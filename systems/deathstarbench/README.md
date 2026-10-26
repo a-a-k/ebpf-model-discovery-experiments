@@ -119,7 +119,14 @@ before guest teardown. It is not a parallel collector comparison.
 
 The fallback pins official DeepFlow agent `v7.2.3` and its multi-platform image
 digest. It uses the official `--standalone` mode, which requires no DeepFlow
-server and writes `l4_flow_log` and `l7_flow_log` locally. Each guest is limited
+server and writes `l4_flow_log` and `l7_flow_log` locally. The pinned agent can
+publish its first standalone configuration notification before its main loop is
+waiting; the fallback therefore uses the supported 10-second minimum proactive
+reload interval instead of the 60-second default. Readiness requires the pinned
+agent's packet-dispatcher start marker on both guests twice, rather than merely
+accepting a live container. Collection copies regular raw files individually
+(the agent's current-log symlink is not mistaken for a flow file) and records a
+technical error if a guest produced no L4/L7 file. Each guest is limited
 to one CPU, 1024 MiB RAM and 1024 PIDs. Flow files rotate at 128 MiB with at most
 two files for each of the two supported output types (512 MiB maximum per
 guest); Docker logs are limited to two 50 MiB files. Raw files, agent logs,
