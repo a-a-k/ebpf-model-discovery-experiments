@@ -9,7 +9,8 @@ import traceback
 from pathlib import Path
 from .runtime import Context, write_json
 from .collectors import Collectors
-from .observations import read_spans, step_id, graph
+from .observations import read_spans, step_id, graph, route, census
+from .model import Projection
 
 
 def main():
@@ -49,7 +50,14 @@ def main():
         for source in ['ebpf', 'native']:
             observed = [s for s in spans if s['source'] == source]
             bound = {step_id(s) for s in observed} & (requested - {None})
+            route_bound = {step_id(s) for s in observed if route(s)} & (requested - {None})
+            projection = Projection(observed)
+            projected = [projection.attempt(row) for row in census(records, 'qualification', '11')]
+            write_json(ctx.out / f'projection-{source}.json', projected)
             support[source] = {'spans': len(observed), 'requested_steps': len(requested), 'bound_steps': len(bound),
+                               'route_bound_steps': len(route_bound),
+                               'joint_http_proxy_known': sum(p['proxy'] is not None for p in projected),
+                               'joint_http_proxy_successes': sum(p['proxy'] is True for p in projected),
                                'services': sorted({s['service'] for s in observed}),
                                'graph': graph(observed)}
         write_json(ctx.out / 'observation-support.json', {'sources': support, 'parse_errors': parse_errors})

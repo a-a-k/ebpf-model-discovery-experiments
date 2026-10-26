@@ -26,27 +26,55 @@ class Projection:
         self.spans = spans
         self.headers = defaultdict(list)
         self.children = defaultdict(list)
+        self.by_id = defaultdict(list)
         for s in spans:
             identity = step_id(s)
             if identity:
                 self.headers[identity].append(s)
             self.children[(s['trace_id'], s['parent_id'])].append(s)
+            self.by_id[(s['source'], s['trace_id'], s['span_id'])].append(s)
+
+    def boundaries(self, anchor):
+        """Bind a child header to an existing HTTP ancestor in the same process.
+
+        A directly tagged HTTP server span is already the boundary. Otherwise
+        follow only unambiguous exact parent IDs in the same observed source,
+        service, instance and node. Never join by timing or request labels.
+        """
+        current, path, result = anchor, [anchor['span_id']], []
+        if route(anchor):
+            result.append((anchor, anchor['span_id'], list(path)))
+            if anchor['kind'] in ('SPAN_KIND_SERVER', 2, 'server'):
+                return result
+        while current['parent_id'] and current['parent_id'] not in path:
+            parents = self.by_id.get((anchor['source'], current['trace_id'], current['parent_id']), [])
+            parents = [p for p in parents if all(p.get(k) == anchor.get(k) for k in ('service', 'instance', 'node'))]
+            if len(parents) != 1:
+                break
+            current = parents[0]
+            path.append(current['span_id'])
+            if route(current):
+                result.append((current, anchor['span_id'], list(path)))
+        return result
 
     def attempt(self, row):
-        roots, signatures, events = [], [], []
+        roots, signatures, events, bindings = [], [], [], []
         for identity in row['step_ids']:
-            candidates = [s for s in self.headers.get(identity, []) if route(s)]
-            servers = [s for s in candidates if s['kind'] in ('SPAN_KIND_SERVER', 2, 'server')]
+            candidates = [item for anchor in self.headers.get(identity, []) for item in self.boundaries(anchor)]
+            servers = [item for item in candidates if item[0]['kind'] in ('SPAN_KIND_SERVER', 2, 'server')]
             candidates = servers or candidates
             # Header binding plus earliest observed server boundary. Duplicates
             # from fusion describe the same request, not extra independent trials.
-            candidates.sort(key=lambda s: (s['start_ns'], s['source'] != 'ebpf'))
+            candidates.sort(key=lambda item: (item[0]['start_ns'], item[0]['source'] != 'ebpf'))
             if not candidates:
                 signatures.append(None)
                 events.append(None)
                 continue
-            s = candidates[0]
+            s, header_span_id, binding_path = candidates[0]
             roots.append(s)
+            bindings.append({'source': s['source'], 'node': s['node'], 'trace_id': s['trace_id'],
+                             'span_id': s['span_id'], 'header_span_id': header_span_id,
+                             'binding_path': binding_path})
             signatures.append(route(s))
             attrs = s['attributes']
             status = attrs.get('http.response.status_code', attrs.get('http.status_code'))
@@ -75,7 +103,7 @@ class Projection:
         return {**row, 'signature': signatures, 'proxy': proxy, 'observed_window_seconds': elapsed,
                 'bound_steps': len(roots), 'requested_steps': len(row['step_ids']),
                 'downstream': sorted(set(descendants), key=str),
-                'root_evidence': [{'source': s['source'], 'node': s['node'], 'trace_id': s['trace_id'], 'span_id': s['span_id']} for s in roots]}
+                'root_evidence': bindings}
 
 
 def assign(row, classes):

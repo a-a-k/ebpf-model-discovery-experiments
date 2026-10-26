@@ -14,6 +14,21 @@ def span(identity, status=200, start=0, end=1000000, path='/product'):
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_child_header_binds_exact_http_parent_and_full_duration(self):
+        for code, duration, expected in ((200, 500_000_000, True), (200, 3_000_000_000, False), (500, 500_000_000, False)):
+            parent = span('parent', status=code, start=0, end=duration)
+            del parent['attributes']['http.request.header.x-experiment-request-id']
+            child = {**span('request'), 'trace_id': parent['trace_id'], 'parent_id': parent['span_id'],
+                     'kind': 'SPAN_KIND_CLIENT', 'start_ns': 100_000_000, 'end_ns': 1_000_000_000,
+                     'attributes': {'http.request.header.x-experiment-request-id': 'request'}}
+            projected = Projection([parent, child]).attempt({'step_ids': ['request']})
+            self.assertEqual(projected['signature'], ['GET /product'])
+            self.assertEqual(projected['observed_window_seconds'], duration/1e9)
+            self.assertIs(projected['proxy'], expected)
+            self.assertEqual(projected['root_evidence'][0]['binding_path'], ['request', 'parent'])
+            parent['source'] = 'native'
+            self.assertIsNone(Projection([parent, child]).attempt({'step_ids': ['request']})['proxy'])
+
     def test_published_database_host_requires_the_selected_port(self):
         db = {'ip': '172.28.11.20', 'transport_host': '192.168.76.11', 'transport_port': 37020}
         self.assertIs(database_reference_match({'address': '192.168.76.11', 'port': 37020}, db), True)
