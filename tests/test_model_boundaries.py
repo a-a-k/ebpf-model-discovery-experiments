@@ -1,8 +1,11 @@
 import base64
+import json
+from pathlib import Path
+import tempfile
 import unittest
 from ebpf_discovery.model import Projection, assign, conditional, wilson
 from ebpf_discovery.observations import census, identifier, graph
-from ebpf_discovery.evaluate import database_activity, database_reference_match, typed_order_chains
+from ebpf_discovery.evaluate import database_activity, database_reference_match, evaluation_projection, typed_order_chains
 
 
 def span(identity, status=200, start=0, end=1000000, path='/product'):
@@ -14,6 +17,17 @@ def span(identity, status=200, start=0, end=1000000, path='/product'):
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_reanalysis_keeps_acquisition_classification_and_unknowns(self):
+        original = [{'attempt_key': 'old', 'class_id': None, 'proxy': None}]
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder)/'target-assignments.json'
+            path.write_text(json.dumps(original))
+            retained, provenance = evaluation_projection(path, [], [], {})
+            self.assertEqual(retained, original)
+            self.assertEqual(provenance['origin'], 'retained_acquisition_assignments')
+            with self.assertRaisesRegex(RuntimeError, 'required for replay'):
+                evaluation_projection(Path(folder)/'missing.json', [], [], {}, replay=True)
+
     def test_unknown_database_endpoints_do_not_invent_shared_identity(self):
         records = [{**span(name), 'instance': name, 'service': name, 'kind': 'SPAN_KIND_CLIENT',
                     'attributes': {'db.system': 'mysql', 'db.name': 'common_namespace'}} for name in ('caller_a', 'caller_b')]
