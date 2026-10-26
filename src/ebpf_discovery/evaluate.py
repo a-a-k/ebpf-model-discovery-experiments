@@ -46,7 +46,8 @@ def ari(truth, predicted):
 
 def class_metrics(external, projected, training):
     truth = {opaque_attempt(r): r['operation'] for r in external if r['phase'] == 'class_test'}
-    train_augmented = {class_key([r['signature'], r['downstream']]) for r in training if r['class_id'] and r['proxy'] is True}
+    train_augmented = {class_key([r['signature'], r['downstream']]) for r in training
+                       if r['phase'] == 'class_train' and r['class_id'] and r['proxy'] is True}
     output = {}
     for variant in ('route', 'route_and_downstream'):
         labels, predictions = [], []
@@ -105,6 +106,9 @@ def evaluate(root):
         folder = Path('models') / source
         if hashlib.sha256((root/folder/'forecast.json').read_bytes()).hexdigest() != saved['sha256'][source]:
             raise RuntimeError('Saved forecast hash changed')
+        for file, field in [('model.json', 'model_sha256'), ('evaluation-map.json', 'evaluation_map_sha256')]:
+            if hashlib.sha256((root/folder/file).read_bytes()).hexdigest() != saved[field][source]:
+                raise RuntimeError(f'Saved {file} hash changed')
         model, forecast = read(folder/'model.json'), read(folder/'forecast.json')
         training = read(folder/'calibration-assignments.json')
         mapping = read(folder/'evaluation-map.json')

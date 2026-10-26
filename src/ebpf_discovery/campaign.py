@@ -135,7 +135,7 @@ class Campaign:
             for state in states:
                 self.block('calibration', state, 240, names)
             spans = self.snapshot('calibration')
-            forecasts = {}
+            forecasts, models, mappings = {}, {}, {}
             for source in ('ebpf', 'native', 'combined'):
                 data = spans if source == 'combined' else [s for s in spans if s['source'] == source]
                 model, forecast, assignments = fit(data, self.census, self.ctx.seed)
@@ -145,9 +145,12 @@ class Campaign:
                 write_json(folder / 'calibration-assignments.json', assignments)
                 write_json(folder / 'evaluation-map.json', evaluation_map(self.records, assignments))
                 forecasts[source] = hashlib.sha256((folder / 'forecast.json').read_bytes()).hexdigest()
+                models[source] = hashlib.sha256((folder / 'model.json').read_bytes()).hexdigest()
+                mappings[source] = hashlib.sha256((folder / 'evaluation-map.json').read_bytes()).hexdigest()
             # This file is written before any target dispatch; both timestamps
             # and hashes are retained, including in failed campaigns.
-            write_json(self.ctx.out / 'forecast-saved.json', {'saved_ns': time.time_ns(), 'sha256': forecasts})
+            write_json(self.ctx.out / 'forecast-saved.json', {'saved_ns': time.time_ns(), 'sha256': forecasts,
+                        'model_sha256': models, 'evaluation_map_sha256': mappings})
             target_states = ['11']*4 + ['10']*2 + ['01', '00']
             self.rng.shuffle(target_states)
             for state in target_states:
