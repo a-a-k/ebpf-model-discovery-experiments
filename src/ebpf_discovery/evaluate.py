@@ -106,13 +106,13 @@ elsewhere are insufficient. This deliberately leaves other possible matchers ope
             for key, val in obj.items():
                 path = prefix+'.'+key
                 normal = key.lower().replace('_', '').replace('.', '')
-                if normal.endswith('orderid') and isinstance(val, str) and uuid.fullmatch(val):
+                if normal == 'orderid' and isinstance(val, str) and uuid.fullmatch(val):
                     result.append((val.lower(), path))
-                if isinstance(val, (dict, list)):
+                # Only the declared current-order object is a semantic alias.
+                # History, previous_order_id, arbitrary nested payloads and
+                # UUID-shaped strings do not establish the current order.
+                if key == 'order' and isinstance(val, dict):
                     result.extend(fields(val, path))
-        elif isinstance(obj, list):
-            for index, item in enumerate(obj):
-                result.extend(fields(item, prefix+f'[{index}]'))
         return result
     for span in spans:
         attrs = span['attributes']
@@ -173,6 +173,29 @@ def validate_cross_node(links, native_spans):
             'error_rate_on_covered': wrong/known if known else None}
 
 
+def database_reference_match(node, reference):
+    """Evaluation-only endpoint match; a host shared by DB ports is ambiguous."""
+    address = str(node.get('address') or '')
+    if not address:
+        return None
+    published = {}
+    if reference.get('transport_host'):
+        published[str(reference['transport_host'])] = reference.get('transport_port')
+    if reference.get('cross_guest_endpoint'):
+        host, port = reference['cross_guest_endpoint'].rsplit(':', 1)
+        published[host] = port
+    port = node.get('port')
+    if address in published:
+        expected = published[address]
+        return str(port) == str(expected) if port is not None and expected is not None else None
+    names = {str(reference[k]) for k in ('ip', 'name', 'container', 'logical_identity') if reference.get(k)}
+    names.update(str(v) for v in reference.get('observed_aliases', []) if str(v) not in published)
+    if address not in names:
+        return False
+    expected = reference.get('port', reference.get('container_port'))
+    return str(port) == str(expected) if port is not None and expected is not None else True
+
+
 def evaluate(root):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
@@ -228,12 +251,11 @@ def evaluate(root):
         observed_graph = graph(data)
         cross_validation = validate_cross_node(observed_graph['cross_node'], [s for s in spans if s['source'] == 'native']) if source == 'ebpf' else None
         db = metadata['database']
-        known_addresses = {str(db.get(k)) for k in ('ip', 'name', 'container', 'logical_identity') if db.get(k)}
-        known_addresses.update(str(v) for v in db.get('observed_aliases', []))
         database_nodes = []
         for node in observed_graph['nodes']:
             if node['kind'] == 'database':
-                database_nodes.append({**node, 'matches_selected_database': str(node['address']) in known_addresses})
+                database_nodes.append({**node, 'matches_selected_database': database_reference_match(node, db),
+                                       'match_kind': 'evaluation-only declared logical name or address/port endpoint; not physical-instance proof'})
         db_controls = {operation: {phase: external_rate([r for r in external if r['operation'] == operation and r['phase'] == phase])
                                    for phase in ('db_up', 'db_down')} for operation in metadata['operations']}
         identities = async_identities(data)
