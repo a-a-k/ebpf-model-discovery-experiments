@@ -313,9 +313,12 @@ def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
     node, command, kwargs = calls[0]
     assert node == "a"
     assert command == (
-        "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+        "docker exec -e KAFKA_OPTS= "
+        "-e 'KAFKA_HEAP_OPTS=-Xms16m -Xmx64m' kafka "
+        "/opt/kafka/bin/kafka-consumer-groups.sh "
         "--bootstrap-server kafka:9092 --group accounting --describe"
     )
+    assert "-javaagent" not in command
     assert kwargs["check"] is False
     assert 0 < kwargs["timeout"] <= 1
 

@@ -1157,7 +1157,13 @@ SELECT json_build_object(
             try:
                 result = self.ctx.node_exec(
                     "a",
-                    "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+                    # The broker is capped at ~620 MiB with a 400 MiB heap and
+                    # KAFKA_OPTS points at its Java agent.  Do not launch the
+                    # administrative client with those broker JVM settings in
+                    # the same container; this override affects only exec.
+                    "docker exec -e KAFKA_OPTS= "
+                    "-e 'KAFKA_HEAP_OPTS=-Xms16m -Xmx64m' kafka "
+                    "/opt/kafka/bin/kafka-consumer-groups.sh "
                     "--bootstrap-server kafka:9092 --group accounting --describe",
                     check=False,
                     timeout=call_timeout,
