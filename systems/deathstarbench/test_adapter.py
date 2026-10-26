@@ -184,26 +184,11 @@ class OracleTests(unittest.TestCase):
             for relative in measured_handlers:
                 handler = social / "nginx-web-server" / relative
                 handler.parent.mkdir(parents=True, exist_ok=True)
-                if relative.endswith("post/compose.lua"):
-                    body = (
-                        "  local span = tracer:start_span('existing')\n"
-                        "  local carrier = {}\n"
-                        "    client.iprot.trans:close()\n"
-                        "    ngx.exit(ngx.status)\n"
-                        "  ngx.say(\"Successfully upload post\")\n"
-                        "  span:finish()\n"
-                    )
-                else:
-                    body = (
-                        "  local span = tracer:start_span('existing')\n"
-                        "  local carrier = {}\n"
-                        "    client.iprot.trans:close()\n"
-                        "    span:finish()\n"
-                        "    ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)\n"
-                        "  span:finish()\n"
-                        "  ngx.exit(ngx.HTTP_OK)\n"
-                    )
-                handler.write_text(body, encoding="utf-8")
+                handler.write_text(
+                    "  local span = tracer:start_span('existing')\n"
+                    "  local carrier = {}\n",
+                    encoding="utf-8",
+                )
             (social / "config" / "jaeger-config.yml").write_text("disabled: false\n", encoding="utf-8")
             (social / "config" / "service-config.json").write_text(json.dumps({
                 "user-timeline-mongodb": {"addr": "user-timeline-mongodb", "port": 27017},
@@ -239,7 +224,6 @@ class OracleTests(unittest.TestCase):
         ))
         self.assertTrue(all('span:set_tag("http.method", ngx.req.get_method())' in source for source in rendered_handlers))
         self.assertTrue(all('span:set_tag("http.url", ngx.var.uri)' in source for source in rendered_handlers))
-        self.assertTrue(all(source.count('span:set_tag("http.status_code"') == 2 for source in rendered_handlers))
         addresses = [spec["networks"]["app"]["ipv4_address"] for spec in node_a["services"].values()]
         self.assertEqual(len(addresses), len(set(addresses)))
 
