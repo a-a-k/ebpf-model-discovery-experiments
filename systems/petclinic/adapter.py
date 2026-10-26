@@ -477,6 +477,7 @@ backend visits_replicas
             "gateway": self._application_service("api-gateway", "gateway-a", IPS["gateway"], IPS["collector_a"], instrument["gateway"]),
         }
         services_a["gateway"]["ports"] = ["0.0.0.0:18080:8080"]
+        services_a["visits-a"]["ports"] = [f"{guest_a}:18081:8080"]
         compose_a = {"name": "petclinic-a", "services": services_a, "networks": common_network_a}
 
         compose_b = {
@@ -571,8 +572,20 @@ backend visits_replicas
             "operations": list(OPERATIONS),
             "entry_url": f"http://{self.ctx.node_ip('a')}:18080",
             "replicas": [
-                {"name": "visits-a", "node": "a", "ip": IPS["visits_a"]},
-                {"name": "visits-b", "node": "b", "ip": IPS["visits_b"]},
+                {
+                    "name": "visits-a",
+                    "node": "a",
+                    "ip": IPS["visits_a"],
+                    "transport_host": self.ctx.node_ip("a"),
+                    "transport_port": 18081,
+                },
+                {
+                    "name": "visits-b",
+                    "node": "b",
+                    "ip": IPS["visits_b"],
+                    "transport_host": self.ctx.node_ip("b"),
+                    "transport_port": 18081,
+                },
             ],
             "database": {
                 "logical_identity": "petclinic-mysql",
@@ -580,6 +593,9 @@ backend visits_replicas
                 "container": "database",
                 "ip": IPS["database"],
                 "cross_guest_endpoint": f"{self.ctx.node_ip('a')}:13306",
+                "observed_aliases": ["database", IPS["database"], self.ctx.node_ip("a")],
+                "published_port": 13306,
+                "container_port": 3306,
             },
             "proxy_discovery": {
                 "node": "a",

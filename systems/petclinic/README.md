@@ -13,6 +13,8 @@ B and a second collector on `172.28.12.0/24`. Every container has a fixed addres
 HAProxy at `172.28.11.13` has an unchanging round-robin backend list containing
 `172.28.11.14:8080` and node B's stable published endpoint
 `192.168.76.12:18081`, which DNATs to the fixed `172.28.12.14:8080` container.
+Replica A is also published as `192.168.76.11:18081`, giving the runner a stable
+reachable state-barrier endpoint for each replica without changing HAProxy policy.
 Visits B reaches MySQL through node A's stable `192.168.76.11:13306` publication.
 These explicit guest endpoints avoid dependence on Docker's cross-bridge forwarding
 rules while preserving container identity, independent guest kernels, and observable

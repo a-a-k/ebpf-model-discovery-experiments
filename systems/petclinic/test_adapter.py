@@ -35,6 +35,12 @@ def test_metadata_records_split_replicas_and_suppression(tmp_path):
     )
     metadata = Adapter(context).metadata()
     assert [row["node"] for row in metadata["replicas"]] == ["a", "b"]
+    assert [(row["transport_host"], row["transport_port"]) for row in metadata["replicas"]] == [
+        ("192.168.76.11", 18081),
+        ("192.168.76.12", 18081),
+    ]
+    assert metadata["database"]["observed_aliases"] == ["database", "172.28.11.20", "192.168.76.11"]
+    assert metadata["database"]["published_port"] == 13306
     assert "both controlled Visits replicas" in metadata["native"]["suppression"]
     assert metadata["proxy_discovery"]["policy"] == "roundrobin"
     assert metadata["proxy_discovery"]["cross_guest_transport"] == "stable_guest_published_port"
