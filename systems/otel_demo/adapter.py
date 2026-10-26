@@ -104,6 +104,7 @@ class Adapter:
             raise RuntimeError(f"upstream checkout is {observed}, expected {UPSTREAM_COMMIT}")
 
         patch_record = self._patch_native_disable()
+        self._write_absent_native_configs()
 
         environment = self._read_env(self.source / ".env")
         environment["DEMO_VERSION"] = DEMO_VERSION
@@ -178,7 +179,10 @@ class Adapter:
         self._compose("b", "pull --ignore-buildable", timeout=600)
         # Services with direct SDK/exporter construction are built from the
         # pinned, recorded source patch. Builds happen only in Actions guests.
-        self._compose("a", "build checkout email product-catalog-a", timeout=1800)
+        build_services = "checkout email product-catalog-a"
+        if self.mode == "absent":
+            build_services += " currency shipping"
+        self._compose("a", f"build {build_services}", timeout=2400)
         self._compose("b", "build product-catalog-b", timeout=1800)
         self._compose("a", "up -d --remove-orphans", timeout=900)
         self._compose("b", "up -d --remove-orphans", timeout=600)
@@ -650,8 +654,11 @@ class Adapter:
         for name in list(services):
             if name in DROP_SERVICES:
                 services.pop(name)
+        source_builds = {"checkout", "email", "product-catalog"}
+        if self.mode == "absent":
+            source_builds.update({"currency", "shipping"})
         for name, service in services.items():
-            if name in {"checkout", "email", "product-catalog"}:
+            if name in source_builds:
                 self._prefix_source_build(service)
                 service["image"] = (
                     f"ebpf-study/otel-demo-{name}:{UPSTREAM_COMMIT[:12]}-{self.mode}"
@@ -710,6 +717,19 @@ class Adapter:
         services["otel-collector"]["ports"] = [f"{COLLECTOR_GUEST_PORT}:4317"]
         services["flagd"]["ports"] = [f"{FLAGD_GUEST_PORT}:8013"]
         services["frontend-proxy"]["ports"] = [f"{ENTRY_GUEST_PORT}:8080"]
+
+        if self.mode == "absent":
+            services["frontend-proxy"].setdefault("volumes", []).append(
+                "./frontend-proxy-no-tracing.yaml:/home/envoy/envoy.tmpl.yaml:ro"
+            )
+            services["image-provider"].setdefault("volumes", []).append(
+                "./image-provider-no-tracing.conf:/nginx.conf.template:ro"
+            )
+            # flagd only installs its OTel exporter when a collector URI is
+            # configured. Its CLI has no SDK-disable flag in this pinned image.
+            flagd_env = services["flagd"].setdefault("environment", {})
+            flagd_env.pop("OTEL_EXPORTER_OTLP_ENDPOINT", None)
+            flagd_env.pop("OTEL_EXPORTER_OTLP_PROTOCOL", None)
 
         # Standard language SDKs get their specified master disable switch.
         # Checkout and product-catalog additionally have explicit source guards
@@ -870,6 +890,37 @@ class Adapter:
             },
         }
         return yaml.safe_dump(config, sort_keys=False)
+
+    def _write_absent_native_configs(self) -> None:
+        """Create recorded no-tracing configs for non-SDK native emitters."""
+        if self.mode != "absent":
+            return
+
+        proxy_source = self.source / "src" / "frontend-proxy" / "envoy.tmpl.yaml"
+        proxy = yaml.safe_load(proxy_source.read_text(encoding="utf-8"))
+        try:
+            manager = proxy["static_resources"]["listeners"][0]["filter_chains"][0][
+                "filters"
+            ][0]["typed_config"]
+            removed = manager.pop("tracing")
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError(
+                f"pinned frontend-proxy tracing config changed: {exc}"
+            ) from exc
+        if not isinstance(removed, dict) or "provider" not in removed:
+            raise RuntimeError("frontend-proxy tracing provider was not found")
+        self._write_yaml(self.bundle / "frontend-proxy-no-tracing.yaml", proxy)
+
+        image_source = self.source / "src" / "image-provider" / "nginx.conf.template"
+        image_config = self._replace_once(
+            image_source.read_text(encoding="utf-8"),
+            "    otel_trace on;\n",
+            "    otel_trace off;\n",
+            image_source,
+        )
+        (self.bundle / "image-provider-no-tracing.conf").write_text(
+            image_config, encoding="utf-8"
+        )
 
     def _envoy_config(self) -> str:
         config = {
@@ -1248,7 +1299,8 @@ SELECT json_build_object(
             "mode": self.mode,
             "excluded": excluded,
             "sdk_settings": "OTEL_SDK_DISABLED=true on disabled standard SDKs",
-            "source_guards": "checkout and product-catalog skip exporter/provider construction; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
+            "source_guards": "checkout and product-catalog skip exporter/provider construction; currency and shipping omit direct trace exporters; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
+            "native_component_guards": "absent mode removes Envoy tracing, sets nginx otel_trace off, and leaves flagd without a collector URI",
             "collector_filter": "none; the file exporter retains the unfiltered native OTLP stream for suppression audit",
             "propagation": "checkout keeps W3C propagation with a never-sample provider; no disabled Go exporter is constructed",
         }
@@ -1266,6 +1318,8 @@ SELECT json_build_object(
         email = self.source / "src" / "email" / "email_server.rb"
         checkout_dockerfile = self.source / "src" / "checkout" / "Dockerfile"
         product_dockerfile = self.source / "src" / "product-catalog" / "Dockerfile"
+        currency_tracer = self.source / "src" / "currency" / "src" / "tracer_common.h"
+        shipping_telemetry = self.source / "src" / "shipping" / "src" / "telemetry_conf.rs"
 
         checkout_text = checkout.read_text(encoding="utf-8")
         if "func telemetrySDKDisabled() bool" not in checkout_text:
@@ -1379,6 +1433,70 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 self._replace_once(email_text, old, new, email), encoding="utf-8"
             )
 
+        currency_text = currency_tracer.read_text(encoding="utf-8")
+        if "OTEL_SDK_DISABLED" not in currency_text:
+            currency_text = self._replace_once(
+                currency_text,
+                "#include <grpcpp/grpcpp.h>\n#include <cstring>",
+                "#include <grpcpp/grpcpp.h>\n#include <cstdlib>\n#include <cstring>",
+                currency_tracer,
+            )
+            old = """  auto exporter = opentelemetry::exporter::otlp::OtlpGrpcExporterFactory::Create();
+  auto processor =
+      opentelemetry::sdk::trace::BatchSpanProcessorFactory::Create(std::move(exporter), {});
+  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanProcessor>> processors;
+  processors.push_back(std::move(processor));
+"""
+            new = """  std::vector<std::unique_ptr<opentelemetry::sdk::trace::SpanProcessor>> processors;
+  const char *sdk_disabled = std::getenv("OTEL_SDK_DISABLED");
+  if (sdk_disabled == nullptr || std::strcmp(sdk_disabled, "true") != 0)
+  {
+    auto exporter = opentelemetry::exporter::otlp::OtlpGrpcExporterFactory::Create();
+    auto processor =
+        opentelemetry::sdk::trace::BatchSpanProcessorFactory::Create(std::move(exporter), {});
+    processors.push_back(std::move(processor));
+  }
+"""
+            currency_tracer.write_text(
+                self._replace_once(currency_text, old, new, currency_tracer),
+                encoding="utf-8",
+            )
+
+        shipping_text = shipping_telemetry.read_text(encoding="utf-8")
+        if "native_tracing_disabled" not in shipping_text:
+            old = """    let tracer_provider = SdkTracerProvider::builder()
+        .with_resource(get_resource())
+        .with_batch_exporter(
+            opentelemetry_otlp::SpanExporter::builder()
+                .with_http()
+                .with_protocol(Protocol::HttpBinary)
+                .build()
+                .expect("Failed to initialize tracing provider"),
+        )
+        .build();
+"""
+            new = """    let native_tracing_disabled =
+        matches!(std::env::var("OTEL_SDK_DISABLED").as_deref(), Ok("true"));
+    let tracer_provider = if native_tracing_disabled {
+        SdkTracerProvider::builder().with_resource(get_resource()).build()
+    } else {
+        SdkTracerProvider::builder()
+            .with_resource(get_resource())
+            .with_batch_exporter(
+                opentelemetry_otlp::SpanExporter::builder()
+                    .with_http()
+                    .with_protocol(Protocol::HttpBinary)
+                    .build()
+                    .expect("Failed to initialize tracing provider"),
+            )
+            .build()
+    };
+"""
+            shipping_telemetry.write_text(
+                self._replace_once(shipping_text, old, new, shipping_telemetry),
+                encoding="utf-8",
+            )
+
         # GitHub occasionally resets an HTTP/2 module download stream. Retry
         # only the immutable go.mod/go.sum download step; dependency versions,
         # checksums, build commands and base-image digests remain unchanged.
@@ -1414,6 +1532,8 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 "src/email/email_server.rb",
                 "src/checkout/Dockerfile",
                 "src/product-catalog/Dockerfile",
+                "src/currency/src/tracer_common.h",
+                "src/shipping/src/telemetry_conf.rs",
             ]
         )
         if not diff.strip():
@@ -1423,7 +1543,14 @@ end # The metric exporter is not constructed when the SDK is disabled.
         return {
             "path": patch_path.name,
             "sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
-            "services": ["checkout", "email", "product-catalog-a", "product-catalog-b"],
+            "services": [
+                "checkout",
+                "currency",
+                "email",
+                "product-catalog-a",
+                "product-catalog-b",
+                "shipping",
+            ],
             "dependency_download_commands": {
                 "checkout": download_command.strip(),
                 "product-catalog": download_command.strip(),
