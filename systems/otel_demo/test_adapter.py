@@ -289,6 +289,36 @@ def test_async_late_first_positive_is_unknown() -> None:
     assert result["success"] is None
 
 
+def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
+    calls = []
+
+    class Result:
+        stdout = (
+            "GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID\n"
+            "accounting orders 0 42 42 0 consumer /172.0.0.1 client\n"
+        )
+        stderr = ""
+        returncode = 0
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append((node, command, kwargs))
+            return Result()
+
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter._wait_consumer_drain(1)
+
+    assert calls == [
+        (
+            "a",
+            "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+            "--bootstrap-server kafka:9092 --group accounting --describe",
+            {"check": False},
+        )
+    ]
+
+
 def test_async_in_boundary_positive_and_missing_oracle() -> None:
     now = time.time_ns()
     adapter = object.__new__(Adapter)
