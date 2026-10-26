@@ -132,6 +132,19 @@ class OracleTests(unittest.TestCase):
             social = adapter.source / "socialNetwork"
             for relative in ("config", "nginx-web-server", "gen-lua", "media-frontend", "docker/openresty-thrift/lua-thrift"):
                 (social / relative).mkdir(parents=True, exist_ok=True)
+            measured_handlers = (
+                "lua-scripts/wrk2-api/post/compose.lua",
+                "lua-scripts/wrk2-api/home-timeline/read.lua",
+                "lua-scripts/wrk2-api/user-timeline/read.lua",
+            )
+            for relative in measured_handlers:
+                handler = social / "nginx-web-server" / relative
+                handler.parent.mkdir(parents=True, exist_ok=True)
+                handler.write_text(
+                    "  local span = tracer:start_span('existing')\n"
+                    "  local carrier = {}\n",
+                    encoding="utf-8",
+                )
             (social / "config" / "jaeger-config.yml").write_text("disabled: false\n", encoding="utf-8")
             (social / "config" / "service-config.json").write_text(json.dumps({
                 "user-timeline-mongodb": {"addr": "user-timeline-mongodb", "port": 27017},
@@ -150,6 +163,10 @@ class OracleTests(unittest.TestCase):
             node_a = yaml.safe_load((adapter.node_dirs["a"] / "docker-compose.yml").read_text(encoding="utf-8"))
             node_b = yaml.safe_load((adapter.node_dirs["b"] / "docker-compose.yml").read_text(encoding="utf-8"))
             node_b_config = json.loads((adapter.node_dirs["b"] / "config" / "service-config.json").read_text(encoding="utf-8"))
+            rendered_handlers = [
+                (adapter.node_dirs["a"] / "nginx-web-server" / relative).read_text(encoding="utf-8")
+                for relative in measured_handlers
+            ]
         self.assertEqual(node_a["services"]["user-timeline-service"]["networks"]["app"]["ipv4_address"], "172.28.11.40")
         self.assertIn("user-timeline-service-replica-a", node_a["services"])
         self.assertEqual(node_a["services"]["user-timeline-service-replica-a"]["ports"], ["19090:9090"])
@@ -157,6 +174,10 @@ class OracleTests(unittest.TestCase):
         self.assertEqual(node_b["services"]["user-timeline-service-replica-b"]["ports"], ["19090:9090"])
         self.assertEqual(node_a["services"]["user-timeline-mongodb"]["ports"], ["37020:27017"])
         self.assertEqual(node_b_config["user-timeline-mongodb"], {"addr": "192.0.2.1", "port": 37020})
+        self.assertTrue(all(
+            'span:set_tag("http.request.header.x-experiment-request-id", experiment_request_id)' in source
+            for source in rendered_handlers
+        ))
         addresses = [spec["networks"]["app"]["ipv4_address"] for spec in node_a["services"].values()]
         self.assertEqual(len(addresses), len(set(addresses)))
 

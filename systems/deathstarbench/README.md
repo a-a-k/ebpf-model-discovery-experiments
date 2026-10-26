@@ -43,7 +43,13 @@ Lua frontend. Suppression changes the SDK configurations themselves:
 
 Jaeger remains running even in absent mode so its empty service/trace census can
 verify absence. This is not exporter filtering. Native data is exported from
-the Jaeger API into a separate directory. This adapter makes no claim that a
+the Jaeger API into a separate directory. During rendering, the adapter makes a
+small source patch to the three measured Lua handlers: after their existing
+span is started, it copies the opaque `X-Experiment-Request-Id` into the span
+tag `http.request.header.x-experiment-request-id` when the header is present.
+This is manual header-capture preparation cost, applies only to already-enabled
+native instrumentation, and neither creates a trace context nor overrides the
+SDK-disabled absent mode. This adapter makes no claim that a
 generic OBI collector understands Thrift; eBPF collection/fallback belongs to
 the common orchestrator.
 
