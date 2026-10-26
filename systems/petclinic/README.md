@@ -11,9 +11,13 @@ Node A hosts the API gateway, customers and vets services, MySQL, HAProxy, Visit
 replica A, and an OTLP collector on `172.28.11.0/24`. Node B hosts Visits replica
 B and a second collector on `172.28.12.0/24`. Every container has a fixed address.
 HAProxy at `172.28.11.13` has an unchanging round-robin backend list containing
-`172.28.11.14` and `172.28.12.14`; `set_replicas` stops or starts only those
-containers and never rewrites routing. Thus the controlled replicas run on two
-independent guest kernels. Resolved Compose files and `placement.json` are retained.
+`172.28.11.14:8080` and node B's stable published endpoint
+`192.168.76.12:18081`, which DNATs to the fixed `172.28.12.14:8080` container.
+Visits B reaches MySQL through node A's stable `192.168.76.11:13306` publication.
+These explicit guest endpoints avoid dependence on Docker's cross-bridge forwarding
+rules while preserving container identity, independent guest kernels, and observable
+cross-node TCP calls. `set_replicas` stops or starts only the Visits containers and
+never rewrites routing. Resolved Compose files and `placement.json` are retained.
 
 The previously qualified SIMPAT image was a GitHub Actions artifact and may be
 expired or require credentials. A workflow may provide an already restored public
