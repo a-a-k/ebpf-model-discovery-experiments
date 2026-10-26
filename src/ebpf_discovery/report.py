@@ -146,6 +146,27 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
         lines.append('| ' + ' | '.join([*key, str(len(data)), fmt(absolute), fmt(conservative), str(informative), str(meets) if complete else 'pending']) + ' |')
     (out/'summary.json').write_text(json.dumps({'complete_campaigns': len(campaigns), 'planned_campaigns': 27,
                                                'groups': summaries}, indent=2)+'\n')
+    comparison = ['# Per-operation comparison', '',
+                  'Cells show mean absolute error / mean worst-end error in percentage points across exactly three seeds. Unknown point estimates stay unknown. The full table also records interval width and the conservative target.', '',
+                  '| System | Operation | Mode | eBPF | Native | Combined |',
+                  '|---|---|---|---:|---:|---:|']
+    by_group = {(s['system'], s['operation'], s['mode'], s['source']): s for s in summaries}
+    for key in sorted({k[:3] for k in by_group}):
+        cells = []
+        for source in ('ebpf', 'native', 'combined'):
+            value = by_group.get((*key, source))
+            cells.append(f"{fmt(value['mean_absolute_error_pp'])} / {fmt(value['mean_worst_end_error_pp'])}" if value else 'pending')
+        comparison.append('| ' + ' | '.join([*key, *cells]) + ' |')
+    (out/'operation-comparison.md').write_text('\n'.join(comparison)+'\n', encoding='utf-8')
+    (out/'report-provenance.json').write_text(json.dumps({
+        'report_run_id': os.environ.get('GITHUB_RUN_ID'),
+        'report_commit': os.environ.get('GITHUB_SHA'),
+        'source_artifact_indexes': [
+            {'run_id': p.parent.name, **json.loads(p.read_text())}
+            for p in sorted(inputs.glob('*/artifact-index.json'))
+        ],
+        'assignment_policy': 'preserve original acquisition assignments; independent raw-stream audits only',
+    }, indent=2)+'\n')
     # Deterministic illustration selection, independent of measured accuracy.
     for system in sorted({c['system'] for c in campaigns}):
         selected = sorted((c for c in campaigns if c['system'] == system), key=lambda c: (c['mode'] != 'absent', c['seed'], str(c['run_id'])))[0]
