@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 import time
 
 from systems.otel_demo import adapter as adapter_module
@@ -75,6 +76,55 @@ def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
     adapter._prefix_source_build(service)
     assert service["build"]["context"] == "./source"
     assert service["build"]["dockerfile"] == "./src/checkout/Dockerfile"
+
+
+def test_collect_native_rotates_exporter_targets_before_restart(tmp_path: Path) -> None:
+    events = []
+
+    class Context:
+        out = tmp_path
+
+        def node_exec(self, node, command, **kwargs):
+            events.append(command)
+            if "ps -a --format '{{.Name}}'" in command:
+                return ""
+            return ""
+
+        def node_get(self, node, remote, local):
+            Path(local).write_text("", encoding="utf-8")
+
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter.mode = "absent"
+    adapter._wait_collector_ready = lambda: events.append("collector-ready")
+    adapter.collect_native(tmp_path / "snapshot")
+
+    stop_index = events.index("docker stop -t 20 otel-collector")
+    rotate_index = next(
+        index
+        for index, command in enumerate(events)
+        if "/native/snapshots/" in command and "mv --" in command
+    )
+    restart_index = next(
+        index for index, command in enumerate(events) if "start otel-collector" in command
+    )
+    assert stop_index < rotate_index < restart_index
+    rotate_command = events[rotate_index]
+    assert "traces.json" in rotate_command
+    assert "otel-logs.json" in rotate_command
+    assert "metrics.json" in rotate_command
+    assert "suppression.json" not in rotate_command
+
+    lifecycle = json.loads(
+        (tmp_path / "snapshot" / "snapshot-lifecycle.json").read_text()
+    )
+    assert lifecycle["local_snapshot_preserved"] is True
+    assert lifecycle["subsequent_export_mode"] == "fresh_file_after_rotation"
+    assert lifecycle["exporter_file_rotation_targets"] == [
+        "traces.json",
+        "otel-logs.json",
+        "metrics.json",
+    ]
 
 
 def test_absent_native_configs_disable_non_sdk_tracing(tmp_path: Path) -> None:
