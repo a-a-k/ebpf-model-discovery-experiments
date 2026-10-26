@@ -11,11 +11,13 @@ import shutil
 from statistics import mean
 
 
-def report(inputs, out):
+def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
     out.mkdir(parents=True, exist_ok=True)
     rows, campaigns, jobs, superseded = [], [], [], []
+    exclusion_rules = json.loads(exclusions_path.read_text()) if exclusions_path.exists() else []
+    excluded = []
     classifications, structures, async_rows, db_controls = [], [], [], []
     seen_jobs = set()
     for path in sorted(inputs.rglob('*jobs.json')):
@@ -30,6 +32,10 @@ def report(inputs, out):
                          'url': job['html_url']})
     for path in sorted(inputs.rglob('metrics.json')):
         m = json.loads(path.read_text())
+        exclusion = next((r for r in exclusion_rules if all(str(r[k]) == str(m[k]) for k in ('run_id', 'system', 'mode', 'seed'))), None)
+        if exclusion:
+            excluded.append({'path': str(path.relative_to(inputs)), 'rule': exclusion, 'metrics': m})
+            continue
         if m.get('protocol_version') != 'fixed-warmup-v2':
             superseded.append({'path': str(path.relative_to(inputs)), 'reason': 'superseded preparation protocol',
                                'metrics': m})
@@ -148,8 +154,11 @@ def report(inputs, out):
             failures.append({'path': str(path.relative_to(inputs)), **status})
     (out/'technical-failures.json').write_text(json.dumps(failures, indent=2)+'\n')
     (out/'superseded-pilots.json').write_text(json.dumps(superseded, indent=2)+'\n')
+    (out/'excluded-campaigns.json').write_text(json.dumps(excluded, indent=2)+'\n')
+    (out/'technical-exclusion-rules.json').write_text(json.dumps(exclusion_rules, indent=2)+'\n')
     lines += ['', f'Retained technical failures: {len(failures)}. See `technical-failures.json`.', '',
               f'Superseded protocol pilots: {len(superseded)}. Full metrics remain in `superseded-pilots.json`; excluded by protocol, not accuracy.', '',
+              f'Acquired campaigns excluded by predeclared implementation defects: {len(excluded)}. All paired sources are excluded consistently; retained metrics and exact rules are in `excluded-campaigns.json` and `technical-exclusion-rules.json`. Original acquisition metrics and raw streams remain in the corresponding Actions artifacts/archive.', '',
               f'Total completed job time across retained repository history, including preparation, checks, selector jobs and failures: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`. Ongoing job time is unknown and excluded from this total. Human/agent engineering time was not independently metered and remains unknown.', '',
               'Class separation and coverage are in `classes.csv`; observed links, DB structure and semantic proxy mismatches in `structure.csv`; DB interventions in `database-controls.csv`; asynchronous controls and unknown identity chains in `async.csv`. Concrete DB-instance identity is not inferred from an IP address. Native ancestry agreement is a reference comparison, not independent ground-truth correctness.', '',
               'Means are reported only with exactly seeds 0, 1, and 2; duplicate attempts must be resolved explicitly from technical-failure history, not averaged or selected by accuracy.']
@@ -177,5 +186,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--exclusions', type=Path, default=Path('docs/technical-exclusions.json'))
     args = parser.parse_args()
-    report(args.inputs, args.out)
+    report(args.inputs, args.out, args.exclusions)
