@@ -62,6 +62,7 @@ def report(inputs, out):
                                'db_logical_nodes': len(result['database_nodes']),
                                'db_nodes_matching_selected_endpoint': sum(n['matches_selected_database'] is True for n in result['database_nodes']),
                                'db_selected_endpoint_unknown': sum(n['matches_selected_database'] is None for n in result['database_nodes']),
+                               'db_selected_endpoint_protocol_disagreements': sum(n.get('selected_endpoint_protocol_agrees') is False for n in result['database_nodes']),
                                'db_concrete_instances_confirmed': sum(n.get('concrete_instance_confirmed') is True for n in result['database_nodes']),
                                'db_shared_dependencies': len(result.get('shared_database_dependencies', {})),
                                'db_forecast_effect': result['database_forecast_effect'],

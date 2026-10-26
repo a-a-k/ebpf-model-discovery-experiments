@@ -251,10 +251,17 @@ def evaluate(root):
         observed_graph = graph(data)
         cross_validation = validate_cross_node(observed_graph['cross_node'], [s for s in spans if s['source'] == 'native']) if source == 'ebpf' else None
         db = metadata['database']
+        # Deployment reference is evaluator-only. Never relabel the observed
+        # graph to hide a collector's protocol misclassification.
+        reference_db_system = {'deathstarbench': 'mongodb', 'petclinic': 'mysql', 'otel_demo': 'postgresql'}[status['system']]
         database_nodes = []
         for node in observed_graph['nodes']:
             if node['kind'] == 'database':
-                database_nodes.append({**node, 'matches_selected_database': database_reference_match(node, db),
+                endpoint_match = database_reference_match(node, db)
+                observed_system = {'postgres': 'postgresql', 'mongo': 'mongodb'}.get(node['system'], node['system'])
+                database_nodes.append({**node, 'matches_selected_database': endpoint_match,
+                                       'reference_system_for_selected_endpoint': reference_db_system if endpoint_match is True else None,
+                                       'selected_endpoint_protocol_agrees': observed_system == reference_db_system if endpoint_match is True else None,
                                        'match_kind': 'evaluation-only declared logical name or address/port endpoint; not physical-instance proof'})
         db_controls = {operation: {phase: external_rate([r for r in external if r['operation'] == operation and r['phase'] == phase])
                                    for phase in ('db_up', 'db_down')} for operation in metadata['operations']}
