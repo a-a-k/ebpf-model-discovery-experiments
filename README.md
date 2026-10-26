@@ -220,6 +220,8 @@ Report outputs include `operations.csv`, `summary.json`, `classes.csv`, `structu
 
 `archive_tags` can name several space-separated data releases. Archived replay verifies original ZIP checksums before extraction and uses the same evaluation and exclusion rules. The job-cost ledger is a new repository-history snapshot when replay runs; use the archived report's ledger for the original cost snapshot. A missing release, asset, checksum, or campaign provenance stops replay instead of silently omitting a run.
 
+The archived path passed [replay run 40365033726](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40365033726): the admitted DeathStarBench absent-mode summary groups exactly matched the earlier report, while the same six excluded campaigns remained excluded. This replay generated no application traffic.
+
 ```text
 .github/workflows/       Infrastructure and application qualification
 docs/PROTOCOL.md         Criterion, baseline, design, skeptic review
