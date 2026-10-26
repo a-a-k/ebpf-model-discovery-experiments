@@ -42,6 +42,17 @@ def main():
                 index += 1
         records = adapter.verify(records)
         write_json(ctx.out / 'external.json', records)
+        if args.system == 'otel_demo':
+            # Exercise the actual recovery/admin command before spending a
+            # full campaign on a broken drain probe. No extra workload traffic.
+            recovery_started = time.time_ns()
+            adapter.set_consumer(False)
+            adapter.set_consumer(True)
+            status['consumer_recovery_check'] = {
+                'status': 'completed', 'started_ns': recovery_started,
+                'ended_ns': time.time_ns(), 'drain_budget_seconds': 60,
+                'evidence': 'commands.jsonl: successful CLI and all returned orders partition lags known zero',
+            }
         collectors.snapshot()
         adapter.collect_native(ctx.out / 'native')
         spans, parse_errors = read_spans(collectors.root, ctx.out / 'native')
