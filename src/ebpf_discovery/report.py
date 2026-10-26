@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 from collections import defaultdict
+from datetime import datetime
 import csv
 import json
 import os
@@ -13,7 +14,14 @@ def report(inputs, out):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
     out.mkdir(parents=True, exist_ok=True)
-    rows, campaigns = [], []
+    rows, campaigns, jobs = [], [], []
+    for path in sorted(inputs.rglob('jobs.json')):
+        for job in json.loads(path.read_text()).get('jobs', []):
+            started, ended = job.get('started_at'), job.get('completed_at')
+            seconds = (datetime.fromisoformat(ended.replace('Z', '+00:00')) - datetime.fromisoformat(started.replace('Z', '+00:00'))).total_seconds() if started and ended else None
+            jobs.append({'run_id': job['run_id'], 'job_id': job['id'], 'name': job['name'],
+                         'conclusion': job['conclusion'], 'job_seconds_including_preparation': seconds,
+                         'url': job['html_url']})
     for path in sorted(inputs.rglob('metrics.json')):
         m = json.loads(path.read_text())
         campaigns.append({'system': m['system'], 'mode': m['mode'], 'seed': m['seed'], 'run_id': m['run_id'],
@@ -28,7 +36,7 @@ def report(inputs, out):
                              'worst_interval_error_pp': op['worst_interval_error']*100,
                              'interval_width_pp': op['interval_width']*100, 'unsupported': op['unsupported'],
                              'target_unclassified': op['target_unclassified']})
-    for filename, data in [('operations.csv', rows), ('costs.csv', campaigns)]:
+    for filename, data in [('operations.csv', rows), ('costs.csv', campaigns), ('job-costs.csv', jobs)]:
         with (out/filename).open('w', newline='', encoding='utf-8') as stream:
             if data:
                 writer = csv.DictWriter(stream, fieldnames=list(data[0]))
@@ -60,6 +68,7 @@ def report(inputs, out):
             failures.append({'path': str(path.relative_to(inputs)), **status})
     (out/'technical-failures.json').write_text(json.dumps(failures, indent=2)+'\n')
     lines += ['', f'Retained technical failures: {len(failures)}. See `technical-failures.json`.', '',
+              f'Total retained job time including VM preparation and failed jobs: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`.', '',
               'Means are reported only with exactly seeds 0, 1, and 2; duplicate attempts must be resolved explicitly from technical-failure history, not averaged or selected by accuracy.']
     (out/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     if rows:

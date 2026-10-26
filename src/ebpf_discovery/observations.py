@@ -146,7 +146,8 @@ def graph(spans):
             dbid = f'db:{db}:{address or "unknown"}:{port or "unknown"}:{namespace or "unknown"}'
             nodes[dbid] = {'id': dbid, 'kind': 'database', 'system': db, 'address': address,
                            'port': port, 'namespace': namespace, 'source': s['source'],
-                           'concrete_instance_confirmed': bool(address and re.fullmatch(r'\d+\.\d+\.\d+\.\d+', str(address)))}
+                           'numeric_address_observed': bool(address and re.fullmatch(r'\d+\.\d+\.\d+\.\d+', str(address))),
+                           'concrete_instance_confirmed': None}
             edges.add((identity, dbid, 'database_client_span'))
             databases.setdefault(dbid, set()).add(s['service'])
     for s in spans:
