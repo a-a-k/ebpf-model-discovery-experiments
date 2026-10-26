@@ -15,8 +15,11 @@ Envoy product-catalog endpoint, and replica A (`172.28.11.21`). Guest B runs
 replica B (`172.28.12.21`). Envoy at `172.28.11.20:3550` always uses the same
 round-robin policy and active gRPC health checks. Replica state changes only
 stop or start the selected backends; they never rewrite routing. All containers
-have recorded stable addresses, and guest B reaches collector, flagd, and
-PostgreSQL over the routed application subnets.
+have recorded stable addresses. Cross-guest transport does not assume Docker
+bridge-subnet routing: replica B is published on guest B port `13550`, while
+guest A publishes PostgreSQL on `15432`, native OTLP/gRPC on `14317`, and flagd
+on `18013`. The generated metadata records both container identity and transport
+host/port.
 
 ## Native tracing modes
 

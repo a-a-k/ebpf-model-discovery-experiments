@@ -40,6 +40,10 @@ COLLECTOR_IP = "172.28.11.30"
 DATABASE_IP = "172.28.11.31"
 KAFKA_IP = "172.28.11.32"
 ACCOUNTING_IP = "172.28.11.33"
+DATABASE_GUEST_PORT = 15432
+COLLECTOR_GUEST_PORT = 14317
+FLAGD_GUEST_PORT = 18013
+REPLICA_B_GUEST_PORT = 13550
 
 OPERATIONS = ("browse_product", "add_to_cart", "checkout")
 DROP_SERVICES = {"load-generator", "fraud-detection", "flagd-ui", "telemetry-docs"}
@@ -235,7 +239,13 @@ class Adapter:
             "entry_url": self.entry_url,
             "replicas": [
                 {"name": "product-catalog-a", "node": "a", "ip": REPLICA_A_IP},
-                {"name": "product-catalog-b", "node": "b", "ip": REPLICA_B_IP},
+                {
+                    "name": "product-catalog-b",
+                    "node": "b",
+                    "ip": REPLICA_B_IP,
+                    "transport_host": self.ctx.node_ip("b"),
+                    "transport_port": REPLICA_B_GUEST_PORT,
+                },
             ],
             "routing": {
                 "name": "product-catalog",
@@ -248,12 +258,16 @@ class Adapter:
                 "node": "a",
                 "container": "astronomy-db",
                 "ip": DATABASE_IP,
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": DATABASE_GUEST_PORT,
             },
             "async_evaluator_database": {
                 "logical_identity": "astronomy_db/accounting",
                 "node": "a",
                 "container": "astronomy-db",
                 "ip": DATABASE_IP,
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": DATABASE_GUEST_PORT,
             },
             "source": {
                 "url": UPSTREAM_URL,
@@ -677,6 +691,12 @@ class Adapter:
         ]
         collector["user"] = "0:0"
 
+        # Cross-guest traffic uses explicit guest-published endpoints. Docker
+        # bridge addresses are evidence identities, not assumed routable links.
+        services["astronomy-db"]["ports"] = [f"{DATABASE_GUEST_PORT}:5432"]
+        services["otel-collector"]["ports"] = [f"{COLLECTOR_GUEST_PORT}:4317"]
+        services["flagd"]["ports"] = [f"{FLAGD_GUEST_PORT}:8013"]
+
         # Standard language SDKs get their specified master disable switch.
         # Checkout and product-catalog additionally have explicit source guards
         # because their custom provider construction can bypass env handling.
@@ -738,11 +758,21 @@ class Adapter:
         product_b["container_name"] = "product-catalog-b"
         product_b["networks"] = {"default": {"ipv4_address": REPLICA_B_IP}}
         product_b.pop("depends_on", None)
-        product_b["extra_hosts"] = [
-            f"otel-collector:{COLLECTOR_IP}",
-            f"astronomy-db:{DATABASE_IP}",
-            f"flagd:{placement['flagd']['ip']}",
-        ]
+        product_b["ports"] = [f"{REPLICA_B_GUEST_PORT}:3550"]
+        node_a_host = self.ctx.node_ip("a")
+        product_b["environment"].update(
+            {
+                "DB_CONNECTION_STRING": (
+                    "postgres://astronomy_user:astronomy_password@"
+                    f"{node_a_host}:{DATABASE_GUEST_PORT}/astronomy_db?sslmode=disable"
+                ),
+                "OTEL_EXPORTER_OTLP_ENDPOINT": (
+                    f"http://{node_a_host}:{COLLECTOR_GUEST_PORT}"
+                ),
+                "FLAGD_HOST": node_a_host,
+                "FLAGD_PORT": str(FLAGD_GUEST_PORT),
+            }
+        )
         node_b = {
             "name": PROJECT,
             "services": {"product-catalog-b": product_b},
@@ -750,7 +780,12 @@ class Adapter:
                 "default": {"ipam": {"config": [{"subnet": "172.28.12.0/24"}]}}
             },
         }
-        placement["product-catalog-b"] = {"node": "b", "ip": REPLICA_B_IP}
+        placement["product-catalog-b"] = {
+            "node": "b",
+            "ip": REPLICA_B_IP,
+            "transport_host": self.ctx.node_ip("b"),
+            "transport_port": REPLICA_B_GUEST_PORT,
+        }
         return node_a, node_b, placement
 
     def _configure_product(self, source: dict[str, Any], node: str) -> dict[str, Any]:
@@ -804,8 +839,7 @@ class Adapter:
         }
         return yaml.safe_dump(config, sort_keys=False)
 
-    @staticmethod
-    def _envoy_config() -> str:
+    def _envoy_config(self) -> str:
         config = {
             "static_resources": {
                 "listeners": [
@@ -864,7 +898,7 @@ class Adapter:
                                 {
                                     "lb_endpoints": [
                                         {"endpoint": {"address": {"socket_address": {"address": REPLICA_A_IP, "port_value": 3550}}}},
-                                        {"endpoint": {"address": {"socket_address": {"address": REPLICA_B_IP, "port_value": 3550}}}},
+                                        {"endpoint": {"address": {"socket_address": {"address": self.ctx.node_ip("b"), "port_value": REPLICA_B_GUEST_PORT}}}},
                                     ]
                                 }
                             ],
@@ -1263,6 +1297,7 @@ SELECT json_build_object(
 \t\t}
 \t\tlogger.Info("Shutdown OpenTelemetry SDK")
 \t}()
+
 \t// Set global providers and propagator
 \totel.SetTracerProvider(sdk.TracerProvider())
 \totel.SetMeterProvider(sdk.MeterProvider())

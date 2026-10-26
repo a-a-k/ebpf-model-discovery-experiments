@@ -2,7 +2,7 @@ from pathlib import Path
 import time
 
 from systems.otel_demo import adapter as adapter_module
-from systems.otel_demo.adapter import Adapter, PRODUCT_ID
+from systems.otel_demo.adapter import Adapter, PRODUCT_ID, REPLICA_B_GUEST_PORT
 
 
 def test_compose_environment_merge() -> None:
@@ -67,6 +67,16 @@ def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
     adapter._prefix_source_build(service)
     assert service["build"]["context"] == "./source"
     assert service["build"]["dockerfile"] == "./src/checkout/Dockerfile"
+
+
+def test_envoy_uses_guest_transport_for_remote_replica() -> None:
+    adapter = object.__new__(Adapter)
+    adapter.ctx = type(
+        "Context", (), {"node_ip": lambda self, node: "192.168.76.12"}
+    )()
+    config = adapter._envoy_config()
+    assert "address: 192.168.76.12" in config
+    assert f"port_value: {REPLICA_B_GUEST_PORT}" in config
 
 
 def test_http_step_uses_fresh_opaque_request_id(monkeypatch) -> None:
