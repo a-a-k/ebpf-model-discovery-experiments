@@ -102,10 +102,11 @@ def report(inputs, out):
     groups = defaultdict(list)
     for row in rows:
         groups[(row['system'], row['mode'], row['source'], row['operation'])].append(row)
+    summaries = []
     lines = ['# Generated empirical results', '', f'Complete metrics files: {len(campaigns)} of 27 planned campaigns.', '',
              'Every value is generated from the accompanying CSV and retained per-campaign metrics. Missing/technical failures are not successful zero-error results.', '',
-             '| System | Mode | Source | Operation | Repeats | Mean absolute error, pp | Worst-end error, pp | Informative width |',
-             '|---|---|---|---|---:|---:|---:|---|']
+             '| System | Mode | Source | Operation | Repeats | Mean absolute error, pp | Worst-end error, pp | Informative width | Conservative 5 pp target |',
+             '|---|---|---|---|---:|---:|---:|---|---|']
     def fmt(value):
         return f'{value:.2f}' if value is not None else 'unknown'
     for key, data in sorted(groups.items()):
@@ -114,7 +115,29 @@ def report(inputs, out):
         absolute = mean(r['absolute_error_pp'] for r in data) if complete and all(r['absolute_error_pp'] is not None for r in data) else None
         conservative = mean(r['worst_interval_error_pp'] for r in data) if complete else None
         informative = complete and all(r['interval_width_pp'] <= 10 and not r['unsupported'] for r in data)
-        lines.append('| ' + ' | '.join([*key, str(len(data)), fmt(absolute), fmt(conservative), str(informative)]) + ' |')
+        meets = complete and informative and conservative <= 5
+        summaries.append({**dict(zip(('system', 'mode', 'source', 'operation'), key)), 'repeats': len(data),
+                          'complete': complete, 'mean_absolute_error_pp': absolute,
+                          'mean_worst_end_error_pp': conservative, 'informative_width': informative,
+                          'conservative_5pp_target_met': meets if complete else None})
+        lines.append('| ' + ' | '.join([*key, str(len(data)), fmt(absolute), fmt(conservative), str(informative), str(meets) if complete else 'pending']) + ' |')
+    (out/'summary.json').write_text(json.dumps({'complete_campaigns': len(campaigns), 'planned_campaigns': 27,
+                                               'groups': summaries}, indent=2)+'\n')
+    # Deterministic illustration selection, independent of measured accuracy.
+    for system in sorted({c['system'] for c in campaigns}):
+        selected = sorted((c for c in campaigns if c['system'] == system), key=lambda c: (c['mode'] != 'absent', c['seed'], str(c['run_id'])))[0]
+        path = inputs/selected['path']
+        observed = json.loads((path.parent/'models'/'ebpf'/'model.json').read_text())['graph']
+        ids = {n['id']: f'n{i}' for i, n in enumerate(observed['nodes'])}
+        diagram = ['flowchart LR']
+        for node in observed['nodes']:
+            label = (f"{node['system']} {node.get('address')}:{node.get('port')}" if node['kind'] == 'database'
+                     else f"{node['service']} | guest {node.get('guest') or 'unknown'} | {node.get('instance') or 'instance unknown'}")
+            label = label.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
+            diagram.append(f'  {ids[node["id"]]}["{label}"]')
+        for edge in observed['edges']:
+            diagram.append(f'  {ids[edge["from"]]} -->|{edge["evidence"]}| {ids[edge["to"]]}')
+        (out/f'example-model-{system}.mmd').write_text('\n'.join(diagram)+'\n')
     lines += ['', '## Retained run references', '']
     for run_id in sorted({str(r['run_id']) for r in campaigns}):
         lines.append(f'- [Actions run {run_id}](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/{run_id}).')
