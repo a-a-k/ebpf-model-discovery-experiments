@@ -90,6 +90,61 @@ def async_identities(spans):
     return {key: dict(stages) for key, stages in found.items()}
 
 
+def typed_order_chains(spans):
+    """Conservative declared-schema matcher, separate from arbitrary UUID presence.
+
+The existing control specifies checkout/accounting roles and order_id semantics.
+Only a field explicitly named order_id/orderId/order.id is accepted, including
+JSON HTTP bodies. SQL placeholders, topic/time matches, broker fetches and UUIDs
+elsewhere are insufficient. This deliberately leaves other possible matchers open.
+"""
+    found = defaultdict(lambda: defaultdict(list))
+    uuid = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+    def fields(obj, prefix=''):
+        result = []
+        if isinstance(obj, dict):
+            for key, val in obj.items():
+                path = prefix+'.'+key
+                normal = key.lower().replace('_', '').replace('.', '')
+                if normal.endswith('orderid') and isinstance(val, str) and uuid.fullmatch(val):
+                    result.append((val.lower(), path))
+                if isinstance(val, (dict, list)):
+                    result.extend(fields(val, path))
+        elif isinstance(obj, list):
+            for index, item in enumerate(obj):
+                result.extend(fields(item, prefix+f'[{index}]'))
+        return result
+    for span in spans:
+        attrs = span['attributes']
+        identities = fields(attrs)
+        for key, val in attrs.items():
+            if 'body' in key and isinstance(val, str):
+                try:
+                    identities.extend(fields(json.loads(val), key))
+                except (ValueError, TypeError):
+                    pass
+        operation = str(attrs.get('messaging.operation.type', attrs.get('messaging.operation.name', attrs.get('messaging.operation', '')))).lower()
+        service = span['service'].lower()
+        stage = None
+        if attrs.get('messaging.system') == 'kafka':
+            if 'checkout' in service and operation in ('send', 'publish', 'produce'):
+                stage = 'checkout_produce'
+            elif 'accounting' in service and operation in ('receive', 'process', 'fetch'):
+                stage = 'accounting_consume'
+        elif 'accounting' in service and attrs.get('db.system.name', attrs.get('db.system')) in ('postgresql', 'postgres'):
+            db_operation = str(attrs.get('db.operation.name', attrs.get('db.operation', ''))).upper()
+            if db_operation in ('INSERT', 'COMMIT'):
+                stage = 'accounting_write'
+        elif '/api/checkout' in json.dumps(attrs):
+            stage = 'checkout_http'
+        if stage:
+            for identity, field in identities:
+                found[identity][stage].append({'field': field, 'service': span['service'],
+                                              'trace_id': span['trace_id'], 'span_id': span['span_id'],
+                                              'source': span['source']})
+    return {key: dict(stages) for key, stages in found.items()}
+
+
 def validate_cross_node(links, native_spans):
     """Use only independently recorded native IDs; unmatched evidence is unknown."""
     lookup = {(s['trace_id'], s['span_id']): s for s in native_spans}
@@ -182,17 +237,20 @@ def evaluate(root):
         db_controls = {operation: {phase: external_rate([r for r in external if r['operation'] == operation and r['phase'] == phase])
                                    for phase in ('db_up', 'db_down')} for operation in metadata['operations']}
         identities = async_identities(data)
+        typed = typed_order_chains(data)
         asynchronous = []
         for row in external:
             if not row['phase'].startswith('async_'):
                 continue
             identity = str(row.get('order_id', '')).lower()
             evidence = identities.get(identity, {})
+            typed_evidence = typed.get(identity, {})
             asynchronous.append({'attempt_key': opaque_attempt(row), 'phase': row['phase'],
                                  'http_success': row.get('success'), 'durable': row.get('async_verification'),
                                  'uuid_stage_presence': evidence,
-                                 'complete_identity_chain': None,
-                                 'identity_note': 'Generic UUID presence is a candidate only; confirmed chain requires typed order identity and accounting consume/write roles.'})
+                                 'typed_order_evidence': typed_evidence,
+                                 'complete_identity_chain': True if all(stage in typed_evidence for stage in ('checkout_http', 'checkout_produce', 'accounting_consume', 'accounting_write')) else None,
+                                 'identity_note': 'Only typed order identity with declared checkout/accounting roles qualifies. SQL placeholders and generic UUID presence remain unknown; this does not rule out richer alternative message matchers.'})
         result['sources'][source] = {'operations': operations,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,
