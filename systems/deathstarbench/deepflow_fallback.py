@@ -20,6 +20,11 @@ DEEPFLOW_IMAGE = "deepflowce/deepflow-agent:v7.2.3@sha256:5f72c0996fdb5008fdb8fd
 CONTAINER = "ebpf-study-deepflow-fallback"
 CONFIG = """# DeepFlow v7.2.3 standalone UserConfig. Unspecified fields retain upstream defaults.
 global:
+  communication:
+    # The first standalone config notification can precede the main-loop wait.
+    # Reload promptly instead of the upstream 60-second default. 10 seconds is
+    # the minimum accepted by the pinned v7.2.3 configuration template.
+    proactive_request_interval: 10s
   standalone_mode:
     max_data_file_size: 128
     data_file_dir: /var/log/deepflow-agent/
@@ -71,8 +76,8 @@ class DeepFlowFallback:
                 "-f /etc/deepflow-agent-standalone.yaml --cgroups-disabled"
             )
             self.ctx.node_exec(node, command, timeout=900)
-        deadline = time.monotonic() + 60
-        consecutive_running = 0
+        deadline = time.monotonic() + 90
+        consecutive_ready = 0
         while time.monotonic() < deadline:
             states = [
                 self.ctx.node_exec(
@@ -82,17 +87,39 @@ class DeepFlowFallback:
                 )
                 for node in ("a", "b")
             ]
-            if all(item.returncode == 0 and item.stdout.strip() == "true" for item in states):
-                consecutive_running += 1
-                if consecutive_running >= 3:
+            dispatchers = [
+                self.ctx.node_exec(
+                    node,
+                    f"docker exec {CONTAINER} sh -c "
+                    + shlex.quote(
+                        "grep -h -E 'Start (.* )?dispatcher' "
+                        "/var/log/deepflow-agent/* 2>/dev/null | head -n 1"
+                    ),
+                    check=False,
+                )
+                for node in ("a", "b")
+            ]
+            running = all(
+                item.returncode == 0 and item.stdout.strip() == "true"
+                for item in states
+            )
+            dispatcher_ready = all(
+                item.returncode == 0 and "dispatcher" in item.stdout.lower()
+                for item in dispatchers
+            )
+            if running and dispatcher_ready:
+                consecutive_ready += 1
+                if consecutive_ready >= 2:
                     self.started = True
                     self._write_provenance("running")
                     return self
             else:
-                consecutive_running = 0
+                consecutive_ready = 0
             time.sleep(2)
         self._write_provenance("start_failed")
-        raise RuntimeError("DeepFlow fallback did not remain running on both guests within 60 seconds")
+        raise RuntimeError(
+            "DeepFlow fallback did not start a packet dispatcher on both guests within 90 seconds"
+        )
 
     def collect(self) -> Path:
         if not self.started:
@@ -134,13 +161,38 @@ class DeepFlowFallback:
                 timeout=60,
                 check=False,
             )
-            try:
-                self.ctx.node_get(node, self.remote_roots[node] + "/data", node_out / "raw")
-            except Exception as exc:
-                errors.append(f"node {node} raw copy: {exc}")
+            raw_out = node_out / "raw"
+            raw_out.mkdir(parents=True, exist_ok=True)
+            listing = self.ctx.node_exec(
+                node,
+                f"find {shlex.quote(self.remote_roots[node] + '/data')} -maxdepth 1 -type f -printf '%f\\n'",
+                timeout=60,
+                check=False,
+            )
+            if listing.returncode:
+                errors.append(f"node {node} raw listing: exit {listing.returncode}")
+            for filename in listing.stdout.splitlines():
+                if not filename or "/" in filename or "\\" in filename:
+                    errors.append(f"node {node} unsafe raw filename: {filename!r}")
+                    continue
+                try:
+                    self.ctx.node_get(
+                        node,
+                        self.remote_roots[node] + "/data/" + filename,
+                        raw_out / filename,
+                    )
+                except Exception as exc:
+                    errors.append(f"node {node} raw copy {filename}: {exc}")
+            flow_files = [
+                path for path in raw_out.iterdir()
+                if path.name in {"l4_flow_log", "l4_flow_log.pre", "l7_flow_log", "l7_flow_log.pre"}
+                and path.is_file()
+            ]
+            if not flow_files:
+                errors.append(f"node {node}: no standalone L4/L7 flow file was produced")
             self.ctx.node_exec(node, f"docker rm {CONTAINER}", timeout=60, check=False)
         self.collected = True
-        self._write_provenance("collected", errors)
+        self._write_provenance("collected" if not errors else "collected_with_errors", errors)
         return self.out
 
     def _write_provenance(self, status: str, errors: list[str] | None = None) -> None:

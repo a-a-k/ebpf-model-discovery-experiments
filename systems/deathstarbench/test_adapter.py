@@ -10,7 +10,7 @@ from unittest import mock
 import yaml
 
 from systems.deathstarbench.adapter import Adapter
-from systems.deathstarbench.deepflow_fallback import DEEPFLOW_IMAGE, fallback
+from systems.deathstarbench.deepflow_fallback import CONFIG, DEEPFLOW_IMAGE, fallback
 
 
 class OracleTests(unittest.TestCase):
@@ -244,6 +244,10 @@ class DeepFlowFallbackTests(unittest.TestCase):
                     return SimpleNamespace(returncode=0, stdout=f"/opt/ebpf-study/deepflow-fallback.{node}12345\n", stderr="")
                 if "docker inspect -f" in command:
                     return SimpleNamespace(returncode=0, stdout="true\n", stderr="")
+                if "grep -h -E" in command:
+                    return SimpleNamespace(returncode=0, stdout="Start dispatcher 0\n", stderr="")
+                if command.startswith("find "):
+                    return SimpleNamespace(returncode=0, stdout="l4_flow_log\n", stderr="")
                 return SimpleNamespace(returncode=0, stdout="{}\n", stderr="")
 
             def node_put(self, node, source, destination):
@@ -251,8 +255,8 @@ class DeepFlowFallbackTests(unittest.TestCase):
 
             def node_get(self, node, source, destination):
                 destination = Path(destination)
-                destination.mkdir(parents=True, exist_ok=True)
-                (destination / "l4_flow_log").write_text(f"raw-{node}\n", encoding="utf-8")
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                destination.write_text(f"raw-{node}\n", encoding="utf-8")
 
         context = Context()
         with tempfile.TemporaryDirectory() as directory:
@@ -264,6 +268,7 @@ class DeepFlowFallbackTests(unittest.TestCase):
         self.assertEqual(len(runs), 2)
         self.assertTrue(all("--standalone" in command and "--network=host" in command for command in runs))
         self.assertTrue(all(DEEPFLOW_IMAGE in command for command in runs))
+        self.assertIn("proactive_request_interval: 10s", CONFIG)
         self.assertEqual(manifest["status"], "collected")
         self.assertTrue(manifest["interpretation"]["raw_only"])
         self.assertFalse(manifest["interpretation"]["thrift_supported_by_v7_2_3_builtin_l7_enum"])
