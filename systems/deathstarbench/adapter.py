@@ -7,6 +7,7 @@ context, i.e. on a GitHub Actions runner or its guests, never at module import t
 from __future__ import annotations
 
 import base64
+import copy
 import hashlib
 import json
 import shutil
@@ -42,6 +43,7 @@ REPLICA_IPS = {"a": "172.28.11.41", "b": "172.28.12.41"}
 PROXY_IP = "172.28.11.40"
 DB_SERVICE = "user-timeline-mongodb"
 DB_CONTAINER = "dsb-user-timeline-mongodb"
+STABLE_FIXTURE_TEXT = "ebpf-study-stable-timeline-fixture-v1"
 
 
 class AdapterError(RuntimeError):
@@ -93,6 +95,9 @@ class Adapter:
         self.node_dirs = {n: self.root / f"node-{n}" for n in ("a", "b")}
         self.entry_url = f"http://{context.node_ip('a')}:8080"
         self._mapping: dict[str, str] = {}
+        self._replica_state = "11"
+        self._database_up = True
+        self._control_epoch = 0
 
     def prepare(self) -> None:
         """Fetch the pinned source and render independent guest deployments."""
@@ -251,10 +256,7 @@ class Adapter:
         else:
             raise AdapterError(f"DeathStarBench did not become ready in 360s: {last}")
         self._initialize_fixtures()
-        # A semantic read proves the frontend/proxy/replica path, not merely '/'.
-        sentinel = self.operation("read_user_timeline", -1, "readiness", deadline=5)
-        if sentinel["success"] is not True:
-            raise AdapterError(f"DeathStarBench semantic readiness failed: {sentinel['error']}")
+        self._assert_stable_fixture(timeout=15)
 
     def _container_running(self, node: str, container: str) -> bool:
         result = self.ctx.node_exec(
@@ -264,12 +266,14 @@ class Adapter:
 
     def _initialize_fixtures(self) -> None:
         actions = []
-        for uid in (0, 1):
+        for uid in (0, 1, 2, 3):
             actions.append(("/wrk2-api/user/register", {
                 "first_name": f"first_name_{uid}", "last_name": f"last_name_{uid}",
                 "username": f"username_{uid}", "password": f"password_{uid}", "user_id": str(uid),
             }))
-        for uid, followee in ((0, 1), (1, 0)):
+        # User 0/1 are reserved for unique compose attempts and their fan-out.
+        # User 2/3 remain untouched after setup and provide stable read oracles.
+        for uid, followee in ((1, 0), (3, 2)):
             actions.append(("/wrk2-api/user/follow", {
                 "user_name": f"username_{uid}", "followee_name": f"username_{followee}",
             }))
@@ -290,7 +294,42 @@ class Adapter:
                 _json_dump(self.root / "fixture-initialization.json", evidence)
                 raise AdapterError(f"fixture initialization {path} did not succeed in 30 attempts")
             evidence.append({"path": path, "attempts": attempts})
+        stable_form = {
+            "username": "username_2", "user_id": "2", "text": STABLE_FIXTURE_TEXT,
+            "media_ids": "[]", "media_types": "[]", "post_type": "0",
+        }
+        stable_attempts = []
+        for _ in range(30):
+            try:
+                response = requests.post(self.entry_url + "/wrk2-api/post/compose", data=stable_form, timeout=10)
+                stable_attempts.append({"status": response.status_code, "body_sha256": hashlib.sha256(response.content).hexdigest()})
+                if response.ok and b"Successfully upload post" in response.content:
+                    break
+            except requests.RequestException as exc:
+                stable_attempts.append({"error": str(exc)})
+            time.sleep(2)
+        else:
+            raise AdapterError("stable timeline fixture could not be composed")
+        evidence.append({"path": "/wrk2-api/post/compose", "fixture": "stable-read-principals", "attempts": stable_attempts})
         _json_dump(self.root / "fixture-initialization.json", evidence)
+
+    def _assert_stable_fixture(self, timeout: float) -> None:
+        paths = (
+            "/wrk2-api/user-timeline/read?user_id=2&start=0&stop=10",
+            "/wrk2-api/home-timeline/read?user_id=3&start=0&stop=10",
+        )
+        for path in paths:
+            until = time.monotonic() + timeout
+            while time.monotonic() < until:
+                try:
+                    response = requests.get(self.entry_url + path, timeout=min(2, timeout))
+                    if response.ok and self._valid_timeline(response.content, STABLE_FIXTURE_TEXT):
+                        break
+                except requests.RequestException:
+                    pass
+                time.sleep(0.25)
+            else:
+                raise AdapterError(f"stable timeline fixture unavailable at {path}")
 
     def metadata(self) -> dict[str, Any]:
         return {
@@ -318,16 +357,7 @@ class Adapter:
         self.ready_without_fixtures()
 
     def ready_without_fixtures(self) -> None:
-        deadline = time.monotonic() + 120
-        while time.monotonic() < deadline:
-            try:
-                r = requests.get(self.entry_url + "/wrk2-api/user-timeline/read?user_id=0&start=0&stop=10", timeout=2)
-                if r.ok and self._valid_timeline(r.content):
-                    return
-            except requests.RequestException:
-                pass
-            time.sleep(1)
-        raise AdapterError("DeathStarBench did not recover within 120s")
+        self._assert_stable_fixture(timeout=120)
 
     def set_replicas(self, state: str) -> None:
         if state not in {"11", "10", "01", "00"}:
@@ -335,35 +365,45 @@ class Adapter:
         for bit, node in zip(state, ("a", "b"), strict=True):
             action = "start" if bit == "1" else "stop"
             self.ctx.node_exec(node, f"docker {action} {REPLICA_CONTAINERS[node]}", timeout=120)
+        self._replica_state = state
+        self._control_epoch += 1
 
     def set_database(self, up: bool) -> None:
         self.ctx.node_exec("a", f"docker {'start' if up else 'stop'} {DB_CONTAINER}", timeout=120)
+        self._database_up = up
+        self._control_epoch += 1
 
     @staticmethod
-    def _valid_timeline(body: bytes) -> bool:
+    def _valid_timeline(body: bytes, expected_text: str) -> bool:
         try:
             value = json.loads(body)
         except (json.JSONDecodeError, UnicodeDecodeError):
             return False
-        if value == {}:  # upstream Lua cjson representation of an empty table
-            return True
-        return isinstance(value, list) and all(
+        valid_shape = isinstance(value, list) and all(
             isinstance(item, dict) and isinstance(item.get("post_id"), str) and isinstance(item.get("text"), str)
             for item in value
         )
+        return valid_shape and any(item["text"] == expected_text for item in value)
+
+    @staticmethod
+    def _within_deadline(started_monotonic_ns: int, ended_monotonic_ns: int, deadline: float) -> bool:
+        return ended_monotonic_ns - started_monotonic_ns <= int(deadline * 1_000_000_000)
 
     def operation(self, name: str, index: int, namespace: str, deadline: float = 2.0) -> dict[str, Any]:
         if name not in self.operations:
             raise ValueError(f"unknown DeathStarBench operation: {name}")
-        attempt_id = f"{namespace}-{index:08d}"
+        if deadline <= 0:
+            raise ValueError("deadline must be positive")
+        attempt_id = f"{namespace}-{name}-{index:08d}"
         digest = hashlib.sha256(attempt_id.encode("utf-8")).hexdigest()
-        trace_id, parent_id = digest[:32], digest[32:48]
-        headers = {"uber-trace-id": f"{trace_id}:{parent_id}:0:1"}
+        request_id = "req-" + digest
+        headers = {"X-Experiment-Request-Id": request_id}
         started = time.time_ns()
+        monotonic_started = time.monotonic_ns()
         method = "GET"
         path: str
         data: dict[str, str] | None = None
-        marker = f"ebpf-study {attempt_id}"
+        marker = f"ebpf-study {request_id}"
         if name == "compose_post":
             method = "POST"
             path = "/wrk2-api/post/compose"
@@ -373,24 +413,30 @@ class Adapter:
                 "media_types": '["png"]' if index % 2 else "[]", "post_type": "0",
             }
         elif name == "read_home_timeline":
-            path = "/wrk2-api/home-timeline/read?user_id=1&start=0&stop=10&study_attempt=" + urllib.parse.quote(attempt_id)
+            path = "/wrk2-api/home-timeline/read?user_id=3&start=0&stop=10"
         else:
-            path = "/wrk2-api/user-timeline/read?user_id=0&start=0&stop=10&study_attempt=" + urllib.parse.quote(attempt_id)
-        step: dict[str, Any] = {"method": method, "url": self.entry_url + path, "request_form": data, "request_headers": headers}
+            path = "/wrk2-api/user-timeline/read?user_id=2&start=0&stop=10"
+        step: dict[str, Any] = {"request_id": request_id, "method": method, "url": self.entry_url + path, "request_form": data, "request_headers": headers}
         error = ""
         success: bool | None
         try:
             response = requests.request(method, step["url"], data=data, headers=headers, timeout=deadline)
             body = response.content
+            monotonic_ended = time.monotonic_ns()
+            within_deadline = self._within_deadline(monotonic_started, monotonic_ended, deadline)
             step.update(status=response.status_code, response_body_base64=base64.b64encode(body).decode("ascii"), response_sha256=hashlib.sha256(body).hexdigest())
             if name == "compose_post":
-                success = response.ok and b"Successfully upload post" in body
-                reason = "" if success else "missing exact compose acknowledgement"
+                content_valid = response.ok and b"Successfully upload post" in body
+                success = content_valid and within_deadline
+                reason = "" if content_valid else "missing exact compose acknowledgement"
             else:
-                success = response.ok and self._valid_timeline(body)
-                reason = "" if success else "response is not the pinned timeline JSON shape"
+                content_valid = response.ok and self._valid_timeline(body, STABLE_FIXTURE_TEXT)
+                success = content_valid and within_deadline
+                reason = "" if content_valid else "response does not contain the stable fixture in the pinned timeline JSON shape"
             if not response.ok:
                 reason = f"HTTP {response.status_code}"
+            elif not within_deadline:
+                reason = f"response completed after {deadline:.6f}s deadline"
             error = reason
         except requests.Timeout as exc:
             success = False
@@ -401,36 +447,57 @@ class Adapter:
             error = str(exc)
             step["transport_error"] = error
         ended = time.time_ns()
+        monotonic_ended = time.monotonic_ns()
         step["started_ns"] = started
         step["ended_ns"] = ended
+        step["elapsed_ns"] = monotonic_ended - monotonic_started
+        step["deadline_seconds"] = deadline
+        step["within_deadline"] = self._within_deadline(monotonic_started, monotonic_ended, deadline)
+        if success is True and not step["within_deadline"]:
+            success = False
+            error = f"response processing completed after {deadline:.6f}s deadline"
         return {
             "operation": name, "attempt_id": attempt_id, "started_ns": started, "ended_ns": ended,
             "success": success, "http_steps": [step], "error": error,
-            "trace_context": {"format": "jaeger_uber", "trace_id": trace_id, "parent_span_id": parent_id, "sampled": True},
-            "validation": {"kind": "exact_http_content_oracle", "compose_marker_sha256": hashlib.sha256(marker.encode()).hexdigest() if name == "compose_post" else None},
+            "validation": {
+                "kind": "exact_http_content_oracle",
+                "compose_marker_sha256": hashlib.sha256(marker.encode()).hexdigest() if name == "compose_post" else None,
+                "control_epoch": self._control_epoch,
+                "replica_state": self._replica_state,
+                "database_up": self._database_up,
+            },
         }
 
     def verify(self, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        # HTTP read payloads are the independent immediate oracle. For compose,
-        # additionally test eventual presence in both owner and follower views.
-        for record in records:
+        # Return copies: eventual evidence never changes the immediate HTTP
+        # outcome. Its deadline is anchored to the original response time, so a
+        # verification delayed until after block restoration becomes unknown.
+        verified = copy.deepcopy(records)
+        for record in verified:
             if record.get("operation") != "compose_post" or record.get("success") is not True:
                 continue
-            attempt_id = str(record["attempt_id"])
-            expected = f"ebpf-study {attempt_id}"
+            if record.get("validation", {}).get("control_epoch") != self._control_epoch:
+                record["eventual_postcondition"] = {
+                    "kind": "compose_eventual_fanout", "success": None,
+                    "unknown_reason": "control state changed before verification",
+                }
+                continue
+            request_id = str(record["http_steps"][0]["request_id"])
+            expected = f"ebpf-study {request_id}"
             locations = {
                 "user_timeline_owner": "/wrk2-api/user-timeline/read?user_id=0&start=0&stop=1000",
                 "home_timeline_follower": "/wrk2-api/home-timeline/read?user_id=1&start=0&stop=1000",
             }
             evidence: dict[str, Any] = {}
+            deadline_ns = int(record["ended_ns"]) + 10_000_000_000
             for label, path in locations.items():
-                until = time.monotonic() + 10
                 found = False
                 last: dict[str, Any] = {"error": "not attempted"}
-                while time.monotonic() < until:
+                while time.time_ns() < deadline_ns:
                     try:
-                        r = requests.get(self.entry_url + path, timeout=2)
-                        found = r.ok and expected.encode() in r.content
+                        remaining = max(0.001, (deadline_ns - time.time_ns()) / 1_000_000_000)
+                        r = requests.get(self.entry_url + path, timeout=min(2, remaining))
+                        found = r.ok and time.time_ns() <= deadline_ns and self._valid_timeline(r.content, expected)
                         last = {"status": r.status_code, "body_sha256": hashlib.sha256(r.content).hexdigest(), "found": found}
                     except requests.RequestException as exc:
                         last = {"error": str(exc), "found": False}
@@ -438,11 +505,15 @@ class Adapter:
                         break
                     time.sleep(0.25)
                 evidence[label] = last
-            record["postcondition"] = {
+            settled = all(v.get("found") is True for v in evidence.values())
+            record["eventual_postcondition"] = {
                 "kind": "compose_eventual_fanout", "expected_text_sha256": hashlib.sha256(expected.encode()).hexdigest(),
-                "locations": evidence, "success": all(v.get("found") is True for v in evidence.values()),
+                "deadline_ns": deadline_ns, "locations": evidence,
+                "success": settled if time.time_ns() <= deadline_ns or settled else None,
+                "unknown_reason": None if settled else "not observed before original ten-second deadline",
+                "control_epoch": self._control_epoch,
             }
-        return records
+        return verified
 
     def collect_native(self, destination: Path) -> None:
         destination.mkdir(parents=True, exist_ok=True)

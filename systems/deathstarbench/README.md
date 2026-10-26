@@ -39,25 +39,40 @@ the common orchestrator.
 
 ## Fixtures and success oracle
 
-Users 0 and 1 are registered and follow one another. Fixtures are initialized
-once after a fresh Compose deployment. `reset()` deliberately preserves MongoDB
-and Redis containers and therefore those users and accumulated synthetic posts;
-it restores the selected database and both replicas and waits for a semantic
-timeline response. A compose teardown removes the unnamed container state.
+Users 0 and 1 are reserved for unique compose attempts and compose fan-out
+checks. Dedicated user 2 has one stable post and dedicated follower 3 follows
+user 2; measured timeline reads use those otherwise untouched principals and
+must contain that exact post. Fixtures are initialized once after a fresh
+Compose deployment. `reset()` deliberately preserves MongoDB and Redis
+containers, restores the selected database and both replicas, and requires the
+same stable post through both the owner and follower reads. This prevents an
+empty `{}` response from passing and keeps every block's read precondition
+comparable. A compose teardown removes the unnamed container state.
 
-Every attempt has a unique namespace/index identifier. Compose uses that value
-in the post text and succeeds only for HTTP 2xx containing the exact upstream
+Every attempt has an evaluator-only namespace/index identifier. On the wire it
+has only `X-Experiment-Request-Id: req-<sha256>`; neither the header nor URL
+contains an operation or namespace label, and no sampled native trace context
+is injected. Compose uses the opaque request id in the post text and succeeds
+only for HTTP 2xx containing the exact upstream
 `Successfully upload post` acknowledgement. Timeline reads succeed only for
-HTTP 2xx and either the exact upstream empty-table representation `{}` or a JSON
-array whose every item has string `post_id` and `text`. `verify()` separately
-checks that a successful composed post becomes visible in the author's user
-timeline and follower's home timeline within ten seconds. Response bytes are
-preserved base64 with hashes; these evaluator records are not observation input.
+HTTP 2xx and a JSON array whose every item has string `post_id` and `text` and
+which contains the exact stable fixture. A response is successful only when the
+complete local processing elapsed time is within the supplied monotonic
+deadline. `verify()` returns copies with a separate `eventual_postcondition`;
+it never changes immediate HTTP success, and the fan-out deadline remains ten
+seconds from the original response rather than restarting after fault recovery.
+Late verification remains unknown. A control epoch is captured with each
+attempt; if replica or database control changes before verification, the fan-out
+result is also unknown rather than being measured after restoration. Response bytes are preserved base64 with
+hashes; these evaluator records are not observation input.
 
 The registered database control is the concrete node-A
 `user-timeline-mongodb` container. Stopping it may be masked temporarily by a
-warm Redis cache; that is real application behavior and is retained rather than
-relabelled.
+warm Redis cache. The stable read fixture therefore cannot by itself prove a
+MongoDB access on every request, and database-down effects are operation- and
+cache-state-dependent. The adapter retains this uncertainty and the external
+outcome rather than interpreting a cached success as proof that the database is
+irrelevant (or a failure as proof of one unique causal path).
 
 ## Provenance and licensing
 
