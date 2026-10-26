@@ -53,6 +53,13 @@ SDK-disabled absent mode. This adapter makes no claim that a
 generic OBI collector understands Thrift; eBPF collection/fallback belongs to
 the common orchestrator.
 
+Jaeger all-in-one instruments its own query API, so the audit request can create
+a `jaeger-all-in-one` trace even when every application SDK is disabled. The
+manifest retains that raw service and trace response and reports both raw and
+application trace counts. Application tracing-mode compliance excludes only the
+exact `jaeger-all-in-one` service name; similarly prefixed services are not
+excluded. The exclusion and its provenance are explicit manifest fields.
+
 ## Fixtures and success oracle
 
 Users 0 and 1 are reserved for unique compose attempts and compose fan-out

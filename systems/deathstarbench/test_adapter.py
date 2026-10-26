@@ -85,6 +85,50 @@ class OracleTests(unittest.TestCase):
         self.assertFalse(manifest["absence_verified"])
         self.assertEqual(manifest["service_census"]["api_errors"][0]["code"], 500)
 
+    def test_native_absence_excludes_only_exact_jaeger_audit_service(self):
+        class Context:
+            mode = "absent"
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        class Response:
+            status_code = 200
+
+            def __init__(self, document):
+                self.document = document
+                self.content = json.dumps(document).encode()
+
+            @staticmethod
+            def raise_for_status():
+                return None
+
+            def json(self):
+                return self.document
+
+        responses = [
+            Response({"data": ["jaeger-all-in-one", "jaeger-all-in-one-extra"], "errors": None}),
+            Response({"data": [{"traceID": "self"}], "errors": None}),
+            Response({"data": [{"traceID": "application"}], "errors": None}),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = Adapter(Context(root))
+            with mock.patch("systems.deathstarbench.adapter.requests.get", side_effect=responses):
+                adapter.collect_native(root / "native")
+            manifest = json.loads((root / "native" / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["trace_count"], 2)
+        self.assertEqual(manifest["audit_self_trace_count"], 1)
+        self.assertEqual(manifest["application_trace_count"], 1)
+        self.assertFalse(manifest["absence_verified"])
+        self.assertTrue(manifest["queries"][0]["excluded_from_application_trace_count"])
+        self.assertFalse(manifest["queries"][1]["excluded_from_application_trace_count"])
+
     def test_render_complete_pinned_upstream_shape(self):
         class Context:
             mode = "partial"
