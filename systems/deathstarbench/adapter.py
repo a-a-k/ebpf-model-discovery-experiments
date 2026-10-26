@@ -82,26 +82,19 @@ def _tracing_yaml(disabled: bool, agent: str = "jaeger-agent:6831") -> str:
     )
 
 
-def _tag_measured_lua_spans(nginx_root: Path) -> None:
-    """Tag only the three measured frontend spans with the opaque request ID."""
-    insertion = """  local experiment_request_id = ngx.req.get_headers()[\"X-Experiment-Request-Id\"]
-  if experiment_request_id ~= nil then
-    span:set_tag(\"http.request.header.x-experiment-request-id\", experiment_request_id)
-  end
-  local carrier = {}
-"""
-    relative_paths = (
-        "lua-scripts/wrk2-api/post/compose.lua",
-        "lua-scripts/wrk2-api/home-timeline/read.lua",
-        "lua-scripts/wrk2-api/user-timeline/read.lua",
+def _tag_nginx_request_spans(nginx_root: Path) -> None:
+    """Put the opaque request ID on nginx's authoritative HTTP request span."""
+    path = nginx_root / "conf" / "nginx.conf"
+    source = path.read_text(encoding="utf-8")
+    marker = "  opentracing on;\n"
+    directive = (
+        marker
+        + "  opentracing_tag http.request.header.x-experiment-request-id "
+        + "$http_x_experiment_request_id;\n"
     )
-    for relative in relative_paths:
-        path = nginx_root / relative
-        source = path.read_text(encoding="utf-8")
-        marker = "  local carrier = {}\n"
-        if source.count(marker) != 1:
-            raise AdapterError(f"unexpected measured Lua handler shape: {relative}")
-        path.write_text(source.replace(marker, insertion, 1), encoding="utf-8")
+    if source.count(marker) != 1:
+        raise AdapterError("unexpected nginx OpenTracing configuration shape")
+    path.write_text(source.replace(marker, directive, 1), encoding="utf-8")
 
 
 def _service_ip_map(names: list[str]) -> dict[str, str]:
@@ -159,7 +152,7 @@ class Adapter:
             dst = node_a / relative
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copytree(src, dst)
-        _tag_measured_lua_spans(node_a / "nginx-web-server")
+        _tag_nginx_request_spans(node_a / "nginx-web-server")
         shutil.copytree(social / "config", node_b / "config")
         shutil.copytree(social / "config", node_a / "config-disabled")
         shutil.copytree(social / "config", node_b / "config-disabled")
