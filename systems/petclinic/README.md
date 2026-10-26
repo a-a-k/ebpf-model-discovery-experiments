@@ -32,10 +32,12 @@ success.
 
 Create-visit uses the pinned gateway's single POST retry on HTTP 503. Each request
 has a unique `ebpf-study-<sha256>` description. HTTP 201 leaves success pending;
-`verify` independently queries MySQL and requires exactly one row whose returned ID,
-pet ID 1, date `2026-09-01`, and description all match. Reset deletes only these
-synthetic rows. No response, manifest, or expected topology is supplied as learner
-evidence.
+`verify` independently queries MySQL once per block for all attempt markers and
+requires exactly one row whose returned ID, pet ID 1, date `2026-09-01`, and
+description all match. The synchronous committed rows need no live polling. This
+local database census has no workload HTTP step or request header. Reset deletes
+only these synthetic rows. No response, manifest, or expected topology is supplied
+as learner evidence.
 
 ## Native tracing
 
@@ -48,9 +50,12 @@ mode is not bypassed. Native server spans capture the opaque
 native trace context. Each guest writes native OTLP JSON separately. A collection
 snapshot gracefully stops and flushes each collector, copies its cumulative file,
 restarts it, waits for OTLP readiness, and checks that the file was not truncated,
-so the same method is safe after calibration and at campaign end. Collection also
-retains inspected commands/environments so absence and partial suppression are
-auditable. The main eBPF collector and inference remain orchestrator-owned.
+so the same method is safe after calibration and at campaign end. The snapshot
+also counts actual spans by `service.name`: absent mode fails on any application
+span, partial mode fails on any Visits span, and partial/full remain `unknown` when
+required service evidence is unavailable. Collection retains inspected
+commands/environments as supporting configuration evidence. The main eBPF
+collector and inference remain orchestrator-owned.
 
 Limitations: the deployment uses two VMs on one Actions runner; the source rebuild
 is reproducible by inputs but not claimed bit-reproducible; and an unavailable SQL

@@ -8,7 +8,12 @@ if importlib.util.find_spec("requests") is None:  # keep the static local check 
     sys.modules["requests"] = SimpleNamespace()
 
 from systems.petclinic import adapter as adapter_module
-from systems.petclinic.adapter import Adapter, _canonical
+from systems.petclinic.adapter import (
+    Adapter,
+    _canonical,
+    _native_mode_compliance,
+    _native_service_census,
+)
 
 
 def test_canonical_rejects_missing_owner_visits():
@@ -39,7 +44,7 @@ def test_verify_rejects_duplicate_exact_visit_rows(tmp_path, monkeypatch):
     adapter = Adapter(context)
     marker = "ebpf-study-" + "a" * 64
     adapter._mysql = lambda _sql: SimpleNamespace(
-        stdout=f"42\t1\t2026-09-01\t{marker}\n43\t1\t2026-09-01\t{marker}\n"
+        stdout=f"{marker}\t42\t1\t2026-09-01\n{marker}\t43\t1\t2026-09-01\n"
     )
     record = {
         "operation": "create_visit",
@@ -55,6 +60,33 @@ def test_verify_rejects_duplicate_exact_visit_rows(tmp_path, monkeypatch):
     verified = adapter.verify([record])[0]
     assert verified["success"] is False
     assert verified["validation"]["row_count"] == 2
+
+
+def test_verify_reads_all_create_markers_in_one_sql_census(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="full"))
+    markers = ["ebpf-study-" + character * 64 for character in ("a", "b")]
+    calls = []
+
+    def mysql(sql):
+        calls.append(sql)
+        return SimpleNamespace(stdout="".join(f"{marker}\t{index}\t1\t2026-09-01\n" for index, marker in enumerate(markers, 41)))
+
+    adapter._mysql = mysql
+    records = [
+        {
+            "operation": "create_visit", "success": None, "error": None,
+            "started_ns": 0, "ended_ns": 1, "deadline_seconds": 2.0,
+            "http_steps": [{"status": 201}],
+            "response_json": {"id": index, "petId": 1, "date": "2026-09-01", "description": marker},
+            "validation": {"marker": marker},
+        }
+        for index, marker in enumerate(markers, 41)
+    ]
+    verified = adapter.verify(records)
+    assert len(calls) == 1
+    assert all(marker in calls[0] for marker in markers)
+    assert all(row["success"] is True for row in verified)
 
 
 def test_operation_uses_only_opaque_binding_header(tmp_path, monkeypatch):
@@ -91,3 +123,16 @@ def test_operation_uses_only_opaque_binding_header(tmp_path, monkeypatch):
     assert "traceparent" not in captured["headers"]
     assert record["http_steps"][0]["request_id"] == request_id
     assert "trace_context" not in record
+
+
+def test_native_census_and_partial_mode_audit_use_actual_service_names():
+    raw = b"\n".join([
+        b'{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name","value":{"stringValue":"api-gateway"}}]},"scopeSpans":[{"spans":[{},{}]}]}]}',
+        b'{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name","value":{"stringValue":"customers-service"}}]},"scopeSpans":[{"spans":[{}]}]},{"resource":{"attributes":[{"key":"service.name","value":{"stringValue":"vets-service"}}]},"scopeSpans":[{"spans":[{}]}]}]}',
+    ])
+    census = _native_service_census(raw)
+    assert census["spans"] == 4
+    assert _native_mode_compliance("partial", census)["compliant"] is True
+    census["services"]["visits-service"] = 1
+    census["spans"] += 1
+    assert _native_mode_compliance("partial", census)["compliant"] is False
