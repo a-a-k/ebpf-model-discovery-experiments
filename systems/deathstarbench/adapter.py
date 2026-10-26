@@ -103,7 +103,45 @@ def _tag_measured_lua_spans(nginx_root: Path) -> None:
         marker = "  local carrier = {}\n"
         if source.count(marker) != 1:
             raise AdapterError(f"unexpected measured Lua handler shape: {relative}")
-        path.write_text(source.replace(marker, insertion, 1), encoding="utf-8")
+        source = source.replace(marker, insertion, 1)
+        if relative == "lua-scripts/wrk2-api/post/compose.lua":
+            replacements = (
+                (
+                    "    client.iprot.trans:close()\n    ngx.exit(ngx.status)\n",
+                    "    client.iprot.trans:close()\n"
+                    "    span:set_tag(\"http.status_code\", ngx.status)\n"
+                    "    span:finish()\n"
+                    "    ngx.exit(ngx.status)\n",
+                ),
+                (
+                    "  ngx.say(\"Successfully upload post\")\n  span:finish()\n",
+                    "  ngx.say(\"Successfully upload post\")\n"
+                    "  span:set_tag(\"http.status_code\", ngx.status)\n"
+                    "  span:finish()\n",
+                ),
+            )
+        else:
+            replacements = (
+                (
+                    "    client.iprot.trans:close()\n    span:finish()\n"
+                    "    ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)\n",
+                    "    client.iprot.trans:close()\n"
+                    "    span:set_tag(\"http.status_code\", ngx.status)\n"
+                    "    span:finish()\n"
+                    "    ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)\n",
+                ),
+                (
+                    "  span:finish()\n  ngx.exit(ngx.HTTP_OK)\n",
+                    "  span:set_tag(\"http.status_code\", ngx.HTTP_OK)\n"
+                    "  span:finish()\n"
+                    "  ngx.exit(ngx.HTTP_OK)\n",
+                ),
+            )
+        for old, new in replacements:
+            if source.count(old) != 1:
+                raise AdapterError(f"unexpected measured Lua status branch: {relative}")
+            source = source.replace(old, new, 1)
+        path.write_text(source, encoding="utf-8")
 
 
 def _service_ip_map(names: list[str]) -> dict[str, str]:

@@ -50,6 +50,11 @@ tag `http.request.header.x-experiment-request-id` when the header is present.
 The same already-existing span receives its actual HTTP method and URI tags so
 the observation evaluator can recognize it as the request boundary; these are
 native span attributes and do not change the wire request.
+Each handler's real success and downstream-error branches set the actual nginx
+status before finishing that span; in particular, fault-path spans are no
+longer abandoned before export. Its recorded duration is the existing Lua
+client/Thrift-call boundary, not the broader automatic nginx server-span
+duration, and is retained as that native baseline approximation.
 This is manual header-capture preparation cost, applies only to already-enabled
 native instrumentation, and neither creates a trace context nor overrides the
 SDK-disabled absent mode. This adapter makes no claim that a
