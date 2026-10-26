@@ -1154,11 +1154,20 @@ SELECT json_build_object(
         while time.monotonic() < end:
             result = self.ctx.node_exec(
                 "a",
-                "docker exec kafka sh -lc \"kafka-consumer-groups.sh --bootstrap-server kafka:9092 --group accounting --describe 2>/dev/null || true\"",
+                "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+                "--bootstrap-server kafka:9092 --group accounting --describe",
+                check=False,
             )
-            last = self._stdout(result)
+            stdout = self._stdout(result)
+            stderr = getattr(result, "stderr", "") or ""
+            if isinstance(stderr, bytes):
+                stderr = stderr.decode("utf-8", errors="replace")
+            last = (
+                f"stdout={stdout[-1000:]} stderr={stderr[-1000:]} "
+                f"returncode={getattr(result, 'returncode', None)}"
+            )
             lags = []
-            for line in last.splitlines():
+            for line in stdout.splitlines():
                 fields = line.split()
                 if len(fields) >= 6 and fields[0] == "accounting":
                     try:
@@ -1168,7 +1177,7 @@ SELECT json_build_object(
             if lags and sum(lags) == 0:
                 return
             time.sleep(1)
-        raise RuntimeError(f"accounting did not drain Kafka backlog: {last[-1000:]}")
+        raise RuntimeError(f"accounting did not drain Kafka backlog: {last}")
 
     def _reserve_async_deadline(self, deadline_ns: int) -> None:
         # Async-control attempts are verified concurrently; never let a racing
