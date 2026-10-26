@@ -14,6 +14,7 @@ import json
 import os
 import re
 import shutil
+import threading
 import time
 import uuid
 from pathlib import Path
@@ -58,6 +59,7 @@ class Adapter:
         self.entry_url = f"http://{ENTRY_IP}:8080"
         self._consumer_paused = False
         self._latest_async_deadline_ns = 0
+        self._deadline_lock = threading.Lock()
 
     # --------------------------- deployment generation --------------------
 
@@ -120,6 +122,15 @@ class Adapter:
             "compose_layers": ["compose.yaml", "compose.full.yaml"],
             "placement": mapping,
             "native_suppression": self._suppression_description(),
+            "native_request_id_capture": {
+                "header": "x-experiment-request-id",
+                "entry_service": "frontend",
+                "configuration": [
+                    "OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST",
+                    "OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_REQUEST_HEADERS",
+                ],
+                "status": "requested from the frontend Node HTTP instrumentation; observed support is recorded by collect_native",
+            },
         }
         (self.bundle / "deployment-manifest.json").write_text(
             json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -205,6 +216,7 @@ class Adapter:
         result = self._psql(query)
         if "1" not in result or "t" not in result:
             raise RuntimeError(f"database fixtures/schema are incomplete: {result!r}")
+        self._wait_collector_ready()
 
     # --------------------------- contract metadata -------------------------
 
@@ -295,7 +307,9 @@ class Adapter:
         # A recovery transition may not release the consumer before the last
         # independently defined 10-second evaluator window has elapsed.
         was_paused = self._consumer_paused
-        remaining = (self._latest_async_deadline_ns - time.time_ns()) / 1e9
+        with self._deadline_lock:
+            latest_deadline_ns = self._latest_async_deadline_ns
+        remaining = (latest_deadline_ns - time.time_ns()) / 1e9
         if was_paused and remaining > 0:
             time.sleep(remaining)
         self._compose("a", "start accounting", timeout=60)
@@ -410,10 +424,7 @@ class Adapter:
                 # Reserve the protocol's default durable deadline immediately;
                 # this prevents an eager recovery transition from releasing the
                 # paused consumer before verify_async receives the records.
-                self._latest_async_deadline_ns = max(
-                    self._latest_async_deadline_ns,
-                    record["ended_ns"] + 10_000_000_000,
-                )
+                self._reserve_async_deadline(record["started_ns"] + 10_000_000_000)
             if time.monotonic() > operation_deadline:
                 record["success"] = False
                 record["error"] = record["error"] or f"operation exceeded {deadline:.3f}s deadline"
@@ -456,9 +467,9 @@ class Adapter:
         for original in records:
             record = copy.deepcopy(original)
             order_id = record.get("order_id")
-            ended_ns = int(record.get("ended_ns") or time.time_ns())
-            deadline_ns = ended_ns + int(deadline * 1_000_000_000)
-            self._latest_async_deadline_ns = max(self._latest_async_deadline_ns, deadline_ns)
+            started_ns = int(record.get("started_ns") or time.time_ns())
+            deadline_ns = started_ns + int(deadline * 1_000_000_000)
+            self._reserve_async_deadline(deadline_ns)
             observations: list[dict[str, Any]] = []
             settled: bool | None = None
             if not isinstance(order_id, str) or not _ORDER_ID.fullmatch(order_id):
@@ -468,7 +479,12 @@ class Adapter:
                     observation = self._read_order(order_id)
                     observations.append(observation)
                     if observation.get("complete") is True:
-                        settled = True
+                        # A first positive observation after the boundary does
+                        # not establish when persistence happened.
+                        completed_ns = int(
+                            observation.get("query_completed_ns") or time.time_ns()
+                        )
+                        settled = True if completed_ns <= deadline_ns else None
                         break
                     now_ns = time.time_ns()
                     if now_ns >= deadline_ns:
@@ -492,12 +508,36 @@ class Adapter:
         destination.mkdir(parents=True, exist_ok=True)
         (destination / "application-logs").mkdir(exist_ok=True)
 
-        self.ctx.node_exec("a", "docker stop -t 20 otel-collector || true")
-        time.sleep(3)
-        for filename in ("traces.json", "otel-logs.json", "metrics.json", "suppression.json"):
-            self._copy_remote_file(
-                "a", f"{REMOTE_ROOT}/native/{filename}", destination / filename
+        snapshot_started_ns = time.time_ns()
+        self.ctx.node_exec("a", "docker stop -t 20 otel-collector")
+        collector_flushed_ns = time.time_ns()
+        try:
+            for filename in ("traces.json", "otel-logs.json", "metrics.json", "suppression.json"):
+                self._copy_remote_file(
+                    "a", f"{REMOTE_ROOT}/native/{filename}", destination / filename
+                )
+        finally:
+            # File exporter output is bind-mounted and append-preserving.  A
+            # calibration snapshot must not leave the collector stopped while
+            # target observations are acquired.
+            self._compose("a", "start otel-collector", timeout=60)
+            self._wait_collector_ready()
+        collector_restarted_ns = time.time_ns()
+        (destination / "snapshot-lifecycle.json").write_text(
+            json.dumps(
+                {
+                    "snapshot_started_ns": snapshot_started_ns,
+                    "collector_flushed_ns": collector_flushed_ns,
+                    "collector_restarted_ns": collector_restarted_ns,
+                    "remote_files_preserved": True,
+                    "subsequent_export_mode": "append",
+                },
+                indent=2,
+                sort_keys=True,
             )
+            + "\n",
+            encoding="utf-8",
+        )
         for node, compose_file in (("a", "node-a.yaml"), ("b", "node-b.yaml")):
             listing = self.ctx.node_exec(
                 node,
@@ -609,6 +649,18 @@ class Adapter:
                         "OTEL_METRICS_EXPORTER": "none",
                     }
                 )
+
+        # The frontend is the first instrumented HTTP application hop.  Node's
+        # current and legacy-contrib variable names are both supplied because
+        # support differs by instrumentation generation.  No traceparent is
+        # injected; the opaque header remains the only experiment alignment ID.
+        frontend_env = services["frontend"].setdefault("environment", {})
+        frontend_env.update(
+            {
+                "OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST": "x-experiment-request-id",
+                "OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_REQUEST_HEADERS": "x-experiment-request-id",
+            }
+        )
 
         preferred = {
             "frontend-proxy": ENTRY_IP,
@@ -922,6 +974,20 @@ SELECT json_build_object(
             time.sleep(1)
         raise RuntimeError(f"accounting did not drain Kafka backlog: {last[-1000:]}")
 
+    def _reserve_async_deadline(self, deadline_ns: int) -> None:
+        # Async-control attempts are verified concurrently; never let a racing
+        # earlier attempt shorten the consumer pause reserved by a later one.
+        lock = getattr(self, "_deadline_lock", None)
+        if lock is None:  # supports focused unit construction via object.__new__
+            self._latest_async_deadline_ns = max(
+                self._latest_async_deadline_ns, deadline_ns
+            )
+            return
+        with lock:
+            self._latest_async_deadline_ns = max(
+                self._latest_async_deadline_ns, deadline_ns
+            )
+
     def _wait_container_healthy(self, node: str, container: str, timeout: float) -> None:
         end = time.monotonic() + timeout
         last = ""
@@ -935,6 +1001,13 @@ SELECT json_build_object(
                 return
             time.sleep(1)
         raise RuntimeError(f"{container} on node {node} did not become healthy: {last}")
+
+    def _wait_collector_ready(self) -> None:
+        self.ctx.node_exec(
+            "a",
+            f"for i in $(seq 1 60); do (echo > /dev/tcp/{COLLECTOR_IP}/4317) >/dev/null 2>&1 && exit 0; sleep 1; done; exit 1",
+            timeout=70,
+        )
 
     def _compose(
         self, node: str, action: str, timeout: int = 300, check: bool = True
@@ -985,9 +1058,10 @@ SELECT json_build_object(
         text = path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
         service_names: list[str] = []
         span_markers = 0
+        request_id_header_attributes = 0
 
         def walk(value: Any) -> None:
-            nonlocal span_markers
+            nonlocal span_markers, request_id_header_attributes
             if isinstance(value, dict):
                 if isinstance(value.get("spans"), list):
                     span_markers += len(value["spans"])
@@ -995,6 +1069,11 @@ SELECT json_build_object(
                     name = value["value"].get("stringValue")
                     if isinstance(name, str):
                         service_names.append(name)
+                if value.get("key") in {
+                    "http.request.header.x_experiment_request_id",
+                    "http.request.header.x-experiment-request-id",
+                }:
+                    request_id_header_attributes += 1
                 for child in value.values():
                     walk(child)
             elif isinstance(value, list):
@@ -1021,6 +1100,14 @@ SELECT json_build_object(
             "span_markers": span_markers,
             "product_catalog_mentions": product_mentions,
             "resource_service_names": sorted(set(service_names)),
+            "request_id_header_attributes": request_id_header_attributes,
+            "request_id_capture_status": (
+                "not_applicable_without_native_spans"
+                if self.mode == "absent"
+                else "observed"
+                if request_id_header_attributes > 0
+                else "unsupported_or_unobserved"
+            ),
             "mode_compliant": compliant,
             "method": "collector file inspection after graceful collector termination",
         }

@@ -40,15 +40,29 @@ evaluator evidence only. Checkout extracts the application's actual `orderId`.
 Every HTTP step carries a fresh opaque `X-Experiment-Request-Id`, retained with
 the evaluator step so common acquisition can align entry observations without
 encoding an operation label, dependency, or result.
+The frontend receives the standard Node HTTP-instrumentation environment
+settings that request capture of this one header. The adapter neither creates
+nor injects a sampled `traceparent`. Because header-capture support depends on
+the instrumentation bundled in the pinned image, each native snapshot reports
+whether the corresponding span attribute was actually observed; zero observed
+attributes are reported as unsupported/unobserved, not treated as a link.
 Checkout reaches only the demo's packaged mock email service; the adapter has no
 mail credentials and never sends external mail.
+
+Native collection is an incremental snapshot: the collector is gracefully
+stopped and flushed, the append-only bind-mounted files are copied, and the same
+collector is restarted before the call returns. Thus a calibration snapshot
+does not prevent target-period native capture; final collection obtains the
+later cumulative file as a separate snapshot.
 It does **not** infer Kafka delivery from the HTTP response or producer state;
 the upstream producer uses `RequiredAcks=NoResponse`.
 
 `verify_async` performs separately timestamped PostgreSQL reads keyed by that
 returned order ID and retains every poll. Success requires the order row, at
 least one matching item, and the shipping row within the independent 10-second
-deadline. While paused, accounting remains stopped through the last registered
+deadline anchored to the business operation's start. A first positive SQL read
+after that boundary is unknown because it cannot prove the persistence time.
+While paused, accounting remains stopped through the last registered
 deadline. Recovery starts accounting and blocks until Kafka consumer-group lag
 is zero, so the backlog drains before the recovered control begins. The database
 schema and catalog fixture come from the pinned upstream PostgreSQL initializer.
