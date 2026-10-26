@@ -57,7 +57,7 @@ Deployment changes and manual knowledge are detailed in the [DeathStarBench](sys
 
 ### Acquisition
 
-OBI runs on both guests in every tracing mode. Exclusion of already instrumented services is disabled. Automatic eBPF context propagation is enabled and recorded. OBI Java-agent and Node.js runtime injection are disabled in the current configuration; this may limit language-specific correlation and is part of the interpretation of coverage.
+OBI runs on both guests in every tracing mode. Exclusion of already instrumented services is disabled. Automatic eBPF context propagation is enabled and recorded. OBI Java-agent and Node.js runtime injection are disabled in the current configuration; this may limit language-specific correlation and is part of the interpretation of coverage. The experiment also captures SQL query text and HTTP bodies on `/api/*` to inspect business-identity evidence. These are synthetic application fixtures. Oracle CLI processes, Jaeger, native collectors, and the fallback collector are excluded from OBI targeting.
 
 Every workload HTTP step carries a unique opaque `X-Experiment-Request-Id`. Only this header is selected for OBI enrichment. It contains no operation name, dependency map, or outcome. It binds the request census to an observed entry span; it does not establish a downstream link. Native header capture is requested where supported, with support checked in actual spans. The generator does not inject sampled `traceparent` or Jaeger contexts.
 
@@ -154,7 +154,15 @@ gh run download RUN_ID -D downloaded/RUN_ID
 
 `qualification.yml` accepts `all`, `deathstarbench`, `otel_demo`, or `petclinic`, and `absent`, `partial`, or `full`. It creates two guests, starts collectors, exercises a small healthy census, exports observations/oracles, and tears down. This technical check does not replace a campaign. Runs and artifacts are linked from [Actions](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions).
 
-Campaign and report commands will be documented with implemented interfaces before the primary series. Missing files or unimplemented commands do not represent successful empty experiments.
+The fixed campaign interface and report regeneration are implemented:
+
+```bash
+gh workflow run campaigns.yml -f system=all -f mode=all -f seed=all
+# A technical rerun can select one system, mode, and seed; preserve the prior run.
+gh workflow run report.yml -f run_ids='CAMPAIGN_RUN_ID ANOTHER_RUN_ID'
+```
+
+Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its forecast/hash before target traffic. The report requires all three distinct seeds for an aggregate and does not automatically select among duplicate runs. Missing files do not represent successful empty experiments. Artifacts expire after 90 days unless retained separately; key tables/models must be committed or archived before expiry.
 
 ```text
 .github/workflows/       Infrastructure and application qualification

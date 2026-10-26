@@ -140,6 +140,7 @@ def evaluate(root):
         observed_graph = graph(data)
         db = metadata['database']
         known_addresses = {str(db.get(k)) for k in ('ip', 'name', 'container', 'logical_identity') if db.get(k)}
+        known_addresses.update(str(v) for v in db.get('observed_aliases', []))
         database_nodes = []
         for node in observed_graph['nodes']:
             if node['kind'] == 'database':
@@ -155,8 +156,9 @@ def evaluate(root):
             evidence = identities.get(identity, {})
             asynchronous.append({'attempt_key': opaque_attempt(row), 'phase': row['phase'],
                                  'http_success': row.get('success'), 'durable': row.get('async_verification'),
-                                 'identity_stages': evidence,
-                                 'complete_identity_chain': True if all(k in evidence for k in ('http', 'producer', 'consumer', 'sql')) else None})
+                                 'uuid_stage_presence': evidence,
+                                 'complete_identity_chain': None,
+                                 'identity_note': 'Generic UUID presence is a candidate only; confirmed chain requires typed order identity and accounting consume/write roles.'})
         result['sources'][source] = {'operations': operations,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,

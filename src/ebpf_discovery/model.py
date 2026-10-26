@@ -93,7 +93,8 @@ def assign(row, classes):
     fallback = not compatible
     if fallback:
         compatible = list(classes)
-    classified = compatible[0] if not fallback and len(compatible) == 1 and signature and all(signature) else None
+    classified = compatible[0] if (not fallback and len(compatible) == 1 and signature and all(signature)
+                                  and signature == classes[compatible[0]]['signature']) else None
     return {**row, 'class_id': classified, 'compatible_classes': compatible}
 
 

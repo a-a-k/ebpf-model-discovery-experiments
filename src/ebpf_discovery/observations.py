@@ -139,7 +139,7 @@ def graph(spans):
                            'instance': s['instance'], 'guest': s['node'], 'source': s['source']}
         a = s['attributes']
         db = a.get('db.system.name', a.get('db.system'))
-        if db:
+        if db and s['kind'] in ('SPAN_KIND_CLIENT', 3, 'client'):
             address = a.get('server.address', a.get('net.peer.name', a.get('net.peer.ip')))
             port = a.get('server.port', a.get('net.peer.port'))
             namespace = a.get('db.namespace', a.get('db.name'))

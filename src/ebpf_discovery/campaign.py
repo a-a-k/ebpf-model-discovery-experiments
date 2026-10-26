@@ -86,7 +86,7 @@ class Campaign:
             sample = []
             for replica, bit in zip(self.metadata['replicas'], state):
                 try:
-                    with socket.create_connection((replica['ip'], replica.get('port', port)), timeout=1):
+                    with socket.create_connection((replica.get('transport_host', replica['ip']), replica.get('transport_port', replica.get('port', port))), timeout=1):
                         accepting = True
                 except OSError:
                     accepting = False
