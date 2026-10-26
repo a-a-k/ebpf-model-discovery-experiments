@@ -204,7 +204,13 @@ def database_activity(spans):
         a = s['attributes']
         system = a.get('db.system.name', a.get('db.system'))
         basis = 'explicit_db_system_attribute'
+        if system and s.get('kind') not in ('SPAN_KIND_CLIENT', 3, 'client'):
+            # DB-server observations may include evaluation/oracle queries;
+            # they do not establish a caller's application dependency.
+            continue
         if not system:
+            if not (s.get('name') or '').lower().endswith('_client'):
+                continue
             named = re.search(r'(?:^|_)(mongo|redis)(?:_|$)', (s.get('name') or '').lower())
             if not named:
                 continue
