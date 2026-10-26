@@ -5,6 +5,7 @@ evaluated independently from timestamped SQL oracle reads.
 """
 from __future__ import annotations
 
+import json
 from collections import defaultdict
 from typing import Any
 
@@ -14,6 +15,7 @@ from .observations import route, step_id
 KAFKA_PRODUCER_OPERATIONS = {'publish', 'produce', 'send'}
 KAFKA_CONSUMER_OPERATIONS = {'fetch', 'process', 'receive'}
 POSTGRES_SYSTEMS = {'postgres', 'postgresql'}
+IGNORED_OBSERVATION_FIELDS = {'raw_file', '_graph_node'}
 
 
 def _operation(attributes: dict[str, Any]) -> str:
@@ -96,16 +98,60 @@ def _is_insert_write(span: dict[str, Any]) -> bool:
     return all(normalized.count(statement) == 1 for statement in statements)
 
 
+def _observation_key(span: dict[str, Any]) -> str:
+    """Canonical normalized evidence, excluding parser provenance/cache fields."""
+    evidence = {
+        key: value
+        for key, value in span.items()
+        if key not in IGNORED_OBSERVATION_FIELDS
+    }
+    return json.dumps(evidence, sort_keys=True, separators=(',', ':'))
+
+
+def _deduplicate(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    unique = {}
+    for span in spans:
+        unique.setdefault(_observation_key(span), span)
+    return list(unique.values())
+
+
+def _span_index(
+    spans: list[dict[str, Any]],
+) -> dict[tuple[str, str], list[dict[str, Any]]]:
+    grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for span in spans:
+        grouped[(span['trace_id'], span['span_id'])].append(span)
+    return {identity: _deduplicate(records) for identity, records in grouped.items()}
+
+
+def _valid_identity(span: dict[str, Any]) -> bool:
+    return bool(span.get('trace_id') and span.get('span_id'))
+
+
 def _ancestry(
-    span: dict[str, Any], lookup: dict[tuple[str, str], dict[str, Any]]
-) -> list[dict[str, Any]]:
+    span: dict[str, Any],
+    lookup: dict[tuple[str, str], list[dict[str, Any]]],
+    stop: tuple[str, str],
+) -> tuple[list[dict[str, Any]], str | None]:
     path, visited = [], set()
     current = span
     while current and current['span_id'] not in visited:
+        if not _valid_identity(current):
+            return path, 'empty_ancestry_identity'
+        records = lookup.get((current['trace_id'], current['span_id']), [])
+        if len(records) != 1:
+            return path, 'ambiguous_ancestry_identity'
         visited.add(current['span_id'])
         path.append(current)
-        current = lookup.get((current['trace_id'], current['parent_id']))
-    return path
+        if (current['trace_id'], current['span_id']) == stop:
+            break
+        if not current['parent_id']:
+            break
+        parents = lookup.get((current['trace_id'], current['parent_id']), [])
+        if len(parents) > 1:
+            return path, 'ambiguous_ancestry_identity'
+        current = parents[0] if parents else None
+    return path, None
 
 
 def _unknown(
@@ -144,6 +190,7 @@ def _source_chain(
     source_spans: list[dict[str, Any]],
     anchors: list[dict[str, Any]],
 ) -> dict[str, Any]:
+    anchors = _deduplicate(anchors)
     if len(anchors) != 1:
         return _unknown(
             source,
@@ -151,18 +198,31 @@ def _source_chain(
             anchor_candidates=[_span_ref(span) for span in anchors],
         )
     anchor = anchors[0]
-    lookup = {(span['trace_id'], span['span_id']): span for span in source_spans}
+    if not _valid_identity(anchor):
+        return _unknown(source, 'empty_anchor_identity', anchor)
+    lookup = _span_index(source_spans)
+    if len(lookup.get((anchor['trace_id'], anchor['span_id']), [])) != 1:
+        return _unknown(source, 'ambiguous_anchor_identity', anchor)
+    indexed_spans = [record for records in lookup.values() for record in records]
 
     producers = []
     producer_paths: dict[str, list[dict[str, Any]]] = {}
-    for span in source_spans:
+    ancestry_issues = []
+    for span in indexed_spans:
         if not _is_producer(span) or span['trace_id'] != anchor['trace_id']:
             continue
-        ancestry = _ancestry(span, lookup)
+        ancestry, issue = _ancestry(
+            span, lookup, (anchor['trace_id'], anchor['span_id'])
+        )
+        if issue is not None:
+            ancestry_issues.append(issue)
+            continue
         if any(parent['span_id'] == anchor['span_id'] for parent in ancestry):
             producers.append(span)
             producer_paths[span['span_id']] = list(reversed(ancestry[: ancestry.index(anchor) + 1]))
     if not producers:
+        if ancestry_issues:
+            return _unknown(source, sorted(ancestry_issues)[0], anchor)
         return _unknown(source, 'missing_producer_descendant', anchor)
     if len(producers) != 1:
         return _unknown(
@@ -172,6 +232,8 @@ def _source_chain(
             producer_candidates=[_span_ref(span) for span in producers],
         )
     producer = producers[0]
+    if not _valid_identity(producer):
+        return _unknown(source, 'empty_producer_identity', anchor)
     producer_path = producer_paths[producer['span_id']]
     producer_identity = {
         'trace_id': producer['trace_id'],
@@ -179,7 +241,7 @@ def _source_chain(
     }
 
     consumers = []
-    for span in source_spans:
+    for span in indexed_spans:
         if not _is_consumer(span):
             continue
         if any(
@@ -205,6 +267,24 @@ def _source_chain(
             consumer_candidates=[_message_ref(span) for span in consumers],
         )
     consumer = consumers[0]
+    if not _valid_identity(consumer):
+        return _unknown(
+            source,
+            'empty_consumer_identity',
+            anchor,
+            producer=_message_ref(producer),
+        )
+    if len(lookup.get((consumer['trace_id'], consumer['span_id']), [])) != 1:
+        return _unknown(
+            source,
+            'ambiguous_consumer_identity',
+            anchor,
+            producer=_message_ref(producer),
+            consumer_candidates=[
+                _message_ref(span)
+                for span in lookup[(consumer['trace_id'], consumer['span_id'])]
+            ],
+        )
     if len(consumer.get('links', [])) != 1:
         return _unknown(
             source,
@@ -215,8 +295,16 @@ def _source_chain(
             observed_links=consumer.get('links', []),
         )
 
-    processing_root = lookup.get((consumer['trace_id'], consumer['parent_id']))
-    if processing_root is None:
+    if not consumer['parent_id']:
+        return _unknown(
+            source,
+            'empty_processing_root_identity',
+            anchor,
+            producer=_message_ref(producer),
+            consumer=_message_ref(consumer),
+        )
+    processing_roots = lookup.get((consumer['trace_id'], consumer['parent_id']), [])
+    if not processing_roots:
         return _unknown(
             source,
             'missing_processing_root',
@@ -224,6 +312,18 @@ def _source_chain(
             producer=_message_ref(producer),
             consumer=_message_ref(consumer),
         )
+    if len(processing_roots) != 1:
+        return _unknown(
+            source,
+            'ambiguous_processing_root_identity',
+            anchor,
+            producer=_message_ref(producer),
+            consumer=_message_ref(consumer),
+            processing_root_candidates=[
+                _span_ref(span) for span in processing_roots
+            ],
+        )
+    processing_root = processing_roots[0]
     if (
         processing_root['service'].lower() != 'accounting'
         or processing_root['name'] != 'order-consumed'
@@ -239,7 +339,7 @@ def _source_chain(
 
     writes = [
         span
-        for span in source_spans
+        for span in indexed_spans
         if span['trace_id'] == processing_root['trace_id']
         and span['parent_id'] == processing_root['span_id']
         and _is_insert_write(span)
@@ -264,6 +364,28 @@ def _source_chain(
             database_write_candidates=[_span_ref(span) for span in writes],
         )
     write = writes[0]
+    if not _valid_identity(write):
+        return _unknown(
+            source,
+            'empty_database_write_identity',
+            anchor,
+            producer=_message_ref(producer),
+            consumer=_message_ref(consumer),
+            processing_root=_span_ref(processing_root),
+        )
+    if len(lookup.get((write['trace_id'], write['span_id']), [])) != 1:
+        return _unknown(
+            source,
+            'ambiguous_database_write_identity',
+            anchor,
+            producer=_message_ref(producer),
+            consumer=_message_ref(consumer),
+            processing_root=_span_ref(processing_root),
+            database_write_candidates=[
+                _span_ref(span)
+                for span in lookup[(write['trace_id'], write['span_id'])]
+            ],
+        )
     result = {
         'status': 'linked',
         'reason': None,
