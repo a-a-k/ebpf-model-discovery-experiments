@@ -579,15 +579,33 @@ class Adapter:
         snapshot_started_ns = time.time_ns()
         self.ctx.node_exec("a", "docker stop -t 20 otel-collector")
         collector_flushed_ns = time.time_ns()
+        snapshot_id = str(collector_flushed_ns)
+        rotation_targets: list[str] = []
         try:
             for filename in ("traces.json", "otel-logs.json", "metrics.json", "suppression.json"):
                 self._copy_remote_file(
                     "a", f"{REMOTE_ROOT}/native/{filename}", destination / filename
                 )
+            # The pinned collector's file exporter truncates its target when
+            # the process starts.  Move flushed exporter files out of those
+            # target paths before restarting so each call captures one intact
+            # interval and later snapshots cannot overwrite earlier evidence.
+            exporter_files = ("traces.json", "otel-logs.json", "metrics.json")
+            archive = f"{REMOTE_ROOT}/native/snapshots/{snapshot_id}"
+            rotate = [f"mkdir -p {self._shquote(archive)}"]
+            for filename in exporter_files:
+                source = f"{REMOTE_ROOT}/native/{filename}"
+                target = f"{archive}/{filename}"
+                rotate.append(
+                    f"if test -f {self._shquote(source)}; then "
+                    f"mv -- {self._shquote(source)} {self._shquote(target)}; fi"
+                )
+            self.ctx.node_exec("a", " && ".join(rotate))
+            rotation_targets = list(exporter_files)
         finally:
-            # File exporter output is bind-mounted and append-preserving.  A
-            # calibration snapshot must not leave the collector stopped while
-            # target observations are acquired.
+            # A calibration snapshot must not leave the collector stopped
+            # while target observations are acquired.  The restart creates
+            # fresh exporter targets after the flushed files were rotated.
             self._compose("a", "start otel-collector", timeout=60)
             self._wait_collector_ready()
         collector_restarted_ns = time.time_ns()
@@ -597,8 +615,10 @@ class Adapter:
                     "snapshot_started_ns": snapshot_started_ns,
                     "collector_flushed_ns": collector_flushed_ns,
                     "collector_restarted_ns": collector_restarted_ns,
-                    "remote_files_preserved": True,
-                    "subsequent_export_mode": "append",
+                    "remote_archive": f"{REMOTE_ROOT}/native/snapshots/{snapshot_id}",
+                    "exporter_file_rotation_targets": rotation_targets,
+                    "local_snapshot_preserved": True,
+                    "subsequent_export_mode": "fresh_file_after_rotation",
                 },
                 indent=2,
                 sort_keys=True,
