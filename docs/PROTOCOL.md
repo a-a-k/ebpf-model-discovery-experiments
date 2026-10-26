@@ -44,6 +44,10 @@ Each OTel campaign: 20 checkout attempts each in normal, accounting-paused, reco
 
 Async links require an observable order identity or a confirmed message-identity chain. Kafka request correlation_id, topic adjacency, timestamps or producer acknowledgements alone are insufficient. Missing evidence stays unknown. SQL census is independent evaluator-only evidence.
 
+Qualification-based matcher review on 2026-10-26: the independent reviewer and orchestrator GO for exact native producer SpanLinks plus accounting processing-root ancestry. The pinned consumer creates one processing activity per consumed message; its receive span links the checkout producer, and the PostgreSQL batch-write span shares that processing root. The observed write is one span with three INSERT statements; CONNECT spans are excluded. Indices remain source-separated and conflicting/empty identities are unknown. Association is distinct from SQL durability and its deadline. This implements the message-chain option already in the design, using qualification evidence before primary async results; it does not infer links from topic/time or use oracle order IDs as inputs.
+
+Database interpretation review on 2026-10-26: Mongo/Redis activity explicitly named by native spans is tallied even when endpoint attributes are absent. The interpretation is marked name-derived, not concrete-instance evidence. Unknown-address DB nodes are scoped to the caller and never counted as shared dependencies. OBI protocol labels remain unchanged, with mismatches against the independent deployment reference reported separately. This prevents parser coverage from being mistaken for absence of native DB information.
+
 ## Acquisition and evaluation
 
 OBI first; one bounded DeepFlow fallback if required protocol observations are unavailable. No open-ended collector benchmark or custom universal tracer. Inspect real Thrift/Kafka support. Separate eBPF, native and deployment metadata provenance. Do not inject operation labels or dependency maps into class discovery.

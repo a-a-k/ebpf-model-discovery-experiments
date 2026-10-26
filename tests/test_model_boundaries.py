@@ -1,8 +1,8 @@
 import base64
 import unittest
 from ebpf_discovery.model import Projection, assign, conditional, wilson
-from ebpf_discovery.observations import census, identifier
-from ebpf_discovery.evaluate import database_reference_match, typed_order_chains
+from ebpf_discovery.observations import census, identifier, graph
+from ebpf_discovery.evaluate import database_activity, database_reference_match, typed_order_chains
 
 
 def span(identity, status=200, start=0, end=1000000, path='/product'):
@@ -14,6 +14,24 @@ def span(identity, status=200, start=0, end=1000000, path='/product'):
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_unknown_database_endpoints_do_not_invent_shared_identity(self):
+        records = [{**span(name), 'instance': name, 'service': name, 'kind': 'SPAN_KIND_CLIENT',
+                    'attributes': {'db.system': 'mysql', 'db.name': 'common_namespace'}} for name in ('caller_a', 'caller_b')]
+        observed = graph(records)
+        self.assertEqual(len([n for n in observed['nodes'] if n['kind'] == 'database']), 2)
+        self.assertEqual(observed['shared_database_dependencies'], {})
+        for record in records:
+            record['attributes'].update({'server.address': 'database', 'server.port': 3306})
+        self.assertEqual(len(graph(records)['shared_database_dependencies']), 1)
+
+    def test_mongo_named_native_activity_survives_missing_endpoint_tags(self):
+        record = {**span('native'), 'source': 'native', 'name': 'user_timeline_mongo_find_client',
+                  'attributes': {}, 'kind': None}
+        audit = database_activity([record])[0]
+        self.assertEqual(audit['interpreted_system'], 'mongodb')
+        self.assertEqual(audit['count'], 1)
+        self.assertIsNone(audit['observed_address'])
+
     def test_child_header_binds_exact_http_parent_and_full_duration(self):
         for code, duration, expected in ((200, 500_000_000, True), (200, 3_000_000_000, False), (500, 500_000_000, False)):
             parent = span('parent', status=code, start=0, end=duration)

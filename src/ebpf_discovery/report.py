@@ -18,7 +18,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     rows, campaigns, jobs, superseded = [], [], [], []
     exclusion_rules = json.loads(exclusions_path.read_text()) if exclusions_path.exists() else []
     excluded = []
-    classifications, structures, async_rows, db_controls = [], [], [], []
+    classifications, structures, async_rows, db_controls, activity_rows = [], [], [], [], []
     seen_jobs = set()
     for path in sorted(inputs.rglob('*jobs.json')):
         for job in json.loads(path.read_text()).get('jobs', []):
@@ -53,19 +53,24 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
         for source, result in m['sources'].items():
             source_out = evidence/'models'/source
             source_out.mkdir(parents=True, exist_ok=True)
-            for name in ('model.json', 'forecast.json', 'evaluation-map.json', 'observed-final-graph.json'):
+            for name in ('model.json', 'forecast.json', 'evaluation-map.json', 'observed-final-graph.json',
+                         'validated-calibration-graph.json', 'message-chain-evidence.json'):
                 if (path.parent/'models'/source/name).exists():
                     shutil.copy2(path.parent/'models'/source/name, source_out/name)
             identity = {k: m[k] for k in ('system', 'mode', 'seed', 'run_id')}
             identity['source'] = source
             for variant, value in result['classes'].items():
                 classifications.append({**identity, 'variant': variant, **value})
+            for activity in result.get('database_activity', []):
+                activity_rows.append({**identity, 'observed_source': activity['source'],
+                                      **{k: v for k, v in activity.items() if k not in ('source', 'example')}})
             reference = result.get('cross_node_reference_validation') or {}
             structures.append({**identity, 'observed_cross_node_links': len(result['cross_node']),
                                'native_reference_covered': reference.get('reference_covered'),
                                'native_reference_disagreement_rate': reference.get('error_rate_on_covered'),
                                'ground_truth_link_error_rate': result['cross_node_error_rate'],
                                'db_logical_nodes': len(result['database_nodes']),
+                               'db_complete_endpoint_nodes': sum(n.get('complete_endpoint_observed') is True for n in result['database_nodes']),
                                'db_nodes_matching_selected_endpoint': sum(n['matches_selected_database'] is True for n in result['database_nodes']),
                                'db_selected_endpoint_unknown': sum(n['matches_selected_database'] is None for n in result['database_nodes']),
                                'db_selected_endpoint_protocol_disagreements': sum(n.get('selected_endpoint_protocol_agrees') is False for n in result['database_nodes']),
@@ -87,6 +92,8 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
                                    'durable_successes': sum((r.get('durable') or {}).get('success') is True for r in selected),
                                    'durable_unknown': sum((r.get('durable') or {}).get('success') is None for r in selected),
                                    'identity_chains_confirmed': sum(r['complete_identity_chain'] is True for r in selected),
+                                   'message_chains_with_native_support': sum('native' in r.get('message_chain_supporting_sources', []) for r in selected),
+                                   'message_chains_with_ebpf_support': sum('ebpf' in r.get('message_chain_supporting_sources', []) for r in selected),
                                    'identity_chains_unknown': sum(r['complete_identity_chain'] is None for r in selected)})
             for operation, op in result['operations'].items():
                 prediction = op['forecast'] or {}
@@ -99,7 +106,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
                              'target_unclassified': op['target_unclassified']})
     for filename, data in [('operations.csv', rows), ('costs.csv', campaigns), ('job-costs.csv', jobs),
                            ('classes.csv', classifications), ('structure.csv', structures),
-                           ('async.csv', async_rows), ('database-controls.csv', db_controls)]:
+                           ('async.csv', async_rows), ('database-controls.csv', db_controls), ('database-activity.csv', activity_rows)]:
         with (out/filename).open('w', newline='', encoding='utf-8') as stream:
             if data:
                 writer = csv.DictWriter(stream, fieldnames=list(data[0]))
@@ -133,7 +140,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     for system in sorted({c['system'] for c in campaigns}):
         selected = sorted((c for c in campaigns if c['system'] == system), key=lambda c: (c['mode'] != 'absent', c['seed'], str(c['run_id'])))[0]
         path = inputs/selected['path']
-        observed = json.loads((path.parent/'models'/'ebpf'/'model.json').read_text())['graph']
+        observed = json.loads((path.parent/'models'/'ebpf'/'validated-calibration-graph.json').read_text())
         ids = {n['id']: f'n{i}' for i, n in enumerate(observed['nodes'])}
         diagram = ['flowchart LR']
         for node in observed['nodes']:
@@ -160,7 +167,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
               f'Superseded protocol pilots: {len(superseded)}. Full metrics remain in `superseded-pilots.json`; excluded by protocol, not accuracy.', '',
               f'Acquired campaigns excluded by predeclared implementation defects: {len(excluded)}. All paired sources are excluded consistently; retained metrics and exact rules are in `excluded-campaigns.json` and `technical-exclusion-rules.json`. Original acquisition metrics and raw streams remain in the corresponding Actions artifacts/archive.', '',
               f'Total completed job time across retained repository history, including preparation, checks, selector jobs and failures: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`. Ongoing job time is unknown and excluded from this total. Human/agent engineering time was not independently metered and remains unknown.', '',
-              'Class separation and coverage are in `classes.csv`; observed links, DB structure and semantic proxy mismatches in `structure.csv`; DB interventions in `database-controls.csv`; asynchronous controls and unknown identity chains in `async.csv`. Concrete DB-instance identity is not inferred from an IP address. Native ancestry agreement is a reference comparison, not independent ground-truth correctness.', '',
+              'Class separation and coverage are in `classes.csv`; observed links, DB structure and semantic proxy mismatches in `structure.csv`; DB interventions in `database-controls.csv`; native name-derived and explicitly tagged DB activity in `database-activity.csv`; asynchronous controls and unknown identity chains in `async.csv`. Zero addressed DB nodes does not mean zero DB activity. Unknown endpoints never establish shared identity. Concrete DB-instance identity is not inferred from an IP address. Native ancestry agreement is a reference comparison, not independent ground-truth correctness. Example graphs are validation views of retained calibration observations; original model hashes and forecasts remain unchanged.', '',
               'Means are reported only with exactly seeds 0, 1, and 2; duplicate attempts must be resolved explicitly from technical-failure history, not averaged or selected by accuracy.']
     (out/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     if rows:

@@ -13,7 +13,6 @@ jobs:
       - run: python -m pip install -e . pytest opentelemetry-proto
       - run: python -m compileall -q src systems
       - run: bash -n scripts/vms.sh
-      - run: python -m unittest discover -s tests
-      - run: python -m pytest --import-mode=importlib systems
+      - run: python -m pytest --import-mode=importlib tests systems
         env:
           PYTHONPATH: .
