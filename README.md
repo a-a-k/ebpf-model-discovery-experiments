@@ -85,6 +85,8 @@ For asynchronous execution, the implemented message matcher requires a unique ch
 
 The four states `11`, `10`, `01`, and `00` indicate replica availability. Target weights are `(4,2,1,1)/8`. For class c, exact integration is `p(c) = sum_s w(s) p(c | s)`. Monte Carlo uses 100,000 draws from the same conditional model and is checked against exact integration.
 
+Reported point estimates use exact integration when the identification bounds coincide; Monte Carlo endpoints and their deviations are retained separately. The simulation check rejects a deviation above one percentage point. Thus zero reported point error is not a claim that a finite random simulation produces exactly the same number. The final report exposes these saved values in `simulation.csv` and fitting/integration timers in `model-costs.csv`; each integration timer includes the exact calculation and simulation together.
+
 Direct stratified estimation is algebraically equivalent and is the strongest simple baseline. Simulation is not claimed to improve it. Potential usefulness comes from acquiring evidence despite missing tracing and is judged against external outcomes. The current implementation design uses the joint observed entry-status/deadline event as a proxy; semantic mismatches must be measured independently. Products of independent per-step success rates are not substituted for joint outcomes.
 
 Model and forecast files are saved before target acquisition. Unknown outcomes yield bounds, not fabricated point estimates. Adding graph structure that does not affect the calculation is not a forecast improvement. HTTP status/duration alone does not implement durable asynchronous completion.

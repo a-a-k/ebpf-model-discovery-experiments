@@ -25,6 +25,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     exclusion_rules = json.loads(exclusions_path.read_text()) if exclusions_path.exists() else []
     excluded = []
     classifications, structures, async_rows, db_controls, activity_rows = [], [], [], [], []
+    simulation_rows, model_costs = [], []
     seen_jobs = set()
     for path in sorted(inputs.rglob('*jobs.json')):
         for job in json.loads(path.read_text()).get('jobs', []):
@@ -65,6 +66,20 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
                     shutil.copy2(path.parent/'models'/source/name, source_out/name)
             identity = {k: m[k] for k in ('system', 'mode', 'seed', 'run_id')}
             identity['source'] = source
+            saved_model = json.loads((path.parent/'models'/source/'model.json').read_text())
+            saved_forecast = json.loads((path.parent/'models'/source/'forecast.json').read_text())
+            model_costs.append({**identity, 'model_preparation_seconds': saved_model['preparation_seconds'],
+                               'exact_and_simulation_seconds': sum(c['simulation_seconds'] for c in saved_forecast['classes'].values())})
+            for class_id, prediction in saved_forecast['classes'].items():
+                simulation_rows.append({**identity, 'class_id': class_id,
+                                        'draws': saved_forecast['draws_per_class'],
+                                        'exact_lower': prediction['identification_bounds'][0],
+                                        'exact_upper': prediction['identification_bounds'][1],
+                                        'mc_lower': prediction['monte_carlo_bounds'][0],
+                                        'mc_upper': prediction['monte_carlo_bounds'][1],
+                                        'mc_lower_deviation_pp': 100*prediction['mc_absolute_deviation'][0],
+                                        'mc_upper_deviation_pp': 100*prediction['mc_absolute_deviation'][1],
+                                        'exact_and_simulation_seconds': prediction['simulation_seconds']})
             for variant, value in result['classes'].items():
                 classifications.append({**identity, 'variant': variant, **value})
             for activity in result.get('database_activity', []):
@@ -112,7 +127,8 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
                              'target_unclassified': op['target_unclassified']})
     for filename, data in [('operations.csv', rows), ('costs.csv', campaigns), ('job-costs.csv', jobs),
                            ('classes.csv', classifications), ('structure.csv', structures),
-                           ('async.csv', async_rows), ('database-controls.csv', db_controls), ('database-activity.csv', activity_rows)]:
+                           ('async.csv', async_rows), ('database-controls.csv', db_controls), ('database-activity.csv', activity_rows),
+                           ('simulation.csv', simulation_rows), ('model-costs.csv', model_costs)]:
         with (out/filename).open('w', newline='', encoding='utf-8') as stream:
             if data:
                 writer = csv.DictWriter(stream, fieldnames=list(data[0]))
