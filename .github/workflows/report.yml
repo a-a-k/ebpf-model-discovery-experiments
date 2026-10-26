@@ -6,6 +6,10 @@ on:
         description: Space-separated campaign run IDs; retain failed attempts too
         required: true
         type: string
+      archive_tags:
+        description: Optional space-separated data release tags; replay originals after Actions artifact expiry
+        required: false
+        type: string
 permissions:
   contents: read
   actions: read
@@ -22,16 +26,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_IDS: ${{ inputs.run_ids }}
-        run: |
-          source scripts/github-read.sh
-          for run_id in $RUN_IDS; do
-            [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
-            mkdir -p "work/inputs/$run_id"
-            gh_api_to_file "work/inputs/$run_id/artifact-index.json" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100"
-            if jq -e '.artifacts[] | select(.name | startswith("campaign-"))' "work/inputs/$run_id/artifact-index.json" >/dev/null; then
-              gh run download "$run_id" --pattern 'campaign-*' -D "work/inputs/$run_id"
-            fi
-          done
+          ARCHIVE_TAGS: ${{ inputs.archive_tags }}
+        run: bash scripts/download-campaigns.sh
       - name: Retain complete repository job costs including preparation and failures
         env:
           GH_TOKEN: ${{ github.token }}

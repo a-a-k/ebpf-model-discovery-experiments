@@ -208,6 +208,8 @@ The fixed campaign interface and report regeneration are implemented:
 gh workflow run campaigns.yml -f system=all -f mode=all -f seed=all
 # A technical rerun can select one system, mode, and seed; preserve the prior run.
 gh workflow run report.yml -f run_ids='CAMPAIGN_RUN_ID ANOTHER_RUN_ID'
+# Replay the same originals from permanent releases after Actions artifacts expire.
+gh workflow run report.yml -f run_ids='40336898753' -f archive_tags='data-40362321620'
 # Retain original artifact ZIPs beyond Actions expiry, including failed attempts.
 gh workflow run archive.yml -f run_ids='CAMPAIGN_RUN_ID QUALIFICATION_RUN_ID PILOT_RUN_ID'
 ```
@@ -215,6 +217,8 @@ gh workflow run archive.yml -f run_ids='CAMPAIGN_RUN_ID QUALIFICATION_RUN_ID PIL
 Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its model, forecast, evaluation map and their hashes before target traffic. Report replay preserves the original target classifications and proxies byte-for-byte, and checks the saved model/forecast/map hashes. Independent database and message-chain audits can reparse the raw streams with recorded evaluation-code provenance; this never refits the predictor. Original metrics remain beside the regenerated metrics. The report requires all three distinct seeds for an aggregate and rejects duplicate admitted campaigns. Missing files do not represent successful empty experiments. Selector-only matrix jobs are not campaigns. Artifacts expire after 90 days; the archive workflow publishes original ZIPs, checksums and provenance in a GitHub release.
 
 Report outputs include `operations.csv`, `summary.json`, `classes.csv`, `structure.csv`, `database-controls.csv`, `async.csv`, error figures, example observed graphs, and per-campaign models/metrics under `evidence/`. `job-costs.csv` covers repository preparation, checks, failures and reruns, while `costs.csv` contains valid-campaign timings. Ongoing job time and unmetered engineering time are explicitly unknown. Nominal Wilson envelopes may exceed the conservative 5 pp target even when point error is zero; both measures remain visible.
+
+`archive_tags` can name several space-separated data releases. Archived replay verifies original ZIP checksums before extraction and uses the same evaluation and exclusion rules. The job-cost ledger is a new repository-history snapshot when replay runs; use the archived report's ledger for the original cost snapshot. A missing release, asset, checksum, or campaign provenance stops replay instead of silently omitting a run.
 
 ```text
 .github/workflows/       Infrastructure and application qualification
