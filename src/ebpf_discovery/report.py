@@ -198,6 +198,14 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
         for edge in observed['edges']:
             diagram.append(f'  {ids[edge["from"]]} -->|{edge["evidence"]}| {ids[edge["to"]]}')
         (out/f'example-model-{system}.mmd').write_text('\n'.join(diagram)+'\n')
+        (out/f'example-model-{system}.md').write_text(
+            f"# Observed calibration graph: {system}\n\n"
+            f"Deterministically selected {selected['mode']} seed {selected['seed']}, "
+            f"[run {selected['run_id']}](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/{selected['run_id']}). "
+            "This is the validated parsing view of retained eBPF calibration observations. "
+            "Observed protocol labels are preserved; an edge is not independent proof of correctness. "
+            "The original model and forecast remain unchanged.\n\n```mermaid\n"
+            + '\n'.join(diagram) + '\n```\n', encoding='utf-8')
     lines += ['', '## Retained run references', '']
     for run_id in sorted({str(r['run_id']) for r in campaigns}):
         lines.append(f'- [Actions run {run_id}](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/{run_id}).')
