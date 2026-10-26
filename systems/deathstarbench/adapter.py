@@ -518,12 +518,33 @@ class Adapter:
     def collect_native(self, destination: Path) -> None:
         destination.mkdir(parents=True, exist_ok=True)
         base = f"http://{self.ctx.node_ip('a')}:16686"
-        manifest: dict[str, Any] = {"mode": self.ctx.mode, "queries": [], "errors": []}
+        manifest: dict[str, Any] = {
+            "mode": self.ctx.mode, "queries": [], "errors": [],
+            "service_census": {},
+        }
         try:
             services_response = requests.get(base + "/api/services", timeout=30)
             (destination / "services.json").write_bytes(services_response.content)
             services_response.raise_for_status()
-            services = services_response.json().get("data", [])
+            document = services_response.json()
+            if not isinstance(document, dict):
+                raise ValueError("Jaeger service census is not a JSON object")
+            api_errors = document.get("errors")
+            data = document.get("data")
+            manifest["service_census"] = {
+                "http_status": services_response.status_code,
+                "data_is_null": data is None,
+                "api_errors": api_errors,
+                "raw_sha256": hashlib.sha256(services_response.content).hexdigest(),
+            }
+            if api_errors:
+                manifest["errors"].append(f"service census API errors: {api_errors}")
+            if data is None:
+                services = []
+            elif isinstance(data, list):
+                services = data
+            else:
+                raise ValueError("Jaeger service census data is neither null nor a list")
         except (requests.RequestException, ValueError, AttributeError) as exc:
             services = []
             manifest["errors"].append(f"service census: {exc}")
@@ -534,9 +555,28 @@ class Adapter:
                 safe = urllib.parse.quote(str(service), safe="")
                 (destination / f"traces-{safe}.json").write_bytes(r.content)
                 r.raise_for_status()
-                count = len(r.json().get("data", []))
+                trace_document = r.json()
+                if not isinstance(trace_document, dict):
+                    raise ValueError("Jaeger trace response is not a JSON object")
+                trace_api_errors = trace_document.get("errors")
+                trace_data = trace_document.get("data")
+                if trace_api_errors:
+                    manifest["errors"].append(
+                        f"trace query {service} API errors: {trace_api_errors}"
+                    )
+                if trace_data is None:
+                    count = 0
+                elif isinstance(trace_data, list):
+                    count = len(trace_data)
+                else:
+                    raise ValueError("Jaeger trace data is neither null nor a list")
                 trace_count += count
-                manifest["queries"].append({"service": service, "count": count, "sha256": hashlib.sha256(r.content).hexdigest()})
+                manifest["queries"].append({
+                    "service": service, "count": count,
+                    "data_is_null": trace_data is None,
+                    "api_errors": trace_api_errors,
+                    "sha256": hashlib.sha256(r.content).hexdigest(),
+                })
             except (requests.RequestException, ValueError, AttributeError) as exc:
                 manifest["errors"].append(f"trace query {service}: {exc}")
         manifest["trace_count"] = trace_count

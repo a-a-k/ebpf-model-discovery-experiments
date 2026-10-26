@@ -14,6 +14,77 @@ from systems.deathstarbench.deepflow_fallback import DEEPFLOW_IMAGE, fallback
 
 
 class OracleTests(unittest.TestCase):
+    def test_native_null_service_data_is_verified_absence(self):
+        class Context:
+            mode = "absent"
+            seed = 0
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        class Response:
+            status_code = 200
+            content = b'{"data":null,"total":0,"limit":0,"offset":0,"errors":null}'
+
+            @staticmethod
+            def raise_for_status():
+                return None
+
+            @staticmethod
+            def json():
+                return {"data": None, "total": 0, "errors": None}
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = Adapter(Context(root))
+            with mock.patch("systems.deathstarbench.adapter.requests.get", return_value=Response()):
+                adapter.collect_native(root / "native")
+            manifest = json.loads((root / "native" / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["errors"], [])
+        self.assertTrue(manifest["service_census"]["data_is_null"])
+        self.assertIsNone(manifest["service_census"]["api_errors"])
+        self.assertTrue(manifest["absence_verified"])
+
+    def test_native_http_200_api_errors_are_not_verified_absence(self):
+        class Context:
+            mode = "absent"
+            seed = 0
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        class Response:
+            status_code = 200
+            content = b'{"data":null,"errors":[{"code":500,"msg":"storage unavailable"}]}'
+
+            @staticmethod
+            def raise_for_status():
+                return None
+
+            @staticmethod
+            def json():
+                return {"data": None, "errors": [{"code": 500, "msg": "storage unavailable"}]}
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = Adapter(Context(root))
+            with mock.patch("systems.deathstarbench.adapter.requests.get", return_value=Response()):
+                adapter.collect_native(root / "native")
+            manifest = json.loads((root / "native" / "manifest.json").read_text(encoding="utf-8"))
+        self.assertTrue(manifest["errors"])
+        self.assertFalse(manifest["absence_verified"])
+        self.assertEqual(manifest["service_census"]["api_errors"][0]["code"], 500)
+
     def test_render_complete_pinned_upstream_shape(self):
         class Context:
             mode = "partial"
