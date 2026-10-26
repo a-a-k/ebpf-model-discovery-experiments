@@ -6,10 +6,77 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+import yaml
+
 from systems.deathstarbench.adapter import Adapter
 
 
 class OracleTests(unittest.TestCase):
+    def test_render_complete_pinned_upstream_shape(self):
+        class Context:
+            mode = "partial"
+            seed = 0
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        images = {
+            "social-graph-service": "deathstarbench/social-network-microservices:latest",
+            "social-graph-mongodb": "mongo:4.4.6",
+            "social-graph-redis": "redis",
+            "home-timeline-redis": "redis",
+            "compose-post-service": "deathstarbench/social-network-microservices:latest",
+            "post-storage-service": "deathstarbench/social-network-microservices:latest",
+            "post-storage-memcached": "memcached",
+            "post-storage-mongodb": "mongo:4.4.6",
+            "user-timeline-service": "deathstarbench/social-network-microservices:latest",
+            "user-timeline-redis": "redis",
+            "user-timeline-mongodb": "mongo:4.4.6",
+            "url-shorten-service": "deathstarbench/social-network-microservices:latest",
+            "url-shorten-memcached": "memcached",
+            "url-shorten-mongodb": "mongo:4.4.6",
+            "user-service": "deathstarbench/social-network-microservices:latest",
+            "user-memcached": "memcached",
+            "user-mongodb": "mongo:4.4.6",
+            "media-service": "deathstarbench/social-network-microservices:latest",
+            "media-memcached": "memcached",
+            "media-mongodb": "mongo:4.4.6",
+            "text-service": "deathstarbench/social-network-microservices:latest",
+            "unique-id-service": "deathstarbench/social-network-microservices:latest",
+            "user-mention-service": "deathstarbench/social-network-microservices:latest",
+            "home-timeline-service": "deathstarbench/social-network-microservices:latest",
+            "nginx-thrift": "yg397/openresty-thrift:xenial",
+            "media-frontend": "yg397/media-frontend:xenial",
+            "jaeger-agent": "jaegertracing/all-in-one:latest",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            adapter = Adapter(Context(Path(directory)))
+            social = adapter.source / "socialNetwork"
+            for relative in ("config", "nginx-web-server", "gen-lua", "media-frontend", "docker/openresty-thrift/lua-thrift"):
+                (social / relative).mkdir(parents=True, exist_ok=True)
+            (social / "config" / "jaeger-config.yml").write_text("disabled: false\n", encoding="utf-8")
+            (social / "nginx-web-server" / "jaeger-config.json").write_text('{"diabled": false}', encoding="utf-8")
+            services = {name: {"image": image} for name, image in images.items()}
+            services["user-timeline-service"].update({
+                "hostname": "user-timeline-service", "entrypoint": "UserTimelineService",
+                "depends_on": {"jaeger-agent": {"condition": "service_started"}, "user-timeline-mongodb": {"condition": "service_started"}},
+                "volumes": ["./config:/social-network-microservices/config"],
+            })
+            (social / "docker-compose.yml").write_text(yaml.safe_dump({"version": "3.9", "services": services}), encoding="utf-8")
+            adapter._render()
+            node_a = yaml.safe_load((adapter.node_dirs["a"] / "docker-compose.yml").read_text(encoding="utf-8"))
+            node_b = yaml.safe_load((adapter.node_dirs["b"] / "docker-compose.yml").read_text(encoding="utf-8"))
+        self.assertEqual(node_a["services"]["user-timeline-service"]["networks"]["app"]["ipv4_address"], "172.28.11.40")
+        self.assertIn("user-timeline-service-replica-a", node_a["services"])
+        self.assertEqual(list(node_b["services"]), ["user-timeline-service-replica-b"])
+        addresses = [spec["networks"]["app"]["ipv4_address"] for spec in node_a["services"].values()]
+        self.assertEqual(len(addresses), len(set(addresses)))
+
     def test_timeline_oracle_accepts_only_pinned_shapes(self):
         self.assertFalse(Adapter._valid_timeline(b"{}", "fixture"))
         self.assertTrue(Adapter._valid_timeline(json.dumps([{"post_id": "1", "text": "fixture"}]).encode(), "fixture"))

@@ -80,7 +80,7 @@ def _service_ip_map(names: list[str]) -> dict[str, str]:
     addresses = [f"172.28.11.{i}" for i in range(10, 40)]
     if len(names) > len(addresses):
         raise AdapterError("too many upstream services for the reserved subnet")
-    return dict(zip(sorted(names), addresses, strict=True))
+    return dict(zip(sorted(names), addresses))
 
 
 class Adapter:
