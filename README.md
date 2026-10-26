@@ -160,6 +160,8 @@ Costs include preparation, downloads/builds, VM startup, acquisition, state chan
 
 Technical reruns retain the failed attempt and its cause. The series is not expanded to obtain positive results.
 
+The [first permanent data archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40362321620) retains original campaign/qualification artifact ZIPs and workflow logs through OTel attempt `40351820494`, including failed preparations, the superseded pilot, and intermediate reports. Its `SHA256SUMS.txt` and `provenance.tar.gz` identify the exact assets and source runs. Later acquisitions will have a separate archive; this release does not represent a completed series.
+
 ## Discussion and limitations
 
 Guests share physical resources. Four controlled states provide a restricted transfer test, not arbitrary failure extrapolation or failure-transition dynamics. Target mixture weights are supplied. Fixed application versions and three repeats limit generalization. Workload grouping and semantic rules include manual knowledge. Protocol/language coverage can leave links unknown. Context propagation changes metadata and affects interpretation of portability and cost. Full native tracing may already contain every database dependency eBPF recovers.
