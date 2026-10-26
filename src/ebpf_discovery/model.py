@@ -105,7 +105,8 @@ def wilson(successes, n, z=1.959963984540054):
     divisor = 1 + z*z/n
     centre = (p + z*z/(2*n)) / divisor
     width = z * math.sqrt(p*(1-p)/n + z*z/(4*n*n)) / divisor
-    return [max(0.0, centre-width), min(1.0, centre+width)]
+    return [0.0 if successes == 0 else max(0.0, centre-width),
+            1.0 if successes == n else min(1.0, centre+width)]
 
 
 def conditional(rows, key, state):

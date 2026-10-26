@@ -122,12 +122,12 @@ class DeepFlowFallback:
         )
 
     def collect(self) -> Path:
-        if not self.started:
-            raise RuntimeError("DeepFlow fallback was not started")
         if self.collected:
             return self.out
-        errors: list[str] = []
-        for node in ("a", "b"):
+        # Retain startup diagnostics too: failed readiness is not an excuse to
+        # lose the container logs before the guest is destroyed.
+        errors: list[str] = [] if self.started else ["collector readiness was not established"]
+        for node in self.remote_roots:
             node_out = self.out / f"node-{node}"
             node_out.mkdir(parents=True, exist_ok=True)
             for command, filename in (

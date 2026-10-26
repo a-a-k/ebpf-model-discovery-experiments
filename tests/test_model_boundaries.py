@@ -1,6 +1,6 @@
 import base64
 import unittest
-from ebpf_discovery.model import Projection, assign, conditional
+from ebpf_discovery.model import Projection, assign, conditional, wilson
 from ebpf_discovery.observations import census, identifier
 
 
@@ -13,6 +13,11 @@ def span(identity, status=200, start=0, end=1000000, path='/product'):
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_wilson_boundary_outcomes_include_zero_and_one(self):
+        for n in (1, 60, 80, 240):
+            self.assertEqual(wilson(0, n)[0], 0.0)
+            self.assertEqual(wilson(n, n)[1], 1.0)
+
     def test_failure_associated_missing_classes_widen_bounds(self):
         rows = [{'class_id': 'c', 'state': '00', 'proxy': True, 'compatible_classes': ['c']}]
         rows += [{'class_id': None, 'state': '00', 'proxy': None, 'compatible_classes': ['c']}] * 9
