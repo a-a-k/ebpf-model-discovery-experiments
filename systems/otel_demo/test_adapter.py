@@ -307,6 +307,7 @@ def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
 
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
     assert len(calls) == 1
@@ -360,6 +361,7 @@ def test_consumer_drain_rejects_failed_missing_partial_and_nonzero_rows(
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
     assert len(calls) == 5
@@ -382,6 +384,7 @@ def test_consumer_drain_failure_retains_probe_diagnostics(monkeypatch) -> None:
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
 
     try:
         adapter._wait_consumer_drain(0.5)
@@ -414,6 +417,7 @@ def test_consumer_drain_retries_bounded_probe_timeout(monkeypatch) -> None:
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
     assert len(calls) == 2
@@ -437,6 +441,7 @@ def test_consumer_drain_probe_uses_full_remaining_budget(monkeypatch) -> None:
     monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(60)
 
     assert calls[0]["timeout"] == 60.0
@@ -454,6 +459,7 @@ def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: "stable"
 
     try:
         adapter._wait_consumer_drain(0.5)
@@ -465,6 +471,67 @@ def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
     assert "probe_timeout=" in message
     assert "partial" in message
     assert "still slow" in message
+
+
+def test_consumer_drain_rejects_broker_restart() -> None:
+    class Result:
+        stdout = "accounting orders 0 42 42 0 consumer host client\n"
+        stderr = ""
+        returncode = 0
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            return Result()
+
+    starts = iter(["before", "after"])
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter._kafka_started_at = lambda deadline: next(starts)
+
+    try:
+        adapter._wait_consumer_drain(1)
+    except RuntimeError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("a broker restart must invalidate drain evidence")
+
+    assert "Kafka restarted" in message
+    assert "before=before after=after" in message
+
+
+def test_kafka_start_query_is_bounded_and_strict(monkeypatch) -> None:
+    calls = []
+
+    class Result:
+        stdout = ""
+        stderr = "inspect failed"
+        returncode = 1
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append((node, command, kwargs))
+            return Result()
+
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: 10.0)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+
+    try:
+        adapter._kafka_started_at(70.0)
+    except RuntimeError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("a failed start-time query must be technical failure")
+
+    assert calls == [
+        (
+            "a",
+            "docker inspect -f '{{.State.StartedAt}}' kafka",
+            {"check": False, "timeout": 60.0},
+        )
+    ]
+    assert "inspect failed" in message
+    assert "returncode=1" in message
 
 
 def test_async_in_boundary_positive_and_missing_oracle() -> None:
