@@ -16,6 +16,10 @@ Costs include setup, manual mapping, acquisition, settling, failures, interpreta
 
 Orchestrator verdict: GO for testing the original current criterion, with external validation and explicit unknown outcomes. Reviewer verdict: **GO**, supplied by the separate GPT-6.1 Sol/xhigh reviewer in this conversation before implementation. Successful Kafka collection is not assumed. An unsupported async result fails to establish that capability and is not relabelled as successful topic-graph discovery. Actual results require a final review before any success claim.
 
+Implementation clarification reviewed on 2026-10-26: separate reviewer GO for the joint observed HTTP status/deadline proxy, with external semantic success unchanged as the criterion. Multi-step grouping is supplied knowledge. Unknown-class calibration attempts widen all compatible classes' bounds; they cannot be discarded. Class rules are fixed before target acquisition. Per-attempt proxy/semantic mismatches are reported. Durable async completion still needs actual identity/completion evidence, independently evaluated; an HTTP proxy is insufficient.
+
+Pilot/code validity review on 2026-10-26: orchestrator and independent 6.1 Sol/xhigh reviewer GO to continue `fixed-warmup-v2`, without an empirical-success verdict. The retained pilot preserves semantic proxy mismatches and unknown native forecasts. Review repairs include exact Wilson boundary handling, nominal iid uncertainty labeling, complete preparation/failure job costs, exact published DB endpoint matching, and rejection of previous-order identifiers. Native exporters use immutable segments across restart. These are implementation/evaluation repairs; neither the target nor the fixed series is changed. Actual OTel recording guards must pass the native-absence audit before its scored absent-mode campaigns.
+
 ## Design
 
 27 campaigns = 3 systems x 3 actual tracing modes (absent, partial, full) x seeds 0,1,2. The partial mode disables native tracing in both controlled replicas. eBPF is collected in every mode; automatic context propagation is permitted and recorded.
@@ -27,6 +31,8 @@ Orchestrator verdict: GO for testing the original current criterion, with extern
 Each campaign: four 60-second calibration blocks (11,10,01,00); eight 30-second target blocks with state counts 4,2,1,1; 4 operations/second with balanced mix. Two healthy 30-second blocks support training/testing operation classes. Total 2160 primary attempts per campaign, 58320 overall. States mean availability of replicas A/B, on different guests. State-mixture transfer does not claim prediction of transition dynamics or MTTF/MTTR.
 
 Reset/settling and pending deadlines are completed between blocks. Forecasts are saved before target observations are acquired. Each forecast uses 100000 Monte Carlo draws and is checked against exact conditional-state weighting. Unsupported interpretations are not given fabricated point values.
+
+Preparation repair, independent reviewer GO on 2026-10-26: after each state barrier, execute exactly one unscored warmup per operation in that block, retain its outcome, and wait 10 seconds. Never retry warmups until success. After scored futures/oracles finish, hold the current intervention for a fixed 10-second drain guard before resetting. The guard does not prove completion of arbitrary server background work. These operations and waits count toward preparation costs; the 2160 scored primary attempts are unchanged. Apply `fixed-warmup-v2` consistently. The already running Petclinic run 40333270035 is a superseded protocol pilot regardless of accuracy and is retained and rerun.
 
 ## Additional controls, same deployments
 

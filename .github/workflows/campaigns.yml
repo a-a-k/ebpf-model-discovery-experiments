@@ -1,0 +1,86 @@
+name: Fixed 27-campaign empirical series
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        type: choice
+        options: [all, deathstarbench, otel_demo, petclinic]
+        default: all
+      mode:
+        type: choice
+        options: [all, absent, partial, full]
+        default: all
+      seed:
+        type: choice
+        options: [all, '0', '1', '2']
+        default: all
+permissions:
+  contents: read
+jobs:
+  campaign:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        system: [deathstarbench, otel_demo, petclinic]
+        mode: [absent, partial, full]
+        seed: [0, 1, 2]
+    steps:
+      - name: Select requested campaign
+        id: select
+        env:
+          SYSTEM: ${{ inputs.system }}
+          MODE: ${{ inputs.mode }}
+          SEED: ${{ inputs.seed }}
+        run: |
+          if [[ ( "$SYSTEM" == all || "$SYSTEM" == '${{ matrix.system }}' ) && ( "$MODE" == all || "$MODE" == '${{ matrix.mode }}' ) && ( "$SEED" == all || "$SEED" == '${{ matrix.seed }}' ) ]]; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.select.outputs.run == 'true'
+      - uses: actions/setup-python@v5
+        if: steps.select.outputs.run == 'true'
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        if: steps.select.outputs.run == 'true'
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Boot two guests
+        if: steps.select.outputs.run == 'true'
+        run: bash scripts/vms.sh start work/vms
+      - name: Acquire calibration, save forecast, then acquire independent target
+        if: steps.select.outputs.run == 'true'
+        env:
+          PYTHONPATH: .
+        run: python -m ebpf_discovery.campaign --system ${{ matrix.system }} --mode ${{ matrix.mode }} --seed ${{ matrix.seed }} --out results/campaign
+      - name: Evaluate independent outcomes
+        if: steps.select.outputs.run == 'true'
+        run: python -m ebpf_discovery.evaluate --out results/campaign
+      - name: Retain infrastructure and cost evidence
+        if: always() && steps.select.outputs.run == 'true'
+        run: |
+          mkdir -p results/campaign/infrastructure
+          cp work/vms/*.json results/campaign/infrastructure/ 2>/dev/null || true
+          for n in a b; do
+            mkdir -p results/campaign/infrastructure/$n
+            cp work/vms/$n/check.txt work/vms/$n/serial.log results/campaign/infrastructure/$n/ 2>/dev/null || true
+          done
+          free -m > results/campaign/infrastructure/runner-memory.txt
+          df -h > results/campaign/infrastructure/runner-disk.txt
+          python -m pip freeze > results/campaign/python-environment.txt
+      - name: Stop guests
+        if: always() && steps.select.outputs.run == 'true'
+        run: bash scripts/vms.sh stop work/vms
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.select.outputs.run == 'true'
+        with:
+          name: campaign-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            results/campaign/
+            !results/campaign/**/source/**
+            !results/campaign/**/upstream/**
+            !results/campaign/**/image-context/**
+            !results/campaign/**/*.tar
+          retention-days: 90

@@ -1,0 +1,56 @@
+name: Regenerate empirical tables and figures
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: Space-separated campaign run IDs; retain failed attempts too
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . matplotlib
+      - name: Download retained campaign artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_IDS: ${{ inputs.run_ids }}
+        run: |
+          for run_id in $RUN_IDS; do
+            [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
+            mkdir -p "work/inputs/$run_id"
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100" > "work/inputs/$run_id/artifact-index.json"
+            if jq -e '.artifacts[] | select(.name | startswith("campaign-"))' "work/inputs/$run_id/artifact-index.json" >/dev/null; then
+              gh run download "$run_id" --pattern 'campaign-*' -D "work/inputs/$run_id"
+            fi
+          done
+      - name: Retain complete repository job costs including preparation and failures
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/inputs/cost-ledger
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" --jq '.workflow_runs[] | [.id, .run_attempt] | @tsv' > work/inputs/cost-ledger/run-attempts.tsv
+          while read -r run_id attempts; do
+            for attempt in $(seq 1 "$attempts"); do
+              gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/attempts/$attempt/jobs?per_page=100" > "work/inputs/cost-ledger/$run_id-$attempt-jobs.json"
+            done
+          done < work/inputs/cost-ledger/run-attempts.tsv
+      - name: Re-evaluate saved evidence without refitting forecasts
+        run: |
+          find work/inputs -name metrics.json -print0 | while IFS= read -r -d '' metrics; do
+            cp "$metrics" "$(dirname "$metrics")/metrics-acquisition-version.json"
+            python -m ebpf_discovery.evaluate --out "$(dirname "$metrics")"
+          done
+      - run: python -m ebpf_discovery.report --inputs work/inputs --out results/report
+      - uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ github.run_id }}
+          path: results/report/
+          retention-days: 90
