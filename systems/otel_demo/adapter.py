@@ -137,11 +137,13 @@ class Adapter:
             "native_request_id_capture": {
                 "header": "x-experiment-request-id",
                 "entry_service": "frontend",
-                "configuration": [
-                    "OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST",
-                    "OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_REQUEST_HEADERS",
-                ],
-                "status": "requested from the frontend Node HTTP instrumentation; observed support is recorded by collect_native",
+                "configuration": "@opentelemetry/instrumentation-http headersToSpanAttributes.server.requestHeaders",
+                "pinned_instrumentation_http": "0.221.0",
+                "status": (
+                    "source-configured on native-enabled frontend entry spans"
+                    if self.mode != "absent"
+                    else "not mounted because native SDKs are disabled"
+                ),
             },
         }
         (self.bundle / "deployment-manifest.json").write_text(
@@ -766,17 +768,11 @@ class Adapter:
                     {"OTEL_SDK_DISABLED": "true"}
                 )
 
-        # The frontend is the first instrumented HTTP application hop.  Node's
-        # current and legacy-contrib variable names are both supplied because
-        # support differs by instrumentation generation.  No traceparent is
-        # injected; the opaque header remains the only experiment alignment ID.
-        frontend_env = services["frontend"].setdefault("environment", {})
-        frontend_env.update(
-            {
-                "OTEL_INSTRUMENTATION_HTTP_CAPTURE_HEADERS_SERVER_REQUEST": "x-experiment-request-id",
-                "OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_REQUEST_HEADERS": "x-experiment-request-id",
-            }
-        )
+        # The exact pinned Node HTTP instrumentation has no environment parser
+        # for header capture.  In native-enabled modes, mount the recorded
+        # source configuration that captures only this server request header.
+        # No traceparent is injected; the opaque value has no graph semantics.
+        self._configure_frontend_native_capture(services["frontend"])
 
         preferred = {
             "frontend-proxy": ENTRY_IP,
@@ -1340,6 +1336,11 @@ SELECT json_build_object(
         product_dockerfile = self.source / "src" / "product-catalog" / "Dockerfile"
         currency_tracer = self.source / "src" / "currency" / "src" / "tracer_common.h"
         shipping_telemetry = self.source / "src" / "shipping" / "src" / "telemetry_conf.rs"
+        frontend_instrumentation = (
+            self.source / "src" / "frontend" / "utils" / "telemetry" / "Instrumentation.js"
+        )
+
+        self._patch_frontend_request_id_capture(frontend_instrumentation)
 
         checkout_text = checkout.read_text(encoding="utf-8")
         if "func telemetrySDKDisabled() bool" not in checkout_text:
@@ -1594,6 +1595,7 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 "src/product-catalog/Dockerfile",
                 "src/currency/src/tracer_common.h",
                 "src/shipping/src/telemetry_conf.rs",
+                "src/frontend/utils/telemetry/Instrumentation.js",
             ]
         )
         if not diff.strip():
@@ -1610,12 +1612,46 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 "product-catalog-a",
                 "product-catalog-b",
                 "shipping",
+                "frontend",
             ],
             "dependency_download_commands": {
                 "checkout": download_command.strip(),
                 "product-catalog": download_command.strip(),
             },
         }
+
+    def _configure_frontend_native_capture(self, service: dict[str, Any]) -> None:
+        if self.mode != "absent":
+            service.setdefault("volumes", []).append(
+                "./source/src/frontend/utils/telemetry/Instrumentation.js:/app/Instrumentation.js:ro"
+            )
+
+    def _patch_frontend_request_id_capture(self, instrumentation: Path) -> None:
+        text = instrumentation.read_text(encoding="utf-8")
+        if "x-experiment-request-id" in text:
+            return
+        patched = self._replace_once(
+            text,
+            """      '@opentelemetry/instrumentation-fs': {
+        enabled: false,
+      },
+""",
+            """      '@opentelemetry/instrumentation-fs': {
+        enabled: false,
+      },
+      // The experiment ID is opaque: it aligns an external HTTP attempt with
+      // the existing frontend server span without adding graph semantics.
+      '@opentelemetry/instrumentation-http': {
+        headersToSpanAttributes: {
+          server: {
+            requestHeaders: ['x-experiment-request-id'],
+          },
+        },
+      },
+""",
+            instrumentation,
+        )
+        instrumentation.write_text(patched, encoding="utf-8")
 
     @staticmethod
     def _replace_once(text: str, old: str, new: str, path: Path) -> str:

@@ -78,6 +78,42 @@ def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
     assert service["build"]["dockerfile"] == "./src/checkout/Dockerfile"
 
 
+def test_native_enabled_frontend_mounts_exact_server_header_capture() -> None:
+    adapter = object.__new__(Adapter)
+    adapter.mode = "full"
+    frontend = {"environment": {}, "volumes": []}
+    adapter._configure_frontend_native_capture(frontend)
+    assert frontend["volumes"] == [
+        "./source/src/frontend/utils/telemetry/Instrumentation.js:/app/Instrumentation.js:ro"
+    ]
+
+    adapter.mode = "absent"
+    absent_frontend = {"environment": {}}
+    adapter._configure_frontend_native_capture(absent_frontend)
+    assert "volumes" not in absent_frontend
+
+
+def test_frontend_patch_uses_server_only_supported_header_config(tmp_path: Path) -> None:
+    instrumentation = tmp_path / "Instrumentation.js"
+    instrumentation.write_text(
+        """getNodeAutoInstrumentations({
+      '@opentelemetry/instrumentation-fs': {
+        enabled: false,
+      },
+})
+""",
+        encoding="utf-8",
+    )
+    adapter = object.__new__(Adapter)
+    adapter._patch_frontend_request_id_capture(instrumentation)
+    patched = instrumentation.read_text(encoding="utf-8")
+    assert "headersToSpanAttributes" in patched
+    assert "server:" in patched
+    assert "requestHeaders: ['x-experiment-request-id']" in patched
+    assert "client:" not in patched
+    assert "requestHook" not in patched
+
+
 def test_collect_native_rotates_exporter_targets_before_restart(tmp_path: Path) -> None:
     events = []
 
