@@ -40,10 +40,13 @@ COLLECTOR_IP = "172.28.11.30"
 DATABASE_IP = "172.28.11.31"
 KAFKA_IP = "172.28.11.32"
 ACCOUNTING_IP = "172.28.11.33"
+ENTRY_GUEST_PORT = 18080
 DATABASE_GUEST_PORT = 15432
 COLLECTOR_GUEST_PORT = 14317
 FLAGD_GUEST_PORT = 18013
+REPLICA_A_GUEST_PORT = 13550
 REPLICA_B_GUEST_PORT = 13550
+ROUTER_GUEST_PORT = 13551
 
 OPERATIONS = ("browse_product", "add_to_cart", "checkout")
 DROP_SERVICES = {"load-generator", "fraud-detection", "flagd-ui", "telemetry-docs"}
@@ -61,7 +64,7 @@ class Adapter:
             raise ValueError(f"invalid tracing mode: {self.mode!r}")
         self.bundle = Path(context.deployment_dir) / "otel_demo"
         self.source = self.bundle / "source"
-        self.entry_url = f"http://{ENTRY_IP}:8080"
+        self.entry_url = f"http://{self.ctx.node_ip('a')}:{ENTRY_GUEST_PORT}"
         self._consumer_paused = False
         self._latest_async_deadline_ns = 0
         self._deadline_lock = threading.Lock()
@@ -238,7 +241,13 @@ class Adapter:
             "operations": list(OPERATIONS),
             "entry_url": self.entry_url,
             "replicas": [
-                {"name": "product-catalog-a", "node": "a", "ip": REPLICA_A_IP},
+                {
+                    "name": "product-catalog-a",
+                    "node": "a",
+                    "ip": REPLICA_A_IP,
+                    "transport_host": self.ctx.node_ip("a"),
+                    "transport_port": REPLICA_A_GUEST_PORT,
+                },
                 {
                     "name": "product-catalog-b",
                     "node": "b",
@@ -251,6 +260,8 @@ class Adapter:
                 "name": "product-catalog",
                 "node": "a",
                 "ip": ROUTER_IP,
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": ROUTER_GUEST_PORT,
                 "policy": "envoy round_robin with active gRPC endpoint health checks",
             },
             "database": {
@@ -662,6 +673,7 @@ class Adapter:
         product = services.pop("product-catalog")
         product_a = self._configure_product(product, "a")
         product_a["container_name"] = "product-catalog-a"
+        product_a["ports"] = [f"{REPLICA_A_GUEST_PORT}:3550"]
         services["product-catalog-a"] = product_a
         services["product-catalog"] = {
             "image": services["frontend-proxy"]["image"],
@@ -679,6 +691,7 @@ class Adapter:
                 "timeout": "2s",
                 "retries": 30,
             },
+            "ports": [f"{ROUTER_GUEST_PORT}:3550"],
         }
 
         # The study collector replaces the demo's debug/metrics collector and
@@ -696,6 +709,7 @@ class Adapter:
         services["astronomy-db"]["ports"] = [f"{DATABASE_GUEST_PORT}:5432"]
         services["otel-collector"]["ports"] = [f"{COLLECTOR_GUEST_PORT}:4317"]
         services["flagd"]["ports"] = [f"{FLAGD_GUEST_PORT}:8013"]
+        services["frontend-proxy"]["ports"] = [f"{ENTRY_GUEST_PORT}:8080"]
 
         # Standard language SDKs get their specified master disable switch.
         # Checkout and product-catalog additionally have explicit source guards
@@ -786,6 +800,24 @@ class Adapter:
             "transport_host": self.ctx.node_ip("b"),
             "transport_port": REPLICA_B_GUEST_PORT,
         }
+        placement["product-catalog-a"].update(
+            {
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": REPLICA_A_GUEST_PORT,
+            }
+        )
+        placement["product-catalog"].update(
+            {
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": ROUTER_GUEST_PORT,
+            }
+        )
+        placement["frontend-proxy"].update(
+            {
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": ENTRY_GUEST_PORT,
+            }
+        )
         return node_a, node_b, placement
 
     def _configure_product(self, source: dict[str, Any], node: str) -> dict[str, Any]:

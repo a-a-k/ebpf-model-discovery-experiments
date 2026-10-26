@@ -17,9 +17,10 @@ round-robin policy and active gRPC health checks. Replica state changes only
 stop or start the selected backends; they never rewrite routing. All containers
 have recorded stable addresses. Cross-guest transport does not assume Docker
 bridge-subnet routing: replica B is published on guest B port `13550`, while
-guest A publishes PostgreSQL on `15432`, native OTLP/gRPC on `14317`, and flagd
-on `18013`. The generated metadata records both container identity and transport
-host/port.
+guest A publishes replica A on `13550`, the product router on `13551`, the HTTP
+entrypoint on `18080`, PostgreSQL on `15432`, native OTLP/gRPC on `14317`, and
+flagd on `18013`. The runner uses `192.168.76.11:18080`; generated metadata
+records both container identity and reachable transport host/port.
 
 ## Native tracing modes
 
