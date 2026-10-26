@@ -1232,6 +1232,8 @@ SELECT json_build_object(
         checkout = self.source / "src" / "checkout" / "main.go"
         product = self.source / "src" / "product-catalog" / "main.go"
         email = self.source / "src" / "email" / "email_server.rb"
+        checkout_dockerfile = self.source / "src" / "checkout" / "Dockerfile"
+        product_dockerfile = self.source / "src" / "product-catalog" / "Dockerfile"
 
         checkout_text = checkout.read_text(encoding="utf-8")
         if "func telemetrySDKDisabled() bool" not in checkout_text:
@@ -1345,6 +1347,29 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 self._replace_once(email_text, old, new, email), encoding="utf-8"
             )
 
+        # GitHub occasionally resets an HTTP/2 module download stream. Retry
+        # only the immutable go.mod/go.sum download step; dependency versions,
+        # checksums, build commands and base-image digests remain unchanged.
+        download_command = """RUN set -eu; \\
+    for attempt in 1 2 3; do \\
+        if go mod download; then exit 0; fi; \\
+        if [ "$attempt" -eq 3 ]; then exit 1; fi; \\
+        sleep $((attempt * 5)); \\
+    done
+"""
+        for dockerfile in (checkout_dockerfile, product_dockerfile):
+            dockerfile_text = dockerfile.read_text(encoding="utf-8")
+            if "for attempt in 1 2 3" not in dockerfile_text:
+                dockerfile.write_text(
+                    self._replace_once(
+                        dockerfile_text,
+                        "RUN go mod download\n",
+                        download_command,
+                        dockerfile,
+                    ),
+                    encoding="utf-8",
+                )
+
         diff = self._run_stdout(
             [
                 "git",
@@ -1355,6 +1380,8 @@ end # The metric exporter is not constructed when the SDK is disabled.
                 "src/checkout/main.go",
                 "src/product-catalog/main.go",
                 "src/email/email_server.rb",
+                "src/checkout/Dockerfile",
+                "src/product-catalog/Dockerfile",
             ]
         )
         if not diff.strip():
@@ -1365,6 +1392,10 @@ end # The metric exporter is not constructed when the SDK is disabled.
             "path": patch_path.name,
             "sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
             "services": ["checkout", "email", "product-catalog-a", "product-catalog-b"],
+            "dependency_download_commands": {
+                "checkout": download_command.strip(),
+                "product-catalog": download_command.strip(),
+            },
         }
 
     @staticmethod
