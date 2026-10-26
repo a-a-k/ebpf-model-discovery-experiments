@@ -63,6 +63,11 @@ later cumulative file as a separate snapshot.
 The generated `native-disable.patch` and its SHA-256 are retained in deployment
 metadata. These patched images are built only in GitHub Actions; local adapter
 checks do not build or run the application.
+The same recorded patch wraps the existing checkout and product-catalog
+`go mod download` Docker layers in at most three attempts with bounded backoff.
+It does not alter `go.mod`, `go.sum`, dependency versions, checksum verification,
+the compilation command, or pinned base-image digests; the full replacement
+commands are included in the deployment manifest.
 It does **not** infer Kafka delivery from the HTTP response or producer state;
 the upstream producer uses `RequiredAcks=NoResponse`.
 
