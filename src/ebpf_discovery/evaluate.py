@@ -185,7 +185,7 @@ def evaluate(root):
     result = {'system': status['system'], 'mode': status['mode'], 'seed': status['seed'],
               'protocol_version': status.get('protocol_version', 'pre-warmup-pilot'),
               'run_id': status['run_id'], 'sources': {}, 'costs': {'campaign_elapsed_seconds': status['elapsed_seconds']},
-              'forecast_saved_before_target': True}
+              'forecast_saved_before_target': True, 'evaluation_commit': os.environ.get('GITHUB_SHA')}
     for source in ('ebpf', 'native', 'combined'):
         folder = Path('models') / source
         if hashlib.sha256((root/folder/'forecast.json').read_bytes()).hexdigest() != saved['sha256'][source]:
@@ -216,7 +216,7 @@ def evaluate(root):
                                      'absolute_error': abs(point-actual) if point is not None and actual is not None else None,
                                      'signed_error': point-actual if point is not None and actual is not None else None,
                                      'worst_interval_error': worst, 'interval_width': bounds[1]-bounds[0],
-                                     'coverage': bounds[0] <= ylo and bounds[1] >= yhi,
+                                     'coverage': bounds[0] <= ylo + 1e-12 and bounds[1] >= yhi - 1e-12,
                                      'unsupported': predicted is None,
                                      'target_unclassified': sum(by_key[opaque_attempt(r)]['class_id'] is None for r in targets)}
             for row in targets:
@@ -254,6 +254,8 @@ def evaluate(root):
         result['sources'][source] = {'operations': operations,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,
+            'shared_database_dependencies': observed_graph['shared_database_dependencies'],
+            'database_edges': [e for e in observed_graph['edges'] if e['evidence'] == 'database_client_span'],
             'database_forecast_effect': None,
             'database_forecast_effect_note': 'DB graph nodes are not variables in the saturated four-state predictor; no structural forecast gain claimed.',
             'cross_node': observed_graph['cross_node'],
@@ -267,6 +269,7 @@ def evaluate(root):
         write_json(root/folder/'target-assignments.json', projected)
         write_json(root/folder/'proxy-semantic-comparison.json', mismatches)
         write_json(root/folder/'observed-uuid-census.json', identities)
+        write_json(root/folder/'observed-final-graph.json', observed_graph)
     write_json(root/'metrics.json', result)
     return result
 

@@ -7,6 +7,7 @@ import csv
 import json
 import os
 from pathlib import Path
+import shutil
 from statistics import mean
 
 
@@ -15,8 +16,13 @@ def report(inputs, out):
         raise RuntimeError('Research result processing runs in GitHub Actions')
     out.mkdir(parents=True, exist_ok=True)
     rows, campaigns, jobs, superseded = [], [], [], []
-    for path in sorted(inputs.rglob('jobs.json')):
+    classifications, structures, async_rows, db_controls = [], [], [], []
+    seen_jobs = set()
+    for path in sorted(inputs.rglob('*jobs.json')):
         for job in json.loads(path.read_text()).get('jobs', []):
+            if job['id'] in seen_jobs:
+                continue
+            seen_jobs.add(job['id'])
             started, ended = job.get('started_at'), job.get('completed_at')
             seconds = (datetime.fromisoformat(ended.replace('Z', '+00:00')) - datetime.fromisoformat(started.replace('Z', '+00:00'))).total_seconds() if started and ended else None
             jobs.append({'run_id': job['run_id'], 'job_id': job['id'], 'name': job['name'],
@@ -30,7 +36,50 @@ def report(inputs, out):
             continue
         campaigns.append({'system': m['system'], 'mode': m['mode'], 'seed': m['seed'], 'run_id': m['run_id'],
                           'path': str(path.relative_to(inputs)), **m['costs']})
+        # Keep the small, reviewable evidence beside generated tables. Raw
+        # telemetry remains in the original Actions artifact/archive.
+        evidence = out/'evidence'/f"{m['system']}-{m['mode']}-{m['seed']}-{m['run_id']}"
+        evidence.mkdir(parents=True, exist_ok=True)
+        for name in ('metrics.json', 'metrics-acquisition-version.json', 'status.json',
+                     'forecast-saved.json', 'blocks.json', 'deployment.json'):
+            if (path.parent/name).exists():
+                shutil.copy2(path.parent/name, evidence/name)
         for source, result in m['sources'].items():
+            source_out = evidence/'models'/source
+            source_out.mkdir(parents=True, exist_ok=True)
+            for name in ('model.json', 'forecast.json', 'evaluation-map.json', 'observed-final-graph.json'):
+                if (path.parent/'models'/source/name).exists():
+                    shutil.copy2(path.parent/'models'/source/name, source_out/name)
+            identity = {k: m[k] for k in ('system', 'mode', 'seed', 'run_id')}
+            identity['source'] = source
+            for variant, value in result['classes'].items():
+                classifications.append({**identity, 'variant': variant, **value})
+            reference = result.get('cross_node_reference_validation') or {}
+            structures.append({**identity, 'observed_cross_node_links': len(result['cross_node']),
+                               'native_reference_covered': reference.get('reference_covered'),
+                               'native_reference_disagreement_rate': reference.get('error_rate_on_covered'),
+                               'ground_truth_link_error_rate': result['cross_node_error_rate'],
+                               'db_logical_nodes': len(result['database_nodes']),
+                               'db_nodes_matching_selected_address': sum(n['matches_selected_database'] for n in result['database_nodes']),
+                               'db_concrete_instances_confirmed': sum(n.get('concrete_instance_confirmed') is True for n in result['database_nodes']),
+                               'db_shared_dependencies': len(result.get('shared_database_dependencies', {})),
+                               'db_forecast_effect': result['database_forecast_effect'],
+                               'proxy_semantic_mismatches': result['proxy_mismatches'],
+                               'proxy_semantic_comparable': result['proxy_comparable'],
+                               'normalized_spans': result['normalized_spans']})
+            for operation, phases in result['db_controls'].items():
+                for phase, rate in phases.items():
+                    db_controls.append({**identity, 'operation': operation, 'phase': phase,
+                                        **{k: v for k, v in rate.items() if k != 'bounds'}})
+            for phase in sorted({r['phase'] for r in result['async']}):
+                selected = [r for r in result['async'] if r['phase'] == phase]
+                async_rows.append({**identity, 'phase': phase, 'attempts': len(selected),
+                                   'http_successes': sum(r['http_success'] is True for r in selected),
+                                   'http_unknown': sum(r['http_success'] is None for r in selected),
+                                   'durable_successes': sum((r.get('durable') or {}).get('success') is True for r in selected),
+                                   'durable_unknown': sum((r.get('durable') or {}).get('success') is None for r in selected),
+                                   'identity_chains_confirmed': sum(r['complete_identity_chain'] is True for r in selected),
+                                   'identity_chains_unknown': sum(r['complete_identity_chain'] is None for r in selected)})
             for operation, op in result['operations'].items():
                 prediction = op['forecast'] or {}
                 rows.append({'system': m['system'], 'mode': m['mode'], 'seed': m['seed'], 'source': source,
@@ -40,7 +89,9 @@ def report(inputs, out):
                              'worst_interval_error_pp': op['worst_interval_error']*100,
                              'interval_width_pp': op['interval_width']*100, 'unsupported': op['unsupported'],
                              'target_unclassified': op['target_unclassified']})
-    for filename, data in [('operations.csv', rows), ('costs.csv', campaigns), ('job-costs.csv', jobs)]:
+    for filename, data in [('operations.csv', rows), ('costs.csv', campaigns), ('job-costs.csv', jobs),
+                           ('classes.csv', classifications), ('structure.csv', structures),
+                           ('async.csv', async_rows), ('database-controls.csv', db_controls)]:
         with (out/filename).open('w', newline='', encoding='utf-8') as stream:
             if data:
                 writer = csv.DictWriter(stream, fieldnames=list(data[0]))
@@ -74,7 +125,8 @@ def report(inputs, out):
     (out/'superseded-pilots.json').write_text(json.dumps(superseded, indent=2)+'\n')
     lines += ['', f'Retained technical failures: {len(failures)}. See `technical-failures.json`.', '',
               f'Superseded protocol pilots: {len(superseded)}. Full metrics remain in `superseded-pilots.json`; excluded by protocol, not accuracy.', '',
-              f'Total retained job time including VM preparation and failed jobs: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`.', '',
+              f'Total completed job time across retained repository history, including preparation, checks, selector jobs and failures: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`. Ongoing job time is unknown and excluded from this total. Human/agent engineering time was not independently metered and remains unknown.', '',
+              'Class separation and coverage are in `classes.csv`; observed links, DB structure and semantic proxy mismatches in `structure.csv`; DB interventions in `database-controls.csv`; asynchronous controls and unknown identity chains in `async.csv`. Concrete DB-instance identity is not inferred from an IP address. Native ancestry agreement is a reference comparison, not independent ground-truth correctness.', '',
               'Means are reported only with exactly seeds 0, 1, and 2; duplicate attempts must be resolved explicitly from technical-failure history, not averaged or selected by accuracy.']
     (out/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
     if rows:

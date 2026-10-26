@@ -54,8 +54,9 @@ def main():
                                'graph': graph(observed)}
         write_json(ctx.out / 'observation-support.json', {'sources': support, 'parse_errors': parse_errors})
         if os.environ.get('DEEPFLOW_FALLBACK') == 'true':
-            from systems.deathstarbench.deepflow_fallback import fallback
-            fallback_handle = fallback(ctx, adapter, ctx.out)
+            from systems.deathstarbench.deepflow_fallback import DeepFlowFallback
+            fallback_handle = DeepFlowFallback(ctx, adapter, ctx.out)
+            fallback_handle.start()
             time.sleep(15)
             fallback_records = []
             for _ in range(4):

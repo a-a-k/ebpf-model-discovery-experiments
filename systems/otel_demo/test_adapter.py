@@ -68,11 +68,44 @@ def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
     assert 'path: /native/traces.json' in config
     description = adapter._suppression_description()
     assert description["collector_filter"].startswith("none")
+    assert "always-off sampling" in description["source_guards"]
+    assert "NoopTracerProvider" in description["native_component_guards"]
 
     service = {"build": {"context": "./", "dockerfile": "./src/checkout/Dockerfile"}}
     adapter._prefix_source_build(service)
     assert service["build"]["context"] == "./source"
     assert service["build"]["dockerfile"] == "./src/checkout/Dockerfile"
+
+
+def test_absent_native_configs_disable_non_sdk_tracing(tmp_path: Path) -> None:
+    adapter = object.__new__(Adapter)
+    adapter.mode = "absent"
+    adapter.bundle = tmp_path / "bundle"
+    adapter.source = tmp_path / "source"
+    (adapter.source / "src/frontend-proxy").mkdir(parents=True)
+    (adapter.source / "src/image-provider").mkdir(parents=True)
+    adapter.bundle.mkdir()
+    (adapter.source / "src/frontend-proxy/envoy.tmpl.yaml").write_text(
+        """static_resources:
+  listeners:
+  - filter_chains:
+    - filters:
+      - typed_config:
+          tracing:
+            provider: {name: envoy.tracers.opentelemetry}
+          route_config: {name: routes}
+""",
+        encoding="utf-8",
+    )
+    (adapter.source / "src/image-provider/nginx.conf.template").write_text(
+        "http {\n    otel_trace on;\n}\n", encoding="utf-8"
+    )
+    adapter._write_absent_native_configs()
+    proxy = (adapter.bundle / "frontend-proxy-no-tracing.yaml").read_text()
+    nginx = (adapter.bundle / "image-provider-no-tracing.conf").read_text()
+    assert "tracing:" not in proxy
+    assert "route_config:" in proxy
+    assert "otel_trace off;" in nginx
 
 
 def test_envoy_uses_guest_transport_for_remote_replica() -> None:

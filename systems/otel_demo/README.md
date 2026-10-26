@@ -30,13 +30,27 @@ to every application service. Disabled containers receive
 `OTEL_SDK_DISABLED=true`. Checkout and product-catalog construct Go providers
 directly, and email directly adds a metric reader to what becomes a no-op Ruby
 provider, so `prepare()` applies a recorded source patch and the Actions guests
-build those three images from the pinned checkout. The patch skips exporter/SDK
+build the affected images from the pinned checkout. The patch skips exporter/SDK
 construction when disabled (checkout retains only a never-sample provider for
 context propagation). The collector does not filter spans: its file export is
 the raw native OTLP stream, and the adapter fails collection when that stream
 contains forbidden native spans. This also audits that the standard disable
 flag worked in the other language SDKs. OTel logs, metrics, Docker application logs,
 and common eBPF evidence remain separate artifacts.
+
+Qualification run 40336717147 showed that five nonstandard emitters ignored the
+master switch. In `absent` mode, currency and shipping are therefore rebuilt with
+explicit source guards around their direct trace exporters; the mounted Envoy
+template has its tracing provider removed; nginx receives `otel_trace off`; and
+flagd receives no collector URI (its documented opt-in for trace export). These
+guards do not filter collector output or alter request handling. Partial mode only
+disables the two controlled catalog replicas and full mode retains all native spans.
+The disabled currency and shipping providers also use the pinned SDKs' explicit
+always-off samplers, so they do not merely omit export while continuing to record
+spans; their W3C propagation remains configured. In pinned flagd `v0.16.0`, an
+empty collector target makes `autoexport.NewSpanExporter` return the none exporter,
+and `BuildTraceProvider` returns before constructing or globally registering an
+SDK tracer provider, leaving the process-wide `NoopTracerProvider` in place.
 
 ## Operations and independent outcomes
 
