@@ -43,15 +43,22 @@ Lua frontend. Suppression changes the SDK configurations themselves:
 
 Jaeger remains running even in absent mode so its empty service/trace census can
 verify absence. This is not exporter filtering. Native data is exported from
-the Jaeger API into a separate directory. During rendering, the adapter makes a
-small source patch to the three measured Lua handlers: after their existing
-span is started, it copies the opaque `X-Experiment-Request-Id` into the span
-tag `http.request.header.x-experiment-request-id` when the header is present.
-This is manual header-capture preparation cost, applies only to already-enabled
-native instrumentation, and neither creates a trace context nor overrides the
-SDK-disabled absent mode. This adapter makes no claim that a
+the Jaeger API into a separate directory. During rendering, the adapter adds one
+`opentracing_tag` directive to the pinned nginx-opentracing v0.8.0 configuration.
+It copies nginx's `$http_x_experiment_request_id` variable into the automatic
+HTTP request span as `http.request.header.x-experiment-request-id`. The module's
+pinned reference explicitly supports `opentracing_tag <key> <value>` at HTTP
+scope and nginx-variable values. This preserves that span's actual route,
+returned status, and full HTTP duration, including failures; no Lua span or
+outcome is synthesized. This is native configuration preparation cost, applies
+only to already-enabled instrumentation, and neither creates a trace context
+nor overrides the SDK-disabled absent mode. This adapter makes no claim that a
 generic OBI collector understands Thrift; eBPF collection/fallback belongs to
 the common orchestrator.
+
+The version is fixed by DeathStarBench's pinned openresty image Dockerfile; the
+matching directive contract is archived in the official
+[nginx-opentracing v0.8.0 reference](https://github.com/opentracing-contrib/nginx-opentracing/blob/v0.8.0/doc/Reference.md#opentracing_tag).
 
 Jaeger all-in-one instruments its own query API, so the audit request can create
 a `jaeger-all-in-one` trace even when every application SDK is disabled. The
