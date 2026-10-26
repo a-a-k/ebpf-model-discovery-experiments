@@ -11,6 +11,12 @@ import shutil
 from statistics import mean
 
 
+def campaign_metric_paths(inputs):
+    # Native OTLP exporters also write metrics.json. Only campaign roots have
+    # the acquisition status marker; exporter telemetry is never result data.
+    return sorted(p for p in inputs.rglob('metrics.json') if (p.parent/'status.json').is_file())
+
+
 def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
@@ -30,7 +36,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
             jobs.append({'run_id': job['run_id'], 'job_id': job['id'], 'name': job['name'],
                          'conclusion': job['conclusion'], 'job_seconds_including_preparation': seconds,
                          'url': job['html_url']})
-    for path in sorted(inputs.rglob('metrics.json')):
+    for path in campaign_metric_paths(inputs):
         m = json.loads(path.read_text())
         exclusion = next((r for r in exclusion_rules if all(str(r[k]) == str(m[k]) for k in ('run_id', 'system', 'mode', 'seed'))), None)
         if exclusion:

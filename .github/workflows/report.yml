@@ -46,7 +46,9 @@ jobs:
           done < work/inputs/cost-ledger/run-attempts.tsv
       - name: Re-evaluate saved evidence without refitting forecasts
         run: |
-          find work/inputs -name metrics.json -print0 | while IFS= read -r -d '' metrics; do
+          find work/inputs -name status.json -print0 | while IFS= read -r -d '' status; do
+            metrics="$(dirname "$status")/metrics.json"
+            [[ -f "$metrics" ]] || continue
             cp "$metrics" "$(dirname "$metrics")/metrics-acquisition-version.json"
             python -m ebpf_discovery.evaluate --out "$(dirname "$metrics")"
           done
