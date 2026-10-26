@@ -23,10 +23,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUN_IDS: ${{ inputs.run_ids }}
         run: |
+          source scripts/github-read.sh
           for run_id in $RUN_IDS; do
             [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
             mkdir -p "work/inputs/$run_id"
-            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100" > "work/inputs/$run_id/artifact-index.json"
+            gh_api_to_file "work/inputs/$run_id/artifact-index.json" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100"
             if jq -e '.artifacts[] | select(.name | startswith("campaign-"))' "work/inputs/$run_id/artifact-index.json" >/dev/null; then
               gh run download "$run_id" --pattern 'campaign-*' -D "work/inputs/$run_id"
             fi
@@ -35,11 +36,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          source scripts/github-read.sh
           mkdir -p work/inputs/cost-ledger
-          gh api --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" --jq '.workflow_runs[] | [.id, .run_attempt] | @tsv' > work/inputs/cost-ledger/run-attempts.tsv
+          gh_api_to_file work/inputs/cost-ledger/run-attempts.tsv --paginate "repos/${GITHUB_REPOSITORY}/actions/runs?per_page=100" --jq '.workflow_runs[] | [.id, .run_attempt] | @tsv'
           while read -r run_id attempts; do
             for attempt in $(seq 1 "$attempts"); do
-              gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/attempts/$attempt/jobs?per_page=100" > "work/inputs/cost-ledger/$run_id-$attempt-jobs.json"
+              gh_api_to_file "work/inputs/cost-ledger/$run_id-$attempt-jobs.json" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/attempts/$attempt/jobs?per_page=100"
             done
           done < work/inputs/cost-ledger/run-attempts.tsv
       - name: Re-evaluate saved evidence without refitting forecasts
