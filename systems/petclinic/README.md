@@ -43,9 +43,14 @@ evidence.
 `partial` instruments gateway/customers/vets but omits the agent and disables the
 SDK in both controlled Visits replicas. `full` instruments all application
 processes. Spring/Micrometer exporters are disabled in all modes so the declared
-mode is not bypassed. Each guest writes native OTLP JSON separately; collection
-also retains inspected commands/environments so absence and partial suppression
-are auditable. The main eBPF collector and inference remain orchestrator-owned.
+mode is not bypassed. Native server spans capture the opaque
+`X-Experiment-Request-Id`; the workload does not inject `traceparent` or any other
+native trace context. Each guest writes native OTLP JSON separately. A collection
+snapshot gracefully stops and flushes each collector, copies its cumulative file,
+restarts it, waits for OTLP readiness, and checks that the file was not truncated,
+so the same method is safe after calibration and at campaign end. Collection also
+retains inspected commands/environments so absence and partial suppression are
+auditable. The main eBPF collector and inference remain orchestrator-owned.
 
 Limitations: the deployment uses two VMs on one Actions runner; the source rebuild
 is reproducible by inputs but not claimed bit-reproducible; and an unavailable SQL
