@@ -1,10 +1,10 @@
 # Discovering operation models from eBPF observations in distributed applications
 
-**Research status: implementation and technical qualification in progress. The 27-campaign measurement series has not started. No accuracy or enrichment result is claimed.** This README is the evolving research report. A green deployment job is not a successful research result.
+**Research status: the measurement series is running; technical failures and completed acquisitions are being reviewed. No final accuracy or enrichment result is claimed.** This README is the evolving research report. A green deployment job is not a successful research result. The [run history](docs/RUN_HISTORY.md) retains failed preparations and the superseded protocol pilot.
 
 ## Abstract
 
-Application traces can support discovery of execution dependencies and operation-success models, but many projects have no tracing or incomplete coverage. This empirical study tests whether eBPF observations can supply sufficiently useful evidence in those settings. Ten operations from DeathStarBench Social Network, OpenTelemetry Demo, and Spring Petclinic Microservices run across two Linux virtual machines with independent kernels. We compare absent, partial, and full application tracing; calibrate under four controlled replica states; and predict success under a new mixture of those states. Independent HTTP content and database checks evaluate the predictions. Additional controls examine operation classes, cross-machine execution links, database dependencies, and asynchronous checkout/accounting. Measurements are pending; this repository currently provides deployment adapters, acquisition code, and technical qualification workflows.
+Application traces can support discovery of execution dependencies and operation-success models, but many projects have no tracing or incomplete coverage. This empirical study tests whether eBPF observations can supply sufficiently useful evidence in those settings. Ten operations from DeathStarBench Social Network, OpenTelemetry Demo, and Spring Petclinic Microservices run across two Linux virtual machines with independent kernels. We compare absent, partial, and full application tracing; calibrate under four controlled replica states; and predict success under a new mixture of those states. Independent HTTP content and database checks evaluate the predictions. Additional controls examine operation classes, cross-machine execution links, database dependencies, and asynchronous checkout/accounting. Measurements are in progress; conclusions await the complete series and review of the retained evidence.
 
 ## Motivation and research questions
 
@@ -83,6 +83,8 @@ Direct stratified estimation is algebraically equivalent and is the strongest si
 
 Model and forecast files are saved before target acquisition. Unknown outcomes yield bounds, not fabricated point estimates. Adding graph structure that does not affect the calculation is not a forecast improvement. HTTP status/duration alone does not implement durable asynchronous completion.
 
+Uncertainty uses weighted nominal pointwise 95% Wilson envelopes under an iid Bernoulli assumption. Within-block temporal dependence is not estimated, so these are not validated 95% predictive intervals or simultaneous confidence bounds. Worst-end error and interval width are reported separately from point error.
+
 ## Experimental design
 
 **27 campaigns:** three systems × three actual tracing modes × seeds `0`, `1`, `2`.
@@ -123,20 +125,25 @@ Costs include preparation, downloads/builds, VM startup, acquisition, state chan
 
 ## Results
 
-**No primary measurements are available yet.** Tables, plots, example models, DB comparisons, and async evidence will be generated from retained campaign artifacts. The counts above are planned counts only.
+**The series is incomplete.** Completed acquisitions and technical failures are retained in the linked runs. The [first generated interim report](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340398882) demonstrates the reporting pipeline on the two v2 campaigns available at its start; it leaves three-repeat means pending. Final tables will use all valid campaigns and reviewed evaluation code.
 
 | Stage | Evidence | Interpretation |
 |---|---|---|
-| Adapters | Three implementations and focused checks | Static preparation only |
+| Adapters | Three implementations and [focused checks](.github/workflows/checks.yml) | App-specific deployment, workload and independent outcome checks |
 | Two-kernel infrastructure | [Passed first technical run](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40324200754) | Two distinct boot IDs, kernel 6.8.0-147, BTF, 6 GiB per guest; infrastructure only |
-| Protocol support | Application captures pending | No Thrift/Kafka recovery claim |
-| 27 campaigns and final review | Not started | No accuracy or enrichment claim |
+| Protocol support | [Technical attempts and repairs](docs/RUN_HISTORY.md) | DSB captures include Mongo endpoints mislabelled as MySQL by OBI; observed labels are retained. Kafka identity-chain recovery remains under investigation |
+| Petclinic series | [Initial nine jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492), [partial repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065), [full repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653) | Three absent-mode campaigns complete; six native-enabled attempts need the exporter snapshot repair |
+| DSB series | [Nine campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753) | Acquisition in progress; a successful job is not an accuracy verdict |
+| OTel series | [Recording-disable qualification](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960) | Absent-mode SDK/config guards are checked in the actual unfiltered stream before scored campaigns |
+| Final empirical review | Pending | No overall accuracy or enrichment claim |
 
 Technical reruns retain the failed attempt and its cause. The series is not expanded to obtain positive results.
 
 ## Discussion and limitations
 
 Guests share physical resources. Four controlled states provide a restricted transfer test, not arbitrary failure extrapolation or failure-transition dynamics. Target mixture weights are supplied. Fixed application versions and three repeats limit generalization. Workload grouping and semantic rules include manual knowledge. Protocol/language coverage can leave links unknown. Context propagation changes metadata and affects interpretation of portability and cost. Full native tracing may already contain every database dependency eBPF recovers.
+
+The downstream class representation uses the observed service/route names. Replica-specific names and variable child calls can fragment one business operation into several observed classes; a lower augmented ARI is not proof that downstream information is inherently unhelpful. No extra representation search is performed after inspecting results. A DB endpoint match is evaluated separately from protocol correctness and concrete-instance identity. Native ancestry is an independent telemetry reference, not ground truth for every eBPF link. Order-chain matching supports declared current-order fields; unimplemented alternative message matchers remain a limitation.
 
 ## Reproduction
 
@@ -160,9 +167,13 @@ The fixed campaign interface and report regeneration are implemented:
 gh workflow run campaigns.yml -f system=all -f mode=all -f seed=all
 # A technical rerun can select one system, mode, and seed; preserve the prior run.
 gh workflow run report.yml -f run_ids='CAMPAIGN_RUN_ID ANOTHER_RUN_ID'
+# Retain original artifact ZIPs beyond Actions expiry, including failed attempts.
+gh workflow run archive.yml -f run_ids='CAMPAIGN_RUN_ID QUALIFICATION_RUN_ID PILOT_RUN_ID'
 ```
 
-Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its forecast/hash before target traffic. The report requires all three distinct seeds for an aggregate and does not automatically select among duplicate runs. Missing files do not represent successful empty experiments. Artifacts expire after 90 days unless retained separately; key tables/models must be committed or archived before expiry.
+Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its forecast/hash before target traffic. The report re-evaluates saved observations with the current evaluation code, retains the original metrics, and never refits the saved forecast. It requires all three distinct seeds for an aggregate and does not automatically select among duplicate runs. Missing files do not represent successful empty experiments. Selector-only matrix jobs are not campaigns. Artifacts expire after 90 days; the archive workflow publishes original ZIPs, checksums and provenance in a GitHub release.
+
+Report outputs include `operations.csv`, `summary.json`, `classes.csv`, `structure.csv`, `database-controls.csv`, `async.csv`, error figures, example observed graphs, and per-campaign models/metrics under `evidence/`. `job-costs.csv` covers repository preparation, checks, failures and reruns, while `costs.csv` contains valid-campaign timings. Ongoing job time and unmetered engineering time are explicitly unknown. Nominal Wilson envelopes may exceed the conservative 5 pp target even when point error is zero; both measures remain visible.
 
 ```text
 .github/workflows/       Infrastructure and application qualification

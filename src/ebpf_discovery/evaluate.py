@@ -106,13 +106,13 @@ elsewhere are insufficient. This deliberately leaves other possible matchers ope
             for key, val in obj.items():
                 path = prefix+'.'+key
                 normal = key.lower().replace('_', '').replace('.', '')
-                if normal.endswith('orderid') and isinstance(val, str) and uuid.fullmatch(val):
+                if normal == 'orderid' and isinstance(val, str) and uuid.fullmatch(val):
                     result.append((val.lower(), path))
-                if isinstance(val, (dict, list)):
+                # Only the declared current-order object is a semantic alias.
+                # History, previous_order_id, arbitrary nested payloads and
+                # UUID-shaped strings do not establish the current order.
+                if key == 'order' and isinstance(val, dict):
                     result.extend(fields(val, path))
-        elif isinstance(obj, list):
-            for index, item in enumerate(obj):
-                result.extend(fields(item, prefix+f'[{index}]'))
         return result
     for span in spans:
         attrs = span['attributes']
@@ -173,6 +173,29 @@ def validate_cross_node(links, native_spans):
             'error_rate_on_covered': wrong/known if known else None}
 
 
+def database_reference_match(node, reference):
+    """Evaluation-only endpoint match; a host shared by DB ports is ambiguous."""
+    address = str(node.get('address') or '')
+    if not address:
+        return None
+    published = {}
+    if reference.get('transport_host'):
+        published[str(reference['transport_host'])] = reference.get('transport_port')
+    if reference.get('cross_guest_endpoint'):
+        host, port = reference['cross_guest_endpoint'].rsplit(':', 1)
+        published[host] = port
+    port = node.get('port')
+    if address in published:
+        expected = published[address]
+        return str(port) == str(expected) if port is not None and expected is not None else None
+    names = {str(reference[k]) for k in ('ip', 'name', 'container', 'logical_identity') if reference.get(k)}
+    names.update(str(v) for v in reference.get('observed_aliases', []) if str(v) not in published)
+    if address not in names:
+        return False
+    expected = reference.get('port', reference.get('container_port'))
+    return str(port) == str(expected) if port is not None and expected is not None else True
+
+
 def evaluate(root):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
@@ -185,7 +208,7 @@ def evaluate(root):
     result = {'system': status['system'], 'mode': status['mode'], 'seed': status['seed'],
               'protocol_version': status.get('protocol_version', 'pre-warmup-pilot'),
               'run_id': status['run_id'], 'sources': {}, 'costs': {'campaign_elapsed_seconds': status['elapsed_seconds']},
-              'forecast_saved_before_target': True}
+              'forecast_saved_before_target': True, 'evaluation_commit': os.environ.get('GITHUB_SHA')}
     for source in ('ebpf', 'native', 'combined'):
         folder = Path('models') / source
         if hashlib.sha256((root/folder/'forecast.json').read_bytes()).hexdigest() != saved['sha256'][source]:
@@ -216,7 +239,7 @@ def evaluate(root):
                                      'absolute_error': abs(point-actual) if point is not None and actual is not None else None,
                                      'signed_error': point-actual if point is not None and actual is not None else None,
                                      'worst_interval_error': worst, 'interval_width': bounds[1]-bounds[0],
-                                     'coverage': bounds[0] <= ylo and bounds[1] >= yhi,
+                                     'coverage': bounds[0] <= ylo + 1e-12 and bounds[1] >= yhi - 1e-12,
                                      'unsupported': predicted is None,
                                      'target_unclassified': sum(by_key[opaque_attempt(r)]['class_id'] is None for r in targets)}
             for row in targets:
@@ -228,12 +251,18 @@ def evaluate(root):
         observed_graph = graph(data)
         cross_validation = validate_cross_node(observed_graph['cross_node'], [s for s in spans if s['source'] == 'native']) if source == 'ebpf' else None
         db = metadata['database']
-        known_addresses = {str(db.get(k)) for k in ('ip', 'name', 'container', 'logical_identity') if db.get(k)}
-        known_addresses.update(str(v) for v in db.get('observed_aliases', []))
+        # Deployment reference is evaluator-only. Never relabel the observed
+        # graph to hide a collector's protocol misclassification.
+        reference_db_system = {'deathstarbench': 'mongodb', 'petclinic': 'mysql', 'otel_demo': 'postgresql'}[status['system']]
         database_nodes = []
         for node in observed_graph['nodes']:
             if node['kind'] == 'database':
-                database_nodes.append({**node, 'matches_selected_database': str(node['address']) in known_addresses})
+                endpoint_match = database_reference_match(node, db)
+                observed_system = {'postgres': 'postgresql', 'mongo': 'mongodb'}.get(node['system'], node['system'])
+                database_nodes.append({**node, 'matches_selected_database': endpoint_match,
+                                       'reference_system_for_selected_endpoint': reference_db_system if endpoint_match is True else None,
+                                       'selected_endpoint_protocol_agrees': observed_system == reference_db_system if endpoint_match is True else None,
+                                       'match_kind': 'evaluation-only declared logical name or address/port endpoint; not physical-instance proof'})
         db_controls = {operation: {phase: external_rate([r for r in external if r['operation'] == operation and r['phase'] == phase])
                                    for phase in ('db_up', 'db_down')} for operation in metadata['operations']}
         identities = async_identities(data)
@@ -254,6 +283,8 @@ def evaluate(root):
         result['sources'][source] = {'operations': operations,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,
+            'shared_database_dependencies': observed_graph['shared_database_dependencies'],
+            'database_edges': [e for e in observed_graph['edges'] if e['evidence'] == 'database_client_span'],
             'database_forecast_effect': None,
             'database_forecast_effect_note': 'DB graph nodes are not variables in the saturated four-state predictor; no structural forecast gain claimed.',
             'cross_node': observed_graph['cross_node'],
@@ -267,6 +298,7 @@ def evaluate(root):
         write_json(root/folder/'target-assignments.json', projected)
         write_json(root/folder/'proxy-semantic-comparison.json', mismatches)
         write_json(root/folder/'observed-uuid-census.json', identities)
+        write_json(root/folder/'observed-final-graph.json', observed_graph)
     write_json(root/'metrics.json', result)
     return result
 

@@ -1,7 +1,8 @@
 import base64
 import unittest
-from ebpf_discovery.model import Projection, assign, conditional
+from ebpf_discovery.model import Projection, assign, conditional, wilson
 from ebpf_discovery.observations import census, identifier
+from ebpf_discovery.evaluate import database_reference_match, typed_order_chains
 
 
 def span(identity, status=200, start=0, end=1000000, path='/product'):
@@ -13,6 +14,26 @@ def span(identity, status=200, start=0, end=1000000, path='/product'):
 
 
 class BoundaryTests(unittest.TestCase):
+    def test_published_database_host_requires_the_selected_port(self):
+        db = {'ip': '172.28.11.20', 'transport_host': '192.168.76.11', 'transport_port': 37020}
+        self.assertIs(database_reference_match({'address': '192.168.76.11', 'port': 37020}, db), True)
+        self.assertIs(database_reference_match({'address': '192.168.76.11', 'port': 37021}, db), False)
+        self.assertIsNone(database_reference_match({'address': '192.168.76.11'}, db))
+
+    def test_previous_order_identity_does_not_link_current_execution(self):
+        identity = '12345678-1234-1234-1234-123456789abc'
+        item = span('http')
+        item['attributes'].update({'url.path': '/api/checkout', 'previous_order_id': identity,
+                                   'history': {'order_id': identity}})
+        self.assertEqual(typed_order_chains([item]), {})
+        item['attributes']['order_id'] = identity
+        self.assertIn('checkout_http', typed_order_chains([item])[identity])
+
+    def test_wilson_boundary_outcomes_include_zero_and_one(self):
+        for n in (1, 60, 80, 240):
+            self.assertEqual(wilson(0, n)[0], 0.0)
+            self.assertEqual(wilson(n, n)[1], 1.0)
+
     def test_failure_associated_missing_classes_widen_bounds(self):
         rows = [{'class_id': 'c', 'state': '00', 'proxy': True, 'compatible_classes': ['c']}]
         rows += [{'class_id': None, 'state': '00', 'proxy': None, 'compatible_classes': ['c']}] * 9

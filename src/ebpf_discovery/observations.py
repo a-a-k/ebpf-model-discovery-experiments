@@ -82,7 +82,7 @@ def read_spans(root: Path, native: Path | None = None):
     if (root / 'native.jsonl').exists():
         paths.append((root / 'native.jsonl', 'native'))
     if native and native.exists():
-        paths += [(p, 'native') for p in native.glob('*') if p.name.startswith(('traces', 'native-node-')) and p.suffix in {'.json', '.jsonl'}]
+        paths += [(p, 'native') for p in sorted(native.rglob('*')) if p.name.startswith(('traces', 'native-node-')) and p.suffix in {'.json', '.jsonl'}]
     for path, source in paths:
         text = path.read_text(encoding='utf-8').strip()
         if not text:

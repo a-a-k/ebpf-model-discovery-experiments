@@ -18,6 +18,8 @@ Orchestrator verdict: GO for testing the original current criterion, with extern
 
 Implementation clarification reviewed on 2026-10-26: separate reviewer GO for the joint observed HTTP status/deadline proxy, with external semantic success unchanged as the criterion. Multi-step grouping is supplied knowledge. Unknown-class calibration attempts widen all compatible classes' bounds; they cannot be discarded. Class rules are fixed before target acquisition. Per-attempt proxy/semantic mismatches are reported. Durable async completion still needs actual identity/completion evidence, independently evaluated; an HTTP proxy is insufficient.
 
+Pilot/code validity review on 2026-10-26: orchestrator and independent 6.1 Sol/xhigh reviewer GO to continue `fixed-warmup-v2`, without an empirical-success verdict. The retained pilot preserves semantic proxy mismatches and unknown native forecasts. Review repairs include exact Wilson boundary handling, nominal iid uncertainty labeling, complete preparation/failure job costs, exact published DB endpoint matching, and rejection of previous-order identifiers. Native exporters use immutable segments across restart. These are implementation/evaluation repairs; neither the target nor the fixed series is changed. Actual OTel recording guards must pass the native-absence audit before its scored absent-mode campaigns.
+
 ## Design
 
 27 campaigns = 3 systems x 3 actual tracing modes (absent, partial, full) x seeds 0,1,2. The partial mode disables native tracing in both controlled replicas. eBPF is collected in every mode; automatic context propagation is permitted and recorded.

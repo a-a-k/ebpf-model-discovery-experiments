@@ -1,0 +1,44 @@
+name: Archive original measurement artifacts
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: Space-separated run IDs, including failed preparations and superseded pilot
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  archive:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download original artifact archives and their provenance
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_IDS: ${{ inputs.run_ids }}
+        run: |
+          mkdir -p work/archive
+          for run_id in $RUN_IDS; do
+            [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100" > "work/archive/$run_id-artifact-index.json"
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id" > "work/archive/$run_id-run.json"
+            while IFS=$'\t' read -r artifact_id artifact_name; do
+              [[ "$artifact_name" =~ ^[a-zA-Z0-9._-]+$ ]] || exit 2
+              gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip" > "work/archive/$run_id-$artifact_name.zip"
+            done < <(jq -r '.artifacts[] | [.id, .name] | @tsv' "work/archive/$run_id-artifact-index.json")
+          done
+          cd work/archive
+          sha256sum *.zip > SHA256SUMS.txt
+          tar -czf provenance.tar.gz *-artifact-index.json *-run.json SHA256SUMS.txt
+      - name: Publish retained synthetic experiment data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="data-${GITHUB_RUN_ID}"
+          cat > work/archive/notes.md <<'EOF'
+          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes original artifact indexes, workflow metadata and SHA-256 checksums. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
+          EOF
+          gh release create "$tag" --target "$GITHUB_SHA" --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
+          gh release upload "$tag" work/archive/*.zip work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt
