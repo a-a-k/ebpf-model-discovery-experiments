@@ -15,6 +15,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import threading
 import time
 import uuid
@@ -1153,13 +1154,21 @@ SELECT json_build_object(
         last = ""
         while time.monotonic() < end:
             call_timeout = max(0.01, min(10.0, end - time.monotonic()))
-            result = self.ctx.node_exec(
-                "a",
-                "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
-                "--bootstrap-server kafka:9092 --group accounting --describe",
-                check=False,
-                timeout=call_timeout,
-            )
+            try:
+                result = self.ctx.node_exec(
+                    "a",
+                    "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+                    "--bootstrap-server kafka:9092 --group accounting --describe",
+                    check=False,
+                    timeout=call_timeout,
+                )
+            except subprocess.TimeoutExpired as exc:
+                last = (
+                    f"probe_timeout={call_timeout} stdout={exc.stdout or ''} "
+                    f"stderr={exc.stderr or ''}"
+                )
+                time.sleep(min(1.0, max(0.0, end - time.monotonic())))
+                continue
             stdout = self._stdout(result)
             stderr = getattr(result, "stderr", "") or ""
             if isinstance(stderr, bytes):
@@ -1190,7 +1199,7 @@ SELECT json_build_object(
                 and all(lag == 0 for lag in lags)
             ):
                 return
-            time.sleep(1)
+            time.sleep(min(1.0, max(0.0, end - time.monotonic())))
         raise RuntimeError(f"accounting did not drain Kafka backlog: {last}")
 
     def _reserve_async_deadline(self, deadline_ns: int) -> None:

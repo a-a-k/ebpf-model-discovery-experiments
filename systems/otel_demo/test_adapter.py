@@ -374,7 +374,7 @@ def test_consumer_drain_failure_retains_probe_diagnostics(monkeypatch) -> None:
         def node_exec(self, node, command, **kwargs):
             return Result()
 
-    ticks = iter([0.0, 0.0, 0.0, 1.0])
+    ticks = iter([0.0, 0.0, 0.0, 0.0, 1.0])
     monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
@@ -389,6 +389,57 @@ def test_consumer_drain_failure_retains_probe_diagnostics(monkeypatch) -> None:
 
     assert "consumer group unavailable" in message
     assert "returncode=1" in message
+
+
+def test_consumer_drain_retries_bounded_probe_timeout(monkeypatch) -> None:
+    class Result:
+        stdout = "accounting orders 0 42 42 0 consumer host client\n"
+        stderr = ""
+        returncode = 0
+
+    calls = []
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append(kwargs)
+            if len(calls) == 1:
+                raise adapter_module.subprocess.TimeoutExpired(
+                    command, kwargs["timeout"], output="partial", stderr="slow probe"
+                )
+            return Result()
+
+    monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter._wait_consumer_drain(1)
+
+    assert len(calls) == 2
+    assert all(0 < call["timeout"] <= 1 for call in calls)
+
+
+def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            raise adapter_module.subprocess.TimeoutExpired(
+                command, kwargs["timeout"], output="partial", stderr="still slow"
+            )
+
+    ticks = iter([0.0, 0.0, 0.0, 0.0, 1.0])
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
+    monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+
+    try:
+        adapter._wait_consumer_drain(0.5)
+    except RuntimeError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("timed-out probes must not establish a drained backlog")
+
+    assert "probe_timeout=" in message
+    assert "partial" in message
+    assert "still slow" in message
 
 
 def test_async_in_boundary_positive_and_missing_oracle() -> None:
