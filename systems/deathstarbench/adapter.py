@@ -676,6 +676,8 @@ class Adapter:
             services = []
             manifest["errors"].append(f"service census: {exc}")
         trace_count = 0
+        application_trace_count = 0
+        audit_self_trace_count = 0
         for service in services:
             try:
                 r = requests.get(base + "/api/traces", params={"service": service, "lookback": "24h", "limit": 20000}, timeout=60)
@@ -698,8 +700,13 @@ class Adapter:
                 else:
                     raise ValueError("Jaeger trace data is neither null nor a list")
                 trace_count += count
+                if service == "jaeger-all-in-one":
+                    audit_self_trace_count += count
+                else:
+                    application_trace_count += count
                 manifest["queries"].append({
                     "service": service, "count": count,
+                    "excluded_from_application_trace_count": service == "jaeger-all-in-one",
                     "data_is_null": trace_data is None,
                     "api_errors": trace_api_errors,
                     "sha256": hashlib.sha256(r.content).hexdigest(),
@@ -707,7 +714,18 @@ class Adapter:
             except (requests.RequestException, ValueError, AttributeError) as exc:
                 manifest["errors"].append(f"trace query {service}: {exc}")
         manifest["trace_count"] = trace_count
-        manifest["absence_verified"] = self.ctx.mode == "absent" and not manifest["errors"] and trace_count == 0
+        manifest["application_trace_count"] = application_trace_count
+        manifest["audit_self_trace_count"] = audit_self_trace_count
+        manifest["audit_self_trace_provenance"] = {
+            "excluded_service_exact_match": "jaeger-all-in-one",
+            "reason": "Jaeger's instrumented query API can trace the audit's own /api/services and /api/traces requests",
+            "raw_responses_retained": True,
+        }
+        manifest["absence_verified"] = (
+            self.ctx.mode == "absent"
+            and not manifest["errors"]
+            and application_trace_count == 0
+        )
         _json_dump(destination / "manifest.json", manifest)
 
     def close(self) -> None:
