@@ -90,6 +90,34 @@ def async_identities(spans):
     return {key: dict(stages) for key, stages in found.items()}
 
 
+def validate_cross_node(links, native_spans):
+    """Use only independently recorded native IDs; unmatched evidence is unknown."""
+    lookup = {(s['trace_id'], s['span_id']): s for s in native_spans}
+    output = []
+    for link in links:
+        trace = link['trace_id']
+        current = lookup.get((trace, link['child_id']))
+        reference_parent = lookup.get((trace, link['parent_id']))
+        correct, visited = None, set()
+        if current and reference_parent:
+            while current and current['span_id'] not in visited:
+                visited.add(current['span_id'])
+                parent = current['parent_id']
+                if parent == link['parent_id']:
+                    correct = True
+                    break
+                if not parent:
+                    correct = False
+                    break
+                current = lookup.get((trace, parent))
+        output.append({**link, 'reference': 'independent native observed ancestry with exact trace/span IDs',
+                       'reference_correct': correct})
+    known = sum(row['reference_correct'] is not None for row in output)
+    wrong = sum(row['reference_correct'] is False for row in output)
+    return {'links': output, 'reference_covered': known, 'unknown': len(output)-known,
+            'error_rate_on_covered': wrong/known if known else None}
+
+
 def evaluate(root):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
@@ -142,6 +170,7 @@ def evaluate(root):
                                    'proxy': proxy, 'external': business,
                                    'mismatch': proxy != business if proxy is not None and business is not None else None})
         observed_graph = graph(data)
+        cross_validation = validate_cross_node(observed_graph['cross_node'], [s for s in spans if s['source'] == 'native']) if source == 'ebpf' else None
         db = metadata['database']
         known_addresses = {str(db.get(k)) for k in ('ip', 'name', 'container', 'logical_identity') if db.get(k)}
         known_addresses.update(str(v) for v in db.get('observed_aliases', []))
@@ -168,7 +197,9 @@ def evaluate(root):
             'database_nodes': database_nodes, 'db_controls': db_controls,
             'database_forecast_effect': None,
             'database_forecast_effect_note': 'DB graph nodes are not variables in the saturated four-state predictor; no structural forecast gain claimed.',
-            'cross_node': observed_graph['cross_node'], 'cross_node_error_rate': None,
+            'cross_node': observed_graph['cross_node'],
+            'cross_node_reference_validation': cross_validation,
+            'cross_node_error_rate': cross_validation['error_rate_on_covered'] if cross_validation else None,
             'async': asynchronous,
             'proxy_mismatches': sum(r['mismatch'] is True for r in mismatches),
             'proxy_comparable': sum(r['mismatch'] is not None for r in mismatches),
