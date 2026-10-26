@@ -26,7 +26,7 @@ class Campaign:
         self.adapter = importlib.import_module(f'systems.{system}.adapter').Adapter(self.ctx)
         self.collectors = Collectors(self.ctx)
         self.rng = random.Random(seed)
-        self.records, self.census, self.blocks = [], [], []
+        self.records, self.census, self.blocks, self.warmups = [], [], [], []
         self.index = 0
         self.metadata = {}
 
@@ -34,6 +34,7 @@ class Campaign:
         write_json(self.ctx.out / 'external.json', self.records)
         write_json(self.ctx.out / 'census.json', self.census)
         write_json(self.ctx.out / 'blocks.json', self.blocks)
+        write_json(self.ctx.out / 'preparation-operations.json', self.warmups)
 
     def block(self, phase, state, count, names, *, reset=True, asynchronous=False):
         block_id = f'{phase}-{len(self.blocks):02d}'
@@ -42,6 +43,18 @@ class Campaign:
             self.adapter.reset()
             self.adapter.set_replicas(state)
         state_evidence = self.state_barrier(state)
+        # Fixed preparation, never repeated until success. This clears a first
+        # stale connection after a replica restart without selecting scored data.
+        warm = []
+        for name in names:
+            row = self.adapter.operation(name, self.index, f'warmup-{block_id}', 2.0)
+            self.index += 1
+            row.update(phase='preparation', state=state, for_block=block_id)
+            if self.system == 'otel_demo' and name == 'checkout':
+                row = self.adapter.verify_async([row], 10.0)[0]
+            warm.append(row)
+        self.warmups.extend(self.adapter.verify(warm))
+        time.sleep(10)
         ordered = [names[i % len(names)] for i in range(count)]
         self.rng.shuffle(ordered)
         futures = []
@@ -68,11 +81,15 @@ class Campaign:
         # Independent verification happens while the intervention is still in
         # force, before reset can turn a failed operation into an apparent success.
         rows = self.adapter.verify(rows)
+        # Fixed drain guard, not a proof of completion of arbitrary background
+        # work. It occurs before any subsequent intervention or reset.
+        time.sleep(10)
         self.records.extend(rows)
         self.census.extend(census(rows, phase, state))
         block = {'id': block_id, 'phase': phase, 'state': state, 'attempts': count,
                  'started_ns': block_start, 'load_started_ns': start_ns, 'ended_ns': time.time_ns(),
-                 'nominal_load_seconds': count/4, 'max_dispatch_lateness_seconds': max(r['dispatch_lateness_seconds'] for r in rows)}
+                 'nominal_load_seconds': count/4, 'preparation_operations': len(warm), 'fixed_settle_seconds': 10,
+                 'fixed_drain_seconds': 10, 'max_dispatch_lateness_seconds': max(r['dispatch_lateness_seconds'] for r in rows)}
         block['state_evidence'] = state_evidence
         self.blocks.append(block)
         self.save_records()
@@ -117,6 +134,7 @@ class Campaign:
 
     def run(self):
         status = {'system': self.system, 'mode': self.ctx.mode, 'seed': self.ctx.seed,
+                  'protocol_version': 'fixed-warmup-v2',
                   'run_id': os.environ.get('GITHUB_RUN_ID'), 'commit': os.environ.get('GITHUB_SHA'),
                   'started_ns': time.time_ns(), 'status': 'running'}
         write_json(self.ctx.out / 'status.json', status)
@@ -179,7 +197,7 @@ class Campaign:
                     action()
                 except Exception as exc:
                     status[name+'_close_error'] = str(exc)
-            status.update(ended_ns=time.time_ns(), attempted_operations=len(self.records))
+            status.update(ended_ns=time.time_ns(), attempted_operations=len(self.records), preparation_operations=len(self.warmups))
             status['elapsed_seconds'] = (status['ended_ns']-status['started_ns'])/1e9
             write_json(self.ctx.out / 'status.json', status)
             self.save_records()

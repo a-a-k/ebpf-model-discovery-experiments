@@ -30,6 +30,8 @@ Each campaign: four 60-second calibration blocks (11,10,01,00); eight 30-second 
 
 Reset/settling and pending deadlines are completed between blocks. Forecasts are saved before target observations are acquired. Each forecast uses 100000 Monte Carlo draws and is checked against exact conditional-state weighting. Unsupported interpretations are not given fabricated point values.
 
+Preparation repair, independent reviewer GO on 2026-10-26: after each state barrier, execute exactly one unscored warmup per operation in that block, retain its outcome, and wait 10 seconds. Never retry warmups until success. After scored futures/oracles finish, hold the current intervention for a fixed 10-second drain guard before resetting. The guard does not prove completion of arbitrary server background work. These operations and waits count toward preparation costs; the 2160 scored primary attempts are unchanged. Apply `fixed-warmup-v2` consistently. The already running Petclinic run 40333270035 is a superseded protocol pilot regardless of accuracy and is retained and rerun.
+
 ## Additional controls, same deployments
 
 Each campaign: 20 operations with selected DB available, then 20 unavailable. This validates observed dependency semantics; adding/removing a redundant node in a saturated estimator is not evidence of prediction improvement.

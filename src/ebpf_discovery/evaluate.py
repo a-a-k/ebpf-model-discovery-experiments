@@ -128,6 +128,7 @@ def evaluate(root):
     if saved['saved_ns'] >= target_start:
         raise RuntimeError('Forecast was not saved before target acquisition')
     result = {'system': status['system'], 'mode': status['mode'], 'seed': status['seed'],
+              'protocol_version': status.get('protocol_version', 'pre-warmup-pilot'),
               'run_id': status['run_id'], 'sources': {}, 'costs': {'campaign_elapsed_seconds': status['elapsed_seconds']},
               'forecast_saved_before_target': True}
     for source in ('ebpf', 'native', 'combined'):
@@ -199,7 +200,8 @@ def evaluate(root):
             'database_forecast_effect_note': 'DB graph nodes are not variables in the saturated four-state predictor; no structural forecast gain claimed.',
             'cross_node': observed_graph['cross_node'],
             'cross_node_reference_validation': cross_validation,
-            'cross_node_error_rate': cross_validation['error_rate_on_covered'] if cross_validation else None,
+            'cross_node_error_rate': None,
+            'native_reference_disagreement_rate': cross_validation['error_rate_on_covered'] if cross_validation else None,
             'async': asynchronous,
             'proxy_mismatches': sum(r['mismatch'] is True for r in mismatches),
             'proxy_comparable': sum(r['mismatch'] is not None for r in mismatches),

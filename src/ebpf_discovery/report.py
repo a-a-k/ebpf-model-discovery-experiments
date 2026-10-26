@@ -14,7 +14,7 @@ def report(inputs, out):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
     out.mkdir(parents=True, exist_ok=True)
-    rows, campaigns, jobs = [], [], []
+    rows, campaigns, jobs, superseded = [], [], [], []
     for path in sorted(inputs.rglob('jobs.json')):
         for job in json.loads(path.read_text()).get('jobs', []):
             started, ended = job.get('started_at'), job.get('completed_at')
@@ -24,6 +24,10 @@ def report(inputs, out):
                          'url': job['html_url']})
     for path in sorted(inputs.rglob('metrics.json')):
         m = json.loads(path.read_text())
+        if m.get('protocol_version') != 'fixed-warmup-v2':
+            superseded.append({'path': str(path.relative_to(inputs)), 'reason': 'superseded preparation protocol',
+                               'metrics': m})
+            continue
         campaigns.append({'system': m['system'], 'mode': m['mode'], 'seed': m['seed'], 'run_id': m['run_id'],
                           'path': str(path.relative_to(inputs)), **m['costs']})
         for source, result in m['sources'].items():
@@ -67,7 +71,9 @@ def report(inputs, out):
         if status.get('status') != 'acquisition_complete':
             failures.append({'path': str(path.relative_to(inputs)), **status})
     (out/'technical-failures.json').write_text(json.dumps(failures, indent=2)+'\n')
+    (out/'superseded-pilots.json').write_text(json.dumps(superseded, indent=2)+'\n')
     lines += ['', f'Retained technical failures: {len(failures)}. See `technical-failures.json`.', '',
+              f'Superseded protocol pilots: {len(superseded)}. Full metrics remain in `superseded-pilots.json`; excluded by protocol, not accuracy.', '',
               f'Total retained job time including VM preparation and failed jobs: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`.', '',
               'Means are reported only with exactly seeds 0, 1, and 2; duplicate attempts must be resolved explicitly from technical-failure history, not averaged or selected by accuracy.']
     (out/'report.md').write_text('\n'.join(lines)+'\n', encoding='utf-8')
