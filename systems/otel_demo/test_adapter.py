@@ -309,14 +309,86 @@ def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
     adapter.ctx = Context()
     adapter._wait_consumer_drain(1)
 
-    assert calls == [
-        (
-            "a",
-            "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
-            "--bootstrap-server kafka:9092 --group accounting --describe",
-            {"check": False},
-        )
-    ]
+    assert len(calls) == 1
+    node, command, kwargs = calls[0]
+    assert node == "a"
+    assert command == (
+        "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
+        "--bootstrap-server kafka:9092 --group accounting --describe"
+    )
+    assert kwargs["check"] is False
+    assert 0 < kwargs["timeout"] <= 1
+
+
+def test_consumer_drain_rejects_failed_missing_partial_and_nonzero_rows(
+    monkeypatch,
+) -> None:
+    header = "GROUP TOPIC PARTITION CURRENT-OFFSET LOG-END-OFFSET LAG CONSUMER-ID HOST CLIENT-ID\n"
+
+    class Result:
+        stderr = "diagnostic"
+
+        def __init__(self, stdout, returncode=0):
+            self.stdout = header + stdout
+            self.returncode = returncode
+
+    results = iter(
+        [
+            Result("accounting orders 0 42 42 0 consumer host client\n", 1),
+            Result(
+                "accounting orders - - - - consumer host client\n"
+                "accounting orders 0 42 42 0 consumer host client\n"
+            ),
+            Result("accounting another-topic 0 42 42 0 consumer host client\n"),
+            Result("accounting orders 0 41 42 1 consumer host client\n"),
+            Result(
+                "accounting orders 0 42 42 0 consumer host client\n"
+                "accounting orders 1 21 21 0 consumer host client\n"
+            ),
+        ]
+    )
+    calls = []
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append(kwargs)
+            return next(results)
+
+    monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter._wait_consumer_drain(1)
+
+    assert len(calls) == 5
+    assert all(call["check"] is False for call in calls)
+    assert all(0 < call["timeout"] <= 1 for call in calls)
+
+
+def test_consumer_drain_failure_retains_probe_diagnostics(monkeypatch) -> None:
+    class Result:
+        stdout = "accounting orders - - - - consumer host client\n"
+        stderr = "consumer group unavailable"
+        returncode = 1
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            return Result()
+
+    ticks = iter([0.0, 0.0, 0.0, 1.0])
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
+    monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+
+    try:
+        adapter._wait_consumer_drain(0.5)
+    except RuntimeError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("an invalid probe must not establish a drained backlog")
+
+    assert "consumer group unavailable" in message
+    assert "returncode=1" in message
 
 
 def test_async_in_boundary_positive_and_missing_oracle() -> None:

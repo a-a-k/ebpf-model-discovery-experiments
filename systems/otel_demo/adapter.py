@@ -1152,11 +1152,13 @@ SELECT json_build_object(
         end = time.monotonic() + timeout
         last = ""
         while time.monotonic() < end:
+            call_timeout = max(0.01, min(10.0, end - time.monotonic()))
             result = self.ctx.node_exec(
                 "a",
                 "docker exec kafka /opt/kafka/bin/kafka-consumer-groups.sh "
                 "--bootstrap-server kafka:9092 --group accounting --describe",
                 check=False,
+                timeout=call_timeout,
             )
             stdout = self._stdout(result)
             stderr = getattr(result, "stderr", "") or ""
@@ -1166,15 +1168,27 @@ SELECT json_build_object(
                 f"stdout={stdout[-1000:]} stderr={stderr[-1000:]} "
                 f"returncode={getattr(result, 'returncode', None)}"
             )
-            lags = []
+            lags: list[int] = []
+            orders_rows = 0
+            all_orders_rows_parseable = True
             for line in stdout.splitlines():
                 fields = line.split()
-                if len(fields) >= 6 and fields[0] == "accounting":
+                if len(fields) >= 2 and fields[:2] == ["accounting", "orders"]:
+                    orders_rows += 1
+                    if len(fields) < 6:
+                        all_orders_rows_parseable = False
+                        continue
                     try:
                         lags.append(int(fields[5]))
                     except ValueError:
-                        pass
-            if lags and sum(lags) == 0:
+                        all_orders_rows_parseable = False
+            if (
+                getattr(result, "returncode", None) == 0
+                and orders_rows > 0
+                and all_orders_rows_parseable
+                and len(lags) == orders_rows
+                and all(lag == 0 for lag in lags)
+            ):
                 return
             time.sleep(1)
         raise RuntimeError(f"accounting did not drain Kafka backlog: {last}")
