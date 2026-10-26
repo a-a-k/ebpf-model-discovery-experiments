@@ -1153,7 +1153,7 @@ SELECT json_build_object(
         end = time.monotonic() + timeout
         last = ""
         while time.monotonic() < end:
-            call_timeout = max(0.01, min(10.0, end - time.monotonic()))
+            call_timeout = max(0.01, end - time.monotonic())
             try:
                 result = self.ctx.node_exec(
                     "a",

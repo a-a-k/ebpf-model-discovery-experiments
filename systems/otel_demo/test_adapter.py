@@ -417,6 +417,28 @@ def test_consumer_drain_retries_bounded_probe_timeout(monkeypatch) -> None:
     assert all(0 < call["timeout"] <= 1 for call in calls)
 
 
+def test_consumer_drain_probe_uses_full_remaining_budget(monkeypatch) -> None:
+    class Result:
+        stdout = "accounting orders 0 42 42 0 consumer host client\n"
+        stderr = ""
+        returncode = 0
+
+    calls = []
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append(kwargs)
+            return Result()
+
+    ticks = iter([100.0, 100.0, 100.0])
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    adapter._wait_consumer_drain(60)
+
+    assert calls[0]["timeout"] == 60.0
+
+
 def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
     class Context:
         def node_exec(self, node, command, **kwargs):
