@@ -34,7 +34,7 @@ The operation set and controlled-replica approach continue the [SIMPAT experimen
 | OpenTelemetry Demo 3.0.0 | [`8c47d47`](https://github.com/open-telemetry/opentelemetry-demo/tree/8c47d47c9ac27710d2b2a153bcd53e483bffe66d) | Browse product; add to cart; checkout | Product-catalog A/B |
 | Petclinic Microservices | [`3858f9c`](https://github.com/spring-petclinic/spring-petclinic-microservices/tree/3858f9c630cf989bb6809a86edf47c2be78dc9f1) | List owners; owner details with visits; create visit; list vets | Visits A/B |
 
-Each campaign creates two Ubuntu guests using QEMU/KVM on one standard public GitHub Actions Linux runner. Each has its own kernel, boot ID, network stack, Docker daemon, and eBPF collector. Guest addresses are `192.168.76.11` and `.12`, with routed container subnets `172.28.11.0/24` and `172.28.12.0/24`. Replicas A/B reside on different guests. Routing remains fixed during replica failures.
+Each campaign creates two Ubuntu guests using QEMU/KVM on one standard public GitHub Actions Linux runner. Each has its own kernel, boot ID, network stack, Docker daemon, and eBPF collector. Guest addresses are `192.168.76.11` and `.12`; their separate Docker subnets are `172.28.11.0/24` and `172.28.12.0/24`. Cross-guest calls use published guest ports, because qualification did not establish direct Docker-subnet reachability. Replicas A/B reside on different guests. Routing remains fixed during replica failures.
 
 ```mermaid
 flowchart LR
@@ -75,6 +75,10 @@ Service instances and placement use available resource/process attributes and co
 
 Database analysis distinguishes logical address, concrete instance evidence, and dependencies shared by multiple services. Known database ports alone do not identify an operation's dependency.
 
+Native database activity named in spans is retained even when endpoint attributes are absent. For example, a named Mongo client call is evidence of activity, not proof of a particular Mongo instance. Unknown endpoints are scoped to their callers and cannot establish a shared database. Observed protocol labels are never corrected using the deployment reference: endpoint agreement and protocol agreement are separate evaluation fields.
+
+For asynchronous execution, the implemented message matcher requires a unique checkout producer, an accounting consumer's exact SpanLink to that producer, and a PostgreSQL write sharing the consumer's exact processing-root ancestry. All IDs must be unambiguous within one source. Combining streams does not lend native message identities to eBPF. The retained proof establishes association; the independent SQL oracle establishes whether the correct order arrived before its deadline.
+
 ### Conditional execution model and simulation
 
 The four states `11`, `10`, `01`, and `00` indicate replica availability. Target weights are `(4,2,1,1)/8`. For class c, exact integration is `p(c) = sum_s w(s) p(c | s)`. Monte Carlo uses 100,000 draws from the same conditional model and is checked against exact integration.
@@ -105,6 +109,23 @@ Suppression is checked through configuration and retained telemetry. A disconnec
 
 The primary series contains **58,320 operation attempts**. Multi-step operations generate more HTTP requests; this is not a packet or span count. Each application's mixture is balanced. Reset, readiness, settling, and outstanding-work completion happen between blocks and count toward cost.
 
+Every block uses the same fixed preparation: one unscored warmup per operation present in that block, a ten-second settling period, and a ten-second drain guard after scored futures and oracle checks complete. Warmups are recorded and never repeated until success. The guard is a bounded preparation rule, not proof that arbitrary background work has ended. A prior pilot using different preparation is retained separately and excluded by protocol version.
+
+The external predicates are declared independently of the observation model. The primary HTTP deadline is two seconds for the complete operation, including all of its HTTP steps.
+
+| Operation | External success predicate in addition to the deadline |
+|---|---|
+| Compose post | HTTP 2xx and the upstream upload acknowledgement; eventual fan-out is recorded separately |
+| Home timeline | HTTP 2xx, well-formed posts, and the exact stable followed-user fixture |
+| User timeline | HTTP 2xx, well-formed posts, and the exact stable owner fixture |
+| Browse product | HTTP 200 and the requested fixture product ID |
+| Add to cart | Product prerequisite succeeds; returned cart contains the fixture product with quantity one |
+| Checkout | Product and cart prerequisites succeed; HTTP 200 returns an order ID; durable accounting is a separate outcome |
+| List owners | HTTP result matches the pinned seed-data oracle |
+| Owner details with visits | Owner/pet fields and all expected visits match the seed-data oracle; an HTTP 200 fallback without visits fails |
+| Create visit | HTTP 201 plus exactly one independently queried MySQL row matching returned ID, pet, date, and unique description |
+| List vets | HTTP result matches the pinned seed-data oracle |
+
 ### Database controls
 
 Each campaign performs 20 attempts with its selected DB available and 20 unavailable, on the same deployment: 1,080 additional attempts overall. Detected dependencies are checked against behavior. Caches can mask outages; that is a result, not permission to infer outcomes from topology. Structural additions and prediction changes are reported separately.
@@ -131,10 +152,10 @@ Costs include preparation, downloads/builds, VM startup, acquisition, state chan
 |---|---|---|
 | Adapters | Three implementations and [focused checks](.github/workflows/checks.yml) | App-specific deployment, workload and independent outcome checks |
 | Two-kernel infrastructure | [Passed first technical run](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40324200754) | Two distinct boot IDs, kernel 6.8.0-147, BTF, 6 GiB per guest; infrastructure only |
-| Protocol support | [Technical attempts and repairs](docs/RUN_HISTORY.md) | DSB captures include Mongo endpoints mislabelled as MySQL by OBI; observed labels are retained. Kafka identity-chain recovery remains under investigation |
-| Petclinic series | [Initial nine jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492), [partial repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065), [full repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653) | Three absent-mode campaigns complete; six native-enabled attempts need the exporter snapshot repair |
-| DSB series | [Nine campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753) | Acquisition in progress; a successful job is not an accuracy verdict |
-| OTel series | [Recording-disable qualification](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960) | Absent-mode SDK/config guards are checked in the actual unfiltered stream before scored campaigns |
+| Protocol support | [Technical attempts and repairs](docs/RUN_HISTORY.md) | DSB Mongo endpoints are mislabelled as MySQL by OBI; labels are retained. Exact native Kafka message chains passed qualification; eBPF-only recovery is not presumed |
+| Petclinic series | [Initial jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492), [partial repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065), [full repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653) | All nine campaigns acquired and evaluated; failed exporter snapshots retained |
+| DSB series | [Absent campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753), [partial replacements](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169), [full replacements](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587) | All nine admitted campaigns acquired and evaluated; six invalid native-baseline campaigns explicitly excluded and retained |
+| OTel series | [Recording-disable qualification](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960), [first complete-primary attempt](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494) | Initial reset-permission failures repaired; later attempt failed during consumer recovery, so is not a complete scientific campaign |
 | Final empirical review | Pending | No overall accuracy or enrichment claim |
 
 Technical reruns retain the failed attempt and its cause. The series is not expanded to obtain positive results.
@@ -144,6 +165,8 @@ Technical reruns retain the failed attempt and its cause. The series is not expa
 Guests share physical resources. Four controlled states provide a restricted transfer test, not arbitrary failure extrapolation or failure-transition dynamics. Target mixture weights are supplied. Fixed application versions and three repeats limit generalization. Workload grouping and semantic rules include manual knowledge. Protocol/language coverage can leave links unknown. Context propagation changes metadata and affects interpretation of portability and cost. Full native tracing may already contain every database dependency eBPF recovers.
 
 The downstream class representation uses the observed service/route names. Replica-specific names and variable child calls can fragment one business operation into several observed classes; a lower augmented ARI is not proof that downstream information is inherently unhelpful. No extra representation search is performed after inspecting results. A DB endpoint match is evaluated separately from protocol correctness and concrete-instance identity. Native ancestry is an independent telemetry reference, not ground truth for every eBPF link. Order-chain matching supports declared current-order fields; unimplemented alternative message matchers remain a limitation.
+
+The [Petclinic cross-node audit](docs/petclinic-cross-node-audit.md) identifies two distinct reference limitations. Native and eBPF server spans for the same request can have different span IDs, which the strict reference binder does not reconcile. Even after an exact opaque-request/method/path match, the native child points to an eBPF proxy parent that has no native counterpart. Matching requests therefore does not supply an independent native parent reference. Cross-node correctness remains unknown rather than being inferred from matching traces or deployment placement.
 
 ## Reproduction
 
@@ -171,7 +194,7 @@ gh workflow run report.yml -f run_ids='CAMPAIGN_RUN_ID ANOTHER_RUN_ID'
 gh workflow run archive.yml -f run_ids='CAMPAIGN_RUN_ID QUALIFICATION_RUN_ID PILOT_RUN_ID'
 ```
 
-Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its forecast/hash before target traffic. The report re-evaluates saved observations with the current evaluation code, retains the original metrics, and never refits the saved forecast. It requires all three distinct seeds for an aggregate and does not automatically select among duplicate runs. Missing files do not represent successful empty experiments. Selector-only matrix jobs are not campaigns. Artifacts expire after 90 days; the archive workflow publishes original ZIPs, checksums and provenance in a GitHub release.
+Campaigns must follow successful deployment and observation qualification and implementation review. A campaign saves its model, forecast, evaluation map and their hashes before target traffic. Report replay preserves the original target classifications and proxies byte-for-byte, and checks the saved model/forecast/map hashes. Independent database and message-chain audits can reparse the raw streams with recorded evaluation-code provenance; this never refits the predictor. Original metrics remain beside the regenerated metrics. The report requires all three distinct seeds for an aggregate and rejects duplicate admitted campaigns. Missing files do not represent successful empty experiments. Selector-only matrix jobs are not campaigns. Artifacts expire after 90 days; the archive workflow publishes original ZIPs, checksums and provenance in a GitHub release.
 
 Report outputs include `operations.csv`, `summary.json`, `classes.csv`, `structure.csv`, `database-controls.csv`, `async.csv`, error figures, example observed graphs, and per-campaign models/metrics under `evidence/`. `job-costs.csv` covers repository preparation, checks, failures and reruns, while `costs.csv` contains valid-campaign timings. Ongoing job time and unmetered engineering time are explicitly unknown. Nominal Wilson envelopes may exceed the conservative 5 pp target even when point error is zero; both measures remain visible.
 
