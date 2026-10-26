@@ -11,6 +11,10 @@ on:
         type: choice
         options: [absent, partial, full]
         default: absent
+      deepflow_fallback:
+        description: One bounded fallback after measured OBI coverage limitation
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -38,6 +42,7 @@ jobs:
         if: inputs.system == 'all' || inputs.system == matrix.system
         env:
           PYTHONPATH: .
+          DEEPFLOW_FALLBACK: ${{ inputs.deepflow_fallback }}
         run: python -m ebpf_discovery.qualify --system ${{ matrix.system }} --mode ${{ inputs.mode }} --out results/qualification
       - name: Preserve infrastructure diagnostics
         if: always() && (inputs.system == 'all' || inputs.system == matrix.system)

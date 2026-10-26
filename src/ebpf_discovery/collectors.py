@@ -38,13 +38,18 @@ class Collectors:
                 'log_level': 'INFO',
                 'discovery': {
                     'instrument': [{'exe_path': '*', 'containers_only': True}],
+                    'exclude_instrument': [{'exe_path': '*all-in-one-linux'}, {'exe_path': '*jaeger*'},
+                                           {'exe_path': '*psql'}, {'exe_path': '*mysql'}, {'exe_path': '*valkey-cli'},
+                                           {'exe_path': '*deepflow-agent'}],
                     'exclude_otel_instrumented_services': False,
                     'disabled_route_harvesters': ['java', 'nodejs'],
                 },
                 'javaagent': {'enabled': False},
                 'nodejs': {'enabled': False, 'manual_spans': False},
+                'attributes': {'select': {'traces': {'include': ['db.query.text', 'service.peer.name']}}},
                 'ebpf': {
                     'context_propagation': 'all', 'track_request_headers': True,
+                    'batch_timeout': '1s',
                     'buffer_sizes': {'http': 8192},
                     'payload_extraction': {'http': {'enrichment': {
                         'enabled': True, 'policy': {'default_action': {'headers': 'exclude', 'body': 'exclude'}},
@@ -80,7 +85,7 @@ class Collectors:
 
     def snapshot(self):
         # OBI exports in batches. This is acquisition settling, counted as cost.
-        time.sleep(5)
+        time.sleep(10)
         self.health()
         for node in ('a', 'b'):
             for command, name in [
@@ -90,6 +95,12 @@ class Collectors:
             ]:
                 result = self.ctx.node_exec(node, command, timeout=60, check=False)
                 (self.root / f'{node}-{name}').write_text(result.stdout + result.stderr, encoding='utf-8')
+
+    def settle(self):
+        # Processes start after the observer. Discovery/attachment is asynchronous;
+        # startup traffic cannot double as the scored measurement interval.
+        time.sleep(30)
+        self.health()
 
     def close(self):
         for node in ('a', 'b'):

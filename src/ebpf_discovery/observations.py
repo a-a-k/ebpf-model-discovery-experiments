@@ -64,13 +64,15 @@ def jaeger(payload, source='native'):
             process = processes.get(s.get('processID'), {})
             a = {x['key']: x.get('value') for x in s.get('tags', [])}
             refs = [r for r in s.get('references', []) if r.get('refType') == 'CHILD_OF']
+            resource = {x['key']: x.get('value') for x in process.get('tags', [])}
+            instance = resource.get('service.instance.id') or resource.get('hostname') or resource.get('host.name') or resource.get('ip')
             yield {'source': source, 'node': None, 'trace_id': s['traceID'].lower(),
                    'span_id': s['spanID'].lower(), 'parent_id': refs[0]['spanID'].lower() if len(refs) == 1 else '',
-                   'service': process.get('serviceName', 'unknown'), 'instance': None,
+                   'service': process.get('serviceName', 'unknown'), 'instance': instance,
                    'name': s.get('operationName'), 'kind': a.get('span.kind'),
                    'start_ns': int(s.get('startTime', 0)) * 1000,
                    'end_ns': (int(s.get('startTime', 0)) + int(s.get('duration', 0))) * 1000,
-                   'attributes': a, 'resource': {x['key']: x.get('value') for x in process.get('tags', [])},
+                   'attributes': a, 'resource': resource,
                    'status': {'code': 'STATUS_CODE_ERROR'} if a.get('error') else {}, 'links': []}
 
 
