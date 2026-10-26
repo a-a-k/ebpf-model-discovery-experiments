@@ -847,7 +847,7 @@ backend visits_replicas
             "mode": self.ctx.mode,
             "files": {},
             "suppression_verified": {},
-            "snapshot_method": "graceful_stop_copy_restart_append_check",
+            "snapshot_method": "graceful_stop_rotate_copy_restart_new_segment",
         }
         for node in ("a", "b"):
             collector = f"collector-{node}"
@@ -855,34 +855,38 @@ backend visits_replicas
             self._node(node, self._compose(node, f"stop -t 30 {collector}"), timeout=60)
             remote = f"{REMOTE_DIR}/node-{node}/native/native.jsonl"
             target = destination / f"native-node-{node}.jsonl"
-            before = 0
+            archived = f"{remote}.snapshot-{time.time_ns()}"
             try:
                 exists = self._node(node, f"test -f {remote}", timeout=30, check=False)
+                if exists.returncode == 0:
+                    # Rotate only after the collector has flushed and stopped. Its file
+                    # exporter starts a fresh segment rather than appending on restart.
+                    self._node(node, f"mv {remote} {archived}", timeout=30)
                 if exists.returncode == 0 and hasattr(self.ctx, "node_get"):
-                    self.ctx.node_get(node, remote, target)
+                    self.ctx.node_get(node, archived, target)
                     raw = target.read_bytes()
                 elif exists.returncode == 0:
-                    result = self._node(node, f"base64 -w0 {remote}", timeout=120)
+                    result = self._node(node, f"base64 -w0 {archived}", timeout=120)
                     raw = base64.b64decode(getattr(result, "stdout", "").strip())
                     target.write_bytes(raw)
                 else:
                     raw = b""
                     target.write_bytes(raw)
-                before = len(raw)
                 census = _native_service_census(raw)
                 census["source_files_present"] = int(exists.returncode == 0)
                 census["source_files_expected"] = 1
                 inventory["files"][node] = {
                     "path": target.name,
-                    "bytes": before,
+                    "bytes": len(raw),
                     "sha256": hashlib.sha256(raw).hexdigest(),
+                    "guest_rotated_file": archived,
                     "census": census,
                     "mode_compliance": _native_mode_compliance(self.ctx.mode, census),
                 }
                 inspect = self._node(node, self._compose(node, "ps -q --all") + " | xargs -r docker inspect --format '{{.Name}} {{json .Config.Cmd}} {{json .Config.Env}}'", timeout=60)
                 inventory["suppression_verified"][node] = getattr(inspect, "stdout", "").splitlines()
             finally:
-                self._resume_native_collector(node, collector, remote, before, inventory)
+                self._resume_native_collector(node, collector, remote, inventory)
         combined = {
             "spans": 0,
             "services": {},
@@ -904,8 +908,8 @@ backend visits_replicas
         inventory["mode_compliance"] = _native_mode_compliance(self.ctx.mode, combined)
         _json_write(destination / "native-metadata.json", inventory)
 
-    def _resume_native_collector(self, node: str, collector: str, remote: str, before: int, inventory: dict[str, Any]) -> None:
-        """Resume a snapshot-stopped collector and prove its cumulative target survived."""
+    def _resume_native_collector(self, node: str, collector: str, remote: str, inventory: dict[str, Any]) -> None:
+        """Resume a snapshot-stopped collector on a fresh segment and prove readiness."""
         self._node(node, self._compose(node, f"start {collector}"), timeout=60)
         collector_ip = IPS[f"collector_{node}"]
         deadline = time.monotonic() + 60
@@ -920,10 +924,8 @@ backend visits_replicas
             raise RuntimeError(f"Native collector {node} did not resume OTLP reception: {last_error}")
         size_result = self._node(node, f"if test -f {remote}; then stat -c %s {remote}; else echo 0; fi", timeout=30)
         resumed_size = int(getattr(size_result, "stdout", "0").strip())
-        if resumed_size < before:
-            raise RuntimeError(f"Native collector {node} truncated its export across snapshot restart")
         file_metadata = inventory.setdefault("files", {}).setdefault(node, {})
-        file_metadata["bytes_after_restart"] = resumed_size
+        file_metadata["next_segment_initial_bytes"] = resumed_size
         file_metadata["collector_resumed"] = True
 
     def close(self) -> None:

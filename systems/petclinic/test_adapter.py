@@ -154,3 +154,35 @@ def test_native_census_and_partial_mode_audit_use_actual_service_names():
     census["services"]["visits-service"] = 1
     census["spans"] += 1
     assert _native_mode_compliance("partial", census)["compliant"] is False
+
+
+def test_native_snapshot_rotates_before_copy_and_accepts_fresh_segment(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    commands = []
+    copied_sources = []
+    raw = b'{"resourceSpans":[]}\n'
+
+    def node_get(_node, source, destination):
+        copied_sources.append(source)
+        destination.write_bytes(raw)
+
+    context = SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="partial", node_get=node_get)
+    adapter = Adapter(context)
+
+    def node(_node, command, timeout=300, check=True):
+        commands.append(command)
+        if command.startswith("test -f"):
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+        if command.startswith("if test -f"):
+            return SimpleNamespace(returncode=0, stdout="0\n", stderr="")
+        return SimpleNamespace(returncode=0, stdout="", stderr="")
+
+    adapter._node = node
+    destination = tmp_path / "native" / "calibration"
+    adapter.collect_native(destination)
+    metadata = json.loads((destination / "native-metadata.json").read_text())
+    assert metadata["snapshot_method"] == "graceful_stop_rotate_copy_restart_new_segment"
+    assert len(copied_sources) == 2
+    assert all(".snapshot-" in source for source in copied_sources)
+    assert sum(command.startswith("mv ") for command in commands) == 2
+    assert all(file["next_segment_initial_bytes"] == 0 for file in metadata["files"].values())
