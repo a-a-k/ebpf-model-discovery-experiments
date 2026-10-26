@@ -7,6 +7,7 @@ import pytest
 if importlib.util.find_spec("requests") is None:  # keep the static local check independent of app tooling
     sys.modules["requests"] = SimpleNamespace()
 
+from systems.petclinic import adapter as adapter_module
 from systems.petclinic.adapter import Adapter, _canonical
 
 
@@ -54,3 +55,39 @@ def test_verify_rejects_duplicate_exact_visit_rows(tmp_path, monkeypatch):
     verified = adapter.verify([record])[0]
     assert verified["success"] is False
     assert verified["validation"]["row_count"] == 2
+
+
+def test_operation_uses_only_opaque_binding_header(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    captured = {}
+
+    class Response:
+        def __init__(self):
+            self.status_code = 200
+            self.content = b"[]"
+            self.headers = {"content-type": "application/json"}
+
+        @staticmethod
+        def json():
+            return []
+
+    def request(method, url, **kwargs):
+        captured.update(method=method, url=url, **kwargs)
+        return Response()
+
+    monkeypatch.setattr(adapter_module.requests, "request", request, raising=False)
+    context = SimpleNamespace(
+        deployment_dir=tmp_path,
+        out=tmp_path,
+        mode="absent",
+        node_ip=lambda _node: "192.168.76.11",
+    )
+    adapter = Adapter(context)
+    adapter.fixture = {"owners": [], "details": {}, "vets": []}
+    record = adapter.operation("list_owners", 3, "calibration")
+    request_id = captured["headers"]["X-Experiment-Request-Id"]
+    assert request_id.startswith("req-")
+    assert "list_owners" not in request_id
+    assert "traceparent" not in captured["headers"]
+    assert record["http_steps"][0]["request_id"] == request_id
+    assert "trace_context" not in record

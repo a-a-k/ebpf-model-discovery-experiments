@@ -536,7 +536,6 @@ backend visits_replicas
         attempt_id = f"{namespace}-{index}-{name}"
         digest = hashlib.sha256(attempt_id.encode()).hexdigest()
         request_id = "req-" + hashlib.sha256(("http-step:" + attempt_id).encode()).hexdigest()
-        trace_id, parent_id = digest[:32], hashlib.sha256(("parent:" + attempt_id).encode()).hexdigest()[:16]
         marker = "ebpf-study-" + digest
         method = "GET"
         paths = {"list_owners": "/api/customer/owners", "owner_details_with_visits": "/api/gateway/owners/6", "create_visit": "/api/visit/owners/1/pets/1/visits", "list_vets": "/api/vet/vets"}
@@ -555,7 +554,6 @@ backend visits_replicas
                 url,
                 json=body,
                 headers={
-                    "traceparent": f"00-{trace_id}-{parent_id}-01",
                     "X-Experiment-Request-Id": request_id,
                     "Connection": "close",
                 },
@@ -602,7 +600,6 @@ backend visits_replicas
             "error": error,
             "validation": validation,
             "response_json": payload,
-            "trace_context": {"trace_id": trace_id, "parent_id": parent_id},
         }
 
     def _mysql(self, sql: str):
@@ -654,29 +651,60 @@ backend visits_replicas
         _require_actions()
         destination = Path(destination)
         destination.mkdir(parents=True, exist_ok=True)
-        inventory: dict[str, Any] = {"mode": self.ctx.mode, "files": {}, "suppression_verified": {}}
+        inventory: dict[str, Any] = {
+            "mode": self.ctx.mode,
+            "files": {},
+            "suppression_verified": {},
+            "snapshot_method": "graceful_stop_copy_restart_append_check",
+        }
         for node in ("a", "b"):
-            try:
-                self._node(node, self._compose(node, f"kill -s SIGTERM collector-{node}"), timeout=30)
-            except Exception as exc:  # noqa: BLE001 - still retain any file after a collector stop failure
-                inventory.setdefault("collector_stop_errors", {})[node] = str(exc)
+            collector = f"collector-{node}"
+            # Compose stop waits for the collector's SIGTERM handling, including exporter flush.
+            self._node(node, self._compose(node, f"stop -t 30 {collector}"), timeout=60)
             remote = f"{REMOTE_DIR}/node-{node}/native/native.jsonl"
             target = destination / f"native-node-{node}.jsonl"
-            exists = self._node(node, f"test -f {remote}", timeout=30, check=False)
-            if exists.returncode == 0 and hasattr(self.ctx, "node_get"):
-                self.ctx.node_get(node, remote, target)
-                raw = target.read_bytes()
-            elif exists.returncode == 0:
-                result = self._node(node, f"base64 -w0 {remote}", timeout=120)
-                raw = base64.b64decode(getattr(result, "stdout", "").strip())
-                target.write_bytes(raw)
-            else:
-                raw = b""
-                target.write_bytes(raw)
-            inventory["files"][node] = {"path": target.name, "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
-            inspect = self._node(node, self._compose(node, "ps -q --all") + " | xargs -r docker inspect --format '{{.Name}} {{json .Config.Cmd}} {{json .Config.Env}}'", timeout=60)
-            inventory["suppression_verified"][node] = getattr(inspect, "stdout", "").splitlines()
+            before = 0
+            try:
+                exists = self._node(node, f"test -f {remote}", timeout=30, check=False)
+                if exists.returncode == 0 and hasattr(self.ctx, "node_get"):
+                    self.ctx.node_get(node, remote, target)
+                    raw = target.read_bytes()
+                elif exists.returncode == 0:
+                    result = self._node(node, f"base64 -w0 {remote}", timeout=120)
+                    raw = base64.b64decode(getattr(result, "stdout", "").strip())
+                    target.write_bytes(raw)
+                else:
+                    raw = b""
+                    target.write_bytes(raw)
+                before = len(raw)
+                inventory["files"][node] = {"path": target.name, "bytes": before, "sha256": hashlib.sha256(raw).hexdigest()}
+                inspect = self._node(node, self._compose(node, "ps -q --all") + " | xargs -r docker inspect --format '{{.Name}} {{json .Config.Cmd}} {{json .Config.Env}}'", timeout=60)
+                inventory["suppression_verified"][node] = getattr(inspect, "stdout", "").splitlines()
+            finally:
+                self._resume_native_collector(node, collector, remote, before, inventory)
         _json_write(destination / "native-metadata.json", inventory)
+
+    def _resume_native_collector(self, node: str, collector: str, remote: str, before: int, inventory: dict[str, Any]) -> None:
+        """Resume a snapshot-stopped collector and prove its cumulative target survived."""
+        self._node(node, self._compose(node, f"start {collector}"), timeout=60)
+        collector_ip = IPS[f"collector_{node}"]
+        deadline = time.monotonic() + 60
+        last_error = ""
+        while time.monotonic() < deadline:
+            probe = self._node(node, f"timeout 2 bash -c '</dev/tcp/{collector_ip}/4318'", timeout=5, check=False)
+            if probe.returncode == 0:
+                break
+            last_error = getattr(probe, "stderr", "")
+            time.sleep(1)
+        else:
+            raise RuntimeError(f"Native collector {node} did not resume OTLP reception: {last_error}")
+        size_result = self._node(node, f"if test -f {remote}; then stat -c %s {remote}; else echo 0; fi", timeout=30)
+        resumed_size = int(getattr(size_result, "stdout", "0").strip())
+        if resumed_size < before:
+            raise RuntimeError(f"Native collector {node} truncated its export across snapshot restart")
+        file_metadata = inventory.setdefault("files", {}).setdefault(node, {})
+        file_metadata["bytes_after_restart"] = resumed_size
+        file_metadata["collector_resumed"] = True
 
     def close(self) -> None:
         diagnostics = Path(self.ctx.out) / "petclinic-diagnostics"
