@@ -45,6 +45,12 @@ template has its tracing provider removed; nginx receives `otel_trace off`; and
 flagd receives no collector URI (its documented opt-in for trace export). These
 guards do not filter collector output or alter request handling. Partial mode only
 disables the two controlled catalog replicas and full mode retains all native spans.
+The disabled currency and shipping providers also use the pinned SDKs' explicit
+always-off samplers, so they do not merely omit export while continuing to record
+spans; their W3C propagation remains configured. In pinned flagd `v0.16.0`, an
+empty collector target makes `autoexport.NewSpanExporter` return the none exporter,
+and `BuildTraceProvider` returns before constructing or globally registering an
+SDK tracer provider, leaving the process-wide `NoopTracerProvider` in place.
 
 ## Operations and independent outcomes
 

@@ -68,6 +68,8 @@ def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
     assert 'path: /native/traces.json' in config
     description = adapter._suppression_description()
     assert description["collector_filter"].startswith("none")
+    assert "always-off sampling" in description["source_guards"]
+    assert "NoopTracerProvider" in description["native_component_guards"]
 
     service = {"build": {"context": "./", "dockerfile": "./src/checkout/Dockerfile"}}
     adapter._prefix_source_build(service)

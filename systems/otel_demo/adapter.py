@@ -1299,10 +1299,10 @@ SELECT json_build_object(
             "mode": self.mode,
             "excluded": excluded,
             "sdk_settings": "OTEL_SDK_DISABLED=true on disabled standard SDKs",
-            "source_guards": "checkout and product-catalog skip exporter/provider construction; currency and shipping omit direct trace exporters; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
-            "native_component_guards": "absent mode removes Envoy tracing, sets nginx otel_trace off, and leaves flagd without a collector URI",
+            "source_guards": "checkout and product-catalog skip exporter/provider construction; currency and shipping omit direct trace exporters and use always-off sampling; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
+            "native_component_guards": "absent mode removes Envoy tracing, sets nginx otel_trace off, and leaves flagd without a collector URI; pinned flagd autoexport then retains its NoopTracerProvider",
             "collector_filter": "none; the file exporter retains the unfiltered native OTLP stream for suppression audit",
-            "propagation": "checkout keeps W3C propagation with a never-sample provider; no disabled Go exporter is constructed",
+            "propagation": "checkout, currency, and shipping keep W3C propagation while their always-off providers create no recording spans",
         }
 
     def _patch_native_disable(self) -> dict[str, Any]:
@@ -1437,6 +1437,14 @@ end # The metric exporter is not constructed when the SDK is disabled.
         if "OTEL_SDK_DISABLED" not in currency_text:
             currency_text = self._replace_once(
                 currency_text,
+                '#include "opentelemetry/sdk/trace/tracer_context_factory.h"',
+                '#include "opentelemetry/sdk/trace/tracer_context_factory.h"\n'
+                '#include "opentelemetry/sdk/resource/resource.h"\n'
+                '#include "opentelemetry/sdk/trace/samplers/always_off.h"',
+                currency_tracer,
+            )
+            currency_text = self._replace_once(
+                currency_text,
                 "#include <grpcpp/grpcpp.h>\n#include <cstring>",
                 "#include <grpcpp/grpcpp.h>\n#include <cstdlib>\n#include <cstring>",
                 currency_tracer,
@@ -1457,13 +1465,42 @@ end # The metric exporter is not constructed when the SDK is disabled.
     processors.push_back(std::move(processor));
   }
 """
+            currency_text = self._replace_once(
+                currency_text, old, new, currency_tracer
+            )
+            currency_text = self._replace_once(
+                currency_text,
+                """  auto context =
+      opentelemetry::sdk::trace::TracerContextFactory::Create(std::move(processors));
+""",
+                """  std::unique_ptr<opentelemetry::sdk::trace::TracerContext> context;
+  if (sdk_disabled != nullptr && std::strcmp(sdk_disabled, "true") == 0)
+  {
+    context = opentelemetry::sdk::trace::TracerContextFactory::Create(
+        std::move(processors),
+        opentelemetry::sdk::resource::Resource::GetDefault(),
+        std::unique_ptr<opentelemetry::sdk::trace::Sampler>(
+            new opentelemetry::sdk::trace::AlwaysOffSampler));
+  }
+  else
+  {
+    context = opentelemetry::sdk::trace::TracerContextFactory::Create(std::move(processors));
+  }
+""",
+                currency_tracer,
+            )
             currency_tracer.write_text(
-                self._replace_once(currency_text, old, new, currency_tracer),
-                encoding="utf-8",
+                currency_text, encoding="utf-8"
             )
 
         shipping_text = shipping_telemetry.read_text(encoding="utf-8")
         if "native_tracing_disabled" not in shipping_text:
+            shipping_text = self._replace_once(
+                shipping_text,
+                "use opentelemetry_sdk::trace::SdkTracerProvider;",
+                "use opentelemetry_sdk::trace::{Sampler, SdkTracerProvider};",
+                shipping_telemetry,
+            )
             old = """    let tracer_provider = SdkTracerProvider::builder()
         .with_resource(get_resource())
         .with_batch_exporter(
@@ -1478,7 +1515,10 @@ end # The metric exporter is not constructed when the SDK is disabled.
             new = """    let native_tracing_disabled =
         matches!(std::env::var("OTEL_SDK_DISABLED").as_deref(), Ok("true"));
     let tracer_provider = if native_tracing_disabled {
-        SdkTracerProvider::builder().with_resource(get_resource()).build()
+        SdkTracerProvider::builder()
+            .with_resource(get_resource())
+            .with_sampler(Sampler::AlwaysOff)
+            .build()
     } else {
         SdkTracerProvider::builder()
             .with_resource(get_resource())
