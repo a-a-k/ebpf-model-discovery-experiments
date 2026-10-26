@@ -83,6 +83,8 @@ Direct stratified estimation is algebraically equivalent and is the strongest si
 
 Model and forecast files are saved before target acquisition. Unknown outcomes yield bounds, not fabricated point estimates. Adding graph structure that does not affect the calculation is not a forecast improvement. HTTP status/duration alone does not implement durable asynchronous completion.
 
+Uncertainty uses weighted nominal pointwise 95% Wilson envelopes under an iid Bernoulli assumption. Within-block temporal dependence is not estimated, so these are not validated 95% predictive intervals or simultaneous confidence bounds. Worst-end error and interval width are reported separately from point error.
+
 ## Experimental design
 
 **27 campaigns:** three systems × three actual tracing modes × seeds `0`, `1`, `2`.

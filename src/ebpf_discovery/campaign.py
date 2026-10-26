@@ -125,7 +125,9 @@ class Campaign:
         self.collectors.snapshot()
         native = self.ctx.out / 'native' / stage
         self.adapter.collect_native(native)
-        spans, errors = read_spans(self.collectors.root, native)
+        # Exporters may start a new file after restart. Include every immutable
+        # native snapshot; read_spans deduplicates cumulative exports by IDs.
+        spans, errors = read_spans(self.collectors.root, native.parent)
         write_json(self.ctx.out / f'normalized-{stage}.json', spans)
         write_json(self.ctx.out / f'parse-errors-{stage}.json', errors)
         if errors:

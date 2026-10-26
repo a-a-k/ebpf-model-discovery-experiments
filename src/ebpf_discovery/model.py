@@ -123,7 +123,7 @@ def conditional(rows, key, state):
             'known_successes': successes, 'known_failures': sum(r['proxy'] is False for r in known),
             'unknown_outcomes': unknown, 'identification_bounds': [low, high],
             'uncertainty_bounds': [wilson(successes, n)[0], wilson(successes+unknown+len(ambiguous), n)[1]],
-            'uncertainty_method': 'weighted pointwise 95% Wilson envelopes; no simultaneous-coverage claim'}
+            'uncertainty_method': 'weighted nominal pointwise 95% iid Bernoulli Wilson envelopes; temporal independence is unvalidated; no simultaneous or predictive coverage claim'}
 
 
 def fit(spans, census, seed):
