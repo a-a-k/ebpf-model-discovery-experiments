@@ -21,8 +21,10 @@ def serve(port: int, output: Path, source: str):
                     request=ExportTraceServiceRequest(); request.ParseFromString(body)
                     payload=MessageToDict(request)
                 with lock, output.open('a',encoding='utf-8') as f:
-                    f.write(json.dumps({'source':source,'received_ns':time.time_ns(),'path':self.path,'payload':payload})+'\n')
-                self.send_response(200); self.send_header('Content-Type','application/x-protobuf'); self.end_headers()
+                    f.write(json.dumps({'source':source,'received_ns':time.time_ns(),'path':self.path,'id_encoding':'hex' if 'json' in self.headers.get('Content-Type','') else 'base64','payload':payload})+'\n')
+                is_json='json' in self.headers.get('Content-Type','')
+                self.send_response(200); self.send_header('Content-Type','application/json' if is_json else 'application/x-protobuf'); self.end_headers()
+                if is_json: self.wfile.write(b'{}')
             except Exception as exc:
                 with lock, output.with_suffix('.errors.jsonl').open('a',encoding='utf-8') as f:
                     f.write(json.dumps({'error':str(exc),'received_ns':time.time_ns(),'path':self.path})+'\n')
