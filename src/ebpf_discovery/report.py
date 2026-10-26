@@ -113,6 +113,10 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
                 writer.writeheader()
                 writer.writerows(data)
     groups = defaultdict(list)
+    admitted = {(str(c['run_id']), c['system'], c['mode'], c['seed']) for c in campaigns}
+    campaign_keys = [(c['system'], c['mode'], c['seed']) for c in campaigns]
+    if len(set(campaign_keys)) != len(campaign_keys):
+        raise RuntimeError('Duplicate admitted system/mode/seed campaigns require an explicit technical exclusion, never accuracy selection')
     for row in rows:
         groups[(row['system'], row['mode'], row['source'], row['operation'])].append(row)
     summaries = []
@@ -154,16 +158,29 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
     lines += ['', '## Retained run references', '']
     for run_id in sorted({str(r['run_id']) for r in campaigns}):
         lines.append(f'- [Actions run {run_id}](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/{run_id}).')
-    failures = []
+    failures, attempts = [], []
     for path in inputs.rglob('status.json'):
         status = json.loads(path.read_text())
+        key = (str(status.get('run_id')), status.get('system'), status.get('mode'), status.get('seed'))
+        blocks_path = path.parent/'blocks.json'
+        blocks = json.loads(blocks_path.read_text()) if blocks_path.exists() else []
+        attempts.append({**{k: status.get(k) for k in ('run_id', 'system', 'mode', 'seed', 'status', 'protocol_version',
+                                                     'attempted_operations', 'preparation_operations', 'elapsed_seconds')},
+                         'included_in_primary_series': key in admitted,
+                         'recorded_primary_attempts': sum(b['attempts'] for b in blocks if b['phase'] in ('class_train', 'calibration', 'target', 'class_test'))})
         if status.get('status') != 'acquisition_complete':
             failures.append({'path': str(path.relative_to(inputs)), **status})
+    with (out/'acquisition-attempts.csv').open('w', newline='', encoding='utf-8') as stream:
+        if attempts:
+            writer = csv.DictWriter(stream, fieldnames=list(attempts[0]))
+            writer.writeheader()
+            writer.writerows(attempts)
     (out/'technical-failures.json').write_text(json.dumps(failures, indent=2)+'\n')
     (out/'superseded-pilots.json').write_text(json.dumps(superseded, indent=2)+'\n')
     (out/'excluded-campaigns.json').write_text(json.dumps(excluded, indent=2)+'\n')
     (out/'technical-exclusion-rules.json').write_text(json.dumps(exclusion_rules, indent=2)+'\n')
-    lines += ['', f'Retained technical failures: {len(failures)}. See `technical-failures.json`.', '',
+    lines += ['', f'Retained acquisition failures with status files: {len(failures)}. See `technical-failures.json`; other failed jobs remain in the job ledger.', '',
+              f'Recorded primary attempts in the admitted series: {sum(a["recorded_primary_attempts"] for a in attempts if a["included_in_primary_series"])} of 58,320 planned. All retained acquisition attempts, preparation operations and invalid runs are separately listed in `acquisition-attempts.csv`.', '',
               f'Superseded protocol pilots: {len(superseded)}. Full metrics remain in `superseded-pilots.json`; excluded by protocol, not accuracy.', '',
               f'Acquired campaigns excluded by predeclared implementation defects: {len(excluded)}. All paired sources are excluded consistently; retained metrics and exact rules are in `excluded-campaigns.json` and `technical-exclusion-rules.json`. Original acquisition metrics and raw streams remain in the corresponding Actions artifacts/archive.', '',
               f'Total completed job time across retained repository history, including preparation, checks, selector jobs and failures: {sum(j["job_seconds_including_preparation"] or 0 for j in jobs):.1f} seconds. See `job-costs.csv`; campaign-only time is separately in `costs.csv`. Ongoing job time is unknown and excluded from this total. Human/agent engineering time was not independently metered and remains unknown.', '',
