@@ -6,6 +6,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import time
+from threading import Lock
 
 
 class Context:
@@ -18,6 +19,7 @@ class Context:
         self.vm_dir = vm_dir.resolve()
         self.deployment_dir = self.out/'deployment'; self.deployment_dir.mkdir(exist_ok=True)
         self.command_log = self.out/'commands.jsonl'
+        self.log_lock = Lock()
 
     def node_ip(self, node):
         return {'a':'192.168.76.11','b':'192.168.76.12'}[node]
@@ -25,7 +27,7 @@ class Context:
     def run(self, command_list, cwd=None, timeout=300, check=True):
         start = time.time_ns()
         result = subprocess.run(command_list, cwd=cwd, timeout=timeout, text=True, capture_output=True)
-        with self.command_log.open('a', encoding='utf-8') as f:
+        with self.log_lock, self.command_log.open('a', encoding='utf-8') as f:
             f.write(json.dumps({'command':command_list,'cwd':str(cwd) if cwd else None,'started_ns':start,'ended_ns':time.time_ns(),'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr})+'\n')
         if check and result.returncode:
             raise RuntimeError(f'Command failed ({result.returncode}): {command_list[0]}\n{result.stderr[-4000:]}\n{result.stdout[-2000:]}')

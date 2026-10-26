@@ -9,7 +9,7 @@ import time
 
 import yaml
 
-OBI_IMAGE = 'otel/ebpf-instrument:0.15.2'
+OBI_IMAGE = 'otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38bfb0e7091f26e813c08d649f35dca253e'
 
 
 class Collectors:
@@ -49,7 +49,9 @@ class Collectors:
                     'payload_extraction': {'http': {'enrichment': {
                         'enabled': True, 'policy': {'default_action': {'headers': 'exclude', 'body': 'exclude'}},
                         'rules': [{'action': 'include', 'type': 'headers', 'scope': 'all',
-                                   'match': {'patterns': ['x-experiment-request-id'], 'case_sensitive': False}}],
+                                   'match': {'patterns': ['x-experiment-request-id'], 'case_sensitive': False}},
+                                  {'action': 'include', 'type': 'body', 'scope': 'all',
+                                   'match': {'url_path_patterns': ['/api/*']}}],
                     }}},
                 },
                 'routes': {'unmatched': 'path'},

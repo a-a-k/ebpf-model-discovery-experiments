@@ -57,5 +57,10 @@ jobs:
         if: always() && (inputs.system == 'all' || inputs.system == matrix.system)
         with:
           name: qualification-${{ matrix.system }}-${{ inputs.mode }}-${{ github.run_id }}
-          path: results/
+          path: |
+            results/
+            !results/**/source/**
+            !results/**/upstream/**
+            !results/**/image-context/**
+            !results/**/*.tar
           retention-days: 90

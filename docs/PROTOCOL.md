@@ -16,6 +16,8 @@ Costs include setup, manual mapping, acquisition, settling, failures, interpreta
 
 Orchestrator verdict: GO for testing the original current criterion, with external validation and explicit unknown outcomes. Reviewer verdict: **GO**, supplied by the separate GPT-6.1 Sol/xhigh reviewer in this conversation before implementation. Successful Kafka collection is not assumed. An unsupported async result fails to establish that capability and is not relabelled as successful topic-graph discovery. Actual results require a final review before any success claim.
 
+Implementation clarification reviewed on 2026-10-26: separate reviewer GO for the joint observed HTTP status/deadline proxy, with external semantic success unchanged as the criterion. Multi-step grouping is supplied knowledge. Unknown-class calibration attempts widen all compatible classes' bounds; they cannot be discarded. Class rules are fixed before target acquisition. Per-attempt proxy/semantic mismatches are reported. Durable async completion still needs actual identity/completion evidence, independently evaluated; an HTTP proxy is insufficient.
+
 ## Design
 
 27 campaigns = 3 systems x 3 actual tracing modes (absent, partial, full) x seeds 0,1,2. The partial mode disables native tracing in both controlled replicas. eBPF is collected in every mode; automatic context propagation is permitted and recorded.

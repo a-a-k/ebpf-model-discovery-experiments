@@ -7,25 +7,26 @@ study_work=$(realpath "$study_work")
 if [[ "$action" == stop ]]; then
   for node in a b; do
     if [[ -f "$study_work/$node.pid" ]]; then
-      sudo kill "$(cat "$study_work/$node.pid")" 2>/dev/null || true
+      sudo kill "$(sudo cat "$study_work/$node.pid")" 2>/dev/null || true
     fi
   done
   exit 0
 fi
 [[ "${GITHUB_ACTIONS:-}" == true ]] || { echo 'VM execution is GitHub Actions only' >&2; exit 2; }
 [[ -e /dev/kvm ]] || { echo 'KVM unavailable: no container or emulation substitution' >&2; exit 3; }
-sudo apt-get update -qq
-sudo apt-get install -y -qq qemu-system-x86 qemu-utils cloud-image-utils jq
+sudo apt-get update -qq -o Acquire::Retries=1 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20
+sudo apt-get install -y -qq --no-install-recommends qemu-system-x86 qemu-utils cloud-image-utils jq
 mkdir -p "$study_work/image"
-curl --fail --location --retry 3 -o "$study_work/image/base.img" https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
-curl --fail --location --retry 3 -o "$study_work/image/SHA256SUMS" https://cloud-images.ubuntu.com/noble/current/SHA256SUMS
+curl --fail --location --retry 3 -o "$study_work/image/base.img" https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img
+curl --fail --location --retry 3 -o "$study_work/image/SHA256SUMS" https://cloud-images.ubuntu.com/noble/20261017/SHA256SUMS
 python3 - "$study_work/image" <<'PY'
 import hashlib,json,pathlib,sys
 p=pathlib.Path(sys.argv[1])
 expected=[x.split()[0] for x in (p/'SHA256SUMS').read_text().splitlines() if x.split()[-1].lstrip('*')=='noble-server-cloudimg-amd64.img']
 actual=hashlib.file_digest((p/'base.img').open('rb'),'sha256').hexdigest()
 assert expected==[actual], (expected,actual)
-(p.parent/'image-provenance.json').write_text(json.dumps({'url':'https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img','sha256':actual},indent=2))
+assert actual=='04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94', 'pinned guest image changed'
+(p.parent/'image-provenance.json').write_text(json.dumps({'url':'https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img','sha256':actual},indent=2))
 PY
 ssh-keygen -q -t ed25519 -N '' -f "$study_work/id_ed25519"
 pubkey=$(cat "$study_work/id_ed25519.pub")
