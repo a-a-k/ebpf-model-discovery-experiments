@@ -1151,9 +1151,12 @@ SELECT json_build_object(
 
     def _wait_consumer_drain(self, timeout: float) -> None:
         end = time.monotonic() + timeout
+        broker_started_at = self._kafka_started_at(end)
         last = ""
         while time.monotonic() < end:
-            call_timeout = max(0.01, end - time.monotonic())
+            call_timeout = end - time.monotonic()
+            if call_timeout <= 0:
+                break
             try:
                 result = self.ctx.node_exec(
                     "a",
@@ -1204,9 +1207,41 @@ SELECT json_build_object(
                 and len(lags) == orders_rows
                 and all(lag == 0 for lag in lags)
             ):
+                current_started_at = self._kafka_started_at(end)
+                if current_started_at != broker_started_at:
+                    raise RuntimeError(
+                        "Kafka restarted during consumer drain observation: "
+                        f"before={broker_started_at} after={current_started_at}"
+                    )
                 return
             time.sleep(min(1.0, max(0.0, end - time.monotonic())))
         raise RuntimeError(f"accounting did not drain Kafka backlog: {last}")
+
+    def _kafka_started_at(self, deadline: float) -> str:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise RuntimeError("Kafka start-time check exceeded consumer drain deadline")
+        command = "docker inspect -f '{{.State.StartedAt}}' kafka"
+        try:
+            result = self.ctx.node_exec(
+                "a", command, check=False, timeout=remaining
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise RuntimeError(
+                "Kafka start-time check timed out: "
+                f"stdout={exc.stdout or ''} stderr={exc.stderr or ''}"
+            ) from exc
+        started_at = self._stdout(result).strip()
+        stderr = getattr(result, "stderr", "") or ""
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode("utf-8", errors="replace")
+        if getattr(result, "returncode", None) != 0 or not started_at:
+            raise RuntimeError(
+                "Kafka start-time check failed: "
+                f"stdout={started_at} stderr={stderr[-1000:]} "
+                f"returncode={getattr(result, 'returncode', None)}"
+            )
+        return started_at
 
     def _reserve_async_deadline(self, deadline_ns: int) -> None:
         # Async-control attempts are verified concurrently; never let a racing
