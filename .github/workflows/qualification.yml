@@ -1,0 +1,71 @@
+name: Application and eBPF qualification
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        description: Application to qualify (all runs three parallel jobs)
+        type: choice
+        options: [all, deathstarbench, otel_demo, petclinic]
+        default: all
+      mode:
+        type: choice
+        options: [absent, partial, full]
+        default: absent
+      deepflow_fallback:
+        description: One bounded fallback after measured OBI coverage limitation
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  qualify:
+    strategy:
+      fail-fast: false
+      matrix:
+        system: [deathstarbench, otel_demo, petclinic]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        if: inputs.system == 'all' || inputs.system == matrix.system
+      - uses: actions/setup-python@v5
+        if: inputs.system == 'all' || inputs.system == matrix.system
+        with:
+          python-version: '3.12'
+      - name: Install tools
+        if: inputs.system == 'all' || inputs.system == matrix.system
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Boot guests
+        if: inputs.system == 'all' || inputs.system == matrix.system
+        run: bash scripts/vms.sh start work/vms
+      - name: Qualify application and observations
+        if: inputs.system == 'all' || inputs.system == matrix.system
+        env:
+          PYTHONPATH: .
+          DEEPFLOW_FALLBACK: ${{ inputs.deepflow_fallback }}
+        run: python -m ebpf_discovery.qualify --system ${{ matrix.system }} --mode ${{ inputs.mode }} --out results/qualification
+      - name: Preserve infrastructure diagnostics
+        if: always() && (inputs.system == 'all' || inputs.system == matrix.system)
+        run: |
+          mkdir -p results/infrastructure
+          cp work/vms/*.json results/infrastructure/ 2>/dev/null || true
+          for n in a b; do
+            mkdir -p results/infrastructure/$n
+            cp work/vms/$n/check.txt work/vms/$n/serial.log results/infrastructure/$n/ 2>/dev/null || true
+          done
+          free -m > results/infrastructure/runner-memory.txt
+          df -h > results/infrastructure/runner-disk.txt
+      - name: Stop guests
+        if: always() && (inputs.system == 'all' || inputs.system == matrix.system)
+        run: bash scripts/vms.sh stop work/vms
+      - uses: actions/upload-artifact@v4
+        if: always() && (inputs.system == 'all' || inputs.system == matrix.system)
+        with:
+          name: qualification-${{ matrix.system }}-${{ inputs.mode }}-${{ github.run_id }}
+          path: |
+            results/
+            !results/**/source/**
+            !results/**/upstream/**
+            !results/**/image-context/**
+            !results/**/*.tar
+          retention-days: 90
