@@ -228,3 +228,37 @@ def test_connect_or_partial_insert_query_is_not_a_database_write():
     result = native_result(spans)
     assert result['status'] == 'unknown'
     assert result['reason'] == 'missing_database_write'
+
+
+def test_conflicting_duplicate_processing_root_is_unknown():
+    spans = fixture()
+    conflicting = deepcopy(next(item for item in spans if item['span_id'] == 'root'))
+    conflicting['instance'] = 'different-accounting-instance'
+    conflicting['node'] = 'b'
+    spans.append(conflicting)
+
+    result = native_result(spans)
+    assert result['status'] == 'unknown'
+    assert result['reason'] == 'ambiguous_processing_root_identity'
+    assert len(result['processing_root_candidates']) == 2
+
+
+def test_identical_duplicate_processing_root_is_deduplicated():
+    spans = fixture()
+    duplicate = deepcopy(next(item for item in spans if item['span_id'] == 'root'))
+    duplicate['raw_file'] = 'another-segment.json'
+    duplicate['_graph_node'] = 'cached-graph-identity'
+    spans.append(duplicate)
+    assert native_result(spans)['status'] == 'linked'
+
+
+def test_empty_confirmed_identity_is_unknown():
+    spans = fixture()
+    producer = next(item for item in spans if item['span_id'] == 'producer')
+    producer['span_id'] = ''
+    consumer = next(item for item in spans if item['span_id'] == 'consumer')
+    consumer['links'] = [{'trace_id': PRODUCER_TRACE, 'span_id': ''}]
+
+    result = native_result(spans)
+    assert result['status'] == 'unknown'
+    assert result['reason'] == 'empty_ancestry_identity'
