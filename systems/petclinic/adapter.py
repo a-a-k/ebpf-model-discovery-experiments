@@ -127,6 +127,81 @@ def _canonical(actual: Any, expected: Any, key: str = "") -> Any:
     return actual
 
 
+def _native_service_census(raw: bytes) -> dict[str, Any]:
+    """Count service-owned spans in collector JSONL without interpreting topology."""
+    services: dict[str, int] = {}
+    spans = 0
+    valid_records = 0
+    malformed_records = 0
+    for line in raw.splitlines():
+        if not line.strip():
+            continue
+        try:
+            record = json.loads(line)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            malformed_records += 1
+            continue
+        valid_records += 1
+        resource_spans = record.get("resourceSpans", record.get("resource_spans", [])) if isinstance(record, dict) else []
+        for resource_span in resource_spans if isinstance(resource_spans, list) else []:
+            resource = resource_span.get("resource", {}) if isinstance(resource_span, dict) else {}
+            service = ""
+            for attribute in resource.get("attributes", []) if isinstance(resource, dict) else []:
+                if not isinstance(attribute, dict) or attribute.get("key") != "service.name":
+                    continue
+                value = attribute.get("value", {})
+                if isinstance(value, dict):
+                    service = str(value.get("stringValue", value.get("string_value", "")))
+            scope_spans = resource_span.get("scopeSpans", resource_span.get("scope_spans", []))
+            count = sum(len(scope.get("spans", [])) for scope in scope_spans if isinstance(scope, dict)) if isinstance(scope_spans, list) else 0
+            spans += count
+            if service and count:
+                services[service] = services.get(service, 0) + count
+    return {
+        "spans": spans,
+        "services": dict(sorted(services.items())),
+        "valid_records": valid_records,
+        "malformed_records": malformed_records,
+    }
+
+
+def _native_mode_compliance(mode: str, census: dict[str, Any]) -> dict[str, Any]:
+    """Audit actual span evidence while leaving unavailable evidence explicitly unknown."""
+    observed = set(census["services"])
+    expected_instrumented = {
+        "partial": {"api-gateway", "customers-service", "vets-service"},
+        "full": {"api-gateway", "customers-service", "vets-service", "visits-service"},
+    }
+    if census["malformed_records"]:
+        return {"compliant": None, "reason": "malformed_native_records", "observed_services": sorted(observed)}
+    if census.get("source_files_present", 0) < census.get("source_files_expected", 0):
+        return {
+            "compliant": None,
+            "reason": "native_export_file_unavailable",
+            "source_files_present": census.get("source_files_present", 0),
+            "source_files_expected": census.get("source_files_expected", 0),
+            "observed_services": sorted(observed),
+        }
+    if mode == "absent":
+        compliant = census["spans"] == 0
+        return {
+            "compliant": compliant,
+            "reason": "no_application_spans" if compliant else "native_spans_present_while_absent",
+            "observed_services": sorted(observed),
+        }
+    if mode == "partial" and "visits-service" in observed:
+        return {"compliant": False, "reason": "controlled_visits_native_spans_present", "observed_services": sorted(observed)}
+    missing = expected_instrumented[mode] - observed
+    if missing:
+        return {
+            "compliant": None,
+            "reason": "required_native_service_evidence_unavailable",
+            "missing_services": sorted(missing),
+            "observed_services": sorted(observed),
+        }
+    return {"compliant": True, "reason": "service_mode_matches_actual_spans", "observed_services": sorted(observed)}
+
+
 class Adapter:
     """Deploy and drive the pinned Petclinic services on two independent guests."""
 
@@ -610,6 +685,7 @@ backend visits_replicas
     def verify(self, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         _require_actions()
         verified = copy.deepcopy(records)
+        candidates: list[tuple[dict[str, Any], str]] = []
         for row in verified:
             if row.get("operation") != "create_visit":
                 continue
@@ -618,22 +694,60 @@ backend visits_replicas
                 row["success"] = False
                 row["error"] = "invalid_or_missing_write_marker"
                 continue
-            sql = ("SELECT id,pet_id,DATE_FORMAT(visit_date,'%Y-%m-%d'),description FROM visits "
-                   f"WHERE description='{marker}' ORDER BY id")
-            try:
-                result = self._mysql(sql)
-            except Exception as exc:  # noqa: BLE001 - unavailable remote SQL is an explicit unknown oracle
+            candidates.append((row, marker))
+        if not candidates:
+            return verified
+        markers = sorted({marker for _, marker in candidates})
+        quoted = ",".join(f"'{marker}'" for marker in markers)
+        sql = (
+            "SELECT description,id,pet_id,DATE_FORMAT(visit_date,'%Y-%m-%d') FROM visits "
+            f"WHERE description IN ({quoted}) ORDER BY description,id"
+        )
+        try:
+            result = self._mysql(sql)
+        except Exception as exc:  # noqa: BLE001 - unavailable remote SQL is an explicit unknown oracle
+            for row, marker in candidates:
                 row["success"] = None if row.get("success") is None else row.get("success")
                 row["validation"] = {"kind": "sql_exact_row", "state": "oracle_unavailable", "error": str(exc), "marker": marker}
+            return verified
+        grouped: dict[str, list[dict[str, Any]]] = {marker: [] for marker in markers}
+        parse_errors: list[str] = []
+        for line in getattr(result, "stdout", "").splitlines():
+            fields = line.split("\t")
+            if len(fields) != 4 or fields[0] not in grouped:
+                parse_errors.append(line)
                 continue
-            db_rows = []
-            for line in getattr(result, "stdout", "").splitlines():
-                fields = line.split("\t")
-                if len(fields) == 4:
-                    db_rows.append({"id": int(fields[0]), "petId": int(fields[1]), "date": fields[2], "description": fields[3]})
+            try:
+                grouped[fields[0]].append({"id": int(fields[1]), "petId": int(fields[2]), "date": fields[3], "description": fields[0]})
+            except ValueError:
+                parse_errors.append(line)
+        if parse_errors:
+            for row, marker in candidates:
+                row["success"] = None if row.get("success") is None else row.get("success")
+                row["validation"] = {
+                    "kind": "sql_exact_row",
+                    "state": "oracle_unavailable",
+                    "error": "sql_census_parse_error",
+                    "malformed_rows": parse_errors,
+                    "marker": marker,
+                }
+            return verified
+        for row, marker in candidates:
+            db_rows = grouped[marker]
             payload = row.get("response_json")
             acknowledged_id = payload.get("id") if isinstance(payload, dict) else None
-            exact = len(db_rows) == 1 and db_rows[0] == {"id": acknowledged_id, "petId": 1, "date": "2026-09-01", "description": marker}
+            response_identity_match = (
+                isinstance(payload, dict)
+                and type(acknowledged_id) is int
+                and acknowledged_id > 0
+                and payload.get("petId") == 1
+                and isinstance(payload.get("date"), str)
+                and payload["date"][:10] == "2026-09-01"
+                and payload.get("description") == marker
+            )
+            exact = response_identity_match and len(db_rows) == 1 and db_rows[0] == {
+                "id": acknowledged_id, "petId": 1, "date": "2026-09-01", "description": marker,
+            }
             elapsed_ns = row["ended_ns"] - row["started_ns"]
             deadline_ns = int(row.get("deadline_seconds", 2.0) * 1_000_000_000)
             http_created = row["http_steps"][0].get("status") == 201 and row.get("error") is None and elapsed_ns <= deadline_ns
@@ -641,6 +755,7 @@ backend visits_replicas
             row["validation"] = {
                 "kind": "sql_exact_row", "state": "verified", "marker": marker,
                 "row_count": len(db_rows), "rows": db_rows, "acknowledged_id": acknowledged_id,
+                "response_identity_match": response_identity_match,
                 "exactly_once_and_identity_match": exact,
             }
             if not row["success"] and not row.get("error"):
@@ -677,11 +792,39 @@ backend visits_replicas
                     raw = b""
                     target.write_bytes(raw)
                 before = len(raw)
-                inventory["files"][node] = {"path": target.name, "bytes": before, "sha256": hashlib.sha256(raw).hexdigest()}
+                census = _native_service_census(raw)
+                census["source_files_present"] = int(exists.returncode == 0)
+                census["source_files_expected"] = 1
+                inventory["files"][node] = {
+                    "path": target.name,
+                    "bytes": before,
+                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "census": census,
+                    "mode_compliance": _native_mode_compliance(self.ctx.mode, census),
+                }
                 inspect = self._node(node, self._compose(node, "ps -q --all") + " | xargs -r docker inspect --format '{{.Name}} {{json .Config.Cmd}} {{json .Config.Env}}'", timeout=60)
                 inventory["suppression_verified"][node] = getattr(inspect, "stdout", "").splitlines()
             finally:
                 self._resume_native_collector(node, collector, remote, before, inventory)
+        combined = {
+            "spans": 0,
+            "services": {},
+            "valid_records": 0,
+            "malformed_records": 0,
+            "source_files_present": 0,
+            "source_files_expected": 2,
+        }
+        for file_metadata in inventory["files"].values():
+            census = file_metadata["census"]
+            combined["spans"] += census["spans"]
+            combined["valid_records"] += census["valid_records"]
+            combined["malformed_records"] += census["malformed_records"]
+            combined["source_files_present"] += census["source_files_present"]
+            for service, count in census["services"].items():
+                combined["services"][service] = combined["services"].get(service, 0) + count
+        combined["services"] = dict(sorted(combined["services"].items()))
+        inventory["actual_census"] = combined
+        inventory["mode_compliance"] = _native_mode_compliance(self.ctx.mode, combined)
         _json_write(destination / "native-metadata.json", inventory)
 
     def _resume_native_collector(self, node: str, collector: str, remote: str, before: int, inventory: dict[str, Any]) -> None:
