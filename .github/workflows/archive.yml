@@ -24,6 +24,8 @@ jobs:
             [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
             gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100" > "work/archive/$run_id-artifact-index.json"
             gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id" > "work/archive/$run_id-run.json"
+            [[ "$(jq -r .status "work/archive/$run_id-run.json")" == completed ]] || exit 2
+            gh api "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/logs" > "work/archive/$run_id-workflow-logs.zip"
             while IFS=$'\t' read -r artifact_id artifact_name; do
               [[ "$artifact_name" =~ ^[a-zA-Z0-9._-]+$ ]] || exit 2
               gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip" > "work/archive/$run_id-$artifact_name.zip"
