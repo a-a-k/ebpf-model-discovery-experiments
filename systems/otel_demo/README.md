@@ -61,20 +61,25 @@ evaluator evidence only. Checkout extracts the application's actual `orderId`.
 Every HTTP step carries a fresh opaque `X-Experiment-Request-Id`, retained with
 the evaluator step so common acquisition can align entry observations without
 encoding an operation label, dependency, or result.
-The frontend receives the standard Node HTTP-instrumentation environment
-settings that request capture of this one header. The adapter neither creates
-nor injects a sampled `traceparent`. Because header-capture support depends on
-the instrumentation bundled in the pinned image, each native snapshot reports
-whether the corresponding span attribute was actually observed; zero observed
-attributes are reported as unsupported/unobserved, not treated as a link.
+The pinned Node HTTP instrumentation (`0.221.0`) does not parse the attempted
+header-capture environment variables. In `full` and `partial`, the adapter
+therefore mounts a recorded source patch that uses its supported
+`headersToSpanAttributes.server.requestHeaders` configuration to put this one
+header on frontend server spans. It does not capture response bodies, operation
+labels, or outcomes. The adapter neither creates nor injects a sampled
+`traceparent`. Each native snapshot still reports whether the corresponding
+span attribute was actually observed; zero observed attributes are reported as
+unsupported/unobserved, not treated as a link.
 Checkout reaches only the demo's packaged mock email service; the adapter has no
 mail credentials and never sends external mail.
 
 Native collection is an incremental snapshot: the collector is gracefully
-stopped and flushed, the append-only bind-mounted files are copied, and the same
-collector is restarted before the call returns. Thus a calibration snapshot
-does not prevent target-period native capture; final collection obtains the
-later cumulative file as a separate snapshot.
+stopped and flushed, its bind-mounted exporter files are copied and moved into
+a unique remote snapshot directory, and the same collector is restarted with
+fresh output targets before the call returns. Thus a calibration snapshot does
+not prevent target-period native capture or get overwritten by the file
+exporter's restart-time truncation; final collection retains the later interval
+as a separate snapshot.
 The generated `native-disable.patch` and its SHA-256 are retained in deployment
 metadata. These patched images are built only in GitHub Actions; local adapter
 checks do not build or run the application.
