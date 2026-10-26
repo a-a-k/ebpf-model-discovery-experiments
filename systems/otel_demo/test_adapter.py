@@ -2,7 +2,13 @@ from pathlib import Path
 import time
 
 from systems.otel_demo import adapter as adapter_module
-from systems.otel_demo.adapter import Adapter, PRODUCT_ID, REPLICA_B_GUEST_PORT
+from systems.otel_demo.adapter import (
+    Adapter,
+    ENTRY_GUEST_PORT,
+    PRODUCT_ID,
+    REPLICA_A_GUEST_PORT,
+    REPLICA_B_GUEST_PORT,
+)
 
 
 def test_compose_environment_merge() -> None:
@@ -77,6 +83,26 @@ def test_envoy_uses_guest_transport_for_remote_replica() -> None:
     config = adapter._envoy_config()
     assert "address: 192.168.76.12" in config
     assert f"port_value: {REPLICA_B_GUEST_PORT}" in config
+
+
+def test_runner_entry_and_replica_metadata_use_guest_transport(tmp_path: Path) -> None:
+    context = type(
+        "Context",
+        (),
+        {
+            "mode": "absent",
+            "deployment_dir": tmp_path,
+            "node_ip": lambda self, node: (
+                "192.168.76.11" if node == "a" else "192.168.76.12"
+            ),
+        },
+    )()
+    adapter = Adapter(context)
+    assert adapter.entry_url == f"http://192.168.76.11:{ENTRY_GUEST_PORT}"
+    replicas = adapter.metadata()["replicas"]
+    assert replicas[0]["transport_host"] == "192.168.76.11"
+    assert replicas[0]["transport_port"] == REPLICA_A_GUEST_PORT
+    assert replicas[1]["transport_host"] == "192.168.76.12"
 
 
 def test_http_step_uses_fresh_opaque_request_id(monkeypatch) -> None:
