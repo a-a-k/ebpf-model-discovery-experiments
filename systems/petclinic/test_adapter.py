@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import sys
 from types import SimpleNamespace
 
@@ -36,6 +37,17 @@ def test_metadata_records_split_replicas_and_suppression(tmp_path):
     assert [row["node"] for row in metadata["replicas"]] == ["a", "b"]
     assert "both controlled Visits replicas" in metadata["native"]["suppression"]
     assert metadata["proxy_discovery"]["policy"] == "roundrobin"
+    assert metadata["proxy_discovery"]["cross_guest_transport"] == "stable_guest_published_port"
+
+
+def test_node_b_uses_published_cross_guest_database_endpoint(tmp_path):
+    context = SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="absent")
+    adapter = Adapter(context)
+    environment = adapter._spring_environment(
+        "visits-service", "visits-b", "172.28.12.30", False, "192.168.76.11:13306"
+    )
+    properties = json.loads(environment["SPRING_APPLICATION_JSON"])
+    assert properties["spring.datasource.url"].startswith("jdbc:mysql://192.168.76.11:13306/")
 
 
 def test_verify_rejects_duplicate_exact_visit_rows(tmp_path, monkeypatch):

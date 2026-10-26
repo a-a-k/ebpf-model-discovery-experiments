@@ -305,7 +305,15 @@ class Adapter:
             },
         )
 
-    def _spring_environment(self, service: str, instance: str, collector_ip: str, instrumented: bool) -> dict[str, str]:
+    def _spring_environment(
+        self,
+        service: str,
+        instance: str,
+        collector_ip: str,
+        instrumented: bool,
+        database_endpoint: str | None = None,
+    ) -> dict[str, str]:
+        database_endpoint = database_endpoint or f"{IPS['database']}:3306"
         props: dict[str, Any] = {
             "server.port": 8080,
             "spring.cloud.config.enabled": False,
@@ -320,7 +328,7 @@ class Adapter:
                 "org.springframework.boot.micrometer.tracing.autoconfigure.MicrometerTracingAutoConfiguration",
             ],
             "management.endpoints.web.exposure.include": "health,info",
-            "spring.datasource.url": f"jdbc:mysql://{IPS['database']}:3306/petclinic?allowPublicKeyRetrieval=true&useSSL=false",
+            "spring.datasource.url": f"jdbc:mysql://{database_endpoint}/petclinic?allowPublicKeyRetrieval=true&useSSL=false",
             "spring.datasource.username": "root",
             "spring.datasource.password": "petclinic-study",
             "spring.datasource.driver-class-name": "com.mysql.cj.jdbc.Driver",
@@ -355,7 +363,15 @@ class Adapter:
         }
         return env
 
-    def _application_service(self, service: str, instance: str, ip: str, collector: str, instrumented: bool) -> dict[str, Any]:
+    def _application_service(
+        self,
+        service: str,
+        instance: str,
+        ip: str,
+        collector: str,
+        instrumented: bool,
+        database_endpoint: str | None = None,
+    ) -> dict[str, Any]:
         java = ["java", "-Xms64m", "-Xmx320m", "-XX:MaxMetaspaceSize=192m"]
         if instrumented:
             java.append("-javaagent:/app/opentelemetry-javaagent.jar")
@@ -363,11 +379,11 @@ class Adapter:
         return {
             "image": IMAGE_TAG,
             "command": java,
-            "environment": self._spring_environment(service, instance, collector, instrumented),
+            "environment": self._spring_environment(service, instance, collector, instrumented, database_endpoint),
             "restart": "unless-stopped",
             "networks": {"application": {"ipv4_address": ip}},
             "extra_hosts": [
-                f"database:{IPS['database']}", f"customers-service:{IPS['customers']}",
+                f"database:{(database_endpoint or IPS['database'] + ':3306').rsplit(':', 1)[0]}", f"customers-service:{IPS['customers']}",
                 f"vets-service:{IPS['vets']}", f"visits-service:{IPS['visits_proxy']}",
             ],
             "mem_limit": "768m",
@@ -388,6 +404,8 @@ class Adapter:
             }
             (directory / "collector.yml").write_text(yaml.safe_dump(collector, sort_keys=False), encoding="utf-8")
 
+        guest_a = self.ctx.node_ip("a")
+        guest_b = self.ctx.node_ip("b")
         (self.assets / "node-a" / "haproxy.cfg").write_text(
             f"""global
   maxconn 1024
@@ -405,7 +423,7 @@ backend visits_replicas
   option http-server-close
   option redispatch
   server visits_a {IPS['visits_a']}:8080 check inter 500ms fall 1 rise 1
-  server visits_b {IPS['visits_b']}:8080 check inter 500ms fall 1 rise 1
+  server visits_b {guest_b}:18081 check inter 500ms fall 1 rise 1
 """,
             encoding="utf-8",
         )
@@ -436,6 +454,7 @@ backend visits_replicas
                 "command": ["--innodb-buffer-pool-size=128M", "--max-connections=64"],
                 "restart": "unless-stopped",
                 "networks": {"application": {"ipv4_address": IPS["database"]}},
+                "ports": [f"{guest_a}:13306:3306"],
                 "volumes": [f"{REMOTE_DIR}/node-a/sql:/docker-entrypoint-initdb.d:ro"],
                 "healthcheck": {"test": ["CMD-SHELL", "MYSQL_PWD=petclinic-study mysqladmin ping -h 127.0.0.1 -uroot --silent"], "interval": "2s", "timeout": "2s", "retries": 60},
                 "mem_limit": "768m",
@@ -468,10 +487,18 @@ backend visits_replicas
                     "networks": {"application": {"ipv4_address": IPS["collector_b"]}},
                     "volumes": [f"{REMOTE_DIR}/node-b/collector.yml:/etc/study/collector.yml:ro", f"{REMOTE_DIR}/node-b/native:/output"],
                 },
-                "visits-b": self._application_service("visits-service", "visits-b", IPS["visits_b"], IPS["collector_b"], instrument["visits_b"]),
+                "visits-b": self._application_service(
+                    "visits-service",
+                    "visits-b",
+                    IPS["visits_b"],
+                    IPS["collector_b"],
+                    instrument["visits_b"],
+                    f"{guest_a}:13306",
+                ),
             },
             "networks": {"application": {"name": "petclinic-b-application", "ipam": {"config": [{"subnet": "172.28.12.0/24"}]}}},
         }
+        compose_b["services"]["visits-b"]["ports"] = [f"{guest_b}:18081:8080"]
         for node, compose in (("a", compose_a), ("b", compose_b)):
             path = self.assets / f"node-{node}" / "compose.yml"
             path.write_text(yaml.safe_dump(compose, sort_keys=False), encoding="utf-8")
@@ -481,7 +508,13 @@ backend visits_replicas
             {
                 "nodes": {"a": {"guest_ip": self.ctx.node_ip("a"), "subnet": "172.28.11.0/24"}, "b": {"guest_ip": self.ctx.node_ip("b"), "subnet": "172.28.12.0/24"}},
                 "containers": {name: {"node": "b" if name.endswith("_b") else "a", "ip": ip} for name, ip in IPS.items()},
-                "proxy": {"name": "visits-proxy", "ip": IPS["visits_proxy"], "policy": "roundrobin", "backends": [IPS["visits_a"], IPS["visits_b"]]},
+                "proxy": {
+                    "name": "visits-proxy",
+                    "ip": IPS["visits_proxy"],
+                    "policy": "roundrobin",
+                    "backends": [f"{IPS['visits_a']}:8080", f"{guest_b}:18081"],
+                    "visits_b_container_ip": IPS["visits_b"],
+                },
                 "native_instrumentation": instrument,
             },
         )
@@ -497,6 +530,7 @@ backend visits_replicas
             self._node(node, f"docker load -i {REMOTE_DIR}/petclinic-image.tar", timeout=900)
         self._node("a", self._compose("a", "up -d database collector-a"), timeout=600)
         self._wait_database(180)
+        self._wait_tcp("b", self.ctx.node_ip("a"), 13306, 60, "node-a published MySQL")
         self._node("a", self._compose("a", "up -d customers vets visits-a visits-proxy gateway"), timeout=600)
         self._node("b", self._compose("b", "up -d"), timeout=600)
         self._current_state = "11"
@@ -540,8 +574,22 @@ backend visits_replicas
                 {"name": "visits-a", "node": "a", "ip": IPS["visits_a"]},
                 {"name": "visits-b", "node": "b", "ip": IPS["visits_b"]},
             ],
-            "database": {"logical_identity": "petclinic-mysql", "node": "a", "container": "database", "ip": IPS["database"]},
-            "proxy_discovery": {"node": "a", "container": "visits-proxy", "ip": IPS["visits_proxy"], "policy": "roundrobin", "static_backends": [IPS["visits_a"], IPS["visits_b"]]},
+            "database": {
+                "logical_identity": "petclinic-mysql",
+                "node": "a",
+                "container": "database",
+                "ip": IPS["database"],
+                "cross_guest_endpoint": f"{self.ctx.node_ip('a')}:13306",
+            },
+            "proxy_discovery": {
+                "node": "a",
+                "container": "visits-proxy",
+                "ip": IPS["visits_proxy"],
+                "policy": "roundrobin",
+                "static_backends": [f"{IPS['visits_a']}:8080", f"{self.ctx.node_ip('b')}:18081"],
+                "visits_b_container": {"ip": IPS["visits_b"], "published_endpoint": f"{self.ctx.node_ip('b')}:18081"},
+                "cross_guest_transport": "stable_guest_published_port",
+            },
             "source": provenance,
             "placement_file": str(self.assets / "placement.json"),
             "native": {
@@ -595,6 +643,19 @@ backend visits_replicas
                 time.sleep(2)
         if pending:
             raise RuntimeError(f"Visits replicas did not open port 8080: {pending}; last errors: {errors}")
+        if "b" in replicas:
+            self._wait_tcp("a", self.ctx.node_ip("b"), 18081, timeout, "node-b published Visits")
+
+    def _wait_tcp(self, node: str, address: str, port: int, timeout: float, label: str) -> None:
+        deadline = time.monotonic() + timeout
+        last_error = ""
+        while time.monotonic() < deadline:
+            probe = self._node(node, f"timeout 2 bash -c '</dev/tcp/{address}/{port}'", timeout=5, check=False)
+            if probe.returncode == 0:
+                return
+            last_error = getattr(probe, "stderr", "")
+            time.sleep(2)
+        raise RuntimeError(f"{label} did not open {address}:{port}: {last_error}")
 
     def set_database(self, up: bool) -> None:
         _require_actions()
@@ -858,6 +919,17 @@ backend visits_replicas
                 (diagnostics / f"node-{node}.log").write_text(getattr(logs, "stdout", ""), encoding="utf-8")
                 state = self._node(node, self._compose(node, "ps --all --format json"), timeout=60)
                 (diagnostics / f"node-{node}-containers.jsonl").write_text(getattr(state, "stdout", ""), encoding="utf-8")
+                network = self._node(
+                    node,
+                    "ip -4 route; sudo iptables -S FORWARD; sudo iptables -S DOCKER-USER; docker network inspect petclinic-"
+                    f"{node}-application",
+                    timeout=60,
+                    check=False,
+                )
+                (diagnostics / f"node-{node}-network.txt").write_text(
+                    getattr(network, "stdout", "") + getattr(network, "stderr", ""),
+                    encoding="utf-8",
+                )
             except Exception as exc:  # noqa: BLE001 - best-effort diagnostics must not skip teardown
                 (diagnostics / f"node-{node}-diagnostic-error.txt").write_text(str(exc), encoding="utf-8")
             finally:
