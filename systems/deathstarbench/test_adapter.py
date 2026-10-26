@@ -4,11 +4,13 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest import mock
 
 import yaml
 
 from systems.deathstarbench.adapter import Adapter
+from systems.deathstarbench.deepflow_fallback import DEEPFLOW_IMAGE, fallback
 
 
 class OracleTests(unittest.TestCase):
@@ -147,3 +149,42 @@ class OracleTests(unittest.TestCase):
         self.assertNotIn("eventual_postcondition", source[0])
         self.assertIsNone(verified[0]["eventual_postcondition"]["success"])
         self.assertEqual(verified[0]["eventual_postcondition"]["unknown_reason"], "control state changed before verification")
+
+
+class DeepFlowFallbackTests(unittest.TestCase):
+    def test_two_node_standalone_lifecycle_and_raw_manifest(self):
+        class Context:
+            def __init__(self):
+                self.commands = []
+
+            def node_exec(self, node, command, timeout=300, check=True):
+                self.commands.append((node, command))
+                if "mktemp -d" in command:
+                    return SimpleNamespace(returncode=0, stdout=f"/opt/ebpf-study/deepflow-fallback.{node}12345\n", stderr="")
+                if "docker inspect -f" in command:
+                    return SimpleNamespace(returncode=0, stdout="true\n", stderr="")
+                return SimpleNamespace(returncode=0, stdout="{}\n", stderr="")
+
+            def node_put(self, node, source, destination):
+                self.commands.append((node, f"put {source} {destination}"))
+
+            def node_get(self, node, source, destination):
+                destination = Path(destination)
+                destination.mkdir(parents=True, exist_ok=True)
+                (destination / "l4_flow_log").write_text(f"raw-{node}\n", encoding="utf-8")
+
+        context = Context()
+        with tempfile.TemporaryDirectory() as directory:
+            with mock.patch("systems.deathstarbench.deepflow_fallback.time.sleep"):
+                handle = fallback(context, object(), Path(directory))
+            output = handle.collect()
+            manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+        runs = [command for _, command in context.commands if command.startswith("docker run")]
+        self.assertEqual(len(runs), 2)
+        self.assertTrue(all("--standalone" in command and "--network=host" in command for command in runs))
+        self.assertTrue(all(DEEPFLOW_IMAGE in command for command in runs))
+        self.assertEqual(manifest["status"], "collected")
+        self.assertTrue(manifest["interpretation"]["raw_only"])
+        self.assertFalse(manifest["interpretation"]["thrift_supported_by_v7_2_3_builtin_l7_enum"])
+        self.assertEqual(manifest["resource_limit_per_node"]["memory_mib"], 1024)
+        self.assertTrue(any(item["path"].endswith("l4_flow_log") for item in manifest["files"]))

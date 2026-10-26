@@ -91,3 +91,28 @@ Actions runner. Shared backing stores mean the two controlled replicas are
 redundant service processes, not independent databases. HAProxy TCP health
 checks detect process/route availability; they do not inspect Thrift semantics.
 The adapter never derives a discovery graph from the known deployment.
+
+## Bounded DeepFlow fallback
+
+`deepflow_fallback.fallback(ctx, adapter, out)` starts the one permitted fallback
+on both guests and returns a handle whose `collect()` method stops the agents,
+copies their raw file output, and writes a hash/provenance manifest. Triggering
+is deliberately outside this adapter: the common orchestrator may call it only
+after actual OBI coverage is absent, before fallback traffic, and must collect
+before guest teardown. It is not a parallel collector comparison.
+
+The fallback pins official DeepFlow agent `v7.2.3` and its multi-platform image
+digest. It uses the official `--standalone` mode, which requires no DeepFlow
+server and writes `l4_flow_log` and `l7_flow_log` locally. Each guest is limited
+to one CPU, 1024 MiB RAM and 1024 PIDs. Flow files rotate at 128 MiB with at most
+two files for each of the two supported output types (512 MiB maximum per
+guest); Docker logs are limited to two 50 MiB files. Raw files, agent logs,
+container/image inspection, exact configuration, hashes and errors are retained.
+
+This option has a concrete DSB limitation: the pinned official
+`L7Protocol` enum includes HTTP, MongoDB, Redis and other protocols but not
+Thrift. No custom parser is added. The fallback can therefore retain L4
+connections for DSB's Thrift calls and supported database/frontend L7 records,
+but cannot turn those connections into Thrift method observations. Unsupported
+operation interpretation remains explicit rather than being inferred from the
+known deployment.
