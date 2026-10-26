@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 
 from .model import Projection, assign, class_key
-from .observations import graph, opaque_attempt
+from .observations import graph, opaque_attempt, read_spans
 from .runtime import write_json
 from .async_links import message_chains
 
@@ -228,11 +228,32 @@ def database_activity(spans):
     return list(tallies.values())
 
 
+def evaluation_projection(path, spans, census, classes, *, replay=False):
+    """Reanalysis retains the acquisition implementation's frozen assignments.
+
+    New evaluator versions may repair ancillary audits, but must not silently
+    apply new classification rules to an older model's independent target.
+    """
+    if path.exists():
+        raw = path.read_bytes()
+        return json.loads(raw), {'origin': 'retained_acquisition_assignments',
+                                 'sha256': hashlib.sha256(raw).hexdigest()}
+    if replay:
+        raise RuntimeError(f'Original acquisition assignments are required for replay: {path}')
+    projection = Projection(spans)
+    return [assign(projection.attempt(row), classes) for row in census], {'origin': 'current_acquisition_code'}
+
+
 def evaluate(root):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
     read = lambda p: json.loads((root/p).read_text(encoding='utf-8'))
-    external, census, spans = read('external.json'), read('census.json'), read('normalized-final.json')
+    replay = (root/'metrics.json').exists() or (root/'metrics-acquisition-version.json').exists()
+    external, census = read('external.json'), read('census.json')
+    spans, audit_parse_errors = read_spans(root/'observations', root/'native')
+    if audit_parse_errors:
+        write_json(root/'audit-parse-errors.json', audit_parse_errors)
+        raise RuntimeError('Raw audit parsing failed; preserve evidence before interpreting results')
     metadata, status, saved = read('deployment.json'), read('status.json'), read('forecast-saved.json')
     target_start = min(b['load_started_ns'] for b in read('blocks.json') if b['phase'] == 'target')
     if saved['saved_ns'] >= target_start:
@@ -240,7 +261,9 @@ def evaluate(root):
     result = {'system': status['system'], 'mode': status['mode'], 'seed': status['seed'],
               'protocol_version': status.get('protocol_version', 'pre-warmup-pilot'),
               'run_id': status['run_id'], 'sources': {}, 'costs': {'campaign_elapsed_seconds': status['elapsed_seconds']},
-              'forecast_saved_before_target': True, 'evaluation_commit': os.environ.get('GITHUB_SHA')}
+              'forecast_saved_before_target': True, 'evaluation_commit': os.environ.get('GITHUB_SHA'),
+              'acquisition_commit': status.get('commit'), 'replay': replay,
+              'audit_input': 'original raw streams, reparsed with conflicting identities retained'}
     for source in ('ebpf', 'native', 'combined'):
         folder = Path('models') / source
         if hashlib.sha256((root/folder/'forecast.json').read_bytes()).hexdigest() != saved['sha256'][source]:
@@ -252,8 +275,8 @@ def evaluate(root):
         training = read(folder/'calibration-assignments.json')
         mapping = read(folder/'evaluation-map.json')
         data = spans if source == 'combined' else [s for s in spans if s['source'] == source]
-        projection = Projection(data)
-        projected = [assign(projection.attempt(row), model['classes']) for row in census]
+        projected, projection_provenance = evaluation_projection(root/folder/'target-assignments.json', data, census, model['classes'], replay=replay)
+        projection_provenance['acquisition_commit'] = status.get('commit')
         by_key = {r['attempt_key']: r for r in projected}
         operations = {}
         mismatches = []
@@ -320,6 +343,7 @@ def evaluate(root):
                                  'complete_identity_chain': True if typed_complete or chain_sources else None,
                                  'identity_note': 'Typed current-order identity or a unique exact producer SpanLink/processing-root chain establishes association only. SQL durability/deadline is independently evaluated; missing or ambiguous chains remain unknown.'})
         result['sources'][source] = {'operations': operations,
+            'projection_provenance': projection_provenance,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,
             'database_activity': database_activity(data),
@@ -335,7 +359,8 @@ def evaluate(root):
             'proxy_mismatches': sum(r['mismatch'] is True for r in mismatches),
             'proxy_comparable': sum(r['mismatch'] is not None for r in mismatches),
             'normalized_spans': len(data)}
-        write_json(root/folder/'target-assignments.json', projected)
+        if projection_provenance['origin'] == 'current_acquisition_code':
+            write_json(root/folder/'target-assignments.json', projected)
         write_json(root/folder/'proxy-semantic-comparison.json', mismatches)
         write_json(root/folder/'observed-uuid-census.json', identities)
         write_json(root/folder/'observed-final-graph.json', observed_graph)

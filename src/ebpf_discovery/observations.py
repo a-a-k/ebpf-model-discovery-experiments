@@ -106,7 +106,12 @@ def read_spans(root: Path, native: Path | None = None):
             errors.append({'file': str(path), 'error': str(exc)})
     unique = {}
     for span in spans:
-        key = (span['source'], span['node'], span['trace_id'], span['span_id'])
+        # Repeated exports are harmless; conflicting same-ID observations must
+        # survive so identity matchers can reject ambiguity rather than pick the
+        # last file arbitrarily. File provenance is not semantic evidence.
+        evidence = {k: v for k, v in span.items() if k not in ('raw_file', '_graph_node')}
+        canonical = hashlib.sha256(json.dumps(evidence, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        key = (span['source'], span['node'], span['trace_id'], span['span_id'], canonical)
         unique[key] = span
     return list(unique.values()), errors
 
