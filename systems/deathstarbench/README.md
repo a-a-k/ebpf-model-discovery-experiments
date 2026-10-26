@@ -139,3 +139,16 @@ connections for DSB's Thrift calls and supported database/frontend L7 records,
 but cannot turn those connections into Thrift method observations. Unsupported
 operation interpretation remains explicit rather than being inferred from the
 known deployment.
+
+The bounded qualification did not establish this fallback as operational on
+the two Ubuntu 24.04 guests. Run 40330475066 produced only the agent log and no
+L4/L7 file. Run 40333407431 used the supported 10-second reload interval and
+required dispatcher evidence, but neither guest emitted a dispatcher-start
+marker within 90 seconds; node A subsequently exited with status zero. The
+recorded command used the pinned image's `--standalone` flag and configuration
+path, the pinned loader forces the agent enabled in standalone mode, and the
+official standalone configuration has no separate enable switch. The second
+failure path did not retain the agent logs, so there is no evidence-backed
+configuration correction to justify another run. This fallback is therefore a
+bounded technical non-result, not application observation evidence and not a
+recovery of the unsupported Thrift calls.
