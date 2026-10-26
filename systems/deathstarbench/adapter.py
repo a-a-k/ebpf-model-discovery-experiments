@@ -44,6 +44,13 @@ PROXY_IP = "172.28.11.40"
 DB_SERVICE = "user-timeline-mongodb"
 DB_CONTAINER = "dsb-user-timeline-mongodb"
 STABLE_FIXTURE_TEXT = "ebpf-study-stable-timeline-fixture-v1"
+CROSS_NODE_PORTS = {
+    "user-timeline-replica": 19090,
+    "user-timeline-mongodb": 37020,
+    "user-timeline-redis": 16383,
+    "post-storage-service": 19092,
+    "jaeger-agent-udp": 16831,
+}
 
 
 class AdapterError(RuntimeError):
@@ -59,13 +66,13 @@ def _write_yaml(path: Path, value: Any) -> None:
     path.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
 
 
-def _tracing_yaml(disabled: bool) -> str:
+def _tracing_yaml(disabled: bool, agent: str = "jaeger-agent:6831") -> str:
     return yaml.safe_dump(
         {
             "disabled": disabled,
             "reporter": {
                 "logSpans": False,
-                "localAgentHostPort": "jaeger-agent:6831",
+                "localAgentHostPort": agent,
                 "queueSize": 1_000_000,
                 "bufferFlushInterval": 1,
             },
@@ -145,6 +152,27 @@ class Adapter:
         nginx_cfg["sampler"] = {"type": "const", "param": 0 if common_disabled else 1}
         _json_dump(node_a / "nginx-web-server" / "jaeger-config.json", nginx_cfg)
 
+        # Docker 29 bridge forwarding between the guest subnets is not assumed.
+        # Only replica B's config uses node A's published dependency ports; node
+        # A services retain their original container-local identities.
+        node_b_service_config_path = node_b / "config" / "service-config.json"
+        node_b_service_config = json.loads(node_b_service_config_path.read_text(encoding="utf-8"))
+        for service, port in (
+            ("user-timeline-mongodb", CROSS_NODE_PORTS["user-timeline-mongodb"]),
+            ("user-timeline-redis", CROSS_NODE_PORTS["user-timeline-redis"]),
+            ("post-storage-service", CROSS_NODE_PORTS["post-storage-service"]),
+        ):
+            node_b_service_config[service]["addr"] = self.ctx.node_ip("a")
+            node_b_service_config[service]["port"] = port
+        _json_dump(node_b_service_config_path, node_b_service_config)
+        (node_b / "config" / "jaeger-config.yml").write_text(
+            _tracing_yaml(
+                self.ctx.mode != "full",
+                f"{self.ctx.node_ip('a')}:{CROSS_NODE_PORTS['jaeger-agent-udp']}",
+            ),
+            encoding="utf-8",
+        )
+
         names = list(services)
         ip_map = _service_ip_map(names)
         for name, spec in services.items():
@@ -156,12 +184,25 @@ class Adapter:
             spec["networks"] = {"app": {"ipv4_address": ip_map[name]}}
             # Compose's local ordering cannot describe the remote replica; all
             # actual readiness is checked by ready().
+        services["user-timeline-mongodb"]["ports"] = [
+            f"{CROSS_NODE_PORTS['user-timeline-mongodb']}:27017"
+        ]
+        services["user-timeline-redis"]["ports"] = [
+            f"{CROSS_NODE_PORTS['user-timeline-redis']}:6379"
+        ]
+        services["post-storage-service"]["ports"] = [
+            f"{CROSS_NODE_PORTS['post-storage-service']}:9090"
+        ]
+        services["jaeger-agent"]["ports"] = [
+            "16686:16686", f"{CROSS_NODE_PORTS['jaeger-agent-udp']}:6831/udp"
+        ]
         replica_a = json.loads(json.dumps(original_replica))
         replica_a.update(
             image=IMAGE_LOCKS[str(original_replica["image"])],
             hostname="user-timeline-service-replica-a",
             container_name=REPLICA_CONTAINERS["a"],
             networks={"app": {"ipv4_address": REPLICA_IPS["a"]}},
+            ports=[f"{CROSS_NODE_PORTS['user-timeline-replica']}:9090"],
         )
         if self.ctx.mode == "partial":
             replica_a["volumes"] = ["./config-disabled:/social-network-microservices/config"]
@@ -178,10 +219,6 @@ class Adapter:
         upstream["networks"] = {"app": {"external": True, "name": "dsb-app-a"}}
         _write_yaml(node_a / "docker-compose.yml", upstream)
 
-        remote_hosts = {
-            key: ip_map[key]
-            for key in ("jaeger-agent", "post-storage-service", "user-timeline-mongodb", "user-timeline-redis")
-        }
         replica_b = json.loads(json.dumps(original_replica))
         replica_b.pop("depends_on", None)
         replica_b.update(
@@ -189,7 +226,7 @@ class Adapter:
             hostname="user-timeline-service-replica-b",
             container_name=REPLICA_CONTAINERS["b"],
             networks={"app": {"ipv4_address": REPLICA_IPS["b"]}},
-            extra_hosts=[f"{name}:{address}" for name, address in remote_hosts.items()],
+            ports=[f"{CROSS_NODE_PORTS['user-timeline-replica']}:9090"],
             volumes=["./config:/social-network-microservices/config"],
         )
         compose_b = {
@@ -205,7 +242,7 @@ class Adapter:
             "frontend thrift\n  bind *:9090\n  default_backend replicas\n"
             "backend replicas\n  balance roundrobin\n  option tcp-check\n"
             f"  server replica-a {REPLICA_IPS['a']}:9090 check inter 1s fall 2 rise 1\n"
-            f"  server replica-b {REPLICA_IPS['b']}:9090 check inter 1s fall 2 rise 1\n",
+            f"  server replica-b {self.ctx.node_ip('b')}:{CROSS_NODE_PORTS['user-timeline-replica']} check inter 1s fall 2 rise 1\n",
             encoding="utf-8",
         )
         self._mapping = {**ip_map, "user-timeline-service": PROXY_IP, **{f"user-timeline-replica-{k}": v for k, v in REPLICA_IPS.items()}}
@@ -257,6 +294,7 @@ class Adapter:
             raise AdapterError(f"DeathStarBench did not become ready in 360s: {last}")
         self._initialize_fixtures()
         self._assert_stable_fixture(timeout=15)
+        self._verify_each_replica_serves()
 
     def _container_running(self, node: str, container: str) -> bool:
         result = self.ctx.node_exec(
@@ -331,17 +369,83 @@ class Adapter:
             else:
                 raise AdapterError(f"stable timeline fixture unavailable at {path}")
 
+    def _verify_each_replica_serves(self) -> None:
+        evidence = []
+        for selected, other in (("a", "b"), ("b", "a")):
+            self.ctx.node_exec(other, f"docker stop {REPLICA_CONTAINERS[other]}", timeout=120)
+            record: dict[str, Any] | None = None
+            try:
+                deadline = time.monotonic() + 20
+                attempt = 0
+                while time.monotonic() < deadline:
+                    record = self.operation(
+                        "read_user_timeline", attempt,
+                        f"readiness-replica-{selected}", deadline=5,
+                    )
+                    if record["success"] is True:
+                        break
+                    attempt += 1
+                    time.sleep(1)
+                else:
+                    raise AdapterError(
+                        f"user-timeline replica {selected} did not serve the semantic probe alone"
+                    )
+                evidence.append({
+                    "selected_replica": selected,
+                    "other_replica_stopped": other,
+                    "attempts": attempt + 1,
+                    "response_sha256": record["http_steps"][0].get("response_sha256"),
+                    "success": True,
+                })
+            finally:
+                self.ctx.node_exec(other, f"docker start {REPLICA_CONTAINERS[other]}", timeout=120)
+        listener_deadline = time.monotonic() + 30
+        while time.monotonic() < listener_deadline:
+            checks = (
+                self.ctx.node_exec(
+                    "a", f"timeout 1 bash -c '</dev/tcp/127.0.0.1/{CROSS_NODE_PORTS['user-timeline-replica']}'",
+                    check=False,
+                ),
+                self.ctx.node_exec(
+                    "b", f"timeout 1 bash -c '</dev/tcp/127.0.0.1/{CROSS_NODE_PORTS['user-timeline-replica']}'",
+                    check=False,
+                ),
+            )
+            if all(check.returncode == 0 for check in checks):
+                break
+            time.sleep(1)
+        else:
+            raise AdapterError("both user-timeline replica listeners were not restored after readiness probes")
+        _json_dump(self.root / "replica-readiness.json", evidence)
+
     def metadata(self) -> dict[str, Any]:
         return {
             "system": "deathstarbench",
             "operations": list(self.operations),
             "entry_url": self.entry_url,
             "replicas": [
-                {"name": REPLICA_CONTAINERS[n], "node": n, "ip": REPLICA_IPS[n], "port": 9090}
+                {
+                    "name": REPLICA_CONTAINERS[n], "node": n,
+                    "ip": REPLICA_IPS[n], "port": 9090,
+                    "transport_host": self.ctx.node_ip(n),
+                    "transport_port": CROSS_NODE_PORTS["user-timeline-replica"],
+                }
                 for n in ("a", "b")
             ],
             "proxy": {"name": "dsb-user-timeline-proxy", "node": "a", "ip": PROXY_IP, "policy": "roundrobin"},
-            "database": {"logical_identity": DB_SERVICE, "name": DB_CONTAINER, "node": "a", "ip": self._mapping.get(DB_SERVICE), "port": 27017},
+            "database": {
+                "logical_identity": DB_SERVICE, "name": DB_CONTAINER,
+                "node": "a", "ip": self._mapping.get(DB_SERVICE), "port": 27017,
+                "transport_host": self.ctx.node_ip("a"),
+                "transport_port": CROSS_NODE_PORTS["user-timeline-mongodb"],
+            },
+            "cross_node_transport": {
+                "kind": "docker_published_guest_ports",
+                "node_a_host": self.ctx.node_ip("a"),
+                "node_b_host": self.ctx.node_ip("b"),
+                "ports": CROSS_NODE_PORTS,
+                "readiness_record": str(self.root / "replica-readiness.json"),
+            },
             "source": {"repository": UPSTREAM, "commit": COMMIT},
             "images": sorted(set(IMAGE_LOCKS.values()) | {HAPROXY_IMAGE}),
             "native_export": {"kind": "jaeger_api", "url": f"http://{self.ctx.node_ip('a')}:16686", "mode": self.ctx.mode},

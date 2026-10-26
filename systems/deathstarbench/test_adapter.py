@@ -133,6 +133,11 @@ class OracleTests(unittest.TestCase):
             for relative in ("config", "nginx-web-server", "gen-lua", "media-frontend", "docker/openresty-thrift/lua-thrift"):
                 (social / relative).mkdir(parents=True, exist_ok=True)
             (social / "config" / "jaeger-config.yml").write_text("disabled: false\n", encoding="utf-8")
+            (social / "config" / "service-config.json").write_text(json.dumps({
+                "user-timeline-mongodb": {"addr": "user-timeline-mongodb", "port": 27017},
+                "user-timeline-redis": {"addr": "user-timeline-redis", "port": 6379},
+                "post-storage-service": {"addr": "post-storage-service", "port": 9090},
+            }), encoding="utf-8")
             (social / "nginx-web-server" / "jaeger-config.json").write_text('{"diabled": false}', encoding="utf-8")
             services = {name: {"image": image} for name, image in images.items()}
             services["user-timeline-service"].update({
@@ -144,9 +149,14 @@ class OracleTests(unittest.TestCase):
             adapter._render()
             node_a = yaml.safe_load((adapter.node_dirs["a"] / "docker-compose.yml").read_text(encoding="utf-8"))
             node_b = yaml.safe_load((adapter.node_dirs["b"] / "docker-compose.yml").read_text(encoding="utf-8"))
+            node_b_config = json.loads((adapter.node_dirs["b"] / "config" / "service-config.json").read_text(encoding="utf-8"))
         self.assertEqual(node_a["services"]["user-timeline-service"]["networks"]["app"]["ipv4_address"], "172.28.11.40")
         self.assertIn("user-timeline-service-replica-a", node_a["services"])
+        self.assertEqual(node_a["services"]["user-timeline-service-replica-a"]["ports"], ["19090:9090"])
         self.assertEqual(list(node_b["services"]), ["user-timeline-service-replica-b"])
+        self.assertEqual(node_b["services"]["user-timeline-service-replica-b"]["ports"], ["19090:9090"])
+        self.assertEqual(node_a["services"]["user-timeline-mongodb"]["ports"], ["37020:27017"])
+        self.assertEqual(node_b_config["user-timeline-mongodb"], {"addr": "192.0.2.1", "port": 37020})
         addresses = [spec["networks"]["app"]["ipv4_address"] for spec in node_a["services"].values()]
         self.assertEqual(len(addresses), len(set(addresses)))
 

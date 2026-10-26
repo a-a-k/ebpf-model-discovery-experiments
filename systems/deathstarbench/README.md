@@ -10,11 +10,21 @@ GitHub Actions context.
 Node A runs the upstream application, its data stores, Jaeger, replica A and a
 TCP HAProxy retaining the original `user-timeline-service:9090` identity. Node B
 runs replica B. They have static container addresses `172.28.11.41` and
-`172.28.12.41`; the proxy is `172.28.11.40`. The guest infrastructure routes
-`172.28.11.0/24` and `172.28.12.0/24`. Replica B receives explicit `/etc/hosts`
-entries for its MongoDB, Redis, post-storage and Jaeger dependencies on node A.
-HAProxy always keeps the same round-robin policy; fault states stop/start only
-the selected replicas.
+`172.28.12.41`; the proxy is `172.28.11.40`. Cross-guest Docker bridge routing
+is not assumed: Docker 29 blocked it in qualification run 40328775069, where
+replica B repeatedly timed out creating its MongoDB index and never listened.
+
+The required cross-node edges therefore use bounded guest-published ports.
+Both replicas expose the same per-guest transport port 19090 (the proxy still
+uses A's direct container endpoint and B's guest endpoint); only B's service configuration
+points to node A's published user-timeline MongoDB (37020), Redis (16383),
+post-storage Thrift (19092), and Jaeger UDP (16831). Node A services retain their
+original container-local names and ports. HAProxy routes A directly and B via
+`192.168.76.12:19090` with the same round-robin policy in every fault state.
+Readiness stops the other replica and requires the exact stable timeline from
+each replica separately, then restores both. A merely running B process cannot
+pass, because the upstream process does not listen until its database index is
+available.
 
 The adapter retains both rendered Compose files and a container/IP mapping.
 These are deployment provenance, not an expected dependency graph and are not
