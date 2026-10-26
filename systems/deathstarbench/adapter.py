@@ -87,8 +87,6 @@ def _tag_measured_lua_spans(nginx_root: Path) -> None:
     insertion = """  local experiment_request_id = ngx.req.get_headers()[\"X-Experiment-Request-Id\"]
   if experiment_request_id ~= nil then
     span:set_tag(\"http.request.header.x-experiment-request-id\", experiment_request_id)
-    span:set_tag(\"http.method\", ngx.req.get_method())
-    span:set_tag(\"http.url\", ngx.var.uri)
   end
   local carrier = {}
 """

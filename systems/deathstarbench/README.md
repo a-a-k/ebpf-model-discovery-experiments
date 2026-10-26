@@ -47,9 +47,6 @@ the Jaeger API into a separate directory. During rendering, the adapter makes a
 small source patch to the three measured Lua handlers: after their existing
 span is started, it copies the opaque `X-Experiment-Request-Id` into the span
 tag `http.request.header.x-experiment-request-id` when the header is present.
-The same already-existing span receives its actual HTTP method and URI tags so
-the observation evaluator can recognize it as the request boundary; these are
-native span attributes and do not change the wire request.
 This is manual header-capture preparation cost, applies only to already-enabled
 native instrumentation, and neither creates a trace context nor overrides the
 SDK-disabled absent mode. This adapter makes no claim that a

@@ -222,8 +222,6 @@ class OracleTests(unittest.TestCase):
             'span:set_tag("http.request.header.x-experiment-request-id", experiment_request_id)' in source
             for source in rendered_handlers
         ))
-        self.assertTrue(all('span:set_tag("http.method", ngx.req.get_method())' in source for source in rendered_handlers))
-        self.assertTrue(all('span:set_tag("http.url", ngx.var.uri)' in source for source in rendered_handlers))
         addresses = [spec["networks"]["app"]["ipv4_address"] for spec in node_a["services"].values()]
         self.assertEqual(len(addresses), len(set(addresses)))
 
