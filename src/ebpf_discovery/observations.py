@@ -144,12 +144,18 @@ def graph(spans):
             port = a.get('server.port', a.get('net.peer.port'))
             namespace = a.get('db.namespace', a.get('db.name'))
             dbid = f'db:{db}:{address or "unknown"}:{port or "unknown"}:{namespace or "unknown"}'
+            complete_endpoint = bool(address and str(address).strip()) and str(port).isdigit() and 1 <= int(port) <= 65535
+            if not complete_endpoint:
+                # An unknown endpoint is not a shared database identity.
+                dbid += ':unresolved-for:' + identity
             nodes[dbid] = {'id': dbid, 'kind': 'database', 'system': db, 'address': address,
                            'port': port, 'namespace': namespace, 'source': s['source'],
+                           'complete_endpoint_observed': complete_endpoint,
                            'numeric_address_observed': bool(address and re.fullmatch(r'\d+\.\d+\.\d+\.\d+', str(address))),
                            'concrete_instance_confirmed': None}
             edges.add((identity, dbid, 'database_client_span'))
-            databases.setdefault(dbid, set()).add(s['service'])
+            if complete_endpoint:
+                databases.setdefault(dbid, set()).add(s['service'])
     for s in spans:
         for p in by_id.get((s['trace_id'], s['parent_id']), []):
             if p['_graph_node'] != s['_graph_node']:

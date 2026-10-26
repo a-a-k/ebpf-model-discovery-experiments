@@ -11,6 +11,7 @@ import re
 from .model import Projection, assign, class_key
 from .observations import graph, opaque_attempt
 from .runtime import write_json
+from .async_links import message_chains
 
 
 def evaluation_map(external, assignments):
@@ -196,6 +197,31 @@ def database_reference_match(node, reference):
     return str(port) == str(expected) if port is not None and expected is not None else True
 
 
+def database_activity(spans):
+    """Retain DB activity that lacks endpoint attributes; never invent sharing."""
+    tallies = {}
+    for s in spans:
+        a = s['attributes']
+        system = a.get('db.system.name', a.get('db.system'))
+        basis = 'explicit_db_system_attribute'
+        if not system:
+            named = re.search(r'(?:^|_)(mongo|redis)(?:_|$)', (s.get('name') or '').lower())
+            if not named:
+                continue
+            system = {'mongo': 'mongodb', 'redis': 'redis'}[named.group(1)]
+            basis = 'interpretation_of_observed_operation_name; not_endpoint_identity'
+        address = a.get('server.address', a.get('net.peer.name', a.get('net.peer.ip')))
+        port = a.get('server.port', a.get('net.peer.port'))
+        key = (s['source'], s['service'], s.get('instance'), s.get('node'), s.get('name'), system, basis, address, port)
+        if key not in tallies:
+            tallies[key] = dict(zip(('source', 'caller', 'instance', 'node', 'span_name', 'interpreted_system',
+                                    'interpretation_basis', 'observed_address', 'observed_port'), key))
+            tallies[key].update(count=0, example={'trace_id': s['trace_id'], 'span_id': s['span_id'],
+                                                'raw_file': s.get('raw_file')})
+        tallies[key]['count'] += 1
+    return list(tallies.values())
+
+
 def evaluate(root):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Research result processing runs in GitHub Actions')
@@ -267,6 +293,7 @@ def evaluate(root):
                                    for phase in ('db_up', 'db_down')} for operation in metadata['operations']}
         identities = async_identities(data)
         typed = typed_order_chains(data)
+        message_evidence = message_chains(data) if status['system'] == 'otel_demo' else {}
         asynchronous = []
         for row in external:
             if not row['phase'].startswith('async_'):
@@ -274,15 +301,22 @@ def evaluate(root):
             identity = str(row.get('order_id', '')).lower()
             evidence = identities.get(identity, {})
             typed_evidence = typed.get(identity, {})
+            chains = {step['request_id']: message_evidence[step['request_id']] for step in row['http_steps']
+                      if step.get('request_id') in message_evidence}
+            chain_sources = sorted({observed_source for chain in chains.values()
+                                    for observed_source, proof in chain['sources'].items() if proof['status'] == 'linked'})
+            typed_complete = all(stage in typed_evidence for stage in ('checkout_http', 'checkout_produce', 'accounting_consume', 'accounting_write'))
             asynchronous.append({'attempt_key': opaque_attempt(row), 'phase': row['phase'],
                                  'http_success': row.get('success'), 'durable': row.get('async_verification'),
                                  'uuid_stage_presence': evidence,
                                  'typed_order_evidence': typed_evidence,
-                                 'complete_identity_chain': True if all(stage in typed_evidence for stage in ('checkout_http', 'checkout_produce', 'accounting_consume', 'accounting_write')) else None,
-                                 'identity_note': 'Only typed order identity with declared checkout/accounting roles qualifies. SQL placeholders and generic UUID presence remain unknown; this does not rule out richer alternative message matchers.'})
+                                 'message_chain_evidence': chains, 'message_chain_supporting_sources': chain_sources,
+                                 'complete_identity_chain': True if typed_complete or chain_sources else None,
+                                 'identity_note': 'Typed current-order identity or a unique exact producer SpanLink/processing-root chain establishes association only. SQL durability/deadline is independently evaluated; missing or ambiguous chains remain unknown.'})
         result['sources'][source] = {'operations': operations,
             'classes': class_metrics(external, projected, training),
             'database_nodes': database_nodes, 'db_controls': db_controls,
+            'database_activity': database_activity(data),
             'shared_database_dependencies': observed_graph['shared_database_dependencies'],
             'database_edges': [e for e in observed_graph['edges'] if e['evidence'] == 'database_client_span'],
             'database_forecast_effect': None,
@@ -299,6 +333,10 @@ def evaluate(root):
         write_json(root/folder/'proxy-semantic-comparison.json', mismatches)
         write_json(root/folder/'observed-uuid-census.json', identities)
         write_json(root/folder/'observed-final-graph.json', observed_graph)
+        calibration_spans = read('normalized-calibration.json')
+        calibration_source = calibration_spans if source == 'combined' else [s for s in calibration_spans if s['source'] == source]
+        write_json(root/folder/'validated-calibration-graph.json', graph(calibration_source))
+        write_json(root/folder/'message-chain-evidence.json', message_evidence)
     write_json(root/'metrics.json', result)
     return result
 
