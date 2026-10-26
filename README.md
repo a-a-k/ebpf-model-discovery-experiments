@@ -71,6 +71,8 @@ The evaluator separately receives labels, fixture expectations, request/response
 
 The basic class representation uses observed method and normalized route; an augmentation uses confirmed downstream signatures. Healthy training and test segments are separate. Generator labels are evaluation-only. Missing anchors and ambiguous classes remain unknown. Unclassified calibration attempts must widen compatible classes' bounds rather than disappear from denominators. Class assignment rules are fixed before target acquisition.
 
+The combined source is a deterministic union. Where several sources describe an HTTP step, projection selects the earliest observed server boundary, with an eBPF tie preference. This is not an optimized fusion method: differently normalized routes or incomplete observations can fragment classes, and adding a stream need not improve the result.
+
 Service instances and placement use available resource/process attributes and collector provenance. A cross-node link requires observed parent/child or message identity. A connection, common topic, or temporal proximity is insufficient. Observed link counts are distinct from an independently validated link-error rate; the latter is unknown without a reference.
 
 Database analysis distinguishes logical address, concrete instance evidence, and dependencies shared by multiple services. Known database ports alone do not identify an operation's dependency.
@@ -146,7 +148,17 @@ Costs include preparation, downloads/builds, VM startup, acquisition, state chan
 
 ## Results
 
-**The series is incomplete.** Completed acquisitions and technical failures are retained in the linked runs. The [first generated interim report](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340398882) demonstrates the reporting pipeline on the two v2 campaigns available at its start; it leaves three-repeat means pending. Final tables will use all valid campaigns and reviewed evaluation code.
+**The series is incomplete: 18 of 27 campaigns have valid results.** The [reviewed interim tables](results/interim-18/report.md), [per-repeat operation data](results/interim-18/operations.csv), and [artifact provenance](results/interim-18/SOURCE.md) were generated in [Actions report 40362124923](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40362124923). They contain 38,880 admitted primary attempts; OTel is still outstanding. Independent review approved reporting this partial evidence, not a claim that the full research criterion has been established.
+
+For DeathStarBench, all three eBPF entry-event forecasts have zero point error across the three repeats in each mode. Conservative mean worst-end error is 4.01 pp for compose/user timeline and 4.58 pp for home timeline, meeting the stated target. Native partial/full observations produce the same forecasts. This result concerns conditional entry outcomes: OBI does not reconstruct the internal Thrift execution topology in these captures.
+
+Petclinic does not meet the conservative target for any operation/mode group. In full mode, list owners and list vets have zero point error but 6.02 pp worst-end error under the nominal interval construction. Owner details has 12.50 pp point error: HTTP 200 can omit required visits. Create-visit forecasts and several absent/partial forecasts retain unknowns. These are limitations of the tested observation/projection procedure and semantic proxy, not proof that all eBPF approaches fail.
+
+The [class results](results/interim-18/classes.csv) preserve coverage alongside ARI. For example, Petclinic absent seed 0 has route ARI 1.0 on all 120 test attempts, while the downstream augmentation has ARI 0.5122 on 119 attempts. Additional downstream detail therefore did not automatically improve this representation. [DB activity](results/interim-18/database-activity.csv) includes native Mongo calls even without endpoint attributes; [structure results](results/interim-18/structure.csv) retain OBI's Mongo-to-MySQL misclassification. No DB-driven forecast improvement or independently validated cross-node error rate is established.
+
+![Interim worst-end errors by operation, source and repeat](results/interim-18/errors.svg)
+
+Each marker is one repeat's worst-end error, including conservative bounds for unknown forecasts; it is not necessarily a point-estimate error. The dashed line is 5 pp. The [cost ledger](results/interim-18/job-costs.csv) records 71,928 completed job-seconds through this report's snapshot, including preparation and failures. Ongoing work and unmetered engineering time are not included as zero.
 
 | Stage | Evidence | Interpretation |
 |---|---|---|
@@ -166,9 +178,13 @@ The [first permanent data archive](https://github.com/a-a-k/ebpf-model-discovery
 
 Guests share physical resources. Four controlled states provide a restricted transfer test, not arbitrary failure extrapolation or failure-transition dynamics. Target mixture weights are supplied. Fixed application versions and three repeats limit generalization. Workload grouping and semantic rules include manual knowledge. Protocol/language coverage can leave links unknown. Context propagation changes metadata and affects interpretation of portability and cost. Full native tracing may already contain every database dependency eBPF recovers.
 
+All native observations here are collected while OBI is also running. They are a paired observation-source reference, not a separate native-only runtime experiment; automatic propagation can affect the parent contexts native spans observe. Collector overhead was not isolated experimentally. The conditional forecast uses entry events rather than the full dependency graph, so accurate forecasts do not establish recovery of an application's internal call topology. Equivalent direct estimation from sufficiently complete HTTP observations can produce the same forecast; the study makes no claim that eBPF is necessary or cheaper than that alternative.
+
 The downstream class representation uses the observed service/route names. Replica-specific names and variable child calls can fragment one business operation into several observed classes; a lower augmented ARI is not proof that downstream information is inherently unhelpful. No extra representation search is performed after inspecting results. A DB endpoint match is evaluated separately from protocol correctness and concrete-instance identity. Native ancestry is an independent telemetry reference, not ground truth for every eBPF link. Order-chain matching supports declared current-order fields; unimplemented alternative message matchers remain a limitation.
 
 The [Petclinic cross-node audit](docs/petclinic-cross-node-audit.md) identifies two distinct reference limitations. Native and eBPF server spans for the same request can have different span IDs, which the strict reference binder does not reconcile. Even after an exact opaque-request/method/path match, the native child points to an eBPF proxy parent that has no native counterpart. Matching requests therefore does not supply an independent native parent reference. Cross-node correctness remains unknown rather than being inferred from matching traces or deployment placement.
+
+Database counts distinguish observed structure from validated dependencies. Endpoint/protocol agreement is checked against the selected intervention database; other endpoints are not all independently validated. An observed shared address is not automatically a confirmed dependency shared by application services: collectors may also describe database processes as clients. These counts must not be read as a count of correctly recovered business dependencies, and no concrete physical database-instance identity is established by address alone.
 
 ## Reproduction
 

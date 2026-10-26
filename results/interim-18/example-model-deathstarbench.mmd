@@ -1,0 +1,28 @@
+flowchart LR
+  n0["user-timeline-service-replica-b | guest b | user-timeline-service-replica-b.dsb-user-timeline-b"]
+  n1["redis 192.168.76.11:16383"]
+  n2["user-timeline-redis | guest a | user-timeline-redis.dsb-user-timeline-redis"]
+  n3["post-storage-memcached | guest a | post-storage-memcached.dsb-post-storage-memcached"]
+  n4["couchbase 172.28.11.19:11211"]
+  n5["nginx-thrift | guest a | nginx-thrift.dsb-nginx-thrift"]
+  n6["user-timeline-service | guest a | user-timeline-service.dsb-user-timeline-proxy"]
+  n7["home-timeline-redis | guest a | home-timeline-redis.dsb-home-timeline-redis"]
+  n8["social-graph-redis | guest a | social-graph-redis.dsb-social-graph-redis"]
+  n9["user-timeline-mongodb | guest a | user-timeline-mongodb.dsb-user-timeline-mongodb"]
+  n10["user-timeline-service-replica-a | guest a | user-timeline-service-replica-a.dsb-user-timeline-a"]
+  n11["redis 172.28.11.35:6379"]
+  n12["post-storage-service | guest a | post-storage-service.dsb-post-storage-service"]
+  n13["home-timeline-service | guest a | home-timeline-service.dsb-home-timeline-service"]
+  n14["redis 172.28.11.11:6379"]
+  n15["social-graph-service | guest a | social-graph-service.dsb-social-graph-service"]
+  n16["redis 172.28.11.23:6379"]
+  n13 -->|database_client_span| n14
+  n13 -->|observed_parent_id| n7
+  n3 -->|database_client_span| n4
+  n12 -->|database_client_span| n4
+  n12 -->|observed_parent_id| n3
+  n15 -->|database_client_span| n16
+  n15 -->|observed_parent_id| n8
+  n10 -->|database_client_span| n11
+  n10 -->|observed_parent_id| n2
+  n0 -->|database_client_span| n1
