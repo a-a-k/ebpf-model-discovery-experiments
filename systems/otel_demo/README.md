@@ -23,12 +23,15 @@ PostgreSQL over the routed application subnets.
 `full` retains native spans from every service. `partial` disables native SDK
 export in both controlled product-catalog replicas. `absent` applies that setting
 to every application service. Disabled containers receive
-`OTEL_SDK_DISABLED=true` and `OTEL_TRACES_EXPORTER=none` (plus disabled metrics).
-Some Go programs construct providers directly and can ignore those environment
-settings, so the remote collector independently filters all forbidden spans.
-This guard does not alter request handling and allows context propagation. The
-adapter inspects the final collector file and fails collection when the selected
-mode leaked forbidden native spans. OTel logs, metrics, Docker application logs,
+`OTEL_SDK_DISABLED=true`. Checkout and product-catalog construct Go providers
+directly, and email directly adds a metric reader to what becomes a no-op Ruby
+provider, so `prepare()` applies a recorded source patch and the Actions guests
+build those three images from the pinned checkout. The patch skips exporter/SDK
+construction when disabled (checkout retains only a never-sample provider for
+context propagation). The collector does not filter spans: its file export is
+the raw native OTLP stream, and the adapter fails collection when that stream
+contains forbidden native spans. This also audits that the standard disable
+flag worked in the other language SDKs. OTel logs, metrics, Docker application logs,
 and common eBPF evidence remain separate artifacts.
 
 ## Operations and independent outcomes
@@ -54,6 +57,9 @@ stopped and flushed, the append-only bind-mounted files are copied, and the same
 collector is restarted before the call returns. Thus a calibration snapshot
 does not prevent target-period native capture; final collection obtains the
 later cumulative file as a separate snapshot.
+The generated `native-disable.patch` and its SHA-256 are retained in deployment
+metadata. These patched images are built only in GitHub Actions; local adapter
+checks do not build or run the application.
 It does **not** infer Kafka delivery from the HTTP response or producer state;
 the upstream producer uses `RequiredAcks=NoResponse`.
 

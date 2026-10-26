@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import base64
 import copy
+import hashlib
 import json
 import os
 import re
@@ -95,6 +96,8 @@ class Adapter:
         if observed != UPSTREAM_COMMIT:
             raise RuntimeError(f"upstream checkout is {observed}, expected {UPSTREAM_COMMIT}")
 
+        patch_record = self._patch_native_disable()
+
         environment = self._read_env(self.source / ".env")
         environment["DEMO_VERSION"] = DEMO_VERSION
         environment["IMAGE_VERSION"] = DEMO_VERSION
@@ -122,6 +125,7 @@ class Adapter:
             "compose_layers": ["compose.yaml", "compose.full.yaml"],
             "placement": mapping,
             "native_suppression": self._suppression_description(),
+            "native_disable_patch": patch_record,
             "native_request_id_capture": {
                 "header": "x-experiment-request-id",
                 "entry_service": "frontend",
@@ -163,8 +167,12 @@ class Adapter:
 
         # Infrastructure and the fixed router endpoint live on A.  B then adds
         # the second product-catalog process without changing routing policy.
-        self._compose("a", "pull", timeout=1200)
-        self._compose("b", "pull", timeout=600)
+        self._compose("a", "pull --ignore-buildable", timeout=1200)
+        self._compose("b", "pull --ignore-buildable", timeout=600)
+        # Services with direct SDK/exporter construction are built from the
+        # pinned, recorded source patch. Builds happen only in Actions guests.
+        self._compose("a", "build checkout email product-catalog-a", timeout=1800)
+        self._compose("b", "build product-catalog-b", timeout=1800)
         self._compose("a", "up -d --remove-orphans", timeout=900)
         self._compose("b", "up -d --remove-orphans", timeout=600)
 
@@ -412,6 +420,16 @@ class Adapter:
                 order_id = payload.get("orderId") or payload.get("order_id")
                 record["order_id"] = order_id
                 record["user_id"] = user_id
+                record["async_expected"] = {
+                    "items": [{"product_id": PRODUCT_ID, "quantity": 1}],
+                    "shipping_address": {
+                        "street_address": "1 Observatory Way",
+                        "city": "Testville",
+                        "state": "CA",
+                        "country": "US",
+                        "zip_code": "94000",
+                    },
+                }
                 # Sarama uses RequiredAcks=NoResponse upstream.  This is only
                 # immediate HTTP success; Kafka delivery is never inferred here.
                 record["success"] = checkout["status"] == 200 and bool(order_id)
@@ -488,7 +506,17 @@ class Adapter:
                         break
                     now_ns = time.time_ns()
                     if now_ns >= deadline_ns:
-                        settled = False if observation.get("query_ok") else None
+                        # A negative snapshot that began before the boundary
+                        # cannot exclude a commit between snapshot and deadline.
+                        query_started_ns = int(
+                            observation.get("query_started_ns") or 0
+                        )
+                        settled = (
+                            False
+                            if observation.get("query_ok")
+                            and query_started_ns >= deadline_ns
+                            else None
+                        )
                         break
                     time.sleep(min(0.4, max(0.0, (deadline_ns - now_ns) / 1e9)))
             record["async_verification"] = {
@@ -497,6 +525,17 @@ class Adapter:
                 "success": settled,
                 "observations": observations,
                 "evidence": "independent PostgreSQL reads keyed only by returned order_id",
+                "expected_postcondition": record.get("async_expected")
+                or {
+                    "items": [{"product_id": PRODUCT_ID, "quantity": 1}],
+                    "shipping_address": {
+                        "street_address": "1 Observatory Way",
+                        "city": "Testville",
+                        "state": "CA",
+                        "country": "US",
+                        "zip_code": "94000",
+                    },
+                },
             }
             results.append(record)
         return results
@@ -586,8 +625,14 @@ class Adapter:
         for name in list(services):
             if name in DROP_SERVICES:
                 services.pop(name)
-        for service in services.values():
-            service.pop("build", None)
+        for name, service in services.items():
+            if name in {"checkout", "email", "product-catalog"}:
+                self._prefix_source_build(service)
+                service["image"] = (
+                    f"ebpf-study/otel-demo-{name}:{UPSTREAM_COMMIT[:12]}-{self.mode}"
+                )
+            else:
+                service.pop("build", None)
             service.pop("ports", None)
             service.pop("profiles", None)
             depends = service.get("depends_on")
@@ -632,8 +677,9 @@ class Adapter:
         ]
         collector["user"] = "0:0"
 
-        # Every native SDK gets the mode setting.  The collector filter remains
-        # authoritative because custom Go SDK construction may ignore it.
+        # Standard language SDKs get their specified master disable switch.
+        # Checkout and product-catalog additionally have explicit source guards
+        # because their custom provider construction can bypass env handling.
         for name, service in services.items():
             if name in {"otel-collector", "product-catalog"}:
                 continue
@@ -643,11 +689,7 @@ class Adapter:
             if disabled:
                 env = service.setdefault("environment", {})
                 env.update(
-                    {
-                        "OTEL_SDK_DISABLED": "true",
-                        "OTEL_TRACES_EXPORTER": "none",
-                        "OTEL_METRICS_EXPORTER": "none",
-                    }
+                    {"OTEL_SDK_DISABLED": "true"}
                 )
 
         # The frontend is the first instrumented HTTP application hop.  Node's
@@ -713,41 +755,18 @@ class Adapter:
 
     def _configure_product(self, source: dict[str, Any], node: str) -> dict[str, Any]:
         service = copy.deepcopy(source)
-        service.pop("build", None)
         service.pop("ports", None)
         service["environment"] = self._environment_dict(service.get("environment", {}))
         disabled = self.mode in {"absent", "partial"}
         if disabled:
             service["environment"].update(
-                {
-                    "OTEL_SDK_DISABLED": "true",
-                    "OTEL_TRACES_EXPORTER": "none",
-                    "OTEL_METRICS_EXPORTER": "none",
-                }
+                {"OTEL_SDK_DISABLED": "true"}
             )
         return service
 
     def _collector_config(self) -> str:
-        processors: dict[str, Any] = {
-            "batch": {"send_batch_size": 256, "timeout": "1s"}
-        }
+        processors: dict[str, Any] = {"batch": {"send_batch_size": 256, "timeout": "1s"}}
         trace_processors = ["batch"]
-        if self.mode == "absent":
-            processors["filter/native_suppression"] = {
-                "error_mode": "propagate",
-                "traces": {"span": ["true"]},
-            }
-            trace_processors.insert(0, "filter/native_suppression")
-        elif self.mode == "partial":
-            processors["filter/native_suppression"] = {
-                "error_mode": "propagate",
-                "traces": {
-                    "span": [
-                        'resource.attributes["service.name"] == "product-catalog"'
-                    ]
-                },
-            }
-            trace_processors.insert(0, "filter/native_suppression")
         config = {
             "receivers": {
                 "otlp": {
@@ -918,7 +937,7 @@ class Adapter:
         return step
 
     def _read_order(self, order_id: str) -> dict[str, Any]:
-        observed_ns = time.time_ns()
+        query_started_ns = time.time_ns()
         escaped = order_id.replace("'", "''")
         sql = f"""
 SELECT json_build_object(
@@ -927,25 +946,65 @@ SELECT json_build_object(
   'order_count', (SELECT count(*) FROM accounting."order" WHERE order_id='{escaped}'),
   'item_count', (SELECT count(*) FROM accounting.orderitem WHERE order_id='{escaped}'),
   'shipping_count', (SELECT count(*) FROM accounting.shipping WHERE order_id='{escaped}'),
-  'items', COALESCE((SELECT json_agg(json_build_object('product_id', product_id, 'quantity', quantity) ORDER BY product_id) FROM accounting.orderitem WHERE order_id='{escaped}'), '[]'::json)
+  'items', COALESCE((SELECT json_agg(json_build_object('product_id', product_id, 'quantity', quantity) ORDER BY product_id) FROM accounting.orderitem WHERE order_id='{escaped}'), '[]'::json),
+  'shipping', COALESCE((SELECT json_agg(json_build_object(
+    'shipping_tracking_id', shipping_tracking_id,
+    'shipping_cost_currency_code', shipping_cost_currency_code,
+    'shipping_cost_units', shipping_cost_units,
+    'shipping_cost_nanos', shipping_cost_nanos,
+    'street_address', street_address,
+    'city', city,
+    'state', state,
+    'country', country,
+    'zip_code', zip_code
+  )) FROM accounting.shipping WHERE order_id='{escaped}'), '[]'::json)
 );"""
+        provenance = {
+            "query_started_ns": query_started_ns,
+            "query_text": sql.strip(),
+            "query_sha256": hashlib.sha256(sql.encode("utf-8")).hexdigest(),
+            "executor": "docker exec astronomy-db psql -U astronomy_user -d astronomy_db",
+            "role": "evaluator_only",
+        }
         try:
             raw = self._psql(sql).strip().splitlines()[-1]
             value = json.loads(raw)
+            expected_items = [{"product_id": PRODUCT_ID, "quantity": 1}]
+            expected_address = {
+                "street_address": "1 Observatory Way",
+                "city": "Testville",
+                "state": "CA",
+                "country": "US",
+                "zip_code": "94000",
+            }
+            shipping = value.get("shipping") or []
+            shipping_exact = (
+                len(shipping) == 1
+                and all(shipping[0].get(key) == expected for key, expected in expected_address.items())
+                and bool(shipping[0].get("shipping_tracking_id"))
+                and shipping[0].get("shipping_cost_currency_code") == "USD"
+                and int(shipping[0].get("shipping_cost_units") or 0) >= 0
+                and 0 <= int(shipping[0].get("shipping_cost_nanos") or 0) < 1_000_000_000
+            )
             value.update(
                 {
-                    "runner_observed_ns": observed_ns,
+                    **provenance,
+                    "runner_observed_ns": query_started_ns,
                     "query_completed_ns": time.time_ns(),
                     "query_ok": True,
                     "complete": value["order_count"] == 1
-                    and value["item_count"] >= 1
+                    and value["item_count"] == 1
                     and value["shipping_count"] == 1,
+                    "postcondition_exact": value.get("items") == expected_items
+                    and shipping_exact,
                 }
             )
+            value["complete"] = bool(value["complete"] and value["postcondition_exact"])
             return value
         except Exception as exc:
             return {
-                "runner_observed_ns": observed_ns,
+                **provenance,
+                "runner_observed_ns": query_started_ns,
                 "query_completed_ns": time.time_ns(),
                 "query_ok": False,
                 "complete": None,
@@ -1122,10 +1181,164 @@ SELECT json_build_object(
         return {
             "mode": self.mode,
             "excluded": excluded,
-            "sdk_settings": "OTEL_SDK_DISABLED=true and OTEL_TRACES_EXPORTER=none on disabled services",
-            "remote_guard": "collector OTTL filter; needed for custom Go providers that ignore SDK disablement",
-            "propagation": "incoming trace context may still be propagated; no excluded span is retained",
+            "sdk_settings": "OTEL_SDK_DISABLED=true on disabled standard SDKs",
+            "source_guards": "checkout and product-catalog skip exporter/provider construction; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
+            "collector_filter": "none; the file exporter retains the unfiltered native OTLP stream for suppression audit",
+            "propagation": "checkout keeps W3C propagation with a never-sample provider; no disabled Go exporter is constructed",
         }
+
+    def _patch_native_disable(self) -> dict[str, Any]:
+        """Install small, auditable disable guards in custom SDK startup.
+
+        The pinned checkout constructs trace, metric and log exporters directly;
+        product-catalog constructs an otelconf SDK directly.  Neither path may be
+        hidden later by a collector filter in an experiment whose treatment is
+        genuine application tracing absence.
+        """
+        checkout = self.source / "src" / "checkout" / "main.go"
+        product = self.source / "src" / "product-catalog" / "main.go"
+        email = self.source / "src" / "email" / "email_server.rb"
+
+        checkout_text = checkout.read_text(encoding="utf-8")
+        if "func telemetrySDKDisabled() bool" not in checkout_text:
+            checkout_text = self._replace_once(
+                checkout_text,
+                '\t"strconv"\n\t"sync"',
+                '\t"strconv"\n\t"strings"\n\t"sync"',
+                checkout,
+            )
+            checkout_text = self._replace_once(
+                checkout_text,
+                "func initTracerProvider() *sdktrace.TracerProvider {\n\tctx := context.Background()",
+                "func telemetrySDKDisabled() bool {\n"
+                '\treturn strings.EqualFold(strings.TrimSpace(os.Getenv("OTEL_SDK_DISABLED")), "true")\n'
+                "}\n\n"
+                "func initTracerProvider() *sdktrace.TracerProvider {\n"
+                "\tif telemetrySDKDisabled() {\n"
+                "\t\ttp := sdktrace.NewTracerProvider(sdktrace.WithSampler(sdktrace.NeverSample()))\n"
+                "\t\totel.SetTracerProvider(tp)\n"
+                "\t\totel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))\n"
+                "\t\treturn tp\n"
+                "\t}\n"
+                "\tctx := context.Background()",
+                checkout,
+            )
+            checkout_text = self._replace_once(
+                checkout_text,
+                "func initMeterProvider() *sdkmetric.MeterProvider {\n\tctx := context.Background()",
+                "func initMeterProvider() *sdkmetric.MeterProvider {\n"
+                "\tif telemetrySDKDisabled() {\n"
+                "\t\tmp := sdkmetric.NewMeterProvider()\n"
+                "\t\totel.SetMeterProvider(mp)\n"
+                "\t\treturn mp\n"
+                "\t}\n"
+                "\tctx := context.Background()",
+                checkout,
+            )
+            checkout_text = self._replace_once(
+                checkout_text,
+                "func initLoggerProvider() *sdklog.LoggerProvider {\n\tctx := context.Background()",
+                "func initLoggerProvider() *sdklog.LoggerProvider {\n"
+                "\tif telemetrySDKDisabled() {\n"
+                "\t\tlp := sdklog.NewLoggerProvider()\n"
+                "\t\tglobal.SetLoggerProvider(lp)\n"
+                "\t\treturn lp\n"
+                "\t}\n"
+                "\tctx := context.Background()",
+                checkout,
+            )
+            checkout.write_text(checkout_text, encoding="utf-8")
+
+        product_text = product.read_text(encoding="utf-8")
+        if "The zero global providers are intentional" not in product_text:
+            old = """\t// Initialize OpenTelemetry SDK with otelconf
+\tsdk, err := otelconf.NewSDK(otelconf.WithContext(ctx))
+\tif err != nil {
+\t\tlogger.Error(fmt.Sprintf("Failed to initialize OpenTelemetry SDK: %v", err))
+\t\tos.Exit(1)
+\t}
+\tdefer func() {
+\t\tif err := sdk.Shutdown(ctx); err != nil {
+\t\t\tlogger.Error(fmt.Sprintf("Error shutting down OpenTelemetry SDK: %v", err))
+\t\t}
+\t\tlogger.Info("Shutdown OpenTelemetry SDK")
+\t}()
+\t// Set global providers and propagator
+\totel.SetTracerProvider(sdk.TracerProvider())
+\totel.SetMeterProvider(sdk.MeterProvider())
+\tglobal.SetLoggerProvider(sdk.LoggerProvider())
+\totel.SetTextMapPropagator(sdk.Propagator())
+"""
+            new = """\tif !strings.EqualFold(strings.TrimSpace(os.Getenv("OTEL_SDK_DISABLED")), "true") {
+\t\t// Initialize OpenTelemetry SDK with otelconf only when native telemetry is enabled.
+\t\tsdk, err := otelconf.NewSDK(otelconf.WithContext(ctx))
+\t\tif err != nil {
+\t\t\tlogger.Error(fmt.Sprintf("Failed to initialize OpenTelemetry SDK: %v", err))
+\t\t\tos.Exit(1)
+\t\t}
+\t\tdefer func() {
+\t\t\tif err := sdk.Shutdown(ctx); err != nil {
+\t\t\t\tlogger.Error(fmt.Sprintf("Error shutting down OpenTelemetry SDK: %v", err))
+\t\t\t}
+\t\t\tlogger.Info("Shutdown OpenTelemetry SDK")
+\t\t}()
+\t\totel.SetTracerProvider(sdk.TracerProvider())
+\t\totel.SetMeterProvider(sdk.MeterProvider())
+\t\tglobal.SetLoggerProvider(sdk.LoggerProvider())
+\t\totel.SetTextMapPropagator(sdk.Propagator())
+\t} // The zero global providers are intentional when native telemetry is disabled.
+"""
+            product.write_text(
+                self._replace_once(product_text, old, new, product), encoding="utf-8"
+            )
+
+        # Ruby's master switch creates no-op providers, while this application
+        # unconditionally calls the SDK-only add_metric_reader method.  Guard
+        # that direct construction; request handling and the test mailer remain
+        # unchanged.
+        email_text = email.read_text(encoding="utf-8")
+        if "metric exporter is not constructed when the SDK is disabled" not in email_text:
+            old = """otlp_metric_exporter = OpenTelemetry::Exporter::OTLP::Metrics::MetricsExporter.new
+OpenTelemetry.meter_provider.add_metric_reader(otlp_metric_exporter)
+"""
+            new = """unless ENV.fetch("OTEL_SDK_DISABLED", "false").strip.casecmp?("true")
+  otlp_metric_exporter = OpenTelemetry::Exporter::OTLP::Metrics::MetricsExporter.new
+  OpenTelemetry.meter_provider.add_metric_reader(otlp_metric_exporter)
+end # The metric exporter is not constructed when the SDK is disabled.
+"""
+            email.write_text(
+                self._replace_once(email_text, old, new, email), encoding="utf-8"
+            )
+
+        diff = self._run_stdout(
+            [
+                "git",
+                "-C",
+                str(self.source),
+                "diff",
+                "--",
+                "src/checkout/main.go",
+                "src/product-catalog/main.go",
+                "src/email/email_server.rb",
+            ]
+        )
+        if not diff.strip():
+            raise RuntimeError("native-disable source patch produced no recorded diff")
+        patch_path = self.bundle / "native-disable.patch"
+        patch_path.write_text(diff, encoding="utf-8")
+        return {
+            "path": patch_path.name,
+            "sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
+            "services": ["checkout", "email", "product-catalog-a", "product-catalog-b"],
+        }
+
+    @staticmethod
+    def _replace_once(text: str, old: str, new: str, path: Path) -> str:
+        if text.count(old) != 1:
+            raise RuntimeError(
+                f"pinned source patch anchor mismatch in {path}: expected one, found {text.count(old)}"
+            )
+        return text.replace(old, new, 1)
 
     @classmethod
     def _compose_merge(cls, base: Any, override: Any) -> Any:
@@ -1221,6 +1434,18 @@ SELECT json_build_object(
                 rewritten.append(volume)
         if "volumes" in service:
             service["volumes"] = rewritten
+
+    @staticmethod
+    def _prefix_source_build(service: dict[str, Any]) -> None:
+        """Retarget an upstream build context after nesting source in bundle."""
+        build = service.get("build")
+        if isinstance(build, str):
+            service["build"] = "./source" if build in {".", "./"} else "./source/" + build.removeprefix("./")
+        elif isinstance(build, dict):
+            build = copy.deepcopy(build)
+            context = str(build.get("context", "./"))
+            build["context"] = "./source" if context in {".", "./"} else "./source/" + context.removeprefix("./")
+            service["build"] = build
 
     def _run_stdout(self, command: list[str]) -> str:
         return self._stdout(self.ctx.run(command, timeout=300))

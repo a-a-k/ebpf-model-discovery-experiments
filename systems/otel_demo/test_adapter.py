@@ -54,6 +54,21 @@ def test_native_suppression_file_checks(tmp_path: Path) -> None:
     assert not adapter._verify_native_file(traces)["mode_compliant"]
 
 
+def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
+    adapter = object.__new__(Adapter)
+    adapter.mode = "absent"
+    config = adapter._collector_config()
+    assert "filter/native_suppression" not in config
+    assert 'path: /native/traces.json' in config
+    description = adapter._suppression_description()
+    assert description["collector_filter"].startswith("none")
+
+    service = {"build": {"context": "./", "dockerfile": "./src/checkout/Dockerfile"}}
+    adapter._prefix_source_build(service)
+    assert service["build"]["context"] == "./source"
+    assert service["build"]["dockerfile"] == "./src/checkout/Dockerfile"
+
+
 def test_http_step_uses_fresh_opaque_request_id(monkeypatch) -> None:
     captured = {}
 
@@ -86,6 +101,7 @@ def test_async_late_first_positive_is_unknown() -> None:
     adapter._read_order = lambda order_id: {
         "query_ok": True,
         "complete": True,
+        "query_started_ns": now - 1_000_000,
         "query_completed_ns": now,
     }
     record = {"order_id": "order-1", "started_ns": now - 11_000_000_000}
@@ -101,6 +117,7 @@ def test_async_in_boundary_positive_and_missing_oracle() -> None:
     adapter._read_order = lambda order_id: {
         "query_ok": True,
         "complete": True,
+        "query_started_ns": now,
         "query_completed_ns": now + 1_000_000,
     }
     success = adapter.verify_async(
@@ -125,3 +142,57 @@ def test_async_in_boundary_positive_and_missing_oracle() -> None:
     )[0]["async_verification"]
     assert unavailable["success"] is None
     assert unavailable["observations"][0]["query_ok"] is False
+
+
+def test_async_late_negative_requires_post_deadline_snapshot() -> None:
+    now = time.time_ns()
+    started = now - 11_000_000_000
+    deadline_ns = started + 10_000_000_000
+    adapter = object.__new__(Adapter)
+    adapter._latest_async_deadline_ns = 0
+    adapter._read_order = lambda order_id: {
+        "query_ok": True,
+        "complete": False,
+        "query_started_ns": deadline_ns - 1,
+        "query_completed_ns": now,
+    }
+    ambiguous = adapter.verify_async(
+        [{"order_id": "order-before", "started_ns": started}]
+    )[0]["async_verification"]
+    assert ambiguous["success"] is None
+
+    adapter._read_order = lambda order_id: {
+        "query_ok": True,
+        "complete": False,
+        "query_started_ns": deadline_ns,
+        "query_completed_ns": now,
+    }
+    negative = adapter.verify_async(
+        [{"order_id": "order-after", "started_ns": started}]
+    )[0]["async_verification"]
+    assert negative["success"] is False
+
+
+def test_order_oracle_requires_exact_item_and_shipping() -> None:
+    adapter = object.__new__(Adapter)
+    adapter._psql = lambda sql: (
+        '{"order_count":1,"item_count":1,"shipping_count":1,'
+        '"items":[{"product_id":"OLJCESPC7Z","quantity":1}],'
+        '"shipping":[{"shipping_tracking_id":"track","shipping_cost_currency_code":"USD",'
+        '"shipping_cost_units":1,"shipping_cost_nanos":0,"street_address":"1 Observatory Way",'
+        '"city":"Testville","state":"CA","country":"US","zip_code":"94000"}]}\n'
+    )
+    observation = adapter._read_order("order-exact")
+    assert observation["complete"] is True
+    assert observation["postcondition_exact"] is True
+    assert observation["role"] == "evaluator_only"
+    assert observation["query_text"].startswith("SELECT json_build_object")
+
+    adapter._psql = lambda sql: (
+        '{"order_count":1,"item_count":1,"shipping_count":1,'
+        '"items":[{"product_id":"WRONG","quantity":1}],'
+        '"shipping":[{"shipping_tracking_id":"track","shipping_cost_currency_code":"USD",'
+        '"shipping_cost_units":1,"shipping_cost_nanos":0,"street_address":"1 Observatory Way",'
+        '"city":"Testville","state":"CA","country":"US","zip_code":"94000"}]}\n'
+    )
+    assert adapter._read_order("order-wrong")["complete"] is False
