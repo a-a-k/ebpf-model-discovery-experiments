@@ -315,7 +315,11 @@ class Adapter:
         self.set_replicas("11")
         self.set_consumer(True)
         self.ctx.node_exec("a", "docker exec valkey-cart valkey-cli FLUSHALL")
-        self._psql(
+        # Upstream intentionally grants the application user SELECT, INSERT
+        # and UPDATE, but not TRUNCATE/DELETE, on accounting tables.  Reset is
+        # a deployment control, not application or evaluator activity, so run
+        # only this cleanup through the database owner session.
+        self._psql_admin(
             'TRUNCATE accounting.orderitem, accounting.shipping, accounting."order";'
         )
         self.ready()
@@ -1222,6 +1226,17 @@ SELECT json_build_object(
             + self._shquote(encoded)
             + " | base64 -d | docker exec -i astronomy-db "
             "psql -X -v ON_ERROR_STOP=1 -At -U astronomy_user -d astronomy_db"
+        )
+        return self._stdout(self.ctx.node_exec("a", command, timeout=30))
+
+    def _psql_admin(self, sql: str) -> str:
+        """Run deployment-only maintenance as the PostgreSQL database owner."""
+        encoded = base64.b64encode(sql.encode()).decode("ascii")
+        command = (
+            "printf '%s' "
+            + self._shquote(encoded)
+            + " | base64 -d | docker exec -i astronomy-db "
+            "psql -X -v ON_ERROR_STOP=1 -At -U postgres -d astronomy_db"
         )
         return self._stdout(self.ctx.node_exec("a", command, timeout=30))
 

@@ -224,6 +224,30 @@ def test_runner_entry_and_replica_metadata_use_guest_transport(tmp_path: Path) -
     assert replicas[1]["transport_host"] == "192.168.76.12"
 
 
+def test_reset_uses_owner_session_only_for_accounting_cleanup() -> None:
+    events = []
+    adapter = object.__new__(Adapter)
+    adapter.ctx = type(
+        "Context",
+        (),
+        {"node_exec": lambda self, node, command, **kwargs: events.append(command) or ""},
+    )()
+    adapter.set_database = lambda up: events.append(("database", up))
+    adapter.set_replicas = lambda state: events.append(("replicas", state))
+    adapter.set_consumer = lambda up: events.append(("consumer", up))
+    adapter.ready = lambda: events.append("ready")
+    adapter._psql = lambda sql: (_ for _ in ()).throw(
+        AssertionError("reset must not TRUNCATE through the evaluator/app session")
+    )
+
+    adapter.reset()
+
+    admin = next(command for command in events if isinstance(command, str) and "psql" in command)
+    assert "-U postgres -d astronomy_db" in admin
+    assert "-U astronomy_user" not in admin
+    assert events[-1] == "ready"
+
+
 def test_http_step_uses_fresh_opaque_request_id(monkeypatch) -> None:
     captured = {}
 
