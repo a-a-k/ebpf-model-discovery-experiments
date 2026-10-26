@@ -55,8 +55,11 @@ mode is not bypassed. Native server spans capture the opaque
 `X-Experiment-Request-Id`; the workload does not inject `traceparent` or any other
 native trace context. Each guest writes native OTLP JSON separately. A collection
 snapshot gracefully stops and flushes each collector, copies its cumulative file,
-restarts it, waits for OTLP readiness, and checks that the file was not truncated,
-so the same method is safe after calibration and at campaign end. The snapshot
+rotates that immutable segment, restarts the exporter on a fresh segment, and waits
+for OTLP readiness. The collector's file exporter does not append across a restart;
+explicit segment rotation therefore preserves calibration evidence while allowing
+target collection to continue. The same method is safe after calibration and at
+campaign end. The snapshot
 also counts actual spans by `service.name`: absent mode fails on any application
 span, partial mode fails on any Visits span, and partial/full remain `unknown` when
 required service evidence is unavailable. Collection retains inspected
