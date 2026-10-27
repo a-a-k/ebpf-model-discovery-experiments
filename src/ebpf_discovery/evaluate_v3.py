@@ -170,7 +170,7 @@ def _validate_http_curves(path: Path, primary: list[dict[str, Any]]) -> dict[str
             if (type(seconds) not in (int, float) or type(fraction) not in (int, float)
                     or not 0 <= seconds <= HTTP_OBSERVATION_CAP_SECONDS
                     or not 0 <= fraction <= 1 or seconds < previous_seconds or fraction < previous_fraction):
-                raise ValueError("HTTP observation curve is not a monotone bounded CDF")
+                raise ValueError("HTTP observed-response fractions are not monotone and bounded")
             previous_seconds, previous_fraction = seconds, fraction
         if previous_fraction != expected_completed[key] / expected[key]:
             raise ValueError("HTTP observation curve endpoint differs from completed response census")
@@ -562,7 +562,9 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         f"System: `{result['system']}`; mode: `{result['mode']}`; seed: `{result['seed']}`.", "",
         "No 5 pp accuracy or 10 pp width gate is applied. Unknown outcomes and forecasts remain unknown.", "",
         ("The 10-second value is an engineering whole-response observation cap, not an application SLO. "
-         "The retained HTTP CDF includes incorrect terminal responses and excludes SQL/async completion time."), "",
+         "The cumulative observed-response fractions include incorrect terminal responses and retain every attempt "
+         "in the denominator; they are neither an uncensored distribution nor a Kaplan–Meier estimate, "
+         "and exclude SQL/async completion time."), "",
         "| Source | Operation | External unknown | Source unknown | Point abs. error (pp) | Empirical worst-end (pp) | Nominal worst-end (pp) |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]

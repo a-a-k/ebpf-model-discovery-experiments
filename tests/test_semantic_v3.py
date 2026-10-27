@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import base64
+import json
 from copy import deepcopy
 from types import SimpleNamespace
 import unittest
@@ -208,6 +209,26 @@ class SemanticTests(unittest.TestCase):
         self.assertIs(binder.cheap_attempt(row, transport_observations([attempt]))['proxy'], False)
         attempt['http_steps'][0].update(status=None, response_body_base64='', error='connection failed')
         self.assertIsNone(binder.cheap_attempt(row, transport_observations([attempt]))['proxy'])
+
+    def test_create_acknowledgment_uses_same_opaque_identity_for_every_source(self):
+        attempt = record(status=201)
+        attempt['operation'] = 'create_visit'
+        row = declared_census([attempt])[0]
+        binder_context = {'fixture': {'unused': 'declaration'}}
+        for description, expected in (('ebpf-study-' + row['attempt_key'], None),
+                                      ('ebpf-study-' + '0' * 64, False)):
+            body = json.dumps({'id': 42, 'petId': 1, 'date': '2026-09-01',
+                               'description': description})
+            attempt['http_steps'][0]['response_body_base64'] = base64.b64encode(body.encode()).decode()
+            events = [span(source=source, service='api-gateway',
+                           path='/api/visit/owners/1/pets/1/visits', code=201, body=body)
+                      for source in ('ebpf', 'native')]
+            binder = Binder(FakeStore(*events), 'petclinic', binder_context)
+            projected = binder.project([row], transport_observations([attempt]))
+            for source in ('ebpf', 'native', 'combined', 'entry_http'):
+                self.assertIs(projected[source][0]['proxy'], expected)
+            self.assertEqual(binder.context, binder_context)
+            self.assertNotIn('attempt_key', binder.context)
 
 
 if __name__ == "__main__":

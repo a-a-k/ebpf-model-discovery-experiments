@@ -89,7 +89,28 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
         return {"value": False if complete_transport else None, "reason": f"unusable_captured_json:{exc}"}
 
     if operation == "create_visit":
-        # An acknowledgment body cannot establish exactly-once durable persistence.
+        # These are necessary response facts, not proof of durable persistence.
+        if not isinstance(payload, dict):
+            return {"value": False, "reason": "acknowledgement_not_object"}
+        acknowledged_id = payload.get("id")
+        date = payload.get("date")
+        if not (
+            type(acknowledged_id) is int and acknowledged_id > 0
+            and payload.get("petId") == 1
+            and isinstance(date, str) and date[:10] == "2026-09-01"
+            and isinstance(payload.get("description"), str)
+        ):
+            return {"value": False, "reason": "acknowledgement_contract_mismatch"}
+        attempt_key = context.get("attempt_key")
+        if not (
+            isinstance(attempt_key, str) and len(attempt_key) == 64
+            and all(character in "0123456789abcdef" for character in attempt_key)
+        ):
+            return {"value": None, "reason": "attempt_identity_unavailable"}
+        # The adapter's marker is exactly this already-supplied opaque attempt
+        # identity. No SQL result or evaluator success label supplies the value.
+        if payload["description"] != "ebpf-study-" + attempt_key:
+            return {"value": False, "reason": "acknowledgement_identity_mismatch"}
         return {"value": None, "reason": "persistence_requires_independent_sql_oracle"}
 
     fixture = context.get("fixture")

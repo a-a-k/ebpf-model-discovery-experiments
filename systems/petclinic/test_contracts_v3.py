@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from systems.petclinic.contracts_v3 import (
@@ -57,10 +59,35 @@ def test_invalid_captured_body_and_missing_fixture_are_unknown():
     }
 
 
-def test_create_acknowledgment_never_claims_persistence():
+def acknowledgment():
+    return {"id": 42, "petId": 1, "date": "2026-09-01", "description": "ebpf-study-" + "a" * 64}
+
+
+@pytest.mark.parametrize("complete_transport", [False, True])
+def test_create_acknowledgment_never_claims_persistence(complete_transport):
     verdict = payload_verdict(
         "create_visit",
-        '{"id":42,"petId":1,"date":"2026-09-01","description":"ebpf-study-deadbeef"}',
-        {"fixture": fixture()},
+        json.dumps(acknowledgment()),
+        {"fixture": fixture(), "attempt_key": "a" * 64, "complete_transport_body": complete_transport},
     )
     assert verdict == {"value": None, "reason": "persistence_requires_independent_sql_oracle"}
+
+
+@pytest.mark.parametrize("change", [
+    {"id": 0}, {"id": True}, {"petId": 2}, {"date": "2026-09-02"},
+    {"description": "ebpf-study-" + "b" * 64},
+])
+@pytest.mark.parametrize("complete_transport", [False, True])
+def test_invalid_create_acknowledgment_is_false_without_sql(change, complete_transport):
+    payload = {**acknowledgment(), **change}
+    verdict = payload_verdict("create_visit", json.dumps(payload), {
+        "attempt_key": "a" * 64, "complete_transport_body": complete_transport,
+    })
+    assert verdict["value"] is False
+
+
+def test_missing_acknowledgment_fields_and_missing_declared_identity():
+    assert payload_verdict("create_visit", "{}", {"attempt_key": "a" * 64})["value"] is False
+    assert payload_verdict("create_visit", json.dumps(acknowledgment()), {}) == {
+        "value": None, "reason": "attempt_identity_unavailable",
+    }

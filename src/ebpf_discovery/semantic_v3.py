@@ -184,7 +184,8 @@ class Binder:
             if ordinal == len(contract['steps'])-1:
                 final = span
         body, body_evidence = captured_body(final)
-        semantic = self.contracts.payload_verdict(operation, body, self.context) if body is not None else {'value': None, 'reason': body_evidence['reason']}
+        semantic = self.contracts.payload_verdict(operation, body,
+            {**self.context, 'attempt_key': row['attempt_key']}) if body is not None else {'value': None, 'reason': body_evidence['reason']}
         censored_policy = row.get('observation_policy') == 'censored-v3'
         timely = None if censored_policy else row['ended_ns'] <= row['deadline_ns']
         verdict = conjunction(values+[semantic['value']]+([] if censored_policy else [timely]))
@@ -204,7 +205,7 @@ class Binder:
         body = actual[-1]['body'] if len(actual) == len(expected) else None
         complete = len(actual) == len(expected) and actual[-1].get('complete_transport_body', False)
         semantic = self.contracts.payload_verdict(operation, body,
-            {**self.context, 'complete_transport_body': True}) if body is not None and complete else {'value': None, 'reason': 'no_complete_final_response'}
+            {**self.context, 'attempt_key': row['attempt_key'], 'complete_transport_body': True}) if body is not None and complete else {'value': None, 'reason': 'no_complete_final_response'}
         if self.system == 'petclinic' and actual and (actual[-1].get('body_bytes') or 0) > 1024*1024:
             semantic = {'value': False, 'reason': 'response_exceeds_declared_limit'}
         censored_policy = row.get('observation_policy') == 'censored-v3'
