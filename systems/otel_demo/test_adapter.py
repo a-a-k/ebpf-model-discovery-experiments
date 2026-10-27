@@ -289,6 +289,14 @@ def test_async_late_first_positive_is_unknown() -> None:
     assert result["success"] is None
 
 
+def _stub_kafka_admin_setup(adapter) -> None:
+    adapter._cleanup_kafka_admin = lambda deadline, name, allow_late, evidence=None: {
+        "returncode": 0,
+        "helper_absent": True,
+    }
+    adapter._kafka_image_id = lambda deadline: "sha256:broker-image"
+
+
 def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
     calls = []
 
@@ -307,18 +315,22 @@ def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
 
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
     assert len(calls) == 1
     node, command, kwargs = calls[0]
     assert node == "a"
-    assert command == (
-        "docker exec -e KAFKA_OPTS= "
-        "-e 'KAFKA_HEAP_OPTS=-Xms16m -Xmx64m' kafka "
-        "/opt/kafka/bin/kafka-consumer-groups.sh "
-        "--bootstrap-server kafka:9092 --group accounting --describe"
-    )
+    assert "docker exec" not in command
+    assert "docker run --rm --pull never" in command
+    assert "--network container:kafka --memory 256m --cpus 1" in command
+    assert "--entrypoint /opt/kafka/bin/kafka-consumer-groups.sh" in command
+    assert "'sha256:broker-image'" in command
+    assert "--bootstrap-server localhost:9092" in command
+    assert "OTEL_SDK_DISABLED=true" in command
+    assert "OTEL_SERVICE_NAME=study-kafka-admin" in command
+    assert "study-kafka-admin-" in command
     assert "-javaagent" not in command
     assert kwargs["check"] is False
     assert 0 < kwargs["timeout"] <= 1
@@ -361,6 +373,7 @@ def test_consumer_drain_rejects_failed_missing_partial_and_nonzero_rows(
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
@@ -379,11 +392,12 @@ def test_consumer_drain_failure_retains_probe_diagnostics(monkeypatch) -> None:
         def node_exec(self, node, command, **kwargs):
             return Result()
 
-    ticks = iter([0.0, 0.0, 0.0, 0.0, 1.0])
+    ticks = iter([0.0, 0.0, 0.0, 0.0, 0.0, 1.0])
     monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: "stable"
 
     try:
@@ -417,11 +431,20 @@ def test_consumer_drain_retries_bounded_probe_timeout(monkeypatch) -> None:
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    cleanup_calls = []
+    adapter._cleanup_kafka_admin = (
+        lambda deadline, name, allow_late, evidence=None: cleanup_calls.append(
+            (deadline, name, allow_late)
+        )
+        or {"returncode": 0, "helper_absent": True}
+    )
+    adapter._kafka_image_id = lambda deadline: "sha256:broker-image"
     adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(1)
 
     assert len(calls) == 2
     assert all(0 < call["timeout"] <= 1 for call in calls)
+    assert any(allow_late for _, _, allow_late in cleanup_calls)
 
 
 def test_consumer_drain_probe_uses_full_remaining_budget(monkeypatch) -> None:
@@ -434,17 +457,20 @@ def test_consumer_drain_probe_uses_full_remaining_budget(monkeypatch) -> None:
 
     class Context:
         def node_exec(self, node, command, **kwargs):
-            calls.append(kwargs)
+            calls.append((command, kwargs))
             return Result()
 
-    ticks = iter([100.0, 100.0, 100.0])
+    ticks = iter([100.0, 100.0, 100.0, 100.0])
     monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: "stable"
     adapter._wait_consumer_drain(60)
 
-    assert calls[0]["timeout"] == 60.0
+    command, kwargs = calls[0]
+    assert kwargs["timeout"] == 60.0
+    assert "timeout --signal=TERM --kill-after=2s 55.000s" in command
 
 
 def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
@@ -454,11 +480,12 @@ def test_consumer_drain_all_timeouts_retain_diagnostics(monkeypatch) -> None:
                 command, kwargs["timeout"], output="partial", stderr="still slow"
             )
 
-    ticks = iter([0.0, 0.0, 0.0, 0.0, 1.0])
+    ticks = iter([0.0, 0.0, 0.0, 0.0, 0.0, 1.0])
     monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(ticks))
     monkeypatch.setattr(adapter_module.time, "sleep", lambda _: None)
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: "stable"
 
     try:
@@ -486,6 +513,7 @@ def test_consumer_drain_rejects_broker_restart() -> None:
     starts = iter(["before", "after"])
     adapter = object.__new__(Adapter)
     adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
     adapter._kafka_started_at = lambda deadline: next(starts)
 
     try:
@@ -532,6 +560,94 @@ def test_kafka_start_query_is_bounded_and_strict(monkeypatch) -> None:
     ]
     assert "inspect failed" in message
     assert "returncode=1" in message
+
+
+def test_kafka_admin_cleanup_is_named_bounded_and_verified(monkeypatch) -> None:
+    calls = []
+
+    class Result:
+        stdout = ""
+        stderr = ""
+        returncode = 0
+
+    class Context:
+        def node_exec(self, node, command, **kwargs):
+            calls.append((node, command, kwargs))
+            return Result()
+
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: 10.0)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    result = adapter._cleanup_kafka_admin(
+        70.0, "study-kafka-admin-deadbeef", allow_late=False
+    )
+
+    node, command, kwargs = calls[0]
+    assert node == "a"
+    assert "docker rm -f 'study-kafka-admin-deadbeef'" in command
+    assert "docker ps -aq --filter name=^/study-kafka-admin-deadbeef$" in command
+    assert kwargs == {"check": False, "timeout": 5.0}
+    assert result["status"] == "completed"
+    assert result["helper_absent"] is True
+
+
+def test_kafka_admin_cleanup_timeout_is_persisted(tmp_path: Path, monkeypatch) -> None:
+    class Context:
+        out = tmp_path
+
+        def node_exec(self, node, command, **kwargs):
+            raise adapter_module.subprocess.TimeoutExpired(
+                command, kwargs["timeout"], output="cleanup out", stderr="cleanup err"
+            )
+
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: 10.0)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    evidence = {"cleanups": []}
+
+    try:
+        adapter._cleanup_kafka_admin(
+            70.0,
+            "study-kafka-admin-deadbeef",
+            allow_late=False,
+            evidence=evidence,
+        )
+    except RuntimeError:
+        pass
+    else:
+        raise AssertionError("cleanup timeout must be a technical failure")
+
+    persisted = json.loads((tmp_path / "kafka-admin-drain.json").read_text())
+    assert persisted["cleanups"][0]["status"] == "timeout"
+    assert "cleanup err" in persisted["cleanups"][0]["stderr"]
+
+
+def test_kafka_admin_evidence_persists_image_helper_and_probe(tmp_path: Path) -> None:
+    class Result:
+        stdout = "accounting orders 0 42 42 0 consumer host client\n"
+        stderr = ""
+        returncode = 0
+
+    class Context:
+        out = tmp_path
+
+        def node_exec(self, node, command, **kwargs):
+            return Result()
+
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    _stub_kafka_admin_setup(adapter)
+    adapter._kafka_started_at = lambda deadline: "stable-start"
+    adapter._wait_consumer_drain(1)
+
+    evidence = json.loads((tmp_path / "kafka-admin-drain.json").read_text())
+    assert evidence["status"] == "completed"
+    assert evidence["broker_image_id"] == "sha256:broker-image"
+    assert evidence["broker_started_at_before"] == "stable-start"
+    assert evidence["broker_started_at_after"] == "stable-start"
+    assert evidence["helper_name"].startswith("study-kafka-admin-")
+    assert evidence["probes"][0]["returncode"] == 0
+    assert evidence["probes"][0]["lags"] == [0]
 
 
 def test_async_in_boundary_positive_and_missing_oracle() -> None:

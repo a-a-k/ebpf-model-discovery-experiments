@@ -1151,23 +1151,69 @@ SELECT json_build_object(
 
     def _wait_consumer_drain(self, timeout: float) -> None:
         end = time.monotonic() + timeout
+        admin_name = f"study-kafka-admin-{uuid.uuid4().hex[:12]}"
+        evidence: dict[str, Any] = {
+            "started_ns": time.time_ns(),
+            "budget_seconds": timeout,
+            "helper_name": admin_name,
+            "probes": [],
+            "cleanups": [],
+            "status": "running",
+        }
+        self._persist_kafka_admin_evidence(evidence)
+        evidence["cleanups"].append(
+            self._cleanup_kafka_admin(
+                end, admin_name, allow_late=False, evidence=evidence
+            )
+        )
+        check_started_ns = time.time_ns()
         broker_started_at = self._kafka_started_at(end)
+        evidence["broker_started_at_before_check"] = {
+            "started_ns": check_started_ns,
+            "ended_ns": time.time_ns(),
+            "value": broker_started_at,
+        }
+        image_check_started_ns = time.time_ns()
+        broker_image_id = self._kafka_image_id(end)
+        evidence.update(
+            broker_started_at_before=broker_started_at,
+            broker_image_id=broker_image_id,
+            broker_image_check={
+                "started_ns": image_check_started_ns,
+                "ended_ns": time.time_ns(),
+            },
+        )
+        self._persist_kafka_admin_evidence(evidence)
         last = ""
         while time.monotonic() < end:
             call_timeout = end - time.monotonic()
-            if call_timeout <= 0:
+            if call_timeout <= 0.2:
                 break
+            # Reserve time inside the same overall deadline for the remote
+            # shell to force-remove its named client container.
+            cleanup_reserve = min(5.0, call_timeout / 2)
+            remote_timeout = call_timeout - cleanup_reserve
+            command = (
+                "set +e; "
+                f"docker rm -f {self._shquote(admin_name)} >/dev/null 2>&1 || true; "
+                f"timeout --signal=TERM --kill-after=2s {remote_timeout:.3f}s "
+                f"docker run --rm --pull never --name {self._shquote(admin_name)} "
+                "--network container:kafka --memory 256m --cpus 1 "
+                "-e KAFKA_OPTS= "
+                "-e 'KAFKA_HEAP_OPTS=-Xms16m -Xmx64m' "
+                "-e OTEL_SDK_DISABLED=true "
+                "-e OTEL_SERVICE_NAME=study-kafka-admin "
+                "--entrypoint /opt/kafka/bin/kafka-consumer-groups.sh "
+                f"{self._shquote(broker_image_id)} "
+                "--bootstrap-server localhost:9092 --group accounting --describe; "
+                f"rc=$?; docker rm -f {self._shquote(admin_name)} >/dev/null 2>&1 || true; "
+                "exit $rc"
+            )
+            probe_started_ns = time.time_ns()
             try:
                 result = self.ctx.node_exec(
                     "a",
-                    # The broker is capped at ~620 MiB with a 400 MiB heap and
-                    # KAFKA_OPTS points at its Java agent.  Do not launch the
-                    # administrative client with those broker JVM settings in
-                    # the same container; this override affects only exec.
-                    "docker exec -e KAFKA_OPTS= "
-                    "-e 'KAFKA_HEAP_OPTS=-Xms16m -Xmx64m' kafka "
-                    "/opt/kafka/bin/kafka-consumer-groups.sh "
-                    "--bootstrap-server kafka:9092 --group accounting --describe",
+                    command,
                     check=False,
                     timeout=call_timeout,
                 )
@@ -1176,8 +1222,31 @@ SELECT json_build_object(
                     f"probe_timeout={call_timeout} stdout={exc.stdout or ''} "
                     f"stderr={exc.stderr or ''}"
                 )
+                evidence["probes"].append(
+                    {
+                        "started_ns": probe_started_ns,
+                        "ended_ns": time.time_ns(),
+                        "runner_timeout_seconds": call_timeout,
+                        "remote_timeout_seconds": remote_timeout,
+                        "status": "runner_timeout",
+                        "stdout": str(exc.stdout or ""),
+                        "stderr": str(exc.stderr or ""),
+                    }
+                )
+                evidence["cleanups"].append(
+                    self._cleanup_kafka_admin(
+                        end, admin_name, allow_late=True, evidence=evidence
+                    )
+                )
+                self._persist_kafka_admin_evidence(evidence)
+                if time.monotonic() >= end:
+                    break
                 time.sleep(min(1.0, max(0.0, end - time.monotonic())))
                 continue
+            cleanup = self._cleanup_kafka_admin(
+                end, admin_name, allow_late=True, evidence=evidence
+            )
+            evidence["cleanups"].append(cleanup)
             stdout = self._stdout(result)
             stderr = getattr(result, "stderr", "") or ""
             if isinstance(stderr, bytes):
@@ -1200,6 +1269,26 @@ SELECT json_build_object(
                         lags.append(int(fields[5]))
                     except ValueError:
                         all_orders_rows_parseable = False
+            evidence["probes"].append(
+                {
+                    "started_ns": probe_started_ns,
+                    "ended_ns": time.time_ns(),
+                    "runner_timeout_seconds": call_timeout,
+                    "remote_timeout_seconds": remote_timeout,
+                    "status": "completed",
+                    "returncode": getattr(result, "returncode", None),
+                    "orders_rows": orders_rows,
+                    "lags": lags,
+                    "all_orders_rows_parseable": all_orders_rows_parseable,
+                    "stdout": stdout,
+                    "stderr": stderr,
+                    "cleanup": cleanup,
+                }
+            )
+            self._persist_kafka_admin_evidence(evidence)
+            if time.monotonic() >= end:
+                last += " readiness result completed after deadline"
+                break
             if (
                 getattr(result, "returncode", None) == 0
                 and orders_rows > 0
@@ -1207,15 +1296,124 @@ SELECT json_build_object(
                 and len(lags) == orders_rows
                 and all(lag == 0 for lag in lags)
             ):
+                final_check_started_ns = time.time_ns()
                 current_started_at = self._kafka_started_at(end)
+                evidence["broker_started_at_after"] = current_started_at
+                evidence["broker_started_at_after_check"] = {
+                    "started_ns": final_check_started_ns,
+                    "ended_ns": time.time_ns(),
+                    "value": current_started_at,
+                }
                 if current_started_at != broker_started_at:
+                    evidence.update(status="technical_failure", ended_ns=time.time_ns())
+                    self._persist_kafka_admin_evidence(evidence)
                     raise RuntimeError(
                         "Kafka restarted during consumer drain observation: "
                         f"before={broker_started_at} after={current_started_at}"
                     )
+                evidence.update(status="completed", ended_ns=time.time_ns())
+                self._persist_kafka_admin_evidence(evidence)
                 return
             time.sleep(min(1.0, max(0.0, end - time.monotonic())))
+        evidence.update(status="technical_failure", ended_ns=time.time_ns(), error=last)
+        self._persist_kafka_admin_evidence(evidence)
         raise RuntimeError(f"accounting did not drain Kafka backlog: {last}")
+
+    def _cleanup_kafka_admin(
+        self,
+        deadline: float,
+        admin_name: str,
+        *,
+        allow_late: bool,
+        evidence: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        remaining = deadline - time.monotonic()
+        late = remaining <= 0
+        if late and not allow_late:
+            raise RuntimeError("Kafka admin cleanup exceeded consumer drain deadline")
+        cleanup_timeout = min(5.0, remaining) if remaining > 0 else 5.0
+        command = (
+            f"docker rm -f {self._shquote(admin_name)} >/dev/null 2>&1 || true; "
+            f"test -z \"$(docker ps -aq --filter name=^/{admin_name}$)\""
+        )
+        started_ns = time.time_ns()
+        record: dict[str, Any] = {
+            "started_ns": started_ns,
+            "timeout_seconds": cleanup_timeout,
+            "after_readiness_deadline": late,
+        }
+        try:
+            result = self.ctx.node_exec(
+                "a", command, check=False, timeout=cleanup_timeout
+            )
+        except subprocess.TimeoutExpired as exc:
+            record.update(
+                status="timeout",
+                ended_ns=time.time_ns(),
+                stdout=str(exc.stdout or ""),
+                stderr=str(exc.stderr or ""),
+            )
+            if evidence is not None:
+                evidence["cleanups"].append(record)
+                self._persist_kafka_admin_evidence(evidence)
+            raise RuntimeError(
+                "Kafka admin cleanup timed out: "
+                f"stdout={exc.stdout or ''} stderr={exc.stderr or ''}"
+            ) from exc
+        if getattr(result, "returncode", None) != 0:
+            record.update(
+                status="error",
+                ended_ns=time.time_ns(),
+                returncode=getattr(result, "returncode", None),
+            )
+            if evidence is not None:
+                evidence["cleanups"].append(record)
+                self._persist_kafka_admin_evidence(evidence)
+            raise RuntimeError(
+                "Kafka admin cleanup failed: "
+                f"returncode={getattr(result, 'returncode', None)}"
+            )
+        record.update(
+            status="completed",
+            ended_ns=time.time_ns(),
+            returncode=getattr(result, "returncode", None),
+            helper_absent=True,
+        )
+        return record
+
+    def _persist_kafka_admin_evidence(self, evidence: dict[str, Any]) -> None:
+        out = getattr(self.ctx, "out", None)
+        if out is None:
+            return
+        Path(out, "kafka-admin-drain.json").write_text(
+            json.dumps(evidence, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+
+    def _kafka_image_id(self, deadline: float) -> str:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise RuntimeError("Kafka image check exceeded consumer drain deadline")
+        command = "docker inspect -f '{{.Image}}' kafka"
+        try:
+            result = self.ctx.node_exec(
+                "a", command, check=False, timeout=remaining
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise RuntimeError(
+                "Kafka image check timed out: "
+                f"stdout={exc.stdout or ''} stderr={exc.stderr or ''}"
+            ) from exc
+        image_id = self._stdout(result).strip()
+        stderr = getattr(result, "stderr", "") or ""
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode("utf-8", errors="replace")
+        if getattr(result, "returncode", None) != 0 or not image_id:
+            raise RuntimeError(
+                "Kafka image check failed: "
+                f"stdout={image_id} stderr={stderr[-1000:]} "
+                f"returncode={getattr(result, 'returncode', None)}"
+            )
+        return image_id
 
     def _kafka_started_at(self, deadline: float) -> str:
         remaining = deadline - time.monotonic()
