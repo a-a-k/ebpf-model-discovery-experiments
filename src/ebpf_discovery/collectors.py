@@ -13,8 +13,9 @@ OBI_IMAGE = 'otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38
 
 
 class Collectors:
-    def __init__(self, ctx):
+    def __init__(self, ctx, *, semantic=False):
         self.ctx = ctx
+        self.semantic = semantic
         self.processes = []
         self.logs = []
         self.root = ctx.out / 'observations'
@@ -64,6 +65,11 @@ class Collectors:
                 'otel_traces_export': {'endpoint': f'http://192.168.76.1:{port}/v1/traces',
                                        'protocol': 'http/protobuf'},
             }
+            if self.semantic:
+                config['ebpf']['buffer_sizes']['http'] = 16384
+                rules = config['ebpf']['payload_extraction']['http']['enrichment']['rules']
+                rules[0]['match']['patterns'] += ['content-length', 'content-type', 'content-encoding', 'transfer-encoding']
+                rules[1]['match']['url_path_patterns'] += ['/wrk2-api/*', '/owners/*']
             path = self.root / f'obi-{node}.yaml'
             path.write_text(yaml.safe_dump(config), encoding='utf-8')
             self.ctx.node_put(node, path, '/tmp/obi-study.yaml')

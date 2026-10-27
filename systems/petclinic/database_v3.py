@@ -168,7 +168,8 @@ class _Index:
                 continue
             identity = (source, span.get("trace_id", ""), span.get("span_id", ""))
             variants[identity].setdefault(_semantic_record(span), span)
-        self.conflicts = {identity for identity, rows in variants.items() if len(rows) > 1}
+        self.conflicts = {identity for identity, rows in variants.items()
+                          if len(rows) > 1 or any(s.get("attribute_conflicts") for s in rows.values())}
         self.conflict_headers: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
         self.children: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
         self.blocked_children: set[tuple[str, str, str]] = set()

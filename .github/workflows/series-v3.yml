@@ -117,6 +117,27 @@ jobs:
       - name: Stop guests
         if: always()
         run: bash scripts/vms.sh stop work/vms
+      - name: Evaluate retained independent outcomes
+        env:
+          PYTHONPATH: .
+        run: python -m ebpf_discovery.evaluate_v3 --out work/campaign
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v3-summary-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/metrics-v3.*
+            work/campaign/status.json
+            work/campaign/blocks.json
+            work/campaign/automatic-metrics.json
+            work/campaign/database-controls.json
+            work/campaign/forecast-saved.json
+            work/campaign/acquisition-complete.json
+            work/campaign/freeze-integrity.json
+            work/campaign/index-*.json
+            work/campaign/models/**/model.json
+            work/campaign/models/**/forecast.json
+          retention-days: 90
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -125,7 +125,7 @@ def _span_index(
 
 
 def _valid_identity(span: dict[str, Any]) -> bool:
-    return bool(span.get('trace_id') and span.get('span_id'))
+    return bool(span.get('trace_id') and span.get('span_id') and not span.get('attribute_conflicts'))
 
 
 def _ancestry(
@@ -332,6 +332,8 @@ def _source_chain(
             ],
         )
     processing_root = processing_roots[0]
+    if processing_root.get('attribute_conflicts'):
+        return _unknown(source, 'conflicting_processing_root_attributes', anchor)
     if (
         processing_root['service'].lower() != 'accounting'
         or processing_root['name'] != 'order-consumed'

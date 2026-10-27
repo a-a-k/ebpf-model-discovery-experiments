@@ -1,0 +1,47 @@
+name: Iteration 3 retained-data report
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: JSON array of series workflow run IDs, including technical replacements
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Download compact complete and failed campaign evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_RUNS: ${{ inputs.run_ids }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          runs = json.loads(os.environ['INPUT_RUNS'])
+          if not isinstance(runs, list) or not runs or any(not str(r).isdigit() for r in runs):
+              raise SystemExit('run_ids must be a nonempty JSON array of numeric run IDs')
+          out = pathlib.Path('results/iteration-3/provenance')
+          out.mkdir(parents=True)
+          for run in runs:
+              subprocess.run(['gh', 'run', 'download', str(run), '-p', 'v3-summary-*', '-D', 'work/v3-inputs/'+str(run)], check=True)
+              for endpoint, suffix in [('', 'run'), ('/jobs?per_page=100', 'jobs'), ('/artifacts?per_page=100', 'artifacts')]:
+                  with (out/(str(run)+'-'+suffix+'.json')).open('w') as stream:
+                      subprocess.run(['gh', 'api', 'repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(run)+endpoint], stdout=stream, check=True)
+          PY
+      - name: Report exact 27-cell population
+        run: python -m ebpf_discovery.evaluate_v3 --inputs work/v3-inputs --report results/iteration-3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-v3-${{ github.run_id }}
+          path: results/iteration-3/
+          retention-days: 90

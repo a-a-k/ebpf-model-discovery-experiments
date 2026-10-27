@@ -148,6 +148,28 @@ class SemanticTests(unittest.TestCase):
         self.assertEqual(assignments[0]["signature"], ["POST " + ROUTE])
         self.assertNotIn("operation_id", assignments[0])
 
+    def test_generic_span_error_does_not_override_declared_http_contract(self):
+        entry = span()
+        entry['status'] = {'code': 'STATUS_CODE_ERROR'}
+        row = declared_census([record()])[0]
+        result = Binder(FakeStore(entry), 'deathstarbench').source_attempt(row, 'ebpf')
+        self.assertIs(result['proxy'], True)
+
+    def test_combination_uses_complementary_facts_and_rejects_conflicts(self):
+        row = declared_census([record()])[0]
+        ebpf = span(body=None)
+        native = span(source='native', service='nginx-web-server')
+        del native['attributes']['http.response.status_code']
+        binder = Binder(FakeStore(ebpf, native), 'deathstarbench')
+        projected = binder.project([row], {})
+        self.assertIsNone(projected['ebpf'][0]['proxy'])
+        self.assertIsNone(projected['native'][0]['proxy'])
+        self.assertIs(projected['combined'][0]['proxy'], True)
+        native['attributes']['http.response.status_code'] = 503
+        projected = binder.project([row], {})
+        self.assertIsNone(projected['combined'][0]['proxy'])
+        self.assertTrue(projected['combined'][0]['primitive_conflict'])
+
 
 if __name__ == "__main__":
     unittest.main()

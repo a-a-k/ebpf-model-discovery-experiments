@@ -4,6 +4,15 @@
 
 **Diagnostic iteration completed:** [retrospective controls](results/iteration-2/report.md) now distinguish classification, proxy semantics, Kafka export and nominal precision effects in the same 27 campaigns. The [refined design](docs/ITERATION_2.md#refined-minimum-design-for-the-next-implementation) follows those findings. Original results remain unchanged; oracle-assisted diagnostic improvements are not corrected eBPF forecasts.
 
+**Fresh iteration 3 is in preparation:** the [updated protocol](docs/ITERATION_3.md)
+uses explicit source-only completion contracts, a cheap HTTP/body comparator and
+shared-database impact controls. Load increases to 20 operations/s, with four
+300-second training blocks and eight 60-second target blocks: 34,800 primary
+attempts per campaign, 939,600 across new seeds 3/4/5. Resource qualification
+precedes acquisition. No fresh empirical result is claimed yet. The 5/10 pp
+thresholds below describe the historical series only; new comparisons report
+errors, uncertainty, unknowns and costs without an accuracy success gate.
+
 ## Abstract
 
 Application traces can support discovery of execution dependencies and operation-success models, but many projects have no tracing or incomplete coverage. This empirical study tests eBPF observations on ten operations from DeathStarBench Social Network, OpenTelemetry Demo, and Spring Petclinic Microservices, using two Linux virtual machines with independent kernels. The [completed series](results/final/SOURCE.md) contains 27 campaigns and 58,320 primary attempts, plus database and asynchronous controls. Conditional models calibrated under four replica states predict outcomes under a new state mixture. DeathStarBench's three entry-event forecasts meet the conservative five-percentage-point target in all tracing modes; Petclinic retains semantic mismatches and unknowns, and OTel forecasts remain noninformative. Healthy operation grouping can succeed while failures make the intended class ambiguous. Native spans support checkout/accounting associations in enabled modes; the tested eBPF path confirms none. Database observations add structure but do not drive this predictor. Exact conditional-state weighting is equivalent to the Monte Carlo calculation, and superiority over simpler HTTP observation or direct estimation is not established. [Complete operation-level results](results/final/report.md) retain uncertainty and failed preparation costs.
@@ -18,7 +27,10 @@ The contribution sought is empirical evidence about applying model discovery and
 4. Does eBPF recover database dependencies missing from the available native traces? Does an addition affect an independently validated prediction?
 5. Can a synchronous checkout response be connected to its asynchronous accounting effect using actual order/message identity?
 
-The practical forecast target is mean absolute error at most **5 percentage points per operation**, across three repeats of each tracing mode. This is an evaluation target, not a condition for publishing a run. Unknowns, wide intervals, and failures remain visible.
+The historical series used mean absolute error at most **5 percentage points per
+operation** as a descriptive evaluation target. It has no application-loss or
+power justification and is not retained as a success gate for the fresh series.
+Unknowns, intervals, and failures remain visible.
 
 ## Context and scope
 

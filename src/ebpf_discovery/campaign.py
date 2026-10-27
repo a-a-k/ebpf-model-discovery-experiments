@@ -29,6 +29,7 @@ class Campaign:
         self.records, self.census, self.blocks, self.warmups = [], [], [], []
         self.index = 0
         self.metadata = {}
+        self.rate, self.workers = 4, 48
 
     def save_records(self):
         write_json(self.ctx.out / 'external.json', self.records)
@@ -65,17 +66,18 @@ class Campaign:
             actual = time.time_ns()
             row = self.adapter.operation(name, index, block_id, 2.0)
             row.update(phase=phase, state=state, block_id=block_id, scheduled_ns=scheduled,
+                       dispatched_ns=actual,
                        dispatch_lateness_seconds=max(0, (actual-scheduled)/1e9))
             if asynchronous or (self.system == 'otel_demo' and name == 'checkout'):
                 row = self.adapter.verify_async([row], 10.0)[0]
             return row
 
-        with ThreadPoolExecutor(max_workers=48) as pool:
+        with ThreadPoolExecutor(max_workers=self.workers) as pool:
             for offset, name in enumerate(ordered):
-                remaining = start_mono + offset/4 - time.monotonic()
+                remaining = start_mono + offset/self.rate - time.monotonic()
                 if remaining > 0:
                     time.sleep(remaining)
-                futures.append(pool.submit(issue, name, self.index, start_ns+int(offset/4*1e9)))
+                futures.append(pool.submit(issue, name, self.index, start_ns+int(offset/self.rate*1e9)))
                 self.index += 1
             rows = [f.result() for f in futures]
         # Independent verification happens while the intervention is still in
@@ -88,7 +90,11 @@ class Campaign:
         self.census.extend(census(rows, phase, state))
         block = {'id': block_id, 'phase': phase, 'state': state, 'attempts': count,
                  'started_ns': block_start, 'load_started_ns': start_ns, 'ended_ns': time.time_ns(),
-                 'nominal_load_seconds': count/4, 'preparation_operations': len(warm), 'fixed_settle_seconds': 10,
+                 'nominal_load_seconds': count/self.rate, 'requested_operations_per_second': self.rate,
+                 'worker_capacity': self.workers,
+                 'achieved_operations_per_second': ((count-1)*1e9/
+                     (max(r['dispatched_ns'] for r in rows)-min(r['dispatched_ns'] for r in rows))) if count > 1 else None,
+                 'preparation_operations': len(warm), 'fixed_settle_seconds': 10,
                  'fixed_drain_seconds': 10, 'max_dispatch_lateness_seconds': max(r['dispatch_lateness_seconds'] for r in rows)}
         block['state_evidence'] = state_evidence
         self.blocks.append(block)
