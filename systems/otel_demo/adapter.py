@@ -1205,7 +1205,7 @@ SELECT json_build_object(
                 "-e OTEL_SERVICE_NAME=study-kafka-admin "
                 "--entrypoint /opt/kafka/bin/kafka-consumer-groups.sh "
                 f"{self._shquote(broker_image_id)} "
-                "--bootstrap-server localhost:9092 --group accounting --describe; "
+                "--bootstrap-server kafka:9092 --group accounting --describe; "
                 f"rc=$?; docker rm -f {self._shquote(admin_name)} >/dev/null 2>&1 || true; "
                 "exit $rc"
             )

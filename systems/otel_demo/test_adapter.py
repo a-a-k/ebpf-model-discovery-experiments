@@ -327,7 +327,9 @@ def test_consumer_drain_uses_pinned_apache_kafka_cli_path() -> None:
     assert "--network container:kafka --memory 256m --cpus 1" in command
     assert "--entrypoint /opt/kafka/bin/kafka-consumer-groups.sh" in command
     assert "'sha256:broker-image'" in command
-    assert "--bootstrap-server localhost:9092" in command
+    # Kafka binds its listener to the Compose hostname, not loopback.  The
+    # helper shares Kafka's network namespace and its Docker DNS configuration.
+    assert "--bootstrap-server kafka:9092" in command
     assert "OTEL_SDK_DISABLED=true" in command
     assert "OTEL_SERVICE_NAME=study-kafka-admin" in command
     assert "study-kafka-admin-" in command
