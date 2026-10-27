@@ -177,8 +177,6 @@ class Binder:
                 0 < span['start_ns'] <= span['end_ns'] <= cutoff):
             return (False, 'entry_outside_sealed_observation_window', None)
         if started <= span['start_ns']:
-            if row.get('observation_censored'):
-                return (False, 'observation_censored', None)
             return (True, 'strict_sealed_window', None)
         native_coarse_nginx = (
             self.system == 'deathstarbench' and source == 'native' and
@@ -226,8 +224,6 @@ class Binder:
                 current = parents[0] if len(parents) == 1 else None
         if not proofs:
             return (False, 'entry_outside_sealed_observation_window', None)
-        if row.get('observation_censored'):
-            return (False, 'observation_censored', None)
         proofs.sort(key=lambda proof: (proof['header_child_start_ns'],
                                        proof['header_child_span_id'], proof['source_local_parent_path']))
         return (True, 'native_header_child_attribution',

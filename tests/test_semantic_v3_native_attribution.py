@@ -112,12 +112,16 @@ class NativeAttributionTests(unittest.TestCase):
         binder = Binder(FakeStore(outer, child), "deathstarbench")
         attempt = journal(censored=True)
         row = declared_census([attempt])[0]
-        self.assertIsNone(binder.source_attempt(row, "native")["proxy"])
+        projected = binder.source_attempt(row, "native")
+        self.assertIsNone(projected["proxy"])
+        self.assertEqual(projected["steps"][0]["binding"], "unique_declared_entry")
+        self.assertEqual(projected["steps"][0]["window_binding"], "native_header_child_attribution")
+        self.assertIs(projected["steps"][0]["protocol"], True)
         raw = {"attempt_key": opaque_attempt(attempt), "step_ids": ["req-a"],
                "phase": "class_train", "state": "11"}
         classes, assigned = binder.automatic(automatic_census([attempt], [raw]), "native")
         self.assertEqual(classes, {})
-        self.assertEqual(assigned[0]["signature"], [None])
+        self.assertEqual(assigned[0]["signature"], ["POST /wrk2-api/post/compose"])
         self.assertIsNone(assigned[0]["proxy"])
         attempt = journal()
         raw["attempt_key"] = opaque_attempt(attempt)
