@@ -1,0 +1,78 @@
+name: Audit retained fresh DSB route coverage
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Fixed fresh acquisition run (40502990432)
+        required: true
+        type: string
+        default: '40502990432'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install read-only evidence reader
+        run: python -m pip install -e .
+      - name: Audit nine retained cells one at a time
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.run_id }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN" == 40502990432 ]] || { echo 'Only the fixed reviewed run is admitted'; exit 2; }
+          mkdir -p work/dsb-fresh-audit results/dsb-fresh-audit
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/artifacts?per_page=100" \
+            > results/dsb-fresh-audit/source-artifacts.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/jobs?per_page=100" \
+            > results/dsb-fresh-audit/source-jobs.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          artifacts=json.loads(Path('results/dsb-fresh-audit/source-artifacts.json').read_text())['artifacts']
+          names={x['name'] for x in artifacts if not x['expired']}
+          for mode in ('absent','partial','full'):
+              for seed in (3,4,5):
+                  for prefix in ('v3-summary','campaign-v3'):
+                      name=f'{prefix}-deathstarbench-{mode}-{seed}-40502990432'
+                      if name not in names:
+                          raise SystemExit(f'missing retained artifact: {name}')
+          PY
+          for mode in absent partial full; do
+            for seed in 3 4 5; do
+              cell="$mode-$seed"
+              mkdir -p "work/dsb-fresh-audit/$cell/full" "work/dsb-fresh-audit/$cell/compact"
+              started=$(date +%s)
+              /usr/bin/time -v -o "results/dsb-fresh-audit/$cell-time.txt" bash -c '
+                set -euo pipefail
+                gh run download "$1" -n "v3-summary-deathstarbench-$2-$3-$1" -D "$4/compact"
+                gh run download "$1" -n "campaign-v3-deathstarbench-$2-$3-$1" -D "$4/full"
+                python -m systems.deathstarbench.audit_fresh_v3 \
+                  --full "$4/full" --compact "$4/compact" --mode "$2" --seed "$3" \
+                  --run-id "$1" --out "$5/$2-$3.json"
+              ' _ "$SOURCE_RUN" "$mode" "$seed" "work/dsb-fresh-audit/$cell" results/dsb-fresh-audit
+              ended=$(date +%s)
+              python - "$cell" "$started" "$ended" <<'PY'
+          import json,sys
+          from pathlib import Path
+          cell,start,end=sys.argv[1],int(sys.argv[2]),int(sys.argv[3])
+          path=Path('results/dsb-fresh-audit')/f'{cell}-cost.json'
+          path.write_text(json.dumps({'cell':cell,'started_epoch_seconds':start,
+                                      'ended_epoch_seconds':end,'elapsed_seconds':end-start},indent=2)+'\n')
+          PY
+              rm -rf "work/dsb-fresh-audit/$cell"
+            done
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dsb-fresh-route-audit-${{ github.run_id }}
+          path: results/dsb-fresh-audit/
+          retention-days: 90
