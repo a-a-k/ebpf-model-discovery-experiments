@@ -3,6 +3,26 @@
   "repository": "a-a-k/ebpf-model-discovery-experiments",
   "runs": [
     {
+      "run_id": 40489946709,
+      "role": "evidence",
+      "note": "Iteration-3 implementation checks before initial qualification"
+    },
+    {
+      "run_id": 40491335266,
+      "role": "evidence",
+      "note": "Implementation checks before retained-data replay"
+    },
+    {
+      "run_id": 40492384536,
+      "role": "evidence",
+      "note": "Implementation checks after native-binding and audit repairs"
+    },
+    {
+      "run_id": 40498380248,
+      "role": "evidence",
+      "note": "Implementation checks for amended censoring policy"
+    },
+    {
       "run_id": 40489958752,
       "role": "qualification",
       "note": "Initial iteration-3 resource qualification"
