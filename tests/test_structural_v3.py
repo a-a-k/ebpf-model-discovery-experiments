@@ -68,15 +68,19 @@ def fixture(root: Path):
         namespace TEXT, conflicted INTEGER NOT NULL, data TEXT NOT NULL);
     """)
     records = [
-        span("ebpf", "t1", "p1", "", "gateway", "one", "a", "a.jsonl"),
-        span("ebpf", "t1", "c1", "p1", "worker", "two", "b", "b.jsonl"),
-        span("ebpf", "t2", "m1", "absent", "worker", "two", "b", "b.jsonl"),
-        span("ebpf", "t3", "dup", "", "worker", "two", "a", "a.jsonl"),
-        span("ebpf", "t3", "dup", "", "worker", "other", "b", "b.jsonl"),
-        span("native", "t4", "p4", "", "gateway", "one", None, "native-a.jsonl"),
-        span("native", "t4", "c4", "p4", "worker", "two", "b", "native-b.jsonl"),
-        span("ebpf", "", "invalid-parent", "", "gateway", "one", "a", "a.jsonl"),
-        span("ebpf", "", "invalid-child", "invalid-parent", "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "1" * 32, "a" * 16, "", "gateway", "one", "a", "a.jsonl"),
+        span("ebpf", "1" * 32, "b" * 16, "a" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "2" * 32, "c" * 16, "d" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "3" * 32, "e" * 16, "", "worker", "two", "a", "a.jsonl"),
+        span("ebpf", "3" * 32, "e" * 16, "", "worker", "other", "b", "b.jsonl"),
+        span("native", "4" * 16, "1" * 16, "", "gateway", "one", None, "native-a.jsonl"),
+        span("native", "4" * 16, "2" * 16, "1" * 16, "worker", "two", "b", "native-b.jsonl"),
+        span("ebpf", "", "3" * 16, "", "gateway", "one", "a", "a.jsonl"),
+        span("ebpf", "", "4" * 16, "3" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "z" * 32, "5" * 16, "", "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "5" * 32, "0" * 16, "", "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "6" * 32, "6" * 16, "g" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "7" * 32, "7" * 16, "0" * 16, "worker", "two", "b", "b.jsonl"),
     ]
     for index, (record, conflicted) in enumerate(records):
         database.execute(
@@ -110,8 +114,12 @@ def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
     assert raw["distinct_cross_guest_ancestry_edge_pairs"] == 1
     assert raw["missing_parent_links"] == 1
     assert raw["ambiguous_identity_groups"] == 1
-    assert raw["invalid_identity_observations"] == 2
-    assert raw["witnesses"]["invalid_identity"][0]["span"]["trace_id"] == ""
+    assert raw["invalid_identity_observations"] == 4
+    assert any(row["span"]["trace_id"] == "" for row in raw["witnesses"]["invalid_identity"])
+    assert raw["invalid_parent_references"] == 2
+    assert {row["child"]["parent_id"] for row in raw["witnesses"]["invalid_parent_reference"]} == {
+        "g" * 16, "0" * 16,
+    }
     assert raw["witnesses"]["cross_guest"][0]["child"]["raw_file"] == "b.jsonl"
     assert result["full_capture_parent_links"]["native"]["unresolved_guest_placement_links"] == 1
     assert result["reference_placement"]["distinct_guest_boot_ids_confirmed"] is True

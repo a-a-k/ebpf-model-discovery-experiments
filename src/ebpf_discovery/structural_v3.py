@@ -109,6 +109,12 @@ def _participant(raw: str, role: str) -> dict[str, Any]:
 def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     where, params = ("", ()) if source == "combined" else ("WHERE source=?", (source,))
     and_source = "" if source == "combined" else "AND s.source=?"
+    def trace_valid(alias: str) -> str:
+        return (f"length({alias}.trace) IN (16,32) AND {alias}.trace NOT GLOB '*[^0-9a-f]*' "
+                f"AND trim({alias}.trace,'0')!=''")
+    def span_valid(alias: str, field: str = "span") -> str:
+        return (f"length({alias}.{field})=16 AND {alias}.{field} NOT GLOB '*[^0-9a-f]*' "
+                f"AND trim({alias}.{field},'0')!=''")
     identity_groups = db.execute(
         f"SELECT COUNT(*) FROM (SELECT source,trace,span FROM spans {where} GROUP BY source,trace,span)", params
     ).fetchone()[0]
@@ -122,23 +128,26 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     ).fetchone()[0]
     invalid_identity_count = db.execute(
         f"SELECT COUNT(*) FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
-        f"(trace='' OR span='') {and_source}", params,
+        f"NOT ({trace_valid('s')} AND {span_valid('s')}) {and_source}", params,
     ).fetchone()[0]
     invalid_identity_rows = db.execute(
         f"SELECT data FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
-        f"(trace='' OR span='') {and_source} ORDER BY source,trace,span,digest LIMIT ?",
+        f"NOT ({trace_valid('s')} AND {span_valid('s')}) {and_source} "
+        "ORDER BY source,trace,span,digest LIMIT ?",
         (*params, WITNESS_LIMIT),
     ).fetchall()
+    parent_valid = span_valid("c", "parent")
     valid = """WITH ids AS (
       SELECT source,trace,span,COUNT(*) n,MAX(conflicted) conflicting FROM spans GROUP BY source,trace,span
     ), valid AS (
-      SELECT source,trace,span FROM ids WHERE trace!='' AND span!='' AND n=1 AND conflicting=0
+      SELECT source,trace,span FROM ids WHERE """ + trace_valid("ids") + " AND " + span_valid("ids") + """
+      AND n=1 AND conflicting=0
     )"""
     joins = """
       FROM spans c JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       JOIN spans p ON p.source=c.source AND p.trace=c.trace AND p.span=c.parent
       JOIN valid pv ON pv.source=p.source AND pv.trace=p.trace AND pv.span=p.span
-      WHERE c.parent!=''""" + (" AND c.source=?" if source != "combined" else "")
+      WHERE c.parent!='' AND """ + parent_valid + (" AND c.source=?" if source != "combined" else "")
     qualified_links = db.execute(valid + " SELECT COUNT(*) " + joins, params).fetchone()[0]
     pair_rows = db.execute(
         valid + " SELECT DISTINCT c.source,p.service,p.instance,p.node,c.service,c.instance,c.node " + joins,
@@ -169,7 +178,7 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     missing_sql = valid + """
       SELECT c.data FROM spans c
       JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
-      WHERE c.parent!='' AND NOT EXISTS (
+      WHERE c.parent!='' AND """ + parent_valid + """ AND NOT EXISTS (
         SELECT 1 FROM spans p WHERE p.source=c.source AND p.trace=c.trace AND p.span=c.parent)
     """ + (" AND c.source=?" if source != "combined" else "")
     missing_count = db.execute("SELECT COUNT(*) FROM (" + missing_sql + ")", params).fetchone()[0]
@@ -177,7 +186,7 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     ambiguous_parent_sql = valid + """
       SELECT c.data FROM spans c
       JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
-      WHERE c.parent!=''
+      WHERE c.parent!='' AND """ + parent_valid + """
       AND EXISTS (SELECT 1 FROM spans p WHERE p.source=c.source AND p.trace=c.trace AND p.span=c.parent)
       AND NOT EXISTS (SELECT 1 FROM valid pv WHERE pv.source=c.source AND pv.trace=c.trace AND pv.span=c.parent)
     """ + (" AND c.source=?" if source != "combined" else "")
@@ -186,6 +195,18 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     ).fetchone()[0]
     ambiguous_parents = db.execute(
         ambiguous_parent_sql + " ORDER BY c.source,c.trace,c.span LIMIT ?", (*params, WITNESS_LIMIT)
+    ).fetchall()
+    invalid_parent_sql = valid + """
+      SELECT c.data FROM spans c
+      JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+      WHERE c.parent!='' AND NOT (""" + parent_valid + ")" + (
+        " AND c.source=?" if source != "combined" else ""
+    )
+    invalid_parent_count = db.execute(
+        "SELECT COUNT(*) FROM (" + invalid_parent_sql + ")", params
+    ).fetchone()[0]
+    invalid_parents = db.execute(
+        invalid_parent_sql + " ORDER BY c.source,c.trace,c.span LIMIT ?", (*params, WITNESS_LIMIT)
     ).fetchall()
     ambiguous_witness_sql = (
         f"SELECT source,trace,span FROM spans {where} "
@@ -208,6 +229,7 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
         "identity_groups": identity_groups,
         "ambiguous_identity_groups": ambiguous,
         "invalid_identity_observations": invalid_identity_count,
+        "invalid_parent_references": invalid_parent_count,
         "attribute_conflicted_observations": conflicted,
         "qualified_parent_links": qualified_links,
         "distinct_structural_edge_pairs": len(structural_pairs),
@@ -222,8 +244,13 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
                                for row in missing],
             "ambiguous_identity": ambiguous_witnesses,
             "invalid_identity": [
-                {"reason": "empty_trace_or_span_identity_excluded", "span": _participant(row[0], "span")}
+                {"reason": "malformed_or_all_zero_trace_or_span_identity_excluded",
+                 "span": _participant(row[0], "span")}
                 for row in invalid_identity_rows
+            ],
+            "invalid_parent_reference": [
+                {"reason": "malformed_or_all_zero_parent_excluded", "child": _participant(row[0], "child")}
+                for row in invalid_parents
             ],
             "ambiguous_parent": [{"reason": "parent_identity_not_unique_or_conflicted",
                                   "child": _participant(row[0], "child")}
