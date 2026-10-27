@@ -49,6 +49,7 @@ FLAGD_GUEST_PORT = 18013
 REPLICA_A_GUEST_PORT = 13550
 REPLICA_B_GUEST_PORT = 13550
 ROUTER_GUEST_PORT = 13551
+FALLBACK_COPY_MAX_BYTES = 64 * 1024 * 1024
 
 OPERATIONS = ("browse_product", "add_to_cart", "checkout")
 DROP_SERVICES = {"load-generator", "fraud-detection", "flagd-ui", "telemetry-docs"}
@@ -667,12 +668,22 @@ class Adapter:
                 node,
                 f"cd {REMOTE_ROOT} && docker compose -p {PROJECT} -f {compose_file} ps -a --format '{{{{.Name}}}}'",
             )
+            remote_logs = f"{REMOTE_ROOT}/diagnostic-logs/{snapshot_id}"
+            self.ctx.node_exec(node, f"mkdir -p {self._shquote(remote_logs)}")
             for name in filter(None, self._stdout(names).splitlines()):
                 safe = re.sub(r"[^A-Za-z0-9_.-]", "_", name)
-                logs = self.ctx.node_exec(node, f"docker logs --timestamps {self._shquote(name)} 2>&1 || true")
-                (destination / "application-logs" / f"{node}-{safe}.log").write_text(
-                    self._stdout(logs), encoding="utf-8", errors="replace"
+                remote_log = f"{remote_logs}/{safe}.log"
+                self.ctx.node_exec(
+                    node,
+                    f"docker logs --timestamps {self._shquote(name)} "
+                    f"> {self._shquote(remote_log)} 2>&1 || true",
                 )
+                self._copy_remote_file(
+                    node,
+                    remote_log,
+                    destination / "application-logs" / f"{node}-{safe}.log",
+                )
+                self.ctx.node_exec(node, f"rm -f -- {self._shquote(remote_log)}")
 
         traces = destination / "traces.json"
         verification = self._verify_native_file(traces)
@@ -1554,30 +1565,45 @@ SELECT json_build_object(
                 pass
         result = self.ctx.node_exec(
             node,
-            f"if test -f {self._shquote(remote)}; then gzip -c {self._shquote(remote)} | base64 -w0; fi",
+            f"if test -f {self._shquote(remote)}; then "
+            f"size=$(stat -c %s -- {self._shquote(remote)}); "
+            f"if test \"$size\" -gt {FALLBACK_COPY_MAX_BYTES}; then "
+            f"printf '__TOO_LARGE__:%s' \"$size\"; "
+            f"else gzip -c {self._shquote(remote)} | base64 -w0; fi; fi",
             timeout=300,
         )
         encoded = self._stdout(result).strip()
+        if encoded.startswith("__TOO_LARGE__:"):
+            raise RuntimeError(
+                f"streaming node_get unavailable for {remote}; bounded fallback reports "
+                f"{encoded.removeprefix('__TOO_LARGE__:')} bytes"
+            )
         if encoded:
             local.write_bytes(__import__("gzip").decompress(base64.b64decode(encoded)))
         else:
             local.write_bytes(b"")
 
     def _verify_native_file(self, path: Path) -> dict[str, Any]:
-        text = path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
-        service_names: list[str] = []
+        service_names: set[str] = set()
         span_markers = 0
+        product_mentions = 0
         request_id_header_attributes = 0
+        record_count = 0
+        malformed_records = 0
+        malformed_evidence: list[dict[str, Any]] = []
+        content_sha256 = hashlib.sha256()
 
         def walk(value: Any) -> None:
-            nonlocal span_markers, request_id_header_attributes
+            nonlocal span_markers, product_mentions, request_id_header_attributes
             if isinstance(value, dict):
                 if isinstance(value.get("spans"), list):
                     span_markers += len(value["spans"])
                 if value.get("key") == "service.name" and isinstance(value.get("value"), dict):
                     name = value["value"].get("stringValue")
                     if isinstance(name, str):
-                        service_names.append(name)
+                        service_names.add(name)
+                        if name == "product-catalog":
+                            product_mentions += 1
                 if value.get("key") in {
                     "http.request.header.x_experiment_request_id",
                     "http.request.header.x-experiment-request-id",
@@ -1589,14 +1615,31 @@ SELECT json_build_object(
                 for child in value:
                     walk(child)
 
-        for line in text.splitlines():
-            try:
-                walk(json.loads(line))
-            except json.JSONDecodeError:
-                # Keep malformed output visible and conservatively count the
-                # standard protobuf JSON span key, without guessing services.
-                span_markers += len(re.findall(r'"spanId"', line))
-        product_mentions = sum(name == "product-catalog" for name in service_names)
+        if path.exists():
+            with path.open("rb") as stream:
+                for line_number, raw_line in enumerate(stream, 1):
+                    content_sha256.update(raw_line)
+                    record_count += 1
+                    line = raw_line.decode("utf-8", errors="replace")
+                    try:
+                        walk(json.loads(line))
+                    except json.JSONDecodeError as exc:
+                        # Preserve the old conservative span census while
+                        # making malformed exporter records explicit. Evidence
+                        # samples are bounded even if every record is damaged.
+                        markers = len(re.findall(r'"spanId"', line))
+                        span_markers += markers
+                        malformed_records += 1
+                        if len(malformed_evidence) < 20:
+                            malformed_evidence.append(
+                                {
+                                    "line_number": line_number,
+                                    "line_bytes": len(raw_line),
+                                    "line_sha256": hashlib.sha256(raw_line).hexdigest(),
+                                    "span_markers": markers,
+                                    "error": str(exc),
+                                }
+                            )
         if self.mode == "absent":
             compliant = span_markers == 0
         elif self.mode == "partial":
@@ -1606,9 +1649,14 @@ SELECT json_build_object(
         return {
             "mode": self.mode,
             "trace_file_bytes": path.stat().st_size if path.exists() else 0,
+            "trace_file_sha256": content_sha256.hexdigest(),
+            "exporter_records": record_count,
+            "malformed_records": malformed_records,
+            "malformed_record_evidence": malformed_evidence,
+            "malformed_record_evidence_truncated": malformed_records > len(malformed_evidence),
             "span_markers": span_markers,
             "product_catalog_mentions": product_mentions,
-            "resource_service_names": sorted(set(service_names)),
+            "resource_service_names": sorted(service_names),
             "request_id_header_attributes": request_id_header_attributes,
             "request_id_capture_status": (
                 "not_applicable_without_native_spans"
@@ -1618,7 +1666,7 @@ SELECT json_build_object(
                 else "unsupported_or_unobserved"
             ),
             "mode_compliant": compliant,
-            "method": "collector file inspection after graceful collector termination",
+            "method": "streamed collector-file JSONL inspection after graceful collector termination",
         }
 
     def _suppression_description(self) -> dict[str, Any]:

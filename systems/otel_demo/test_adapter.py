@@ -1,4 +1,5 @@
 from pathlib import Path
+import hashlib
 import json
 import time
 
@@ -59,6 +60,33 @@ def test_native_suppression_file_checks(tmp_path: Path) -> None:
         '{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name","value":{"stringValue":"product-catalog"}}]},"scopeSpans":[{"spans":[{"spanId":"1"}]}]}]}\n'
     )
     assert not adapter._verify_native_file(traces)["mode_compliant"]
+
+
+def test_native_suppression_census_streams_and_reports_malformed_records(
+    tmp_path: Path, monkeypatch
+) -> None:
+    traces = tmp_path / "traces.json"
+    raw = (
+        b'{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name",'
+        b'"value":{"stringValue":"frontend"}}]},"scopeSpans":[{"spans":'
+        b'[{"spanId":"one"}]}]}]}\n'
+        b'{"spanId":"damaged"\n'
+    )
+    traces.write_bytes(raw)
+    monkeypatch.setattr(
+        Path,
+        "read_text",
+        lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("whole-file read")),
+    )
+    adapter = object.__new__(Adapter)
+    adapter.mode = "full"
+    result = adapter._verify_native_file(traces)
+    assert result["trace_file_sha256"] == hashlib.sha256(raw).hexdigest()
+    assert result["exporter_records"] == 2
+    assert result["malformed_records"] == 1
+    assert result["malformed_record_evidence"][0]["line_number"] == 2
+    assert result["span_markers"] == 2
+    assert result["resource_service_names"] == ["frontend"]
 
 
 def test_native_collector_is_unfiltered_and_build_context_is_nested() -> None:
