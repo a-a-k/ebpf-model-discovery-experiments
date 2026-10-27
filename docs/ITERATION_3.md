@@ -79,6 +79,10 @@ remain available and observations cannot be silently discarded to fit RAM.
    and the same journal/contracts. It receives neither evaluator success labels
    nor SQL oracle results. Equality or superiority over eBPF is retained, and
    telemetry-only provenance is not relabelled as practical superiority.
+   A completed transport response uses the original adapter's JSON parsing
+   semantics, including duplicate-key behavior: known malformed complete JSON
+   can establish failure. Telemetry capture uncertainty remains unknown.
+   Exception placeholders are not treated as completed empty responses.
 3. Automatic method/route grouping is a separate arm from the primary supplied-
    identity comparison. Missing/censored signatures stay visible.
 4. Retain 20 DB-up and 20 DB-down operations in each campaign. For Petclinic,

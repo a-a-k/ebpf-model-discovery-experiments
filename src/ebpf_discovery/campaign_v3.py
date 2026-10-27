@@ -254,7 +254,9 @@ class CampaignV3(Campaign):
                     'index_sha256': digest(self.store.path),
                     'rule_sha256': {name: digest(self.ctx.repo_dir/name) for name in RULE_FILES+
                         [f'systems/{self.system}/contracts_v3.py']+
-                        (['systems/petclinic/database_v3.py'] if self.system == 'petclinic' else [])},
+                        (['systems/petclinic/database_v3.py', 'systems/petclinic/adapter.py'] if self.system == 'petclinic' else [])},
+                    'fixture_sha256': digest(self.ctx.deployment_dir/'petclinic'/'fixture.json')
+                        if self.system == 'petclinic' else None,
                     'external_sha256': digest(self.ctx.out/'external.json')})
                 status['status'] = 'analysis_pending'
                 write_json(self.ctx.out/'status.json', status)
@@ -288,6 +290,9 @@ class CampaignV3(Campaign):
         for relative, before in marker['rule_sha256'].items():
             if digest(self.ctx.repo_dir/relative) != before:
                 raise RuntimeError(f'Recovery must use original source rules: {relative}')
+        if self.system == 'petclinic' and marker['fixture_sha256'] != digest(
+                self.ctx.deployment_dir/'petclinic'/'fixture.json'):
+            raise RuntimeError('Sealed Petclinic semantic fixture changed')
         if (status['system'], status['mode'], status['seed']) != (self.system, self.ctx.mode, self.ctx.seed):
             raise RuntimeError('Resume arguments do not match retained population')
         for attr, filename in (('records', 'external.json'), ('census', 'census.json'),

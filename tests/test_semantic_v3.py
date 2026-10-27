@@ -170,6 +170,21 @@ class SemanticTests(unittest.TestCase):
         self.assertIsNone(projected['combined'][0]['proxy'])
         self.assertTrue(projected['combined'][0]['primitive_conflict'])
 
+    def test_complete_transport_json_uses_original_parser_without_changing_source(self):
+        body = b'[{"post_id":"1","text":"wrong","text":"ebpf-study-stable-timeline-fixture-v1"}]'
+        attempt = record(body=body)
+        attempt['operation'] = 'read_user_timeline'
+        row = declared_census([attempt])[0]
+        binder = Binder(FakeStore(), 'deathstarbench')
+        result = binder.cheap_attempt(row, transport_observations([attempt]))
+        self.assertIs(result['proxy'], True)  # original JSON parser retains last key
+        self.assertNotIn('complete_transport_body', binder.context)
+        self.assertIsNone(binder.contracts.payload_verdict('read_user_timeline', body.decode(), {})['value'])
+        attempt['http_steps'][0]['response_body_base64'] = base64.b64encode(b'{').decode()
+        self.assertIs(binder.cheap_attempt(row, transport_observations([attempt]))['proxy'], False)
+        attempt['http_steps'][0].update(status=None, response_body_base64='', error='connection failed')
+        self.assertIsNone(binder.cheap_attempt(row, transport_observations([attempt]))['proxy'])
+
 
 if __name__ == "__main__":
     unittest.main()

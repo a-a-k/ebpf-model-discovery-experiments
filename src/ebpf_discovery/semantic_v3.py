@@ -37,12 +37,16 @@ def transport_observations(records):
         steps = []
         for step in record['http_steps']:
             encoded = step.get('response_body_b64', step.get('response_body_base64'))
+            decoded = None
             try:
-                body = base64.b64decode(encoded, validate=True).decode('utf-8', errors='strict') if encoded is not None else None
+                decoded = base64.b64decode(encoded, validate=True) if encoded is not None else None
+                body = decoded.decode('utf-8', errors='strict') if decoded is not None else None
             except (ValueError, UnicodeDecodeError):
                 body = None
             steps.append({'request_id': step['request_id'], 'status': step.get('status'),
-                          'body': body})
+                          'body': body, 'complete_transport_body': encoded is not None and step.get('status') is not None
+                          and not step.get('transport_error') and not step.get('error'),
+                          'body_bytes': len(decoded) if decoded is not None else None})
         result[opaque_attempt(record)] = steps
     return result
 
@@ -177,7 +181,11 @@ class Binder:
         statuses = [self.contracts.status_ok(operation, i, actual[i]['status'])
                     if i < len(actual) and actual[i]['status'] is not None else None for i in range(len(expected))]
         body = actual[-1]['body'] if len(actual) == len(expected) else None
-        semantic = self.contracts.payload_verdict(operation, body, self.context) if body is not None else {'value': None, 'reason': 'no_complete_final_response'}
+        complete = len(actual) == len(expected) and actual[-1].get('complete_transport_body', False)
+        semantic = self.contracts.payload_verdict(operation, body,
+            {**self.context, 'complete_transport_body': True}) if body is not None and complete else {'value': None, 'reason': 'no_complete_final_response'}
+        if self.system == 'petclinic' and actual and (actual[-1].get('body_bytes') or 0) > 1024*1024:
+            semantic = {'value': False, 'reason': 'response_exceeds_declared_limit'}
         timely = row['ended_ns'] <= row['deadline_ns']
         return {**row, 'source': 'entry_http', 'class_id': operation, 'compatible_classes': [operation],
                 'proxy': conjunction(statuses+[semantic['value'], timely]),

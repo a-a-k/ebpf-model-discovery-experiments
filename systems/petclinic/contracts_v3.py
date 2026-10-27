@@ -82,10 +82,11 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
     """Evaluate an observed complete body without consulting external outcomes."""
     if operation not in CONTRACTS:
         raise ValueError(f"unknown Petclinic operation: {operation}")
+    complete_transport = context.get("complete_transport_body") is True
     try:
-        payload = strict_json(text)
+        payload = json.loads(text) if complete_transport else strict_json(text)
     except (json.JSONDecodeError, TypeError, ValueError) as exc:
-        return {"value": None, "reason": f"unusable_captured_json:{exc}"}
+        return {"value": False if complete_transport else None, "reason": f"unusable_captured_json:{exc}"}
 
     if operation == "create_visit":
         # An acknowledgment body cannot establish exactly-once durable persistence.

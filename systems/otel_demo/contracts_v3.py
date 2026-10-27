@@ -99,15 +99,17 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
         return {"value": None, "reason": "not_final_response"}
     if not isinstance(text, str):
         return {"value": None, "reason": "response_body_not_text"}
+    complete_transport = context.get("complete_transport_body") is True
     try:
-        payload = json.loads(text, object_pairs_hook=_object, parse_constant=_constant)
+        payload = json.loads(text) if complete_transport else json.loads(
+            text, object_pairs_hook=_object, parse_constant=_constant)
     except _DuplicateKey:
         return {"value": None, "reason": "duplicate_json_key"}
     except _NonFiniteNumber:
         return {"value": None, "reason": "non_finite_json_number"}
     except (json.JSONDecodeError, UnicodeError):
-        return {"value": None, "reason": "invalid_json"}
-    if not _finite(payload):
+        return {"value": False if complete_transport else None, "reason": "invalid_json"}
+    if not complete_transport and not _finite(payload):
         return {"value": None, "reason": "non_finite_json_number"}
     if not isinstance(payload, dict):
         return {"value": False, "reason": "response_not_object"}

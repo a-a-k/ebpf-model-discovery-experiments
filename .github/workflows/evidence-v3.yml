@@ -1,0 +1,53 @@
+name: Copy iteration 3 qualification evidence
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Qualification run whose existing artifacts should be copied
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  copy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch existing qualification artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: ${{ inputs.run_id }}
+        run: |
+          [[ "$SOURCE_RUN" =~ ^[0-9]+$ ]] || exit 2
+          gh run download "$SOURCE_RUN" -p 'qualification-v3-*' -D work/qualification
+          mkdir -p results/qualification-review
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/artifacts" > results/qualification-review/source-artifacts.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/jobs?per_page=100" > results/qualification-review/source-jobs.json
+      - name: Copy precomputed evidence without recalculation
+        run: |
+          python - <<'PY'
+          import hashlib, json, shutil
+          from pathlib import Path
+          root, out = Path('work/qualification'), Path('results/qualification-review')
+          retained = {'qualification.json','status.json','blocks.json','index-qualification.json',
+                      'deployment.json','campaign-time.txt','runner-final.txt',
+                      'runner-samples.txt','guest-a-samples.txt','guest-b-samples.txt'}
+          hashes = {}
+          for path in root.rglob('*'):
+              if not path.is_file() or path.name not in retained:
+                  continue
+              relative = path.relative_to(root)
+              target = out/relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(path, target)
+              with path.open('rb') as stream:
+                  hashes[str(relative)] = hashlib.file_digest(stream, 'sha256').hexdigest()
+          (out/'copied-sha256.json').write_text(json.dumps(hashes, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualification-review-${{ github.run_id }}
+          path: results/qualification-review/
+          retention-days: 90

@@ -7,6 +7,7 @@ span and check the attempt deadline. Evaluator response bytes are never inputs.
 from __future__ import annotations
 
 import json
+import math
 from typing import Any
 
 
@@ -60,7 +61,7 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
     incomplete capture. A well-formed body that fails the predicate is false.
     The context is reserved for contract versioning; no evaluator fields are read.
     """
-    del context
+    complete_transport = context.get("complete_transport_body") is True
     kind = CONTRACTS[operation]["response_kind"]
     if not isinstance(text, str):
         return {"value": None, "reason": "response body is not text"}
@@ -68,9 +69,20 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
         value = ACKNOWLEDGEMENT in text
         return {"value": value, "reason": "compose acknowledgement present" if value else "compose acknowledgement absent"}
     try:
-        body = json.loads(text, object_pairs_hook=_unique_pairs, parse_constant=_invalid_constant)
+        body = json.loads(text) if complete_transport else json.loads(
+            text, object_pairs_hook=_unique_pairs, parse_constant=_invalid_constant)
     except (ValueError, TypeError, RecursionError) as exc:
-        return {"value": None, "reason": f"invalid or incomplete timeline JSON: {exc}"}
+        return {"value": False if complete_transport else None, "reason": f"invalid or incomplete timeline JSON: {exc}"}
+    def finite(value):
+        if isinstance(value, float):
+            return math.isfinite(value)
+        if isinstance(value, list):
+            return all(finite(v) for v in value)
+        if isinstance(value, dict):
+            return all(finite(v) for v in value.values())
+        return True
+    if not complete_transport and not finite(body):
+        return {"value": None, "reason": "nonfinite timeline JSON number"}
     valid_shape = isinstance(body, list) and all(
         isinstance(item, dict)
         and isinstance(item.get("post_id"), str)

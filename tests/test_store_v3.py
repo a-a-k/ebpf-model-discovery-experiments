@@ -31,6 +31,25 @@ def batch(*spans, service="nginx-thrift"):
 
 
 class StoreTests(unittest.TestCase):
+    def test_conflicting_primitive_attributes_are_preserved_and_not_selected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            obs = root/'obs'
+            obs.mkdir()
+            raw = otlp_span('1'*16)
+            raw['attributes'].append({'key': 'http.response.status_code', 'value': {'intValue': '503'}})
+            (obs/'a.jsonl').write_text(json.dumps(batch(raw))+'\n')
+            store = ObservationStore(root/'index.sqlite')
+            try:
+                store.ingest(obs, root/'native')
+                row = store.candidates('ebpf', 'req-a')[0]
+                self.assertNotIn('http.response.status_code', row['attributes'])
+                self.assertEqual(row['attribute_conflicts'][0]['key'], 'http.response.status_code')
+                self.assertEqual(len(row['attribute_conflicts'][0]['raw_values']), 2)
+                self.assertEqual(store.descendants(row), [])
+            finally:
+                store.close()
+
     def test_large_unfinished_tail_keeps_prior_complete_record(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "a.jsonl"
