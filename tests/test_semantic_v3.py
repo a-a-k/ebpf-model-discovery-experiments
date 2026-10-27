@@ -53,6 +53,30 @@ def record(*, success=False, body=b"wrong", status=200):
 
 
 class SemanticTests(unittest.TestCase):
+    def test_native_nginx_selects_outer_untyped_http_boundary(self):
+        child = span(source='native', service='nginx-web-server', code=200)
+        root = span(source='native', service='nginx-web-server', span_id='2'*16, code=503)
+        for event in (child, root):
+            event['kind'] = None
+            event['attributes']['component'] = 'nginx'
+        child['parent_id'] = root['span_id']
+        root['attributes'].pop('http.request.header.x-experiment-request-id')
+        binder = Binder(FakeStore(child, root), 'deathstarbench')
+        selected, reason = binder.entry('native', 'req-a')
+        self.assertEqual(selected['span_id'], root['span_id'])
+        self.assertIsNone(selected['kind'])
+        self.assertEqual(selected['_header_binding']['source_local_parent_path'], [child['span_id'], root['span_id']])
+        row = declared_census([record()])[0]
+        self.assertIs(binder.source_attempt(row, 'native')['proxy'], False)
+        root['start_ns'] = row['ended_ns']+2_000_000_000
+        self.assertIsNone(binder.source_attempt(row, 'native')['proxy'])
+        root['kind'] = 'client'
+        self.assertIsNone(binder.entry('native', 'req-a')[0])
+        root['kind'] = None
+        second = deepcopy(child)
+        second['span_id'], second['parent_id'] = '3'*16, ''
+        self.assertIsNone(Binder(FakeStore(child, root, second), 'deathstarbench').entry('native', 'req-a')[0])
+
     def test_declared_census_excludes_oracle_status_and_response_bytes(self):
         false_record = record(success=False, body=b"wrong", status=503)
         true_record = record(success=True, body=ACK.encode(), status=200)

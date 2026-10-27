@@ -12,6 +12,9 @@ from typing import Any
 
 
 ENTRY_SERVICES = {"ebpf": ["nginx-thrift"], "native": ["nginx-web-server"]}
+# The pinned nginx OpenTracing exporter emits no span.kind. Its HTTP boundary
+# is the outermost same-process component=nginx ancestor, proved by parent IDs.
+UNTYPED_ENTRY_COMPONENTS = {"native": ["nginx"]}
 STABLE_FIXTURE_TEXT = "ebpf-study-stable-timeline-fixture-v1"
 ACKNOWLEDGEMENT = "Successfully upload post"
 

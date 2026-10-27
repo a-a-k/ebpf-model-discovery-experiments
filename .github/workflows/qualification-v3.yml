@@ -98,6 +98,7 @@ jobs:
             !work/campaign/**/source/**
             !work/campaign/**/upstream/**
             !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
           compression-level: 1
           include-hidden-files: true
           retention-days: 90

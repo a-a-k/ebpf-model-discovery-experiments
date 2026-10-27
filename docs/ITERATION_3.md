@@ -46,6 +46,13 @@ source-local. Combined evidence unites independent facts for the same request,
 not a synthetic cross-source trace. Deadline timing comes from the same permitted
 request journal for every source, as in the original operation model.
 
+The pinned DeathStarBench nginx OpenTracing exporter omits `span.kind`.
+Qualification exposed that format mismatch. Its native binding uses the
+outermost matching `component=nginx` HTTP ancestor within the same observed
+service, instance and node, reached through exact parent IDs from the request
+header. This declared format rule never invents a server kind, crosses sources,
+or accepts an explicit client span. The raw kind and ancestry remain in evidence.
+
 | Application / operation | Required positive response predicate |
 | --- | --- |
 | DeathStarBench compose | Original HTTP acceptance predicate and observed acknowledgement containing `Successfully upload post` |

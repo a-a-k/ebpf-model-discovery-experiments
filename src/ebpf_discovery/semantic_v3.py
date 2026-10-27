@@ -124,7 +124,7 @@ class Binder:
         for anchor in candidates:
             if anchor['service'] not in self.contracts.ENTRY_SERVICES[source]:
                 continue
-            span, path = anchor, []
+            span, path, candidate = anchor, [], None
             while span and span['span_id'] not in path:
                 path.append(span['span_id'])
                 if span.get('attribute_conflicts'):
@@ -132,18 +132,28 @@ class Binder:
                 if len(self.store.identity(source, span['trace_id'], span['span_id'])) != 1:
                     return None, 'conflicting_entry_identity'
                 method_path = raw_route(span)
-                if (str(span['kind']) in ('2', 'SPAN_KIND_SERVER', 'server') and method_path in allowed
+                server = str(span['kind']) in ('2', 'SPAN_KIND_SERVER', 'server')
+                untyped = span['kind'] is None and span['attributes'].get('component') in getattr(
+                    self.contracts, 'UNTYPED_ENTRY_COMPONENTS', {}).get(source, [])
+                if str(span['kind']) in ('3', 'SPAN_KIND_CLIENT', 'client'):
+                    candidate = None
+                    break
+                if ((server or untyped) and method_path in allowed
                         and (not expected or method_path == (expected['method'], expected['path']))):
-                    selected[(span['trace_id'], span['span_id'])] = {
+                    candidate = {
                         **span, '_header_binding': {'header_span_id': anchor['span_id'],
                                                    'source_local_parent_path': path[:],
-                                                   'same_service_instance_node': True}}
-                    break
+                                                   'same_service_instance_node': True, 'raw_kind': span['kind'],
+                                                   'rule': 'declared_nginx_untyped_outer_http' if untyped else 'explicit_server'}}
+                    if server:
+                        break
                 parents = self.store.identity(source, span['trace_id'], span['parent_id']) if span['parent_id'] else []
                 if len(parents) > 1:
                     return None, 'conflicting_entry_identity'
                 span = parents[0] if parents and all(parents[0].get(k) == anchor.get(k)
                             for k in ('service', 'instance', 'node')) else None
+            if candidate:
+                selected[(candidate['trace_id'], candidate['span_id'])] = candidate
         if len(selected) != 1:
             return None, 'entry_missing' if not selected else 'multiple_entries'
         return next(iter(selected.values())), 'unique_declared_entry'
