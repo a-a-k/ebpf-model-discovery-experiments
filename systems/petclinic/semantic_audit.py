@@ -7,7 +7,6 @@ independent persisted-row observation are not span fields in this experiment.
 """
 from __future__ import annotations
 
-import re
 from collections import Counter, defaultdict
 from urllib.parse import urlsplit
 
@@ -131,6 +130,10 @@ def _validate_rows(rows):
         for field in ("started_ns", "ended_ns", "deadline_ns"):
             if type(row[field]) is not int:
                 raise ValueError(f"{field} must be an integer")
+        if row["ended_ns"] < row["started_ns"]:
+            raise ValueError("ended_ns must not precede started_ns")
+        if row["deadline_ns"] < row["started_ns"]:
+            raise ValueError("deadline_ns must be an absolute timestamp at or after started_ns")
 
 
 class _Index:
@@ -249,34 +252,34 @@ def _group(index, descendants, group, contract):
 
 def _write_evidence(index, source, root):
     if root is None:
-        return {"identity_attempted": None, "commit_span_observed": None, "persistence": None,
-                "reason": "entry_unbound", "witnesses": []}
+        return {"write_attempt_observed": None, "commit_span_observed": None,
+                "persistence": None, "reason": "entry_unbound", "witnesses": [],
+                "same_trace_unattached_candidates": []}
     trace_spans = index.traces.get((source, root["trace_id"]), ())
     inserts, commits = [], []
-    exact = []
     for span in trace_spans:
         attrs = span.get("attributes", {})
         operation = str(attrs.get("db.operation.name", attrs.get("db.operation", ""))).upper()
         statement = str(attrs.get("db.query.text", attrs.get("db.statement", "")))
         if operation == "INSERT" and "visits" in statement.lower():
             inserts.append(span)
-            if ("2026-09-01" in statement and re.search(r"ebpf-study-[0-9a-f]{64}", statement)
-                    and re.search(r"[, ]1\)?\s*$", statement)):
-                exact.append(span)
         if span.get("service") == "visits-service" and span.get("name") == "Transaction.commit":
             commits.append(span)
-    attached = [s for s in inserts + commits if index.descends_from(s, root)]
+    attached_inserts = [s for s in inserts if index.descends_from(s, root)]
+    attached_commits = [s for s in commits if index.descends_from(s, root)]
+    unattached = [s for s in inserts + commits if s not in attached_inserts + attached_commits]
     reason = "no_write_span_observed"
-    if inserts:
-        reason = "exact_insert_identity_attempted" if len(exact) == 1 and len(inserts) == 1 else "insert_attempt_observed_without_exact_identity"
-        if not attached:
-            reason += "_same_trace_unattached"
+    if attached_inserts:
+        reason = "exact_ancestry_insert_attempt_observed"
+    elif unattached:
+        reason = "same_trace_unattached_write_candidates"
     return {
-        "identity_attempted": True if len(exact) == 1 and len(inserts) == 1 else None,
-        "commit_span_observed": True if commits else None,
+        "write_attempt_observed": True if attached_inserts else None,
+        "commit_span_observed": True if attached_commits else None,
         "persistence": None,
         "reason": reason,
-        "witnesses": [_witness(s) for s in inserts + commits],
+        "witnesses": [_witness(s) for s in attached_inserts + attached_commits],
+        "same_trace_unattached_candidates": [_witness(s) for s in unattached],
     }
 
 
@@ -284,8 +287,7 @@ def _audit_attempt(index, source, row):
     contract = CONTRACTS[row["contract_id"]]
     root, binding = _entry(index, source, row, contract)
     entry_protocol = _explicit_status(root) if root else None
-    elapsed = row["ended_ns"] - row["started_ns"]
-    timely = None if elapsed < 0 or row["deadline_ns"] < 0 else elapsed <= row["deadline_ns"]
+    timely = row["ended_ns"] <= row["deadline_ns"]
     descendants = index.descendants(root) if root else []
     groups = [_group(index, descendants, group, contract) for group in contract["groups"]]
     logical = _conjunction([entry_protocol, timely] + [g["completion"] for g in groups])

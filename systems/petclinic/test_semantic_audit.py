@@ -24,8 +24,9 @@ def span(source, trace, sid, parent, service, kind, method=None, path=None, stat
 
 def row(operation, request_id="req-1"):
     return {"attempt_key": "attempt-1", "step_ids": [request_id], "contract_id": operation,
-            "phase": "target", "state": "11", "started_ns": 10, "ended_ns": 20,
-            "deadline_ns": 100}
+            "phase": "target", "state": "11", "started_ns": 1_700_000_000_000_000_000,
+            "ended_ns": 1_700_000_000_100_000_000,
+            "deadline_ns": 1_700_000_002_000_000_000}
 
 
 def attempt(result, source="native"):
@@ -93,7 +94,7 @@ def test_create_retry_can_complete_protocol_but_never_proves_persistence():
     record = attempt(audit_semantics(spans, [row("create_visit")]), "ebpf")
     assert record["mandatory_groups"][0]["completion"] is True
     assert record["logical_completion"] is True
-    assert record["write_evidence"]["identity_attempted"] is True
+    assert record["write_evidence"]["write_attempt_observed"] is True
     assert record["write_evidence"]["persistence"] is None
     assert record["source_business_verdict"] is None
 
@@ -107,6 +108,33 @@ def test_parent_traversal_never_crosses_sources():
     result = audit_semantics(spans, [row("list_owners")])
     assert attempt(result, "ebpf")["logical_completion"] is None
     assert attempt(result, "native")["entry_binding"]["status"] == "missing"
+
+
+def test_absolute_deadline_can_exclude_business_success_at_nonzero_epoch():
+    semantic_row = row("list_vets")
+    semantic_row["ended_ns"] = semantic_row["deadline_ns"] + 1
+    spans = [span("native", "t", "root", "", "api-gateway", 2,
+                  "GET", "/api/vet/vets", 200, "req-1")]
+    record = attempt(audit_semantics(spans, [semantic_row]))
+    assert record["timely"] is False
+    assert record["source_business_verdict"] is False
+
+
+def test_same_trace_unattached_write_candidates_are_not_positive_attempt_evidence():
+    spans = [
+        span("native", "t", "root", "", "api-gateway", 2, "POST",
+             "/api/visit/owners/1/pets/1/visits", 201, "req-1"),
+        span("native", "t", "insert", "missing-parent", "visits-service", 3,
+             name="INSERT petclinic.visits", **{"db.system": "mysql", "db.operation": "INSERT",
+                                                "db.statement": "insert into visits values (?,?,?)"}),
+        span("native", "t", "commit", "missing-parent", "visits-service", 1,
+             name="Transaction.commit"),
+    ]
+    write = attempt(audit_semantics(spans, [row("create_visit")]))["write_evidence"]
+    assert write["write_attempt_observed"] is None
+    assert write["commit_span_observed"] is None
+    assert write["persistence"] is None
+    assert len(write["same_trace_unattached_candidates"]) == 2
 
 
 def test_semantic_row_boundary_rejects_outcome_leakage():
