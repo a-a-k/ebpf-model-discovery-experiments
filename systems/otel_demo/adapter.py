@@ -25,11 +25,12 @@ from typing import Any
 import requests
 import yaml
 
+from .contracts_v3 import CONTRACTS, PRODUCT_ID
+
 
 UPSTREAM_URL = "https://github.com/open-telemetry/opentelemetry-demo.git"
 UPSTREAM_COMMIT = "8c47d47c9ac27710d2b2a153bcd53e483bffe66d"
 DEMO_VERSION = "3.0.0"
-PRODUCT_ID = "OLJCESPC7Z"
 REMOTE_ROOT = "/opt/ebpf-study/otel_demo"
 PROJECT = "ebpf-otel-demo"
 
@@ -371,13 +372,28 @@ class Adapter:
         attempt_id = f"{namespace}-{name}-{index}-{uuid.uuid4().hex[:12]}"
         fixture_token = uuid.uuid4().hex
         user_id = f"u-{fixture_token}"
+        started_ns = time.time_ns()
+        request_intent = {
+            "started_ns": started_ns,
+            "operation_id": name,
+            "steps": [
+                {
+                    "ordinal": ordinal,
+                    "request_id": uuid.uuid4().hex,
+                    "method": step["method"],
+                    "path": step["path"],
+                }
+                for ordinal, step in enumerate(CONTRACTS[name]["steps"])
+            ],
+        }
         record: dict[str, Any] = {
             "operation": name,
             "attempt_id": attempt_id,
-            "started_ns": time.time_ns(),
+            "started_ns": started_ns,
             "ended_ns": None,
             "success": False,
             "http_steps": [],
+            "request_intent": request_intent,
             "error": None,
             "deadline_seconds": deadline,
         }
@@ -396,11 +412,13 @@ class Adapter:
                     "GET",
                     f"/api/products/{PRODUCT_ID}",
                     remaining(),
+                    request_id=request_intent["steps"][0]["request_id"],
                 )
                 record["success"] = product["status"] == 200
             elif name == "add_to_cart":
                 product = self._http_step(
-                    record, "GET", f"/api/products/{PRODUCT_ID}", remaining()
+                    record, "GET", f"/api/products/{PRODUCT_ID}", remaining(),
+                    request_id=request_intent["steps"][0]["request_id"],
                 )
                 if product["status"] != 200:
                     raise RuntimeError("product prerequisite failed")
@@ -410,12 +428,14 @@ class Adapter:
                     "/api/cart",
                     remaining(),
                     {"userId": user_id, "item": {"productId": PRODUCT_ID, "quantity": 1}},
+                    request_id=request_intent["steps"][1]["request_id"],
                 )
                 record["success"] = cart["status"] == 200
                 record["user_id"] = user_id
             else:
                 product = self._http_step(
-                    record, "GET", f"/api/products/{PRODUCT_ID}", remaining()
+                    record, "GET", f"/api/products/{PRODUCT_ID}", remaining(),
+                    request_id=request_intent["steps"][0]["request_id"],
                 )
                 if product["status"] != 200:
                     raise RuntimeError("product prerequisite failed")
@@ -425,6 +445,7 @@ class Adapter:
                     "/api/cart",
                     remaining(),
                     {"userId": user_id, "item": {"productId": PRODUCT_ID, "quantity": 1}},
+                    request_id=request_intent["steps"][1]["request_id"],
                 )
                 if cart["status"] != 200:
                     raise RuntimeError("cart prerequisite failed")
@@ -451,6 +472,7 @@ class Adapter:
                             "creditCardExpirationMonth": 1,
                         },
                     },
+                    request_id=request_intent["steps"][2]["request_id"],
                 )
                 payload = checkout.get("json") if isinstance(checkout.get("json"), dict) else {}
                 order_id = payload.get("orderId") or payload.get("order_id")
@@ -1034,9 +1056,10 @@ class Adapter:
         path: str,
         timeout: float,
         body: dict[str, Any] | None = None,
+        request_id: str | None = None,
     ) -> dict[str, Any]:
         started = time.time_ns()
-        request_id = uuid.uuid4().hex
+        request_id = request_id or uuid.uuid4().hex
         request_bytes = b"" if body is None else json.dumps(body, separators=(",", ":")).encode()
         step: dict[str, Any] = {
             "request_id": request_id,
