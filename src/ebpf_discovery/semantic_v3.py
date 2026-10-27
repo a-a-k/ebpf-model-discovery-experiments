@@ -306,7 +306,6 @@ def fit_declared(rows, operations, seed, graph):
         if max(abs(a-b) for a, b in zip(exact, mc)) > .01:
             raise ValueError('MC failed exact-arithmetic check')
         forecast['classes'][operation] = {'point': exact[0] if math.isclose(*exact, abs_tol=1e-12) else None,
-            'identification_bounds': exact, 'uncertainty_bounds': nominal, 'monte_carlo_bounds': mc,
-            'historical_reference_width_10pp': nominal[1]-nominal[0] <= .10}
+            'identification_bounds': exact, 'uncertainty_bounds': nominal, 'monte_carlo_bounds': mc}
     model['preparation_seconds'] = time.perf_counter()-started
     return model, forecast

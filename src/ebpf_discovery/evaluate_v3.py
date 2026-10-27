@@ -476,7 +476,6 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
                 ),
                 "empirical_interval_width": empirical[1] - empirical[0],
                 "nominal_interval_width": nominal[1] - nominal[0],
-                "historical_reference_width_10pp": prediction.get("historical_reference_width_10pp"),
                 "accuracy_gate_applied": False,
             })
 
