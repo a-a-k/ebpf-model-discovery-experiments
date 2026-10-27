@@ -775,41 +775,48 @@ backend visits_replicas
         if not candidates:
             return verified
         markers = sorted({marker for _, marker in candidates})
-        quoted = ",".join(f"'{marker}'" for marker in markers)
-        sql = (
-            "SELECT description,id,pet_id,DATE_FORMAT(visit_date,'%Y-%m-%d') FROM visits "
-            f"WHERE description IN ({quoted}) ORDER BY description,id"
-        )
-        try:
-            result = self._mysql(sql)
-        except Exception as exc:  # noqa: BLE001 - unavailable remote SQL is an explicit unknown oracle
-            for row, marker in candidates:
-                row["success"] = None if row.get("success") is None else row.get("success")
-                row["validation"] = {"kind": "sql_exact_row", "state": "oracle_unavailable", "error": str(exc), "marker": marker}
-            return verified
         grouped: dict[str, list[dict[str, Any]]] = {marker: [] for marker in markers}
-        parse_errors: list[str] = []
-        for line in getattr(result, "stdout", "").splitlines():
-            fields = line.split("\t")
-            if len(fields) != 4 or fields[0] not in grouped:
-                parse_errors.append(line)
-                continue
+        oracle_errors: dict[str, dict[str, Any]] = {}
+        for offset in range(0, len(markers), 100):
+            chunk = markers[offset:offset + 100]
+            quoted = ",".join(f"'{marker}'" for marker in chunk)
+            sql = (
+                "SELECT description,id,pet_id,DATE_FORMAT(visit_date,'%Y-%m-%d') FROM visits "
+                f"WHERE description IN ({quoted}) ORDER BY description,id"
+            )
             try:
-                grouped[fields[0]].append({"id": int(fields[1]), "petId": int(fields[2]), "date": fields[3], "description": fields[0]})
-            except ValueError:
-                parse_errors.append(line)
-        if parse_errors:
-            for row, marker in candidates:
+                result = self._mysql(sql)
+            except Exception as exc:  # noqa: BLE001 - unavailable remote SQL is an explicit unknown oracle
+                for marker in chunk:
+                    oracle_errors[marker] = {"error": str(exc)}
+                continue
+            parse_errors: list[str] = []
+            for line in getattr(result, "stdout", "").splitlines():
+                fields = line.split("\t")
+                if len(fields) != 4 or fields[0] not in grouped or fields[0] not in chunk:
+                    parse_errors.append(line)
+                    continue
+                try:
+                    grouped[fields[0]].append({
+                        "id": int(fields[1]), "petId": int(fields[2]),
+                        "date": fields[3], "description": fields[0],
+                    })
+                except ValueError:
+                    parse_errors.append(line)
+            if parse_errors:
+                for marker in chunk:
+                    oracle_errors[marker] = {
+                        "error": "sql_census_parse_error",
+                        "malformed_rows": parse_errors,
+                    }
+        for row, marker in candidates:
+            if marker in oracle_errors:
                 row["success"] = None if row.get("success") is None else row.get("success")
                 row["validation"] = {
-                    "kind": "sql_exact_row",
-                    "state": "oracle_unavailable",
-                    "error": "sql_census_parse_error",
-                    "malformed_rows": parse_errors,
-                    "marker": marker,
+                    "kind": "sql_exact_row", "state": "oracle_unavailable",
+                    "marker": marker, **oracle_errors[marker],
                 }
-            return verified
-        for row, marker in candidates:
+                continue
             db_rows = grouped[marker]
             payload = row.get("response_json")
             acknowledged_id = payload.get("id") if isinstance(payload, dict) else None

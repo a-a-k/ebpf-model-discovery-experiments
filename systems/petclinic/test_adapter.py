@@ -107,6 +107,41 @@ def test_verify_reads_all_create_markers_in_one_sql_census(tmp_path, monkeypatch
     assert all(row["success"] is True for row in verified)
 
 
+def test_verify_chunks_large_marker_census_and_localizes_query_failure(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="full"))
+    markers = [f"ebpf-study-{index:064x}" for index in range(205)]
+    calls = []
+
+    def mysql(sql):
+        calls.append(sql)
+        selected = [marker for marker in markers if marker in sql]
+        if len(calls) == 2:
+            raise RuntimeError("temporary census failure")
+        return SimpleNamespace(stdout="".join(
+            f"{marker}\t{markers.index(marker) + 1}\t1\t2026-09-01\n" for marker in selected
+        ))
+
+    adapter._mysql = mysql
+    records = [{
+        "operation": "create_visit", "success": None, "error": None,
+        "started_ns": 0, "ended_ns": 1, "deadline_seconds": 2.0,
+        "http_steps": [{"status": 201}],
+        "response_json": {
+            "id": index + 1, "petId": 1, "date": "2026-09-01", "description": marker,
+        },
+        "validation": {"marker": marker},
+    } for index, marker in enumerate(markers)]
+
+    verified = adapter.verify(records)
+    assert len(calls) == 3
+    assert max(sql.count("ebpf-study-") for sql in calls) <= 100
+    assert all(row["success"] is True for row in verified[:100])
+    assert all(row["success"] is None for row in verified[100:200])
+    assert all(row["validation"]["state"] == "oracle_unavailable" for row in verified[100:200])
+    assert all(row["success"] is True for row in verified[200:])
+
+
 def test_operation_uses_only_opaque_binding_header(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     captured = {}
