@@ -287,6 +287,31 @@ independently proven root causes. No projection, model or forecast is regenerate
 Implementation review granted GO at `407d305`; all six focused synthetic checks
 passed. The orchestrator agrees with that reporting-only verdict.
 
+### Retained DSB coverage diagnosis
+
+Inspection of all nine completed DSB compact reports found variable coverage,
+including near-complete and very sparse automatic route assignment. Before
+implementing a diagnostic, the independent skeptic and orchestrator granted
+explicit GO under the unchanged original criterion for examining all nine
+fixed cells in Actions. Competing explanations are unavailable capture evidence,
+identity ambiguity, timing-filter rejection and absent frozen class support.
+The same saved sources and exact request identities are examined without adding
+semantic knowledge to a predictor. No timestamp correction, model fitting,
+replacement traffic or forecast selection is authorized by this diagnostic.
+
+The audit separates pre-window entry availability from saved eligibility and
+class assignment, and retains bounded early/middle/late timestamp witnesses with
+raw-export checks. Exact-ID timestamps incompatible with the client journal
+establish rejection, not independently verified clock drift or collector loss.
+All original captures and download/processing costs remain retained.
+
+Technical replacement requires a demonstrated protocol or integration defect,
+applied consistently to every affected cell and paired source. Missing evidence,
+ambiguous identities, unsupported classes or unestablished timestamp comparability
+alone remain unknowns. If a repair changes training inputs or frozen predictions,
+retained-data replay is diagnostic and fresh confirmation is required. A pure
+reporting error can be corrected without reacquiring unchanged observations.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
