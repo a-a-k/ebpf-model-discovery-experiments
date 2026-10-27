@@ -11,6 +11,7 @@ from collections.abc import Iterable
 from pathlib import Path
 from statistics import mean
 from typing import Any
+from urllib.parse import urlsplit
 
 from .model import wilson
 from .observations import opaque_attempt
@@ -85,6 +86,11 @@ def _worst_end_error(predicted: list[float], observed: list[float]) -> float:
     return max(abs(predicted[0] - observed[1]), abs(predicted[1] - observed[0]))
 
 
+def _complete_sum(values: Iterable[int | float | None]) -> int | float | None:
+    values = list(values)
+    return sum(values) if all(value is not None for value in values) else None
+
+
 def _projection_counts(rows: list[dict[str, Any]]) -> dict[str, Any]:
     proxy = Counter(row.get("proxy") for row in rows)
     protocol = Counter(row.get("protocol_only") for row in rows)
@@ -130,20 +136,26 @@ def _control_evidence(root: Path, status: dict[str, Any], external: list[dict[st
         by_key = {opaque_attempt(row): row for row in database_rows}
         if len(attempts) != 40 or {row["attempt_key"] for row in attempts} != set(by_key):
             raise ValueError("Petclinic database predictions do not match the control population")
-        summaries = {}
-        for source in ("ebpf", "native", "combined"):
-            counts = Counter()
+        comparisons = []
+        for predictor in ("ebpf", "native", "combined", "static_endpoint_baseline"):
+            grouped: dict[tuple[str, str], Counter] = defaultdict(Counter)
             for row in attempts:
-                value = row["predicted_database_caused_failure"][source]
-                external_value = by_key[row["attempt_key"]].get("success")
+                external_row = by_key[row["attempt_key"]]
+                value = (row["static_endpoint_baseline"] if predictor == "static_endpoint_baseline"
+                         else row["predicted_database_caused_failure"][predictor])
+                external_value = external_row.get("success")
+                counts = grouped[(external_row["operation"], external_row["phase"])]
                 counts[f"predicted_{str(value).lower()}"] += 1
                 counts[f"external_{str(external_value).lower()}"] += 1
                 if value is True and external_value is True:
                     counts["predicted_failure_but_external_success"] += 1
-            summaries[source] = dict(counts)
+                if value is True and external_value is False:
+                    counts["predicted_failure_supported_by_external_failure"] += 1
+            comparisons.extend({"predictor": predictor, "operation": operation, "phase": phase, **dict(counts)}
+                               for (operation, phase), counts in sorted(grouped.items()))
         evidence["petclinic_database_prediction"] = {
             "sha256_by_file": {name: _digest(path) for name, path in files.items()},
-            "attempts": len(attempts), "sources": summaries,
+            "attempts": len(attempts), "comparisons": comparisons,
             "interpretation": "one-sided DB-caused-failure prediction; false never implies business success",
         }
     if status["system"] == "otel_demo":
@@ -152,21 +164,32 @@ def _control_evidence(root: Path, status: dict[str, Any], external: list[dict[st
         async_rows = [row for row in external if str(row.get("phase", "")).startswith("async_")]
         if len(async_rows) != 60:
             raise ValueError("OTel async controls must contain 60 attempts")
-        summaries = {}
-        for source in ("ebpf", "native"):
-            statuses = Counter()
-            for row in async_rows:
-                request_id = row["http_steps"][-1]["request_id"]
-                proof = chains.get(request_id, {}).get("sources", {}).get(source)
-                statuses[(proof or {}).get("status", "unknown")] += 1
-            summaries[source] = dict(statuses)
-        durable = _outcome_rate([
-            {"success": (row.get("async_verification") or {}).get("success")} for row in async_rows
-        ])
+        phases = {}
+        for phase in ("async_normal", "async_paused", "async_recovered"):
+            population = [row for row in async_rows if row["phase"] == phase]
+            if len(population) != 20:
+                raise ValueError(f"OTel {phase} control must contain 20 attempts")
+            sources = {}
+            for source in ("ebpf", "native"):
+                statuses = Counter()
+                for row in population:
+                    anchors = [step for step in row.get("http_steps", [])
+                               if urlsplit(str(step.get("url", ""))).path == "/api/checkout"
+                               and step.get("request_id")]
+                    proof = (chains.get(anchors[0]["request_id"], {}).get("sources", {}).get(source)
+                             if len(anchors) == 1 else None)
+                    statuses[(proof or {}).get("status", "unknown")] += 1
+                sources[source] = dict(statuses)
+            phases[phase] = {
+                "attempts": 20, "sources": sources,
+                "immediate_outcome": _outcome_rate([{"success": row.get("success")} for row in population]),
+                "durable_outcome": _outcome_rate([
+                    {"success": (row.get("async_verification") or {}).get("success")} for row in population
+                ]),
+            }
         evidence["async_association"] = {
             "chains_sha256": _digest(chain_path), "selection_sha256": _digest(selection_path),
-            "selection": selection, "attempts": len(async_rows), "sources": summaries,
-            "external_durable_outcome": durable,
+            "selection": selection, "attempts": len(async_rows), "phases": phases,
             "association_is_not_durability": True,
         }
     return evidence
@@ -184,6 +207,19 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         raise ValueError("campaign is not source-contract-v3")
     if status.get("status") != "acquisition_complete":
         raise ValueError("campaign acquisition is incomplete")
+    saved_path, integrity_path = root / "forecast-saved.json", root / "freeze-integrity.json"
+    saved, integrity = _read(saved_path), _read(integrity_path)
+    target_starts = [block["load_started_ns"] for block in blocks if block.get("phase") == "target"]
+    if not target_starts or saved.get("saved_ns", 0) >= min(target_starts):
+        raise ValueError("forecasts were not frozen before target acquisition")
+    saved_hashes = saved.get("sha256_by_path")
+    integrity_hashes = integrity.get("sha256_by_path")
+    if integrity.get("all_unchanged") is not True or not isinstance(saved_hashes, dict) or saved_hashes != integrity_hashes:
+        raise ValueError("frozen artifact integrity record is incomplete or inconsistent")
+    for relative, expected_hash in saved_hashes.items():
+        path = root / relative
+        if not path.is_file() or _digest(path) != expected_hash:
+            raise ValueError(f"frozen artifact changed: {relative}")
     phase_counts = Counter(row.get("phase") for row in external)
     if any(phase_counts[phase] != expected for phase, expected in PRIMARY_COUNTS.items()):
         raise ValueError(f"primary population mismatch: {dict(phase_counts)}")
@@ -203,6 +239,7 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
     operations: tuple[str, ...] | None = None
     source_inputs = {}
     source_projections = {}
+    source_primary = {}
     for source in SOURCES:
         model_path = root / "models" / source / "model.json"
         forecast_path = root / "models" / source / "forecast.json"
@@ -243,6 +280,7 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         source_projections[source] = (
             forecast, {key: row for key, row in projected_by_key.items() if row["phase"] == "target"}
         )
+        source_primary[source] = projected_by_key
 
     metrics = []
     for operation in operations or ():
@@ -272,12 +310,38 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
                     if point is not None and observed["point"] is not None else None
                 ),
                 "empirical_worst_end_error": _worst_end_error(empirical, observed["empirical_bounds"]),
-                "nominal_worst_end_error": _worst_end_error(nominal, observed["nominal_bounds"]),
+                "nominal_worst_end_error": _worst_end_error(nominal, observed["empirical_bounds"]),
+                "nominal_vs_external_wilson_worst_end_error": (
+                    _worst_end_error(nominal, observed["nominal_bounds"])
+                ),
                 "empirical_interval_width": empirical[1] - empirical[0],
                 "nominal_interval_width": nominal[1] - nominal[0],
                 "historical_reference_width_10pp": prediction.get("historical_reference_width_10pp"),
                 "accuracy_gate_applied": False,
             })
+
+    confusion = []
+    label = {True: "true", False: "false", None: "unknown"}
+    for source in SOURCES:
+        for operation in operations or ():
+            for phase in ("calibration", "target"):
+                external_rows = [row for row in primary if row["phase"] == phase and row["operation"] == operation]
+                categories: dict[str, list[str]] = defaultdict(list)
+                for external_row in external_rows:
+                    attempt_key = opaque_attempt(external_row)
+                    proxy = source_primary[source][attempt_key].get("proxy")
+                    outcome = external_row.get("success")
+                    if proxy not in label or outcome not in label:
+                        raise ValueError("confusion inputs must be true, false, or null")
+                    categories[f"source_{label[proxy]}_external_{label[outcome]}"].append(attempt_key)
+                confusion.append({
+                    "source": source, "operation": operation, "phase": phase, "n": len(external_rows),
+                    "counts": {category: len(ids) for category, ids in sorted(categories.items())},
+                    "witness_attempt_ids": {
+                        category: sorted(ids)[:10] for category, ids in sorted(categories.items())
+                    },
+                    "witness_limit_per_category": 10,
+                })
 
     traffic_blocks = [{
         "id": block.get("id"), "phase": block.get("phase"), "state": block.get("state"),
@@ -296,13 +360,23 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         "status_sha256": _digest(status_path),
         "external_sha256": _digest(external_path),
         "source_inputs": source_inputs,
+        "freeze": {
+            "forecast_saved_sha256": _digest(saved_path),
+            "freeze_integrity_sha256": _digest(integrity_path),
+            "saved_ns": saved["saved_ns"], "target_started_ns": min(target_starts),
+            "verified_paths": len(saved_hashes),
+        },
         "primary_population": {
             **{phase: phase_counts[phase] for phase in PRIMARY_COUNTS}, "total": expected_primary,
         },
         "metrics": metrics,
+        "confusion": confusion,
         "controls": _control_evidence(root, status, external),
         "costs": {
             "campaign_elapsed_seconds": status.get("elapsed_seconds"),
+            "fit_and_discovery_seconds": saved.get("fit_and_discovery_seconds"),
+            "attempted_operations": status.get("attempted_operations"),
+            "preparation_operations": status.get("preparation_operations"),
             "model_preparation_seconds": {
                 source: _read(root / "models" / source / "model.json").get("preparation_seconds")
                 for source in SOURCES
@@ -383,20 +457,32 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         })
 
     automatic_groups: dict[tuple[str, str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
-    database_groups: dict[tuple[str, str], Counter] = defaultdict(Counter)
-    async_groups: dict[tuple[str, str], Counter] = defaultdict(Counter)
+    database_groups: dict[tuple[str, str, str, str], Counter] = defaultdict(Counter)
+    async_groups: dict[tuple[str, str, str], Counter] = defaultdict(Counter)
+    confusion_groups: dict[tuple[str, str, str, str, str], Counter] = defaultdict(Counter)
     for result in evaluations:
         automatic = result["controls"]["automatic"]["metrics"]
         for source, variants in automatic.items():
             for variant, phases in variants.items():
                 for phase, metrics in phases.items():
                     automatic_groups[(result["system"], result["mode"], source, variant, phase)].append(metrics)
-        petclinic_db = result["controls"].get("petclinic_database_prediction", {}).get("sources", {})
-        for source, counts in petclinic_db.items():
-            database_groups[(result["mode"], source)].update(counts)
-        async_data = result["controls"].get("async_association", {}).get("sources", {})
-        for source, counts in async_data.items():
-            async_groups[(result["mode"], source)].update(counts)
+        petclinic_db = result["controls"].get("petclinic_database_prediction", {}).get("comparisons", [])
+        for row in petclinic_db:
+            counts = {key: value for key, value in row.items()
+                      if key not in {"predictor", "operation", "phase"}}
+            database_groups[(result["mode"], row["predictor"], row["operation"], row["phase"])].update(counts)
+        async_data = result["controls"].get("async_association", {}).get("phases", {})
+        for phase, phase_data in async_data.items():
+            for source, counts in phase_data["sources"].items():
+                key = (result["mode"], source, phase)
+                async_groups[key].update(counts)
+                for outcome_name in ("immediate_outcome", "durable_outcome"):
+                    outcome = phase_data[outcome_name]
+                    async_groups[key].update({f"{outcome_name}_{name}": outcome[name]
+                                              for name in ("successes", "failures", "unknown")})
+        for row in result["confusion"]:
+            key = (result["system"], result["mode"], row["operation"], row["source"], row["phase"])
+            confusion_groups[key].update(row["counts"])
     automatic_summaries = []
     for key, rows in sorted(automatic_groups.items()):
         ari_values = [row.get("ari_on_covered") for row in rows]
@@ -410,12 +496,17 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
             "seeds": len(rows),
         })
     database_summaries = [
-        {"mode": mode, "source": source, **dict(counts)}
-        for (mode, source), counts in sorted(database_groups.items())
+        {"mode": mode, "predictor": predictor, "operation": operation, "phase": phase, **dict(counts)}
+        for (mode, predictor, operation, phase), counts in sorted(database_groups.items())
     ]
     async_summaries = [
-        {"mode": mode, "source": source, **dict(counts)}
-        for (mode, source), counts in sorted(async_groups.items())
+        {"mode": mode, "source": source, "phase": phase, **dict(counts)}
+        for (mode, source, phase), counts in sorted(async_groups.items())
+    ]
+    confusion_summaries = [
+        {"system": system, "mode": mode, "operation": operation, "source": source,
+         "phase": phase, "counts": dict(counts)}
+        for (system, mode, operation, source, phase), counts in sorted(confusion_groups.items())
     ]
 
     out = Path(output)
@@ -426,19 +517,28 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         "protocol_version": "source-contract-v3",
         "campaigns": len(evaluations),
         "costs": {
-            "campaign_elapsed_seconds": sum(
-                result["costs"]["campaign_elapsed_seconds"] or 0 for result in evaluations
+            "campaign_elapsed_seconds": _complete_sum(
+                result["costs"]["campaign_elapsed_seconds"] for result in evaluations
             ),
             "model_preparation_seconds": {
-                source: sum(
-                    result["costs"]["model_preparation_seconds"][source] or 0
+                source: _complete_sum(
+                    result["costs"]["model_preparation_seconds"][source]
                     for result in evaluations
                 )
                 for source in SOURCES
             },
+            "fit_and_discovery_seconds": _complete_sum(
+                result["costs"]["fit_and_discovery_seconds"] for result in evaluations
+            ),
+            "attempted_operations": _complete_sum(
+                result["costs"]["attempted_operations"] for result in evaluations
+            ),
+            "preparation_operations": _complete_sum(
+                result["costs"]["preparation_operations"] for result in evaluations
+            ),
             "primary_attempts": sum(result["primary_population"]["total"] for result in evaluations),
-            "all_recorded_block_attempts": sum(
-                block["attempts"] or 0
+            "all_recorded_block_attempts": _complete_sum(
+                block["attempts"]
                 for result in evaluations for block in result["costs"]["traffic_blocks"]
             ),
             "traffic_blocks": sum(len(result["costs"]["traffic_blocks"]) for result in evaluations),
@@ -448,6 +548,7 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         "automatic_grouping": automatic_summaries,
         "petclinic_database_prediction": database_summaries,
         "otel_async_association": async_summaries,
+        "per_attempt_confusion": confusion_summaries,
         "control_references": [{
             "system": result["system"], "mode": result["mode"], "seed": result["seed"],
             "controls": result["controls"],
@@ -490,20 +591,32 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
             f"{row['covered']} / {row['total']} | {row['mean_unknown_fraction']:.3f} | {ari} |"
         )
     lines += ["", "### Petclinic selected-database prediction", "",
-              "| Mode | Source | Predicted true | Predicted false | Predicted unknown | Prediction contradicted by external success |",
-              "| --- | --- | ---: | ---: | ---: | ---: |"]
+              "| Mode | Predictor | Operation | Phase | Predicted true | Predicted false | Predicted unknown | Supported | Contradicted |",
+              "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |"]
     for row in database_summaries:
         lines.append(
-            f"| {row['mode']} | {row['source']} | {row.get('predicted_true', 0)} | "
+            f"| {row['mode']} | {row['predictor']} | {row['operation']} | {row['phase']} | "
+            f"{row.get('predicted_true', 0)} | "
             f"{row.get('predicted_false', 0)} | {row.get('predicted_none', 0)} | "
+            f"{row.get('predicted_failure_supported_by_external_failure', 0)} | "
             f"{row.get('predicted_failure_but_external_success', 0)} |"
         )
     lines += ["", "### OTel asynchronous association", "",
-              "| Mode | Source | Linked | Unknown |",
-              "| --- | --- | ---: | ---: |"]
+              "| Mode | Source | Phase | Linked | Unknown | Immediate T/F/U | Durable T/F/U |",
+              "| --- | --- | --- | ---: | ---: | --- | --- |"]
     for row in async_summaries:
-        lines.append(f"| {row['mode']} | {row['source']} | {row.get('linked', 0)} | {row.get('unknown', 0)} |")
-    lines += ["", (f"Recorded campaign elapsed time: {result['costs']['campaign_elapsed_seconds']:.1f} seconds. "
+        immediate = "/".join(str(row.get(f"immediate_outcome_{key}", 0))
+                             for key in ("successes", "failures", "unknown"))
+        durable = "/".join(str(row.get(f"durable_outcome_{key}", 0))
+                           for key in ("successes", "failures", "unknown"))
+        lines.append(f"| {row['mode']} | {row['source']} | {row['phase']} | {row.get('linked', 0)} | "
+                     f"{row.get('unknown', 0)} | {immediate} | {durable} |")
+    lines += ["", "### Per-attempt semantic confusion", "",
+              ("Full calibration/target confusion counts and bounded witness attempt IDs are retained in `results.json`. "
+               "False positives, false negatives, and source/external unknowns are not absorbed into interval averages.")]
+    elapsed = result["costs"]["campaign_elapsed_seconds"]
+    elapsed_text = "unknown" if elapsed is None else f"{elapsed:.1f} seconds"
+    lines += ["", (f"Recorded campaign elapsed time: {elapsed_text}. "
                    "Human/agent time is unmetered and remains unknown.")]
     markdown_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return {"json": str(json_path), "csv": str(csv_path), "markdown": str(markdown_path)}
