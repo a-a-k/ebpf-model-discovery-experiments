@@ -35,6 +35,11 @@ jobs:
           python -m systems.otel_demo.audit_qualification_v3 \
             --inputs work/qualification \
             --out results/qualification-review/otel-body-fidelity.json
+      - name: Audit saved DSB entry binding without fitting or new traffic
+        run: |
+          python -m systems.deathstarbench.audit_qualification_v3 \
+            --inputs work/qualification \
+            --out results/qualification-review/dsb-entry-binding.json
       - name: Copy precomputed evidence without recalculation
         run: |
           python - <<'PY'
