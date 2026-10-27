@@ -579,8 +579,10 @@ def _retryable_transport(exc: subprocess.CalledProcessError | subprocess.Timeout
     if isinstance(exc, subprocess.TimeoutExpired):
         return True
     message = _transport_message(exc).lower()
+    if re.search(r"\b(?:http|status(?: code)?)\s*:?\s+(?:502|503|504)\b", message):
+        return True
     return any(token in message for token in (
-        "502", "503", "504", "bad gateway", "gateway timeout", "timed out",
+        "bad gateway", "gateway timeout", "timed out",
         "timeout", "connection reset", "connection refused", "connection aborted",
         "temporary network", "unexpected eof", "tls handshake timeout",
     ))

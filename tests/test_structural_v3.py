@@ -405,7 +405,8 @@ def test_download_semantic_errors_and_nonretryable_gh_failure_do_not_retry(tmp_p
     with pytest.raises(ValueError, match="artifact expired"):
         structural._download("1", "report", destination, root)
     monkeypatch.setattr(structural, "_artifact", lambda *_: (_ for _ in ()).throw(
-        subprocess.CalledProcessError(1, ["gh", "api"], stderr="HTTP 404")))
+        subprocess.CalledProcessError(1, ["gh", "api"],
+                                      stderr="HTTP 404: no artifact in run 40502990432")))
     with pytest.raises(structural.ArtifactTransportError) as caught:
         structural._download("1", "report", destination, root)
     assert len(caught.value.attempts) == 1
