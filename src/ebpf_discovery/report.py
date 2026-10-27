@@ -54,7 +54,7 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
         evidence = out/'evidence'/f"{m['system']}-{m['mode']}-{m['seed']}-{m['run_id']}"
         evidence.mkdir(parents=True, exist_ok=True)
         for name in ('metrics.json', 'metrics-acquisition-version.json', 'status.json',
-                     'forecast-saved.json', 'blocks.json', 'deployment.json'):
+                     'forecast-saved.json', 'blocks.json', 'deployment.json', 'evaluation-recovery.json'):
             if (path.parent/name).exists():
                 shutil.copy2(path.parent/name, evidence/name)
         for source, result in m['sources'].items():

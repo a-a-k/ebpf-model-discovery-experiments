@@ -44,9 +44,12 @@ jobs:
         run: |
           find work/inputs -name status.json -print0 | while IFS= read -r -d '' status; do
             metrics="$(dirname "$status")/metrics.json"
-            [[ -f "$metrics" ]] || continue
-            cp "$metrics" "$(dirname "$metrics")/metrics-acquisition-version.json"
-            python -m ebpf_discovery.evaluate --out "$(dirname "$metrics")"
+            if [[ -f "$metrics" ]]; then
+              cp "$metrics" "$(dirname "$metrics")/metrics-acquisition-version.json"
+              python -m ebpf_discovery.evaluate --out "$(dirname "$metrics")"
+            elif [[ "$(jq -r .status "$status")" == acquisition_complete ]]; then
+              python -m ebpf_discovery.recover --out "$(dirname "$status")"
+            fi
           done
       - run: python -m ebpf_discovery.report --inputs work/inputs --out results/report
       - uses: actions/upload-artifact@v4
