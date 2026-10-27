@@ -70,6 +70,8 @@ def span_fact(span: dict, row: dict) -> dict:
         "node": span.get("node"), "trace_id": span["trace_id"], "span_id": span["span_id"],
         "parent_id": span["parent_id"], "kind": span["kind"], "component": attrs.get("component"),
         "method_path": raw_route(span), "start_ns": span["start_ns"], "end_ns": span["end_ns"],
+        "start_mod_millisecond_ns": span["start_ns"] % 1_000_000,
+        "end_mod_millisecond_ns": span["end_ns"] % 1_000_000,
         "start_minus_journal_ns": span["start_ns"]-started,
         "end_minus_cutoff_ns": span["end_ns"]-cutoff,
         "inside_sealed_window": started <= span["start_ns"] <= span["end_ns"] <= cutoff,
@@ -207,6 +209,9 @@ def audit(capture: Path) -> dict:
                 for (operation, binding, body), count in sorted(by_operation.items())],
             "witnesses": [item for key in sorted(witnesses) for item in witnesses[key]],
             "witness_selection": "first three attempt hashes per operation and saved binding reason",
+            "timing_interpretation": ("Timestamp residues and journal differences are descriptive. "
+                                      "A coarse exported native timestamp or an older capture does not prove "
+                                      "the cause of missing bindings, clock offset, or admissibility of a tolerance."),
             "raw_response_bodies_retained_in_source_artifact_only": True,
         }
     finally:
