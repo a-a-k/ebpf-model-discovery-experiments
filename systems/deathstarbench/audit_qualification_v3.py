@@ -146,6 +146,7 @@ def audit(capture: Path) -> dict:
         binder = Binder(store, "deathstarbench")
         reasons, bodies, entry_replay, windows, anchor_categories = (
             Counter(), Counter(), Counter(), Counter(), Counter())
+        boundary_flags, revised_eligibility = Counter(), Counter()
         by_operation = Counter()
         witnesses = defaultdict(list)
         for row in sorted(rows, key=lambda item: item["attempt_key"]):
@@ -166,10 +167,21 @@ def audit(capture: Path) -> dict:
             entry, replay_reason = binder.entry("native", request_id, expected)
             entry_replay[replay_reason] += 1
             relation = "unbound_before_window"
+            eligible, revised_reason, proof = (False, "entry_unbound", None)
             if entry:
                 relation = ("inside" if row["started_ns"] <= entry["start_ns"] <=
                             entry["end_ns"] <= row["deadline_ns"] else "outside")
+                if entry["start_ns"] < row["started_ns"]:
+                    boundary_flags["start_before_journal"] += 1
+                if entry["end_ns"] > row["deadline_ns"]:
+                    boundary_flags["end_after_cutoff"] += 1
+                if entry["end_ns"] < entry["start_ns"]:
+                    boundary_flags["inverted_outer"] += 1
+                if relation == "inside":
+                    boundary_flags["strict_inside"] += 1
+                eligible, revised_reason, proof = binder.entry_window(entry, "native", request_id, row)
             windows[relation] += 1
+            revised_eligibility[(reason, revised_reason, eligible)] += 1
             if len(witnesses[(operation, reason)]) >= MAX_WITNESSES_PER_REASON_OPERATION:
                 continue
             witness = {
@@ -180,6 +192,8 @@ def audit(capture: Path) -> dict:
                 "saved_binding_reason": reason, "saved_body_reason": body_reason,
                 "replayed_pre_window_entry_reason": replay_reason,
                 "replayed_entry": span_fact(entry, row) if entry else None,
+                "revised_entry_eligible": eligible, "revised_entry_reason": revised_reason,
+                "revised_attribution_proof": proof,
                 "total_native_header_anchors": len(anchors),
                 "anchors_shown": [anchor_chain(store, anchor, row)
                                   for anchor in anchors[:MAX_ANCHORS_PER_WITNESS]],
@@ -204,6 +218,11 @@ def audit(capture: Path) -> dict:
             "native_header_anchor_categories": dict(sorted(anchor_categories.items())),
             "pre_window_entry_replay_reasons": dict(sorted(entry_replay.items())),
             "pre_window_entry_window_relation": dict(sorted(windows.items())),
+            "raw_entry_boundary_counts": dict(sorted(boundary_flags.items())),
+            "saved_binding_vs_revised_eligibility": [
+                {"saved_binding": saved, "revised_reason": revised, "eligible": eligible,
+                 "n": count}
+                for (saved, revised, eligible), count in sorted(revised_eligibility.items())],
             "by_operation_binding_body": [
                 {"operation": operation, "binding": binding, "body_reason": body, "n": count}
                 for (operation, binding, body), count in sorted(by_operation.items())],

@@ -162,6 +162,77 @@ class Binder:
             return None, 'entry_missing' if not selected else 'multiple_entries'
         return next(iter(selected.values())), 'unique_declared_entry'
 
+    def entry_window(self, span, source, identity, row):
+        """Admit an entry inside the sealed journal, with one narrow DSB proof.
+
+        A coarse native nginx outer start may precede the client journal. Only
+        an exact header-bearing descendant proves request presence. The outer
+        span remains the source of HTTP status, body, raw start and end.
+        """
+        if row.get('observation_policy') != 'censored-v3':
+            return (True, 'legacy_window', None)
+        started, cutoff = row['started_ns'], row['deadline_ns']
+        if not (type(started) is int and type(cutoff) is int and started < cutoff and
+                type(span['start_ns']) is int and type(span['end_ns']) is int and
+                0 < span['start_ns'] <= span['end_ns'] <= cutoff):
+            return (False, 'entry_outside_sealed_observation_window', None)
+        if started <= span['start_ns']:
+            if row.get('observation_censored'):
+                return (False, 'observation_censored', None)
+            return (True, 'strict_sealed_window', None)
+        native_coarse_nginx = (
+            self.system == 'deathstarbench' and source == 'native' and
+            span['service'] in self.contracts.ENTRY_SERVICES['native'] and
+            span['kind'] is None and span['attributes'].get('component') in
+                getattr(self.contracts, 'UNTYPED_ENTRY_COMPONENTS', {}).get('native', [])
+        )
+        if not native_coarse_nginx or not identity:
+            return (False, 'entry_outside_sealed_observation_window', None)
+        proofs = []
+        for anchor in self.store.candidates(source, identity):
+            if anchor['span_id'] == span['span_id'] or step_id(anchor) != identity:
+                continue
+            if str(anchor['kind']) in ('3', 'SPAN_KIND_CLIENT', 'client'):
+                continue
+            if any(anchor.get(key) != span.get(key) for key in
+                   ('source', 'trace_id', 'service', 'instance', 'node')):
+                continue
+            if not (type(anchor['start_ns']) is int and type(anchor['end_ns']) is int and
+                    0 < started <= anchor['start_ns'] < anchor['end_ns'] <= span['end_ns'] <= cutoff):
+                continue
+            current, path, visited = anchor, [], set()
+            while current and current['span_id'] not in visited:
+                visited.add(current['span_id'])
+                path.append(current['span_id'])
+                if current.get('attribute_conflicts') or len(self.store.identity(
+                        source, current['trace_id'], current['span_id'])) != 1:
+                    break
+                if current['span_id'] != span['span_id'] and str(current['kind']) in (
+                        '3', 'SPAN_KIND_CLIENT', 'client'):
+                    break
+                if any(current.get(key) != span.get(key) for key in
+                       ('source', 'trace_id', 'service', 'instance', 'node')):
+                    break
+                if current['span_id'] == span['span_id']:
+                    proofs.append({'rule': 'native_nginx_coarse_outer_start_exact_header_child',
+                        'outer_raw_start_ns': span['start_ns'], 'outer_end_ns': span['end_ns'],
+                        'header_child_start_ns': anchor['start_ns'],
+                        'header_child_end_ns': anchor['end_ns'],
+                        'header_child_span_id': anchor['span_id'],
+                        'source_local_parent_path': path[:]})
+                    break
+                parent = current.get('parent_id')
+                parents = self.store.identity(source, current['trace_id'], parent) if parent else []
+                current = parents[0] if len(parents) == 1 else None
+        if not proofs:
+            return (False, 'entry_outside_sealed_observation_window', None)
+        if row.get('observation_censored'):
+            return (False, 'observation_censored', None)
+        proofs.sort(key=lambda proof: (proof['header_child_start_ns'],
+                                       proof['header_child_span_id'], proof['source_local_parent_path']))
+        return (True, 'native_header_child_attribution',
+                {**proofs[0], 'valid_header_children': len(proofs)})
+
     def source_attempt(self, row, source):
         operation = row['operation_id']
         contract = self.contracts.CONTRACTS[operation]
@@ -169,10 +240,14 @@ class Binder:
         for ordinal, expected in enumerate(contract['steps']):
             identity = row['step_ids'][ordinal] if ordinal < len(row['step_ids']) else None
             span, reason = self.entry(source, identity, expected)
+            window_reason = None
             if span:
                 if row.get('observation_policy') == 'censored-v3':
-                    if not row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']:
-                        span, reason = None, 'entry_outside_sealed_observation_window'
+                    eligible, window_reason, proof = self.entry_window(span, source, identity, row)
+                    if not eligible:
+                        span, reason = None, window_reason
+                    elif proof:
+                        span['_header_binding'] = {**span['_header_binding'], 'window_attribution': proof}
                 elif span['start_ns'] < row['started_ns']-1_000_000_000 or span['start_ns'] > row['ended_ns']+1_000_000_000:
                     span, reason = None, 'entry_outside_journal_window'
             code = status_code(span)
@@ -180,6 +255,7 @@ class Binder:
             values.append(valid)
             steps.append({'ordinal': ordinal, 'request_id': identity, 'binding': reason, 'status': code,
                           'protocol': valid, 'witness': witness(span),
+                          'window_binding': window_reason,
                           'header_binding': span.get('_header_binding') if span else None})
             if ordinal == len(contract['steps'])-1:
                 final = span
@@ -251,16 +327,14 @@ class Binder:
         for row in actual_census:
             signatures, evidence = [], []
             for identity in row['step_ids']:
-                choices = [self.entry(s, identity)[0] for s in ('ebpf', 'native')] if source == 'combined' else [self.entry(source, identity)[0]]
+                sources = ('ebpf', 'native') if source == 'combined' else (source,)
+                choices = [(s, self.entry(s, identity)[0]) for s in sources]
                 if row.get('observation_policy') == 'censored-v3':
-                    choices = [span for span in choices if span and
-                        row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']]
+                    choices = [(s, span) for s, span in choices if span and
+                               self.entry_window(span, s, identity, row)[0]]
                 signatures_found = set()
-                for span in choices:
+                for _, span in choices:
                     if not span or not route(span):
-                        continue
-                    if row.get('observation_policy') == 'censored-v3' and not (
-                            row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']):
                         continue
                     signature = route(span)
                     if downstream:
@@ -274,7 +348,7 @@ class Binder:
                         signature = json.dumps([signature, features], separators=(',', ':'))
                     signatures_found.add(signature)
                 signatures.append(next(iter(signatures_found)) if len(signatures_found) == 1 else None)
-                codes = [status_code(s) for s in choices if s]
+                codes = [status_code(span) for _, span in choices if span]
                 evidence.append(merge_verdicts([200 <= c < 300 for c in codes if c is not None]))
             proxy = None if row.get('observation_censored') else conjunction(evidence)
             projected.append({**row, 'signature': signatures, 'proxy': proxy})
