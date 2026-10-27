@@ -98,14 +98,36 @@ deadline anchored to the business operation's start. A first positive SQL read
 after that boundary is unknown because it cannot prove the persistence time.
 While paused, accounting remains stopped through the last registered
 deadline. Recovery starts accounting and blocks until Kafka consumer-group lag
-is zero, so the backlog drains before the recovered control begins. The database
-schema and catalog fixture come from the pinned upstream PostgreSQL initializer.
+is zero, so the backlog drains before the recovered control begins. Drain
+observation runs in a uniquely named, ephemeral container made from the running
+broker's exact image ID. It shares Kafka's network namespace but has its own
+256 MiB memory and one-CPU limits, a 16--64 MiB JVM heap, no Java agent, and the
+native SDK disabled. The client uses the pinned broker's actual listener
+`kafka:9092`; it does not assume that Kafka listens on loopback. The initial
+cleanup, image and broker-start checks, every probe, retry delay, and successful
+zero-lag observation all share one fixed 60-second readiness deadline. A
+successful result requires a zero exit status, at least one `orders` partition,
+parseable lag for every returned `orders` partition, zero lag for each one, and
+an unchanged broker `StartedAt`. Cleanup is checked independently so a failed
+container census cannot masquerade as absence.
+
+Each recovery writes `kafka-admin-drain.json`, retaining the image ID, helper
+name, deadline, commands' timings and results, parsed partition lags, broker
+start timestamps, cleanup outcomes, and any technical failure. Common OBI
+configuration excludes only containers named `study-kafka-admin-*`; it does not
+exclude the broker or application Java processes. Technical qualification run
+`40454954706` observed lag 3 followed by lag 0, an unchanged broker start time,
+and verified helper cleanup in 19.55 seconds. This qualifies the lifecycle, not
+Kafka delivery semantics or application durability. The database schema and
+catalog fixture come from the pinned upstream PostgreSQL initializer.
 
 ## Limitations
 
 The Envoy endpoint is experiment deployment metadata, not learner input or an
 expected dependency graph. SQL census is evaluator-only evidence. This adapter
 does not invent Kafka message identity links: absence of a confirmed identity
-chain remains unknown to the common inference code. Images, source acquisition,
-guest launches, application traffic, and builds are intended only for GitHub
-Actions; local use is limited to static and focused unit checks.
+chain remains unknown to the common inference code. The isolated Kafka admin
+client establishes only observed consumer-group drain and broker continuity;
+it does not prove that any particular order was delivered or persisted. Images,
+source acquisition, guest launches, application traffic, and builds are intended
+only for GitHub Actions; local use is limited to static and focused unit checks.
