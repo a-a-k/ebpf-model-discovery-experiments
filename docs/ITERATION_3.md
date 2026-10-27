@@ -398,6 +398,20 @@ The reviewer grants explicit implementation **GO** for the OTel-only nine-cell
 reporting rerun. The orchestrator agrees; all earlier reporting costs remain
 included.
 
+## Report output isolation after publishing results
+
+Published primary results now exist in fresh repository checkouts. Before a
+report refresh, the fixed generated output tree must be cleared in the ephemeral
+Actions workspace; otherwise `mkdir` fails or old files contaminate a new report.
+The reviewer and orchestrator give **GO** before implementation for this scoped
+preparation repair: require matching resolved workspace/cwd and the exact
+`workspace/results/iteration-3` target, refusing redirected paths. Published
+Git files/releases and downloaded inputs are untouched. The direct baseline is
+the same report with an empty output directory; no information or calculation
+changes. The original primary files remain preserved locally/in Git, and only
+refreshed costs/provenance are published as a separate supplement. Reporting
+costs remain disclosed.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
