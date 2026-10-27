@@ -146,7 +146,7 @@ def audit(capture: Path) -> dict:
         binder = Binder(store, "deathstarbench")
         reasons, bodies, entry_replay, windows, anchor_categories = (
             Counter(), Counter(), Counter(), Counter(), Counter())
-        by_operation = defaultdict(Counter)
+        by_operation = Counter()
         witnesses = defaultdict(list)
         for row in sorted(rows, key=lambda item: item["attempt_key"]):
             operation = row["operation_id"]
