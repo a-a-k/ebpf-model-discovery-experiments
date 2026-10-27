@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import ijson
 import json
 import os
 from pathlib import Path
@@ -15,6 +16,7 @@ import time
 from typing import Any
 
 SOURCES = ("ebpf", "native", "combined")
+PROJECTION_SOURCES = (*SOURCES, "entry_http")
 MODES = ("absent", "partial", "full")
 SEEDS = (3, 4, 5)
 WITNESS_LIMIT = 5
@@ -41,6 +43,101 @@ def _digest(path: Path) -> str:
 
 def _tree_bytes(path: Path) -> int:
     return sum(item.stat().st_size for item in path.rglob("*") if item.is_file())
+
+
+def _reason(value: Any) -> str:
+    return value if isinstance(value, str) and value else "not recorded"
+
+
+def _increment(counter: dict[str, int], key: str) -> None:
+    counter[key] = counter.get(key, 0) + 1
+
+
+def _witness(witnesses: dict[str, list[str]], category: str, attempt_key: Any) -> None:
+    if not isinstance(attempt_key, str) or not attempt_key:
+        return
+    witnesses[category] = sorted(set(witnesses.get(category, []) + [attempt_key]))[:WITNESS_LIMIT]
+
+
+def _projection_diagnostics(path: Path, source: str) -> dict[str, Any]:
+    """Stream recorded projection diagnostics without re-projecting retained evidence."""
+    groups: dict[tuple[str, str], dict[str, Any]] = {}
+    attempts: set[str] = set()
+    records = 0
+    with path.open("rb") as stream:
+        for row in ijson.items(stream, "item", use_float=True):
+            if not isinstance(row, dict) or row.get("source") != source:
+                raise ValueError(f"{source} projection contains a malformed or cross-source record")
+            attempt = row.get("attempt_key")
+            operation, phase = row.get("operation_id"), row.get("phase")
+            if not all(isinstance(value, str) and value for value in (attempt, operation, phase)):
+                raise ValueError(f"{source} projection record lacks its opaque identity or grouping fields")
+            if attempt in attempts:
+                raise ValueError(f"{source} projection repeats attempt_key {attempt}")
+            attempts.add(attempt)
+            records += 1
+            group = groups.setdefault((operation, phase), {
+                "attempt_denominator": 0,
+                "proxy_attempts": {"true": 0, "false": 0, "unknown": 0},
+                "censor_flag_attempts": {"true": 0, "false": 0, "not recorded": 0},
+                "body_evidence_reason_attempts": {}, "payload_verdict_reason_attempts": {},
+                "steps_field_attempts": {"recorded": 0, "not recorded": 0},
+                "step_occurrence_denominator": 0,
+                "step_binding_reason_occurrences": {}, "step_window_reason_occurrences": {},
+                "step_header_rule_occurrences": {}, "step_header_window_rule_occurrences": {},
+                "bounded_opaque_attempt_witnesses": {},
+            })
+            group["attempt_denominator"] += 1
+            proxy = "true" if row.get("proxy") is True else "false" if row.get("proxy") is False else "unknown"
+            group["proxy_attempts"][proxy] += 1
+            _witness(group["bounded_opaque_attempt_witnesses"], f"proxy:{proxy}", attempt)
+            if "observation_censored" not in row:
+                censored = "not recorded"
+            else:
+                censored = "true" if row.get("observation_censored") is True else (
+                    "false" if row.get("observation_censored") is False else "not recorded")
+            group["censor_flag_attempts"][censored] += 1
+            _witness(group["bounded_opaque_attempt_witnesses"], f"censor:{censored}", attempt)
+            body = row.get("body_evidence")
+            body_reason = _reason(body.get("reason") if isinstance(body, dict) else None)
+            _increment(group["body_evidence_reason_attempts"], body_reason)
+            _witness(group["bounded_opaque_attempt_witnesses"], f"body:{body_reason}", attempt)
+            payload = row.get("payload_verdict")
+            payload_reason = _reason(payload.get("reason") if isinstance(payload, dict) else None)
+            _increment(group["payload_verdict_reason_attempts"], payload_reason)
+            _witness(group["bounded_opaque_attempt_witnesses"], f"payload:{payload_reason}", attempt)
+            steps = row.get("steps")
+            if not isinstance(steps, list):
+                group["steps_field_attempts"]["not recorded"] += 1
+                _witness(group["bounded_opaque_attempt_witnesses"], "steps:not recorded", attempt)
+                continue
+            group["steps_field_attempts"]["recorded"] += 1
+            for step in steps:
+                if not isinstance(step, dict):
+                    raise ValueError(f"{source} projection contains a malformed step record")
+                group["step_occurrence_denominator"] += 1
+                binding = _reason(step.get("binding"))
+                window = _reason(step.get("window_binding"))
+                header = step.get("header_binding")
+                header_rule = _reason(header.get("rule") if isinstance(header, dict) else None)
+                attribution = header.get("window_attribution") if isinstance(header, dict) else None
+                header_window = _reason(attribution.get("rule") if isinstance(attribution, dict) else None)
+                for field, reason in (
+                    ("step_binding_reason_occurrences", binding),
+                    ("step_window_reason_occurrences", window),
+                    ("step_header_rule_occurrences", header_rule),
+                    ("step_header_window_rule_occurrences", header_window),
+                ):
+                    _increment(group[field], reason)
+                    _witness(group["bounded_opaque_attempt_witnesses"], f"{field}:{reason}", attempt)
+    return {
+        "records": records,
+        "groups": [
+            {"operation_id": operation, "phase": phase, **group}
+            for (operation, phase), group in sorted(groups.items())
+        ],
+        "attempt_keys": attempts,
+    }
 
 
 def _one(root: Path, name: str) -> Path:
@@ -340,6 +437,13 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
         "compact/freeze-integrity.json": _digest(integrity_path),
         "full/freeze-integrity.json": _digest(full_integrity_path),
     }
+    compact_metrics_path, full_metrics_path = _one(summary, "metrics-v3.json"), _one(full, "metrics-v3.json")
+    if compact_metrics_path.read_bytes() != full_metrics_path.read_bytes():
+        raise ValueError("compact and full metrics-v3.json bytes differ")
+    metrics_hash = _digest(compact_metrics_path)
+    metrics = _read(compact_metrics_path)
+    inputs["compact/metrics-v3.json"] = metrics_hash
+    inputs["full/metrics-v3.json"] = metrics_hash
     for source in SOURCES:
         relative = f"models/{source}/model.json"
         model_path = summary / relative
@@ -351,6 +455,24 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
         inputs[f"compact/{relative}"] = expected[relative]
         inputs[f"full/{relative}"] = expected[relative]
         graphs[source] = _graph_summary(_read(model_path).get("graph"), source)
+    projections, attempt_sets = {}, {}
+    source_inputs = metrics.get("source_inputs")
+    if not isinstance(source_inputs, dict):
+        raise ValueError("compact metrics lack source_inputs")
+    for source in PROJECTION_SOURCES:
+        projection_path = _one(full, f"{source}-final.json")
+        expected_projection_hash = source_inputs.get(source, {}).get("projection_sha256")
+        actual_projection_hash = _digest(projection_path)
+        if (not isinstance(expected_projection_hash, str) or len(expected_projection_hash) != 64
+                or actual_projection_hash != expected_projection_hash):
+            raise ValueError(f"retained projection hash mismatch for {source}")
+        inputs[f"full/projections/{source}-final.json"] = actual_projection_hash
+        projection = _projection_diagnostics(projection_path, source)
+        attempt_sets[source] = projection.pop("attempt_keys")
+        projections[source] = projection
+    first_attempts = attempt_sets[PROJECTION_SOURCES[0]]
+    if any(attempt_sets[source] != first_attempts for source in PROJECTION_SOURCES[1:]):
+        raise ValueError("retained projections do not contain the same attempt population")
     index = _one(full, "observation-index.sqlite")
     index_hash = _digest(index)
     summary_acquisition_path = _one(summary, "acquisition-complete.json")
@@ -379,6 +501,14 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
         "system": reference["system"], "mode": reference["mode"], "seed": int(reference["seed"]),
         "run_id": str(reference["run_id"]),
         "frozen_graphs": graphs,
+        "projection_recorded_diagnostics": {
+            "interpretation": (
+                "Reasons and flags are records from retained projections, not independently proven root causes. "
+                "Reason occurrences can overlap and are not exclusive causes; attempt and step denominators are separate."
+            ),
+            "missing_fields_label": "not recorded", "witness_limit": WITNESS_LIMIT,
+            "sources": projections,
+        },
         "full_capture_parent_links": raw,
         "reference_placement": reference_placement,
         "input_sha256": inputs,
@@ -466,6 +596,40 @@ def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: 
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+    diagnostic_rows = []
+    for cell in result["cells"]:
+        for source in PROJECTION_SOURCES:
+            for group in cell["projection_recorded_diagnostics"]["sources"][source]["groups"]:
+                diagnostic_rows.append({
+                    "system": system, "mode": cell["mode"], "seed": cell["seed"],
+                    "run_id": cell["run_id"], "source": source,
+                    "operation_id": group["operation_id"], "phase": group["phase"],
+                    "attempt_denominator": group["attempt_denominator"],
+                    "proxy_true": group["proxy_attempts"]["true"],
+                    "proxy_false": group["proxy_attempts"]["false"],
+                    "proxy_unknown": group["proxy_attempts"]["unknown"],
+                    "censor_true": group["censor_flag_attempts"]["true"],
+                    "censor_false": group["censor_flag_attempts"]["false"],
+                    "censor_not_recorded": group["censor_flag_attempts"]["not recorded"],
+                    "step_occurrence_denominator": group["step_occurrence_denominator"],
+                    "body_evidence_reason_attempts": json.dumps(
+                        group["body_evidence_reason_attempts"], sort_keys=True, separators=(",", ":")),
+                    "payload_verdict_reason_attempts": json.dumps(
+                        group["payload_verdict_reason_attempts"], sort_keys=True, separators=(",", ":")),
+                    "step_binding_reason_occurrences": json.dumps(
+                        group["step_binding_reason_occurrences"], sort_keys=True, separators=(",", ":")),
+                    "step_window_reason_occurrences": json.dumps(
+                        group["step_window_reason_occurrences"], sort_keys=True, separators=(",", ":")),
+                    "step_header_rule_occurrences": json.dumps(
+                        group["step_header_rule_occurrences"], sort_keys=True, separators=(",", ":")),
+                    "step_header_window_rule_occurrences": json.dumps(
+                        group["step_header_window_rule_occurrences"], sort_keys=True, separators=(",", ":")),
+                })
+    with (output / "projection-recorded-diagnostics-v3.csv").open(
+            "w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(diagnostic_rows[0]))
+        writer.writeheader()
+        writer.writerows(diagnostic_rows)
     lines = [
         f"# Iteration 3 structural supplement: {system}", "",
         "All nine admitted cells are included. Frozen calibration graphs and full-capture parent links are separate.",
@@ -474,6 +638,9 @@ def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: 
         "Combined-source nodes are a source-qualified union, not additional physical instances.",
         "Deployment and boot records are evaluation-only references and do not correct observed placement.",
         "No per-request independent structural truth is available; correctness error rate remains unknown.", "",
+        ("Projection diagnostics reproduce recorded reasons and flags; they are not independently proven root causes, "
+         "and overlapping step-reason occurrences are not exclusive causes."),
+        "Attempt and step-occurrence denominators are reported separately; absent fields are `not recorded`.", "",
         ("Recorded costs cover input-artifact transfer/decompression and processing only. Complete runner-job, "
          "local-compute, and human/agent effort remain unknown."), "",
         ("| Mode | Seed | Source | Frozen services | Frozen DB logical nodes | Frozen/full cross-guest pairs | "

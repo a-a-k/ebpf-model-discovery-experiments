@@ -5,7 +5,7 @@ import sqlite3
 
 import pytest
 
-from ebpf_discovery.structural_v3 import _report, summarize_cell
+from ebpf_discovery.structural_v3 import _projection_diagnostics, _report, summarize_cell
 
 
 def write(path: Path, value):
@@ -50,6 +50,31 @@ def fixture(root: Path):
               "status": "acquisition_complete"}
     write(summary / "status.json", status)
     write(full / "status.json", status)
+    projection_hashes = {}
+    for source in ("ebpf", "native", "combined", "entry_http"):
+        rows = []
+        for index, proxy in enumerate((True, None)):
+            row = {
+                "source": source, "attempt_key": f"opaque-{index}",
+                "operation_id": "owner_details_with_visits", "phase": "target",
+                "proxy": proxy, "observation_censored": index == 1,
+                "payload_verdict": {"reason": "fixture_match" if index == 0 else "payload_missing"},
+            }
+            if source != "entry_http":
+                row["body_evidence"] = {"reason": "captured_body"}
+                row["steps"] = [{
+                    "binding": "unique_declared_entry", "window_binding": "strict_sealed_window",
+                    "header_binding": {"rule": "explicit_server"},
+                }]
+            rows.append(row)
+        path = full / "projections" / f"{source}-final.json"
+        write(path, rows)
+        projection_hashes[source] = hashlib.sha256(path.read_bytes()).hexdigest()
+    metrics = {"source_inputs": {
+        source: {"projection_sha256": digest} for source, digest in projection_hashes.items()
+    }}
+    write(summary / "metrics-v3.json", metrics)
+    write(full / "metrics-v3.json", metrics)
     write(full / "deployment.json", {
         "replicas": [{"name": "worker", "node": "b"}],
         "database": {"logical_identity": "db", "node": "a"},
@@ -127,6 +152,18 @@ def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
     assert result["frozen_graphs"]["combined"]["qualified_union_not_additional_physical_instances"] is True
     assert graph["known_instance_label_nodes"] == 1
     assert graph["unknown_instance_label_nodes"] == 1
+    diagnostics = result["projection_recorded_diagnostics"]
+    ebpf = diagnostics["sources"]["ebpf"]["groups"][0]
+    assert ebpf["attempt_denominator"] == 2
+    assert ebpf["proxy_attempts"] == {"true": 1, "false": 0, "unknown": 1}
+    assert ebpf["step_occurrence_denominator"] == 2
+    assert ebpf["step_binding_reason_occurrences"] == {"unique_declared_entry": 2}
+    assert sum(ebpf["body_evidence_reason_attempts"].values()) == ebpf["attempt_denominator"]
+    entry = diagnostics["sources"]["entry_http"]["groups"][0]
+    assert entry["body_evidence_reason_attempts"] == {"not recorded": 2}
+    assert entry["steps_field_attempts"] == {"recorded": 0, "not recorded": 2}
+    assert entry["step_occurrence_denominator"] == 0
+    assert result["input_sha256"]["full/projections/entry_http-final.json"]
 
 
 def test_structural_summary_rejects_changed_frozen_model(tmp_path):
@@ -157,6 +194,36 @@ def test_structural_summary_verifies_admission_and_final_index_hashes(tmp_path):
         summarize_cell(reference, summary, full)
 
 
+def test_structural_summary_rejects_metrics_or_projection_integrity_mismatch(tmp_path):
+    summary, full, status_hash = fixture(tmp_path / "metrics")
+    reference = {"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100",
+                 "status_sha256": status_hash}
+    (full / "metrics-v3.json").write_text("{}", encoding="utf-8")
+    with pytest.raises(ValueError, match="metrics-v3.json bytes differ"):
+        summarize_cell(reference, summary, full)
+
+    summary, full, status_hash = fixture(tmp_path / "projection")
+    with (full / "projections" / "native-final.json").open("ab") as stream:
+        stream.write(b" ")
+    reference["status_sha256"] = status_hash
+    with pytest.raises(ValueError, match="projection hash mismatch for native"):
+        summarize_cell(reference, summary, full)
+
+
+def test_projection_diagnostic_witnesses_are_bounded_and_deterministic(tmp_path):
+    path = tmp_path / "ebpf-final.json"
+    write(path, [{
+        "source": "ebpf", "attempt_key": f"opaque-{index}", "operation_id": "op",
+        "phase": "target", "proxy": None, "observation_censored": False,
+        "body_evidence": {"reason": "body_missing"}, "steps": [],
+    } for index in range(9, -1, -1)])
+    group = _projection_diagnostics(path, "ebpf")["groups"][0]
+    assert group["attempt_denominator"] == 10
+    assert group["bounded_opaque_attempt_witnesses"]["body:body_missing"] == [
+        "opaque-0", "opaque-1", "opaque-2", "opaque-3", "opaque-4",
+    ]
+
+
 def test_structural_report_requires_and_emits_nine_cells(tmp_path):
     cells = []
     for mode in ("absent", "partial", "full"):
@@ -180,6 +247,23 @@ def test_structural_report_requires_and_emits_nine_cells(tmp_path):
                     "full": {"stored_archive_bytes": 3, "extracted_bytes": 4,
                              "download_and_decompression_seconds": 0.2},
                 },
+                "projection_recorded_diagnostics": {
+                    "sources": {
+                        source: {"groups": [{
+                            "operation_id": "op", "phase": "target", "attempt_denominator": 1,
+                            "proxy_attempts": {"true": 1, "false": 0, "unknown": 0},
+                            "censor_flag_attempts": {"true": 0, "false": 1, "not recorded": 0},
+                            "step_occurrence_denominator": 0,
+                            "body_evidence_reason_attempts": {"not recorded": 1},
+                            "payload_verdict_reason_attempts": {"ok": 1},
+                            "step_binding_reason_occurrences": {},
+                            "step_window_reason_occurrences": {},
+                            "step_header_rule_occurrences": {},
+                            "step_header_window_rule_occurrences": {},
+                        }]}
+                        for source in ("ebpf", "native", "combined", "entry_http")
+                    }
+                },
                 "processing_seconds": 0.3,
             })
     _report(cells, "petclinic", tmp_path / "out", {
@@ -190,5 +274,6 @@ def test_structural_report_requires_and_emits_nine_cells(tmp_path):
     result = json.loads((tmp_path / "out" / "structural-v3.json").read_text())
     assert len(result["cells"]) == 9
     assert len((tmp_path / "out" / "structural-v3.csv").read_text().splitlines()) == 28
+    assert len((tmp_path / "out" / "projection-recorded-diagnostics-v3.csv").read_text().splitlines()) == 37
     assert result["correctness_error_rate"] is None
     assert result["costs"]["stored_archive_bytes"] == 41
