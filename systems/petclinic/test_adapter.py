@@ -191,6 +191,16 @@ def test_native_census_and_partial_mode_audit_use_actual_service_names():
     assert _native_mode_compliance("partial", census)["compliant"] is False
 
 
+def test_native_census_streams_jsonl_without_reading_whole_file(tmp_path):
+    path = tmp_path / "native.jsonl"
+    path.write_bytes(b'not-json\n{"resourceSpans":[]}\n')
+    with path.open("rb") as stream:
+        census = _native_service_census(stream)
+    assert census == {
+        "spans": 0, "services": {}, "valid_records": 1, "malformed_records": 1,
+    }
+
+
 def test_native_snapshot_rotates_before_copy_and_accepts_fresh_segment(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     commands = []

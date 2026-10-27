@@ -33,6 +33,8 @@ def test_strict_json_rejects_duplicate_keys_and_non_finite_numbers():
         strict_json('{"id":1,"id":2}')
     with pytest.raises(ValueError, match="non_finite_json_constant"):
         strict_json('{"id":NaN}')
+    with pytest.raises(ValueError, match="non_finite_json_number"):
+        strict_json('{"nested":[1e999]}')
 
 
 def test_read_payload_uses_exact_pinned_fixture_semantics():
@@ -47,8 +49,8 @@ def test_read_payload_uses_exact_pinned_fixture_semantics():
     assert verdict["reason"].startswith("payload_contract_mismatch:")
 
 
-def test_invalid_complete_body_is_false_but_missing_fixture_is_unknown():
-    assert payload_verdict("list_vets", "{", {"fixture": fixture()})["value"] is False
+def test_invalid_captured_body_and_missing_fixture_are_unknown():
+    assert payload_verdict("list_vets", "{", {"fixture": fixture()})["value"] is None
     assert payload_verdict("list_vets", "[]", {}) == {
         "value": None,
         "reason": "fixture_unavailable",

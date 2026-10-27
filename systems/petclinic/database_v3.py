@@ -24,6 +24,15 @@ OPERATION_SERVICES = {
     "create_visit": ["visits-service"],
     "list_vets": ["vets-service"],
 }
+MANDATORY_REQUESTS = {
+    "list_owners": {"customers-service": ("GET", "/owners")},
+    "owner_details_with_visits": {
+        "customers-service": ("GET", "/owners/6"),
+        "visits-service": ("GET", "/pets/visits"),
+    },
+    "create_visit": {"visits-service": ("POST", "/owners/1/pets/1/visits")},
+    "list_vets": {"vets-service": ("GET", "/vets")},
+}
 
 
 def _header(span: dict[str, Any]) -> str | None:
@@ -48,6 +57,10 @@ def _path(span: dict[str, Any]) -> str | None:
 
 def _server(span: dict[str, Any]) -> bool:
     return str(span.get("kind")) in {"SPAN_KIND_SERVER", "2", "server"}
+
+
+def _client(span: dict[str, Any]) -> bool:
+    return str(span.get("kind")) in {"SPAN_KIND_CLIENT", "3", "client"}
 
 
 def _semantic_record(span: dict[str, Any]) -> str:
@@ -212,7 +225,7 @@ def _attempt_evidence(index: _Index, source: str, row: dict[str, Any], aliases: 
     window = _window(row)
     declared = CONTRACTS[operation]["steps"][0]
     candidates = []
-    seeds = []
+    request_rows = []
     for request_id in steps:
         if any(_in_window(span, window) for span in index.conflict_headers.get((source, request_id), ())):
             return {"bound": False, "reason": "conflicting_request_identity",
@@ -221,18 +234,34 @@ def _attempt_evidence(index: _Index, source: str, row: dict[str, Any], aliases: 
         candidates.extend(span for span in rows if _server(span)
                           and span.get("service") in ENTRY_SERVICES[source]
                           and _method(span) == declared["method"] and _path(span) == declared["path"])
-        seeds.extend(rows)
+        request_rows.extend(rows)
     unique_entries = {
         (span.get("trace_id"), span.get("span_id")): span for span in candidates
     }
     if len(unique_entries) != 1:
         return {"bound": False, "reason": "entry_missing" if not unique_entries else "entry_ambiguous",
                 "database_endpoints": [], "database_services": []}
-    descendants, ambiguous = index.descendants(seeds)
-    if ambiguous:
-        return {"bound": False, "reason": "conflicting_descendant_identity",
-                "database_endpoints": [], "database_services": []}
-    selected = [(span, endpoint) for span in descendants if (endpoint := _db_endpoint(span)) in aliases]
+    selected = []
+    for service, method_path in MANDATORY_REQUESTS[operation].items():
+        witnesses = [
+            span for span in request_rows
+            if span.get("service") == service and _server(span)
+            and (_method(span), _path(span)) == method_path
+        ]
+        unique_witnesses = {
+            (span.get("trace_id"), span.get("span_id")): span for span in witnesses
+        }
+        if len(unique_witnesses) != 1:
+            continue
+        descendants, ambiguous = index.descendants(list(unique_witnesses.values()))
+        if ambiguous:
+            return {"bound": False, "reason": "conflicting_descendant_identity",
+                    "database_endpoints": [], "database_services": []}
+        selected.extend(
+            (span, endpoint) for span in descendants
+            if span.get("service") == service and _client(span) and _in_window(span, window)
+            and (endpoint := _db_endpoint(span)) in aliases
+        )
     endpoints = sorted({endpoint for _, endpoint in selected})
     services = sorted({str(span.get("service")) for span, _ in selected})
     return {
@@ -304,7 +333,8 @@ def learn_database_effects(
                 "database_endpoints": sorted(
                     {json.dumps(endpoint, sort_keys=True)
                      for service in OPERATION_SERVICES[operation]
-                     for endpoint in inventory["service_database_endpoints"].get(service, [])}
+                     for endpoint in inventory["service_database_endpoints"].get(service, [])
+                     if (endpoint["host"], int(endpoint["port"])) in aliases}
                 ),
                 "manual_database_necessity": EXPECTED_DATABASE_NECESSITY[operation],
             }

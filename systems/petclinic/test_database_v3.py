@@ -74,6 +74,16 @@ def test_vets_cache_necessity_remains_unknown_even_with_observed_database_path()
     assert prediction["static_endpoint_baseline"] is None
 
 
+def test_static_baseline_does_not_treat_unrelated_datasource_as_selected_database():
+    inventory = inventory_value()
+    inventory["service_database_endpoints"]["customers-service"] = [
+        {"host": "unrelated-database", "port": 3306}
+    ]
+    model = learn_database_effects([], [intent()], inventory)
+    prediction = predict_database_effects(model, [intent()], database_up=False)[0]
+    assert prediction["static_endpoint_baseline"] is None
+
+
 def test_conflicting_request_identity_fails_closed():
     spans = [
         span("root", "", "api-gateway", "SPAN_KIND_SERVER", "req-1", "/api/customer/owners"),
@@ -86,6 +96,25 @@ def test_conflicting_request_identity_fails_closed():
     effect = model["effects"]["ebpf"]["list_owners"]
     assert effect["entry_bound"] == 0
     assert effect["selected_database_dependency"] is None
+
+
+@pytest.mark.parametrize("mutation", ["wrong_service", "server_kind", "outside_window", "unattached"])
+def test_incidental_database_activity_cannot_promote_dependency(mutation):
+    spans = [
+        span("root", "", "api-gateway", "SPAN_KIND_SERVER", "req-1", "/api/customer/owners"),
+        span("customer", "missing-transport-parent", "customers-service", "SPAN_KIND_SERVER", "req-1", "/owners"),
+        span("sql", "customer", "customers-service", "SPAN_KIND_CLIENT", db=True),
+    ]
+    if mutation == "wrong_service":
+        spans[-1]["service"] = "vets-service"
+    elif mutation == "server_kind":
+        spans[-1]["kind"] = "SPAN_KIND_SERVER"
+    elif mutation == "outside_window":
+        spans[-1].update(start_ns=201, end_ns=202)
+    else:
+        spans[-1]["parent_id"] = "unrelated"
+    model = learn_database_effects(spans, [intent()], inventory_value())
+    assert model["effects"]["ebpf"]["list_owners"]["selected_database_dependency"] is None
 
 
 def test_prediction_rejects_mutated_frozen_model():

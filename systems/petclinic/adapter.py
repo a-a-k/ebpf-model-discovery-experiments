@@ -11,6 +11,7 @@ import ast
 import base64
 import copy
 import hashlib
+import io
 import json
 import os
 import re
@@ -127,13 +128,14 @@ def _canonical(actual: Any, expected: Any, key: str = "") -> Any:
     return actual
 
 
-def _native_service_census(raw: bytes) -> dict[str, Any]:
+def _native_service_census(raw: Any) -> dict[str, Any]:
     """Count service-owned spans in collector JSONL without interpreting topology."""
     services: dict[str, int] = {}
     spans = 0
     valid_records = 0
     malformed_records = 0
-    for line in raw.splitlines():
+    lines = io.BytesIO(raw) if isinstance(raw, bytes) else raw
+    for line in lines:
         if not line.strip():
             continue
         try:
@@ -871,21 +873,19 @@ backend visits_replicas
                     self._node(node, f"mv {remote} {archived}", timeout=30)
                 if exists.returncode == 0 and hasattr(self.ctx, "node_get"):
                     self.ctx.node_get(node, archived, target)
-                    raw = target.read_bytes()
                 elif exists.returncode == 0:
                     result = self._node(node, f"base64 -w0 {archived}", timeout=120)
-                    raw = base64.b64decode(getattr(result, "stdout", "").strip())
-                    target.write_bytes(raw)
+                    target.write_bytes(base64.b64decode(getattr(result, "stdout", "").strip()))
                 else:
-                    raw = b""
-                    target.write_bytes(raw)
-                census = _native_service_census(raw)
+                    target.write_bytes(b"")
+                with target.open("rb") as stream:
+                    census = _native_service_census(stream)
                 census["source_files_present"] = int(exists.returncode == 0)
                 census["source_files_expected"] = 1
                 inventory["files"][node] = {
                     "path": target.name,
-                    "bytes": len(raw),
-                    "sha256": hashlib.sha256(raw).hexdigest(),
+                    "bytes": target.stat().st_size,
+                    "sha256": _sha256(target),
                     "guest_rotated_file": archived,
                     "census": census,
                     "mode_compliance": _native_mode_compliance(self.ctx.mode, census),

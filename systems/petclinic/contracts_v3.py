@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 from typing import Any
 
 from systems.petclinic.adapter import _canonical
@@ -47,11 +48,25 @@ def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
     return result
 
 
+def _reject_nonfinite(value: Any) -> Any:
+    if isinstance(value, float) and not math.isfinite(value):
+        raise ValueError("non_finite_json_number")
+    if isinstance(value, list):
+        for item in value:
+            _reject_nonfinite(item)
+    elif isinstance(value, dict):
+        for item in value.values():
+            _reject_nonfinite(item)
+    return value
+
+
 def strict_json(text: str) -> Any:
     """Parse one JSON value while rejecting duplicate keys and non-finite numbers."""
     if not isinstance(text, str):
         raise TypeError("body_must_be_text")
-    return json.loads(text, object_pairs_hook=_unique_object, parse_constant=_reject_constant)
+    return _reject_nonfinite(
+        json.loads(text, object_pairs_hook=_unique_object, parse_constant=_reject_constant)
+    )
 
 
 def status_ok(operation: str, step_index: int, code: int | None) -> bool:
@@ -70,7 +85,7 @@ def payload_verdict(operation: str, text: str, context: dict[str, Any]) -> dict[
     try:
         payload = strict_json(text)
     except (json.JSONDecodeError, TypeError, ValueError) as exc:
-        return {"value": False, "reason": f"invalid_json:{exc}"}
+        return {"value": None, "reason": f"unusable_captured_json:{exc}"}
 
     if operation == "create_visit":
         # An acknowledgment body cannot establish exactly-once durable persistence.
