@@ -254,7 +254,10 @@ criterion. No acquisition, model fitting, classes, forecasts or outcomes change.
 The supplement summarizes all 27 frozen graphs and keeps unknown instance/guest
 labels explicit. Combined graphs are source-qualified unions, not additional
 physical instances. Bounded witnesses from each retained full SQLite index use
-the same unique-identity, conflict and source-local parent filters as discovery.
+unique-identity, conflict and source-local parent filters. The supplement also
+rejects malformed or zero trace/span identities before qualifying ancestry;
+invalid observations remain counted and witnessed. Frozen graph files and their
+original counts are preserved, not retrospectively corrected by this guard.
 Full-capture span-link counts are separate from frozen graph-edge counts. These
 are **observed exact-ID cross-guest ancestry**; independent link correctness is
 not established and its error rate remains unknown. Deployment/container and
@@ -266,6 +269,12 @@ Processing runs in Actions, one full campaign at a time per system, with input
 hashes, bounded witnesses and download/processing/storage costs retained. Larger
 graphs do not establish a usefulness advantage or improve the conditional-state
 predictor by themselves.
+
+Implementation review granted explicit GO at `2ca7210` after checking the
+identity guards, admitted status and acquisition-index seals, matching full and
+compact frozen ledgers, unknown placement/instance counts, and sequential
+processing. Four focused synthetic checks passed. The orchestrator agrees;
+execution approval does not establish an empirical advantage.
 
 ## Reproduction of the fresh series
 
@@ -286,6 +295,8 @@ gh workflow run evidence-v3.yml -f run_id=QUALIFICATION_RUN
 gh workflow run series-v3.yml -f system=all -f mode=all -f seed=all
 # Replace SERIES_RUN with the completed numeric run ID (JSON numeric array).
 gh workflow run report-v3.yml -f run_ids='[SERIES_RUN]'
+# Read-only graph and ancestry supplement from that completed primary report.
+gh workflow run structural-v3.yml -f report_run_id=REPORT_RUN
 ```
 
 The resource evidence copy retains precomputed qualification, deployment,

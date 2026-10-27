@@ -5,8 +5,8 @@
 **Diagnostic iteration completed:** [retrospective controls](results/iteration-2/report.md) now distinguish classification, proxy semantics, Kafka export and nominal precision effects in the same 27 campaigns. The [refined design](docs/ITERATION_2.md#refined-minimum-design-for-the-next-implementation) follows those findings. Original results remain unchanged; oracle-assisted diagnostic improvements are not corrected eBPF forecasts.
 
 **Fresh iteration 3 is running:** [27 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
-follow the [reviewed updated protocol](docs/ITERATION_3.md)
-uses explicit source-only completion contracts, a cheap HTTP/body comparator and
+follow the [reviewed updated protocol](docs/ITERATION_3.md), using
+explicit source-only completion contracts, a cheap HTTP/body comparator and
 shared-database impact controls. Load increases to 20 operations/s, with four
 300-second training blocks and eight 60-second target blocks: 34,800 primary
 attempts per campaign, 939,600 across new seeds 3/4/5. Revised resource qualification
@@ -19,6 +19,10 @@ engineering observation cap produces censoring, not an automatic failure.
 Correctness, client-observed HTTP timing and SQL completion intervals are
 reported separately. [Retained technical evidence](results/iteration-3-preparation/qualification-40498392196/SOURCE.md)
 includes the native timestamp-attribution repair and remaining unknown bindings.
+
+The abstract, design table and measured results below describe the original
+series. Fresh-series findings will be reported separately after acquisition and
+review; preparation diagnostics are not substituted for those findings.
 
 ## Abstract
 
