@@ -49,6 +49,14 @@ flowchart LR
 
 The shared physical host is a limitation: these experiments exercise inter-kernel execution and networking, but not independent physical-machine failures. KVM and readable guest BTF are required. Infrastructure failures are recorded; two containers are not substituted for two machines, and paid runners are not connected automatically.
 
+| System | Guest A | Guest B | Selected DB intervention | Required cross-guest transport |
+|---|---|---|---|---|
+| DeathStarBench | Frontend and ordinary services, user-timeline A, fixed HAProxy, MongoDB/Redis stores | User-timeline B | Stop/start `user-timeline-mongodb` on A | Proxy to B:19090; B to A's MongoDB:37020, Redis:16383 and post-storage:19092 |
+| OTel Demo | Frontend and ordinary services, product-catalog A, fixed Envoy router, Kafka, accounting, PostgreSQL, Valkey | Product-catalog B | Stop/start `astronomy-db` on A | Router to B:13550; B to A's PostgreSQL:15432 and flagd:18013 |
+| Petclinic | Gateway, customers, vets, Visits A, fixed HAProxy and MySQL | Visits B | Stop/start MySQL on A | Proxy to B:18081; B to A's MySQL:13306 |
+
+Both guests run OBI, and enabled native observation is retained separately. The Kafka/accounting chain resides on guest A; it tests asynchronous identity, while the catalog calls and database accesses exercise guest boundaries. Kafka delivery is not presented as a separate-machine experiment. Placement is supplied deployment metadata; the tables above are not discovery input.
+
 The default allocation is two vCPUs and 6 GiB per guest when runner memory permits. Host resources, guest allocation, kernel versions, boot IDs, cloud-image checksum, application image digests, and resolved Compose configurations are retained. The guest image is pinned to Ubuntu Noble's 2026-10-17 build, SHA-256 `04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94`.
 
 Deployment changes and manual knowledge are detailed in the [DeathStarBench](systems/deathstarbench/README.md), [OTel Demo](systems/otel_demo/README.md), and [Petclinic](systems/petclinic/README.md) notes. These are real pinned upstream systems, not replacement services producing synthetic spans.
@@ -70,6 +78,8 @@ The learner receives observed spans and a restricted census: opaque attempt keys
 The evaluator separately receives labels, fixture expectations, request/response evidence, and SQL observations. Deployment manifests are references for placement and DB identity, not discovered topology. Both simulation and the direct weighted baseline receive the same permitted evidence and state weights.
 
 The basic class representation uses observed method and normalized route; an augmentation uses confirmed downstream signatures. Healthy training and test segments are separate. Generator labels are evaluation-only. Missing anchors and ambiguous classes remain unknown. Unclassified calibration attempts must widen compatible classes' bounds rather than disappear from denominators. Class assignment rules are fixed before target acquisition.
+
+Adjusted Rand index (ARI) compares discovered grouping with the withheld operation labels on classified test attempts; 1 means identical grouping. Coverage and unknown fraction always use the complete test census. An augmented signature absent from healthy training remains unknown, so a high ARI on a small covered subset cannot be read as complete operation recognition. The learner does not generate business names; the separate training-label map is used only to display evaluation results by operation.
 
 The combined source is a deterministic union. Where several sources describe an HTTP step, projection selects the earliest observed server boundary, with an eBPF tie preference. This is not an optimized fusion method: differently normalized routes or incomplete observations can fragment classes, and adding a stream need not improve the result.
 
@@ -161,6 +171,8 @@ In the three OTel absent-mode repeats, all three operations retain unknown point
 The [asynchronous controls](results/interim-22/async.csv) distinguish association from timely completion. In OTel full seed 2, native and combined evidence link all 20 checkouts in each of the normal, paused and recovered blocks to subsequent accounting write spans; eBPF confirms none of these chains. The matcher establishes an observed write attempt, not successful SQL execution or commit. HTTP successes are respectively 20, 20 and 13, while SQL confirms timely durable success for 20, 0 and 13. The paused block has 19 unknown SQL outcomes and one confirmed failure; recovered has seven unknowns. Retained oracle evidence includes command/SSH failures and queries that cross a deadline; unknown is not counted as observed failure. Eventual trace association after consumer recovery does not establish persistence before the ten-second deadline. These are single-repeat full-mode observations, not a three-repeat full-mode aggregate.
 
 The [class results](results/interim-22/classes.csv) preserve coverage alongside ARI. For example, Petclinic absent seed 0 has route ARI 1.0 on all 120 test attempts, while the downstream augmentation has ARI 0.5122 on 119 attempts. Additional downstream detail therefore did not automatically improve this representation. [DB activity](results/interim-22/database-activity.csv) includes native Mongo calls even without endpoint attributes; [structure results](results/interim-22/structure.csv) retain OBI's Mongo-to-MySQL misclassification. No DB-driven forecast improvement or independently validated cross-node error rate is established.
+
+The [DB controls](results/interim-22/database-controls.csv) also show why an observed database node does not alone determine operation success. In the fixed absent seed-0 illustration, all 20 DeathStarBench operations satisfy their declared immediate predicates with the selected MongoDB stopped. Petclinic's five vet-list operations still pass, while its other 15 operations fail. All 20 OTel operations fail with PostgreSQL stopped. These are bounded controls on prepared fixtures; cached responses and an immediate acknowledgement can mask effects beyond the declared outcome. They do not estimate dependency recall or establish that every observed DB edge is causally necessary.
 
 ![Interim worst-end errors by operation, source and repeat](results/interim-22/errors.svg)
 
