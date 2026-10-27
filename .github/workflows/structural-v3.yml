@@ -1,0 +1,51 @@
+name: Iteration 3 read-only structural supplement
+on:
+  workflow_dispatch:
+    inputs:
+      report_run_id:
+        description: Completed primary iteration-3 report run ID admitting exactly 27 cells
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  structural:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        system: [deathstarbench, otel_demo, petclinic]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Verify numeric primary report identity
+        env:
+          REPORT_RUN_ID: ${{ inputs.report_run_id }}
+        run: |
+          python - <<'PY'
+          import os
+          if not os.environ['REPORT_RUN_ID'].isdigit():
+              raise SystemExit('report_run_id must be numeric')
+          PY
+      - name: Inspect nine admitted cells without refitting or new traffic
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT_RUN_ID: ${{ inputs.report_run_id }}
+        run: |
+          python -m ebpf_discovery.structural_v3 \
+            --report-run-id "$REPORT_RUN_ID" \
+            --system '${{ matrix.system }}' \
+            --work work/structural-v3/${{ matrix.system }} \
+            --out results/structural-v3/${{ matrix.system }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: structural-v3-${{ matrix.system }}-${{ github.run_id }}
+          path: results/structural-v3/${{ matrix.system }}/
+          retention-days: 90
+          if-no-files-found: warn
