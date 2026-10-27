@@ -5,7 +5,8 @@ import sqlite3
 
 import pytest
 
-from ebpf_discovery.structural_v3 import _projection_diagnostics, _report, summarize_cell
+from ebpf_discovery.structural_v3 import (
+    _prepare_valid_ids, _projection_diagnostics, _raw_source, _report, summarize_cell)
 
 
 def write(path: Path, value):
@@ -91,6 +92,8 @@ def fixture(root: Path):
         parent TEXT, service TEXT, instance TEXT, request TEXT, kind TEXT,
         start INTEGER, end INTEGER, dbsystem TEXT, address TEXT, port TEXT,
         namespace TEXT, conflicted INTEGER NOT NULL, data TEXT NOT NULL);
+      CREATE INDEX identity_idx ON spans(source,trace,span);
+      CREATE INDEX parent_idx ON spans(source,trace,parent);
     """)
     records = [
         span("ebpf", "1" * 32, "a" * 16, "", "gateway", "one", "a", "a.jsonl"),
@@ -106,6 +109,12 @@ def fixture(root: Path):
         span("ebpf", "5" * 32, "0" * 16, "", "worker", "two", "b", "b.jsonl"),
         span("ebpf", "6" * 32, "6" * 16, "g" * 16, "worker", "two", "b", "b.jsonl"),
         span("ebpf", "7" * 32, "7" * 16, "0" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "3" * 32, "f" * 16, "e" * 16, "worker", "two", "b", "b.jsonl"),
+        span("ebpf", "8" * 32, "8" * 16, "", "worker", "two", "b", "b.jsonl", conflicted=1),
+        # The same trace/span in a different source is a distinct observation.
+        span("native", "1" * 32, "a" * 16, "", "gateway", "one", "a", "native-a.jsonl"),
+        span("native", "1" * 32, "c" * 16, "b" * 16, "worker", "two", "b", "native-b.jsonl"),
+        span(None, "9" * 32, "9" * 16, "", "unknown", None, None, "unknown.jsonl"),
     ]
     for index, (record, conflicted) in enumerate(records):
         database.execute(
@@ -139,6 +148,8 @@ def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
     assert raw["distinct_cross_guest_ancestry_edge_pairs"] == 1
     assert raw["missing_parent_links"] == 1
     assert raw["ambiguous_identity_groups"] == 1
+    assert raw["ambiguous_parent_links"] == 1
+    assert result["full_capture_parent_links"]["native"]["missing_parent_links"] == 1
     assert raw["invalid_identity_observations"] == 4
     assert any(row["span"]["trace_id"] == "" for row in raw["witnesses"]["invalid_identity"])
     assert raw["invalid_parent_references"] == 2
@@ -164,6 +175,42 @@ def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
     assert entry["steps_field_attempts"] == {"recorded": 0, "not recorded": 2}
     assert entry["step_occurrence_denominator"] == 0
     assert result["input_sha256"]["full/projections/entry_http-final.json"]
+
+
+def test_materialized_valid_identity_matches_pre_repair_full_outputs_and_uses_keyed_lookups(tmp_path):
+    _, full, _ = fixture(tmp_path)
+    index = full / "observation-index.sqlite"
+    original_hash = hashlib.sha256(index.read_bytes()).hexdigest()
+    database = sqlite3.connect(index.resolve().as_uri() + "?mode=ro", uri=True)
+    try:
+        _prepare_valid_ids(database)
+        assert database.execute("PRAGMA temp_store").fetchone()[0] == 1  # FILE
+        assert database.execute("PRAGMA temp.cache_size").fetchone()[0] == -65536
+        assert database.execute("SELECT COUNT(*) FROM temp.valid_ids WHERE source IS NULL").fetchone()[0] == 1
+        # Complete serialized source outputs, including every bounded witness,
+        # captured from d0d81f8's CTE implementation on this synthetic fixture.
+        expected = {
+            "ebpf": "bc51a1a03c2f2d166834a24b0500f3006eb79ee3c8c6fdefc4866127d53237c9",
+            "native": "0d1936db7da02b438fa727392969df9a43befc54a141314dd826048d36a06473",
+            "combined": "e049491f0c763b06a1a831f6572ca937f4851e87ac9ea5f82f8402de64b40a78",
+        }
+        for source, baseline_hash in expected.items():
+            result = _raw_source(database, source)
+            actual = hashlib.sha256(json.dumps(result, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            assert actual == baseline_hash
+        sql = """SELECT COUNT(*) FROM spans c
+            JOIN temp.valid_ids cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+            JOIN spans p ON p.source=c.source AND p.trace=c.trace AND p.span=c.parent
+            JOIN temp.valid_ids pv ON pv.source=p.source AND pv.trace=p.trace AND pv.span=p.span
+            WHERE c.parent!='' AND c.source=?"""
+        plan = [row[3] for row in database.execute("EXPLAIN QUERY PLAN " + sql, ("ebpf",))]
+        for alias in ("cv", "pv"):
+            assert any(f"SEARCH {alias} USING COVERING INDEX sqlite_autoindex_valid_ids_1 "
+                       "(source=? AND trace=? AND span=?)" in item
+                       for item in plan), plan
+    finally:
+        database.close()
+    assert hashlib.sha256(index.read_bytes()).hexdigest() == original_hash
 
 
 def test_structural_summary_rejects_changed_frozen_model(tmp_path):

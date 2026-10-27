@@ -203,15 +203,39 @@ def _participant(raw: str, role: str) -> dict[str, Any]:
     }
 
 
+def _trace_valid(alias: str) -> str:
+    return (f"length({alias}.trace) IN (16,32) AND {alias}.trace NOT GLOB '*[^0-9a-f]*' "
+            f"AND trim({alias}.trace,'0')!=''")
+
+
+def _span_valid(alias: str, field: str = "span") -> str:
+    return (f"length({alias}.{field})=16 AND {alias}.{field} NOT GLOB '*[^0-9a-f]*' "
+            f"AND trim({alias}.{field},'0')!=''")
+
+
+def _prepare_valid_ids(db: sqlite3.Connection) -> None:
+    """Materialize the original identity predicate once with explicit lookup keys.
+
+    The input database is opened mode=ro. Only the file-backed TEMP schema is
+    written, and its cache is bounded independently of the retained index.
+    """
+    db.execute("PRAGMA temp_store=FILE")
+    db.execute("PRAGMA temp.cache_size=-65536")
+    db.execute("""CREATE TEMP TABLE valid_ids (
+        source TEXT, trace TEXT, span TEXT,
+        PRIMARY KEY (source,trace,span)
+    )""")
+    db.execute("""INSERT INTO temp.valid_ids(source,trace,span)
+        SELECT source,trace,span FROM (
+          SELECT source,trace,span,COUNT(*) n,MAX(conflicted) conflicting
+          FROM main.spans GROUP BY source,trace,span
+        ) ids WHERE """ + _trace_valid("ids") + " AND " + _span_valid("ids") +
+        " AND n=1 AND conflicting=0")
+
+
 def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     where, params = ("", ()) if source == "combined" else ("WHERE source=?", (source,))
     and_source = "" if source == "combined" else "AND s.source=?"
-    def trace_valid(alias: str) -> str:
-        return (f"length({alias}.trace) IN (16,32) AND {alias}.trace NOT GLOB '*[^0-9a-f]*' "
-                f"AND trim({alias}.trace,'0')!=''")
-    def span_valid(alias: str, field: str = "span") -> str:
-        return (f"length({alias}.{field})=16 AND {alias}.{field} NOT GLOB '*[^0-9a-f]*' "
-                f"AND trim({alias}.{field},'0')!=''")
     identity_groups = db.execute(
         f"SELECT COUNT(*) FROM (SELECT source,trace,span FROM spans {where} GROUP BY source,trace,span)", params
     ).fetchone()[0]
@@ -225,29 +249,23 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     ).fetchone()[0]
     invalid_identity_count = db.execute(
         f"SELECT COUNT(*) FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
-        f"NOT ({trace_valid('s')} AND {span_valid('s')}) {and_source}", params,
+        f"NOT ({_trace_valid('s')} AND {_span_valid('s')}) {and_source}", params,
     ).fetchone()[0]
     invalid_identity_rows = db.execute(
         f"SELECT data FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
-        f"NOT ({trace_valid('s')} AND {span_valid('s')}) {and_source} "
+        f"NOT ({_trace_valid('s')} AND {_span_valid('s')}) {and_source} "
         "ORDER BY source,trace,span,digest LIMIT ?",
         (*params, WITNESS_LIMIT),
     ).fetchall()
-    parent_valid = span_valid("c", "parent")
-    valid = """WITH ids AS (
-      SELECT source,trace,span,COUNT(*) n,MAX(conflicted) conflicting FROM spans GROUP BY source,trace,span
-    ), valid AS (
-      SELECT source,trace,span FROM ids WHERE """ + trace_valid("ids") + " AND " + span_valid("ids") + """
-      AND n=1 AND conflicting=0
-    )"""
+    parent_valid = _span_valid("c", "parent")
     joins = """
-      FROM spans c JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+      FROM spans c JOIN temp.valid_ids cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       JOIN spans p ON p.source=c.source AND p.trace=c.trace AND p.span=c.parent
-      JOIN valid pv ON pv.source=p.source AND pv.trace=p.trace AND pv.span=p.span
+      JOIN temp.valid_ids pv ON pv.source=p.source AND pv.trace=p.trace AND pv.span=p.span
       WHERE c.parent!='' AND """ + parent_valid + (" AND c.source=?" if source != "combined" else "")
-    qualified_links = db.execute(valid + " SELECT COUNT(*) " + joins, params).fetchone()[0]
+    qualified_links = db.execute(" SELECT COUNT(*) " + joins, params).fetchone()[0]
     pair_rows = db.execute(
-        valid + " SELECT DISTINCT c.source,p.service,p.instance,p.node,c.service,c.instance,c.node " + joins,
+        " SELECT DISTINCT c.source,p.service,p.instance,p.node,c.service,c.instance,c.node " + joins,
         params,
     ).fetchall()
     structural_pairs = {tuple(row) for row in pair_rows if tuple(row[1:4]) != tuple(row[4:7])}
@@ -256,36 +274,36 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
         if pair[3] not in (None, "") and pair[6] not in (None, "") and pair[3] != pair[6]
     }
     unresolved_count = db.execute(
-        valid + " SELECT COUNT(*) " + joins + " AND (c.node IS NULL OR c.node='' OR p.node IS NULL OR p.node='')",
+        " SELECT COUNT(*) " + joins + " AND (c.node IS NULL OR c.node='' OR p.node IS NULL OR p.node='')",
         params,
     ).fetchone()[0]
     witness_select = " SELECT c.data,p.data,c.node,p.node,c.service,c.instance,p.service,p.instance "
     ordered = " ORDER BY c.source,c.trace,c.span,p.span LIMIT ?"
     cross_witnesses = db.execute(
-        valid + witness_select + joins
+        witness_select + joins
         + " AND c.node IS NOT NULL AND c.node!='' AND p.node IS NOT NULL AND p.node!='' AND c.node!=p.node"
         + ordered,
         (*params, WITNESS_LIMIT),
     ).fetchall()
     unresolved_witnesses = db.execute(
-        valid + witness_select + joins + " AND (c.node IS NULL OR c.node='' OR p.node IS NULL OR p.node='')"
+        witness_select + joins + " AND (c.node IS NULL OR c.node='' OR p.node IS NULL OR p.node='')"
         + ordered,
         (*params, WITNESS_LIMIT),
     ).fetchall()
-    missing_sql = valid + """
+    missing_sql = """
       SELECT c.data FROM spans c
-      JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+      JOIN temp.valid_ids cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       WHERE c.parent!='' AND """ + parent_valid + """ AND NOT EXISTS (
         SELECT 1 FROM spans p WHERE p.source=c.source AND p.trace=c.trace AND p.span=c.parent)
     """ + (" AND c.source=?" if source != "combined" else "")
     missing_count = db.execute("SELECT COUNT(*) FROM (" + missing_sql + ")", params).fetchone()[0]
     missing = db.execute(missing_sql + " ORDER BY c.source,c.trace,c.span LIMIT ?", (*params, WITNESS_LIMIT)).fetchall()
-    ambiguous_parent_sql = valid + """
+    ambiguous_parent_sql = """
       SELECT c.data FROM spans c
-      JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+      JOIN temp.valid_ids cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       WHERE c.parent!='' AND """ + parent_valid + """
       AND EXISTS (SELECT 1 FROM spans p WHERE p.source=c.source AND p.trace=c.trace AND p.span=c.parent)
-      AND NOT EXISTS (SELECT 1 FROM valid pv WHERE pv.source=c.source AND pv.trace=c.trace AND pv.span=c.parent)
+      AND NOT EXISTS (SELECT 1 FROM temp.valid_ids pv WHERE pv.source=c.source AND pv.trace=c.trace AND pv.span=c.parent)
     """ + (" AND c.source=?" if source != "combined" else "")
     ambiguous_parent_count = db.execute(
         "SELECT COUNT(*) FROM (" + ambiguous_parent_sql + ")", params
@@ -293,9 +311,9 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     ambiguous_parents = db.execute(
         ambiguous_parent_sql + " ORDER BY c.source,c.trace,c.span LIMIT ?", (*params, WITNESS_LIMIT)
     ).fetchall()
-    invalid_parent_sql = valid + """
+    invalid_parent_sql = """
       SELECT c.data FROM spans c
-      JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
+      JOIN temp.valid_ids cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       WHERE c.parent!='' AND NOT (""" + parent_valid + ")" + (
         " AND c.source=?" if source != "combined" else ""
     )
@@ -404,6 +422,8 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
                    download: dict[str, Any] | None = None) -> dict[str, Any]:
     """Summarize one admitted cell without changing any retained input."""
     started = time.perf_counter()
+    cell_label = f"{reference.get('system')}/{reference.get('mode')}/{reference.get('seed')}"
+    print(f"structural_v3 {cell_label}: verifying retained inputs", flush=True)
     summary_status_path, full_status_path = _one(summary, "status.json"), _one(full, "status.json")
     expected_status_hash = reference.get("status_sha256")
     if (not isinstance(expected_status_hash, str) or len(expected_status_hash) != 64
@@ -481,6 +501,7 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
         raise ValueError("compact and full acquisition markers differ")
     if _read(full_acquisition_path).get("index_sha256") != index_hash:
         raise ValueError("final observation index hash does not match acquisition marker")
+    print(f"structural_v3 {cell_label}: index hash admitted; preparing keyed identities", flush=True)
     inputs["compact/acquisition-complete.json"] = _digest(summary_acquisition_path)
     inputs["full/acquisition-complete.json"] = _digest(full_acquisition_path)
     inputs["full/observation-index.sqlite"] = index_hash
@@ -493,7 +514,14 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
         required = {"digest", "source", "node", "trace", "span", "parent", "service", "instance", "conflicted", "data"}
         if not required <= columns:
             raise ValueError("retained observation index has an unexpected schema")
-        raw = {source: _raw_source(database, source) for source in SOURCES}
+        _prepare_valid_ids(database)
+        print(f"structural_v3 {cell_label}: keyed identities ready after "
+              f"{time.perf_counter()-started:.1f}s", flush=True)
+        raw = {}
+        for source in SOURCES:
+            raw[source] = _raw_source(database, source)
+            print(f"structural_v3 {cell_label}: {source} structural summary ready after "
+                  f"{time.perf_counter()-started:.1f}s", flush=True)
     finally:
         database.close()
     return {
