@@ -1,0 +1,67 @@
+{
+  "figure_meaning": "source comparison; missing values are not zero; nominal worst-end is not point error",
+  "figures": [
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 27,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-deathstarbench.svg",
+      "sha256": "4ec50f4baeb132ac2cdd8e9f0cb04d7ed5754f99143ff334433962a82be35d1c",
+      "system": "deathstarbench"
+    },
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 27,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-deathstarbench.png",
+      "sha256": "e09833ea0cfe281332881e360798308dc1d20767298980ea2b523f2aeee1e7d1",
+      "system": "deathstarbench"
+    },
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 28,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-otel_demo.svg",
+      "sha256": "1b92697acf685e084295d872cf8f792041506dec1d82aa9022da5aa940b7ef3e",
+      "system": "otel_demo"
+    },
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 28,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-otel_demo.png",
+      "sha256": "2c7ff1b96288f747de21db9712592278018574b8abdc8393e43843497fd313a2",
+      "system": "otel_demo"
+    },
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 39,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-petclinic.svg",
+      "sha256": "4602f4916540f807cc9d3254dccfa0a55d235a93a5a122d1f8f38983c24511db",
+      "system": "petclinic"
+    },
+    {
+      "missing_values": {
+        "nominal_worst_end_pp": 0,
+        "point_error_pp": 39,
+        "source_unknown_pct": 0
+      },
+      "path": "operation-forecasts-petclinic.png",
+      "sha256": "250c8aec6193002c65d5ae4dee322d9cdc393d0f61fde55bca85f8a0fd50ff4a",
+      "system": "petclinic"
+    }
+  ],
+  "input": "results.json",
+  "input_sha256": "459f37fd1642365534935c4271110661da8f7f98059846e6e8940e9bbde1c678"
+}

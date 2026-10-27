@@ -1,0 +1,2341 @@
+{
+  "cost_definition": {
+    "job_elapsed": "sum of GitHub job started_at-to-completed_at durations, including setup, preparation and failures",
+    "run_wall_clock_not_substituted": true,
+    "stored_artifact_bytes": "sum of GitHub artifact size_in_bytes values; repeated or overlapping artifacts are charged repeatedly and are not content-deduplicated"
+  },
+  "current_reporting_job": {
+    "elapsed_seconds": null,
+    "included_in_fetched_job_totals": false,
+    "reason": "the reporting job is incomplete when this report is generated"
+  },
+  "human_agent_time_note": "Human and agent preparation time was not independently metered and remains unknown.",
+  "human_agent_time_seconds": null,
+  "input_sha256": {
+    "preparation_manifest": "4a4e10eb391acc31456d85931774d2ae231402a4818cad02e25627698911d209",
+    "series_run_manifest": "f263aecf1b17dc56d39a80b4cb47d6c797423780ae9bbe5ea4d86bfb95e74a4c"
+  },
+  "local_check_compute_note": "Local editing and validation compute was not metered by GitHub Actions and remains unknown.",
+  "local_check_compute_seconds": null,
+  "preparation": {
+    "artifacts_with_unknown_size": 0,
+    "compact_summary_artifact_availability": {
+      "not_applicable": 26
+    },
+    "completed_job_elapsed_seconds": 4508.0,
+    "job_conclusions": {
+      "success": 36
+    },
+    "jobs": 36,
+    "jobs_with_unknown_elapsed": 0,
+    "known_job_elapsed_seconds_subtotal": 4508.0,
+    "known_stored_artifact_bytes_subtotal": 601676518,
+    "runs": 26,
+    "runs_without_compact_summary_artifact": 0,
+    "stored_artifact_bytes": 601676518
+  },
+  "repository": "a-a-k/ebpf-model-discovery-experiments",
+  "runs": [
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12742531347/zip",
+          "artifact_id": 12742531347,
+          "created_at": "2026-10-27T14:28:16Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-full-4-40502990432",
+          "size_in_bytes": 502012950
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12742305988/zip",
+          "artifact_id": 12742305988,
+          "created_at": "2026-10-27T14:23:55Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-full-3-40502990432",
+          "size_in_bytes": 502938099
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12742230313/zip",
+          "artifact_id": 12742230313,
+          "created_at": "2026-10-27T14:18:48Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-partial-3-40502990432",
+          "size_in_bytes": 472279744
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12742221141/zip",
+          "artifact_id": 12742221141,
+          "created_at": "2026-10-27T14:23:22Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-full-3-40502990432",
+          "size_in_bytes": 469411
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741985844/zip",
+          "artifact_id": 12741985844,
+          "created_at": "2026-10-27T14:21:17Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-partial-4-40502990432",
+          "size_in_bytes": 467363
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741701514/zip",
+          "artifact_id": 12741701514,
+          "created_at": "2026-10-27T14:21:51Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-full-5-40502990432",
+          "size_in_bytes": 467240
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741463517/zip",
+          "artifact_id": 12741463517,
+          "created_at": "2026-10-27T14:27:54Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-full-4-40502990432",
+          "size_in_bytes": 466595
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741325416/zip",
+          "artifact_id": 12741325416,
+          "created_at": "2026-10-27T14:11:13Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-absent-4-40502990432",
+          "size_in_bytes": 306699508
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741158654/zip",
+          "artifact_id": 12741158654,
+          "created_at": "2026-10-27T14:27:13Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-partial-5-40502990432",
+          "size_in_bytes": 482305403
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741142024/zip",
+          "artifact_id": 12741142024,
+          "created_at": "2026-10-27T14:18:15Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-partial-3-40502990432",
+          "size_in_bytes": 468020
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12741048799/zip",
+          "artifact_id": 12741048799,
+          "created_at": "2026-10-27T14:26:41Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-partial-5-40502990432",
+          "size_in_bytes": 467388
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740681580/zip",
+          "artifact_id": 12740681580,
+          "created_at": "2026-10-27T14:14:17Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-absent-5-40502990432",
+          "size_in_bytes": 466016
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740613279/zip",
+          "artifact_id": 12740613279,
+          "created_at": "2026-10-27T14:22:18Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-full-5-40502990432",
+          "size_in_bytes": 503318226
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740603377/zip",
+          "artifact_id": 12740603377,
+          "created_at": "2026-10-27T14:21:51Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-partial-4-40502990432",
+          "size_in_bytes": 480789204
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740495107/zip",
+          "artifact_id": 12740495107,
+          "created_at": "2026-10-27T13:53:34Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-partial-4-40502990432",
+          "size_in_bytes": 1191428689
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740473054/zip",
+          "artifact_id": 12740473054,
+          "created_at": "2026-10-27T14:14:37Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-absent-5-40502990432",
+          "size_in_bytes": 315137732
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740411758/zip",
+          "artifact_id": 12740411758,
+          "created_at": "2026-10-27T14:03:54Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-petclinic-absent-3-40502990432",
+          "size_in_bytes": 313996182
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740300070/zip",
+          "artifact_id": 12740300070,
+          "created_at": "2026-10-27T13:50:41Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-full-5-40502990432",
+          "size_in_bytes": 1137045663
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740296306/zip",
+          "artifact_id": 12740296306,
+          "created_at": "2026-10-27T13:58:10Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-absent-4-40502990432",
+          "size_in_bytes": 795851407
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740202431/zip",
+          "artifact_id": 12740202431,
+          "created_at": "2026-10-27T14:03:39Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-absent-3-40502990432",
+          "size_in_bytes": 465473
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12740066290/zip",
+          "artifact_id": 12740066290,
+          "created_at": "2026-10-27T13:55:28Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-absent-5-40502990432",
+          "size_in_bytes": 798188478
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739827994/zip",
+          "artifact_id": 12739827994,
+          "created_at": "2026-10-27T13:57:24Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-absent-4-40502990432",
+          "size_in_bytes": 42749
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739699219/zip",
+          "artifact_id": 12739699219,
+          "created_at": "2026-10-27T14:10:52Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-petclinic-absent-4-40502990432",
+          "size_in_bytes": 467001
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739676443/zip",
+          "artifact_id": 12739676443,
+          "created_at": "2026-10-27T13:52:00Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-partial-5-40502990432",
+          "size_in_bytes": 1177404616
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739647860/zip",
+          "artifact_id": 12739647860,
+          "created_at": "2026-10-27T13:52:26Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-partial-4-40502990432",
+          "size_in_bytes": 47760
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739602745/zip",
+          "artifact_id": 12739602745,
+          "created_at": "2026-10-27T13:54:28Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-absent-5-40502990432",
+          "size_in_bytes": 37939
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739447123/zip",
+          "artifact_id": 12739447123,
+          "created_at": "2026-10-27T13:49:33Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-full-5-40502990432",
+          "size_in_bytes": 50817
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739427324/zip",
+          "artifact_id": 12739427324,
+          "created_at": "2026-10-27T13:51:05Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-absent-3-40502990432",
+          "size_in_bytes": 44744
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739261487/zip",
+          "artifact_id": 12739261487,
+          "created_at": "2026-10-27T13:50:53Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-partial-5-40502990432",
+          "size_in_bytes": 56872
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739230418/zip",
+          "artifact_id": 12739230418,
+          "created_at": "2026-10-27T13:43:42Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-partial-3-40502990432",
+          "size_in_bytes": 1207678895
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12739021520/zip",
+          "artifact_id": 12739021520,
+          "created_at": "2026-10-27T13:49:49Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-full-3-40502990432",
+          "size_in_bytes": 41596
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738906971/zip",
+          "artifact_id": 12738906971,
+          "created_at": "2026-10-27T13:52:05Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-full-4-40502990432",
+          "size_in_bytes": 1155063904
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738731270/zip",
+          "artifact_id": 12738731270,
+          "created_at": "2026-10-27T13:42:56Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-partial-3-40502990432",
+          "size_in_bytes": 39830
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738638500/zip",
+          "artifact_id": 12738638500,
+          "created_at": "2026-10-27T13:50:58Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-otel_demo-full-4-40502990432",
+          "size_in_bytes": 52866
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738443163/zip",
+          "artifact_id": 12738443163,
+          "created_at": "2026-10-27T13:51:51Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-absent-3-40502990432",
+          "size_in_bytes": 799189627
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738304152/zip",
+          "artifact_id": 12738304152,
+          "created_at": "2026-10-27T13:50:47Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-otel_demo-full-3-40502990432",
+          "size_in_bytes": 1222523976
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738295069/zip",
+          "artifact_id": 12738295069,
+          "created_at": "2026-10-27T13:22:41Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-full-5-40502990432",
+          "size_in_bytes": 38104
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738035353/zip",
+          "artifact_id": 12738035353,
+          "created_at": "2026-10-27T13:21:28Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-full-3-40502990432",
+          "size_in_bytes": 42359
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737870859/zip",
+          "artifact_id": 12737870859,
+          "created_at": "2026-10-27T13:23:17Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-full-5-40502990432",
+          "size_in_bytes": 627831770
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737715600/zip",
+          "artifact_id": 12737715600,
+          "created_at": "2026-10-27T13:19:45Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-partial-5-40502990432",
+          "size_in_bytes": 549647856
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737636049/zip",
+          "artifact_id": 12737636049,
+          "created_at": "2026-10-27T13:19:13Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-partial-4-40502990432",
+          "size_in_bytes": 40623
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737571988/zip",
+          "artifact_id": 12737571988,
+          "created_at": "2026-10-27T13:23:00Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-full-4-40502990432",
+          "size_in_bytes": 38184
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737536258/zip",
+          "artifact_id": 12737536258,
+          "created_at": "2026-10-27T13:19:13Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-partial-5-40502990432",
+          "size_in_bytes": 37676
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737361560/zip",
+          "artifact_id": 12737361560,
+          "created_at": "2026-10-27T13:22:08Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-full-3-40502990432",
+          "size_in_bytes": 624498622
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737336025/zip",
+          "artifact_id": 12737336025,
+          "created_at": "2026-10-27T13:18:31Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-partial-3-40502990432",
+          "size_in_bytes": 549883605
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737306877/zip",
+          "artifact_id": 12737306877,
+          "created_at": "2026-10-27T13:23:37Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-full-4-40502990432",
+          "size_in_bytes": 627288681
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737096592/zip",
+          "artifact_id": 12737096592,
+          "created_at": "2026-10-27T13:16:42Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-absent-3-40502990432",
+          "size_in_bytes": 34042
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12737036176/zip",
+          "artifact_id": 12737036176,
+          "created_at": "2026-10-27T13:16:54Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-absent-3-40502990432",
+          "size_in_bytes": 167439927
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12736970144/zip",
+          "artifact_id": 12736970144,
+          "created_at": "2026-10-27T13:09:18Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-absent-4-40502990432",
+          "size_in_bytes": 31969
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12736807306/zip",
+          "artifact_id": 12736807306,
+          "created_at": "2026-10-27T13:19:45Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-partial-4-40502990432",
+          "size_in_bytes": 546957647
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12736344171/zip",
+          "artifact_id": 12736344171,
+          "created_at": "2026-10-27T13:15:40Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-absent-5-40502990432",
+          "size_in_bytes": 34353
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12736239438/zip",
+          "artifact_id": 12736239438,
+          "created_at": "2026-10-27T13:15:49Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-absent-5-40502990432",
+          "size_in_bytes": 166561984
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12736149698/zip",
+          "artifact_id": 12736149698,
+          "created_at": "2026-10-27T13:17:57Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "v3-summary-deathstarbench-partial-3-40502990432",
+          "size_in_bytes": 37952
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12735424911/zip",
+          "artifact_id": 12735424911,
+          "created_at": "2026-10-27T13:09:30Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:20:32Z",
+          "name": "campaign-v3-deathstarbench-absent-4-40502990432",
+          "size_in_bytes": 169478799
+        }
+      ],
+      "classification": "scientific_acquisition",
+      "compact_summary_artifact": {
+        "availability": "available",
+        "matching_artifact_ids": [
+          12742221141,
+          12741985844,
+          12741701514,
+          12741463517,
+          12741142024,
+          12741048799,
+          12740681580,
+          12740202431,
+          12739827994,
+          12739699219,
+          12739647860,
+          12739602745,
+          12739447123,
+          12739427324,
+          12739261487,
+          12739021520,
+          12738731270,
+          12738638500,
+          12738295069,
+          12738035353,
+          12737636049,
+          12737571988,
+          12737536258,
+          12737096592,
+          12736970144,
+          12736344171,
+          12736149698
+        ],
+        "matching_artifact_names": [
+          "v3-summary-petclinic-full-3-40502990432",
+          "v3-summary-petclinic-partial-4-40502990432",
+          "v3-summary-petclinic-full-5-40502990432",
+          "v3-summary-petclinic-full-4-40502990432",
+          "v3-summary-petclinic-partial-3-40502990432",
+          "v3-summary-petclinic-partial-5-40502990432",
+          "v3-summary-petclinic-absent-5-40502990432",
+          "v3-summary-petclinic-absent-3-40502990432",
+          "v3-summary-otel_demo-absent-4-40502990432",
+          "v3-summary-petclinic-absent-4-40502990432",
+          "v3-summary-otel_demo-partial-4-40502990432",
+          "v3-summary-otel_demo-absent-5-40502990432",
+          "v3-summary-otel_demo-full-5-40502990432",
+          "v3-summary-otel_demo-absent-3-40502990432",
+          "v3-summary-otel_demo-partial-5-40502990432",
+          "v3-summary-otel_demo-full-3-40502990432",
+          "v3-summary-otel_demo-partial-3-40502990432",
+          "v3-summary-otel_demo-full-4-40502990432",
+          "v3-summary-deathstarbench-full-5-40502990432",
+          "v3-summary-deathstarbench-full-3-40502990432",
+          "v3-summary-deathstarbench-partial-4-40502990432",
+          "v3-summary-deathstarbench-full-4-40502990432",
+          "v3-summary-deathstarbench-partial-5-40502990432",
+          "v3-summary-deathstarbench-absent-3-40502990432",
+          "v3-summary-deathstarbench-absent-4-40502990432",
+          "v3-summary-deathstarbench-absent-5-40502990432",
+          "v3-summary-deathstarbench-partial-3-40502990432"
+        ],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:20:31Z",
+      "declared_note": null,
+      "declared_role": "series_input",
+      "display_title": "Iteration 3 fresh 27-campaign series",
+      "event": "workflow_dispatch",
+      "head_sha": "19eed302e4f7d1f56d64ba25a8b84c062349b922",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:20:37Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185098796",
+          "job_id": 122185098796,
+          "name": "prepare",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:34Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:09:33Z",
+          "conclusion": "success",
+          "elapsed_seconds": 2934.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139232",
+          "job_id": 122185139232,
+          "name": "campaign (deathstarbench, absent, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:19:47Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3547.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139249",
+          "job_id": 122185139249,
+          "name": "campaign (deathstarbench, partial, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:18:33Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3474.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139252",
+          "job_id": 122185139252,
+          "name": "campaign (deathstarbench, partial, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:15:52Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3312.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139272",
+          "job_id": 122185139272,
+          "name": "campaign (deathstarbench, absent, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:16:57Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3377.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139333",
+          "job_id": 122185139333,
+          "name": "campaign (deathstarbench, absent, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:52:03Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5483.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139362",
+          "job_id": 122185139362,
+          "name": "campaign (otel_demo, partial, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:50:50Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5411.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139363",
+          "job_id": 122185139363,
+          "name": "campaign (otel_demo, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:21:53Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3724.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139373",
+          "job_id": 122185139373,
+          "name": "campaign (petclinic, partial, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:19:49Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:52:07Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5488.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139380",
+          "job_id": 122185139380,
+          "name": "campaign (otel_demo, full, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:53:36Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5577.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139388",
+          "job_id": 122185139388,
+          "name": "campaign (otel_demo, partial, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:23:39Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3780.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139403",
+          "job_id": 122185139403,
+          "name": "campaign (deathstarbench, full, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:43:45Z",
+          "conclusion": "success",
+          "elapsed_seconds": 4985.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139411",
+          "job_id": 122185139411,
+          "name": "campaign (otel_demo, partial, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:22:11Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3691.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139417",
+          "job_id": 122185139417,
+          "name": "campaign (deathstarbench, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:03:57Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3262.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139434",
+          "job_id": 122185139434,
+          "name": "campaign (petclinic, absent, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:09:35Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:27:17Z",
+          "conclusion": "success",
+          "elapsed_seconds": 4047.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139441",
+          "job_id": 122185139441,
+          "name": "campaign (petclinic, partial, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:19:50Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:55:31Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5691.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139467",
+          "job_id": 122185139467,
+          "name": "campaign (otel_demo, absent, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:23:58Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3705.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139485",
+          "job_id": 122185139485,
+          "name": "campaign (petclinic, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:22:13Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:51:54Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5474.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139504",
+          "job_id": 122185139504,
+          "name": "campaign (otel_demo, absent, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:18:51Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3616.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139522",
+          "job_id": 122185139522,
+          "name": "campaign (petclinic, partial, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:18:35Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:23:24Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3765.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139540",
+          "job_id": 122185139540,
+          "name": "campaign (deathstarbench, full, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:19:48Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3548.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139556",
+          "job_id": 122185139556,
+          "name": "campaign (deathstarbench, partial, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:58:13Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5853.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139666",
+          "job_id": 122185139666,
+          "name": "campaign (otel_demo, absent, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:40Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:14:41Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3461.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139667",
+          "job_id": 122185139667,
+          "name": "campaign (petclinic, absent, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:17:00Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:11:17Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3322.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139688",
+          "job_id": 122185139688,
+          "name": "campaign (petclinic, absent, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:15:55Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:22:20Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3519.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139691",
+          "job_id": 122185139691,
+          "name": "campaign (petclinic, full, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:23:41Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T13:50:44Z",
+          "conclusion": "success",
+          "elapsed_seconds": 5405.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139724",
+          "job_id": 122185139724,
+          "name": "campaign (otel_demo, full, 5)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:39Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T14:28:20Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3894.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432/job/122185139881",
+          "job_id": 122185139881,
+          "name": "campaign (petclinic, full, 4)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:23:26Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "5d6fd6f99f3f3ca1af520fd24b75842e686db3398bc18d669a2a15ff43d25842",
+        "jobs": "7164db9afdc2f33f0d28be172f259c6e0e5f06b6fcdd50124dcb4b1fc2928193",
+        "run": "b040fe84ac115f795e5ad5c9df928e55f00ba7983d51438f16f8399f5a4672c6"
+      },
+      "run_attempt": 1,
+      "run_id": 40502990432,
+      "run_started_at": "2026-10-27T12:20:31Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T14:28:21Z",
+      "workflow_name": "Iteration 3 fresh 27-campaign series",
+      "workflow_path": ".github/workflows/series-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:15:45Z",
+      "declared_note": "Native timestamp attribution implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Bind coarse native DSB entry start through exact header child",
+      "event": "push",
+      "head_sha": "f118427ebdcc22f3d6d0af6fc02031817a9d8863",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502378266",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:16:08Z",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502378266/job/122182986239",
+          "job_id": 122182986239,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:15:48Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "b26b9c0207c26832786b79f00c4b5eeb0802af4d953b11d2f2229d5e76e9a36a",
+        "run": "07cae07606ba6ddd3ff623c89d1a078413cb7965d680901af517a44ebb515046"
+      },
+      "run_attempt": 1,
+      "run_id": 40502378266,
+      "run_started_at": "2026-10-27T12:15:45Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:16:09Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12733980787/zip",
+          "artifact_id": 12733980787,
+          "created_at": "2026-10-27T12:16:07Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:15:47Z",
+          "name": "qualification-review-40502380042",
+          "size_in_bytes": 91854
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:15:46Z",
+      "declared_note": "Retained native entry attribution replay; 631 exact-child bindings recovered, 6 unknown retained",
+      "declared_role": "evidence",
+      "display_title": "Copy iteration 3 qualification evidence",
+      "event": "workflow_dispatch",
+      "head_sha": "f118427ebdcc22f3d6d0af6fc02031817a9d8863",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502380042",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:16:09Z",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502380042/job/122183000237",
+          "job_id": 122183000237,
+          "name": "copy",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:15:49Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "684a42796e1a469c3b94fdac2bc652d13337e4106444fd2607d4518019235185",
+        "jobs": "ebff4f78d3ae766f57d1201366f067664fda37b67477394d706871d4b1080fd2",
+        "run": "66cd830145a35a18a110c42943e2fcaeccefbad185999798c798c2ac716d11ba"
+      },
+      "run_attempt": 1,
+      "run_id": 40502380042,
+      "run_started_at": "2026-10-27T12:15:46Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:16:10Z",
+      "workflow_name": "Copy iteration 3 qualification evidence",
+      "workflow_path": ".github/workflows/evidence-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:05:46Z",
+      "declared_note": "Read-only DSB binding audit implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Exercise DSB qualification audit against synthetic saved index",
+      "event": "push",
+      "head_sha": "d8edf9670aff1a2cbdb314a392c841d07d28cc39",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501091008",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:06:07Z",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501091008/job/122178655208",
+          "job_id": 122178655208,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:05:49Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "eb74d8539edae2bfc7d6a1229c4989531521090b960d15807c9590ac962d7d3b",
+        "run": "a1abae05bf2d0a6c33c9a7a8ae1188a21ba1628c5a1a4a7d43ac95f69f3dcda7"
+      },
+      "run_attempt": 1,
+      "run_id": 40501091008,
+      "run_started_at": "2026-10-27T12:05:46Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:06:08Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12733475371/zip",
+          "artifact_id": 12733475371,
+          "created_at": "2026-10-27T12:06:08Z",
+          "expired": false,
+          "expires_at": "2027-01-25T12:05:50Z",
+          "name": "qualification-review-40501095000",
+          "size_in_bytes": 91246
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:05:48Z",
+      "declared_note": "Retained qualification audit: all 1200 native entries present before timing filter",
+      "declared_role": "evidence",
+      "display_title": "Copy iteration 3 qualification evidence",
+      "event": "workflow_dispatch",
+      "head_sha": "d8edf9670aff1a2cbdb314a392c841d07d28cc39",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501095000",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:06:11Z",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501095000/job/122178679791",
+          "job_id": 122178679791,
+          "name": "copy",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:05:52Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "28f4a5442d5b0871cb5017f224625986805508a3512185cce04f7b7baa0a559d",
+        "jobs": "893615053e25537498f3b32d53487b2005ebe41605d6c210fe7b8cbe2ca7209f",
+        "run": "7b471961dec4c70714f9db83643faf55fbc0db84801fbf1883eb463941f1f3bf"
+      },
+      "run_attempt": 1,
+      "run_id": 40501095000,
+      "run_started_at": "2026-10-27T12:05:48Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:06:12Z",
+      "workflow_name": "Copy iteration 3 qualification evidence",
+      "workflow_path": ".github/workflows/evidence-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T11:51:14Z",
+      "declared_note": "Integrated acknowledgement, figure and cost implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Validate necessary visit acknowledgement facts equally",
+      "event": "push",
+      "head_sha": "a6ef37d4989fa80d24af83d36fb3c8923af81659",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40499244511",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T11:51:36Z",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40499244511/job/122172460008",
+          "job_id": 122172460008,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:51:17Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "7fd013a29a38795cfc6b47723979e6d24bce662cf6097aece51737abdde924fe",
+        "run": "a15ba91ff33cf82dd684b2a16dec33af73ae641907f1de97f3338d4a7ee0362c"
+      },
+      "run_attempt": 1,
+      "run_id": 40499244511,
+      "run_started_at": "2026-10-27T11:51:14Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T11:51:36Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T11:53:44Z",
+      "declared_note": "Cost failure-preservation and no-gate implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Retain costs before v3 artifact downloads",
+      "event": "push",
+      "head_sha": "2e534c6eedf9679ef3dbb86950482a5cae27f57d",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40499553849",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T11:53:59Z",
+          "conclusion": "success",
+          "elapsed_seconds": 13.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40499553849/job/122173505383",
+          "job_id": 122173505383,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:53:46Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "6df1d65a7463ba4b4c68345f20e14533d49369adc275a852595776fb927e4a97",
+        "run": "a51df70a448101d64f91c41fcaba7dcfc7cc9d3889c67d16abde825f9e0ab9c5"
+      },
+      "run_attempt": 1,
+      "run_id": 40499553849,
+      "run_started_at": "2026-10-27T11:53:44Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T11:54:00Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12731998874/zip",
+          "artifact_id": 12731998874,
+          "created_at": "2026-10-27T11:59:12Z",
+          "expired": false,
+          "expires_at": "2027-01-25T11:58:51Z",
+          "name": "qualification-review-40500194868",
+          "size_in_bytes": 85675
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T11:58:50Z",
+      "declared_note": "Revised qualification resource copy and completed-body fidelity audit",
+      "declared_role": "evidence",
+      "display_title": "Copy iteration 3 qualification evidence",
+      "event": "workflow_dispatch",
+      "head_sha": "2e534c6eedf9679ef3dbb86950482a5cae27f57d",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40500194868",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T11:59:15Z",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40500194868/job/122175674520",
+          "job_id": 122175674520,
+          "name": "copy",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:58:53Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "6cd5b3c5751221be90beabc95c4ee2bc20c59bf61b9a712572190daed5ac0c24",
+        "jobs": "5c5abf356657639e848d7e02df057c73c842b4d391005e62d2aec4b2a6d86fbf",
+        "run": "d1dd2f4eedaf997b73c7fb31660efdc5446e8cb252ed4be19ab642f50c53eb2f"
+      },
+      "run_attempt": 1,
+      "run_id": 40500194868,
+      "run_started_at": "2026-10-27T11:58:50Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T11:59:15Z",
+      "workflow_name": "Copy iteration 3 qualification evidence",
+      "workflow_path": ".github/workflows/evidence-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:37:41Z",
+      "declared_note": "Iteration-3 implementation checks before initial qualification",
+      "declared_role": "evidence",
+      "display_title": "Implement reviewed source-contract campaigns at 20 operations per second",
+      "event": "push",
+      "head_sha": "e9dc91570150adc2b4d6e03a02f59485c7a9c2bf",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489946709",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:37:55Z",
+          "conclusion": "success",
+          "elapsed_seconds": 12.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489946709/job/122141068814",
+          "job_id": 122141068814,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:37:43Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "96f771dd059b9890ec534d169d7a15404e9f34628855e046b169c85836d6711f",
+        "run": "68d3f04b6ede9d386f80dc83a4198eb3f92c4543eadb70618e671486c3cb488c"
+      },
+      "run_attempt": 1,
+      "run_id": 40489946709,
+      "run_started_at": "2026-10-27T10:37:41Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:37:56Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:48:34Z",
+      "declared_note": "Implementation checks before retained-data replay",
+      "declared_role": "evidence",
+      "display_title": "Preserve complete-response baselines and recovery semantics",
+      "event": "push",
+      "head_sha": "19df523c7757c8a2d7f6cfb0f1ac2503f8384027",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491335266",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:48:52Z",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491335266/job/122145739347",
+          "job_id": 122145739347,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:48:36Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "ac727f8fb5646c7a3acc287631db8a95d5922fbf9b050fea5721ba1ab574ebed",
+        "run": "5183ff7ad26a733e65d62039ab3e819201819ec16cc823b4d3fab157ad18800b"
+      },
+      "run_attempt": 1,
+      "run_id": 40491335266,
+      "run_started_at": "2026-10-27T10:48:34Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:48:52Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:56:44Z",
+      "declared_note": "Implementation checks after native-binding and audit repairs",
+      "declared_role": "evidence",
+      "display_title": "Bind untyped nginx HTTP spans through exact native ancestry",
+      "event": "push",
+      "head_sha": "27714384e310016f4c5f57010492cf2045cc8dbf",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492384536",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:56:57Z",
+          "conclusion": "success",
+          "elapsed_seconds": 11.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492384536/job/122149255707",
+          "job_id": 122149255707,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:56:46Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "aa65d74cad9ca06b63478472bd232bb6b18de78d036c3608ceb3d26ef42fde6c",
+        "run": "424bf92af7a910eef1a6c9592f78b7b2d92b8292677c13a22b39be0815a0767c"
+      },
+      "run_attempt": 1,
+      "run_id": 40492384536,
+      "run_started_at": "2026-10-27T10:56:44Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:56:58Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T11:44:18Z",
+      "declared_note": "Implementation checks for amended censoring policy",
+      "declared_role": "evidence",
+      "display_title": "Separate incomplete observations from application failure in iteration 3",
+      "event": "push",
+      "head_sha": "79ca71e8d6d54ced18fec96e3d03141a5c43f464",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498380248",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T11:44:37Z",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498380248/job/122169534681",
+          "job_id": 122169534681,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:44:21Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "0be3f0dd4e6ff51498d5b287ab990755de338dc2cece662a5617206aa816dfdc",
+        "run": "a15bc21e82786dffc78ab87c484dc0355ee16222a45e54e02419906e80940fd9"
+      },
+      "run_attempt": 1,
+      "run_id": 40498380248,
+      "run_started_at": "2026-10-27T11:44:18Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T11:44:38Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728901818/zip",
+          "artifact_id": 12728901818,
+          "created_at": "2026-10-27T10:44:06Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:37:47Z",
+          "name": "qualification-v3-deathstarbench-full-3-40489958752",
+          "size_in_bytes": 16227237
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12727882474/zip",
+          "artifact_id": 12727882474,
+          "created_at": "2026-10-27T10:45:16Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:37:47Z",
+          "name": "qualification-v3-petclinic-full-3-40489958752",
+          "size_in_bytes": 472802872
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12727772421/zip",
+          "artifact_id": 12727772421,
+          "created_at": "2026-10-27T10:47:02Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:37:47Z",
+          "name": "qualification-v3-otel_demo-full-3-40489958752",
+          "size_in_bytes": 34515851
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:37:46Z",
+      "declared_note": "Initial iteration-3 resource qualification",
+      "declared_role": "qualification",
+      "display_title": "Iteration 3 resource qualification",
+      "event": "workflow_dispatch",
+      "head_sha": "e9dc91570150adc2b4d6e03a02f59485c7a9c2bf",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:37:52Z",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752/job/122141116158",
+          "job_id": 122141116158,
+          "name": "prepare",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:37:49Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:45:18Z",
+          "conclusion": "success",
+          "elapsed_seconds": 444.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752/job/122141149241",
+          "job_id": 122141149241,
+          "name": "qualify (petclinic, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:37:54Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:44:08Z",
+          "conclusion": "success",
+          "elapsed_seconds": 374.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752/job/122141149274",
+          "job_id": 122141149274,
+          "name": "qualify (deathstarbench, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:37:54Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:47:05Z",
+          "conclusion": "success",
+          "elapsed_seconds": 551.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752/job/122141149397",
+          "job_id": 122141149397,
+          "name": "qualify (otel_demo, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:37:54Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "1c51dd530d0dca25028cbb3273fe357790b25363eff23897e6c0028ebb7c8dd3",
+        "jobs": "b7cb32f71a3bf23493df26d83bdf1fe01b143ed208da153359a4c94852d6783b",
+        "run": "ce81864d1507b6c7b297bbeadd7283cf81622daa58009c8f706ffbd540d260b0"
+      },
+      "run_attempt": 1,
+      "run_id": 40489958752,
+      "run_started_at": "2026-10-27T10:37:46Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:47:06Z",
+      "workflow_name": "Iteration 3 resource qualification",
+      "workflow_path": ".github/workflows/qualification-v3.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728992899/zip",
+          "artifact_id": 12728992899,
+          "created_at": "2026-10-27T10:49:13Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:48:48Z",
+          "name": "replay-v3-petclinic-40491361699",
+          "size_in_bytes": 4369
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728967776/zip",
+          "artifact_id": 12728967776,
+          "created_at": "2026-10-27T10:49:39Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:48:48Z",
+          "name": "replay-v3-otel_demo-40491361699",
+          "size_in_bytes": 4236
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728812804/zip",
+          "artifact_id": 12728812804,
+          "created_at": "2026-10-27T10:49:37Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:48:48Z",
+          "name": "replay-v3-deathstarbench-40491361699",
+          "size_in_bytes": 4008
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:48:46Z",
+      "declared_note": "First retained full seed-zero source-contract replay",
+      "declared_role": "replay",
+      "display_title": "Replay three retained full seed-zero source contracts",
+      "event": "workflow_dispatch",
+      "head_sha": "19df523c7757c8a2d7f6cfb0f1ac2503f8384027",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491361699",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:49:40Z",
+          "conclusion": "success",
+          "elapsed_seconds": 50.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491361699/job/122145837481",
+          "job_id": 122145837481,
+          "name": "replay (deathstarbench)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:48:50Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:49:41Z",
+          "conclusion": "success",
+          "elapsed_seconds": 51.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491361699/job/122145837588",
+          "job_id": 122145837588,
+          "name": "replay (otel_demo)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:48:50Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:49:15Z",
+          "conclusion": "success",
+          "elapsed_seconds": 25.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491361699/job/122145837929",
+          "job_id": 122145837929,
+          "name": "replay (petclinic)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:48:50Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "f5326f1a4db188e97e19823fe23c998678f4648f60cb11a0690800c4cef50471",
+        "jobs": "59c7ba47988f61e6248d2ddb498b8ae162dda4d766e28f73a04ea7077fbd502b",
+        "run": "dbfec1e20eefe48383c91a09132668d967862dd0478bf291299b3e245e48d5bd"
+      },
+      "run_attempt": 1,
+      "run_id": 40491361699,
+      "run_started_at": "2026-10-27T10:48:46Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:49:42Z",
+      "workflow_name": "Replay three retained full seed-zero source contracts",
+      "workflow_path": ".github/workflows/replay-v3.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12729072413/zip",
+          "artifact_id": 12729072413,
+          "created_at": "2026-10-27T10:49:47Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:49:08Z",
+          "name": "qualification-review-40491404248",
+          "size_in_bytes": 82576
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:49:07Z",
+      "declared_note": "First qualification evidence copy",
+      "declared_role": "evidence",
+      "display_title": "Copy iteration 3 qualification evidence",
+      "event": "workflow_dispatch",
+      "head_sha": "19df523c7757c8a2d7f6cfb0f1ac2503f8384027",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491404248",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:49:49Z",
+          "conclusion": "success",
+          "elapsed_seconds": 39.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491404248/job/122145977008",
+          "job_id": 122145977008,
+          "name": "copy",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:49:10Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "aa0204404906ba3447f006358e8ec6c4faad4ba80e3559b3dad9ee34d5961957",
+        "jobs": "d45d26df51b862d6c0261bdff4a871948fa921abb04a180fe95f716e8918fef5",
+        "run": "aa3cce6cb237d318c6925ab4df1b6133cb488620dc714b56771ef1c06598088f"
+      },
+      "run_attempt": 1,
+      "run_id": 40491404248,
+      "run_started_at": "2026-10-27T10:49:07Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:49:50Z",
+      "workflow_name": "Copy iteration 3 qualification evidence",
+      "workflow_path": ".github/workflows/evidence-v3.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728434177/zip",
+          "artifact_id": 12728434177,
+          "created_at": "2026-10-27T10:57:22Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:56:47Z",
+          "name": "qualification-review-40492389279",
+          "size_in_bytes": 86124
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:56:46Z",
+      "declared_note": "Second qualification evidence copy",
+      "declared_role": "evidence",
+      "display_title": "Copy iteration 3 qualification evidence",
+      "event": "workflow_dispatch",
+      "head_sha": "27714384e310016f4c5f57010492cf2045cc8dbf",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492389279",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:57:25Z",
+          "conclusion": "success",
+          "elapsed_seconds": 35.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492389279/job/122149280721",
+          "job_id": 122149280721,
+          "name": "copy",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:56:50Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "966745f47ddc771dafc5c1637fdd24a5d3d9ee99fcb5e8c314dd134fd3b2c016",
+        "jobs": "fc58d6947d50b742e6ba580f74ebadd7e7e72bf50b80041959cb61382d35cf18",
+        "run": "3f3c8541b30645eded6dbbafeb9ba8e846b91b3afab17e8f9fdfe5e7eec51688"
+      },
+      "run_attempt": 1,
+      "run_id": 40492389279,
+      "run_started_at": "2026-10-27T10:56:46Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:57:26Z",
+      "workflow_name": "Copy iteration 3 qualification evidence",
+      "workflow_path": ".github/workflows/evidence-v3.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12728334099/zip",
+          "artifact_id": 12728334099,
+          "created_at": "2026-10-27T10:57:27Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:56:50Z",
+          "name": "replay-v3-petclinic-40492396200",
+          "size_in_bytes": 4422
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12727599877/zip",
+          "artifact_id": 12727599877,
+          "created_at": "2026-10-27T10:57:33Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:56:50Z",
+          "name": "replay-v3-otel_demo-40492396200",
+          "size_in_bytes": 4300
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12727539545/zip",
+          "artifact_id": 12727539545,
+          "created_at": "2026-10-27T10:57:37Z",
+          "expired": false,
+          "expires_at": "2027-01-25T10:56:50Z",
+          "name": "replay-v3-deathstarbench-40492396200",
+          "size_in_bytes": 4159
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T10:56:49Z",
+      "declared_note": "Second retained full seed-zero source-contract replay",
+      "declared_role": "replay",
+      "display_title": "Replay three retained full seed-zero source contracts",
+      "event": "workflow_dispatch",
+      "head_sha": "27714384e310016f4c5f57010492cf2045cc8dbf",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492396200",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T10:57:35Z",
+          "conclusion": "success",
+          "elapsed_seconds": 42.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492396200/job/122149301748",
+          "job_id": 122149301748,
+          "name": "replay (otel_demo)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:56:53Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:57:30Z",
+          "conclusion": "success",
+          "elapsed_seconds": 37.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492396200/job/122149302032",
+          "job_id": 122149302032,
+          "name": "replay (petclinic)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:56:53Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T10:57:39Z",
+          "conclusion": "success",
+          "elapsed_seconds": 46.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492396200/job/122149302115",
+          "job_id": 122149302115,
+          "name": "replay (deathstarbench)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T10:56:53Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "a41ec8d3361e192472c8757ccae9385cc27314cd443ac4dc31e438f2f0550d02",
+        "jobs": "cdaa4fa3abe77a8aad3f27b8ee1d27f3779bcb8904ccbe1ecbcf8ff787e66f35",
+        "run": "48bcb45af146ed15cb962dac4476326b089c84840d3e29ed2393327e099edae0"
+      },
+      "run_attempt": 1,
+      "run_id": 40492396200,
+      "run_started_at": "2026-10-27T10:56:49Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T10:57:40Z",
+      "workflow_name": "Replay three retained full seed-zero source contracts",
+      "workflow_path": ".github/workflows/replay-v3.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12731624385/zip",
+          "artifact_id": 12731624385,
+          "created_at": "2026-10-27T11:58:17Z",
+          "expired": false,
+          "expires_at": "2027-01-25T11:44:25Z",
+          "name": "qualification-v3-deathstarbench-full-3-40498392196",
+          "size_in_bytes": 16295467
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12731514151/zip",
+          "artifact_id": 12731514151,
+          "created_at": "2026-10-27T11:56:02Z",
+          "expired": false,
+          "expires_at": "2027-01-25T11:44:25Z",
+          "name": "qualification-v3-otel_demo-full-3-40498392196",
+          "size_in_bytes": 44629758
+        },
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12731199453/zip",
+          "artifact_id": 12731199453,
+          "created_at": "2026-10-27T11:52:37Z",
+          "expired": false,
+          "expires_at": "2027-01-25T11:44:25Z",
+          "name": "qualification-v3-petclinic-full-3-40498392196",
+          "size_in_bytes": 16675519
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T11:44:24Z",
+      "declared_note": "Revised censored-observation qualification",
+      "declared_role": "qualification",
+      "display_title": "Iteration 3 resource qualification",
+      "event": "workflow_dispatch",
+      "head_sha": "79ca71e8d6d54ced18fec96e3d03141a5c43f464",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T11:44:29Z",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196/job/122169579175",
+          "job_id": 122169579175,
+          "name": "prepare",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:44:27Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T11:56:04Z",
+          "conclusion": "success",
+          "elapsed_seconds": 692.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196/job/122169613915",
+          "job_id": 122169613915,
+          "name": "qualify (otel_demo, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:44:32Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T11:52:39Z",
+          "conclusion": "success",
+          "elapsed_seconds": 487.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196/job/122169613927",
+          "job_id": 122169613927,
+          "name": "qualify (petclinic, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:44:32Z",
+          "status": "completed"
+        },
+        {
+          "completed_at": "2026-10-27T11:58:20Z",
+          "conclusion": "success",
+          "elapsed_seconds": 828.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196/job/122169613945",
+          "job_id": 122169613945,
+          "name": "qualify (deathstarbench, full, 3)",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T11:44:32Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "0bc74abd5eb1400f4154f9c07a02b41c746f855c72d3b87033fbb8f484a250c9",
+        "jobs": "3a8d8038e1c85a799941fd56c69c6371c6bd6fe979697e2de84dd647da1fc611",
+        "run": "fd9d056d87cc73891f01c2a85a6d1ee7e11bb96391255b640961297373aca8df"
+      },
+      "run_attempt": 1,
+      "run_id": 40498392196,
+      "run_started_at": "2026-10-27T11:44:24Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T11:58:21Z",
+      "workflow_name": "Iteration 3 resource qualification",
+      "workflow_path": ".github/workflows/qualification-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:20:30Z",
+      "declared_note": "Final acquisition-code implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Record final original-criterion execution review and retained replay",
+      "event": "push",
+      "head_sha": "19eed302e4f7d1f56d64ba25a8b84c062349b922",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502988126",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:20:48Z",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502988126/job/122185084025",
+          "job_id": 122185084025,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:20:32Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "c2874ea75b88738d42a4ec3a7352cd016143fc1f2141d3f26926f6e893661318",
+        "run": "dfe542b4671ebdfa58768d84ebf387f21b1d05d16d7a5c63b966ad0257e59e4a"
+      },
+      "run_attempt": 1,
+      "run_id": 40502988126,
+      "run_started_at": "2026-10-27T12:20:30Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:20:49Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:21:10Z",
+      "declared_note": "Acquisition-link publication checks",
+      "declared_role": "evidence",
+      "display_title": "Link the running fresh 27-campaign acquisition",
+      "event": "push",
+      "head_sha": "a868e0b87b8f2a60d9dd91d741d9433f01882fb9",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40503077703",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:21:27Z",
+          "conclusion": "success",
+          "elapsed_seconds": 15.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40503077703/job/122185382812",
+          "job_id": 122185382812,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:21:12Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "f66c9ccb1d606e9e71064cb46bd45d49908f806ffb001b85c95daa5fafc18b3f",
+        "run": "6c930a64ca1d409f3d89f278c16aaa96d35576d3484f28528ada1ee9f1a94cc4"
+      },
+      "run_attempt": 1,
+      "run_id": 40503077703,
+      "run_started_at": "2026-10-27T12:21:10Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:21:27Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T12:53:56Z",
+      "declared_note": "Structural supplement implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Add read-only v3 structural supplement",
+      "event": "push",
+      "head_sha": "91c2d5a20f472ea0b01aaaaccb32b193d9f72fc9",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40507425683",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T12:54:15Z",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40507425683/job/122200206516",
+          "job_id": 122200206516,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T12:53:59Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "2ce2f8a371a4a2606bbfdb7abeebbd6ce57919c0a903b13f87951b26eab0e0d3",
+        "run": "36c95d236805165e820b20bdcfb9344e52ab05c52bc3247ffa0df216daed32fb"
+      },
+      "run_attempt": 1,
+      "run_id": 40507425683,
+      "run_started_at": "2026-10-27T12:53:56Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T12:54:15Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T13:04:17Z",
+      "declared_note": "Reviewed structural identity and integrity implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Record structural reporting review and clarify series scope",
+      "event": "push",
+      "head_sha": "ec9efef4bbf826c640c323bd612f38f17f48d5d2",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40508845530",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T13:04:33Z",
+          "conclusion": "success",
+          "elapsed_seconds": 14.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40508845530/job/122205096841",
+          "job_id": 122205096841,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:04:19Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "bf71cc6fa03f52a95149aa3b076e7985f5c8dd8ad04c4cbb206e7f124d264194",
+        "run": "85fb610722c61e3c7be7be78a04246f28cfcf58e111ddc022f1015e4ba208883"
+      },
+      "run_attempt": 1,
+      "run_id": 40508845530,
+      "run_started_at": "2026-10-27T13:04:17Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T13:04:34Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T13:15:07Z",
+      "declared_note": "Permanent archive of iteration-3 preparation, qualification, replay and implementation-check artifacts",
+      "declared_role": "evidence",
+      "display_title": "Archive original measurement artifacts",
+      "event": "workflow_dispatch",
+      "head_sha": "ec9efef4bbf826c640c323bd612f38f17f48d5d2",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40510390283",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T13:16:38Z",
+          "conclusion": "success",
+          "elapsed_seconds": 88.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40510390283/job/122210448640",
+          "job_id": 122210448640,
+          "name": "archive",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:15:10Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "0d8f3ab84162b186beeb6d24bd7134a12805629eaeef78d226e3cf1dd45ad60c",
+        "run": "1abe996209939deed6272d1087f9d519302f58d7600ed5ee94ae60700e385b5b"
+      },
+      "run_attempt": 1,
+      "run_id": 40510390283,
+      "run_started_at": "2026-10-27T13:15:07Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T13:16:38Z",
+      "workflow_name": "Archive original measurement artifacts",
+      "workflow_path": ".github/workflows/archive.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T13:19:25Z",
+      "declared_note": "Retained projection diagnostic implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Link retained preparation archive and diagnostic review",
+      "event": "push",
+      "head_sha": "a2b5ce1c52883b4b496eefed2348543b60513479",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40511015584",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T13:19:46Z",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40511015584/job/122212624557",
+          "job_id": 122212624557,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:19:28Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "705c4d9846988fed18459a075ab3d2e7e2101ee33724351e2db1b143d8f1485a",
+        "run": "cfb0da1f75fcbe71e0888a5265aaf9aeb08335b1ca80e633be4065319ad15f5c"
+      },
+      "run_attempt": 1,
+      "run_id": 40511015584,
+      "run_started_at": "2026-10-27T13:19:25Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T13:19:46Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [
+        {
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12738204661/zip",
+          "artifact_id": 12738204661,
+          "created_at": "2026-10-27T13:50:08Z",
+          "expired": false,
+          "expires_at": "2027-01-25T13:43:20Z",
+          "name": "dsb-fresh-route-audit-40514548883",
+          "size_in_bytes": 66845
+        }
+      ],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T13:43:19Z",
+      "declared_note": "Read-only diagnosis of fixed nine DSB coverage patterns with original hashed rules and raw timestamp witnesses",
+      "declared_role": "evidence",
+      "display_title": "Audit retained fresh DSB route coverage",
+      "event": "workflow_dispatch",
+      "head_sha": "bd83ffe5a4328ce266ed9068e0ec2ffed33f57f3",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40514548883",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T13:50:11Z",
+          "conclusion": "success",
+          "elapsed_seconds": 409.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40514548883/job/122224951259",
+          "job_id": 122224951259,
+          "name": "audit",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:43:22Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "e49b002ddbb9bdd262146bd39807faadfe98bd9e790e67392a02cd8bc94a1769",
+        "jobs": "34f73c43e5120893414c0a6a0547094fa38d572ed556c3872d88a4a5189c1241",
+        "run": "b30af97470c84a59e2906285b64e8c0112fbdc7c77b9809262ce45efa07bc731"
+      },
+      "run_attempt": 1,
+      "run_id": 40514548883,
+      "run_started_at": "2026-10-27T13:43:19Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T13:50:17Z",
+      "workflow_name": "Audit retained fresh DSB route coverage",
+      "workflow_path": ".github/workflows/audit-dsb-fresh-v3.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T13:43:18Z",
+      "declared_note": "Retained DSB coverage audit implementation checks",
+      "declared_role": "evidence",
+      "display_title": "Record reviewed DSB coverage audit implementation",
+      "event": "push",
+      "head_sha": "bd83ffe5a4328ce266ed9068e0ec2ffed33f57f3",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40514546003",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T13:43:39Z",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40514546003/job/122224933702",
+          "job_id": 122224933702,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T13:43:21Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "9309723562d2878c4b226a3db6c58eb82cfae06550c0cca61adba7be282335ef",
+        "run": "ef55dec6e6cf4545167757cb6990ca226600b52de6b3d5e9d83eead34f501c00"
+      },
+      "run_attempt": 1,
+      "run_id": 40514546003,
+      "run_started_at": "2026-10-27T13:43:18Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T13:43:40Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    },
+    {
+      "artifacts": [],
+      "classification": "preparation",
+      "compact_summary_artifact": {
+        "availability": "not_applicable",
+        "matching_artifact_ids": [],
+        "matching_artifact_names": [],
+        "meaning": "not_uploaded is distinct from a later artifact download or network failure"
+      },
+      "conclusion": "success",
+      "created_at": "2026-10-27T14:04:53Z",
+      "declared_note": "Published retained coverage diagnosis and comparator-scope checks",
+      "declared_role": "evidence",
+      "display_title": "Publish retained coverage diagnosis and scope the comparators",
+      "event": "push",
+      "head_sha": "865aa8140ccb6967cf2e4d3a1f39ce98888191f7",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40517725553",
+      "jobs": [
+        {
+          "completed_at": "2026-10-27T14:05:18Z",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0,
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40517725553/job/122235582117",
+          "job_id": 122235582117,
+          "name": "checks",
+          "run_attempt": 1,
+          "started_at": "2026-10-27T14:04:56Z",
+          "status": "completed"
+        }
+      ],
+      "metadata_sha256": {
+        "artifacts": "af3c25b59e7048d2e4b6ea03a688b2eced4e1786b5ae40f71516bc3ce0d4149e",
+        "jobs": "d085eef06c8c8d5959dd7756a105cb1f9cf89afca956a4204d0525e2282a5a21",
+        "run": "f0ede3d6fce76821caad65aff43d4656163d40b8f506c3e9fed8e0542b60ef89"
+      },
+      "run_attempt": 1,
+      "run_id": 40517725553,
+      "run_started_at": "2026-10-27T14:04:53Z",
+      "status": "completed",
+      "updated_at": "2026-10-27T14:09:18Z",
+      "workflow_name": "Focused implementation checks",
+      "workflow_path": ".github/workflows/checks.yml"
+    }
+  ],
+  "schema_version": 1,
+  "scientific_acquisition": {
+    "artifacts_with_unknown_size": 0,
+    "compact_summary_artifact_availability": {
+      "available": 1
+    },
+    "completed_job_elapsed_seconds": 113348.0,
+    "job_conclusions": {
+      "success": 28
+    },
+    "jobs": 28,
+    "jobs_with_unknown_elapsed": 0,
+    "known_job_elapsed_seconds_subtotal": 113348.0,
+    "known_stored_artifact_bytes_subtotal": 17398396136,
+    "runs": 1,
+    "runs_without_compact_summary_artifact": 0,
+    "stored_artifact_bytes": 17398396136
+  }
+}
