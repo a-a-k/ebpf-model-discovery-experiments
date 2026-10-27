@@ -4,19 +4,21 @@
 
 **Diagnostic iteration completed:** [retrospective controls](results/iteration-2/report.md) now distinguish classification, proxy semantics, Kafka export and nominal precision effects in the same 27 campaigns. The [refined design](docs/ITERATION_2.md#refined-minimum-design-for-the-next-implementation) follows those findings. Original results remain unchanged; oracle-assisted diagnostic improvements are not corrected eBPF forecasts.
 
-**Fresh iteration 3 is in preparation:** the [updated protocol](docs/ITERATION_3.md)
+**Fresh iteration 3 is running:** [27 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
+follow the [reviewed updated protocol](docs/ITERATION_3.md)
 uses explicit source-only completion contracts, a cheap HTTP/body comparator and
 shared-database impact controls. Load increases to 20 operations/s, with four
 300-second training blocks and eight 60-second target blocks: 34,800 primary
-attempts per campaign, 939,600 across new seeds 3/4/5. Resource qualification
-precedes acquisition. No fresh empirical result is claimed yet. The 5/10 pp
+attempts per campaign, 939,600 across new seeds 3/4/5. Revised resource qualification
+and independent implementation review are complete. No fresh empirical result is claimed yet. The 5/10 pp
 thresholds below describe the historical series only; new comparisons report
 errors, uncertainty, unknowns and costs without an accuracy success gate.
 The [timing amendment](docs/ITERATION_3.md#timing-amendment-no-imposed-application-deadline)
 also removes the unjustified universal two-second business cutoff. A ten-second
 engineering observation cap produces censoring, not an automatic failure.
 Correctness, client-observed HTTP timing and SQL completion intervals are
-reported separately; revised technical qualification precedes the fresh series.
+reported separately. [Retained technical evidence](results/iteration-3-preparation/qualification-40498392196/SOURCE.md)
+includes the native timestamp-attribution repair and remaining unknown bindings.
 
 ## Abstract
 

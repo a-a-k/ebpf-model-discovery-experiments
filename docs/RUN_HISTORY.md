@@ -77,6 +77,7 @@ original-criterion skeptic review and eligibility boundaries.
 | [40500194868](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40500194868) | Revised qualification evidence copy and body audit completed | OTel 1,089/1,089 comparable completed bodies match exactly. Copies resource evidence without refitting or generating traffic |
 | [40501095000](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501095000) | Retained DSB native-entry binding audit completed | All 1,200 entries exist before timing filtering; 637 were rejected by the strict window |
 | [40502380042](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502380042) | Reviewed attribution rule replay completed | Exact in-window header-child ancestry recovers 631 bindings; six remain unknown. Outer HTTP facts and timestamps are preserved; no new traffic or fitting |
+| [40502990432](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432) | Fixed fresh 27-campaign series launched | Three systems, three modes, seeds 3/4/5; 20 operations/s, 300-second training and 60-second target blocks. Censoring is unknown, no application deadline or accuracy gate; results pending |
 
 The engineering observation cap bounds resource occupancy; it does not classify
 an operation as failed. Changing this rule increases potential concurrency, so

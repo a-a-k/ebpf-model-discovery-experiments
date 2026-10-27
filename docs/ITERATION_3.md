@@ -2,7 +2,9 @@
 
 Status: source contracts, baselines, amended censoring policy, implementation and
 revised resource qualification reviewed. The fixed fresh 27-campaign acquisition
-has explicit execution GO; its results are not yet available.
+is running in [40502990432](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
+at commit `19eed302e4f7d1f56d64ba25a8b84c062349b922`, after explicit execution GO.
+Its results are not yet available.
 This is a new acquisition series. Original campaigns and oracle-assisted
 retrospective diagnostics remain separate immutable populations.
 
