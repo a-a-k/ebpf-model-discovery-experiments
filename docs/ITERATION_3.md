@@ -393,6 +393,11 @@ and population failures remain hard failures. An optional system selector keeps
 costs are charged together with the failed attempt. No acquisition, refitting,
 scientific-rule change or stronger usefulness claim follows from this repair.
 
+Implementation `9f138a3` passed twelve focused checks and independent review.
+The reviewer grants explicit implementation **GO** for the OTel-only nine-cell
+reporting rerun. The orchestrator agrees; all earlier reporting costs remain
+included.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run

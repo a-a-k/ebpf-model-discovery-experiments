@@ -1,0 +1,11 @@
+{
+  "analysis_commit": "98f9cac47af48d1223b61eadaa5cc0cfc0e0f4aa",
+  "cells_completed": 7,
+  "ended_ns": 1793114944346326480,
+  "error": "CalledProcessError: Command '['gh', 'run', 'download', '40502990432', '-n', 'campaign-v3-otel_demo-partial-4-40502990432', '-D', '/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/structural-v3/otel_demo/partial-4-40502990432/full']' returned non-zero exit status 1.",
+  "report_run_id": "40521491267",
+  "started_ns": 1793113400593298146,
+  "status": "technical_failure",
+  "supplement_run_id": "40527106796",
+  "system": "otel_demo"
+}
