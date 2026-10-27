@@ -20,6 +20,12 @@ Correctness, client-observed HTTP timing and SQL completion intervals are
 reported separately. [Retained technical evidence](results/iteration-3-preparation/qualification-40498392196/SOURCE.md)
 includes the native timestamp-attribution repair and remaining unknown bindings.
 
+A [retained-data coverage audit](results/iteration-3-diagnostics/dsb-coverage-40514548883/SOURCE.md)
+now identifies a measurement-path limitation in the fresh DSB results: exact-ID
+events were present, but an unvalidated cross-clock timing gate rejected them in
+some cells. Original forecasts remain unchanged; sparse assigned coverage must
+not be described as absence of those raw eBPF events.
+
 The abstract, design table and measured results below describe the original
 series. Fresh-series findings will be reported separately after acquisition and
 review; preparation diagnostics are not substituted for those findings.

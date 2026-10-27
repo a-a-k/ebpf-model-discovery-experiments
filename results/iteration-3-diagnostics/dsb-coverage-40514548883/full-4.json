@@ -1,0 +1,926 @@
+{
+  "acquisition_rule_sha256": {
+    "src/ebpf_discovery/model.py": "71a8d452efcd7ba36d481b396237b4aba85791771dfc5535a033a5f1d3dc38f4",
+    "src/ebpf_discovery/observations.py": "8097d73b05bd5a29ce220ed3bdb3dc87969f0b57fb881fa710edf82da23e9b53",
+    "src/ebpf_discovery/semantic_v3.py": "76e30f3a40d4d70eca35a9f3385820279a20c887d716d1fffd1d4e424a054168",
+    "src/ebpf_discovery/store_v3.py": "3b645d514b2c630eb3e321c6de4ac6e1c837a6dc885c9127df936547afa2bdaf",
+    "src/ebpf_discovery/timing_v3.py": "245e01207c743a82120d5b3b8bdb0268541851b2914797a6288b4e162f1de91f",
+    "systems/deathstarbench/contracts_v3.py": "683860ae9993684bf2499209a0b6d146d9d610dd1ba755b5df274c821f602e31"
+  },
+  "audit_commit": "bd83ffe5a4328ce266ed9068e0ec2ffed33f57f3",
+  "input_sha256": {
+    "automatic/combined/route/classes.json": "216044ef0b8dab44c0c4621cbf37bb9e835652d27f9e67d7a99ab1608f6ef0b5",
+    "automatic/combined/route/evaluation-map.json": "3e79127903ec6bb07c5a1860f3660488163c59644ac27d4903d4790ade313fea",
+    "automatic/combined/route/final-assignments.json": "93ab021a789d0e23d29337939347eac6f40040943f3e801c65126793addb635e",
+    "automatic/combined/route_and_downstream/classes.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "automatic/combined/route_and_downstream/evaluation-map.json": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "automatic/ebpf/route/classes.json": "216044ef0b8dab44c0c4621cbf37bb9e835652d27f9e67d7a99ab1608f6ef0b5",
+    "automatic/ebpf/route/evaluation-map.json": "3e79127903ec6bb07c5a1860f3660488163c59644ac27d4903d4790ade313fea",
+    "automatic/ebpf/route/final-assignments.json": "93ab021a789d0e23d29337939347eac6f40040943f3e801c65126793addb635e",
+    "automatic/ebpf/route_and_downstream/classes.json": "312a161b856fb53fe62baf37faa7324783c8921ee5d4d28b2d4b9b1efa53b1dc",
+    "automatic/ebpf/route_and_downstream/evaluation-map.json": "2d83e1ed924e14eed993787c910571b08d084ad7e4264c83c254f20b0da8f6d6",
+    "automatic/native/route/classes.json": "216044ef0b8dab44c0c4621cbf37bb9e835652d27f9e67d7a99ab1608f6ef0b5",
+    "automatic/native/route/evaluation-map.json": "3e79127903ec6bb07c5a1860f3660488163c59644ac27d4903d4790ade313fea",
+    "automatic/native/route/final-assignments.json": "93ab021a789d0e23d29337939347eac6f40040943f3e801c65126793addb635e",
+    "automatic/native/route_and_downstream/classes.json": "5c43f73fd9f349e54414624699b1e90b72b1a47dfadc077ff855ea7be9c2045a",
+    "automatic/native/route_and_downstream/evaluation-map.json": "986d7aa442287ac87721fe8a1a29ba53f622044b9b93a9df12f532b7ebd7be31",
+    "compact/acquisition-complete.json": "18cf287bc049e93b32e4daa9652fcc636eed4027a7eb74145873c886a9733e36",
+    "compact/automatic-metrics.json": "7da701309c723f0585227a5d3737525da8c0960ec0a159dbde5b426a461c4b1b",
+    "compact/blocks.json": "0d9fe312023c768ed900786d52a8dc5337a2d88c7f7b30b659e4d69288c6dda7",
+    "compact/index-final.json": "a48092a22f716dccc73c834a989cebdce7b87962a08d8cb2751332fb30ff1722",
+    "compact/metrics-v3.json": "f31a054e51e7d3c6c436278e23a8f1fef480f90ab780bed8121804ba6afdc2c2",
+    "external.json": "ffdde12f3f0d5f7ac41e9aeab7cd7a3c68b55a4f92030ba3c4287ab6d1d80fb7",
+    "forecast-saved.json": "c13d47bc9e3e441084f08c189ccd4c0e28c61e1772ed765d0da6aadf6caf2c4a",
+    "freeze-integrity.json": "9fd40050d090df9b42c16f12ba9c9311f80afe4ea275d4f1fe6de0e70f20fc25",
+    "models/combined/forecast.json": "a8589344e4d722cd22b33bffb420e4d02054533f759efd1ebb85097a2f89df99",
+    "models/combined/model.json": "11cc06d0379f64f81902cbeeb2c7649fc8a43669ee150a67eb51905d63f9dcfd",
+    "models/ebpf/forecast.json": "56188949d957ac96e750c49f891a4aa413aa825d55c7c65db7edeeed181f3f7b",
+    "models/ebpf/model.json": "4a27ac1b03d9d50b7f4b8c3b6d2c7080a32aaf63b0ed4275373073750d31ae10",
+    "models/entry_http/forecast.json": "acd902d91c27d84ccc48254b9667ea6fc47e829d0193b7d799c4f55ca36d9a8a",
+    "models/entry_http/model.json": "936041135373398cd489481c21a0862592c0ada5fcc988ea49cbded7684036e6",
+    "models/native/forecast.json": "80219dadae8185621462d329ba2d336312da56fd8f765a4fdc3c1a6f815e4285",
+    "models/native/model.json": "22d5673d5ec916321ecbe0a8d3c69916979487e7b7b17baae68c11bb38a03108",
+    "observation-index.sqlite": "de9e31345684a89336fb853a95092c18ab4d20e08d7cf7f872e1cc62fbfffce3",
+    "projections/combined-final.json": "480bf59983d5c28a75bd4d8470d939175e37d7ba6d5cbd9053ab592ac3984e3b",
+    "projections/ebpf-final.json": "9375eb6d08521ef3bfb24ebec395ce09ec077d248b2e75e735ab11627a3ac8ef",
+    "projections/entry_http-final.json": "732be28767da5a5e562c98f47630a45eb12ee036fa0ad2c714b912e78ecf0739",
+    "projections/native-final.json": "d887008d312af341bfc14d233bbcd38ec880bee1a839b972ae238b579f1e2921",
+    "status.json": "a1676443f14dd21889302e08af4f0590465747edbb9eb29e9ebee942efb63fb2"
+  },
+  "interpretation": "Missing exact dispatched ID means unavailable indexed evidence, not proven collector loss. Raw timestamp differences are descriptive; no clock tolerance is inferred.",
+  "kind": "retained_dsb_route_coverage_diagnostic",
+  "mode": "full",
+  "no_new_traffic_fitting_or_projection_regeneration": true,
+  "seed": 4,
+  "source_run_id": "40502990432",
+  "sources": {
+    "combined": {
+      "frozen_route_class_support_by_phase": {
+        "calibration": {
+          "1c13608a83b748f2": 8000,
+          "ab7cb183ef892914": 8000,
+          "bf64214653c90ea4": 8000
+        },
+        "class_test": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "class_train": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "target": {
+          "1c13608a83b748f2": 3200,
+          "ab7cb183ef892914": 3200,
+          "bf64214653c90ea4": 3200
+        }
+      },
+      "frozen_route_classes": 3,
+      "primary_attempts": 34800,
+      "scope": "saved class support only; source-local binding partitions are eBPF/native"
+    },
+    "ebpf": {
+      "by_block": {
+        "calibration-01": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-02": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-03": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-04": {
+          "accepted_frozen_route_class": 6000
+        },
+        "class_test-13": {
+          "accepted_frozen_route_class": 600
+        },
+        "class_train-00": {
+          "accepted_frozen_route_class": 600
+        },
+        "target-05": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-06": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-07": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-08": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-09": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-10": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-11": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-12": {
+          "accepted_frozen_route_class": 1200
+        }
+      },
+      "by_operation": {
+        "compose_post": {
+          "accepted_frozen_route_class": 11600
+        },
+        "read_home_timeline": {
+          "accepted_frozen_route_class": 11600
+        },
+        "read_user_timeline": {
+          "accepted_frozen_route_class": 11600
+        }
+      },
+      "by_phase": {
+        "calibration": {
+          "accepted_frozen_route_class": 24000
+        },
+        "class_test": {
+          "accepted_frozen_route_class": 600
+        },
+        "class_train": {
+          "accepted_frozen_route_class": 600
+        },
+        "target": {
+          "accepted_frozen_route_class": 9600
+        }
+      },
+      "diagnostic_reasons": [
+        {
+          "category": "accepted_frozen_route_class",
+          "n": 34800,
+          "reason": "strict_sealed_window"
+        }
+      ],
+      "frozen_route_class_support_by_phase": {
+        "calibration": {
+          "1c13608a83b748f2": 8000,
+          "ab7cb183ef892914": 8000,
+          "bf64214653c90ea4": 8000
+        },
+        "class_test": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "class_train": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "target": {
+          "1c13608a83b748f2": 3200,
+          "ab7cb183ef892914": 3200,
+          "bf64214653c90ea4": 3200
+        }
+      },
+      "frozen_route_classes": 3,
+      "partition": {
+        "accepted_frozen_route_class": 34800
+      },
+      "primary_attempts": 34800,
+      "saved_body_reasons": {
+        "below_limit_single_document_assumption": 20800,
+        "body_not_exported": 14000
+      },
+      "saved_step_binding_reasons": {
+        "unique_declared_entry": 34800
+      },
+      "witness_selection": "first, middle, last by client start within source/category",
+      "witnesses": [
+        {
+          "attempt_key": "7d5ff708a2240d973da9ead2d380917cf9019bbec5b54339273c0047f73b517a",
+          "automatic_class_id": "bf64214653c90ea4",
+          "automatic_signature": [
+            "GET /wrk2-api/home-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9994421218,
+          "client_body_end_ns": 1793103870402401297,
+          "cutoff_ns": 1793103880396822515,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9989412639,
+            "end_mod_millisecond_ns": 409876,
+            "end_ns": 1793103870407409876,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/home-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": 245,
+            "response_body_present": true,
+            "response_status": "200",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "a6aed44910be7ad6",
+            "start_minus_journal_ns": 6947396,
+            "start_mod_millisecond_ns": 769911,
+            "start_ns": 1793103870403769911,
+            "trace_id": "8a5e5a8f07d86d13af74eb837a5c12a8"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793103870402792794,
+          "journal_start_ns": 1793103870396822515,
+          "observation_censored": false,
+          "operation": "read_home_timeline",
+          "phase": "class_train",
+          "position": "early",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9989412639,
+            "end_mod_millisecond_ns": 409876,
+            "end_ns": 1793103870407409876,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/home-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": 245,
+            "response_body_present": true,
+            "response_status": "200",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "a6aed44910be7ad6",
+            "start_minus_journal_ns": 6947396,
+            "start_mod_millisecond_ns": 769911,
+            "start_ns": 1793103870403769911,
+            "trace_id": "8a5e5a8f07d86d13af74eb837a5c12a8"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 274616927,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "22334eb06875b66ab79d6bdc2ecd105b6fe16e30def5b5e77dfe9eccc98fa0e2",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 1499582,
+            "variants": [
+              {
+                "end_ns": 1793103870407409876,
+                "occurrences": 1,
+                "raw_example": {
+                  "endTimeUnixNano_raw": "1793103870407409876",
+                  "format": "otlp",
+                  "normalized_end_ns_from_raw": 1793103870407409876,
+                  "normalized_start_ns_from_raw": 1793103870403769911,
+                  "raw_unit": "nanoseconds",
+                  "startTimeUnixNano_raw": "1793103870403769911"
+                },
+                "start_ns": 1793103870403769911
+              }
+            ]
+          },
+          "request_id": "req-7d5ff708a2240d973da9ead2d380917cf9019bbec5b54339273c0047f73b517a",
+          "saved_binding": "unique_declared_entry"
+        },
+        {
+          "attempt_key": "e0a7b418cd1c220850c7e7c5ac6b3481ab0145cfc6e585b447e8188e4ceba9cc",
+          "automatic_class_id": "ab7cb183ef892914",
+          "automatic_signature": [
+            "GET /wrk2-api/user-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9997090722,
+          "client_body_end_ns": 1793104902603438533,
+          "cutoff_ns": 1793104912600529255,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9983016665,
+            "end_mod_millisecond_ns": 512590,
+            "end_ns": 1793104902617512590,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": "500",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "0d0b5beb3adb9769",
+            "start_minus_journal_ns": 16031417,
+            "start_mod_millisecond_ns": 560672,
+            "start_ns": 1793104902616560672,
+            "trace_id": "977c1457a9a49c3f91a6c7d8344d269a"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793104902603880992,
+          "journal_start_ns": 1793104902600529255,
+          "observation_censored": false,
+          "operation": "read_user_timeline",
+          "phase": "calibration",
+          "position": "middle",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9983016665,
+            "end_mod_millisecond_ns": 512590,
+            "end_ns": 1793104902617512590,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": "500",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "0d0b5beb3adb9769",
+            "start_minus_journal_ns": 16031417,
+            "start_mod_millisecond_ns": 560672,
+            "start_ns": 1793104902616560672,
+            "trace_id": "977c1457a9a49c3f91a6c7d8344d269a"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 274616927,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "22334eb06875b66ab79d6bdc2ecd105b6fe16e30def5b5e77dfe9eccc98fa0e2",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 1499582,
+            "variants": [
+              {
+                "end_ns": 1793104902617512590,
+                "occurrences": 1,
+                "raw_example": {
+                  "endTimeUnixNano_raw": "1793104902617512590",
+                  "format": "otlp",
+                  "normalized_end_ns_from_raw": 1793104902617512590,
+                  "normalized_start_ns_from_raw": 1793104902616560672,
+                  "raw_unit": "nanoseconds",
+                  "startTimeUnixNano_raw": "1793104902616560672"
+                },
+                "start_ns": 1793104902616560672
+              }
+            ]
+          },
+          "request_id": "req-e0a7b418cd1c220850c7e7c5ac6b3481ab0145cfc6e585b447e8188e4ceba9cc",
+          "saved_binding": "unique_declared_entry"
+        },
+        {
+          "attempt_key": "8eb99210ca03e6607e7230f44c315065f0ee626743202894567ab9c2e98ff073",
+          "automatic_class_id": "ab7cb183ef892914",
+          "automatic_signature": [
+            "GET /wrk2-api/user-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9993068727,
+          "client_body_end_ns": 1793106675471548511,
+          "cutoff_ns": 1793106685464617238,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9969400043,
+            "end_mod_millisecond_ns": 217195,
+            "end_ns": 1793106675495217195,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": 245,
+            "response_body_present": true,
+            "response_status": "200",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "13eba87fbd5ba97c",
+            "start_minus_journal_ns": 25586398,
+            "start_mod_millisecond_ns": 203636,
+            "start_ns": 1793106675490203636,
+            "trace_id": "884c3fb549dd0be9934e6ef8b56e52ee"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793106675471986860,
+          "journal_start_ns": 1793106675464617238,
+          "observation_censored": false,
+          "operation": "read_user_timeline",
+          "phase": "class_test",
+          "position": "late",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": null,
+            "end_minus_cutoff_ns": -9969400043,
+            "end_mod_millisecond_ns": 217195,
+            "end_ns": 1793106675495217195,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift.dsb-nginx-thrift",
+            "kind": "SPAN_KIND_SERVER",
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": "a",
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+            "raw_file_basename": "a.jsonl",
+            "response_body_bytes": 245,
+            "response_body_present": true,
+            "response_status": "200",
+            "service": "nginx-thrift",
+            "source": "ebpf",
+            "span_id": "13eba87fbd5ba97c",
+            "start_minus_journal_ns": 25586398,
+            "start_mod_millisecond_ns": 203636,
+            "start_ns": 1793106675490203636,
+            "trace_id": "884c3fb549dd0be9934e6ef8b56e52ee"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 274616927,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "22334eb06875b66ab79d6bdc2ecd105b6fe16e30def5b5e77dfe9eccc98fa0e2",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 1499582,
+            "variants": [
+              {
+                "end_ns": 1793106675495217195,
+                "occurrences": 1,
+                "raw_example": {
+                  "endTimeUnixNano_raw": "1793106675495217195",
+                  "format": "otlp",
+                  "normalized_end_ns_from_raw": 1793106675495217195,
+                  "normalized_start_ns_from_raw": 1793106675490203636,
+                  "raw_unit": "nanoseconds",
+                  "startTimeUnixNano_raw": "1793106675490203636"
+                },
+                "start_ns": 1793106675490203636
+              }
+            ]
+          },
+          "request_id": "req-8eb99210ca03e6607e7230f44c315065f0ee626743202894567ab9c2e98ff073",
+          "saved_binding": "unique_declared_entry"
+        }
+      ]
+    },
+    "native": {
+      "by_block": {
+        "calibration-01": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-02": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-03": {
+          "accepted_frozen_route_class": 6000
+        },
+        "calibration-04": {
+          "accepted_frozen_route_class": 6000
+        },
+        "class_test-13": {
+          "accepted_frozen_route_class": 600
+        },
+        "class_train-00": {
+          "accepted_frozen_route_class": 600
+        },
+        "target-05": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-06": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-07": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-08": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-09": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-10": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-11": {
+          "accepted_frozen_route_class": 1200
+        },
+        "target-12": {
+          "accepted_frozen_route_class": 1200
+        }
+      },
+      "by_operation": {
+        "compose_post": {
+          "accepted_frozen_route_class": 11600
+        },
+        "read_home_timeline": {
+          "accepted_frozen_route_class": 11600
+        },
+        "read_user_timeline": {
+          "accepted_frozen_route_class": 11600
+        }
+      },
+      "by_phase": {
+        "calibration": {
+          "accepted_frozen_route_class": 24000
+        },
+        "class_test": {
+          "accepted_frozen_route_class": 600
+        },
+        "class_train": {
+          "accepted_frozen_route_class": 600
+        },
+        "target": {
+          "accepted_frozen_route_class": 9600
+        }
+      },
+      "diagnostic_reasons": [
+        {
+          "category": "accepted_frozen_route_class",
+          "n": 34800,
+          "reason": "strict_sealed_window"
+        }
+      ],
+      "frozen_route_class_support_by_phase": {
+        "calibration": {
+          "1c13608a83b748f2": 8000,
+          "ab7cb183ef892914": 8000,
+          "bf64214653c90ea4": 8000
+        },
+        "class_test": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "class_train": {
+          "1c13608a83b748f2": 200,
+          "ab7cb183ef892914": 200,
+          "bf64214653c90ea4": 200
+        },
+        "target": {
+          "1c13608a83b748f2": 3200,
+          "ab7cb183ef892914": 3200,
+          "bf64214653c90ea4": 3200
+        }
+      },
+      "frozen_route_classes": 3,
+      "partition": {
+        "accepted_frozen_route_class": 34800
+      },
+      "primary_attempts": 34800,
+      "saved_body_reasons": {
+        "body_not_exported": 34800
+      },
+      "saved_step_binding_reasons": {
+        "unique_declared_entry": 34800
+      },
+      "witness_selection": "first, middle, last by client start within source/category",
+      "witnesses": [
+        {
+          "attempt_key": "7d5ff708a2240d973da9ead2d380917cf9019bbec5b54339273c0047f73b517a",
+          "automatic_class_id": "bf64214653c90ea4",
+          "automatic_signature": [
+            "GET /wrk2-api/home-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9994421218,
+          "client_body_end_ns": 1793103870402401297,
+          "cutoff_ns": 1793103880396822515,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9989345515,
+            "end_mod_millisecond_ns": 477000,
+            "end_ns": 1793103870407477000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/home-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/calibration/traces-home-timeline-service-1793103842739463-1793103962739462.json",
+            "raw_file_basename": "traces-home-timeline-service-1793103842739463-1793103962739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 200,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "9625350fef836924",
+            "start_minus_journal_ns": 7177485,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793103870404000000,
+            "trace_id": "9625350fef836924"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793103870402792794,
+          "journal_start_ns": 1793103870396822515,
+          "observation_censored": false,
+          "operation": "read_home_timeline",
+          "phase": "class_train",
+          "position": "early",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9989345515,
+            "end_mod_millisecond_ns": 477000,
+            "end_ns": 1793103870407477000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/home-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/calibration/traces-home-timeline-service-1793103842739463-1793103962739462.json",
+            "raw_file_basename": "traces-home-timeline-service-1793103842739463-1793103962739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 200,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "9625350fef836924",
+            "start_minus_journal_ns": 7177485,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793103870404000000,
+            "trace_id": "9625350fef836924"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 6217129,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "4231e049ad210283b610ba28b91d2760a1ca018e8650d113ba989fdfe4829c13",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 0,
+            "variants": [
+              {
+                "end_ns": 1793103870407477000,
+                "occurrences": 1,
+                "raw_example": {
+                  "duration_raw": 3477,
+                  "format": "jaeger",
+                  "normalized_end_ns_from_raw": 1793103870407477000,
+                  "normalized_start_ns_from_raw": 1793103870404000000,
+                  "raw_unit": "microseconds",
+                  "startTime_raw": 1793103870404000
+                },
+                "start_ns": 1793103870404000000
+              }
+            ]
+          },
+          "request_id": "req-7d5ff708a2240d973da9ead2d380917cf9019bbec5b54339273c0047f73b517a",
+          "saved_binding": "unique_declared_entry"
+        },
+        {
+          "attempt_key": "e0a7b418cd1c220850c7e7c5ac6b3481ab0145cfc6e585b447e8188e4ceba9cc",
+          "automatic_class_id": "ab7cb183ef892914",
+          "automatic_signature": [
+            "GET /wrk2-api/user-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9997090722,
+          "client_body_end_ns": 1793104902603438533,
+          "cutoff_ns": 1793104912600529255,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9982931255,
+            "end_mod_millisecond_ns": 598000,
+            "end_ns": 1793104902617598000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/calibration/traces-nginx-web-server-1793104802739463-1793104922739462.json",
+            "raw_file_basename": "traces-nginx-web-server-1793104802739463-1793104922739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 500,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "4a0c63c01a6ea2d0",
+            "start_minus_journal_ns": 15470745,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793104902616000000,
+            "trace_id": "4a0c63c01a6ea2d0"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793104902603880992,
+          "journal_start_ns": 1793104902600529255,
+          "observation_censored": false,
+          "operation": "read_user_timeline",
+          "phase": "calibration",
+          "position": "middle",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9982931255,
+            "end_mod_millisecond_ns": 598000,
+            "end_ns": 1793104902617598000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/calibration/traces-nginx-web-server-1793104802739463-1793104922739462.json",
+            "raw_file_basename": "traces-nginx-web-server-1793104802739463-1793104922739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 500,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "4a0c63c01a6ea2d0",
+            "start_minus_journal_ns": 15470745,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793104902616000000,
+            "trace_id": "4a0c63c01a6ea2d0"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 14720534,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "32938dd7aad45eb384e473e9bd74357be5c1fa96ad56dabd6a0d0fd0157e575a",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 0,
+            "variants": [
+              {
+                "end_ns": 1793104902617598000,
+                "occurrences": 1,
+                "raw_example": {
+                  "duration_raw": 1598,
+                  "format": "jaeger",
+                  "normalized_end_ns_from_raw": 1793104902617598000,
+                  "normalized_start_ns_from_raw": 1793104902616000000,
+                  "raw_unit": "microseconds",
+                  "startTime_raw": 1793104902616000
+                },
+                "start_ns": 1793104902616000000
+              }
+            ]
+          },
+          "request_id": "req-e0a7b418cd1c220850c7e7c5ac6b3481ab0145cfc6e585b447e8188e4ceba9cc",
+          "saved_binding": "unique_declared_entry"
+        },
+        {
+          "attempt_key": "8eb99210ca03e6607e7230f44c315065f0ee626743202894567ab9c2e98ff073",
+          "automatic_class_id": "ab7cb183ef892914",
+          "automatic_signature": [
+            "GET /wrk2-api/user-timeline/read"
+          ],
+          "category": "accepted_frozen_route_class",
+          "client_body_end_minus_cutoff_ns": -9993068727,
+          "client_body_end_ns": 1793106675471548511,
+          "cutoff_ns": 1793106685464617238,
+          "diagnostic_reason": "strict_sealed_window",
+          "entry": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9969336238,
+            "end_mod_millisecond_ns": 281000,
+            "end_ns": 1793106675495281000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/final/traces-nginx-web-server-1793106602739463-1793106722739462.json",
+            "raw_file_basename": "traces-nginx-web-server-1793106602739463-1793106722739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 200,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "1ca70cf8a2ddc2c7",
+            "start_minus_journal_ns": 25382762,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793106675490000000,
+            "trace_id": "1ca70cf8a2ddc2c7"
+          },
+          "exact_id_anchor_count": 1,
+          "journal_end_ns": 1793106675471986860,
+          "journal_start_ns": 1793106675464617238,
+          "observation_censored": false,
+          "operation": "read_user_timeline",
+          "phase": "class_test",
+          "position": "late",
+          "raw_span": {
+            "attribute_conflict_keys": [],
+            "component": "nginx",
+            "end_minus_cutoff_ns": -9969336238,
+            "end_mod_millisecond_ns": 281000,
+            "end_ns": 1793106675495281000,
+            "inside_sealed_window": true,
+            "instance": "nginx-thrift",
+            "kind": null,
+            "method_path": [
+              "GET",
+              "/wrk2-api/user-timeline/read"
+            ],
+            "node": null,
+            "parent_id": "",
+            "raw_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/final/traces-nginx-web-server-1793106602739463-1793106722739462.json",
+            "raw_file_basename": "traces-nginx-web-server-1793106602739463-1793106722739462.json",
+            "response_body_bytes": null,
+            "response_body_present": false,
+            "response_status": 200,
+            "service": "nginx-web-server",
+            "source": "native",
+            "span_id": "1ca70cf8a2ddc2c7",
+            "start_minus_journal_ns": 25382762,
+            "start_mod_millisecond_ns": 0,
+            "start_ns": 1793106675490000000,
+            "trace_id": "1ca70cf8a2ddc2c7"
+          },
+          "raw_span_role": "entry",
+          "raw_timestamp_check": {
+            "distinct_timestamp_pairs_in_indexed_prefix": 1,
+            "indexed_prefix_bytes": 5391666,
+            "matching_pair_occurrences": 1,
+            "raw_file_sha256": "bbec34044594eb5e5e1f53408d7850b55dbc91f0c93ec192350a68fd49a8944e",
+            "raw_occurrences_in_indexed_prefix": 1,
+            "reason": "unique_raw_timestamp_pair_matches_indexed_span",
+            "unindexed_tail_bytes": 0,
+            "variants": [
+              {
+                "end_ns": 1793106675495281000,
+                "occurrences": 1,
+                "raw_example": {
+                  "duration_raw": 5281,
+                  "format": "jaeger",
+                  "normalized_end_ns_from_raw": 1793106675495281000,
+                  "normalized_start_ns_from_raw": 1793106675490000000,
+                  "raw_unit": "microseconds",
+                  "startTime_raw": 1793106675490000
+                },
+                "start_ns": 1793106675490000000
+              }
+            ]
+          },
+          "request_id": "req-8eb99210ca03e6607e7230f44c315065f0ee626743202894567ab9c2e98ff073",
+          "saved_binding": "unique_declared_entry"
+        }
+      ]
+    }
+  }
+}

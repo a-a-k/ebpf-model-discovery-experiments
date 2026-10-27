@@ -1,0 +1,30 @@
+	Command being timed: "bash -c 
+      set -euo pipefail
+      gh run download "$1" -n "v3-summary-deathstarbench-$2-$3-$1" -D "$4/compact"
+      gh run download "$1" -n "campaign-v3-deathstarbench-$2-$3-$1" -D "$4/full"
+      python -m systems.deathstarbench.audit_fresh_v3 \
+        --full "$4/full" --compact "$4/compact" --mode "$2" --seed "$3" \
+        --run-id "$1" --out "$5/$2-$3.json"
+     _ 40502990432 absent 3 work/dsb-fresh-audit/absent-3 results/dsb-fresh-audit"
+	User time (seconds): 19.52
+	System time (seconds): 2.07
+	Percent of CPU this job got: 85%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:25.17
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 697536
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 14
+	Minor (reclaiming a frame) page faults: 252835
+	Voluntary context switches: 8528
+	Involuntary context switches: 212
+	Swaps: 0
+	File system inputs: 3832
+	File system outputs: 3407024
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

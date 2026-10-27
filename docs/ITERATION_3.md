@@ -16,6 +16,25 @@ they add relative to simpler observation methods at comparable complete effort.
 Negative and unknown results remain outcomes. Equivalent conditional weighting,
 larger graphs, SDK independence or provenance alone do not establish an advantage.
 
+Comparators apply to the result they can actually produce. The cheap HTTP/body
+arm estimates scalar operation-outcome rates from generator-visible responses;
+it is not a recovered internal dependency, placement, database or distributed
+execution model. Matching that arm's forecast is not a failure criterion for
+the whole study. The central question remains empirical applicability of model
+discovery and simulation without complete tracing. Structural findings and any
+externally validated use of those findings need their own comparable baselines;
+larger graphs alone still do not establish practical usefulness.
+Independent review reaffirmed this scope after the user's clarification:
+applicability and comparative advantage are separate conclusions. The HTTP arm
+is scoped to outcome prediction; native graphs, obtainable inventory, route
+grouping and exact native message links provide simple comparisons for their
+respective outputs. Cheap combinations receive the same permitted information.
+Evaluation-only deployment truth is not silently made a discovery input. The
+current state-conditional forecast does not consume the recovered graph and
+therefore cannot validate graph-based simulation. Unknown manual effort prevents
+a cost-saving claim, without turning scalar HTTP superiority into a study-wide
+success gate.
+
 The user explicitly removed binary success gates based on 5 pp error and 10 pp
 interval width: neither threshold has an application-loss or power justification.
 They remain historical references only. Report operation-wise point errors,
@@ -317,6 +336,14 @@ all seven focused synthetic checks passed. Replay uses acquisition-hashed rules
 and the automatic binder without declared-operation restrictions. Raw witnesses
 are limited to the indexed file prefix and retain duplicate timestamp variants;
 they cannot substitute a later unindexed value. The orchestrator agrees.
+
+The [completed audit and original outputs](../results/iteration-3-diagnostics/dsb-coverage-40514548883/SOURCE.md)
+passed independent result review. All nine eBPF cells retain unique pre-window
+entries; observed automatic-route coverage deficits in those cells are timing
+rejections. Selected raw timestamp pairs match the indexed values. This identifies
+an avoidable admission gate, not collector loss or a fundamental eBPF limitation.
+The existing forecasts remain unchanged measurements of that pipeline. No repair
+or additional acquisition is approved merely by publishing this diagnosis.
 
 ## Reproduction of the fresh series
 
