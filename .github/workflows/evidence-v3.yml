@@ -15,6 +15,11 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install bounded evidence readers
+        run: python -m pip install -e .
       - name: Fetch existing qualification artifacts
         env:
           GH_TOKEN: ${{ github.token }}
@@ -25,6 +30,11 @@ jobs:
           mkdir -p results/qualification-review
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/artifacts" > results/qualification-review/source-artifacts.json
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN/jobs?per_page=100" > results/qualification-review/source-jobs.json
+      - name: Audit saved OTel body fidelity without fitting or new traffic
+        run: |
+          python -m systems.otel_demo.audit_qualification_v3 \
+            --inputs work/qualification \
+            --out results/qualification-review/otel-body-fidelity.json
       - name: Copy precomputed evidence without recalculation
         run: |
           python - <<'PY'
