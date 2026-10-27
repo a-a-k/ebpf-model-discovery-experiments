@@ -217,7 +217,8 @@ def attach_raw_timestamps(full: Path, witnesses: list[dict], consumed_by_origina
         consumed = consumed_by_original[original]
         grouped[(local, fact['source'], consumed)].add(key)
         paths[id(witness)] = (local, fact['source'], consumed, key)
-    lookups = {key: raw_timestamps(*key, ids) for key, ids in grouped.items()}
+    lookups = {(local, source, consumed): raw_timestamps(local, source, ids, consumed)
+               for (local, source, consumed), ids in grouped.items()}
     file_hashes = {local: digest(local) for local, _, _ in grouped}
     for witness in witnesses:
         address = paths.get(id(witness))

@@ -6,7 +6,7 @@ import tempfile
 import unittest
 
 from systems.deathstarbench.audit_fresh_v3 import (
-    classify, raw_timestamps, timestamp_verdict, verify_acquisition_rules)
+    attach_raw_timestamps, classify, raw_timestamps, timestamp_verdict, verify_acquisition_rules)
 
 
 class Store:
@@ -98,6 +98,26 @@ class FreshAuditTests(unittest.TestCase):
             self.assertEqual(verdict['distinct_timestamp_pairs_in_indexed_prefix'], 2)
             self.assertEqual(verdict['matching_pair_occurrences'], 1)
             self.assertGreater(verdict['unindexed_tail_bytes'], 0)
+
+    def test_witness_reader_uses_sqlite_consumed_limit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            raw = root/'observations'/'a.jsonl'
+            raw.parent.mkdir()
+            def item(start):
+                return json.dumps({'payload': {'resourceSpans': [{'scopeSpans': [{'spans': [{
+                    'traceId': 'AA', 'spanId': 'BB', 'startTimeUnixNano': str(start),
+                    'endTimeUnixNano': str(start+50)}]}]}]}})+'\n'
+            prefix = item(900)
+            raw.write_text(prefix+item(999))
+            original = '/home/runner/work/repo/work/campaign/observations/a.jsonl'
+            witness = {'raw_span': {'raw_file': original, 'source': 'ebpf', 'trace_id': 'aa',
+                                    'span_id': 'bb', 'start_ns': 900, 'end_ns': 950}}
+            attach_raw_timestamps(root, [witness], {original: len(prefix.encode())})
+            result = witness['raw_timestamp_check']
+            self.assertEqual(result['reason'], 'unique_raw_timestamp_pair_matches_indexed_span')
+            self.assertEqual(result['raw_occurrences_in_indexed_prefix'], 1)
+            self.assertGreater(result['unindexed_tail_bytes'], 0)
 
     def test_replayed_rule_hashes_must_match_marker(self):
         with tempfile.TemporaryDirectory() as directory:
