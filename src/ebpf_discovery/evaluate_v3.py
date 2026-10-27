@@ -21,6 +21,8 @@ SYSTEMS = ("deathstarbench", "otel_demo", "petclinic")
 MODES = ("absent", "partial", "full")
 SEEDS = (3, 4, 5)
 PRIMARY_COUNTS = {"class_train": 600, "calibration": 24000, "target": 9600, "class_test": 600}
+OBSERVATION_POLICY = "censored-v3"
+HTTP_OBSERVATION_CAP_SECONDS = 10
 
 
 def _require_actions() -> None:
@@ -107,12 +109,159 @@ def _projection_counts(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _validate_observations(external: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    observations = {}
+    for row in external:
+        key = opaque_attempt(row)
+        observation = row.get("observation")
+        if not isinstance(observation, dict) or observation.get("policy") != OBSERVATION_POLICY:
+            raise ValueError("external attempt is missing the censored-v3 observation policy")
+        if observation.get("cap_seconds") != HTTP_OBSERVATION_CAP_SECONDS:
+            raise ValueError("external attempt has the wrong HTTP observation cap")
+        if type(observation.get("censored")) is not bool:
+            raise ValueError("external observation censored must be boolean")
+        if observation.get("termination") not in {"complete", "transport_incomplete", "cap_reached"}:
+            raise ValueError("external observation has an invalid termination")
+        started_ns, cutoff_ns = row.get("started_ns"), observation.get("cutoff_ns")
+        if type(started_ns) is not int or type(cutoff_ns) is not int:
+            raise ValueError("external observation timestamps must be integers")
+        if cutoff_ns != started_ns + HTTP_OBSERVATION_CAP_SECONDS * 1_000_000_000:
+            raise ValueError("external observation cutoff does not match the engineering cap")
+        if observation["censored"] and row.get("success") is not None:
+            raise ValueError("censored external outcomes must remain unknown")
+        observations[key] = observation
+    return observations
+
+
+def _validate_http_curves(path: Path, primary: list[dict[str, Any]]) -> dict[str, Any]:
+    data = _read(path)
+    if (data.get("engineering_observation_cap_seconds") != HTTP_OBSERVATION_CAP_SECONDS
+            or data.get("application_slo") is not None
+            or data.get("not_business_success_or_database_commit_latency") is not True
+            or data.get("shared_journal_for_all_methods") is not True):
+        raise ValueError("HTTP observation curves do not preserve their descriptive-only meaning")
+    expected = Counter((row["phase"], row["state"], row["operation"]) for row in primary)
+    expected_censored = Counter(
+        (row["phase"], row["state"], row["operation"])
+        for row in primary if row["observation"]["censored"]
+    )
+    expected_completed = Counter()
+    for row in primary:
+        receipts = [
+            step.get("body_completed_ns", step.get("ended_ns"))
+            for step in row.get("http_steps", []) if step.get("status") is not None
+        ]
+        if not row["observation"]["censored"] and any(value is not None for value in receipts):
+            expected_completed[(row["phase"], row["state"], row["operation"])] += 1
+    seen = {}
+    for curve in data.get("curves", []):
+        key = (curve.get("phase"), curve.get("state"), curve.get("operation"))
+        if key in seen or key not in expected:
+            raise ValueError("HTTP observation curves contain an unexpected or duplicate population")
+        if (curve.get("n") != expected[key] or curve.get("censored") != expected_censored[key]
+                or curve.get("completed_response_observations") != expected_completed[key]):
+            raise ValueError("HTTP observation curve census differs from the external journal")
+        points = curve.get("points")
+        if not isinstance(points, list) or not points:
+            raise ValueError("HTTP observation curve has no points")
+        previous_seconds, previous_fraction = -1.0, -1.0
+        for point in points:
+            seconds, fraction = point.get("seconds"), point.get("fraction")
+            if (type(seconds) not in (int, float) or type(fraction) not in (int, float)
+                    or not 0 <= seconds <= HTTP_OBSERVATION_CAP_SECONDS
+                    or not 0 <= fraction <= 1 or seconds < previous_seconds or fraction < previous_fraction):
+                raise ValueError("HTTP observation curve is not a monotone bounded CDF")
+            previous_seconds, previous_fraction = seconds, fraction
+        if previous_fraction != expected_completed[key] / expected[key]:
+            raise ValueError("HTTP observation curve endpoint differs from completed response census")
+        seen[key] = curve
+    if set(seen) != set(expected):
+        raise ValueError("HTTP observation curves do not cover the complete primary journal")
+    return {"path": path.name, "sha256": _digest(path), "data": data}
+
+
 def _campaign_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
     common = {
         "system": result["system"], "mode": result["mode"], "seed": result["seed"],
         "run_id": result["run_id"], "protocol_version": result["protocol_version"],
+        "observation_policy": result["observation_policy"],
+        "http_observation_cap_seconds": result["http_observation_cap_seconds"],
+        "application_deadline_seconds": result["application_deadline_seconds"],
     }
     return [{**common, **row} for row in result["metrics"]]
+
+
+def _completion_interval_evidence(status: dict[str, Any], external: list[dict[str, Any]]) -> dict[str, Any]:
+    """Retain independently observed interval endpoints without estimating event times."""
+    if status["system"] == "petclinic":
+        records = []
+        for row in external:
+            validation = row.get("validation") or {}
+            query_started = validation.get("query_started_ns")
+            query_completed = validation.get("query_completed_ns")
+            operation_interval = validation.get("operation_completion_interval_ns")
+            commit_interval = validation.get("database_commit_time_interval_ns")
+            if any(value is not None for value in (
+                query_started, query_completed, operation_interval, commit_interval
+            )):
+                if (type(query_started) is not int or type(query_completed) is not int
+                        or query_started > query_completed):
+                    raise ValueError("Petclinic SQL verification timing is incomplete or reversed")
+                if (operation_interval is None) != (commit_interval is None):
+                    raise ValueError("Petclinic SQL completion intervals must be retained together")
+                if operation_interval is not None:
+                    for name, interval in (
+                        ("operation", operation_interval), ("database commit", commit_interval)
+                    ):
+                        if not isinstance(interval, dict):
+                            raise ValueError(f"Petclinic {name} completion interval is missing")
+                        lower, upper = interval.get("lower"), interval.get("upper")
+                        if type(upper) is not int or (lower is not None and type(lower) is not int):
+                            raise ValueError(f"Petclinic {name} completion interval has invalid endpoints")
+                        if lower is not None and lower > upper:
+                            raise ValueError(f"Petclinic {name} completion interval is reversed")
+                    if commit_interval["lower"] is not None or commit_interval["upper"] != query_completed:
+                        raise ValueError("Petclinic commit interval must remain left-unknown through SQL completion")
+                records.append({
+                    "attempt_key": opaque_attempt(row),
+                    "query_started_ns": query_started,
+                    "query_completed_ns": query_completed,
+                    "operation_completion_interval_ns": operation_interval,
+                    "database_commit_time_interval_ns": commit_interval,
+                })
+        return {
+            "kind": "independent_sql_postcondition_intervals",
+            "query_started_observed": sum(type(row["query_started_ns"]) is int for row in records),
+            "query_completed_observed": sum(type(row["query_completed_ns"]) is int for row in records),
+            "operation_completion_intervals": sum(
+                isinstance(row["operation_completion_interval_ns"], dict) for row in records
+            ),
+            "database_commit_time_intervals": sum(
+                isinstance(row["database_commit_time_interval_ns"], dict) for row in records
+            ),
+            "records": records,
+            "exact_database_commit_time_inferred": False,
+        }
+    if status["system"] == "otel_demo":
+        records = []
+        for row in external:
+            verification = row.get("async_verification") or {}
+            interval = verification.get("completion_time_interval_ns")
+            if interval is not None:
+                if not isinstance(interval, dict):
+                    raise ValueError("OTel async completion interval must be an object")
+                lower, upper = interval.get("lower_bound_ns"), interval.get("upper_bound_ns")
+                if (lower is not None and type(lower) is not int) or (upper is not None and type(upper) is not int):
+                    raise ValueError("OTel async completion interval has invalid endpoints")
+                if lower is not None and upper is not None and lower > upper:
+                    raise ValueError("OTel async completion interval is reversed")
+                records.append({"attempt_key": opaque_attempt(row), "completion_time_interval_ns": interval})
+        return {
+            "kind": "independent_async_completion_intervals",
+            "intervals": len(records), "records": records,
+            "exact_completion_time_inferred": False,
+        }
+    return {"kind": "not_applicable", "records": []}
 
 
 def _control_evidence(root: Path, status: dict[str, Any], external: list[dict[str, Any]]) -> dict[str, Any]:
@@ -123,6 +272,7 @@ def _control_evidence(root: Path, status: dict[str, Any], external: list[dict[st
     evidence: dict[str, Any] = {
         "automatic": {"sha256": _digest(automatic_path), "metrics": automatic},
         "database_controls": {"sha256": _digest(database_controls_path), "rates": database_controls},
+        "completion_interval_evidence": _completion_interval_evidence(status, external),
     }
     database_rows = [row for row in external if row.get("phase") in {"db_up", "db_down"}]
     if Counter(row["phase"] for row in database_rows) != {"db_up": 20, "db_down": 20}:
@@ -205,6 +355,10 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
     external, blocks = _read(external_path), _read(blocks_path)
     if status.get("protocol_version") != "source-contract-v3":
         raise ValueError("campaign is not source-contract-v3")
+    if (status.get("observation_policy") != OBSERVATION_POLICY
+            or status.get("http_observation_cap_seconds") != HTTP_OBSERVATION_CAP_SECONDS
+            or status.get("application_deadline_seconds", "missing") is not None):
+        raise ValueError("campaign does not use the approved censored-v3 observation policy")
     if status.get("status") != "acquisition_complete":
         raise ValueError("campaign acquisition is incomplete")
     saved_path, integrity_path = root / "forecast-saved.json", root / "freeze-integrity.json"
@@ -234,6 +388,8 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
     all_by_key = {opaque_attempt(row): row for row in external}
     if len(all_by_key) != len(external):
         raise ValueError("duplicate campaign attempt identity")
+    observations_by_key = _validate_observations(external)
+    curve_evidence = _validate_http_curves(root / "http-observation-curves.json", primary)
     targets = [row for row in primary if row.get("phase") == "target"]
 
     operations: tuple[str, ...] | None = None
@@ -272,6 +428,10 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
                 raise ValueError(f"{source} projection operation declaration mismatch")
             if row.get("phase") != external_row.get("phase") or row.get("state") != external_row.get("state"):
                 raise ValueError(f"{source} projection phase/state mismatch")
+            observation = observations_by_key[key]
+            if (row.get("observation_policy") != observation["policy"]
+                    or row.get("observation_censored") is not observation["censored"]):
+                raise ValueError(f"{source} projection censoring differs from the external journal")
         source_inputs[source] = {
             "model_sha256": _digest(model_path),
             "forecast_sha256": _digest(forecast_path),
@@ -349,6 +509,7 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         "requested_operations_per_second": block.get("requested_operations_per_second"),
         "achieved_operations_per_second": block.get("achieved_operations_per_second"),
         "worker_capacity": block.get("worker_capacity"),
+        "peak_in_flight_attempts": block.get("peak_in_flight_attempts"),
         "nominal_load_seconds": block.get("nominal_load_seconds"),
         "load_started_ns": block.get("load_started_ns"), "ended_ns": block.get("ended_ns"),
     } for block in blocks]
@@ -356,10 +517,14 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         "schema_version": 3,
         "system": status["system"], "mode": status["mode"], "seed": status["seed"],
         "run_id": status.get("run_id"), "protocol_version": status["protocol_version"],
+        "observation_policy": status["observation_policy"],
+        "http_observation_cap_seconds": status["http_observation_cap_seconds"],
+        "application_deadline_seconds": status["application_deadline_seconds"],
         "acquisition_commit": status.get("commit"),
         "status_sha256": _digest(status_path),
         "external_sha256": _digest(external_path),
         "source_inputs": source_inputs,
+        "http_observation_curves": curve_evidence,
         "freeze": {
             "forecast_saved_sha256": _digest(saved_path),
             "freeze_integrity_sha256": _digest(integrity_path),
@@ -377,6 +542,7 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
             "fit_and_discovery_seconds": saved.get("fit_and_discovery_seconds"),
             "attempted_operations": status.get("attempted_operations"),
             "preparation_operations": status.get("preparation_operations"),
+            "http_observation_cap_seconds": status["http_observation_cap_seconds"],
             "model_preparation_seconds": {
                 source: _read(root / "models" / source / "model.json").get("preparation_seconds")
                 for source in SOURCES
@@ -395,6 +561,8 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
         "# Source-contract-v3 campaign evaluation", "",
         f"System: `{result['system']}`; mode: `{result['mode']}`; seed: `{result['seed']}`.", "",
         "No 5 pp accuracy or 10 pp width gate is applied. Unknown outcomes and forecasts remain unknown.", "",
+        ("The 10-second value is an engineering whole-response observation cap, not an application SLO. "
+         "The retained HTTP CDF includes incorrect terminal responses and excludes SQL/async completion time."), "",
         "| Source | Operation | External unknown | Source unknown | Point abs. error (pp) | Empirical worst-end (pp) | Nominal worst-end (pp) |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
@@ -426,6 +594,16 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
     for root in campaign_paths:
         path = root / "metrics-v3.json"
         evaluations.append(_read(path) if path.exists() else evaluate(root))
+    for root, result in zip(campaign_paths, evaluations, strict=True):
+        if (result.get("observation_policy") != OBSERVATION_POLICY
+                or result.get("http_observation_cap_seconds") != HTTP_OBSERVATION_CAP_SECONDS
+                or result.get("application_deadline_seconds", "missing") is not None):
+            raise ValueError("aggregate contains an ineligible observation policy")
+        reference = result.get("http_observation_curves") or {}
+        curve_path = root / str(reference.get("path", ""))
+        if (not curve_path.is_file() or reference.get("sha256") != _digest(curve_path)
+                or reference.get("data") != _read(curve_path)):
+            raise ValueError("aggregate HTTP observation curve reference is incomplete or changed")
     population = {(row["system"], row["mode"], int(row["seed"])) for row in evaluations}
     expected = {(system, mode, seed) for system in SYSTEMS for mode in MODES for seed in SEEDS}
     if population != expected:
@@ -515,6 +693,9 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
     result = {
         "schema_version": 3,
         "protocol_version": "source-contract-v3",
+        "observation_policy": OBSERVATION_POLICY,
+        "http_observation_cap_seconds": HTTP_OBSERVATION_CAP_SECONDS,
+        "application_deadline_seconds": None,
         "campaigns": len(evaluations),
         "costs": {
             "campaign_elapsed_seconds": _complete_sum(
@@ -542,6 +723,16 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
                 for result in evaluations for block in result["costs"]["traffic_blocks"]
             ),
             "traffic_blocks": sum(len(result["costs"]["traffic_blocks"]) for result in evaluations),
+            "http_observation_cap_seconds": HTTP_OBSERVATION_CAP_SECONDS,
+            "maximum_peak_in_flight_attempts": (
+                max(
+                    block["peak_in_flight_attempts"]
+                    for result in evaluations for block in result["costs"]["traffic_blocks"]
+                ) if all(
+                    block["peak_in_flight_attempts"] is not None
+                    for result in evaluations for block in result["costs"]["traffic_blocks"]
+                ) else None
+            ),
             "human_agent_seconds": None,
         },
         "summaries": summaries,
@@ -549,6 +740,10 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         "petclinic_database_prediction": database_summaries,
         "otel_async_association": async_summaries,
         "per_attempt_confusion": confusion_summaries,
+        "http_observation_curves": [{
+            "system": result["system"], "mode": result["mode"], "seed": result["seed"],
+            **result["http_observation_curves"],
+        } for result in evaluations],
         "control_references": [{
             "system": result["system"], "mode": result["mode"], "seed": result["seed"],
             "controls": result["controls"],
@@ -556,6 +751,7 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         "campaign_references": [{
             "system": result["system"], "mode": result["mode"], "seed": result["seed"],
             "run_id": result["run_id"], "status_sha256": result["status_sha256"],
+            "http_observation_curves_sha256": result["http_observation_curves"]["sha256"],
             "evaluation": str(campaign_paths[index] / "metrics-v3.json"),
         } for index, result in enumerate(evaluations)],
         "accuracy_success_gate": None,
@@ -567,6 +763,8 @@ def aggregate(paths: Iterable[str | Path], output: str | Path) -> dict[str, str]
         "# Source-contract-v3 results", "",
         "All 27 campaigns and seeds 3/4/5 are included. No 5 pp accuracy or 10 pp width gate is applied.",
         "Unknown seed-level point errors remain unknown in the aggregate rather than being averaged away.", "",
+        ("The shared 10-second client observation cap is not an application deadline. HTTP receipt curves include "
+         "incorrect terminal responses; independent SQL and async completion intervals remain separate controls."), "",
         "| System | Mode | Operation | Source | Point abs. error (pp) | Empirical worst-end (pp) | Nominal worst-end (pp) | External unknown | Source unknown |",
         "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]

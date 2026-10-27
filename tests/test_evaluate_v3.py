@@ -42,9 +42,39 @@ def campaign(root: Path, system="petclinic", mode="absent", seed=3):
                     }],
                     "async_verification": {"success": None if index == 0 else index % 2 == 0},
                 })
+    for sequence, row in enumerate(external):
+        row["started_ns"] = 1_700_000_000_000_000_000 + sequence * 20_000_000_000
+        censored = row["success"] is None
+        row["observation"] = {
+            "policy": "censored-v3", "cap_seconds": 10,
+            "cutoff_ns": row["started_ns"] + 10_000_000_000,
+            "censored": censored, "termination": "cap_reached" if censored else "complete",
+        }
+        for step in row["http_steps"]:
+            step.update(status=200, body_completed_ns=row["started_ns"] + 1_000_000_000)
+        if "async_verification" in row:
+            row["async_verification"]["completion_time_interval_ns"] = {
+                "lower_bound_ns": None,
+                "upper_bound_ns": None if censored else row["started_ns"] + 2_000_000_000,
+            }
+    if system == "petclinic":
+        external[0]["validation"] = {
+            "query_started_ns": external[0]["started_ns"] + 2_000_000_000,
+            "query_completed_ns": external[0]["started_ns"] + 3_000_000_000,
+            "operation_completion_interval_ns": {
+                "lower": external[0]["started_ns"] + 1_000_000_000,
+                "upper": external[0]["started_ns"] + 3_000_000_000,
+            },
+            "database_commit_time_interval_ns": {
+                "lower": None,
+                "upper": external[0]["started_ns"] + 3_000_000_000,
+            },
+        }
     write(root / "status.json", {
         "system": system, "mode": mode, "seed": seed, "run_id": "1",
         "protocol_version": "source-contract-v3", "status": "acquisition_complete",
+        "observation_policy": "censored-v3", "http_observation_cap_seconds": 10,
+        "application_deadline_seconds": None,
         "elapsed_seconds": 10,
     })
     write(root / "external.json", external)
@@ -52,8 +82,31 @@ def campaign(root: Path, system="petclinic", mode="absent", seed=3):
         "id": "target", "phase": "target", "state": "11", "attempts": 2,
         "requested_operations_per_second": 20, "achieved_operations_per_second": 19.5,
         "worker_capacity": 256, "nominal_load_seconds": 60,
+        "peak_in_flight_attempts": 17,
         "load_started_ns": 1, "ended_ns": 2,
     }])
+    groups = {}
+    for row in external:
+        if row["phase"] not in counts:
+            continue
+        key = (row["phase"], row["state"], row["operation"])
+        groups.setdefault(key, []).append(row)
+    curves = []
+    for (phase, state, operation), rows in sorted(groups.items()):
+        completed = sum(not row["observation"]["censored"] and bool(row["http_steps"]) for row in rows)
+        curves.append({
+            "phase": phase, "state": state, "operation": operation, "n": len(rows),
+            "completed_response_observations": completed,
+            "censored": sum(row["observation"]["censored"] for row in rows),
+            "points": [{"seconds": i / 10, "fraction": (completed / len(rows) if i >= 10 else 0.0)}
+                       for i in range(101)],
+        })
+    write(root / "http-observation-curves.json", {
+        "meaning": "client-observed terminal HTTP response receipt; includes incorrect HTTP responses",
+        "not_business_success_or_database_commit_latency": True,
+        "application_slo": None, "engineering_observation_cap_seconds": 10,
+        "shared_journal_for_all_methods": True, "curves": curves,
+    })
     write(root / "automatic-metrics.json", {
         "ebpf": {"route": {"target": {"total": 2, "covered": 1, "unknown_fraction": 0.5,
                                          "ari_on_covered": 1.0}}}
@@ -95,6 +148,8 @@ def campaign(root: Path, system="petclinic", mode="absent", seed=3):
             "state": row["state"],
             "proxy": None if row["phase"] == "target" and row["attempt_id"].endswith("-1") else True,
             "protocol_only": True,
+            "observation_policy": row["observation"]["policy"],
+            "observation_censored": row["observation"]["censored"],
             "oracle_fields_consumed": False,
         } for row in external]
         write(root / "projections" / f"{source}-final.json", projected)
@@ -125,6 +180,15 @@ def test_evaluate_preserves_unknowns_and_scores_both_bounds(tmp_path, monkeypatc
     assert row["accuracy_gate_applied"] is False
     assert result["confusion"]
     assert result["costs"]["traffic_blocks"][0]["requested_operations_per_second"] == 20
+    assert result["costs"]["traffic_blocks"][0]["peak_in_flight_attempts"] == 17
+    assert result["costs"]["http_observation_cap_seconds"] == 10
+    assert result["http_observation_curves"]["sha256"] == hashlib.sha256(
+        (tmp_path / "http-observation-curves.json").read_bytes()
+    ).hexdigest()
+    intervals = result["controls"]["completion_interval_evidence"]
+    assert intervals["query_started_observed"] == 1
+    assert intervals["database_commit_time_intervals"] == 1
+    assert intervals["exact_database_commit_time_inferred"] is False
     assert result["controls"]["petclinic_database_prediction"]["attempts"] == 40
     assert any(row["predictor"] == "static_endpoint_baseline"
                for row in result["controls"]["petclinic_database_prediction"]["comparisons"])
@@ -158,6 +222,28 @@ def test_evaluate_rejects_projection_that_consumed_oracle_fields(tmp_path, monke
         evaluate(tmp_path)
 
 
+def test_evaluate_rejects_censored_outcome_or_projection_mismatch(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    counts = campaign(tmp_path)
+    monkeypatch.setattr(evaluate_v3, "PRIMARY_COUNTS", counts)
+    external_path = tmp_path / "external.json"
+    external = json.loads(external_path.read_text())
+    censored = next(row for row in external if row["observation"]["censored"])
+    censored["success"] = False
+    write(external_path, external)
+    with pytest.raises(ValueError, match="censored external outcomes must remain unknown"):
+        evaluate(tmp_path)
+
+    censored["success"] = None
+    write(external_path, external)
+    projection_path = tmp_path / "projections" / "ebpf-final.json"
+    projected = json.loads(projection_path.read_text())
+    projected[0]["observation_censored"] = not projected[0]["observation_censored"]
+    write(projection_path, projected)
+    with pytest.raises(ValueError, match="projection censoring differs"):
+        evaluate(tmp_path)
+
+
 def test_aggregate_requires_complete_population_and_keeps_unknown_mean(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     paths = []
@@ -181,6 +267,9 @@ def test_aggregate_requires_complete_population_and_keeps_unknown_mean(tmp_path,
     assert result["costs"]["primary_attempts"] == 27 * sum(counts.values())
     assert result["costs"]["campaign_elapsed_seconds"] is None
     assert result["costs"]["human_agent_seconds"] is None
+    assert result["costs"]["http_observation_cap_seconds"] == 10
+    assert result["costs"]["maximum_peak_in_flight_attempts"] == 17
+    assert len(result["http_observation_curves"]) == 27
     assert result["automatic_grouping"]
     assert result["petclinic_database_prediction"]
     assert result["otel_async_association"]
