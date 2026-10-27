@@ -24,6 +24,23 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -e . matplotlib
+      - name: Prepare an isolated generated report directory
+        run: |
+          python - <<'PY'
+          import os, pathlib, shutil
+          workspace = pathlib.Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          if pathlib.Path.cwd().resolve() != workspace:
+              raise SystemExit('report cwd must equal the Actions workspace')
+          target = workspace / 'results' / 'iteration-3'
+          if target.parent.is_symlink() or target.is_symlink() or target.resolve() != target:
+              raise SystemExit('refusing redirected report output path')
+          if target.parent != workspace / 'results' or target.name != 'iteration-3':
+              raise SystemExit('unexpected report output target')
+          if target.exists():
+              if not target.is_dir():
+                  raise SystemExit('report output target must be a directory')
+              shutil.rmtree(target)
+          PY
       - name: Fetch complete run, job and artifact metadata before downloads
         env:
           GH_TOKEN: ${{ github.token }}
