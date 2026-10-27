@@ -129,6 +129,53 @@ class OracleTests(unittest.TestCase):
         self.assertTrue(manifest["queries"][0]["excluded_from_application_trace_count"])
         self.assertFalse(manifest["queries"][1]["excluded_from_application_trace_count"])
 
+    def test_native_saturated_query_is_split_and_all_raw_windows_retained(self):
+        class Context:
+            mode = "full"
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        class Response:
+            status_code = 200
+
+            def __init__(self, data):
+                self.document = {"data": data, "total": len(data), "errors": None}
+                self.content = json.dumps(self.document).encode()
+
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return self.document
+
+        responses = [
+            Response(["nginx-web-server"]),
+            Response([{"traceID": "a"}, {"traceID": "b"}]),
+            Response([{"traceID": "a"}]),
+            Response([{"traceID": "b"}]),
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            adapter = Adapter(Context(root))
+            adapter._native_capture_since_us = 1_000_000
+            with mock.patch("systems.deathstarbench.adapter.requests.get", side_effect=responses), \
+                 mock.patch("systems.deathstarbench.adapter.time.time_ns", return_value=4_000_000_000), \
+                 mock.patch("systems.deathstarbench.adapter.NATIVE_QUERY_LIMIT", 2), \
+                 mock.patch("systems.deathstarbench.adapter.NATIVE_WINDOW_US", 4_000_000):
+                adapter.collect_native(root / "native")
+            manifest = json.loads((root / "native" / "manifest.json").read_text(encoding="utf-8"))
+            files = list((root / "native").glob("traces-*.json"))
+        self.assertEqual(manifest["application_trace_count"], 2)
+        self.assertEqual(manifest["errors"], [])
+        self.assertEqual([q["saturated"] for q in manifest["queries"]], [True, False, False])
+        self.assertEqual(len(files), 3)
+
     def test_render_complete_pinned_upstream_shape(self):
         class Context:
             mode = "partial"

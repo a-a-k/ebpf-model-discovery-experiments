@@ -19,6 +19,8 @@ from typing import Any
 import requests
 import yaml
 
+from .contracts_v3 import STABLE_FIXTURE_TEXT
+
 
 UPSTREAM = "https://github.com/delimitrou/DeathStarBench.git"
 COMMIT = "6ecb09706140f8730b5385c08f1386c654c3c526"
@@ -43,7 +45,6 @@ REPLICA_IPS = {"a": "172.28.11.41", "b": "172.28.12.41"}
 PROXY_IP = "172.28.11.40"
 DB_SERVICE = "user-timeline-mongodb"
 DB_CONTAINER = "dsb-user-timeline-mongodb"
-STABLE_FIXTURE_TEXT = "ebpf-study-stable-timeline-fixture-v1"
 CROSS_NODE_PORTS = {
     "user-timeline-replica": 19090,
     "user-timeline-mongodb": 37020,
@@ -51,6 +52,10 @@ CROSS_NODE_PORTS = {
     "post-storage-service": 19092,
     "jaeger-agent-udp": 16831,
 }
+NATIVE_QUERY_LIMIT = 20_000
+NATIVE_WINDOW_US = 120_000_000
+NATIVE_MIN_WINDOW_US = 1_000_000
+NATIVE_MAX_WINDOWS = 1_000
 
 
 class AdapterError(RuntimeError):
@@ -120,6 +125,8 @@ class Adapter:
         self._replica_state = "11"
         self._database_up = True
         self._control_epoch = 0
+        # Includes preparation traffic and qualification if capture is requested.
+        self._native_capture_since_us = time.time_ns() // 1000
 
     def prepare(self) -> None:
         """Fetch the pinned source and render independent guest deployments."""
@@ -671,41 +678,80 @@ class Adapter:
         trace_count = 0
         application_trace_count = 0
         audit_self_trace_count = 0
+        capture_end_us = max(self._native_capture_since_us + 1, time.time_ns() // 1000 + 1)
+        manifest["capture_window_us"] = [self._native_capture_since_us, capture_end_us]
+        manifest["query_limit"] = NATIVE_QUERY_LIMIT
+        manifest["maximum_windows_per_service"] = NATIVE_MAX_WINDOWS
         for service in services:
-            try:
-                r = requests.get(base + "/api/traces", params={"service": service, "lookback": "24h", "limit": 20000}, timeout=60)
-                safe = urllib.parse.quote(str(service), safe="")
-                (destination / f"traces-{safe}.json").write_bytes(r.content)
-                r.raise_for_status()
-                trace_document = r.json()
-                if not isinstance(trace_document, dict):
-                    raise ValueError("Jaeger trace response is not a JSON object")
-                trace_api_errors = trace_document.get("errors")
-                trace_data = trace_document.get("data")
-                if trace_api_errors:
-                    manifest["errors"].append(
-                        f"trace query {service} API errors: {trace_api_errors}"
-                    )
-                if trace_data is None:
-                    count = 0
-                elif isinstance(trace_data, list):
+            seen_trace_ids: set[str] = set()
+            safe = urllib.parse.quote(str(service), safe="")
+            windows = [
+                (start, min(start + NATIVE_WINDOW_US - 1, capture_end_us))
+                for start in range(self._native_capture_since_us, capture_end_us + 1, NATIVE_WINDOW_US)
+            ]
+            queried = 0
+            while windows:
+                if queried >= NATIVE_MAX_WINDOWS:
+                    manifest["errors"].append(f"trace query {service}: maximum native windows reached")
+                    break
+                start_us, end_us = windows.pop(0)
+                queried += 1
+                try:
+                    r = requests.get(base + "/api/traces", params={
+                        "service": service, "start": start_us, "end": end_us,
+                        "limit": NATIVE_QUERY_LIMIT,
+                    }, timeout=60)
+                    filename = f"traces-{safe}-{start_us}-{end_us}.json"
+                    (destination / filename).write_bytes(r.content)
+                    r.raise_for_status()
+                    trace_document = r.json()
+                    if not isinstance(trace_document, dict):
+                        raise ValueError("Jaeger trace response is not a JSON object")
+                    trace_api_errors = trace_document.get("errors")
+                    trace_data = trace_document.get("data")
+                    if trace_data is None:
+                        trace_data = []
+                    if not isinstance(trace_data, list):
+                        raise ValueError("Jaeger trace data is neither null nor a list")
                     count = len(trace_data)
-                else:
-                    raise ValueError("Jaeger trace data is neither null nor a list")
-                trace_count += count
-                if service == "jaeger-all-in-one":
-                    audit_self_trace_count += count
-                else:
-                    application_trace_count += count
-                manifest["queries"].append({
-                    "service": service, "count": count,
-                    "excluded_from_application_trace_count": service == "jaeger-all-in-one",
-                    "data_is_null": trace_data is None,
-                    "api_errors": trace_api_errors,
-                    "sha256": hashlib.sha256(r.content).hexdigest(),
-                })
-            except (requests.RequestException, ValueError, AttributeError) as exc:
-                manifest["errors"].append(f"trace query {service}: {exc}")
+                    total = trace_document.get("total")
+                    saturated = count >= NATIVE_QUERY_LIMIT or (
+                        type(total) is int and total > count
+                    )
+                    manifest["queries"].append({
+                        "service": service, "count": count, "total": total,
+                        "start_us": start_us, "end_us": end_us, "file": filename,
+                        "saturated": saturated,
+                        "excluded_from_application_trace_count": service == "jaeger-all-in-one",
+                        "data_is_null": trace_document.get("data") is None,
+                        "api_errors": trace_api_errors,
+                        "sha256": hashlib.sha256(r.content).hexdigest(),
+                    })
+                    if trace_api_errors:
+                        manifest["errors"].append(f"trace query {service} API errors: {trace_api_errors}")
+                    if saturated:
+                        if end_us - start_us < NATIVE_MIN_WINDOW_US:
+                            manifest["errors"].append(
+                                f"trace query {service}: unresolved saturated window {start_us}-{end_us}"
+                            )
+                        else:
+                            midpoint = (start_us + end_us) // 2
+                            windows[0:0] = [(start_us, midpoint), (midpoint + 1, end_us)]
+                        continue
+                    for trace in trace_data:
+                        trace_id = trace.get("traceID") if isinstance(trace, dict) else None
+                        if not isinstance(trace_id, str) or not trace_id:
+                            manifest["errors"].append(f"trace query {service}: trace without identity")
+                            continue
+                        seen_trace_ids.add(trace_id)
+                except (requests.RequestException, ValueError, AttributeError) as exc:
+                    manifest["errors"].append(f"trace query {service} {start_us}-{end_us}: {exc}")
+            count = len(seen_trace_ids)
+            trace_count += count
+            if service == "jaeger-all-in-one":
+                audit_self_trace_count += count
+            else:
+                application_trace_count += count
         manifest["trace_count"] = trace_count
         manifest["application_trace_count"] = application_trace_count
         manifest["audit_self_trace_count"] = audit_self_trace_count
