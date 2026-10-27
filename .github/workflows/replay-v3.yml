@@ -1,0 +1,29 @@
+name: Replay three retained full seed-zero source contracts
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        system: [deathstarbench, otel_demo, petclinic]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Replay checksum-verified original capture without fitting
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m ebpf_discovery.replay_v3 --system '${{ matrix.system }}' --out results/replay-v3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replay-v3-${{ matrix.system }}-${{ github.run_id }}
+          path: results/replay-v3/${{ matrix.system }}/
+          retention-days: 90
