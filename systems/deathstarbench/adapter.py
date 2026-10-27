@@ -527,6 +527,7 @@ class Adapter:
         headers = {"X-Experiment-Request-Id": request_id}
         started = time.time_ns()
         monotonic_started = time.monotonic_ns()
+        censored_policy = getattr(self.ctx, "observation_policy", None) == "censored-v3"
         method = "GET"
         path: str
         data: dict[str, str] | None = None
@@ -546,31 +547,38 @@ class Adapter:
         step: dict[str, Any] = {"request_id": request_id, "method": method, "url": self.entry_url + path, "request_form": data, "request_headers": headers}
         error = ""
         success: bool | None
+        termination = "complete"
         try:
-            response = requests.request(method, step["url"], data=data, headers=headers, timeout=deadline)
+            if censored_policy:
+                from ebpf_discovery.transport_v3 import request as observed_request
+                response = observed_request(method, step["url"], data=data, headers=headers, timeout=deadline)
+            else:
+                response = requests.request(method, step["url"], data=data, headers=headers, timeout=deadline)
             body = response.content
             monotonic_ended = time.monotonic_ns()
             within_deadline = self._within_deadline(monotonic_started, monotonic_ended, deadline)
             step.update(status=response.status_code, response_body_base64=base64.b64encode(body).decode("ascii"), response_sha256=hashlib.sha256(body).hexdigest())
             if name == "compose_post":
                 content_valid = response.ok and b"Successfully upload post" in body
-                success = content_valid and within_deadline
+                success = content_valid if censored_policy else content_valid and within_deadline
                 reason = "" if content_valid else "missing exact compose acknowledgement"
             else:
                 content_valid = response.ok and self._valid_timeline(body, STABLE_FIXTURE_TEXT)
-                success = content_valid and within_deadline
+                success = content_valid if censored_policy else content_valid and within_deadline
                 reason = "" if content_valid else "response does not contain the stable fixture in the pinned timeline JSON shape"
             if not response.ok:
                 reason = f"HTTP {response.status_code}"
-            elif not within_deadline:
+            elif not censored_policy and not within_deadline:
                 reason = f"response completed after {deadline:.6f}s deadline"
             error = reason
         except requests.Timeout as exc:
-            success = False
-            error = f"deadline exceeded: {exc}"
+            success = None if censored_policy else False
+            termination = "cap_reached"
+            error = f"observation cap reached: {exc}" if censored_policy else f"deadline exceeded: {exc}"
             step["transport_error"] = error
         except requests.RequestException as exc:
-            success = False
+            success = None if censored_policy else False
+            termination = "transport_incomplete"
             error = str(exc)
             step["transport_error"] = error
         ended = time.time_ns()
@@ -580,10 +588,10 @@ class Adapter:
         step["elapsed_ns"] = monotonic_ended - monotonic_started
         step["deadline_seconds"] = deadline
         step["within_deadline"] = self._within_deadline(monotonic_started, monotonic_ended, deadline)
-        if success is True and not step["within_deadline"]:
+        if not censored_policy and success is True and not step["within_deadline"]:
             success = False
             error = f"response processing completed after {deadline:.6f}s deadline"
-        return {
+        result = {
             "operation": name, "attempt_id": attempt_id, "started_ns": started, "ended_ns": ended,
             "success": success, "http_steps": [step], "error": error,
             "validation": {
@@ -594,6 +602,13 @@ class Adapter:
                 "database_up": self._database_up,
             },
         }
+        if censored_policy:
+            result["observation"] = {
+                "policy": "censored-v3", "cap_seconds": deadline,
+                "cutoff_ns": started + int(deadline * 1_000_000_000),
+                "censored": termination != "complete", "termination": termination,
+            }
+        return result
 
     def verify(self, records: list[dict[str, Any]]) -> list[dict[str, Any]]:
         # Return copies: eventual evidence never changes the immediate HTTP

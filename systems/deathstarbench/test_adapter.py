@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import requests
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -308,6 +310,71 @@ class OracleTests(unittest.TestCase):
         self.assertNotIn("secret-operation-label", step["url"])
         self.assertNotIn("secret-operation-label", json.dumps(step["request_headers"]))
         self.assertNotIn("uber-trace-id", {key.lower() for key in step["request_headers"]})
+
+    def test_censored_policy_completed_after_two_seconds_is_success(self):
+        class Context:
+            mode = "full"
+            observation_policy = "censored-v3"
+            observation_cap_seconds = 10
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        response = SimpleNamespace(ok=True, status_code=200, content=b"Successfully upload post")
+        transport = mock.Mock(return_value=response)
+        with tempfile.TemporaryDirectory() as directory:
+            adapter = Adapter(Context(Path(directory)))
+            with mock.patch.dict(sys.modules, {"ebpf_discovery.transport_v3": SimpleNamespace(request=transport)}), \
+                 mock.patch("systems.deathstarbench.adapter.time.monotonic_ns",
+                            side_effect=[0, 3_000_000_000, 3_000_000_000]), \
+                 mock.patch("systems.deathstarbench.adapter.time.time_ns",
+                            side_effect=[1_000_000_000, 4_000_000_000]):
+                record = adapter.operation("compose_post", 7, "scored", deadline=10.0)
+        self.assertIs(record["success"], True)
+        self.assertEqual(record["observation"], {
+            "policy": "censored-v3", "cap_seconds": 10.0, "cutoff_ns": 11_000_000_000,
+            "censored": False, "termination": "complete"})
+        self.assertEqual(record["http_steps"][0]["elapsed_ns"], 3_000_000_000)
+        self.assertEqual(transport.call_args.kwargs["timeout"], 10.0)
+
+    def test_censored_policy_timeout_unknown_but_completed_500_false(self):
+        class Context:
+            mode = "full"
+            observation_policy = "censored-v3"
+            observation_cap_seconds = 10
+
+            def __init__(self, root):
+                self.deployment_dir = root / "deployment"
+                self.out = root
+
+            @staticmethod
+            def node_ip(_node):
+                return "192.0.2.1"
+
+        responses = [requests.Timeout("total transfer cap"),
+                     SimpleNamespace(ok=False, status_code=500, content=b"server failed")]
+        transport = mock.Mock(side_effect=responses)
+        with tempfile.TemporaryDirectory() as directory:
+            adapter = Adapter(Context(Path(directory)))
+            with mock.patch.dict(sys.modules, {"ebpf_discovery.transport_v3": SimpleNamespace(request=transport)}):
+                timeout = adapter.operation("compose_post", 1, "scored", deadline=10.0)
+                failed = adapter.operation("compose_post", 2, "scored", deadline=10.0)
+        self.assertIsNone(timeout["success"])
+        self.assertEqual(timeout["observation"]["termination"], "cap_reached")
+        self.assertTrue(timeout["observation"]["censored"])
+        self.assertNotIn("response_body_base64", timeout["http_steps"][0])
+        self.assertIs(failed["success"], False)
+        self.assertEqual(failed["observation"]["termination"], "complete")
+        self.assertFalse(failed["observation"]["censored"])
+        self.assertEqual(failed["http_steps"][0]["status"], 500)
+        verified = adapter.verify([timeout])
+        self.assertIsNone(verified[0]["success"])
+        self.assertNotIn("eventual_postcondition", verified[0])
 
     def test_verification_after_control_change_is_unknown_and_nonmutating(self):
         class Context:
