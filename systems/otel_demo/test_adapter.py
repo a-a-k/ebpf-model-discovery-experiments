@@ -2,6 +2,7 @@ from pathlib import Path
 import hashlib
 import json
 import time
+from types import SimpleNamespace
 
 from systems.otel_demo import adapter as adapter_module
 from systems.otel_demo.adapter import (
@@ -299,6 +300,132 @@ def test_http_step_uses_fresh_opaque_request_id(monkeypatch) -> None:
     assert step["request_id"] == captured["headers"]["X-Experiment-Request-Id"]
     assert len(step["request_id"]) == 32
     assert record["attempt_id"] not in str(captured["headers"])
+
+
+def _v3_adapter() -> Adapter:
+    adapter = object.__new__(Adapter)
+    adapter.ctx = SimpleNamespace(observation_policy="censored-v3", cap_seconds=10.0)
+    adapter.entry_url = "http://example.invalid"
+    adapter._consumer_paused = False
+    adapter._latest_async_deadline_ns = 0
+    return adapter
+
+
+def test_censored_transport_timeout_stays_unknown_through_verify(monkeypatch) -> None:
+    def timeout(*args, **kwargs):
+        raise adapter_module.requests.Timeout("whole transfer cap")
+
+    monkeypatch.setattr(adapter_module, "_censored_request", timeout)
+    adapter = _v3_adapter()
+    record = adapter.operation("browse_product", 1, "v3", deadline=10.0)
+    assert record["success"] is None
+    assert record["observation"]["termination"] == "cap_reached"
+    assert record["observation"]["censored"] is True
+    verified = adapter.verify([record])[0]
+    assert verified["success"] is None
+    assert verified["payload_postcondition"] is None
+
+
+def test_censored_unreceived_response_is_transport_incomplete(monkeypatch) -> None:
+    def unavailable(*args, **kwargs):
+        raise adapter_module.requests.ConnectionError("no response")
+
+    monkeypatch.setattr(adapter_module, "_censored_request", unavailable)
+    record = _v3_adapter().operation("browse_product", 4, "v3", deadline=10.0)
+    assert record["success"] is None
+    assert record["observation"]["termination"] == "transport_incomplete"
+    assert record["http_steps"][0]["status"] is None
+    assert record["http_steps"][0]["transport_error"] is True
+
+
+def test_censored_success_after_historical_two_seconds_is_true(monkeypatch) -> None:
+    class Response:
+        status_code = 200
+        content = b'{"id":"OLJCESPC7Z"}'
+
+        @staticmethod
+        def json():
+            return {"id": PRODUCT_ID}
+
+    monotonic = iter([100.0, 103.0])
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: next(monotonic))
+    monkeypatch.setattr(adapter_module, "_censored_request", lambda *args, **kwargs: Response())
+    adapter = _v3_adapter()
+    record = adapter.operation("browse_product", 2, "v3", deadline=10.0)
+    assert record["success"] is True
+    assert record["observation"]["termination"] == "complete"
+    assert record["observation"]["censored"] is False
+    assert adapter.verify([record])[0]["success"] is True
+
+
+def test_censored_async_completion_interval_and_late_correct_unknown() -> None:
+    now = time.time_ns()
+    adapter = _v3_adapter()
+    adapter._read_order = lambda order_id: {
+        "query_ok": True,
+        "complete": True,
+        "query_started_ns": now + 1_000,
+        "query_completed_ns": now + 2_000,
+    }
+    within = adapter.verify_async([{"order_id": "order-within", "ended_ns": now}], 10.0)[0]
+    evidence = within["async_verification"]
+    assert evidence["success"] is True
+    assert evidence["completion_time_interval_ns"]["lower_bound_ns"] is None
+    assert evidence["completion_time_interval_ns"]["upper_bound_ns"] == now + 2_000
+
+    late = adapter.verify_async(
+        [{"order_id": "order-late", "ended_ns": now - 11_000_000_000}], 10.0
+    )[0]["async_verification"]
+    assert late["success"] is None
+    assert late["censored"] is True
+    assert late["termination"] == "complete_first_observed_after_cap"
+
+
+def test_censored_async_expiry_unknown_and_terminal_wrong_false() -> None:
+    now = time.time_ns()
+    adapter = _v3_adapter()
+    adapter._read_order = lambda order_id: {
+        "query_ok": True,
+        "complete": False,
+        "terminal_wrong_persisted_payload": False,
+        "query_started_ns": now,
+        "query_completed_ns": now,
+    }
+    expired = adapter.verify_async(
+        [{"order_id": "order-expired", "ended_ns": now - 11_000_000_000}], 10.0
+    )[0]["async_verification"]
+    assert expired["success"] is None
+    assert expired["censored"] is True
+    assert expired["termination"] == "cap_reached"
+
+    adapter._read_order = lambda order_id: {
+        "query_ok": True,
+        "complete": False,
+        "terminal_wrong_persisted_payload": True,
+        "query_started_ns": now,
+        "query_completed_ns": now,
+    }
+    wrong = adapter.verify_async(
+        [{"order_id": "order-wrong", "ended_ns": now}], 10.0
+    )[0]["async_verification"]
+    assert wrong["success"] is False
+    assert wrong["censored"] is False
+    assert wrong["termination"] == "terminal_wrong_persisted_payload"
+
+
+def test_paused_consumer_hold_is_anchored_to_http_end_in_v3() -> None:
+    adapter = _v3_adapter()
+    adapter._consumer_paused = True
+
+    def complete_step(record, method, path, timeout, body=None, request_id=None):
+        return {
+            "status": 200,
+            "json": {"orderId": "order-held"} if path.startswith("/api/checkout") else {},
+        }
+
+    adapter._http_step = complete_step
+    record = adapter.operation("checkout", 3, "v3", deadline=10.0)
+    assert adapter._latest_async_deadline_ns == record["ended_ns"] + 10_000_000_000
 
 
 def test_async_late_first_positive_is_unknown() -> None:
@@ -804,4 +931,7 @@ def test_order_oracle_requires_exact_item_and_shipping() -> None:
         '"shipping_cost_units":1,"shipping_cost_nanos":0,"street_address":"1 Observatory Way",'
         '"city":"Testville","state":"CA","country":"US","zip_code":"94000"}]}\n'
     )
-    assert adapter._read_order("order-wrong")["complete"] is False
+    wrong = adapter._read_order("order-wrong")
+    assert wrong["complete"] is False
+    assert wrong["postcondition_exact"] is False
+    assert wrong["terminal_wrong_persisted_payload"] is True

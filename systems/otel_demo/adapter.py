@@ -57,6 +57,13 @@ _ORDER_ID = re.compile(r"^[A-Za-z0-9._:-]{1,200}$")
 _ENV = re.compile(r"\$\{([A-Za-z_][A-Za-z0-9_]*)(?:(:-|-)([^}]*))?\}")
 
 
+def _censored_request(method: str, url: str, **kwargs: Any) -> Any:
+    """Load the v3 whole-transfer transport only for the revised policy."""
+    from ebpf_discovery.transport_v3 import request
+
+    return request(method, url, **kwargs)
+
+
 class Adapter:
     """OpenTelemetry Demo implementation of the system adapter contract."""
 
@@ -374,6 +381,13 @@ class Adapter:
         fixture_token = uuid.uuid4().hex
         user_id = f"u-{fixture_token}"
         started_ns = time.time_ns()
+        censored_policy = self._uses_censored_policy()
+        cap_seconds = (
+            min(float(deadline), float(getattr(self.ctx, "cap_seconds", deadline)))
+            if censored_policy
+            else float(deadline)
+        )
+        cutoff_ns = started_ns + int(cap_seconds * 1_000_000_000)
         request_intent = {
             "started_ns": started_ns,
             "operation_id": name,
@@ -392,18 +406,28 @@ class Adapter:
             "attempt_id": attempt_id,
             "started_ns": started_ns,
             "ended_ns": None,
-            "success": False,
+            "success": None if censored_policy else False,
             "http_steps": [],
             "request_intent": request_intent,
             "error": None,
-            "deadline_seconds": deadline,
+            "deadline_seconds": cap_seconds,
         }
-        operation_deadline = time.monotonic() + deadline
+        if censored_policy:
+            record["observation"] = {
+                "policy": "censored-v3",
+                "cap_seconds": cap_seconds,
+                "cutoff_ns": cutoff_ns,
+                "censored": None,
+                "termination": None,
+                "interpretation": "engineering observation cap, not a business SLO",
+            }
+        operation_deadline = time.monotonic() + cap_seconds
+        termination = "complete"
 
         def remaining() -> float:
             value = operation_deadline - time.monotonic()
             if value <= 0:
-                raise TimeoutError(f"operation exceeded {deadline:.3f}s deadline")
+                raise TimeoutError(f"operation reached {cap_seconds:.3f}s observation cap")
             return value
 
         try:
@@ -494,15 +518,30 @@ class Adapter:
                 record["success"] = checkout["status"] == 200 and bool(order_id)
         except Exception as exc:
             record["error"] = str(exc)
-            record["success"] = False
+            if censored_policy and isinstance(exc, (TimeoutError, requests.Timeout)):
+                record["success"] = None
+                termination = "cap_reached"
+            elif censored_policy and isinstance(exc, requests.RequestException):
+                record["success"] = None
+                termination = "transport_incomplete"
+            else:
+                record["success"] = False
         finally:
             record["ended_ns"] = time.time_ns()
             if name == "checkout" and self._consumer_paused:
-                # Reserve the protocol's default durable deadline immediately;
-                # this prevents an eager recovery transition from releasing the
-                # paused consumer before verify_async receives the records.
-                self._reserve_async_deadline(record["started_ns"] + 10_000_000_000)
-            if time.monotonic() > operation_deadline:
+                # In v3 the independent persistence observation starts only
+                # after the HTTP attempt ends. Legacy studies retain their
+                # original operation-start anchor.
+                anchor_ns = (
+                    record["ended_ns"] if censored_policy else record["started_ns"]
+                )
+                self._reserve_async_deadline(anchor_ns + 10_000_000_000)
+            if censored_policy:
+                record["observation"].update(
+                    censored=record["success"] is None,
+                    termination=termination,
+                )
+            elif time.monotonic() > operation_deadline:
                 record["success"] = False
                 record["error"] = record["error"] or f"operation exceeded {deadline:.3f}s deadline"
         return record
@@ -527,12 +566,18 @@ class Adapter:
                 postcondition = bool(record.get("order_id"))
             else:
                 postcondition = None
-            record["payload_postcondition"] = postcondition
-            record["success"] = (
-                bool(record.get("success") and postcondition)
-                if postcondition is not None
-                else None
-            )
+            if self._uses_censored_policy() and record.get("success") is None:
+                # Missing transport evidence is censoring, not a negative
+                # business payload observation.
+                record["payload_postcondition"] = None
+                record["success"] = None
+            else:
+                record["payload_postcondition"] = postcondition
+                record["success"] = (
+                    bool(record.get("success") and postcondition)
+                    if postcondition is not None
+                    else None
+                )
             verified.append(record)
         return verified
 
@@ -540,6 +585,8 @@ class Adapter:
         self, records: list[dict[str, Any]], deadline: float = 10.0
     ) -> list[dict[str, Any]]:
         """Poll independent SQL state, preserving every timestamped observation."""
+        if self._uses_censored_policy():
+            return self._verify_async_censored(records, deadline)
         results: list[dict[str, Any]] = []
         for original in records:
             record = copy.deepcopy(original)
@@ -582,6 +629,108 @@ class Adapter:
                 "deadline_seconds": deadline,
                 "deadline_ns": deadline_ns,
                 "success": settled,
+                "observations": observations,
+                "evidence": "independent PostgreSQL reads keyed only by returned order_id",
+                "expected_postcondition": record.get("async_expected")
+                or {
+                    "items": [{"product_id": PRODUCT_ID, "quantity": 1}],
+                    "shipping_address": {
+                        "street_address": "1 Observatory Way",
+                        "city": "Testville",
+                        "state": "CA",
+                        "country": "US",
+                        "zip_code": "94000",
+                    },
+                },
+            }
+            results.append(record)
+        return results
+
+    def _verify_async_censored(
+        self, records: list[dict[str, Any]], deadline: float
+    ) -> list[dict[str, Any]]:
+        """Observe persistence after HTTP completion without inventing a commit time."""
+        results: list[dict[str, Any]] = []
+        for original in records:
+            record = copy.deepcopy(original)
+            order_id = record.get("order_id")
+            window_start_ns = int(record.get("ended_ns") or time.time_ns())
+            deadline_ns = window_start_ns + int(deadline * 1_000_000_000)
+            self._reserve_async_deadline(deadline_ns)
+            observations: list[dict[str, Any]] = []
+            settled: bool | None = None
+            censored = True
+            termination = "identity_unavailable"
+            completion_interval = None
+            last_negative_started_ns = None
+            if not isinstance(order_id, str) or not _ORDER_ID.fullmatch(order_id):
+                record["async_error"] = "missing or unsafe order_id"
+            else:
+                while True:
+                    observation = self._read_order(order_id)
+                    observations.append(observation)
+                    query_started_ns = int(observation.get("query_started_ns") or 0)
+                    query_completed_ns = int(
+                        observation.get("query_completed_ns") or time.time_ns()
+                    )
+                    if observation.get("complete") is True:
+                        # Persistence may precede the HTTP response. Without a
+                        # prior incomplete snapshot there is no lower bound;
+                        # the first positive query end is only an upper bound.
+                        lower_ns = (
+                            int(last_negative_started_ns)
+                            if last_negative_started_ns is not None
+                            else None
+                        )
+                        completion_interval = {
+                            "lower_bound_ns": (
+                                min(lower_ns, query_completed_ns)
+                                if lower_ns is not None
+                                else None
+                            ),
+                            "upper_bound_ns": query_completed_ns,
+                            "lower_bound_inclusive": (
+                                False if lower_ns is not None else None
+                            ),
+                            "upper_bound_inclusive": True,
+                            "basis": (
+                                "last incomplete query start when available; "
+                                "first complete query end is only an upper bound, "
+                                "and persistence may precede HTTP completion"
+                            ),
+                        }
+                        settled = True if query_completed_ns <= deadline_ns else None
+                        censored = settled is None
+                        termination = (
+                            "complete_observed_within_cap"
+                            if settled is True
+                            else "complete_first_observed_after_cap"
+                        )
+                        break
+                    if observation.get("terminal_wrong_persisted_payload") is True:
+                        settled = False
+                        censored = False
+                        termination = "terminal_wrong_persisted_payload"
+                        break
+                    if observation.get("query_ok"):
+                        last_negative_started_ns = query_started_ns
+                    now_ns = time.time_ns()
+                    if now_ns >= deadline_ns:
+                        # Absence at the engineering cutoff is right-censored;
+                        # it is not evidence that persistence never completes.
+                        termination = "cap_reached"
+                        break
+                    time.sleep(min(0.4, max(0.0, (deadline_ns - now_ns) / 1e9)))
+            record["async_verification"] = {
+                "observation_policy": "censored-v3",
+                "window_kind": "engineering observation cap, not a business SLO",
+                "window_start_ns": window_start_ns,
+                "deadline_seconds": deadline,
+                "deadline_ns": deadline_ns,
+                "censored": censored,
+                "termination": termination,
+                "success": settled,
+                "completion_time_interval_ns": completion_interval,
                 "observations": observations,
                 "evidence": "independent PostgreSQL reads keyed only by returned order_id",
                 "expected_postcondition": record.get("async_expected")
@@ -708,6 +857,9 @@ class Adapter:
         self._compose("a", "down -v --remove-orphans", timeout=240, check=False)
 
     # --------------------------- private helpers ---------------------------
+
+    def _uses_censored_policy(self) -> bool:
+        return getattr(getattr(self, "ctx", None), "observation_policy", None) == "censored-v3"
 
     def _split_compose(self, document: dict[str, Any]) -> tuple[dict, dict, dict]:
         services = copy.deepcopy(document["services"])
@@ -1080,7 +1232,8 @@ class Adapter:
             "request_body_b64": base64.b64encode(request_bytes).decode("ascii"),
         }
         try:
-            response = requests.request(
+            requester = _censored_request if self._uses_censored_policy() else requests.request
+            response = requester(
                 method,
                 self.entry_url + path,
                 json=body,
@@ -1091,7 +1244,10 @@ class Adapter:
                 {
                     "status": response.status_code,
                     "response_body_b64": base64.b64encode(response.content).decode("ascii"),
-                    "ended_ns": time.time_ns(),
+                    "ended_ns": int(
+                        getattr(response, "_study_body_completed_ns", time.time_ns())
+                    ),
+                    "transport_error": False,
                     "error": None,
                 }
             )
@@ -1101,7 +1257,14 @@ class Adapter:
                 step["json"] = None
         except Exception as exc:
             step.update(
-                {"status": None, "response_body_b64": "", "ended_ns": time.time_ns(), "error": str(exc), "json": None}
+                {
+                    "status": None,
+                    "response_body_b64": "",
+                    "ended_ns": time.time_ns(),
+                    "transport_error": isinstance(exc, requests.RequestException),
+                    "error": str(exc),
+                    "json": None,
+                }
             )
             record["http_steps"].append(step)
             raise
@@ -1172,6 +1335,12 @@ SELECT json_build_object(
                 }
             )
             value["complete"] = bool(value["complete"] and value["postcondition_exact"])
+            value["terminal_wrong_persisted_payload"] = bool(
+                value["order_count"] >= 1
+                and value["item_count"] >= 1
+                and value["shipping_count"] >= 1
+                and not value["postcondition_exact"]
+            )
             return value
         except Exception as exc:
             return {
