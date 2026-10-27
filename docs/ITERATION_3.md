@@ -243,6 +243,30 @@ business outcomes remain unknown. No implementation or resource blocker remains;
 this verdict authorizes acquisition and does not establish empirical usefulness,
 algorithmic advantage or superiority over the direct/HTTP baselines.
 
+### Structural reporting coverage
+
+While acquisition runs, the independent reviewer identified a reporting gap:
+the frozen models retain graphs, but the primary evaluator does not summarize
+their service, instance or guest-placement evidence. The skeptic and orchestrator
+both granted GO for a reporting-only supplement under the unchanged original
+criterion. No acquisition, model fitting, classes, forecasts or outcomes change.
+
+The supplement summarizes all 27 frozen graphs and keeps unknown instance/guest
+labels explicit. Combined graphs are source-qualified unions, not additional
+physical instances. Bounded witnesses from each retained full SQLite index use
+the same unique-identity, conflict and source-local parent filters as discovery.
+Full-capture span-link counts are separate from frozen graph-edge counts. These
+are **observed exact-ID cross-guest ancestry**; independent link correctness is
+not established and its error rate remains unknown. Deployment/container and
+distinct kernel boot IDs support evaluation only. Addresses and TCP reachability
+do not establish request ancestry; observed placement is distinguished from any
+reference-resolved placement. Missing or ambiguous evidence remains unknown.
+
+Processing runs in Actions, one full campaign at a time per system, with input
+hashes, bounded witnesses and download/processing/storage costs retained. Larger
+graphs do not establish a usefulness advantage or improve the conditional-state
+predictor by themselves.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
