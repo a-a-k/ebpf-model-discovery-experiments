@@ -48,6 +48,10 @@ def test_report_separates_costs_and_preserves_unknowns(tmp_path, monkeypatch):
     assert result["preparation"]["known_job_elapsed_seconds_subtotal"] is None
     assert result["preparation"]["stored_artifact_bytes"] == 50
     assert result["human_agent_time_seconds"] is None
+    assert result["local_check_compute_seconds"] is None
     assert result["current_reporting_job"]["elapsed_seconds"] is None
     assert len(result["runs"][0]["artifacts"]) == 2
     assert result["runs"][0]["metadata_sha256"]["jobs"]
+    assert result["runs"][0]["compact_summary_artifact"]["availability"] == "not_uploaded"
+    assert result["scientific_acquisition"]["runs_without_compact_summary_artifact"] == 1
+    assert result["scientific_acquisition"]["compact_summary_artifact_availability"] == {"not_uploaded": 1}

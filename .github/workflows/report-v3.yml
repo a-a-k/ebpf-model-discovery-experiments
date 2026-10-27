@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -e . matplotlib
-      - name: Download compact complete and failed campaign evidence
+      - name: Fetch complete run, job and artifact metadata before downloads
         env:
           GH_TOKEN: ${{ github.token }}
           INPUT_RUNS: ${{ inputs.run_ids }}
@@ -55,8 +55,6 @@ jobs:
           (out/'series-input-runs.json').write_text(json.dumps(runs, indent=2)+'\n')
           effective = {**manifest, 'runs': preparation}
           (out/'preparation-runs-effective.json').write_text(json.dumps(effective, indent=2, sort_keys=True)+'\n')
-          for run in runs:
-              subprocess.run(['gh', 'run', 'download', str(run), '-p', 'v3-summary-*', '-D', 'work/v3-inputs/'+str(run)], check=True)
           for run in [*runs, *preparation_ids]:
               base = 'repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(run)
               with (out/(str(run)+'-run.json')).open('w') as stream:
@@ -73,6 +71,44 @@ jobs:
             --manifest results/iteration-3/provenance/preparation-runs-effective.json \
             --series-runs results/iteration-3/provenance/series-input-runs.json \
             --out results/iteration-3
+      - name: Download available compact campaign evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, pathlib, subprocess
+          provenance = pathlib.Path('results/iteration-3/provenance')
+          runs = json.loads((provenance/'series-input-runs.json').read_text())
+          diagnostics, failures = [], []
+          for run in runs:
+              pages = json.loads((provenance/f'{run}-artifacts.json').read_text())
+              artifacts = [artifact for page in pages for artifact in page['artifacts']]
+              compact = [artifact for artifact in artifacts if artifact.get('name', '').startswith('v3-summary-')]
+              available = [artifact for artifact in compact if artifact.get('expired') is not True]
+              if not compact:
+                  diagnostics.append({'run_id': run, 'status': 'not_uploaded',
+                                      'detail': 'GitHub artifact metadata contains no v3-summary-* artifact'})
+                  continue
+              if not available:
+                  diagnostics.append({'run_id': run, 'status': 'expired_unavailable',
+                                      'artifact_ids': [artifact['id'] for artifact in compact]})
+                  continue
+              command = ['gh', 'run', 'download', str(run), '-p', 'v3-summary-*',
+                         '-D', 'work/v3-inputs/'+str(run)]
+              completed = subprocess.run(command, text=True, capture_output=True)
+              if completed.returncode:
+                  item = {'run_id': run, 'status': 'download_failed', 'returncode': completed.returncode,
+                          'stdout': completed.stdout, 'stderr': completed.stderr,
+                          'artifact_ids': [artifact['id'] for artifact in available]}
+                  diagnostics.append(item)
+                  failures.append(item)
+              else:
+                  diagnostics.append({'run_id': run, 'status': 'downloaded',
+                                      'artifact_ids': [artifact['id'] for artifact in available]})
+          (provenance/'compact-downloads.json').write_text(json.dumps(diagnostics, indent=2, sort_keys=True)+'\n')
+          if failures:
+              raise SystemExit('one or more advertised compact artifacts failed to download; see compact-downloads.json')
+          PY
       - name: Report exact 27-cell population
         run: python -m ebpf_discovery.evaluate_v3 --inputs work/v3-inputs --report results/iteration-3
       - name: Plot retained iteration-3 report

@@ -52,6 +52,7 @@ def _group(rows: list[dict[str, Any]], classification: str) -> dict[str, Any]:
     selected = [row for row in rows if row["classification"] == classification]
     job_seconds = [job["elapsed_seconds"] for row in selected for job in row["jobs"]]
     artifact_bytes = [artifact["size_in_bytes"] for row in selected for artifact in row["artifacts"]]
+    compact_availability = Counter(row["compact_summary_artifact"]["availability"] for row in selected)
     return {
         "runs": len(selected),
         "jobs": sum(len(row["jobs"]) for row in selected),
@@ -70,6 +71,10 @@ def _group(rows: list[dict[str, Any]], classification: str) -> dict[str, Any]:
             if any(value is not None for value in artifact_bytes) else None
         ),
         "artifacts_with_unknown_size": sum(value is None for value in artifact_bytes),
+        "runs_without_compact_summary_artifact": sum(
+            row["compact_summary_artifact"]["availability"] == "not_uploaded" for row in selected
+        ),
+        "compact_summary_artifact_availability": dict(sorted(compact_availability.items())),
     }
 
 
@@ -120,6 +125,13 @@ def report(provenance: Path, manifest_path: Path, series_path: Path, output: Pat
             "expires_at": artifact.get("expires_at"), "archive_download_url": artifact.get("archive_download_url"),
         } for artifact in artifacts]
         declaration = preparation.get(run_id)
+        compact = [artifact for artifact in artifact_rows if str(artifact.get("name", "")).startswith("v3-summary-")]
+        compact_availability = (
+            "not_applicable" if declaration else
+            "not_uploaded" if not compact else
+            "expired" if all(artifact.get("expired") is True for artifact in compact) else
+            "available"
+        )
         rows.append({
             "run_id": run_id,
             "classification": "preparation" if declaration else "scientific_acquisition",
@@ -132,6 +144,12 @@ def report(provenance: Path, manifest_path: Path, series_path: Path, output: Pat
             "run_started_at": run.get("run_started_at"), "updated_at": run.get("updated_at"),
             "head_sha": run.get("head_sha"), "html_url": run.get("html_url"),
             "metadata_sha256": {name: _digest(path) for name, path in paths.items()},
+            "compact_summary_artifact": {
+                "availability": compact_availability,
+                "matching_artifact_ids": [artifact["artifact_id"] for artifact in compact],
+                "matching_artifact_names": [artifact["name"] for artifact in compact],
+                "meaning": "not_uploaded is distinct from a later artifact download or network failure",
+            },
             "jobs": job_rows, "artifacts": artifact_rows,
         })
 
@@ -153,6 +171,10 @@ def report(provenance: Path, manifest_path: Path, series_path: Path, output: Pat
         "runs": rows,
         "human_agent_time_seconds": None,
         "human_agent_time_note": manifest.get("human_agent_time_note"),
+        "local_check_compute_seconds": None,
+        "local_check_compute_note": (
+            "Local editing and validation compute was not metered by GitHub Actions and remains unknown."
+        ),
         "current_reporting_job": {
             "elapsed_seconds": None,
             "included_in_fetched_job_totals": False,
@@ -185,7 +207,8 @@ def report(provenance: Path, manifest_path: Path, series_path: Path, output: Pat
         )
     lines += ["", ("Artifact bytes are stored capture cost: duplicate and overlapping artifacts are counted each time. "
                      "No content deduplication is claimed."), "",
-              "Human/agent time and the still-running reporting job remain unknown; neither is filled with zero."]
+              ("Human/agent time, local-check compute, and the still-running reporting job remain unknown; "
+               "none is filled with zero.")]
     markdown_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return {"json": str(json_path), "csv": str(csv_path), "markdown": str(markdown_path)}
 
