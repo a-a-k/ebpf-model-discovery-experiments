@@ -22,11 +22,15 @@ def declared_census(records):
         intent = record.get('request_intent') or {}
         planned = intent.get('steps', [])
         ids = [s['request_id'] for s in planned] if planned else [s['request_id'] for s in record['http_steps']]
+        observation = record.get('observation') or {}
         output.append({'attempt_key': opaque_attempt(record), 'operation_id': record['operation'],
                        'step_ids': ids, 'actual_step_ids': [s['request_id'] for s in record['http_steps']],
                        'phase': record['phase'], 'state': record['state'],
                        'started_ns': record['started_ns'], 'ended_ns': record['ended_ns'],
-                       'deadline_ns': record['started_ns']+int(record.get('deadline_seconds', 2.)*1e9)})
+                       'deadline_ns': observation.get('cutoff_ns', record['started_ns']+int(record.get('deadline_seconds', 2.)*1e9)),
+                       'observation_policy': observation.get('policy'),
+                       'observation_censored': observation.get('censored'),
+                       'observation_termination': observation.get('termination')})
     return output
 
 
@@ -165,8 +169,12 @@ class Binder:
         for ordinal, expected in enumerate(contract['steps']):
             identity = row['step_ids'][ordinal] if ordinal < len(row['step_ids']) else None
             span, reason = self.entry(source, identity, expected)
-            if span and (span['start_ns'] < row['started_ns']-1_000_000_000 or span['start_ns'] > row['ended_ns']+1_000_000_000):
-                span, reason = None, 'entry_outside_journal_window'
+            if span:
+                if row.get('observation_policy') == 'censored-v3':
+                    if not row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']:
+                        span, reason = None, 'entry_outside_sealed_observation_window'
+                elif span['start_ns'] < row['started_ns']-1_000_000_000 or span['start_ns'] > row['ended_ns']+1_000_000_000:
+                    span, reason = None, 'entry_outside_journal_window'
             code = status_code(span)
             valid = self.contracts.status_ok(operation, ordinal, code) if code is not None else None
             values.append(valid)
@@ -177,10 +185,13 @@ class Binder:
                 final = span
         body, body_evidence = captured_body(final)
         semantic = self.contracts.payload_verdict(operation, body, self.context) if body is not None else {'value': None, 'reason': body_evidence['reason']}
-        timely = row['ended_ns'] <= row['deadline_ns']
-        verdict = conjunction(values+[semantic['value'], timely])
+        censored_policy = row.get('observation_policy') == 'censored-v3'
+        timely = None if censored_policy else row['ended_ns'] <= row['deadline_ns']
+        verdict = conjunction(values+[semantic['value']]+([] if censored_policy else [timely]))
+        if censored_policy and row['observation_censored']:
+            verdict = None
         return {**row, 'source': source, 'class_id': operation, 'compatible_classes': [operation],
-                'proxy': verdict, 'protocol_only': conjunction(values+[timely]), 'timely': timely,
+                'proxy': verdict, 'protocol_only': conjunction(values+([] if censored_policy else [timely])), 'timely': timely,
                 'steps': steps, 'body_evidence': body_evidence, 'payload_verdict': semantic,
                 'outcome_kind': 'declared_business_completion', 'oracle_fields_consumed': False}
 
@@ -196,10 +207,14 @@ class Binder:
             {**self.context, 'complete_transport_body': True}) if body is not None and complete else {'value': None, 'reason': 'no_complete_final_response'}
         if self.system == 'petclinic' and actual and (actual[-1].get('body_bytes') or 0) > 1024*1024:
             semantic = {'value': False, 'reason': 'response_exceeds_declared_limit'}
-        timely = row['ended_ns'] <= row['deadline_ns']
+        censored_policy = row.get('observation_policy') == 'censored-v3'
+        timely = None if censored_policy else row['ended_ns'] <= row['deadline_ns']
+        verdict = conjunction(statuses+[semantic['value']]+([] if censored_policy else [timely]))
+        if censored_policy and row['observation_censored']:
+            verdict = None
         return {**row, 'source': 'entry_http', 'class_id': operation, 'compatible_classes': [operation],
-                'proxy': conjunction(statuses+[semantic['value'], timely]),
-                'protocol_only': conjunction(statuses+[timely]), 'payload_verdict': semantic,
+                'proxy': verdict,
+                'protocol_only': conjunction(statuses+([] if censored_policy else [timely])), 'payload_verdict': semantic,
                 'outcome_kind': 'declared_business_completion', 'oracle_fields_consumed': False}
 
     def project(self, rows, transport):
@@ -215,10 +230,14 @@ class Binder:
             primitive_values = [[item['steps'][ordinal]['protocol'] for item in individual]
                                 for ordinal in range(len(merged_steps))]+[payload_values]
             conflict = any(True in values and False in values for values in primitive_values)
-            combined = conjunction(merged_steps+[merge_verdicts(payload_values), individual[0]['timely']])
+            censored_policy = row.get('observation_policy') == 'censored-v3'
+            timing = [] if censored_policy else [individual[0]['timely']]
+            combined = conjunction(merged_steps+[merge_verdicts(payload_values)]+timing)
+            if censored_policy and row['observation_censored']:
+                combined = None
             output['combined'].append({**row, 'source': 'combined', 'class_id': row['operation_id'],
                 'compatible_classes': [row['operation_id']], 'proxy': None if conflict else combined,
-                'protocol_only': conjunction(merged_steps+[individual[0]['timely']]),
+                'protocol_only': conjunction(merged_steps+timing),
                 'source_verdicts': dict(zip(('ebpf', 'native'), verdicts)),
                 'primitive_conflict': conflict, 'merged_step_status_verdicts': merged_steps,
                 'conflict': conflict, 'oracle_fields_consumed': False})
@@ -232,13 +251,22 @@ class Binder:
             signatures, evidence = [], []
             for identity in row['step_ids']:
                 choices = [self.entry(s, identity)[0] for s in ('ebpf', 'native')] if source == 'combined' else [self.entry(source, identity)[0]]
+                if row.get('observation_policy') == 'censored-v3':
+                    choices = [span for span in choices if span and
+                        row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']]
                 signatures_found = set()
                 for span in choices:
                     if not span or not route(span):
                         continue
+                    if row.get('observation_policy') == 'censored-v3' and not (
+                            row['started_ns'] <= span['start_ns'] <= span['end_ns'] <= row['deadline_ns']):
+                        continue
                     signature = route(span)
                     if downstream:
                         descendants = self.store.descendants(span)
+                        if row.get('observation_policy') == 'censored-v3':
+                            descendants = [item for item in descendants if
+                                row['started_ns'] <= item['start_ns'] <= item['end_ns'] <= row['deadline_ns']]
                         features = sorted({(s['service'], route(s) or s['name'],
                             s['attributes'].get('db.system.name', s['attributes'].get('db.system')))
                             for s in descendants}, key=str)
@@ -247,7 +275,8 @@ class Binder:
                 signatures.append(next(iter(signatures_found)) if len(signatures_found) == 1 else None)
                 codes = [status_code(s) for s in choices if s]
                 evidence.append(merge_verdicts([200 <= c < 300 for c in codes if c is not None]))
-            projected.append({**row, 'signature': signatures, 'proxy': conjunction(evidence)})
+            proxy = None if row.get('observation_censored') else conjunction(evidence)
+            projected.append({**row, 'signature': signatures, 'proxy': proxy})
         if classes is None:
             classes = {class_key(r['signature']): {'signature': r['signature']} for r in projected
                        if r['phase'] == 'class_train' and r['proxy'] is True and r['signature'] and all(r['signature'])}
@@ -262,6 +291,8 @@ def fit_declared(rows, operations, seed, graph):
              'conditional': conditions, 'graph': graph, 'target_weights': WEIGHTS,
              'manual_inputs': ['operation contracts and identity', 'opaque request grouping/timing', 'replica states', 'target weights'],
              'business_oracle_input': False, 'created_ns': time.time_ns()}
+    model['observation_policy'] = sorted({str(row.get('observation_policy')) for row in rows})
+    model['application_deadline_seconds'] = None
     rng = np.random.default_rng(seed)
     forecast = {'schema_version': 3, 'classes': {}, 'created_ns': time.time_ns(), 'draws_per_class': 100000,
                 'baseline': 'identical direct conditional-state weighting', 'no_accuracy_success_gate': True}

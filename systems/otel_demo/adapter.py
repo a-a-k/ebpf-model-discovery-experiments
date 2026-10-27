@@ -708,9 +708,10 @@ class Adapter:
                         )
                         break
                     if observation.get("terminal_wrong_persisted_payload") is True:
-                        settled = False
-                        censored = False
-                        termination = "terminal_wrong_persisted_payload"
+                        settled = False if query_completed_ns <= deadline_ns else None
+                        censored = settled is None
+                        termination = ("terminal_wrong_persisted_payload" if settled is False
+                                       else "wrong_payload_first_observed_after_cap")
                         break
                     if observation.get("query_ok"):
                         last_negative_started_ns = query_started_ns

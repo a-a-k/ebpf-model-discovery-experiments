@@ -130,6 +130,7 @@ jobs:
             work/campaign/status.json
             work/campaign/blocks.json
             work/campaign/automatic-metrics.json
+            work/campaign/http-observation-curves.json
             work/campaign/database-controls.json
             work/campaign/forecast-saved.json
             work/campaign/acquisition-complete.json

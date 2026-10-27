@@ -11,12 +11,14 @@ import random
 import socket
 import time
 import traceback
+from threading import Lock
 
 from .collectors import Collectors
 from .model import fit
 from .observations import census, read_spans
 from .runtime import Context, write_json
 from .evaluate import evaluation_map
+from .timing_v3 import seal_attempt
 
 
 class Campaign:
@@ -30,6 +32,7 @@ class Campaign:
         self.index = 0
         self.metadata = {}
         self.rate, self.workers = 4, 48
+        self.http_cap, self.verify_all_checkouts = 2.0, True
 
     def save_records(self):
         write_json(self.ctx.out / 'external.json', self.records)
@@ -48,10 +51,11 @@ class Campaign:
         # stale connection after a replica restart without selecting scored data.
         warm = []
         for name in names:
-            row = self.adapter.operation(name, self.index, f'warmup-{block_id}', 2.0)
+            row = self.adapter.operation(name, self.index, f'warmup-{block_id}', self.http_cap)
+            seal_attempt(row)
             self.index += 1
             row.update(phase='preparation', state=state, for_block=block_id)
-            if self.system == 'otel_demo' and name == 'checkout':
+            if self.system == 'otel_demo' and name == 'checkout' and (asynchronous or self.verify_all_checkouts):
                 row = self.adapter.verify_async([row], 10.0)[0]
             warm.append(row)
         self.warmups.extend(self.adapter.verify(warm))
@@ -61,16 +65,25 @@ class Campaign:
         futures = []
         start_mono = time.monotonic()
         start_ns = time.time_ns()
+        active, active_lock = {'current': 0, 'peak': 0}, Lock()
 
         def issue(name, index, scheduled):
             actual = time.time_ns()
-            row = self.adapter.operation(name, index, block_id, 2.0)
-            row.update(phase=phase, state=state, block_id=block_id, scheduled_ns=scheduled,
-                       dispatched_ns=actual,
-                       dispatch_lateness_seconds=max(0, (actual-scheduled)/1e9))
-            if asynchronous or (self.system == 'otel_demo' and name == 'checkout'):
-                row = self.adapter.verify_async([row], 10.0)[0]
-            return row
+            with active_lock:
+                active['current'] += 1
+                active['peak'] = max(active['peak'], active['current'])
+            try:
+                row = self.adapter.operation(name, index, block_id, self.http_cap)
+                seal_attempt(row)
+                row.update(phase=phase, state=state, block_id=block_id, scheduled_ns=scheduled,
+                           dispatched_ns=actual,
+                           dispatch_lateness_seconds=max(0, (actual-scheduled)/1e9))
+                if asynchronous or (self.system == 'otel_demo' and name == 'checkout' and self.verify_all_checkouts):
+                    row = self.adapter.verify_async([row], 10.0)[0]
+                return row
+            finally:
+                with active_lock:
+                    active['current'] -= 1
 
         with ThreadPoolExecutor(max_workers=self.workers) as pool:
             for offset, name in enumerate(ordered):
@@ -92,6 +105,7 @@ class Campaign:
                  'started_ns': block_start, 'load_started_ns': start_ns, 'ended_ns': time.time_ns(),
                  'nominal_load_seconds': count/self.rate, 'requested_operations_per_second': self.rate,
                  'worker_capacity': self.workers,
+                 'peak_in_flight_attempts': active['peak'], 'http_observation_cap_seconds': self.http_cap,
                  'achieved_operations_per_second': ((count-1)*1e9/
                      (max(r['dispatched_ns'] for r in rows)-min(r['dispatched_ns'] for r in rows))) if count > 1 else None,
                  'preparation_operations': len(warm), 'fixed_settle_seconds': 10,

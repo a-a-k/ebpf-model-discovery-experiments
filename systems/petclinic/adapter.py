@@ -705,6 +705,7 @@ backend visits_replicas
             method, body = "POST", {"date": "2026-09-01", "description": marker}
         url = f"http://{self.ctx.node_ip('a')}:18080{paths[name]}"
         started_ns = time.time_ns()
+        started_monotonic = time.monotonic()
         response = None
         payload = None
         raw = b""
@@ -724,7 +725,7 @@ backend visits_replicas
                     "X-Experiment-Request-Id": request_id,
                     "Connection": "close",
                 },
-                timeout=deadline,
+                timeout=max(0.0, deadline-(time.monotonic()-started_monotonic)) if censored_policy else deadline,
             )
             body_completed_ns = getattr(response, "_study_body_completed_ns", time.time_ns())
             body_completed_monotonic = getattr(response, "_study_body_completed_monotonic", None)
@@ -732,6 +733,10 @@ backend visits_replicas
             if len(raw) > 1024 * 1024:
                 raise ValueError("response_exceeds_declared_limit")
             payload = response.json()
+        except requests.exceptions.JSONDecodeError as exc:
+            # Requests' JSONDecodeError also subclasses RequestException. The
+            # response bytes arrived completely; this is not transport censoring.
+            error = f"{type(exc).__name__}: {exc}"
         except requests.exceptions.Timeout as exc:
             error = f"{type(exc).__name__}: {exc}"
             termination = "cap_reached"
@@ -893,10 +898,15 @@ backend visits_replicas
                 observation.get("policy") == "censored-v3" or elapsed_ns <= deadline_ns
             )
             if not is_censored:
-                row["success"] = bool(http_created and exact)
+                if observation.get("policy") == "censored-v3" and http_created and response_identity_match and not db_rows:
+                    row["success"] = None
+                else:
+                    row["success"] = bool(http_created and exact)
             query_timing = oracle_queries[marker]
             row["validation"] = {
-                "kind": "sql_exact_row", "state": "verified", "marker": marker,
+                "kind": "sql_exact_row",
+                "state": "postcondition_unobserved" if row["success"] is None and not db_rows else "verified",
+                "marker": marker,
                 "row_count": len(db_rows), "rows": db_rows, "acknowledged_id": acknowledged_id,
                 "response_identity_match": response_identity_match,
                 "database_exactly_once_contract_match": database_contract_match,
@@ -905,10 +915,14 @@ backend visits_replicas
             }
             if http_created and exact:
                 http_completed_ns = row["http_steps"][0].get("body_completed_ns") or row["ended_ns"]
-                row["validation"]["persistence_completion_interval_ns"] = {
+                row["validation"]["operation_completion_interval_ns"] = {
                     "lower": http_completed_ns,
                     "upper": query_timing["query_completed_ns"],
                     "lower_bound_meaning": "completed_http_acknowledgement",
+                }
+                row["validation"]["database_commit_time_interval_ns"] = {
+                    "lower": None, "upper": query_timing["query_completed_ns"],
+                    "meaning": "first positive SQL query only bounds commit from above",
                 }
             if row["success"] is False and not row.get("error"):
                 row["error"] = "write_not_persisted_exactly_once_with_acknowledged_identity"

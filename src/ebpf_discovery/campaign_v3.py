@@ -18,10 +18,11 @@ from .observations import opaque_attempt
 from .runtime import write_json
 from .semantic_v3 import Binder, SOURCES, declared_census, fit_declared, transport_observations
 from .store_v3 import ObservationStore
+from .timing_v3 import automatic_census, http_curves
 
 PRIMARY_PHASES = ('class_train', 'calibration', 'target', 'class_test')
 RULE_FILES = ['src/ebpf_discovery/'+name+'.py' for name in
-              ('semantic_v3', 'store_v3', 'observations', 'model', 'async_links', 'campaign_v3')]
+              ('semantic_v3', 'store_v3', 'observations', 'model', 'async_links', 'campaign_v3', 'timing_v3')]
 
 
 def digest(path):
@@ -33,6 +34,9 @@ class CampaignV3(Campaign):
     def __init__(self, system, mode, seed, out, qualification=False):
         super().__init__(system, mode, seed, out)
         self.rate, self.workers = 20, 256
+        self.http_cap, self.verify_all_checkouts = 10.0, False
+        self.ctx.observation_policy = 'censored-v3'
+        self.ctx.observation_cap_seconds = self.http_cap
         self.qualification = qualification
         self.collectors = Collectors(self.ctx, semantic=True)
         self.store = ObservationStore(self.ctx.out/'observation-index.sqlite')
@@ -80,7 +84,7 @@ class CampaignV3(Campaign):
         for source in ('ebpf', 'native', 'combined'):
             self.automatic_classes[source] = {}
             for variant in ('route', 'route_and_downstream'):
-                classes, assigned = binder.automatic(self.census, source, downstream=variant != 'route')
+                classes, assigned = binder.automatic(automatic_census(self.records, self.census), source, downstream=variant != 'route')
                 self.automatic_classes[source][variant] = classes
                 folder = self.ctx.out/'automatic'/source/variant
                 for filename, value in (('classes.json', classes),
@@ -109,6 +113,7 @@ class CampaignV3(Campaign):
     def finish_projection(self):
         binder = self.binder()
         rows = declared_census(self.records)
+        write_json(self.ctx.out/'http-observation-curves.json', http_curves(self.records, self.http_cap))
         write_json(self.ctx.out/'declared-journal-final.json', rows)
         projections = binder.project(rows, transport_observations(self.records))
         for source, projected in projections.items():
@@ -121,7 +126,7 @@ class CampaignV3(Campaign):
         for source in ('ebpf', 'native', 'combined'):
             automatic_metrics[source] = {}
             for variant, classes in self.automatic_classes[source].items():
-                _, assigned = binder.automatic(self.census, source, classes, downstream=variant != 'route')
+                _, assigned = binder.automatic(automatic_census(self.records, self.census), source, classes, downstream=variant != 'route')
                 write_json(self.ctx.out/'automatic'/source/variant/'final-assignments.json', assigned)
                 metrics = {}
                 for phase in ('calibration', 'target', 'class_test'):
@@ -178,6 +183,9 @@ class CampaignV3(Campaign):
                    'disk_free_bytes': free, 'projected_full_capture_and_index_bytes_with_2x_margin': projected,
                    'disk_projection_fits': projected < free, 'source_summary': {},
                    'no_accuracy_success_gate': True, 'memory_and_scheduling_evidence': 'infrastructure/ and blocks.json'}
+        summary.update(observation_policy=self.ctx.observation_policy,
+                       application_deadline_seconds=None, http_observation_cap_seconds=self.http_cap,
+                       peak_in_flight_attempts=max(b['peak_in_flight_attempts'] for b in self.blocks))
         for source, projected_rows in projections.items():
             summary['source_summary'][source] = {
                 'outcomes': dict(Counter(str(r['proxy']) for r in projected_rows)),
@@ -204,6 +212,8 @@ class CampaignV3(Campaign):
     def run(self):
         status = {'system': self.system, 'mode': self.ctx.mode, 'seed': self.ctx.seed,
                   'protocol_version': 'source-contract-v3', 'qualification': self.qualification,
+                  'observation_policy': self.ctx.observation_policy,
+                  'http_observation_cap_seconds': self.http_cap, 'application_deadline_seconds': None,
                   'run_id': os.environ.get('GITHUB_RUN_ID'), 'commit': os.environ.get('GITHUB_SHA'),
                   'started_ns': time.time_ns(), 'status': 'running', 'requested_operations_per_second': self.rate}
         write_json(self.ctx.out/'status.json', status)

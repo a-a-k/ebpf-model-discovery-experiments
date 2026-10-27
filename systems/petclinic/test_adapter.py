@@ -206,7 +206,7 @@ def test_censored_policy_uses_bounded_transport_and_records_complete_observation
     adapter = Adapter(context)
     adapter.fixture = {"owners": [], "details": {}, "vets": []}
     record = adapter.operation("list_owners", 1, "target", deadline=10)
-    assert captured["timeout"] == 10
+    assert 0 < captured["timeout"] <= 10
     assert record["success"] is True
     assert record["http_steps"][0]["body_completed_ns"] == Response._study_body_completed_ns
     assert record["http_steps"][0]["body_completed_monotonic"] == 123.5
@@ -255,6 +255,40 @@ def test_verify_keeps_censored_write_unknown_but_retains_positive_sql_evidence(t
     assert verified["validation"]["exactly_once_and_identity_match"] is False
     assert "query_started_ns" in verified["validation"]
     assert "query_completed_ns" in verified["validation"]
+
+
+def test_completed_ack_without_observed_sql_row_is_unknown_under_censor_policy(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="full"))
+    marker = "ebpf-study-" + "d" * 64
+    adapter._mysql = lambda _sql: SimpleNamespace(stdout="")
+    record = {
+        "operation": "create_visit", "success": None, "error": None,
+        "started_ns": 1, "ended_ns": 3_000_000_001, "deadline_seconds": 10,
+        "observation": {"policy": "censored-v3", "censored": False, "termination": "complete"},
+        "http_steps": [{"status": 201}], "validation": {"marker": marker},
+        "response_json": {"id": 42, "petId": 1, "date": "2026-09-01", "description": marker},
+    }
+    verified = adapter.verify([record])[0]
+    assert verified["success"] is None
+    assert verified["validation"]["state"] == "postcondition_unobserved"
+
+
+def test_complete_invalid_json_is_not_a_transport_censor(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    response = adapter_module.requests.Response()
+    response.status_code = 200
+    response._content = b"{"
+    response.headers["content-type"] = "application/json"
+    monkeypatch.setattr(adapter_module, "_censored_request", lambda *args, **kwargs: response)
+    context = SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="full",
+                              observation_policy="censored-v3", node_ip=lambda _: "192.168.76.11")
+    adapter = Adapter(context)
+    adapter.fixture = {"owners": [], "details": {}, "vets": []}
+    record = adapter.operation("list_owners", 1, "target", deadline=10)
+    assert record["success"] is False
+    assert record["observation"]["censored"] is False
+    assert record["observation"]["termination"] == "complete"
 
 
 def test_native_census_and_partial_mode_audit_use_actual_service_names():

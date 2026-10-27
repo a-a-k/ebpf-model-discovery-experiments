@@ -12,6 +12,11 @@ attempts per campaign, 939,600 across new seeds 3/4/5. Resource qualification
 precedes acquisition. No fresh empirical result is claimed yet. The 5/10 pp
 thresholds below describe the historical series only; new comparisons report
 errors, uncertainty, unknowns and costs without an accuracy success gate.
+The [timing amendment](docs/ITERATION_3.md#timing-amendment-no-imposed-application-deadline)
+also removes the unjustified universal two-second business cutoff. A ten-second
+engineering observation cap produces censoring, not an automatic failure.
+Correctness, client-observed HTTP timing and SQL completion intervals are
+reported separately; revised technical qualification precedes the fresh series.
 
 ## Abstract
 

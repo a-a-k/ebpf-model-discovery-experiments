@@ -551,10 +551,13 @@ class Adapter:
         try:
             if censored_policy:
                 from ebpf_discovery.transport_v3 import request as observed_request
-                response = observed_request(method, step["url"], data=data, headers=headers, timeout=deadline)
+                remaining = deadline-(time.monotonic_ns()-monotonic_started)/1e9
+                response = observed_request(method, step["url"], data=data, headers=headers, timeout=remaining)
             else:
                 response = requests.request(method, step["url"], data=data, headers=headers, timeout=deadline)
             body = response.content
+            if censored_policy:
+                step["body_completed_ns"] = getattr(response, "_study_body_completed_ns", time.time_ns())
             monotonic_ended = time.monotonic_ns()
             within_deadline = self._within_deadline(monotonic_started, monotonic_ended, deadline)
             step.update(status=response.status_code, response_body_base64=base64.b64encode(body).decode("ascii"), response_sha256=hashlib.sha256(body).hexdigest())

@@ -1,6 +1,8 @@
 # Iteration 3: fresh source-only experiments
 
-Status: source contracts and baselines reviewed; implementation in progress.
+Status: source contracts, baselines and amended censoring policy reviewed;
+implementation and revised resource qualification in progress. No fresh
+27-campaign acquisition has started.
 This is a new acquisition series. Original campaigns and oracle-assisted
 retrospective diagnostics remain separate immutable populations.
 
@@ -32,10 +34,77 @@ replica states; their reweighting does not predict an unseen failure from topolo
 All predictions and mappings are saved before test traffic. No outcome-based
 campaign exclusion, extension or retry is permitted.
 
+## Timing amendment: no imposed application deadline
+
+The first technical qualification used the old universal two-second predicate.
+The user challenged its basis: the agreed plan named two seconds only for the
+HTTP component of the asynchronous control, and no application SLO justified
+extending it to every primary operation. Those 3,600 technical attempts remain
+historical evidence and are not eligible fresh-series observations. Their
+timeout outcomes must not be described collectively as application failures.
+
+The fresh series separates correct completion, confirmed incorrect completion
+and censored/unknown observation. There is no imposed business deadline.
+A ten-second **total attempt observation cap** covers every HTTP step and body
+transfer. It is an engineering bound: at 20 attempts/s it permits approximately
+200 simultaneously waiting operations within the 256-worker budget. It is not
+an SLA or a success gate. Actual concurrency, scheduling delays and resource use
+must be requalified because the previous two-second preflight is insufficient.
+
+All methods receive the same outcome-free transport journal, including censoring
+and the fixed observation cutoff. Timeouts and incomplete responses remain
+unknown. Later telemetry cannot promote them. Both span start and end must lie
+inside the sealed attempt window, including downstream classification evidence.
+This comparison assumes comparable guest/host UTC timestamps; it does not claim
+an independently bounded per-span clock error. Rejected timing evidence remains
+unknown. The HTTP client enforces a whole-transfer cap using
+[`aiohttp.ClientTimeout`](https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientTimeout),
+plus an absolute asynchronous timeout; a socket inactivity timeout alone is
+insufficient. Responses received outside the observation window are retained
+but cannot fill the earlier window.
+
+Correctness forecasts retain censored outcomes as identification uncertainty.
+Client-observed HTTP response curves show cumulative observed-response fractions,
+with every censored attempt retained in the denominator. They are neither an
+uncensored completion-time distribution nor a Kaplan–Meier estimate. They cover
+the entire 0–10 second window and
+include incorrect HTTP responses; they are explicitly separate from business
+success and SQL commit latency. No favourable horizon is selected. Exact
+conditional weighting remains equivalent to the Monte Carlo calculation.
+
+Primary OTel checkouts no longer perform unrelated per-request SQL polling.
+The existing 60 async controls still observe accounting independently, for a
+ten-second engineering window beginning at HTTP termination. Expiry without a
+confirmed result is unknown. The first positive SQL query supplies an upper
+bound, and a prior incomplete query may supply a lower bound; neither is an
+exact commit timestamp. The consumer remains paused through all windows and the
+queue drains before recovery. Petclinic retains its independent SQL postcondition
+verification while the intervention is held; no matching row or an unavailable
+query is not automatically a terminal violation. HTTP-and-SQL operation
+completion and database commit-time bounds are named separately.
+
+The independent skeptic and orchestrator both granted GO for this revised test
+of the **original usefulness criterion**, with the same direct and HTTP/body
+baselines and complete costs. This is not an empirical success claim.
+Implementation and the revised technical qualifications require review before
+the fixed 27 campaigns. Old/new accuracy comparisons cannot isolate an eBPF
+effect: load, observation rules and collection configuration changed; use paired
+comparisons within the new population.
+
+The revised implementation received explicit skeptic GO for the three bounded
+technical qualifications after total-transfer cancellation, common censoring,
+sealed entry/descendant evidence, and SQL interval/unknown handling were checked.
+The orchestrator agrees; full-series execution remains conditional on their
+resource evidence. The first qualification's 11 apparent OTel body mismatches
+were all incomplete client responses; the retained audit found 697/697 exact
+matches among complete responses. Neither that audit nor qualification is a
+business-success result.
+
 ## Source-only completion contracts
 
 The primary arm receives explicit operation declarations and an outcome-free
-request journal: opaque step IDs, operation identity, start/end timing and deadline.
+request journal: opaque step IDs, operation identity, start/end timing and the
+engineering observation cutoff.
 The scheduler fixes the operation and complete intended step sequence before the
 first request. Automatic grouping receives no supplied operation label or intended
 sequence length. Every dispatched operation stays in the denominator.
@@ -43,8 +112,9 @@ sequence length. Every dispatched operation stays in the denominator.
 Entry binding requires the declared entry service/method/path and opaque request
 identity. Conflicting observations remain unknown; parent relations are strictly
 source-local. Combined evidence unites independent facts for the same request,
-not a synthetic cross-source trace. Deadline timing comes from the same permitted
-request journal for every source, as in the original operation model.
+not a synthetic cross-source trace. Observation-window timing comes from the same permitted
+request journal for every source. Its cutoff is an observation limit, not a
+business-success requirement.
 
 The pinned DeathStarBench nginx OpenTracing exporter omits `span.kind`.
 Qualification exposed that format mismatch. Its native binding uses the
@@ -61,7 +131,7 @@ or accepts an explicit client span. The raw kind and ancestry remain in evidence
 | OTel cart | Required product/cart steps HTTP 200; final body contains the declared product and quantity 1 |
 | OTel checkout | Required product/cart/checkout steps HTTP 200; final body contains a nonempty order ID. Async persistence is separate. |
 | Petclinic owners/details/vets | HTTP 200 and the exact seed-derived semantic fields, lists and identities specified by the pinned SQL fixture |
-| Petclinic create visit | HTTP/deadline failure can establish false. HTTP 201, INSERT text and commit-shaped spans do not alone establish exactly-once persistence; unsupported persistence remains unknown. |
+| Petclinic create visit | A completed incorrect HTTP response can establish false; a timeout cannot. HTTP 201, INSERT text and commit-shaped spans do not alone establish exactly-once persistence; unsupported persistence remains unknown. |
 
 Source body content must actually be exported. Invalid, explicitly truncated,
 conflicting or insufficiently attributable content remains unknown. Accepted

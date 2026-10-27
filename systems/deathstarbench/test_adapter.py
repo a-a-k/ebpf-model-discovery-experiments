@@ -331,9 +331,9 @@ class OracleTests(unittest.TestCase):
             adapter = Adapter(Context(Path(directory)))
             with mock.patch.dict(sys.modules, {"ebpf_discovery.transport_v3": SimpleNamespace(request=transport)}), \
                  mock.patch("systems.deathstarbench.adapter.time.monotonic_ns",
-                            side_effect=[0, 3_000_000_000, 3_000_000_000]), \
+                        side_effect=[0, 0, 3_000_000_000, 3_000_000_000]), \
                  mock.patch("systems.deathstarbench.adapter.time.time_ns",
-                            side_effect=[1_000_000_000, 4_000_000_000]):
+                        side_effect=[1_000_000_000, 4_000_000_000, 4_000_000_000]):
                 record = adapter.operation("compose_post", 7, "scored", deadline=10.0)
         self.assertIs(record["success"], True)
         self.assertEqual(record["observation"], {
