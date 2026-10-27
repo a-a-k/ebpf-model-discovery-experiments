@@ -79,6 +79,8 @@ def _graph_summary(graph: dict[str, Any], source: str) -> dict[str, Any]:
         "service_nodes": len(services),
         "service_labels": sorted({str(node.get("service")) for node in services}),
         "observed_instance_labels": sorted({str(node["instance"]) for node in services if node.get("instance")}),
+        "known_instance_label_nodes": sum(node.get("instance") not in (None, "") for node in services),
+        "unknown_instance_label_nodes": sum(node.get("instance") in (None, "") for node in services),
         "known_guest_placement": sum(node.get("guest") not in (None, "") for node in services),
         "unknown_guest_placement": sum(node.get("guest") in (None, "") for node in services),
         "database_logical_nodes": [{
@@ -118,9 +120,20 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
         f"SELECT COUNT(*) FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} conflicted!=0 {and_source}",
         params,
     ).fetchone()[0]
+    invalid_identity_count = db.execute(
+        f"SELECT COUNT(*) FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
+        f"(trace='' OR span='') {and_source}", params,
+    ).fetchone()[0]
+    invalid_identity_rows = db.execute(
+        f"SELECT data FROM spans s {'WHERE' if source != 'combined' else 'WHERE'} "
+        f"(trace='' OR span='') {and_source} ORDER BY source,trace,span,digest LIMIT ?",
+        (*params, WITNESS_LIMIT),
+    ).fetchall()
     valid = """WITH ids AS (
       SELECT source,trace,span,COUNT(*) n,MAX(conflicted) conflicting FROM spans GROUP BY source,trace,span
-    ), valid AS (SELECT source,trace,span FROM ids WHERE n=1 AND conflicting=0)"""
+    ), valid AS (
+      SELECT source,trace,span FROM ids WHERE trace!='' AND span!='' AND n=1 AND conflicting=0
+    )"""
     joins = """
       FROM spans c JOIN valid cv ON cv.source=c.source AND cv.trace=c.trace AND cv.span=c.span
       JOIN spans p ON p.source=c.source AND p.trace=c.trace AND p.span=c.parent
@@ -194,6 +207,7 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
     return {
         "identity_groups": identity_groups,
         "ambiguous_identity_groups": ambiguous,
+        "invalid_identity_observations": invalid_identity_count,
         "attribute_conflicted_observations": conflicted,
         "qualified_parent_links": qualified_links,
         "distinct_structural_edge_pairs": len(structural_pairs),
@@ -207,6 +221,10 @@ def _raw_source(db: sqlite3.Connection, source: str) -> dict[str, Any]:
             "missing_parent": [{"reason": "parent_identity_absent", "child": _participant(row[0], "child")}
                                for row in missing],
             "ambiguous_identity": ambiguous_witnesses,
+            "invalid_identity": [
+                {"reason": "empty_trace_or_span_identity_excluded", "span": _participant(row[0], "span")}
+                for row in invalid_identity_rows
+            ],
             "ambiguous_parent": [{"reason": "parent_identity_not_unique_or_conflicted",
                                   "child": _participant(row[0], "child")}
                                  for row in ambiguous_parents],
@@ -262,24 +280,61 @@ def summarize_cell(reference: dict[str, Any], summary: Path, full: Path,
                    download: dict[str, Any] | None = None) -> dict[str, Any]:
     """Summarize one admitted cell without changing any retained input."""
     started = time.perf_counter()
+    summary_status_path, full_status_path = _one(summary, "status.json"), _one(full, "status.json")
+    expected_status_hash = reference.get("status_sha256")
+    if (not isinstance(expected_status_hash, str) or len(expected_status_hash) != 64
+            or _digest(summary_status_path) != expected_status_hash
+            or _digest(full_status_path) != expected_status_hash):
+        raise ValueError("admitted status hash does not match compact and full artifacts")
+    expected_identity = (
+        reference.get("system"), reference.get("mode"), int(reference.get("seed", -1)),
+        str(reference.get("run_id")),
+    )
+    for status in (_read(summary_status_path), _read(full_status_path)):
+        actual_identity = (
+            status.get("system"), status.get("mode"), int(status.get("seed", -1)), str(status.get("run_id"))
+        )
+        if actual_identity != expected_identity or status.get("status") != "acquisition_complete":
+            raise ValueError("artifact status does not match the admitted campaign cell")
     saved_path, integrity_path = _one(summary, "forecast-saved.json"), _one(summary, "freeze-integrity.json")
+    full_saved_path = _one(full, "forecast-saved.json")
+    full_integrity_path = _one(full, "freeze-integrity.json")
+    if _digest(saved_path) != _digest(full_saved_path) or _digest(integrity_path) != _digest(full_integrity_path):
+        raise ValueError("compact and full frozen hash ledgers differ")
     saved, integrity = _read(saved_path), _read(integrity_path)
     expected = saved.get("sha256_by_path")
     if (not isinstance(expected, dict) or integrity.get("sha256_by_path") != expected
             or integrity.get("all_unchanged") is not True):
         raise ValueError("frozen hash ledgers are inconsistent")
     graphs, inputs = {}, {
-        "forecast-saved.json": _digest(saved_path), "freeze-integrity.json": _digest(integrity_path)
+        "compact/status.json": expected_status_hash, "full/status.json": expected_status_hash,
+        "compact/forecast-saved.json": _digest(saved_path),
+        "full/forecast-saved.json": _digest(full_saved_path),
+        "compact/freeze-integrity.json": _digest(integrity_path),
+        "full/freeze-integrity.json": _digest(full_integrity_path),
     }
     for source in SOURCES:
         relative = f"models/{source}/model.json"
         model_path = summary / relative
+        full_model_path = full / relative
         if expected.get(relative) != _digest(model_path):
             raise ValueError(f"saved model hash mismatch for {source}")
-        inputs[relative] = expected[relative]
+        if not full_model_path.is_file() or _digest(full_model_path) != expected[relative]:
+            raise ValueError(f"full artifact model hash mismatch for {source}")
+        inputs[f"compact/{relative}"] = expected[relative]
+        inputs[f"full/{relative}"] = expected[relative]
         graphs[source] = _graph_summary(_read(model_path).get("graph"), source)
     index = _one(full, "observation-index.sqlite")
-    inputs["observation-index.sqlite"] = _digest(index)
+    index_hash = _digest(index)
+    summary_acquisition_path = _one(summary, "acquisition-complete.json")
+    full_acquisition_path = _one(full, "acquisition-complete.json")
+    if _digest(summary_acquisition_path) != _digest(full_acquisition_path):
+        raise ValueError("compact and full acquisition markers differ")
+    if _read(full_acquisition_path).get("index_sha256") != index_hash:
+        raise ValueError("final observation index hash does not match acquisition marker")
+    inputs["compact/acquisition-complete.json"] = _digest(summary_acquisition_path)
+    inputs["full/acquisition-complete.json"] = _digest(full_acquisition_path)
+    inputs["full/observation-index.sqlite"] = index_hash
     reference_placement, reference_hashes = _reference(full)
     inputs.update(reference_hashes)
     uri = index.resolve().as_uri() + "?mode=ro"
@@ -350,6 +405,7 @@ def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: 
         "combined_is_source_qualified_union_not_physical_instance_count": True,
         "graph_only_forecast_benefit_evaluated": False,
         "costs": {
+            "scope": "supplement input-artifact download/decompression and structural processing only",
             "download_and_decompression_seconds": sum(
                 transfer["download_and_decompression_seconds"] for transfer in transfers
             ),
@@ -357,7 +413,10 @@ def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: 
             "stored_archive_bytes": sum(stored_sizes) if all(value is not None for value in stored_sizes) else None,
             "extracted_bytes": sum(transfer["extracted_bytes"] for transfer in transfers),
             "human_agent_seconds": None,
+            "local_compute_seconds": None,
+            "complete_runner_job_elapsed_seconds": None,
         },
+        "supplement_run_id": provenance.get("supplement_run_id"),
     }
     output.mkdir(parents=True, exist_ok=True)
     _write(output / "structural-v3.json", result)
@@ -388,6 +447,8 @@ def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: 
         "Combined-source nodes are a source-qualified union, not additional physical instances.",
         "Deployment and boot records are evaluation-only references and do not correct observed placement.",
         "No per-request independent structural truth is available; correctness error rate remains unknown.", "",
+        ("Recorded costs cover input-artifact transfer/decompression and processing only. Complete runner-job, "
+         "local-compute, and human/agent effort remain unknown."), "",
         ("| Mode | Seed | Source | Frozen services | Frozen DB logical nodes | Frozen/full cross-guest pairs | "
          "Missing parent | Ambiguous ID | Unresolved placement |"),
         "| --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -416,6 +477,7 @@ def run(report_run_id: str, system: str, work: Path, output: Path) -> None:
     status = {
         "status": "running", "report_run_id": report_run_id, "system": system,
         "cells_completed": 0, "started_ns": time.time_ns(), "analysis_commit": os.environ.get("GITHUB_SHA"),
+        "supplement_run_id": os.environ.get("GITHUB_RUN_ID"),
     }
     _write(status_path, status)
     report_dir = root / "primary-report"
@@ -472,6 +534,7 @@ def run(report_run_id: str, system: str, work: Path, output: Path) -> None:
             "report_campaign_references": selected,
             "analysis_commit": os.environ.get("GITHUB_SHA"),
             "repository": os.environ.get("GITHUB_REPOSITORY"),
+            "supplement_run_id": os.environ.get("GITHUB_RUN_ID"),
             "all_computation_in_github_actions": True,
         }
         _report(cells, system, output, provenance)

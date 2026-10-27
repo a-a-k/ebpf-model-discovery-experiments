@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import sqlite3
 
+import pytest
+
 from ebpf_discovery.structural_v3 import _report, summarize_cell
 
 
@@ -38,9 +40,16 @@ def fixture(root: Path):
         }
         path = summary / "models" / source / "model.json"
         write(path, {"graph": graph})
+        write(full / "models" / source / "model.json", {"graph": graph})
         hashes[path.relative_to(summary).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
     write(summary / "forecast-saved.json", {"sha256_by_path": hashes})
     write(summary / "freeze-integrity.json", {"all_unchanged": True, "sha256_by_path": hashes})
+    write(full / "forecast-saved.json", {"sha256_by_path": hashes})
+    write(full / "freeze-integrity.json", {"all_unchanged": True, "sha256_by_path": hashes})
+    status = {"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100",
+              "status": "acquisition_complete"}
+    write(summary / "status.json", status)
+    write(full / "status.json", status)
     write(full / "deployment.json", {
         "replicas": [{"name": "worker", "node": "b"}],
         "database": {"logical_identity": "db", "node": "a"},
@@ -66,6 +75,8 @@ def fixture(root: Path):
         span("ebpf", "t3", "dup", "", "worker", "other", "b", "b.jsonl"),
         span("native", "t4", "p4", "", "gateway", "one", None, "native-a.jsonl"),
         span("native", "t4", "c4", "p4", "worker", "two", "b", "native-b.jsonl"),
+        span("ebpf", "", "invalid-parent", "", "gateway", "one", "a", "a.jsonl"),
+        span("ebpf", "", "invalid-child", "invalid-parent", "worker", "two", "b", "b.jsonl"),
     ]
     for index, (record, conflicted) in enumerate(records):
         database.execute(
@@ -76,13 +87,19 @@ def fixture(root: Path):
         )
     database.commit()
     database.close()
-    return summary, full
+    index_hash = hashlib.sha256((full / "observation-index.sqlite").read_bytes()).hexdigest()
+    marker = {"index_sha256": index_hash}
+    write(summary / "acquisition-complete.json", marker)
+    write(full / "acquisition-complete.json", marker)
+    status_hash = hashlib.sha256((summary / "status.json").read_bytes()).hexdigest()
+    return summary, full, status_hash
 
 
 def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
-    summary, full = fixture(tmp_path)
+    summary, full, status_hash = fixture(tmp_path)
     result = summarize_cell(
-        {"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100"},
+        {"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100",
+         "status_sha256": status_hash},
         summary, full, {"summary": {"stored_archive_bytes": 10}},
     )
     graph = result["frozen_graphs"]["ebpf"]
@@ -93,23 +110,43 @@ def test_structural_summary_separates_frozen_graph_and_full_capture(tmp_path):
     assert raw["distinct_cross_guest_ancestry_edge_pairs"] == 1
     assert raw["missing_parent_links"] == 1
     assert raw["ambiguous_identity_groups"] == 1
+    assert raw["invalid_identity_observations"] == 2
+    assert raw["witnesses"]["invalid_identity"][0]["span"]["trace_id"] == ""
     assert raw["witnesses"]["cross_guest"][0]["child"]["raw_file"] == "b.jsonl"
     assert result["full_capture_parent_links"]["native"]["unresolved_guest_placement_links"] == 1
     assert result["reference_placement"]["distinct_guest_boot_ids_confirmed"] is True
     assert result["correctness_error_rate"] is None
     assert result["frozen_graphs"]["combined"]["qualified_union_not_additional_physical_instances"] is True
+    assert graph["known_instance_label_nodes"] == 1
+    assert graph["unknown_instance_label_nodes"] == 1
 
 
 def test_structural_summary_rejects_changed_frozen_model(tmp_path):
-    summary, full = fixture(tmp_path)
+    summary, full, status_hash = fixture(tmp_path)
     path = summary / "models" / "ebpf" / "model.json"
     path.write_text(path.read_text() + " ", encoding="utf-8")
     try:
-        summarize_cell({"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100"}, summary, full)
+        summarize_cell({"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100",
+                        "status_sha256": status_hash}, summary, full)
     except ValueError as exc:
         assert "saved model hash mismatch" in str(exc)
     else:
         raise AssertionError("changed frozen model was accepted")
+
+
+def test_structural_summary_verifies_admission_and_final_index_hashes(tmp_path):
+    summary, full, status_hash = fixture(tmp_path / "status")
+    reference = {"system": "petclinic", "mode": "full", "seed": 3, "run_id": "100",
+                 "status_sha256": "0" * 64}
+    with pytest.raises(ValueError, match="admitted status hash"):
+        summarize_cell(reference, summary, full)
+
+    summary, full, status_hash = fixture(tmp_path / "index")
+    write(summary / "acquisition-complete.json", {"index_sha256": "0" * 64})
+    write(full / "acquisition-complete.json", {"index_sha256": "0" * 64})
+    reference["status_sha256"] = status_hash
+    with pytest.raises(ValueError, match="final observation index hash"):
+        summarize_cell(reference, summary, full)
 
 
 def test_structural_report_requires_and_emits_nine_cells(tmp_path):
