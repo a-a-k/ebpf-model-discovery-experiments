@@ -3,6 +3,21 @@
   "repository": "a-a-k/ebpf-model-discovery-experiments",
   "runs": [
     {
+      "run_id": 40499244511,
+      "role": "evidence",
+      "note": "Integrated acknowledgement, figure and cost implementation checks"
+    },
+    {
+      "run_id": 40499553849,
+      "role": "evidence",
+      "note": "Cost failure-preservation and no-gate implementation checks"
+    },
+    {
+      "run_id": 40500194868,
+      "role": "evidence",
+      "note": "Revised qualification resource copy and completed-body fidelity audit"
+    },
+    {
       "run_id": 40489946709,
       "role": "evidence",
       "note": "Iteration-3 implementation checks before initial qualification"

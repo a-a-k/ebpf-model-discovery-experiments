@@ -1,0 +1,87 @@
+{
+  "system": "deathstarbench",
+  "operations": [
+    "compose_post",
+    "read_home_timeline",
+    "read_user_timeline"
+  ],
+  "entry_url": "http://192.168.76.11:8080",
+  "replicas": [
+    {
+      "name": "dsb-user-timeline-a",
+      "node": "a",
+      "ip": "172.28.11.41",
+      "port": 9090,
+      "transport_host": "192.168.76.11",
+      "transport_port": 19090
+    },
+    {
+      "name": "dsb-user-timeline-b",
+      "node": "b",
+      "ip": "172.28.12.41",
+      "port": 9090,
+      "transport_host": "192.168.76.12",
+      "transport_port": 19090
+    }
+  ],
+  "proxy": {
+    "name": "dsb-user-timeline-proxy",
+    "node": "a",
+    "ip": "172.28.11.40",
+    "policy": "roundrobin"
+  },
+  "database": {
+    "logical_identity": "user-timeline-mongodb",
+    "name": "dsb-user-timeline-mongodb",
+    "node": "a",
+    "ip": "172.28.11.34",
+    "port": 27017,
+    "transport_host": "192.168.76.11",
+    "transport_port": 37020
+  },
+  "cross_node_transport": {
+    "kind": "docker_published_guest_ports",
+    "node_a_host": "192.168.76.11",
+    "node_b_host": "192.168.76.12",
+    "ports": {
+      "user-timeline-replica": 19090,
+      "user-timeline-mongodb": 37020,
+      "user-timeline-redis": 16383,
+      "post-storage-service": 19092,
+      "jaeger-agent-udp": 16831
+    },
+    "readiness_record": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/deployment/deathstarbench/replica-readiness.json"
+  },
+  "source": {
+    "repository": "https://github.com/delimitrou/DeathStarBench.git",
+    "commit": "6ecb09706140f8730b5385c08f1386c654c3c526"
+  },
+  "images": [
+    "deathstarbench/social-network-microservices:latest@sha256:a845266e98ce15d204ee7b98d41a2a95820af525013ce70f14104f5b9b5e92b6",
+    "haproxy:3.0-alpine@sha256:34cc7d1f6142464d7d2b73e2a1eef7392556dbf304160aef543e513cfd9e5162",
+    "jaegertracing/all-in-one:latest@sha256:8f165334f418ca53691ce358c19b4244226ed35c5d18408c5acf305af2065fb9",
+    "memcached:latest@sha256:75c93cc91e76853da7c029e74d6e8dbd44774dd3713c93be8cd1971ad26120a4",
+    "mongo:4.4.6@sha256:6efa052039903e731e4a5550c68a13c4869ddc93742c716332883fd9c77eb79b",
+    "redis:latest@sha256:298e5b3bc566bade82f46ad5511777a4a07a294097ce16ada2f6a42be5239df5",
+    "yg397/media-frontend:xenial@sha256:272049995f2929435b91da34f20fc16216a7f974d1b8f9afa0ccbb529f1a9840",
+    "yg397/openresty-thrift:xenial@sha256:6c295fda3c2f6b941d85ebf16421bafac0dcf72450c96f53a2d031b29d8c81ef"
+  ],
+  "native_export": {
+    "kind": "jaeger_api",
+    "url": "http://192.168.76.11:16686",
+    "mode": "full"
+  },
+  "deployment_records": [
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/deployment/deathstarbench/runtime-resolved-node-a.yml",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/deployment/deathstarbench/runtime-resolved-node-b.yml",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/deployment/deathstarbench/container-ip-mapping.json"
+  ],
+  "tracing_suppression": {
+    "mode": "full",
+    "mechanism": "Jaeger SDK disabled flag plus const-zero sampler; collector remains for negative observation",
+    "frontend_sdk_disabled": false,
+    "ordinary_service_sdks_disabled": false,
+    "controlled_replica_sdks_disabled": false,
+    "export_is_not_merely_blocked": true
+  }
+}

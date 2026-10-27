@@ -1,0 +1,172 @@
+===== 2026-10-27T11:53:30.287929641Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   486301696  4873601024     1064960  1105842176  5726392320
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414673920 21411594240  11% /
+/dev/vda1      23843045376 2414673920 21411594240  11% /
+1.26 0.37 0.13 1/150 2356
+ssh_returncode=0
+===== 2026-10-27T11:53:45.918552014Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   564477952  4561551360     1146880  1345167360  5648216064
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641715200 21184552960  12% /
+/dev/vda1      23843045376 2641715200 21184552960  12% /
+1.05 0.37 0.13 1/172 2777
+{"BlockIO":"0B / 0B","CPUPerc":"3.83%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"0.36%","MemUsage":"21.46MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:54:03.498867932Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   527073280  4598845440     1155072  1345314816  5685620736
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641793024 21184475136  12% /
+/dev/vda1      23843045376 2641793024 21184475136  12% /
+0.89 0.37 0.14 1/172 3142
+{"BlockIO":"0B / 0B","CPUPerc":"0.14%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"0.31%","MemUsage":"18.59MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:54:22.204409447Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   605257728  4372553728     1163264  1496649728  5607436288
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2786091008 21040177152  12% /
+/dev/vda1      23843045376 2786091008 21040177152  12% /
+0.59 0.34 0.13 4/195 3310
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"0.31%","MemUsage":"18.56MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:54:45.970368960Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   835760128  3851673600     1249280  1795596288  5376933888
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065778176 20760489984  13% /
+/dev/vda1      23843045376 3065778176 20760489984  13% /
+0.62 0.37 0.14 1/203 3899
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.523MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"2.94kB / 2.26kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.34%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"4.43%","MemUsage":"262.5MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:55:05.818422583Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   821456896  3865911296     1232896  1795653632  5391237120
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065786368 20760481792  13% /
+/dev/vda1      23843045376 3065786368 20760481792  13% /
+0.44 0.34 0.14 1/201 4040
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.664MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"8.48kB / 6.71kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.25%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"4.07%","MemUsage":"241.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:55:25.732902347Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   809955328  3877249024     1249280  1795842048  5402738688
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065798656 20760469504  13% /
+/dev/vda1      23843045376 3065798656 20760469504  13% /
+0.31 0.32 0.14 1/203 4179
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.664MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"12.4kB / 8.71kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.26%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"4.07%","MemUsage":"241.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:55:45.758045396Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   843579392  3843616768     1249280  1795850240  5369114624
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065806848 20760461312  13% /
+/dev/vda1      23843045376 3065806848 20760461312  13% /
+0.22 0.30 0.13 1/202 4385
+{"BlockIO":"0B / 0B","CPUPerc":"0.43%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.707MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"19.5kB / 15.6kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.96%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"4.07%","MemUsage":"241.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:56:06.129385327Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   822165504  3865026560     1220608  1795817472  5390528512
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065815040 20760453120  13% /
+/dev/vda1      23843045376 3065815040 20760453120  13% /
+0.31 0.31 0.14 1/202 4466
+{"BlockIO":"0B / 0B","CPUPerc":"0.43%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.727MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"505kB / 163kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.91%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"3.99%","MemUsage":"236.1MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:56:26.636657558Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   819482624  3867693056     1208320  1795821568  5393211392
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065823232 20760444928  13% /
+/dev/vda1      23843045376 3065823232 20760444928  13% /
+0.22 0.29 0.14 1/202 4547
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.746MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"1.24MB / 238kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.00%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"3.99%","MemUsage":"236.1MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:56:46.812536468Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   819396608  3867500544     1253376  1796149248  5393297408
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065831424 20760436736  13% /
+/dev/vda1      23843045376 3065831424 20760436736  13% /
+0.16 0.27 0.13 1/202 4636
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.816MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"2.4MB / 315kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.92%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"3.98%","MemUsage":"235.6MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:57:07.263456576Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   814518272  3872370688     1220608  1796124672  5398175744
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065835520 20760432640  13% /
+/dev/vda1      23843045376 3065835520 20760432640  13% /
+0.11 0.25 0.13 1/201 4716
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.777MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"2.41MB / 317kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.37%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"3.98%","MemUsage":"235.6MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:57:27.638369350Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   797995008  3888865280     1245184  1796186112  5414699008
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065843712 20760424448  13% /
+/dev/vda1      23843045376 3065843712 20760424448  13% /
+0.08 0.23 0.12 1/201 5014
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.777MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"2.41MB / 319kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.29%","Container":"6ebcf811c307ed00bfe71f6f6a985600fad718104d783088b488106c35dbe50b","ID":"6ebcf811c307","MemPerc":"3.98%","MemUsage":"235.7MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:57:47.530010625Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   562876416  4124069888     1167360  1795502080  5649817600
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065843712 20760424448  13% /
+/dev/vda1      23843045376 3065843712 20760424448  13% /
+2.19 0.69 0.28 1/187 5268
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"9bd8d5e2a06a7120dfa8498a3dc74f4b60436d08862411de825e9f97bc88fddf","ID":"9bd8d5e2a06a","MemPerc":"0.03%","MemUsage":"1.77MiB / 5.786GiB","Name":"dsb-user-timeline-b","NetIO":"2.41MB / 320kB","PIDs":"3"}
+ssh_returncode=0
+===== 2026-10-27T11:58:06.195169482Z guest-b =====
+Warning: Permanently added '192.168.76.12' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   588455936  4098408448     1163264  1795579904  5624238080
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3065847808 20760420352  13% /
+/dev/vda1      23843045376 3065847808 20760420352  13% /
+1.57 0.65 0.27 1/204 5561
+ssh_returncode=0

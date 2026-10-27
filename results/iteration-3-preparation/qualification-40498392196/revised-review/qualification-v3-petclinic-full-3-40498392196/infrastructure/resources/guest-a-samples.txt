@@ -1,0 +1,319 @@
+===== 2026-10-27T11:45:55.896702912Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   461369344  4899672064     1052672  1105887232  5752356864
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414657536 21411610624  11% /
+/dev/vda1      23843045376 2414657536 21411610624  11% /
+1.57 0.48 0.17 1/153 2550
+ssh_returncode=0
+===== 2026-10-27T11:46:11.643755492Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   464560128  4896264192     1060864  1106079744  5749166080
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414665728 21411602432  11% /
+/dev/vda1      23843045376 2414665728 21411602432  11% /
+1.22 0.46 0.17 1/153 2629
+ssh_returncode=0
+===== 2026-10-27T11:46:27.916074838Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   485711872  4875087872     1060864  1106108416  5728014336
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414673920 21411594240  11% /
+/dev/vda1      23843045376 2414673920 21411594240  11% /
+0.87 0.43 0.16 1/154 2718
+ssh_returncode=0
+===== 2026-10-27T11:46:44.862195949Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   543444992  4584873984     1060864  1343086592  5670281216
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641530880 21184737280  12% /
+/dev/vda1      23843045376 2641530880 21184737280  12% /
+0.68 0.41 0.16 1/157 2975
+ssh_returncode=0
+===== 2026-10-27T11:47:00.844869769Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   547868672  4579201024     1138688  1345179648  5665857536
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641743872 21184524288  12% /
+/dev/vda1      23843045376 2641743872 21184524288  12% /
+0.53 0.38 0.16 2/174 3288
+{"BlockIO":"0B / 0B","CPUPerc":"0.30%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"0.53%","MemUsage":"31.22MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:47:18.573071667Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   651943936  2362925056     1146880  3493941248  5561782272
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 4713840640 19112427520  20% /
+/dev/vda1      23843045376 4713840640 19112427520  20% /
+0.91 0.49 0.20 2/174 3663
+{"BlockIO":"0B / 0B","CPUPerc":"0.14%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"0.53%","MemUsage":"31.32MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:47:36.629115440Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208   704684032  1387900928     1146880  4432916480  5509042176
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 5618085888 18208182272  24% /
+/dev/vda1      23843045376 5618085888 18208182272  24% /
+1.27 0.58 0.23 6/201 3862
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"0.53%","MemUsage":"31.38MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:47:54.575836883Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  1449496576   207392768     1327104  4913508352  4764229632
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6556606464 17269661696  28% /
+/dev/vda1      23843045376 6556606464 17269661696  28% /
+2.33 0.87 0.33 4/223 4758
+{"BlockIO":"48.9MB / 285MB","CPUPerc":"53.85%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"49.96%","MemUsage":"383.7MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"1.24kB / 126B","PIDs":"18"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.58%","MemUsage":"34.62MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"1.24kB / 126B","PIDs":"7"}
+{"BlockIO":"0B / 0B","CPUPerc":"94.92%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.26%","MemUsage":"252.4MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:48:13.712327000Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  1818611712   188493824     1798144  4521820160  4395114496
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6613569536 17212698624  28% /
+/dev/vda1      23843045376 6613569536 17212698624  28% /
+4.42 1.43 0.53 8/383 5709
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.14%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.234MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"4.8kB / 5.1kB","PIDs":"3"}
+{"BlockIO":"0B / 57.3kB","CPUPerc":"47.30%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"15.54%","MemUsage":"119.3MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"3.87kB / 2.24kB","PIDs":"14"}
+{"BlockIO":"0B / 57.3kB","CPUPerc":"48.50%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"15.73%","MemUsage":"120.8MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"1.29kB / 126B","PIDs":"14"}
+{"BlockIO":"0B / 57.3kB","CPUPerc":"48.86%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"16.23%","MemUsage":"124.7MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"1.24kB / 126B","PIDs":"14"}
+{"BlockIO":"0B / 57.3kB","CPUPerc":"49.36%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"14.76%","MemUsage":"113.4MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"1.16kB / 126B","PIDs":"14"}
+{"BlockIO":"63.7MB / 302MB","CPUPerc":"0.69%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"55.09%","MemUsage":"423.1MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"2.64kB / 681B","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.58%","MemUsage":"34.62MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"2.11kB / 126B","PIDs":"7"}
+{"BlockIO":"918kB / 0B","CPUPerc":"1.78%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"3.95%","MemUsage":"234.4MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:48:34.485537850Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  1995198464   116412416     1798144  4417314816  4218527744
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6613577728 17212690432  28% /
+/dev/vda1      23843045376 6613577728 17212690432  28% /
+6.36 2.07 0.76 12/398 6346
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.19%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.234MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"9.25kB / 11.1kB","PIDs":"3"}
+{"BlockIO":"0B / 123kB","CPUPerc":"47.33%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"20.57%","MemUsage":"157.9MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"7.57kB / 4.91kB","PIDs":"18"}
+{"BlockIO":"0B / 123kB","CPUPerc":"50.45%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"21.39%","MemUsage":"164.3MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"1.36kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 123kB","CPUPerc":"49.80%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"21.37%","MemUsage":"164.1MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"1.31kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 123kB","CPUPerc":"44.98%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"21.32%","MemUsage":"163.8MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"1.23kB / 126B","PIDs":"18"}
+{"BlockIO":"63.7MB / 302MB","CPUPerc":"0.53%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"55.26%","MemUsage":"424.4MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"5.56kB / 6.64kB","PIDs":"37"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.58%","MemUsage":"34.62MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"2.18kB / 126B","PIDs":"7"}
+{"BlockIO":"1.41MB / 0B","CPUPerc":"1.26%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"3.99%","MemUsage":"236.7MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:48:55.057229925Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2263068672   156745728     1798144  4109111296  3950657536
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6613655552 17212612608  28% /
+/dev/vda1      23843045376 6613655552 17212612608  28% /
+7.90 2.71 1.00 10/398 7078
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.12%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.234MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"14.7kB / 20.2kB","PIDs":"3"}
+{"BlockIO":"0B / 205kB","CPUPerc":"41.96%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"29.79%","MemUsage":"228.8MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"11.2kB / 7.59kB","PIDs":"20"}
+{"BlockIO":"0B / 201kB","CPUPerc":"50.49%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"29.30%","MemUsage":"225MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"1.43kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 197kB","CPUPerc":"48.02%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"29.92%","MemUsage":"229.8MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"1.31kB / 126B","PIDs":"18"}
+{"BlockIO":"0B / 205kB","CPUPerc":"50.19%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"30.56%","MemUsage":"234.7MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"1.23kB / 126B","PIDs":"21"}
+{"BlockIO":"63.7MB / 302MB","CPUPerc":"0.50%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"55.25%","MemUsage":"424.3MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"5.63kB / 6.64kB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.58%","MemUsage":"34.62MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"2.25kB / 126B","PIDs":"7"}
+{"BlockIO":"1.51MB / 0B","CPUPerc":"2.03%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"3.99%","MemUsage":"236.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:49:15.535396373Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2573164544   158810112     1798144  3796996096  3640561664
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6613831680 17212436480  28% /
+/dev/vda1      23843045376 6613831680 17212436480  28% /
+8.38 3.16 1.19 10/452 7858
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.10%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.238MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"20.1kB / 28.6kB","PIDs":"3"}
+{"BlockIO":"0B / 283kB","CPUPerc":"57.71%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"41.06%","MemUsage":"315.4MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"23.6kB / 18.1kB","PIDs":"27"}
+{"BlockIO":"0B / 283kB","CPUPerc":"66.06%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"41.42%","MemUsage":"318.1MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"9.88kB / 7.81kB","PIDs":"26"}
+{"BlockIO":"0B / 365kB","CPUPerc":"0.09%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"32.63%","MemUsage":"250.6MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"1.64kB / 126B","PIDs":"23"}
+{"BlockIO":"0B / 291kB","CPUPerc":"55.02%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"41.50%","MemUsage":"318.8MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"9.72kB / 7.82kB","PIDs":"41"}
+{"BlockIO":"63.7MB / 302MB","CPUPerc":"0.43%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"55.55%","MemUsage":"426.6MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"21.1kB / 30.3kB","PIDs":"42"}
+{"BlockIO":"4.1kB / 8.19kB","CPUPerc":"0.06%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.58%","MemUsage":"34.65MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"10.1kB / 1.26kB","PIDs":"7"}
+{"BlockIO":"1.64MB / 0B","CPUPerc":"1.43%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.03%","MemUsage":"238.7MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:49:36.474686869Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2721988608   169525248     1810432  3637424128  3491737600
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6614142976 17212125184  28% /
+/dev/vda1      23843045376 6614142976 17212125184  28% /
+6.52 3.09 1.20 1/489 8342
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.12%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.258MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"27.8kB / 41.6kB","PIDs":"3"}
+{"BlockIO":"0B / 348kB","CPUPerc":"0.13%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"42.40%","MemUsage":"325.7MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"29.9kB / 21.5kB","PIDs":"41"}
+{"BlockIO":"0B / 356kB","CPUPerc":"0.14%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"47.11%","MemUsage":"361.8MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"18.9kB / 26.5kB","PIDs":"40"}
+{"BlockIO":"0B / 541kB","CPUPerc":"0.14%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"36.27%","MemUsage":"278.5MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"10kB / 15kB","PIDs":"32"}
+{"BlockIO":"0B / 360kB","CPUPerc":"0.18%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.18%","MemUsage":"339.3MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"13.4kB / 17.6kB","PIDs":"41"}
+{"BlockIO":"64MB / 302MB","CPUPerc":"5.25%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"56.84%","MemUsage":"436.5MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"28.3kB / 40.7kB","PIDs":"42"}
+{"BlockIO":"4.1kB / 69.6kB","CPUPerc":"0.04%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.59%","MemUsage":"34.68MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"34.5kB / 2.62kB","PIDs":"7"}
+{"BlockIO":"1.84MB / 0B","CPUPerc":"1.95%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"3.98%","MemUsage":"236.1MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:49:56.736629079Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2726256640   165208064     1814528  3637477376  3487469568
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6614151168 17212116992  28% /
+/dev/vda1      23843045376 6614151168 17212116992  28% /
+4.75 2.90 1.18 2/492 8682
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.13%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.258MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"34.2kB / 53.7kB","PIDs":"3"}
+{"BlockIO":"0B / 401kB","CPUPerc":"0.11%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"42.40%","MemUsage":"325.7MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"35.7kB / 24.6kB","PIDs":"41"}
+{"BlockIO":"0B / 406kB","CPUPerc":"0.16%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"47.11%","MemUsage":"361.8MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"19.1kB / 26.6kB","PIDs":"40"}
+{"BlockIO":"0B / 590kB","CPUPerc":"0.15%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"36.27%","MemUsage":"278.5MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"10.1kB / 15.1kB","PIDs":"32"}
+{"BlockIO":"0B / 414kB","CPUPerc":"0.15%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.19%","MemUsage":"339.4MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"13.4kB / 17.7kB","PIDs":"41"}
+{"BlockIO":"64MB / 302MB","CPUPerc":"5.46%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"56.84%","MemUsage":"436.5MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"28.4kB / 40.7kB","PIDs":"42"}
+{"BlockIO":"4.1kB / 69.6kB","CPUPerc":"0.03%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.59%","MemUsage":"34.7MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"34.9kB / 3kB","PIDs":"7"}
+{"BlockIO":"1.84MB / 0B","CPUPerc":"1.76%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.00%","MemUsage":"237.1MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:16.787559873Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2765484032   171671552     1810432  3591835648  3448242176
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6614437888 17211830272  28% /
+/dev/vda1      23843045376 6614437888 17211830272  28% /
+3.46 2.73 1.16 2/487 9756
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.11%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.273MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"41.3kB / 66.1kB","PIDs":"3"}
+{"BlockIO":"0B / 467kB","CPUPerc":"0.41%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"45.37%","MemUsage":"348.4MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"44.3kB / 33kB","PIDs":"39"}
+{"BlockIO":"0B / 463kB","CPUPerc":"0.14%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"47.14%","MemUsage":"362MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"27.6kB / 44.9kB","PIDs":"40"}
+{"BlockIO":"0B / 737kB","CPUPerc":"0.14%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"37.35%","MemUsage":"286.9MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"18kB / 27.7kB","PIDs":"31"}
+{"BlockIO":"0B / 479kB","CPUPerc":"0.13%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.17%","MemUsage":"339.2MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"14.4kB / 20.9kB","PIDs":"39"}
+{"BlockIO":"64MB / 302MB","CPUPerc":"5.38%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"56.85%","MemUsage":"436.6MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"32.9kB / 48.5kB","PIDs":"42"}
+{"BlockIO":"4.1kB / 115kB","CPUPerc":"0.06%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.59%","MemUsage":"34.72MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"56.4kB / 4.33kB","PIDs":"7"}
+{"BlockIO":"1.84MB / 0B","CPUPerc":"1.59%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"3.98%","MemUsage":"235.8MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:37.091192203Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2790707200   138362880     1810432  3599867904  3423019008
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6620868608 17205399552  28% /
+/dev/vda1      23843045376 6620868608 17205399552  28% /
+3.12 2.68 1.18 13/487 10136
+{"BlockIO":"4.1kB / 0B","CPUPerc":"1.11%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.312MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"140kB / 177kB","PIDs":"3"}
+{"BlockIO":"0B / 545kB","CPUPerc":"10.01%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"46.19%","MemUsage":"354.8MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"95.4kB / 116kB","PIDs":"39"}
+{"BlockIO":"0B / 524kB","CPUPerc":"33.12%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"47.96%","MemUsage":"368.4MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"373kB / 550kB","PIDs":"40"}
+{"BlockIO":"0B / 4.25MB","CPUPerc":"81.23%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"38.50%","MemUsage":"295.7MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"365kB / 468kB","PIDs":"31"}
+{"BlockIO":"0B / 541kB","CPUPerc":"3.61%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.55%","MemUsage":"342.2MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"37.5kB / 76.3kB","PIDs":"39"}
+{"BlockIO":"64MB / 304MB","CPUPerc":"11.49%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"56.98%","MemUsage":"437.6MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"238kB / 384kB","PIDs":"45"}
+{"BlockIO":"4.1kB / 160kB","CPUPerc":"0.04%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.60%","MemUsage":"35.29MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"386kB / 8.55kB","PIDs":"7"}
+{"BlockIO":"2.37MB / 0B","CPUPerc":"7.25%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.09%","MemUsage":"242.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:57.919455068Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2815213568   139567104     1773568  3574120448  3398512640
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6639304704 17186963456  28% /
+/dev/vda1      23843045376 6639304704 17186963456  28% /
+3.00 2.72 1.23 2/478 10395
+{"BlockIO":"4.1kB / 0B","CPUPerc":"1.19%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.309MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"409kB / 466kB","PIDs":"3"}
+{"BlockIO":"0B / 635kB","CPUPerc":"8.26%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"46.87%","MemUsage":"359.9MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"230kB / 408kB","PIDs":"39"}
+{"BlockIO":"0B / 590kB","CPUPerc":"20.59%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"49.01%","MemUsage":"376.4MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"1.22MB / 2.41MB","PIDs":"39"}
+{"BlockIO":"0B / 9.84MB","CPUPerc":"27.44%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"39.82%","MemUsage":"305.8MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"1.21MB / 1.82MB","PIDs":"31"}
+{"BlockIO":"0B / 606kB","CPUPerc":"1.48%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.79%","MemUsage":"344MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"90.4kB / 243kB","PIDs":"39"}
+{"BlockIO":"64MB / 306MB","CPUPerc":"6.18%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"56.98%","MemUsage":"437.6MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"745kB / 1.2MB","PIDs":"45"}
+{"BlockIO":"4.1kB / 1.45MB","CPUPerc":"0.32%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.71%","MemUsage":"42.02MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"2.19MB / 24.8kB","PIDs":"7"}
+{"BlockIO":"2.74MB / 0B","CPUPerc":"3.25%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.27%","MemUsage":"253.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:18.410537041Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2851868672   135409664     1802240  3541651456  3361857536
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6656856064 17169412096  28% /
+/dev/vda1      23843045376 6656856064 17169412096  28% /
+2.27 2.57 1.22 1/478 10672
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.86%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.309MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"656kB / 734kB","PIDs":"3"}
+{"BlockIO":"0B / 729kB","CPUPerc":"12.85%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"47.28%","MemUsage":"363.1MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"365kB / 706kB","PIDs":"39"}
+{"BlockIO":"0B / 655kB","CPUPerc":"13.97%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"48.71%","MemUsage":"374.1MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"2.1MB / 4.09MB","PIDs":"39"}
+{"BlockIO":"0B / 13.8MB","CPUPerc":"19.29%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"40.23%","MemUsage":"308.9MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"2.06MB / 3.29MB","PIDs":"31"}
+{"BlockIO":"0B / 672kB","CPUPerc":"1.34%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"44.94%","MemUsage":"345.1MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"139kB / 383kB","PIDs":"39"}
+{"BlockIO":"64MB / 308MB","CPUPerc":"5.94%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"57.02%","MemUsage":"437.9MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"1.27MB / 2.06MB","PIDs":"45"}
+{"BlockIO":"4.1kB / 4.7MB","CPUPerc":"0.24%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.77%","MemUsage":"45.68MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"3.88MB / 36.3kB","PIDs":"8"}
+{"BlockIO":"3.03MB / 0B","CPUPerc":"3.73%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.19%","MemUsage":"248.5MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:39.256740770Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2871013376   202539008     1802240  3455377408  3342712832
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6663049216 17163218944  28% /
+/dev/vda1      23843045376 6663049216 17163218944  28% /
+1.70 2.42 1.19 1/478 11231
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.12%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.301MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"818kB / 911kB","PIDs":"3"}
+{"BlockIO":"0B / 811kB","CPUPerc":"0.12%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"47.52%","MemUsage":"364.9MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"438kB / 904kB","PIDs":"39"}
+{"BlockIO":"0B / 717kB","CPUPerc":"0.23%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"48.83%","MemUsage":"375MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"2.49MB / 4.94MB","PIDs":"39"}
+{"BlockIO":"0B / 15.5MB","CPUPerc":"0.12%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"40.32%","MemUsage":"309.6MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"2.5MB / 4.02MB","PIDs":"31"}
+{"BlockIO":"0B / 737kB","CPUPerc":"0.12%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"45.08%","MemUsage":"346.2MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"176kB / 510kB","PIDs":"39"}
+{"BlockIO":"64.1MB / 319MB","CPUPerc":"5.41%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"57.19%","MemUsage":"439.2MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"1.51MB / 2.44MB","PIDs":"45"}
+{"BlockIO":"4.1kB / 9.28MB","CPUPerc":"0.03%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.78%","MemUsage":"46.03MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"4.83MB / 43.6kB","PIDs":"8"}
+{"BlockIO":"3.03MB / 0B","CPUPerc":"1.64%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.18%","MemUsage":"247.7MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:59.223326452Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2854780928   218595328     1789952  3455541248  3358945280
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6663061504 17163206656  28% /
+/dev/vda1      23843045376 6663061504 17163206656  28% /
+1.22 2.26 1.17 1/478 11741
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.14%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.301MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"823kB / 921kB","PIDs":"3"}
+{"BlockIO":"0B / 852kB","CPUPerc":"0.14%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"47.52%","MemUsage":"364.9MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"443kB / 907kB","PIDs":"39"}
+{"BlockIO":"0B / 770kB","CPUPerc":"0.16%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"48.83%","MemUsage":"375MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"2.49MB / 4.94MB","PIDs":"39"}
+{"BlockIO":"0B / 15.5MB","CPUPerc":"0.10%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"40.32%","MemUsage":"309.6MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"2.5MB / 4.02MB","PIDs":"31"}
+{"BlockIO":"0B / 774kB","CPUPerc":"0.13%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"45.08%","MemUsage":"346.2MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"176kB / 510kB","PIDs":"39"}
+{"BlockIO":"64.1MB / 319MB","CPUPerc":"0.60%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"57.19%","MemUsage":"439.2MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"1.51MB / 2.44MB","PIDs":"45"}
+{"BlockIO":"4.1kB / 9.28MB","CPUPerc":"0.03%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.78%","MemUsage":"46.03MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"4.84MB / 43.9kB","PIDs":"8"}
+{"BlockIO":"3.03MB / 0B","CPUPerc":"1.63%","Container":"fb8504fc352500b41cb105cf921073e9d2ff39a21065e96c90f5b5ac3f386b04","ID":"fb8504fc3525","MemPerc":"4.12%","MemUsage":"244.1MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:52:17.817756470Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213726208  2600660992   473022464     1712128  3455156224  3613065216
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6663086080 17163182080  28% /
+/dev/vda1      23843045376 6663086080 17163182080  28% /
+1.18 2.18 1.16 2/486 12752
+{"BlockIO":"4.1kB / 0B","CPUPerc":"0.14%","Container":"f4cecd23ab0cac49e62475c11e3e4a68541b25eacd37fc0d0094b8355e65d908","ID":"f4cecd23ab0c","MemPerc":"0.14%","MemUsage":"8.27MiB / 5.787GiB","Name":"petclinic-a-visits-proxy-1","NetIO":"830kB / 932kB","PIDs":"3"}
+{"BlockIO":"0B / 922kB","CPUPerc":"0.11%","Container":"393f1440f3f44e878f5a24155e0f104f4a10372fc3ccf5584e200a952b32a6de","ID":"393f1440f3f4","MemPerc":"47.53%","MemUsage":"365MiB / 768MiB","Name":"petclinic-a-visits-a-1","NetIO":"449kB / 910kB","PIDs":"39"}
+{"BlockIO":"0B / 827kB","CPUPerc":"0.14%","Container":"63222e973c1d34c984569b95ec94ce583ef71a2049d09fd1a48328e674deafc6","ID":"63222e973c1d","MemPerc":"48.83%","MemUsage":"375MiB / 768MiB","Name":"petclinic-a-customers-1","NetIO":"2.49MB / 4.94MB","PIDs":"39"}
+{"BlockIO":"0B / 15.5MB","CPUPerc":"0.13%","Container":"6ffbe7ec7cf0a3efd25b65ac44986d1960a76e3451eb3b6d5b0f5f43a5107410","ID":"6ffbe7ec7cf0","MemPerc":"40.32%","MemUsage":"309.6MiB / 768MiB","Name":"petclinic-a-gateway-1","NetIO":"2.5MB / 4.02MB","PIDs":"31"}
+{"BlockIO":"0B / 848kB","CPUPerc":"0.14%","Container":"a0fa2815677553e8a4d9a84ea7bfd6243eee0250abe1e014f45ece6741f0edd7","ID":"a0fa28156775","MemPerc":"45.08%","MemUsage":"346.2MiB / 768MiB","Name":"petclinic-a-vets-1","NetIO":"176kB / 511kB","PIDs":"39"}
+{"BlockIO":"64.1MB / 319MB","CPUPerc":"5.08%","Container":"a29c39492a26bea88bb2e265fc0f8ddce81a1633c4de951515b8aa54012f919d","ID":"a29c39492a26","MemPerc":"57.19%","MemUsage":"439.2MiB / 768MiB","Name":"petclinic-a-database-1","NetIO":"1.51MB / 2.44MB","PIDs":"45"}
+{"BlockIO":"8.19kB / 0B","CPUPerc":"0.02%","Container":"29f76632671ba05d20bd44511c8c5d11e17a092cc26714af0c1805d1af2af784","ID":"29f76632671b","MemPerc":"0.52%","MemUsage":"31.09MiB / 5.787GiB","Name":"petclinic-a-collector-a-1","NetIO":"1.01kB / 350B","PIDs":"8"}
+ssh_returncode=0

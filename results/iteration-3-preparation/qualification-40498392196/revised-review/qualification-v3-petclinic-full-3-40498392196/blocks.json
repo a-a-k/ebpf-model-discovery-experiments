@@ -1,0 +1,62 @@
+[
+  {
+    "id": "qualification-00",
+    "phase": "qualification",
+    "state": "11",
+    "attempts": 1200,
+    "started_ns": 1793101797839993620,
+    "load_started_ns": 1793101832366712741,
+    "ended_ns": 1793101904702327403,
+    "nominal_load_seconds": 60.0,
+    "requested_operations_per_second": 20,
+    "worker_capacity": 256,
+    "peak_in_flight_attempts": 10,
+    "http_observation_cap_seconds": 10.0,
+    "achieved_operations_per_second": 19.999453931840705,
+    "preparation_operations": 4,
+    "fixed_settle_seconds": 10,
+    "fixed_drain_seconds": 10,
+    "max_dispatch_lateness_seconds": 0.004929858,
+    "state_evidence": {
+      "method": "two TCP state censuses separated by 5s router settling",
+      "samples": [
+        [
+          {
+            "name": "visits-a",
+            "node": "a",
+            "ip": "172.28.11.14",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101811269264488
+          },
+          {
+            "name": "visits-b",
+            "node": "b",
+            "ip": "172.28.12.14",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101811269709929
+          }
+        ],
+        [
+          {
+            "name": "visits-a",
+            "node": "a",
+            "ip": "172.28.11.14",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101816270298376
+          },
+          {
+            "name": "visits-b",
+            "node": "b",
+            "ip": "172.28.12.14",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101816270698111
+          }
+        ]
+      ]
+    }
+  }
+]

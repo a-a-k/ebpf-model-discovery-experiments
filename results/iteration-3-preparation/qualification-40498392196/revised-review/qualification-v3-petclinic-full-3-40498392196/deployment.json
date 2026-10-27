@@ -1,0 +1,88 @@
+{
+  "system": "petclinic",
+  "operations": [
+    "list_owners",
+    "owner_details_with_visits",
+    "create_visit",
+    "list_vets"
+  ],
+  "entry_url": "http://192.168.76.11:18080",
+  "replicas": [
+    {
+      "name": "visits-a",
+      "node": "a",
+      "ip": "172.28.11.14",
+      "transport_host": "192.168.76.11",
+      "transport_port": 18081
+    },
+    {
+      "name": "visits-b",
+      "node": "b",
+      "ip": "172.28.12.14",
+      "transport_host": "192.168.76.12",
+      "transport_port": 18081
+    }
+  ],
+  "database": {
+    "logical_identity": "petclinic-mysql",
+    "node": "a",
+    "container": "database",
+    "ip": "172.28.11.20",
+    "cross_guest_endpoint": "192.168.76.11:13306",
+    "observed_aliases": [
+      "database",
+      "172.28.11.20",
+      "192.168.76.11"
+    ],
+    "published_port": 13306,
+    "container_port": 3306
+  },
+  "proxy_discovery": {
+    "node": "a",
+    "container": "visits-proxy",
+    "ip": "172.28.11.13",
+    "policy": "roundrobin",
+    "static_backends": [
+      "172.28.11.14:8080",
+      "192.168.76.12:18081"
+    ],
+    "visits_b_container": {
+      "ip": "172.28.12.14",
+      "published_endpoint": "192.168.76.12:18081"
+    },
+    "cross_guest_transport": "stable_guest_published_port"
+  },
+  "source": {
+    "historic_qualified_artifact": {
+      "artifact_id": 10045092166,
+      "byte_identity_claimed": false,
+      "expired_artifact_fallback": "rebuild_from_pinned_source"
+    },
+    "image_archive_sha256": "cccb4396445a1ccbc5884d3f5356bd8c716f021a539d35a6bb18ed09133e44b9",
+    "image_id": "sha256:8a0e452f20abc3ff3a1396a0775bc434b87ff17c0cb6e0f3b764e718c753f849",
+    "image_tag": "petclinic-ebpf-study:3858f9c630cf",
+    "java_agent": {
+      "sha256": "bbf83c151b6400709e2f225bdd07a04f839d9d13b8b93464241333fd25d3e3ba",
+      "url": "https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.31.1/opentelemetry-javaagent.jar"
+    },
+    "preparation": "rebuild_from_pinned_source",
+    "runtime_images": {
+      "collector": "ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.159.0@sha256:1f2c54a30e713fac6b3ae77a1ec84010c2007e29ced8ec666214fc2f6739c1cc",
+      "haproxy": "haproxy:3.0-alpine@sha256:34cc7d1f6142464d7d2b73e2a1eef7392556dbf304160aef543e513cfd9e5162",
+      "java": "eclipse-temurin:17-jre@sha256:13cc28a6cc72a38ce1f00c906be3580c1a3e604b8984d694f369a96742abc93b",
+      "mysql": "mysql:8.4@sha256:b3b90af2a6552ae30c266fdb7d5dd55f3afb72404bb78d37fe8a23eb857fd3fb"
+    },
+    "source_commit": "3858f9c630cf989bb6809a86edf47c2be78dc9f1",
+    "source_repository": "https://github.com/spring-petclinic/spring-petclinic-microservices.git"
+  },
+  "placement_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/deployment/petclinic/placement.json",
+  "native": {
+    "mode": "full",
+    "export_locations": {
+      "a": "/opt/ebpf-study/petclinic/node-a/native/native.jsonl",
+      "b": "/opt/ebpf-study/petclinic/node-b/native/native.jsonl"
+    },
+    "suppression": "All five application processes use the pinned Java agent and always_on sampling.",
+    "micrometer_export_disabled": true
+  }
+}

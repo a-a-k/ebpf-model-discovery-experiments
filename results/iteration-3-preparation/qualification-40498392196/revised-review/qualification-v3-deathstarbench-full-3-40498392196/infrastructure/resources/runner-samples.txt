@@ -1,0 +1,705 @@
+===== 2026-10-27T11:53:30.287929641Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560  5143572480  7991054336    48979968  4021592064 11621806080
+Swap:     3221221376           0  3221221376
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 64401195008 90476216320  42% /
+/dev/root      154894188544 64401195008 90476216320  42% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3263       1 2026768 9001080 106 12.3    47 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   3218       1 2021988 8200364 105 12.3    47 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   2074    2072 154032 1440320 0.3  0.9    586 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 140684 274420576 0.7  0.8  537 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 108248 274346500 0.3  0.6  538 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71924 2127348 0.0  0.4     589 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51608 295296  0.0  0.3     589 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 47304 1962308 0.0  0.2     589 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     598 multipathd      /sbin/multipathd -d -s
+   1427    1064 38440 454664  0.1  0.2     589 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     589 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 22080 1271100 0.0  0.1     586 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     589 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     589 php-fpm8.3      php-fpm: pool www
+   1025       1 21100  32548  0.0  0.1     590 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 21028 405872  0.0  0.1      56 packagekitd     /usr/libexec/packagekitd
+    156       1 18156 116448  0.0  0.1     598 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.5  0.0     599 systemd         /sbin/init
+   1063       1 13744 518156  0.0  0.0     589 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     595 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12944 433004  0.0  0.0     589 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     589 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     594 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     589 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     589 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     598 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     586 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     589 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     590 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     595 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3344    3338  4308  11308  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     589 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3632   7888  0.0  0.0       0 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0       0 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     589 (sd-pam)        (sd-pam)
+    406       1  2972   3852  0.0  0.0     596 hv_kvp_daemon   /usr/lib/linux-tools/6.17.0-1022-azure/hv_kvp_daemon -n
+   1097       1  2888   7236  0.0  0.0     589 cron            /usr/sbin/cron -f -P
+   1172       1  2224   6160  0.0  0.0     589 agetty          /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+   1210       1  2108   6116  0.0  0.0     589 agetty          /sbin/agetty -o -p -- \u --noclear - linux
+===== 2026-10-27T11:53:45.918552014Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560  5412241408  6748782592    49754112  5012705280 11353137152
+Swap:     3221221376           0  3221221376
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 65352777728 89524633600  43% /
+/dev/root      154894188544 65352777728 89524633600  43% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3263       1 2116976 9001080 87.5 12.9   62 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   3218       1 2099508 8495292 86.5 12.8   62 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   2153    2133 146580 274437264 0.7  0.8  552 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2074    2072 142864 1440320 0.3  0.8    602 provjobd2305416 /tmp/provjobd2305416325
+   2133    2059 108336 274346504 0.3  0.6  554 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71924 2127348 0.0  0.4     605 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51608 295296  0.0  0.3     605 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   3347    3339 48160 276876  3.7  0.2      15 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1125       1 47304 1962308 0.0  0.2     605 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     613 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     604 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     605 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 22080 1271100 0.0  0.1     602 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.4  0.1      11 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     604 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     604 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.5  0.1      11 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21100  32548  0.0  0.1     605 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 21028 405872  0.0  0.1      72 packagekitd     /usr/libexec/packagekitd
+   3371    3347 21008  31404  0.6  0.1      11 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+    156       1 18156 116448  0.0  0.1     614 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.5  0.0     615 systemd         /sbin/init
+   1063       1 13744 518156  0.0  0.0     605 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     611 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12944 433004  0.0  0.0     605 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     605 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     609 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     605 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     605 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     613 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     602 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     605 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     605 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     611 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3402    3338  4356  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     605 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3636   7888  0.0  0.0      15 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0      15 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     605 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:54:03.498867932Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560  6533705728  5271638016    49754112  5372981248 10231672832
+Swap:     3221221376           0  3221221376
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 65698758656 89178652672  43% /
+/dev/root      154894188544 65698758656 89178652672  43% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 3199548 8446116 87.3 19.5   80 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2119032 8919120 69.9 12.9   80 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2153    2133 146528 274420844 0.7  0.8  570 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2074    2072 142872 1440320 0.3  0.8    620 provjobd2305416 /tmp/provjobd2305416325
+   2133    2059 107444 274346520 0.2  0.6  572 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71924 2127348 0.0  0.4     622 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51608 295296  0.0  0.3     623 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   3347    3339 48160 276876  1.8  0.2      33 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1125       1 47304 1962308 0.0  0.2     622 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     631 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     622 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     623 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 22080 1271100 0.0  0.1     620 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.1  0.1      29 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     622 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     622 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.2  0.1      29 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21100  32548  0.0  0.1     623 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 21028 405872  0.0  0.1      90 packagekitd     /usr/libexec/packagekitd
+   3371    3347 21008  31404  0.2  0.1      29 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+    156       1 18164 116448  0.0  0.1     631 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     633 systemd         /sbin/init
+   1063       1 13744 518156  0.0  0.0     623 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     628 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12944 433004  0.0  0.0     622 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     622 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     627 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     623 systemd-logind  /usr/lib/systemd/systemd-logind
+   3421    3347  8536  15016  1.5  0.0       7 ssh             ssh -i /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 ubuntu@192.168.76.11 bash -lc 'cd /opt/ebpf-study/deathstarbench/node-a && docker compose pull && docker compose up -d'
+   1033       1  8152 340956  0.0  0.0     623 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     631 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     620 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     622 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     623 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     628 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3429    3338  4360  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     622 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3644   7888  0.0  0.0      33 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0      33 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+===== 2026-10-27T11:54:22.204409447Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560  9156898816   332730368    49729536  7692886016  7608479744
+Swap:     3221221376       24576  3221196800
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 68686024704 86191386624  45% /
+/dev/root      154894188544 68686024704 86191386624  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 5794632 8487096 109 35.3    99 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2118948 8861748 57.3 12.9   98 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 140676 1440320 0.3  0.8    638 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 120676 274420828 0.7  0.7  588 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 85316 274346504 0.2  0.5   590 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71896 2127348 0.0  0.4     641 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51608 295296  0.0  0.3     641 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   3347    3339 48148 276876  1.3  0.2      51 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1125       1 47204 1962308 0.0  0.2     641 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     650 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     640 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     641 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 22080 1271100 0.0  0.1     638 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.1  0.1      48 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     641 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     641 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.1  0.1      48 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21096  32548  0.0  0.1     641 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 21028 405872  0.0  0.1     108 packagekitd     /usr/libexec/packagekitd
+   3371    3347 21008  31404  0.1  0.1      48 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+    156       1 18164 116448  0.0  0.1     650 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     651 systemd         /sbin/init
+   1063       1 13744 518156  0.0  0.0     641 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     647 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     641 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     641 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     646 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     641 systemd-logind  /usr/lib/systemd/systemd-logind
+   3421    3347  8536  15016  0.6  0.0      25 ssh             ssh -i /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 ubuntu@192.168.76.11 bash -lc 'cd /opt/ebpf-study/deathstarbench/node-a && docker compose pull && docker compose up -d'
+   1033       1  8152 340956  0.0  0.0     641 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     650 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     638 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     641 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     641 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     647 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3447    3338  4356  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     641 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3644   7888  0.0  0.0      51 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0      51 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+===== 2026-10-27T11:54:45.970368960Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10286424064   223682560    49795072  6668566528  6478954496
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69096718336 85780692992  45% /
+/dev/root      154894188544 69096718336 85780692992  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293556 8497404 103 38.4   122 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723272 8943708 57.5 16.6  122 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 141808 1440576 0.3  0.8    662 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127468 274437264 0.7  0.7  612 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 92240 274346508 0.2  0.5   614 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71780 2127348 0.0  0.4     665 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 58320 450140  1.2  0.3      75 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     665 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     665 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     674 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     664 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     665 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 22080 1271100 0.0  0.1     662 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.0  0.1      71 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     664 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     664 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.1  0.1      71 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     665 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3371    3347 21008  31404  0.1  0.1      71 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   3103       1 20904 405872  0.0  0.1     132 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     674 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     675 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     665 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13300  21484  0.0  0.0     671 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     665 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     665 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     669 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     665 systemd-logind  /usr/lib/systemd/systemd-logind
+   3493    3347  8240  14756 21.2  0.0       0 ssh             ssh -i /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 ubuntu@192.168.76.11 bash -lc 'docker stop dsb-user-timeline-a'
+   1033       1  8152 340956  0.0  0.0     665 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     674 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     662 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     665 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     665 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     671 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3497    3338  4340  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     665 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3644   7888  0.0  0.0      75 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0      75 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+===== 2026-10-27T11:55:05.818422583Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10297167872   207507456    49807360  6673735680  6468210688
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69098180608 85779230720  45% /
+/dev/root      154894188544 69098180608 85779230720  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293680 8529272 91.6 38.4  142 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723200 8894532 50.4 16.6  142 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 141844 1440576 0.3  0.8    682 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127600 274437236 0.6  0.7  632 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 90704 274346508 0.2  0.5   634 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71780 2127348 0.0  0.4     684 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 58332 450140  0.9  0.3      95 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     685 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     685 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     693 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     684 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     685 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3371    3347 26568 118588  0.1  0.1      91 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   2059       1 22080 1271100 0.0  0.1     682 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.0  0.1      91 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     684 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     684 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1      91 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     685 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     152 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     694 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     695 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     685 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     691 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     685 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     684 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     689 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     685 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     685 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     693 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     682 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     685 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     685 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     691 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3513    3338  4340  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     685 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3644   7888  0.0  0.0      95 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0      95 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     684 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:55:25.732902347Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10292060160   211279872    49807360  6675087360  6473318400
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69098926080 85778485248  45% /
+/dev/root      154894188544 69098926080 85778485248  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293608 8480096 82.2 38.4  162 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723104 8828964 45.1 16.6  162 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 141848 1440576 0.3  0.8    702 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127632 274420832 0.6  0.7  652 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 90704 274346508 0.2  0.5   654 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71780 2127348 0.0  0.4     704 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 58332 450140  0.7  0.3     115 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     705 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     705 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     713 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     704 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     705 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3371    3347 26568 118588  0.0  0.1     111 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   2059       1 22080 1271100 0.0  0.1     702 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.0  0.1     111 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     704 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     704 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     111 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     705 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     172 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     714 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     715 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     705 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     711 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     704 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     704 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     709 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     705 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     705 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     713 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     702 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     704 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     705 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     710 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3525    3338  4328  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     705 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3644   7888  0.0  0.0     115 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     115 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     704 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:55:45.758045396Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10296209408   205414400    49827840  6676869120  6469169152
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69099999232 85777412096  45% /
+/dev/root      154894188544 69099999232 85777412096  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293600 8472928 75.3 38.4  182 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723080 8812572 41.2 16.6  182 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 142644 1440576 0.3  0.8    722 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127632 274420848 0.6  0.7  672 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 91168 274346520 0.2  0.5   674 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     724 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 58372 450140  0.6  0.3     135 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     725 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     725 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     733 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     724 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     725 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3371    3347 26568 118588  0.0  0.1     131 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   2059       1 22080 1271100 0.0  0.1     722 hosted-compute- /opt/hca/hosted-compute-agent
+   3372    3347 21916  32108  0.0  0.1     131 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   1353    1028 21404 295900  0.0  0.1     724 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     724 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     131 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     725 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     192 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     734 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     735 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     725 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     731 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     724 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     724 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     729 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     725 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     725 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     733 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     722 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     724 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     725 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     731 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3543    3338  4352  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     725 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     135 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     135 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     724 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:56:06.129385327Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10312196096   302804992    49856512  6563483648  6453182464
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69102108672 85775302656  45% /
+/dev/root      154894188544 69102108672 85775302656  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293600 8472928 71.5 38.4  203 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723080 8812572 38.1 16.6  202 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 142644 1440576 0.3  0.8    742 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127604 274420832 0.6  0.7  692 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 93444 274346516 0.2  0.5   694 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     745 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 60044 1024876 1.1  0.3     155 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     745 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     745 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     754 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     744 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     745 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3371    3347 30948 122684  0.1  0.1     152 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   3372    3347 21916  32108  0.0  0.1     152 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   2059       1 21632 1271100 0.0  0.1     742 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     745 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     745 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     152 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     745 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     212 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     754 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.4  0.0     755 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     745 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     751 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     745 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     745 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     749 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     745 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     745 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     754 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     742 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     745 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     745 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     751 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3562    3338  4352  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     745 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     155 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     155 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     745 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:56:26.636657558Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10326478848   285028352    49856512  6566973440  6438899712
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69104910336 85772500992  45% /
+/dev/root      154894188544 69104910336 85772500992  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293600 8472928 68.8 38.4  223 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723068 8804376 35.5 16.6  223 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 142848 1440576 0.3  0.8    763 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127604 274420832 0.6  0.7  713 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 91756 274346500 0.2  0.5   715 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     765 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 61968 1109128 1.5  0.3     176 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     766 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     766 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     774 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     765 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   3371    3347 33160 124732  0.1  0.2     172 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   1064       1 31952  39488  0.0  0.1     766 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3372    3347 21916  32108  0.0  0.1     172 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   2059       1 21632 1271100 0.0  0.1     763 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     765 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     765 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     172 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     766 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     233 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     774 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     776 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     766 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     771 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     765 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     765 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     770 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     766 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     766 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     774 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     763 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     765 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     766 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     771 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3572    3338  4352  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     766 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     176 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     176 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     765 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:56:46.812536468Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10338578432   269025280    49860608  6570860544  6426800128
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69107372032 85770039296  45% /
+/dev/root      154894188544 69107372032 85770039296  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293600 8472928 66.5 38.4  243 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723068 8804376 33.3 16.6  243 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 143044 1440576 0.3  0.8    783 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127604 274420832 0.6  0.7  733 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 91988 274346504 0.2  0.5   735 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     785 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 63856 1110284 1.9  0.3     196 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     786 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     786 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     794 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     785 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   3371    3347 35876 125756  0.2  0.2     192 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   1064       1 31952  39488  0.0  0.1     786 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3372    3347 21916  32108  0.0  0.1     192 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   2059       1 21632 1271100 0.0  0.1     783 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     785 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     785 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     192 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     786 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     253 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     795 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     796 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     786 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     792 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     785 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     785 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     790 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     786 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     786 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     794 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     783 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     786 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     786 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     792 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3585    3338  4336  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     786 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     196 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     196 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     785 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:57:07.263456576Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10350866432   254128128    49868800  6573486080  6414512128
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69109833728 85767577600  45% /
+/dev/root      154894188544 69109833728 85767577600  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6293600 8472928 65.3 38.4  264 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723080 8812572 31.5 16.6  264 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 143048 1440576 0.3  0.8    803 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 127612 274420848 0.6  0.7  753 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 92216 274346520 0.2  0.5   755 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     806 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   3347    3339 67944 1115096 1.9  0.4     216 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1028       1 51404 295296  0.0  0.3     806 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45936 1962308 0.0  0.2     806 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     815 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     806 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   3371    3347 37720 127804  0.2  0.2     213 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   1064       1 31952  39488  0.0  0.1     806 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3372    3347 21916  32108  0.0  0.1     213 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   2059       1 21632 1271100 0.0  0.1     803 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     806 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     806 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     213 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     806 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     273 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     815 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     816 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     806 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     812 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     806 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     806 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     811 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     806 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     806 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     815 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     803 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     806 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     806 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     812 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3602    3338  4340  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     806 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     216 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     216 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     806 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:57:27.638369350Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10421293056   255500288    49889280  6501707776  6344085504
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69143511040 85733900288  45% /
+/dev/root      154894188544 69143511040 85733900288  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6295648 8472928 62.7 38.4  284 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723080 8812572 29.9 16.6  284 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 143052 1440576 0.3  0.8    824 provjobd2305416 /tmp/provjobd2305416325
+   2153    2133 128332 274420840 0.6  0.7  774 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 92208 274346504 0.2  0.5   776 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   3347    3339 83864 1130704 1.9  0.5     237 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   1264       1 71796 2127348 0.0  0.4     826 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51404 295296  0.0  0.3     827 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45944 1962308 0.0  0.2     827 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     835 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     826 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   3371    3347 38216 127804  0.2  0.2     233 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4318 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl --source ebpf:a
+   1064       1 31952  39488  0.0  0.1     827 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   3372    3347 21916  32108  0.0  0.1     233 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4320 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/b.jsonl --source ebpf:b
+   2059       1 21632 1271100 0.0  0.1     824 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     826 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     826 php-fpm8.3      php-fpm: pool www
+   3373    3347 21216  31404  0.0  0.1     233 python          /opt/hostedtoolcache/Python/3.12.15/x64/bin/python -m ebpf_discovery.receiver --port 4319 --out /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/native.jsonl --source native
+   1025       1 21092  32548  0.0  0.1     827 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+   3103       1 20904 405872  0.0  0.1     294 packagekitd     /usr/libexec/packagekitd
+    156       1 18164 116448  0.0  0.1     836 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     837 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     827 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     832 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     826 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     826 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     831 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     827 systemd-logind  /usr/lib/systemd/systemd-logind
+   1033       1  8152 340956  0.0  0.0     827 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     835 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     824 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     826 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     827 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     832 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3620    3338  4332  11440  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     827 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     237 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     237 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     826 (sd-pam)        (sd-pam)
+===== 2026-10-27T11:57:47.530010625Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10386202624   324354048    49897472  6467952640  6379175936
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69249708032 85627703296  45% /
+/dev/root      154894188544 69249708032 85627703296  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6295708 8513908 61.3 38.4  304 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723088 8812572 28.6 16.6  304 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 143056 1440576 0.3  0.8    844 provjobd2305416 /tmp/provjobd2305416325
+   3347    3339 138252 1184768 5.7  0.8    257 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   2153    2133 128332 274420840 0.5  0.7  794 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 92320 274346524 0.2  0.5   796 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     846 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51404 295296  0.0  0.3     847 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45944 1962308 0.0  0.2     847 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     855 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     846 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     847 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 21632 1271100 0.0  0.1     844 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     846 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     846 php-fpm8.3      php-fpm: pool www
+   1025       1 21092  32548  0.0  0.1     847 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+    156       1 18164 116448  0.0  0.1     855 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     857 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     847 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     852 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     846 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     846 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     851 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     847 systemd-logind  /usr/lib/systemd/systemd-logind
+   3634    3347  8524  15016  2.0  0.0       3 ssh             ssh -i /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 ubuntu@192.168.76.11 bash -lc 'cd /opt/ebpf-study/deathstarbench/node-a && docker compose down --remove-orphans'
+   1033       1  8152 340956  0.0  0.0     847 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     855 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     844 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     846 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     847 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     852 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3647    3338  4340  11308  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     846 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     257 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     257 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     846 (sd-pam)        (sd-pam)
+    406       1  2972   3852  0.0  0.0     853 hv_kvp_daemon   /usr/lib/linux-tools/6.17.0-1022-azure/hv_kvp_daemon -n
+   1097       1  2888   7236  0.0  0.0     847 cron            /usr/sbin/cron -f -P
+   1172       1  2224   6160  0.0  0.0     846 agetty          /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220
+===== 2026-10-27T11:58:06.195169482Z runner =====
+               total        used        free      shared  buff/cache   available
+Mem:     16765378560 10385072128   322072576    49897472  6471356416  6380306432
+Swap:     3221221376       65536  3221155840
+Filesystem        1B-blocks        Used   Available Use% Mounted on
+/dev/root      154894188544 69251248128 85626163200  45% /
+/dev/root      154894188544 69251248128 85626163200  45% /
+    PID    PPID   RSS    VSZ %CPU %MEM ELAPSED COMMAND         COMMAND
+   3218       1 6295648 8472928 58.9 38.4  323 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-a,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:11 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/a.pid
+   3263       1 2723088 8812572 27.4 16.6  322 qemu-system-x86 qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 6144 -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/root.qcow2,format=qcow2,if=virtio -drive file=/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/seed.img,format=raw,if=virtio -netdev tap,id=n0,ifname=tap-b,script=no,downscript=no -device virtio-net-pci,netdev=n0,mac=52:54:00:76:00:12 -display none -serial file:/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b/serial.log -daemonize -pidfile /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/b.pid
+   2074    2072 143060 1440576 0.2  0.8    862 provjobd2305416 /tmp/provjobd2305416325
+   3347    3339 138252 1184768 5.3  0.8    275 python          python -m ebpf_discovery.campaign_v3 --system deathstarbench --mode full --seed 3 --out work/campaign --qualification
+   2153    2133 128332 274420856 0.5  0.7  812 Runner.Worker   /home/runner/actions-runner/cached/2.338.0/bin/Runner.Worker spawnclient 142 145
+   2133    2059 92296 274346508 0.2  0.5   814 Runner.Listener /home/runner/actions-runner/cached/2.338.0/bin/Runner.Listener run
+   1264       1 71796 2127348 0.0  0.4     865 dockerd         /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+   1028       1 51404 295296  0.0  0.3     865 php-fpm8.3      php-fpm: master process (/etc/php/8.3/fpm/php-fpm.conf)
+   1125       1 45944 1962308 0.0  0.2     865 containerd      /usr/bin/containerd
+    222       1 43716 305388  0.0  0.2     874 multipathd      /sbin/multipathd -d -s
+   1427    1064 38444 454664  0.1  0.2     864 python3         /usr/bin/python3 -u bin/WALinuxAgent-2.16.0.2-py3.12.egg -run-exthandlers
+   1064       1 31952  39488  0.0  0.1     865 python3         /usr/bin/python3 -u /usr/sbin/waagent -daemon
+   2059       1 21632 1271100 0.0  0.1     862 hosted-compute- /opt/hca/hosted-compute-agent
+   1353    1028 21404 295900  0.0  0.1     865 php-fpm8.3      php-fpm: pool www
+   1352    1028 21400 295896  0.0  0.1     865 php-fpm8.3      php-fpm: pool www
+   1025       1 21092  32548  0.0  0.1     865 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+    156       1 18164 116448  0.0  0.1     874 systemd-journal /usr/lib/systemd/systemd-journald
+      1       0 14448  22856  0.3  0.0     875 systemd         /sbin/init
+   1063       1 13716 518156  0.0  0.0     865 udisksd         /usr/libexec/udisks2/udisksd
+    531       1 13316  21484  0.0  0.0     871 systemd-resolve /usr/lib/systemd/systemd-resolved
+   1223       1 12936 433004  0.0  0.0     865 ModemManager    /usr/sbin/ModemManager
+   1247       1 11700  20396  0.0  0.0     865 systemd         /usr/lib/systemd/systemd --user
+    738       1 10076  22564  0.0  0.0     870 systemd-network /usr/lib/systemd/systemd-networkd
+   1060       1  9820  18928  0.0  0.0     865 systemd-logind  /usr/lib/systemd/systemd-logind
+   3660    3347  8520  15016  0.7  0.0       9 ssh             ssh -i /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10 ubuntu@192.168.76.12 bash -lc 'cd /opt/ebpf-study/deathstarbench/node-b && docker compose down --remove-orphans'
+   1033       1  8152 340956  0.0  0.0     865 polkitd         /usr/lib/polkit-1/polkitd --no-debug
+    226       1  8060  25964  0.0  0.0     874 systemd-udevd   /usr/lib/systemd/systemd-udevd
+   2072    2059  7120  17156  0.0  0.0     862 sudo            sudo -n PROVJOBD_E2E=1 /tmp/provjobd2305416325
+   1217       1  6204 230716  0.0  0.0     865 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+   1021       1  5556   9836  0.0  0.0     865 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+    599       1  5124   8496  0.0  0.0     871 haveged         /usr/sbin/haveged --Foreground --verbose=1
+   3664    3338  4340  11308  0.0  0.0       0 ps              ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss
+   1139       1  3844  11220  0.0  0.0     865 chronyd         /usr/sbin/chronyd -F 1
+   3338    3336  3648   7888  0.0  0.0     275 bash            bash scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms
+   3336    2153  3628   7756  0.0  0.0     275 bash            /usr/bin/bash -e /home/runner/work/_temp/bc70fb79-9f6c-4a3b-b04c-ad905429f9d5.sh
+   1257    1247  3572  21180  0.0  0.0     865 (sd-pam)        (sd-pam)
+    406       1  2972   3852  0.0  0.0     872 hv_kvp_daemon   /usr/lib/linux-tools/6.17.0-1022-azure/hv_kvp_daemon -n
+   1097       1  2888   7236  0.0  0.0     865 cron            /usr/sbin/cron -f -P
+   1172       1  2224   6160  0.0  0.0     865 agetty          /sbin/agetty -o -p -- \u --keep-baud 115200,57600,38400,9600 - vt220

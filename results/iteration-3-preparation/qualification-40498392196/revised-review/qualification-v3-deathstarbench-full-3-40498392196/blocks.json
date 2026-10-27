@@ -1,0 +1,62 @@
+[
+  {
+    "id": "qualification-00",
+    "phase": "qualification",
+    "state": "11",
+    "attempts": 1200,
+    "started_ns": 1793102128017303869,
+    "load_started_ns": 1793102149502142104,
+    "ended_ns": 1793102229619169428,
+    "nominal_load_seconds": 60.0,
+    "requested_operations_per_second": 20,
+    "worker_capacity": 256,
+    "peak_in_flight_attempts": 1,
+    "http_observation_cap_seconds": 10.0,
+    "achieved_operations_per_second": 19.999490544086854,
+    "preparation_operations": 3,
+    "fixed_settle_seconds": 10,
+    "fixed_drain_seconds": 10,
+    "max_dispatch_lateness_seconds": 0.001838908,
+    "state_evidence": {
+      "method": "two TCP state censuses separated by 5s router settling",
+      "samples": [
+        [
+          {
+            "name": "dsb-user-timeline-a",
+            "node": "a",
+            "ip": "172.28.11.41",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793102129470571597
+          },
+          {
+            "name": "dsb-user-timeline-b",
+            "node": "b",
+            "ip": "172.28.12.41",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793102129471111225
+          }
+        ],
+        [
+          {
+            "name": "dsb-user-timeline-a",
+            "node": "a",
+            "ip": "172.28.11.41",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793102134471674167
+          },
+          {
+            "name": "dsb-user-timeline-b",
+            "node": "b",
+            "ip": "172.28.12.41",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793102134472230346
+          }
+        ]
+      ]
+    }
+  }
+]

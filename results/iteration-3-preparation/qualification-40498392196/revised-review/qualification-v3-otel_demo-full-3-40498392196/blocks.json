@@ -1,0 +1,62 @@
+[
+  {
+    "id": "qualification-00",
+    "phase": "qualification",
+    "state": "11",
+    "attempts": 1200,
+    "started_ns": 1793101953406384460,
+    "load_started_ns": 1793101987043540731,
+    "ended_ns": 1793102057678179322,
+    "nominal_load_seconds": 60.0,
+    "requested_operations_per_second": 20,
+    "worker_capacity": 256,
+    "peak_in_flight_attempts": 52,
+    "http_observation_cap_seconds": 10.0,
+    "achieved_operations_per_second": 19.999186951485765,
+    "preparation_operations": 3,
+    "fixed_settle_seconds": 10,
+    "fixed_drain_seconds": 10,
+    "max_dispatch_lateness_seconds": 0.00419846,
+    "state_evidence": {
+      "method": "two TCP state censuses separated by 5s router settling",
+      "samples": [
+        [
+          {
+            "name": "product-catalog-a",
+            "node": "a",
+            "ip": "172.28.11.21",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101964466683205
+          },
+          {
+            "name": "product-catalog-b",
+            "node": "b",
+            "ip": "172.28.12.21",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101964467046793
+          }
+        ],
+        [
+          {
+            "name": "product-catalog-a",
+            "node": "a",
+            "ip": "172.28.11.21",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101969467546178
+          },
+          {
+            "name": "product-catalog-b",
+            "node": "b",
+            "ip": "172.28.12.21",
+            "tcp_accepting": true,
+            "expected_up": true,
+            "checked_ns": 1793101969467989828
+          }
+        ]
+      ]
+    }
+  }
+]

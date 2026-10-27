@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "campaigns": [
+    {
+      "schema_version": 1,
+      "method": "otel-v3-saved-projection-body-fidelity-audit",
+      "campaign": "qualification-v3-otel_demo-full-3-40498392196",
+      "external_records": 1200,
+      "sources": {
+        "ebpf": {
+          "counts": {
+            "compared": 1089,
+            "exact_body_matches": 1089,
+            "projection_rows": 1200,
+            "source_body_evidence": 1089,
+            "source_body_sha_missing": 111
+          },
+          "comparison_strata": [
+            {
+              "dispatch_state": "final_completed",
+              "result": "match",
+              "count": 1089
+            }
+          ],
+          "mismatches": []
+        },
+        "native": {
+          "counts": {
+            "projection_rows": 1200,
+            "source_body_sha_missing": 1200
+          },
+          "comparison_strata": [],
+          "mismatches": []
+        }
+      },
+      "saved_independent_body_fidelity": {
+        "ebpf": {
+          "compared": 1089,
+          "exact_body_matches": 1089,
+          "mismatches": 0,
+          "unsupported_without_body_evidence": false
+        },
+        "native": {
+          "compared": 0,
+          "exact_body_matches": 0,
+          "mismatches": 0,
+          "unsupported_without_body_evidence": true
+        }
+      },
+      "reproduces_saved_qualification_counts": true,
+      "qualification_json_sha256": "b5b0b90b8db3c8c0ac98e0326166d9cb492afb1ba7ea557a53ea0229e800ec18",
+      "fitting_performed": false,
+      "oracle_fields_consumed": false,
+      "comparison_note": "Counts first reproduce the original final-actual-step body hash comparison. Dispatch/completion strata are descriptive and do not filter mismatches or assert semantics."
+    }
+  ]
+}

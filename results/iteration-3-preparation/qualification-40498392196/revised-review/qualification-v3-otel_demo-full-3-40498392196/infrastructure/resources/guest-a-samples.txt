@@ -1,0 +1,604 @@
+===== 2026-10-27T11:45:48.707608078Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   472793088  4888313856     1052672  1105817600  5740937216
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414653440 21411614720  11% /
+/dev/vda1      23843045376 2414653440 21411614720  11% /
+0.58 0.17 0.06 1/150 2554
+ssh_returncode=0
+===== 2026-10-27T11:46:04.438242572Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   550350848  4576915456     1146880  1345048576  5663379456
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641707008 21184561152  12% /
+/dev/vda1      23843045376 2641707008 21184561152  12% /
+0.45 0.16 0.06 1/181 2978
+{"BlockIO":"0B / 0B","CPUPerc":"0.38%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"0.55%","MemUsage":"32.6MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:46:22.098783819Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   989437952  3521630208     1159168  1973055488  5224292352
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3235287040 20590981120  14% /
+/dev/vda1      23843045376 3235287040 20590981120  14% /
+1.60 0.43 0.15 13/231 3400
+{"BlockIO":"0B / 0B","CPUPerc":"0.06%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"0.55%","MemUsage":"32.71MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:46:41.791418184Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   936996864  1290625024     1142784  4300660736  5276733440
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 5439520768 18386747392  23% /
+/dev/vda1      23843045376 5439520768 18386747392  23% /
+3.87 1.03 0.35 10/256 3960
+{"BlockIO":"0B / 0B","CPUPerc":"0.06%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"0.55%","MemUsage":"32.8MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:47:00.907187561Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   921907200   130355200     1146880  5476048896  5291823104
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7387025408 16439242752  32% /
+/dev/vda1      23843045376 7387025408 16439242752  32% /
+4.23 1.24 0.43 7/240 4238
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"0.32%","MemUsage":"18.91MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:47:19.657188272Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   691572736   224149504     1183744  5612605440  5522157568
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 8955801600 14870466560  38% /
+/dev/vda1      23843045376 8955801600 14870466560  38% /
+3.81 1.34 0.48 4/242 4594
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"0.32%","MemUsage":"18.95MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"9"}
+ssh_returncode=0
+===== 2026-10-27T11:47:37.607516525Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1310375936   216784896     1183744  5001265152  4903354368
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 9978896384 13847371776  42% /
+/dev/vda1      23843045376 9978896384 13847371776  42% /
+4.68 1.69 0.62 6/253 4773
+{"BlockIO":"7MB / 0B","CPUPerc":"1.01%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"4.10%","MemUsage":"242.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:47:55.922198594Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1543147520   498675712     1220608  4633329664  4670582784
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 10218008576 13608259584  43% /
+/dev/vda1      23843045376 10218029056 13608239104  43% /
+4.68 1.84 0.68 8/264 5636
+{"BlockIO":"12.4MB / 0B","CPUPerc":"61.76%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"5.40%","MemUsage":"320MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:48:14.188519878Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1287114752   321318912     1183744  4957642752  4926615552
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 10562424832 13263843328  45% /
+/dev/vda1      23843045376 10562424832 13263843328  45% /
+5.25 2.16 0.81 6/247 6395
+{"BlockIO":"13.3MB / 0B","CPUPerc":"1.76%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.40%","MemUsage":"438.7MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:48:32.894213861Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1212264448   197480448     1220608  5118709760  5001465856
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11168645120 12657623040  47% /
+/dev/vda1      23843045376 11168645120 12657623040  47% /
+5.39 2.39 0.92 6/264 7055
+{"BlockIO":"13.8MB / 0B","CPUPerc":"1.68%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.84%","MemUsage":"405.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:48:51.191840678Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1450500096   200593408     1220608  4877361152  4763230208
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11402350592 12423917568  48% /
+/dev/vda1      23843045376 11402350592 12423917568  48% /
+5.90 2.65 1.03 10/275 8479
+{"BlockIO":"15MB / 0B","CPUPerc":"1.62%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"406MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:49:09.467424893Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1418055680   168218624     1228800  4942086144  4795674624
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11666382848 12159885312  49% /
+/dev/vda1      23843045376 11666386944 12159881216  49% /
+6.14 2.92 1.15 7/272 9661
+{"BlockIO":"15MB / 0B","CPUPerc":"1.79%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"406MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:49:27.709737532Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1342955520   398680064     1183744  4786679808  4870774784
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11681878016 12144390144  50% /
+/dev/vda1      23843045376 11681878016 12144390144  50% /
+5.94 3.09 1.25 5/250 10467
+{"BlockIO":"15MB / 0B","CPUPerc":"1.81%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"406MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:49:46.321477277Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1263423488   251142144     1191936  5013757952  4950306816
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11999305728 11826962432  51% /
+/dev/vda1      23843045376 11999305728 11826962432  51% /
+5.43 3.11 1.29 3/246 11591
+{"BlockIO":"15MB / 0B","CPUPerc":"1.63%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"406MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:04.264752583Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1066442752   669143040     1146880  4792692736  5147287552
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11802370048 12023898112  50% /
+/dev/vda1      23843045376 11802370048 12023898112  50% /
+4.02 2.94 1.27 1/205 11710
+{"BlockIO":"15MB / 0B","CPUPerc":"5.18%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"405.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:22.451611571Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1060450304   671186944     1150976  4796645376  5153280000
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11802374144 12023894016  50% /
+/dev/vda1      23843045376 11802374144 12023894016  50% /
+3.03 2.79 1.25 1/205 11800
+{"BlockIO":"15MB / 0B","CPUPerc":"3.53%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.85%","MemUsage":"405.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:40.673198184Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1041985536   689618944     1118208  4796645376  5171744768
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11802386432 12023881728  50% /
+/dev/vda1      23843045376 11802386432 12023881728  50% /
+2.36 2.65 1.23 1/204 11886
+{"BlockIO":"15MB / 0B","CPUPerc":"4.34%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.86%","MemUsage":"406.2MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:50:58.915397045Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1046380544   679133184     1142784  4802760704  5167349760
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11802390528 12023877632  50% /
+/dev/vda1      23843045376 11802390528 12023877632  50% /
+1.69 2.47 1.20 1/192 11977
+{"BlockIO":"15MB / 0B","CPUPerc":"4.88%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.69%","MemUsage":"396.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:17.888991725Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1523118080   209887232    19824640  4814123008  4690612224
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11874385920 11951882240  50% /
+/dev/vda1      23843045376 11874385920 11951882240  50% /
+3.40 2.79 1.33 16/592 13777
+{"BlockIO":"30.2MB / 0B","CPUPerc":"22.00%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"24.79%","MemUsage":"39.66MiB / 160MiB","Name":"cart","NetIO":"308B / 84B","PIDs":"13"}
+{"BlockIO":"6.49MB / 0B","CPUPerc":"35.95%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"68.06%","MemUsage":"95.28MiB / 140MiB","Name":"payment","NetIO":"4.12kB / 3.44kB","PIDs":"19"}
+{"BlockIO":"2.72MB / 0B","CPUPerc":"0.02%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"28.54%","MemUsage":"5.707MiB / 20MiB","Name":"shipping","NetIO":"2.89kB / 3.04kB","PIDs":"12"}
+{"BlockIO":"12.2MB / 3.64MB","CPUPerc":"33.12%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"8.40%","MemUsage":"41.98MiB / 500MiB","Name":"recommendation","NetIO":"1.59kB / 126B","PIDs":"10"}
+{"BlockIO":"44.5MB / 32.8kB","CPUPerc":"35.19%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"29.72%","MemUsage":"89.16MiB / 300MiB","Name":"ad","NetIO":"1.68kB / 126B","PIDs":"13"}
+{"BlockIO":"14.1MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"65.88%","MemUsage":"26.35MiB / 40MiB","Name":"quote","NetIO":"2.4kB / 126B","PIDs":"1"}
+{"BlockIO":"10.2MB / 8.19kB","CPUPerc":"0.02%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.24%","MemUsage":"14.68MiB / 120MiB","Name":"image-provider","NetIO":"2.59kB / 705B","PIDs":"11"}
+{"BlockIO":"18.6MB / 0B","CPUPerc":"0.03%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"58.88%","MemUsage":"58.88MiB / 100MiB","Name":"email","NetIO":"2.78kB / 126B","PIDs":"17"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.03%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.27%","MemUsage":"7.254MiB / 20MiB","Name":"currency","NetIO":"3.25kB / 1.72kB","PIDs":"11"}
+{"BlockIO":"21.3MB / 90.5MB","CPUPerc":"0.03%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"50.65%","MemUsage":"40.52MiB / 80MiB","Name":"astronomy-db","NetIO":"3.1kB / 126B","PIDs":"9"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.02%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"21.22%","MemUsage":"15.92MiB / 75MiB","Name":"flagd","NetIO":"4.21kB / 1.86kB","PIDs":"8"}
+{"BlockIO":"45.4MB / 32.8kB","CPUPerc":"31.95%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"24.66%","MemUsage":"152.9MiB / 620MiB","Name":"kafka","NetIO":"3.14kB / 126B","PIDs":"15"}
+{"BlockIO":"29.7MB / 0B","CPUPerc":"2.98%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.72%","MemUsage":"42.63MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"3.03kB / 410B","PIDs":"9"}
+{"BlockIO":"11.3MB / 0B","CPUPerc":"0.33%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"69.34%","MemUsage":"13.87MiB / 20MiB","Name":"valkey-cart","NetIO":"5.81kB / 3.25kB","PIDs":"6"}
+{"BlockIO":"137MB / 4.1kB","CPUPerc":"0.22%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"40.57%","MemUsage":"162.3MiB / 400MiB","Name":"otel-collector","NetIO":"10.6kB / 2.61kB","PIDs":"7"}
+{"BlockIO":"16.1MB / 0B","CPUPerc":"11.25%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.12%","MemUsage":"421.8MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:37.701559885Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  1928458240   154644480    36737024  4480765952  4285272064
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11875999744 11950268416  50% /
+/dev/vda1      23843045376 11875999744 11950268416  50% /
+4.05 3.00 1.43 3/667 15361
+{"BlockIO":"6.82MB / 0B","CPUPerc":"3.06%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"56.66%","MemUsage":"79.32MiB / 140MiB","Name":"payment","NetIO":"27.5kB / 13.7kB","PIDs":"13"}
+{"BlockIO":"2.76MB / 0B","CPUPerc":"2.58%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"28.85%","MemUsage":"5.77MiB / 20MiB","Name":"shipping","NetIO":"3.7kB / 3.24kB","PIDs":"10"}
+{"BlockIO":"163MB / 0B","CPUPerc":"10.49%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"69.94%","MemUsage":"13.99MiB / 20MiB","Name":"product-catalog-a","NetIO":"3.61kB / 3.36kB","PIDs":"7"}
+{"BlockIO":"13.9MB / 3.64MB","CPUPerc":"2.72%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.46%","MemUsage":"52.32MiB / 500MiB","Name":"recommendation","NetIO":"4.56kB / 4.89kB","PIDs":"15"}
+{"BlockIO":"71.2MB / 164kB","CPUPerc":"0.10%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"72.03%","MemUsage":"216.1MiB / 300MiB","Name":"ad","NetIO":"4.13kB / 6.43kB","PIDs":"33"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"5.31%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"68.64%","MemUsage":"27.46MiB / 40MiB","Name":"quote","NetIO":"3.02kB / 126B","PIDs":"1"}
+{"BlockIO":"34.1MB / 0B","CPUPerc":"0.60%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"37.92%","MemUsage":"60.66MiB / 160MiB","Name":"cart","NetIO":"7.06kB / 9.51kB","PIDs":"33"}
+{"BlockIO":"10.2MB / 20.5kB","CPUPerc":"2.41%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"4.17kB / 4.5kB","PIDs":"11"}
+{"BlockIO":"18.6MB / 0B","CPUPerc":"10.18%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"66.39%","MemUsage":"66.39MiB / 100MiB","Name":"email","NetIO":"3.47kB / 126B","PIDs":"19"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.06%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.35%","MemUsage":"7.27MiB / 20MiB","Name":"currency","NetIO":"4kB / 1.78kB","PIDs":"11"}
+{"BlockIO":"23.4MB / 90.7MB","CPUPerc":"0.02%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"55.64%","MemUsage":"44.52MiB / 80MiB","Name":"astronomy-db","NetIO":"4.71kB / 1.34kB","PIDs":"10"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.03%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"24.29%","MemUsage":"18.21MiB / 75MiB","Name":"flagd","NetIO":"10.4kB / 8.05kB","PIDs":"8"}
+{"BlockIO":"110MB / 152kB","CPUPerc":"120.08%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"56.62%","MemUsage":"351MiB / 620MiB","Name":"kafka","NetIO":"4.19kB / 3kB","PIDs":"19"}
+{"BlockIO":"29.7MB / 0B","CPUPerc":"0.15%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.72%","MemUsage":"42.75MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"3.65kB / 410B","PIDs":"9"}
+{"BlockIO":"11.3MB / 0B","CPUPerc":"0.14%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"69.73%","MemUsage":"13.95MiB / 20MiB","Name":"valkey-cart","NetIO":"6.42kB / 3.25kB","PIDs":"6"}
+{"BlockIO":"137MB / 61.4kB","CPUPerc":"0.09%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"40.61%","MemUsage":"162.4MiB / 400MiB","Name":"otel-collector","NetIO":"37.4kB / 9.9kB","PIDs":"7"}
+{"BlockIO":"27.5MB / 0B","CPUPerc":"3.54%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.88%","MemUsage":"407.7MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:51:57.764561446Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2438115328   159223808    59465728  3989348352  3775614976
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11877609472 11948658688  50% /
+/dev/vda1      23843045376 11877609472 11948658688  50% /
+4.20 3.09 1.50 6/883 17185
+{"BlockIO":"446kB / 0B","CPUPerc":"0.16%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"17.43%","MemUsage":"15.69MiB / 90MiB","Name":"frontend-proxy","NetIO":"642B / 126B","PIDs":"10"}
+{"BlockIO":"38.2MB / 0B","CPUPerc":"0.30%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"35.28%","MemUsage":"88.2MiB / 250MiB","Name":"frontend","NetIO":"3.06kB / 2.03kB","PIDs":"11"}
+{"BlockIO":"130MB / 0B","CPUPerc":"11.74%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"70.84%","MemUsage":"14.17MiB / 20MiB","Name":"checkout","NetIO":"3.33kB / 3.63kB","PIDs":"5"}
+{"BlockIO":"6.82MB / 0B","CPUPerc":"27.47%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"56.69%","MemUsage":"79.36MiB / 140MiB","Name":"payment","NetIO":"48.2kB / 18.9kB","PIDs":"12"}
+{"BlockIO":"2.83MB / 0B","CPUPerc":"2.81%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"29.18%","MemUsage":"5.836MiB / 20MiB","Name":"shipping","NetIO":"4.92kB / 3.5kB","PIDs":"10"}
+{"BlockIO":"261MB / 0B","CPUPerc":"0.02%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"74.30%","MemUsage":"14.86MiB / 20MiB","Name":"product-catalog-a","NetIO":"5.05kB / 3.8kB","PIDs":"8"}
+{"BlockIO":"21.1MB / 24.6kB","CPUPerc":"0.71%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"45.79%","MemUsage":"73.27MiB / 160MiB","Name":"accounting","NetIO":"6.48kB / 8.26kB","PIDs":"26"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"3.18%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.46%","MemUsage":"52.32MiB / 500MiB","Name":"recommendation","NetIO":"5.99kB / 5.41kB","PIDs":"15"}
+{"BlockIO":"71.2MB / 193kB","CPUPerc":"0.13%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"72.99%","MemUsage":"219MiB / 300MiB","Name":"ad","NetIO":"5.33kB / 6.62kB","PIDs":"33"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"68.64%","MemUsage":"27.46MiB / 40MiB","Name":"quote","NetIO":"3.97kB / 126B","PIDs":"1"}
+{"BlockIO":"34.1MB / 0B","CPUPerc":"0.60%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"37.86%","MemUsage":"60.58MiB / 160MiB","Name":"cart","NetIO":"8.8kB / 10.7kB","PIDs":"34"}
+{"BlockIO":"10.2MB / 28.7kB","CPUPerc":"2.76%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"6.06kB / 8.18kB","PIDs":"11"}
+{"BlockIO":"18.7MB / 0B","CPUPerc":"0.03%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"59.51%","MemUsage":"59.51MiB / 100MiB","Name":"email","NetIO":"4.35kB / 126B","PIDs":"17"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"3.35%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.35%","MemUsage":"7.27MiB / 20MiB","Name":"currency","NetIO":"5.06kB / 1.96kB","PIDs":"11"}
+{"BlockIO":"24.5MB / 91.2MB","CPUPerc":"0.02%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"58.37%","MemUsage":"46.7MiB / 80MiB","Name":"astronomy-db","NetIO":"6.51kB / 2.55kB","PIDs":"11"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.04%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"24.33%","MemUsage":"18.25MiB / 75MiB","Name":"flagd","NetIO":"14.9kB / 12.6kB","PIDs":"8"}
+{"BlockIO":"117MB / 774kB","CPUPerc":"14.70%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"90.36%","MemUsage":"560.3MiB / 620MiB","Name":"kafka","NetIO":"11.3kB / 202kB","PIDs":"108"}
+{"BlockIO":"29.8MB / 0B","CPUPerc":"3.16%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.72%","MemUsage":"42.86MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"4.6kB / 410B","PIDs":"9"}
+{"BlockIO":"11.3MB / 0B","CPUPerc":"0.15%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"69.75%","MemUsage":"13.95MiB / 20MiB","Name":"valkey-cart","NetIO":"7.38kB / 3.25kB","PIDs":"6"}
+{"BlockIO":"137MB / 369kB","CPUPerc":"0.08%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"40.70%","MemUsage":"162.8MiB / 400MiB","Name":"otel-collector","NetIO":"247kB / 16.6kB","PIDs":"7"}
+{"BlockIO":"37.7MB / 0B","CPUPerc":"4.65%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"8.20%","MemUsage":"485.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:52:18.100285162Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2358476800   257970176    62550016  3973337088  3855253504
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11878162432 11948105728  50% /
+/dev/vda1      23843045376 11878162432 11948105728  50% /
+3.13 2.92 1.48 6/855 19025
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.15%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"18.15%","MemUsage":"16.33MiB / 90MiB","Name":"frontend-proxy","NetIO":"4.95kB / 9.48kB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"0.27%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"36.19%","MemUsage":"90.48MiB / 250MiB","Name":"frontend","NetIO":"5.82kB / 7.94kB","PIDs":"11"}
+{"BlockIO":"256MB / 0B","CPUPerc":"11.29%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"67.85%","MemUsage":"13.57MiB / 20MiB","Name":"checkout","NetIO":"4.38kB / 4.2kB","PIDs":"5"}
+{"BlockIO":"6.82MB / 0B","CPUPerc":"6.95%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"64.04%","MemUsage":"89.65MiB / 140MiB","Name":"payment","NetIO":"63.8kB / 31kB","PIDs":"19"}
+{"BlockIO":"2.83MB / 0B","CPUPerc":"2.59%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"29.18%","MemUsage":"5.836MiB / 20MiB","Name":"shipping","NetIO":"5.78kB / 4kB","PIDs":"10"}
+{"BlockIO":"433MB / 0B","CPUPerc":"0.10%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"69.86%","MemUsage":"13.97MiB / 20MiB","Name":"product-catalog-a","NetIO":"12.8kB / 12.1kB","PIDs":"8"}
+{"BlockIO":"21.1MB / 24.6kB","CPUPerc":"0.26%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"46.02%","MemUsage":"73.62MiB / 160MiB","Name":"accounting","NetIO":"8.79kB / 10.4kB","PIDs":"26"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"9.85%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.89%","MemUsage":"54.46MiB / 500MiB","Name":"recommendation","NetIO":"7.28kB / 20.2kB","PIDs":"15"}
+{"BlockIO":"71.3MB / 250kB","CPUPerc":"0.10%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.03%","MemUsage":"219.1MiB / 300MiB","Name":"ad","NetIO":"5.98kB / 6.86kB","PIDs":"33"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"72.16%","MemUsage":"28.86MiB / 40MiB","Name":"quote","NetIO":"4.63kB / 3.92kB","PIDs":"1"}
+{"BlockIO":"34.1MB / 0B","CPUPerc":"0.21%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"38.17%","MemUsage":"61.07MiB / 160MiB","Name":"cart","NetIO":"10.2kB / 13kB","PIDs":"35"}
+{"BlockIO":"10.2MB / 36.9kB","CPUPerc":"2.48%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"7.36kB / 11.9kB","PIDs":"11"}
+{"BlockIO":"18.7MB / 0B","CPUPerc":"0.02%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"59.77%","MemUsage":"59.77MiB / 100MiB","Name":"email","NetIO":"4.71kB / 126B","PIDs":"16"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"2.48%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.39%","MemUsage":"7.277MiB / 20MiB","Name":"currency","NetIO":"5.57kB / 2.11kB","PIDs":"11"}
+{"BlockIO":"26.2MB / 91.7MB","CPUPerc":"0.03%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"62.13%","MemUsage":"49.71MiB / 80MiB","Name":"astronomy-db","NetIO":"7.66kB / 3.57kB","PIDs":"11"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.03%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"25.18%","MemUsage":"18.89MiB / 75MiB","Name":"flagd","NetIO":"17.9kB / 16.9kB","PIDs":"8"}
+{"BlockIO":"117MB / 1.19MB","CPUPerc":"1.83%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"90.58%","MemUsage":"561.6MiB / 620MiB","Name":"kafka","NetIO":"14.2kB / 209kB","PIDs":"108"}
+{"BlockIO":"29.8MB / 0B","CPUPerc":"2.92%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.73%","MemUsage":"43.02MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"11.5kB / 9.3kB","PIDs":"9"}
+{"BlockIO":"11.3MB / 0B","CPUPerc":"0.15%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"69.75%","MemUsage":"13.95MiB / 20MiB","Name":"valkey-cart","NetIO":"7.9kB / 3.7kB","PIDs":"6"}
+{"BlockIO":"137MB / 369kB","CPUPerc":"0.17%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"40.75%","MemUsage":"163MiB / 400MiB","Name":"otel-collector","NetIO":"302kB / 25.5kB","PIDs":"7"}
+{"BlockIO":"37.7MB / 0B","CPUPerc":"4.40%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.84%","MemUsage":"405.1MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:52:38.664036638Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2416005120   199630848    63496192  3974991872  3797725184
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11878498304 11947769856  50% /
+/dev/vda1      23843045376 11878498304 11947769856  50% /
+2.86 2.88 1.49 1/870 20869
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.28%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"18.20%","MemUsage":"16.38MiB / 90MiB","Name":"frontend-proxy","NetIO":"7.65kB / 15kB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"0.27%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"36.25%","MemUsage":"90.64MiB / 250MiB","Name":"frontend","NetIO":"7.27kB / 9.24kB","PIDs":"11"}
+{"BlockIO":"380MB / 0B","CPUPerc":"10.90%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"70.04%","MemUsage":"14.01MiB / 20MiB","Name":"checkout","NetIO":"4.84kB / 4.61kB","PIDs":"5"}
+{"BlockIO":"6.82MB / 0B","CPUPerc":"0.56%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"58.83%","MemUsage":"82.36MiB / 140MiB","Name":"payment","NetIO":"83.8kB / 43.6kB","PIDs":"12"}
+{"BlockIO":"2.83MB / 0B","CPUPerc":"2.60%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"29.18%","MemUsage":"5.836MiB / 20MiB","Name":"shipping","NetIO":"6.02kB / 4.24kB","PIDs":"10"}
+{"BlockIO":"626MB / 0B","CPUPerc":"0.33%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"79.18%","MemUsage":"15.84MiB / 20MiB","Name":"product-catalog-a","NetIO":"23.6kB / 33.3kB","PIDs":"8"}
+{"BlockIO":"21.1MB / 24.6kB","CPUPerc":"1.03%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"46.58%","MemUsage":"74.52MiB / 160MiB","Name":"accounting","NetIO":"10.9kB / 12.8kB","PIDs":"26"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"2.96%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.89%","MemUsage":"54.46MiB / 500MiB","Name":"recommendation","NetIO":"8.01kB / 20.8kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 307kB","CPUPerc":"0.13%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.45%","MemUsage":"220.3MiB / 300MiB","Name":"ad","NetIO":"6.88kB / 16.3kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"72.16%","MemUsage":"28.86MiB / 40MiB","Name":"quote","NetIO":"4.76kB / 3.99kB","PIDs":"1"}
+{"BlockIO":"34.5MB / 0B","CPUPerc":"0.15%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"38.67%","MemUsage":"61.88MiB / 160MiB","Name":"cart","NetIO":"12.1kB / 23.2kB","PIDs":"33"}
+{"BlockIO":"10.2MB / 45.1kB","CPUPerc":"2.63%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"8.29kB / 15.6kB","PIDs":"11"}
+{"BlockIO":"18.7MB / 0B","CPUPerc":"0.03%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"60.09%","MemUsage":"60.09MiB / 100MiB","Name":"email","NetIO":"4.71kB / 126B","PIDs":"17"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.05%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.43%","MemUsage":"7.285MiB / 20MiB","Name":"currency","NetIO":"5.64kB / 2.17kB","PIDs":"11"}
+{"BlockIO":"26.3MB / 91.9MB","CPUPerc":"6.79%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"62.31%","MemUsage":"49.85MiB / 80MiB","Name":"astronomy-db","NetIO":"8.43kB / 4.58kB","PIDs":"11"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.04%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"25.27%","MemUsage":"18.95MiB / 75MiB","Name":"flagd","NetIO":"21.3kB / 21.4kB","PIDs":"8"}
+{"BlockIO":"117MB / 1.41MB","CPUPerc":"4.77%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"90.88%","MemUsage":"563.4MiB / 620MiB","Name":"kafka","NetIO":"17.6kB / 225kB","PIDs":"110"}
+{"BlockIO":"29.8MB / 0B","CPUPerc":"2.17%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.75%","MemUsage":"44.71MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"24.3kB / 24.9kB","PIDs":"15"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.16%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"70.68%","MemUsage":"14.14MiB / 20MiB","Name":"valkey-cart","NetIO":"7.99kB / 3.79kB","PIDs":"7"}
+{"BlockIO":"137MB / 430kB","CPUPerc":"0.24%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"40.78%","MemUsage":"163.1MiB / 400MiB","Name":"otel-collector","NetIO":"370kB / 34.6kB","PIDs":"7"}
+{"BlockIO":"37.8MB / 0B","CPUPerc":"4.07%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.84%","MemUsage":"405.6MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:52:59.118644090Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2431721472   164196352    85475328  4016697344  3782008832
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11878850560 11947417600  50% /
+/dev/vda1      23843045376 11878850560 11947417600  50% /
+2.12 2.71 1.46 1/864 22764
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"3.40%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"18.28%","MemUsage":"16.45MiB / 90MiB","Name":"frontend-proxy","NetIO":"21.9kB / 46kB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"0.32%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"36.87%","MemUsage":"92.18MiB / 250MiB","Name":"frontend","NetIO":"17.5kB / 43.3kB","PIDs":"11"}
+{"BlockIO":"522MB / 0B","CPUPerc":"2.84%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"80.06%","MemUsage":"16.01MiB / 20MiB","Name":"checkout","NetIO":"16kB / 32kB","PIDs":"6"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"53.52%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"60.05%","MemUsage":"84.07MiB / 140MiB","Name":"payment","NetIO":"107kB / 56.5kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"2.29%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"33.93%","MemUsage":"6.785MiB / 20MiB","Name":"shipping","NetIO":"9.85kB / 11.2kB","PIDs":"13"}
+{"BlockIO":"831MB / 0B","CPUPerc":"0.18%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"69.92%","MemUsage":"13.98MiB / 20MiB","Name":"product-catalog-a","NetIO":"36.7kB / 49.4kB","PIDs":"8"}
+{"BlockIO":"32.6MB / 45.1kB","CPUPerc":"1.09%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"76.44%","MemUsage":"122.3MiB / 160MiB","Name":"accounting","NetIO":"30.2kB / 38.9kB","PIDs":"26"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"3.01%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.89%","MemUsage":"54.46MiB / 500MiB","Name":"recommendation","NetIO":"9.04kB / 21.3kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 356kB","CPUPerc":"2.88%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.46%","MemUsage":"220.4MiB / 300MiB","Name":"ad","NetIO":"7.83kB / 16.6kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"4.86%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"77.83%","MemUsage":"31.13MiB / 40MiB","Name":"quote","NetIO":"6.9kB / 8.95kB","PIDs":"1"}
+{"BlockIO":"36.3MB / 0B","CPUPerc":"5.69%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"44.57%","MemUsage":"71.32MiB / 160MiB","Name":"cart","NetIO":"18.6kB / 43kB","PIDs":"36"}
+{"BlockIO":"10.2MB / 53.2kB","CPUPerc":"0.04%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"9.94kB / 19.4kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.03%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"66.67%","MemUsage":"66.67MiB / 100MiB","Name":"email","NetIO":"8.14kB / 4.53kB","PIDs":"17"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.04%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"36.76%","MemUsage":"7.352MiB / 20MiB","Name":"currency","NetIO":"8.56kB / 5.97kB","PIDs":"12"}
+{"BlockIO":"26.9MB / 92.4MB","CPUPerc":"0.02%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"67.22%","MemUsage":"53.78MiB / 80MiB","Name":"astronomy-db","NetIO":"18.1kB / 21kB","PIDs":"12"}
+{"BlockIO":"1.16MB / 0B","CPUPerc":"0.01%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"28.94%","MemUsage":"21.71MiB / 75MiB","Name":"flagd","NetIO":"31.8kB / 39.1kB","PIDs":"8"}
+{"BlockIO":"118MB / 1.64MB","CPUPerc":"8.30%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"91.42%","MemUsage":"566.8MiB / 620MiB","Name":"kafka","NetIO":"26.1kB / 244kB","PIDs":"112"}
+{"BlockIO":"29.8MB / 0B","CPUPerc":"0.24%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.73%","MemUsage":"43.08MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"41.6kB / 45.3kB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.20%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"70.74%","MemUsage":"14.15MiB / 20MiB","Name":"valkey-cart","NetIO":"10.6kB / 4.73kB","PIDs":"7"}
+{"BlockIO":"137MB / 647kB","CPUPerc":"0.41%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"41.00%","MemUsage":"164MiB / 400MiB","Name":"otel-collector","NetIO":"531kB / 54.1kB","PIDs":"7"}
+{"BlockIO":"37.8MB / 0B","CPUPerc":"4.55%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"6.84%","MemUsage":"405.6MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:53:19.650571287Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2573025280   152039424    93601792  3895865344  3640705024
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11887042560 11939225600  50% /
+/dev/vda1      23843045376 11887042560 11939225600  50% /
+5.83 3.49 1.75 12/916 24178
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"7.38%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.32%","MemUsage":"19.19MiB / 90MiB","Name":"frontend-proxy","NetIO":"1.14MB / 2.41MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"23.09%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"50.08%","MemUsage":"125.2MiB / 250MiB","Name":"frontend","NetIO":"807kB / 1.84MB","PIDs":"11"}
+{"BlockIO":"1.44GB / 0B","CPUPerc":"26.37%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"89.84%","MemUsage":"17.97MiB / 20MiB","Name":"checkout","NetIO":"314kB / 871kB","PIDs":"10"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"18.93%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"71.71%","MemUsage":"100.4MiB / 140MiB","Name":"payment","NetIO":"154kB / 228kB","PIDs":"19"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"0.10%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"38.63%","MemUsage":"7.727MiB / 20MiB","Name":"shipping","NetIO":"184kB / 299kB","PIDs":"14"}
+{"BlockIO":"1.6GB / 0B","CPUPerc":"10.73%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"66.21%","MemUsage":"13.24MiB / 20MiB","Name":"product-catalog-a","NetIO":"433kB / 768kB","PIDs":"9"}
+{"BlockIO":"32.6MB / 65.5kB","CPUPerc":"24.32%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"88.74%","MemUsage":"142MiB / 160MiB","Name":"accounting","NetIO":"133kB / 334kB","PIDs":"29"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"0.56%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.91%","MemUsage":"54.54MiB / 500MiB","Name":"recommendation","NetIO":"10.4kB / 36.2kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 422kB","CPUPerc":"0.12%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.50%","MemUsage":"220.5MiB / 300MiB","Name":"ad","NetIO":"8.67kB / 27.5kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"5.29%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"79.47%","MemUsage":"31.79MiB / 40MiB","Name":"quote","NetIO":"73.2kB / 195kB","PIDs":"1"}
+{"BlockIO":"36.4MB / 0B","CPUPerc":"25.06%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"52.82%","MemUsage":"84.51MiB / 160MiB","Name":"cart","NetIO":"277kB / 996kB","PIDs":"39"}
+{"BlockIO":"10.2MB / 61.4kB","CPUPerc":"0.18%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"11.2kB / 24kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"3.63%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"74.43%","MemUsage":"74.43MiB / 100MiB","Name":"email","NetIO":"141kB / 112kB","PIDs":"21"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.36%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.81%","MemUsage":"7.562MiB / 20MiB","Name":"currency","NetIO":"63.6kB / 149kB","PIDs":"12"}
+{"BlockIO":"27.7MB / 93.4MB","CPUPerc":"6.58%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"70.88%","MemUsage":"56.71MiB / 80MiB","Name":"astronomy-db","NetIO":"470kB / 554kB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"7.48%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"46.23%","MemUsage":"34.68MiB / 75MiB","Name":"flagd","NetIO":"443kB / 788kB","PIDs":"8"}
+{"BlockIO":"118MB / 1.9MB","CPUPerc":"7.19%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"93.09%","MemUsage":"577.2MiB / 620MiB","Name":"kafka","NetIO":"90.7kB / 318kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"2.24%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"43.78MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"471kB / 516kB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"1.02%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.11%","MemUsage":"14.22MiB / 20MiB","Name":"valkey-cart","NetIO":"176kB / 86.5kB","PIDs":"7"}
+{"BlockIO":"137MB / 9.16MB","CPUPerc":"3.52%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"45.43%","MemUsage":"181.7MiB / 400MiB","Name":"otel-collector","NetIO":"5.84MB / 212kB","PIDs":"8"}
+{"BlockIO":"38.3MB / 0B","CPUPerc":"11.42%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.25%","MemUsage":"429.6MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:53:42.686229544Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2621190144   179830784    97492992  3823509504  3592540160
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11907170304 11919097856  50% /
+/dev/vda1      23843045376 11907170304 11919097856  50% /
+9.58 4.64 2.18 16/911 25681
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"4.64%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"22.04%","MemUsage":"19.84MiB / 90MiB","Name":"frontend-proxy","NetIO":"2.49MB / 5.29MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"11.73%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"50.85%","MemUsage":"127.1MiB / 250MiB","Name":"frontend","NetIO":"1.78MB / 4.47MB","PIDs":"11"}
+{"BlockIO":"3.19GB / 0B","CPUPerc":"35.37%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"88.96%","MemUsage":"17.79MiB / 20MiB","Name":"checkout","NetIO":"762kB / 2.44MB","PIDs":"6"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"3.11%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"63.82%","MemUsage":"89.35MiB / 140MiB","Name":"payment","NetIO":"215kB / 477kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"1.40%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"40.35%","MemUsage":"8.07MiB / 20MiB","Name":"shipping","NetIO":"476kB / 736kB","PIDs":"14"}
+{"BlockIO":"3.35GB / 0B","CPUPerc":"44.67%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"89.18%","MemUsage":"17.84MiB / 20MiB","Name":"product-catalog-a","NetIO":"826kB / 1.47MB","PIDs":"16"}
+{"BlockIO":"32.6MB / 86kB","CPUPerc":"6.51%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"90.80%","MemUsage":"145.3MiB / 160MiB","Name":"accounting","NetIO":"282kB / 856kB","PIDs":"28"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"0.56%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.91%","MemUsage":"54.54MiB / 500MiB","Name":"recommendation","NetIO":"11kB / 36.9kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 475kB","CPUPerc":"0.12%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.52%","MemUsage":"220.6MiB / 300MiB","Name":"ad","NetIO":"9.03kB / 27.8kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"1.38%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"80.95%","MemUsage":"32.38MiB / 40MiB","Name":"quote","NetIO":"177kB / 457kB","PIDs":"1"}
+{"BlockIO":"36.4MB / 0B","CPUPerc":"8.35%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"57.55%","MemUsage":"92.09MiB / 160MiB","Name":"cart","NetIO":"623kB / 2.9MB","PIDs":"37"}
+{"BlockIO":"10.2MB / 73.7kB","CPUPerc":"0.07%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"12.1kB / 27.6kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"21.08%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"82.17%","MemUsage":"82.17MiB / 100MiB","Name":"email","NetIO":"350kB / 261kB","PIDs":"23"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"1.49%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.93%","MemUsage":"7.586MiB / 20MiB","Name":"currency","NetIO":"137kB / 351kB","PIDs":"12"}
+{"BlockIO":"27.8MB / 95MB","CPUPerc":"1.99%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"71.19%","MemUsage":"56.95MiB / 80MiB","Name":"astronomy-db","NetIO":"1.04MB / 1.22MB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"10.40%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"47.15%","MemUsage":"35.36MiB / 75MiB","Name":"flagd","NetIO":"970kB / 1.72MB","PIDs":"10"}
+{"BlockIO":"118MB / 2.22MB","CPUPerc":"3.49%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"93.45%","MemUsage":"579.4MiB / 620MiB","Name":"kafka","NetIO":"183kB / 440kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"5.41%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.08MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.04MB / 1.13MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.62%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.43%","MemUsage":"14.29MiB / 20MiB","Name":"valkey-cart","NetIO":"392kB / 198kB","PIDs":"7"}
+{"BlockIO":"137MB / 20.8MB","CPUPerc":"2.20%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"46.12%","MemUsage":"184.5MiB / 400MiB","Name":"otel-collector","NetIO":"13.9MB / 399kB","PIDs":"8"}
+{"BlockIO":"38.4MB / 0B","CPUPerc":"9.46%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.09%","MemUsage":"419.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"11"}
+ssh_returncode=0
+===== 2026-10-27T11:54:05.522982303Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2634825728   178368512    98091008  3812036608  3578904576
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11924848640 11901419520  51% /
+/dev/vda1      23843045376 11924848640 11901419520  51% /
+11.21 5.36 2.47 5/891 27259
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.32%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.95%","MemUsage":"19.75MiB / 90MiB","Name":"frontend-proxy","NetIO":"3.78MB / 8.13MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"4.48%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"54.10%","MemUsage":"135.3MiB / 250MiB","Name":"frontend","NetIO":"2.7MB / 6.9MB","PIDs":"17"}
+{"BlockIO":"4.57GB / 0B","CPUPerc":"0.89%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"85.64%","MemUsage":"17.13MiB / 20MiB","Name":"checkout","NetIO":"1.15MB / 3.81MB","PIDs":"7"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"27.40%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"65.66%","MemUsage":"91.93MiB / 140MiB","Name":"payment","NetIO":"285kB / 717kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"0.03%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"41.07%","MemUsage":"8.215MiB / 20MiB","Name":"shipping","NetIO":"707kB / 1.1MB","PIDs":"15"}
+{"BlockIO":"4.86GB / 0B","CPUPerc":"0.23%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"90.47%","MemUsage":"18.09MiB / 20MiB","Name":"product-catalog-a","NetIO":"1.26MB / 2.19MB","PIDs":"9"}
+{"BlockIO":"32.6MB / 115kB","CPUPerc":"0.18%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"91.06%","MemUsage":"145.7MiB / 160MiB","Name":"accounting","NetIO":"421kB / 1.3MB","PIDs":"29"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"0.39%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.91%","MemUsage":"54.54MiB / 500MiB","Name":"recommendation","NetIO":"11.6kB / 37.4kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 537kB","CPUPerc":"0.11%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.53%","MemUsage":"220.6MiB / 300MiB","Name":"ad","NetIO":"9.34kB / 28.1kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"2.06%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"81.71%","MemUsage":"32.68MiB / 40MiB","Name":"quote","NetIO":"263kB / 681kB","PIDs":"1"}
+{"BlockIO":"36.4MB / 0B","CPUPerc":"0.16%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"58.44%","MemUsage":"93.5MiB / 160MiB","Name":"cart","NetIO":"972kB / 4.47MB","PIDs":"35"}
+{"BlockIO":"10.2MB / 90.1kB","CPUPerc":"2.65%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"13.2kB / 31.4kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.55%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"74.92%","MemUsage":"74.92MiB / 100MiB","Name":"email","NetIO":"520kB / 394kB","PIDs":"21"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"2.69%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.91%","MemUsage":"7.582MiB / 20MiB","Name":"currency","NetIO":"208kB / 543kB","PIDs":"12"}
+{"BlockIO":"27.8MB / 96.2MB","CPUPerc":"0.01%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"57.14%","MemUsage":"45.71MiB / 80MiB","Name":"astronomy-db","NetIO":"1.59MB / 1.86MB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.50%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.45%","MemUsage":"37.84MiB / 75MiB","Name":"flagd","NetIO":"1.45MB / 2.73MB","PIDs":"10"}
+{"BlockIO":"118MB / 2.69MB","CPUPerc":"3.99%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"93.74%","MemUsage":"581.2MiB / 620MiB","Name":"kafka","NetIO":"269kB / 538kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"2.71%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.08MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.57MB / 1.71MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"3.12%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.54%","MemUsage":"14.31MiB / 20MiB","Name":"valkey-cart","NetIO":"608kB / 311kB","PIDs":"7"}
+{"BlockIO":"137MB / 35.9MB","CPUPerc":"1.13%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"46.79%","MemUsage":"187.2MiB / 400MiB","Name":"otel-collector","NetIO":"21.8MB / 591kB","PIDs":"8"}
+{"BlockIO":"38.5MB / 0B","CPUPerc":"4.23%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.34%","MemUsage":"435MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"11"}
+ssh_returncode=0
+===== 2026-10-27T11:54:26.651281349Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2629414912   200134656    98406400  3795988480  3584315392
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11928031232 11898236928  51% /
+/dev/vda1      23843045376 11928031232 11898236928  51% /
+8.97 5.23 2.49 1/877 28734
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.22%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.86%","MemUsage":"19.67MiB / 90MiB","Name":"frontend-proxy","NetIO":"3.78MB / 8.14MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"9.14%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"50.90%","MemUsage":"127.3MiB / 250MiB","Name":"frontend","NetIO":"2.7MB / 6.93MB","PIDs":"11"}
+{"BlockIO":"4.9GB / 0B","CPUPerc":"0.28%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"86.13%","MemUsage":"17.23MiB / 20MiB","Name":"checkout","NetIO":"1.15MB / 3.81MB","PIDs":"7"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"0.60%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"65.76%","MemUsage":"92.07MiB / 140MiB","Name":"payment","NetIO":"301kB / 737kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"0.03%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"40.33%","MemUsage":"8.066MiB / 20MiB","Name":"shipping","NetIO":"708kB / 1.13MB","PIDs":"10"}
+{"BlockIO":"5.27GB / 0B","CPUPerc":"0.11%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"77.19%","MemUsage":"15.44MiB / 20MiB","Name":"product-catalog-a","NetIO":"1.27MB / 2.26MB","PIDs":"9"}
+{"BlockIO":"32.6MB / 123kB","CPUPerc":"0.21%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"92.47%","MemUsage":"148MiB / 160MiB","Name":"accounting","NetIO":"431kB / 1.35MB","PIDs":"27"}
+{"BlockIO":"13.9MB / 4.63MB","CPUPerc":"0.53%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.91%","MemUsage":"54.54MiB / 500MiB","Name":"recommendation","NetIO":"12.7kB / 52.4kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 594kB","CPUPerc":"0.11%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.54%","MemUsage":"220.6MiB / 300MiB","Name":"ad","NetIO":"10.2kB / 39.1kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.03%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"81.71%","MemUsage":"32.68MiB / 40MiB","Name":"quote","NetIO":"264kB / 710kB","PIDs":"1"}
+{"BlockIO":"36.4MB / 0B","CPUPerc":"0.25%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"56.06%","MemUsage":"89.7MiB / 160MiB","Name":"cart","NetIO":"975kB / 4.68MB","PIDs":"34"}
+{"BlockIO":"10.2MB / 102kB","CPUPerc":"2.58%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.29%","MemUsage":"14.75MiB / 120MiB","Name":"image-provider","NetIO":"14.3kB / 35.2kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.04%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"74.71%","MemUsage":"74.71MiB / 100MiB","Name":"email","NetIO":"521kB / 400kB","PIDs":"20"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"3.19%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.95%","MemUsage":"7.59MiB / 20MiB","Name":"currency","NetIO":"209kB / 544kB","PIDs":"12"}
+{"BlockIO":"27.9MB / 96.5MB","CPUPerc":"0.01%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"57.19%","MemUsage":"45.75MiB / 80MiB","Name":"astronomy-db","NetIO":"1.59MB / 1.86MB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.02%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.45%","MemUsage":"37.84MiB / 75MiB","Name":"flagd","NetIO":"1.45MB / 2.73MB","PIDs":"10"}
+{"BlockIO":"118MB / 3.09MB","CPUPerc":"5.29%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"93.82%","MemUsage":"581.7MiB / 620MiB","Name":"kafka","NetIO":"278kB / 553kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"3.61%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.08MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.58MB / 1.73MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.17%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.54%","MemUsage":"14.31MiB / 20MiB","Name":"valkey-cart","NetIO":"608kB / 312kB","PIDs":"7"}
+{"BlockIO":"137MB / 44.8MB","CPUPerc":"0.19%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"46.90%","MemUsage":"187.6MiB / 400MiB","Name":"otel-collector","NetIO":"22.3MB / 605kB","PIDs":"8"}
+{"BlockIO":"38.5MB / 0B","CPUPerc":"4.88%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.15%","MemUsage":"423.9MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"11"}
+ssh_returncode=0
+===== 2026-10-27T11:54:46.907799586Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2615881728   205815808    98721792  3804155904  3597848576
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11928248320 11898019840  51% /
+/dev/vda1      23843045376 11928248320 11898019840  51% /
+7.07 5.04 2.48 4/890 32525
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.22%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.88%","MemUsage":"19.69MiB / 90MiB","Name":"frontend-proxy","NetIO":"3.79MB / 8.15MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"5.02%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"52.81%","MemUsage":"132MiB / 250MiB","Name":"frontend","NetIO":"2.7MB / 6.93MB","PIDs":"17"}
+{"BlockIO":"5.24GB / 0B","CPUPerc":"26.08%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"75.55%","MemUsage":"15.11MiB / 20MiB","Name":"checkout","NetIO":"1.15MB / 3.83MB","PIDs":"7"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"0.58%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"65.83%","MemUsage":"92.17MiB / 140MiB","Name":"payment","NetIO":"323kB / 743kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"0.04%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"40.10%","MemUsage":"8.02MiB / 20MiB","Name":"shipping","NetIO":"710kB / 1.13MB","PIDs":"10"}
+{"BlockIO":"5.7GB / 0B","CPUPerc":"0.21%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"85.88%","MemUsage":"17.18MiB / 20MiB","Name":"product-catalog-a","NetIO":"1.27MB / 2.27MB","PIDs":"9"}
+{"BlockIO":"32.6MB / 123kB","CPUPerc":"0.25%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"92.71%","MemUsage":"148.3MiB / 160MiB","Name":"accounting","NetIO":"441kB / 1.36MB","PIDs":"26"}
+{"BlockIO":"14MB / 4.63MB","CPUPerc":"0.50%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.92%","MemUsage":"54.61MiB / 500MiB","Name":"recommendation","NetIO":"14.3kB / 53kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 639kB","CPUPerc":"0.11%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.58%","MemUsage":"220.7MiB / 300MiB","Name":"ad","NetIO":"11.5kB / 39.3kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.02%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"81.74%","MemUsage":"32.7MiB / 40MiB","Name":"quote","NetIO":"265kB / 711kB","PIDs":"1"}
+{"BlockIO":"38MB / 0B","CPUPerc":"0.27%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"57.34%","MemUsage":"91.75MiB / 160MiB","Name":"cart","NetIO":"977kB / 4.68MB","PIDs":"35"}
+{"BlockIO":"10.2MB / 111kB","CPUPerc":"2.96%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"14.94%","MemUsage":"17.93MiB / 120MiB","Name":"image-provider","NetIO":"17kB / 39.8kB","PIDs":"17"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.06%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"75.00%","MemUsage":"75MiB / 100MiB","Name":"email","NetIO":"522kB / 400kB","PIDs":"19"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"2.99%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.91%","MemUsage":"7.582MiB / 20MiB","Name":"currency","NetIO":"210kB / 544kB","PIDs":"12"}
+{"BlockIO":"28MB / 96.5MB","CPUPerc":"0.00%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"57.19%","MemUsage":"45.75MiB / 80MiB","Name":"astronomy-db","NetIO":"1.6MB / 1.86MB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.07%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.44%","MemUsage":"37.83MiB / 75MiB","Name":"flagd","NetIO":"1.45MB / 2.73MB","PIDs":"10"}
+{"BlockIO":"118MB / 3.58MB","CPUPerc":"4.51%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"93.91%","MemUsage":"582.3MiB / 620MiB","Name":"kafka","NetIO":"289kB / 591kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"0.30%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.09MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.6MB / 1.74MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.18%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.54%","MemUsage":"14.31MiB / 20MiB","Name":"valkey-cart","NetIO":"609kB / 312kB","PIDs":"7"}
+{"BlockIO":"4.18MB / 49.2kB","CPUPerc":"0.26%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"9.11%","MemUsage":"36.45MiB / 400MiB","Name":"otel-collector","NetIO":"56.2kB / 5.25kB","PIDs":"7"}
+{"BlockIO":"38.5MB / 0B","CPUPerc":"3.53%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.18%","MemUsage":"425.3MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"11"}
+ssh_returncode=0
+===== 2026-10-27T11:55:07.765220350Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2642886656   178049024    98820096  3805016064  3570843648
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11928350720 11897917440  51% /
+/dev/vda1      23843045376 11928350720 11897917440  51% /
+5.07 4.73 2.45 1/874 36348
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.54%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.88%","MemUsage":"19.7MiB / 90MiB","Name":"frontend-proxy","NetIO":"3.79MB / 8.15MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"8.33%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"50.92%","MemUsage":"127.3MiB / 250MiB","Name":"frontend","NetIO":"2.7MB / 6.94MB","PIDs":"11"}
+{"BlockIO":"5.49GB / 0B","CPUPerc":"0.69%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"86.58%","MemUsage":"17.32MiB / 20MiB","Name":"checkout","NetIO":"1.15MB / 3.83MB","PIDs":"7"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"0.70%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"65.87%","MemUsage":"92.22MiB / 140MiB","Name":"payment","NetIO":"338kB / 747kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"0.03%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"39.98%","MemUsage":"7.996MiB / 20MiB","Name":"shipping","NetIO":"710kB / 1.13MB","PIDs":"10"}
+{"BlockIO":"6.12GB / 0B","CPUPerc":"1.72%","Container":"0bf9153f433ddb757e9abdbc5aa897a91592c7a28584a61943f2895038b4ce11","ID":"0bf9153f433d","MemPerc":"87.36%","MemUsage":"17.47MiB / 20MiB","Name":"product-catalog-a","NetIO":"1.28MB / 2.27MB","PIDs":"9"}
+{"BlockIO":"32.6MB / 127kB","CPUPerc":"0.52%","Container":"37bd2c591022e99e6cdde0d5259b1905094ca6f577290b8bbd16f75065362713","ID":"37bd2c591022","MemPerc":"96.80%","MemUsage":"154.9MiB / 160MiB","Name":"accounting","NetIO":"451kB / 1.38MB","PIDs":"27"}
+{"BlockIO":"14MB / 4.63MB","CPUPerc":"0.64%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.92%","MemUsage":"54.61MiB / 500MiB","Name":"recommendation","NetIO":"14.8kB / 53.3kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 692kB","CPUPerc":"0.13%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.61%","MemUsage":"220.8MiB / 300MiB","Name":"ad","NetIO":"11.9kB / 39.5kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"81.74%","MemUsage":"32.7MiB / 40MiB","Name":"quote","NetIO":"265kB / 711kB","PIDs":"1"}
+{"BlockIO":"38MB / 0B","CPUPerc":"0.15%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"57.17%","MemUsage":"91.47MiB / 160MiB","Name":"cart","NetIO":"978kB / 4.69MB","PIDs":"33"}
+{"BlockIO":"10.2MB / 119kB","CPUPerc":"3.32%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.31%","MemUsage":"14.77MiB / 120MiB","Name":"image-provider","NetIO":"18kB / 43.5kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.05%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"75.27%","MemUsage":"75.27MiB / 100MiB","Name":"email","NetIO":"523kB / 401kB","PIDs":"19"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"3.59%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.91%","MemUsage":"7.582MiB / 20MiB","Name":"currency","NetIO":"210kB / 544kB","PIDs":"12"}
+{"BlockIO":"28MB / 96.5MB","CPUPerc":"0.00%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"57.19%","MemUsage":"45.75MiB / 80MiB","Name":"astronomy-db","NetIO":"1.6MB / 1.86MB","PIDs":"14"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.08%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.45%","MemUsage":"37.84MiB / 75MiB","Name":"flagd","NetIO":"1.46MB / 2.74MB","PIDs":"10"}
+{"BlockIO":"118MB / 3.81MB","CPUPerc":"6.26%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"94.02%","MemUsage":"582.9MiB / 620MiB","Name":"kafka","NetIO":"299kB / 606kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"0.40%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.09MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.61MB / 1.75MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"0.18%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.54%","MemUsage":"14.31MiB / 20MiB","Name":"valkey-cart","NetIO":"609kB / 312kB","PIDs":"7"}
+{"BlockIO":"4.18MB / 168kB","CPUPerc":"0.06%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"9.14%","MemUsage":"36.57MiB / 400MiB","Name":"otel-collector","NetIO":"113kB / 11.3kB","PIDs":"7"}
+{"BlockIO":"38.5MB / 0B","CPUPerc":"4.70%","Container":"c11d02174118c3acd803789ae028d04c9941eeff8c50e1397364c0bb867880e6","ID":"c11d02174118","MemPerc":"7.18%","MemUsage":"425.6MiB / 5.787GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"11"}
+ssh_returncode=0
+===== 2026-10-27T11:55:28.041815748Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304  2230218752   587788288    98762752  3807887360  3983511552
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11928567808 11897700352  51% /
+/dev/vda1      23843045376 11928567808 11897700352  51% /
+3.84 4.47 2.41 3/895 38162
+{"BlockIO":"631kB / 16.4kB","CPUPerc":"0.32%","Container":"0c0c34704a74be24ebfbe0cc11df3ae376c88167e5cc855956f47bf3db47cba5","ID":"0c0c34704a74","MemPerc":"21.88%","MemUsage":"19.7MiB / 90MiB","Name":"frontend-proxy","NetIO":"3.79MB / 8.15MB","PIDs":"10"}
+{"BlockIO":"39MB / 0B","CPUPerc":"6.08%","Container":"4a329376a5b7040519e188a2a12e309cf280fddad315f4bbd7022cf696a09083","ID":"4a329376a5b7","MemPerc":"50.92%","MemUsage":"127.3MiB / 250MiB","Name":"frontend","NetIO":"2.7MB / 6.94MB","PIDs":"11"}
+{"BlockIO":"5.85GB / 0B","CPUPerc":"0.02%","Container":"074e72b5d9cdb21e220d4601884632fa935af7b6f9b49e68b17fb642abcb01c4","ID":"074e72b5d9cd","MemPerc":"81.39%","MemUsage":"16.28MiB / 20MiB","Name":"checkout","NetIO":"1.15MB / 3.83MB","PIDs":"7"}
+{"BlockIO":"7.18MB / 0B","CPUPerc":"0.45%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"66.18%","MemUsage":"92.65MiB / 140MiB","Name":"payment","NetIO":"359kB / 769kB","PIDs":"12"}
+{"BlockIO":"3.4MB / 0B","CPUPerc":"2.90%","Container":"70deb65756c13ea57ed862220c026106cacf18a4f451b168209b61fbc8bbacbe","ID":"70deb65756c1","MemPerc":"40.02%","MemUsage":"8.004MiB / 20MiB","Name":"shipping","NetIO":"711kB / 1.14MB","PIDs":"10"}
+{"BlockIO":"14MB / 4.63MB","CPUPerc":"0.47%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.92%","MemUsage":"54.61MiB / 500MiB","Name":"recommendation","NetIO":"16.7kB / 68.9kB","PIDs":"15"}
+{"BlockIO":"71.4MB / 778kB","CPUPerc":"0.10%","Container":"0451e0d1e612065f943a9fd50ee0697b96d12b78deedafbf5b609106a8bda3df","ID":"0451e0d1e612","MemPerc":"73.66%","MemUsage":"221MiB / 300MiB","Name":"ad","NetIO":"13.1kB / 50.4kB","PIDs":"30"}
+{"BlockIO":"15.3MB / 0B","CPUPerc":"0.01%","Container":"60ea2ba8a573320d6322e30a3b822ada0d2d39f8eb52830c7cea5a22390f858a","ID":"60ea2ba8a573","MemPerc":"81.69%","MemUsage":"32.68MiB / 40MiB","Name":"quote","NetIO":"266kB / 716kB","PIDs":"1"}
+{"BlockIO":"38MB / 0B","CPUPerc":"0.13%","Container":"fe0db7d0e12f24b92b1e14d82f7919b2151c40b751141f90f810a80b56128c2a","ID":"fe0db7d0e12f","MemPerc":"57.33%","MemUsage":"91.73MiB / 160MiB","Name":"cart","NetIO":"981kB / 4.7MB","PIDs":"32"}
+{"BlockIO":"10.2MB / 131kB","CPUPerc":"2.22%","Container":"59fe4b4bc4728055fc8759feb727c8c0fb50375e1457868abb757aed58825a1f","ID":"59fe4b4bc472","MemPerc":"12.27%","MemUsage":"14.72MiB / 120MiB","Name":"image-provider","NetIO":"19.5kB / 47.2kB","PIDs":"11"}
+{"BlockIO":"22.6MB / 0B","CPUPerc":"0.04%","Container":"8bab6fedf7e3cb30f3070576fdc9fbee4d9a1f5de10dae2552c355504d797d6e","ID":"8bab6fedf7e3","MemPerc":"75.54%","MemUsage":"75.54MiB / 100MiB","Name":"email","NetIO":"524kB / 402kB","PIDs":"18"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"2.50%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.89%","MemUsage":"7.578MiB / 20MiB","Name":"currency","NetIO":"211kB / 546kB","PIDs":"12"}
+{"BlockIO":"28MB / 96.5MB","CPUPerc":"0.68%","Container":"37cd1eda3333f7ff8b429e361b07c1cce22e12da779454c379c32b42147f7074","ID":"37cd1eda3333","MemPerc":"44.76%","MemUsage":"35.8MiB / 80MiB","Name":"astronomy-db","NetIO":"1.6MB / 1.86MB","PIDs":"9"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.10%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.08%","MemUsage":"37.56MiB / 75MiB","Name":"flagd","NetIO":"1.46MB / 2.75MB","PIDs":"10"}
+{"BlockIO":"118MB / 5.05MB","CPUPerc":"5.98%","Container":"c92f9cea1d5adf0eb53df08ca5ef366f209ed85ee19e6de959eb65a36416c67a","ID":"c92f9cea1d5a","MemPerc":"94.06%","MemUsage":"583.2MiB / 620MiB","Name":"kafka","NetIO":"309kB / 625kB","PIDs":"112"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"0.34%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.08MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.62MB / 1.77MB","PIDs":"9"}
+{"BlockIO":"11.3MB / 4.1kB","CPUPerc":"3.23%","Container":"a069c1ef59c06740d24970d48136605adb8bfdac8f1d5f467e68b2d6b152cf86","ID":"a069c1ef59c0","MemPerc":"71.46%","MemUsage":"14.29MiB / 20MiB","Name":"valkey-cart","NetIO":"610kB / 312kB","PIDs":"7"}
+{"BlockIO":"4.18MB / 422kB","CPUPerc":"0.34%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"9.17%","MemUsage":"36.7MiB / 400MiB","Name":"otel-collector","NetIO":"239kB / 23.8kB","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:55:46.418379063Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6213730304   954404864  1868406784     1626112  3705946112  5259325440
+Swap:              0           0           0
+Filesystem       1B-blocks        Used   Available Use% Mounted on
+/dev/vda1      23843045376 11857412096 11968856064  50% /
+/dev/vda1      23843045376 11857412096 11968856064  50% /
+3.06 4.27 2.38 1/396 39815
+{"BlockIO":"7.18MB / 0B","CPUPerc":"0.69%","Container":"c145d6cc84a965bdff0ee61c605d7c3439db71fdb9aa0560317f52d026689c0c","ID":"c145d6cc84a9","MemPerc":"66.24%","MemUsage":"92.74MiB / 140MiB","Name":"payment","NetIO":"376kB / 782kB","PIDs":"12"}
+{"BlockIO":"14MB / 4.63MB","CPUPerc":"0.48%","Container":"00bbd048e6edbe3d0434b0d15befa5cd0a9b0d52fcf047425e688e200803a7f8","ID":"00bbd048e6ed","MemPerc":"10.92%","MemUsage":"54.61MiB / 500MiB","Name":"recommendation","NetIO":"18.4kB / 69.3kB","PIDs":"15"}
+{"BlockIO":"4.16MB / 0B","CPUPerc":"0.04%","Container":"03c55308ac08d3111e4fc5a0cd37e5fa41502a31c731e6df659158de7d5485f3","ID":"03c55308ac08","MemPerc":"37.83%","MemUsage":"7.566MiB / 20MiB","Name":"currency","NetIO":"213kB / 546kB","PIDs":"12"}
+{"BlockIO":"1.29MB / 0B","CPUPerc":"0.06%","Container":"82b89c9217289f9084b173a455e2a8ea00e3123e739dae4f6da12fadfd87fea7","ID":"82b89c921728","MemPerc":"50.08%","MemUsage":"37.56MiB / 75MiB","Name":"flagd","NetIO":"1.47MB / 2.76MB","PIDs":"10"}
+{"BlockIO":"29.9MB / 0B","CPUPerc":"0.32%","Container":"81b1d1feec1a511c5b81d68679d13c2fbdb82c7d115258cafe6297fc902c1ea4","ID":"81b1d1feec1a","MemPerc":"0.74%","MemUsage":"44.09MiB / 5.787GiB","Name":"product-catalog-router","NetIO":"1.62MB / 1.77MB","PIDs":"9"}
+{"BlockIO":"4.18MB / 627kB","CPUPerc":"0.07%","Container":"fafe54f671e19c08c494ad952dbb501ec7281526ec20e77b8f54ebc7a0d0c373","ID":"fafe54f671e1","MemPerc":"9.19%","MemUsage":"36.75MiB / 400MiB","Name":"otel-collector","NetIO":"322kB / 31.1kB","PIDs":"8"}
+ssh_returncode=0

@@ -1,0 +1,71 @@
+{
+  "kind": "technical_qualification_not_scientific_campaign",
+  "attempts": 1200,
+  "requested_operations_per_second": 20,
+  "raw_bytes": 113451034,
+  "index_bytes": 247328768,
+  "disk_free_bytes": 76628082688,
+  "projected_full_capture_and_index_bytes_with_2x_margin": 20925228516.0,
+  "disk_projection_fits": true,
+  "source_summary": {
+    "ebpf": {
+      "outcomes": {
+        "True": 1089,
+        "False": 111
+      },
+      "body_reasons": {
+        "length_verified": 1089,
+        "body_not_exported": 51,
+        "entry_unbound": 60
+      }
+    },
+    "native": {
+      "outcomes": {
+        "None": 1089,
+        "False": 111
+      },
+      "body_reasons": {
+        "body_not_exported": 1140,
+        "entry_unbound": 60
+      }
+    },
+    "combined": {
+      "outcomes": {
+        "True": 1089,
+        "False": 111
+      },
+      "body_reasons": {
+        "not_applicable": 1200
+      }
+    },
+    "entry_http": {
+      "outcomes": {
+        "True": 1089,
+        "False": 111
+      },
+      "body_reasons": {
+        "not_applicable": 1200
+      }
+    }
+  },
+  "no_accuracy_success_gate": true,
+  "memory_and_scheduling_evidence": "infrastructure/ and blocks.json",
+  "observation_policy": "censored-v3",
+  "application_deadline_seconds": null,
+  "http_observation_cap_seconds": 10.0,
+  "peak_in_flight_attempts": 52,
+  "independent_body_fidelity": {
+    "ebpf": {
+      "compared": 1089,
+      "exact_body_matches": 1089,
+      "mismatches": 0,
+      "unsupported_without_body_evidence": false
+    },
+    "native": {
+      "compared": 0,
+      "exact_body_matches": 0,
+      "mismatches": 0,
+      "unsupported_without_body_evidence": true
+    }
+  }
+}

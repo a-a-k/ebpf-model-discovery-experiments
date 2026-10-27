@@ -1,0 +1,80 @@
+{
+  "system": "otel_demo",
+  "operations": [
+    "browse_product",
+    "add_to_cart",
+    "checkout"
+  ],
+  "entry_url": "http://192.168.76.11:18080",
+  "replicas": [
+    {
+      "name": "product-catalog-a",
+      "node": "a",
+      "ip": "172.28.11.21",
+      "transport_host": "192.168.76.11",
+      "transport_port": 13550
+    },
+    {
+      "name": "product-catalog-b",
+      "node": "b",
+      "ip": "172.28.12.21",
+      "transport_host": "192.168.76.12",
+      "transport_port": 13550
+    }
+  ],
+  "routing": {
+    "name": "product-catalog",
+    "node": "a",
+    "ip": "172.28.11.20",
+    "transport_host": "192.168.76.11",
+    "transport_port": 13551,
+    "policy": "envoy round_robin with active gRPC endpoint health checks"
+  },
+  "database": {
+    "logical_identity": "astronomy_db/catalog.products",
+    "node": "a",
+    "container": "astronomy-db",
+    "ip": "172.28.11.31",
+    "transport_host": "192.168.76.11",
+    "transport_port": 15432
+  },
+  "async_evaluator_database": {
+    "logical_identity": "astronomy_db/accounting",
+    "node": "a",
+    "container": "astronomy-db",
+    "ip": "172.28.11.31",
+    "transport_host": "192.168.76.11",
+    "transport_port": 15432
+  },
+  "source": {
+    "url": "https://github.com/open-telemetry/opentelemetry-demo.git",
+    "commit": "8c47d47c9ac27710d2b2a153bcd53e483bffe66d",
+    "version": "3.0.0",
+    "compose_layers": [
+      "compose.yaml",
+      "compose.full.yaml"
+    ]
+  },
+  "images": {
+    "application_prefix": "ghcr.io/open-telemetry/demo:3.0.0-",
+    "resolved_digests": [
+      "deployment/otel_demo/resolved-images-a.txt",
+      "deployment/otel_demo/resolved-images-b.txt"
+    ]
+  },
+  "native_export_locations": {
+    "traces": "node a:/opt/ebpf-study/otel_demo/native/traces.json",
+    "otel_logs": "node a:/opt/ebpf-study/otel_demo/native/otel-logs.json",
+    "metrics": "node a:/opt/ebpf-study/otel_demo/native/metrics.json",
+    "container_logs": "collect_native destination/application-logs/"
+  },
+  "native_suppression": {
+    "mode": "full",
+    "excluded": "none",
+    "sdk_settings": "OTEL_SDK_DISABLED=true on disabled standard SDKs",
+    "source_guards": "checkout and product-catalog skip exporter/provider construction; currency and shipping omit direct trace exporters and use always-off sampling; email skips its direct metric exporter when OTEL_SDK_DISABLED=true",
+    "native_component_guards": "absent mode removes Envoy tracing, sets nginx otel_trace off, and leaves flagd without a collector URI; pinned flagd autoexport then retains its NoopTracerProvider",
+    "collector_filter": "none; the file exporter retains the unfiltered native OTLP stream for suppression audit",
+    "propagation": "checkout, currency, and shipping keep W3C propagation while their always-off providers create no recording spans"
+  }
+}

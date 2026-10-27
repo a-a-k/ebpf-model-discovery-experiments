@@ -1,0 +1,210 @@
+{
+  "files": [
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/observations/a.jsonl",
+      "source": "ebpf",
+      "from_byte": 0,
+      "through_byte": 5987903,
+      "raw_spans": 7648,
+      "new_unique_observations": 7648
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-compose-post-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 29
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-compose-post-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 11620
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-home-timeline-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 23614,
+      "raw_spans": 43,
+      "new_unique_observations": 14
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-home-timeline-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 7776654,
+      "raw_spans": 14575,
+      "new_unique_observations": 2975
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-media-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-media-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-nginx-web-server-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 81299,
+      "raw_spans": 144,
+      "new_unique_observations": 101
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-nginx-web-server-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 10135609,
+      "raw_spans": 18557,
+      "new_unique_observations": 3962
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-post-storage-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 45565,
+      "raw_spans": 81,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-post-storage-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 10135609,
+      "raw_spans": 18557,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-social-graph-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 47432,
+      "raw_spans": 89,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-social-graph-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5826459,
+      "raw_spans": 11600,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-text-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-text-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-unique-id-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-unique-id-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-url-shorten-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-url-shorten-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-mention-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 14566,
+      "raw_spans": 29,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-mention-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 47432,
+      "raw_spans": 89,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 5837323,
+      "raw_spans": 11620,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-timeline-service-1793102010618256-1793102130618255.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 36517,
+      "raw_spans": 67,
+      "new_unique_observations": 0
+    },
+    {
+      "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/native/qualification/traces-user-timeline-service-1793102130618256-1793102246320733.json",
+      "source": "native",
+      "from_byte": 0,
+      "through_byte": 8174550,
+      "raw_spans": 15562,
+      "new_unique_observations": 0
+    }
+  ],
+  "total_unique_observations": 26349,
+  "index_bytes": 42725376,
+  "seconds": 8.713930999000013,
+  "discard_policy": "only byte-equivalent normalized duplicates; conflicting observations retained",
+  "started_ns": 1793102249934521002,
+  "ended_ns": 1793102258648522200
+}

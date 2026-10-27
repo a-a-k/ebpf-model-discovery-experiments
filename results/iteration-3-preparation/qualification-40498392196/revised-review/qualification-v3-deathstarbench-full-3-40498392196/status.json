@@ -1,0 +1,19 @@
+{
+  "system": "deathstarbench",
+  "mode": "full",
+  "seed": 3,
+  "protocol_version": "source-contract-v3",
+  "qualification": true,
+  "observation_policy": "censored-v3",
+  "http_observation_cap_seconds": 10.0,
+  "application_deadline_seconds": null,
+  "run_id": "40498392196",
+  "commit": "79ca71e8d6d54ced18fec96e3d03141a5c43f464",
+  "started_ns": 1793102010628753137,
+  "status": "qualification_complete",
+  "requested_operations_per_second": 20,
+  "ended_ns": 1793102287059836197,
+  "attempted_operations": 1200,
+  "preparation_operations": 3,
+  "elapsed_seconds": 276.43108306
+}

@@ -1,0 +1,460 @@
+===== 2026-10-27T11:53:30.287929641Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   545660928  4813950976     1056768  1106317312  5667033088
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2414657536 21411610624  11% /
+/dev/vda1      23843045376 2414657536 21411610624  11% /
+0.88 0.26 0.09 1/150 2579
+ssh_returncode=0
+===== 2026-10-27T11:53:45.918552014Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   579186688  4546691072     1146880  1345413120  5633507328
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 2641719296 21184548864  12% /
+/dev/vda1      23843045376 2641719296 21184548864  12% /
+0.69 0.25 0.09 1/174 2994
+{"BlockIO":"0B / 0B","CPUPerc":"0.10%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"0.56%","MemUsage":"33.01MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:54:03.498867932Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   802189312  3307872256     1163264  2382155776  5410504704
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 3630481408 20195786752  16% /
+/dev/vda1      23843045376 3630481408 20195786752  16% /
+0.89 0.31 0.11 11/229 3512
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"0.57%","MemUsage":"33.83MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+ssh_returncode=0
+===== 2026-10-27T11:54:22.204409447Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   890839040   653307904     1155072  4983304192  5321854976
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 6042746880 17783521280  26% /
+/dev/vda1      23843045376 6042746880 17783521280  26% /
+3.38 0.92 0.32 18/294 3941
+{"BlockIO":"0B / 0B","CPUPerc":"0.30%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"0.58%","MemUsage":"34.53MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"8"}
+{"BlockIO":"0B / 164kB","CPUPerc":"22.07%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.88%","MemUsage":"51.92MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"2.15kB / 126B","PIDs":"33"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"2.11kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.14%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.5MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"2.64kB / 126B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"24.42%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.18%","MemUsage":"10.79MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"2.11kB / 126B","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"24.89%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.18%","MemUsage":"10.79MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"2.19kB / 126B","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"27.74%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.18%","MemUsage":"10.78MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"2.32kB / 126B","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"25.51%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.18%","MemUsage":"10.79MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"2.07kB / 126B","PIDs":"5"}
+{"BlockIO":"0B / 197kB","CPUPerc":"15.92%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.88%","MemUsage":"52.16MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"4.59kB / 1.38kB","PIDs":"35"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.15%","MemUsage":"8.645MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"2.92kB / 126B","PIDs":"8"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.03%","MemUsage":"2.059MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"2.79kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.18MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"2.7kB / 516B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.16%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.488MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"3.42kB / 126B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.051MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"3.38kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.23%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.488MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"3.15kB / 126B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.03%","MemUsage":"2.062MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"3.3kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.02%","MemUsage":"1.086MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"1.98kB / 126B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.03%","MemUsage":"1.824MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"3.24kB / 1.74kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.066MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"1.78kB / 84B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.715MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"1.44kB / 84B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.03%","MemUsage":"1.805MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"2.77kB / 1.72kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.062MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"1.39kB / 84B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.09%","MemUsage":"5.059MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"1.36kB / 84B","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.59MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"3.37kB / 2.08kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.59MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"3.08kB / 1.77kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.078MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"1.73kB / 126B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.066MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"1.56kB / 126B","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.824MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"2.95kB / 1.78kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.24%","MemUsage":"14.33MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"1.52kB / 126B","PIDs":"17"}
+ssh_returncode=0
+===== 2026-10-27T11:54:45.970368960Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1510223872   265076736     3661824  4754452480  4702470144
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7932194816 15894073344  34% /
+/dev/vda1      23843045376 7932194816 15894073344  34% /
+4.41 1.44 0.51 1/974 6459
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"15.3kB / 14kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.988MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"11.8kB / 12kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.859MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"11.2kB / 8kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.152MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"3.92kB / 767B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.246MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"5.79kB / 3.42kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.145MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"4.17kB / 752B","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.43kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.094MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"10.4kB / 8.48kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.801MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"4.38kB / 780B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.906MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"5.98kB / 2.79kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.02%","MemUsage":"1.355MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"7.18kB / 5.29kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.234MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"5.07kB / 2kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.12%","MemUsage":"7.031MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"15.7kB / 26.5kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.551MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"6.29kB / 575B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"6.45kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.09%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.25MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"11.7kB / 8.84kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.13%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"7.44kB / 1.25kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.559MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"7.21kB / 515B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.44kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"5.66kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.172MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"7.96kB / 2.15kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.16%","MemUsage":"9.656MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"28.2kB / 672B","PIDs":"8"}
+{"BlockIO":"0B / 213kB","CPUPerc":"0.31%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.07MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"8.36kB / 2.15kB","PIDs":"35"}
+{"BlockIO":"0B / 258kB","CPUPerc":"0.28%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.95%","MemUsage":"56.32MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"11.7kB / 4.24kB","PIDs":"36"}
+{"BlockIO":"0B / 217kB","CPUPerc":"0.46%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.95%","MemUsage":"56.1MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"8.85kB / 2.71kB","PIDs":"35"}
+{"BlockIO":"0B / 209kB","CPUPerc":"0.33%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.53MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.41kB / 126B","PIDs":"33"}
+{"BlockIO":"0B / 250kB","CPUPerc":"0.30%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.95%","MemUsage":"56.36MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"12.6kB / 5.44kB","PIDs":"36"}
+{"BlockIO":"0B / 217kB","CPUPerc":"0.34%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.95%","MemUsage":"56.44MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"13kB / 6.41kB","PIDs":"37"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.93%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.03%","MemUsage":"238.8MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:55:05.818422583Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1491038208   283979776     3641344  4754714624  4721655808
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7932227584 15894040576  34% /
+/dev/vda1      23843045376 7932227584 15894040576  34% /
+3.58 1.40 0.51 1/960 6774
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"16.4kB / 14.4kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.988MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"12.9kB / 12.4kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.613MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"4.35kB / 3.23kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.152MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"4.24kB / 767B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.246MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"6.11kB / 3.42kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.145MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"4.5kB / 752B","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.75kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.094MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"12.6kB / 10.3kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.801MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"4.71kB / 780B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.906MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"7.07kB / 3.17kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.02%","MemUsage":"1.359MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"7.57kB / 5.35kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.234MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"5.39kB / 2kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.12%","MemUsage":"7.121MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"17.5kB / 29.3kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.23%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.551MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"6.61kB / 575B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"6.77kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.08%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.24MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"16.4kB / 16kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.21%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"8.41kB / 1.62kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.16%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.559MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"7.53kB / 515B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.77kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"5.99kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"8.93kB / 2.82kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.16%","MemUsage":"9.672MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"30.7kB / 672B","PIDs":"8"}
+{"BlockIO":"0B / 258kB","CPUPerc":"0.39%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.04MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"9.06kB / 2.92kB","PIDs":"34"}
+{"BlockIO":"0B / 291kB","CPUPerc":"0.33%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.95%","MemUsage":"56.3MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"12.4kB / 5.01kB","PIDs":"35"}
+{"BlockIO":"0B / 262kB","CPUPerc":"0.44%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.95%","MemUsage":"56.07MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"9.55kB / 3.48kB","PIDs":"34"}
+{"BlockIO":"0B / 242kB","CPUPerc":"0.35%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.51MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.73kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 283kB","CPUPerc":"0.39%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.95%","MemUsage":"56.34MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"13.3kB / 6.21kB","PIDs":"35"}
+{"BlockIO":"0B / 262kB","CPUPerc":"0.41%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.95%","MemUsage":"56.38MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"16.2kB / 9.28kB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.03%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.04%","MemUsage":"239.4MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:55:25.732902347Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1492070400   282214400     3649536  4755456000  4720623616
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7932637184 15893630976  34% /
+/dev/vda1      23843045376 7932637184 15893630976  34% /
+2.56 1.31 0.50 1/960 6860
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"17.2kB / 14.7kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.988MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"13.7kB / 12.8kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.613MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"8.06kB / 5.09kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.152MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"4.24kB / 767B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.246MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"6.11kB / 3.42kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.145MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"4.57kB / 752B","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.75kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.094MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"13.4kB / 10.7kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.801MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"4.78kB / 780B","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.906MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"7.91kB / 3.56kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.02%","MemUsage":"1.359MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"7.64kB / 5.35kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.234MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"5.46kB / 2kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.12%","MemUsage":"7.121MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"17.5kB / 29.3kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.16%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.551MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"6.68kB / 575B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"6.84kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.08%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.24MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"19.3kB / 21.6kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.23%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"8.48kB / 1.62kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.17%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.559MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"7.6kB / 515B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.84kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"5.99kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"9kB / 2.82kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.16%","MemUsage":"9.672MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"30.8kB / 672B","PIDs":"8"}
+{"BlockIO":"0B / 426kB","CPUPerc":"0.47%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.29MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"9.51kB / 3.69kB","PIDs":"34"}
+{"BlockIO":"0B / 504kB","CPUPerc":"0.36%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.95%","MemUsage":"56.55MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"12.8kB / 5.78kB","PIDs":"35"}
+{"BlockIO":"0B / 479kB","CPUPerc":"0.51%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.95%","MemUsage":"56.32MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"9.93kB / 4.25kB","PIDs":"34"}
+{"BlockIO":"0B / 401kB","CPUPerc":"0.41%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.74MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.8kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 496kB","CPUPerc":"0.48%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.6MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"13.7kB / 6.98kB","PIDs":"35"}
+{"BlockIO":"0B / 483kB","CPUPerc":"0.42%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.95%","MemUsage":"56.58MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"17kB / 10.9kB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.11%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.04%","MemUsage":"239.4MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:55:45.758045396Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1497341952   276029440     3649536  4756369408  4715352064
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933157376 15893110784  34% /
+/dev/vda1      23843045376 7933157376 15893110784  34% /
+2.40 1.37 0.54 1/954 7223
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.215MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"18.7kB / 15.6kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.988MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"14.6kB / 13.2kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.746MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"14kB / 10kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.125MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"4.96kB / 1.27kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.309MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"8.99kB / 7.17kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.117MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"5.22kB / 1.24kB","PIDs":"2"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.95kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.098MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"19.8kB / 17.5kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.77MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"5.43kB / 1.36kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.879MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"9.33kB / 4.43kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.02%","MemUsage":"1.371MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"9.85kB / 9.77kB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.211MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"6.63kB / 3.76kB","PIDs":"2"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.13%","MemUsage":"7.469MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"23.8kB / 41.4kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.15%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.551MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"6.8kB / 575B","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"6.97kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.08%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.25MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"24.9kB / 29.4kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.18%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.562MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"9.9kB / 2.46kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.20%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.559MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"8.7kB / 1.2kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.96kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.18kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"11.8kB / 5.61kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.17%","MemUsage":"9.848MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"42.9kB / 1.18kB","PIDs":"8"}
+{"BlockIO":"0B / 459kB","CPUPerc":"0.44%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.29MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"10kB / 4.46kB","PIDs":"34"}
+{"BlockIO":"0B / 537kB","CPUPerc":"0.27%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.95%","MemUsage":"56.56MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"13.4kB / 6.55kB","PIDs":"35"}
+{"BlockIO":"0B / 516kB","CPUPerc":"0.44%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.95%","MemUsage":"56.33MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"11kB / 5.13kB","PIDs":"34"}
+{"BlockIO":"0B / 434kB","CPUPerc":"0.38%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.75MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.92kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 528kB","CPUPerc":"0.36%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.62MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"14.2kB / 7.75kB","PIDs":"35"}
+{"BlockIO":"0B / 516kB","CPUPerc":"0.33%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.96%","MemUsage":"56.59MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"18.6kB / 13kB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.94%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.04%","MemUsage":"239.5MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:56:06.129385327Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1546268672   226697216     3620864  4756754432  4666425344
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933177856 15893090304  34% /
+/dev/vda1      23843045376 7933177856 15893090304  34% /
+1.75 1.30 0.54 1/968 8284
+{"BlockIO":"0B / 0B","CPUPerc":"0.10%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"57.8kB / 50.2kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.14%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"2MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"60.2kB / 83.1kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.58%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"1.922MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"143kB / 231kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.12%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.188MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"38.3kB / 30.7kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.91%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.41MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"170kB / 264kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.08%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"41.5kB / 32.5kB","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.95kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.32%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.176MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"347kB / 430kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.08%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.828MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"40.5kB / 33.2kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.10%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.938MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"44.1kB / 34.5kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.69%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.57MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"186kB / 430kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.29%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.305MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"78.7kB / 143kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"3.07%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.19%","MemUsage":"11.04MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"432kB / 810kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.26%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"30.4kB / 10.7kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"6.97kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.40%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.26MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"161kB / 164kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.44%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.602MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"86.5kB / 33.2kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.46%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.602MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"59.8kB / 23.4kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.96kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.18kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.75%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"186kB / 188kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.64%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.31%","MemUsage":"18.43MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"939kB / 1.26kB","PIDs":"8"}
+{"BlockIO":"0B / 492kB","CPUPerc":"0.45%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.3MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"10.4kB / 5.23kB","PIDs":"34"}
+{"BlockIO":"0B / 573kB","CPUPerc":"0.41%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.95%","MemUsage":"56.56MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"13.8kB / 7.32kB","PIDs":"35"}
+{"BlockIO":"0B / 1.04MB","CPUPerc":"0.73%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.96%","MemUsage":"56.89MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"82.7kB / 20.2kB","PIDs":"34"}
+{"BlockIO":"0B / 467kB","CPUPerc":"0.43%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.75MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.92kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 565kB","CPUPerc":"0.41%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.62MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"14.6kB / 8.52kB","PIDs":"35"}
+{"BlockIO":"0B / 1.12MB","CPUPerc":"1.24%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.97%","MemUsage":"57.45MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"113kB / 454kB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.74%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.12%","MemUsage":"244.3MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:56:26.636657558Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1537028096   234065920     3649536  4758646784  4675665920
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933640704 15892627456  34% /
+/dev/vda1      23843045376 7933640704 15892627456  34% /
+1.33 1.23 0.53 1/969 9435
+{"BlockIO":"0B / 0B","CPUPerc":"0.12%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"98.5kB / 86.8kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.30%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"2MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"105kB / 151kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.80%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"2.008MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"866kB / 554kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.13%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.188MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"75.3kB / 64.7kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.75%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.43MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"325kB / 515kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.12%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"79.2kB / 64.5kB","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"3.95kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.43%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.184MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"681kB / 854kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.11%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.828MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"77.2kB / 66.1kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.11%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.938MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"80.5kB / 65.6kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.05%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.586MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"368kB / 871kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.44%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.301MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"154kB / 287kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"3.27%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.19%","MemUsage":"11.26MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"851kB / 1.64MB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.37%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"54.7kB / 21kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"7.04kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.57%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.26MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"308kB / 310kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.54%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.617MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"169kB / 66.4kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.50%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.613MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"110kB / 44.7kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"7.96kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.18kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.71%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"364kB / 373kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.68%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.43%","MemUsage":"25.48MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"1.92MB / 1.55kB","PIDs":"9"}
+{"BlockIO":"0B / 594kB","CPUPerc":"0.42%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.95%","MemUsage":"56.45MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"10.8kB / 6kB","PIDs":"34"}
+{"BlockIO":"0B / 680kB","CPUPerc":"0.38%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.96%","MemUsage":"56.65MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"14.1kB / 8.09kB","PIDs":"35"}
+{"BlockIO":"0B / 1.69MB","CPUPerc":"0.89%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.96%","MemUsage":"57.11MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"157kB / 35.9kB","PIDs":"34"}
+{"BlockIO":"0B / 569kB","CPUPerc":"0.53%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.83MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.99kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 672kB","CPUPerc":"0.46%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.76MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"15.1kB / 9.29kB","PIDs":"35"}
+{"BlockIO":"0B / 2.08MB","CPUPerc":"1.92%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"0.98%","MemUsage":"58.35MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"216kB / 1.72MB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.99%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.16%","MemUsage":"246.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:56:46.812536468Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1546698752   222871552     3649536  4760170496  4665995264
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933648896 15892619264  34% /
+/dev/vda1      23843045376 7933648896 15892619264  34% /
+0.95 1.15 0.52 4/970 10626
+{"BlockIO":"0B / 0B","CPUPerc":"0.20%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"140kB / 124kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.34%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"2MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"156kB / 229kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.49%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.03%","MemUsage":"2.016MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"1.93MB / 847kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.188MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"112kB / 97.6kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.83%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.02%","MemUsage":"1.426MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"491kB / 781kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.22%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"118kB / 97.3kB","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"4.02kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.23%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.04%","MemUsage":"2.191MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"1.01MB / 1.28MB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.17%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.828MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"115kB / 99.3kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.20%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.938MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"118kB / 97.4kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.85%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.594MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"554kB / 1.32MB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.70%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.305MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"230kB / 433kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"3.46%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.19%","MemUsage":"11.31MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"1.27MB / 2.46MB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.42%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"79.5kB / 31.6kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"7.04kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.64%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.26MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"446kB / 448kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.53%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.09%","MemUsage":"5.621MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"247kB / 97.4kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.42%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.09%","MemUsage":"5.621MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"163kB / 67.4kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"8.03kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.25kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.57%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.05%","MemUsage":"3.195MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"539kB / 555kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"1.57%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.53%","MemUsage":"31.61MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"2.89MB / 1.89kB","PIDs":"9"}
+{"BlockIO":"0B / 635kB","CPUPerc":"0.44%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.96%","MemUsage":"56.63MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"11.2kB / 6.77kB","PIDs":"34"}
+{"BlockIO":"0B / 721kB","CPUPerc":"0.36%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.96%","MemUsage":"56.84MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"14.6kB / 8.86kB","PIDs":"35"}
+{"BlockIO":"0B / 2.22MB","CPUPerc":"1.18%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.97%","MemUsage":"57.35MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"233kB / 51.8kB","PIDs":"34"}
+{"BlockIO":"0B / 610kB","CPUPerc":"0.37%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.94%","MemUsage":"55.9MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.99kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 713kB","CPUPerc":"0.42%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.95MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"15.4kB / 10.1kB","PIDs":"35"}
+{"BlockIO":"0B / 3.22MB","CPUPerc":"2.11%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"1.00%","MemUsage":"59.2MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"316kB / 3.87MB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"4.14%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.26%","MemUsage":"252.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:57:07.263456576Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1593896960   175362048     3649536  4760481792  4618797056
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933661184 15892606976  34% /
+/dev/vda1      23843045376 7933661184 15892606976  34% /
+0.74 1.09 0.52 1/968 10880
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"141kB / 124kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"2MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"156kB / 230kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.04%","MemUsage":"2.402MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"6.11MB / 4.9MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.188MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"112kB / 97.9kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.03%","MemUsage":"1.77MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"2.62MB / 2.75MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"118kB / 97.8kB","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"4.02kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.05%","MemUsage":"3.223MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"12.4MB / 7.58MB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.828MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"115kB / 100kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.938MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"118kB / 98kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.535MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"555kB / 1.32MB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.305MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"230kB / 436kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.09%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.62%","MemUsage":"36.86MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"6.25MB / 8.31MB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"79.5kB / 31.6kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"7.04kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.14%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.27MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"3.52MB / 3.52MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.18%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.10%","MemUsage":"5.699MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"1.08MB / 499kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.10%","MemUsage":"5.652MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"168kB / 310kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"8.03kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.25kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.03%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.08%","MemUsage":"4.801MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"1.91MB / 11.6MB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.09%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"0.54%","MemUsage":"31.87MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"3.06MB / 1.97kB","PIDs":"9"}
+{"BlockIO":"0B / 676kB","CPUPerc":"0.37%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.96%","MemUsage":"56.63MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"11.6kB / 7.54kB","PIDs":"34"}
+{"BlockIO":"0B / 762kB","CPUPerc":"0.37%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.96%","MemUsage":"56.84MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"15kB / 9.63kB","PIDs":"35"}
+{"BlockIO":"0B / 2.27MB","CPUPerc":"0.38%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.97%","MemUsage":"57.76MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"239kB / 176kB","PIDs":"34"}
+{"BlockIO":"0B / 651kB","CPUPerc":"0.31%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.95%","MemUsage":"56.1MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.99kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 754kB","CPUPerc":"0.33%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.95MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"15.8kB / 10.8kB","PIDs":"35"}
+{"BlockIO":"0B / 3.26MB","CPUPerc":"0.34%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"1.00%","MemUsage":"59.21MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"332kB / 4.59MB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.09%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.32%","MemUsage":"255.8MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:57:27.638369350Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1690206208   184492032     3641344  4655034368  4522487808
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7933759488 15892508672  34% /
+/dev/vda1      23843045376 7933759488 15892508672  34% /
+0.53 1.02 0.50 2/965 11179
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.242MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"142kB / 125kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"2MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"157kB / 230kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.04%","MemUsage":"2.402MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"6.12MB / 4.9MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.188MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"112kB / 97.9kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.03%","MemUsage":"1.77MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"2.62MB / 2.75MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"118kB / 97.8kB","PIDs":"3"}
+{"BlockIO":"0B / 4.1kB","CPUPerc":"0.00%","Container":"6cc74f99a6fc230dae8282034bf81d2849fdaae6ed599443680e9ee3712c9de6","ID":"6cc74f99a6fc","MemPerc":"0.25%","MemUsage":"14.66MiB / 5.786GiB","Name":"dsb-media-frontend","NetIO":"4.02kB / 126B","PIDs":"17"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.05%","MemUsage":"3.223MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"12.4MB / 7.58MB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.828MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"115kB / 100kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.938MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"119kB / 98.4kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.535MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"555kB / 1.32MB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.301MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"230kB / 436kB","PIDs":"3"}
+{"BlockIO":"24.6kB / 4.1kB","CPUPerc":"0.00%","Container":"7be90224e312dd99a4b0526dba4448f8b31536b68cb1829e181552f9d746b2ad","ID":"7be90224e312","MemPerc":"0.62%","MemUsage":"36.86MiB / 5.786GiB","Name":"dsb-nginx-thrift","NetIO":"6.25MB / 8.31MB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.25%","Container":"bb528b90b0eb199b589c9214749b42f68e26d4b0db7f84cd675c2c3cbb666cef","ID":"bb528b90b0eb","MemPerc":"0.09%","MemUsage":"5.555MiB / 5.786GiB","Name":"dsb-social-graph-redis","NetIO":"79.5kB / 31.6kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"b4b5f02465dff226ef944e96b18cc45a2a13398103c4d5f519598d7f4b92bea4","ID":"b4b5f02465df","MemPerc":"0.04%","MemUsage":"2.09MiB / 5.786GiB","Name":"dsb-media-memcached","NetIO":"7.04kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.10%","Container":"53342e39a1bdabbe1b848288f673f1cef265f4c34a802f7d35a88e25f3cd8aad","ID":"53342e39a1bd","MemPerc":"0.68%","MemUsage":"40.27MiB / 5.786GiB","Name":"dsb-user-timeline-proxy","NetIO":"3.52MB / 3.53MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.19%","Container":"342d0c01880e8a84b0f2a298554fc5bc5f067f4ec8a939ab5fa19427b5f7ca35","ID":"342d0c01880e","MemPerc":"0.10%","MemUsage":"5.695MiB / 5.786GiB","Name":"dsb-user-timeline-redis","NetIO":"1.08MB / 499kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.17%","Container":"9f676b4d5181aa2c4a1a283e552dd3d6b482f653ef43df4bc95e56fdc01543bb","ID":"9f676b4d5181","MemPerc":"0.10%","MemUsage":"5.652MiB / 5.786GiB","Name":"dsb-home-timeline-redis","NetIO":"168kB / 310kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.05%","Container":"ce9ac19e21a125a9674634de4e2fc660e5f724fcd5ba1fde0c0775e182f8bb94","ID":"ce9ac19e21a1","MemPerc":"0.05%","MemUsage":"3.156MiB / 5.786GiB","Name":"dsb-user-memcached","NetIO":"8.03kB / 1.28kB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"9a89f28166a6bf8e5c3dff7abb7f89317586093c25daa1525cc40a20670d9bc6","ID":"9a89f28166a6","MemPerc":"0.03%","MemUsage":"2.07MiB / 5.786GiB","Name":"dsb-url-shorten-memcached","NetIO":"6.25kB / 126B","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.02%","Container":"bc8fd212672ad79eae31188ffcda23b752e65b47abd5d2be0376fe91c46694aa","ID":"bc8fd212672a","MemPerc":"0.08%","MemUsage":"4.801MiB / 5.786GiB","Name":"dsb-post-storage-memcached","NetIO":"1.91MB / 11.6MB","PIDs":"10"}
+{"BlockIO":"0B / 0B","CPUPerc":"59.25%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"1.81%","MemUsage":"107.4MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"3.17MB / 5.7MB","PIDs":"9"}
+{"BlockIO":"0B / 766kB","CPUPerc":"0.49%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.96%","MemUsage":"56.65MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"12kB / 8.31kB","PIDs":"34"}
+{"BlockIO":"0B / 848kB","CPUPerc":"0.40%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.96%","MemUsage":"56.85MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"15.3kB / 10.4kB","PIDs":"35"}
+{"BlockIO":"0B / 2.48MB","CPUPerc":"0.42%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.98%","MemUsage":"57.83MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"239kB / 176kB","PIDs":"34"}
+{"BlockIO":"0B / 733kB","CPUPerc":"0.40%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.95%","MemUsage":"56.23MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"6.99kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 840kB","CPUPerc":"0.46%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.96MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"16.2kB / 11.6kB","PIDs":"35"}
+{"BlockIO":"0B / 3.41MB","CPUPerc":"0.43%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"1.00%","MemUsage":"59.21MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"333kB / 4.6MB","PIDs":"36"}
+{"BlockIO":"0B / 0B","CPUPerc":"2.66%","Container":"147e8c7efc1ed83c0d244c0d59ccf42100bfe22b502cb690eecb9c2651aa8883","ID":"147e8c7efc1e","MemPerc":"4.32%","MemUsage":"256.2MiB / 5.786GiB","Name":"study-obi","NetIO":"0B / 0B","PIDs":"10"}
+ssh_returncode=0
+===== 2026-10-27T11:57:47.530010625Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016  1260826624   614178816     2674688  4653760512  4951867392
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7932669952 15893598208  34% /
+/dev/vda1      23843045376 7932669952 15893598208  34% /
+0.38 0.95 0.49 1/744 12095
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"dc30b073e939a10b5aba7d49ca7390628d16997bcd2c031c920b3fcbeb9e9ab3","ID":"dc30b073e939","MemPerc":"0.04%","MemUsage":"2.238MiB / 5.786GiB","Name":"dsb-user-service","NetIO":"143kB / 125kB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"ff56d0d55c3751ddac5fdfa0da0f1573bc8c9d96f041e6432d58f1f215ec7042","ID":"ff56d0d55c37","MemPerc":"0.03%","MemUsage":"1.992MiB / 5.786GiB","Name":"dsb-social-graph-service","NetIO":"158kB / 231kB","PIDs":"5"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e92b8acf2246c1711984da923f415c8a11746e9de393607553495cab4c7c4e84","ID":"e92b8acf2246","MemPerc":"0.04%","MemUsage":"2.395MiB / 5.786GiB","Name":"dsb-user-timeline-a","NetIO":"6.12MB / 4.9MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"dad301cf33c7764d24a7f2140f6dfe19a0e27ab9147abc7e71fe531feef9d99a","ID":"dad301cf33c7","MemPerc":"0.02%","MemUsage":"1.176MiB / 5.786GiB","Name":"dsb-unique-id-service","NetIO":"112kB / 97.9kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"4769d54ffdbaf86ead089885d2e0090efa8afc44393231b7515e5ca91c48a376","ID":"4769d54ffdba","MemPerc":"0.03%","MemUsage":"1.762MiB / 5.786GiB","Name":"dsb-home-timeline-service","NetIO":"2.62MB / 2.75MB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"01fd511b335111c4188d98a1da49eab20cb2398d79b25294ec0fc6215149b084","ID":"01fd511b3351","MemPerc":"0.02%","MemUsage":"1.164MiB / 5.786GiB","Name":"dsb-media-service","NetIO":"118kB / 97.8kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"f87d0fe69f46d0331842fca656c4d8099ee6dffe15b5c2a4ddfc9e48008a6fc8","ID":"f87d0fe69f46","MemPerc":"0.05%","MemUsage":"3.211MiB / 5.786GiB","Name":"dsb-post-storage-service","NetIO":"12.4MB / 7.58MB","PIDs":"6"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"91ff639b916457ca7efb0c811c6f804f6b785916b8d9ac27c56ab729da2a62d6","ID":"91ff639b9164","MemPerc":"0.03%","MemUsage":"1.816MiB / 5.786GiB","Name":"dsb-user-mention-service","NetIO":"115kB / 100kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"e758dc2adfdacb8995698657b01085c76833c6dc5fd8413c3e1ee56d6c213438","ID":"e758dc2adfda","MemPerc":"0.03%","MemUsage":"1.926MiB / 5.786GiB","Name":"dsb-url-shorten-service","NetIO":"120kB / 98.8kB","PIDs":"4"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.01%","Container":"2cb4d870ef6d1241b647e4aae3dffc575359e682f77c787dfe4bdbfb8e4301d4","ID":"2cb4d870ef6d","MemPerc":"0.03%","MemUsage":"1.523MiB / 5.786GiB","Name":"dsb-compose-post-service","NetIO":"555kB / 1.32MB","PIDs":"2"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.00%","Container":"d3163c17cb3ed78a1058c20035b2520716da3193029066e47fd9152710a1e9d8","ID":"d3163c17cb3e","MemPerc":"0.02%","MemUsage":"1.289MiB / 5.786GiB","Name":"dsb-text-service","NetIO":"231kB / 436kB","PIDs":"3"}
+{"BlockIO":"0B / 0B","CPUPerc":"0.04%","Container":"a699c0184860b9a853d290c38c0fd0fa77c64035ebb981cebd9231ef40ce3926","ID":"a699c0184860","MemPerc":"1.81%","MemUsage":"107.4MiB / 5.786GiB","Name":"dsb-jaeger-agent","NetIO":"3.17MB / 5.7MB","PIDs":"9"}
+{"BlockIO":"0B / 807kB","CPUPerc":"0.28%","Container":"ef75b747d7654691d515ad3ab0c7149addbdd6a0bf79db67e8cb54785a948f39","ID":"ef75b747d765","MemPerc":"0.96%","MemUsage":"56.63MiB / 5.786GiB","Name":"dsb-url-shorten-mongodb","NetIO":"12.6kB / 9.08kB","PIDs":"34"}
+{"BlockIO":"0B / 893kB","CPUPerc":"0.23%","Container":"a8ce5d928e043d8fbc36b9f9ca12c4bfb351c76f78882e28be36d729c003bed4","ID":"a8ce5d928e04","MemPerc":"0.96%","MemUsage":"56.84MiB / 5.786GiB","Name":"dsb-social-graph-mongodb","NetIO":"16kB / 11.2kB","PIDs":"35"}
+{"BlockIO":"0B / 2.53MB","CPUPerc":"0.25%","Container":"d84d4ad1e8ac64a3034fb51cfe8ee756a1433bef9ca55b57037eb1301b380981","ID":"d84d4ad1e8ac","MemPerc":"0.98%","MemUsage":"57.82MiB / 5.786GiB","Name":"dsb-post-storage-mongodb","NetIO":"240kB / 177kB","PIDs":"34"}
+{"BlockIO":"0B / 774kB","CPUPerc":"0.28%","Container":"9a1c1d94503fe712877b6d98e899b8803a516e3d288a7cfa1dbcd54c90eb2a58","ID":"9a1c1d94503f","MemPerc":"0.95%","MemUsage":"56.22MiB / 5.786GiB","Name":"dsb-media-mongodb","NetIO":"7.25kB / 126B","PIDs":"32"}
+{"BlockIO":"0B / 885kB","CPUPerc":"0.26%","Container":"8c4da504c207194b8b50c5a967e6b1dc0a69d9fad501613d4e937d183a2c4e35","ID":"8c4da504c207","MemPerc":"0.96%","MemUsage":"56.95MiB / 5.786GiB","Name":"dsb-user-mongodb","NetIO":"16.8kB / 12.4kB","PIDs":"35"}
+{"BlockIO":"0B / 3.47MB","CPUPerc":"0.27%","Container":"8f0fd808cb64ed5b81880b33b0e351ad8b67947c888673ecb7627476f0807990","ID":"8f0fd808cb64","MemPerc":"1.00%","MemUsage":"59.2MiB / 5.786GiB","Name":"dsb-user-timeline-mongodb","NetIO":"334kB / 4.6MB","PIDs":"36"}
+ssh_returncode=0
+===== 2026-10-27T11:58:06.195169482Z guest-a =====
+Warning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.
+               total        used        free      shared  buff/cache   available
+Mem:      6212694016   584208384  1295237120     1069056  4647714816  5628485632
+Swap:              0           0           0
+Filesystem       1B-blocks       Used   Available Use% Mounted on
+/dev/vda1      23843045376 7930757120 15895511040  34% /
+/dev/vda1      23843045376 7930757120 15895511040  34% /
+0.27 0.89 0.48 1/208 12834
+ssh_returncode=0
