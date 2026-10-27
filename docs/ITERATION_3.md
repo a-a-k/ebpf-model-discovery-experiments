@@ -284,6 +284,8 @@ source, operation, phase, complete denominators, censoring and bounded witnesses
 absent fields remain "not recorded". Attempt counts and step-reason occurrences
 are distinct and may overlap. These are projection-reported reasons, not
 independently proven root causes. No projection, model or forecast is regenerated.
+Implementation review granted GO at `407d305`; all six focused synthetic checks
+passed. The orchestrator agrees with that reporting-only verdict.
 
 ## Reproduction of the fresh series
 

@@ -9,6 +9,7 @@ for incomplete observations.
 - Acquisition: [40498392196](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196), commit `79ca71e8d6d54ced18fec96e3d03141a5c43f464`.
 - Evidence copy and body audit: [40500194868](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40500194868), commit `2e534c6eedf9679ef3dbb86950482a5cae27f57d`.
 - [Copied-file checksums](revised-review/copied-sha256.json), [original artifact index](revised-review/source-artifacts.json), and [workflow jobs](revised-review/source-jobs.json).
+- Permanent [original ZIPs, logs, provenance and checksums](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40510390283), including the superseded qualification and retained-data audits.
 
 The `revised-review/` directory is an unmodified copy of the compact Actions
 artifact. It retains deployment, index, scheduling, memory and disk evidence.
