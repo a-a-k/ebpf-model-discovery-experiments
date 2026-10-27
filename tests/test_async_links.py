@@ -3,11 +3,42 @@ from copy import deepcopy
 import pytest
 
 from ebpf_discovery.async_links import message_chains
+import ebpf_discovery.async_links as async_links
 
 
 REQUEST_ID = 'opaque-checkout-step'
 PRODUCER_TRACE = '1' * 32
 CONSUMER_TRACE = '2' * 32
+
+
+def test_many_requests_share_one_source_index_without_cross_linking(monkeypatch):
+    records = []
+    for source in ('native', 'ebpf'):
+        for number in range(16):
+            request = fixture()
+            producer_trace = f'{number + 1:032x}'
+            consumer_trace = f'{number + 1000:032x}'
+            for row in request:
+                row['source'] = source
+                row['trace_id'] = producer_trace if row['trace_id'] == PRODUCER_TRACE else consumer_trace
+                for link in row['links']:
+                    link['trace_id'] = producer_trace
+            request[0]['attributes']['http.request.header.x_experiment_request_id'] = [f'request-{number}']
+            records.extend(request)
+    original = async_links._span_index
+    indexed_sources = []
+    def counted(rows):
+        indexed_sources.append({row['source'] for row in rows})
+        return original(rows)
+    monkeypatch.setattr(async_links, '_span_index', counted)
+    result = message_chains(records)
+    assert indexed_sources == [{'native'}, {'ebpf'}]
+    for number in range(16):
+        for source in ('native', 'ebpf'):
+            proof = result[f'request-{number}']['sources'][source]
+            assert proof['status'] == 'linked'
+            assert proof['producer']['trace_id'] == f'{number + 1:032x}'
+            assert proof['consumer']['trace_id'] == f'{number + 1000:032x}'
 
 
 def span(

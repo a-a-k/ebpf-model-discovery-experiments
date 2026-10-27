@@ -185,9 +185,30 @@ def _application_order_evidence(path: list[dict[str, Any]]) -> dict[str, Any] | 
     return observed[0] if len(observed) == 1 else None
 
 
+def _source_lookup(source_spans: list[dict[str, Any]]) -> dict[str, Any]:
+    """Index each source once; retain every conflicting identity candidate."""
+    lookup = _span_index(source_spans)
+    producers, consumers, writes = defaultdict(list), defaultdict(list), defaultdict(list)
+    for records in lookup.values():
+        for span in records:
+            if _is_producer(span):
+                producers[span['trace_id']].append(span)
+            if _is_consumer(span):
+                # A repeated identical link still selects one consumer, just as
+                # the former any(link...) scan did. Its multi-link ambiguity is
+                # rejected later by the unchanged len(links) check.
+                identities = {(link.get('trace_id'), link.get('span_id'))
+                              for link in span.get('links', [])}
+                for identity in identities:
+                    consumers[identity].append(span)
+            if _is_insert_write(span):
+                writes[(span['trace_id'], span['parent_id'])].append(span)
+    return {'lookup': lookup, 'producers': producers, 'consumers': consumers, 'writes': writes}
+
+
 def _source_chain(
     source: str,
-    source_spans: list[dict[str, Any]],
+    index: dict[str, Any],
     anchors: list[dict[str, Any]],
 ) -> dict[str, Any]:
     anchors = _deduplicate(anchors)
@@ -200,17 +221,13 @@ def _source_chain(
     anchor = anchors[0]
     if not _valid_identity(anchor):
         return _unknown(source, 'empty_anchor_identity', anchor)
-    lookup = _span_index(source_spans)
+    lookup = index['lookup']
     if len(lookup.get((anchor['trace_id'], anchor['span_id']), [])) != 1:
         return _unknown(source, 'ambiguous_anchor_identity', anchor)
-    indexed_spans = [record for records in lookup.values() for record in records]
-
     producers = []
     producer_paths: dict[str, list[dict[str, Any]]] = {}
     ancestry_issues = []
-    for span in indexed_spans:
-        if not _is_producer(span) or span['trace_id'] != anchor['trace_id']:
-            continue
+    for span in index['producers'].get(anchor['trace_id'], []):
         ancestry, issue = _ancestry(
             span, lookup, (anchor['trace_id'], anchor['span_id'])
         )
@@ -240,16 +257,7 @@ def _source_chain(
         'span_id': producer['span_id'],
     }
 
-    consumers = []
-    for span in indexed_spans:
-        if not _is_consumer(span):
-            continue
-        if any(
-            link.get('trace_id') == producer['trace_id']
-            and link.get('span_id') == producer['span_id']
-            for link in span.get('links', [])
-        ):
-            consumers.append(span)
+    consumers = index['consumers'].get((producer['trace_id'], producer['span_id']), [])
     if not consumers:
         return _unknown(
             source,
@@ -337,13 +345,7 @@ def _source_chain(
             processing_root=_span_ref(processing_root),
         )
 
-    writes = [
-        span
-        for span in indexed_spans
-        if span['trace_id'] == processing_root['trace_id']
-        and span['parent_id'] == processing_root['span_id']
-        and _is_insert_write(span)
-    ]
+    writes = index['writes'].get((processing_root['trace_id'], processing_root['span_id']), [])
     if not writes:
         return _unknown(
             source,
@@ -447,8 +449,11 @@ def message_chains(spans: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
             anchors[(source, request_id)].append(span)
 
     results: dict[str, dict[str, Any]] = defaultdict(lambda: {'sources': {}})
+    sources_with_anchors = {source for source, _ in anchors}
+    indexes = {source: _source_lookup(records) for source, records in by_source.items()
+               if source in sources_with_anchors}
     for (source, request_id), source_anchors in anchors.items():
         results[request_id]['sources'][source] = _source_chain(
-            source, by_source[source], source_anchors
+            source, indexes[source], source_anchors
         )
     return dict(results)
