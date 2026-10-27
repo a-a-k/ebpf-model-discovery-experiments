@@ -1,0 +1,71 @@
+# Observed calibration graph: otel_demo
+
+Deterministically selected absent seed 0, [run 40372011776](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776). This is the validated parsing view of retained eBPF calibration observations. Observed protocol labels are preserved; an edge is not independent proof of correctness. The original model and forecast remain unchanged.
+
+```mermaid
+flowchart LR
+  n0["product-catalog | guest b | opentelemetry-demo.product-catalog.product-catalog-b"]
+  n1["postgresql 192.168.76.11:15432"]
+  n2["postgresql 192.168.76.11:0"]
+  n3["product-catalog | guest b | ebpf-b:6577"]
+  n4["postgresql 192.168.76.11:0"]
+  n5["ruby | guest a | ebpf-a:4420"]
+  n6["go | guest a | ebpf-a:20092"]
+  n7["image-provider | guest a | image-provider.image-provider"]
+  n8["cart | guest a | opentelemetry-demo.cart.cart"]
+  n9["flagd | guest a | opentelemetry-demo.flagd.flagd"]
+  n10["valkey-cart | guest a | valkey-cart.valkey-cart"]
+  n11["product-catalog | guest a | opentelemetry-demo.product-catalog.product-catalog-a"]
+  n12["ad | guest a | opentelemetry-demo.ad.ad"]
+  n13["checkout | guest a | opentelemetry-demo.checkout.checkout"]
+  n14["product-catalog | guest a | product-catalog.product-catalog-router"]
+  n15["frontend | guest a | opentelemetry-demo.frontend.frontend"]
+  n16["frontend-proxy | guest a | opentelemetry-demo.frontend-proxy.frontend-proxy"]
+  n17["redis 172.28.11.52:6379"]
+  n18["astronomy-db | guest a | astronomy-db.astronomy-db"]
+  n19["postgresql astronomy-db:None"]
+  n20["postgresql astronomy-db:0"]
+  n21["currency | guest a | opentelemetry-demo.currency.currency"]
+  n22["shipping | guest a | opentelemetry-demo.shipping.shipping"]
+  n23["quote | guest a | opentelemetry-demo.quote.quote"]
+  n24["accounting | guest a | opentelemetry-demo.accounting.accounting"]
+  n25["email | guest a | email.email"]
+  n26["postgresql astronomy-db:5432"]
+  n27["kafka | guest a | opentelemetry-demo.kafka.kafka"]
+  n28["payment | guest a | opentelemetry-demo.payment.payment"]
+  n29["postgresql 172.28.11.31:5432"]
+  n30["product-catalog | guest a | ebpf-a:25218"]
+  n24 -->|database_client_span| n29
+  n24 -->|observed_parent_id| n18
+  n24 -->|observed_parent_id| n27
+  n8 -->|database_client_span| n17
+  n8 -->|observed_parent_id| n9
+  n8 -->|observed_parent_id| n10
+  n13 -->|observed_parent_id| n25
+  n13 -->|observed_parent_id| n9
+  n13 -->|observed_parent_id| n22
+  n25 -->|observed_parent_id| n9
+  n16 -->|observed_parent_id| n15
+  n15 -->|observed_parent_id| n8
+  n15 -->|observed_parent_id| n13
+  n15 -->|observed_parent_id| n3
+  n15 -->|observed_parent_id| n11
+  n15 -->|observed_parent_id| n0
+  n15 -->|observed_parent_id| n14
+  n28 -->|observed_parent_id| n9
+  n3 -->|database_client_span| n4
+  n3 -->|database_client_span| n1
+  n3 -->|observed_parent_id| n9
+  n11 -->|database_client_span| n20
+  n11 -->|database_client_span| n26
+  n11 -->|database_client_span| n19
+  n11 -->|observed_parent_id| n9
+  n0 -->|database_client_span| n2
+  n0 -->|database_client_span| n1
+  n0 -->|observed_parent_id| n9
+  n14 -->|observed_parent_id| n30
+  n14 -->|observed_parent_id| n3
+  n14 -->|observed_parent_id| n11
+  n14 -->|observed_parent_id| n0
+  n22 -->|observed_parent_id| n23
+```

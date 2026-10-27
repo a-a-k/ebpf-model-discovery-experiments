@@ -1,0 +1,523 @@
+run_id,job_id,name,conclusion,job_seconds_including_preparation,url
+40324200754,121576573983,qualify,success,1126.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40324200754/job/121576573983
+40327411084,121587592101,qualify (petclinic),failure,185.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40327411084/job/121587592101
+40327411084,121587592357,qualify (deathstarbench),failure,112.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40327411084/job/121587592357
+40327411084,121587592688,qualify (otel_demo),cancelled,546.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40327411084/job/121587592688
+40328591084,121591682206,qualify (deathstarbench),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328591084/job/121591682206
+40328591084,121591682830,qualify (petclinic),failure,712.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328591084/job/121591682830
+40328591084,121591682865,qualify (otel_demo),success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328591084/job/121591682865
+40328775069,121592328705,qualify (otel_demo),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328775069/job/121592328705
+40328775069,121592328971,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328775069/job/121592328971
+40328775069,121592329003,qualify (deathstarbench),failure,201.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328775069/job/121592329003
+40328785304,121592366588,qualify (otel_demo),failure,192.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328785304/job/121592366588
+40328785304,121592367071,qualify (petclinic),success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328785304/job/121592367071
+40328785304,121592367194,qualify (deathstarbench),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40328785304/job/121592367194
+40330470668,121598225366,checks,success,36.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330470668/job/121598225366
+40330475066,121598249737,qualify (deathstarbench),success,290.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330475066/job/121598249737
+40330475066,121598250359,qualify (petclinic),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330475066/job/121598250359
+40330475066,121598250473,qualify (otel_demo),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330475066/job/121598250473
+40330650534,121598867776,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330650534/job/121598867776
+40330653637,121598884813,qualify (otel_demo),failure,76.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330653637/job/121598884813
+40330653637,121598885200,qualify (deathstarbench),success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330653637/job/121598885200
+40330653637,121598885218,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40330653637/job/121598885218
+40331985285,121603481113,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40331985285/job/121603481113
+40331991293,121603509826,qualify (petclinic),success,341.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40331991293/job/121603509826
+40331991293,121603510268,qualify (deathstarbench),success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40331991293/job/121603510268
+40331991293,121603510759,qualify (otel_demo),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40331991293/job/121603510759
+40332059037,121603737060,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332059037/job/121603737060
+40332061429,121603749438,qualify (petclinic),success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332061429/job/121603749438
+40332061429,121603749751,qualify (otel_demo),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332061429/job/121603749751
+40332061429,121603749971,qualify (deathstarbench),success,309.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332061429/job/121603749971
+40332593238,121605604856,checks,success,12.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332593238/job/121605604856
+40332599576,121605632938,qualify (petclinic),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332599576/job/121605632938
+40332599576,121605633429,qualify (otel_demo),failure,314.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332599576/job/121605633429
+40332599576,121605633525,qualify (deathstarbench),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40332599576/job/121605633525
+40333263584,121607955827,checks,success,11.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333263584/job/121607955827
+40333270035,121607987184,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987184
+40333270035,121607987467,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987467
+40333270035,121607987472,"campaign (deathstarbench, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987472
+40333270035,121607987488,"campaign (deathstarbench, full, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987488
+40333270035,121607987524,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987524
+40333270035,121607987577,"campaign (otel_demo, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987577
+40333270035,121607987622,"campaign (otel_demo, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987622
+40333270035,121607987660,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987660
+40333270035,121607987676,"campaign (otel_demo, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987676
+40333270035,121607987678,"campaign (deathstarbench, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987678
+40333270035,121607987717,"campaign (deathstarbench, absent, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987717
+40333270035,121607987806,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987806
+40333270035,121607987843,"campaign (deathstarbench, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987843
+40333270035,121607987919,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987919
+40333270035,121607987989,"campaign (otel_demo, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607987989
+40333270035,121607988274,"campaign (otel_demo, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607988274
+40333270035,121607990548,"campaign (otel_demo, full, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607990548
+40333270035,121607990692,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607990692
+40333270035,121607990783,"campaign (petclinic, absent, 0)",success,1395.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607990783
+40333270035,121607990810,"campaign (petclinic, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607990810
+40333270035,121607990887,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607990887
+40333270035,121607991046,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607991046
+40333270035,121607991532,"campaign (petclinic, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607991532
+40333270035,121607991539,"campaign (petclinic, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607991539
+40333270035,121607992057,"campaign (petclinic, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607992057
+40333270035,121607992239,"campaign (petclinic, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607992239
+40333270035,121607993452,"campaign (petclinic, full, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035/job/121607993452
+40333280818,121608024003,qualify (petclinic),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333280818/job/121608024003
+40333280818,121608024548,qualify (otel_demo),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333280818/job/121608024548
+40333280818,121608024649,qualify (deathstarbench),cancelled,119.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333280818/job/121608024649
+40333399145,121608429666,checks,success,12.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333399145/job/121608429666
+40333407431,121608464027,qualify (deathstarbench),failure,831.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333407431/job/121608464027
+40333407431,121608464500,qualify (otel_demo),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333407431/job/121608464500
+40333407431,121608464951,qualify (petclinic),success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333407431/job/121608464951
+40334185914,121611216262,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40334185914/job/121611216262
+40334194723,121611254391,qualify (deathstarbench),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40334194723/job/121611254391
+40334194723,121611254707,qualify (otel_demo),failure,664.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40334194723/job/121611254707
+40334194723,121611254822,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40334194723/job/121611254822
+40335548182,121616012472,checks,success,18.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335548182/job/121616012472
+40335553492,121616043131,"campaign (deathstarbench, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043131
+40335553492,121616043172,"campaign (otel_demo, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043172
+40335553492,121616043190,"campaign (otel_demo, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043190
+40335553492,121616043206,"campaign (deathstarbench, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043206
+40335553492,121616043217,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043217
+40335553492,121616043235,"campaign (deathstarbench, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043235
+40335553492,121616043287,"campaign (deathstarbench, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043287
+40335553492,121616043296,"campaign (otel_demo, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043296
+40335553492,121616043372,"campaign (otel_demo, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043372
+40335553492,121616043393,"campaign (otel_demo, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043393
+40335553492,121616043411,"campaign (otel_demo, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043411
+40335553492,121616043445,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043445
+40335553492,121616043466,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043466
+40335553492,121616043549,"campaign (deathstarbench, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043549
+40335553492,121616043555,"campaign (deathstarbench, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043555
+40335553492,121616043581,"campaign (otel_demo, partial, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616043581
+40335553492,121616045990,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616045990
+40335553492,121616046140,"campaign (petclinic, absent, 2)",success,1653.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046140
+40335553492,121616046198,"campaign (petclinic, partial, 0)",failure,817.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046198
+40335553492,121616046200,"campaign (petclinic, partial, 1)",failure,1366.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046200
+40335553492,121616046222,"campaign (otel_demo, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046222
+40335553492,121616046260,"campaign (petclinic, absent, 1)",success,2192.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046260
+40335553492,121616046281,"campaign (petclinic, absent, 0)",success,1749.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046281
+40335553492,121616046361,"campaign (petclinic, partial, 2)",failure,1279.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046361
+40335553492,121616046687,"campaign (petclinic, full, 0)",failure,1333.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046687
+40335553492,121616046851,"campaign (petclinic, full, 1)",failure,1361.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616046851
+40335553492,121616048713,"campaign (petclinic, full, 2)",failure,926.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492/job/121616048713
+40336708481,121620117804,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336708481/job/121620117804
+40336717147,121620156474,qualify (otel_demo),failure,553.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336717147/job/121620156474
+40336717147,121620157029,qualify (deathstarbench),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336717147/job/121620157029
+40336717147,121620157053,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336717147/job/121620157053
+40336898753,121620794586,"campaign (deathstarbench, partial, 2)",success,1875.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794586
+40336898753,121620794795,"campaign (deathstarbench, full, 1)",success,2016.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794795
+40336898753,121620794819,"campaign (otel_demo, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794819
+40336898753,121620794872,"campaign (otel_demo, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794872
+40336898753,121620794887,"campaign (otel_demo, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794887
+40336898753,121620794954,"campaign (deathstarbench, partial, 0)",success,1503.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794954
+40336898753,121620794973,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794973
+40336898753,121620794980,"campaign (otel_demo, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794980
+40336898753,121620794987,"campaign (deathstarbench, absent, 0)",success,1496.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620794987
+40336898753,121620795063,"campaign (deathstarbench, absent, 2)",success,1858.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795063
+40336898753,121620795082,"campaign (otel_demo, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795082
+40336898753,121620795085,"campaign (deathstarbench, partial, 1)",success,1965.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795085
+40336898753,121620795130,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795130
+40336898753,121620795163,"campaign (deathstarbench, full, 0)",success,2353.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795163
+40336898753,121620795263,"campaign (deathstarbench, full, 2)",success,2085.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795263
+40336898753,121620795343,"campaign (deathstarbench, absent, 1)",success,1846.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620795343
+40336898753,121620797716,"campaign (otel_demo, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620797716
+40336898753,121620797896,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620797896
+40336898753,121620797946,"campaign (petclinic, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620797946
+40336898753,121620797972,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620797972
+40336898753,121620798069,"campaign (petclinic, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620798069
+40336898753,121620798315,"campaign (petclinic, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620798315
+40336898753,121620798453,"campaign (petclinic, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620798453
+40336898753,121620798519,"campaign (petclinic, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620798519
+40336898753,121620798684,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620798684
+40336898753,121620799038,"campaign (petclinic, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620799038
+40336898753,121620800875,"campaign (petclinic, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753/job/121620800875
+40339213813,121628963047,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40339213813/job/121628963047
+40340291501,121632856870,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340291501/job/121632856870
+40340398882,121633248849,report,success,60.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340398882/job/121633248849
+40340751264,121634470367,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340751264/job/121634470367
+40340755960,121634495640,qualify (otel_demo),failure,1256.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960/job/121634495640
+40340755960,121634495885,qualify (deathstarbench),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960/job/121634495885
+40340755960,121634496041,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40340755960/job/121634496041
+40341227531,121636146400,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341227531/job/121636146400
+40341237065,121636186938,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636186938
+40341237065,121636187435,"campaign (otel_demo, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187435
+40341237065,121636187438,"campaign (otel_demo, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187438
+40341237065,121636187453,"campaign (deathstarbench, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187453
+40341237065,121636187483,"campaign (otel_demo, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187483
+40341237065,121636187546,"campaign (deathstarbench, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187546
+40341237065,121636187562,"campaign (deathstarbench, full, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187562
+40341237065,121636187586,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187586
+40341237065,121636187644,"campaign (deathstarbench, full, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187644
+40341237065,121636187654,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187654
+40341237065,121636187658,"campaign (otel_demo, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187658
+40341237065,121636187689,"campaign (deathstarbench, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187689
+40341237065,121636187716,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187716
+40341237065,121636187737,"campaign (otel_demo, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187737
+40341237065,121636187782,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187782
+40341237065,121636187837,"campaign (deathstarbench, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636187837
+40341237065,121636190463,"campaign (otel_demo, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190463
+40341237065,121636190551,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190551
+40341237065,121636190605,"campaign (petclinic, absent, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190605
+40341237065,121636190664,"campaign (petclinic, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190664
+40341237065,121636190746,"campaign (petclinic, partial, 1)",success,1779.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190746
+40341237065,121636190856,"campaign (petclinic, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190856
+40341237065,121636190896,"campaign (petclinic, partial, 0)",success,1799.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190896
+40341237065,121636190907,"campaign (petclinic, partial, 2)",success,1671.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190907
+40341237065,121636190971,"campaign (petclinic, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636190971
+40341237065,121636191061,"campaign (petclinic, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636191061
+40341237065,121636193569,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065/job/121636193569
+40341553349,121637310420,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341553349/job/121637310420
+40342100630,121639242893,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342100630/job/121639242893
+40342661015,121641200647,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342661015/job/121641200647
+40342667653,121641229991,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641229991
+40342667653,121641230278,"campaign (deathstarbench, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230278
+40342667653,121641230348,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230348
+40342667653,121641230363,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230363
+40342667653,121641230491,"campaign (deathstarbench, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230491
+40342667653,121641230552,"campaign (deathstarbench, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230552
+40342667653,121641230566,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230566
+40342667653,121641230575,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230575
+40342667653,121641230608,"campaign (otel_demo, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230608
+40342667653,121641230625,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230625
+40342667653,121641230636,"campaign (otel_demo, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230636
+40342667653,121641230652,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230652
+40342667653,121641230704,"campaign (deathstarbench, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230704
+40342667653,121641230767,"campaign (deathstarbench, absent, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230767
+40342667653,121641230776,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230776
+40342667653,121641230777,"campaign (otel_demo, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641230777
+40342667653,121641233949,"campaign (otel_demo, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641233949
+40342667653,121641233989,"campaign (petclinic, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641233989
+40342667653,121641234016,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234016
+40342667653,121641234072,"campaign (petclinic, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234072
+40342667653,121641234113,"campaign (petclinic, full, 0)",success,2258.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234113
+40342667653,121641234169,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234169
+40342667653,121641234230,"campaign (petclinic, partial, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234230
+40342667653,121641234266,"campaign (petclinic, full, 1)",success,2245.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234266
+40342667653,121641234343,"campaign (petclinic, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234343
+40342667653,121641234468,"campaign (petclinic, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641234468
+40342667653,121641236874,"campaign (petclinic, full, 2)",success,1732.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653/job/121641236874
+40343136013,121643035720,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40343136013/job/121643035720
+40344204817,121646656539,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344204817/job/121646656539
+40344336411,121647114642,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344336411/job/121647114642
+40344342452,121647144201,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344342452/job/121647144201
+40344342452,121647144660,qualify (otel_demo),success,596.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344342452/job/121647144660
+40344342452,121647144898,qualify (deathstarbench),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344342452/job/121647144898
+40344799981,121648774965,"campaign (deathstarbench, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648774965
+40344799981,121648775314,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775314
+40344799981,121648775391,"campaign (deathstarbench, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775391
+40344799981,121648775447,"campaign (deathstarbench, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775447
+40344799981,121648775490,"campaign (deathstarbench, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775490
+40344799981,121648775499,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775499
+40344799981,121648775506,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775506
+40344799981,121648775511,"campaign (otel_demo, absent, 1)",failure,1092.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775511
+40344799981,121648775528,"campaign (deathstarbench, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775528
+40344799981,121648775592,"campaign (otel_demo, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775592
+40344799981,121648775601,"campaign (otel_demo, absent, 0)",failure,1002.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775601
+40344799981,121648775758,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775758
+40344799981,121648775805,"campaign (otel_demo, absent, 2)",failure,1165.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775805
+40344799981,121648775965,"campaign (otel_demo, partial, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648775965
+40344799981,121648776036,"campaign (otel_demo, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648776036
+40344799981,121648776072,"campaign (deathstarbench, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648776072
+40344799981,121648778455,"campaign (otel_demo, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778455
+40344799981,121648778573,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778573
+40344799981,121648778741,"campaign (petclinic, absent, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778741
+40344799981,121648778780,"campaign (petclinic, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778780
+40344799981,121648778789,"campaign (petclinic, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778789
+40344799981,121648778833,"campaign (petclinic, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648778833
+40344799981,121648779016,"campaign (petclinic, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648779016
+40344799981,121648779081,"campaign (petclinic, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648779081
+40344799981,121648779399,"campaign (petclinic, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648779399
+40344799981,121648779961,"campaign (petclinic, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648779961
+40344799981,121648781700,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40344799981/job/121648781700
+40346539475,121654846415,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346539475/job/121654846415
+40346548867,121654887801,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346548867/job/121654887801
+40346548867,121654888239,qualify (otel_demo),success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346548867/job/121654888239
+40346548867,121654888351,qualify (deathstarbench),success,249.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346548867/job/121654888351
+40346563009,121654943128,"campaign (deathstarbench, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943128
+40346563009,121654943566,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943566
+40346563009,121654943608,"campaign (deathstarbench, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943608
+40346563009,121654943635,"campaign (deathstarbench, full, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943635
+40346563009,121654943664,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943664
+40346563009,121654943679,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943679
+40346563009,121654943698,"campaign (otel_demo, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943698
+40346563009,121654943717,"campaign (otel_demo, partial, 2)",failure,984.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943717
+40346563009,121654943751,"campaign (otel_demo, full, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943751
+40346563009,121654943764,"campaign (deathstarbench, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943764
+40346563009,121654943811,"campaign (deathstarbench, partial, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943811
+40346563009,121654943867,"campaign (otel_demo, partial, 1)",failure,559.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943867
+40346563009,121654943897,"campaign (deathstarbench, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654943897
+40346563009,121654944136,"campaign (otel_demo, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654944136
+40346563009,121654944163,"campaign (otel_demo, partial, 0)",failure,418.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654944163
+40346563009,121654944256,"campaign (deathstarbench, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654944256
+40346563009,121654946838,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654946838
+40346563009,121654947020,"campaign (petclinic, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947020
+40346563009,121654947030,"campaign (otel_demo, full, 1)",success,6.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947030
+40346563009,121654947033,"campaign (petclinic, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947033
+40346563009,121654947067,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947067
+40346563009,121654947134,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947134
+40346563009,121654947261,"campaign (petclinic, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947261
+40346563009,121654947711,"campaign (petclinic, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654947711
+40346563009,121654948356,"campaign (petclinic, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654948356
+40346563009,121654948381,"campaign (petclinic, full, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654948381
+40346563009,121654950070,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346563009/job/121654950070
+40346575968,121654986121,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986121
+40346575968,121654986632,"campaign (otel_demo, full, 0)",failure,395.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986632
+40346575968,121654986657,"campaign (otel_demo, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986657
+40346575968,121654986658,"campaign (deathstarbench, full, 2)",success,6.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986658
+40346575968,121654986703,"campaign (deathstarbench, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986703
+40346575968,121654986712,"campaign (deathstarbench, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986712
+40346575968,121654986784,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986784
+40346575968,121654986839,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986839
+40346575968,121654986869,"campaign (otel_demo, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986869
+40346575968,121654986887,"campaign (deathstarbench, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986887
+40346575968,121654986895,"campaign (otel_demo, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654986895
+40346575968,121654987034,"campaign (otel_demo, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654987034
+40346575968,121654987052,"campaign (deathstarbench, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654987052
+40346575968,121654987158,"campaign (deathstarbench, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654987158
+40346575968,121654987287,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654987287
+40346575968,121654987319,"campaign (deathstarbench, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654987319
+40346575968,121654990004,"campaign (otel_demo, full, 1)",failure,922.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990004
+40346575968,121654990180,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990180
+40346575968,121654990216,"campaign (otel_demo, full, 2)",failure,531.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990216
+40346575968,121654990233,"campaign (petclinic, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990233
+40346575968,121654990307,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990307
+40346575968,121654990334,"campaign (petclinic, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990334
+40346575968,121654990351,"campaign (petclinic, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990351
+40346575968,121654990534,"campaign (petclinic, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654990534
+40346575968,121654991545,"campaign (petclinic, full, 0)",success,6.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654991545
+40346575968,121654992247,"campaign (petclinic, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654992247
+40346575968,121654993053,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40346575968/job/121654993053
+40349570169,121665621737,"campaign (deathstarbench, partial, 2)",success,1504.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621737
+40349570169,121665621886,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621886
+40349570169,121665621941,"campaign (otel_demo, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621941
+40349570169,121665621954,"campaign (deathstarbench, partial, 0)",success,2066.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621954
+40349570169,121665621960,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621960
+40349570169,121665621962,"campaign (deathstarbench, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665621962
+40349570169,121665622052,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622052
+40349570169,121665622125,"campaign (deathstarbench, partial, 1)",success,1514.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622125
+40349570169,121665622138,"campaign (deathstarbench, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622138
+40349570169,121665622140,"campaign (otel_demo, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622140
+40349570169,121665622209,"campaign (otel_demo, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622209
+40349570169,121665622230,"campaign (otel_demo, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622230
+40349570169,121665622273,"campaign (otel_demo, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622273
+40349570169,121665622295,"campaign (otel_demo, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622295
+40349570169,121665622343,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622343
+40349570169,121665622420,"campaign (deathstarbench, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665622420
+40349570169,121665625407,"campaign (otel_demo, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665625407
+40349570169,121665626270,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626270
+40349570169,121665626280,"campaign (petclinic, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626280
+40349570169,121665626297,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626297
+40349570169,121665626587,"campaign (petclinic, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626587
+40349570169,121665626626,"campaign (petclinic, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626626
+40349570169,121665626720,"campaign (petclinic, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626720
+40349570169,121665626742,"campaign (petclinic, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665626742
+40349570169,121665627226,"campaign (petclinic, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665627226
+40349570169,121665627552,"campaign (petclinic, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665627552
+40349570169,121665628563,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169/job/121665628563
+40349582587,121665666545,"campaign (deathstarbench, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666545
+40349582587,121665666559,"campaign (deathstarbench, full, 1)",success,1447.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666559
+40349582587,121665666658,"campaign (otel_demo, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666658
+40349582587,121665666669,"campaign (otel_demo, full, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666669
+40349582587,121665666679,"campaign (deathstarbench, full, 2)",success,1445.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666679
+40349582587,121665666701,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666701
+40349582587,121665666751,"campaign (deathstarbench, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666751
+40349582587,121665666753,"campaign (otel_demo, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666753
+40349582587,121665666777,"campaign (deathstarbench, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666777
+40349582587,121665666826,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666826
+40349582587,121665666950,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666950
+40349582587,121665666956,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666956
+40349582587,121665666970,"campaign (otel_demo, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665666970
+40349582587,121665667031,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665667031
+40349582587,121665667079,"campaign (deathstarbench, full, 0)",success,1509.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665667079
+40349582587,121665667222,"campaign (deathstarbench, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665667222
+40349582587,121665669571,"campaign (otel_demo, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665669571
+40349582587,121665669623,"campaign (petclinic, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665669623
+40349582587,121665669963,"campaign (petclinic, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665669963
+40349582587,121665669978,"campaign (petclinic, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665669978
+40349582587,121665670267,"campaign (petclinic, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670267
+40349582587,121665670427,"campaign (petclinic, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670427
+40349582587,121665670454,"campaign (petclinic, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670454
+40349582587,121665670464,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670464
+40349582587,121665670577,"campaign (petclinic, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670577
+40349582587,121665670889,"campaign (petclinic, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665670889
+40349582587,121665672791,"campaign (petclinic, full, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587/job/121665672791
+40349920144,121666865581,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349920144/job/121666865581
+40350348359,121668395913,report,success,208.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40350348359/job/121668395913
+40350354044,121668408722,checks,success,12.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40350354044/job/121668408722
+40351815745,121673599971,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351815745/job/121673599971
+40351820494,121673633028,"campaign (deathstarbench, absent, 1)",success,6.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633028
+40351820494,121673633347,"campaign (deathstarbench, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633347
+40351820494,121673633414,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633414
+40351820494,121673633481,"campaign (deathstarbench, partial, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633481
+40351820494,121673633487,"campaign (deathstarbench, full, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633487
+40351820494,121673633498,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633498
+40351820494,121673633588,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633588
+40351820494,121673633603,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633603
+40351820494,121673633611,"campaign (deathstarbench, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633611
+40351820494,121673633625,"campaign (otel_demo, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633625
+40351820494,121673633633,"campaign (deathstarbench, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633633
+40351820494,121673633698,"campaign (otel_demo, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633698
+40351820494,121673633753,"campaign (otel_demo, full, 0)",failure,2001.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633753
+40351820494,121673633754,"campaign (deathstarbench, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673633754
+40351820494,121673634045,"campaign (deathstarbench, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673634045
+40351820494,121673634542,"campaign (otel_demo, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673634542
+40351820494,121673636914,"campaign (petclinic, absent, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673636914
+40351820494,121673636946,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673636946
+40351820494,121673636966,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673636966
+40351820494,121673637079,"campaign (otel_demo, full, 1)",success,6.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637079
+40351820494,121673637115,"campaign (petclinic, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637115
+40351820494,121673637167,"campaign (petclinic, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637167
+40351820494,121673637213,"campaign (petclinic, partial, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637213
+40351820494,121673637259,"campaign (petclinic, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637259
+40351820494,121673637416,"campaign (petclinic, partial, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673637416
+40351820494,121673638829,"campaign (petclinic, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673638829
+40351820494,121673640329,"campaign (petclinic, full, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40351820494/job/121673640329
+40353079225,121678114830,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40353079225/job/121678114830
+40355744498,121687602619,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40355744498/job/121687602619
+40356312250,121689623139,report,failure,144.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40356312250/job/121689623139
+40361189080,121706756544,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361189080/job/121706756544
+40361222386,121706885272,report,failure,146.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361222386/job/121706885272
+40361785193,121708876602,checks,success,19.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361785193/job/121708876602
+40361838871,121709064036,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361838871/job/121709064036
+40361979734,121709571517,"campaign (deathstarbench, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709571517
+40361979734,121709571921,"campaign (otel_demo, absent, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709571921
+40361979734,121709571957,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709571957
+40361979734,121709572051,"campaign (otel_demo, full, 0)",failure,1874.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572051
+40361979734,121709572068,"campaign (deathstarbench, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572068
+40361979734,121709572102,"campaign (otel_demo, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572102
+40361979734,121709572119,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572119
+40361979734,121709572150,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572150
+40361979734,121709572168,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572168
+40361979734,121709572170,"campaign (otel_demo, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572170
+40361979734,121709572231,"campaign (deathstarbench, absent, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572231
+40361979734,121709572233,"campaign (deathstarbench, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572233
+40361979734,121709572242,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572242
+40361979734,121709572243,"campaign (otel_demo, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572243
+40361979734,121709572366,"campaign (otel_demo, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572366
+40361979734,121709572459,"campaign (deathstarbench, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709572459
+40361979734,121709575034,"campaign (otel_demo, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575034
+40361979734,121709575043,"campaign (otel_demo, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575043
+40361979734,121709575274,"campaign (petclinic, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575274
+40361979734,121709575298,"campaign (petclinic, absent, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575298
+40361979734,121709575304,"campaign (petclinic, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575304
+40361979734,121709575529,"campaign (petclinic, partial, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575529
+40361979734,121709575533,"campaign (petclinic, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575533
+40361979734,121709575636,"campaign (petclinic, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709575636
+40361979734,121709576014,"campaign (petclinic, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709576014
+40361979734,121709576187,"campaign (petclinic, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709576187
+40361979734,121709578214,"campaign (petclinic, full, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40361979734/job/121709578214
+40362095112,121709958482,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40362095112/job/121709958482
+40362124923,121710067243,report,success,466.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40362124923/job/121710067243
+40362280818,121710594273,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40362280818/job/121710594273
+40362321620,121710751693,archive,success,150.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40362321620/job/121710751693
+40363080451,121713410182,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40363080451/job/121713410182
+40363239680,121713963583,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40363239680/job/121713963583
+40364687593,121719071578,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40364687593/job/121719071578
+40365001965,121720191559,checks,success,14.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40365001965/job/121720191559
+40365033726,121720315814,report,success,203.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40365033726/job/121720315814
+40366080830,121724031626,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40366080830/job/121724031626
+40366312170,121724858675,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40366312170/job/121724858675
+40367894943,121730459489,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40367894943/job/121730459489
+40368068437,121731061973,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40368068437/job/121731061973
+40368288097,121731843318,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40368288097/job/121731843318
+40368288097,121731843782,qualify (otel_demo),failure,551.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40368288097/job/121731843782
+40368288097,121731843960,qualify (deathstarbench),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40368288097/job/121731843960
+40368458797,121732432962,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40368458797/job/121732432962
+40369891138,121737479228,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40369891138/job/121737479228
+40370053088,121738044999,checks,success,18.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40370053088/job/121738044999
+40370126016,121738363991,qualify (petclinic),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40370126016/job/121738363991
+40370126016,121738364671,qualify (otel_demo),success,607.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40370126016/job/121738364671
+40370126016,121738364822,qualify (deathstarbench),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40370126016/job/121738364822
+40371285022,121742379821,checks,success,18.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40371285022/job/121742379821
+40372011776,121744929230,"campaign (deathstarbench, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929230
+40372011776,121744929429,"campaign (deathstarbench, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929429
+40372011776,121744929446,"campaign (deathstarbench, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929446
+40372011776,121744929457,"campaign (otel_demo, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929457
+40372011776,121744929462,"campaign (deathstarbench, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929462
+40372011776,121744929487,"campaign (otel_demo, absent, 1)",success,5870.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929487
+40372011776,121744929490,"campaign (otel_demo, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929490
+40372011776,121744929524,"campaign (deathstarbench, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929524
+40372011776,121744929592,"campaign (otel_demo, absent, 0)",success,6431.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929592
+40372011776,121744929602,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929602
+40372011776,121744929605,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929605
+40372011776,121744929617,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929617
+40372011776,121744929676,"campaign (deathstarbench, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929676
+40372011776,121744929744,"campaign (otel_demo, absent, 2)",success,7044.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929744
+40372011776,121744929966,"campaign (deathstarbench, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744929966
+40372011776,121744930025,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744930025
+40372011776,121744932406,"campaign (otel_demo, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932406
+40372011776,121744932473,"campaign (petclinic, full, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932473
+40372011776,121744932514,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932514
+40372011776,121744932679,"campaign (petclinic, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932679
+40372011776,121744932680,"campaign (petclinic, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932680
+40372011776,121744932693,"campaign (petclinic, absent, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932693
+40372011776,121744932772,"campaign (petclinic, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932772
+40372011776,121744932887,"campaign (petclinic, partial, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744932887
+40372011776,121744933062,"campaign (petclinic, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744933062
+40372011776,121744934057,"campaign (petclinic, partial, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744934057
+40372011776,121744934811,"campaign (petclinic, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776/job/121744934811
+40372023737,121744969120,"campaign (deathstarbench, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969120
+40372023737,121744969566,"campaign (deathstarbench, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969566
+40372023737,121744969578,"campaign (otel_demo, partial, 0)",failure,1986.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969578
+40372023737,121744969582,"campaign (deathstarbench, full, 1)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969582
+40372023737,121744969622,"campaign (deathstarbench, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969622
+40372023737,121744969624,"campaign (otel_demo, partial, 2)",failure,1841.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969624
+40372023737,121744969657,"campaign (otel_demo, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969657
+40372023737,121744969665,"campaign (deathstarbench, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969665
+40372023737,121744969666,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969666
+40372023737,121744969682,"campaign (deathstarbench, full, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969682
+40372023737,121744969696,"campaign (deathstarbench, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969696
+40372023737,121744969725,"campaign (otel_demo, partial, 1)",failure,2280.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969725
+40372023737,121744969762,"campaign (otel_demo, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969762
+40372023737,121744969819,"campaign (deathstarbench, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969819
+40372023737,121744969832,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969832
+40372023737,121744969916,"campaign (otel_demo, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744969916
+40372023737,121744972496,"campaign (otel_demo, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744972496
+40372023737,121744972786,"campaign (petclinic, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744972786
+40372023737,121744972847,"campaign (petclinic, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744972847
+40372023737,121744972966,"campaign (petclinic, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744972966
+40372023737,121744972977,"campaign (petclinic, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744972977
+40372023737,121744973022,"campaign (petclinic, absent, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744973022
+40372023737,121744973058,"campaign (otel_demo, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744973058
+40372023737,121744973083,"campaign (petclinic, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744973083
+40372023737,121744973379,"campaign (petclinic, full, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744973379
+40372023737,121744974049,"campaign (petclinic, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744974049
+40372023737,121744975694,"campaign (petclinic, full, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737/job/121744975694
+40372035878,121745012602,"campaign (deathstarbench, partial, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012602
+40372035878,121745012909,"campaign (otel_demo, partial, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012909
+40372035878,121745012960,"campaign (deathstarbench, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012960
+40372035878,121745012988,"campaign (deathstarbench, absent, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012988
+40372035878,121745012996,"campaign (otel_demo, absent, 0)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012996
+40372035878,121745012998,"campaign (deathstarbench, full, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745012998
+40372035878,121745013001,"campaign (deathstarbench, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013001
+40372035878,121745013015,"campaign (otel_demo, partial, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013015
+40372035878,121745013066,"campaign (deathstarbench, partial, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013066
+40372035878,121745013100,"campaign (otel_demo, absent, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013100
+40372035878,121745013102,"campaign (otel_demo, partial, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013102
+40372035878,121745013108,"campaign (deathstarbench, full, 2)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013108
+40372035878,121745013110,"campaign (deathstarbench, absent, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013110
+40372035878,121745013122,"campaign (deathstarbench, full, 1)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013122
+40372035878,121745013263,"campaign (otel_demo, full, 0)",failure,1975.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013263
+40372035878,121745013282,"campaign (otel_demo, absent, 2)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745013282
+40372035878,121745016074,"campaign (otel_demo, full, 2)",cancelled,7269.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016074
+40372035878,121745016178,"campaign (petclinic, full, 0)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016178
+40372035878,121745016199,"campaign (petclinic, partial, 2)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016199
+40372035878,121745016210,"campaign (petclinic, partial, 0)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016210
+40372035878,121745016217,"campaign (otel_demo, full, 1)",failure,1968.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016217
+40372035878,121745016549,"campaign (petclinic, absent, 1)",success,5.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016549
+40372035878,121745016569,"campaign (petclinic, partial, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016569
+40372035878,121745016598,"campaign (petclinic, absent, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016598
+40372035878,121745016611,"campaign (petclinic, absent, 0)",success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016611
+40372035878,121745016625,"campaign (petclinic, full, 1)",success,4.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745016625
+40372035878,121745019109,"campaign (petclinic, full, 2)",success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878/job/121745019109
+40372133664,121745352617,checks,success,18.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372133664/job/121745352617
+40372134132,121745426835,checks,success,17.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372134132/job/121745426835
+40372134826,121745356297,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372134826/job/121745356297
+40372610837,121747043485,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372610837/job/121747043485
+40375082750,121755823534,checks,success,16.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40375082750/job/121755823534
+40453145794,122020271255,checks,success,15.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453145794/job/122020271255
+40453425802,122021151673,checks,success,13.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453425802/job/122021151673
+40453531820,122021486922,checks,success,18.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453531820/job/122021486922
+40453564014,122021598324,qualify (deathstarbench),success,3.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453564014/job/122021598324
+40453564014,122021598674,qualify (petclinic),success,2.0,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453564014/job/122021598674
+40453564014,122021598725,qualify (otel_demo),,,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453564014/job/122021598725
+40453691448,122022001314,report,,,https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453691448/job/122022001314
