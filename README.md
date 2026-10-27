@@ -1,10 +1,10 @@
 # Discovering operation models from eBPF observations in distributed applications
 
-**Research status: acquisition and evaluation jobs have completed for all 27 planned campaigns; final aggregation and independent review are in progress. The reviewed 22-campaign snapshot remains below until that review finishes.** This README is the evolving research report. A green deployment job is not a successful research result. The [run history](docs/RUN_HISTORY.md) retains failed preparations and the superseded protocol pilot.
+**Research status: the fixed 27-campaign series, final analysis and independent review are complete.** This README reports the measured positive, negative and unknown outcomes. The [final review](docs/PROTOCOL.md#final-result-review-2026-10-27) approves the report and does not endorse the full original usefulness claim. The [run history](docs/RUN_HISTORY.md) retains failed preparations, technical replacements and the superseded protocol pilot.
 
 ## Abstract
 
-Application traces can support discovery of execution dependencies and operation-success models, but many projects have no tracing or incomplete coverage. This empirical study tests whether eBPF observations can supply sufficiently useful evidence in those settings. Ten operations from DeathStarBench Social Network, OpenTelemetry Demo, and Spring Petclinic Microservices run across two Linux virtual machines with independent kernels. We compare absent, partial, and full application tracing; calibrate under four controlled replica states; and predict success under a new mixture of those states. Independent HTTP content and database checks evaluate the predictions. Additional controls examine operation classes, cross-machine execution links, database dependencies, and asynchronous checkout/accounting. All acquisition/evaluation jobs have completed; conclusions await final aggregation and review of the retained evidence.
+Application traces can support discovery of execution dependencies and operation-success models, but many projects have no tracing or incomplete coverage. This empirical study tests eBPF observations on ten operations from DeathStarBench Social Network, OpenTelemetry Demo, and Spring Petclinic Microservices, using two Linux virtual machines with independent kernels. The [completed series](results/final/SOURCE.md) contains 27 campaigns and 58,320 primary attempts, plus database and asynchronous controls. Conditional models calibrated under four replica states predict outcomes under a new state mixture. DeathStarBench's three entry-event forecasts meet the conservative five-percentage-point target in all tracing modes; Petclinic retains semantic mismatches and unknowns, and OTel forecasts remain noninformative. Healthy operation grouping can succeed while failures make the intended class ambiguous. Native spans support checkout/accounting associations in enabled modes; the tested eBPF path confirms none. Database observations add structure but do not drive this predictor. Exact conditional-state weighting is equivalent to the Monte Carlo calculation, and superiority over simpler HTTP observation or direct estimation is not established. [Complete operation-level results](results/final/report.md) retain uncertainty and failed preparation costs.
 
 ## Motivation and research questions
 
@@ -158,27 +158,72 @@ Accounting remains stopped until all deadlines expire; the queue is drained befo
 
 Evaluation retains every operation, tracing mode, and repeat. Outputs include signed/absolute forecast errors, uncertainty intervals, external success, unknown fractions, class ARI, supported cross-node links, database dependencies, and costs. Conservative interval error for `[L,U]` and external rate y is `max(|L-y|,|U-y|)`. Width above 10 percentage points is insufficiently informative. Per-attempt proxy-versus-business mismatches prevent compensating semantic errors from disappearing inside an aggregate.
 
+If the independent oracle has unknown outcomes, its rate is bounded by `y_lo = successes/n` and `y_hi = (successes + unknown)/n`. Scoring then uses `max(|L-y_hi|,|U-y_lo|)`; unknown oracle outcomes are not removed from the denominator. An unsupported forecast uses `[0,1]` and is marked explicitly.
+
 Costs include preparation, downloads/builds, VM startup, acquisition, state changes, settling, queue draining, oracle queries, inference, simulation, analysis, and technical failures. Job duration and machine resources accompany measured process timings. Manual semantic declarations and engineering work are described separately, not treated as free automation.
 
 ## Results
 
-**The series is incomplete: 22 of 27 campaigns have valid results.** The [reviewed interim tables](results/interim-22/report.md), [per-operation comparison](results/interim-22/operation-comparison.md), [per-repeat data](results/interim-22/operations.csv), and [artifact provenance](results/interim-22/SOURCE.md) were generated in [Actions report 40453691448](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40453691448). They contain 47,520 admitted primary attempts. Five OTel partial/full replacements have completed and await inclusion in the final report; full seed 2 was recovered from a completed capture without new traffic or fitting. Independent review approved this expanded partial report and retained a NO-GO for claiming the full original criterion established.
+**All 27 planned campaigns have valid results, covering 58,320 primary attempts.** The [complete tables](results/final/report.md), [per-repeat data](results/final/operations.csv), and [artifact provenance](results/final/SOURCE.md) come from [Actions report 40459487189](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40459487189). OTel full seed 2 was evaluated from its completed capture after an evaluation timeout, without new traffic or fitting. Technical replacements are identified independently of measured accuracy, and earlier partial reports remain retained.
+
+The following table is copied from the [generated comparison](results/final/operation-comparison.md). Cells show mean absolute point error / mean worst-end error in percentage points across exactly three seeds. `unknown` is an unidentified point estimate, not zero error. The [full report](results/final/report.md) also records interval informativeness and the conservative target.
+
+| System | Operation | Mode | eBPF | Native | Combined |
+|---|---|---|---:|---:|---:|
+| deathstarbench | compose_post | absent | 0.00 / 4.01 | unknown / 87.50 | 0.00 / 4.01 |
+| deathstarbench | compose_post | full | 0.00 / 4.01 | 0.00 / 4.01 | 0.00 / 4.01 |
+| deathstarbench | compose_post | partial | 0.00 / 4.01 | 0.00 / 4.01 | 0.00 / 4.01 |
+| deathstarbench | read_home_timeline | absent | 0.00 / 4.58 | unknown / 100.00 | 0.00 / 4.58 |
+| deathstarbench | read_home_timeline | full | 0.00 / 4.58 | 0.00 / 4.58 | 0.00 / 4.58 |
+| deathstarbench | read_home_timeline | partial | 0.00 / 4.58 | 0.00 / 4.58 | 0.00 / 4.58 |
+| deathstarbench | read_user_timeline | absent | 0.00 / 4.01 | unknown / 87.50 | 0.00 / 4.01 |
+| deathstarbench | read_user_timeline | full | 0.00 / 4.01 | 0.00 / 4.01 | 0.00 / 4.01 |
+| deathstarbench | read_user_timeline | partial | 0.00 / 4.01 | 0.00 / 4.01 | 0.00 / 4.01 |
+| otel_demo | add_to_cart | absent | unknown / 12.50 | unknown / 87.50 | unknown / 12.50 |
+| otel_demo | add_to_cart | full | unknown / 12.50 | unknown / 12.50 | unknown / 62.50 |
+| otel_demo | add_to_cart | partial | unknown / 12.50 | unknown / 12.50 | unknown / 39.10 |
+| otel_demo | browse_product | absent | unknown / 12.50 | unknown / 87.50 | unknown / 12.50 |
+| otel_demo | browse_product | full | unknown / 12.50 | unknown / 12.50 | unknown / 62.50 |
+| otel_demo | browse_product | partial | unknown / 12.50 | unknown / 12.50 | unknown / 13.93 |
+| otel_demo | checkout | absent | unknown / 12.50 | unknown / 87.50 | unknown / 12.50 |
+| otel_demo | checkout | full | unknown / 13.09 | unknown / 13.09 | unknown / 40.25 |
+| otel_demo | checkout | partial | unknown / 12.50 | unknown / 12.50 | unknown / 39.10 |
+| petclinic | create_visit | absent | unknown / 42.90 | unknown / 87.50 | unknown / 42.90 |
+| petclinic | create_visit | full | unknown / 32.68 | unknown / 32.68 | unknown / 32.68 |
+| petclinic | create_visit | partial | unknown / 16.25 | 0.00 / 5.27 | unknown / 16.25 |
+| petclinic | list_owners | absent | unknown / 13.10 | unknown / 100.00 | unknown / 13.10 |
+| petclinic | list_owners | full | 0.00 / 6.02 | 0.00 / 6.02 | 0.00 / 6.02 |
+| petclinic | list_owners | partial | unknown / 13.35 | 0.00 / 6.02 | unknown / 13.35 |
+| petclinic | list_vets | absent | unknown / 13.10 | unknown / 100.00 | unknown / 13.10 |
+| petclinic | list_vets | full | 0.00 / 6.02 | 0.00 / 6.02 | 0.00 / 6.02 |
+| petclinic | list_vets | partial | unknown / 13.35 | 0.00 / 6.02 | unknown / 13.35 |
+| petclinic | owner_details_with_visits | absent | unknown / 13.25 | unknown / 87.50 | unknown / 13.25 |
+| petclinic | owner_details_with_visits | full | 12.50 / 12.50 | 12.50 / 12.50 | 12.50 / 12.50 |
+| petclinic | owner_details_with_visits | partial | unknown / 13.50 | 12.50 / 12.50 | unknown / 13.50 |
 
 For DeathStarBench, all three eBPF entry-event forecasts have zero point error across the three repeats in each mode. Conservative mean worst-end error is 4.01 pp for compose/user timeline and 4.58 pp for home timeline, meeting the stated target. Native partial/full observations produce the same forecasts. This result concerns conditional entry outcomes: OBI does not reconstruct the internal Thrift execution topology in these captures.
 
 Petclinic does not meet the conservative target for any operation/mode group. In full mode, list owners and list vets have zero point error but 6.02 pp worst-end error under the nominal interval construction. Owner details has 12.50 pp point error: HTTP 200 can omit required visits. Create-visit forecasts and several absent/partial forecasts retain unknowns. These are limitations of the tested observation/projection procedure and semantic proxy, not proof that all eBPF approaches fail.
 
-In the three OTel absent-mode repeats, all three operations retain unknown point forecasts and have mean worst-end error 12.50 pp, failing the target. Healthy route classification nevertheless has ARI 1.0 on all 120 held-out attempts in each repeat. When both catalog replicas fail, the operation sequences stop at their common product-read prefix, leaving their intended classes ambiguous under the fixed representation. The fixed estimator allows either outcome for every compatible unclassified attempt, even when its recorded HTTP proxy is false; the resulting bounds remain wide. This identifies a limitation of the implemented classification and conservative estimator, not an impossibility result for all observation-based methods.
+OTel eBPF forecasts remain noninformative in every mode. Mean worst-end error is 12.50 pp for product browse and add-to-cart; checkout is 12.50 pp in absent/partial mode and 13.09 pp in full mode. Healthy eBPF route classification nevertheless has ARI 1.0 on all 120 held-out attempts in each of the nine campaigns. When both catalog replicas fail, operation sequences stop at their common product-read prefix, leaving their intended classes ambiguous under the fixed representation. The fixed estimator allows either outcome for every compatible unclassified attempt, even when its recorded HTTP proxy is false; the resulting bounds remain wide. This is a limitation of the implemented assignment and bounds policy, not an impossibility result for all observation-based methods. The simple combined-source procedure can also worsen results: full-mode browse/cart worst-end error is 62.50 pp, compared with 12.50 pp from either source separately.
 
-The [asynchronous controls](results/interim-22/async.csv) distinguish association from timely completion. In OTel full seed 2, native and combined evidence link all 20 checkouts in each of the normal, paused and recovered blocks to subsequent accounting write spans; eBPF confirms none of these chains. The matcher establishes an observed write attempt, not successful SQL execution or commit. HTTP successes are respectively 20, 20 and 13, while SQL confirms timely durable success for 20, 0 and 13. The paused block has 19 unknown SQL outcomes and one confirmed failure; recovered has seven unknowns. Retained oracle evidence includes command/SSH failures and queries that cross a deadline; unknown is not counted as observed failure. Eventual trace association after consumer recovery does not establish persistence before the ten-second deadline. These are single-repeat full-mode observations, not a three-repeat full-mode aggregate.
+The [asynchronous controls](results/final/async.csv) distinguish association from timely completion. No eBPF source confirms an identity chain in any of the nine OTel campaigns. In each partial/full block, native and combined evidence associate all 20 attempts with subsequent accounting write spans. An observed write attempt does not prove successful SQL execution or commit. The following example retains full seed 2, the first completed full-mode capture already reported in the 22-campaign snapshot; it is not a three-repeat aggregate.
 
-The [class results](results/interim-22/classes.csv) preserve coverage alongside ARI. For example, Petclinic absent seed 0 has route ARI 1.0 on all 120 test attempts, while the downstream augmentation has ARI 0.5122 on 119 attempts. Additional downstream detail therefore did not automatically improve this representation. [DB activity](results/interim-22/database-activity.csv) includes native Mongo calls even without endpoint attributes; [structure results](results/interim-22/structure.csv) retain OBI's Mongo-to-MySQL misclassification. No DB-driven forecast improvement or independently validated cross-node error rate is established.
+| Full seed 2 control, 20 attempts each | HTTP success within 2 s | SQL success within 10 s | Confirmed SQL failure | SQL unknown | Native/combined associations | eBPF associations |
+|---|---:|---:|---:|---:|---:|---:|
+| Normal | 20 | 20 | 0 | 0 | 20 | 0 |
+| Accounting stopped | 20 | 0 | 1 | 19 | 20 | 0 |
+| After recovery | 13 | 13 | 0 | 7 | 20 | 0 |
 
-The [DB controls](results/interim-22/database-controls.csv) also show why an observed database node does not alone determine operation success. In the fixed absent seed-0 illustration, all 20 DeathStarBench operations satisfy their declared immediate predicates with the selected MongoDB stopped. Petclinic's five vet-list operations still pass, while its other 15 operations fail. All 20 OTel operations fail with PostgreSQL stopped. These are bounded controls on prepared fixtures; cached responses and an immediate acknowledgement can mask effects beyond the declared outcome. They do not estimate dependency recall or establish that every observed DB edge is causally necessary.
+Retained oracle evidence includes command/SSH failures and queries that cross a deadline; unknown is not counted as observed failure. Eventual trace association after consumer recovery does not establish persistence before the ten-second deadline. All repeats, including less successful HTTP and SQL controls, remain in the linked CSV and per-attempt evidence.
 
-![Interim worst-end errors by operation, source and repeat](results/interim-22/errors.svg)
+The [class results](results/final/classes.csv) preserve coverage alongside ARI. For example, Petclinic absent seed 0 has route ARI 1.0 on all 120 test attempts, while the downstream augmentation has ARI 0.5122 on 119 attempts. Additional downstream detail therefore did not automatically improve this representation. [DB activity](results/final/database-activity.csv) includes native Mongo calls even without endpoint attributes; [structure results](results/final/structure.csv) retain OBI's Mongo-to-MySQL misclassification. No DB-driven forecast improvement or independently validated cross-node error rate is established.
 
-Each marker is one repeat's worst-end error, including conservative bounds for unknown forecasts; it is not necessarily a point-estimate error. The dashed line is 5 pp. The [cost ledger](results/interim-22/job-costs.csv) records 113,020 completed job-seconds through this report's snapshot, including preparation and failures. Ongoing work and unmetered engineering time are not included as zero.
+The [DB controls](results/final/database-controls.csv) also show why an observed database node does not alone determine operation success. In the fixed absent seed-0 illustration, all 20 DeathStarBench operations satisfy their declared immediate predicates with the selected MongoDB stopped. Petclinic's five vet-list operations still pass, while its other 15 operations fail. All 20 OTel operations fail with PostgreSQL stopped. These are bounded controls on prepared fixtures; cached responses and an immediate acknowledgement can mask effects beyond the declared outcome. They do not estimate dependency recall or establish that every observed DB edge is causally necessary.
+
+![Worst-end errors by operation, source and repeat](results/final/errors.svg)
+
+Each marker is one repeat's worst-end error, including conservative bounds for unknown forecasts; it is not necessarily a point-estimate error. The dashed line is 5 pp. The [cost ledger](results/final/job-costs.csv) records 125,205 completed job-seconds through this report's snapshot, including preparation and failures. Ongoing work and unmetered engineering time are not included as zero.
 
 | Stage | Evidence | Interpretation |
 |---|---|---|
@@ -187,14 +232,14 @@ Each marker is one repeat's worst-end error, including conservative bounds for u
 | Protocol support | [Technical attempts and repairs](docs/RUN_HISTORY.md) | DSB Mongo endpoints are mislabelled as MySQL by OBI; labels are retained. Exact native Kafka message chains passed qualification; eBPF-only recovery is not presumed |
 | Petclinic series | [Initial jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40335553492), [partial repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40341237065), [full repairs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40342667653) | All nine campaigns acquired and evaluated; failed exporter snapshots retained |
 | DSB series | [Absent campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40336898753), [partial replacements](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349570169), [full replacements](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40349582587) | All nine admitted campaigns acquired and evaluated; six invalid native-baseline campaigns explicitly excluded and retained |
-| OTel series | [Absent](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776), [partial](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372023737), [full](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878), [new helper qualification](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40454954706) | Three absent campaigns completed; full seed 2 completed its first evaluation from the retained acquisition. All five partial/full replacements completed after verified helper qualification; all incomplete attempts retained |
-| Final empirical review | [27-campaign report running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40459487189) | Collection/evaluation jobs completed; final aggregate and independent review pending |
+| OTel series | [Absent](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372011776), [partial](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40456045810), [full seed 0](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40456053398), [full seed 1](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40456061253), [retained full seed 2](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40372035878) | All nine campaigns completed; five technical replacements passed count/hash/mode/parse/admin-lifecycle audits, and full seed 2 used evaluation recovery. Incomplete originals remain retained |
+| Final empirical review | [Completed 27-campaign report](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40459487189), [verdict](docs/PROTOCOL.md#final-result-review-2026-10-27) | Completed: complete seeds/counts, 243 core hashes and 81 assignment hashes match; README agrees with retained evidence. GO for the mixed/negative report, not the full original usefulness claim |
 
 Technical reruns retain the failed attempt and its cause. The series is not expanded to obtain positive results.
 
-The [first permanent data archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40362321620) retains original campaign/qualification artifact ZIPs and workflow logs through OTel attempt `40351820494`, including failed preparations, the superseded pilot, and intermediate reports. The [second archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40455065560) retains the later OTel captures, failed recovery qualifications and the 18/22-campaign reports. Each release's `SHA256SUMS.txt` and `provenance.tar.gz` identify exact assets and source runs. These releases do not represent a completed series.
+The [first permanent data archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40362321620) retains initial acquisitions, failed preparations, the superseded pilot and intermediate reports. The [second archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40455065560) retains later OTel captures, failed recovery qualifications and the 18/22-campaign reports. The [final archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40460660847) retains the qualified helper, last five replacements and complete 27-campaign report. Together they preserve the full input series and technical history. Each release's `SHA256SUMS.txt` and `provenance.tar.gz` identify exact assets and source runs; the final report's archived digest matches its original Actions digest.
 
-Example observed calibration graphs are available for [DeathStarBench](results/interim-22/example-model-deathstarbench.md), [OTel Demo](results/interim-22/example-model-otel_demo.md) and [Petclinic](results/interim-22/example-model-petclinic.md). Selection is fixed to the first absent-mode seed-0 campaign. These graphs retain uncertain identities and observed protocol labels; they are not ground-truth architecture diagrams.
+Example observed calibration graphs are available for [DeathStarBench](results/final/example-model-deathstarbench.md), [OTel Demo](results/final/example-model-otel_demo.md) and [Petclinic](results/final/example-model-petclinic.md). Selection is fixed to the first absent-mode seed-0 campaign. These graphs retain uncertain identities and observed protocol labels; they are not ground-truth architecture diagrams.
 
 ## Discussion and limitations
 
@@ -211,6 +256,8 @@ Database counts distinguish observed structure from validated dependencies. Endp
 ## Reproduction
 
 Application execution and research computation run in GitHub Actions. Local activity is editing, static checks, and focused unit checks.
+
+Dispatching the commands below requires GitHub CLI authentication and permission to run workflows in this repository. Each campaign requires a standard Ubuntu runner with usable KVM, sufficient memory for both guests, and network access for the pinned sources/images. Public releases can be downloaded for inspection without permission to dispatch workflows. The [final report provenance](results/final/SOURCE.md) provides the exact retained-data replay command, all 18 input run IDs and a pinned analysis reference.
 
 ```bash
 gh repo clone a-a-k/ebpf-model-discovery-experiments
@@ -260,7 +307,9 @@ Artifacts include `qualification.json`, `deployment.json`, `commands.jsonl`, `ex
 
 ## Conclusions and sources
 
-The study is incomplete. Conclusions will identify operations/settings that did or did not meet the external criterion, with unknowns and costs. Collection, plausible graphs, and agreement with equivalent arithmetic alone do not establish useful discovery.
+The completed series provides a bounded positive case for forecasting entry outcomes without application tracing in DeathStarBench, alongside semantic and identification failures in the other systems. It does not establish the full original usefulness criterion against the strongest simple alternatives. Direct conditional-state estimation gives the same calculation; no advantage from Monte Carlo itself or lower complete preparation effort is demonstrated.
+
+The tested grouping does not recover business intent when distinct workflows abort at a shared prefix. Native message context supports asynchronous association in these captures, while the tested eBPF procedure does not establish it. Database nodes can enrich an observed graph, but this predictor does not use them and therefore demonstrates no DB-driven prediction gain. Independent cross-node error rates and concrete database-instance identities remain unknown. These limits, oracle failures, manual identity labels, and all technical attempts are part of the result; the fixed series was not expanded to obtain a positive conclusion.
 
 - [Existing SIMPAT experiments](https://github.com/a-a-k/telemetry-availability-identification).
 - [DeathStarBench](https://github.com/delimitrou/DeathStarBench).

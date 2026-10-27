@@ -1,0 +1,44 @@
+[
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "partial",
+    "seed": 0,
+    "reason": "Predeclared projection repair: header-bearing Lua child was not linked to its existing exact-parent nginx HTTP evidence; the saved native forecast was therefore fitted with an incomplete binder. Exclude all paired sources, retain original data and costs."
+  },
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "partial",
+    "seed": 1,
+    "reason": "Same projection/binding implementation defect as partial seed 0; exclusion is independent of measured accuracy."
+  },
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "partial",
+    "seed": 2,
+    "reason": "Same projection/binding implementation defect as partial seed 0; exclusion is independent of measured accuracy."
+  },
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "full",
+    "seed": 0,
+    "reason": "Same native projection/binding implementation as partial mode; identified before this job completed. Exclude all paired sources, retain original data and costs."
+  },
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "full",
+    "seed": 1,
+    "reason": "Same native projection/binding implementation as partial mode; exclusion is independent of measured accuracy."
+  },
+  {
+    "run_id": "40336898753",
+    "system": "deathstarbench",
+    "mode": "full",
+    "seed": 2,
+    "reason": "Same native projection/binding implementation as partial mode; exclusion is independent of measured accuracy."
+  }
+]

@@ -1,0 +1,1235 @@
+{
+  "report_run_id": "40459487189",
+  "report_commit": "69fc1e3397ad945a8d6580011ed431e4c5141085",
+  "source_artifact_indexes": [
+    {
+      "run_id": "40333270035",
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12656539031,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1NjUzOTAzMQ==",
+          "name": "campaign-petclinic-absent-0-40333270035",
+          "size_in_bytes": 9070280,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12656539031",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12656539031/zip",
+          "expired": false,
+          "digest": "sha256:8ee1fe685576b11ac9075b112900243a408b6eff3d7eda774de7c1b8186fbcea",
+          "created_at": "2026-10-26T14:08:11Z",
+          "updated_at": "2026-10-26T14:08:11Z",
+          "expires_at": "2027-01-24T13:44:42Z",
+          "workflow_run": {
+            "id": 40333270035,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "2ac30a1ff0d7eb409ab1e3ba968bd0444ac3cd15"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40335553492",
+      "total_count": 9,
+      "artifacts": [
+        {
+          "id": 12660730425,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MDczMDQyNQ==",
+          "name": "campaign-petclinic-full-1-40335553492",
+          "size_in_bytes": 3844430,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660730425",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660730425/zip",
+          "expired": false,
+          "digest": "sha256:fb88dc086228b85c4512595fa2df5e15632d0ca4a027a040db618d651a5852ea",
+          "created_at": "2026-10-26T14:44:19Z",
+          "updated_at": "2026-10-26T14:44:19Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12659700212,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTcwMDIxMg==",
+          "name": "campaign-petclinic-full-0-40335553492",
+          "size_in_bytes": 3767922,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659700212",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659700212/zip",
+          "expired": false,
+          "digest": "sha256:ba54297b02214ca3765f08e8773de1459fdcc0ff91239a627364ad7054f26821",
+          "created_at": "2026-10-26T14:36:05Z",
+          "updated_at": "2026-10-26T14:36:05Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12659530995,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTUzMDk5NQ==",
+          "name": "campaign-petclinic-full-2-40335553492",
+          "size_in_bytes": 3860975,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659530995",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659530995/zip",
+          "expired": false,
+          "digest": "sha256:baff01d26fe9b583b22a7ac8c837cbb168e31901b0a950318bf1725f35d1abe1",
+          "created_at": "2026-10-26T14:38:31Z",
+          "updated_at": "2026-10-26T14:38:31Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12659325631,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTMyNTYzMQ==",
+          "name": "campaign-petclinic-partial-2-40335553492",
+          "size_in_bytes": 3750398,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659325631",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659325631/zip",
+          "expired": false,
+          "digest": "sha256:b427d1cf34fd57e298708527b04165c88485815a1eee79d767675d3c0114a6c7",
+          "created_at": "2026-10-26T14:21:36Z",
+          "updated_at": "2026-10-26T14:21:36Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12658804257,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1ODgwNDI1Nw==",
+          "name": "campaign-petclinic-absent-1-40335553492",
+          "size_in_bytes": 9349045,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658804257",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658804257/zip",
+          "expired": false,
+          "digest": "sha256:b077cb1ca74e265b380bf82c3fb993ad907c9f87b404c945fd4d226a5464ba6e",
+          "created_at": "2026-10-26T14:36:44Z",
+          "updated_at": "2026-10-26T14:36:44Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12658295458,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1ODI5NTQ1OA==",
+          "name": "campaign-petclinic-partial-0-40335553492",
+          "size_in_bytes": 3688984,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658295458",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658295458/zip",
+          "expired": false,
+          "digest": "sha256:6b34ccde723ede8b6820736083e1f1a07796dbb5601fa1184acc42d5a0284adc",
+          "created_at": "2026-10-26T14:13:53Z",
+          "updated_at": "2026-10-26T14:13:53Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12657858174,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1Nzg1ODE3NA==",
+          "name": "campaign-petclinic-absent-2-40335553492",
+          "size_in_bytes": 9327399,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657858174",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657858174/zip",
+          "expired": false,
+          "digest": "sha256:22c698e5f3fca087c2b0d8b929ed93c8b935ccbe8c064ce5aad5efd0d004a685",
+          "created_at": "2026-10-26T14:27:47Z",
+          "updated_at": "2026-10-26T14:27:47Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12657739129,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1NzczOTEyOQ==",
+          "name": "campaign-petclinic-absent-0-40335553492",
+          "size_in_bytes": 9318900,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657739129",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657739129/zip",
+          "expired": false,
+          "digest": "sha256:501f7945d31b7967b7445c4b11539d64dd5a51961eb39ee6dbbf2e87b7ec2c30",
+          "created_at": "2026-10-26T14:29:22Z",
+          "updated_at": "2026-10-26T14:29:22Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        },
+        {
+          "id": 12657019990,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1NzAxOTk5MA==",
+          "name": "campaign-petclinic-partial-1-40335553492",
+          "size_in_bytes": 3717588,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657019990",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12657019990/zip",
+          "expired": false,
+          "digest": "sha256:f877edb971db24e796de238639d5c30c15bbb77767f160db6d62f176e603ebd2",
+          "created_at": "2026-10-26T14:23:03Z",
+          "updated_at": "2026-10-26T14:23:03Z",
+          "expires_at": "2027-01-24T13:59:57Z",
+          "workflow_run": {
+            "id": 40335553492,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "45d0eee2e118802094b504e3d2fba324f7bd4f47"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40336898753",
+      "total_count": 9,
+      "artifacts": [
+        {
+          "id": 12662046369,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MjA0NjM2OQ==",
+          "name": "campaign-deathstarbench-full-2-40336898753",
+          "size_in_bytes": 21371690,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662046369",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662046369/zip",
+          "expired": false,
+          "digest": "sha256:e309190ce61f53d2582c5beced5e3c9278eb4c999cd003af0b8cd28312ddd5a3",
+          "created_at": "2026-10-26T15:14:20Z",
+          "updated_at": "2026-10-26T15:14:20Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12662036199,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MjAzNjE5OQ==",
+          "name": "campaign-deathstarbench-full-0-40336898753",
+          "size_in_bytes": 21556856,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662036199",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662036199/zip",
+          "expired": false,
+          "digest": "sha256:f16bb5d0622cc89af9ab04dc5c86d59a13becfc8cf62cd991eb2eca8c9bfd8ef",
+          "created_at": "2026-10-26T15:12:57Z",
+          "updated_at": "2026-10-26T15:12:57Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12660280292,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MDI4MDI5Mg==",
+          "name": "campaign-deathstarbench-partial-1-40336898753",
+          "size_in_bytes": 18338087,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660280292",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660280292/zip",
+          "expired": false,
+          "digest": "sha256:d794ada1ff4600c5b59f0bf5ab9c3aea30dd3c1920b71475eea749a888a5d992",
+          "created_at": "2026-10-26T14:41:31Z",
+          "updated_at": "2026-10-26T14:41:31Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12659879734,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTg3OTczNA==",
+          "name": "campaign-deathstarbench-full-1-40336898753",
+          "size_in_bytes": 21462280,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659879734",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659879734/zip",
+          "expired": false,
+          "digest": "sha256:85f44a547d38c6e3553f600c5e3d90b29dedb6513e9f379b7f978fdbd2f044a7",
+          "created_at": "2026-10-26T15:07:27Z",
+          "updated_at": "2026-10-26T15:07:27Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12659491219,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTQ5MTIxOQ==",
+          "name": "campaign-deathstarbench-absent-2-40336898753",
+          "size_in_bytes": 4850175,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659491219",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659491219/zip",
+          "expired": false,
+          "digest": "sha256:9071d29ee2c9ecbe1c4ad63435303001f57d6efd20c1665b58e7e005acdb69a3",
+          "created_at": "2026-10-26T14:39:43Z",
+          "updated_at": "2026-10-26T14:39:43Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12659112408,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1OTExMjQwOA==",
+          "name": "campaign-deathstarbench-absent-1-40336898753",
+          "size_in_bytes": 4823080,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659112408",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12659112408/zip",
+          "expired": false,
+          "digest": "sha256:800aaddea93684a6060ba8003ae95286cd078cfe8deeecfef407e0e6b1705d03",
+          "created_at": "2026-10-26T14:39:33Z",
+          "updated_at": "2026-10-26T14:39:33Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12658409803,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1ODQwOTgwMw==",
+          "name": "campaign-deathstarbench-partial-2-40336898753",
+          "size_in_bytes": 18273388,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658409803",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658409803/zip",
+          "expired": false,
+          "digest": "sha256:695f9156caea2a583df09d6e419ca4ec510570936814d575c6e4b958e09157c9",
+          "created_at": "2026-10-26T14:40:01Z",
+          "updated_at": "2026-10-26T14:40:01Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12658144657,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1ODE0NDY1Nw==",
+          "name": "campaign-deathstarbench-absent-0-40336898753",
+          "size_in_bytes": 4887935,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658144657",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658144657/zip",
+          "expired": false,
+          "digest": "sha256:282486532fbce1dd36c2f72ce37ba2704da4d5544bdccd2aa106ade8e635a0b3",
+          "created_at": "2026-10-26T14:33:43Z",
+          "updated_at": "2026-10-26T14:33:43Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        },
+        {
+          "id": 12658064865,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY1ODA2NDg2NQ==",
+          "name": "campaign-deathstarbench-partial-0-40336898753",
+          "size_in_bytes": 18284578,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658064865",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12658064865/zip",
+          "expired": false,
+          "digest": "sha256:7bc823e3d5c775121a26892af79dd979e4fcbdf513abe633b344033c116abb2d",
+          "created_at": "2026-10-26T14:33:50Z",
+          "updated_at": "2026-10-26T14:33:50Z",
+          "expires_at": "2027-01-24T14:08:47Z",
+          "workflow_run": {
+            "id": 40336898753,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "6ed44e23ed77509b3a0cc7e3d9d4486bca7f4a56"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40341237065",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12661641555,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTY0MTU1NQ==",
+          "name": "campaign-petclinic-partial-0-40341237065",
+          "size_in_bytes": 15600165,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661641555",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661641555/zip",
+          "expired": false,
+          "digest": "sha256:952b73ef9ea354f5649886a769982aa903e98b4b1d8fa3f6dd13c1d7715476f5",
+          "created_at": "2026-10-26T15:07:14Z",
+          "updated_at": "2026-10-26T15:07:14Z",
+          "expires_at": "2027-01-24T14:36:55Z",
+          "workflow_run": {
+            "id": 40341237065,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "279297bffcbfd5d3d8250f876db9ba69c37be794"
+          }
+        },
+        {
+          "id": 12661058154,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTA1ODE1NA==",
+          "name": "campaign-petclinic-partial-1-40341237065",
+          "size_in_bytes": 15813417,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661058154",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661058154/zip",
+          "expired": false,
+          "digest": "sha256:4437c3fe7384c6026394a856e8c6fce1197c1b512f8a6ad3ba90514ed4fe9491",
+          "created_at": "2026-10-26T15:06:57Z",
+          "updated_at": "2026-10-26T15:06:57Z",
+          "expires_at": "2027-01-24T14:36:55Z",
+          "workflow_run": {
+            "id": 40341237065,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "279297bffcbfd5d3d8250f876db9ba69c37be794"
+          }
+        },
+        {
+          "id": 12660129612,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MDEyOTYxMg==",
+          "name": "campaign-petclinic-partial-2-40341237065",
+          "size_in_bytes": 15650772,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660129612",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12660129612/zip",
+          "expired": false,
+          "digest": "sha256:c314123dd0e51deacb497300fc33b6e92999dce19bf59a6da8ec715e99836f98",
+          "created_at": "2026-10-26T15:05:09Z",
+          "updated_at": "2026-10-26T15:05:09Z",
+          "expires_at": "2027-01-24T14:36:55Z",
+          "workflow_run": {
+            "id": 40341237065,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "279297bffcbfd5d3d8250f876db9ba69c37be794"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40342667653",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12663097086,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MzA5NzA4Ng==",
+          "name": "campaign-petclinic-full-0-40342667653",
+          "size_in_bytes": 16569580,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12663097086",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12663097086/zip",
+          "expired": false,
+          "digest": "sha256:3c296c3b2b4995945931896825744d966b847c8748df25a43573d06a11201809",
+          "created_at": "2026-10-26T15:23:47Z",
+          "updated_at": "2026-10-26T15:23:47Z",
+          "expires_at": "2027-01-24T14:45:49Z",
+          "workflow_run": {
+            "id": 40342667653,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "5ae63cfd7ba6518f25b18a39980d9be655adbb5d"
+          }
+        },
+        {
+          "id": 12661767876,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTc2Nzg3Ng==",
+          "name": "campaign-petclinic-full-2-40342667653",
+          "size_in_bytes": 16634117,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661767876",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661767876/zip",
+          "expired": false,
+          "digest": "sha256:0ac1588bd6bc9996dc893a842262d207be63965ec65be71d15d51389ee24574f",
+          "created_at": "2026-10-26T15:15:02Z",
+          "updated_at": "2026-10-26T15:15:02Z",
+          "expires_at": "2027-01-24T14:45:49Z",
+          "workflow_run": {
+            "id": 40342667653,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "5ae63cfd7ba6518f25b18a39980d9be655adbb5d"
+          }
+        },
+        {
+          "id": 12661724787,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTcyNDc4Nw==",
+          "name": "campaign-petclinic-full-1-40342667653",
+          "size_in_bytes": 16680583,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661724787",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661724787/zip",
+          "expired": false,
+          "digest": "sha256:3b65bee97b8757cb8b245faf7256f75fba8edbbc291f9cbc4537f0f8e924e9a3",
+          "created_at": "2026-10-26T15:23:35Z",
+          "updated_at": "2026-10-26T15:23:35Z",
+          "expires_at": "2027-01-24T14:45:49Z",
+          "workflow_run": {
+            "id": 40342667653,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "5ae63cfd7ba6518f25b18a39980d9be655adbb5d"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40344799981",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12662976220,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2Mjk3NjIyMA==",
+          "name": "campaign-otel_demo-absent-2-40344799981",
+          "size_in_bytes": 143798,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662976220",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662976220/zip",
+          "expired": false,
+          "digest": "sha256:7e37e3612e623498ecfafbb49beb7bf8d9fb1f6f2da0d2c9579650c21e86e2a7",
+          "created_at": "2026-10-26T15:18:34Z",
+          "updated_at": "2026-10-26T15:18:34Z",
+          "expires_at": "2027-01-24T14:59:02Z",
+          "workflow_run": {
+            "id": 40344799981,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1e5adf6ea5243b41082d3326f64d9eb2f212892f"
+          }
+        },
+        {
+          "id": 12661803571,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTgwMzU3MQ==",
+          "name": "campaign-otel_demo-absent-1-40344799981",
+          "size_in_bytes": 145772,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661803571",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661803571/zip",
+          "expired": false,
+          "digest": "sha256:6580d77c4bff94fa5cdf375edfbc7e9fd3973a492407abca66ec12d3294c1c42",
+          "created_at": "2026-10-26T15:17:21Z",
+          "updated_at": "2026-10-26T15:17:21Z",
+          "expires_at": "2027-01-24T14:59:02Z",
+          "workflow_run": {
+            "id": 40344799981,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1e5adf6ea5243b41082d3326f64d9eb2f212892f"
+          }
+        },
+        {
+          "id": 12661686917,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTY4NjkxNw==",
+          "name": "campaign-otel_demo-absent-0-40344799981",
+          "size_in_bytes": 133688,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661686917",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661686917/zip",
+          "expired": false,
+          "digest": "sha256:46bd897e0350031ccb1714f2deb0052f4bd08d4ccc28f712bdb3d44cfe49d629",
+          "created_at": "2026-10-26T15:15:50Z",
+          "updated_at": "2026-10-26T15:15:50Z",
+          "expires_at": "2027-01-24T14:59:02Z",
+          "workflow_run": {
+            "id": 40344799981,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1e5adf6ea5243b41082d3326f64d9eb2f212892f"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40346563009",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12662051853,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MjA1MTg1Mw==",
+          "name": "campaign-otel_demo-partial-0-40346563009",
+          "size_in_bytes": 107622,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662051853",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12662051853/zip",
+          "expired": false,
+          "digest": "sha256:370157eb69cce039aa19c6fc40db6ede33fb89167fd4c22cf210960ca10325cd",
+          "created_at": "2026-10-26T15:16:44Z",
+          "updated_at": "2026-10-26T15:16:44Z",
+          "expires_at": "2027-01-24T15:09:37Z",
+          "workflow_run": {
+            "id": 40346563009,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12661928289,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTkyODI4OQ==",
+          "name": "campaign-otel_demo-partial-2-40346563009",
+          "size_in_bytes": 111484,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661928289",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661928289/zip",
+          "expired": false,
+          "digest": "sha256:0912236750600000e9ae8355080a811789d95154184e2c4a869b1ca0e63b5334",
+          "created_at": "2026-10-26T15:26:12Z",
+          "updated_at": "2026-10-26T15:26:12Z",
+          "expires_at": "2027-01-24T15:09:37Z",
+          "workflow_run": {
+            "id": 40346563009,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12661634084,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTYzNDA4NA==",
+          "name": "campaign-otel_demo-partial-1-40346563009",
+          "size_in_bytes": 116353,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661634084",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661634084/zip",
+          "expired": false,
+          "digest": "sha256:914a0cb7652eb29c55f9ab708e97969d93833e7e18c34aabf03ceef4d22390d7",
+          "created_at": "2026-10-26T15:19:08Z",
+          "updated_at": "2026-10-26T15:19:08Z",
+          "expires_at": "2027-01-24T15:09:37Z",
+          "workflow_run": {
+            "id": 40346563009,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40346575968",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12661843004,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTg0MzAwNA==",
+          "name": "campaign-otel_demo-full-1-40346575968",
+          "size_in_bytes": 102433,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661843004",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661843004/zip",
+          "expired": false,
+          "digest": "sha256:20a27678266a331b41b6b902a34c358562718232ff6f2fb315323e44a34e62d6",
+          "created_at": "2026-10-26T15:25:18Z",
+          "updated_at": "2026-10-26T15:25:18Z",
+          "expires_at": "2027-01-24T15:09:42Z",
+          "workflow_run": {
+            "id": 40346575968,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12661823699,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTgyMzY5OQ==",
+          "name": "campaign-otel_demo-full-2-40346575968",
+          "size_in_bytes": 110853,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661823699",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661823699/zip",
+          "expired": false,
+          "digest": "sha256:6deb558ae03a34025dc41487f2c07135b0422f6a269ad8e815db00596e86f6c2",
+          "created_at": "2026-10-26T15:18:47Z",
+          "updated_at": "2026-10-26T15:18:47Z",
+          "expires_at": "2027-01-24T15:09:42Z",
+          "workflow_run": {
+            "id": 40346575968,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12661602111,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MTYwMjExMQ==",
+          "name": "campaign-otel_demo-full-0-40346575968",
+          "size_in_bytes": 100207,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661602111",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12661602111/zip",
+          "expired": false,
+          "digest": "sha256:0185e3b4086e84312f0d92fe1f9f0a5f7e9704a3e0ccd922222ef803a0c3e210",
+          "created_at": "2026-10-26T15:16:30Z",
+          "updated_at": "2026-10-26T15:16:30Z",
+          "expires_at": "2027-01-24T15:09:42Z",
+          "workflow_run": {
+            "id": 40346575968,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40349570169",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12665241270,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NTI0MTI3MA==",
+          "name": "campaign-deathstarbench-partial-1-40349570169",
+          "size_in_bytes": 18573051,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12665241270",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12665241270/zip",
+          "expired": false,
+          "digest": "sha256:746a1e9e51f68055d2812f62ba7dc0f64d3fa52794eb2168838c4795e1a6e6cd",
+          "created_at": "2026-10-26T15:53:11Z",
+          "updated_at": "2026-10-26T15:53:11Z",
+          "expires_at": "2027-01-24T15:27:58Z",
+          "workflow_run": {
+            "id": 40349570169,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12664674071,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NDY3NDA3MQ==",
+          "name": "campaign-deathstarbench-partial-0-40349570169",
+          "size_in_bytes": 18599032,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664674071",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664674071/zip",
+          "expired": false,
+          "digest": "sha256:432ba23873187418956603dad8dd4100f426764c31cedab8c7af15a3143837ce",
+          "created_at": "2026-10-26T16:02:24Z",
+          "updated_at": "2026-10-26T16:02:24Z",
+          "expires_at": "2027-01-24T15:27:58Z",
+          "workflow_run": {
+            "id": 40349570169,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12664213287,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NDIxMzI4Nw==",
+          "name": "campaign-deathstarbench-partial-2-40349570169",
+          "size_in_bytes": 18551369,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664213287",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664213287/zip",
+          "expired": false,
+          "digest": "sha256:434fda1af95aaff7f7346de655b557a2af86817a824f03a957af5d8788c6196d",
+          "created_at": "2026-10-26T15:53:02Z",
+          "updated_at": "2026-10-26T15:53:02Z",
+          "expires_at": "2027-01-24T15:27:58Z",
+          "workflow_run": {
+            "id": 40349570169,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40349582587",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12664383186,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NDM4MzE4Ng==",
+          "name": "campaign-deathstarbench-full-0-40349582587",
+          "size_in_bytes": 21845311,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664383186",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664383186/zip",
+          "expired": false,
+          "digest": "sha256:7683e283f433d9b8d00f4820f638a07eb6824156d9cf2cf46c41610da9cf1e87",
+          "created_at": "2026-10-26T15:53:16Z",
+          "updated_at": "2026-10-26T15:53:16Z",
+          "expires_at": "2027-01-24T15:28:02Z",
+          "workflow_run": {
+            "id": 40349582587,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12664317202,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NDMxNzIwMg==",
+          "name": "campaign-deathstarbench-full-1-40349582587",
+          "size_in_bytes": 21684379,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664317202",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12664317202/zip",
+          "expired": false,
+          "digest": "sha256:a04d5a7f728786de9c272f368f09a3d1fa058d3bfbadc01b9a37049611345f6e",
+          "created_at": "2026-10-26T15:52:15Z",
+          "updated_at": "2026-10-26T15:52:15Z",
+          "expires_at": "2027-01-24T15:28:02Z",
+          "workflow_run": {
+            "id": 40349582587,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        },
+        {
+          "id": 12663299786,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2MzI5OTc4Ng==",
+          "name": "campaign-deathstarbench-full-2-40349582587",
+          "size_in_bytes": 21725515,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12663299786",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12663299786/zip",
+          "expired": false,
+          "digest": "sha256:af4e1c8a71227589e3f6c2198d16191f0c667797698b276777cd40144886dde2",
+          "created_at": "2026-10-26T15:52:13Z",
+          "updated_at": "2026-10-26T15:52:13Z",
+          "expires_at": "2027-01-24T15:28:02Z",
+          "workflow_run": {
+            "id": 40349582587,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "c18b8e8ab8deabd51e1685492ad0081ebb618066"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40351820494",
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12667225569,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY2NzIyNTU2OQ==",
+          "name": "campaign-otel_demo-full-0-40351820494",
+          "size_in_bytes": 22778595,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12667225569",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12667225569/zip",
+          "expired": false,
+          "digest": "sha256:df3015d95d63dfb1b236e7da1839e981c5e291b4f6554a2798f07d59854d4a34",
+          "created_at": "2026-10-26T16:15:13Z",
+          "updated_at": "2026-10-26T16:15:13Z",
+          "expires_at": "2027-01-24T15:41:40Z",
+          "workflow_run": {
+            "id": 40351820494,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "76ae1cd918886391541490672bbb9425ffaf3151"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40361979734",
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12671300743,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3MTMwMDc0Mw==",
+          "name": "campaign-otel_demo-full-0-40361979734",
+          "size_in_bytes": 23133750,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12671300743",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12671300743/zip",
+          "expired": false,
+          "digest": "sha256:d322986d939540f44ea1f9d45aecc798d7b9b56e22f97d0b39b3641667da7c74",
+          "created_at": "2026-10-26T17:15:47Z",
+          "updated_at": "2026-10-26T17:15:47Z",
+          "expires_at": "2027-01-24T16:44:22Z",
+          "workflow_run": {
+            "id": 40361979734,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "cc78364d487c142f39075e30f0ff17e8dd494bf6"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40372011776",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12681976899,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY4MTk3Njg5OQ==",
+          "name": "campaign-otel_demo-absent-0-40372011776",
+          "size_in_bytes": 32228534,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12681976899",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12681976899/zip",
+          "expired": false,
+          "digest": "sha256:00ac4e6ce45bd8224f0f4cec1f10f6b3857075abe0db4eef43d450ce307dd650",
+          "created_at": "2026-10-26T19:35:23Z",
+          "updated_at": "2026-10-26T19:35:23Z",
+          "expires_at": "2027-01-24T17:48:07Z",
+          "workflow_run": {
+            "id": 40372011776,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12680359748,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY4MDM1OTc0OA==",
+          "name": "campaign-otel_demo-absent-2-40372011776",
+          "size_in_bytes": 32297512,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12680359748",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12680359748/zip",
+          "expired": false,
+          "digest": "sha256:02e6b01f56e80cab974c88b73894b9ee56d51e8cca20d6d46e6ec02469e99ccb",
+          "created_at": "2026-10-26T19:45:38Z",
+          "updated_at": "2026-10-26T19:45:38Z",
+          "expires_at": "2027-01-24T17:48:07Z",
+          "workflow_run": {
+            "id": 40372011776,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12679984946,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3OTk4NDk0Ng==",
+          "name": "campaign-otel_demo-absent-1-40372011776",
+          "size_in_bytes": 32202488,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12679984946",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12679984946/zip",
+          "expired": false,
+          "digest": "sha256:657684ca3fcfa175339ef780c69699366767ba2522528a76f25ce4f095f7bb0a",
+          "created_at": "2026-10-26T19:26:04Z",
+          "updated_at": "2026-10-26T19:26:04Z",
+          "expires_at": "2027-01-24T17:48:07Z",
+          "workflow_run": {
+            "id": 40372011776,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40372023737",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12676390522,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3NjM5MDUyMg==",
+          "name": "campaign-otel_demo-partial-1-40372023737",
+          "size_in_bytes": 22907787,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12676390522",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12676390522/zip",
+          "expired": false,
+          "digest": "sha256:4d34d6d6dc8c0b58bf8ee30ee817c81a17386bd7be2c0d6a42616716cb2d7bba",
+          "created_at": "2026-10-26T18:26:21Z",
+          "updated_at": "2026-10-26T18:26:21Z",
+          "expires_at": "2027-01-24T17:48:12Z",
+          "workflow_run": {
+            "id": 40372023737,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12675475730,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3NTQ3NTczMA==",
+          "name": "campaign-otel_demo-partial-0-40372023737",
+          "size_in_bytes": 22898429,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12675475730",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12675475730/zip",
+          "expired": false,
+          "digest": "sha256:1823fa1883622f4a21972636657fd5b0a1bc645804e27c8fbe8da23186dbc18b",
+          "created_at": "2026-10-26T18:21:27Z",
+          "updated_at": "2026-10-26T18:21:27Z",
+          "expires_at": "2027-01-24T17:48:12Z",
+          "workflow_run": {
+            "id": 40372023737,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12674803106,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3NDgwMzEwNg==",
+          "name": "campaign-otel_demo-partial-2-40372023737",
+          "size_in_bytes": 22828041,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12674803106",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12674803106/zip",
+          "expired": false,
+          "digest": "sha256:d9223c77214b511ca052f1962203beee1f537fa7a1e983097cef3c57cac76ce8",
+          "created_at": "2026-10-26T18:19:04Z",
+          "updated_at": "2026-10-26T18:19:04Z",
+          "expires_at": "2027-01-24T17:48:12Z",
+          "workflow_run": {
+            "id": 40372023737,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40372035878",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12682109307,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY4MjEwOTMwNw==",
+          "name": "campaign-otel_demo-full-2-40372035878",
+          "size_in_bytes": 49140689,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12682109307",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12682109307/zip",
+          "expired": false,
+          "digest": "sha256:551d061d74c0161e1657661eb3510c93aac5813deefc42e7b59c02b45e247fe5",
+          "created_at": "2026-10-26T19:49:39Z",
+          "updated_at": "2026-10-26T19:49:39Z",
+          "expires_at": "2027-01-24T17:48:17Z",
+          "workflow_run": {
+            "id": 40372035878,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12676110050,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3NjExMDA1MA==",
+          "name": "campaign-otel_demo-full-1-40372035878",
+          "size_in_bytes": 23141257,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12676110050",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12676110050/zip",
+          "expired": false,
+          "digest": "sha256:b18198926256ecbc0add1424e1920890025dc4428ae802129eb8f34c7a88e0ac",
+          "created_at": "2026-10-26T18:21:16Z",
+          "updated_at": "2026-10-26T18:21:16Z",
+          "expires_at": "2027-01-24T17:48:17Z",
+          "workflow_run": {
+            "id": 40372035878,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        },
+        {
+          "id": 12674577818,
+          "node_id": "MDg6QXJ0aWZhY3QxMjY3NDU3NzgxOA==",
+          "name": "campaign-otel_demo-full-0-40372035878",
+          "size_in_bytes": 23137000,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12674577818",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12674577818/zip",
+          "expired": false,
+          "digest": "sha256:36b57428b534160c8a27bc29dcdd08adce4be16f046ffa40805e3a6aebdfbad5",
+          "created_at": "2026-10-26T18:21:23Z",
+          "updated_at": "2026-10-26T18:21:23Z",
+          "expires_at": "2027-01-24T17:48:17Z",
+          "workflow_run": {
+            "id": 40372035878,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "ece952e211efdf7d5c4cec692d22fbd952907c03"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40456045810",
+      "total_count": 3,
+      "artifacts": [
+        {
+          "id": 12713826927,
+          "node_id": "MDg6QXJ0aWZhY3QxMjcxMzgyNjkyNw==",
+          "name": "campaign-otel_demo-partial-1-40456045810",
+          "size_in_bytes": 49410022,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713826927",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713826927/zip",
+          "expired": false,
+          "digest": "sha256:4fd71d3335d2bc0af2e1ec7043862709a7c933660565ff3c7debfa820cc2f680",
+          "created_at": "2026-10-27T06:09:26Z",
+          "updated_at": "2026-10-27T06:09:26Z",
+          "expires_at": "2027-01-25T05:34:06Z",
+          "workflow_run": {
+            "id": 40456045810,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1798a54b26c3d425539e433830240f68d839b35f"
+          }
+        },
+        {
+          "id": 12712759401,
+          "node_id": "MDg6QXJ0aWZhY3QxMjcxMjc1OTQwMQ==",
+          "name": "campaign-otel_demo-partial-0-40456045810",
+          "size_in_bytes": 49185214,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12712759401",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12712759401/zip",
+          "expired": false,
+          "digest": "sha256:800079dd72456ddff194133482562b54ee2a7db6b745a40c0b3b17e2054b1384",
+          "created_at": "2026-10-27T06:07:56Z",
+          "updated_at": "2026-10-27T06:07:56Z",
+          "expires_at": "2027-01-25T05:34:06Z",
+          "workflow_run": {
+            "id": 40456045810,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1798a54b26c3d425539e433830240f68d839b35f"
+          }
+        },
+        {
+          "id": 12712684559,
+          "node_id": "MDg6QXJ0aWZhY3QxMjcxMjY4NDU1OQ==",
+          "name": "campaign-otel_demo-partial-2-40456045810",
+          "size_in_bytes": 49179655,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12712684559",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12712684559/zip",
+          "expired": false,
+          "digest": "sha256:ccbaf76602cdf3c72ce0013ef32f5ee9a2b8ed84a5d4460c9bfeaf33aa1c8ef7",
+          "created_at": "2026-10-27T06:08:10Z",
+          "updated_at": "2026-10-27T06:08:10Z",
+          "expires_at": "2027-01-25T05:34:06Z",
+          "workflow_run": {
+            "id": 40456045810,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1798a54b26c3d425539e433830240f68d839b35f"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40456053398",
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12713198511,
+          "node_id": "MDg6QXJ0aWZhY3QxMjcxMzE5ODUxMQ==",
+          "name": "campaign-otel_demo-full-0-40456053398",
+          "size_in_bytes": 49515409,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713198511",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713198511/zip",
+          "expired": false,
+          "digest": "sha256:ded9ade41d00aab2f082cca829bf1594aa0c047ee89625ec01c7266f697ede98",
+          "created_at": "2026-10-27T06:05:17Z",
+          "updated_at": "2026-10-27T06:05:17Z",
+          "expires_at": "2027-01-25T05:34:11Z",
+          "workflow_run": {
+            "id": 40456053398,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1798a54b26c3d425539e433830240f68d839b35f"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "40456061253",
+      "total_count": 1,
+      "artifacts": [
+        {
+          "id": 12713488227,
+          "node_id": "MDg6QXJ0aWZhY3QxMjcxMzQ4ODIyNw==",
+          "name": "campaign-otel_demo-full-1-40456061253",
+          "size_in_bytes": 50492565,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713488227",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12713488227/zip",
+          "expired": false,
+          "digest": "sha256:9313db53c2b8be02be3e7dcb075b92db5337959498014a9f1efaade15d5d3618",
+          "created_at": "2026-10-27T06:07:17Z",
+          "updated_at": "2026-10-27T06:07:17Z",
+          "expires_at": "2027-01-25T05:34:16Z",
+          "workflow_run": {
+            "id": 40456061253,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1798a54b26c3d425539e433830240f68d839b35f"
+          }
+        }
+      ]
+    }
+  ],
+  "assignment_policy": "preserve original acquisition assignments; independent raw-stream audits only"
+}
