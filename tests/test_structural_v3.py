@@ -2,9 +2,11 @@ import hashlib
 import json
 from pathlib import Path
 import sqlite3
+import subprocess
 
 import pytest
 
+import ebpf_discovery.structural_v3 as structural
 from ebpf_discovery.structural_v3 import (
     _prepare_valid_ids, _projection_diagnostics, _raw_source, _report, summarize_cell)
 
@@ -324,3 +326,99 @@ def test_structural_report_requires_and_emits_nine_cells(tmp_path):
     assert len((tmp_path / "out" / "projection-recorded-diagnostics-v3.csv").read_text().splitlines()) == 37
     assert result["correctness_error_rate"] is None
     assert result["costs"]["stored_archive_bytes"] == 41
+
+
+def test_download_recovers_from_transient_http_502_and_removes_partial_extraction(tmp_path, monkeypatch):
+    root, destination = tmp_path / "work", tmp_path / "work" / "cell" / "full"
+    root.mkdir()
+    monkeypatch.setattr(structural, "_artifact", lambda *_: {"id": 7, "size_in_bytes": 10})
+    sleeps, calls = [], []
+    monkeypatch.setattr(structural.time, "sleep", sleeps.append)
+
+    def download(command, **kwargs):
+        calls.append(command)
+        folder = Path(command[command.index("-D") + 1])
+        assert not (folder / "partial.txt").exists()
+        if len(calls) == 1:
+            (folder / "partial.txt").write_text("incomplete")
+            raise subprocess.CalledProcessError(1, command, stderr="HTTP 502 Bad Gateway")
+        (folder / "complete.txt").write_text("complete")
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(structural.subprocess, "run", download)
+    transfer = structural._download("1", "campaign", destination, root)
+    assert len(calls) == 2 and sleeps == [2]
+    assert [item["result"] for item in transfer["transport_attempts"]] == ["transport_failure", "success"]
+    assert transfer["transport_attempts"][0]["stage"] == "artifact_download"
+    assert (destination / "complete.txt").read_text() == "complete"
+
+
+def test_download_recovers_from_artifact_api_503(tmp_path, monkeypatch):
+    root, destination = tmp_path / "work", tmp_path / "work" / "report"
+    root.mkdir()
+    calls, sleeps = [], []
+    def artifact(*args):
+        calls.append(args)
+        if len(calls) == 1:
+            raise subprocess.CalledProcessError(1, ["gh", "api"], stderr="HTTP 503")
+        return {"id": 8, "size_in_bytes": 20}
+    monkeypatch.setattr(structural, "_artifact", artifact)
+    monkeypatch.setattr(structural.time, "sleep", sleeps.append)
+    def download(command, **kwargs):
+        (destination / "result.json").write_text("{}")
+        return subprocess.CompletedProcess(command, 0)
+    monkeypatch.setattr(structural.subprocess, "run", download)
+    transfer = structural._download("1", "report", destination, root)
+    assert len(calls) == 2 and sleeps == [2]
+    assert transfer["transport_attempts"][0]["stage"] == "artifact_api"
+    assert transfer["transport_attempts"][1]["result"] == "success"
+
+
+def test_download_final_transport_failure_preserves_attempt_diagnostics_and_cleans(tmp_path, monkeypatch):
+    root, destination = tmp_path / "work", tmp_path / "work" / "cell" / "full"
+    root.mkdir()
+    monkeypatch.setattr(structural, "_artifact", lambda *_: {"id": 7})
+    sleeps, calls = [], []
+    monkeypatch.setattr(structural.time, "sleep", sleeps.append)
+    def download(command, **kwargs):
+        calls.append(command)
+        folder = Path(command[command.index("-D") + 1])
+        assert not (folder / "partial.txt").exists()
+        (folder / "partial.txt").write_text("incomplete")
+        raise subprocess.CalledProcessError(1, command, stderr="HTTP 502")
+    monkeypatch.setattr(structural.subprocess, "run", download)
+    with pytest.raises(structural.ArtifactTransportError) as caught:
+        structural._download("1", "campaign", destination, root)
+    assert len(calls) == 3 and sleeps == [2, 5]
+    assert not destination.exists()
+    assert [item["attempt"] for item in caught.value.attempts] == [1, 2, 3]
+    assert all(item["error"] == "HTTP 502" for item in caught.value.attempts)
+
+
+def test_download_semantic_errors_and_nonretryable_gh_failure_do_not_retry(tmp_path, monkeypatch):
+    root, destination = tmp_path / "work", tmp_path / "work" / "report"
+    root.mkdir()
+    sleeps = []
+    monkeypatch.setattr(structural.time, "sleep", sleeps.append)
+    monkeypatch.setattr(structural.subprocess, "run", lambda *_args, **_kw: pytest.fail("unexpected download"))
+    monkeypatch.setattr(structural, "_artifact", lambda *_: (_ for _ in ()).throw(ValueError("artifact expired")))
+    with pytest.raises(ValueError, match="artifact expired"):
+        structural._download("1", "report", destination, root)
+    monkeypatch.setattr(structural, "_artifact", lambda *_: (_ for _ in ()).throw(
+        subprocess.CalledProcessError(1, ["gh", "api"], stderr="HTTP 404")))
+    with pytest.raises(structural.ArtifactTransportError) as caught:
+        structural._download("1", "report", destination, root)
+    assert len(caught.value.attempts) == 1
+    assert caught.value.attempts[0]["result"] == "non_retryable_gh_failure"
+    assert sleeps == []
+
+
+def test_download_refuses_cleanup_outside_designated_work_root(tmp_path, monkeypatch):
+    root, outside = tmp_path / "work", tmp_path / "unrelated"
+    root.mkdir()
+    outside.mkdir()
+    (outside / "keep.txt").write_text("keep")
+    monkeypatch.setattr(structural, "_artifact", lambda *_: pytest.fail("unexpected API call"))
+    with pytest.raises(ValueError, match="outside structural work root"):
+        structural._download("1", "report", outside, root)
+    assert (outside / "keep.txt").read_text() == "keep"

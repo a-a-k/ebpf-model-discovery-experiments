@@ -6,6 +6,16 @@ on:
         description: Completed primary iteration-3 report run ID admitting exactly 27 cells
         required: true
         type: string
+      system:
+        description: System to inspect, or all three
+        required: true
+        type: choice
+        default: all
+        options:
+          - all
+          - deathstarbench
+          - otel_demo
+          - petclinic
 permissions:
   contents: read
   actions: read
@@ -16,7 +26,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        system: [deathstarbench, otel_demo, petclinic]
+        system: ${{ fromJSON(inputs.system == 'all' && '["deathstarbench","otel_demo","petclinic"]' || format('["{0}"]', inputs.system)) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -555,24 +555,76 @@ def _artifact(run_id: str, name: str) -> dict[str, Any]:
     raw = subprocess.check_output([
         "gh", "api", "--paginate", "--slurp",
         f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{run_id}/artifacts?per_page=100",
-    ], text=True)
+    ], text=True, stderr=subprocess.PIPE)
     matches = [row for page in json.loads(raw) for row in page["artifacts"] if row.get("name") == name]
     if len(matches) != 1 or matches[0].get("expired") is True:
         raise ValueError(f"expected one unexpired artifact {name} in run {run_id}")
     return matches[0]
 
 
-def _download(run_id: str, name: str, destination: Path) -> dict[str, Any]:
-    artifact = _artifact(run_id, name)
+class ArtifactTransportError(RuntimeError):
+    def __init__(self, name: str, attempts: list[dict[str, Any]]):
+        self.attempts = attempts
+        super().__init__(f"artifact {name} transport failed after {len(attempts)} attempts")
+
+
+def _transport_message(exc: subprocess.CalledProcessError | subprocess.TimeoutExpired) -> str:
+    detail = exc.stderr or exc.output or str(exc)
+    if isinstance(detail, bytes):
+        detail = detail.decode("utf-8", errors="replace")
+    return str(detail).strip()[:500]
+
+
+def _retryable_transport(exc: subprocess.CalledProcessError | subprocess.TimeoutExpired) -> bool:
+    if isinstance(exc, subprocess.TimeoutExpired):
+        return True
+    message = _transport_message(exc).lower()
+    return any(token in message for token in (
+        "502", "503", "504", "bad gateway", "gateway timeout", "timed out",
+        "timeout", "connection reset", "connection refused", "connection aborted",
+        "temporary network", "unexpected eof", "tls handshake timeout",
+    ))
+
+
+def _download(run_id: str, name: str, destination: Path, work_root: Path) -> dict[str, Any]:
+    """Retry only gh transport failures, clearing a partial extraction each time."""
     started = time.perf_counter()
-    subprocess.run(["gh", "run", "download", run_id, "-n", name, "-D", str(destination)], check=True)
-    return {
-        "artifact_id": artifact["id"], "artifact_name": name,
-        "github_artifact_digest": artifact.get("digest"),
-        "stored_archive_bytes": artifact.get("size_in_bytes"),
-        "extracted_bytes": _tree_bytes(destination),
-        "download_and_decompression_seconds": time.perf_counter() - started,
-    }
+    attempts: list[dict[str, Any]] = []
+    for attempt in range(1, 4):
+        _safe_remove(destination, work_root)
+        destination.mkdir(parents=True)
+        attempt_started = time.perf_counter()
+        stage = "artifact_api"
+        try:
+            artifact = _artifact(run_id, name)
+            stage = "artifact_download"
+            subprocess.run(["gh", "run", "download", run_id, "-n", name, "-D", str(destination)],
+                           check=True, capture_output=True, text=True)
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
+            retryable = _retryable_transport(exc)
+            record = {"attempt": attempt, "stage": stage,
+                      "result": "transport_failure" if retryable else "non_retryable_gh_failure",
+                      "elapsed_seconds": time.perf_counter() - attempt_started,
+                      "error": _transport_message(exc)}
+            attempts.append(record)
+            _safe_remove(destination, work_root)
+            if not retryable or attempt == 3:
+                raise ArtifactTransportError(name, attempts) from exc
+            delay = (2, 5)[attempt - 1]
+            record["backoff_seconds"] = delay
+            time.sleep(delay)
+            continue
+        attempts.append({"attempt": attempt, "stage": stage, "result": "success",
+                         "elapsed_seconds": time.perf_counter() - attempt_started})
+        return {
+            "artifact_id": artifact["id"], "artifact_name": name,
+            "github_artifact_digest": artifact.get("digest"),
+            "stored_archive_bytes": artifact.get("size_in_bytes"),
+            "extracted_bytes": _tree_bytes(destination),
+            "download_and_decompression_seconds": time.perf_counter() - started,
+            "transport_attempts": attempts,
+        }
+    raise AssertionError("unreachable artifact transport retry state")
 
 
 def _report(cells: list[dict[str, Any]], system: str, output: Path, provenance: dict[str, Any]) -> None:
@@ -706,7 +758,8 @@ def run(report_run_id: str, system: str, work: Path, output: Path) -> None:
     cells_dir = output / "cells"
     try:
         _safe_remove(report_dir, root)
-        report_transfer = _download(report_run_id, f"report-v3-{report_run_id}", report_dir)
+        report_transfer = _download(report_run_id, f"report-v3-{report_run_id}", report_dir, root)
+        _write(output / "primary-report-transfer.json", report_transfer)
         results_path = _one(report_dir, "results.json")
         results = _read(results_path)
         if results.get("campaigns") != 27:
@@ -738,10 +791,11 @@ def run(report_run_id: str, system: str, work: Path, output: Path) -> None:
             try:
                 summary_name = f"v3-summary-{system}-{mode}-{seed}-{run_id}"
                 full_name = f"campaign-v3-{system}-{mode}-{seed}-{run_id}"
-                transfers = {
-                    "summary": _download(run_id, summary_name, summary),
-                    "full": _download(run_id, full_name, full),
-                }
+                summary_transfer = _download(run_id, summary_name, summary, root)
+                _write(cells_dir / f"{mode}-{seed}-{run_id}-summary-transfer.json", summary_transfer)
+                full_transfer = _download(run_id, full_name, full, root)
+                transfers = {"summary": summary_transfer, "full": full_transfer}
+                _write(cells_dir / f"{mode}-{seed}-{run_id}-transfer.json", transfers)
                 cell = summarize_cell(reference, summary, full, transfers)
                 _write(cells_dir / f"{mode}-{seed}-{run_id}.json", cell)
                 cells.append(cell)
@@ -763,6 +817,8 @@ def run(report_run_id: str, system: str, work: Path, output: Path) -> None:
         status["status"] = "complete"
     except Exception as exc:
         status.update(status="technical_failure", error=f"{type(exc).__name__}: {exc}")
+        if isinstance(exc, ArtifactTransportError):
+            status["artifact_transport_attempts"] = exc.attempts
         raise
     finally:
         status["ended_ns"] = time.time_ns()
