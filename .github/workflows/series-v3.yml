@@ -1,0 +1,132 @@
+name: Iteration 3 fresh 27-campaign series
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        description: Narrow only for a reviewed technical rerun
+        type: choice
+        options: [all, deathstarbench, otel_demo, petclinic]
+        default: all
+      mode:
+        description: Narrow only for a reviewed technical rerun
+        type: choice
+        options: [all, absent, partial, full]
+        default: all
+      seed:
+        description: Narrow only for a reviewed technical rerun
+        type: choice
+        options: [all, '3', '4', '5']
+        default: all
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+      count: ${{ steps.matrix.outputs.count }}
+    steps:
+      - name: Build only the requested campaign cells
+        id: matrix
+        env:
+          REQUESTED_SYSTEM: ${{ inputs.system }}
+          REQUESTED_MODE: ${{ inputs.mode }}
+          REQUESTED_SEED: ${{ inputs.seed }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          dimensions = {
+              "system": ["deathstarbench", "otel_demo", "petclinic"],
+              "mode": ["absent", "partial", "full"],
+              "seed": [3, 4, 5],
+          }
+          selected = {}
+          for name, values in dimensions.items():
+              requested = os.environ[f"REQUESTED_{name.upper()}"]
+              if requested == "all":
+                  selected[name] = values
+                  continue
+              value = int(requested) if name == "seed" else requested
+              if value not in values:
+                  raise SystemExit(f"invalid {name}: {requested}")
+              selected[name] = [value]
+          include = [
+              {"system": system, "mode": mode, "seed": seed}
+              for system in selected["system"]
+              for mode in selected["mode"]
+              for seed in selected["seed"]
+          ]
+          print("matrix=" + json.dumps({"include": include}, separators=(",", ":")))
+          print("count=" + str(len(include)))
+          PY
+  campaign:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Initialize evidence directory
+        run: mkdir -p work/campaign/infrastructure
+      - name: Boot two independent guests
+        run: bash scripts/vms.sh start work/vms
+      - name: Acquire the fixed fresh campaign
+        env:
+          PYTHONPATH: .
+        run: |
+          chmod +x scripts/capture-v3-resources.sh
+          scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms &
+          sampler=$!
+          set +e
+          /usr/bin/time -v -o work/campaign/infrastructure/campaign-time.txt \
+            python -m ebpf_discovery.campaign_v3 \
+              --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' \
+              --seed '${{ matrix.seed }}' --out work/campaign
+          rc=$?
+          kill "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$rc"
+      - name: Retain infrastructure, environment and cost evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/campaign/infrastructure
+          cp work/vms/*.json work/campaign/infrastructure/ 2>/dev/null || true
+          for n in a b; do
+            mkdir -p "work/campaign/infrastructure/$n"
+            cp "work/vms/$n/check.txt" "work/vms/$n/serial.log" "work/campaign/infrastructure/$n/" 2>/dev/null || true
+          done
+          uname -a > work/campaign/infrastructure/runner-final.txt
+          free -m >> work/campaign/infrastructure/runner-final.txt
+          df -h >> work/campaign/infrastructure/runner-final.txt
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss > work/campaign/infrastructure/runner-processes-final.txt
+          python -m pip freeze > work/campaign/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+            > work/campaign/infrastructure/workflow-jobs-snapshot.json \
+            2> work/campaign/infrastructure/workflow-jobs-snapshot.err || true
+      - name: Stop guests
+        if: always()
+        run: bash scripts/vms.sh stop work/vms
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v3-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
