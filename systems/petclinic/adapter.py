@@ -63,6 +63,13 @@ def _require_actions() -> None:
         raise RuntimeError("Petclinic application builds, deployments, and requests run only in GitHub Actions")
 
 
+def _censored_request(method: str, url: str, **kwargs: Any):
+    """Load the shared bounded transport only for censored-v3 campaigns."""
+    from ebpf_discovery.transport_v3 import request
+
+    return request(method, url, **kwargs)
+
+
 def _fixture_from_source(source: Path) -> dict[str, Any]:
     """Derive immutable response oracles from pinned upstream SQL, not live replies."""
     tables: dict[str, list[tuple[Any, ...]]] = {}
@@ -702,8 +709,14 @@ backend visits_replicas
         payload = None
         raw = b""
         error = None
+        body_completed_ns = None
+        body_completed_monotonic = None
+        censored_policy = getattr(self.ctx, "observation_policy", None) == "censored-v3"
+        cutoff_ns = started_ns + int(deadline * 1_000_000_000)
+        termination = "complete"
         try:
-            response = requests.request(
+            request = _censored_request if censored_policy else requests.request
+            response = request(
                 method,
                 url,
                 json=body,
@@ -713,21 +726,33 @@ backend visits_replicas
                 },
                 timeout=deadline,
             )
+            body_completed_ns = getattr(response, "_study_body_completed_ns", time.time_ns())
+            body_completed_monotonic = getattr(response, "_study_body_completed_monotonic", None)
             raw = response.content[: 1024 * 1024 + 1]
             if len(raw) > 1024 * 1024:
                 raise ValueError("response_exceeds_declared_limit")
             payload = response.json()
-        except (requests.exceptions.RequestException, ValueError) as exc:
+        except requests.exceptions.Timeout as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            termination = "cap_reached"
+        except requests.exceptions.RequestException as exc:
+            error = f"{type(exc).__name__}: {exc}"
+            termination = "transport_incomplete"
+        except ValueError as exc:
+            # A fully transferred but malformed/oversized payload is a completed
+            # observation and can disprove the declared response contract.
             error = f"{type(exc).__name__}: {exc}"
         ended_ns = time.time_ns()
         timely = ended_ns - started_ns <= int(deadline * 1_000_000_000)
         status = response.status_code if response is not None else None
-        success: bool | None = False
+        success: bool | None = None if censored_policy and termination != "complete" else False
         validation: dict[str, Any] = {"kind": "payload", "valid": False}
         if name == "create_visit":
-            success = None if status == 201 and error is None and timely else False
+            http_ack = status == 201 and error is None and (censored_policy or timely)
+            if http_ack:
+                success = None
             validation = {"kind": "sql_exact_row", "state": "pending" if success is None else "http_failed", "marker": marker}
-        elif status == 200 and error is None and timely:
+        elif status == 200 and error is None and (censored_policy or timely):
             fixture_key = {"list_owners": "owners", "owner_details_with_visits": "details", "list_vets": "vets"}[name]
             try:
                 _canonical(payload, self.fixture[fixture_key])
@@ -735,9 +760,9 @@ backend visits_replicas
                 validation = {"kind": "payload", "valid": True, "fixture": fixture_key}
             except (ValueError, KeyError, TypeError) as exc:
                 error = f"semantic_validation: {exc}"
-        if not timely and error is None:
+        if not censored_policy and not timely and error is None:
             error = "whole_operation_deadline_exceeded"
-        return {
+        record = {
             "operation": name,
             "attempt_id": attempt_id,
             "started_ns": started_ns,
@@ -755,6 +780,17 @@ backend visits_replicas
             "validation": validation,
             "response_json": payload,
         }
+        if censored_policy:
+            record["http_steps"][0]["body_completed_ns"] = body_completed_ns
+            record["http_steps"][0]["body_completed_monotonic"] = body_completed_monotonic
+            record["observation"] = {
+                "policy": "censored-v3",
+                "cap_seconds": deadline,
+                "cutoff_ns": cutoff_ns,
+                "censored": termination != "complete",
+                "termination": termination,
+            }
+        return record
 
     def _mysql(self, sql: str):
         encoded = base64.b64encode(sql.encode()).decode()
@@ -770,7 +806,9 @@ backend visits_replicas
                 continue
             marker = row.get("validation", {}).get("marker", "")
             if not re.fullmatch(r"ebpf-study-[0-9a-f]{64}", marker):
-                row["success"] = False
+                observation = row.get("observation", {})
+                if not (observation.get("policy") == "censored-v3" and observation.get("censored") is True):
+                    row["success"] = False
                 row["error"] = "invalid_or_missing_write_marker"
                 continue
             candidates.append((row, marker))
@@ -779,6 +817,7 @@ backend visits_replicas
         markers = sorted({marker for _, marker in candidates})
         grouped: dict[str, list[dict[str, Any]]] = {marker: [] for marker in markers}
         oracle_errors: dict[str, dict[str, Any]] = {}
+        oracle_queries: dict[str, dict[str, Any]] = {}
         for offset in range(0, len(markers), 100):
             chunk = markers[offset:offset + 100]
             quoted = ",".join(f"'{marker}'" for marker in chunk)
@@ -786,12 +825,24 @@ backend visits_replicas
                 "SELECT description,id,pet_id,DATE_FORMAT(visit_date,'%Y-%m-%d') FROM visits "
                 f"WHERE description IN ({quoted}) ORDER BY description,id"
             )
+            query_started_ns = time.time_ns()
             try:
                 result = self._mysql(sql)
             except Exception as exc:  # noqa: BLE001 - unavailable remote SQL is an explicit unknown oracle
+                query_completed_ns = time.time_ns()
                 for marker in chunk:
+                    oracle_queries[marker] = {
+                        "query_started_ns": query_started_ns,
+                        "query_completed_ns": query_completed_ns,
+                    }
                     oracle_errors[marker] = {"error": str(exc)}
                 continue
+            query_completed_ns = time.time_ns()
+            for marker in chunk:
+                oracle_queries[marker] = {
+                    "query_started_ns": query_started_ns,
+                    "query_completed_ns": query_completed_ns,
+                }
             parse_errors: list[str] = []
             for line in getattr(result, "stdout", "").splitlines():
                 fields = line.split("\t")
@@ -813,10 +864,9 @@ backend visits_replicas
                     }
         for row, marker in candidates:
             if marker in oracle_errors:
-                row["success"] = None if row.get("success") is None else row.get("success")
                 row["validation"] = {
                     "kind": "sql_exact_row", "state": "oracle_unavailable",
-                    "marker": marker, **oracle_errors[marker],
+                    "marker": marker, **oracle_queries[marker], **oracle_errors[marker],
                 }
                 continue
             db_rows = grouped[marker]
@@ -831,20 +881,36 @@ backend visits_replicas
                 and payload["date"][:10] == "2026-09-01"
                 and payload.get("description") == marker
             )
-            exact = response_identity_match and len(db_rows) == 1 and db_rows[0] == {
-                "id": acknowledged_id, "petId": 1, "date": "2026-09-01", "description": marker,
-            }
+            database_contract_match = len(db_rows) == 1 and db_rows[0].get("petId") == 1 and db_rows[0].get(
+                "date"
+            ) == "2026-09-01" and db_rows[0].get("description") == marker
+            exact = response_identity_match and database_contract_match and db_rows[0].get("id") == acknowledged_id
+            observation = row.get("observation", {})
+            is_censored = observation.get("policy") == "censored-v3" and observation.get("censored") is True
             elapsed_ns = row["ended_ns"] - row["started_ns"]
             deadline_ns = int(row.get("deadline_seconds", 2.0) * 1_000_000_000)
-            http_created = row["http_steps"][0].get("status") == 201 and row.get("error") is None and elapsed_ns <= deadline_ns
-            row["success"] = bool(http_created and exact)
+            http_created = row["http_steps"][0].get("status") == 201 and row.get("error") is None and (
+                observation.get("policy") == "censored-v3" or elapsed_ns <= deadline_ns
+            )
+            if not is_censored:
+                row["success"] = bool(http_created and exact)
+            query_timing = oracle_queries[marker]
             row["validation"] = {
                 "kind": "sql_exact_row", "state": "verified", "marker": marker,
                 "row_count": len(db_rows), "rows": db_rows, "acknowledged_id": acknowledged_id,
                 "response_identity_match": response_identity_match,
+                "database_exactly_once_contract_match": database_contract_match,
                 "exactly_once_and_identity_match": exact,
+                **query_timing,
             }
-            if not row["success"] and not row.get("error"):
+            if http_created and exact:
+                http_completed_ns = row["http_steps"][0].get("body_completed_ns") or row["ended_ns"]
+                row["validation"]["persistence_completion_interval_ns"] = {
+                    "lower": http_completed_ns,
+                    "upper": query_timing["query_completed_ns"],
+                    "lower_bound_meaning": "completed_http_acknowledgement",
+                }
+            if row["success"] is False and not row.get("error"):
                 row["error"] = "write_not_persisted_exactly_once_with_acknowledged_identity"
         return verified
 

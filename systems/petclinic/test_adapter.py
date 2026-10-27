@@ -178,6 +178,85 @@ def test_operation_uses_only_opaque_binding_header(tmp_path, monkeypatch):
     assert "trace_context" not in record
 
 
+def test_censored_policy_uses_bounded_transport_and_records_complete_observation(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    captured = {}
+
+    class Response:
+        status_code = 200
+        content = b"[]"
+        headers = {"content-type": "application/json"}
+        _study_body_completed_ns = 1_700_000_000_123_456_789
+        _study_body_completed_monotonic = 123.5
+
+        @staticmethod
+        def json():
+            return []
+
+    def request(method, url, **kwargs):
+        captured.update(method=method, url=url, **kwargs)
+        return Response()
+
+    monkeypatch.setattr(adapter_module, "_censored_request", request)
+    context = SimpleNamespace(
+        deployment_dir=tmp_path, out=tmp_path, mode="full",
+        observation_policy="censored-v3", observation_cap_seconds=10,
+        node_ip=lambda _node: "192.168.76.11",
+    )
+    adapter = Adapter(context)
+    adapter.fixture = {"owners": [], "details": {}, "vets": []}
+    record = adapter.operation("list_owners", 1, "target", deadline=10)
+    assert captured["timeout"] == 10
+    assert record["success"] is True
+    assert record["http_steps"][0]["body_completed_ns"] == Response._study_body_completed_ns
+    assert record["http_steps"][0]["body_completed_monotonic"] == 123.5
+    assert record["observation"] == {
+        "policy": "censored-v3", "cap_seconds": 10,
+        "cutoff_ns": record["started_ns"] + 10_000_000_000,
+        "censored": False, "termination": "complete",
+    }
+
+
+def test_censored_transport_timeout_is_unknown(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+
+    def timeout(*_args, **_kwargs):
+        raise adapter_module.requests.exceptions.Timeout("total cap")
+
+    monkeypatch.setattr(adapter_module, "_censored_request", timeout)
+    context = SimpleNamespace(
+        deployment_dir=tmp_path, out=tmp_path, mode="full", observation_policy="censored-v3",
+        node_ip=lambda _node: "192.168.76.11",
+    )
+    adapter = Adapter(context)
+    adapter.fixture = {"owners": [], "details": {}, "vets": []}
+    record = adapter.operation("list_owners", 1, "target", deadline=10)
+    assert record["success"] is None
+    assert record["observation"]["censored"] is True
+    assert record["observation"]["termination"] == "cap_reached"
+
+
+def test_verify_keeps_censored_write_unknown_but_retains_positive_sql_evidence(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(SimpleNamespace(deployment_dir=tmp_path, out=tmp_path, mode="full"))
+    marker = "ebpf-study-" + "c" * 64
+    adapter._mysql = lambda _sql: SimpleNamespace(stdout=f"{marker}\t42\t1\t2026-09-01\n")
+    record = {
+        "operation": "create_visit", "success": None, "error": "Timeout: total cap",
+        "started_ns": 1, "ended_ns": 11, "deadline_seconds": 10,
+        "observation": {"policy": "censored-v3", "censored": True, "termination": "cap_reached"},
+        "http_steps": [{"status": None}],
+        "response_json": None,
+        "validation": {"marker": marker},
+    }
+    verified = adapter.verify([record])[0]
+    assert verified["success"] is None
+    assert verified["validation"]["database_exactly_once_contract_match"] is True
+    assert verified["validation"]["exactly_once_and_identity_match"] is False
+    assert "query_started_ns" in verified["validation"]
+    assert "query_completed_ns" in verified["validation"]
+
+
 def test_native_census_and_partial_mode_audit_use_actual_service_names():
     raw = b"\n".join([
         b'{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name","value":{"stringValue":"api-gateway"}}]},"scopeSpans":[{"spans":[{},{}]}]}]}',
