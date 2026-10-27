@@ -2,8 +2,9 @@
 
 This module does not fit a model and never consumes business outcomes.  It asks
 which declared protocol/completion facts are supported by each telemetry source.
-Positive business success remains unsupported because response payloads and an
-independent persisted-row observation are not span fields in this experiment.
+It inventories exported response-body fields but intentionally does not interpret
+their payloads. Positive business success therefore remains outside this
+protocol-only audit, as does independent persisted-row verification.
 """
 from __future__ import annotations
 
@@ -21,7 +22,7 @@ CONTRACTS = {
     "list_owners": {
         "method": "GET", "entry_path": "/api/customer/owners",
         "groups": (("customers", "customers-service", ("/owners",)),),
-        "postcondition": "exact_owner_fixture_payload_not_observed",
+        "postcondition": "exact_owner_fixture_payload_not_evaluated_by_protocol_audit",
     },
     "owner_details_with_visits": {
         "method": "GET", "entry_path": "/api/gateway/owners/6",
@@ -29,18 +30,18 @@ CONTRACTS = {
             ("customers", "customers-service", ("/owners/6",)),
             ("visits", "visits-service", ("/pets/visits",)),
         ),
-        "postcondition": "owner_pets_and_visits_payload_not_observed",
+        "postcondition": "owner_pets_and_visits_payload_not_evaluated_by_protocol_audit",
     },
     "create_visit": {
         "method": "POST", "entry_path": "/api/visit/owners/1/pets/1/visits",
         "groups": (("visits", "visits-service", ("/owners/1/pets/1/visits",)),),
-        "postcondition": "exactly_once_persisted_row_not_observed",
+        "postcondition": "exactly_once_persisted_row_not_evaluated_by_protocol_audit",
         "single_retry": (503, 201),
     },
     "list_vets": {
         "method": "GET", "entry_path": "/api/vet/vets",
         "groups": (("vets", "vets-service", ("/vets",)),),
-        "postcondition": "exact_vets_fixture_payload_not_observed",
+        "postcondition": "exact_vets_fixture_payload_not_evaluated_by_protocol_audit",
     },
 }
 
@@ -104,6 +105,26 @@ def _witness(span):
         "name": span.get("name"), "kind": span.get("kind"),
         "method": _method(span), "path": _path(span),
         "status_code": attrs.get("http.response.status_code", attrs.get("http.status_code")),
+    }
+
+
+def _body_inventory(spans):
+    witnesses = []
+    all_paths = set()
+    for span in spans:
+        paths = sorted(
+            f"attributes.{key}" for key in span.get("attributes", {})
+            if "response.body" in str(key).lower()
+        )
+        if paths:
+            all_paths.update(paths)
+            witnesses.append({**_witness(span), "field_paths": paths})
+    paths = sorted(all_paths)
+    return {
+        "field_paths": paths,
+        "content_available": any(path.lower().endswith(".content") for path in paths),
+        "witnesses": witnesses,
+        "semantic_evaluation": "not_evaluated_by_protocol_audit",
     }
 
 
@@ -328,6 +349,7 @@ def _audit_attempt(index, source, row):
         "phase": row["phase"], "state": row["state"], "source": source,
         "entry_binding": binding, "entry_protocol": entry_protocol, "timely": timely,
         "mandatory_groups": groups, "logical_completion": logical,
+        "response_body_evidence": _body_inventory(descendants + blocked),
         "write_evidence": write,
         "business_postcondition": None,
         "source_business_verdict": business,
@@ -355,5 +377,5 @@ def audit_semantics(spans, semantic_rows):
         "method": "petclinic-declared-semantic-evidence-audit-v1",
         "sources": sources,
         "business_success_supported": False,
-        "business_success_note": "Spans can exclude success or establish logical protocol completion, but cannot certify exact response payloads or exactly-once persisted rows.",
+        "business_success_note": "This protocol-only audit can exclude success or establish logical protocol completion. It inventories exported response-body fields but does not interpret payload semantics, and it does not independently verify exactly-once persistence; positive business success therefore remains unknown.",
     }

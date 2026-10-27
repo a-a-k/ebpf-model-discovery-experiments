@@ -71,6 +71,29 @@ def test_missing_mandatory_calls_remain_unknown():
     assert all(g["reason"] == "required_group_not_fully_observed" for g in record["mandatory_groups"])
 
 
+def test_exported_response_body_is_inventoried_but_not_semantically_evaluated():
+    spans = [span(
+        "ebpf", "t", "root", "", "api-gateway", "SPAN_KIND_SERVER",
+        "GET", "/api/vet/vets", 200, "req-1",
+        **{"http.response.body.content": '[{"id":1}]'},
+    )]
+    result = audit_semantics(spans, [row("list_vets")])
+    record = attempt(result, "ebpf")
+    assert record["response_body_evidence"] == {
+        "field_paths": ["attributes.http.response.body.content"],
+        "content_available": True,
+        "witnesses": [{
+            **record["entry_binding"]["witnesses"][0],
+            "field_paths": ["attributes.http.response.body.content"],
+        }],
+        "semantic_evaluation": "not_evaluated_by_protocol_audit",
+    }
+    assert record["business_postcondition"] is None
+    assert record["source_business_verdict"] is None
+    assert record["business_reason"] == "exact_vets_fixture_payload_not_evaluated_by_protocol_audit"
+    assert "does not interpret payload semantics" in result["business_success_note"]
+
+
 def test_duplicate_declared_entries_are_ambiguous_not_earliest_wins():
     spans = [
         span("ebpf", "a", "one", "", "api-gateway", "SPAN_KIND_SERVER", "GET", "/api/vet/vets", 200, "req-1"),
