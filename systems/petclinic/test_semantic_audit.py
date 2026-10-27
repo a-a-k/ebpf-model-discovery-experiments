@@ -81,6 +81,33 @@ def test_duplicate_declared_entries_are_ambiguous_not_earliest_wins():
     assert record["logical_completion"] is None
 
 
+def test_conflicting_same_identity_statuses_fail_closed_before_entry_verdict():
+    spans = [
+        span("ebpf", "t", "same", "", "api-gateway", "SPAN_KIND_SERVER",
+             "GET", "/api/vet/vets", 200, "req-1"),
+        span("ebpf", "t", "same", "", "api-gateway", "SPAN_KIND_SERVER",
+             "GET", "/api/vet/vets", 503, "req-1"),
+    ]
+    record = attempt(audit_semantics(spans, [row("list_vets")]), "ebpf")
+    assert record["entry_binding"]["reason"] == "conflicting_entry_identity"
+    assert record["entry_protocol"] is None
+    assert record["logical_completion"] is None
+    assert record["source_business_verdict"] is None
+
+
+def test_conflicting_descendant_identity_blocks_the_branch():
+    spans = [
+        span("native", "t", "root", "", "api-gateway", 2,
+             "GET", "/api/customer/owners", 200, "req-1"),
+        span("native", "t", "same", "root", "api-gateway", 3, "GET", "/owners", 200),
+        span("native", "t", "same", "root", "api-gateway", 3, "GET", "/owners", 503),
+    ]
+    record = attempt(audit_semantics(spans, [row("list_owners")]))
+    assert record["mandatory_groups"][0]["reason"] == "conflicting_descendant_identity"
+    assert record["mandatory_groups"][0]["completion"] is None
+    assert record["logical_completion"] is None
+
+
 def test_create_retry_can_complete_protocol_but_never_proves_persistence():
     spans = [
         span("ebpf", "t", "root", "", "api-gateway", "SPAN_KIND_SERVER", "POST", "/api/visit/owners/1/pets/1/visits", 201, "req-1"),

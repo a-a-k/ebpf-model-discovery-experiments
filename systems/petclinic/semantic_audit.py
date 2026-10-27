@@ -107,6 +107,12 @@ def _witness(span):
     }
 
 
+def _same_semantic_record(left, right):
+    ignored = {"raw_file", "_graph_node"}
+    return ({key: value for key, value in left.items() if key not in ignored}
+            == {key: value for key, value in right.items() if key not in ignored})
+
+
 def _conjunction(values):
     values = list(values)
     return False if False in values else (True if values and all(v is True for v in values) else None)
@@ -138,30 +144,42 @@ def _validate_rows(rows):
 
 class _Index:
     def __init__(self, spans):
-        self.sources = sorted({str(s.get("source")) for s in spans if s.get("source") in ("ebpf", "native")})
         self.headers = defaultdict(list)
         self.children = defaultdict(list)
+        self.blocked_children = defaultdict(list)
         self.traces = defaultdict(list)
         self.by_id = {}
+        variants = defaultdict(list)
         for span in spans:
             source = span.get("source")
             if source not in ("ebpf", "native"):
                 continue
             trace = span.get("trace_id", "")
             identity = (source, trace, span.get("span_id", ""))
-            self.by_id[identity] = span
-            self.children[(source, trace, span.get("parent_id", ""))].append(span)
-            self.traces[(source, trace)].append(span)
+            if not any(_same_semantic_record(existing, span) for existing in variants[identity]):
+                variants[identity].append(span)
             step = _header(span)
             if step:
                 self.headers[(source, step)].append(span)
+        self.conflicts = {identity for identity, rows in variants.items() if len(rows) > 1}
+        self.conflict_variants = {identity: rows for identity, rows in variants.items() if len(rows) > 1}
+        for identity, rows in variants.items():
+            source, trace, _ = identity
+            if identity in self.conflicts:
+                for span in rows:
+                    self.blocked_children[(source, trace, span.get("parent_id", ""))].append(span)
+                continue
+            span = rows[0]
+            self.by_id[identity] = span
+            self.children[(source, trace, span.get("parent_id", ""))].append(span)
+            self.traces[(source, trace)].append(span)
         for values in (self.headers, self.children, self.traces):
             for rows in values.values():
                 rows.sort(key=lambda s: (int(s.get("start_ns", 0)), str(s.get("span_id", ""))))
 
     def descendants(self, root):
         source, trace = root["source"], root["trace_id"]
-        output, queue, seen = [], [root], set()
+        output, blocked, queue, seen = [], [], [root], set()
         while queue:
             span = queue.pop()
             identity = span.get("span_id", "")
@@ -169,8 +187,9 @@ class _Index:
                 continue
             seen.add(identity)
             output.append(span)
+            blocked.extend(self.blocked_children.get((source, trace, identity), ()))
             queue.extend(self.children.get((source, trace, identity), ()))
-        return output
+        return output, blocked
 
     def descends_from(self, span, ancestor):
         if span.get("source") != ancestor.get("source") or span.get("trace_id") != ancestor.get("trace_id"):
@@ -190,10 +209,17 @@ def _entry(index, source, row, contract):
     candidates = []
     for step in row["step_ids"]:
         candidates.extend(index.headers.get((source, step), ()))
-    unique = {(s.get("trace_id"), s.get("span_id")): s for s in candidates}
-    matches = [s for s in unique.values() if _kind(s, SERVER_KINDS)
+    matches = [s for s in candidates if _kind(s, SERVER_KINDS)
                and s.get("service") == "api-gateway"
                and _method(s) == contract["method"] and _path(s) == contract["entry_path"]]
+    identities = {(source, s.get("trace_id", ""), s.get("span_id", "")) for s in matches}
+    conflicted = identities & index.conflicts
+    if conflicted:
+        witnesses = [variant for identity in sorted(conflicted) for variant in index.conflict_variants[identity]]
+        return None, {"status": "ambiguous", "reason": "conflicting_entry_identity",
+                      "candidate_count": len(witnesses), "witnesses": [_witness(s) for s in witnesses]}
+    unique = {(s.get("trace_id"), s.get("span_id")): s for s in matches}
+    matches = list(unique.values())
     matches.sort(key=lambda s: (int(s.get("start_ns", 0)), str(s.get("span_id", ""))))
     if len(matches) != 1:
         reason = "entry_missing" if not matches else "entry_ambiguous"
@@ -203,7 +229,7 @@ def _entry(index, source, row, contract):
                         "candidate_count": 1, "witnesses": [_witness(matches[0])]}
 
 
-def _group(index, descendants, group, contract):
+def _group(index, descendants, blocked, group, contract):
     name, target, paths = group
     clients = [s for s in descendants if s.get("service") == "api-gateway"
                and _kind(s, CLIENT_KINDS) and _method(s) == contract["method"] and _path(s) in paths]
@@ -216,7 +242,11 @@ def _group(index, descendants, group, contract):
         "reason": "required_group_not_fully_observed",
         "client_witnesses": [_witness(s) for s in clients],
         "receiver_witnesses": [_witness(s) for s in receivers],
+        "conflict_witnesses": [_witness(s) for s in blocked],
     }
+    if blocked:
+        result["reason"] = "conflicting_descendant_identity"
+        return result
     retry = contract.get("single_retry")
     if retry and len(clients) == 2 and tuple(_status_code(s) for s in clients) == retry:
         first, final = clients
@@ -288,8 +318,8 @@ def _audit_attempt(index, source, row):
     root, binding = _entry(index, source, row, contract)
     entry_protocol = _explicit_status(root) if root else None
     timely = row["ended_ns"] <= row["deadline_ns"]
-    descendants = index.descendants(root) if root else []
-    groups = [_group(index, descendants, group, contract) for group in contract["groups"]]
+    descendants, blocked = index.descendants(root) if root else ([], [])
+    groups = [_group(index, descendants, blocked, group, contract) for group in contract["groups"]]
     logical = _conjunction([entry_protocol, timely] + [g["completion"] for g in groups])
     business = False if logical is False else None
     write = _write_evidence(index, source, root) if row["contract_id"] == "create_visit" else None
