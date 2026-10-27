@@ -1334,7 +1334,8 @@ SELECT json_build_object(
         cleanup_timeout = min(5.0, remaining) if remaining > 0 else 5.0
         command = (
             f"docker rm -f {self._shquote(admin_name)} >/dev/null 2>&1 || true; "
-            f"test -z \"$(docker ps -aq --filter name=^/{admin_name}$)\""
+            f"ids=$(docker ps -aq --filter name=^/{admin_name}$) || exit $?; "
+            "test -z \"$ids\""
         )
         started_ns = time.time_ns()
         record: dict[str, Any] = {
@@ -1361,16 +1362,23 @@ SELECT json_build_object(
                 f"stdout={exc.stdout or ''} stderr={exc.stderr or ''}"
             ) from exc
         if getattr(result, "returncode", None) != 0:
+            stdout = self._stdout(result)
+            stderr = getattr(result, "stderr", "") or ""
+            if isinstance(stderr, bytes):
+                stderr = stderr.decode("utf-8", errors="replace")
             record.update(
                 status="error",
                 ended_ns=time.time_ns(),
                 returncode=getattr(result, "returncode", None),
+                stdout=stdout,
+                stderr=stderr,
             )
             if evidence is not None:
                 evidence["cleanups"].append(record)
                 self._persist_kafka_admin_evidence(evidence)
             raise RuntimeError(
                 "Kafka admin cleanup failed: "
+                f"stdout={stdout[-1000:]} stderr={stderr[-1000:]} "
                 f"returncode={getattr(result, 'returncode', None)}"
             )
         record.update(
