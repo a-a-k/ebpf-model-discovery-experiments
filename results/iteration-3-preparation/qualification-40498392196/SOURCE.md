@@ -19,6 +19,15 @@ business-outcome/SQL labels.
 
 All three jobs completed. Resource review is separate from source coverage:
 unsupported native response bodies, missing compose acknowledgement bodies and
-unbound entries remain explicit. The DeathStarBench native-entry binding gap is
-being checked on retained data before the fresh series is dispatched. No
-qualification attempts are admitted into the 27-campaign population.
+unbound entries remain explicit. No qualification attempts are admitted into the
+27-campaign population.
+
+The [first binding audit](binding-audit-40501095000.json), produced in
+[40501095000](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40501095000),
+found all 1,200 native entries by exact request identity before the timing rule.
+The [reviewed attribution replay](binding-replay-40502380042.json), produced in
+[40502380042](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502380042),
+confirmed that all 637 rejected outer spans started before the client journal.
+The documented exact-header-child rule recovers 631, while six remain unknown;
+563 already satisfied the strict window. No traffic, model fitting or accuracy
+selection occurred. Raw input hashes agree between the two audits.

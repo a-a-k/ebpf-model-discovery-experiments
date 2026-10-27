@@ -1,8 +1,8 @@
 # Iteration 3: fresh source-only experiments
 
-Status: source contracts, baselines and amended censoring policy reviewed;
-implementation and revised resource qualification in progress. No fresh
-27-campaign acquisition has started.
+Status: source contracts, baselines, amended censoring policy, implementation and
+revised resource qualification reviewed. The fixed fresh 27-campaign acquisition
+has explicit execution GO; its results are not yet available.
 This is a new acquisition series. Original campaigns and oracle-assisted
 retrospective diagnostics remain separate immutable populations.
 
@@ -228,6 +228,18 @@ traffic, source capture/storage, unknowns, failed attempts, analysis and all
 technical reruns. Unmetered human/agent time remains unknown, not zero. Earlier
 acquisition/diagnostic costs remain separately available. No automatic second
 series is triggered by disappointing results.
+
+### Final execution review, 2026-10-27
+
+The independent skeptic granted explicit GO for the fixed 27 campaigns against
+the unchanged original usefulness criterion after reviewing implementation
+`6f91d8f`, all three revised resource captures and retained-data replay
+`40502380042`. The orchestrator agrees. The replay accounts for all 1,200 DSB
+entries: 563 strict bindings, 631 exact-header-child attributions and six retained
+unknowns. Valid pre-cap routes remain observable on censored attempts while
+business outcomes remain unknown. No implementation or resource blocker remains;
+this verdict authorizes acquisition and does not establish empirical usefulness,
+algorithmic advantage or superiority over the direct/HTTP baselines.
 
 ## Reproduction of the fresh series
 

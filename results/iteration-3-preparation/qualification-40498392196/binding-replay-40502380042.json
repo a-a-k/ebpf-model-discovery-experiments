@@ -1,0 +1,2121 @@
+{
+  "audit_code_sha": "f118427ebdcc22f3d6d0af6fc02031817a9d8863",
+  "binding_reasons": {
+    "entry_outside_sealed_observation_window": 637,
+    "unique_declared_entry": 563
+  },
+  "body_reasons": {
+    "body_not_exported": 563,
+    "entry_unbound": 637
+  },
+  "by_operation_binding_body": [
+    {
+      "binding": "entry_outside_sealed_observation_window",
+      "body_reason": "entry_unbound",
+      "n": 140,
+      "operation": "compose_post"
+    },
+    {
+      "binding": "unique_declared_entry",
+      "body_reason": "body_not_exported",
+      "n": 260,
+      "operation": "compose_post"
+    },
+    {
+      "binding": "entry_outside_sealed_observation_window",
+      "body_reason": "entry_unbound",
+      "n": 242,
+      "operation": "read_home_timeline"
+    },
+    {
+      "binding": "unique_declared_entry",
+      "body_reason": "body_not_exported",
+      "n": 158,
+      "operation": "read_home_timeline"
+    },
+    {
+      "binding": "entry_outside_sealed_observation_window",
+      "body_reason": "entry_unbound",
+      "n": 255,
+      "operation": "read_user_timeline"
+    },
+    {
+      "binding": "unique_declared_entry",
+      "body_reason": "body_not_exported",
+      "n": 145,
+      "operation": "read_user_timeline"
+    }
+  ],
+  "ebpf_binding_reasons": {
+    "entry_outside_sealed_observation_window": 3,
+    "unique_declared_entry": 1197
+  },
+  "input_sha256": {
+    "ebpf_projection": "18dcd0c94ad8480f6645bdc0d57e8b3016afa3864c49865d1db3698279a26b95",
+    "index": "11cf7b4d86efcc9d3150905372b82e1a81586ff1b70701462a47d550c54003c2",
+    "native_projection": "a2db20f21d48be3a691cc667d4ae9d51703f7487306ec1519387f2b9f48b4678",
+    "status": "1d0673a9ff7077b1a772b5c930524c39cea4dabbd9e70b88d415b757c2b88c4c"
+  },
+  "kind": "retained_dsb_native_binding_diagnostic",
+  "native_entry_services": [
+    "nginx-web-server"
+  ],
+  "native_header_anchor_categories": {
+    "allowed_service_header_anchor": 1200
+  },
+  "no_new_traffic_or_fitting": true,
+  "pre_window_entry_replay_reasons": {
+    "unique_declared_entry": 1200
+  },
+  "pre_window_entry_window_relation": {
+    "inside": 563,
+    "outside": 637
+  },
+  "qualification_attempts": 1200,
+  "raw_entry_boundary_counts": {
+    "start_before_journal": 637,
+    "strict_inside": 563
+  },
+  "raw_response_bodies_retained_in_source_artifact_only": true,
+  "saved_binding_vs_revised_eligibility": [
+    {
+      "eligible": false,
+      "n": 6,
+      "revised_reason": "entry_outside_sealed_observation_window",
+      "saved_binding": "entry_outside_sealed_observation_window"
+    },
+    {
+      "eligible": true,
+      "n": 631,
+      "revised_reason": "native_header_child_attribution",
+      "saved_binding": "entry_outside_sealed_observation_window"
+    },
+    {
+      "eligible": true,
+      "n": 563,
+      "revised_reason": "strict_sealed_window",
+      "saved_binding": "unique_declared_entry"
+    }
+  ],
+  "source_run_id": "40498392196",
+  "timing_interpretation": "Timestamp residues and journal differences are descriptive. A coarse exported native timestamp or an older capture does not prove the cause of missing bindings, clock offset, or admissibility of a tolerance.",
+  "witness_selection": "first three attempt hashes per operation and saved binding reason",
+  "witnesses": [
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9990183723,
+              "end_mod_millisecond_ns": 168000,
+              "end_ns": 1793102201712168000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "4d8fd630d66b90a8",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "7caba51b5a32be88",
+              "start_minus_journal_ns": 659277,
+              "start_mod_millisecond_ns": 11000,
+              "start_ns": 1793102201703011000,
+              "trace_id": "4d8fd630d66b90a8"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9990183723,
+              "end_mod_millisecond_ns": 168000,
+              "end_ns": 1793102201712168000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "4d8fd630d66b90a8",
+              "start_minus_journal_ns": -351723,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102201702000000,
+              "trace_id": "4d8fd630d66b90a8"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "083a7d7c11ef13d6ffdeceb0771b6f5329832aadf8437994b5d53805e21da2b8",
+      "cutoff_ns": 1793102211702351723,
+      "journal_ended_ns": 1793102201714424390,
+      "journal_started_ns": 1793102201702351723,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9990183723,
+        "end_mod_millisecond_ns": 168000,
+        "end_ns": 1793102201712168000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "4d8fd630d66b90a8",
+        "start_minus_journal_ns": -351723,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102201702000000,
+        "trace_id": "4d8fd630d66b90a8"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-083a7d7c11ef13d6ffdeceb0771b6f5329832aadf8437994b5d53805e21da2b8",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102201712168000,
+        "header_child_span_id": "7caba51b5a32be88",
+        "header_child_start_ns": 1793102201703011000,
+        "outer_end_ns": 1793102201712168000,
+        "outer_raw_start_ns": 1793102201702000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "7caba51b5a32be88",
+          "4d8fd630d66b90a8"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9987984152,
+              "end_mod_millisecond_ns": 340000,
+              "end_ns": 1793102204314340000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "b3f136533e08d416",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "e5ada563cd289c44",
+              "start_minus_journal_ns": 634848,
+              "start_mod_millisecond_ns": 959000,
+              "start_ns": 1793102204302959000,
+              "trace_id": "b3f136533e08d416"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9987984152,
+              "end_mod_millisecond_ns": 340000,
+              "end_ns": 1793102204314340000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "b3f136533e08d416",
+              "start_minus_journal_ns": -324152,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102204302000000,
+              "trace_id": "b3f136533e08d416"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "0f3eb31ee68d6dfc8f9cc4ba326bd5c87c54005322a1eae378c6b0da77640179",
+      "cutoff_ns": 1793102214302324152,
+      "journal_ended_ns": 1793102204316750441,
+      "journal_started_ns": 1793102204302324152,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9987984152,
+        "end_mod_millisecond_ns": 340000,
+        "end_ns": 1793102204314340000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "b3f136533e08d416",
+        "start_minus_journal_ns": -324152,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102204302000000,
+        "trace_id": "b3f136533e08d416"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-0f3eb31ee68d6dfc8f9cc4ba326bd5c87c54005322a1eae378c6b0da77640179",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102204314340000,
+        "header_child_span_id": "e5ada563cd289c44",
+        "header_child_start_ns": 1793102204302959000,
+        "outer_end_ns": 1793102204314340000,
+        "outer_raw_start_ns": 1793102204302000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "e5ada563cd289c44",
+          "b3f136533e08d416"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9993146336,
+              "end_mod_millisecond_ns": 184000,
+              "end_ns": 1793102192909184000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "6e44288ca6787e74",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "3aafb9b490fe64cb",
+              "start_minus_journal_ns": 733664,
+              "start_mod_millisecond_ns": 64000,
+              "start_ns": 1793102192903064000,
+              "trace_id": "6e44288ca6787e74"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9993146336,
+              "end_mod_millisecond_ns": 184000,
+              "end_ns": 1793102192909184000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "6e44288ca6787e74",
+              "start_minus_journal_ns": -330336,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102192902000000,
+              "trace_id": "6e44288ca6787e74"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "10388b94d2cd00d5e082f7753ee6ba51d5fb86540abc6721e3e7c6b317106c18",
+      "cutoff_ns": 1793102202902330336,
+      "journal_ended_ns": 1793102192911217503,
+      "journal_started_ns": 1793102192902330336,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9993146336,
+        "end_mod_millisecond_ns": 184000,
+        "end_ns": 1793102192909184000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "6e44288ca6787e74",
+        "start_minus_journal_ns": -330336,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102192902000000,
+        "trace_id": "6e44288ca6787e74"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-10388b94d2cd00d5e082f7753ee6ba51d5fb86540abc6721e3e7c6b317106c18",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102192909184000,
+        "header_child_span_id": "3aafb9b490fe64cb",
+        "header_child_start_ns": 1793102192903064000,
+        "outer_end_ns": 1793102192909184000,
+        "outer_raw_start_ns": 1793102192902000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "3aafb9b490fe64cb",
+          "6e44288ca6787e74"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9990216519,
+              "end_mod_millisecond_ns": 135000,
+              "end_ns": 1793102162062135000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "be11b21d6369527e",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "e24e56f4af5e404d",
+              "start_minus_journal_ns": 847481,
+              "start_mod_millisecond_ns": 199000,
+              "start_ns": 1793102162053199000,
+              "trace_id": "be11b21d6369527e"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9990216519,
+              "end_mod_millisecond_ns": 135000,
+              "end_ns": 1793102162062135000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "be11b21d6369527e",
+              "start_minus_journal_ns": 648481,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102162053000000,
+              "trace_id": "be11b21d6369527e"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "033c128f190d40df7b01d2549ba84e237039cc081e00679467f582ab3d2fc988",
+      "cutoff_ns": 1793102172052351519,
+      "journal_ended_ns": 1793102162064265123,
+      "journal_started_ns": 1793102162052351519,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9990216519,
+        "end_mod_millisecond_ns": 135000,
+        "end_ns": 1793102162062135000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "be11b21d6369527e",
+        "start_minus_journal_ns": 648481,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102162053000000,
+        "trace_id": "be11b21d6369527e"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-033c128f190d40df7b01d2549ba84e237039cc081e00679467f582ab3d2fc988",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9984450098,
+              "end_mod_millisecond_ns": 949000,
+              "end_ns": 1793102207367949000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "819bf9cf7b0e1e09",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "c98280754fc569ea",
+              "start_minus_journal_ns": 979902,
+              "start_mod_millisecond_ns": 379000,
+              "start_ns": 1793102207353379000,
+              "trace_id": "819bf9cf7b0e1e09"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9984450098,
+              "end_mod_millisecond_ns": 949000,
+              "end_ns": 1793102207367949000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "819bf9cf7b0e1e09",
+              "start_minus_journal_ns": 600902,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102207353000000,
+              "trace_id": "819bf9cf7b0e1e09"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "03c3c0816e9c93c657a4e2e159e9277a239b456571bad06bdb82abdb2afdd7ed",
+      "cutoff_ns": 1793102217352399098,
+      "journal_ended_ns": 1793102207370419665,
+      "journal_started_ns": 1793102207352399098,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9984450098,
+        "end_mod_millisecond_ns": 949000,
+        "end_ns": 1793102207367949000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "819bf9cf7b0e1e09",
+        "start_minus_journal_ns": 600902,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102207353000000,
+        "trace_id": "819bf9cf7b0e1e09"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-03c3c0816e9c93c657a4e2e159e9277a239b456571bad06bdb82abdb2afdd7ed",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9989161584,
+              "end_mod_millisecond_ns": 182000,
+              "end_ns": 1793102204413182000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "c67897a219b7a240",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "395fa0a3bb0c0663",
+              "start_minus_journal_ns": 814416,
+              "start_mod_millisecond_ns": 158000,
+              "start_ns": 1793102204403158000,
+              "trace_id": "c67897a219b7a240"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9989161584,
+              "end_mod_millisecond_ns": 182000,
+              "end_ns": 1793102204413182000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "POST",
+                "/wrk2-api/post/compose"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "c67897a219b7a240",
+              "start_minus_journal_ns": 656416,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102204403000000,
+              "trace_id": "c67897a219b7a240"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "048aac47bd34bac370f7e235507989b32d643a4ae861f93144072efca0ba42cf",
+      "cutoff_ns": 1793102214402343584,
+      "journal_ended_ns": 1793102204415446126,
+      "journal_started_ns": 1793102204402343584,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "compose_post",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9989161584,
+        "end_mod_millisecond_ns": 182000,
+        "end_ns": 1793102204413182000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "POST",
+          "/wrk2-api/post/compose"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-compose-post-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "c67897a219b7a240",
+        "start_minus_journal_ns": 656416,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102204403000000,
+        "trace_id": "c67897a219b7a240"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-048aac47bd34bac370f7e235507989b32d643a4ae861f93144072efca0ba42cf",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9997115975,
+              "end_mod_millisecond_ns": 209000,
+              "end_ns": 1793102167705209000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "a69ee8446c263260",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "2ce7759f44123a83",
+              "start_minus_journal_ns": 629025,
+              "start_mod_millisecond_ns": 954000,
+              "start_ns": 1793102167702954000,
+              "trace_id": "a69ee8446c263260"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9997115975,
+              "end_mod_millisecond_ns": 209000,
+              "end_ns": 1793102167705209000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "a69ee8446c263260",
+              "start_minus_journal_ns": -324975,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102167702000000,
+              "trace_id": "a69ee8446c263260"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "00e3bcd34438a0146a2a25586c0becf399ef5ab35f6671c0a4e78bee248ee8b5",
+      "cutoff_ns": 1793102177702324975,
+      "journal_ended_ns": 1793102167707337839,
+      "journal_started_ns": 1793102167702324975,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9997115975,
+        "end_mod_millisecond_ns": 209000,
+        "end_ns": 1793102167705209000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "a69ee8446c263260",
+        "start_minus_journal_ns": -324975,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102167702000000,
+        "trace_id": "a69ee8446c263260"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-00e3bcd34438a0146a2a25586c0becf399ef5ab35f6671c0a4e78bee248ee8b5",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102167705209000,
+        "header_child_span_id": "2ce7759f44123a83",
+        "header_child_start_ns": 1793102167702954000,
+        "outer_end_ns": 1793102167705209000,
+        "outer_raw_start_ns": 1793102167702000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "2ce7759f44123a83",
+          "a69ee8446c263260"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996833284,
+              "end_mod_millisecond_ns": 518000,
+              "end_ns": 1793102204155518000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "2c5afb649c13cadf",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "ee0ee1e9d03bdae2",
+              "start_minus_journal_ns": 741716,
+              "start_mod_millisecond_ns": 93000,
+              "start_ns": 1793102204153093000,
+              "trace_id": "2c5afb649c13cadf"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996833284,
+              "end_mod_millisecond_ns": 518000,
+              "end_ns": 1793102204155518000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "2c5afb649c13cadf",
+              "start_minus_journal_ns": -351284,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102204152000000,
+              "trace_id": "2c5afb649c13cadf"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "012c45799b23210147adf4b0b4cb02e2af0487bea94c1eda93922fd9bb71e6c9",
+      "cutoff_ns": 1793102214152351284,
+      "journal_ended_ns": 1793102204157784040,
+      "journal_started_ns": 1793102204152351284,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9996833284,
+        "end_mod_millisecond_ns": 518000,
+        "end_ns": 1793102204155518000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "2c5afb649c13cadf",
+        "start_minus_journal_ns": -351284,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102204152000000,
+        "trace_id": "2c5afb649c13cadf"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-012c45799b23210147adf4b0b4cb02e2af0487bea94c1eda93922fd9bb71e6c9",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102204155518000,
+        "header_child_span_id": "ee0ee1e9d03bdae2",
+        "header_child_start_ns": 1793102204153093000,
+        "outer_end_ns": 1793102204155518000,
+        "outer_raw_start_ns": 1793102204152000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "ee0ee1e9d03bdae2",
+          "2c5afb649c13cadf"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996371172,
+              "end_mod_millisecond_ns": 965000,
+              "end_ns": 1793102189855965000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "1bf4af4c9a5ad297",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "44432fb9f567bbde",
+              "start_minus_journal_ns": 573828,
+              "start_mod_millisecond_ns": 910000,
+              "start_ns": 1793102189852910000,
+              "trace_id": "1bf4af4c9a5ad297"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996371172,
+              "end_mod_millisecond_ns": 965000,
+              "end_ns": 1793102189855965000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "1bf4af4c9a5ad297",
+              "start_minus_journal_ns": -336172,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102189852000000,
+              "trace_id": "1bf4af4c9a5ad297"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "023bcb6daf13f72bc2edf2b40c260e1f4ba2055ca3f891b476d54624bc52806c",
+      "cutoff_ns": 1793102199852336172,
+      "journal_ended_ns": 1793102189858036286,
+      "journal_started_ns": 1793102189852336172,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9996371172,
+        "end_mod_millisecond_ns": 965000,
+        "end_ns": 1793102189855965000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "1bf4af4c9a5ad297",
+        "start_minus_journal_ns": -336172,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102189852000000,
+        "trace_id": "1bf4af4c9a5ad297"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-023bcb6daf13f72bc2edf2b40c260e1f4ba2055ca3f891b476d54624bc52806c",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102189855965000,
+        "header_child_span_id": "44432fb9f567bbde",
+        "header_child_start_ns": 1793102189852910000,
+        "outer_end_ns": 1793102189855965000,
+        "outer_raw_start_ns": 1793102189852000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "44432fb9f567bbde",
+          "1bf4af4c9a5ad297"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996574902,
+              "end_mod_millisecond_ns": 781000,
+              "end_ns": 1793102194155781000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "e6bebebeccf65b90",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "426900c9113ea671",
+              "start_minus_journal_ns": 833098,
+              "start_mod_millisecond_ns": 189000,
+              "start_ns": 1793102194153189000,
+              "trace_id": "e6bebebeccf65b90"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996573902,
+              "end_mod_millisecond_ns": 782000,
+              "end_ns": 1793102194155782000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "e6bebebeccf65b90",
+              "start_minus_journal_ns": 644098,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102194153000000,
+              "trace_id": "e6bebebeccf65b90"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "00bb9ef4e0e79db4a0055c9174ac286b6252dcb19a876cc9cd4a7f55ca1639f5",
+      "cutoff_ns": 1793102204152355902,
+      "journal_ended_ns": 1793102194158072892,
+      "journal_started_ns": 1793102194152355902,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9996573902,
+        "end_mod_millisecond_ns": 782000,
+        "end_ns": 1793102194155782000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "e6bebebeccf65b90",
+        "start_minus_journal_ns": 644098,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102194153000000,
+        "trace_id": "e6bebebeccf65b90"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-00bb9ef4e0e79db4a0055c9174ac286b6252dcb19a876cc9cd4a7f55ca1639f5",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996784463,
+              "end_mod_millisecond_ns": 549000,
+              "end_ns": 1793102163155549000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "9339051dd731166c",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "1f62ae525789e1e9",
+              "start_minus_journal_ns": 943537,
+              "start_mod_millisecond_ns": 277000,
+              "start_ns": 1793102163153277000,
+              "trace_id": "9339051dd731166c"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996783463,
+              "end_mod_millisecond_ns": 550000,
+              "end_ns": 1793102163155550000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "9339051dd731166c",
+              "start_minus_journal_ns": 666537,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102163153000000,
+              "trace_id": "9339051dd731166c"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "01d14a80ff19239236d1b1252ba811ab48d9b750d8414973876d6bc2e8abfe7f",
+      "cutoff_ns": 1793102173152333463,
+      "journal_ended_ns": 1793102163157584879,
+      "journal_started_ns": 1793102163152333463,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9996783463,
+        "end_mod_millisecond_ns": 550000,
+        "end_ns": 1793102163155550000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "9339051dd731166c",
+        "start_minus_journal_ns": 666537,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102163153000000,
+        "trace_id": "9339051dd731166c"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-01d14a80ff19239236d1b1252ba811ab48d9b750d8414973876d6bc2e8abfe7f",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995501634,
+              "end_mod_millisecond_ns": 825000,
+              "end_ns": 1793102160456825000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "3976dbb2d15d3de3",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "d94cbaeb42760c38",
+              "start_minus_journal_ns": 1219366,
+              "start_mod_millisecond_ns": 546000,
+              "start_ns": 1793102160453546000,
+              "trace_id": "3976dbb2d15d3de3"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995501634,
+              "end_mod_millisecond_ns": 825000,
+              "end_ns": 1793102160456825000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/home-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "3976dbb2d15d3de3",
+              "start_minus_journal_ns": 673366,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102160453000000,
+              "trace_id": "3976dbb2d15d3de3"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "03b38052c644e2515500de3d9766f3c52b0497adce725b1835e291a3b363e1b4",
+      "cutoff_ns": 1793102170452326634,
+      "journal_ended_ns": 1793102160458890437,
+      "journal_started_ns": 1793102160452326634,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_home_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9995501634,
+        "end_mod_millisecond_ns": 825000,
+        "end_ns": 1793102160456825000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/home-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-home-timeline-service-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "3976dbb2d15d3de3",
+        "start_minus_journal_ns": 673366,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102160453000000,
+        "trace_id": "3976dbb2d15d3de3"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-03b38052c644e2515500de3d9766f3c52b0497adce725b1835e291a3b363e1b4",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995136574,
+              "end_mod_millisecond_ns": 218000,
+              "end_ns": 1793102179807218000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "ef5b0ae084957fa5",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "fe5bc054a04dfa4a",
+              "start_minus_journal_ns": 765426,
+              "start_mod_millisecond_ns": 120000,
+              "start_ns": 1793102179803120000,
+              "trace_id": "ef5b0ae084957fa5"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995136574,
+              "end_mod_millisecond_ns": 218000,
+              "end_ns": 1793102179807218000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "ef5b0ae084957fa5",
+              "start_minus_journal_ns": -354574,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102179802000000,
+              "trace_id": "ef5b0ae084957fa5"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "020fb80480297eb82da7fae4cad50536d27c388fbcab2cf0826b098e6f414159",
+      "cutoff_ns": 1793102189802354574,
+      "journal_ended_ns": 1793102179809443085,
+      "journal_started_ns": 1793102179802354574,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9995136574,
+        "end_mod_millisecond_ns": 218000,
+        "end_ns": 1793102179807218000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "ef5b0ae084957fa5",
+        "start_minus_journal_ns": -354574,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102179802000000,
+        "trace_id": "ef5b0ae084957fa5"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-020fb80480297eb82da7fae4cad50536d27c388fbcab2cf0826b098e6f414159",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102179807218000,
+        "header_child_span_id": "fe5bc054a04dfa4a",
+        "header_child_start_ns": 1793102179803120000,
+        "outer_end_ns": 1793102179807218000,
+        "outer_raw_start_ns": 1793102179802000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "fe5bc054a04dfa4a",
+          "ef5b0ae084957fa5"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995899927,
+              "end_mod_millisecond_ns": 430000,
+              "end_ns": 1793102176206430000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "f8854e5eee522af9",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "392285fe5c142390",
+              "start_minus_journal_ns": 764073,
+              "start_mod_millisecond_ns": 94000,
+              "start_ns": 1793102176203094000,
+              "trace_id": "f8854e5eee522af9"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995898927,
+              "end_mod_millisecond_ns": 431000,
+              "end_ns": 1793102176206431000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "f8854e5eee522af9",
+              "start_minus_journal_ns": -329927,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102176202000000,
+              "trace_id": "f8854e5eee522af9"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "04a2de00d85ac6c478d7c6baf1df4da6d0a3b935252c0f9892b82bbeca32c46c",
+      "cutoff_ns": 1793102186202329927,
+      "journal_ended_ns": 1793102176208570485,
+      "journal_started_ns": 1793102176202329927,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9995898927,
+        "end_mod_millisecond_ns": 431000,
+        "end_ns": 1793102176206431000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "f8854e5eee522af9",
+        "start_minus_journal_ns": -329927,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102176202000000,
+        "trace_id": "f8854e5eee522af9"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-04a2de00d85ac6c478d7c6baf1df4da6d0a3b935252c0f9892b82bbeca32c46c",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102176206430000,
+        "header_child_span_id": "392285fe5c142390",
+        "header_child_start_ns": 1793102176203094000,
+        "outer_end_ns": 1793102176206431000,
+        "outer_raw_start_ns": 1793102176202000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "392285fe5c142390",
+          "f8854e5eee522af9"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996372683,
+              "end_mod_millisecond_ns": 960000,
+              "end_ns": 1793102164205960000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "da98f973054c8abd",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "322b61c41bad36e6",
+              "start_minus_journal_ns": 608317,
+              "start_mod_millisecond_ns": 941000,
+              "start_ns": 1793102164202941000,
+              "trace_id": "da98f973054c8abd"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9996371683,
+              "end_mod_millisecond_ns": 961000,
+              "end_ns": 1793102164205961000,
+              "inside_sealed_window": false,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "da98f973054c8abd",
+              "start_minus_journal_ns": -332683,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102164202000000,
+              "trace_id": "da98f973054c8abd"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "070f058e31f2285a6ddb3b3dc92f06089d59a6d9de4ee48de1069bf144ccad89",
+      "cutoff_ns": 1793102174202332683,
+      "journal_ended_ns": 1793102164208097448,
+      "journal_started_ns": 1793102164202332683,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9996371683,
+        "end_mod_millisecond_ns": 961000,
+        "end_ns": 1793102164205961000,
+        "inside_sealed_window": false,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "da98f973054c8abd",
+        "start_minus_journal_ns": -332683,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102164202000000,
+        "trace_id": "da98f973054c8abd"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-070f058e31f2285a6ddb3b3dc92f06089d59a6d9de4ee48de1069bf144ccad89",
+      "revised_attribution_proof": {
+        "header_child_end_ns": 1793102164205960000,
+        "header_child_span_id": "322b61c41bad36e6",
+        "header_child_start_ns": 1793102164202941000,
+        "outer_end_ns": 1793102164205961000,
+        "outer_raw_start_ns": 1793102164202000000,
+        "rule": "native_nginx_coarse_outer_start_exact_header_child",
+        "source_local_parent_path": [
+          "322b61c41bad36e6",
+          "da98f973054c8abd"
+        ],
+        "valid_header_children": 1
+      },
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "native_header_child_attribution",
+      "saved_binding_reason": "entry_outside_sealed_observation_window",
+      "saved_body_reason": "entry_unbound",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995576246,
+              "end_mod_millisecond_ns": 760000,
+              "end_ns": 1793102206856760000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "df0c3aea8cb06b5d",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "0ab0b2afe5b6266c",
+              "start_minus_journal_ns": 853754,
+              "start_mod_millisecond_ns": 190000,
+              "start_ns": 1793102206853190000,
+              "trace_id": "df0c3aea8cb06b5d"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995575246,
+              "end_mod_millisecond_ns": 761000,
+              "end_ns": 1793102206856761000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "df0c3aea8cb06b5d",
+              "start_minus_journal_ns": 663754,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102206853000000,
+              "trace_id": "df0c3aea8cb06b5d"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "02f6f56df119567ee9a9393faeaf6f10ffee768480be5bb2353feae417ea43c1",
+      "cutoff_ns": 1793102216852336246,
+      "journal_ended_ns": 1793102206859124103,
+      "journal_started_ns": 1793102206852336246,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9995575246,
+        "end_mod_millisecond_ns": 761000,
+        "end_ns": 1793102206856761000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "df0c3aea8cb06b5d",
+        "start_minus_journal_ns": 663754,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102206853000000,
+        "trace_id": "df0c3aea8cb06b5d"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-02f6f56df119567ee9a9393faeaf6f10ffee768480be5bb2353feae417ea43c1",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9994726279,
+              "end_mod_millisecond_ns": 656000,
+              "end_ns": 1793102202057656000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "2e5b94686ed338fe",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "76a2cd438d6a3ca2",
+              "start_minus_journal_ns": 1381721,
+              "start_mod_millisecond_ns": 764000,
+              "start_ns": 1793102202053764000,
+              "trace_id": "2e5b94686ed338fe"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9994725279,
+              "end_mod_millisecond_ns": 657000,
+              "end_ns": 1793102202057657000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "2e5b94686ed338fe",
+              "start_minus_journal_ns": 617721,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102202053000000,
+              "trace_id": "2e5b94686ed338fe"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "036ec74e74e8f4734ae35201a015cf71ae269ef63ee2fd188f54341fa3b6891a",
+      "cutoff_ns": 1793102212052382279,
+      "journal_ended_ns": 1793102202060030884,
+      "journal_started_ns": 1793102202052382279,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9994725279,
+        "end_mod_millisecond_ns": 657000,
+        "end_ns": 1793102202057657000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "2e5b94686ed338fe",
+        "start_minus_journal_ns": 617721,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102202053000000,
+        "trace_id": "2e5b94686ed338fe"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-036ec74e74e8f4734ae35201a015cf71ae269ef63ee2fd188f54341fa3b6891a",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    },
+    {
+      "anchors_omitted": 0,
+      "anchors_shown": [
+        {
+          "spans": [
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995623120,
+              "end_mod_millisecond_ns": 714000,
+              "end_ns": 1793102175556714000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "a3317b8becf6cd18",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "328ff3d80d0a228f",
+              "start_minus_journal_ns": 794880,
+              "start_mod_millisecond_ns": 132000,
+              "start_ns": 1793102175553132000,
+              "trace_id": "a3317b8becf6cd18"
+            },
+            {
+              "attribute_conflict_keys": [],
+              "component": "nginx",
+              "end_minus_cutoff_ns": -9995623120,
+              "end_mod_millisecond_ns": 714000,
+              "end_ns": 1793102175556714000,
+              "inside_sealed_window": true,
+              "instance": "nginx-thrift",
+              "kind": null,
+              "method_path": [
+                "GET",
+                "/wrk2-api/user-timeline/read"
+              ],
+              "node": null,
+              "parent_id": "",
+              "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+              "response_body_bytes": null,
+              "response_body_present": false,
+              "response_status": 200,
+              "service": "nginx-web-server",
+              "source": "native",
+              "span_id": "a3317b8becf6cd18",
+              "start_minus_journal_ns": 662880,
+              "start_mod_millisecond_ns": 0,
+              "start_ns": 1793102175553000000,
+              "trace_id": "a3317b8becf6cd18"
+            }
+          ],
+          "stop": "root"
+        }
+      ],
+      "attempt_key": "09ae61b9b8b157e590afc2a7ae2f05f2f7d1591b6d402d55fd252420d952afec",
+      "cutoff_ns": 1793102185552337120,
+      "journal_ended_ns": 1793102175558737703,
+      "journal_started_ns": 1793102175552337120,
+      "nearby_expected_route_without_identity": [],
+      "observation_censored": false,
+      "operation": "read_user_timeline",
+      "replayed_entry": {
+        "attribute_conflict_keys": [],
+        "component": "nginx",
+        "end_minus_cutoff_ns": -9995623120,
+        "end_mod_millisecond_ns": 714000,
+        "end_ns": 1793102175556714000,
+        "inside_sealed_window": true,
+        "instance": "nginx-thrift",
+        "kind": null,
+        "method_path": [
+          "GET",
+          "/wrk2-api/user-timeline/read"
+        ],
+        "node": null,
+        "parent_id": "",
+        "raw_file_basename": "traces-nginx-web-server-1793102130618256-1793102246320733.json",
+        "response_body_bytes": null,
+        "response_body_present": false,
+        "response_status": 200,
+        "service": "nginx-web-server",
+        "source": "native",
+        "span_id": "a3317b8becf6cd18",
+        "start_minus_journal_ns": 662880,
+        "start_mod_millisecond_ns": 0,
+        "start_ns": 1793102175553000000,
+        "trace_id": "a3317b8becf6cd18"
+      },
+      "replayed_pre_window_entry_reason": "unique_declared_entry",
+      "request_id": "req-09ae61b9b8b157e590afc2a7ae2f05f2f7d1591b6d402d55fd252420d952afec",
+      "revised_attribution_proof": null,
+      "revised_entry_eligible": true,
+      "revised_entry_reason": "strict_sealed_window",
+      "saved_binding_reason": "unique_declared_entry",
+      "saved_body_reason": "body_not_exported",
+      "total_native_header_anchors": 1
+    }
+  ]
+}

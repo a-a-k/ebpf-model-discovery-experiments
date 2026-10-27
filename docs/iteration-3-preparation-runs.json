@@ -3,6 +3,16 @@
   "repository": "a-a-k/ebpf-model-discovery-experiments",
   "runs": [
     {
+      "run_id": 40502378266,
+      "role": "evidence",
+      "note": "Native timestamp attribution implementation checks"
+    },
+    {
+      "run_id": 40502380042,
+      "role": "evidence",
+      "note": "Retained native entry attribution replay; 631 exact-child bindings recovered, 6 unknown retained"
+    },
+    {
       "run_id": 40501091008,
       "role": "evidence",
       "note": "Read-only DSB binding audit implementation checks"
