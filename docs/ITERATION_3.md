@@ -312,6 +312,12 @@ alone remain unknowns. If a repair changes training inputs or frozen predictions
 retained-data replay is diagnostic and fresh confirmation is required. A pure
 reporting error can be corrected without reacquiring unchanged observations.
 
+The independent reviewer granted explicit implementation GO at `a52fbbe` after
+all seven focused synthetic checks passed. Replay uses acquisition-hashed rules
+and the automatic binder without declared-operation restrictions. Raw witnesses
+are limited to the indexed file prefix and retain duplicate timestamp variants;
+they cannot substitute a later unindexed value. The orchestrator agrees.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
