@@ -345,6 +345,29 @@ an avoidable admission gate, not collector loss or a fundamental eBPF limitation
 The existing forecasts remain unchanged measurements of that pipeline. No repair
 or additional acquisition is approved merely by publishing this diagnosis.
 
+## Structural reporting access-path repair
+
+Run `40521759317` spends extended time inspecting the retained captures. A
+synthetic SQLite query plan exposes a possible near-quadratic join: its first
+materialized validity CTE lookup uses count/conflict attributes without the
+source/trace/span identity key. This is a technical reporting hypothesis, not
+evidence that eBPF discovery failed or that the live runner uses that exact plan.
+
+The proposed repair materializes the identical valid-identity relation once per
+read-only capture connection in a keyed TEMP table. The strongest direct baseline
+is the current query with identical input and predicates. Both must return the
+same synthetic outputs, including witnesses and ambiguous/invalid identities;
+retained data, models, forecasts, and information boundaries remain unchanged.
+File-backed temporary storage and bounded caches limit resource use. Original
+and repaired job costs, preparation and cancellation are retained together.
+
+Before implementation, the independent skeptic grants **GO under the unchanged
+original criterion** for this reporting-only repair; the orchestrator agrees.
+The original contribution remains empirical model discovery and validated uses
+without complete tracing. An equivalent SQL access path cannot improve that
+scientific contribution; it only completes the already required report. No
+additional acquisition or model refitting is authorized by this repair.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
