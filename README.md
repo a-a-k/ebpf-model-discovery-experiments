@@ -85,6 +85,8 @@ The combined source is a deterministic union. Where several sources describe an 
 
 Service instances and placement use available resource/process attributes and collector provenance. A cross-node link requires observed parent/child or message identity. A connection, common topic, or temporal proximity is insufficient. Observed link counts are distinct from an independently validated link-error rate; the latter is unknown without a reference.
 
+Petclinic deployment explicitly supplies service names and instance labels through `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES`, including when its native SDK is disabled. These are manual identity annotations available to observation tools; their presence in a recovered graph is not autonomous discovery of an otherwise unnamed instance. Guest identity comes from collector ingress, and no IP address alone establishes a concrete database instance.
+
 Database analysis distinguishes logical address, concrete instance evidence, and dependencies shared by multiple services. Known database ports alone do not identify an operation's dependency.
 
 Native database activity named in spans is retained even when endpoint attributes are absent. For example, a named Mongo client call is evidence of activity, not proof of a particular Mongo instance. Unknown endpoints are scoped to their callers and cannot establish a shared database. Observed protocol labels are never corrected using the deployment reference: endpoint agreement and protocol agreement are separate evaluation fields.
