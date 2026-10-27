@@ -1,6 +1,6 @@
 # Iteration 2: diagnose the completed experiment before changing its design
 
-Status: pre-execution review. The user requested this diagnostic iteration on
+Status: completed and independently reviewed. The user requested this diagnostic iteration on
 2026-10-27. The original 27 campaigns and published results remain unchanged.
 
 ## Criterion and interpretation
@@ -88,6 +88,79 @@ iid assumptions and unvalidated temporal coverage.
 New acquisition is a separate step after these diagnostics and a renewed skeptic
 check of its concrete design. There is no automatic second 27-campaign sweep.
 
+## Results and decisions
+
+The [generated report](../results/iteration-2/report.md) contains all 27 campaigns,
+all four diagnostic cells and all sources. The [summary CSV](../results/iteration-2/summary.csv)
+retains each operation/mode separately over its three original seeds. Oracle
+controls identify replacement effects in this estimator, not corrected eBPF models.
+
+| Explanation | What the diagnostic established | Design consequence |
+| --- | --- | --- |
+| H1: proxy semantics | Petclinic full-mode owner-details point MAE is 12.50 pp with original data or oracle classes, and 0 with oracle calibration outcomes. Enabled native has the same semantic error. | Keep the original business contract. Bind mandatory calls and, where available, response-payload semantics; do not substitute HTTP 2xx for completion. |
+| H2: classification | OTel absent/partial eBPF forecasts become identified with zero point MAE in the class-oracle control; outcome replacement alone does not help. Full-mode class-oracle point MAE is 0.52/1.04/2.08 pp for browse/cart/checkout. Petclinic create-visit class replacement also yields zero point MAE in all modes. | Separate supplied operation identity from automatic grouping. Fix strict entry selection and source-local ancestry before evaluating automatic discovery again. |
+| H3: Kafka export | In all nine OTel captures, audited raw Kafka spans/attributes survive normalization, but eBPF has no accepted identity candidates. Enabled native has exact links. | The tested async failure is already present in exported identity evidence. Repeating the unchanged configuration is not an evidenced repair. |
+| H4: nominal precision | Full-mode Petclinic owners/vets have zero point error and zero identification width, but 6.02 pp nominal worst-end error. Even both-oracle Petclinic controls retain 5.27–6.02 pp worst-end error. | Plan real observations per operation/state against the precision target before fresh acquisition. More MC draws cannot repair this design issue. |
+| DB graph | The original predictor never uses DB nodes. Shared MySQL already exists and a static endpoint inventory can expose it. | A future shared-DB corner must change an external impact prediction, compare the inventory baseline, and explicitly use the dependency. |
+
+The source-only Petclinic audit is narrower than the oracle outcome control. In
+the three absent-mode captures, it identifies 24, 15 and 22 of the 30 target HTTP
+proxy false positives respectively. With native tracing enabled, the eBPF audit
+identifies none of those 30 per capture; the native audit identifies all 30.
+No source-false verdict contradicts an externally successful operation. This
+does not establish positive business completion or a repaired forecast. It
+motivates checking ancestry/context interactions when both instrumentations run;
+the mode contrast alone does not prove instrumentation interference.
+
+Response bodies occur in exported Petclinic data. Their absence is not an
+established explanation. The diagnostic inventories their availability without
+implementing a payload binder. A source-only binder must validate field format,
+completeness and attribution, use the same declared fixtures/contracts for all
+sources, and keep SQL write attempts distinct from confirmed persistence.
+
+DeathStarBench's eBPF results are unchanged by either oracle substitution. This is
+a useful control against attributing every result to the same failure mechanism.
+
+## Refined minimum design for the next implementation
+
+1. **Source comparison first.** Use the same explicit operation identities and
+   original completion contracts for native/eBPF/combined source comparison.
+   Automatic classification is a separate paired arm. Supplied identities are
+   manual knowledge, not an automatic-discovery result.
+2. **Repair evidenced processing gaps.** Select the declared entry rather than
+   the earliest header-bearing server, keep source identity in ancestry keys,
+   and preserve conflicts as unknown. Bind completion from actual mandatory-call,
+   status and body evidence. First replay archives as development evidence; then
+   confirm using new observations. A full original-model port is not completed here.
+3. **Separate errors and uncertainty.** Retain point error, identification bounds,
+   nominal sampling bounds, unknowns and the original conservative gate. Set
+   sample sizes before acquisition; do not relax the gate or repeat until it passes.
+4. **Keep Kafka bounded.** New acquisition needs a concrete change capable of
+   exporting missing message identity. Native association is the reference;
+   offsets/topic/time cannot replace identity.
+5. **Use one shared-DB corner on Petclinic if the comparison is informative.**
+   Healthy discovery precedes single-replica and shared-DB interventions. Predict
+   effects on visit creation and owner retrieval while both replicas can remain
+   running during the DB outage. Compare native, eBPF, combined and cheap endpoint
+   inventory with identical contracts and fault information. If inventory supplies
+   the same binding, rediscovering it establishes no model/simulation advantage.
+   Cache-dependent reads remain explicit.
+
+The next live acquisition budget is not automatically the original 27 campaigns.
+Its scope depends on which source-only repairs survive replay and review; the
+original usefulness criterion is unchanged. This iteration ends with diagnosed
+replacement effects and a revised design, not a freshly confirmed repaired method.
+
+## Source context for the Kafka finding
+
+The raw audit, rather than these implementation references alone, supports H3.
+The pinned OBI Sarama path supplies messaging metadata without the original
+trace/parent fields in [go_kafka_transform.go](https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/b28e4e7fe0a01f1961b7c4747a13b8ff486d6fec/pkg/ebpf/common/go_kafka_transform.go#L41).
+Its [produce parser](https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/b28e4e7fe0a01f1961b7c4747a13b8ff486d6fec/pkg/internal/ebpf/kafkaparser/produce.go#L144)
+skips record payload bytes. The pinned demo's [Sarama producer](https://github.com/open-telemetry/opentelemetry-demo/blob/8c47d47c9ac27710d2b2a153bcd53e483bffe66d/src/checkout/kafka/producer.go#L39)
+uses NoResponse acknowledgements, another reason not to regard coincident
+reported offset values as producer/consumer message identity.
+
 ## Costs, provenance and review
 
 Retain input archive checksums, original prediction/assignment hashes, diagnostic
@@ -106,3 +179,22 @@ calculation, and no presentation of retrospective improvements as a deployable
 eBPF result. Improvements describe replacement effects in this estimator,
 including its pessimistic treatment of ambiguous classes. H4 measures nominal
 Wilson padding, not an inferred effective sample size. DB work remains design-only.
+
+Independent implementation review: **GO at `6e270c6`** after verifying the
+two-by-two controls, source-local identity ambiguity handling and independently
+preserved raw Kafka fields. Tuple/offset overlaps are untrusted candidates, not
+message identities; incomplete raw/preservation audits cannot be called evidence
+of collector absence. The run is [40480503659](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40480503659).
+
+Final result review: orchestrator and independent 6.1 Sol/xhigh reviewer **GO for
+the integrity and reporting of this diagnostic iteration; NO-GO for claiming the
+original usefulness criterion established.** The reviewer independently checked
+all 27 distinct campaigns and all 405 protected hashes against the original
+report, confirmed the calibration-only oracle boundaries, and verified all nine
+raw Kafka audits. Source-only Petclinic negative verdicts have no contradictions
+with successful external outcomes in either phase. Class-oracle improvements
+include the original estimator's pessimistic ambiguous-class policy. The
+protocol-only audit establishes neither positive business completion nor a
+deployable correction. Nominal Wilson padding does not establish effective sample
+size or temporal interval coverage. The [permanent archive and reproduction](../results/iteration-2/SOURCE.md)
+retain the complete diagnostic evidence and cost-snapshot limitations.

@@ -1,0 +1,50 @@
+{
+  "status": "complete",
+  "campaigns": 27,
+  "commit": "6e270c678b328e0e5e522decd16abdf6a88e34a8",
+  "run_id": "40480503659",
+  "system_statuses": [
+    {
+      "status": "complete",
+      "system": "deathstarbench",
+      "campaigns": 9,
+      "original_report_run": "40459487189",
+      "report_zip_sha256": "102ae31f2f357976c6c132be2b69b17e405a76b5bbe1640da9c7fa7aea1c1c89",
+      "diagnostic_run": "40480503659",
+      "commit": "6e270c678b328e0e5e522decd16abdf6a88e34a8",
+      "elapsed_seconds_including_downloads": 16.797383549,
+      "original_results_unchanged": true,
+      "new_application_attempts": 0,
+      "unmetered_human_agent_cost": null
+    },
+    {
+      "status": "complete",
+      "system": "otel_demo",
+      "campaigns": 9,
+      "original_report_run": "40459487189",
+      "report_zip_sha256": "102ae31f2f357976c6c132be2b69b17e405a76b5bbe1640da9c7fa7aea1c1c89",
+      "diagnostic_run": "40480503659",
+      "commit": "6e270c678b328e0e5e522decd16abdf6a88e34a8",
+      "elapsed_seconds_including_downloads": 252.546151501,
+      "original_results_unchanged": true,
+      "new_application_attempts": 0,
+      "unmetered_human_agent_cost": null
+    },
+    {
+      "status": "complete",
+      "system": "petclinic",
+      "campaigns": 9,
+      "original_report_run": "40459487189",
+      "report_zip_sha256": "102ae31f2f357976c6c132be2b69b17e405a76b5bbe1640da9c7fa7aea1c1c89",
+      "diagnostic_run": "40480503659",
+      "commit": "6e270c678b328e0e5e522decd16abdf6a88e34a8",
+      "elapsed_seconds_including_downloads": 42.94479217500003,
+      "original_results_unchanged": true,
+      "new_application_attempts": 0,
+      "unmetered_human_agent_cost": null
+    }
+  ],
+  "new_application_attempts": 0,
+  "protected_originals_verified": 405,
+  "fresh_confirmation": false
+}
