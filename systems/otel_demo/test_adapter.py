@@ -585,7 +585,8 @@ def test_kafka_admin_cleanup_is_named_bounded_and_verified(monkeypatch) -> None:
     node, command, kwargs = calls[0]
     assert node == "a"
     assert "docker rm -f 'study-kafka-admin-deadbeef'" in command
-    assert "docker ps -aq --filter name=^/study-kafka-admin-deadbeef$" in command
+    assert "ids=$(docker ps -aq --filter name=^/study-kafka-admin-deadbeef$) || exit $?" in command
+    assert 'test -z "$ids"' in command
     assert kwargs == {"check": False, "timeout": 5.0}
     assert result["status"] == "completed"
     assert result["helper_absent"] is True
@@ -620,6 +621,44 @@ def test_kafka_admin_cleanup_timeout_is_persisted(tmp_path: Path, monkeypatch) -
     persisted = json.loads((tmp_path / "kafka-admin-drain.json").read_text())
     assert persisted["cleanups"][0]["status"] == "timeout"
     assert "cleanup err" in persisted["cleanups"][0]["stderr"]
+
+
+def test_kafka_admin_cleanup_rejects_docker_ps_failure(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class Result:
+        stdout = ""
+        stderr = "docker daemon unavailable"
+        returncode = 1
+
+    class Context:
+        out = tmp_path
+
+        def node_exec(self, node, command, **kwargs):
+            return Result()
+
+    monkeypatch.setattr(adapter_module.time, "monotonic", lambda: 10.0)
+    adapter = object.__new__(Adapter)
+    adapter.ctx = Context()
+    evidence = {"cleanups": []}
+
+    try:
+        adapter._cleanup_kafka_admin(
+            70.0,
+            "study-kafka-admin-deadbeef",
+            allow_late=False,
+            evidence=evidence,
+        )
+    except RuntimeError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError("docker ps failure must not prove helper absence")
+
+    persisted = json.loads((tmp_path / "kafka-admin-drain.json").read_text())
+    assert persisted["cleanups"][0]["status"] == "error"
+    assert persisted["cleanups"][0]["returncode"] == 1
+    assert "docker daemon unavailable" in persisted["cleanups"][0]["stderr"]
+    assert "docker daemon unavailable" in message
 
 
 def test_kafka_admin_evidence_persists_image_helper_and_probe(tmp_path: Path) -> None:
