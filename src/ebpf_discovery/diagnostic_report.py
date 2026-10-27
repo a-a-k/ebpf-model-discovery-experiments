@@ -95,9 +95,10 @@ def generate(inputs, out):
                     counts['raw_exact_identity_candidates'], counts['matcher_linked'], data['assessment']['status'])) + ' |')
     csv_write(out/'async-identity-summary.csv', async_rows)
     lines += ['', '## Petclinic: source-only completion evidence', '',
-              'The audit receives explicit operation contracts and timing, but no oracle outcomes or '
-              'response payloads. Evaluation joins outcomes only afterward. It can identify explicit '
-              'failure of required completion, but cannot certify exact response contents or persistence. '
+              'The audit receives explicit operation contracts, timing and source spans, but no oracle outcomes. '
+              'It does not interpret response-payload semantics. Evaluation joins outcomes only afterward. It can identify explicit '
+              'failure of required completion; this protocol-only audit does not evaluate captured '
+              'response bodies or certify persistence. Body-field availability is inventoried separately. '
               'Per-attempt witnesses are retained in each campaign\'s semantic-evidence-audit.json.', '',
               '| Campaign | Source | Target attempts | Proxy true / external false | Of those, source audit establishes failure | False audit / external true |',
               '| --- | --- | ---: | ---: | ---: | ---: |']

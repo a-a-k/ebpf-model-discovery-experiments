@@ -41,6 +41,14 @@ generator labels and external outcomes never enter a claimed source-only model.
 Calibration/test separation is preserved, but the investigation was designed
 after inspecting the first results: it is not fresh confirmatory evidence.
 
+The source audit also checks strict entry binding and source-separated ancestry:
+the original projection can select a header-bearing downstream server instead
+of the declared entry, and its combined child index does not separate sources.
+These are possible processing causes, not demonstrated limits of eBPF.
+Petclinic exports can contain `http.response.body.content`; the protocol-only
+audit inventories this availability rather than falsely declaring payloads
+absent. It deliberately does not yet implement a payload-semantic binder.
+
 The semantic substitution keeps original assignments fixed; it does not silently
 reclassify attempts using their newly substituted outcomes. Unknown source
 outcomes remain unknown in the class-only control. Missing classes retain the

@@ -21,7 +21,7 @@ import zipfile
 
 from .evaluate import external_rate
 from .model import STATES, WEIGHTS, conditional
-from .observations import opaque_attempt, read_spans
+from .observations import opaque_attempt, read_spans, normalized_route
 
 REPORT_RUN = '40459487189'
 REPORT_TAG = 'data-40460660847'
@@ -210,7 +210,7 @@ def analyze_campaign(evidence, capture, out):
             from systems.otel_demo.identity_audit import audit_message_identity
             write(out/'async-identity-audit.json', audit_message_identity(capture/'observations', capture/'native', spans))
         else:
-            from systems.petclinic.semantic_audit import audit_semantics
+            from systems.petclinic.semantic_audit import audit_semantics, CONTRACTS
             audit = audit_semantics(spans, semantic_census(external))
             write(out/'semantic-evidence-audit.json', audit)
             comparison = []
@@ -220,10 +220,16 @@ def analyze_campaign(evidence, capture, out):
                             for r in read(evidence/'models'/source/name)}
                 for attempt in result['attempts']:
                     external_outcome = reference[attempt['attempt_key']].get('success')
+                    original_attempt = original[attempt['attempt_key']]
+                    contract = CONTRACTS[attempt['contract_id']]
+                    expected_route = contract['method'] + ' ' + normalized_route(contract['entry_path'])
+                    observed_routes = [r for r in original_attempt['signature'] if r]
                     comparison.append({**identity, 'source': source, 'operation': attempt['contract_id'],
                         'phase': attempt['phase'], 'state': attempt['state'], 'attempt_key': attempt['attempt_key'],
                         'entry_binding': attempt['entry_binding']['status'],
-                        'original_proxy': original[attempt['attempt_key']]['proxy'],
+                        'original_proxy': original_attempt['proxy'],
+                        'original_non_entry_route': any(r != expected_route for r in observed_routes) if observed_routes else None,
+                        'response_body_content_available': attempt['response_body_evidence']['content_available'],
                         'logical_completion': attempt['logical_completion'],
                         'source_business_verdict': attempt['source_business_verdict'],
                         'external_success': external_outcome,
