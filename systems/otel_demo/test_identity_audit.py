@@ -144,6 +144,54 @@ def test_event_identity_field_prevents_raw_absence_overclaim(tmp_path: Path) -> 
     assert result["assessment"]["status"] == "normalization_discard_unresolved_candidate"
 
 
+def test_raw_variants_differing_only_by_dropped_event_survive(tmp_path: Path) -> None:
+    plain = _span("34" * 16, "44" * 8, "", "send orders", "checkout", "send")
+    with_event = _span(
+        "34" * 16,
+        "44" * 8,
+        "",
+        "send orders",
+        "checkout",
+        "send",
+        event_attributes=[("messaging.message.id", "later-record")],
+    )
+    raw, normalized = _write(tmp_path, [plain, with_event])
+
+    result = audit_message_identity(raw, None, normalized)["sources"]["ebpf"]
+
+    assert result["preservation"]["raw_unique_kafka_spans"] == 2
+    assert result["identity_candidate_counts"]["identity_fields_in_dropped_event_attributes"] == 1
+    assert result["assessment"]["status"] == "normalization_discard_unresolved_candidate"
+
+
+def test_offset_tuple_overlap_is_untrusted(tmp_path: Path) -> None:
+    producer = _span("35" * 16, "45" * 8, "", "send orders", "checkout", "send", offset=0)
+    consumer = _span("36" * 16, "46" * 8, "", "process orders", "accounting", "process", offset=0)
+    raw, normalized = _write(tmp_path, [producer, consumer])
+
+    result = audit_message_identity(raw, None, normalized)["sources"]["ebpf"]
+
+    assert result["stage_counts"]["raw_exact_identity_candidates"] == 0
+    assert result["stage_counts"]["raw_untrusted_identity_candidates"] == 1
+    assert result["assessment"]["status"] == "untrusted_candidate_only"
+
+
+def test_parse_or_preservation_failure_makes_audit_incomplete(tmp_path: Path) -> None:
+    raw = tmp_path / "observations"
+    raw.mkdir()
+    (raw / "a.jsonl").write_text("{not-json}\n", encoding="utf-8")
+    malformed = audit_message_identity(raw, None, [])["sources"]["ebpf"]
+    assert malformed["assessment"]["status"] == "audit_incomplete"
+
+    other = tmp_path / "other"
+    producer = _span("37" * 16, "47" * 8, "", "send orders", "checkout", "send")
+    valid_raw, normalized = _write(other, [producer])
+    normalized[0]["attributes"].pop("messaging.destination.name")
+    mismatch = audit_message_identity(valid_raw, None, normalized)["sources"]["ebpf"]
+    assert mismatch["assessment"]["status"] == "audit_incomplete"
+    assert mismatch["assessment"]["basis"]["preservation_incomplete"] is True
+
+
 def test_native_reference_does_not_fill_ebpf_absence(tmp_path: Path) -> None:
     ebpf_root = tmp_path / "ebpf"
     native_root = tmp_path / "native"

@@ -68,6 +68,25 @@ def _semantic_key(span: dict[str, Any]) -> str:
     return json.dumps(evidence, sort_keys=True, separators=(",", ":"))
 
 
+def _raw_value(item: Any) -> Any:
+    """Decode protobuf JSON values without relying on the normalizer output."""
+    if not isinstance(item, dict):
+        return item
+    if "arrayValue" in item:
+        return [_raw_value(value) for value in item["arrayValue"].get("values", [])]
+    if "kvlistValue" in item:
+        return _raw_attributes(item["kvlistValue"].get("values", []))
+    return next(iter(item.values()), None)
+
+
+def _raw_attributes(items: list[dict[str, Any]]) -> dict[str, Any]:
+    return {
+        item["key"]: _raw_value(item.get("value"))
+        for item in items
+        if isinstance(item, dict) and isinstance(item.get("key"), str)
+    }
+
+
 def _locator(span: dict[str, Any]) -> tuple[Any, ...]:
     return (
         span.get("source"),
@@ -142,22 +161,23 @@ def _raw_records(root: Path, source: str) -> tuple[list[dict[str, Any]], list[di
                         for item in raw.get("attributes", [])
                         if isinstance(item, dict)
                     ]
-                    link_attribute_keys = [
-                        item.get("key", "")
+                    link_attributes = [
+                        _raw_attributes(link.get("attributes", []))
                         for link in raw.get("links", [])
                         if isinstance(link, dict)
-                        for item in link.get("attributes", [])
-                        if isinstance(item, dict)
                     ]
-                    event_attribute_keys = [
-                        item.get("key", "")
+                    events = [
+                        {
+                            "name": event.get("name"),
+                            "timeUnixNano": event.get("timeUnixNano"),
+                            "attributes": _raw_attributes(event.get("attributes", [])),
+                        }
                         for event in raw.get("events", [])
                         if isinstance(event, dict)
-                        for item in event.get("attributes", [])
-                        if isinstance(item, dict)
                     ]
                     record = {
                         "span": span,
+                        "raw_attributes": _raw_attributes(raw.get("attributes", [])),
                         "raw_id_presence": {
                             "traceId": bool(raw.get("traceId")),
                             "spanId": bool(raw.get("spanId")),
@@ -177,10 +197,15 @@ def _raw_records(root: Path, source: str) -> tuple[list[dict[str, Any]], list[di
                             for link in raw.get("links", [])
                             if isinstance(link, dict)
                         ],
-                        "raw_link_attribute_keys": link_attribute_keys,
-                        "raw_event_attribute_keys": event_attribute_keys,
+                        "raw_link_attributes": link_attributes,
+                        "raw_events": events,
                     }
-                    records.setdefault(_semantic_key(span), record)
+                    # The production normalizer intentionally omits link
+                    # attributes and events. Include their independently
+                    # decoded values here so distinct raw observations cannot
+                    # collapse merely because they normalize identically.
+                    raw_key = json.dumps(record, sort_keys=True, separators=(",", ":"))
+                    records.setdefault(raw_key, record)
         except (OSError, ValueError, TypeError, KeyError) as exc:
             errors.append({"file": str(path), "error": str(exc)})
     return list(records.values()), errors
@@ -200,17 +225,18 @@ def _field_path_counts(records: list[dict[str, Any]]) -> dict[str, int]:
                 counts["span.links[].traceId"] += 1
             if span_id:
                 counts["span.links[].spanId"] += 1
-        for key in record["raw_link_attribute_keys"]:
-            if _audited_key(key):
-                counts[f"span.links[].attributes.{key}"] += 1
-        for key in record["raw_event_attribute_keys"]:
-            if _audited_key(key):
-                counts[f"span.events[].attributes.{key}"] += 1
+        for link_attrs in record["raw_link_attributes"]:
+            for key in link_attrs:
+                if _audited_key(key):
+                    counts[f"span.links[].attributes.{key}"] += 1
+        for event in record["raw_events"]:
+            for key in event["attributes"]:
+                if _audited_key(key):
+                    counts[f"span.events[].attributes.{key}"] += 1
     return dict(sorted(counts.items()))
 
 
-def _identity_tuple(span: dict[str, Any]) -> tuple[str, str, str] | None:
-    attrs = span["attributes"]
+def _identity_tuple(attrs: dict[str, Any]) -> tuple[str, str, str] | None:
     destination = _value_for(attrs, DESTINATION_KEYS)
     partition = _value_for(attrs, PARTITION_KEYS)
     offset = _value_for(attrs, OFFSET_KEYS)
@@ -219,14 +245,15 @@ def _identity_tuple(span: dict[str, Any]) -> tuple[str, str, str] | None:
     return str(destination), str(partition), str(offset)
 
 
-def _message_ids(span: dict[str, Any]) -> set[str]:
-    value = _value_for(span["attributes"], MESSAGE_ID_KEYS)
+def _message_ids(attrs: dict[str, Any]) -> set[str]:
+    value = _value_for(attrs, MESSAGE_ID_KEYS)
     return {str(value)} if value is not None else set()
 
 
 def _candidate_counts(records: list[dict[str, Any]]) -> dict[str, int]:
-    producers = [r["span"] for r in records if _role(r["span"]) == "producer"]
-    consumers = [r["span"] for r in records if _role(r["span"]) == "consumer"]
+    producer_records = [r for r in records if _role(r["span"]) == "producer"]
+    consumer_records = [r for r in records if _role(r["span"]) == "consumer"]
+    producers = [r["span"] for r in producer_records]
     producer_ids = {
         (span["trace_id"], span["span_id"])
         for span in producers
@@ -238,19 +265,33 @@ def _candidate_counts(records: list[dict[str, Any]]) -> dict[str, int]:
         if _role(record["span"]) == "consumer"
         for trace_id, span_id in record["raw_link_ids"]
     )
-    producer_tuples = {value for span in producers if (value := _identity_tuple(span))}
-    consumer_tuples = {value for span in consumers if (value := _identity_tuple(span))}
-    producer_message_ids = set().union(*(_message_ids(span) for span in producers)) if producers else set()
-    consumer_message_ids = set().union(*(_message_ids(span) for span in consumers)) if consumers else set()
+    producer_tuples = {
+        value for record in producer_records if (value := _identity_tuple(record["raw_attributes"]))
+    }
+    consumer_tuples = {
+        value for record in consumer_records if (value := _identity_tuple(record["raw_attributes"]))
+    }
+    producer_message_ids = (
+        set().union(*(_message_ids(record["raw_attributes"]) for record in producer_records))
+        if producer_records
+        else set()
+    )
+    consumer_message_ids = (
+        set().union(*(_message_ids(record["raw_attributes"]) for record in consumer_records))
+        if consumer_records
+        else set()
+    )
     dropped_link_identity_fields = sum(
         key in MESSAGE_ID_KEYS or key in OFFSET_KEYS
         for record in records
-        for key in record["raw_link_attribute_keys"]
+        for link_attrs in record["raw_link_attributes"]
+        for key in link_attrs
     )
     dropped_event_identity_fields = sum(
         key in MESSAGE_ID_KEYS or key in OFFSET_KEYS
         for record in records
-        for key in record["raw_event_attribute_keys"]
+        for event in record["raw_events"]
+        for key in event["attributes"]
     )
     return {
         "exact_consumer_links_to_observed_producer": direct_links,
@@ -278,7 +319,7 @@ def _preservation(
         matches = by_locator.get(_locator(span), [])
         if matches:
             records_with_locator += 1
-        for key, value in span["attributes"].items():
+        for key, value in record["raw_attributes"].items():
             if not _audited_key(key):
                 continue
             attribute_paths_seen += 1
@@ -307,10 +348,12 @@ def _preservation(
         "link_identities_seen": link_ids_seen,
         "link_identities_preserved": link_ids_preserved,
         "link_attribute_fields_not_represented_by_normalizer": sum(
-            len(record["raw_link_attribute_keys"]) for record in records
+            sum(len(attrs) for attrs in record["raw_link_attributes"])
+            for record in records
         ),
         "event_attribute_fields_not_represented_by_normalizer": sum(
-            len(record["raw_event_attribute_keys"]) for record in records
+            sum(len(event["attributes"]) for event in record["raw_events"])
+            for record in records
         ),
     }
 
@@ -336,6 +379,7 @@ def _matcher_census(
 
 def _assessment(
     records: list[dict[str, Any]],
+    errors: list[dict[str, str]],
     candidates: dict[str, int],
     preservation: dict[str, Any],
     matcher: dict[str, Any],
@@ -350,23 +394,38 @@ def _assessment(
         candidates["identity_fields_in_dropped_link_attributes"]
         + candidates["identity_fields_in_dropped_event_attributes"]
     )
-    exact_raw_candidates = (
-        candidates["exact_consumer_links_to_observed_producer"]
-        + candidates["complete_destination_partition_offset_intersections"]
+    trusted_raw_candidates = candidates[
+        "exact_consumer_links_to_observed_producer"
+    ]
+    untrusted_raw_candidates = (
+        candidates["complete_destination_partition_offset_intersections"]
         + candidates["message_id_intersections"]
     )
-    if not records:
+    preservation_incomplete = (
+        preservation["records_with_normalized_locator"]
+        != preservation["raw_unique_kafka_spans"]
+        or preservation["audited_span_attribute_values_seen"]
+        != preservation["audited_span_attribute_values_preserved"]
+        or preservation["link_identities_seen"]
+        != preservation["link_identities_preserved"]
+        or any(record["duplicate_attribute_keys"] for record in records)
+    )
+    if errors or preservation_incomplete:
+        status = "audit_incomplete"
+    elif not records:
         status = "no_observation"
     elif linked:
         status = "matcher_confirmed"
     elif ambiguous:
         status = "ambiguous"
-    elif exact_raw_candidates:
+    elif trusted_raw_candidates:
         status = "matcher_reject"
     elif dropped_candidates:
         # The field path is real raw evidence, but this census does not call it
         # an association without a matching value at another exact endpoint.
         status = "normalization_discard_unresolved_candidate"
+    elif untrusted_raw_candidates:
+        status = "untrusted_candidate_only"
     else:
         status = "raw_candidate_absent_observed_scope"
     return {
@@ -374,11 +433,14 @@ def _assessment(
         "bounded_to_observed_capture": True,
         "not_a_business_outcome": True,
         "basis": {
-            "exact_raw_candidates": exact_raw_candidates,
+            "trusted_exact_raw_candidates": trusted_raw_candidates,
+            "untrusted_raw_candidates": untrusted_raw_candidates,
             "dropped_candidate_fields": dropped_candidates,
             "matcher_linked": linked,
             "matcher_ambiguous": ambiguous,
             "raw_unique_kafka_spans": preservation["raw_unique_kafka_spans"],
+            "parse_errors": len(errors),
+            "preservation_incomplete": preservation_incomplete,
         },
     }
 
@@ -428,22 +490,32 @@ def audit_message_identity(
                 )
             ),
             "identity_candidate_counts": candidates,
+            "candidate_trust": {
+                "trusted": ["exact_consumer_links_to_observed_producer"],
+                "untrusted": [
+                    "complete_destination_partition_offset_intersections",
+                    "message_id_intersections",
+                ],
+                "untrusted_note": (
+                    "tuple/value overlaps are a census only; they do not prove "
+                    "association and never trigger matcher-loss classification"
+                ),
+            },
             "preservation": preservation,
             "matcher": matcher,
             "stage_counts": {
                 "raw_kafka_spans": len(records),
                 "normalized_exact_matches": preservation["exact_normalized_record_matches"],
-                "raw_exact_identity_candidates": sum(
-                    candidates[key]
-                    for key in (
-                        "exact_consumer_links_to_observed_producer",
-                        "complete_destination_partition_offset_intersections",
-                        "message_id_intersections",
-                    )
+                "raw_exact_identity_candidates": candidates[
+                    "exact_consumer_links_to_observed_producer"
+                ],
+                "raw_untrusted_identity_candidates": (
+                    candidates["complete_destination_partition_offset_intersections"]
+                    + candidates["message_id_intersections"]
                 ),
                 "matcher_linked": matcher["status_counts"].get("linked", 0),
                 "matcher_unknown": matcher["status_counts"].get("unknown", 0),
             },
-            "assessment": _assessment(records, candidates, preservation, matcher),
+            "assessment": _assessment(records, errors, candidates, preservation, matcher),
         }
     return output
