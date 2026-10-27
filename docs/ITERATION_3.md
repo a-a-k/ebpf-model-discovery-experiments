@@ -1,10 +1,11 @@
 # Iteration 3: fresh source-only experiments
 
-Status: source contracts, baselines, amended censoring policy, implementation and
-revised resource qualification reviewed. The fixed fresh 27-campaign acquisition
-is running in [40502990432](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
+Status: all 27 fresh campaigns completed without technical replacement in
+[40502990432](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
 at commit `19eed302e4f7d1f56d64ba25a8b84c062349b922`, after explicit execution GO.
-Its results are not yet available.
+The [primary results](../results/iteration-3/SOURCE.md) retain 939,600 primary
+attempts. Structural reporting and final cost/publication review follow the
+unchanged captures; execution completion does not imply universal scientific success.
 This is a new acquisition series. Original campaigns and oracle-assisted
 retrospective diagnostics remain separate immutable populations.
 
@@ -374,6 +375,23 @@ including witnesses and null/source-identity cases: outputs agree exactly.
 The test database hash stays unchanged, and query plans use the full identity
 key. The reviewer grants explicit implementation **GO** for the same 27-cell
 supplement; the orchestrator agrees. This is not a new empirical-success claim.
+
+## Structural artifact delivery retry
+
+The repaired report completed DSB and Petclinic and seven OTel cells in
+`40527106796`. GitHub then returned HTTP 502 while fetching the next original
+artifact. This is a transport failure, not a measurement or model failure.
+The seven partial cell outputs and all job costs remain retained.
+
+Before implementation, the independent reviewer gives explicit **GO** under the
+unchanged original scope for a bounded delivery repair; the orchestrator agrees.
+The direct baseline is the current artifact download with exactly the same
+identities and evidence. Up to three transport/API attempts use 2/5-second
+backoffs and clean, guarded download staging. Semantic admission, hash, schema
+and population failures remain hard failures. An optional system selector keeps
+`all` as default and permits rerunning only OTel's fixed nine cells. Reprocessing
+costs are charged together with the failed attempt. No acquisition, refitting,
+scientific-rule change or stronger usefulness claim follows from this repair.
 
 ## Reproduction of the fresh series
 
