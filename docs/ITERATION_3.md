@@ -276,6 +276,15 @@ compact frozen ledgers, unknown placement/instance counts, and sequential
 processing. Four focused synthetic checks passed. The orchestrator agrees;
 execution approval does not establish an empirical advantage.
 
+Before implementing explanatory reason counts, skeptic and orchestrator also
+granted GO for reading the already retained final projection files during this
+same supplement. Compact metrics preserve verdicts but omit body/binding reason
+distributions. Projection hashes must match admitted metric inputs. Counts keep
+source, operation, phase, complete denominators, censoring and bounded witnesses;
+absent fields remain "not recorded". Attempt counts and step-reason occurrences
+are distinct and may overlap. These are projection-reported reasons, not
+independently proven root causes. No projection, model or forecast is regenerated.
+
 ## Reproduction of the fresh series
 
 All application acquisition, fitting, simulation and retained-data reporting run
