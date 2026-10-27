@@ -6,6 +6,11 @@ on:
         description: JSON array of series workflow run IDs, including technical replacements
         required: true
         type: string
+      additional_preparation_runs:
+        description: JSON array of additional {run_id, role, note} preparation declarations
+        required: false
+        default: '[]'
+        type: string
 permissions:
   contents: read
   actions: read
@@ -18,27 +23,60 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e .
+      - run: python -m pip install -e . matplotlib
       - name: Download compact complete and failed campaign evidence
         env:
           GH_TOKEN: ${{ github.token }}
           INPUT_RUNS: ${{ inputs.run_ids }}
+          ADDITIONAL_PREPARATION_RUNS: ${{ inputs.additional_preparation_runs }}
         run: |
           python - <<'PY'
           import json, os, pathlib, subprocess
           runs = json.loads(os.environ['INPUT_RUNS'])
           if not isinstance(runs, list) or not runs or any(not str(r).isdigit() for r in runs):
               raise SystemExit('run_ids must be a nonempty JSON array of numeric run IDs')
+          runs = [int(run) for run in runs]
+          manifest = json.loads(pathlib.Path('docs/iteration-3-preparation-runs.json').read_text())
+          additional = json.loads(os.environ['ADDITIONAL_PREPARATION_RUNS'])
+          if not isinstance(additional, list) or any(
+              not isinstance(row, dict) or not str(row.get('run_id', '')).isdigit()
+              or row.get('role') not in {'qualification', 'replay', 'evidence'}
+              or not isinstance(row.get('note'), str)
+              for row in additional
+          ):
+              raise SystemExit('additional_preparation_runs must be a JSON array of numeric run_id/role/note objects')
+          additional = [{**row, 'run_id': int(row['run_id'])} for row in additional]
+          preparation = [*manifest['runs'], *additional]
+          preparation_ids = [row['run_id'] for row in preparation]
+          if len(set(runs)) != len(runs) or len(set(preparation_ids)) != len(preparation_ids) or set(runs) & set(preparation_ids):
+              raise SystemExit('series and preparation run IDs must be unique and disjoint')
           out = pathlib.Path('results/iteration-3/provenance')
           out.mkdir(parents=True)
+          (out/'series-input-runs.json').write_text(json.dumps(runs, indent=2)+'\n')
+          effective = {**manifest, 'runs': preparation}
+          (out/'preparation-runs-effective.json').write_text(json.dumps(effective, indent=2, sort_keys=True)+'\n')
           for run in runs:
               subprocess.run(['gh', 'run', 'download', str(run), '-p', 'v3-summary-*', '-D', 'work/v3-inputs/'+str(run)], check=True)
-              for endpoint, suffix in [('', 'run'), ('/jobs?per_page=100', 'jobs'), ('/artifacts?per_page=100', 'artifacts')]:
+          for run in [*runs, *preparation_ids]:
+              base = 'repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(run)
+              with (out/(str(run)+'-run.json')).open('w') as stream:
+                  subprocess.run(['gh', 'api', base], stdout=stream, check=True)
+              for endpoint, suffix in [('/jobs?filter=all&per_page=100', 'jobs'),
+                                       ('/artifacts?per_page=100', 'artifacts')]:
                   with (out/(str(run)+'-'+suffix+'.json')).open('w') as stream:
-                      subprocess.run(['gh', 'api', 'repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(run)+endpoint], stdout=stream, check=True)
+                      subprocess.run(['gh', 'api', '--paginate', '--slurp', base+endpoint], stdout=stream, check=True)
           PY
+      - name: Report complete Actions preparation and acquisition costs
+        run: |
+          python -m ebpf_discovery.cost_report_v3 \
+            --provenance results/iteration-3/provenance \
+            --manifest results/iteration-3/provenance/preparation-runs-effective.json \
+            --series-runs results/iteration-3/provenance/series-input-runs.json \
+            --out results/iteration-3
       - name: Report exact 27-cell population
         run: python -m ebpf_discovery.evaluate_v3 --inputs work/v3-inputs --report results/iteration-3
+      - name: Plot retained iteration-3 report
+        run: python -m ebpf_discovery.plot_v3 --input results/iteration-3/results.json --out results/iteration-3
       - uses: actions/upload-artifact@v4
         if: always()
         with:

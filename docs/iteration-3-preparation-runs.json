@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "repository": "a-a-k/ebpf-model-discovery-experiments",
+  "runs": [
+    {
+      "run_id": 40489958752,
+      "role": "qualification",
+      "note": "Initial iteration-3 resource qualification"
+    },
+    {
+      "run_id": 40491361699,
+      "role": "replay",
+      "note": "First retained full seed-zero source-contract replay"
+    },
+    {
+      "run_id": 40491404248,
+      "role": "evidence",
+      "note": "First qualification evidence copy"
+    },
+    {
+      "run_id": 40492389279,
+      "role": "evidence",
+      "note": "Second qualification evidence copy"
+    },
+    {
+      "run_id": 40492396200,
+      "role": "replay",
+      "note": "Second retained full seed-zero source-contract replay"
+    },
+    {
+      "run_id": 40498392196,
+      "role": "qualification",
+      "note": "Revised censored-observation qualification"
+    }
+  ],
+  "human_agent_time_seconds": null,
+  "human_agent_time_note": "Human and agent preparation time was not independently metered and remains unknown."
+}
