@@ -59,4 +59,25 @@ The original six DSB partial/full forecasts in run 40336898753 were generated wi
 
 Infrastructure checks and application qualification are preparation costs. Full job durations, including failed attempts, belong in the cost ledger; the shorter `qualification.json` application timer excludes VM startup and must not be presented as total cost. Generated reports keep scientific campaign costs separate from job wall time.
 
+## Iteration 3 preparation and observation-policy correction
+
+These runs are separate from both the original 27 campaigns and the planned
+fresh 27 campaigns. Qualification and replay outcomes do not establish empirical
+usefulness. The [iteration 3 protocol](ITERATION_3.md) records the timing amendment,
+original-criterion skeptic review and eligibility boundaries.
+
+| Run | Purpose and outcome | Interpretation |
+|---|---|---|
+| [40489958752](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40489958752) | Three 1,200-attempt technical qualifications completed at 20 operations/s | Used the old universal two-second cutoff. Historical resource evidence only; not eligible under the amended censoring policy |
+| [40491361699](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491361699) | Source-contract replay on one retained original full/seed-0 capture per system completed | No traffic or refitting; development diagnostic, not an independent confirmation series |
+| [40491404248](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40491404248) | Compact resource-evidence copy completed | Copies precomputed qualification files and hashes; no new experiment |
+| [40492389279](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492389279) | Retained OTel body-fidelity audit completed | All 11 apparent mismatches involved incomplete client responses. All 697 completed responses with comparable captured bodies matched; no business-success inference |
+| [40492396200](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40492396200) | Retained-data replay after DSB native binding repair completed | Untyped nginx HTTP ancestor evidence is now recognized without inventing a span kind. Original data and the first replay remain retained |
+| [40498392196](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40498392196) | Three revised technical qualifications launched | Whole-operation observation cap, incomplete responses unknown, no application deadline. Full acquisition awaits resource review |
+
+The engineering observation cap bounds resource occupancy; it does not classify
+an operation as failed. Changing this rule increases potential concurrency, so
+the previous qualification cannot alone authorize the fresh acquisition. Both
+qualifications and all read-only replay/audit costs remain preparation costs.
+
 The first scheduled acquisition, [Petclinic, absent, seed 0](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035), is retained as a **superseded protocol pilot**. Before its accuracy was inspected, review approved a fixed warmup and drain guard for every block to reduce stale-connection effects after replica changes. All 27 scored campaigns use `fixed-warmup-v2`; this earlier run is rerun by protocol version, regardless of accuracy. Its costs and data remain part of the history.

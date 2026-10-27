@@ -1,6 +1,6 @@
 # Discovering operation models from eBPF observations in distributed applications
 
-**Research status: the fixed 27-campaign series, final analysis and independent review are complete.** This README reports the measured positive, negative and unknown outcomes. The [final review](docs/PROTOCOL.md#final-result-review-2026-10-27) approves the report and does not endorse the full original usefulness claim. The [run history](docs/RUN_HISTORY.md) retains failed preparations, technical replacements and the superseded protocol pilot.
+**Original-series status: the first 27-campaign series, its analysis and independent review are complete.** The original results below report measured positive, negative and unknown outcomes. The [final review](docs/PROTOCOL.md#final-result-review-2026-10-27) approves the report and does not endorse the full original usefulness claim. The [run history](docs/RUN_HISTORY.md) retains failed preparations, technical replacements and the superseded protocol pilot.
 
 **Diagnostic iteration completed:** [retrospective controls](results/iteration-2/report.md) now distinguish classification, proxy semantics, Kafka export and nominal precision effects in the same 27 campaigns. The [refined design](docs/ITERATION_2.md#refined-minimum-design-for-the-next-implementation) follows those findings. Original results remain unchanged; oracle-assisted diagnostic improvements are not corrected eBPF forecasts.
 

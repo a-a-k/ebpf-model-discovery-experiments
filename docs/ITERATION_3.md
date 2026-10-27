@@ -201,3 +201,39 @@ traffic, source capture/storage, unknowns, failed attempts, analysis and all
 technical reruns. Unmetered human/agent time remains unknown, not zero. Earlier
 acquisition/diagnostic costs remain separately available. No automatic second
 series is triggered by disappointing results.
+
+## Reproduction of the fresh series
+
+All application acquisition, fitting, simulation and retained-data reporting run
+in GitHub Actions. Local checks only validate implementation. Each campaign uses
+its own standard `ubuntu-24.04` runner and two guests. The workflow permits up to
+18 simultaneous campaigns, within the documented
+[standard-runner concurrency limits](https://docs.github.com/en/actions/reference/limits#job-concurrency-limits-for-github-hosted-runners);
+actual scheduling also depends on other account jobs. Campaigns share no
+application state. The fixed population remains 27, with no paid runner selection.
+
+```sh
+# Three technical jobs; inspect their resource evidence before acquisition.
+gh workflow run qualification-v3.yml -f system=all
+# Replace QUALIFICATION_RUN with the completed numeric run ID.
+gh workflow run evidence-v3.yml -f run_id=QUALIFICATION_RUN
+# Reviewed fixed population: three systems x three modes x seeds 3/4/5.
+gh workflow run series-v3.yml -f system=all -f mode=all -f seed=all
+# Replace SERIES_RUN with the completed numeric run ID (JSON numeric array).
+gh workflow run report-v3.yml -f run_ids='[SERIES_RUN]'
+```
+
+The resource evidence copy retains precomputed qualification, deployment,
+scheduling, memory and disk records, plus an OTel captured-body fidelity audit.
+It does not fit predictions. Full campaign artifacts retain raw sources,
+independent operation outcomes, frozen models, forecasts, automatic classes,
+controls and resource records. Compact `v3-summary-*` artifacts carry evaluated
+metrics and their supporting frozen files into the report; they do not replace
+the full captures. Technical failures retain available data and costs. A completed
+capture can resume analysis only if its input and frozen-rule hashes still match.
+
+The report accepts exactly the 27 distinct campaign cells, preserves unknown
+values, and produces operation-level tables. Its data remain separate from
+`results/final/` and the oracle-assisted `results/iteration-2/`. The archive
+workflow retains original artifact ZIPs, hashes and provenance in a public
+release; the run history identifies superseded and incomplete preparations.
