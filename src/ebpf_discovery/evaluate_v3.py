@@ -281,8 +281,10 @@ def evaluate(campaign_dir: str | Path) -> dict[str, Any]:
 
     traffic_blocks = [{
         "id": block.get("id"), "phase": block.get("phase"), "state": block.get("state"),
-        "attempts": block.get("attempts"), "requested_rps": block.get("requested_rps"),
-        "achieved_rps": block.get("achieved_rps"),
+        "attempts": block.get("attempts"),
+        "requested_operations_per_second": block.get("requested_operations_per_second"),
+        "achieved_operations_per_second": block.get("achieved_operations_per_second"),
+        "worker_capacity": block.get("worker_capacity"),
         "nominal_load_seconds": block.get("nominal_load_seconds"),
         "load_started_ns": block.get("load_started_ns"), "ended_ns": block.get("ended_ns"),
     } for block in blocks]

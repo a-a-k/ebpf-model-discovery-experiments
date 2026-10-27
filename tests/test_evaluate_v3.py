@@ -46,7 +46,8 @@ def campaign(root: Path, system="petclinic", mode="absent", seed=3):
     write(root / "external.json", external)
     write(root / "blocks.json", [{
         "id": "target", "phase": "target", "state": "11", "attempts": 2,
-        "requested_rps": 20, "achieved_rps": 19.5, "nominal_load_seconds": 60,
+        "requested_operations_per_second": 20, "achieved_operations_per_second": 19.5,
+        "worker_capacity": 256, "nominal_load_seconds": 60,
         "load_started_ns": 1, "ended_ns": 2,
     }])
     write(root / "automatic-metrics.json", {
@@ -106,7 +107,7 @@ def test_evaluate_preserves_unknowns_and_scores_both_bounds(tmp_path, monkeypatc
     assert row["point_absolute_error"] is None
     assert row["empirical_worst_end_error"] == pytest.approx(0.5)
     assert row["accuracy_gate_applied"] is False
-    assert result["costs"]["traffic_blocks"][0]["requested_rps"] == 20
+    assert result["costs"]["traffic_blocks"][0]["requested_operations_per_second"] == 20
     assert result["controls"]["petclinic_database_prediction"]["attempts"] == 40
     assert Path(result["outputs"]["json"]).exists()
 
