@@ -123,6 +123,33 @@ service, instance and node, reached through exact parent IDs from the request
 header. This declared format rule never invents a server kind, crosses sources,
 or accepts an explicit client span. The raw kind and ancestry remain in evidence.
 
+The revised qualification's retained-data audit found all 1,200 native entries
+by exact request identity before the timing check; 637 were then rejected by the
+strict observation-window rule. The
+[pinned image recipe](https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/docker/openresty-thrift/xenial/Dockerfile)
+selects nginx-opentracing v0.8.0, whose
+[request tracing implementation](https://github.com/opentracing-contrib/nginx-opentracing/blob/v0.8.0/opentracing/src/request_tracing.cpp)
+initializes the outer span from seconds/milliseconds and creates the location
+child using the tracer's current time. Observed timestamp residues do not alone
+establish a guest/host clock offset.
+
+Before implementing the repair, the independent skeptic and orchestrator both
+granted GO under the unchanged original usefulness criterion: strengthen the
+native interpretation while retaining the same external outcomes, direct and
+HTTP/body baselines, semantic knowledge and complete preparation costs. This is
+a decoder correction, not evidence of an eBPF advantage.
+
+For this declared nginx format, an outer start preceding the journal can use an
+exact, unambiguous in-window request-header child as an attribution witness.
+The parent path must remain in the same source, trace, service, instance and node;
+timestamps must be positive and ordered, and the outer end must contain the
+child end and remain within the cutoff. Outer status, body, raw start and duration
+are unchanged. No arbitrary clock tolerance or child-duration substitution is
+introduced. Primary and automatic entry binding use the same rule; downstream
+windows remain strict, and censored attempts stay unknown. Focused rejection
+checks and Actions replay of the retained qualification precede full acquisition;
+the resource approval stands without generating replacement traffic.
+
 | Application / operation | Required positive response predicate |
 | --- | --- |
 | DeathStarBench compose | Original HTTP acceptance predicate and observed acknowledgement containing `Successfully upload post` |

@@ -3,6 +3,16 @@
   "repository": "a-a-k/ebpf-model-discovery-experiments",
   "runs": [
     {
+      "run_id": 40501091008,
+      "role": "evidence",
+      "note": "Read-only DSB binding audit implementation checks"
+    },
+    {
+      "run_id": 40501095000,
+      "role": "evidence",
+      "note": "Retained qualification audit: all 1200 native entries present before timing filter"
+    },
+    {
       "run_id": 40499244511,
       "role": "evidence",
       "note": "Integrated acknowledgement, figure and cost implementation checks"
