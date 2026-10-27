@@ -4,8 +4,11 @@ Status: all 27 fresh campaigns completed without technical replacement in
 [40502990432](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40502990432)
 at commit `19eed302e4f7d1f56d64ba25a8b84c062349b922`, after explicit execution GO.
 The [primary results](../results/iteration-3/SOURCE.md) retain 939,600 primary
-attempts. Structural reporting and final cost/publication review follow the
-unchanged captures; execution completion does not imply universal scientific success.
+attempts. [Structural reporting](../results/iteration-3/structural/SOURCE.md) and
+the [refreshed cost snapshot](../results/iteration-3/cost-refresh/SOURCE.md) are
+complete on unchanged captures. Independent review and the orchestrator agree
+on the scoped applicability conclusion; execution completion does not imply
+universal scientific success.
 This is a new acquisition series. Original campaigns and oracle-assisted
 retrospective diagnostics remain separate immutable populations.
 

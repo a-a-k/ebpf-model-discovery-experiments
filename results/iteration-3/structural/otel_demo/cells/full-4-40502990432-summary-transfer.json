@@ -1,0 +1,16 @@
+{
+  "artifact_id": 12738638500,
+  "artifact_name": "v3-summary-otel_demo-full-4-40502990432",
+  "download_and_decompression_seconds": 1.2405916210000214,
+  "extracted_bytes": 762278,
+  "github_artifact_digest": "sha256:9c1ea822cbaf2830943d8910a515bda002de051e898ae71ea6bc32ff1d0f876d",
+  "stored_archive_bytes": 52866,
+  "transport_attempts": [
+    {
+      "attempt": 1,
+      "elapsed_seconds": 1.240042578999919,
+      "result": "success",
+      "stage": "artifact_download"
+    }
+  ]
+}

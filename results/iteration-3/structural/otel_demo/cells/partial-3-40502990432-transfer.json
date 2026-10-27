@@ -1,0 +1,34 @@
+{
+  "full": {
+    "artifact_id": 12739230418,
+    "artifact_name": "campaign-v3-otel_demo-partial-3-40502990432",
+    "download_and_decompression_seconds": 99.05848785500007,
+    "extracted_bytes": 10304666911,
+    "github_artifact_digest": "sha256:5d109184793803ae3ac2dfa084f168591876bbc2ed807dfe3a527a2fa19725e2",
+    "stored_archive_bytes": 1207678895,
+    "transport_attempts": [
+      {
+        "attempt": 1,
+        "elapsed_seconds": 99.05638287400006,
+        "result": "success",
+        "stage": "artifact_download"
+      }
+    ]
+  },
+  "summary": {
+    "artifact_id": 12738731270,
+    "artifact_name": "v3-summary-otel_demo-partial-3-40502990432",
+    "download_and_decompression_seconds": 1.0915831869999693,
+    "extracted_bytes": 745866,
+    "github_artifact_digest": "sha256:b861868f499c17d043ee63b9bc529e558e90959fd4da589c04cda7757e6cb333",
+    "stored_archive_bytes": 39830,
+    "transport_attempts": [
+      {
+        "attempt": 1,
+        "elapsed_seconds": 1.0911406889999853,
+        "result": "success",
+        "stage": "artifact_download"
+      }
+    ]
+  }
+}

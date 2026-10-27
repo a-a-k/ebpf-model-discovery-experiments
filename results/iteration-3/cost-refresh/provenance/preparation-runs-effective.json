@@ -1,0 +1,183 @@
+{
+  "human_agent_time_note": "Human and agent preparation time was not independently metered and remains unknown.",
+  "human_agent_time_seconds": null,
+  "repository": "a-a-k/ebpf-model-discovery-experiments",
+  "runs": [
+    {
+      "note": "Native timestamp attribution implementation checks",
+      "role": "evidence",
+      "run_id": 40502378266
+    },
+    {
+      "note": "Retained native entry attribution replay; 631 exact-child bindings recovered, 6 unknown retained",
+      "role": "evidence",
+      "run_id": 40502380042
+    },
+    {
+      "note": "Read-only DSB binding audit implementation checks",
+      "role": "evidence",
+      "run_id": 40501091008
+    },
+    {
+      "note": "Retained qualification audit: all 1200 native entries present before timing filter",
+      "role": "evidence",
+      "run_id": 40501095000
+    },
+    {
+      "note": "Integrated acknowledgement, figure and cost implementation checks",
+      "role": "evidence",
+      "run_id": 40499244511
+    },
+    {
+      "note": "Cost failure-preservation and no-gate implementation checks",
+      "role": "evidence",
+      "run_id": 40499553849
+    },
+    {
+      "note": "Revised qualification resource copy and completed-body fidelity audit",
+      "role": "evidence",
+      "run_id": 40500194868
+    },
+    {
+      "note": "Iteration-3 implementation checks before initial qualification",
+      "role": "evidence",
+      "run_id": 40489946709
+    },
+    {
+      "note": "Implementation checks before retained-data replay",
+      "role": "evidence",
+      "run_id": 40491335266
+    },
+    {
+      "note": "Implementation checks after native-binding and audit repairs",
+      "role": "evidence",
+      "run_id": 40492384536
+    },
+    {
+      "note": "Implementation checks for amended censoring policy",
+      "role": "evidence",
+      "run_id": 40498380248
+    },
+    {
+      "note": "Initial iteration-3 resource qualification",
+      "role": "qualification",
+      "run_id": 40489958752
+    },
+    {
+      "note": "First retained full seed-zero source-contract replay",
+      "role": "replay",
+      "run_id": 40491361699
+    },
+    {
+      "note": "First qualification evidence copy",
+      "role": "evidence",
+      "run_id": 40491404248
+    },
+    {
+      "note": "Second qualification evidence copy",
+      "role": "evidence",
+      "run_id": 40492389279
+    },
+    {
+      "note": "Second retained full seed-zero source-contract replay",
+      "role": "replay",
+      "run_id": 40492396200
+    },
+    {
+      "note": "Revised censored-observation qualification",
+      "role": "qualification",
+      "run_id": 40498392196
+    },
+    {
+      "note": "Final acquisition-code implementation checks",
+      "role": "evidence",
+      "run_id": 40502988126
+    },
+    {
+      "note": "Acquisition-link publication checks",
+      "role": "evidence",
+      "run_id": 40503077703
+    },
+    {
+      "note": "Structural supplement implementation checks",
+      "role": "evidence",
+      "run_id": 40507425683
+    },
+    {
+      "note": "Reviewed structural identity and integrity implementation checks",
+      "role": "evidence",
+      "run_id": 40508845530
+    },
+    {
+      "note": "Permanent archive of iteration-3 preparation, qualification, replay and implementation-check artifacts",
+      "role": "evidence",
+      "run_id": 40510390283
+    },
+    {
+      "note": "Retained projection diagnostic implementation checks",
+      "role": "evidence",
+      "run_id": 40511015584
+    },
+    {
+      "note": "Read-only diagnosis of fixed nine DSB coverage patterns with original hashed rules and raw timestamp witnesses",
+      "role": "evidence",
+      "run_id": 40514548883
+    },
+    {
+      "note": "Retained DSB coverage audit implementation checks",
+      "role": "evidence",
+      "run_id": 40514546003
+    },
+    {
+      "note": "Published retained coverage diagnosis and comparator-scope checks",
+      "role": "evidence",
+      "run_id": 40517725553
+    },
+    {
+      "note": "Primary complete 27-cell retained-data report and figures",
+      "role": "evidence",
+      "run_id": 40521491267
+    },
+    {
+      "note": "Cancelled read-only structural reporting attempt; no cell completed before cancellation, all job costs retained",
+      "role": "evidence",
+      "run_id": 40521759317
+    },
+    {
+      "note": "Permanent archive of all fresh acquisition captures and coverage diagnostic",
+      "role": "evidence",
+      "run_id": 40521714062
+    },
+    {
+      "note": "Publication checks for complete primary results and corrected attribution of procedure limits",
+      "role": "evidence",
+      "run_id": 40525346828
+    },
+    {
+      "note": "Implementation checks for reviewed structural SQL access-path repair",
+      "role": "evidence",
+      "run_id": 40527102842
+    },
+    {
+      "note": "Keyed structural report: DSB/Petclinic complete; OTel seven cells retained before GitHub HTTP502 artifact transport failure",
+      "role": "evidence",
+      "run_id": 40527106796
+    },
+    {
+      "note": "Implementation checks for bounded structural artifact delivery and reviewed DSB/Petclinic publication",
+      "role": "evidence",
+      "run_id": 40533191883
+    },
+    {
+      "note": "OTel-only nine-cell structural reporting rerun after GitHub artifact HTTP502; same acquisition and scientific rules",
+      "role": "evidence",
+      "run_id": 40533198423
+    },
+    {
+      "note": "Implementation checks for isolated regeneration of already-published report output",
+      "role": "evidence",
+      "run_id": 40533746276
+    }
+  ],
+  "schema_version": 1
+}
