@@ -1,0 +1,52 @@
+name: Extract compact evidence for report review
+on:
+  workflow_dispatch:
+    inputs:
+      report_run_id:
+        description: Completed report run; copy its existing evidence without recalculation
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  extract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the complete original report in Actions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT_RUN_ID: ${{ inputs.report_run_id }}
+        run: |
+          [[ "$REPORT_RUN_ID" =~ ^[0-9]+$ ]] || exit 2
+          gh run download "$REPORT_RUN_ID" --name "report-$REPORT_RUN_ID" --dir work/report
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$REPORT_RUN_ID/artifacts" > work/source-artifact-index.json
+      - name: Copy existing metrics and protected prediction files
+        run: |
+          python - <<'PY'
+          import hashlib, json, shutil
+          from pathlib import Path
+          root, out = Path('work/report'), Path('results/review')
+          retained = {'metrics.json', 'metrics-acquisition-version.json', 'status.json',
+                      'forecast-saved.json', 'blocks.json', 'evaluation-recovery.json',
+                      'model.json', 'forecast.json', 'evaluation-map.json'}
+          digests = {}
+          for path in sorted(root.rglob('*')):
+              if not path.is_file():
+                  continue
+              relative = path.relative_to(root)
+              if len(relative.parts) > 1 and path.name not in retained:
+                  continue
+              target = out / relative
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(path, target)
+              digests[str(relative)] = hashlib.sha256(path.read_bytes()).hexdigest()
+          shutil.copyfile('work/source-artifact-index.json', out/'source-artifact-index.json')
+          (out/'copied-file-sha256.json').write_text(json.dumps(digests, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: review-${{ github.run_id }}
+          path: results/review/
+          retention-days: 90
