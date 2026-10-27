@@ -61,7 +61,8 @@ def report(inputs, out, exclusions_path=Path('docs/technical-exclusions.json')):
             source_out = evidence/'models'/source
             source_out.mkdir(parents=True, exist_ok=True)
             for name in ('model.json', 'forecast.json', 'evaluation-map.json', 'observed-final-graph.json',
-                         'validated-calibration-graph.json', 'message-chain-evidence.json'):
+                         'validated-calibration-graph.json', 'message-chain-evidence.json',
+                         'calibration-assignments.json', 'target-assignments.json', 'proxy-semantic-comparison.json'):
                 if (path.parent/'models'/source/name).exists():
                     shutil.copy2(path.parent/'models'/source/name, source_out/name)
             identity = {k: m[k] for k in ('system', 'mode', 'seed', 'run_id')}

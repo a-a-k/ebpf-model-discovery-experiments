@@ -69,6 +69,10 @@ def recover(root: Path):
         if hashlib.sha256((root/relative).read_bytes()).hexdigest() != digest:
             raise RuntimeError(f'Protected acquisition input changed: {relative}')
     evidence['status'] = 'completed'
+    evidence['completed_target_assignments_sha256'] = {
+        source: hashlib.sha256((root/'models'/source/'target-assignments.json').read_bytes()).hexdigest()
+        for source in ('ebpf', 'native', 'combined')
+    }
     write_json(root/'evaluation-recovery.json', evidence)
     result['evaluation_recovery'] = evidence
     write_json(root/'metrics.json', result)

@@ -49,7 +49,11 @@ def test_recovery_preserves_existing_assignment_bytes(tmp_path, monkeypatch):
     frozen = complete_capture(tmp_path)
     original = frozen.read_bytes()
     mock_git(monkeypatch)
-    monkeypatch.setattr(recovery, 'evaluate', lambda root: {})
+    def finish(root):
+        for source in ('native', 'combined'):
+            (root/'models'/source/'target-assignments.json').write_text('[]')
+        return {}
+    monkeypatch.setattr(recovery, 'evaluate', finish)
     recovery.recover(tmp_path)
     assert frozen.read_bytes() == original
     assert json.loads((tmp_path/'evaluation-recovery.json').read_text())['status'] == 'completed'
