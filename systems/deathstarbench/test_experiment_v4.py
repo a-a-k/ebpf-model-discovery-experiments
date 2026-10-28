@@ -94,6 +94,29 @@ def test_later_verification_has_no_deadline_and_cannot_change_primary(monkeypatc
     assert all(call[2]["timeout"] is None for call in calls)
 
 
+def test_bounded_verification_page_absence_is_unknown_not_false(monkeypatch):
+    adapter = Adapter(_Context())
+    plan = adapter.plan_operation("compose_post", 4, "fixed")
+    record = {
+        "operation": "compose_post", "success": True,
+        "http_steps": plan["http_steps"],
+        "validation": {"control_epoch": 0},
+    }
+    unrelated = ('[{"post_id":"other","text":"' + STABLE_FIXTURE_TEXT + '"}]').encode()
+    _transport(monkeypatch, _response(200, unrelated))
+    checked = adapter.verify([record])[0]
+    assert checked["success"] is True
+    assert checked["eventual_postcondition"]["success"] is None
+    assert checked["eventual_postcondition"]["unknown_reason"] == "bounded_page_no_witness"
+    assert all(item["found"] is False for item in checked["eventual_postcondition"]["locations"].values())
+
+    expected = f"ebpf-study {plan['http_steps'][0]['request_id']}"
+    positive = ('[{"post_id":"matching","text":"' + expected + '"}]').encode()
+    _transport(monkeypatch, _response(200, positive))
+    witnessed = adapter.verify([record])[0]
+    assert witnessed["eventual_postcondition"]["success"] is True
+
+
 def test_mongo_fallback_is_not_an_unconditional_user_read_call():
     read = CONTRACTS["read_user_timeline"]
     assert not any(item.get("db_system") == "mongodb" for item in read["required_calls"])

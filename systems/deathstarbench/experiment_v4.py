@@ -264,12 +264,17 @@ class Adapter(HistoricalAdapter):
                 except requests.RequestException as exc:
                     evidence[label] = {"request_id": probe_id, "found": None, "error": str(exc)}
             states = [item["found"] for item in evidence.values()]
-            success = None if None in states else all(states)
+            # A bounded first page can omit an older acknowledged post. Only
+            # exact positive witnesses establish this auxiliary postcondition.
+            success = True if all(state is True for state in states) else None
             record["eventual_postcondition"] = {
                 "kind": "compose_eventual_fanout",
                 "expected_text_sha256": hashlib.sha256(expected.encode()).hexdigest(),
                 "locations": evidence, "success": success,
-                "unknown_reason": "incomplete verification transport" if success is None else None,
+                "unknown_reason": (
+                    "incomplete verification transport" if None in states else
+                    "bounded_page_no_witness" if success is None else None
+                ),
                 "control_epoch": self._control_epoch,
             }
         return verified
