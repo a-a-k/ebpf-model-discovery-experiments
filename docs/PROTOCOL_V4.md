@@ -315,6 +315,34 @@ dispatch: preparation records are retained separately, and legitimate unissued
 HTTP-step suffixes are not required. The single diagnostic is
 `40742060084`; it does not replace or complete OTel/full/6.
 
+The standalone diagnostic completed with unchanged checkpoint bytes, all six
+shared Bering discoveries, fourteen available operation overlays and fourteen
+Sheaft commands completing. Its retained process report records 24:43.04 elapsed
+and maximum RSS 13,678,344 KiB on a runner with 16,766,414,848 bytes of RAM. This
+establishes standalone feasibility, not the cause of the lost co-located runner.
+
+Root and independent 6.1 Sol/xhigh skeptic give **ORIGINAL-criterion design GO**
+for a separate standard Actions worker for the planned OTel/full/6 replacement.
+The original supervised campaign and its same two guests stay alive. The worker
+receives only the exact closed training checkpoint, inventory, contracts and
+pinned binaries, restores verified paths inside its workspace, and returns the
+complete actual toolchain evidence, including unavailable branches. Parent run,
+attempt, cell, scientific checkout, checkpoint artifact/manifest and worker
+run/attempt/output hashes bind the handoff. The parent verifies a separate staging
+directory before atomic import, fits classes on its unchanged training index and
+saves the complete forecast freeze before any target request. No cross-host
+campaign resume or later observation input is permitted.
+
+Reserve execution capacity for workers: initially dispatch only this one repaired
+parent; subsequent scheduling must leave worker slots rather than filling the
+account with waiting parents. Parent wait/idle-guest time and worker preparation,
+transfer, compute, storage and failed attempts remain separate measured costs;
+their overlapping wall times are not a new efficiency claim. Sources and the
+direct equal-information baseline are unchanged. No deadlines, observation
+filtering, paid runner tier or product changes are introduced. Implementation
+review precedes dispatch; the already planned full/6 cell supplies the resource
+confirmation without another qualification grid.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
