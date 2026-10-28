@@ -7,7 +7,11 @@ after acquisition: the Procrustes goal had empty mandatory targets. Repair `1284
 supplies existing per-step obligations. Retained replays subsequently reached Bering;
 Petclinic replay [40661273773](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773)
 also reached Sheaft for some combined models after an ancillary predicate repair.
-These are diagnostics, not fresh validation. No scientific-series results exist.
+The later repaired replay
+[40674465933](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933)
+at `2b72cd73d7fdb88c3dfa7f51a34e073b6e83d0b8` passed integrity checks for all three
+systems and produced the source-specific readouts described below. These are
+diagnostics, not fresh validation. No scientific-series results exist.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 
@@ -159,6 +163,37 @@ exact configuration hashes, DB grouping, proxy/scope/URL repairs and equal basel
 knowledge. The Linux child-resource wrapper is included; it forwards graceful
 termination and retains Bering-only RSS/CPU/wall/exit evidence. Full-series resource
 adequacy and external predictive accuracy remain unestablished.
+
+Retained replay outcome (`40674465933`, artifact `12811247145`, API-advertised ZIP
+SHA-256 `565a58b1b7f5ad8ae26229a6896e2927b6b0f4eaf6eae510871cd622135bd3b0`):
+each system's `readout.json` reports `integrity.ok=true`. Both variants now give
+native and combined DSB primary forecasts; eBPF-only DSB remains unknown because
+required calls are absent. OTel native browse/cart and all combined operations
+have primary forecasts; native checkout and eBPF-only operations remain unknown.
+All Petclinic primary operations have forecasts for each source. In the supplied
+network-scope variant, each source's Petclinic DB-down forecast is zero for owners,
+details and create-visit; cached vets stays unknown. Unscoped DB-fault mappings and
+DSB/OTel DB-fault predictions remain unknown. No fresh-outcome accuracy claim is made.
+
+The same readouts retain isolated Bering child RSS, input counts and exit status.
+For example, combined/network_scope discovery ingested 28,490 raw observations
+with 141,128 KiB peak RSS in DSB; 13,752 with 180,796 KiB in OTel; and 6,091 with
+102,624 KiB in Petclinic. These are individual small-replay measurements, not
+concurrent VM measurements or full-series memory bounds. Raw duplicates count
+toward Bering's input buffer; unique indexed spans cannot substitute for that cost.
+
+First-stage execution decision: root **GO** and independent 6.1 Sol/xhigh skeptic
+**explicit GO for the ORIGINAL criterion**, after reviewing the above artifacts
+and green implementation checks
+[40704172324](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704172324).
+Execute `system=all, mode=full, seed=6, max-parallel=3` as the first three of the
+27 planned cells, with the complete unchanged protocol. Retain valid cells
+regardless of accuracy or unknown coverage. The remaining 24 follow review of
+these cells' resource and protocol validity. This is permission to attempt the
+standard-runner workload, not a capacity certification. Preserve raw multiplicity,
+child and VM resources, all costs and incomplete intents; technical resource
+failures remain unscored unknowns. No paid runner, shortened acquisition, input
+cap, reduced trial count or accuracy selection is authorized by this decision.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service

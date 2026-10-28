@@ -90,13 +90,15 @@ invent missing edges or infer success from elapsed time.
 
 ## Current next work
 
-Technical qualification and retained-capture replay have exposed integration and
-binding issues before the full series. The two schema errors in Procrustes/Sheaft
-inputs are repaired. Petclinic replay has actual Sheaft outputs for some combined
-source models. DSB and OTel still have unresolved binding/observation gaps.
+The repaired retained replay `40674465933` completed with all three source
+integrity checks passing. Actual Sheaft forecasts now exist for all four Petclinic
+operations using eBPF alone; supplied network-scope mapping enables shared-DB
+fault forecasts where the DB obligation is unconditional. DSB and OTel eBPF-only
+graphs still lack required service paths. This is technical evidence, not fresh
+accuracy measurement. Bering-only resource evidence is retained.
 
-Next: distinguish representation errors from missing evidence, integrate and
-review the explicitly supplied receiver-role rule, make fixed-condition
-assumptions explicit without fabricating DB structure, repeat retained-data checks,
-then verify concurrent guest/tool resources and execute the fresh series. No
-scientific success is claimed at this stage.
+Next: review the retained readout, then execute the first three already-planned
+full/seed6 cells with two guests and full-size acquisition. Retain every valid
+cell regardless of accuracy or unknown coverage, then execute the other 24 cells.
+Resource adequacy must be measured, not inferred from the small replay. Report,
+archive and review the actual results without weakening the original objective.

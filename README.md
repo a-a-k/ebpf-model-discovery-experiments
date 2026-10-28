@@ -2,14 +2,16 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): qualification repair; no scientific results.**
+> **Current status (iteration 4): retained replay verified; no scientific-series results.**
 > [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
 > each acquired 240 planned requests, then failed on an invalid Procrustes goal
 > before discovery. Per-step goals and ancillary Sheaft predicates are repaired;
-> [Global-input retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40668208749)
-> reached actual Sheaft simulation for every combined OTel/Petclinic operation.
-> Source-format, proxy and database-mapping repairs are being verified. The 27 scientific campaigns
-> have not started; retained replay does not measure fresh predictive accuracy.
+> [The repaired retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933)
+> reached actual Sheaft simulation for all four Petclinic operations using eBPF alone,
+> with shared-DB fault forecasts for the three operations with unconditional DB obligations
+> in the supplied network-scope variant. DSB and OTel eBPF-only branches still lack
+> required service paths. The 27 scientific campaigns have not started;
+> retained replay does not measure fresh predictive accuracy or full-campaign capacity.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
