@@ -26,8 +26,8 @@ from .contracts_v3 import STABLE_FIXTURE_TEXT
 
 
 ENTRY_SERVICES = ["nginx-thrift", "nginx-web-server"]
-# Source-audited native nginx spans omit span.kind; this declaration only binds
-# request observations. The original kind remains unchanged in Bering input.
+# Source-audited native nginx entry spans omit span.kind. Original captures stay
+# unchanged; exact bound roots receive attributed SERVER roles in derived input.
 UNTYPED_ENTRY_COMPONENTS = {"native": ["nginx"]}
 CONTROLLED_SERVICE_ALIASES = ["user-timeline-service"]
 SELECTED_DATABASE = {
