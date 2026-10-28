@@ -177,11 +177,16 @@ def _cross_guest(store, plans):
                 'parent_request_id': parent_req, 'child_digest': child_digest,
                 'parent_digest': parent_digest})
     store.db.execute('DROP TABLE temp.evidence_v4_unique')
+    placement = {source: {'known_guest_observations': known, 'unattributed_guest_observations': total-known}
+                 for source, total, known in store.db.execute(
+                     "SELECT source,COUNT(*),SUM(CASE WHEN node IN ('a','b') THEN 1 ELSE 0 END) FROM spans GROUP BY source")}
     return {source: {'exact_parent_links': sum(counts[source].values()),
                      'invalid_identity_candidates': invalid[source],
+                     'placement_coverage': placement.get(source, {'known_guest_observations': 0,
+                                                                 'unattributed_guest_observations': 0}),
                      'header_verdicts': dict(counts[source]),
                      'witnesses': dict(witnesses[source]),
-                     'interpretation': 'structural parent link; header comparison does not prove application correctness'}
+                     'interpretation': 'only attributed guests can establish a cross-guest link; zero links with unattributed placement is unknown, not absence; header comparison does not prove application correctness'}
             for source in ('ebpf', 'native')}
 
 

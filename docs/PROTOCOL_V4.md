@@ -1,6 +1,8 @@
 # Iteration 4: graph discovery and graph-driven prediction
 
-Status: original-criterion design GO; implementation pending review; no iteration-4 measurements exist.
+Status: original-criterion implementation GO for three technical qualification jobs;
+qualification [40655022146](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
+is running at `7e8deb9dfeb78723d87b254a3384bef735464d81`. No scientific-series results exist.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 
@@ -25,6 +27,14 @@ to test the original criterion**, issued before implementation on 2026-10-28.
 This is not a verdict that the usefulness criterion has been met. The reviewer
 requires an implementation check before research execution and a result check
 before any success claim.
+
+Execution review, 2026-10-28: root and independent 6.1 Sol/xhigh reviewer **GO**
+for exactly three full-mode, seed-6 qualification campaigns after
+[CI 40653952677](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40653952677).
+The check covered the original graph-to-simulation criterion, identical supplied
+semantics, the direct baseline/equivalence and full cost limitations. This does not
+authorize an empirical success claim. Full-series review awaits actual qualification
+artifacts and the final evaluator/cost implementation.
 
 ## Versions and product boundary
 

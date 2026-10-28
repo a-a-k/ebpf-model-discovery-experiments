@@ -62,6 +62,15 @@ def test_invalid_cross_guest_ids_are_retained_but_not_confirmed(tmp_path):
     assert result['invalid_identity_candidates'] == 1
 
 
+def test_central_native_export_without_guest_attribution_does_not_imply_local_execution(tmp_path):
+    store = ObservationStore(tmp_path/'index.sqlite')
+    _put(store, 'p1', 'native', None, 'trace', 'parent', None, 'known')
+    _put(store, 'c1', 'native', None, 'trace', 'child', 'parent', 'known')
+    result = _cross_guest(store, _plan('known'))['native']
+    assert result['exact_parent_links'] == 0
+    assert result['placement_coverage'] == {'known_guest_observations': 0, 'unattributed_guest_observations': 2}
+
+
 def test_database_alias_requires_complete_address_port_and_scope_and_counts_shared_callers(tmp_path):
     folder = tmp_path/'graph'
     folder.mkdir()
