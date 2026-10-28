@@ -387,6 +387,37 @@ and sequential plans for the actual verification queries. This repair applies
 only to future planned runs after staged admission; it does not repeat or change
 parent `40754529169` or its worker `40764150238`.
 
+After worker `40764150238` failed before its parent imported forecasts, root and
+the independent 6.1 Sol/xhigh reviewer give **explicit ORIGINAL-criterion design
+GO** for exactly one standalone diagnostic of the new complete checkpoint.
+The fixed source is parent `40754529169` at `72133c00df3f7e4150a3f737dee33e4bee12527d`,
+training artifact `12847933267`, archive SHA-256
+`ba0289fd1e0cefd4be96cfbf0a0ac4a335db2ef4f748de4b0ffa63aa00c2c422`,
+manifest SHA-256 `b90d303797e4285d16659b4515195b0fc58276d8d4200ec6a9fa9eae070e333c`.
+Its saved index reports 1,695,697 observations, more than the earlier successful
+diagnostic's 1,066,513; that smaller replay did not establish this input's capacity.
+
+Hypothesis: earlier collection of temporary Go allocations can reduce resource
+pressure enough to execute the unchanged complete graph/simulation chain on the
+standard runner. The strongest simple repair is Bering-child-only
+`GOMEMLIMIT=12GiB`, with default `GOGC` unchanged and retained `gctrace` evidence.
+This target leaves headroom on the approximately 16 GiB runner; it is not an
+observation limit, RSS guarantee, accuracy gate or experimental deadline. The
+[Go GC guide](https://go.dev/doc/gc-guide#Memory_limit) documents the soft limit,
+possible overshoot and increased CPU use. Bering retains the full span window
+and overlapping discovery indexes, so the live set may itself remain too large.
+The failed worker's memory/swap pressure and exit 143 do not prove an OOM kill.
+
+Keep the pinned binaries, every observation and source branch, declared contracts,
+source comparisons and strong direct baseline unchanged. Verify the complete
+checkpoint before and after use. Retain preparation, transfer, GC/CPU/wall time,
+RSS, swap, failed-run costs and unknown branches. No fresh application traffic,
+resume of the dead parent, completed-cell admission or remaining-eight rollout
+is authorized by this diagnostic. Implementation review and CI precede its single
+execution; a completed diagnostic would still require a fresh staged campaign.
+Both agents' verdicts are GO for this technical check of the original criterion,
+not for a substitute contribution or a success claim.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed

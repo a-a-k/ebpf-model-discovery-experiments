@@ -17,10 +17,13 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > This supports the requested path for Petclinic. The supplied-contract baseline makes the same
 > scalar predictions; no cost advantage or cross-system conclusion is established.
 > All nine cells passed independent integrity/resource review.
-> OTel's retained training data completed the actual toolchain on a separate standard
-> runner; a reviewed [live-campaign replacement is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40754529169).
-> This does not establish the
-> cause of the earlier runner loss. The DSB staged retry continues after its training upload.
+> OTel's earlier, smaller training checkpoint completed the toolchain on a separate
+> standard runner. The [larger replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40754529169)
+> failed before forecast import and target traffic: its
+> [worker log](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40764150238)
+> records severe RAM/swap pressure followed by runner shutdown (exit 143), without
+> a confirmed OOM kill. A reviewed GC diagnostic will reuse that full checkpoint;
+> it cannot complete the failed cell. The DSB staged retry continues after training upload.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
