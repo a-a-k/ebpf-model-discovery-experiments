@@ -380,6 +380,12 @@ graph construction, simulations or selection. Parent and worker must use the
 same implementation/proof definition. Backup equality and value/add/delete/rowid
 mutation checks precede use. The live run remains unchanged; its waiting time
 does not establish this query as the actual bottleneck or prove a cost advantage.
+Implementation `1c26956` received root **GO** and independent **explicit
+ORIGINAL-criterion implementation GO** after exact-head Linux CI `40765148985`.
+Synthetic tests cover consistent WAL backups, full content/schema/rowid mutations
+and sequential plans for the actual verification queries. This repair applies
+only to future planned runs after staged admission; it does not repeat or change
+parent `40754529169` or its worker `40764150238`.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
