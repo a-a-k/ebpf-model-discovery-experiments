@@ -9,7 +9,7 @@ from __future__ import annotations
 import re
 from urllib.parse import urlsplit
 
-from .selection_v4 import canonical_route, valid_identity
+from .selection_v4 import canonical_route, method_path, valid_identity
 
 
 _HTTP_HINT = re.compile(r"(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS) (/.+)")
@@ -34,11 +34,18 @@ def _rpc_parts(value: object) -> tuple[str, str] | None:
     service, method = text.split("/", 1)
     if not service or not method or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", method):
         return None
-    # Package qualification may differ, but the declared service token may not.
-    return service.rsplit(".", 1)[-1], method
+    return service, method
 
 
-def matches_call_hint(identity: dict, hint: str) -> tuple[bool, str | None]:
+def _rpc_service_matches(observed: str, expected: str,
+                         permitted_services: tuple[str, ...]) -> bool:
+    """Match the exact declared service or an explicitly supplied spelling."""
+    allowed = {expected, *(str(item).strip().strip("/") for item in permitted_services)}
+    return observed in allowed
+
+
+def matches_call_hint(identity: dict, hint: str, *,
+                      permitted_services: tuple[str, ...] = ()) -> tuple[bool, str | None]:
     """Match a declared call hint to one recovered edge identity.
 
     HTTP hints retain exact method+canonical-route behavior.  RPC hints accept
@@ -63,22 +70,26 @@ def matches_call_hint(identity: dict, hint: str) -> tuple[bool, str | None]:
     if rpc_method is not None:
         if str(rpc_method) != expected_method:
             return False, None
-        if rpc_service is not None and str(rpc_service).rsplit(".", 1)[-1] != expected_service:
+        if rpc_service is not None and not _rpc_service_matches(
+                str(rpc_service), expected_service, permitted_services):
             return False, None
         return True, "rpc_method_token_exact"
 
     operation = str(identity.get("operation") or "")
     operation_rpc = _rpc_parts(operation)
     if operation_rpc is not None:
-        return (operation_rpc == expected,
-                "rpc_service_method_exact" if operation_rpc == expected else None)
+        matched = (operation_rpc[1] == expected_method and _rpc_service_matches(
+            operation_rpc[0], expected_service, permitted_services))
+        return matched, "rpc_service_method_exact" if matched else None
     if operation == expected_method:
         return True, "rpc_method_token_exact"
 
     # Several SDKs expose a gRPC server as an HTTP server span.  Require POST and
     # a complete /Service/Method route; GET and substring matches are rejected.
     route_rpc = _rpc_parts(_path(identity.get("route") or identity.get("path")))
-    if _method(identity) == "POST" and route_rpc == expected:
+    if (_method(identity) == "POST" and route_rpc is not None
+            and route_rpc[1] == expected_method
+            and _rpc_service_matches(route_rpc[0], expected_service, permitted_services)):
         return True, "rpc_over_http_post_route_exact"
     return False, None
 
@@ -112,6 +123,9 @@ def endpoint_alias_evidence(store, roots: list[dict], step: dict,
         candidates = store.candidates(root.get("source"), root["request_id"])
         if not any((item.get("trace_id"), item.get("span_id"))
                    == (root.get("trace_id"), root.get("span_id")) for item in candidates):
+            continue
+        indexed_method, indexed_path = method_path(row)
+        if (str(indexed_method or "").upper(), indexed_path) != (expected_method, expected_path):
             continue
         attrs = row.get("attributes", {})
         observed_method = str(attrs.get("http.request.method", attrs.get("http.method", ""))).upper()

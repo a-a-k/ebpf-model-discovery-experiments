@@ -66,17 +66,34 @@ def test_endpoint_alias_requires_exact_selection_and_indexed_request_evidence():
         [root()], step, "frontend", endpoint)["endpoint_ids"]
     assert not endpoint_alias_evidence(Store(observed()),
         [root(service="other")], step, "frontend", endpoint)["endpoint_ids"]
+    wrong_concrete = observed(attributes={
+        "http.request.method": "GET", "url.path": "/api/products/WRONG",
+        "http.route": "/api/products/[productId]/index"})
+    assert not endpoint_alias_evidence(Store(wrong_concrete),
+        [root()], step, "frontend", endpoint)["endpoint_ids"]
 
 
 def test_rpc_hint_accepts_exact_rpc_and_grpc_over_http_post_tokens():
     assert matches_call_hint({"operation": "Convert"}, "CurrencyService/Convert") == (
         True, "rpc_method_token_exact")
-    assert matches_call_hint({"operation": "other.pkg.CurrencyService/Convert"},
+    assert matches_call_hint({"operation": "oteldemo.CurrencyService/Convert"},
                              "oteldemo.CurrencyService/Convert")[0]
     assert matches_call_hint({"operation": "POST", "protocol": "http",
-                              "route": "/other.pkg.CartService/AddItem"},
-                             "oteldemo.CartService/AddItem") == (
+                              "route": "/oteldemo.CartService/AddItem"},
+                             "CartService/AddItem",
+                             permitted_services=("oteldemo.CartService",)) == (
         True, "rpc_over_http_post_route_exact")
+
+
+def test_rpc_hint_requires_exact_qualified_namespace_or_explicit_contract_spelling():
+    assert matches_call_hint({"operation": "other.pkg.CartService/AddItem"},
+                             "oteldemo.CartService/AddItem") == (False, None)
+    identity = {"operation": "POST", "route": "/other.pkg.CartService/AddItem"}
+    assert matches_call_hint(identity, "CartService/AddItem") == (False, None)
+    assert matches_call_hint(identity, "CartService/AddItem",
+                             permitted_services=("oteldemo.CartService",)) == (False, None)
+    assert matches_call_hint(identity, "CartService/AddItem",
+                             permitted_services=("other.pkg.CartService",))[0]
 
 
 def test_rpc_hint_rejects_wrong_method_service_get_and_substrings():
