@@ -53,8 +53,13 @@ def _descendant_tokens(store, root: dict) -> tuple[list[tuple], str | None]:
         rpc_service = attrs.get("rpc.service")
         rpc_method = attrs.get("rpc.method")
         database = attrs.get("db.system.name", attrs.get("db.system"))
+        # Raw span names can contain IDs, SQL values or other instance data.  Use
+        # one only as source-observed operation evidence when no canonical HTTP,
+        # RPC or database identity exists.
+        operation_name = (row.get("name") if not any(
+            (method, route, rpc_service, rpc_method, database)) else None)
         tokens.append((row.get("service"), method, route, rpc_service, rpc_method,
-                       database, row.get("name")))
+                       database, operation_name))
         pending.extend(sorted(children.get(identity, set()) - seen))
     return sorted(tokens, key=lambda item: tuple("" if value is None else str(value) for value in item)), None
 
@@ -107,6 +112,7 @@ def fit(store, plans: list[dict], declaration, out: Path) -> dict:
     training = [plan for plan in plans if plan.get("phase") == "class_train"]
     model = {"schema_version": "classes-v4", "fit_phase": "class_train", "sources": {},
              "driver_grouping": "supplied attempt and planned-step boundaries; not automatic business-session segmentation",
+             "raw_operation_name_rule": "fallback only when HTTP, RPC and database call identity are all absent",
              "fit_features_exclude": ["plan.operation", "record.operation", "timestamps", "status", "body", "success", "outcome"]}
     for source in SOURCES:
         model["sources"][source] = {}

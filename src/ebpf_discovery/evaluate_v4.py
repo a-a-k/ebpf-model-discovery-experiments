@@ -8,6 +8,7 @@ import html
 import importlib
 import json
 import math
+import os
 from pathlib import Path
 from statistics import mean
 
@@ -15,6 +16,9 @@ from statistics import mean
 PRIMARY_PHASES = {"class_train", "calibration", "target", "class_test"}
 EXPECTED_PRIMARY_PER_CELL = 34_800
 EXPECTED_GRID_TOTAL = 939_600
+EXPECTED_PHASE_COUNTS = {"class_train": 600, "calibration": 24_000,
+                         "target": 9_600, "class_test": 600}
+EXPECTED_TARGET_STATES = {"11": 4_800, "10": 2_400, "01": 1_200, "00": 1_200}
 SOURCES = ("ebpf", "native", "combined")
 VARIANTS = ("raw", "network_scope")
 
@@ -31,16 +35,18 @@ def _digest(path: Path) -> str:
 
 
 def _counts(records: list[dict]) -> dict:
-    return {
+    counts = {
         "success": sum(row.get("success") is True for row in records),
         "failure": sum(row.get("success") is False for row in records),
         "unknown": sum(row.get("success") is None for row in records),
         "total": len(records),
     }
+    counts["invalid"] = counts["total"] - counts["success"] - counts["failure"] - counts["unknown"]
+    return counts
 
 
 def _bounds(counts: dict) -> list[float] | None:
-    if not counts["total"]:
+    if not counts["total"] or counts.get("invalid"):
         return None
     return [counts["success"] / counts["total"],
             (counts["success"] + counts["unknown"]) / counts["total"]]
@@ -56,6 +62,9 @@ def _wilson(success: int, total: int, z: float = 1.959963984540054) -> list[floa
 
 def _nominal_envelope(counts: dict) -> dict:
     total = counts["total"]
+    if counts.get("invalid"):
+        return {"interval": None, "label": "unknown: invalid external success value",
+                "assumption": "not evaluated"}
     lower = _wilson(counts["success"], total)
     upper = _wilson(counts["success"] + counts["unknown"], total)
     return {
@@ -109,6 +118,88 @@ def _integrity(root: Path, frozen: dict, forecasts: dict) -> dict:
             "rule": "all frozen hashes and every available forecast's actual Sheaft graph hash must match"}
 
 
+def _completeness(records: list[dict], plans: list[dict], census: list[dict]) -> dict:
+    """Validate the fixed primary acquisition and its three durable identity views."""
+    primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
+    primary_plans = [row for row in plans if row.get("phase") in PRIMARY_PHASES]
+    primary_census = [row for row in census if row.get("phase") in PRIMARY_PHASES]
+    phase_counts = {phase: sum(row.get("phase") == phase for row in primary)
+                    for phase in EXPECTED_PHASE_COUNTS}
+    target = [row for row in primary if row.get("phase") == "target"]
+    state_counts = {state: sum(row.get("state") == state for row in target)
+                    for state in EXPECTED_TARGET_STATES}
+    problems = []
+    if phase_counts != EXPECTED_PHASE_COUNTS:
+        problems.append("primary_phase_counts_mismatch")
+    if state_counts != EXPECTED_TARGET_STATES:
+        problems.append("target_state_counts_mismatch")
+
+    record_ids = [row.get("attempt_id") for row in primary]
+    plan_ids = [row.get("attempt_id") for row in primary_plans]
+    if any(not value for value in record_ids) or len(set(record_ids)) != len(record_ids):
+        problems.append("primary_record_attempt_ids_missing_or_duplicate")
+    if any(not value for value in plan_ids) or len(set(plan_ids)) != len(plan_ids):
+        problems.append("primary_plan_attempt_ids_missing_or_duplicate")
+    if set(record_ids) != set(plan_ids) or len(record_ids) != len(plan_ids):
+        problems.append("primary_records_plans_do_not_match")
+
+    records_by_id = {row.get("attempt_id"): row for row in primary if row.get("attempt_id")}
+    plans_by_id = {row.get("attempt_id"): row for row in primary_plans if row.get("attempt_id")}
+    for attempt_id in set(records_by_id) & set(plans_by_id):
+        record, plan = records_by_id[attempt_id], plans_by_id[attempt_id]
+        if (record.get("phase"), record.get("state")) != (plan.get("phase"), plan.get("state")):
+            problems.append(f"record_plan_phase_state_mismatch:{attempt_id}")
+
+    census_keys = [row.get("attempt_key") for row in primary_census]
+    if any(not value for value in census_keys) or len(set(census_keys)) != len(census_keys):
+        problems.append("primary_census_attempt_keys_missing_or_duplicate")
+    expected_keys = {hashlib.sha256(value.encode()).hexdigest() for value in record_ids if value}
+    if set(census_keys) != expected_keys or len(census_keys) != len(record_ids):
+        problems.append("primary_census_attempts_do_not_match")
+    census_by_key = {row.get("attempt_key"): row for row in primary_census if row.get("attempt_key")}
+    for attempt_id, record in records_by_id.items():
+        key = hashlib.sha256(attempt_id.encode()).hexdigest()
+        observed = census_by_key.get(key)
+        plan = plans_by_id.get(attempt_id)
+        if not observed or not plan:
+            continue
+        actual_steps = [step.get("request_id") for step in record.get("http_steps", [])]
+        planned_steps = [step.get("request_id") for step in plan.get("http_steps", [])]
+        if (observed.get("phase"), observed.get("state")) != (record.get("phase"), record.get("state")):
+            problems.append(f"census_phase_state_mismatch:{attempt_id}")
+        if observed.get("step_ids") != actual_steps or any(step not in planned_steps for step in actual_steps):
+            problems.append(f"census_steps_mismatch:{attempt_id}")
+
+    invalid = [row.get("attempt_id") for row in records
+               if row.get("success") is not True and row.get("success") is not False
+               and row.get("success") is not None]
+    if invalid:
+        problems.append("invalid_success_values")
+    return {
+        "valid": not problems, "problems": problems,
+        "phase_counts": phase_counts, "expected_phase_counts": EXPECTED_PHASE_COUNTS,
+        "target_state_counts": state_counts, "expected_target_state_counts": EXPECTED_TARGET_STATES,
+        "primary_records": len(primary), "primary_plans": len(primary_plans),
+        "primary_census": len(primary_census), "invalid_success_attempt_ids": invalid,
+        "rule": "fixed phase/state counts, unique attempt identities, and matching records/plans/census",
+    }
+
+
+def _valid_probability(value) -> bool:
+    return type(value) in (int, float) and math.isfinite(value) and 0.0 <= value <= 1.0
+
+
+def _valid_forecast(forecast) -> bool:
+    interval = (forecast or {}).get("interval")
+    states = (forecast or {}).get("by_state", {})
+    return bool(forecast and forecast.get("available")
+                and _valid_probability(forecast.get("prediction"))
+                and isinstance(interval, list) and len(interval) == 2
+                and all(_valid_probability(value) for value in interval)
+                and interval[0] <= interval[1]
+                and all(_valid_probability(states.get(state)) for state in EXPECTED_TARGET_STATES))
+
+
 def _manual_baselines(system: str, operations: list[str]) -> dict:
     declaration = importlib.import_module(f"systems.{system}.experiment_v4")
     controlled = set(declaration.CONTROLLED_SERVICE_ALIASES)
@@ -125,15 +216,25 @@ def _manual_baselines(system: str, operations: list[str]) -> dict:
         by_state = {state: (0.0 if requires_controlled and state == "00" else 1.0)
                     for state in ("11", "10", "01", "00")}
         prediction = .5*by_state["11"] + .25*by_state["10"] + .125*by_state["01"] + .125*by_state["00"]
+        def selected(call):
+            if call.get("db_system") != selected_db.get("db_system"):
+                return False
+            role = selected_db.get("db_role")
+            return role in (None, "shared") or call.get("db_role") == role
         db_calls = [call for call in contract["required_calls"] if "db_system" in call]
-        conditional = bool(contract.get("conditional_db"))
-        if conditional:
+        conditional_value = contract.get("conditional_db") or []
+        conditional_calls = (conditional_value if isinstance(conditional_value, list)
+                             else [conditional_value.get("call", conditional_value)])
+        unconditional_selected = any(selected(call) for call in db_calls)
+        conditional_selected = any(selected(call) for call in conditional_calls)
+        if conditional_selected:
             database = {"available": False, "reason": "declared_database_requirement_is_conditional"}
-        elif selected_db and any(call.get("db_system") == selected_db.get("db_system") for call in db_calls):
+        elif selected_db and unconditional_selected:
             database = {"available": True, "database_down_prediction": 0.0,
                         "basis": "declared unconditional selected database requirement"}
         else:
-            database = {"available": False, "reason": "no_sound_unconditional_selected_database_contract"}
+            database = {"available": True, "database_down_prediction": 1.0,
+                        "basis": "selected database is off-path under the declared complete contract"}
         result[operation] = {
             "available": True, "prediction": prediction, "by_state": by_state,
             "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
@@ -200,6 +301,8 @@ def evaluate_campaign(root: Path) -> dict:
     status = _read(root/"status.json", {})
     records = _read(root/"external.json", [])
     blocks = _read(root/"blocks.json", [])
+    plans = _read(root/"plans.json", [])
+    census = _read(root/"census.json", [])
     forecasts = _read(root/"toolchain"/"forecasts.json", {})
     frozen = _read(root/"freeze-integrity.json", {})
     declared_operations = set()
@@ -212,7 +315,9 @@ def evaluate_campaign(root: Path) -> dict:
     primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
     target = [row for row in records if row.get("phase") == "target"]
     integrity = _integrity(root, frozen, forecasts)
-    complete = status.get("status") == "acquisition_complete" and integrity["valid"]
+    completeness = _completeness(records, plans, census)
+    complete = (status.get("status") == "acquisition_complete" and integrity["valid"]
+                and completeness["valid"])
     evaluations = []
     for operation in operations:
         actual = [row for row in target if row.get("operation") == operation]
@@ -225,20 +330,26 @@ def evaluate_campaign(root: Path) -> dict:
         for source in SOURCES:
             for variant in VARIANTS:
                 forecast = forecasts.get(source, {}).get(variant, {}).get(operation)
-                available = bool(complete and forecast and forecast.get("available"))
+                forecast_valid = _valid_forecast(forecast)
+                available = bool(complete and forecast_valid)
                 prediction = forecast.get("prediction") if available else None
                 state_eval = {}
                 for state, actual_state in per_state.items():
-                    predicted = forecast.get("by_state", {}).get(state) if available else None
+                    candidate = forecast.get("by_state", {}).get(state) if available else None
+                    predicted = candidate if _valid_probability(candidate) else None
                     state_eval[state] = {**actual_state, "prediction": predicted,
                                          "error": _error(predicted, actual_state["bounds"])}
                 evaluations.append({
                     "operation": operation, "source": source, "variant": variant,
                     "available": available, "reason": None if available else (
                         "campaign_incomplete_or_integrity_failed" if not complete else
-                        (forecast or {}).get("reason", "forecast_missing")),
+                        (forecast or {}).get("reason", "forecast_missing_or_invalid")),
                     "prediction": prediction, "actual_counts": actual_counts,
                     "point_prediction": prediction,
+                    "forecast_interval": (forecast or {}).get("interval"),
+                    "forecast_interval_status": ("valid" if available else
+                        "retained_unavailable_or_invalid_forecast_interval" if forecast else
+                        "unknown_missing_forecast"),
                     "actual_target_success_counts": {"true": actual_counts["success"],
                                                       "false": actual_counts["failure"],
                                                       "none": actual_counts["unknown"]},
@@ -256,22 +367,33 @@ def evaluate_campaign(root: Path) -> dict:
     database["forecast_impact"] = [{
         "operation": item["operation"], "source": item["source"], "variant": item["variant"],
         "structural_graph_available": bool(item["graph_sha256"]),
-        "database_down_prediction": forecasts.get(item["source"], {}).get(item["variant"], {})
-            .get(item["operation"], {}).get("database_down_prediction"),
-        "prognostic_impact": None if item["prediction"] is None else (
-            None if forecasts.get(item["source"], {}).get(item["variant"], {})
-            .get(item["operation"], {}).get("database_down_prediction") is None else
-            item["prediction"] - forecasts[item["source"]][item["variant"]][item["operation"]]["database_down_prediction"]),
+        "healthy_state_11_prediction": (
+            forecasts.get(item["source"], {}).get(item["variant"], {})
+            .get(item["operation"], {}).get("by_state", {}).get("11") if item["available"] else None),
+        "database_down_prediction": (
+            forecasts.get(item["source"], {}).get(item["variant"], {})
+            .get(item["operation"], {}).get("database_down_prediction") if item["available"] else None),
+        "prognostic_impact": None,
         "counted_as_accuracy_benefit": False,
     } for item in evaluations]
+    for item in database["forecast_impact"]:
+        healthy, down = item["healthy_state_11_prediction"], item["database_down_prediction"]
+        if _valid_probability(healthy) and _valid_probability(down):
+            item["prognostic_impact"] = healthy - down
+            item["comparison"] = "healthy_state_11_minus_database_down"
+        else:
+            item["healthy_state_11_prediction"] = healthy if _valid_probability(healthy) else None
+            item["database_down_prediction"] = down if _valid_probability(down) else None
+            item["comparison"] = "unknown_unless_both_predictions_available"
     classes = _read(root/"classes-v4.json")
     return {
         "schema_version": "evaluation-v4", "root": str(root.resolve()),
         "system": status.get("system"), "mode": status.get("mode"), "seed": status.get("seed"),
-        "status": status, "integrity": integrity, "complete_for_evaluation": complete,
+        "status": status, "integrity": integrity, "completeness": completeness,
+        "complete_for_evaluation": complete,
         "counts": {"all_records": len(records), "primary": len(primary), "target": len(target),
-                   "expected_primary": EXPECTED_PRIMARY_PER_CELL,
-                   "primary_count_matches": len(primary) == EXPECTED_PRIMARY_PER_CELL,
+                   "expected_primary": sum(EXPECTED_PHASE_COUNTS.values()),
+                   "primary_count_matches": len(primary) == sum(EXPECTED_PHASE_COUNTS.values()),
                    "target_state_counts": {state: sum(row.get("state") == state for row in target)
                                            for state in ("11", "10", "01", "00")},
                    "blocks": len(blocks)},
@@ -295,13 +417,63 @@ def _find_campaigns(roots: list[Path]) -> list[Path]:
     return sorted(found)
 
 
-def aggregate(roots: list[Path], report_dir: Path) -> dict:
+def _selection(selection_manifest) -> tuple[dict, dict]:
+    if selection_manifest is None:
+        return {}, {"provided": False}
+    path = Path(selection_manifest) if not isinstance(selection_manifest, dict) else None
+    value = _read(path) if path else selection_manifest
+    if value.get("policy") != "technical_replacement_only_no_outcome_selection":
+        raise ValueError("selection manifest must assert technical-only, outcome-independent replacement")
+    selected = {}
+    for row in value.get("cells", []):
+        key = (row.get("system"), row.get("mode"), row.get("seed"))
+        if key in selected or not row.get("reason_code", "").startswith("technical_"):
+            raise ValueError(f"invalid or duplicate technical selection for {key}")
+        selected[key] = row
+    provenance = {"provided": True, "path": str(path.resolve()) if path else None,
+                  "sha256": _digest(path) if path else None, "manifest": value}
+    return selected, provenance
+
+
+def aggregate(roots: list[Path], report_dir: Path, selection_manifest=None) -> dict:
     reports = [evaluate_campaign(path) for path in _find_campaigns(roots)]
-    cells = {(r["system"], r["mode"], r["seed"]): r for r in reports}
+    candidates = {}
+    for report in reports:
+        candidates.setdefault((report["system"], report["mode"], report["seed"]), []).append(report)
+    requested, selection_provenance = _selection(selection_manifest)
+    selected, ambiguous, replacements = {}, [], []
+    for key, attempts in sorted(candidates.items(), key=lambda item: str(item[0])):
+        if len(attempts) == 1:
+            if key in requested:
+                raise ValueError(f"selection manifest names non-duplicate cell {key}")
+            selected[key] = attempts[0]
+            continue
+        choice = requested.get(key)
+        roots_for_cell = {str(Path(row["root"]).resolve()) for row in attempts}
+        if choice is None:
+            ambiguous.append({"cell": list(key), "candidate_roots": sorted(roots_for_cell),
+                              "reason": "duplicate_cell_requires_explicit_technical_selection"})
+            continue
+        declared = {str(Path(value).resolve()) for value in choice.get("candidate_roots", [])}
+        chosen = str(Path(choice.get("selected_root", "")).resolve())
+        if declared != roots_for_cell or chosen not in roots_for_cell:
+            raise ValueError(f"selection candidates do not exactly match retained inputs for {key}")
+        chosen_report = next(row for row in attempts if str(Path(row["root"]).resolve()) == chosen)
+        excluded_reports = [row for row in attempts if str(Path(row["root"]).resolve()) != chosen]
+        if not chosen_report["complete_for_evaluation"] or any(
+                row["complete_for_evaluation"] for row in excluded_reports):
+            raise ValueError(f"technical selection for {key} must retain the sole complete campaign")
+        selected[key] = chosen_report
+        replacements.append({"cell": list(key), "selected_root": chosen,
+                             "excluded_roots": sorted(roots_for_cell-{chosen}),
+                             "reason_code": choice["reason_code"]})
+    unused = set(requested)-set(candidates)
+    if unused:
+        raise ValueError(f"selection manifest names missing cells: {sorted(unused)}")
     expected = {(s, m, z) for s in ("deathstarbench", "otel_demo", "petclinic")
                 for m in ("absent", "partial", "full") for z in (6, 7, 8)}
     grouped = {}
-    for report in reports:
+    for report in selected.values():
         for row in report["evaluations"]:
             key = (report["system"], report["mode"], row["operation"], row["source"], row["variant"])
             grouped.setdefault(key, []).append(row)
@@ -320,10 +492,15 @@ def aggregate(roots: list[Path], report_dir: Path) -> dict:
         })
     result = {
         "schema_version": "evaluation-v4-aggregate", "campaigns": reports,
-        "grid": {"expected_cells": 27, "observed_cells": len(cells),
-                 "missing_cells": [list(item) for item in sorted(expected-set(cells))],
+        "selection": selection_provenance,
+        "technical_replacements": replacements,
+        "ambiguous_duplicate_cells": ambiguous,
+        "grid": {"expected_cells": 27, "selected_unambiguous_cells": len(selected),
+                 "retained_campaign_attempts": len(reports),
+                 "missing_cells": [list(item) for item in sorted(expected-set(selected))],
                  "expected_primary_total": EXPECTED_GRID_TOTAL,
-                 "observed_primary_total": sum(r["counts"]["primary"] for r in reports)},
+                 "selected_primary_total": sum(r["counts"]["primary"] for r in selected.values()),
+                 "retained_attempt_primary_total": sum(r["counts"]["primary"] for r in reports)},
         "per_operation_source_variant_repeats": summaries,
         "overall_accuracy_mean": None,
         "claim": "operations and sources remain separate; no masking overall mean or accuracy threshold",
@@ -363,14 +540,19 @@ def main():
     group.add_argument("--aggregate", type=Path, nargs="+")
     parser.add_argument("--out", type=Path)
     parser.add_argument("--report-dir", type=Path)
+    parser.add_argument("--selection", type=Path,
+                        help="auditable technical-only selection for duplicate cells")
     args = parser.parse_args()
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        parser.error("v4 research evaluation is permitted only in GitHub Actions")
     if args.campaign:
+        if args.selection is not None: parser.error("--selection is only valid with --aggregate")
         if args.out is None: parser.error("--campaign requires --out")
         args.out.parent.mkdir(parents=True, exist_ok=True)
         args.out.write_text(json.dumps(evaluate_campaign(args.campaign), indent=2)+"\n")
     else:
         if args.report_dir is None: parser.error("--aggregate requires --report-dir")
-        aggregate(args.aggregate, args.report_dir)
+        aggregate(args.aggregate, args.report_dir, args.selection)
 
 
 if __name__ == "__main__":

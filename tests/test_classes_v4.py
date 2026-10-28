@@ -29,8 +29,12 @@ class Store:
 
 
 def _row(span, request, route, *, parent="", service="frontend", db=None,
-         rpc_service=None, rpc_method=None, name=None):
-    attributes = {"http.request.method": "GET", "http.route": route}
+         rpc_service=None, rpc_method=None, name=None, method="GET"):
+    attributes = {}
+    if method:
+        attributes["http.request.method"] = method
+    if route:
+        attributes["http.route"] = route
     if request:
         attributes["http.request.header.x-experiment-request-id"] = request
     if db:
@@ -128,4 +132,15 @@ def test_downstream_excludes_entry_and_keeps_rpc_call_identity(tmp_path: Path):
     signature = model["sources"]["ebpf"]["downstream"]["classes"][0]["signature"]
     descendants = signature[0][0]["descendants"]
     assert descendants == [["worker", "GET", "/rpc", "catalog.v1.Products",
-                            "GetProduct", None, "grpc.call"]]
+                            "GetProduct", None, None]]
+
+
+def test_raw_operation_name_is_only_a_last_resort(tmp_path: Path):
+    root = _row("1" * 16, "train", "/a")
+    child = _row("2" * 16, None, None, parent="1" * 16, service="worker",
+                 name="stable-call", method=None)
+    model = fit(Store([root, child]), [_plan("attempt", "class_train", "train", "/a")],
+                _declaration(), tmp_path)
+    signature = model["sources"]["ebpf"]["downstream"]["classes"][0]["signature"]
+    assert signature[0][0]["descendants"] == [["worker", None, None, None, None, None,
+                                                "stable-call"]]
