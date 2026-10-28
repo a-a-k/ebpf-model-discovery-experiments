@@ -357,10 +357,11 @@ The manual workflows are:
 
 - [qualification-v4.yml](.github/workflows/qualification-v4.yml): three full-mode
   technical qualifications by default, with reviewed diagnostic inputs;
-- [series-v4.yml](.github/workflows/series-v4.yml): the fixed 27-cell matrix, maximum
-  parallelism three, with exact-cell inputs for reviewed staging or technical reruns;
+- [series-v4.yml](.github/workflows/series-v4.yml): the fixed 27-cell matrix, up to
+  three campaign jobs per workflow, with exact-cell inputs for reviewed staging or
+  technical reruns; global parent/worker admission follows [the protocol](docs/PROTOCOL_V4.md#parallel-campaign-scheduling-and-api-waits);
 - [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
-  and complete Actions job/artifact costs, including declared failed preparation runs;
+  and Actions job/artifact costs for the declared run inventory, including failed preparation runs;
   render per-operation figures from that saved aggregate as SVG, PNG and PDF.
 - [archive.yml](.github/workflows/archive.yml): retain original artifact ZIPs, job
   logs and provenance in permanent data releases, with lossless numbered parts
@@ -508,6 +509,16 @@ Saved Actions jobs remain in the report even when no campaign artifact survived;
 missing evidence does not mean zero observations. Failed history is preserved. Tool clone/build time,
 campaign elapsed time, command times/return codes, process/resource samples and early
 termination are reported. Unmeasured manual preparation remains unmeasured.
+
+Before the final report, reconcile the declared inventory with repository Actions
+runs since the first v4 code commit, `42ebf33223da579fc68533f2b5c07aa1c4f97f68`
+(2026-10-28 03:28:33 UTC), through the stated report snapshot. Include CI, including
+failed and documentation-only checks, as shared preparation overhead alongside
+campaign, worker, qualification, diagnostic, report and archive jobs. Do not
+allocate shared CI overhead as instrumentation cost to one source. Earlier
+iterations and independent product development remain outside this v4 automation
+window; human/agent effort is unmeasured. The published interim ledger is its
+original declared subset, not a retroactive complete total for this wider scope.
 
 ## 10. Current limitations, review state and references
 
