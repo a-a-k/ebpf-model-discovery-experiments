@@ -1,3 +1,4 @@
+import gzip
 import json
 import sys
 
@@ -18,12 +19,14 @@ def row(operation, source, variant, mean, span, available):
             "coverage": {"expected_repeats": 3, "observed": 3, "available": available}}
 
 
-def test_render_preserves_stored_ranges_availability_and_unknown(tmp_path):
-    source = tmp_path / "evaluation-v4.json"
-    source.write_text(json.dumps(aggregate([
+@pytest.mark.parametrize("compressed", [False, True])
+def test_render_preserves_stored_ranges_availability_and_unknown(tmp_path, compressed):
+    source = tmp_path / ("evaluation-v4.json.gz" if compressed else "evaluation-v4.json")
+    payload = json.dumps(aggregate([
         row("browse", "ebpf", "raw", .25, [.10, .40], 3),
         row("browse", "native", "network_scope", None, None, 0),
-    ])), encoding="utf-8")
+    ])).encode("utf-8")
+    source.write_bytes(gzip.compress(payload, mtime=0) if compressed else payload)
     out = tmp_path / "figures"
     result = render(source, out)
 
@@ -33,6 +36,7 @@ def test_render_preserves_stored_ranges_availability_and_unknown(tmp_path):
         path = out / f"errors-otel_demo-full.{suffix}"
         assert path.is_file() and path.stat().st_size > 0
     markdown = (out / "figures-v4.md").read_text(encoding="utf-8")
+    assert f"[`{source.name}`](../{source.name})" in markdown
     assert "25.000" in markdown
     assert "10.000–40.000" in markdown
     assert "3/3" in markdown

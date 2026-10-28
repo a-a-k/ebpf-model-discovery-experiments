@@ -403,6 +403,12 @@ evaluations. It explicitly does not reverify raw originals. The full-artifact
 Actions. Technical attempts with no completed acquisition stay unscorable; their
 available costs and missing evidence remain in the report.
 
+New report runs also retain `evaluation-v4.json.gz` for compact repository
+publication. Decompression must restore the exact original JSON SHA-256; both
+forms and `provenance/aggregate-packaging.json` remain in the Actions artifact.
+The table and figure commands accept either form. Compression removes no fields
+and changes no calculation; the existing interim snapshot remains unchanged.
+
 A campaign artifact retains, as available:
 
 ```text

@@ -173,14 +173,38 @@ jobs:
           if [ -n "$SELECTION_MANIFEST" ]; then args+=(--selection "$SELECTION_MANIFEST"); fi
           python -m ebpf_discovery.evaluate_v4 --aggregate-saved work/v4-inputs \
             --report-dir results/iteration-4 "${args[@]}"
+      - name: Retain a lossless compressed aggregate for repository publication
+        run: |
+          gzip -n -c results/iteration-4/evaluation-v4.json > results/iteration-4/evaluation-v4.json.gz
+          python - <<'PY'
+          import gzip, hashlib, json, pathlib
+          root = pathlib.Path('results/iteration-4')
+          original = root/'evaluation-v4.json'
+          packed = root/'evaluation-v4.json.gz'
+          with original.open('rb') as stream:
+              original_sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+          with gzip.open(packed, 'rb') as stream:
+              restored_sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+          if restored_sha != original_sha:
+              raise SystemExit('compressed aggregate does not restore the original bytes')
+          with packed.open('rb') as stream:
+              packed_sha = hashlib.file_digest(stream, 'sha256').hexdigest()
+          (root/'provenance'/'aggregate-packaging.json').write_text(json.dumps({
+              'original':original.name, 'original_sha256':original_sha,
+              'original_bytes':original.stat().st_size, 'compressed':packed.name,
+              'compressed_sha256':packed_sha, 'compressed_bytes':packed.stat().st_size,
+              'restored_sha256':restored_sha, 'same_uncompressed_bytes':True,
+              'original_json_retained_in_actions_artifact':True,
+          }, indent=2)+'\n')
+          PY
       - name: Render publication figures from the saved aggregate
         run: |
-          python -m ebpf_discovery.plot_v4 --aggregate results/iteration-4/evaluation-v4.json \
+          python -m ebpf_discovery.plot_v4 --aggregate results/iteration-4/evaluation-v4.json.gz \
             --out-dir results/iteration-4/figures
           python -m pip freeze > results/iteration-4/provenance/report-python-environment.txt
       - name: Render saved evaluation tables
         run: |
-          python -m ebpf_discovery.report_v4 --aggregate results/iteration-4/evaluation-v4.json \
+          python -m ebpf_discovery.report_v4 --aggregate results/iteration-4/evaluation-v4.json.gz \
             --costs results/iteration-4/costs-v4.json --out results/iteration-4/report-v4.md
       - name: Render the fixed observed model example with frozen-file verification
         env:

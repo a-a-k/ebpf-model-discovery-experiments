@@ -6,6 +6,7 @@ Repeat minima/maxima are descriptive ranges, never confidence intervals.
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import os
 import re
@@ -23,7 +24,9 @@ def _safe(value: object) -> str:
 
 
 def _load(path: Path) -> tuple[dict, list[dict]]:
-    payload = json.loads(path.read_text(encoding="utf-8"))
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as stream:
+        payload = json.load(stream)
     if payload.get("schema_version") != "evaluation-v4-aggregate":
         raise ValueError("plot_v4 requires an evaluation-v4 aggregate")
     rows = payload.get("per_operation_source_variant_repeats")
@@ -108,7 +111,7 @@ def render(aggregate: Path, out_dir: Path) -> dict:
     lines = [
         "# Protocol-v4 stored aggregate figures",
         "",
-        f"Input: [`evaluation-v4.json`]({relative_input})",
+        f"Input: [`{aggregate.name}`]({relative_input})",
         "",
         "Values below are copied from the saved aggregate and converted from fractions to percentage points (pp).",
         "Repeat ranges are observed min–max ranges, not confidence intervals. `k/3` is stored availability.",

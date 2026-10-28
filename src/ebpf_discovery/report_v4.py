@@ -2,13 +2,16 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import os
 from pathlib import Path
 
 
 def _read(path: Path) -> dict:
-    value = json.loads(path.read_text(encoding="utf-8"))
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as stream:
+        value = json.load(stream)
     if not isinstance(value, dict):
         raise ValueError(f"expected JSON object: {path}")
     return value
@@ -61,7 +64,7 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
     lines = [
         "# Protocol-v4 saved evaluation report",
         "",
-        f"Aggregate input: [`evaluation-v4.json`]({aggregate_link})",
+        f"Aggregate input: [`{aggregate.name}`]({aggregate_link})",
         "",
         "This report copies stored evaluation metrics and descriptively counts retained causal verdicts. It introduces no threshold, cross-campaign pooling, relinking, refit, or new forecast.",
         "Every retained campaign is listed as an attempt; selection metadata determines evaluation inclusion.",

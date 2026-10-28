@@ -1,3 +1,4 @@
+import gzip
 import json
 import sys
 
@@ -79,12 +80,15 @@ def aggregate(campaigns):
             "ambiguous_duplicate_cells": []}
 
 
-def test_report_copies_saved_tables_and_marks_unknown_cost(tmp_path):
-    source = tmp_path / "evaluation-v4.json"
-    source.write_text(json.dumps(aggregate([campaign()])), encoding="utf-8")
+@pytest.mark.parametrize("compressed", [False, True])
+def test_report_copies_saved_tables_and_marks_unknown_cost(tmp_path, compressed):
+    source = tmp_path / ("evaluation-v4.json.gz" if compressed else "evaluation-v4.json")
+    payload = json.dumps(aggregate([campaign()])).encode("utf-8")
+    source.write_bytes(gzip.compress(payload, mtime=0) if compressed else payload)
     out = tmp_path / "report-v4.md"
     result = render(source, out)
     text = out.read_text(encoding="utf-8")
+    assert f"[`{source.name}`]({source.name})" in text
     assert result["attempts"] == 1
     assert "All retained attempts (not all are necessarily selected)" in text
     assert "v4-summary-otel_demo-full-6-123" in text
