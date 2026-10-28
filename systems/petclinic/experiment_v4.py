@@ -158,6 +158,42 @@ backend visits_replicas
             encoding="utf-8",
         )
 
+    def ready(self) -> None:
+        """Run bounded technical probes without invoking scored operations."""
+        _require_actions()
+        self.fixture = self.fixture or json.loads((self.assets / "fixture.json").read_text(encoding="utf-8"))
+        self._wait_replica_ports({"a": IPS["visits_a"], "b": IPS["visits_b"]}, 180)
+        stop = time.monotonic() + 420
+        last: list[dict[str, Any]] = []
+        while time.monotonic() < stop:
+            last = [self._readiness_probe(name) for name in ("list_owners", "owner_details_with_visits", "list_vets")]
+            if all(item["ready"] is True for item in last):
+                return
+            time.sleep(5)
+        raise RuntimeError("Petclinic failed seed-derived technical readiness probes: " + json.dumps(last))
+
+    def _readiness_probe(self, name: str) -> dict[str, Any]:
+        """Check deployed application health; results never enter experiment records."""
+        step = CONTRACTS[name]["steps"][0]
+        fixture_key = {
+            "list_owners": "owners",
+            "owner_details_with_visits": "details",
+            "list_vets": "vets",
+        }[name]
+        url = f"http://{self.ctx.node_ip('a')}:18080{step['path']}"
+        try:
+            response = requests.request(
+                step["method"], url,
+                headers={"Connection": "close", "X-Technical-Probe": "readiness"},
+                timeout=5.0,
+            )
+            if response.status_code != 200:
+                return {"operation": name, "ready": False, "status": response.status_code}
+            _canonical(response.json(), self.fixture[fixture_key])
+            return {"operation": name, "ready": True, "status": response.status_code}
+        except (requests.exceptions.RequestException, requests.exceptions.JSONDecodeError, TypeError, ValueError) as exc:
+            return {"operation": name, "ready": False, "error": f"{type(exc).__name__}: {exc}"}
+
     def operation(self, name: str, index: int, namespace: str, deadline: float | None = None) -> dict[str, Any]:
         _require_actions()
         if deadline is not None:

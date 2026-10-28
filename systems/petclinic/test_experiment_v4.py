@@ -99,6 +99,50 @@ def test_operation_rejects_reintroduced_deadline(tmp_path, monkeypatch):
         Adapter(context(tmp_path)).operation("list_vets", 1, "target", deadline=10)
 
 
+def test_readiness_probe_is_technical_and_does_not_call_scored_operation(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(context(tmp_path))
+    adapter.fixture = {"owners": [{"id": 1}], "details": {}, "vets": []}
+    response = requests.Response()
+    response.status_code = 200
+    response._content = b'[{"id":1}]'
+    captured = []
+
+    def technical_request(method, url, **kwargs):
+        captured.append((method, url, kwargs))
+        return response
+
+    monkeypatch.setattr(requests, "request", technical_request)
+    monkeypatch.setattr(adapter, "operation", lambda *_args, **_kwargs: pytest.fail("ready called scored operation"))
+    result = adapter._readiness_probe("list_owners")
+    assert result == {"operation": "list_owners", "ready": True, "status": 200}
+    assert captured[0][2]["timeout"] == 5.0
+    assert captured[0][2]["headers"] == {"Connection": "close", "X-Technical-Probe": "readiness"}
+    assert "X-Experiment-Request-Id" not in captured[0][2]["headers"]
+
+
+def test_inherited_reset_reaches_v4_technical_ready_not_scored_operation(tmp_path, monkeypatch):
+    monkeypatch.setenv("GITHUB_ACTIONS", "true")
+    adapter = Adapter(context(tmp_path))
+    adapter.fixture = {"owners": [], "details": {}, "vets": []}
+    calls = []
+    monkeypatch.setattr(adapter, "set_database", lambda up: calls.append(("database", up)))
+    monkeypatch.setattr(adapter, "set_replicas", lambda state: calls.append(("replicas", state)))
+    monkeypatch.setattr(adapter, "_mysql", lambda sql: calls.append(("sql", sql)))
+    monkeypatch.setattr(adapter, "_wait_replica_ports", lambda replicas, timeout: calls.append(("ports", replicas, timeout)))
+    monkeypatch.setattr(
+        adapter,
+        "_readiness_probe",
+        lambda name: {"operation": name, "ready": True, "status": 200},
+    )
+    monkeypatch.setattr(adapter, "operation", lambda *_args, **_kwargs: pytest.fail("reset called scored operation"))
+    adapter.reset()
+    assert ("database", True) in calls
+    assert ("replicas", "11") in calls
+    assert any(call[0] == "sql" for call in calls)
+    assert any(call[0] == "ports" for call in calls)
+
+
 def test_verify_requires_unique_exact_sql_identity_without_elapsed_gate(tmp_path, monkeypatch):
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     adapter = Adapter(context(tmp_path))
