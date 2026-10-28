@@ -13,9 +13,10 @@ OBI_IMAGE = 'otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38
 
 
 class Collectors:
-    def __init__(self, ctx, *, semantic=False):
+    def __init__(self, ctx, *, semantic=False, raw_capture=False):
         self.ctx = ctx
         self.semantic = semantic
+        self.raw_capture = raw_capture
         self.processes = []
         self.logs = []
         self.root = ctx.out / 'observations'
@@ -25,11 +26,14 @@ class Collectors:
         for node, port in [('a', 4318), ('b', 4320), ('native', 4319)]:
             log = (self.root / f'receiver-{node}.log').open('w')
             self.logs.append(log)
-            process = subprocess.Popen([
+            command = [
                 sys.executable, '-m', 'ebpf_discovery.receiver', '--port', str(port),
                 '--out', str(self.root / f'{node}.jsonl'), '--source',
-                f'ebpf:{node}' if node != 'native' else 'native',
-            ], stdout=log, stderr=subprocess.STDOUT)
+                f'ebpf:{node}' if node != 'native' else 'native', '--node', node,
+            ]
+            if self.raw_capture:
+                command.append('--raw-capture')
+            process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT)
             self.processes.append(process)
         time.sleep(1)
         if any(p.poll() is not None for p in self.processes):
