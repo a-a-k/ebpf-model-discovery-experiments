@@ -16,6 +16,11 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > is ongoing. The DSB staged retry continues. All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
+The independently reviewed [interim report](results/iteration-4/SOURCE.md) contains
+generated per-operation tables, error figures and the actual Bering eBPF graph.
+Its cost ledger includes failed and running jobs at the report snapshot; it is not
+the final series total.
+
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
 historical predictors did not consume the recovered graph. Their results must not be

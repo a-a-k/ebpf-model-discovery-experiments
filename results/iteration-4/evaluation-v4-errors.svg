@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="624">
+<style>text{font:12px monospace}.missing{fill:#777}.value{fill:#a33}</style>
+<text x="10" y="18">Worst-end absolute error by operation/source/variant/repeat group (no threshold)</text>
+<text x="10" y="48">petclinic/full/create_visit/combined/network_scope</text>
+<rect class="value" x="650" y="34" width="0.000" height="10"/>
+<text x="1160" y="48">0.0000</text>
+<text x="10" y="72">petclinic/full/create_visit/combined/raw</text>
+<rect class="value" x="650" y="58" width="0.000" height="10"/>
+<text x="1160" y="72">0.0000</text>
+<text x="10" y="96">petclinic/full/create_visit/ebpf/network_scope</text>
+<rect class="value" x="650" y="82" width="0.000" height="10"/>
+<text x="1160" y="96">0.0000</text>
+<text x="10" y="120">petclinic/full/create_visit/ebpf/raw</text>
+<rect class="value" x="650" y="106" width="0.000" height="10"/>
+<text x="1160" y="120">0.0000</text>
+<text x="10" y="144">petclinic/full/create_visit/native/network_scope</text>
+<rect class="value" x="650" y="130" width="0.000" height="10"/>
+<text x="1160" y="144">0.0000</text>
+<text x="10" y="168">petclinic/full/create_visit/native/raw</text>
+<rect class="value" x="650" y="154" width="0.000" height="10"/>
+<text x="1160" y="168">0.0000</text>
+<text x="10" y="192">petclinic/full/list_owners/combined/network_scope</text>
+<rect class="value" x="650" y="178" width="0.000" height="10"/>
+<text x="1160" y="192">0.0000</text>
+<text x="10" y="216">petclinic/full/list_owners/combined/raw</text>
+<rect class="value" x="650" y="202" width="0.000" height="10"/>
+<text x="1160" y="216">0.0000</text>
+<text x="10" y="240">petclinic/full/list_owners/ebpf/network_scope</text>
+<rect class="value" x="650" y="226" width="0.000" height="10"/>
+<text x="1160" y="240">0.0000</text>
+<text x="10" y="264">petclinic/full/list_owners/ebpf/raw</text>
+<rect class="value" x="650" y="250" width="0.000" height="10"/>
+<text x="1160" y="264">0.0000</text>
+<text x="10" y="288">petclinic/full/list_owners/native/network_scope</text>
+<rect class="value" x="650" y="274" width="0.000" height="10"/>
+<text x="1160" y="288">0.0000</text>
+<text x="10" y="312">petclinic/full/list_owners/native/raw</text>
+<rect class="value" x="650" y="298" width="0.000" height="10"/>
+<text x="1160" y="312">0.0000</text>
+<text x="10" y="336">petclinic/full/list_vets/combined/network_scope</text>
+<rect class="value" x="650" y="322" width="0.000" height="10"/>
+<text x="1160" y="336">0.0000</text>
+<text x="10" y="360">petclinic/full/list_vets/combined/raw</text>
+<rect class="value" x="650" y="346" width="0.000" height="10"/>
+<text x="1160" y="360">0.0000</text>
+<text x="10" y="384">petclinic/full/list_vets/ebpf/network_scope</text>
+<rect class="value" x="650" y="370" width="0.000" height="10"/>
+<text x="1160" y="384">0.0000</text>
+<text x="10" y="408">petclinic/full/list_vets/ebpf/raw</text>
+<rect class="value" x="650" y="394" width="0.000" height="10"/>
+<text x="1160" y="408">0.0000</text>
+<text x="10" y="432">petclinic/full/list_vets/native/network_scope</text>
+<rect class="value" x="650" y="418" width="0.000" height="10"/>
+<text x="1160" y="432">0.0000</text>
+<text x="10" y="456">petclinic/full/list_vets/native/raw</text>
+<rect class="value" x="650" y="442" width="0.000" height="10"/>
+<text x="1160" y="456">0.0000</text>
+<text x="10" y="480">petclinic/full/owner_details_with_visits/combined/network_scope</text>
+<rect class="value" x="650" y="466" width="0.000" height="10"/>
+<text x="1160" y="480">0.0000</text>
+<text x="10" y="504">petclinic/full/owner_details_with_visits/combined/raw</text>
+<rect class="value" x="650" y="490" width="0.000" height="10"/>
+<text x="1160" y="504">0.0000</text>
+<text x="10" y="528">petclinic/full/owner_details_with_visits/ebpf/network_scope</text>
+<rect class="value" x="650" y="514" width="0.000" height="10"/>
+<text x="1160" y="528">0.0000</text>
+<text x="10" y="552">petclinic/full/owner_details_with_visits/ebpf/raw</text>
+<rect class="value" x="650" y="538" width="0.000" height="10"/>
+<text x="1160" y="552">0.0000</text>
+<text x="10" y="576">petclinic/full/owner_details_with_visits/native/network_scope</text>
+<rect class="value" x="650" y="562" width="0.000" height="10"/>
+<text x="1160" y="576">0.0000</text>
+<text x="10" y="600">petclinic/full/owner_details_with_visits/native/raw</text>
+<rect class="value" x="650" y="586" width="0.000" height="10"/>
+<text x="1160" y="600">0.0000</text>
+</svg>

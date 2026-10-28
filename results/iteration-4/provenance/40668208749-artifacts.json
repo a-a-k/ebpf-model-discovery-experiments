@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12808132110,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgwODEzMjExMA==",
+        "name": "replay-qualification-v4-all-40655022146-40668208749",
+        "size_in_bytes": 106146618,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12808132110",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12808132110/zip",
+        "expired": false,
+        "digest": "sha256:5bd0273bf09733eff3237f4f19a199421834e1c6b69c997573780646f0c6e08d",
+        "created_at": "2026-10-28T10:12:44Z",
+        "updated_at": "2026-10-28T10:12:44Z",
+        "expires_at": "2027-01-26T09:56:51Z",
+        "workflow_run": {
+          "id": 40668208749,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1d3a7bdde7e280ed7fae0e0c2ebb7928ab43f570"
+        }
+      }
+    ]
+  }
+]

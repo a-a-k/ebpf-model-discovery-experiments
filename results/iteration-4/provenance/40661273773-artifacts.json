@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12804620539,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgwNDYyMDUzOQ==",
+        "name": "replay-qualification-v4-petclinic-40655022146-40661273773",
+        "size_in_bytes": 27864671,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12804620539",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12804620539/zip",
+        "expired": false,
+        "digest": "sha256:e975bcd2c1933925a9d3fbcfc5fec4e85890f758f3e78f6f4c0d648e3f5c74f6",
+        "created_at": "2026-10-28T09:04:02Z",
+        "updated_at": "2026-10-28T09:04:02Z",
+        "expires_at": "2027-01-26T09:03:22Z",
+        "workflow_run": {
+          "id": 40661273773,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "12954418b8413d07b09fc808f3e5762ab5d249b7"
+        }
+      }
+    ]
+  }
+]

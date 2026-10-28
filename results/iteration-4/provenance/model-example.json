@@ -1,0 +1,216 @@
+{
+  "fixed_cell": [
+    "petclinic",
+    "full",
+    6
+  ],
+  "source": "ebpf",
+  "variant": "network_scope",
+  "choice_rule": "fixed planned cell; independent of accuracy, coverage or appearance",
+  "status": "rendered",
+  "provenance": {
+    "run_id": "40718674400",
+    "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576",
+    "artifact_id": 12834368897,
+    "artifact_name": "v4-summary-petclinic-full-6-40718674400",
+    "artifact_digest": "sha256:27933333a58a1990652725c9bf6d0bd769e436799cf920b2bf8d9c5669261faf",
+    "full_artifact_name": "campaign-v4-petclinic-full-6-40718674400",
+    "full_artifact_id": 12834864581,
+    "full_artifact_digest": "sha256:d94dbd5b37505d41e32e4cd0ff7545bfa08d581a6dc4a944f777b11540915bb6",
+    "full_artifact_expired": false,
+    "full_originals_reverified_by_report_job": false,
+    "original_journal_sha256_claim": "d80580dfa91bc98be2b952ac8034a3b0b6db60a7bb02482080776d896ca519f9",
+    "manifest_sha256": "b9f75f032743cdfa1f4cd6339e6f027492d5a37be1a81637d725e0fbec7ae0e1",
+    "evaluation_sha256": "8951d56bba5c424c9ae1184ca29e324e38a8d15c5380b4594b13c7895d1ad6ff"
+  },
+  "frozen_model_sha256": "c77022678f205fb12a7c4909a5fa60dde697b33018725b86e563ece027854a64",
+  "model_relative_path": "figures/petclinic-full-6-ebpf-network_scope.model.json",
+  "renderer": {
+    "source": "saved Bering observed.json",
+    "original_model_path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/results/iteration-4/figures/petclinic-full-6-ebpf-network_scope.model.json",
+    "original_model_sha256": "c77022678f205fb12a7c4909a5fa60dde697b33018725b86e563ece027854a64",
+    "counts": {
+      "services": 12,
+      "edges": 24,
+      "endpoints": 11
+    },
+    "service_ids": [
+      "api-gateway",
+      "customers-service",
+      "database",
+      "database:cdadb481d78f32e10c33b98d188102f4170604212ec565139e192aa385c487ed",
+      "peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f",
+      "peer:74cca6782df37222ef58acf6f538ff40345328845710e58164f1290b4a0f8a15",
+      "peer:a9145c077940c58f11d9ee8e8607b68357633ed1d5fe4079f70c99315e696b3b",
+      "peer:b0efefb3f50bfc64afc501a85744450960675fc9fbd0472ac71910b5dc4d05bd",
+      "peer:f81001406e56d9d45f01cc5cffdfabf5d8f2a11df4a009a52a0220289aa150f1",
+      "vets-service",
+      "visits-proxy",
+      "visits-service"
+    ],
+    "edges": [
+      {
+        "input_index": 0,
+        "id": "api-gateway|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=server",
+        "from": "api-gateway",
+        "to": "customers-service"
+      },
+      {
+        "input_index": 1,
+        "id": "api-gateway|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=server",
+        "from": "api-gateway",
+        "to": "customers-service"
+      },
+      {
+        "input_index": 2,
+        "id": "api-gateway|peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f|sync|true|protocol=http|operation=POST|route=%2Fv1%2Ftraces|span_kind=client",
+        "from": "api-gateway",
+        "to": "peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f"
+      },
+      {
+        "input_index": 3,
+        "id": "api-gateway|peer:74cca6782df37222ef58acf6f538ff40345328845710e58164f1290b4a0f8a15|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=client",
+        "from": "api-gateway",
+        "to": "peer:74cca6782df37222ef58acf6f538ff40345328845710e58164f1290b4a0f8a15"
+      },
+      {
+        "input_index": 4,
+        "id": "api-gateway|peer:b0efefb3f50bfc64afc501a85744450960675fc9fbd0472ac71910b5dc4d05bd|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+        "from": "api-gateway",
+        "to": "peer:b0efefb3f50bfc64afc501a85744450960675fc9fbd0472ac71910b5dc4d05bd"
+      },
+      {
+        "input_index": 5,
+        "id": "api-gateway|peer:f81001406e56d9d45f01cc5cffdfabf5d8f2a11df4a009a52a0220289aa150f1|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=client",
+        "from": "api-gateway",
+        "to": "peer:f81001406e56d9d45f01cc5cffdfabf5d8f2a11df4a009a52a0220289aa150f1"
+      },
+      {
+        "input_index": 6,
+        "id": "api-gateway|peer:f81001406e56d9d45f01cc5cffdfabf5d8f2a11df4a009a52a0220289aa150f1|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=client",
+        "from": "api-gateway",
+        "to": "peer:f81001406e56d9d45f01cc5cffdfabf5d8f2a11df4a009a52a0220289aa150f1"
+      },
+      {
+        "input_index": 7,
+        "id": "api-gateway|vets-service|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=server",
+        "from": "api-gateway",
+        "to": "vets-service"
+      },
+      {
+        "input_index": 8,
+        "id": "api-gateway|visits-proxy|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=server",
+        "from": "api-gateway",
+        "to": "visits-proxy"
+      },
+      {
+        "input_index": 9,
+        "id": "api-gateway|visits-proxy|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=server",
+        "from": "api-gateway",
+        "to": "visits-proxy"
+      },
+      {
+        "input_index": 10,
+        "id": "customers-service|database|sync|true|span_kind=server",
+        "from": "customers-service",
+        "to": "database"
+      },
+      {
+        "input_index": 11,
+        "id": "customers-service|peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f|sync|true|protocol=http|operation=POST|route=%2Fv1%2Ftraces|span_kind=client",
+        "from": "customers-service",
+        "to": "peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f"
+      },
+      {
+        "input_index": 12,
+        "id": "vets-service|database|sync|true|span_kind=server",
+        "from": "vets-service",
+        "to": "database"
+      },
+      {
+        "input_index": 13,
+        "id": "vets-service|peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f|sync|true|protocol=http|operation=POST|route=%2Fv1%2Ftraces|span_kind=client",
+        "from": "vets-service",
+        "to": "peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f"
+      },
+      {
+        "input_index": 14,
+        "id": "visits-proxy|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=server",
+        "from": "visits-proxy",
+        "to": "customers-service"
+      },
+      {
+        "input_index": 15,
+        "id": "visits-proxy|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=server",
+        "from": "visits-proxy",
+        "to": "customers-service"
+      },
+      {
+        "input_index": 16,
+        "id": "visits-proxy|vets-service|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=server",
+        "from": "visits-proxy",
+        "to": "vets-service"
+      },
+      {
+        "input_index": 17,
+        "id": "visits-proxy|visits-service|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=server",
+        "from": "visits-proxy",
+        "to": "visits-service"
+      },
+      {
+        "input_index": 18,
+        "id": "visits-proxy|visits-service|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=server",
+        "from": "visits-proxy",
+        "to": "visits-service"
+      },
+      {
+        "input_index": 19,
+        "id": "visits-service|database:cdadb481d78f32e10c33b98d188102f4170604212ec565139e192aa385c487ed|sync|true|protocol=mysql|operation=INSERT|span_kind=client",
+        "from": "visits-service",
+        "to": "database:cdadb481d78f32e10c33b98d188102f4170604212ec565139e192aa385c487ed"
+      },
+      {
+        "input_index": 20,
+        "id": "visits-service|database:cdadb481d78f32e10c33b98d188102f4170604212ec565139e192aa385c487ed|sync|true|protocol=mysql|operation=SELECT|span_kind=client",
+        "from": "visits-service",
+        "to": "database:cdadb481d78f32e10c33b98d188102f4170604212ec565139e192aa385c487ed"
+      },
+      {
+        "input_index": 21,
+        "id": "visits-service|database|sync|true|span_kind=server",
+        "from": "visits-service",
+        "to": "database"
+      },
+      {
+        "input_index": 22,
+        "id": "visits-service|peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f|sync|true|protocol=http|operation=POST|route=%2Fv1%2Ftraces|span_kind=client",
+        "from": "visits-service",
+        "to": "peer:2e594ebff3a1d4b36771f2f24263f372c17b9b8ebd3b5a79dbd4a59865b7465f"
+      },
+      {
+        "input_index": 23,
+        "id": "visits-service|peer:a9145c077940c58f11d9ee8e8607b68357633ed1d5fe4079f70c99315e696b3b|sync|true|protocol=http|operation=POST|route=%2Fv1%2Ftraces|span_kind=client",
+        "from": "visits-service",
+        "to": "peer:a9145c077940c58f11d9ee8e8607b68357633ed1d5fe4079f70c99315e696b3b"
+      }
+    ],
+    "endpoint_ids": [
+      "api-gateway:GET /api/customer/owners",
+      "api-gateway:GET /api/gateway/owners/6",
+      "api-gateway:GET /api/vet/vets",
+      "api-gateway:POST /api/visit/owners/1/pets/1/visits",
+      "customers-service:GET /owners",
+      "customers-service:GET /owners/6",
+      "vets-service:GET /vets",
+      "visits-proxy:GET /pets/visits",
+      "visits-proxy:POST /owners/1/pets/1/visits",
+      "visits-service:GET /pets/visits",
+      "visits-service:POST /owners/1/pets/1/visits"
+    ],
+    "dot_path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/results/iteration-4/figures/petclinic-full-6-ebpf-network_scope.dot",
+    "graph_rule": "every observed service and edge retained; endpoints annotate observed entry services; no identity merge or placement inference",
+    "svg_path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/results/iteration-4/figures/petclinic-full-6-ebpf-network_scope.svg"
+  },
+  "graphviz_version": "dot - graphviz version 2.43.0 (0)",
+  "verification_scope": "copied model file matched the admitted frozen SHA; full archive not re-evaluated"
+}

@@ -1,0 +1,139 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 122769236368,
+        "run_id": 40674465933,
+        "workflow_name": "Iteration 4 retained qualification capture replay",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAclZ3hkA",
+        "head_sha": "2b72cd73d7fdb88c3dfa7f51a34e073b6e83d0b8",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/122769236368",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933/job/122769236368",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-28T10:44:15Z",
+        "started_at": "2026-10-28T10:44:17Z",
+        "completed_at": "2026-10-28T11:07:05Z",
+        "name": "replay",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-28T10:44:18Z",
+            "completed_at": "2026-10-28T10:44:18Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-28T10:44:18Z",
+            "completed_at": "2026-10-28T10:44:20Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-28T10:44:20Z",
+            "completed_at": "2026-10-28T10:44:20Z"
+          },
+          {
+            "name": "Run python -m pip install -e . opentelemetry-proto",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-28T10:44:20Z",
+            "completed_at": "2026-10-28T10:44:29Z"
+          },
+          {
+            "name": "Admit immutable qualification artifact metadata",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-28T10:44:29Z",
+            "completed_at": "2026-10-28T10:44:30Z"
+          },
+          {
+            "name": "Download original captures without modification",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-28T10:44:30Z",
+            "completed_at": "2026-10-28T10:44:34Z"
+          },
+          {
+            "name": "Replay pinned graph toolchain against retained capture only",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-28T10:44:34Z",
+            "completed_at": "2026-10-28T11:06:51Z"
+          },
+          {
+            "name": "Produce compact retained-evidence readout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-28T11:06:51Z",
+            "completed_at": "2026-10-28T11:06:52Z"
+          },
+          {
+            "name": "Retain replay runner resource evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-28T11:06:52Z",
+            "completed_at": "2026-10-28T11:06:54Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-28T11:06:54Z",
+            "completed_at": "2026-10-28T11:07:03Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-28T11:07:03Z",
+            "completed_at": "2026-10-28T11:07:03Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20,
+            "started_at": "2026-10-28T11:07:03Z",
+            "completed_at": "2026-10-28T11:07:04Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-10-28T11:07:04Z",
+            "completed_at": "2026-10-28T11:07:04Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/122769236368",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028374,
+        "runner_name": "GitHub Actions 1000028374",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

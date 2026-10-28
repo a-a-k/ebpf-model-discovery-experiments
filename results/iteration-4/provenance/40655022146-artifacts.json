@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12801577978,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgwMTU3Nzk3OA==",
+        "name": "qualification-v4-deathstarbench-full-6-40655022146",
+        "size_in_bytes": 28277001,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12801577978",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12801577978/zip",
+        "expired": false,
+        "digest": "sha256:cad443014179b8947e3c02ed09895fac81cffeb9640cc1e04d78419238f45114",
+        "created_at": "2026-10-28T08:17:31Z",
+        "updated_at": "2026-10-28T08:17:31Z",
+        "expires_at": "2027-01-26T08:11:26Z",
+        "workflow_run": {
+          "id": 40655022146,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "7e8deb9dfeb78723d87b254a3384bef735464d81"
+        }
+      },
+      {
+        "id": 12801008226,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgwMTAwODIyNg==",
+        "name": "qualification-v4-petclinic-full-6-40655022146",
+        "size_in_bytes": 28114140,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12801008226",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12801008226/zip",
+        "expired": false,
+        "digest": "sha256:78d8230936f8eea35066088b2b9466c0ff008dfe0d4291030fd801bbe6ca5bd8",
+        "created_at": "2026-10-28T08:18:29Z",
+        "updated_at": "2026-10-28T08:18:29Z",
+        "expires_at": "2027-01-26T08:11:26Z",
+        "workflow_run": {
+          "id": 40655022146,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "7e8deb9dfeb78723d87b254a3384bef735464d81"
+        }
+      },
+      {
+        "id": 12800914853,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgwMDkxNDg1Mw==",
+        "name": "qualification-v4-otel_demo-full-6-40655022146",
+        "size_in_bytes": 31415032,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12800914853",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12800914853/zip",
+        "expired": false,
+        "digest": "sha256:c2444bb749905ec8da343364b9e3f9fa519ba2f65311067085eca079ca7c69d9",
+        "created_at": "2026-10-28T08:23:46Z",
+        "updated_at": "2026-10-28T08:23:46Z",
+        "expires_at": "2027-01-26T08:11:26Z",
+        "workflow_run": {
+          "id": 40655022146,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "7e8deb9dfeb78723d87b254a3384bef735464d81"
+        }
+      }
+    ]
+  }
+]

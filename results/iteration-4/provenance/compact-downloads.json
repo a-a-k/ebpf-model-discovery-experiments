@@ -1,0 +1,44 @@
+[
+  {
+    "run_id": 40704758284,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40718665137,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40718674400,
+    "status": "downloaded",
+    "artifact_id": 12834368897,
+    "name": "v4-summary-petclinic-full-6-40718674400",
+    "digest": "sha256:27933333a58a1990652725c9bf6d0bd769e436799cf920b2bf8d9c5669261faf"
+  },
+  {
+    "run_id": 40731158179,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40733841068,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40733846961,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40733852492,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40733858113,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  }
+]

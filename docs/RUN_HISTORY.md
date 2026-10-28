@@ -24,6 +24,8 @@ completed scientific cell.
 | [40733852492](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733852492) | Petclinic full/7, running at `4276ea9` | Planned new repeat; admitted full/6 is retained |
 | [40733858113](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733858113) | Petclinic full/8, running at `4276ea9` | Planned new repeat; admitted full/6 is retained |
 | [40734810232](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40734810232) | First admitted Petclinic cell permanently archived | [Release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40734810232) retains original full, compact and training ZIPs with matching SHA-256 digests, logs and provenance; no additional application traffic |
+| [40738379291](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40738379291) | Interim report completed and independently reviewed: one of 27 cells | [Unchanged generated outputs](../results/iteration-4/SOURCE.md), per-operation figures and fixed actual Bering graph. Failed/live jobs and incomplete costs are explicit; no new acquisition or refit |
+| [40739554089](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40739554089) | Archive attempt failed while retrieving a job log, before release creation | GitHub CLI rejected original ANSI escape bytes. A file-only download repair preserves those bytes; missing logs and failed attempts remain explicit |
 
 Both retry uploads and release steps succeeded. The downloaded ready/manifest
 metadata matches its run, source commit, system, mode and seed; inspected metadata

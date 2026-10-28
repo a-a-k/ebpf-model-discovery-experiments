@@ -1,0 +1,500 @@
+{
+  "schema_version": "v4-actions-costs",
+  "runs": [
+    {
+      "run_id": 40704758284,
+      "role": "series",
+      "note": null,
+      "head_sha": "fdec1a6fcc20317c40f834a9342d17118b5fcdff",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284",
+      "jobs": [
+        {
+          "id": 122873766641,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 122873831100,
+          "name": "campaign (otel_demo, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 2542.0
+        },
+        {
+          "id": 122873831307,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11346.0
+        },
+        {
+          "id": 122873831892,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 2750.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 16641.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40718665137,
+      "role": "series",
+      "note": null,
+      "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137",
+      "jobs": [
+        {
+          "id": 122923240202,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 122923302034,
+          "name": "campaign (otel_demo, full, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 3.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [
+        {
+          "id": 12830934533,
+          "name": "training-v4-otel_demo-full-6-40718665137",
+          "digest": "sha256:47def427dfe5dd7509b0d31b3198affef8dc25dabd69a2c6e551824d4b0f0a1c",
+          "expired": false,
+          "size_in_bytes": 547331981
+        }
+      ],
+      "stored_artifact_bytes": 547331981
+    },
+    {
+      "run_id": 40718674400,
+      "role": "series",
+      "note": null,
+      "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400",
+      "jobs": [
+        {
+          "id": 122923272255,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 122923328293,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4874.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 4877.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12834864581,
+          "name": "campaign-v4-petclinic-full-6-40718674400",
+          "digest": "sha256:d94dbd5b37505d41e32e4cd0ff7545bfa08d581a6dc4a944f777b11540915bb6",
+          "expired": false,
+          "size_in_bytes": 1221944174
+        },
+        {
+          "id": 12834368897,
+          "name": "v4-summary-petclinic-full-6-40718674400",
+          "digest": "sha256:27933333a58a1990652725c9bf6d0bd769e436799cf920b2bf8d9c5669261faf",
+          "expired": false,
+          "size_in_bytes": 4821681
+        },
+        {
+          "id": 12832246532,
+          "name": "training-v4-petclinic-full-6-40718674400",
+          "digest": "sha256:38149e16e8f1dbf8826187b347cd8bf7c6fc4104ed44e5819b48d2ce5cc9ada3",
+          "expired": false,
+          "size_in_bytes": 342357121
+        }
+      ],
+      "stored_artifact_bytes": 1569122976
+    },
+    {
+      "run_id": 40731158179,
+      "role": "series",
+      "note": null,
+      "head_sha": "3e708879889eac8a238027a4640466fc8a76eca5",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179",
+      "jobs": [
+        {
+          "id": 122967537594,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 122967583738,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 2.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40733841068,
+      "role": "series",
+      "note": null,
+      "head_sha": "4276ea92c3eea897df27be7a65846238847bdfea",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068",
+      "jobs": [
+        {
+          "id": 122976976338,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 122977038199,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 122977038314,
+          "name": "campaign (petclinic, absent, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 122977038331,
+          "name": "campaign (petclinic, absent, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 4.0,
+      "jobs_with_unknown_elapsed": 3,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40733846961,
+      "role": "series",
+      "note": null,
+      "head_sha": "4276ea92c3eea897df27be7a65846238847bdfea",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961",
+      "jobs": [
+        {
+          "id": 122976997740,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 122977061849,
+          "name": "campaign (petclinic, partial, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 122977061925,
+          "name": "campaign (petclinic, partial, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 122977061988,
+          "name": "campaign (petclinic, partial, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 4.0,
+      "jobs_with_unknown_elapsed": 3,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40733852492,
+      "role": "series",
+      "note": null,
+      "head_sha": "4276ea92c3eea897df27be7a65846238847bdfea",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733852492",
+      "jobs": [
+        {
+          "id": 122977019489,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 122977072193,
+          "name": "campaign (petclinic, full, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 2.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40733858113,
+      "role": "series",
+      "note": null,
+      "head_sha": "4276ea92c3eea897df27be7a65846238847bdfea",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733858113",
+      "jobs": [
+        {
+          "id": 122977040060,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 122977084450,
+          "name": "campaign (petclinic, full, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 3.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40655022146,
+      "role": "qualification",
+      "note": "Original full-mode qualification; preparation failure retained",
+      "head_sha": "7e8deb9dfeb78723d87b254a3384bef735464d81",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146",
+      "jobs": [
+        {
+          "id": 122703847782,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 122703882684,
+          "name": "qualify (otel_demo, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 735.0
+        },
+        {
+          "id": 122703882705,
+          "name": "qualify (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 360.0
+        },
+        {
+          "id": 122703882785,
+          "name": "qualify (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 417.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1516.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12801577978,
+          "name": "qualification-v4-deathstarbench-full-6-40655022146",
+          "digest": "sha256:cad443014179b8947e3c02ed09895fac81cffeb9640cc1e04d78419238f45114",
+          "expired": false,
+          "size_in_bytes": 28277001
+        },
+        {
+          "id": 12801008226,
+          "name": "qualification-v4-petclinic-full-6-40655022146",
+          "digest": "sha256:78d8230936f8eea35066088b2b9466c0ff008dfe0d4291030fd801bbe6ca5bd8",
+          "expired": false,
+          "size_in_bytes": 28114140
+        },
+        {
+          "id": 12800914853,
+          "name": "qualification-v4-otel_demo-full-6-40655022146",
+          "digest": "sha256:c2444bb749905ec8da343364b9e3f9fa519ba2f65311067085eca079ca7c69d9",
+          "expired": false,
+          "size_in_bytes": 31415032
+        }
+      ],
+      "stored_artifact_bytes": 87806173
+    },
+    {
+      "run_id": 40658671556,
+      "role": "replay",
+      "note": "Original retained-capture replay; failed attempt retained",
+      "head_sha": "6810aed19ceb7ebc5dfe790aa4c9ae1f3dde527e",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40658671556",
+      "jobs": [
+        {
+          "id": 122715914425,
+          "name": "replay",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 74.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 74.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12803432141,
+          "name": "replay-qualification-v4-all-40655022146-40658671556",
+          "digest": "sha256:8d416bc2761b875377fbb39b2387995b75ccbed55e609563e04f94a03b11cb06",
+          "expired": false,
+          "size_in_bytes": 94697141
+        }
+      ],
+      "stored_artifact_bytes": 94697141
+    },
+    {
+      "run_id": 40661273773,
+      "role": "replay",
+      "note": "Petclinic technical repair replay",
+      "head_sha": "12954418b8413d07b09fc808f3e5762ab5d249b7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773",
+      "jobs": [
+        {
+          "id": 122724620556,
+          "name": "replay",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 40.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 40.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12804620539,
+          "name": "replay-qualification-v4-petclinic-40655022146-40661273773",
+          "digest": "sha256:e975bcd2c1933925a9d3fbcfc5fec4e85890f758f3e78f6f4c0d648e3f5c74f6",
+          "expired": false,
+          "size_in_bytes": 27864671
+        }
+      ],
+      "stored_artifact_bytes": 27864671
+    },
+    {
+      "run_id": 40668208749,
+      "role": "replay",
+      "note": "Source-global input repair replay",
+      "head_sha": "1d3a7bdde7e280ed7fae0e0c2ebb7928ab43f570",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40668208749",
+      "jobs": [
+        {
+          "id": 122748041062,
+          "name": "replay",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 953.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 953.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12808132110,
+          "name": "replay-qualification-v4-all-40655022146-40668208749",
+          "digest": "sha256:5bd0273bf09733eff3237f4f19a199421834e1c6b69c997573780646f0c6e08d",
+          "expired": false,
+          "size_in_bytes": 106146618
+        }
+      ],
+      "stored_artifact_bytes": 106146618
+    },
+    {
+      "run_id": 40674465933,
+      "role": "replay",
+      "note": "Final reviewed qualification replay",
+      "head_sha": "2b72cd73d7fdb88c3dfa7f51a34e073b6e83d0b8",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933",
+      "jobs": [
+        {
+          "id": 122769236368,
+          "name": "replay",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1368.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1368.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12811247145,
+          "name": "replay-qualification-v4-all-40655022146-40674465933",
+          "digest": "sha256:565a58b1b7f5ad8ae26229a6896e2927b6b0f4eaf6eae510871cd622135bd3b0",
+          "expired": false,
+          "size_in_bytes": 109584032
+        }
+      ],
+      "stored_artifact_bytes": 109584032
+    }
+  ],
+  "all_retained_job_seconds": 25487.0,
+  "all_retained_artifact_bytes": 2542553592,
+  "preparation_and_failed_runs_included": true,
+  "current_report_job_elapsed_seconds": null,
+  "human_agent_seconds": null,
+  "rule": "sum of job durations is compute use, not campaign wall clock; overlapping artifacts are charged each time"
+}

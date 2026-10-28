@@ -1,0 +1,27 @@
+[
+  {
+    "run_id": 40655022146,
+    "role": "qualification",
+    "note": "Original full-mode qualification; preparation failure retained"
+  },
+  {
+    "run_id": 40658671556,
+    "role": "replay",
+    "note": "Original retained-capture replay; failed attempt retained"
+  },
+  {
+    "run_id": 40661273773,
+    "role": "replay",
+    "note": "Petclinic technical repair replay"
+  },
+  {
+    "run_id": 40668208749,
+    "role": "replay",
+    "note": "Source-global input repair replay"
+  },
+  {
+    "run_id": 40674465933,
+    "role": "replay",
+    "note": "Final reviewed qualification replay"
+  }
+]

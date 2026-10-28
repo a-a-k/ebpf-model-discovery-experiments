@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12834864581,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgzNDg2NDU4MQ==",
+        "name": "campaign-v4-petclinic-full-6-40718674400",
+        "size_in_bytes": 1221944174,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12834864581",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12834864581/zip",
+        "expired": false,
+        "digest": "sha256:d94dbd5b37505d41e32e4cd0ff7545bfa08d581a6dc4a944f777b11540915bb6",
+        "created_at": "2026-10-28T17:03:48Z",
+        "updated_at": "2026-10-28T17:03:48Z",
+        "expires_at": "2027-01-26T15:42:31Z",
+        "workflow_run": {
+          "id": 40718674400,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576"
+        }
+      },
+      {
+        "id": 12834368897,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgzNDM2ODg5Nw==",
+        "name": "v4-summary-petclinic-full-6-40718674400",
+        "size_in_bytes": 4821681,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12834368897",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12834368897/zip",
+        "expired": false,
+        "digest": "sha256:27933333a58a1990652725c9bf6d0bd769e436799cf920b2bf8d9c5669261faf",
+        "created_at": "2026-10-28T17:03:50Z",
+        "updated_at": "2026-10-28T17:03:50Z",
+        "expires_at": "2027-01-26T15:42:31Z",
+        "workflow_run": {
+          "id": 40718674400,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576"
+        }
+      },
+      {
+        "id": 12832246532,
+        "node_id": "MDg6QXJ0aWZhY3QxMjgzMjI0NjUzMg==",
+        "name": "training-v4-petclinic-full-6-40718674400",
+        "size_in_bytes": 342357121,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12832246532",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12832246532/zip",
+        "expired": false,
+        "digest": "sha256:38149e16e8f1dbf8826187b347cd8bf7c6fc4104ed44e5819b48d2ce5cc9ada3",
+        "created_at": "2026-10-28T16:15:17Z",
+        "updated_at": "2026-10-28T16:15:17Z",
+        "expires_at": "2027-01-26T15:42:31Z",
+        "workflow_run": {
+          "id": 40718674400,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "ea2e278e50f64bd50597c243d84f834be1b92576"
+        }
+      }
+    ]
+  }
+]
