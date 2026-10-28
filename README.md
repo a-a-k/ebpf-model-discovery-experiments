@@ -2,21 +2,23 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): one of 27 planned cells admitted; series incomplete.**
-> [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400)
-> completed 34,800 primary operations, including 9,600 held-out target operations.
+> **Current status (iteration 4): two of 27 planned cells admitted; series incomplete.**
+> [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
+> and [Petclinic/absent/seed8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068/artifacts/12840556183)
+> each completed 34,800 primary operations, including 9,600 held-out target operations.
 > Actual Bering graphs built from eBPF observations were consumed by Sheaft; all four
-> operation forecasts matched their observed target frequencies in this cell.
-> The supplied-contract baseline makes the same primary predictions. Application
-> tracing was enabled in this cell: applicability when it is disabled remains to be
-> measured. These are one-cell results, not a three-repeat or cross-system conclusion.
-> [Saved evaluation and provenance](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
-> passed independent integrity/resource review; the other eight Petclinic cells are running.
+> operation forecasts matched observed target frequencies in both cells.
+> In absent/seed8, deployed runtime settings disable native instrumentation and both
+> training/final native captures contain zero spans. This supports the requested
+> no-native-tracing path for this cell. The supplied-contract baseline makes the same
+> scalar predictions; no cost advantage or cross-system conclusion is established.
+> Both cells passed independent integrity/resource review; seven Petclinic cells remain.
 > OTel's continuation failed after its training checkpoint was uploaded; diagnosis
 > is ongoing. The DSB staged retry continues. All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
-The independently reviewed [interim report](results/iteration-4/SOURCE.md) contains
+The independently reviewed [interim report](results/iteration-4/SOURCE.md), an earlier
+one-cell snapshot, contains
 generated per-operation tables, error figures and the actual Bering eBPF graph.
 Its cost ledger includes failed and running jobs at the report snapshot; it is not
 the final series total.
@@ -443,7 +445,7 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 currently has one admitted full/seed6 Petclinic cell. The remaining
+Iteration 4 currently has admitted Petclinic full/seed6 and absent/seed8 cells. The remaining
 cells and source/tracing-mode comparisons are incomplete. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
@@ -452,6 +454,13 @@ each system's remaining eight follow its own resource and protocol-validity revi
 The evaluator/cost component has passed independent review. After the
 series, the original criterion must be checked again against the external outcomes and
 the strongest baseline before any success claim.
+
+The absent/seed8 cell also retains a negative operation-class result: route-based
+grouping covers all 600 healthy test attempts with ARI 1, while downstream-enriched
+grouping covers 580, leaves 20 unknown, and has ARI approximately 0.516 on its known
+subset. Accurate primary forecasts therefore do not establish better operation
+identification. These are [stored one-cell metrics](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068/artifacts/12840556183),
+not a repeat-level or causal explanation of the difference.
 
 The principal limitations are known in advance:
 
