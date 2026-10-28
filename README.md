@@ -284,7 +284,7 @@ only from the healthy `class_train` block and freezes them before target traffic
 eBPF, native and combined models remain separate. Missing/ambiguous roots, conflicting
 identities and unseen test signatures are unknown; they are not fitted at test time or
 pooled into one artificial class. Operation labels enter only after prediction to
-compute adjusted Rand index on the known subset. Coverage and unknown counts accompany
+compute [adjusted Rand index](https://doi.org/10.1007/BF01908075) on the known subset. Coverage and unknown counts accompany
 ARI. Driver-supplied attempt and step grouping is explicit: this does not claim
 automatic business-session segmentation in arbitrary production traffic.
 
@@ -295,7 +295,8 @@ External evaluation reports, per operation/source/variant/repeat:
 - the saved point/interval prediction, absolute-error range and worst-end error;
 - per-state outcomes and predictions;
 - descriptive latency with no deadline interpretation;
-- nominal Wilson envelopes labelled with their IID Bernoulli assumption;
+- nominal [Wilson envelopes](https://jhanley.biostat.mcgill.ca/c607/ch08/wilson_jasa_1927.pdf)
+  labelled with their IID Bernoulli assumption;
 - class coverage/ARI, DB and async controls, integrity checks and available costs.
 
 There is no 5 pp/10 pp gate and no overall mean that can mask a failed operation or
@@ -346,7 +347,8 @@ python -m ebpf_discovery.plot_v4 --aggregate report/evaluation-v4.json \
   --out-dir report/figures
 ```
 
-The report extra (`pip install -e '.[report]'`) pins Matplotlib. Figures retain
+The report extra (`pip install -e '.[report]'`) pins
+[Matplotlib](https://doi.org/10.1109/MCSE.2007.55). Figures retain
 each operation/source/mode separately, show unknown errors and available repeats,
 and label observed repeat min–max ranges as descriptive ranges, not confidence
 intervals. `figures/figures-v4.md` links the aggregate and lists the stored values.
