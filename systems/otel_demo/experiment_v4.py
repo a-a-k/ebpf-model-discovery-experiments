@@ -468,27 +468,68 @@ class Adapter(LegacyAdapter):
                 record["success"] = False
                 verified.append(record)
                 continue
-            payload = actual[-1].get("json")
-            if not isinstance(payload, dict):
-                postcondition = False
-            elif record["operation"] == "browse_product":
-                postcondition = payload.get("id") == PRODUCT_ID
-            elif record["operation"] == "add_to_cart":
-                items = payload.get("items")
-                postcondition = isinstance(items, list) and any(
-                    isinstance(item, dict)
-                    and item.get("productId") == PRODUCT_ID
-                    and item.get("quantity") == 1
-                    for item in items
+            step_postconditions: list[dict[str, Any]] = []
+            for ordinal, step in enumerate(actual):
+                payload = step.get("json")
+                if ordinal == 0:
+                    value = isinstance(payload, dict) and payload.get("id") == PRODUCT_ID
+                    reason = "selected_product_id_matches" if value else "selected_product_id_mismatch"
+                elif ordinal == 1:
+                    value = self._cart_contains_selected_item(payload)
+                    reason = "cart_contains_selected_item" if value else "cart_missing_selected_item"
+                else:
+                    order_id = (
+                        payload.get("orderId") or payload.get("order_id")
+                        if isinstance(payload, dict)
+                        else None
+                    )
+                    order_ok = isinstance(order_id, str) and bool(order_id)
+                    item_ok = self._checkout_contains_selected_item(payload)
+                    value = order_ok and item_ok
+                    reason = (
+                        "checkout_order_and_item_match"
+                        if value
+                        else "checkout_order_or_item_mismatch"
+                    )
+                    record["order_id"] = order_id
+                step_postconditions.append(
+                    {
+                        "ordinal": ordinal,
+                        "request_id": step.get("request_id"),
+                        "value": bool(value),
+                        "reason": reason,
+                    }
                 )
-            else:
-                order_id = payload.get("orderId") or payload.get("order_id")
-                postcondition = isinstance(order_id, str) and bool(order_id)
-                record["order_id"] = order_id
+            postcondition = all(item["value"] for item in step_postconditions)
+            record["step_payload_postconditions"] = step_postconditions
             record["payload_postcondition"] = postcondition
-            record["success"] = bool(postcondition)
+            record["success"] = postcondition
             verified.append(record)
         return verified
+
+    @staticmethod
+    def _cart_contains_selected_item(payload: Any) -> bool:
+        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+            return False
+        return any(
+            isinstance(item, dict)
+            and item.get("productId") == PRODUCT_ID
+            and item.get("quantity") == 1
+            for item in payload["items"]
+        )
+
+    @staticmethod
+    def _checkout_contains_selected_item(payload: Any) -> bool:
+        """Match the pinned frontend's IProductCheckoutItem response shape."""
+        if not isinstance(payload, dict) or not isinstance(payload.get("items"), list):
+            return False
+        return any(
+            isinstance(entry, dict)
+            and isinstance(entry.get("item"), dict)
+            and entry["item"].get("productId") == PRODUCT_ID
+            and entry["item"].get("quantity") == 1
+            for entry in payload["items"]
+        )
 
     def set_consumer(self, up: bool) -> None:
         """Transition accounting immediately; v4 has no persistence-window hold."""

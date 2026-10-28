@@ -165,7 +165,15 @@ def test_checkout_extracts_actual_order_id(tmp_path: Path, monkeypatch: pytest.M
         [
             _response(200, {"id": PRODUCT_ID}),
             _response(200, {"items": [{"productId": PRODUCT_ID, "quantity": 1}]}),
-            _response(200, {"orderId": "order-actual"}),
+            _response(
+                200,
+                {
+                    "orderId": "order-actual",
+                    "items": [
+                        {"item": {"productId": PRODUCT_ID, "quantity": 1}}
+                    ],
+                },
+            ),
         ]
     )
     monkeypatch.setattr(experiment_v4, "_v4_request", lambda *a, **k: next(replies))
@@ -176,6 +184,68 @@ def test_checkout_extracts_actual_order_id(tmp_path: Path, monkeypatch: pytest.M
     assert record["order_id"] == "order-actual"
     assert checked["success"] is True
     assert checked["order_id"] == "order-actual"
+
+
+def test_wrong_product_prerequisite_fails_even_when_cart_is_valid(tmp_path: Path) -> None:
+    adapter = _adapter(tmp_path)
+    record = {
+        "operation": "add_to_cart",
+        "success": True,
+        "http_steps": [
+            {"state": "complete", "status": 200, "json": {"id": "wrong"}},
+            {
+                "state": "complete",
+                "status": 200,
+                "json": {"items": [{"productId": PRODUCT_ID, "quantity": 1}]},
+            },
+        ],
+    }
+
+    checked = adapter.verify([record])[0]
+
+    assert checked["success"] is False
+    assert [row["value"] for row in checked["step_payload_postconditions"]] == [
+        False,
+        True,
+    ]
+
+
+def test_wrong_cart_prerequisite_fails_even_when_checkout_order_is_valid(
+    tmp_path: Path,
+) -> None:
+    adapter = _adapter(tmp_path)
+    record = {
+        "operation": "checkout",
+        "success": True,
+        "http_steps": [
+            {"state": "complete", "status": 200, "json": {"id": PRODUCT_ID}},
+            {
+                "state": "complete",
+                "status": 200,
+                "json": {"items": [{"productId": PRODUCT_ID, "quantity": 2}]},
+            },
+            {
+                "state": "complete",
+                "status": 200,
+                "json": {
+                    "orderId": "order-valid",
+                    "items": [
+                        {"item": {"productId": PRODUCT_ID, "quantity": 1}}
+                    ],
+                },
+            },
+        ],
+    }
+
+    checked = adapter.verify([record])[0]
+
+    assert checked["success"] is False
+    assert checked["order_id"] == "order-valid"
+    assert [row["value"] for row in checked["step_payload_postconditions"]] == [
+        True,
+        False,
+        True,
+    ]
 
 
 def test_v4_rejects_experiment_deadlines(tmp_path: Path) -> None:
