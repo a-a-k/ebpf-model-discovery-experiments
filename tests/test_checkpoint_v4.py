@@ -19,7 +19,7 @@ def _json(path: Path, value):
     path.write_text(json.dumps(value) + '\n', encoding='utf-8')
 
 
-def _capture(tmp_path: Path, monkeypatch):
+def _capture(tmp_path: Path, monkeypatch, *, ingest=True):
     monkeypatch.setenv('GITHUB_RUN_ID', '12345')
     monkeypatch.setenv('GITHUB_SHA', 'a' * 40)
     live = tmp_path/'campaign'
@@ -50,7 +50,8 @@ def _capture(tmp_path: Path, monkeypatch):
     native = live/'native'
     native.mkdir()
     store = ObservationStore(live/'observation-index.sqlite')
-    store.ingest(observations, native)
+    if ingest:
+        store.ingest(observations, native)
     # This complete later line is deliberately absent from files.consumed.
     source.write_bytes(prefix + (json.dumps({'payload': payload}) + '\n').encode())
     journal = Journal(live/'attempt-journal.sqlite')
@@ -119,6 +120,26 @@ def test_release_requires_exact_binding_and_upload_success(tmp_path: Path, monke
         assert campaign.ctx.journal.db.execute(
             "SELECT COUNT(*) FROM events WHERE kind='training_checkpoint_release'").fetchone()[0] == 1
         assert not (campaign.ctx.out/'toolchain').exists()
+    finally:
+        campaign.store.close()
+        campaign.ctx.journal.close()
+
+
+def test_empty_index_is_retained_as_unknown_evidence_not_checkpoint_failure(tmp_path: Path, monkeypatch):
+    campaign, _, _ = _capture(tmp_path, monkeypatch, ingest=False)
+    try:
+        folder = tmp_path/'training-checkpoint'
+        ready = create_checkpoint(campaign, folder)
+        manifest = json.loads((folder/'manifest.json').read_text())
+        assert ready['status'] == 'training_checkpoint_ready'
+        assert manifest['indexed_sources'] == []
+        assert manifest['referenced_wire_bodies'] == []
+        assert not (folder/'observations'/'a.jsonl').exists()
+        with sqlite3.connect(folder/'observation-index.sqlite') as db:
+            assert db.execute('PRAGMA quick_check').fetchone()[0] == 'ok'
+            assert db.execute('SELECT COUNT(*) FROM files').fetchone()[0] == 0
+            assert db.execute('SELECT COUNT(*) FROM spans').fetchone()[0] == 0
+        assert manifest['status'].startswith('partial_training_capture_only')
     finally:
         campaign.store.close()
         campaign.ctx.journal.close()

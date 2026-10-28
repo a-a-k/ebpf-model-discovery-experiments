@@ -101,8 +101,6 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
     live_root = campaign.ctx.out.resolve()
     with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
         indexed = list(frozen_index.execute('SELECT path,consumed FROM files ORDER BY path'))
-        if not indexed:
-            raise ValueError('training checkpoint has no indexed source files')
     source_records, wire_records = [], []
     for name, consumed in indexed:
         original = Path(name)
