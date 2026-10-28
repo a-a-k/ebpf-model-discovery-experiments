@@ -97,11 +97,11 @@ def _backup(connection: sqlite3.Connection, destination: Path) -> dict:
             'sha256': _sha(destination)}
 
 
-def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dict], list[dict]]:
+def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
     live_root = campaign.ctx.out.resolve()
     with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
         indexed = list(frozen_index.execute('SELECT path,consumed FROM files ORDER BY path'))
-    source_records, wire_records = [], []
+    source_records, wire_records, metadata_records, absent_metadata = [], [], [], []
     for name, consumed in indexed:
         original = Path(name)
         record = _copy(original, live_root, checkpoint, copied, prefix_bytes=consumed)
@@ -115,8 +115,13 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
                     continue
                 document = json.loads(line)
                 raw_ref = document.get('raw_ref')
+                metadata_ref = document.get('raw_metadata_ref')
+                if metadata_ref is not None and not raw_ref:
+                    raise ValueError('indexed receiver metadata reference has no raw_ref body')
                 if not raw_ref:
                     continue
+                if not isinstance(raw_ref, str):
+                    raise ValueError('indexed receiver raw_ref must be a relative string')
                 ref = Path(raw_ref)
                 if ref.is_absolute():
                     raise ValueError('absolute receiver raw_ref needs explicit replay relocation')
@@ -131,7 +136,29 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
                     wire_records.append(wire_record)
                 if copied[key]['sha256'] != expected:
                     raise ValueError(f'indexed wire body digest mismatch: {wire_relative}')
-    return source_records, wire_records
+                if metadata_ref is None:
+                    absent_metadata.append({'indexed_source': record['relative_path'],
+                                            'raw_ref': raw_ref, 'status': 'no metadata reference in original wrapper'})
+                    continue
+                if not isinstance(metadata_ref, str) or not metadata_ref:
+                    raise ValueError('indexed receiver raw_metadata_ref must be a relative string')
+                metadata_path = Path(metadata_ref)
+                if metadata_path.is_absolute():
+                    raise ValueError('absolute receiver raw_metadata_ref needs explicit replay relocation')
+                metadata_source, metadata_relative = _inside(original.parent/metadata_path, live_root)
+                if metadata_source.parent != wire_source.parent or metadata_source.name != 'metadata.json':
+                    raise ValueError(f'indexed receiver metadata is not alongside wire body: {metadata_relative}')
+                metadata_key = metadata_relative.as_posix()
+                if metadata_key not in copied:
+                    metadata_records.append(_copy(metadata_source, live_root, checkpoint, copied))
+                metadata = json.loads((checkpoint/metadata_key).read_text(encoding='utf-8'))
+                required = ('source', 'node', 'received_ns', 'content_type', 'content_encoding',
+                            'content_headers', 'raw_size_bytes', 'raw_sha256', 'raw_ref')
+                if (not isinstance(metadata, dict)
+                        or any(metadata.get(field) != document.get(field) for field in required)
+                        or metadata.get('raw_size_bytes') != copied[key]['bytes']):
+                    raise ValueError(f'indexed receiver metadata differs from wrapper or wire body: {metadata_relative}')
+    return source_records, wire_records, metadata_records, absent_metadata
 
 
 def _toolchain(campaign, checkpoint: Path, copied: dict) -> dict:
@@ -186,7 +213,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
         journal = _backup(campaign.ctx.journal.db, folder/'attempt-journal.sqlite')
     copied[index['relative_path']] = index
     copied[journal['relative_path']] = journal
-    sources, wires = _indexed_sources(campaign, folder, copied)
+    sources, wires, wire_metadata, absent_metadata = _indexed_sources(campaign, folder, copied)
     deployment = live_root/'deployment'
     if deployment.is_dir():
         for path in sorted(deployment.rglob('*')):
@@ -202,7 +229,9 @@ def create_checkpoint(campaign, folder: Path) -> dict:
                 'status': 'partial_training_capture_only; no forecast or completed cell',
                 'source_cutoff_rule': 'exact files.consumed byte prefixes in backed-up observation-index.sqlite',
                 'index': index, 'journal': journal, 'indexed_sources': sources,
-                'referenced_wire_bodies': wires, 'toolchain': binaries,
+                'referenced_wire_bodies': wires, 'referenced_wire_metadata': wire_metadata,
+                'metadata_reference_absent': absent_metadata,
+                'toolchain': binaries,
                 'files': copied, 'created_ns': time.time_ns(),
                 'new_application_traffic': False, 'same_live_campaign_required_to_continue': True}
     _atomic_json(folder/'manifest.json', manifest)
@@ -233,10 +262,13 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('live v4 training checkpoint is permitted only in GitHub Actions')
     started_ns = time.time_ns()
+    started_mono = time.monotonic_ns()
     ready = None
+    ready_mono = None
     release = None
     try:
         ready = create_checkpoint(campaign, folder)
+        ready_mono = time.monotonic_ns()
         campaign.ctx.journal.append('training_checkpoint_ready', ready)
         release = wait_for_release(campaign, folder, ready)
         return release
@@ -252,9 +284,13 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
                         release = candidate
                 except (OSError, ValueError):
                     pass
+        ended_mono = time.monotonic_ns()
         _atomic_json(campaign.ctx.out/'training-checkpoint-cost.json', {
             'started_ns': started_ns, 'ended_ns': time.time_ns(),
+            'total_wall_seconds': (ended_mono-started_mono)/1e9,
+            'creation_wall_seconds': ((ready_mono or ended_mono)-started_mono)/1e9,
+            'upload_hold_wall_seconds': (ended_mono-ready_mono)/1e9 if ready_mono else None,
             'ready': ready is not None, 'upload_success': release.get('upload_success') if release else None,
             'checkpoint_path': str(Path(folder).resolve()),
-            'scope': 'same live runner and guests; preparation, upload and hold counted as campaign cost',
+            'scope': 'checkpoint creation and upload hold on same live runner and guests; toolchain setup and earlier campaign are recorded separately',
         })

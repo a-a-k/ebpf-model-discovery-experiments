@@ -8,7 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from ebpf_discovery.checkpoint_v4 import create_checkpoint, wait_for_release
+from ebpf_discovery.checkpoint_v4 import _inside, create_checkpoint, wait_for_release
 from ebpf_discovery.store_v3 import ObservationStore
 from ebpf_discovery.toolchain_v4 import PINS
 from ebpf_discovery.transport_v4 import Journal
@@ -19,7 +19,7 @@ def _json(path: Path, value):
     path.write_text(json.dumps(value) + '\n', encoding='utf-8')
 
 
-def _capture(tmp_path: Path, monkeypatch, *, ingest=True):
+def _capture(tmp_path: Path, monkeypatch, *, ingest=True, metadata_reference=True):
     monkeypatch.setenv('GITHUB_RUN_ID', '12345')
     monkeypatch.setenv('GITHUB_SHA', 'a' * 40)
     live = tmp_path/'campaign'
@@ -40,10 +40,16 @@ def _capture(tmp_path: Path, monkeypatch, *, ingest=True):
     wire = observations/'a.raw'/'one'/'body.json'
     wire.parent.mkdir(parents=True)
     wire.write_bytes(body)
-    wrapper = {'payload': payload, 'id_encoding': 'hex',
-               'raw_ref': wire.relative_to(observations).as_posix(),
-               'raw_sha256': hashlib.sha256(body).hexdigest(),
-               'content_type': 'application/json'}
+    metadata = {'source': 'ebpf:a', 'node': 'a', 'received_ns': 1,
+                'content_type': 'application/json', 'content_encoding': '',
+                'content_headers': {'content-type': 'application/json'},
+                'raw_size_bytes': len(body), 'raw_sha256': hashlib.sha256(body).hexdigest(),
+                'raw_ref': wire.relative_to(observations).as_posix()}
+    _json(wire.parent/'metadata.json', metadata)
+    wrapper = {**metadata, 'payload': payload, 'id_encoding': 'hex',
+               'raw_metadata_ref': (wire.parent/'metadata.json').relative_to(observations).as_posix()}
+    if not metadata_reference:
+        wrapper.pop('raw_metadata_ref')
     prefix = (json.dumps(wrapper) + '\n').encode()
     source = observations/'a.jsonl'
     source.write_bytes(prefix)
@@ -82,11 +88,15 @@ def test_checkpoint_is_closed_training_prefix_with_independent_sqlite_backups(tm
         assert ready['status'] == 'training_checkpoint_ready'
         assert (folder/'observations'/'a.jsonl').read_bytes() == prefix
         assert (folder/'observations'/'a.raw'/'one'/'body.json').read_bytes() == body
+        copied_metadata = folder/'observations'/'a.raw'/'one'/'metadata.json'
+        assert json.loads(copied_metadata.read_text())['raw_sha256'] == hashlib.sha256(body).hexdigest()
         assert (campaign.ctx.out/'observations'/'a.jsonl').stat().st_size > len(prefix)
         manifest_bytes = (folder/'manifest.json').read_bytes()
         assert ready['manifest_sha256'] == hashlib.sha256(manifest_bytes).hexdigest()
         manifest = json.loads(manifest_bytes)
         assert manifest['indexed_sources'][0]['consumed_prefix_bytes'] == len(prefix)
+        assert manifest['referenced_wire_metadata'][0]['sha256'] == hashlib.sha256(
+            copied_metadata.read_bytes()).hexdigest()
         assert manifest['files']['observations/a.jsonl']['sha256'] == hashlib.sha256(prefix).hexdigest()
         assert {item['name'] for item in manifest['toolchain']['binaries']} == {
             name.lower() for name in PINS}
@@ -134,12 +144,64 @@ def test_empty_index_is_retained_as_unknown_evidence_not_checkpoint_failure(tmp_
         assert ready['status'] == 'training_checkpoint_ready'
         assert manifest['indexed_sources'] == []
         assert manifest['referenced_wire_bodies'] == []
+        assert manifest['referenced_wire_metadata'] == []
+        assert manifest['metadata_reference_absent'] == []
         assert not (folder/'observations'/'a.jsonl').exists()
         with sqlite3.connect(folder/'observation-index.sqlite') as db:
             assert db.execute('PRAGMA quick_check').fetchone()[0] == 'ok'
             assert db.execute('SELECT COUNT(*) FROM files').fetchone()[0] == 0
             assert db.execute('SELECT COUNT(*) FROM spans').fetchone()[0] == 0
         assert manifest['status'].startswith('partial_training_capture_only')
+    finally:
+        campaign.store.close()
+        campaign.ctx.journal.close()
+
+
+def test_missing_or_mispointed_wire_metadata_never_publishes_ready(tmp_path: Path, monkeypatch):
+    campaign, _, _ = _capture(tmp_path, monkeypatch)
+    try:
+        metadata = campaign.ctx.out/'observations'/'a.raw'/'one'/'metadata.json'
+        metadata.unlink()
+        folder = tmp_path/'training-checkpoint'
+        with pytest.raises(ValueError, match='checkpoint input is missing'):
+            create_checkpoint(campaign, folder)
+        assert not (folder/'ready.json').exists()
+        outside = tmp_path/'outside.json'
+        outside.write_text('{}')
+        with pytest.raises(ValueError, match='outside live campaign'):
+            _inside(outside, campaign.ctx.out.resolve())
+    finally:
+        campaign.store.close()
+        campaign.ctx.journal.close()
+
+
+def test_wire_metadata_must_match_indexed_wrapper_and_body(tmp_path: Path, monkeypatch):
+    campaign, _, _ = _capture(tmp_path, monkeypatch)
+    try:
+        metadata = campaign.ctx.out/'observations'/'a.raw'/'one'/'metadata.json'
+        document = json.loads(metadata.read_text())
+        document['raw_ref'] = 'a.raw/another/body.json'
+        _json(metadata, document)
+        folder = tmp_path/'training-checkpoint'
+        with pytest.raises(ValueError, match='differs from wrapper or wire body'):
+            create_checkpoint(campaign, folder)
+        assert not (folder/'ready.json').exists()
+    finally:
+        campaign.store.close()
+        campaign.ctx.journal.close()
+
+
+def test_unreferenced_metadata_is_disclosed_without_new_capture_gate(tmp_path: Path, monkeypatch):
+    campaign, _, body = _capture(tmp_path, monkeypatch, metadata_reference=False)
+    try:
+        folder = tmp_path/'training-checkpoint'
+        ready = create_checkpoint(campaign, folder)
+        manifest = json.loads((folder/'manifest.json').read_text())
+        assert ready['status'] == 'training_checkpoint_ready'
+        assert (folder/'observations'/'a.raw'/'one'/'body.json').read_bytes() == body
+        assert manifest['referenced_wire_metadata'] == []
+        assert len(manifest['metadata_reference_absent']) == 1
+        assert not (folder/'observations'/'a.raw'/'one'/'metadata.json').exists()
     finally:
         campaign.store.close()
         campaign.ctx.journal.close()
