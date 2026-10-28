@@ -1,0 +1,129 @@
+name: Iteration 4 retained qualification capture replay
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: Original fixed full-mode seed-6 qualification Actions run
+        required: true
+        type: string
+      system:
+        description: Replay one retained capture, or all only when all three artifacts exist
+        required: true
+        type: choice
+        options: [deathstarbench, otel_demo, petclinic, all]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  replay:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Admit immutable qualification artifact metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+          REQUESTED_SYSTEM: ${{ inputs.system }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, re, subprocess
+          run_id = os.environ['SOURCE_RUN_ID']
+          if not run_id.isdecimal() or int(run_id) <= 0:
+              raise SystemExit('source_run_id must be a positive Actions run ID')
+          requested = os.environ['REQUESTED_SYSTEM']
+          systems = ['deathstarbench','otel_demo','petclinic'] if requested == 'all' else [requested]
+          if not systems or any(s not in ('deathstarbench','otel_demo','petclinic') for s in systems):
+              raise SystemExit('invalid system choice')
+          base = f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{run_id}"
+          run = json.loads(subprocess.check_output(['gh','api',base], text=True))
+          pages = json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',
+              base+'/artifacts?per_page=100'], text=True))
+          artifacts = [item for page in pages for item in page['artifacts']]
+          if (str(run.get('id')) != run_id or
+              not str(run.get('path','')).endswith('/qualification-v4.yml') or
+              run.get('status') != 'completed' or
+              not re.fullmatch(r'[0-9a-f]{40}', str(run.get('head_sha','')))):
+              raise SystemExit('source run is not a v4 qualification run')
+          selected = []
+          for system in systems:
+              name = f'qualification-v4-{system}-full-6-{run_id}'
+              found = [item for item in artifacts if item.get('name') == name and item.get('expired') is not True]
+              if len(found) != 1:
+                  raise SystemExit(f'exactly one available immutable artifact required for {system}')
+              item = found[0]
+              if not re.fullmatch(r'sha256:[0-9a-f]{64}', str(item.get('digest',''))):
+                  raise SystemExit(f'qualification artifact lacks immutable SHA256 digest: {system}')
+              selected.append({'system':system,'run_id':int(run_id),'run_sha':run['head_sha'],
+                  'run_status':run['status'],'run_conclusion':run.get('conclusion'),
+                  'run_url':run.get('html_url'),'artifact_id':item['id'],
+                  'artifact_name':name,'artifact_digest':item.get('digest'),
+                  'artifact_bytes':item.get('size_in_bytes'),'expired':False,
+                  'source_workflow_path':run.get('path')})
+          output = pathlib.Path('work/replay')
+          output.mkdir(parents=True)
+          (output/'source-run.json').write_text(json.dumps(run,indent=2)+'\n')
+          (output/'source-artifacts.json').write_text(json.dumps(artifacts,indent=2)+'\n')
+          (output/'selected-source-artifacts.json').write_text(json.dumps(selected,indent=2)+'\n')
+          PY
+      - name: Download original captures without modification
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, pathlib, subprocess
+          replay = pathlib.Path('work/replay')
+          selected = json.loads((replay/'selected-source-artifacts.json').read_text())
+          results = []
+          for item in selected:
+              system, run_id, name = item['system'], item['run_id'], item['artifact_name']
+              original = pathlib.Path('work/original')/system
+              original.mkdir(parents=True, exist_ok=False)
+              completed = subprocess.run(['gh','run','download',str(run_id),'-n',name,
+                  '-D',str(original)], text=True, capture_output=True)
+              result = {'system':system,'artifact_id':item['artifact_id'],
+                  'returncode':completed.returncode,'stdout':completed.stdout,
+                  'stderr':completed.stderr}
+              results.append(result)
+              (replay/'downloads.json').write_text(json.dumps(results,indent=2)+'\n')
+              if completed.returncode:
+                  raise SystemExit(f'failed to download original {system} artifact')
+              source = replay/system/'source-artifact.json'
+              source.parent.mkdir(parents=True, exist_ok=False)
+              source.write_text(json.dumps(item,indent=2)+'\n')
+          PY
+      - name: Replay pinned graph toolchain against retained capture only
+        run: |
+          set +e
+          result=0
+          for source in work/replay/*/source-artifact.json; do
+            system="$(basename "$(dirname "$source")")"
+            mkdir -p "work/replay/$system/infrastructure"
+            /usr/bin/time -v -o "work/replay/$system/infrastructure/replay-time.txt" \
+              python -m ebpf_discovery.replay_qualification_v4 \
+                --original "work/original/$system" --out "work/replay/$system/output" \
+                --system "$system" --source "$source"
+            code=$?
+            if [ "$code" -ne 0 ]; then result=1; fi
+          done
+          exit "$result"
+      - name: Retain replay runner resource evidence
+        if: always()
+        run: |
+          mkdir -p work/replay/infrastructure
+          uname -a > work/replay/infrastructure/runner-final.txt
+          free -m >> work/replay/infrastructure/runner-final.txt
+          df -h >> work/replay/infrastructure/runner-final.txt
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss > work/replay/infrastructure/processes-final.txt
+          python -m pip freeze > work/replay/infrastructure/python-environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: replay-qualification-v4-${{ inputs.system }}-${{ inputs.source_run_id }}-${{ github.run_id }}
+          path: work/replay/
+          compression-level: 1
+          retention-days: 90
+          if-no-files-found: error
