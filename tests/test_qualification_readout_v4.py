@@ -27,7 +27,8 @@ def observed(folder):
 
 def branch(folder):
     observed(folder)
-    write(folder / "observations.selection.json", {"observations": 4, "outcomes_used": False})
+    write(folder / "entry-evidence.json", {"source": "native", "roots": [{"request_id": "r1"}],
+        "binding_reasons": {"native:unique_declared_entry": 1}, "outcomes_used": False})
     write(folder / "binding.json", {"available": False,
         "unknown": [{"reason": "required_call_missing_or_ambiguous"}]})
     write(folder / "forecast.json", {"available": False,
@@ -43,7 +44,7 @@ def test_readout_retains_computed_graph_binding_forecast_and_not_run(tmp_path):
     value = result["branches"]["native"]["raw"]["browse"]
     assert value["status"] == "completed"
     assert value["bering"]["returncode"] == 0
-    assert value["selection"] == {"observations": 4, "outcomes_used": False}
+    assert value["entry_evidence"]["roots_count"] == 1
     assert value["observed"]["counts"] == {"services": 2, "edges": 1, "endpoints": 1}
     assert value["observed"]["services"] == ["catalog", "frontend"]
     assert value["observed"]["edges"] == ["frontend|catalog"]
@@ -61,12 +62,17 @@ def test_relative_observed_reference_verifies_all_hashes(tmp_path):
     observed(discovery)
     hashes = {name: hashlib.sha256((discovery / name).read_bytes()).hexdigest()
               for name in ("observed.json", "observed.signal-quality.json", "observed.snapshot.json")}
+    write(discovery / "observed-runtime" / "replay-command.json", {
+        "returncode": 0, "started_ns": 3, "ended_ns": 4, "argv": ["bering", "serve"]})
     write(folder / "observed-reference.json", {"folder": "../../../discovery/native/raw", "files": hashes})
     result = build_readout(tmp_path, operations=["browse"])
     value = result["branches"]["native"]["raw"]["browse"]
     assert value["status"] == "completed"
     assert value["observed"]["provenance"]["kind"] == "reference"
     assert value["observed"]["provenance"]["verified_sha256"] == hashes
+    # The actual shared Bering execution record is under the verified target.
+    assert value["bering"]["path"].endswith("discovery/native/raw/observed-runtime/replay-command.json")
+    assert value["bering"]["started_ns"] == 3
 
 
 def test_reference_hash_mismatch_is_retained_as_technical_error(tmp_path):
@@ -74,6 +80,8 @@ def test_reference_hash_mismatch_is_retained_as_technical_error(tmp_path):
     branch(folder)
     discovery = tmp_path / "toolchain" / "discovery" / "native" / "raw"
     observed(discovery)
+    write(discovery / "observed-runtime" / "replay-command.json", {
+        "returncode": 0, "started_ns": 3, "ended_ns": 4, "argv": ["bering", "serve"]})
     hashes = {name: "0" * 64 for name in (
         "observed.json", "observed.signal-quality.json", "observed.snapshot.json")}
     write(folder / "observed-reference.json", {"folder": "../../../discovery/native/raw", "files": hashes})
@@ -84,6 +92,33 @@ def test_reference_hash_mismatch_is_retained_as_technical_error(tmp_path):
         "observed.json:sha256_mismatch", "observed.signal-quality.json:sha256_mismatch",
         "observed.snapshot.json:sha256_mismatch"]
     assert not result["integrity"]["ok"]
+
+
+def test_zero_source_branch_is_expected_unavailable_and_verifies_input_reference(tmp_path):
+    folder = tmp_path / "toolchain" / "ebpf" / "raw" / "browse"
+    input_path = tmp_path / "toolchain" / "inputs" / "ebpf" / "raw" / "observations.json"
+    write(input_path, {"observations": 0, "exports": []})
+    write(folder / "input-reference.json", {"path": "../../../inputs/ebpf/raw/observations.json",
+        "sha256": hashlib.sha256(input_path.read_bytes()).hexdigest(), "observations": 0, "shared": True})
+    write(folder / "entry-evidence.json", {"source": "ebpf", "roots": [], "outcomes_used": False})
+    write(folder / "forecast.json", {"available": False, "prediction": None,
+        "reason": "no_frozen_source_observations"})
+    result = build_readout(tmp_path, operations=["browse"])
+    value = result["branches"]["ebpf"]["raw"]["browse"]
+    assert value["status"] == "expected_unavailable"
+    assert value["input_reference"]["verified"]
+    assert value["observed"] is None and value["binding"] is None
+    assert value["bering"]["status"] == value["sheaft"]["status"] == "not_run"
+    assert result["integrity"]["ok"]
+    reference = folder / "input-reference.json"
+    broken = json.loads(reference.read_text(encoding="utf-8"))
+    broken["sha256"] = "0" * 64
+    write(reference, broken)
+    broken_result = build_readout(tmp_path, operations=["browse"])
+    broken_value = broken_result["branches"]["ebpf"]["raw"]["browse"]
+    assert broken_value["status"] == "technical_error"
+    assert broken_value["integrity_errors"] == ["input-reference:sha256_mismatch"]
+    assert not broken_result["integrity"]["ok"]
 
 
 def test_retained_gnu_time_has_source_path_hash_and_fields(tmp_path):

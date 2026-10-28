@@ -50,34 +50,34 @@ def _command(path: Path, root: Path) -> dict:
     }
 
 
-def _observed_paths(folder: Path, root: Path) -> tuple[dict[str, Path], dict]:
+def _observed_paths(folder: Path, root: Path) -> tuple[dict[str, Path], dict, Path]:
     reference = folder / "observed-reference.json"
     if not reference.exists():
         paths = {name: folder / name for name in OBSERVED_FILES}
-        return paths, {"kind": "local", "reference": None}
+        return paths, {"kind": "local", "reference": None}, folder
     value = _json(reference)
     relative = value.get("folder")
     if not isinstance(relative, str) or not relative:
         return {}, {"kind": "reference", "reference": _relative(reference, root),
-                    "errors": ["reference_folder_missing"]}
+                    "errors": ["reference_folder_missing"]}, folder
     target = (folder / relative).resolve()
     replay_root = root.resolve()
     try:
         target.relative_to(replay_root)
     except ValueError:
         return {}, {"kind": "reference", "reference": _relative(reference, root),
-                    "errors": ["reference_folder_outside_replay_root"]}
+                    "errors": ["reference_folder_outside_replay_root"]}, folder
     declared = value.get("files")
     if not isinstance(declared, dict):
         return {}, {"kind": "reference", "reference": _relative(reference, root),
-                    "errors": ["reference_files_missing"]}
+                    "errors": ["reference_files_missing"]}, target
     return ({name: target / name for name in OBSERVED_FILES},
             {"kind": "reference", "reference": _relative(reference, root),
-             "folder": _relative(target, root), "declared_hashes": declared})
+             "folder": _relative(target, root), "declared_hashes": declared}, target)
 
 
-def _observed(folder: Path, root: Path) -> tuple[dict, list[str]]:
-    paths, provenance = _observed_paths(folder, root)
+def _observed(folder: Path, root: Path) -> tuple[dict, list[str], Path]:
+    paths, provenance, runtime_folder = _observed_paths(folder, root)
     errors = list(provenance.pop("errors", []))
     declared = provenance.pop("declared_hashes", {})
     hashes = {}
@@ -97,7 +97,7 @@ def _observed(folder: Path, root: Path) -> tuple[dict, list[str]]:
     provenance["verified_sha256"] = hashes
     model_path, quality_path = paths.get("observed.json"), paths.get("observed.signal-quality.json")
     if errors or model_path is None or quality_path is None:
-        return {"provenance": provenance}, errors
+        return {"provenance": provenance}, errors, runtime_folder
     model, quality = _json(model_path), _json(quality_path)
     return {
         "provenance": provenance,
@@ -108,16 +108,18 @@ def _observed(folder: Path, root: Path) -> tuple[dict, list[str]]:
         "quality_artifact": quality.get("artifact"),
         "source_mix": quality.get("source_mix"),
         "warnings": quality.get("warnings", []),
-    }, errors
+    }, errors, runtime_folder
 
 
-def _selected(path: Path) -> dict | None:
+def _entry_evidence(path: Path) -> dict | None:
     if not path.exists():
         return None
     value = _json(path)
-    keys = ("source", "binding_reasons", "selected_identity_counts", "observations",
-            "clock_gate", "outcomes_used", "ids_rewritten", "input_manifest_sha256")
-    return {key: value[key] for key in keys if key in value}
+    keys = ("source", "binding_reasons", "selection", "includes_descendants",
+            "clock_gate", "outcomes_used", "ids_rewritten")
+    result = {key: value[key] for key in keys if key in value}
+    result["roots_count"] = len(value.get("roots", []))
+    return result
 
 
 def _binding(path: Path) -> dict | None:
@@ -130,34 +132,84 @@ def _binding(path: Path) -> dict | None:
     return {key: value[key] for key in keys if key in value}
 
 
+def _input_reference(folder: Path, root: Path) -> tuple[dict | None, list[str]]:
+    path = folder / "input-reference.json"
+    if not path.exists():
+        return None, []
+    value = _json(path)
+    errors = []
+    relative = value.get("path")
+    target = (folder / relative).resolve() if isinstance(relative, str) and relative else None
+    if target is None:
+        errors.append("input-reference:path_missing")
+    else:
+        try:
+            target.relative_to(root.resolve())
+        except ValueError:
+            errors.append("input-reference:path_outside_replay_root")
+        if not target.is_file():
+            errors.append("input-reference:target_missing")
+        elif not isinstance(value.get("sha256"), str):
+            errors.append("input-reference:hash_not_declared")
+        elif _digest(target) != value["sha256"]:
+            errors.append("input-reference:sha256_mismatch")
+    return ({"path": relative, "sha256": value.get("sha256"),
+             "observations": value.get("observations"), "shared": value.get("shared"),
+             "verified": not errors}, errors)
+
+
 def _branch(folder: Path, root: Path) -> dict:
     exists = folder.is_dir()
     result = {"status": "not_run", "folder": _relative(folder, root)}
     if not exists:
         return result
-    selection = folder / "observations.selection.json"
+    entry = folder / "entry-evidence.json"
     binding = folder / "binding.json"
     forecast = folder / "forecast.json"
-    observed, errors = _observed(folder, root)
-    bering = _command(folder / "observed-runtime" / "replay-command.json", root)
+    forecast_value = _json(forecast) if forecast.exists() else None
+    input_reference, errors = _input_reference(folder, root)
+    no_source = (forecast_value is not None
+                 and forecast_value.get("available") is False
+                 and forecast_value.get("reason") == "no_frozen_source_observations"
+                 and input_reference is not None and input_reference.get("observations") == 0)
+    if no_source:
+        result.update({
+            "status": "technical_error" if errors else "expected_unavailable",
+            "input_reference": input_reference,
+            "entry_evidence": _entry_evidence(entry),
+            "bering": {"status": "not_run", "reason": "no_frozen_source_observations"},
+            "observed": None, "binding": None, "forecast": forecast_value,
+            "sheaft": {"status": "not_run", "reason": "no_frozen_source_observations"},
+            "integrity_errors": errors,
+        })
+        return result
+    observed, observed_errors, runtime_folder = _observed(folder, root)
+    errors.extend(observed_errors)
+    bering = _command(runtime_folder / "observed-runtime" / "replay-command.json", root)
     sheaft_paths = sorted(folder.rglob("*command.json"))
     sheaft_paths = [path for path in sheaft_paths if "sheaft" in path.name.lower()
                     or "simulation" in path.as_posix().lower()]
     result.update({
         "status": "technical_error" if errors else "completed",
-        "selection": _selected(selection),
+        "input_reference": input_reference,
+        "entry_evidence": _entry_evidence(entry),
         "bering": bering,
         "observed": observed,
         "binding": _binding(binding),
-        "forecast": _json(forecast) if forecast.exists() else None,
+        "forecast": forecast_value,
         "sheaft": (_command(sheaft_paths[0], root) if sheaft_paths else {"status": "not_run"}),
         "integrity_errors": errors,
     })
-    if bering["status"] == "technical_error":
+    if bering["status"] != "completed":
         result["status"] = "technical_error"
+        result["integrity_errors"].append("bering_execution_not_completed")
     if not binding.exists() or not forecast.exists():
         result["status"] = "technical_error"
         result["integrity_errors"].append("binding_or_forecast_missing")
+    if (forecast_value and forecast_value.get("available") is True
+            and result["sheaft"]["status"] != "completed"):
+        result["status"] = "technical_error"
+        result["integrity_errors"].append("sheaft_execution_not_completed")
     return result
 
 
