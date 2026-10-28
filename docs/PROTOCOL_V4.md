@@ -443,6 +443,30 @@ success and failure through restore, immutable checks, scoped settings and outpu
 retention; they do not establish actual resource capacity. Activation remains
 subject to the diagnostic and staged-execution decisions above.
 
+DSB run `40731158179` has a terminal failed continuation step (22:25:38 UTC),
+with final cleanup, evaluation and uploads skipped. The outer job was still
+finalizing and its log/annotations unavailable when this decision was made;
+neither failure cause nor last completed scientific phase is inferred. Root
+and independent 6.1 Sol/xhigh reviewer give **explicit ORIGINAL-criterion design
+GO** for one parallel standalone diagnostic of its fixed training checkpoint.
+Use artifact `12843610949` (2,300,389,036 bytes), archive SHA-256
+`8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0`,
+source `3e708879889eac8a238027a4640466fc8a76eca5`, manifest SHA-256
+`8a518c3edbfb4f6904ece3b344c85f211cd55bd909cd0629f4a5f29303948235`.
+The saved index reports 702,494 observations. Keep the entire checkpoint,
+including its 9,437,769,728-byte journal, and verify the exact 600 + 4x6,000
+training plans and all original file hashes before/after use. Bind the profile
+to `deathstarbench` and its real declaration, with the same pinned toolchain,
+all branches, contracts and direct baseline.
+
+This tests engineering feasibility on a separate standard runner without live
+guest contention, using the same one child-only 12 GiB GC target and GC logging.
+That setting is still empirically unproven; no parameter search, observation
+reduction or paid tier is introduced. Full preparation, transfer, disk, memory,
+GC/CPU/wall and failed-run costs are retained. Implementation review and CI
+precede the single execution. It cannot resume or complete the failed campaign,
+prove shutdown causality, or authorize any new DSB acquisition.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed

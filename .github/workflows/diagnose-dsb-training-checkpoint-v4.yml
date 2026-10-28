@@ -1,0 +1,130 @@
+name: Iteration 4 immutable DSB checkpoint GC diagnostic
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Admit the one immutable checkpoint artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: '40731158179'
+          SOURCE_ARTIFACT: '12843610949'
+          SOURCE_NAME: training-v4-deathstarbench-full-6-40731158179
+          SOURCE_DIGEST: sha256:8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0
+          SOURCE_HEAD: 3e708879889eac8a238027a4640466fc8a76eca5
+          MANIFEST_SHA256: 8a518c3edbfb4f6904ece3b344c85f211cd55bd909cd0629f4a5f29303948235
+        run: |
+          mkdir -p work/diagnostic/source-metadata work/original
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN" > work/diagnostic/source-metadata/run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT" > work/diagnostic/source-metadata/artifact.json
+          python - <<'PY'
+          import json, os, pathlib
+          run=json.loads(pathlib.Path('work/diagnostic/source-metadata/run.json').read_text())
+          artifact=json.loads(pathlib.Path('work/diagnostic/source-metadata/artifact.json').read_text())
+          expected={'run_id':int(os.environ['SOURCE_RUN']),'artifact_id':int(os.environ['SOURCE_ARTIFACT']),
+              'artifact_name':os.environ['SOURCE_NAME'],'artifact_digest':os.environ['SOURCE_DIGEST'],
+              'run_sha':os.environ['SOURCE_HEAD'],'expired':False,
+              'manifest_sha256':os.environ['MANIFEST_SHA256']}
+          if (run.get('id') != expected['run_id'] or run.get('head_sha') != expected['run_sha']
+                  or artifact.get('id') != expected['artifact_id']
+                  or artifact.get('name') != expected['artifact_name']
+                  or artifact.get('digest') != expected['artifact_digest']
+                  or artifact.get('expired') is True
+                  or (artifact.get('workflow_run') or {}).get('id') != expected['run_id']
+                  or (artifact.get('workflow_run') or {}).get('head_sha') != expected['run_sha']):
+              raise SystemExit('immutable checkpoint Actions metadata mismatch')
+          expected.update(run_status=run.get('status'),run_conclusion=run.get('conclusion'),
+              run_url=run.get('html_url'),artifact_bytes=artifact.get('size_in_bytes'),
+              source_workflow_path=run.get('path'))
+          pathlib.Path('work/diagnostic/source-metadata/source-artifact.json').write_text(
+              json.dumps(expected,indent=2)+'\n')
+          PY
+      - name: Download and verify the original artifact archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_ARTIFACT: '12843610949'
+          SOURCE_DIGEST_HEX: 8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0
+        run: |
+          mkdir -p work/diagnostic/infrastructure
+          /usr/bin/time -v -o work/diagnostic/infrastructure/download-time.txt \
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT/zip" \
+            > work/checkpoint.zip
+          printf '%s  %s\n' "$SOURCE_DIGEST_HEX" work/checkpoint.zip \
+            > work/diagnostic/source-metadata/archive.sha256
+          sha256sum --check work/diagnostic/source-metadata/archive.sha256
+          /usr/bin/time -v -o work/diagnostic/infrastructure/extract-time.txt \
+            unzip -q work/checkpoint.zip -d work/original
+          du -B1 -s work/checkpoint.zip work/original > work/diagnostic/infrastructure/source-disk-bytes.txt
+      - name: Allocate measured swap on the standard runner
+        env:
+          GITHUB_ACTIONS: 'true'
+        run: bash scripts/setup-v4-swap.sh work/diagnostic/infrastructure/swap
+      - name: Run full-prefix toolchain with Bering-child-only soft GC target
+        env:
+          PYTHONPATH: src
+        run: |
+          set +e
+          bash scripts/capture-v4-resources.sh \
+            work/diagnostic/infrastructure/resources 15 work/no-guests &
+          sampler=$!
+          printf '%s\n' "$sampler" > work/diagnostic/infrastructure/resource-sampler.pid
+          (
+            while true; do
+              find work/diagnostic/output -type f -name bering.log -print0 2>/dev/null \
+                | while IFS= read -r -d '' log; do
+                    printf 'BERING_GC_HEARTBEAT '
+                    stat --printf='path=%n inode=%i bytes=%s mtime=%Y\n' "$log"
+                    tail -n 400 "$log" | grep -E '^gc [0-9]+ ' | tail -n 3 | cut -c1-1000 || true
+                  done
+              sleep 60
+            done
+          ) &
+          gc_heartbeat=$!
+          printf '%s\n' "$gc_heartbeat" > work/diagnostic/infrastructure/gc-heartbeat.pid
+          /usr/bin/time -v -o work/diagnostic/infrastructure/diagnostic-time.txt \
+            python -m ebpf_discovery.checkpoint_diagnostic_v4 \
+              --profile full6-40731158179-dsb-gomemlimit12g \
+              --original work/original --out work/diagnostic/output \
+              --source work/diagnostic/source-metadata/source-artifact.json
+          code=$?
+          kill -TERM "$gc_heartbeat" 2>/dev/null || true
+          wait "$gc_heartbeat" 2>/dev/null || true
+          kill -TERM "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$code"
+      - name: Retain final runner and disk evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/diagnostic/infrastructure
+          uname -a > work/diagnostic/infrastructure/runner-final.txt
+          free -b >> work/diagnostic/infrastructure/runner-final.txt
+          swapon --show --bytes >> work/diagnostic/infrastructure/runner-final.txt
+          df -B1 >> work/diagnostic/infrastructure/runner-final.txt
+          du -B1 -s work/diagnostic work/original work/checkpoint.zip \
+            > work/diagnostic/infrastructure/final-disk-bytes.txt 2>&1 || true
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss \
+            > work/diagnostic/infrastructure/processes-final.txt
+          python -m pip freeze > work/diagnostic/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+            > work/diagnostic/infrastructure/workflow-jobs.json 2>work/diagnostic/infrastructure/workflow-jobs.err || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostic-v4-dsb-checkpoint-gc-${{ github.run_id }}
+          path: work/diagnostic/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error

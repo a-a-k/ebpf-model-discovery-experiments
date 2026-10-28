@@ -108,31 +108,42 @@ def test_census_uses_actual_steps_and_accepts_unissued_plan_suffix(tmp_path):
         diagnostic.validate_training_prefix(tmp_path)
 
 
-def test_manifest_verifies_every_file_and_rejects_unmanifested_bytes(tmp_path, monkeypatch):
-    commit = diagnostic.PROFILES[diagnostic.DEFAULT_PROFILE]["commit"]
+@pytest.mark.parametrize('profile_name', [diagnostic.DEFAULT_PROFILE,
+    diagnostic.LARGE_GC_PROFILE, diagnostic.DSB_GC_PROFILE])
+def test_manifest_verifies_every_file_and_rejects_unmanifested_bytes(tmp_path, monkeypatch, profile_name):
+    profile = diagnostic.PROFILES[profile_name]
+    commit = profile["commit"]
+    source = {key: profile[key] for key in ('run_id', 'artifact_id', 'artifact_name', 'artifact_digest')}
+    source.update(run_sha=commit, expired=False)
     payload = tmp_path/"plans.json"
     payload.write_bytes(b"[]\n")
     record = {"relative_path": "plans.json", "bytes": payload.stat().st_size,
               "sha256": hashlib.sha256(payload.read_bytes()).hexdigest()}
     manifest = {"schema_version": "v4-training-prefix-checkpoint",
-                "identity": {"run_id": str(diagnostic.SOURCE_RUN_ID), "commit": commit,
-                             "system": "otel_demo", "mode": "full", "seed": 6},
+                "identity": {"run_id": str(profile['run_id']), "commit": commit,
+                             "system": profile['system'], "mode": "full", "seed": 6},
                 "status": "partial_training_capture_only; no forecast or completed cell",
                 "source_cutoff_rule": "exact indexed prefixes", "files": {"plans.json": record},
                 "new_application_traffic": False}
     _write(tmp_path/"manifest.json", manifest)
     manifest_sha = hashlib.sha256((tmp_path/"manifest.json").read_bytes()).hexdigest()
     _write(tmp_path/"ready.json", {"schema_version": "v4-training-prefix-checkpoint-ready",
-        "status": "training_checkpoint_ready", "run_id": str(diagnostic.SOURCE_RUN_ID),
-        "commit": commit, "system": "otel_demo", "mode": "full", "seed": 6,
+        "status": "training_checkpoint_ready", "run_id": str(profile['run_id']),
+        "commit": commit, "system": profile['system'], "mode": "full", "seed": 6,
         "manifest_sha256": manifest_sha})
-    monkeypatch.setitem(diagnostic.PROFILES[diagnostic.DEFAULT_PROFILE], "manifest_sha256", manifest_sha)
-    proof = diagnostic.validate_checkpoint_manifest(tmp_path, _source(commit))
+    monkeypatch.setitem(profile, "manifest_sha256", manifest_sha)
+    proof = diagnostic.validate_checkpoint_manifest(tmp_path, source, profile_name)
     assert proof["verified_files"] == {"plans.json": {
         "bytes": payload.stat().st_size, "sha256": record["sha256"]}}
     (tmp_path/"unexpected.bin").write_bytes(b"not admitted")
     with pytest.raises(ValueError, match="unmanifested"):
-        diagnostic.validate_checkpoint_manifest(tmp_path, _source(commit))
+        diagnostic.validate_checkpoint_manifest(tmp_path, source, profile_name)
+    (tmp_path / 'unexpected.bin').unlink()
+    manifest['identity']['system'] = 'wrong-system'
+    _write(tmp_path / 'manifest.json', manifest)
+    monkeypatch.setitem(profile, 'manifest_sha256', diagnostic.digest(tmp_path / 'manifest.json'))
+    with pytest.raises(ValueError, match='manifest identity'):
+        diagnostic.validate_checkpoint_manifest(tmp_path, source, profile_name)
 
 
 def test_diagnostic_is_actions_only(tmp_path, monkeypatch):
@@ -159,6 +170,7 @@ def test_named_large_profile_is_exact_and_does_not_change_default():
     assert default["artifact_id"] == diagnostic.SOURCE_ARTIFACT_ID
     assert default["bering_child_go_environment"] == {}
     assert large == {
+        "system": "otel_demo",
         "run_id": 40754529169,
         "artifact_id": 12847933267,
         "artifact_name": "training-v4-otel_demo-full-6-40754529169",
@@ -176,14 +188,19 @@ def test_named_large_profile_is_exact_and_does_not_change_default():
         diagnostic.validate_artifact_identity(source, diagnostic.LARGE_GC_PROFILE)
 
 
-def test_large_profile_workflow_retains_full_diagnostic_and_child_only_gc_setting():
+@pytest.mark.parametrize('profile_name,workflow_name', [
+    (diagnostic.LARGE_GC_PROFILE, 'diagnose-large-training-checkpoint-v4.yml'),
+    (diagnostic.DSB_GC_PROFILE, 'diagnose-dsb-training-checkpoint-v4.yml'),
+])
+def test_large_profile_workflow_retains_full_diagnostic_and_child_only_gc_setting(profile_name, workflow_name):
     workflow = (Path(__file__).resolve().parents[1]/".github"/"workflows"/
-                "diagnose-large-training-checkpoint-v4.yml").read_text(encoding="utf-8")
-    profile = diagnostic.PROFILES[diagnostic.LARGE_GC_PROFILE]
+                workflow_name).read_text(encoding="utf-8")
+    profile = diagnostic.PROFILES[profile_name]
     for value in (profile["run_id"], profile["artifact_id"], profile["artifact_digest"],
                   profile["manifest_sha256"], profile["commit"]):
         assert str(value) in workflow
-    assert f"--profile {diagnostic.LARGE_GC_PROFILE}" in workflow
+    assert f"--profile {profile_name}" in workflow
+    assert profile['system'] in profile['artifact_name']
     assert "GOMEMLIMIT" not in workflow and "GOGC" not in workflow and "GODEBUG" not in workflow
     assert "BERING_GC_HEARTBEAT" in workflow and "tail -n 3" in workflow
     assert "stat --printf='path=%n inode=%i bytes=%s mtime=%Y" in workflow

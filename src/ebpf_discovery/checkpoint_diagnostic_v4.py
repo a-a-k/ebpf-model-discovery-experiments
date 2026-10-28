@@ -32,8 +32,10 @@ SOURCE_MANIFEST_SHA256 = "1947882e9a8ce92732ca31e14907afde9c5def9dd33050658b2e66
 
 DEFAULT_PROFILE = "original-40718665137"
 LARGE_GC_PROFILE = "full6-40754529169-gomemlimit12g"
+DSB_GC_PROFILE = "full6-40731158179-dsb-gomemlimit12g"
 PROFILES = {
     DEFAULT_PROFILE: {
+        "system": "otel_demo",
         "run_id": SOURCE_RUN_ID,
         "artifact_id": SOURCE_ARTIFACT_ID,
         "artifact_name": SOURCE_ARTIFACT_NAME,
@@ -43,12 +45,23 @@ PROFILES = {
         "bering_child_go_environment": {},
     },
     LARGE_GC_PROFILE: {
+        "system": "otel_demo",
         "run_id": 40754529169,
         "artifact_id": 12847933267,
         "artifact_name": "training-v4-otel_demo-full-6-40754529169",
         "artifact_digest": "sha256:ba0289fd1e0cefd4be96cfbf0a0ac4a335db2ef4f748de4b0ffa63aa00c2c422",
         "manifest_sha256": "b90d303797e4285d16659b4515195b0fc58276d8d4200ec6a9fa9eae070e333c",
         "commit": "72133c00df3f7e4150a3f737dee33e4bee12527d",
+        "bering_child_go_environment": {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"},
+    },
+    DSB_GC_PROFILE: {
+        "system": "deathstarbench",
+        "run_id": 40731158179,
+        "artifact_id": 12843610949,
+        "artifact_name": "training-v4-deathstarbench-full-6-40731158179",
+        "artifact_digest": "sha256:8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0",
+        "manifest_sha256": "8a518c3edbfb4f6904ece3b344c85f211cd55bd909cd0629f4a5f29303948235",
+        "commit": "3e708879889eac8a238027a4640466fc8a76eca5",
         "bering_child_go_environment": {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"},
     },
 }
@@ -89,7 +102,7 @@ def validate_checkpoint_manifest(original: Path, source: dict, profile_name=DEFA
         raise ValueError("checkpoint manifest differs from the admitted immutable digest")
     manifest, ready = _read(manifest_path), _read(ready_path)
     identity = {"run_id": str(profile["run_id"]), "commit": profile["commit"],
-                "system": "otel_demo", "mode": "full", "seed": 6}
+                "system": profile["system"], "mode": "full", "seed": 6}
     if source["run_sha"] != profile["commit"]:
         raise ValueError("checkpoint source commit differs from the named immutable profile")
     if (manifest.get("schema_version") != "v4-training-prefix-checkpoint"
@@ -207,6 +220,7 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
     out.mkdir(parents=True, exist_ok=True)
     status = {"schema_version": "v4-training-checkpoint-diagnostic",
               "status": "diagnostic_started", "profile": profile_name,
+              "system": profile["system"],
               "source_run_id": profile["run_id"],
               "source_artifact_id": profile["artifact_id"], "started_ns": time.time_ns(),
               "completed_campaign_cell": False, "new_application_traffic": False,
@@ -231,9 +245,9 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
         os.environ["PBS_BIN"] = str(binary_dir.resolve())
         store = ObservationStore(out/"observation-index.sqlite", same_trace_parents=True)
         try:
-            declaration = importlib.import_module("systems.otel_demo.experiment_v4")
+            declaration = importlib.import_module(f"systems.{profile['system']}.experiment_v4")
             with child_go_environment(profile["bering_child_go_environment"]):
-                forecasts = Toolchain(ctx, "otel_demo", store, declaration).forecast(plans)
+                forecasts = Toolchain(ctx, profile["system"], store, declaration).forecast(plans)
         finally:
             store.close()
             if old_bin is None:

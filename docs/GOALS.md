@@ -98,7 +98,8 @@ forecasts are checked against independent target outcomes. Source limitations,
 manual-baseline equivalence, DB unknowns and adverse class results remain visible.
 The overall completion count is 9/27, not a cross-system success claim.
 
-DSB/full/seed6 `40731158179` continues after its retained training checkpoint.
+DSB/full/seed6 `40731158179` failed its continuation after retaining the training
+checkpoint; cause and last scientific phase remain unknown pending terminal evidence.
 OTel/full/seed6 parent `40754529169` failed after worker `40764150238` shut down
 with severe recorded RAM/swap pressure. No forecast import/freeze or target traffic
 occurred. Parent artifacts and available logs are permanently archived by
@@ -108,7 +109,8 @@ Next is one reviewed diagnostic using the larger, unchanged OTel training
 checkpoint and Bering-child-only Go GC tuning, as recorded in PROTOCOL_V4.md.
 It cannot complete or resume the failed campaign. After technical qualification,
 a fresh staged cell must pass integrity/resource review before that system's
-remaining eight cells proceed. DSB is assessed independently when it terminates.
+remaining eight cells proceed. One parallel immutable DSB checkpoint diagnostic
+is approved for preparation; it cannot resume or complete its failed campaign.
 Retain every valid cell regardless of accuracy or unknown coverage, and include
 failed acquisition, worker, diagnostic, reporting and archival costs. Resource
 adequacy must be measured on the actual input, not inferred from a smaller replay.

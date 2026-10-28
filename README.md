@@ -24,7 +24,8 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > records severe RAM/swap pressure followed by runner shutdown (exit 143), without
 > a confirmed OOM kill. A reviewed [GC diagnostic is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
 > on that full checkpoint;
-> it cannot complete the failed cell. The DSB staged retry continues after training upload.
+> it cannot complete the failed cell. DSB's staged retry also failed after training
+> upload; its retained full checkpoint is being prepared for an independently reviewed diagnostic.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
