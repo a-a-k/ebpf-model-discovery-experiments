@@ -107,7 +107,12 @@ failed and its uploads were skipped; final platform status and logs are pending.
 The checkpoint/streaming/swap repair passed independent review and Linux CI
 `40718306225` (413 tests). Unchanged OTel and Petclinic full/seed6 cells were
 relaunched at `ea2e278` in `40718665137` and `40718674400`, respectively.
-Next: assess these live technical retries and the original DSB cell. Retain every
-valid cell regardless of accuracy or unknown coverage, then execute the other 24 cells.
+DSB/full/seed6 was retried at `3e70887` in `40731158179`, after review accepted the
+explicitly failed acquisition step, skipped uploads and empty artifact inventory
+as technical failure evidence while GitHub finalizes the outer original job.
+Next: assess the three live retries and retain the original attempt's available
+logs/costs. Each system's remaining eight cells may proceed after its own staged
+integrity/resource review, independently of the other systems. Retain every
+valid cell regardless of accuracy or unknown coverage.
 Resource adequacy must be measured, not inferred from the small replay. Report,
 archive and review the actual results without weakening the original objective.

@@ -19,6 +19,9 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > swap. After independent review and 413 passing Linux tests, the unchanged failed
 > cells were relaunched: [OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
 > and [Petclinic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400).
+> Both saved training checkpoints and continued on the same guests. The reviewed
+> [DSB retry](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179)
+> is also launched; the explicitly failed original acquisition remains in the history.
 > Their outcomes are pending. Retained replay does not
 > measure fresh predictive accuracy or full-campaign capacity.
 
@@ -442,7 +445,7 @@ Iteration 4 currently has no scientific-series results. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;
-the remaining 24 follow their resource and protocol-validity review.
+each system's remaining eight follow its own resource and protocol-validity review.
 The evaluator/cost component has passed independent review. After the
 series, the original criterion must be checked again against the external outcomes and
 the strongest baseline before any success claim.

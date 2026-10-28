@@ -18,6 +18,7 @@ completed scientific cell.
 | [40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284) | First planned full/seed6 cells at `fdec1a6`; OTel and Petclinic runner shutdowns interrupted discovery and skipped uploads; DSB acquisition also failed with uploads skipped, final platform status/logs pending | Shutdown cause unproven; technically failed cells are retried without protocol reduction |
 | [40718665137](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137) | OTel/full/seed6 retry at `ea2e278`; training artifact `12830934533` uploaded and same-live-process continuation started | Training retained; final model/validation outcome pending |
 | [40718674400](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400) | Petclinic/full/seed6 retry at `ea2e278`; training artifact `12832246532` uploaded and same-live-process continuation started | Training retained; final model/validation outcome pending |
+| [40731158179](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179) | DSB/full/seed6 retry at `3e70887`, with the same reviewed scientific implementation and checkpoint/streaming/swap repair | Dispatched after explicit acquisition failure and skipped uploads in the original attempt; original outer-job finalization still monitored |
 
 Both retry uploads and release steps succeeded. The downloaded ready/manifest
 metadata matches its run, source commit, system, mode and seed; inspected metadata

@@ -257,6 +257,25 @@ The two retries were dispatched at this exact reviewed commit: OTel
 [40718665137](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
 and Petclinic [40718674400](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400).
 
+Scheduling update after the user's request to accelerate execution: root **GO**
+and independent 6.1 Sol/xhigh skeptic **explicit ORIGINAL-criterion GO** permit
+each system's remaining eight planned cells after its own staged cell passes the
+same integrity/resource review. Other systems need not finish first. All valid
+outcomes and unavailable forecasts remain admissible; inputs, counts and tools
+are unchanged. Select absent/all seeds, partial/all seeds, full/7 and full/8 to
+avoid duplicating the staged full/6 cell.
+
+The same review gives **GO now** for the DSB/full/6 technical retry. Its original
+acquisition step is explicitly completed/failure at 16:44:08 UTC; all subsequent
+retention/evaluation/upload steps are skipped, no step is active and no artifact
+exists. This establishes a failed acquisition attempt even though GitHub has not
+finalized its outer job. The original job remains monitored and its available
+logs/costs will be retained; no elapsed-time cancellation or OOM inference is made.
+The reviewed scientific implementation `ea2e278` is unchanged through `3e70887`.
+The DSB retry was dispatched at `3e708879889eac8a238027a4640466fc8a76eca5`
+in [40731158179](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179),
+after successful CI `40730137143`.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
