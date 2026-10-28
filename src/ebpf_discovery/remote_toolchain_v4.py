@@ -27,11 +27,13 @@ import requests
 from .runtime import Context
 from .store_v3 import ObservationStore
 from .toolchain_v4 import PINS, Toolchain
+from .bering_v4 import child_go_environment
 
 
 API_VERSION = "2026-03-10"
 WORKFLOW = "toolchain-worker-v4.yml"
 IDENTITY_KEYS = ("run_id", "commit", "system", "mode", "seed", "manifest_sha256")
+WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
 
 
 def _sha(path: Path) -> str:
@@ -286,7 +288,11 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
         os.environ["PBS_BIN"] = str((campaign_root / "toolchain-build" / "bin").resolve())
         store = _readonly_store(campaign_root / "observation-index.sqlite")
         try:
-            forecasts = Toolchain(ctx, expected["system"], store, declaration).forecast(plans)
+            with child_go_environment(WORKER_BERING_GO_ENV) as go_environment:
+                # This setting affects every Bering branch, not the Python
+                # parent, Procrustes or Sheaft. Retain it even if tools fail.
+                _atomic_json(artifact_root / "bering-go-environment.json", go_environment)
+                forecasts = Toolchain(ctx, expected["system"], store, declaration).forecast(plans)
         finally:
             store.close()
             if old_bin is None:
@@ -318,6 +324,7 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
                 ("artifact_id", "artifact_name", "artifact_digest")},
             "checkpoint_input": input_proof,
             "binaries": binary_proof,
+            "bering_go_environment": go_environment,
             "plans_sha256": expected["plans_sha256"],
             "training_index_proof": index_proof,
             "toolchain_files": output_files,

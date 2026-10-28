@@ -26,14 +26,14 @@ _GO_ENV_KEYS = ('GOMEMLIMIT', 'GOGC', 'GODEBUG')
 
 @contextmanager
 def child_go_environment(overrides=None):
-    """Scope diagnostic Go settings to Bering children, never other tools."""
+    """Scope Go settings to Bering children, never other tools."""
     supplied = dict(overrides or {})
     unknown = set(supplied) - set(_GO_ENV_KEYS)
     if unknown or any(not isinstance(value, str) for value in supplied.values()):
         raise ValueError('Bering child environment only accepts string Go runtime settings')
     token = _CHILD_GO_ENV.set(supplied or None)
     try:
-        yield
+        yield _child_process_environment()[1]
     finally:
         _CHILD_GO_ENV.reset(token)
 
@@ -42,7 +42,8 @@ def _child_process_environment():
     overrides = _CHILD_GO_ENV.get()
     inherited = {key: os.environ.get(key) for key in _GO_ENV_KEYS}
     if not overrides:
-        return None, {'configured': False, 'inherited_go_environment': inherited,
+        return None, {'configured': False, 'requested_go_environment': {},
+                      'inherited_go_environment': inherited,
                       'effective_go_environment': inherited}
     effective = dict(inherited)
     effective.update(overrides)
@@ -54,7 +55,8 @@ def _child_process_environment():
         effective['GODEBUG'] = ','.join([*retained, *requested])
     environment = os.environ.copy()
     environment.update({key: value for key, value in effective.items() if value is not None})
-    return environment, {'configured': True, 'inherited_go_environment': inherited,
+    return environment, {'configured': True, 'requested_go_environment': dict(overrides),
+                         'inherited_go_environment': inherited,
                          'effective_go_environment': effective,
                          'scope': 'Bering child wrapper and Bering child only'}
 

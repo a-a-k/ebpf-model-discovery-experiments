@@ -425,6 +425,17 @@ effective Go settings; a bounded live heartbeat also preserves recent GC lines
 in Actions logs if final uploads are lost. The earlier diagnostic remains a
 separate immutable default profile. No result is assumed at dispatch.
 
+While diagnostic `40778455040` is live, root and the independent reviewer give
+**explicit ORIGINAL-criterion design GO** to prepare and test the same child-only
+GC profile in the future remote worker. Apply it equally to every Bering source
+and variant, preserve the default GOGC and other tools' environments, and retain
+requested/effective settings and full costs. The causal engineering hypothesis,
+full input, source comparisons and direct baseline are unchanged. This approval
+does not authorize new traffic: first require the diagnostic's actual integrity
+and resource review, then separate execution GO for one fresh planned OTel/full/6
+replacement. Its admission still precedes the remaining eight OTel cells. Local
+Petclinic/DSB execution and currently running jobs are unchanged.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed

@@ -318,3 +318,85 @@ def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path)
         assert store.db.execute("PRAGMA temp_store").fetchone()[0] == 1
     finally:
         store.close()
+
+
+@pytest.mark.parametrize('tool_failure', [False, True])
+def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(
+        tmp_path, monkeypatch, tool_failure):
+    from types import SimpleNamespace
+    from ebpf_discovery.bering_v4 import _child_process_environment
+    from ebpf_discovery.checkpoint_diagnostic_v4 import PROFILES, LARGE_GC_PROFILE
+
+    # Exercise the worker's actual restore/verify/forecast/finalize path with a
+    # tiny synthetic checkpoint; no product binary or empirical input is run.
+    original = tmp_path / 'original'
+    manifest = checkpoint(original, identity())
+    index = original / 'observation-index.sqlite'
+    with sqlite3.connect(index) as db:
+        for table in ('spans', 'links', 'files'):
+            db.execute(f'CREATE TABLE {table}(value TEXT)')
+            db.execute(f'INSERT INTO {table} VALUES (?)', ('unchanged',))
+    manifest['files'][index.name] = {'relative_path': index.name,
+        'bytes': index.stat().st_size, 'sha256': remote._sha(index)}
+    write_json(original / 'manifest.json', manifest)
+    manifest_sha = remote._sha(original / 'manifest.json')
+    write_json(original / 'ready.json', {**identity(), 'status': 'training_checkpoint_ready',
+                                         'manifest_sha256': manifest_sha})
+    plans = json.loads((original / 'plans.json').read_text())
+    expected = {**identity(), 'manifest_sha256': manifest_sha,
+        'plans_sha256': remote._json_sha(plans),
+        'training_index_proof_sha256': remote._json_sha(remote._index_table_proof(index))}
+    archive = tmp_path / 'checkpoint.zip'
+    with zipfile.ZipFile(archive, 'w') as z:
+        for path in original.iterdir():
+            z.write(path, path.name)
+    root, out = tmp_path / 'campaign', tmp_path / 'output'
+    source_hashes = remote._manifest(original)
+    monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+    monkeypatch.setenv('GOGC', '87')
+    monkeypatch.setenv('GODEBUG', 'netdns=go,gctrace=0')
+    monkeypatch.delenv('GOMEMLIMIT', raising=False)
+    environment = dict(os.environ)
+    monkeypatch.setattr(remote.subprocess, 'run', lambda *a, **kw:
+                        SimpleNamespace(stdout=identity()['commit']))
+    monkeypatch.setattr(remote, '_verify_binaries', lambda *a, **kw: {})
+    forecasts = {source: {variant: {'operation': {'available': False,
+        'reason': 'synthetic_unknown'}} for variant in ('raw', 'network_scope')}
+        for source in ('ebpf', 'native', 'combined')}
+    calls = []
+
+    class SyntheticToolchain:
+        def __init__(self, ctx, system, store, declaration):
+            assert ctx.out == root.resolve() and system == 'otel_demo'
+            assert declaration.__name__ == 'systems.otel_demo.experiment_v4'
+            assert store.db.execute('PRAGMA query_only').fetchone()[0] == 1
+
+        def forecast(self, actual_plans):
+            calls.append(actual_plans)
+            child, evidence = _child_process_environment()
+            assert evidence['requested_go_environment'] == (
+                PROFILES[LARGE_GC_PROFILE]['bering_child_go_environment'])
+            assert child['GOMEMLIMIT'] == '12GiB' and child['GOGC'] == '87'
+            assert child['GODEBUG'] == 'netdns=go,gctrace=1'
+            assert os.environ.get('GOMEMLIMIT') is None
+            assert os.environ['GODEBUG'] == environment['GODEBUG']
+            write_json(root / 'toolchain/forecasts.json', forecasts)
+            if tool_failure:
+                raise RuntimeError('synthetic tool failure')
+            return forecasts
+
+    monkeypatch.setattr(remote, 'Toolchain', SyntheticToolchain)
+    if tool_failure:
+        with pytest.raises(RuntimeError, match='synthetic tool failure'):
+            remote.execute_worker(archive, root, out, expected)
+        assert (out / 'partial-toolchain/forecasts.json').is_file()
+    else:
+        assert remote.execute_worker(archive, root, out, expected) == forecasts
+        provenance = json.loads((out / 'worker-provenance.json').read_text())
+        assert provenance['checkpoint_unchanged'] is True
+        assert provenance['bering_go_environment']['effective_go_environment']['GOMEMLIMIT'] == '12GiB'
+    assert calls == [plans] and remote._manifest(root) == source_hashes
+    assert dict(os.environ) == environment
+    assert _child_process_environment()[1]['configured'] is False
+    evidence = json.loads((out / 'bering-go-environment.json').read_text())
+    assert evidence['requested_go_environment'] == remote.WORKER_BERING_GO_ENV

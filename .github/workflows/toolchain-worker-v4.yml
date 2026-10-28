@@ -88,6 +88,19 @@ jobs:
             work/worker-artifact/infrastructure/resources 15 work/no-guests &
           sampler=$!
           printf '%s\n' "$sampler" > work/worker-artifact/infrastructure/resource-sampler.pid
+          (
+            while true; do
+              find work/campaign/toolchain -type f -name bering.log -print0 2>/dev/null \
+                | while IFS= read -r -d '' log; do
+                    printf 'BERING_GC_HEARTBEAT '
+                    stat --printf='path=%n inode=%i bytes=%s mtime=%Y\n' "$log"
+                    tail -n 400 "$log" | grep -E '^gc [0-9]+ ' | tail -n 3 | cut -c1-1000 || true
+                  done
+              sleep 60
+            done
+          ) &
+          gc_heartbeat=$!
+          printf '%s\n' "$gc_heartbeat" > work/worker-artifact/infrastructure/gc-heartbeat.pid
           /usr/bin/time -v -o work/worker-artifact/infrastructure/toolchain-time.txt \
             python -m ebpf_discovery.remote_toolchain_v4 worker \
               --checkpoint-zip work/worker-input/checkpoint.zip \
@@ -95,6 +108,8 @@ jobs:
               --artifact-root work/worker-artifact \
               --expected work/worker-input/expected.json
           code=$?
+          kill -TERM "$gc_heartbeat" 2>/dev/null || true
+          wait "$gc_heartbeat" 2>/dev/null || true
           kill -TERM "$sampler" 2>/dev/null || true
           wait "$sampler" 2>/dev/null || true
           exit "$code"
