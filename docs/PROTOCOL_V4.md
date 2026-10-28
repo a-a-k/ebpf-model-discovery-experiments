@@ -2,7 +2,10 @@
 
 Status: original-criterion implementation GO for three technical qualification jobs;
 qualification [40655022146](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
-is running at `7e8deb9dfeb78723d87b254a3384bef735464d81`. No scientific-series results exist.
+at `7e8deb9dfeb78723d87b254a3384bef735464d81` completed with three technical failures
+after acquisition: the Procrustes goal had empty mandatory targets. Repair `1284a5f`
+supplies existing per-step obligations; capture-replay diagnosis is pending its
+implementation check. No scientific-series results exist.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 

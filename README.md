@@ -1,10 +1,10 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-> **Current status (iteration 4): technical qualification running; no scientific results.**
-> The implementation received independent GO for the original criterion and passed
-> CI. [Three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
-> are running. The 27 scientific campaigns have not started; this README reports no
-> iteration-4 scientific result.
+> **Current status (iteration 4): qualification repair; no scientific results.**
+> [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
+> each acquired 240 planned requests, then failed on an invalid Procrustes goal
+> before discovery. Per-step goals are repaired; retained-capture replay is being
+> checked before execution. The 27 scientific campaigns have not started.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
@@ -206,7 +206,10 @@ recovered deployment placement.
 
 Technical qualification first runs 120 healthy plus 120 both-down requests for each
 system in full mode, exercises the actual toolchain, and checks retained source and
-model artifacts. Qualification is running at revision `7e8deb9`. It is a technical prerequisite,
+model artifacts. The first run at revision `7e8deb9` failed on an empty
+`operation.mandatory_targets` input. Repair `1284a5f` supplies the already-audited
+service targets separately for each HTTP step; it changes no Bering discovery or
+Sheaft obligation. Original captures and failed outputs are retained. Qualification is a technical prerequisite,
 not a favorable-accuracy filter.
 
 ## 7. Database and asynchronous controls
@@ -349,9 +352,11 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 currently has no scientific-series results. Technical qualification is
-running after implementation GO; its artifacts and the final evaluator/cost review
-are still required before the fixed series can start. After the
+Iteration 4 currently has no scientific-series results. The first qualification
+exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
+replay can diagnose the actual tool path but cannot establish concurrent VM/tool
+resource capacity. Qualification review is still required before the fixed series.
+The evaluator/cost component has passed independent review. After the
 series, the original criterion must be checked again against the external outcomes and
 the strongest baseline before any success claim.
 
