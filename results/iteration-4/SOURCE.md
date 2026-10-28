@@ -25,6 +25,12 @@ All 57 original archive members are retained here unchanged; this source note is
 added separately. The report verifies compact evaluation manifests and the frozen
 example model hash; it does not repeat the original full raw-data evaluation.
 
+The original report ZIP is permanently retained in
+[data-40740761225](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40740761225)
+with the same digest. That release also preserves available logs and annotations
+from the original failed acquisition and failed archive attempt. The missing DSB
+job log is explicitly recorded as HTTP 404, rather than represented by an empty log.
+
 The cost ledger is a snapshot. Durations of jobs still running at collection are
 unknown, and this reporting job's own eventual duration is not included in its
 snapshot. Missing human/agent preparation costs remain unknown. The final report
