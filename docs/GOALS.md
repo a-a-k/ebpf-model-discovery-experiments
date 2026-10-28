@@ -99,7 +99,9 @@ manual-baseline equivalence, DB unknowns and adverse class results remain visibl
 The overall completion count is 9/27, not a cross-system success claim.
 
 DSB/full/seed6 `40731158179` failed its continuation after retaining the training
-checkpoint; cause and last scientific phase remain unknown pending terminal evidence.
+checkpoint.
+GitHub finalized cancellation under its six-hour job limit; the earlier failed
+continuation still has no available log, so its cause and last phase remain unknown.
 OTel/full/seed6 parent `40754529169` failed after worker `40764150238` shut down
 with severe recorded RAM/swap pressure. No forecast import/freeze or target traffic
 occurred. Parent artifacts and available logs are permanently archived by
