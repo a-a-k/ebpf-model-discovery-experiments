@@ -32,7 +32,8 @@ def _training_files(root: Path):
             attempt = f"attempt-{ordinal}"
             plans.append({"attempt_id": attempt, "phase": phase, "state": state,
                           "http_steps": [{"request_id": f"request-{ordinal}"}]})
-            records.append({"attempt_id": attempt, "phase": phase, "state": state})
+            records.append({"attempt_id": attempt, "phase": phase, "state": state,
+                            "http_steps": [{"request_id": f"request-{ordinal}"}]})
             census.append({"attempt_key": hashlib.sha256(attempt.encode()).hexdigest(),
                            "step_ids": [f"request-{ordinal}"], "phase": phase, "state": state})
             ordinal += 1
@@ -83,6 +84,25 @@ def test_census_and_preparation_identities_must_match_their_sources(tmp_path):
     records[-1]["attempt_id"] = records[-2]["attempt_id"]
     _write(tmp_path/"external.json", records)
     with pytest.raises(ValueError, match="preparation records"):
+        diagnostic.validate_training_prefix(tmp_path)
+
+
+def test_census_uses_actual_steps_and_accepts_unissued_plan_suffix(tmp_path):
+    _training_files(tmp_path)
+    plans = json.loads((tmp_path/"plans.json").read_text())
+    plans[0]["http_steps"] = [{"request_id": "request-0"},
+                              {"request_id": "unissued-1"},
+                              {"request_id": "unissued-2"}]
+    _write(tmp_path/"plans.json", plans)
+    # The retained external row and census contain only the first dispatched
+    # request after a terminal failure; planned suffixes are not fabricated.
+    _, proof = diagnostic.validate_training_prefix(tmp_path)
+    assert proof["primary_external_records"] == 24600
+
+    records = json.loads((tmp_path/"external.json").read_text())
+    records[0]["http_steps"] = [{"request_id": "not-in-the-plan"}]
+    _write(tmp_path/"external.json", records)
+    with pytest.raises(ValueError, match="absent from the plan"):
         diagnostic.validate_training_prefix(tmp_path)
 
 

@@ -117,20 +117,30 @@ def validate_training_prefix(original: Path) -> tuple[list[dict], dict]:
     record_counts = Counter((row.get("phase"), row.get("state")) for row in primary_records)
     if len(census) != 24600 or census_counts != expected or len(primary_records) != 24600 or record_counts != expected:
         raise ValueError("checkpoint census or external records differ from completed training plans")
+    record_ids = [row.get("attempt_id") for row in primary_records]
+    if (any(not isinstance(value, str) or not value for value in record_ids)
+            or set(record_ids) != set(attempt_ids) or len(set(record_ids)) != 24600):
+        raise ValueError("checkpoint census or external attempt identities are missing, duplicate, or mismatched")
+    records_by_id = {row["attempt_id"]: row for row in primary_records}
     expected_census = {}
     for plan in plans:
+        record = records_by_id[plan["attempt_id"]]
+        planned = [step.get("request_id") for step in plan.get("http_steps", [])]
+        dispatched = [step.get("request_id") for step in record.get("http_steps", [])]
+        for request_id in dispatched:
+            if not isinstance(request_id, str) or not request_id:
+                raise ValueError("checkpoint external record has an invalid dispatched request identity")
+            if request_id not in planned:
+                raise ValueError("checkpoint dispatched request identity is absent from the plan")
+        if (record.get("phase") != plan.get("phase")
+                or record.get("state") != plan.get("state")):
+            raise ValueError("checkpoint external record differs from its planned attempt")
         key = hashlib.sha256(plan["attempt_id"].encode()).hexdigest()
-        expected_census[key] = {
-            "attempt_key": key,
-            "step_ids": [step.get("request_id") for step in plan.get("http_steps", [])],
-            "phase": plan.get("phase"), "state": plan.get("state"),
-        }
+        expected_census[key] = {"attempt_key": key, "step_ids": dispatched,
+                                "phase": plan.get("phase"), "state": plan.get("state")}
     actual_census = {row.get("attempt_key"): row for row in census
                      if isinstance(row.get("attempt_key"), str) and row.get("attempt_key")}
-    record_ids = [row.get("attempt_id") for row in primary_records]
-    if (len(actual_census) != 24600 or actual_census != expected_census
-            or any(not isinstance(value, str) or not value for value in record_ids)
-            or set(record_ids) != set(attempt_ids) or len(set(record_ids)) != 24600):
+    if len(actual_census) != 24600 or actual_census != expected_census:
         raise ValueError("checkpoint census or external attempt identities are missing, duplicate, or mismatched")
     preparation_ids = [row.get("attempt_id") for row in preparation_records]
     retained_preparation_ids = [row.get("attempt_id") for row in preparation]
