@@ -299,6 +299,24 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
         "Checkpoint total s", "Upload success", "Upload artifact ID", "Swap setup s", "Swap status",
         "Swap requested additional bytes", "Resource heartbeat retained",
     ], phase_rows)
+    remote_rows = []
+    for campaign in campaigns:
+        run_id, system, mode, seed, _ = _identity(campaign)
+        remote = (campaign.get("cost") or {}).get("remote_toolchain")
+        if isinstance(remote, dict):
+            remote_rows.append([run_id, system, mode, seed,
+                remote.get("worker_run_id"), remote.get("worker_run_attempt"),
+                remote.get("checkpoint_validation_seconds"), remote.get("dispatch_seconds"),
+                remote.get("parent_wait_wall_seconds"), remote.get("output_transfer_seconds"),
+                remote.get("verification_import_seconds")])
+    if remote_rows:
+        lines.extend(["", "Separate toolchain worker costs:", "",
+            "Parent wait is nested inside campaign elapsed and overlaps worker computation. "
+            "Worker job durations belong in the Actions ledger separately; these phase values must not be added twice. "
+            "The complete saved remote cost/provenance record remains in the evaluation input.", ""])
+        lines += _table(["Parent run", "System", "Mode", "Seed", "Worker run", "Worker attempt",
+            "Checkpoint verification s", "Dispatch s", "Parent wait s", "Output transfer s",
+            "Verification/import s"], remote_rows)
     if cost_payload is not None:
         lines.extend(["", "Optional saved cost artifact metadata:", ""])
         lines += _table(["Stored field", "Value"], [

@@ -24,7 +24,12 @@ from .observations import census as intent_census
 
 
 class CampaignV4(Campaign):
-    def __init__(self, system, mode, seed, out, qualification=False, training_checkpoint=None):
+    def __init__(self, system, mode, seed, out, qualification=False, training_checkpoint=None,
+                 toolchain_execution='local'):
+        if toolchain_execution not in ('local', 'worker'):
+            raise ValueError('toolchain_execution must be local or worker')
+        if toolchain_execution == 'worker' and (qualification or training_checkpoint is None):
+            raise ValueError('worker execution requires a full live campaign with a training checkpoint')
         self.ctx = Context(out, mode, seed)
         self.ctx.observation_policy = 'uncapped-v4'
         self.ctx.journal = Journal(self.ctx.out/'attempt-journal.sqlite')
@@ -40,6 +45,8 @@ class CampaignV4(Campaign):
         self.frozen = {}
         self.record_lock = threading.Lock()
         self.training_checkpoint = Path(training_checkpoint) if training_checkpoint else None
+        self.training_release = None
+        self.toolchain_execution = toolchain_execution
 
     def snapshot(self, stage):
         self.collectors.snapshot()
@@ -152,7 +159,13 @@ class CampaignV4(Campaign):
 
     def freeze(self):
         plans = [p for p in self.plans if p['phase'] in ('class_train', 'calibration', 'qualification')]
-        forecasts = Toolchain(self.ctx, self.system, self.store, self.declaration).forecast(plans)
+        if self.toolchain_execution == 'worker':
+            if self.training_release is None:
+                raise RuntimeError('worker execution requires the same live campaign checkpoint release')
+            from .remote_toolchain_v4 import forecast_on_worker
+            forecasts = forecast_on_worker(self, self.training_checkpoint, self.training_release, plans)
+        else:
+            forecasts = Toolchain(self.ctx, self.system, self.store, self.declaration).forecast(plans)
         fit_classes(self.store, plans, self.declaration, self.ctx.out/'toolchain'/'classes')
         for path in (self.ctx.out/'toolchain').rglob('*'):
             if path.is_file():
@@ -164,6 +177,7 @@ class CampaignV4(Campaign):
     def run(self):
         status = dict(system=self.system, mode=self.ctx.mode, seed=self.ctx.seed,
                       protocol_version='graph-v4', run_id=os.environ.get('GITHUB_RUN_ID'),
+                      toolchain_execution=self.toolchain_execution,
                       commit=os.environ.get('GITHUB_SHA'), started_ns=time.time_ns(), status='running')
         write_json(self.ctx.out/'status.json', status)
         try:
@@ -193,7 +207,7 @@ class CampaignV4(Campaign):
                 if self.training_checkpoint is not None:
                     from .checkpoint_v4 import checkpoint_and_wait
                     self.require_completed_transports()
-                    checkpoint_and_wait(self, self.training_checkpoint)
+                    self.training_release = checkpoint_and_wait(self, self.training_checkpoint)
                 self.freeze()
                 states = ['11']*4+['10']*2+['01', '00']
                 self.rng.shuffle(states)
@@ -253,6 +267,8 @@ def main():
     parser.add_argument('--qualification', action='store_true')
     parser.add_argument('--training-checkpoint', type=Path,
                         help='Actions-only closed training-prefix upload handshake before Bering')
+    parser.add_argument('--toolchain-execution', choices=('local', 'worker'), default='local',
+                        help='Compute on this runner or a checkpoint-bound Actions worker; guests stay live')
     args = parser.parse_args()
     CampaignV4(**vars(args)).run()
 

@@ -156,6 +156,7 @@ def _commands(config: dict) -> tuple[list[str], list[str]]:
         "--system", config["system"], "--mode", config["mode"],
         "--seed", str(config["seed"]), "--out", str(out),
         "--training-checkpoint", config["checkpoint"],
+        "--toolchain-execution", config.get("toolchain_execution", "local"),
     ]
     resources = ["bash", str(root / "scripts" / "capture-v4-resources.sh"),
                  str(out / "infrastructure" / "resources"), "15", config["vms"]]
@@ -248,7 +249,8 @@ def _spawn(args) -> int:
     config = {**identity, "state_dir": str(state_dir.resolve()),
               "out": str(Path(args.out).resolve()),
               "checkpoint": str(Path(args.checkpoint).resolve()),
-              "vms": str(Path(args.vms).resolve())}
+              "vms": str(Path(args.vms).resolve()),
+              "toolchain_execution": args.toolchain_execution}
     config_path = state_dir / "config.json"
     _atomic_json(config_path, config)
     # Preserve RUNNER_TRACKING_ID: explicit stop is normal cleanup, while the
@@ -376,6 +378,7 @@ def main() -> None:
     _common(start)
     start.add_argument("--out", type=Path, required=True)
     start.add_argument("--vms", type=Path, required=True)
+    start.add_argument("--toolchain-execution", choices=("local", "worker"), default="local")
     wait = commands.add_parser("wait")
     _common(wait)
     wait.add_argument("--until", choices=("checkpoint", "exit"), required=True)

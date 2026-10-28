@@ -134,6 +134,9 @@ def test_default_commands_preserve_full_campaign_and_resource_sampler(tmp_path):
     assert campaign[campaign.index("--system") + 1] == "otel_demo"
     assert campaign[campaign.index("--mode") + 1] == "full"
     assert campaign[campaign.index("--seed") + 1] == "6"
+    assert campaign[campaign.index("--toolchain-execution") + 1] == "local"
+    remote, _ = process_v4._commands({**config, "toolchain_execution": "worker"})
+    assert remote[remote.index("--toolchain-execution") + 1] == "worker"
     assert resources[0] == "bash"
     assert Path(resources[1]).name == "capture-v4-resources.sh"
     assert resources[-2:] == ["15", str(tmp_path/"vms")]

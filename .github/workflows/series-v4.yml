@@ -50,6 +50,9 @@ jobs:
   campaign:
     needs: prepare
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       max-parallel: 3
@@ -98,10 +101,13 @@ jobs:
         id: training
         env:
           PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          TOOLCHAIN_EXECUTION: ${{ matrix.system == 'otel_demo' && 'worker' || 'local' }}
         run: |
           python -m ebpf_discovery.campaign_process_v4 start \
             --state-dir work/campaign-process --out work/campaign \
             --checkpoint work/training-checkpoint --vms work/vms \
+            --toolchain-execution "$TOOLCHAIN_EXECUTION" \
             --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
           python -m ebpf_discovery.campaign_process_v4 wait \
             --state-dir work/campaign-process --checkpoint work/training-checkpoint \

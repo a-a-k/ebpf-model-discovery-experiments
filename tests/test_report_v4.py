@@ -64,6 +64,10 @@ def campaign(complete=True):
             "swap_setup": {"status": "ready", "elapsed_seconds": 3,
                 "requested_additional_bytes": 8589934592, "meminfo": "large raw text"},
             "resource_heartbeats_retained": True,
+            "remote_toolchain": {"worker_run_id": 456, "worker_run_attempt": 1,
+                "checkpoint_validation_seconds": 1.1, "dispatch_seconds": .2,
+                "parent_wait_wall_seconds": 6.3, "output_transfer_seconds": 1.4,
+                "verification_import_seconds": .7},
             "cost_overlap_note": "checkpoint nested in campaign; swap precedes campaign",
             "manual_preparation": {"measured": False, "reason": "not instrumented"}},
     }
@@ -106,6 +110,8 @@ def test_report_copies_saved_tables_and_marks_unknown_cost(tmp_path, compressed)
     assert "native | async_recovered | 1 | 0 | 0 | 0 | conflicting=1 | 0/1" in text
     assert "do not establish SQL durability or business correctness" in text
     assert "unknown | 4" in text  # unavailable clone seconds is not rendered as zero
+    assert "123 | otel_demo | full | 6 | 456 | 1 | 1.1 | 0.2 | 6.3 | 1.4 | 0.7" in text
+    assert "overlaps worker computation" in text
 
 
 def test_report_retains_excluded_incomplete_attempt(tmp_path):
