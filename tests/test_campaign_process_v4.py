@@ -112,6 +112,12 @@ def test_default_commands_preserve_full_campaign_and_resource_sampler(tmp_path):
     assert resources[-2:] == ["15", str(tmp_path/"vms")]
 
 
+def test_supervisor_preserves_runner_tracking_for_job_end_cleanup(monkeypatch):
+    monkeypatch.setenv("RUNNER_TRACKING_ID", "actions-owned-tree")
+    environment = process_v4._supervisor_environment()
+    assert environment["RUNNER_TRACKING_ID"] == "actions-owned-tree"
+
+
 @pytest.mark.skipif(os.name != "posix", reason="process groups and Linux /proc are exercised in Actions")
 def test_supervisor_forwards_signal_waits_cleanup_and_writes_actual_exit(tmp_path):
     state, out, checkpoint = tmp_path/"state", tmp_path/"out", tmp_path/"checkpoint"

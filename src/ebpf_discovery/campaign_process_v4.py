@@ -122,6 +122,11 @@ def _commands(config: dict) -> tuple[list[str], list[str]]:
     return campaign, resources
 
 
+def _supervisor_environment() -> dict[str, str]:
+    """Preserve runner ownership so job-end cleanup remains a final fallback."""
+    return dict(os.environ)
+
+
 def supervise(config: dict, *, campaign_command: list[str] | None = None,
               resource_command: list[str] | None = None) -> int:
     """Run and supervise one campaign; command overrides are synthetic-test hooks."""
@@ -203,10 +208,9 @@ def _spawn(args) -> int:
               "vms": str(Path(args.vms).resolve())}
     config_path = state_dir / "config.json"
     _atomic_json(config_path, config)
-    environment = dict(os.environ)
-    # GitHub's step cleanup marker must not classify the intentional supervisor
-    # as an orphan. This does not survive a runner/host shutdown.
-    environment.pop("RUNNER_TRACKING_ID", None)
+    # Preserve RUNNER_TRACKING_ID: explicit stop is normal cleanup, while the
+    # runner must still own and reap the tree on cancellation or job failure.
+    environment = _supervisor_environment()
     bootstrap = (state_dir / "bootstrap.log").open("ab", buffering=0)
     process = subprocess.Popen([sys.executable, "-m", "ebpf_discovery.campaign_process_v4",
                                 "supervise", "--config", str(config_path)],
