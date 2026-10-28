@@ -17,7 +17,8 @@ The first three planned full/seed6 cells are launched in
 [40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
 at `fdec1a6`, following original-criterion GO and CI `40704617133`. OTel and Petclinic
 lost their runners during discovery, without artifact upload. DSB's acquisition step
-also failed and uploads were skipped; final platform status/logs are pending.
+also failed and uploads were skipped; its final annotation confirms runner
+communication loss, while the cause and last campaign phase remain unknown.
 The technical repair and original-criterion design GO are recorded below.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
@@ -289,6 +290,24 @@ This authorizes continuation of the unchanged series, not a general success clai
 The remaining Petclinic cells were dispatched at `4276ea9`: absent/6–8 in
 `40733841068`, partial/6–8 in `40733846961`, full/7 in `40733852492` and full/8
 in `40733858113`. The admitted full/6 cell is not repeated.
+
+After OTel retry `40718665137` lost its continuation and skipped final retention,
+the already uploaded training checkpoint `12830934533` remains available. Root
+and independent 6.1 Sol/xhigh skeptic give **ORIGINAL-criterion design GO** for
+one diagnostic replay on a separate standard Actions runner. The hypothesis is
+only that the exact retained full-size input can identify a reproducible tool or
+resource failure; the interruption's cause is not assumed. The useful-result
+criterion, source comparisons and direct baseline remain unchanged.
+Verify the checkpoint identity/manifest, every consumed prefix and referenced
+body/metadata, SQLite and pinned-binary hashes, and the actual 600 class-training
+plus four 6,000-attempt calibration blocks. Relocate only copied index file paths,
+proving unchanged span/link rows; use the same exporter and Bering configuration.
+Retain transfer/preparation costs, memory/disk evidence and tool exits, drops and
+publication counts. No traffic or target continuation is permitted. This replay
+cannot complete the interrupted cell, prove capacity alongside live VMs, identify
+the original cause merely by succeeding, or support a usefulness claim on its own.
+Implementation review precedes execution. No OTLP splitting or model optimization
+is approved by this diagnostic decision.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
