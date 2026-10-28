@@ -13,9 +13,11 @@ from types import SimpleNamespace
 import pytest
 
 from ebpf_discovery import campaign_process_v4 as process_v4
+from ebpf_discovery import checkpoint_v4
 
 
-IDENTITY = {"run_id": "17", "system": "otel_demo", "mode": "full", "seed": 6}
+IDENTITY = {"run_id": "17", "commit": "c" * 40,
+            "system": "otel_demo", "mode": "full", "seed": 6}
 
 
 def write(path: Path, value: dict) -> None:
@@ -25,6 +27,7 @@ def write(path: Path, value: dict) -> None:
 def args(tmp_path: Path, **updates):
     value = dict(state_dir=tmp_path/"state", checkpoint=tmp_path/"checkpoint",
                  system="otel_demo", mode="full", seed=6, run_id="17",
+                 commit="c" * 40,
                  manifest_sha256="a" * 64, upload_success="true",
                  artifact_id="42", artifact_url="https://example.invalid/42",
                  artifact_digest="sha256:artifact")
@@ -54,13 +57,37 @@ def test_release_requires_same_live_cell_and_exact_manifest(tmp_path, monkeypatc
     assert process_v4._release(args(tmp_path)) == 0
     release = json.loads((checkpoint/"release.json").read_text())
     assert release["upload_success"] is True
-    assert release["ready_manifest_sha256"] == "a" * 64
+    assert release["manifest_sha256"] == "a" * 64
+    assert release["commit"] == "c" * 40
     assert release["artifact_id"] == "42"
 
     (checkpoint/"release.json").unlink()
     with pytest.raises(RuntimeError, match="manifest SHA"):
         process_v4._release(args(tmp_path, manifest_sha256="b" * 64))
     assert not (checkpoint/"release.json").exists()
+
+
+def test_release_is_consumed_by_actual_checkpoint_contract(tmp_path, monkeypatch):
+    proc = tmp_path/"proc"
+    fake_proc(proc, 123, 456)
+    state, checkpoint = tmp_path/"state", tmp_path/"checkpoint"
+    ready = {**IDENTITY, "manifest_sha256": "a" * 64}
+    write(state/"started.json", {**IDENTITY, "supervisor_pid": 123,
+                                  "supervisor_start_ticks": 456,
+                                  "host": socket.gethostname()})
+    write(checkpoint/"ready.json", ready)
+    original = process_v4._validate_live
+    monkeypatch.setattr(process_v4, "_validate_live",
+        lambda state_dir, identity: original(state_dir, identity, proc))
+    assert process_v4._release(args(tmp_path)) == 0
+
+    appended = []
+    campaign = SimpleNamespace(ctx=SimpleNamespace(
+        journal=SimpleNamespace(append=lambda kind, data: appended.append((kind, data)))))
+    release = checkpoint_v4.wait_for_release(campaign, checkpoint, ready)
+    assert release["commit"] == ready["commit"]
+    assert release["manifest_sha256"] == ready["manifest_sha256"]
+    assert appended == [("training_checkpoint_release", release)]
 
 
 def test_disappeared_or_reused_pid_without_exit_is_technical_error(tmp_path):
@@ -116,6 +143,54 @@ def test_supervisor_preserves_runner_tracking_for_job_end_cleanup(monkeypatch):
     monkeypatch.setenv("RUNNER_TRACKING_ID", "actions-owned-tree")
     environment = process_v4._supervisor_environment()
     assert environment["RUNNER_TRACKING_ID"] == "actions-owned-tree"
+
+
+@pytest.mark.skipif(os.name != "posix", reason="process groups and Linux /proc are exercised in Actions")
+def test_terminate_group_waits_for_delayed_descendant_after_leader_exits(tmp_path):
+    child = tmp_path/"child.py"
+    child.write_text('''
+import pathlib, signal, sys, time
+ready, finished = map(pathlib.Path, sys.argv[1:])
+def finish(_s, _f):
+    time.sleep(.35)
+    finished.write_text("flushed")
+    raise SystemExit(0)
+signal.signal(signal.SIGTERM, finish)
+ready.write_text("ready")
+while True: time.sleep(.05)
+''')
+    leader = tmp_path/"leader.py"
+    leader.write_text('''
+import pathlib, signal, subprocess, sys, time
+child, ready, finished, leader_ready = sys.argv[1:]
+subprocess.Popen([sys.executable, child, ready, finished])
+until = time.monotonic() + 5
+while not pathlib.Path(ready).exists() and time.monotonic() < until: time.sleep(.01)
+def finish_leader(_s, _f): raise SystemExit(0)
+signal.signal(signal.SIGTERM, finish_leader)
+pathlib.Path(leader_ready).write_text("ready")
+while True: time.sleep(.05)
+''')
+    ready, finished, leader_ready = tmp_path/"ready", tmp_path/"finished", tmp_path/"leader-ready"
+    process = subprocess.Popen([sys.executable, str(leader), str(child), str(ready),
+                                str(finished), str(leader_ready)], start_new_session=True)
+    try:
+        until = time.monotonic() + 5
+        while not leader_ready.exists() and time.monotonic() < until:
+            time.sleep(.01)
+        assert leader_ready.exists()
+        started = time.monotonic()
+        result = process_v4._terminate_group(process, grace_seconds=3)
+        assert time.monotonic() - started >= .25
+        assert result["returncode"] == 0
+        assert result["group_drained"] is True
+        assert result["forced_kill"] is False
+        assert result["remaining_pids"] == []
+        assert finished.read_text() == "flushed"
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid, signal.SIGKILL)
+            process.wait()
 
 
 @pytest.mark.skipif(os.name != "posix", reason="process groups and Linux /proc are exercised in Actions")

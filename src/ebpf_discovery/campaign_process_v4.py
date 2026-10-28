@@ -52,9 +52,12 @@ def _start_ticks(pid: int, proc_root: Path = Path("/proc")) -> int:
 
 def _identity(args) -> dict:
     run_id = args.run_id or os.environ.get("GITHUB_RUN_ID")
+    commit = args.commit or os.environ.get("GITHUB_SHA")
     if not run_id:
         raise RuntimeError("run identity requires --run-id or GITHUB_RUN_ID")
-    return {"run_id": str(run_id), "system": str(args.system),
+    if not commit:
+        raise RuntimeError("run identity requires --commit or GITHUB_SHA")
+    return {"run_id": str(run_id), "commit": str(commit), "system": str(args.system),
             "mode": str(args.mode), "seed": int(args.seed)}
 
 
@@ -83,28 +86,65 @@ def _validate_live(state_dir: Path, identity: dict, proc_root: Path = Path("/pro
     return marker
 
 
-def _terminate_group(process: subprocess.Popen | None, signum: int = signal.SIGTERM) -> dict:
-    if process is None:
-        return {"started": False, "returncode": None}
-    sent = False
-    if process.poll() is None:
+def _group_members(pgid: int, proc_root: Path = Path("/proc")) -> list[int]:
+    """Return live (non-zombie) members of one Linux process group."""
+    members = []
+    for entry in Path(proc_root).iterdir():
+        if not entry.name.isdecimal():
+            continue
         try:
-            os.killpg(process.pid, signum)
+            text = entry.joinpath("stat").read_text(encoding="ascii")
+            remainder = text[text.rfind(")") + 2:].split()
+            # Fields after comm start at state (3), ppid (4), pgrp (5).
+            if remainder[0] != "Z" and int(remainder[2]) == pgid:
+                members.append(int(entry.name))
+        except (FileNotFoundError, PermissionError, OSError, ValueError, IndexError):
+            continue
+    return sorted(members)
+
+
+def _wait_group_drain(pgid: int, seconds: float, proc_root: Path = Path("/proc")) -> list[int]:
+    deadline = time.monotonic() + seconds
+    while True:
+        members = _group_members(pgid, proc_root)
+        if not members or time.monotonic() >= deadline:
+            return members
+        time.sleep(.05)
+
+
+def _terminate_group(process: subprocess.Popen | None, signum: int = signal.SIGTERM,
+                     *, grace_seconds: float = 30.0,
+                     proc_root: Path = Path("/proc")) -> dict:
+    if process is None:
+        return {"started": False, "returncode": None, "group_drained": True}
+    pgid = process.pid
+    sent = False
+    members = _group_members(pgid, proc_root)
+    if members:
+        try:
+            os.killpg(pgid, signum)
             sent = True
         except ProcessLookupError:
             pass
     try:
-        returncode = process.wait(timeout=30)
+        returncode = process.wait(timeout=grace_seconds)
     except subprocess.TimeoutExpired:
+        returncode = None
+    remaining = _wait_group_drain(pgid, grace_seconds, proc_root)
+    forced = bool(remaining)
+    if forced:
         try:
-            os.killpg(process.pid, signal.SIGKILL)
+            os.killpg(pgid, signal.SIGKILL)
         except ProcessLookupError:
             pass
+        if returncode is None:
+            returncode = process.wait()
+        remaining = _wait_group_drain(pgid, grace_seconds, proc_root)
+    elif returncode is None:
         returncode = process.wait()
-        return {"started": True, "signal_sent": sent, "forced_kill": True,
-                "returncode": returncode}
-    return {"started": True, "signal_sent": sent, "forced_kill": False,
-            "returncode": returncode}
+    return {"started": True, "pgid": pgid, "signal_sent": sent,
+            "forced_kill": forced, "group_drained": not remaining,
+            "remaining_pids": remaining, "returncode": returncode}
 
 
 def _commands(config: dict) -> tuple[list[str], list[str]]:
@@ -133,7 +173,7 @@ def supervise(config: dict, *, campaign_command: list[str] | None = None,
     state_dir = Path(config["state_dir"])
     state_dir.mkdir(parents=True, exist_ok=True)
     log_path = state_dir / "campaign.log"
-    identity = {key: config[key] for key in ("run_id", "system", "mode", "seed")}
+    identity = {key: config[key] for key in ("run_id", "commit", "system", "mode", "seed")}
     started = {**identity, "schema_version": "campaign-process-v4",
                "supervisor_pid": os.getpid(), "supervisor_start_ticks": _start_ticks(os.getpid()),
                "started_ns": time.time_ns(), "host": socket.gethostname(),
@@ -180,19 +220,22 @@ def supervise(config: dict, *, campaign_command: list[str] | None = None,
     finally:
         cleanup["campaign"] = _terminate_group(campaign)
         cleanup["resources"] = _terminate_group(resources)
+        cleanup_complete = all(item.get("group_drained", False) for item in cleanup.values())
+        supervisor_rc = int(campaign_rc) if cleanup_complete else TECHNICAL_ERROR
         for item, handler in prior.items():
             signal.signal(item, handler)
         terminal = {**identity, "schema_version": "campaign-process-v4-exit",
                     "supervisor_pid": os.getpid(),
                     "supervisor_start_ticks": started["supervisor_start_ticks"],
-                    "returncode": campaign_rc, "ended_ns": time.time_ns(),
+                    "returncode": campaign_rc, "supervisor_returncode": supervisor_rc,
+                    "cleanup_complete": cleanup_complete, "ended_ns": time.time_ns(),
                     "forwarded_signals": forwarded, "cleanup": cleanup}
         if error is not None:
             terminal["supervisor_error"] = error
         # This is deliberately last: its presence means child wait and cleanup
         # both happened, never merely that a PID disappeared.
         _atomic_json(state_dir / "exit.json", terminal)
-    return int(campaign_rc)
+    return supervisor_rc
 
 
 def _spawn(args) -> int:
@@ -250,7 +293,7 @@ def _tail_wait(args) -> int:
             if not _same_identity(terminal, identity):
                 raise RuntimeError("terminal sentinel belongs to another campaign cell")
             if args.until == "exit":
-                return int(terminal.get("returncode", TECHNICAL_ERROR))
+                return int(terminal.get("supervisor_returncode", TECHNICAL_ERROR))
             raise RuntimeError(f"campaign exited before checkpoint release: {terminal}")
         _validate_live(state_dir, identity)
         if args.until == "checkpoint":
@@ -275,7 +318,7 @@ def _release(args) -> int:
     if success and not all((args.artifact_id, args.artifact_url, args.artifact_digest)):
         raise RuntimeError("successful checkpoint upload requires artifact ID, URL, and digest")
     release = {**identity, "schema_version": "campaign-process-v4-release",
-               "ready_manifest_sha256": ready["manifest_sha256"],
+               "manifest_sha256": ready["manifest_sha256"],
                "upload_success": success, "artifact_id": args.artifact_id,
                "artifact_url": args.artifact_url, "artifact_digest": args.artifact_digest,
                "released_ns": time.time_ns()}
@@ -323,6 +366,7 @@ def _common(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--mode", required=True)
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--run-id")
+    parser.add_argument("--commit")
 
 
 def main() -> None:
