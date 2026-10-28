@@ -151,6 +151,15 @@ The repairs change compatibility and documented conditional interpretation, not
 the original usefulness criterion. Their preparation and replay costs remain part
 of the work; no scientific success follows from improved binding coverage.
 
+Concrete implementation review: root and independent 6.1 Sol/xhigh reviewer
+**GO for a further retained replay of all three systems** at `642f61f`, after
+[CI 40674218814](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674218814).
+The review checked entry candidate preservation and complete state-vector agreement,
+exact configuration hashes, DB grouping, proxy/scope/URL repairs and equal baseline
+knowledge. The Linux child-resource wrapper is included; it forwards graceful
+termination and retains Bering-only RSS/CPU/wall/exit evidence. Full-series resource
+adequacy and external predictive accuracy remain unestablished.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
