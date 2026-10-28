@@ -313,9 +313,10 @@ The manual workflows are:
 - [qualification-v4.yml](.github/workflows/qualification-v4.yml): three full-mode
   technical qualifications by default, with reviewed diagnostic inputs;
 - [series-v4.yml](.github/workflows/series-v4.yml): the fixed 27-cell matrix, maximum
-  parallelism three, with optional exact-cell inputs only for approved technical reruns;
+  parallelism three, with exact-cell inputs for reviewed staging or technical reruns;
 - [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
-  and complete Actions job/artifact costs, including declared failed preparation runs.
+  and complete Actions job/artifact costs, including declared failed preparation runs;
+  render per-operation figures from that saved aggregate as SVG, PNG and PDF.
 
 The campaign command used by both workflows is:
 
@@ -334,7 +335,14 @@ Evaluation commands, run in Actions, are:
 python -m ebpf_discovery.evaluate_v4 --campaign PATH --out evaluation.json
 python -m ebpf_discovery.evaluate_v4 --aggregate ROOT [ROOT ...] \
   --report-dir report [--selection technical-replacements.json]
+python -m ebpf_discovery.plot_v4 --aggregate report/evaluation-v4.json \
+  --out-dir report/figures
 ```
+
+The report extra (`pip install -e '.[report]'`) pins Matplotlib. Figures retain
+each operation/source/mode separately, show unknown errors and available repeats,
+and label observed repeat min–max ranges as descriptive ranges, not confidence
+intervals. `figures/figures-v4.md` links the aggregate and lists the stored values.
 
 The series evaluates each cell against its full retained evidence before upload.
 The report workflow downloads compact `v4-summary-*` artifacts, verifies their

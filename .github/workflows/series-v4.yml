@@ -3,17 +3,17 @@ on:
   workflow_dispatch:
     inputs:
       system:
-        description: Narrow only for an approved technical rerun
+        description: Select planned cells for reviewed staging or a technical rerun
         type: choice
         options: [all, deathstarbench, otel_demo, petclinic]
         default: all
       mode:
-        description: Narrow only for an approved technical rerun
+        description: Select planned cells for reviewed staging or a technical rerun
         type: choice
         options: [all, absent, partial, full]
         default: all
       seed:
-        description: Narrow only for an approved technical rerun
+        description: Select planned cells for reviewed staging or a technical rerun
         type: choice
         options: [all, '6', '7', '8']
         default: all

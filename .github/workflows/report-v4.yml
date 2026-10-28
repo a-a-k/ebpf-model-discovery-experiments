@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e . opentelemetry-proto
+      - run: python -m pip install -e '.[report]' opentelemetry-proto
       - name: Retain metadata and complete Actions cost ledger
         env:
           GH_TOKEN: ${{ github.token }}
@@ -155,6 +155,11 @@ jobs:
           if [ -n "$SELECTION_MANIFEST" ]; then args+=(--selection "$SELECTION_MANIFEST"); fi
           python -m ebpf_discovery.evaluate_v4 --aggregate-saved work/v4-inputs \
             --report-dir results/iteration-4 "${args[@]}"
+      - name: Render publication figures from the saved aggregate
+        run: |
+          python -m ebpf_discovery.plot_v4 --aggregate results/iteration-4/evaluation-v4.json \
+            --out-dir results/iteration-4/figures
+          python -m pip freeze > results/iteration-4/provenance/report-python-environment.txt
       - uses: actions/upload-artifact@v4
         if: always()
         with:
