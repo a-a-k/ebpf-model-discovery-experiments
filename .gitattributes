@@ -4,3 +4,4 @@
 *.yml text eol=lf
 results/iteration-3-preparation/**/revised-review/** -text
 results/iteration-3/** -text
+results/iteration-4/** -text
