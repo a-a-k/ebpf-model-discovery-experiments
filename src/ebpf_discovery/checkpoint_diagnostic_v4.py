@@ -21,6 +21,7 @@ from .replay_qualification_v4 import (
 from .runtime import Context, write_json
 from .store_v3 import ObservationStore
 from .toolchain_v4 import Toolchain
+from .bering_v4 import child_go_environment
 
 
 SOURCE_RUN_ID = 40718665137
@@ -29,16 +30,47 @@ SOURCE_ARTIFACT_NAME = "training-v4-otel_demo-full-6-40718665137"
 SOURCE_ARTIFACT_DIGEST = "sha256:47def427dfe5dd7509b0d31b3198affef8dc25dabd69a2c6e551824d4b0f0a1c"
 SOURCE_MANIFEST_SHA256 = "1947882e9a8ce92732ca31e14907afde9c5def9dd33050658b2e66440b14e765"
 
+DEFAULT_PROFILE = "original-40718665137"
+LARGE_GC_PROFILE = "full6-40754529169-gomemlimit12g"
+PROFILES = {
+    DEFAULT_PROFILE: {
+        "run_id": SOURCE_RUN_ID,
+        "artifact_id": SOURCE_ARTIFACT_ID,
+        "artifact_name": SOURCE_ARTIFACT_NAME,
+        "artifact_digest": SOURCE_ARTIFACT_DIGEST,
+        "manifest_sha256": SOURCE_MANIFEST_SHA256,
+        "commit": "ea2e278e50f64bd50597c243d84f834be1b92576",
+        "bering_child_go_environment": {},
+    },
+    LARGE_GC_PROFILE: {
+        "run_id": 40754529169,
+        "artifact_id": 12847933267,
+        "artifact_name": "training-v4-otel_demo-full-6-40754529169",
+        "artifact_digest": "sha256:ba0289fd1e0cefd4be96cfbf0a0ac4a335db2ef4f748de4b0ffa63aa00c2c422",
+        "manifest_sha256": "b90d303797e4285d16659b4515195b0fc58276d8d4200ec6a9fa9eae070e333c",
+        "commit": "72133c00df3f7e4150a3f737dee33e4bee12527d",
+        "bering_child_go_environment": {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"},
+    },
+}
+
+
+def _profile(name=DEFAULT_PROFILE):
+    try:
+        return PROFILES[name]
+    except KeyError as error:
+        raise ValueError(f"unknown immutable diagnostic profile: {name}") from error
+
 
 def _read(path: Path):
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
-def validate_artifact_identity(source: dict) -> None:
+def validate_artifact_identity(source: dict, profile_name=DEFAULT_PROFILE) -> None:
+    profile = _profile(profile_name)
     expected = {
-        "run_id": SOURCE_RUN_ID, "artifact_id": SOURCE_ARTIFACT_ID,
-        "artifact_name": SOURCE_ARTIFACT_NAME,
-        "artifact_digest": SOURCE_ARTIFACT_DIGEST,
+        "run_id": profile["run_id"], "artifact_id": profile["artifact_id"],
+        "artifact_name": profile["artifact_name"],
+        "artifact_digest": profile["artifact_digest"],
     }
     if any(source.get(key) != value for key, value in expected.items()):
         raise ValueError("checkpoint Actions artifact identity or digest mismatch")
@@ -47,16 +79,19 @@ def validate_artifact_identity(source: dict) -> None:
         raise ValueError("checkpoint source commit or availability is invalid")
 
 
-def validate_checkpoint_manifest(original: Path, source: dict) -> dict:
+def validate_checkpoint_manifest(original: Path, source: dict, profile_name=DEFAULT_PROFILE) -> dict:
     """Verify the ready binding and every byte recorded by the checkpoint."""
     original = Path(original).resolve()
-    validate_artifact_identity(source)
+    profile = _profile(profile_name)
+    validate_artifact_identity(source, profile_name)
     manifest_path, ready_path = original/"manifest.json", original/"ready.json"
-    if digest(manifest_path) != SOURCE_MANIFEST_SHA256:
+    if digest(manifest_path) != profile["manifest_sha256"]:
         raise ValueError("checkpoint manifest differs from the admitted immutable digest")
     manifest, ready = _read(manifest_path), _read(ready_path)
-    identity = {"run_id": str(SOURCE_RUN_ID), "commit": source["run_sha"],
+    identity = {"run_id": str(profile["run_id"]), "commit": profile["commit"],
                 "system": "otel_demo", "mode": "full", "seed": 6}
+    if source["run_sha"] != profile["commit"]:
+        raise ValueError("checkpoint source commit differs from the named immutable profile")
     if (manifest.get("schema_version") != "v4-training-prefix-checkpoint"
             or manifest.get("status") != "partial_training_capture_only; no forecast or completed cell"
             or any(str(manifest.get("identity", {}).get(key)) != str(value)
@@ -64,7 +99,7 @@ def validate_checkpoint_manifest(original: Path, source: dict) -> dict:
         raise ValueError("checkpoint manifest identity or partial-training status mismatch")
     if (ready.get("schema_version") != "v4-training-prefix-checkpoint-ready"
             or ready.get("status") != "training_checkpoint_ready"
-            or ready.get("manifest_sha256") != SOURCE_MANIFEST_SHA256
+            or ready.get("manifest_sha256") != profile["manifest_sha256"]
             or any(str(ready.get(key)) != str(value) for key, value in identity.items())):
         raise ValueError("checkpoint ready marker does not bind the admitted manifest")
     files = manifest.get("files")
@@ -85,7 +120,7 @@ def validate_checkpoint_manifest(original: Path, source: dict) -> dict:
     expected_files = set(files) | {"manifest.json", "ready.json"}
     if actual_files != expected_files:
         raise ValueError("checkpoint artifact contains unmanifested or missing files")
-    return {"identity": identity, "manifest_sha256": SOURCE_MANIFEST_SHA256,
+    return {"identity": identity, "manifest_sha256": profile["manifest_sha256"],
             "verified_files": verified, "verified_file_count": len(verified),
             "source_cutoff_rule": manifest.get("source_cutoff_rule"),
             "new_application_traffic": manifest.get("new_application_traffic")}
@@ -160,9 +195,10 @@ def validate_training_prefix(original: Path) -> tuple[list[dict], dict]:
                                           for (phase, state), count in sorted(expected.items())}}
 
 
-def diagnose(original: Path, out: Path, source: dict) -> dict:
+def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFILE) -> dict:
     if os.environ.get("GITHUB_ACTIONS") != "true":
         raise RuntimeError("v4 training-checkpoint diagnostic is permitted only in GitHub Actions")
+    profile = _profile(profile_name)
     original, out = Path(original).resolve(), Path(out).resolve()
     if out == original or out in original.parents or original in out.parents:
         raise ValueError("diagnostic output and immutable checkpoint must be separate")
@@ -170,15 +206,16 @@ def diagnose(original: Path, out: Path, source: dict) -> dict:
         raise ValueError("diagnostic output must be empty")
     out.mkdir(parents=True, exist_ok=True)
     status = {"schema_version": "v4-training-checkpoint-diagnostic",
-              "status": "diagnostic_started", "source_run_id": SOURCE_RUN_ID,
-              "source_artifact_id": SOURCE_ARTIFACT_ID, "started_ns": time.time_ns(),
+              "status": "diagnostic_started", "profile": profile_name,
+              "source_run_id": profile["run_id"],
+              "source_artifact_id": profile["artifact_id"], "started_ns": time.time_ns(),
               "completed_campaign_cell": False, "new_application_traffic": False,
               "interpretation": "immutable full-training-prefix toolchain diagnostic only"}
     write_json(out/"status.json", status)
     original_files = None
     try:
         original_files = file_manifest(original)
-        manifest_proof = validate_checkpoint_manifest(original, source)
+        manifest_proof = validate_checkpoint_manifest(original, source, profile_name)
         plans, census_proof = validate_training_prefix(original)
         write_json(out/"checkpoint-validation.json", {
             "source_artifact": source, "manifest": manifest_proof, "training": census_proof,
@@ -195,7 +232,8 @@ def diagnose(original: Path, out: Path, source: dict) -> dict:
         store = ObservationStore(out/"observation-index.sqlite", same_trace_parents=True)
         try:
             declaration = importlib.import_module("systems.otel_demo.experiment_v4")
-            forecasts = Toolchain(ctx, "otel_demo", store, declaration).forecast(plans)
+            with child_go_environment(profile["bering_child_go_environment"]):
+                forecasts = Toolchain(ctx, "otel_demo", store, declaration).forecast(plans)
         finally:
             store.close()
             if old_bin is None:
@@ -212,6 +250,12 @@ def diagnose(original: Path, out: Path, source: dict) -> dict:
                 for source_name, variants in forecasts.items()},
             "completed_campaign_cell": False, "campaign_resume": False,
             "new_application_traffic": False,
+            "profile": profile_name,
+            "bering_child_go_environment": {
+                "requested": profile["bering_child_go_environment"],
+                "scope": "Bering child only; Procrustes and Sheaft environment unchanged",
+                "gogc_override": False,
+            },
         })
         status["status"] = "diagnostic_complete"
         return status
@@ -240,8 +284,9 @@ def main() -> None:
     parser.add_argument("--original", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--profile", choices=sorted(PROFILES), default=DEFAULT_PROFILE)
     args = parser.parse_args()
-    diagnose(args.original, args.out, _read(args.source))
+    diagnose(args.original, args.out, _read(args.source), args.profile)
 
 
 if __name__ == "__main__":

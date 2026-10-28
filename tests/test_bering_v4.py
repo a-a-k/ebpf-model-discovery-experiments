@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch
 import pytest
 import yaml
 
-from ebpf_discovery.bering_v4 import replay
+from ebpf_discovery.bering_v4 import child_go_environment, replay
 
 
 def harness(tmp_path, *, ingest_count=2, dropped=0):
@@ -21,7 +21,10 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
     graph = {'services': [{'id': 'observed-only'}], 'edges': [], 'endpoints': []}
 
     class Process:
+        kwargs = None
+
         def __init__(self, argv, **kwargs):
+            Process.kwargs = kwargs
             assert Path(argv[1]).name == 'child_resources_v4.py'
             assert argv[2] == '--report'
             assert Path(argv[3]).name == 'bering-resources.json'
@@ -82,6 +85,31 @@ def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path):
     assert config['sources'][0]['domain'] == 'same-deployment'
     assert config['runtime']['late_span_policy'] == 'current_window'
     assert json.loads((tmp_path / 'model.json').read_text()) == graph
+    assert 'env' not in process.kwargs
+
+
+def test_diagnostic_go_environment_is_child_only_and_retained(tmp_path, monkeypatch):
+    manifest, _, process = harness(tmp_path)
+    response = Mock(status_code=200)
+    monkeypatch.setenv('GODEBUG', 'netdns=go,gctrace=0')
+    monkeypatch.setenv('GOGC', '87')
+    before = dict(__import__('os').environ)
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
+            patch('ebpf_discovery.bering_v4.requests.post', return_value=response), \
+            child_go_environment({'GOMEMLIMIT': '12GiB', 'GODEBUG': 'gctrace=1'}):
+        replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
+    child = process.kwargs['env']
+    assert child['GOMEMLIMIT'] == '12GiB'
+    assert child['GOGC'] == '87'
+    assert child['GODEBUG'] == 'netdns=go,gctrace=1'
+    assert dict(__import__('os').environ) == before
+    evidence = json.loads((tmp_path / 'model-runtime/replay-command.json').read_text())
+    go = evidence['go_runtime_environment']
+    assert go['inherited_go_environment'] == {
+        'GOMEMLIMIT': None, 'GOGC': '87', 'GODEBUG': 'netdns=go,gctrace=0'}
+    assert go['effective_go_environment'] == {
+        'GOMEMLIMIT': '12GiB', 'GOGC': '87', 'GODEBUG': 'netdns=go,gctrace=1'}
 
 
 def test_compressed_export_limit_uses_decoded_bytes(tmp_path):

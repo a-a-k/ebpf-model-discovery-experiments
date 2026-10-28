@@ -4,17 +4,59 @@ from __future__ import annotations
 import hashlib
 import gzip
 import json
+import os
 from pathlib import Path
 import signal
 import socket
 import subprocess
 import sys
 import time
+from contextlib import contextmanager
+from contextvars import ContextVar
 
 import requests
 import yaml
 
 from .runtime import write_json
+
+
+_CHILD_GO_ENV = ContextVar('bering_v4_child_go_env', default=None)
+_GO_ENV_KEYS = ('GOMEMLIMIT', 'GOGC', 'GODEBUG')
+
+
+@contextmanager
+def child_go_environment(overrides=None):
+    """Scope diagnostic Go settings to Bering children, never other tools."""
+    supplied = dict(overrides or {})
+    unknown = set(supplied) - set(_GO_ENV_KEYS)
+    if unknown or any(not isinstance(value, str) for value in supplied.values()):
+        raise ValueError('Bering child environment only accepts string Go runtime settings')
+    token = _CHILD_GO_ENV.set(supplied or None)
+    try:
+        yield
+    finally:
+        _CHILD_GO_ENV.reset(token)
+
+
+def _child_process_environment():
+    overrides = _CHILD_GO_ENV.get()
+    inherited = {key: os.environ.get(key) for key in _GO_ENV_KEYS}
+    if not overrides:
+        return None, {'configured': False, 'inherited_go_environment': inherited,
+                      'effective_go_environment': inherited}
+    effective = dict(inherited)
+    effective.update(overrides)
+    if 'GODEBUG' in overrides and inherited.get('GODEBUG'):
+        requested = [part for part in overrides['GODEBUG'].split(',') if part]
+        requested_names = {part.split('=', 1)[0] for part in requested}
+        retained = [part for part in inherited['GODEBUG'].split(',')
+                    if part and part.split('=', 1)[0] not in requested_names]
+        effective['GODEBUG'] = ','.join([*retained, *requested])
+    environment = os.environ.copy()
+    environment.update({key: value for key, value in effective.items() if value is not None})
+    return environment, {'configured': True, 'inherited_go_environment': inherited,
+                         'effective_go_environment': effective,
+                         'scope': 'Bering child wrapper and Bering child only'}
 
 
 def decoded_size(export):
@@ -72,10 +114,15 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
               'source_domain': domain, 'clock_admission_filter': False,
               'discovery_mode': 'one offline batch; no historical reconciliation',
               'child_resource_report': str(resource_path)}
+    child_env, go_environment = _child_process_environment()
+    record['go_runtime_environment'] = go_environment
     process = None
     try:
         with (run_dir / 'bering.log').open('wb') as log:
-            process = subprocess.Popen(supervisor_argv, stdout=log, stderr=subprocess.STDOUT)
+            popen_options = {'stdout': log, 'stderr': subprocess.STDOUT}
+            if child_env is not None:
+                popen_options['env'] = child_env
+            process = subprocess.Popen(supervisor_argv, **popen_options)
             # Startup readiness only: no workload observation is measured here.
             ready_started = time.monotonic()
             while True:

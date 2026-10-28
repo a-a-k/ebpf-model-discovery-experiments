@@ -14,7 +14,9 @@ def _write(path: Path, value) -> None:
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
 
 
-def _source(commit="a" * 40):
+def _source(commit=None, profile_name=diagnostic.DEFAULT_PROFILE):
+    profile = diagnostic.PROFILES[profile_name]
+    commit = commit or profile["commit"]
     return {"run_id": diagnostic.SOURCE_RUN_ID,
             "artifact_id": diagnostic.SOURCE_ARTIFACT_ID,
             "artifact_name": diagnostic.SOURCE_ARTIFACT_NAME,
@@ -107,7 +109,7 @@ def test_census_uses_actual_steps_and_accepts_unissued_plan_suffix(tmp_path):
 
 
 def test_manifest_verifies_every_file_and_rejects_unmanifested_bytes(tmp_path, monkeypatch):
-    commit = "a" * 40
+    commit = diagnostic.PROFILES[diagnostic.DEFAULT_PROFILE]["commit"]
     payload = tmp_path/"plans.json"
     payload.write_bytes(b"[]\n")
     record = {"relative_path": "plans.json", "bytes": payload.stat().st_size,
@@ -124,7 +126,7 @@ def test_manifest_verifies_every_file_and_rejects_unmanifested_bytes(tmp_path, m
         "status": "training_checkpoint_ready", "run_id": str(diagnostic.SOURCE_RUN_ID),
         "commit": commit, "system": "otel_demo", "mode": "full", "seed": 6,
         "manifest_sha256": manifest_sha})
-    monkeypatch.setattr(diagnostic, "SOURCE_MANIFEST_SHA256", manifest_sha)
+    monkeypatch.setitem(diagnostic.PROFILES[diagnostic.DEFAULT_PROFILE], "manifest_sha256", manifest_sha)
     proof = diagnostic.validate_checkpoint_manifest(tmp_path, _source(commit))
     assert proof["verified_files"] == {"plans.json": {
         "bytes": payload.stat().st_size, "sha256": record["sha256"]}}
@@ -149,3 +151,38 @@ def test_workflow_is_fixed_checkpoint_only_and_retains_resources():
     assert "campaign_v4" not in workflow and "vms.sh start" not in workflow
     assert "setup-v4-swap.sh" in workflow and "capture-v4-resources.sh" in workflow
     assert "checkpoint_diagnostic_v4" in workflow
+
+
+def test_named_large_profile_is_exact_and_does_not_change_default():
+    default = diagnostic.PROFILES[diagnostic.DEFAULT_PROFILE]
+    large = diagnostic.PROFILES[diagnostic.LARGE_GC_PROFILE]
+    assert default["artifact_id"] == diagnostic.SOURCE_ARTIFACT_ID
+    assert default["bering_child_go_environment"] == {}
+    assert large == {
+        "run_id": 40754529169,
+        "artifact_id": 12847933267,
+        "artifact_name": "training-v4-otel_demo-full-6-40754529169",
+        "artifact_digest": "sha256:ba0289fd1e0cefd4be96cfbf0a0ac4a335db2ef4f748de4b0ffa63aa00c2c422",
+        "manifest_sha256": "b90d303797e4285d16659b4515195b0fc58276d8d4200ec6a9fa9eae070e333c",
+        "commit": "72133c00df3f7e4150a3f737dee33e4bee12527d",
+        "bering_child_go_environment": {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"},
+    }
+    source = {"run_id": large["run_id"], "artifact_id": large["artifact_id"],
+              "artifact_name": large["artifact_name"], "artifact_digest": large["artifact_digest"],
+              "run_sha": large["commit"], "expired": False}
+    diagnostic.validate_artifact_identity(source, diagnostic.LARGE_GC_PROFILE)
+    source["artifact_id"] = diagnostic.SOURCE_ARTIFACT_ID
+    with pytest.raises(ValueError, match="identity or digest"):
+        diagnostic.validate_artifact_identity(source, diagnostic.LARGE_GC_PROFILE)
+
+
+def test_large_profile_workflow_retains_full_diagnostic_and_child_only_gc_setting():
+    workflow = (Path(__file__).resolve().parents[1]/".github"/"workflows"/
+                "diagnose-large-training-checkpoint-v4.yml").read_text(encoding="utf-8")
+    profile = diagnostic.PROFILES[diagnostic.LARGE_GC_PROFILE]
+    for value in (profile["run_id"], profile["artifact_id"], profile["artifact_digest"],
+                  profile["manifest_sha256"], profile["commit"]):
+        assert str(value) in workflow
+    assert f"--profile {diagnostic.LARGE_GC_PROFILE}" in workflow
+    assert "GOMEMLIMIT" not in workflow and "GOGC" not in workflow and "GODEBUG" not in workflow
+    assert "campaign_v4" not in workflow and "vms.sh start" not in workflow
