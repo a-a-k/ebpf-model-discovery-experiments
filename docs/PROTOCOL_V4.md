@@ -4,8 +4,10 @@ Status: original-criterion implementation GO for three technical qualification j
 qualification [40655022146](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
 at `7e8deb9dfeb78723d87b254a3384bef735464d81` completed with three technical failures
 after acquisition: the Procrustes goal had empty mandatory targets. Repair `1284a5f`
-supplies existing per-step obligations; capture-replay diagnosis is pending its
-implementation check. No scientific-series results exist.
+supplies existing per-step obligations. Retained replays subsequently reached Bering;
+Petclinic replay [40661273773](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773)
+also reached Sheaft for some combined models after an ancillary predicate repair.
+These are diagnostics, not fresh validation. No scientific-series results exist.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 
@@ -66,13 +68,39 @@ Native, eBPF and combined observations receive identical operation contracts,
 static replica inventory, intervention vectors and simulation settings. Sources
 remain isolated when resolving trace/span IDs. Combining sources cannot create
 cross-source parent relationships. Conflicting identities remain ambiguous.
-Exact request headers and source-local ancestry select operation observations;
-cross-host clock containment is never an admission condition. No evaluator body,
+The graph input is **all observations in the source-separated frozen training-file
+prefixes**, including records without an entry request ID or connected parent chain.
+Cross-host clock containment is never an admission condition. Exact request headers
+and source-local ancestry are used separately for entry-alias evidence, classes and
+causal-execution checks; they do not filter structural discovery. No evaluator body,
 success flag, expected edge list or target-block observation enters discovery.
 
+Retained qualification diagnosis exposed an incorrect precondition in the first
+v4 implementation: selecting only descendants of exact entry roots demanded trace
+reconstruction before graph discovery. Bering already supports structural L7 client
+dependencies without that complete parent chain. Root and independent 6.1 Sol/xhigh
+skeptic: **GO under the ORIGINAL criterion** for removing this graph-input filter,
+2026-10-28, before replay execution. The causal source is restored access to actual
+observed calls, not a supplied edge or a stronger success definition. Native, eBPF
+and combined arms get the same training-prefix/background exposure and supplied
+semantics; the direct contract/inventory baseline is unchanged. Ambient preparation,
+verification and collector traffic may be present and is explicitly retained, so the
+global graph is not claimed to contain only the intended operations. A structural
+edge does not prove that a particular request executed it. Larger graphs alone are
+not success. Earlier filtered diagnostics remain preserved.
+
+Export each source/variant once and reuse the identical bytes in the combined arm.
+Run Bering once per source/variant for the observed graph and reuse that verified
+output across operation bindings. Bering itself applies each operation overlay in a
+separate replay before Sheaft. Charge preparation and all actual replay costs;
+references do not create duplicate commands. The current Bering offline batch keeps
+all admitted spans in memory, so resource qualification must cover this global input
+with the guests running before full-series approval. No cap or silent truncation is
+permitted to pass qualification.
+
 Bering receives actual observations. Required semantic calls are resolved against
-its output; they never create missing edges. Missing or ambiguous obligations
-produce an unavailable prediction with a reason. A complete graph is analyzed
+its output; they never create missing edges. Missing or ambiguous required service
+paths produce an unavailable prediction with a reason. The observed graph is analyzed
 using Sheaft external edge-aware predicates, including exact recovered edge IDs
 when separate calls to a shared dependency must both be required. An observed
 call is not automatically a mandatory call.
@@ -82,7 +110,35 @@ this protocol's node/whole-endpoint failures and live-edge probability one, thos
 edges share exactly the same availability; their conjunction is equivalent to one
 channel witness. This does not infer that every observed SQL/Redis command is
 mandatory. The binding records this basis; individual edge or command failures
-would require different semantics. Missing or ambiguous channels remain unknown.
+would require different semantics. Missing or ambiguous channels remain unknown as
+structural findings and for DB interventions; the primary conditional projection is
+defined separately below.
+
+Qualification diagnosis exposed an unnecessary admission rule: requiring every DB
+channel to be observed before predicting replica-only interventions, although the
+primary conditional model assumes nonintervened DB requirements are satisfied.
+For this primary target, an unobserved DB requirement can be a fixed satisfied
+factor, explicitly recorded as an assumption rather than a recovered dependency.
+This means fulfillment of the DB requirement, not merely a process accepting TCP.
+External response/body/SQL mismatches still test this assumption. Required observed
+service paths and entry evidence remain mandatory; the full observed graph stays
+intact. DB-down predictions remain unknown without the relevant observed required
+channel and fault-target mapping. This rule applies equally to every source arm
+and the direct baseline. Primary forecast availability does not establish DB-model
+completeness.
+
+Root and independent 6.1 Sol/xhigh reviewer: **GO for this explicitly conditional
+projection under the ORIGINAL criterion**, 2026-10-28, before fresh-series execution.
+It follows the declared topology-only assumptions and does not repair missing
+Thrift/service paths or prove business completion. Costs and external outcomes are
+unchanged; original failed replay outputs are retained. No empirical-success claim.
+
+The reviewer also approved supplied receiver-role normalization for exact bound
+untyped nginx HTTP entry spans. Original bytes and missing kind are retained;
+derived selected inputs record the supplied SERVER role and its rule/identifiers.
+Explicit CLIENT roles and conflicting evidence are never overridden. The same
+policy applies to declared receiver evidence across sources. This is manual
+semantic enrichment, not newly observed telemetry, and creates no downstream edge.
 
 Compare raw observation discovery with explicitly attributed static/network-scope
 enrichment, and native/eBPF/combined graphs through the same tooling. Include the

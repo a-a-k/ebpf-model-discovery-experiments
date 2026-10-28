@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 import json
+import hashlib
 from pathlib import Path
 import re
 
@@ -40,9 +41,17 @@ def _alias_key(alias):
 
 
 def _graph(folder):
-    model = _read(folder/'observed.json')
-    quality = _read(folder/'observed.signal-quality.json')
-    snapshot = _read(folder/'observed.snapshot.json')
+    observed = folder
+    reference = _read(folder/'observed-reference.json')
+    if reference:
+        observed = (folder/reference['folder']).resolve()
+        for filename, expected in reference['files'].items():
+            with (observed/filename).open('rb') as stream:
+                if hashlib.file_digest(stream, 'sha256').hexdigest() != expected:
+                    raise ValueError('Shared observed Bering output changed: '+filename)
+    model = _read(observed/'observed.json')
+    quality = _read(observed/'observed.signal-quality.json')
+    snapshot = _read(observed/'observed.snapshot.json')
     final_model = _read(folder/'model.json')
     final_quality = _read(folder/'model.signal-quality.json')
     final_snapshot = _read(folder/'model.snapshot.json')
@@ -113,6 +122,7 @@ def _graph(folder):
         else:
             db_impact['reason'] = 'conditional_database_or_profile_unavailable'
     return {'available': True, 'services': len(services), 'edges': len(edges),
+            'shared_discovery_reference': reference,
             'endpoints': len(endpoints), 'observed_instance_evidence': len(observed_instances),
             'bering_outputs_present': {'observed_model': True, 'observed_snapshot': snapshot is not None,
                 'observed_quality': quality is not None, 'final_model': final_model is not None,

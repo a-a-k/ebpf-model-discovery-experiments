@@ -92,7 +92,7 @@ def descendant_identities(rows, roots):
             pending.extend(children[identity] - seen)
 
 
-def select_planned(store, plans, contract, source, untyped_components=None):
+def select_planned(store, plans, contract, source, untyped_components=None, *, include_descendants=True):
     wanted = {(s['method'], canonical_route(s['path'])) for s in contract['steps']}
     traces, roots, reasons = defaultdict(set), [], defaultdict(int)
     sources = ('ebpf', 'native') if source == 'combined' else (source,)
@@ -112,12 +112,17 @@ def select_planned(store, plans, contract, source, untyped_components=None):
                                   'binding_reason': reason})
     selected = {s: set() for s in sources}
     for (actual_source, trace), ids in sorted(traces.items()):
+        if not include_descendants:
+            selected[actual_source].update((trace, span) for span in ids)
+            continue
         rows = [json.loads(encoded) for (encoded,) in store.db.execute(
             'SELECT data FROM spans WHERE source=? AND trace=? ORDER BY digest', (actual_source, trace))]
         selected[actual_source].update(descendant_identities(rows, ids))
     return selected, {'source': source, 'roots': roots, 'binding_reasons': dict(reasons),
         'selected_identity_counts': {s: len(ids) for s, ids in selected.items()},
-        'selection': 'declared routes, exact training request IDs and source-local ancestry',
+        'selection': ('declared routes, exact training request IDs and source-local ancestry'
+                      if include_descendants else 'exact declared entry roots only; no descendant traversal'),
+        'includes_descendants': include_descendants,
         'clock_gate': False, 'outcomes_used': False, 'ids_rewritten': False}
 
 

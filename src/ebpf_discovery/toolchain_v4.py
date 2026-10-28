@@ -17,9 +17,10 @@ from urllib.parse import urlsplit
 import yaml
 
 from .runtime import write_json
-from .selection_v4 import canonical_route, select_planned
+from .selection_v4 import canonical_route, select_planned, supplied_entry_roles
 from .raw_v4 import export_selection
 from .bering_v4 import replay
+from .binding_v4 import endpoint_alias_evidence, matches_call_hint
 
 PINS = {
     'Procrustes': '39f76000f8a39c971155e08ebffde829b525911b',
@@ -60,7 +61,7 @@ def db_aliases(model, quality):
     return result
 
 
-def unique_path(model, start, end, *, intermediates=None, call_hint=None):
+def unique_path(model, start, end, *, intermediates=None, call_hint=None, permitted_services=()):
     """A unique observed directed service path; keep every typed edge on its hops.
 
     Parallel operation identities on one channel are not alternate service paths.
@@ -71,16 +72,8 @@ def unique_path(model, start, end, *, intermediates=None, call_hint=None):
     for edge in model['edges']:
         if edge['kind'] == 'sync':
             if call_hint and edge['to'] == end:
-                identity = edge.get('identity') or {}
-                http = re.fullmatch(r'(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS) (/.+)', call_hint)
-                if http:
-                    matched = (identity.get('operation', '').upper() == http[1]
-                               and canonical_route(identity.get('route', '')) == canonical_route(http[2]))
-                else:
-                    # RPC service aliases were resolved separately. Match the method
-                    # as a complete token, not a substring of another operation.
-                    matched = (str(identity.get('operation', '')).rsplit('/', 1)[-1]
-                               == call_hint.rsplit('/', 1)[-1])
+                matched, _ = matches_call_hint(edge.get('identity') or {}, call_hint,
+                                               permitted_services=tuple(permitted_services))
                 if not matched:
                     continue
             adjacency[edge['from']].add(edge['to'])
@@ -103,9 +96,9 @@ def unique_path(model, start, end, *, intermediates=None, call_hint=None):
     return sorted({eid for a, b in zip(path, path[1:]) for eid in by_pair[a, b]})
 
 
-def resolve_contract(model, quality, contract, proxy_aliases=()):
+def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs=None):
     """Compile supplied obligations against recovered structure, never add structure."""
-    required, targets, resolved, unknown = set(), set(), [], []
+    required, targets, resolved, unknown, assumed_database = set(), set(), [], [], []
     databases = db_aliases(model, quality)
     entry = unique_service(model, contract['entry_services'])
     if not entry:
@@ -124,7 +117,16 @@ def resolve_contract(model, quality, contract, proxy_aliases=()):
         else:
             callee = unique_service(model, call['callee'])
         path = unique_path(model, caller, callee, intermediates=set(proxy_aliases),
-                           call_hint=call.get('operation_hint') if 'db_system' not in call else None) if caller and callee else None
+                           call_hint=call.get('operation_hint') if 'db_system' not in call else None,
+                           permitted_services=aliases(call.get('callee'))) if caller and callee else None
+        if 'db_system' in call and caller and entry and reachable(model, entry, caller) and path is None:
+            assumed_database.append({'obligation': call, 'resolved_caller': caller,
+                'resolved_callee': callee, 'reason': 'database_channel_missing_or_ambiguous',
+                'assumption': 'database requirement fulfilled under primary replica-only conditional model',
+                'basis': 'declared fixed condition; not inferred from process readiness or observed outcomes',
+                'recovered_dependency': False})
+            targets.add(caller)
+            continue
         if path is None:
             unknown.append({'reason': 'required_call_missing_or_ambiguous', 'obligation': call,
                             'resolved_caller': caller, 'resolved_callee': callee})
@@ -136,24 +138,43 @@ def resolve_contract(model, quality, contract, proxy_aliases=()):
         targets.update([caller, callee])
         resolved.append({'obligation': call, 'caller': caller, 'callee': callee,
                          'required_edge_ids': path,
+                         'call_hint_evidence': [
+                             {'edge_id': edge['id'], 'observed_identity': edge.get('identity'),
+                              'basis': matches_call_hint(edge.get('identity') or {}, call['operation_hint'],
+                                  permitted_services=tuple(aliases(call.get('callee'))))[1]}
+                             for edge in model['edges'] if edge['id'] in path and edge['to'] == callee
+                             and 'db_system' not in call and call.get('operation_hint')],
                          **({'compiled_semantics': 'mandatory caller-to-database-endpoint channel',
                              'basis': 'all typed edges on this channel share endpoint liveness; live-edge probability is one',
                              'validity': 'node/whole-endpoint fail-stop interventions only; no individual command or edge failures',
                              'command_level_necessity_inferred': False}
                             if 'db_system' in call else {})})
-    endpoints = []
-    for step in contract['steps']:
+    endpoints, endpoint_bindings = [], []
+    for index, step in enumerate(contract['steps']):
         candidates = [e for e in model['endpoints'] if e['entry_service'] == entry
                       and e.get('method') == step['method']
                       and canonical_route(e.get('path', '')) == canonical_route(step['path'])]
-        if len(candidates) != 1:
+        proof = (entry_proofs or {}).get(index, {})
+        proven = [e['id'] for e in model['endpoints'] if e['id'] in proof.get('endpoint_ids', [])
+                  and e['entry_service'] == entry and e.get('method') == step['method']]
+        if proven:
+            endpoints.extend(proven)
+            endpoint_bindings.append({'step': step, 'endpoint_ids': proven, 'proof': proof})
+        elif len(candidates) != 1:
             unknown.append({'reason': 'entry_endpoint_missing_or_ambiguous', 'step': step,
                             'candidates': [e['id'] for e in candidates]})
         else:
             endpoints.append(candidates[0]['id'])
+            endpoint_bindings.append({'step': step, 'endpoint_ids': [candidates[0]['id']],
+                                      'basis': 'unique observed entry method and canonical route'})
     return {'entry_service': entry, 'required_edges': sorted(required),
             'mandatory_targets': sorted(targets-{entry}), 'endpoints': sorted(set(endpoints)),
-            'resolved_calls': resolved, 'unknown': unknown, 'available': not unknown}
+            'resolved_calls': resolved, 'endpoint_bindings': endpoint_bindings,
+            'unknown': unknown, 'available': not unknown,
+            'assumed_satisfied_database_requirements': assumed_database,
+            'all_required_database_channels_observed': not assumed_database and not any(
+                'db_system' in item.get('obligation', {}) for item in unknown),
+            'primary_scope': 'topology-only replica intervention conditional on nonintervened requirements being fulfilled'}
 
 
 def fault_inputs(controlled, database_nodes=()):
@@ -309,16 +330,61 @@ class Toolchain:
                                      'identity': service['identity'], 'replicas': service['replicas']})
         return [next(iter(values.values())) for values in by_id.values() if len(values) == 1], evidence
 
-    def select(self, plans, contract, source, path, enriched):
-        selected, evidence = select_planned(self.store, plans, contract, source,
-            getattr(self.declaration, 'UNTYPED_ENTRY_COMPONENTS', {}))
-        manifest = export_selection(self.store, selected, path.parent/'selected-inputs',
-                                    self.system+'-routed-network' if enriched else None)
-        write_json(path, manifest)
-        write_json(path.with_suffix('.selection.json'), dict(evidence,
-            observations=manifest['observations'], network_scope_supplied=enriched,
-            input_manifest_sha256=digest(path)))
-        return manifest['observations']
+    def prepare_inputs(self, plans):
+        """Freeze source-global graph input; exact roots serve only separate proofs.
+
+        One export per source/variant is shared by all operations and the combined
+        arm. No request ancestry or supplied expected topology filters the graph.
+        """
+        started = time.time_ns()
+        self.entry_evidence, self.input_manifests = {}, {}
+        roles = {}
+        untyped = getattr(self.declaration, 'UNTYPED_ENTRY_COMPONENTS', {})
+        try:
+            for name, contract in self.declaration.CONTRACTS.items():
+                for source in ('ebpf', 'native'):
+                    _, evidence = select_planned(self.store, plans, contract, source, untyped,
+                                                 include_descendants=False)
+                    self.entry_evidence[source, name] = evidence
+                    for identity, declaration in supplied_entry_roles(
+                            self.store, evidence['roots'], contract['entry_services'], untyped).items():
+                        if identity in roles and roles[identity] != declaration:
+                            raise ValueError('Conflicting supplied role declarations for one source identity')
+                        roles[identity] = declaration
+                pieces = [self.entry_evidence[source, name] for source in ('ebpf', 'native')]
+                self.entry_evidence['combined', name] = {
+                    'source': 'combined', 'roots': [root for piece in pieces for root in piece['roots']],
+                    'binding_reasons': {key: value for piece in pieces for key, value in piece['binding_reasons'].items()},
+                    'selection': 'union of source-local exact entry proofs; no cross-source causal join',
+                    'includes_descendants': False, 'outcomes_used': False, 'clock_gate': False}
+            for variant in ('raw', 'network_scope'):
+                for source in ('ebpf', 'native'):
+                    folder = self.root/'inputs'/source/variant
+                    folder.mkdir(parents=True, exist_ok=True)
+                    manifest = export_selection(self.store, {source: None}, folder/'exports',
+                        self.system+'-routed-network' if variant == 'network_scope' else None,
+                        supplied_server_roles={key: value for key, value in roles.items() if key[0] == source})
+                    manifest.update(graph_input='all source-separated frozen training-prefix observations',
+                        causal_execution_inferred=False,
+                        ambient_preparation_and_oracle_traffic='retained if present in frozen source prefixes',
+                        supplied_role_policy='union of exact declared entry roots across all operations')
+                    path = folder/'observations.json'
+                    write_json(path, manifest)
+                    self.input_manifests[source, variant] = (path, manifest)
+                pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
+                manifest = {'exports': [export for _, piece in pieces for export in piece['exports']],
+                    'observations': sum(piece['observations'] for _, piece in pieces),
+                    'graph_input': 'union of unchanged source-global exports; no cross-source causal join',
+                    'source_manifests': [{'path': str(path), 'sha256': digest(path)} for path, _ in pieces],
+                    'causal_execution_inferred': False}
+                path = self.root/'inputs'/'combined'/variant/'observations.json'
+                path.parent.mkdir(parents=True, exist_ok=True)
+                write_json(path, manifest)
+                self.input_manifests['combined', variant] = (path, manifest)
+        finally:
+            write_json(self.root/'input-preparation-cost.json', {'started_ns': started,
+                'ended_ns': time.time_ns(), 'completed': len(self.input_manifests) == 6,
+                'scope': 'entry proofs, role union, frozen raw exports and combined references; shared across operations'})
 
     def discover(self, input_path, folder, overlay=None, prefix='model'):
         manifest = json.loads(input_path.read_text(encoding='utf-8'))
@@ -368,24 +434,42 @@ class Toolchain:
 
     def forecast(self, plans):
         self.preflight()
+        self.prepare_inputs(plans)
         results = {}
         for source in ('ebpf', 'native', 'combined'):
             results[source] = {}
             for variant in ('raw', 'network_scope'):
                 results[source][variant] = {}
+                input_path, manifest = self.input_manifests[source, variant]
+                shared = self.root/'discovery'/source/variant
+                shared.mkdir(parents=True, exist_ok=True)
+                if manifest['observations']:
+                    observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
                 for name, contract in self.declaration.CONTRACTS.items():
                     folder = self.root/source/variant/name
                     folder.mkdir(parents=True, exist_ok=True)
-                    input_path = folder/'observations.json'
                     unavailable = {'prediction': None, 'interval': [0, 1], 'by_state': {}, 'available': False}
-                    if not self.select(plans, contract, source, input_path, variant != 'raw'):
-                        answer = dict(unavailable, reason='no_observed_entry_traces')
+                    write_json(folder/'input-reference.json', {'path': os.path.relpath(input_path, folder),
+                        'sha256': digest(input_path), 'shared': True, 'observations': manifest['observations']})
+                    write_json(folder/'entry-evidence.json', self.entry_evidence[source, name])
+                    if not manifest['observations']:
+                        answer = dict(unavailable, reason='no_frozen_source_observations')
                         write_json(folder/'forecast.json', answer)
                         results[source][variant][name] = answer
                         continue
-                    model, quality = self.discover(input_path, folder, prefix='observed')
+                    model, quality = observed_model, observed_quality
+                    write_json(folder/'observed-reference.json', {'folder': os.path.relpath(shared, folder),
+                        'files': {filename: digest(shared/filename) for filename in
+                                  ('observed.json', 'observed.signal-quality.json', 'observed.snapshot.json')},
+                        'basis': 'same actual Bering graph reused across operations; discovery cost counted once'})
                     proxy_names = aliases(self.inventory.get('proxy', {}).get('name'))
-                    binding = resolve_contract(model, quality, contract, proxy_names)
+                    entry = unique_service(model, contract['entry_services'])
+                    proofs = {index: endpoint_alias_evidence(self.store,
+                        self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
+                        for index, step in enumerate(contract['steps'])} if entry else {}
+                    binding = resolve_contract(model, quality, contract, proxy_names, entry_proofs=proofs)
+                    selected_db, mapping = self.database_nodes(model, quality)
+                    write_json(folder/'database-mapping.json', mapping)
                     controlled = unique_service(model, self.declaration.CONTROLLED_SERVICE_ALIASES)
                     # A missing controlled node is acceptable only for operations
                     # whose declared requirements do not include that service.
@@ -403,8 +487,6 @@ class Toolchain:
                         continue
                     static_services, static_evidence = self.static_overlay(model, source, name)
                     write_json(folder/'procrustes-attachment.json', static_evidence)
-                    selected_db, mapping = self.database_nodes(model, quality)
-                    write_json(folder/'database-mapping.json', mapping)
                     overlay = {'name': 'supplied-operation-and-placement-contract',
                                'services': [s for s in static_services if s['id'] not in {*selected_db, controlled}],
                                'endpoints': []}
@@ -464,12 +546,18 @@ class Toolchain:
                               'database_down_prediction': values.get('db-down'),
                               'exact_database_down_given_contract': exact_database_down,
                               'database_conditional': bool(contract.get('conditional_db')),
+                              'assumed_satisfied_database_requirements': binding['assumed_satisfied_database_requirements'],
+                              'all_required_database_channels_observed': binding['all_required_database_channels_observed'],
                               'state_weights': STATE_WEIGHTS, 'simulator': 'Sheaft',
                               'graph_sha256': digest(folder/'model.json'),
                               'analysis_sha256': digest(folder/'analysis.json'),
                               'structural_adequacy_is_tested': True}
                     if contract.get('conditional_db'):
                         answer['database_down_prediction'] = None
+                        answer['database_unknown_reason'] = 'declared_conditional_database_requirement'
+                    if not binding['all_required_database_channels_observed']:
+                        answer['database_down_prediction'] = None
+                        answer['database_unknown_reason'] = 'unobserved_or_ambiguous_required_database_channel'
                     write_json(folder/'forecast.json', answer)
                     results[source][variant][name] = answer
         write_json(self.root/'forecasts.json', results)
@@ -478,10 +566,13 @@ class Toolchain:
             for variant, operations in variants.items():
                 for operation, forecast in operations.items():
                     folder = self.root/source/variant/operation
-                    replay_path = folder/'observed-runtime'/'replay-command.json'
+                    replay_path = self.root/'discovery'/source/variant/'observed-runtime'/'replay-command.json'
                     simulation_path = folder/'simulation.command.json'
                     execution.append({'source': source, 'variant': variant, 'operation': operation,
                         'bering_executed': replay_path.is_file(),
+                        'bering_discovery_shared_across_operations': True,
+                        'bering_discovery_record': str(replay_path),
+                        'bering_overlay_executed': (folder/'model-runtime'/'replay-command.json').is_file(),
                         'sheaft_executed': simulation_path.is_file(),
                         'prediction_available': forecast['available'],
                         'unknown_reason': forecast.get('reason')})

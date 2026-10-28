@@ -5,8 +5,11 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > **Current status (iteration 4): qualification repair; no scientific results.**
 > [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
 > each acquired 240 planned requests, then failed on an invalid Procrustes goal
-> before discovery. Per-step goals are repaired; retained-capture replay is being
-> checked before execution. The 27 scientific campaigns have not started.
+> before discovery. Per-step goals and ancillary Sheaft predicates are repaired;
+> [Petclinic retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773)
+> produced some combined-source forecasts. Diagnosis also exposed an incorrect
+> graph-input filter, now being removed and reviewed. The 27 scientific campaigns
+> have not started; retained replay does not measure fresh predictive accuracy.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
@@ -145,23 +148,35 @@ headers, receipt metadata and SHA-256, even if decoding fails. Its JSONL index p
 back to the exact raw file; it does not repair IDs. Native OTLP/Jaeger exports remain
 in a separate source with their own provenance.
 
-The bounded SQLite observation index streams complete file prefixes and retains
-conflicting same-ID variants. Exact request binding selects source-local entry roots;
-only observed descendants of those roots enter an operation export. Protobuf records
-are filtered by copying their original resource/scope/span messages, so attributes,
-links, unknown protobuf fields, IDs and timestamps are not reconstructed from a
-normalized surrogate. Invalid/all-zero IDs do not become valid through prefixing.
+The SQLite observation index streams complete file prefixes and retains conflicting
+same-ID variants. Bering receives **all records in the frozen training prefixes** of
+the selected source, including calls without a connected entry trace. Exact request
+binding remains a separate input to endpoint-alias, class and causal checks. Complete
+protobuf resource/scope/span messages preserve attributes, links, unknown fields, IDs
+and timestamps. Invalid/all-zero IDs do not become valid through prefixing. Native
+Jaeger has an explicit format codec; original evidence is retained.
 
-For each operation, source and variant, one offline batch is replayed through the
-actual Bering runtime:
+For each source and variant, one offline batch is replayed through the actual Bering
+runtime and its observed graph is reused across operations:
 
 1. `ebpf` uses Bering's declared `ebpf-obi` endpoint and source domain;
 2. `native` uses the native endpoint and a separate domain;
 3. `combined` sends both domains to one runtime but never creates cross-source parent
    relationships;
-4. Bering flushes after all input, and only its published model is passed to Sheaft.
+4. Bering flushes after all input. Each operation overlay is then applied by Bering
+   in a separate replay, and only its published model is passed to Sheaft.
 
-There are two discovery variants. `raw` is the selected raw wire evidence.
+This corrects the first v4 implementation, which required complete parent chains
+before admitting downstream calls. Structural calls do not by themselves establish
+causality for an individual operation. The global graph can also include preparation,
+verification and ambient traffic; all arms have the same scope policy. Inputs are
+shared without copying wire bodies per operation. Preparation/replay costs are retained.
+The offline Bering batch still holds spans in memory; the SQLite index does not make
+that tool memory bounded. Actual guest/tool resource qualification remains necessary.
+
+There are two discovery variants. `raw` preserves the original wire structures,
+with separately attributed format conversion and explicitly supplied receiver roles
+where exact entry evidence permits them; it is not claimed to be entirely unaided.
 `network_scope` differs only by adding the explicitly attributed
 `bering.network.scope` resource attribute. Existing conflicting attributes are
 retained rather than overwritten. Both variants receive the same contracts and
@@ -339,7 +354,9 @@ native/training/, native/final/      # source-separated native snapshots
 toolchain-build/                     # commits, Go archives, binaries, hashes, costs
 toolchain/static-inputs.json
 toolchain/procrustes/                 # goals, reports and command evidence
-toolchain/{source}/{variant}/{op}/    # selected wire input, Bering model/quality,
+toolchain/inputs/{source}/{variant}/  # shared frozen source wire inputs/manifests
+toolchain/discovery/{source}/{variant}/ # actual shared observed Bering graph
+toolchain/{source}/{variant}/{op}/    # verified input/observed references, final model,
                                      # binding, overlays, faults, predicates,
                                      # Sheaft analysis/simulation and forecast
 toolchain/forecasts.json, forecast-saved.json, freeze-integrity.json

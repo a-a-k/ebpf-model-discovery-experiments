@@ -111,6 +111,21 @@ jobs:
             if [ "$code" -ne 0 ]; then result=1; fi
           done
           exit "$result"
+      - name: Produce compact retained-evidence readout
+        if: always()
+        run: |
+          set +e
+          result=0
+          for source in work/replay/*/source-artifact.json; do
+            system="$(basename "$(dirname "$source")")"
+            python -m ebpf_discovery.qualification_readout_v4 \
+              --replay-dir "work/replay/$system/output" \
+              --out "work/replay/$system/readout.json" \
+              --resource "replay=work/replay/$system/infrastructure/replay-time.txt"
+            code=$?
+            if [ "$code" -ne 0 ]; then result=1; fi
+          done
+          exit "$result"
       - name: Retain replay runner resource evidence
         if: always()
         run: |

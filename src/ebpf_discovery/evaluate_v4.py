@@ -240,6 +240,7 @@ def _manual_baselines(system: str, operations: list[str]) -> dict:
             "available": True, "prediction": prediction, "by_state": by_state,
             "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
             "controlled_service_required": requires_controlled, "database": database,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes",
         }
     return result
 
@@ -343,6 +344,9 @@ def _journal_transport_cost(root: Path) -> dict:
 def _cost(root: Path, status: dict) -> dict:
     build = _read(root/"toolchain-build"/"toolchain-build.json")
     binaries = build.get("binaries", []) if isinstance(build, dict) else []
+    preparation = _read(root/"toolchain"/"input-preparation-cost.json", {})
+    preparation_seconds = ((preparation['ended_ns']-preparation['started_ns'])/1e9
+        if isinstance(preparation.get('started_ns'), int) and isinstance(preparation.get('ended_ns'), int) else None)
     commands, returncodes, bering_replays, replay_statuses = [], [], [], []
     for path in (root/"toolchain").rglob("*.command.json") if (root/"toolchain").exists() else []:
         row = _read(path, {})
@@ -375,6 +379,8 @@ def _cost(root: Path, status: dict) -> dict:
         "toolchain_build_seconds": sum(row.get("build_seconds", 0) for row in binaries) if binaries else None,
         "toolchain_command_seconds": sum(commands) if commands else None,
         "toolchain_command_count": len(commands),
+        "shared_input_preparation_seconds": preparation_seconds,
+        "shared_input_preparation_completed": preparation.get('completed'),
         "bering_replay_command_seconds": sum(bering_replays) if bering_replays else None,
         "bering_replay_command_count": len(bering_replays),
         "bering_replay_attempts": len(replay_statuses),

@@ -163,3 +163,96 @@ def test_database_predicate_is_explicitly_a_channel_under_node_faults():
     for unavailable in ([], ['cart'], ['db'], ['cart', 'db']):
         assert exact_graph_outcome(model, binding, unavailable) == exact_graph_outcome(
             model, dict(binding, required_edges=['HGET']), unavailable)
+
+
+def test_missing_db_export_does_not_veto_explicit_fixed_condition_replica_forecast():
+    model = {'services': [{'id': name} for name in ('gateway', 'worker')],
+        'edges': [{'id': 'gw', 'from': 'gateway', 'to': 'worker', 'kind': 'sync'}],
+        'endpoints': [{'id': 'entry', 'entry_service': 'gateway', 'method': 'GET', 'path': '/work'}]}
+    contract = {'entry_services': ['gateway'], 'steps': [{'method': 'GET', 'path': '/work'}],
+        'required_calls': [{'caller': ['gateway'], 'callee': ['worker']},
+                           {'caller': ['worker'], 'db_system': 'postgresql'}]}
+    projected = resolve_contract(model, {}, contract)
+    assert projected['available']
+    assert not projected['all_required_database_channels_observed']
+    assert projected['assumed_satisfied_database_requirements'][0]['recovered_dependency'] is False
+    assert projected['required_edges'] == ['gw']
+    full_model = {**model, 'services': [*model['services'], {'id': 'db'}],
+        'edges': [*model['edges'], {'id': 'wd', 'from': 'worker', 'to': 'db', 'kind': 'sync'}]}
+    quality = {'observation_evidence': [{'entity_type': 'service', 'entity_id': 'db',
+        'evidence': {'database': {'system': 'postgresql'}}}]}
+    observed = resolve_contract(full_model, quality, contract)
+    assert observed['available'] and observed['all_required_database_channels_observed']
+    for down in ([], ['worker']):
+        assert exact_graph_outcome(model, projected, down) == exact_graph_outcome(full_model, observed, down)
+    assert exact_graph_outcome(full_model, observed, ['db']) == 0
+    # Projection is not evidence for the DB intervention; the observed model has
+    # a distinct response and the binding explicitly records missing DB coverage.
+    assert exact_graph_outcome(model, projected, ['db']) == 1
+
+
+def test_database_projection_cannot_invent_a_required_service_path():
+    model = {'services': [{'id': 'gateway'}, {'id': 'worker'}], 'edges': [],
+        'endpoints': [{'id': 'entry', 'entry_service': 'gateway', 'method': 'GET', 'path': '/work'}]}
+    contract = {'entry_services': ['gateway'], 'steps': [{'method': 'GET', 'path': '/work'}],
+        'required_calls': [{'caller': ['gateway'], 'callee': ['worker']},
+                           {'caller': ['worker'], 'db_system': 'postgresql'}]}
+    binding = resolve_contract(model, {}, contract)
+    assert not binding['available']
+    assert binding['assumed_satisfied_database_requirements'] == []
+    assert len(binding['unknown']) == 2
+
+
+def test_global_inputs_keep_unlinked_calls_without_request_roots_and_reuse_wire(tmp_path):
+    import sqlite3
+    from pathlib import Path
+    store = SimpleNamespace(db=sqlite3.connect(':memory:'))
+    store.db.execute('CREATE TABLE files(path TEXT, consumed INTEGER)')
+    for filename in ('a.jsonl', 'native-node-a.jsonl'):
+        payload = {'resourceSpans': [{'resource': {'attributes': [
+            {'key': 'service.name', 'value': {'stringValue': 'unlinked-worker'}}]},
+            'scopeSpans': [{'spans': [{'traceId': '1'*32, 'spanId': '2'*16,
+                'kind': 'SPAN_KIND_CLIENT', 'name': 'GET /downstream', 'attributes': []}]}]}]}
+        path = tmp_path/filename
+        path.write_text(json.dumps(payload)+'\n', encoding='utf-8')
+        store.db.execute('INSERT INTO files VALUES (?, ?)', (str(path), path.stat().st_size))
+    tool = object.__new__(Toolchain)
+    tool.root, tool.store, tool.system = tmp_path/'toolchain', store, 'generic'
+    tool.root.mkdir()
+    tool.declaration = SimpleNamespace(CONTRACTS={name: {'entry_services': ['entry'],
+        'steps': [{'method': 'GET', 'path': '/'+name}]} for name in ('first', 'second')})
+    tool.prepare_inputs([])
+    for variant in ('raw', 'network_scope'):
+        ebpf = tool.input_manifests['ebpf', variant][1]
+        native = tool.input_manifests['native', variant][1]
+        combined = tool.input_manifests['combined', variant][1]
+        assert ebpf['observations'] == native['observations'] == 1
+        assert combined['observations'] == 2
+        assert [item['path'] for item in combined['exports']] == [
+            ebpf['exports'][0]['path'], native['exports'][0]['path']]
+        assert all(Path(item['path']).is_file() for item in combined['exports'])
+        assert {item['source'] for item in ebpf['exports']} == {'ebpf'}
+        assert {item['source'] for item in native['exports']} == {'native'}
+    assert all(not evidence['roots'] for evidence in tool.entry_evidence.values())
+    # Missing entry binding cannot silently reduce the structural graph input.
+    assert len(list(tool.root.rglob('*.json'))) > 0
+
+
+def test_contract_rpc_wire_spelling_and_proven_endpoint_alias_preserve_graph():
+    model = {'services': [{'id': name} for name in ('frontend', 'cart')],
+        'edges': [{'id': 'call', 'from': 'frontend', 'to': 'cart', 'kind': 'sync',
+                   'identity': {'protocol': 'http', 'operation': 'POST', 'route': '/oteldemo.CartService/AddItem'}}],
+        'endpoints': [{'id': 'concrete', 'entry_service': 'frontend', 'method': 'POST', 'path': '/cart/6'},
+                      {'id': 'template', 'entry_service': 'frontend', 'method': 'POST', 'path': '/cart/{id}'}]}
+    original = json.dumps(model, sort_keys=True)
+    contract = {'entry_services': ['frontend'], 'steps': [{'method': 'POST', 'path': '/cart/6'}],
+        'required_calls': [{'caller': ['frontend'], 'callee': ['cart', 'oteldemo.CartService'],
+                           'operation_hint': 'CartService/AddItem'}]}
+    assert not resolve_contract(model, {}, contract)['available']
+    proof = {'endpoint_ids': ['concrete', 'template'], 'evidence': [{'basis': 'fixture exact bound root'}]}
+    binding = resolve_contract(model, {}, contract, entry_proofs={0: proof})
+    assert binding['available'] and binding['endpoints'] == ['concrete', 'template']
+    assert binding['resolved_calls'][0]['call_hint_evidence'][0]['basis'] == 'rpc_over_http_post_route_exact'
+    assert json.dumps(model, sort_keys=True) == original
+    model['edges'][0]['identity']['route'] = '/another.CartService/AddItem'
+    assert not resolve_contract(model, {}, contract, entry_proofs={0: proof})['available']

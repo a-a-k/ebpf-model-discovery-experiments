@@ -1,9 +1,28 @@
 import json
 import hashlib
+import pytest
 from types import SimpleNamespace
 
 from ebpf_discovery.evidence_v4 import _alias_key, _cross_guest, _graph, evaluate
 from ebpf_discovery.store_v3 import ObservationStore
+
+
+def test_shared_discovery_reference_is_verified_and_remains_relocatable(tmp_path):
+    shared, operation = tmp_path/'shared', tmp_path/'operation'
+    shared.mkdir()
+    operation.mkdir()
+    contents = {'observed.json': {'services': [{'id': 'worker'}], 'edges': [], 'endpoints': []},
+                'observed.signal-quality.json': {}, 'observed.snapshot.json': {}}
+    hashes = {}
+    for name, value in contents.items():
+        data = json.dumps(value).encode()
+        (shared/name).write_bytes(data)
+        hashes[name] = hashlib.sha256(data).hexdigest()
+    (operation/'observed-reference.json').write_text(json.dumps({'folder': '../shared', 'files': hashes}))
+    assert _graph(operation)['services'] == 1
+    (shared/'observed.json').write_text('{}')
+    with pytest.raises(ValueError, match='Shared observed Bering output changed'):
+        _graph(operation)
 
 
 def _id(value, width=16):
