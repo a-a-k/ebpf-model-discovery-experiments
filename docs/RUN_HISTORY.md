@@ -1,5 +1,34 @@
 # Technical run history
 
+## Iteration 4: graph-driven forecasts
+
+The current design is [PROTOCOL_V4.md](PROTOCOL_V4.md). These attempts use actual
+Bering graphs and Sheaft forecasts; the older iterations below are historical and
+must not be pooled with them. A training checkpoint is partial evidence, not a
+completed scientific cell.
+
+| Run | Purpose and current evidence | Interpretation |
+|---|---|---|
+| [40655022146](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146) | Three small full-mode qualifications acquired data, then failed on empty Procrustes targets | Retained technical preparation; target construction repaired |
+| [40658671556](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40658671556) | Retained replay exposed the Petclinic ancillary-predicate defect | Retained failure; no new application traffic |
+| [40661273773](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773) | Petclinic retained replay after predicate repair | Technical tool-path evidence, not a fresh accuracy measurement |
+| [40668208749](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40668208749) | Global frozen-input replay | Retained diagnostic; discovery input is not filtered to linked request descendants |
+| [40674465933](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933) | Repaired retained replay at `2b72cd7` passed all three source-integrity checks | Source-specific availability and unknowns described in the protocol; no full-size capacity claim |
+| [40704387111](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704387111) | Archived those five original attempts, logs and metadata | [Permanent data release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40704387111) |
+| [40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284) | First planned full/seed6 cells at `fdec1a6`; OTel and Petclinic runner shutdowns interrupted discovery and skipped uploads; DSB still running | Shutdown cause unproven; technically failed cells are retried without protocol reduction |
+| [40718665137](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137) | OTel/full/seed6 retry at `ea2e278`; training artifact `12830934533` uploaded and same-live-process continuation started | Training retained; final model/validation outcome pending |
+| [40718674400](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400) | Petclinic/full/seed6 retry at `ea2e278`; training artifact `12832246532` uploaded and same-live-process continuation started | Training retained; final model/validation outcome pending |
+
+Both retry uploads and release steps succeeded. The downloaded ready/manifest
+metadata matches its run, source commit, system, mode and seed; inspected metadata
+file hashes match the manifests. Selected ZIP members were read by HTTP ranges;
+this is not an independent verification of every raw body, SQLite backup or the
+entire archive digest. Original artifact identity and GitHub archive digests remain
+in the Actions metadata. The full evidence and final forecast-freeze chain are
+still subject to campaign evaluation and review.
+
+## Iterations 1–3: retained historical attempts
+
 These are engineering/qualification attempts, not additional scientific repeats. Workflow success alone does not imply that the two replicas, observation modes, or protocols were qualified. The fixed empirical series remains 27 campaigns. All references below are retained, including cancellations and invalid qualifications.
 
 | Run | Purpose and outcome | Repair or interpretation |
