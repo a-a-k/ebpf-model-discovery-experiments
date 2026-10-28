@@ -178,6 +178,14 @@ network-scope variant, each source's Petclinic DB-down forecast is zero for owne
 details and create-visit; cached vets stays unknown. Unscoped DB-fault mappings and
 DSB/OTel DB-fault predictions remain unknown. No fresh-outcome accuracy claim is made.
 
+Retained OTel diagnosis: supplied network scope maps the observed logical
+PostgreSQL endpoints, but product-catalog also has edges to `unresolved_alias`
+nodes with an address and no port. Those nodes cannot be proved coextensive with
+the selected whole-endpoint DB fault group. The resolver retains unknown instead
+of merging them. The descriptive SQL operation hint is not used in DB matching;
+it is not the cause. This limits the current evidence/resolution path, not every
+possible eBPF collector or identity-resolution method.
+
 The same readouts retain isolated Bering child RSS, input counts and exit status.
 For example, combined/network_scope discovery ingested 28,490 raw observations
 with 141,128 KiB peak RSS in DSB; 13,752 with 180,796 KiB in OTel; and 6,091 with
