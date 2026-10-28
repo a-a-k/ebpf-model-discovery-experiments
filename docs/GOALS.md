@@ -60,6 +60,8 @@ integration were updated. Product verification does not replace empirical work.
 
 No study code, data, results, mentions or links belong in Bering. Further product
 work must be necessary generic functionality, not migration of experiment code.
+Published release, chart and integration evidence is collected in
+[TOOLCHAIN_RELEASES.md](TOOLCHAIN_RELEASES.md).
 The public research repository is `a-a-k/ebpf-model-discovery-experiments`, under
 the single local `ebpf/ebpf-model-discovery-experiments` directory.
 
