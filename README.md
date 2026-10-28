@@ -15,7 +15,10 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > graph discovery after training acquisition; their artifact uploads were skipped.
 > The logs do not establish the shutdown cause. DSB remains running. A reviewed
 > technical repair adds a saved training checkpoint, streamed input and measured
-> swap before rerunning failed cells; implementation checks are pending. Retained replay does not
+> swap. After independent review and 413 passing Linux tests, the unchanged failed
+> cells were relaunched: [OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
+> and [Petclinic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400).
+> Their outcomes are pending. Retained replay does not
 > measure fresh predictive accuracy or full-campaign capacity.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),

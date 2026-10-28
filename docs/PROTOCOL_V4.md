@@ -242,6 +242,20 @@ experiment. No observation cap, deduplication, shorter discovery window, reduced
 trial count, experimental deadline or weaker outcome contract is introduced.
 The remaining 24 cells still wait for the repaired first-stage review.
 
+Implementation decision at `ea2e278e50f64bd50597c243d84f834be1b92576`: root **GO**
+and independent 6.1 Sol/xhigh skeptic **explicit ORIGINAL-criterion execution GO**
+for only OTel/full/seed6 and Petclinic/full/seed6 technical retries. Linux CI
+[40718306225](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718306225)
+passed all 413 tests, including the actual supervisor/checkpoint handoff and both
+Linux process-group cleanup cases. Exact wire and referenced metadata retention,
+same-live-process continuation and separate creation/upload-hold costs were reviewed.
+This is permission to measure the unchanged experiment, not evidence of sufficient
+capacity or successful predictions. Original DSB remains running; any valid result
+is retained irrespective of accuracy or unknown coverage.
+The two retries were dispatched at this exact reviewed commit: OTel
+[40718665137](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
+and Petclinic [40718674400](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400).
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
