@@ -90,29 +90,85 @@ jobs:
           /usr/bin/time -v -o work/campaign/infrastructure/toolchain-setup-time.txt \
             scripts/setup-toolchain-v4.sh work/campaign/toolchain-build
           echo "PBS_BIN=$(realpath work/campaign/toolchain-build/bin)" >> "$GITHUB_ENV"
+      - name: Allocate measured swap on the standard runner
+        run: bash scripts/setup-v4-swap.sh work/campaign/infrastructure
       - name: Boot two independent guests
         run: bash scripts/vms.sh start work/vms
-      - name: Acquire one fixed fresh campaign cell
+      - name: Acquire and close the training prefix on the live guests
+        id: training
         env:
-          PYTHONPATH: .
+          PYTHONPATH: src
         run: |
-          chmod +x scripts/capture-v3-resources.sh
-          scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms &
-          sampler=$!
-          set +e
-          /usr/bin/time -v -o work/campaign/infrastructure/campaign-time.txt \
-            python -m ebpf_discovery.campaign_v4 --system '${{ matrix.system }}' \
-              --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' --out work/campaign
-          rc=$?
-          kill "$sampler" 2>/dev/null || true
-          wait "$sampler" 2>/dev/null || true
-          exit "$rc"
+          python -m ebpf_discovery.campaign_process_v4 start \
+            --state-dir work/campaign-process --out work/campaign \
+            --checkpoint work/training-checkpoint --vms work/vms \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
+          python -m ebpf_discovery.campaign_process_v4 wait \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --until checkpoint
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, pathlib
+          ready = json.loads(pathlib.Path('work/training-checkpoint/ready.json').read_text())
+          print('manifest_sha256='+ready['manifest_sha256'])
+          PY
+      - name: Persist the closed training checkpoint before discovery
+        id: training_checkpoint
+        if: always() && steps.training.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-v4-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: work/training-checkpoint/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Bind upload outcome to the same live campaign
+        id: release
+        if: always() && steps.training.outcome == 'success'
+        env:
+          PYTHONPATH: src
+          MANIFEST_SHA256: ${{ steps.training.outputs.manifest_sha256 }}
+          UPLOAD_SUCCESS: ${{ steps.training_checkpoint.outcome == 'success' }}
+          ARTIFACT_ID: ${{ steps.training_checkpoint.outputs.artifact-id }}
+          ARTIFACT_URL: ${{ steps.training_checkpoint.outputs.artifact-url }}
+          ARTIFACT_DIGEST: ${{ steps.training_checkpoint.outputs.artifact-digest }}
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 release \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --manifest-sha256 "$MANIFEST_SHA256" --upload-success "$UPLOAD_SUCCESS" \
+            --artifact-id "$ARTIFACT_ID" --artifact-url "$ARTIFACT_URL" --artifact-digest "$ARTIFACT_DIGEST"
+      - name: Continue discovery and validation on the same live guests
+        if: always() && steps.training.outcome == 'success' && steps.release.outcome == 'success'
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 wait \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --until exit
+      - name: Stop only the owned campaign processes before retention
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 stop \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
       - name: Retain environment, status and cost evidence
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p work/campaign/infrastructure
+          if [[ -d work/campaign-process ]]; then cp -a work/campaign-process work/campaign/infrastructure/; fi
+          mkdir -p work/campaign/infrastructure/training-checkpoint
+          for name in manifest ready release; do
+            if [[ -f "work/training-checkpoint/$name.json" ]]; then
+              cp "work/training-checkpoint/$name.json" work/campaign/infrastructure/training-checkpoint/
+            fi
+          done
           cp work/vms/*.json work/campaign/infrastructure/ 2>/dev/null || true
           for n in a b; do mkdir -p "work/campaign/infrastructure/$n"; cp "work/vms/$n/check.txt" "work/vms/$n/serial.log" "work/campaign/infrastructure/$n/" 2>/dev/null || true; done
           uname -a > work/campaign/infrastructure/runner-final.txt

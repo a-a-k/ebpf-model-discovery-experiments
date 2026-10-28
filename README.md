@@ -11,7 +11,11 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > with shared-DB fault forecasts for the three operations with unconditional DB obligations
 > in the supplied network-scope variant. DSB and OTel eBPF-only branches still lack
 > required service paths. [The first three planned full/seed6 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
-> are now launched at `fdec1a6`; their results are pending. Retained replay does not
+> launched at `fdec1a6`. OTel and Petclinic received runner shutdown signals during
+> graph discovery after training acquisition; their artifact uploads were skipped.
+> The logs do not establish the shutdown cause. DSB remains running. A reviewed
+> technical repair adds a saved training checkpoint, streamed input and measured
+> swap before rerunning failed cells; implementation checks are pending. Retained replay does not
 > measure fresh predictive accuracy or full-campaign capacity.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),

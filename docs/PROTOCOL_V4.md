@@ -14,7 +14,9 @@ systems and produced the source-specific readouts described below. These are
 diagnostics, not fresh validation. No scientific-series results exist.
 The first three planned full/seed6 cells are launched in
 [40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
-at `fdec1a6`, following original-criterion GO and CI `40704617133`; outcomes are pending.
+at `fdec1a6`, following original-criterion GO and CI `40704617133`. OTel and Petclinic
+lost their runners during discovery, without artifact upload; DSB remains running.
+The technical repair and original-criterion design GO are recorded below.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 

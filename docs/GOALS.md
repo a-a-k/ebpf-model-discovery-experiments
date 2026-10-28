@@ -99,7 +99,10 @@ accuracy measurement. Bering-only resource evidence is retained.
 
 The first three already-planned full/seed6 cells are launched in run `40704758284`
 at `fdec1a6`, after independent original-criterion GO and CI `40704617133`.
-Next: assess these cells with two guests and full-size acquisition. Retain every
+OTel and Petclinic lost their runners during discovery after training acquisition,
+without artifact upload; the cause is not established. DSB remains running.
+Next: finish reviewed checkpoint/streaming/swap repair, pass Linux CI and rerun
+only technically failed cells on the unchanged protocol. Retain every
 valid cell regardless of accuracy or unknown coverage, then execute the other 24 cells.
 Resource adequacy must be measured, not inferred from the small replay. Report,
 archive and review the actual results without weakening the original objective.
