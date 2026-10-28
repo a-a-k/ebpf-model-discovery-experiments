@@ -335,7 +335,7 @@ The manual workflows are:
   and complete Actions job/artifact costs, including declared failed preparation runs;
   render per-operation figures from that saved aggregate as SVG, PNG and PDF.
 
-The campaign command used by both workflows is:
+The acquisition entry point is:
 
 ```text
 python -m ebpf_discovery.campaign_v4 \
@@ -345,6 +345,25 @@ python -m ebpf_discovery.campaign_v4 \
 Qualification adds `--qualification`. There is no experiment job timeout; the external
 GitHub-hosted runner limit is recorded as a platform constraint. Interruption or
 eviction is a retained technical unknown, not a failed application outcome.
+
+The fresh-series workflow supervises that command with
+`--training-checkpoint work/training-checkpoint`. After training, before Bering, the
+same process waits while Actions uploads a closed `training-v4-SYSTEM-MODE-SEED-RUN`
+artifact. It contains consistent index/journal backups, the exact indexed raw byte
+prefixes, referenced wire bodies and metadata, external training outcomes, plans,
+deployment evidence, pinned binaries and file hashes. The upload acknowledgement
+is bound to the run, commit, cell and manifest SHA. Only then does that process
+continue on the same live guests; an unsuccessful upload is a technical failure.
+This checkpoint is partial evidence, not a finished campaign or permission to
+resume target measurements on a replacement host.
+
+The repaired series uses an additional measured 8 GiB swap file on the standard
+runner's local disk. Allocation failure remains explicit. Wire files are streamed
+unchanged to Bering; no observation or simulation-trial cap is introduced. Resource
+heartbeats enter both files and Actions logs. A recorded child-only Linux OOM
+preference is best-effort host protection, not evidence that earlier shutdowns
+were caused by memory exhaustion. Checkpoint creation and upload hold are included
+in campaign elapsed time; swap setup precedes it and is recorded separately.
 
 Evaluation commands, run in Actions, are:
 
@@ -389,6 +408,7 @@ A campaign artifact retains, as available:
 ```text
 status.json, deployment.json, blocks.json, plans.json, external.json, census.json
 attempt-journal.sqlite, attempt-journal.jsonl, unresolved-transports.json
+training-checkpoint-cost.json        # creation/upload hold; nested in campaign time
 observation-index.sqlite, index-training.json, index-final.json
 observations/a.raw/, b.raw/, native.raw/ # original OTLP bodies and metadata
 native/training/, native/final/      # source-separated native snapshots
@@ -403,10 +423,15 @@ toolchain/{source}/{variant}/{op}/    # verified input/observed references, fina
 toolchain/forecasts.json, forecast-saved.json, freeze-integrity.json
 toolchain/classes/classes-model.json, classes-v4.json (campaign root)
 async-*.json, infrastructure/         # SQL controls, VM/resource/platform evidence
+infrastructure/campaign-process/     # same-host supervisor identity, log and exit
+infrastructure/training-checkpoint/  # manifest, ready and upload acknowledgement
 ```
 
-Artifacts are uploaded even when a job fails, with raw-data-friendly compression and
-90-day workflow retention. Failed history is preserved. Tool clone/build time,
+Artifact upload steps run on ordinary job failures, with raw-data-friendly compression
+and 90-day workflow retention. Abrupt runner loss can skip those steps; the separate
+pre-discovery upload protects the closed training evidence once acknowledged.
+Saved Actions jobs remain in the report even when no campaign artifact survived;
+missing evidence does not mean zero observations. Failed history is preserved. Tool clone/build time,
 campaign elapsed time, command times/return codes, process/resource samples and early
 termination are reported. Unmeasured manual preparation remains unmeasured.
 
