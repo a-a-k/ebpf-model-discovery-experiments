@@ -98,6 +98,15 @@ all admitted spans in memory, so resource qualification must cover this global i
 with the guests running before full-series approval. No cap or silent truncation is
 permitted to pass qualification.
 
+Implementation review, 2026-10-28: root and independent 6.1 Sol/xhigh reviewer
+**GO for all three retained-capture diagnostics** from original run `40655022146`
+using global-input integration `05b5510` and readout correction `9311c10`, after CI.
+The check covers shared inputs/role union, actual Bering discovery and overlays,
+Sheaft invocation, exact endpoint/RPC binding, conditional DB projection and hash
+verification. This is not approval of full-series resource adequacy or a success
+claim. The later resource check may stage already-planned cells rather than add
+an unrelated scenario grid; that decision awaits these diagnostic outputs.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
