@@ -247,9 +247,10 @@ class Adapter(LegacyAdapter):
             "catalog_database_mapping": self.selected_database_mapping(),
             "prediction_semantics": "required calls resolve against, but never modify, the recovered graph",
             "router_native_defaults_after_adapter_limits_removed": {
-                "route_timeout_seconds": 15,
+                "route_timeout_seconds": None,
+                "route_timeout_configuration": "0s disables the Envoy route deadline",
                 "connect_timeout_seconds": 5,
-                "provenance": "Envoy defaults when the corresponding fields are omitted",
+                "provenance": "explicitly disabled route deadline and native Envoy connect default",
             },
         }
         return metadata
@@ -569,7 +570,7 @@ class Adapter(LegacyAdapter):
         manager = listener["filter_chains"][0]["filters"][0]["typed_config"]
         routes = manager["route_config"]["virtual_hosts"][0]["routes"]
         for route in routes:
-            route.get("route", {}).pop("timeout", None)
+            route.setdefault("route", {})["timeout"] = "0s"
         for cluster in config["static_resources"]["clusters"]:
             if cluster.get("name") == "product_catalog_replicas":
                 cluster.pop("connect_timeout", None)

@@ -247,7 +247,7 @@ def test_envoy_removes_request_and_connect_limits_but_keeps_health_check(
     route = manager["route_config"]["virtual_hosts"][0]["routes"][0]["route"]
     cluster = config["static_resources"]["clusters"][0]
 
-    assert "timeout" not in route
+    assert route["timeout"] == "0s"
     assert "connect_timeout" not in cluster
     assert cluster["health_checks"][0]["timeout"] == "0.5s"
 
@@ -265,5 +265,32 @@ def test_metadata_records_native_envoy_defaults(tmp_path: Path) -> None:
     limits = _adapter(tmp_path).metadata()["v4_contract"][
         "router_native_defaults_after_adapter_limits_removed"
     ]
-    assert limits["route_timeout_seconds"] == 15
+    assert limits["route_timeout_seconds"] is None
+    assert limits["route_timeout_configuration"].startswith("0s disables")
     assert limits["connect_timeout_seconds"] == 5
+
+
+def test_inherited_ready_and_reset_do_not_call_v4_business_operation(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    adapter = _adapter(tmp_path)
+    monkeypatch.setattr(
+        adapter,
+        "operation",
+        lambda *args, **kwargs: pytest.fail("readiness must not dispatch a scored operation"),
+    )
+    monkeypatch.setattr(
+        experiment_v4.requests,
+        "get",
+        lambda *args, **kwargs: _response(200, {"id": PRODUCT_ID}),
+    )
+    adapter._psql = lambda sql: "1\nt"
+    adapter._psql_admin = lambda sql: ""
+    adapter._wait_collector_ready = lambda: None
+    adapter.set_database = lambda up: None
+    adapter.set_replicas = lambda state: None
+    adapter.set_consumer = lambda up: None
+    adapter.ctx.node_exec = lambda *args, **kwargs: None
+
+    adapter.ready()
+    adapter.reset()
