@@ -18,7 +18,8 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > scalar predictions; no cost advantage or cross-system conclusion is established.
 > All nine cells passed independent integrity/resource review.
 > OTel's retained training data completed the actual toolchain on a separate standard
-> runner; a live-campaign handoff is being implemented. This does not establish the
+> runner; a reviewed [live-campaign replacement is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40754529169).
+> This does not establish the
 > cause of the earlier runner loss. The DSB staged retry continues after its training upload.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.

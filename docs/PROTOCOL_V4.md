@@ -354,6 +354,20 @@ filtering, paid runner tier or product changes are introduced. Implementation
 review precedes dispatch; the already planned full/6 cell supplies the resource
 confirmation without another qualification grid.
 
+Implementation decision: root **GO** and independent 6.1 Sol/xhigh skeptic
+**explicit ORIGINAL-criterion execution GO** for this one OTel/full/6 replacement
+through `eaa9a8d`, included in `72133c00df3f7e4150a3f737dee33e4bee12527d`.
+Linux CI `40754244720` passed at that exact dispatch head. Review repaired actual
+artifact digest spelling and ZIP-restored executable modes before new acquisition.
+The parent proves the same logical training index before and after worker wait;
+the worker reads an immutable index and returns all actual toolchain branches.
+The subsequent report must list the child worker run as series compute alongside
+its parent, including its job/artifact costs; parent wait overlaps that compute.
+This is authorization of the existing planned replacement, not empirical success
+or permission to skip its staged integrity/resource review.
+The replacement was dispatched as run `40754529169` at that reviewed head;
+the two preceding failed OTel attempts and the diagnostic remain retained.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
