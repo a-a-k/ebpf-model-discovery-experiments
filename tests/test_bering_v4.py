@@ -21,12 +21,19 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
     graph = {'services': [{'id': 'observed-only'}], 'edges': [], 'endpoints': []}
 
     class Process:
-        finished = False
-
         def __init__(self, argv, **kwargs):
+            assert Path(argv[1]).name == 'child_resources_v4.py'
+            assert argv[2] == '--report'
+            assert Path(argv[3]).name == 'bering-resources.json'
+            assert argv[4] == '--'
+            assert argv[-3:] == ['serve', '--config', argv[-1]]
             self.config = yaml.safe_load(Path(argv[-1]).read_text())
+            self.finished = False
+            self.returncode = None
 
         def poll(self):
+            if self.finished:
+                self.returncode = 0
             return 0 if self.finished else None
 
         def send_signal(self, _):
@@ -43,6 +50,7 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
             self.finished = True
 
         def wait(self):
+            self.returncode = 0
             return 0
 
     return {'exports': inputs, 'observations': 2}, graph, Process

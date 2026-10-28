@@ -22,7 +22,7 @@ def run(command: list[str], report: Path) -> int:
     started_ns, started_mono = time.time_ns(), time.monotonic()
     child = None
     forwarded: list[int] = []
-    returncode, error = 125, None
+    child_returncode, wrapper_returncode, error = None, 125, None
 
     def forward(signum, _frame):
         forwarded.append(signum)
@@ -37,12 +37,13 @@ def run(command: list[str], report: Path) -> int:
         for signum in forwarded:
             if child.poll() is None:
                 child.send_signal(signum)
-        returncode = child.wait()
+        child_returncode = child.wait()
+        wrapper_returncode = child_returncode
     except BaseException as exc:
         error = repr(exc)
         if child is not None and child.poll() is None:
             child.send_signal(signal.SIGTERM)
-            returncode = child.wait()
+            child_returncode = child.wait()
     finally:
         ended_ns = time.time_ns()
         elapsed = time.monotonic() - started_mono
@@ -53,7 +54,8 @@ def run(command: list[str], report: Path) -> int:
             "child_user_seconds": after.ru_utime - before.ru_utime,
             "child_system_seconds": after.ru_stime - before.ru_stime,
             "child_peak_rss_kib": after.ru_maxrss,
-            "exit_status": returncode,
+            "exit_status": child_returncode,
+            "wrapper_exit_status": wrapper_returncode,
             "forwarded_signals": forwarded,
             "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
         }
@@ -64,7 +66,7 @@ def run(command: list[str], report: Path) -> int:
         os.replace(temporary, report)
         for signum, handler in prior.items():
             signal.signal(signum, handler)
-    return returncode
+    return wrapper_returncode
 
 
 def main() -> None:

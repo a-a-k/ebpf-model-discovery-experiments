@@ -42,6 +42,7 @@ while True: time.sleep(.05)
         assert flushed.read_text() == 'published'
         data = json.loads(report.read_text())
         assert data['exit_status'] == 0
+        assert data['wrapper_exit_status'] == 0
         assert data['forwarded_signals'] == [15]
         assert data['child_peak_rss_kib'] > 0
         assert data['wall_seconds'] > 0
@@ -62,5 +63,16 @@ def test_nonzero_child_exit_is_reported_and_propagated(tmp_path: Path):
     assert completed.returncode == 7
     data = json.loads(report.read_text())
     assert data['exit_status'] == 7
+    assert data['wrapper_exit_status'] == 7
     assert data['forwarded_signals'] == []
     assert data['child_peak_rss_kib'] > 0
+
+
+@pytest.mark.skipif(os.name != 'posix', reason='RUSAGE_CHILDREN is measured on Linux Actions')
+def test_wrapper_error_cannot_be_reported_as_clean_exit(tmp_path: Path):
+    report = tmp_path/'resources.json'
+    code = child_resources_v4.run([str(tmp_path/'missing-executable')], report)
+    data = json.loads(report.read_text())
+    assert code == data['wrapper_exit_status'] == 125
+    assert data['exit_status'] is None
+    assert 'error' in data
