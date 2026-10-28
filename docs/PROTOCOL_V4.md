@@ -466,6 +466,11 @@ reduction or paid tier is introduced. Full preparation, transfer, disk, memory,
 GC/CPU/wall and failed-run costs are retained. Implementation review and CI
 precede the single execution. It cannot resume or complete the failed campaign,
 prove shutdown causality, or authorize any new DSB acquisition.
+Implementation `65843e5e5a387e40b19547bcae06c87e657911af` received root GO and
+independent **ORIGINAL-criterion implementation GO**. Independent focused tests
+passed (28 checks, one Windows executable-mode skip), and exact-head Linux CI
+`40780702510` succeeded. The single DSB diagnostic was dispatched as
+`40780918812`; it has no application traffic or campaign-resume path.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service

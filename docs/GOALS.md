@@ -110,7 +110,7 @@ checkpoint and Bering-child-only Go GC tuning, as recorded in PROTOCOL_V4.md.
 It cannot complete or resume the failed campaign. After technical qualification,
 a fresh staged cell must pass integrity/resource review before that system's
 remaining eight cells proceed. One parallel immutable DSB checkpoint diagnostic
-is approved for preparation; it cannot resume or complete its failed campaign.
+is running as `40780918812`; it cannot resume or complete its failed campaign.
 Retain every valid cell regardless of accuracy or unknown coverage, and include
 failed acquisition, worker, diagnostic, reporting and archival costs. Resource
 adequacy must be measured on the actual input, not inferred from a smaller replay.
