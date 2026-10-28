@@ -7,7 +7,7 @@ import sys
 import types
 
 import ebpf_discovery.evaluate_v4 as evaluator
-from ebpf_discovery.evaluate_v4 import aggregate, evaluate_campaign, main
+from ebpf_discovery.evaluate_v4 import _cost, aggregate, evaluate_campaign, main
 
 
 def _write(path: Path, value) -> None:
@@ -221,3 +221,115 @@ def test_cli_rejects_local_research_processing(monkeypatch, tmp_path: Path):
         assert exc.code == 2
     else:
         raise AssertionError("CLI evaluation unexpectedly ran outside GitHub Actions")
+
+
+def test_cost_accounts_distinct_transport_ids_and_bering_replays(tmp_path: Path):
+    _write(tmp_path/"plans.json", [{"phase":"target", "http_steps":[{"request_id":"primary-1"}]}])
+    _write(tmp_path/"preparation-operations.json", [
+        {"http_steps":[{"request_id":"warm-1"}]}])
+    _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"observed-runtime"/"replay-command.json",
+           {"started_ns":0,"ended_ns":5_000_000_000,"status":"complete"})
+    _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"model-runtime"/"replay-command.json",
+           {"started_ns":0,"ended_ns":3_000_000_000,"status":"complete"})
+    _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"simulation.command.json",
+           {"started_ns":0,"ended_ns":2_000_000_000,"returncode":0})
+    def event(kind, identity, request, **data):
+        return {"kind":kind,"data":{"transport_id":identity,"request_id":request,
+                                      "method":"GET",**data}}
+    events = [
+        event("step_started", "p", "primary-1"),
+        event("step_finished", "p", "primary-1", elapsed_ns=1_000_000_000,
+              status_code=200, response_body_base64="YQ=="),
+        event("step_started", "w", "warm-1"),
+        event("step_transport_unknown", "w", "warm-1", elapsed_ns=500_000_000,
+              error="connection lost"),
+        event("step_started", "v1", "verify-one"),
+        event("step_finished", "v1", "verify-one", elapsed_ns=2_000_000_000,
+              status_code=200, response_body_base64="aGVsbG8="),
+        event("step_started", "v2", "verify-two"),
+    ]
+    (tmp_path/"attempt-journal.jsonl").write_text(
+        "".join(json.dumps(row)+"\n" for row in events), encoding="utf-8")
+    result = _cost(tmp_path, {"elapsed_seconds":20})
+    assert result["bering_replay_command_seconds"] == 8
+    assert result["bering_replay_statuses"] == {"complete": 2}
+    assert result["toolchain_command_seconds"] == 10
+    assert result["http_transport"]["summed_request_seconds_are_not_wall_clock"]
+    assert result["http_transport"]["by_category"]["primary"]["completed_requests"] == 1
+    assert result["http_transport"]["by_category"]["preparation"]["transport_unknown_requests"] == 1
+    probes = result["auxiliary_timeline_probes"]
+    assert probes["started_gets"] == 2
+    assert probes["completed_requests"] == 1 and probes["unresolved_requests"] == 1
+    assert probes["completed_response_body_bytes"] == 5
+    assert probes["summed_completed_request_seconds"] == 2
+
+
+def test_missing_journal_cost_is_unknown(tmp_path: Path):
+    result = _cost(tmp_path, {})
+    assert result["http_transport"] == {"available": False, "reason": "attempt_journal_missing"}
+    assert result["auxiliary_timeline_probes"] is None
+
+
+def _saved_summary(root: Path, run_id: int, monkeypatch):
+    _fake_declaration(monkeypatch)
+    campaign = _campaign(root/"full", seed=6)
+    summary = root/"summary"
+    for name in ("status.json", "plans.json", "census.json", "blocks.json",
+                 "freeze-integrity.json", "toolchain/forecasts.json"):
+        target = summary/name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((campaign/name).read_bytes())
+    _write(summary/"evaluation-v4.json", evaluate_campaign(campaign))
+    names = ("evaluation-v4.json", "status.json", "plans.json", "census.json",
+             "blocks.json", "freeze-integrity.json", "toolchain/forecasts.json",
+             "evidence-v4.json", "attempt-journal.jsonl")
+    manifest = {"schema_version":"v4-cell-summary-manifest", "run_id":str(run_id),
+                "commit":"a"*40,"system":"fake","mode":"full","seed":6,
+                "full_artifact_name":f"campaign-v4-fake-full-6-{run_id}",
+                "files_sha256":{name:_hash(summary/name) if (summary/name).is_file() else None
+                                for name in names}}
+    _write(summary/"evaluation-manifest.json", manifest)
+    _write(summary/"artifact-provenance.json", {"run_id":run_id,"head_sha":"a"*40,
+        "artifact_id":run_id*10,"name":f"v4-summary-fake-full-6-{run_id}",
+        "digest":"sha256:"+"b"*64,"expired":False,
+        "full_artifact_id":run_id*10+1,
+        "full_artifact_name":f"campaign-v4-fake-full-6-{run_id}",
+        "full_artifact_digest":"sha256:"+"c"*64,"full_artifact_expired":False})
+    return summary
+
+
+def test_saved_aggregate_is_explicitly_attributed_and_does_not_need_full_raw(tmp_path, monkeypatch):
+    summary = _saved_summary(tmp_path, 100, monkeypatch)
+    for model in (tmp_path/"full"/"toolchain").rglob("model.json"):
+        model.unlink()
+    result = aggregate([summary], tmp_path/"report", saved=True)
+    assert result["input_mode"] == "saved_actions_evaluations_original_raw_not_reverified"
+    row = result["campaigns"][0]
+    assert row["complete_for_evaluation"]
+    assert row["saved_evaluation_provenance"]["artifact_id"] == 1000
+    assert row["saved_evaluation_provenance"]["full_originals_reverified_by_report_job"] is False
+
+
+def test_saved_aggregate_rejects_tamper_and_wrong_run_sha(tmp_path, monkeypatch):
+    summary = _saved_summary(tmp_path, 101, monkeypatch)
+    report = summary/"evaluation-v4.json"
+    report.write_text(report.read_text()+" ", encoding="utf-8")
+    try:
+        aggregate([summary], tmp_path/"bad-hash", saved=True)
+    except ValueError as exc:
+        assert "hash mismatch" in str(exc)
+    else:
+        raise AssertionError("tampered compact evaluation was accepted")
+    _write(report, evaluate_campaign(tmp_path/"full"))
+    manifest = json.loads((summary/"evaluation-manifest.json").read_text())
+    manifest["files_sha256"]["evaluation-v4.json"] = _hash(report)
+    _write(summary/"evaluation-manifest.json", manifest)
+    artifact = json.loads((summary/"artifact-provenance.json").read_text())
+    artifact["head_sha"] = "wrong"
+    _write(summary/"artifact-provenance.json", artifact)
+    try:
+        aggregate([summary], tmp_path/"bad-run", saved=True)
+    except ValueError as exc:
+        assert "artifact/run provenance mismatch" in str(exc)
+    else:
+        raise AssertionError("wrong artifact run SHA was accepted")

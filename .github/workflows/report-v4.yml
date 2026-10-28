@@ -1,0 +1,165 @@
+name: Iteration 4 compact retained-evidence report
+on:
+  workflow_dispatch:
+    inputs:
+      run_ids:
+        description: JSON array of all series run IDs, including technical attempts and replacements
+        required: true
+        type: string
+      preparation_runs:
+        description: JSON array of {run_id, role, note}, including failed qualification runs
+        required: false
+        default: '[]'
+        type: string
+      selection_manifest:
+        description: Optional committed technical-only duplicate-cell selection JSON path
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Retain metadata and complete Actions cost ledger
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SERIES_RUNS: ${{ inputs.run_ids }}
+          PREPARATION_RUNS: ${{ inputs.preparation_runs }}
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json, os, pathlib, subprocess
+          series = json.loads(os.environ['SERIES_RUNS'])
+          prep = json.loads(os.environ['PREPARATION_RUNS'])
+          if not isinstance(series, list) or not series or any(type(v) is not int or v <= 0 for v in series):
+              raise SystemExit('run_ids must be a nonempty JSON array of positive integers')
+          if not isinstance(prep, list) or any(not isinstance(v, dict) or
+              type(v.get('run_id')) is not int or v.get('run_id') <= 0 or
+              v.get('role') not in ('qualification','replay','evidence') or
+              not isinstance(v.get('note'), str) for v in prep):
+              raise SystemExit('preparation_runs must declare positive run_id, role, note')
+          prep_ids = [v['run_id'] for v in prep]
+          if len(set(series)) != len(series) or len(set(prep_ids)) != len(prep_ids) or set(series) & set(prep_ids):
+              raise SystemExit('series and preparation run IDs must be unique and disjoint')
+          out = pathlib.Path('results/iteration-4/provenance')
+          out.mkdir(parents=True)
+          (out/'series-input-runs.json').write_text(json.dumps(series, indent=2)+'\n')
+          (out/'preparation-input-runs.json').write_text(json.dumps(prep, indent=2)+'\n')
+          rows = []
+          def elapsed(start, end):
+              if not start or not end: return None
+              a = dt.datetime.fromisoformat(start.replace('Z','+00:00'))
+              b = dt.datetime.fromisoformat(end.replace('Z','+00:00'))
+              return (b-a).total_seconds()
+          for run_id in [*series, *prep_ids]:
+              base = f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{run_id}"
+              run = json.loads(subprocess.check_output(['gh','api',base], text=True))
+              jobs = json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',
+                  base+'/jobs?filter=all&per_page=100'], text=True))
+              artifacts = json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',
+                  base+'/artifacts?per_page=100'], text=True))
+              (out/f'{run_id}-run.json').write_text(json.dumps(run,indent=2)+'\n')
+              (out/f'{run_id}-jobs.json').write_text(json.dumps(jobs,indent=2)+'\n')
+              (out/f'{run_id}-artifacts.json').write_text(json.dumps(artifacts,indent=2)+'\n')
+              job_rows = [job for page in jobs for job in page['jobs']]
+              artifact_rows = [artifact for page in artifacts for artifact in page['artifacts']]
+              if run.get('id') != run_id or any(job.get('run_id') != run_id for job in job_rows):
+                  raise SystemExit(f'Actions metadata identity mismatch for run {run_id}')
+              durations = [elapsed(job.get('started_at'),job.get('completed_at')) for job in job_rows]
+              declaration = next((v for v in prep if v['run_id']==run_id), None)
+              rows.append({'run_id':run_id,'role':declaration['role'] if declaration else 'series',
+                  'note':declaration['note'] if declaration else None,
+                  'head_sha':run.get('head_sha'),'status':run.get('status'),
+                  'conclusion':run.get('conclusion'),'html_url':run.get('html_url'),
+                  'jobs':[{'id':j.get('id'),'name':j.get('name'),'status':j.get('status'),
+                           'conclusion':j.get('conclusion'),'elapsed_seconds':duration}
+                          for j,duration in zip(job_rows,durations)],
+                  'completed_job_elapsed_seconds':sum(v for v in durations if v is not None),
+                  'jobs_with_unknown_elapsed':sum(v is None for v in durations),
+                  'artifacts':[{'id':a.get('id'),'name':a.get('name'),'digest':a.get('digest'),
+                                'expired':a.get('expired'),'size_in_bytes':a.get('size_in_bytes')}
+                               for a in artifact_rows],
+                  'stored_artifact_bytes':sum(a.get('size_in_bytes') or 0 for a in artifact_rows)})
+          ledger = {'schema_version':'v4-actions-costs','runs':rows,
+              'all_retained_job_seconds':sum(r['completed_job_elapsed_seconds'] for r in rows),
+              'all_retained_artifact_bytes':sum(r['stored_artifact_bytes'] for r in rows),
+              'preparation_and_failed_runs_included':True,
+              'current_report_job_elapsed_seconds':None,'human_agent_seconds':None,
+              'rule':'sum of job durations is compute use, not campaign wall clock; overlapping artifacts are charged each time'}
+          (out.parent/'costs-v4.json').write_text(json.dumps(ledger,indent=2)+'\n')
+          PY
+      - name: Download only advertised compact campaign summaries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, pathlib, re, subprocess
+          provenance = pathlib.Path('results/iteration-4/provenance')
+          runs = json.loads((provenance/'series-input-runs.json').read_text())
+          rows, failures = [], []
+          for run in runs:
+              run_meta = json.loads((provenance/f'{run}-run.json').read_text())
+              pages = json.loads((provenance/f'{run}-artifacts.json').read_text())
+              all_artifacts = [a for page in pages for a in page['artifacts']]
+              artifacts = [a for a in all_artifacts if a.get('name','').startswith('v4-summary-')]
+              if not artifacts:
+                  rows.append({'run_id':run,'status':'not_uploaded','artifact_ids':[]})
+              for artifact in artifacts:
+                  name, artifact_id = artifact['name'], artifact['id']
+                  if not re.fullmatch(r'v4-summary-(deathstarbench|otel_demo|petclinic)-(absent|partial|full)-(6|7|8)-'+str(run), name):
+                      raise SystemExit(f'unexpected compact artifact name in run {run}: {name}')
+                  full_name = name.replace('v4-summary-', 'campaign-v4-', 1)
+                  full = [a for a in all_artifacts if a.get('name') == full_name]
+                  if len(full) != 1:
+                      raise SystemExit(f'compact summary lacks one retained full artifact: {name}')
+                  if artifact.get('expired') is True:
+                      rows.append({'run_id':run,'status':'expired','artifact_id':artifact_id,'name':name})
+                      continue
+                  destination = pathlib.Path('work/v4-inputs')/str(run)/name
+                  destination.mkdir(parents=True, exist_ok=False)
+                  command = ['gh','run','download',str(run),'-n',name,'-D',str(destination)]
+                  completed = subprocess.run(command,text=True,capture_output=True)
+                  if completed.returncode:
+                      item = {'run_id':run,'status':'download_failed','artifact_id':artifact_id,
+                              'name':name,'returncode':completed.returncode,
+                              'stderr':completed.stderr}
+                      rows.append(item)
+                      failures.append(item)
+                      continue
+                  sidecar = {'run_id':run,'head_sha':run_meta['head_sha'],
+                      'artifact_id':artifact_id,'name':name,'digest':artifact.get('digest'),
+                      'expired':False,'full_artifact_id':full[0]['id'],
+                      'full_artifact_name':full_name,
+                      'full_artifact_digest':full[0].get('digest'),
+                      'full_artifact_expired':full[0].get('expired')}
+                  (destination/'artifact-provenance.json').write_text(json.dumps(sidecar,indent=2)+'\n')
+                  rows.append({'run_id':run,'status':'downloaded','artifact_id':artifact_id,
+                               'name':name,'digest':artifact.get('digest')})
+          (provenance/'compact-downloads.json').write_text(json.dumps(rows,indent=2)+'\n')
+          if failures:
+              raise SystemExit('advertised compact artifact download failed; provenance retained')
+          PY
+      - name: Aggregate saved source-evaluated cells without raw recomputation
+        env:
+          SELECTION_MANIFEST: ${{ inputs.selection_manifest }}
+        run: |
+          args=()
+          if [ -n "$SELECTION_MANIFEST" ]; then args+=(--selection "$SELECTION_MANIFEST"); fi
+          python -m ebpf_discovery.evaluate_v4 --aggregate-saved work/v4-inputs \
+            --report-dir results/iteration-4 "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-v4-${{ github.run_id }}
+          path: results/iteration-4/
+          retention-days: 90
+          if-no-files-found: error

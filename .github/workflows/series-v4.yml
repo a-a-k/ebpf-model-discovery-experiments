@@ -112,6 +112,38 @@ jobs:
       - name: Stop guests
         if: always()
         run: bash scripts/vms.sh stop work/vms
+      - name: Evaluate retained full campaign evidence
+        if: always()
+        run: |
+          python -m ebpf_discovery.evaluate_v4 --campaign work/campaign \
+            --out work/campaign/evaluation-v4.json
+      - name: Record compact evaluation provenance
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('work/campaign')
+          names = ['evaluation-v4.json', 'status.json', 'plans.json', 'census.json',
+                   'blocks.json', 'freeze-integrity.json', 'toolchain/forecasts.json',
+                   'evidence-v4.json', 'attempt-journal.jsonl']
+          files = {}
+          for name in names:
+              path = root/name
+              if path.is_file():
+                  with path.open('rb') as stream:
+                      files[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
+              else:
+                  files[name] = None
+          manifest = {'schema_version': 'v4-cell-summary-manifest',
+                      'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                      'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
+                      'seed': ${{ matrix.seed }},
+                      'full_artifact_name': 'campaign-v4-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}',
+                      'files_sha256': files,
+                      'original_evidence_reverified_by_compact_report': False}
+          (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -128,3 +160,19 @@ jobs:
           include-hidden-files: true
           retention-days: 90
           if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v4-summary-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/evaluation-v4.json
+            work/campaign/evaluation-manifest.json
+            work/campaign/status.json
+            work/campaign/plans.json
+            work/campaign/census.json
+            work/campaign/blocks.json
+            work/campaign/freeze-integrity.json
+            work/campaign/toolchain/forecasts.json
+            work/campaign/evidence-v4.json
+          retention-days: 90
+          if-no-files-found: warn

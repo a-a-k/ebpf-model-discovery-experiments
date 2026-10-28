@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import hashlib
 import html
@@ -266,14 +267,96 @@ def _async_results(root: Path) -> dict:
     return result
 
 
+def _journal_transport_cost(root: Path) -> dict:
+    journal = root/"attempt-journal.jsonl"
+    if not journal.is_file():
+        return {"available": False, "reason": "attempt_journal_missing"}
+    by_request = {}
+    for plan in _read(root/"plans.json", []):
+        category = "primary" if plan.get("phase") in PRIMARY_PHASES else "control"
+        for step in plan.get("http_steps", []):
+            by_request[step["request_id"]] = (category, plan.get("phase"))
+    for record in _read(root/"preparation-operations.json", []):
+        for step in record.get("http_steps", []):
+            by_request[step["request_id"]] = ("preparation", "preparation")
+    transports = {}
+    with journal.open(encoding="utf-8") as stream:
+        for line in stream:
+            event = json.loads(line)
+            kind, data = event.get("kind"), event.get("data") or {}
+            if kind not in ("step_started", "step_finished", "step_transport_unknown"):
+                continue
+            identity, request_id = data.get("transport_id"), data.get("request_id")
+            if not identity:
+                raise ValueError("HTTP transport journal event lacks transport_id")
+            if isinstance(request_id, str) and request_id.startswith("verify-"):
+                category, phase = "verification", "verification"
+            else:
+                category, phase = by_request.get(request_id, ("unclassified", None))
+            if category == "verification" and data.get("method") != "GET":
+                raise ValueError("verification transport is not a GET")
+            if kind == "step_started":
+                if identity in transports:
+                    raise ValueError("duplicate HTTP transport start")
+                transports[identity] = {"category": category, "phase": phase,
+                                        "request_id": request_id, "terminal": None}
+            else:
+                row = transports.get(identity)
+                if row is None or row["terminal"] is not None:
+                    raise ValueError("HTTP terminal event lacks one unique started event")
+                if row["request_id"] != request_id:
+                    raise ValueError("HTTP terminal request ID differs from start")
+                row["terminal"] = kind
+                row["elapsed_ns"] = data.get("elapsed_ns")
+                row["error"] = data.get("error") if kind == "step_transport_unknown" else None
+                row["status_code"] = data.get("status_code") if kind == "step_finished" else None
+                if kind == "step_finished":
+                    encoded = data.get("response_body_base64") or ""
+                    if not isinstance(encoded, str) or len(encoded) % 4:
+                        raise ValueError("invalid journal response body encoding")
+                    row["response_body_bytes"] = (len(encoded)//4)*3 - (len(encoded)-len(encoded.rstrip("=")))
+    categories = {}
+    for category in ("primary", "preparation", "verification", "control", "unclassified"):
+        rows = [row for row in transports.values() if row["category"] == category]
+        categories[category] = {
+            "started_gets": len(rows) if category == "verification" else None,
+            "started_requests": len(rows),
+            "completed_requests": sum(row["terminal"] == "step_finished" for row in rows),
+            "transport_unknown_requests": sum(row["terminal"] == "step_transport_unknown" for row in rows),
+            "unresolved_requests": sum(row["terminal"] is None for row in rows),
+            "summed_completed_request_seconds": sum((row.get("elapsed_ns") or 0)/1e9 for row in rows
+                                                    if row["terminal"] == "step_finished"),
+            "summed_transport_unknown_seconds": sum((row.get("elapsed_ns") or 0)/1e9 for row in rows
+                                                    if row["terminal"] == "step_transport_unknown"),
+            "completed_response_body_bytes": sum(row.get("response_body_bytes", 0) for row in rows),
+            "http_error_responses": sum(isinstance(row.get("status_code"), int) and
+                                        row["status_code"] >= 400 for row in rows),
+            "error_transport_ids": sorted(identity for identity, row in transports.items()
+                                          if row["category"] == category and row.get("error")),
+        }
+    return {"available": True, "by_category": categories,
+            "summed_request_seconds_are_not_wall_clock": True,
+            "journal_path": str(journal),
+            "rule": "each started transport_id counted once; terminal errors and unresolved requests retained"}
+
+
 def _cost(root: Path, status: dict) -> dict:
     build = _read(root/"toolchain-build"/"toolchain-build.json", {})
-    commands, returncodes = [], []
+    commands, returncodes, bering_replays, replay_statuses = [], [], [], []
     for path in (root/"toolchain").rglob("*.command.json") if (root/"toolchain").exists() else []:
         row = _read(path, {})
         if isinstance(row.get("started_ns"), int) and isinstance(row.get("ended_ns"), int):
             commands.append((row["ended_ns"]-row["started_ns"])/1e9)
         returncodes.append(row.get("returncode"))
+    for path in (root/"toolchain").rglob("replay-command.json") if (root/"toolchain").exists() else []:
+        row = _read(path, {})
+        replay_statuses.append(row.get("status", "unknown"))
+        if isinstance(row.get("started_ns"), int) and isinstance(row.get("ended_ns"), int):
+            elapsed = (row["ended_ns"]-row["started_ns"])/1e9
+            commands.append(elapsed)
+            bering_replays.append(elapsed)
+        returncodes.append(row.get("returncode"))
+    transport_cost = _journal_transport_cost(root)
     time_file = root/"infrastructure"/"campaign-time.txt"
     time_fields = {}
     if time_file.is_file():
@@ -289,9 +372,15 @@ def _cost(root: Path, status: dict) -> dict:
         "toolchain_clone_seconds": sum(row.get("clone_seconds", 0) for row in build.get("binaries", [])),
         "toolchain_build_seconds": sum(row.get("build_seconds", 0) for row in build.get("binaries", [])),
         "toolchain_command_seconds": sum(commands), "toolchain_command_count": len(commands),
+        "bering_replay_command_seconds": sum(bering_replays),
+        "bering_replay_command_count": len(bering_replays),
+        "bering_replay_attempts": len(replay_statuses),
+        "bering_replay_statuses": dict(Counter(replay_statuses)),
         "toolchain_command_returncodes": returncodes,
         "toolchain_command_failures": sum(code not in (0, None) for code in returncodes),
         "infrastructure_time_file": str(time_file), "infrastructure_time_fields": time_fields,
+        "http_transport": transport_cost,
+        "auxiliary_timeline_probes": (transport_cost.get("by_category") or {}).get("verification"),
         "manual_preparation": {"measured": False, "reason": "human preparation time was not instrumented; no full-cost advantage claimed"},
     }
 
@@ -418,6 +507,84 @@ def _find_campaigns(roots: list[Path]) -> list[Path]:
     return sorted(found)
 
 
+def _saved_reports(roots: list[Path]) -> list[dict]:
+    """Admit compact reports by their original Actions artifact/run identity.
+
+    This validates copied compact files, but cannot reverify omitted raw capture
+    or frozen Bering outputs. The source cell's full-evidence evaluation remains
+    explicitly attributed to its original Actions run.
+    """
+    found = set()
+    for root in roots:
+        root = Path(root)
+        if root.is_file() and root.name == "evaluation-v4.json":
+            found.add(root.resolve())
+        elif root.is_dir():
+            found.update(path.resolve() for path in root.rglob("evaluation-v4.json"))
+    reports = []
+    artifact_ids = set()
+    for path in sorted(found):
+        folder = path.parent
+        manifest = _read(folder/"evaluation-manifest.json")
+        artifact = _read(folder/"artifact-provenance.json")
+        if not manifest or manifest.get("schema_version") != "v4-cell-summary-manifest":
+            raise ValueError(f"saved v4 evaluation lacks its cell manifest: {path}")
+        if not artifact or type(artifact.get("artifact_id")) is not int:
+            raise ValueError(f"saved v4 evaluation lacks immutable artifact identity: {path}")
+        if artifact["artifact_id"] in artifact_ids:
+            raise ValueError("duplicate v4 summary artifact ID")
+        artifact_ids.add(artifact["artifact_id"])
+        if (str(artifact.get("run_id")) != str(manifest.get("run_id"))
+                or artifact.get("head_sha") != manifest.get("commit")
+                or artifact.get("name") != f"v4-summary-{manifest.get('system')}-{manifest.get('mode')}-{manifest.get('seed')}-{manifest.get('run_id')}"
+                or artifact.get("full_artifact_name") != manifest.get("full_artifact_name")
+                or type(artifact.get("full_artifact_id")) is not int
+                or artifact.get("expired") is True):
+            raise ValueError(f"saved v4 evaluation artifact/run provenance mismatch: {path}")
+        hashes = manifest.get("files_sha256") or {}
+        for name in ("evaluation-v4.json", "status.json", "plans.json", "census.json",
+                     "blocks.json", "freeze-integrity.json", "toolchain/forecasts.json",
+                     "evidence-v4.json"):
+            expected = hashes.get(name)
+            target = folder/name
+            if expected is not None and (not target.is_file() or _digest(target) != expected):
+                raise ValueError(f"saved v4 evaluation compact hash mismatch: {target}")
+            if expected is None and target.is_file():
+                raise ValueError(f"unexpected unadmitted compact file: {target}")
+        if not hashes.get("evaluation-v4.json") or not hashes.get("status.json"):
+            raise ValueError(f"saved v4 evaluation or status missing: {path}")
+        report = _read(path)
+        if report.get("schema_version") != "evaluation-v4":
+            raise ValueError(f"invalid saved v4 evaluation schema: {path}")
+        status = _read(folder/"status.json")
+        for key in ("system", "mode", "seed"):
+            if report.get(key) != manifest.get(key) or report.get(key) != status.get(key):
+                raise ValueError(f"saved v4 cell identity mismatch: {path}: {key}")
+        if report.get("status") != status:
+            raise ValueError(f"saved v4 evaluation status differs from copied status: {path}")
+        if report.get("complete_for_evaluation") and any(hashes.get(name) is None for name in
+                ("plans.json", "census.json", "blocks.json", "freeze-integrity.json",
+                 "toolchain/forecasts.json")):
+            raise ValueError(f"complete saved v4 evaluation lacks required compact proof files: {path}")
+        report["original_campaign_root"] = report.get("root")
+        report["root"] = str(folder.resolve())
+        report["saved_evaluation_provenance"] = {
+            "run_id": manifest["run_id"], "head_sha": manifest["commit"],
+            "artifact_id": artifact["artifact_id"], "artifact_name": artifact["name"],
+            "artifact_digest": artifact.get("digest"),
+            "full_artifact_name": manifest.get("full_artifact_name"),
+            "full_artifact_id": artifact["full_artifact_id"],
+            "full_artifact_digest": artifact.get("full_artifact_digest"),
+            "full_artifact_expired": artifact.get("full_artifact_expired"),
+            "full_originals_reverified_by_report_job": False,
+            "original_journal_sha256_claim": hashes.get("attempt-journal.jsonl"),
+            "manifest_sha256": _digest(folder/"evaluation-manifest.json"),
+            "evaluation_sha256": hashes["evaluation-v4.json"],
+        }
+        reports.append(report)
+    return reports
+
+
 def _selection(selection_manifest) -> tuple[dict, dict]:
     if selection_manifest is None:
         return {}, {"provided": False}
@@ -436,8 +603,10 @@ def _selection(selection_manifest) -> tuple[dict, dict]:
     return selected, provenance
 
 
-def aggregate(roots: list[Path], report_dir: Path, selection_manifest=None) -> dict:
-    reports = [evaluate_campaign(path) for path in _find_campaigns(roots)]
+def aggregate(roots: list[Path], report_dir: Path, selection_manifest=None,
+              *, saved: bool = False) -> dict:
+    reports = (_saved_reports(roots) if saved else
+               [evaluate_campaign(path) for path in _find_campaigns(roots)])
     candidates = {}
     for report in reports:
         candidates.setdefault((report["system"], report["mode"], report["seed"]), []).append(report)
@@ -493,6 +662,8 @@ def aggregate(roots: list[Path], report_dir: Path, selection_manifest=None) -> d
         })
     result = {
         "schema_version": "evaluation-v4-aggregate", "campaigns": reports,
+        "input_mode": ("saved_actions_evaluations_original_raw_not_reverified" if saved else
+                       "full_campaign_evidence_recomputed"),
         "selection": selection_provenance,
         "technical_replacements": replacements,
         "ambiguous_duplicate_cells": ambiguous,
@@ -539,6 +710,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--campaign", type=Path)
     group.add_argument("--aggregate", type=Path, nargs="+")
+    group.add_argument("--aggregate-saved", type=Path, nargs="+")
     parser.add_argument("--out", type=Path)
     parser.add_argument("--report-dir", type=Path)
     parser.add_argument("--selection", type=Path,
@@ -553,7 +725,8 @@ def main():
         args.out.write_text(json.dumps(evaluate_campaign(args.campaign), indent=2)+"\n")
     else:
         if args.report_dir is None: parser.error("--aggregate requires --report-dir")
-        aggregate(args.aggregate, args.report_dir, args.selection)
+        aggregate(args.aggregate or args.aggregate_saved, args.report_dir, args.selection,
+                  saved=bool(args.aggregate_saved))
 
 
 if __name__ == "__main__":
