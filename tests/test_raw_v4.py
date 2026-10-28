@@ -188,11 +188,11 @@ def test_jaeger_codec_preserves_typed_evidence_and_reference_semantics(tmp_path:
     assert span["kind"] == "SPAN_KIND_SERVER"
     assert span["status"]["code"] == "STATUS_CODE_ERROR"
     assert span["events"][0]["attributes"][0]["value"]["stringValue"] == "failed"
-    assert span["links"][0]["traceId"] == "0" * 16
-    assert span["links"][0]["spanId"] == "0"
+    assert span["links"][0]["traceId"] == "0" * 32
+    assert span["links"][0]["spanId"] == "0" * 16
     assert span["links"][0]["attributes"][0]["value"]["stringValue"] == "FOLLOWS_FROM"
     process_tag = next(item for item in resource["resource"]["attributes"] if item["key"] == "host.port")
     assert process_tag["value"]["intValue"] == "8080"
     invalid = next(item for item in spans if item["name"] == "invalid-zero-id")
-    assert invalid["traceId"] == zero_trace
-    assert invalid["spanId"] == "0"
+    assert invalid["traceId"] == "0" * 32
+    assert invalid["spanId"] == "0" * 16

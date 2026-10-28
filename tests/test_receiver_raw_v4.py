@@ -89,6 +89,34 @@ def test_raw_protobuf_body_is_byte_exact_without_id_rewriting(tmp_path: Path):
     _assert_capture(output, record, wire)
 
 
+def test_chunked_protobuf_body_is_not_acknowledged_as_empty(tmp_path: Path):
+    output = tmp_path / "a.jsonl"
+    request = ExportTraceServiceRequest()
+    request.resource_spans.add()
+    wire = request.SerializeToString()
+    server = create_server(0, output, "ebpf:a", node="a", raw_capture=True)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    connection = http.client.HTTPConnection("127.0.0.1", server.server_port, timeout=5)
+    try:
+        connection.request(
+            "POST", "/v1/traces", body=iter([wire[:1], wire[1:]]),
+            headers={"Content-Type": "application/x-protobuf"}, encode_chunked=True,
+        )
+        response = connection.getresponse()
+        response.read()
+    finally:
+        connection.close()
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+    assert response.status == 200
+    record = _record(output)
+    assert record["raw_size_bytes"] == len(wire) > 0
+    assert record["content_headers"]["transfer-encoding"] == "chunked"
+    _assert_capture(output, record, wire)
+
+
 def test_raw_gzip_body_preserves_compressed_wire_bytes(tmp_path: Path):
     output = tmp_path / "a.jsonl"
     decoded = b'{"resourceSpans": [], "compressed": true}'

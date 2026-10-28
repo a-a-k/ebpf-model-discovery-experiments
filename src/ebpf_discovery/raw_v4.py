@@ -157,8 +157,6 @@ def _codec_id(raw: Any, width: int) -> str:
     value = str(raw or "").lower()
     if not value or len(value) > width or any(char not in "0123456789abcdef" for char in value):
         return value
-    if int(value, 16) == 0:
-        return value
     return value.zfill(width)
 
 

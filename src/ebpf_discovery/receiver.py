@@ -21,6 +21,47 @@ def _append_jsonl(path: Path, record: dict) -> None:
         stream.write(json.dumps(record) + "\n")
 
 
+def _read_request_body(handler: BaseHTTPRequestHandler) -> bytes:
+    transfer_encoding = handler.headers.get("Transfer-Encoding", "").lower().strip()
+    if transfer_encoding:
+        if transfer_encoding != "chunked":
+            raise ValueError(f"unsupported transfer encoding: {transfer_encoding}")
+        chunks = []
+        while True:
+            line = handler.rfile.readline(65537)
+            if not line or len(line) > 65536 or not line.endswith(b"\r\n"):
+                raise ValueError("invalid chunk-size line")
+            size_text = line[:-2].split(b";", 1)[0].strip()
+            try:
+                size = int(size_text, 16)
+            except ValueError as exc:
+                raise ValueError("invalid hexadecimal chunk size") from exc
+            if size < 0:
+                raise ValueError("negative chunk size")
+            if size == 0:
+                while True:
+                    trailer = handler.rfile.readline(65537)
+                    if not trailer or len(trailer) > 65536:
+                        raise ValueError("invalid chunk trailer")
+                    if trailer == b"\r\n":
+                        return b"".join(chunks)
+            chunk = handler.rfile.read(size)
+            if len(chunk) != size or handler.rfile.read(2) != b"\r\n":
+                raise ValueError("truncated chunked request body")
+            chunks.append(chunk)
+    raw_length = handler.headers.get("Content-Length", "0")
+    try:
+        length = int(raw_length)
+    except ValueError as exc:
+        raise ValueError("invalid Content-Length") from exc
+    if length < 0:
+        raise ValueError("negative Content-Length")
+    body = handler.rfile.read(length)
+    if len(body) != length:
+        raise ValueError("truncated request body")
+    return body
+
+
 def _capture_wire_body(
     output: Path,
     wire_body: bytes,
@@ -85,20 +126,19 @@ def create_server(
     class Handler(BaseHTTPRequestHandler):
         def do_POST(self):
             received_ns = time.time_ns()
-            wire_body = self.rfile.read(int(self.headers.get("Content-Length", "0")))
             capture = None
-            if raw_capture:
-                with lock:
-                    capture = _capture_wire_body(
-                        output,
-                        wire_body,
-                        source=source,
-                        node=capture_node,
-                        received_ns=received_ns,
-                        headers=self.headers,
-                    )
-
             try:
+                wire_body = _read_request_body(self)
+                if raw_capture:
+                    with lock:
+                        capture = _capture_wire_body(
+                            output,
+                            wire_body,
+                            source=source,
+                            node=capture_node,
+                            received_ns=received_ns,
+                            headers=self.headers,
+                        )
                 body = wire_body
                 if self.headers.get("Content-Encoding", "").lower().strip() == "gzip":
                     body = gzip.decompress(body)
