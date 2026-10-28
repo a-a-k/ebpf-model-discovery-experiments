@@ -110,7 +110,11 @@ relaunched at `ea2e278` in `40718665137` and `40718674400`, respectively.
 DSB/full/seed6 was retried at `3e70887` in `40731158179`, after review accepted the
 explicitly failed acquisition step, skipped uploads and empty artifact inventory
 as technical failure evidence while GitHub finalizes the outer original job.
-Next: assess the three live retries and retain the original attempt's available
+Petclinic/full/6 `40718674400` is complete and independently admitted: all 34,800
+primary operations and frozen graph/forecast integrity checks pass. Its remaining
+eight cells are running in `40733841068`, `40733846961`, `40733852492` and
+`40733858113`. Permanent archiving of the first Petclinic cell is in `40734810232`.
+Next: assess these cells and the OTel/DSB staged retries; retain the original attempt's available
 logs/costs. Each system's remaining eight cells may proceed after its own staged
 integrity/resource review, independently of the other systems. Retain every
 valid cell regardless of accuracy or unknown coverage.

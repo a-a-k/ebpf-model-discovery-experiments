@@ -2,28 +2,18 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): retained replay verified; no scientific-series results.**
-> [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
-> each acquired 240 planned requests, then failed on an invalid Procrustes goal
-> before discovery. Per-step goals and ancillary Sheaft predicates are repaired;
-> [The repaired retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933)
-> reached actual Sheaft simulation for all four Petclinic operations using eBPF alone,
-> with shared-DB fault forecasts for the three operations with unconditional DB obligations
-> in the supplied network-scope variant. DSB and OTel eBPF-only branches still lack
-> required service paths. [The first three planned full/seed6 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
-> launched at `fdec1a6`. OTel and Petclinic received runner shutdown signals during
-> graph discovery after training acquisition; their artifact uploads were skipped.
-> The logs do not establish the shutdown cause. DSB's acquisition step also failed
-> and its upload steps were skipped; final platform status/logs are pending. A reviewed
-> technical repair adds a saved training checkpoint, streamed input and measured
-> swap. After independent review and 413 passing Linux tests, the unchanged failed
-> cells were relaunched: [OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
-> and [Petclinic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400).
-> Both saved training checkpoints and continued on the same guests. The reviewed
-> [DSB retry](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179)
-> is also launched; the explicitly failed original acquisition remains in the history.
-> Their outcomes are pending. Retained replay does not
-> measure fresh predictive accuracy or full-campaign capacity.
+> **Current status (iteration 4): one of 27 planned cells admitted; series incomplete.**
+> [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400)
+> completed 34,800 primary operations, including 9,600 held-out target operations.
+> Actual Bering graphs built from eBPF observations were consumed by Sheaft; all four
+> operation forecasts matched their observed target frequencies in this cell.
+> The supplied-contract baseline makes the same primary predictions. Application
+> tracing was enabled in this cell: applicability when it is disabled remains to be
+> measured. These are one-cell results, not a three-repeat or cross-system conclusion.
+> [Saved evaluation and provenance](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
+> passed independent integrity/resource review; the other eight Petclinic cells are running.
+> The OTel and DSB staged retries continue. All failed attempts remain in the
+> [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
@@ -441,7 +431,8 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 currently has no scientific-series results. The first qualification
+Iteration 4 currently has one admitted full/seed6 Petclinic cell. The remaining
+cells and source/tracing-mode comparisons are incomplete. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;

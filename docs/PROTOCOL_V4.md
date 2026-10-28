@@ -11,7 +11,8 @@ The later repaired replay
 [40674465933](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933)
 at `2b72cd73d7fdb88c3dfa7f51a34e073b6e83d0b8` passed integrity checks for all three
 systems and produced the source-specific readouts described below. These are
-diagnostics, not fresh validation. No scientific-series results exist.
+diagnostics, not fresh validation. The first full-size Petclinic/full/6 cell has
+since completed and passed staged admission; the rest of the series is incomplete.
 The first three planned full/seed6 cells are launched in
 [40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
 at `fdec1a6`, following original-criterion GO and CI `40704617133`. OTel and Petclinic
@@ -241,7 +242,8 @@ rerunning only technically failed cells:
 Checkpoint creation, upload/hold, swap and failed-run costs remain part of the
 experiment. No observation cap, deduplication, shorter discovery window, reduced
 trial count, experimental deadline or weaker outcome contract is introduced.
-The remaining 24 cells still wait for the repaired first-stage review.
+At this repair decision the remaining 24 cells awaited staged review; the later
+per-system scheduling and Petclinic admission decisions below supersede that wait.
 
 Implementation decision at `ea2e278e50f64bd50597c243d84f834be1b92576`: root **GO**
 and independent 6.1 Sol/xhigh skeptic **explicit ORIGINAL-criterion execution GO**
@@ -275,6 +277,18 @@ The reviewed scientific implementation `ea2e278` is unchanged through `3e70887`.
 The DSB retry was dispatched at `3e708879889eac8a238027a4640466fc8a76eca5`
 in [40731158179](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40731158179),
 after successful CI `40730137143`.
+
+Petclinic staged admission: root **GO** and independent 6.1 Sol/xhigh skeptic
+**explicit ORIGINAL-criterion GO** admit full/6 run `40718674400` and its remaining
+eight planned cells. Saved evaluation confirms 34,800 primary and 9,600 target
+operations with exact phase/state counts, matching plans/census, unchanged frozen
+hashes and pretarget forecast ordering. All 30 Bering replays and 62 tool commands
+completed; same-process cleanup and measured swap/checkpoint costs are retained.
+Accuracy is not an admission gate. Raw/conditional DB unknowns remain retained.
+This authorizes continuation of the unchanged series, not a general success claim.
+The remaining Petclinic cells were dispatched at `4276ea9`: absent/6–8 in
+`40733841068`, partial/6–8 in `40733846961`, full/7 in `40733852492` and full/8
+in `40733858113`. The admitted full/6 cell is not repeated.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
