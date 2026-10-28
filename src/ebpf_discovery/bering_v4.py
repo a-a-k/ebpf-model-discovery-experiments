@@ -8,6 +8,7 @@ from pathlib import Path
 import signal
 import socket
 import subprocess
+import sys
 import time
 
 import requests
@@ -64,13 +65,17 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
     config_path = run_dir / 'serve.yaml'
     config_path.write_text(yaml.safe_dump(config), encoding='utf-8')
     argv = [str(Path(binary).resolve()), 'serve', '--config', str(config_path)]
+    resource_path = run_dir / 'bering-resources.json'
+    supervisor_argv = [sys.executable, str(Path(__file__).with_name('child_resources_v4.py')),
+                       '--report', str(resource_path), '--', *argv]
     record = {'argv': argv, 'started_ns': time.time_ns(), 'input_observations': count,
               'source_domain': domain, 'clock_admission_filter': False,
-              'discovery_mode': 'one offline batch; no historical reconciliation'}
+              'discovery_mode': 'one offline batch; no historical reconciliation',
+              'child_resource_report': str(resource_path)}
     process = None
     try:
         with (run_dir / 'bering.log').open('wb') as log:
-            process = subprocess.Popen(argv, stdout=log, stderr=subprocess.STDOUT)
+            process = subprocess.Popen(supervisor_argv, stdout=log, stderr=subprocess.STDOUT)
             # Startup readiness only: no workload observation is measured here.
             ready_started = time.monotonic()
             while True:
@@ -122,5 +127,11 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
         if process is not None and process.poll() is None:
             process.send_signal(signal.SIGTERM)
             process.wait()
+        if process is not None:
+            record.setdefault('returncode', process.returncode)
+        if resource_path.exists():
+            record['child_resources'] = json.loads(resource_path.read_text(encoding='utf-8'))
+        else:
+            record['child_resources_unavailable'] = 'child wrapper did not produce a resource report'
         record['ended_ns'] = time.time_ns()
         write_json(run_dir / 'replay-command.json', record)
