@@ -30,6 +30,8 @@ SERVICE_ALIASES = {
 }
 CONTROLLED_SERVICE = "visits-service"
 CONTROLLED_SERVICE_ALIASES = tuple(SERVICE_ALIASES["visits"])
+SELECTED_DATABASE = {"db_system": "mysql", "db_role": "shared",
+                     "container": "database", "fault_scope": "whole_database_container"}
 ENTRY_SERVICES = {"ebpf": SERVICE_ALIASES["gateway"], "native": SERVICE_ALIASES["gateway"]}
 
 

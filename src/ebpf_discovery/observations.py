@@ -55,7 +55,7 @@ def otlp(payload, source, node, encoding='hex'):
                 }
 
 
-def jaeger(payload, source='native'):
+def jaeger(payload, source='native', *, same_trace_parents=False):
     for trace in payload.get('data', []):
         if not isinstance(trace, dict) or 'spans' not in trace:
             continue
@@ -63,7 +63,8 @@ def jaeger(payload, source='native'):
         for s in trace['spans']:
             process = processes.get(s.get('processID'), {})
             a = {x['key']: x.get('value') for x in s.get('tags', [])}
-            refs = [r for r in s.get('references', []) if r.get('refType') == 'CHILD_OF']
+            refs = [r for r in s.get('references', []) if r.get('refType') == 'CHILD_OF'
+                    and (not same_trace_parents or str(r.get('traceID', '')).lower() == s['traceID'].lower())]
             resource = {x['key']: x.get('value') for x in process.get('tags', [])}
             instance = resource.get('service.instance.id') or resource.get('hostname') or resource.get('host.name') or resource.get('ip')
             yield {'source': source, 'node': None, 'trace_id': s['traceID'].lower(),

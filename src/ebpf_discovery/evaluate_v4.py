@@ -401,6 +401,7 @@ def evaluate_campaign(root: Path) -> dict:
             if status.get("system") else {},
         "database": database, "async": _async_results(root),
         "classes": classes if classes is not None else {"available": False, "reason": "classes-v4.json pending"},
+        "evidence": _read(root/"evidence-v4.json") or {"available": False, "reason": "evidence-v4.json pending"},
         "cost": _cost(root, status),
         "claim": "external descriptive evaluation only; no accuracy threshold and no success claim",
     }

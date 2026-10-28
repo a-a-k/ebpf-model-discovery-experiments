@@ -54,7 +54,7 @@ def complete_prefix(path):
         return 0  # an in-flight first record has no complete prefix yet
 
 
-def normalized_file(path, source, offset, limit):
+def normalized_file(path, source, offset, limit, *, same_trace_parents=False):
     """Native Jaeger documents stream one trace; OTLP exports stream one batch."""
     node = path.stem if source == 'ebpf' else (path.stem[-1] if path.stem.startswith('native-node-') else None)
     is_jaeger = path.name.startswith('traces-') and path.suffix == '.json'
@@ -64,7 +64,7 @@ def normalized_file(path, source, offset, limit):
         prefix = 'data.item' if is_jaeger else ''
         for document in ijson.items(limited, prefix, multiple_values=not is_jaeger, use_float=True):
             if is_jaeger:
-                records = jaeger({'data': [document]})
+                records = jaeger({'data': [document]}, same_trace_parents=same_trace_parents)
                 conflicts = (attribute_conflicts(span.get('tags', []))+
                     attribute_conflicts(document.get('processes', {}).get(span.get('processID'), {}).get('tags', []))
                     for span in document.get('spans', []))
@@ -84,7 +84,8 @@ def normalized_file(path, source, offset, limit):
 
 
 class ObservationStore:
-    def __init__(self, path):
+    def __init__(self, path, *, same_trace_parents=False):
+        self.same_trace_parents = same_trace_parents
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(self.path)
@@ -129,7 +130,7 @@ class ObservationStore:
                 raise ValueError(f'Closed native snapshot changed: {path}')
             seen, added = 0, 0
             try:
-                for row in normalized_file(path, source, offset, limit):
+                for row in normalized_file(path, source, offset, limit, same_trace_parents=self.same_trace_parents):
                     seen += 1
                     a = row['attributes']
                     evidence = {k: v for k, v in row.items() if k != 'raw_file'}

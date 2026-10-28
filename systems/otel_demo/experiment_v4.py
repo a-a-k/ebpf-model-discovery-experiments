@@ -28,6 +28,8 @@ CONTROLLED_SERVICE_ALIASES = [
 
 ENTRY_SERVICE_ALIASES = ["frontend", "frontend-service"]
 CATALOG_DATABASE_ALIASES = ["astronomy-db", "astronomy_db", "postgresql"]
+SELECTED_DATABASE = {"db_system": "postgresql", "db_role": "catalog",
+                     "container": "astronomy-db", "fault_scope": "whole_database_container"}
 
 
 def _call(
@@ -154,7 +156,8 @@ _CHECKOUT_CALLS = [
         _CHECKOUT,
         _CURRENCY,
         protocol="grpc",
-        operation_hint="CurrencyService/Convert item price",
+        operation_hint="CurrencyService/Convert",
+        purpose="item price",
     ),
     _call(
         "checkout.checkout.shipping.quote",
@@ -168,7 +171,8 @@ _CHECKOUT_CALLS = [
         _CHECKOUT,
         _CURRENCY,
         protocol="grpc",
-        operation_hint="CurrencyService/Convert shipping price",
+        operation_hint="CurrencyService/Convert",
+        purpose="shipping price",
     ),
     _call(
         "checkout.checkout.payment.charge",
@@ -241,6 +245,8 @@ class Adapter(LegacyAdapter):
 
     def metadata(self) -> dict[str, Any]:
         metadata = super().metadata()
+        # PostgreSQL container port in the pinned rendered deployment.
+        metadata["database"].update(port=5432, system="postgresql")
         metadata["v4_contract"] = {
             "controlled_service_aliases": list(CONTROLLED_SERVICE_ALIASES),
             "contracts_module": "systems.otel_demo.experiment_v4.CONTRACTS",

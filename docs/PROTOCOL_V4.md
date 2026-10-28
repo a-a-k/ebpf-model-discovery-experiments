@@ -30,13 +30,16 @@ before any success claim.
 
 | Tool | Source revision |
 |---|---|
-| Procrustes | `bf815bf1f42fc72437817dea3948cdb8a9ad5f99` |
-| Bering | `2c82e22efc183e9ff9068d2d2b57909797c10907` |
-| Sheaft | `9248f50ccb1bc93dc26f1ca234b4f88b52880031` (v1.3.1) |
+| Procrustes | `39f76000f8a39c971155e08ebffde829b525911b` |
+| Bering | `dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3` (v1.1.1) |
+| Sheaft | `686a602f4e7b71f3612f1810885e29dd66c8733a` (v1.3.2) |
 
 All experimental adaptations, workload semantics, data and reports belong here.
-Procrustes is used as its current diagnostic static analyzer. Its SDK-specific
-checks may report BLOCKED for agent collection; preserve that report verbatim.
+Procrustes is used as its current diagnostic static analyzer. Native and explicit
+`ebpf-obi` collection selections retain their own unmodified reports. The eBPF
+selection records kernel/protocol coverage as unknown, rather than requiring an
+application SDK. Missing custom-driver/Tracetest correspondence and conflicting
+replica workload identities may still produce BLOCKED reports; retain them.
 Only independently confirmed inventory facts pass into discovery overlays.
 Goal-derived endpoint semantics are separately declared inputs, not discovered
 facts. A real two-guest technical run checks the agent path; it does not rewrite
@@ -61,10 +64,20 @@ using Sheaft external edge-aware predicates, including exact recovered edge IDs
 when separate calls to a shared dependency must both be required. An observed
 call is not automatically a mandatory call.
 
+A declared mandatory DB channel is compiled into its recovered typed edges. Under
+this protocol's node/whole-endpoint failures and live-edge probability one, those
+edges share exactly the same availability; their conjunction is equivalent to one
+channel witness. This does not infer that every observed SQL/Redis command is
+mandatory. The binding records this basis; individual edge or command failures
+would require different semantics. Missing or ambiguous channels remain unknown.
+
 Compare raw observation discovery with explicitly attributed static/network-scope
 enrichment, and native/eBPF/combined graphs through the same tooling. Include the
-same merged Bering revision in every arm: the raw/enriched difference is the
-declared network-scope/replica/placement input, not different product algorithms.
+same released Bering revision in every arm. The `raw` and `network_scope`
+variants differ only in explicitly supplied network scope during discovery. Both
+receive the same separately attributed confirmed static facts and controlled
+placement inventory for simulation. Unaugmented Bering graphs are also retained;
+configured replicas and fault placement are not claimed as autonomous recovery.
 Save that additional evidence and the exact transformation rule. Include the
 direct source-contract plus inventory calculation where applicable. For a single
 controlled two-replica service with all other components held live, that baseline
@@ -73,6 +86,20 @@ manual call audit already contains semantic dependency knowledge; its preparatio
 cost is charged to every method using it. No novelty or predictive superiority
 is claimed for Monte Carlo, graph size, or this equivalence. HTTP observations
 are external evidence about HTTP outcomes, not an alternative discovery method.
+
+
+Actual OBI HTTP bodies are retained before decoding, with collector ingress,
+content headers and hashes. Selection copies complete OTLP protobuf/JSON records
+from those bodies; it preserves conflicting attributes, scope, links and IDs.
+Native Jaeger exports use an attributed format codec. A source prefix never
+turns an invalid ID into a valid one. Bering's declared OBI endpoint decodes eBPF
+exports; its native endpoint decodes native exports. Combined discovery occurs
+inside one Bering runtime, with source domains preventing cross-source ancestry.
+The runtime replays a single offline batch, admits native late records, and
+flushes after input is complete. Any dropped input or split publication is a
+technical failure. Historical reconciliation is disabled for this batch method;
+source timestamps do not determine selection. No graph is constructed outside
+Bering. Only its emitted model is extracted from the snapshot and given to Sheaft.
 
 ## Operation contracts
 
@@ -167,7 +194,10 @@ No 5/10 percentage-point success gates. Capture preparation, builds, observation
 discovery, simulation, verification, failed runs and early termination; unavailable
 human/agent costs remain explicitly unavailable rather than zero.
 
-Technical qualification precedes the series. Reviewer checks actual generated
+Technical qualification precedes the series.
+`toolchain/execution-summary.json` distinguishes branches that actually invoked
+Bering and Sheaft from unavailable branches; qualification completion does not
+imply that every source path was exercised. Reviewer checks actual generated
 models, fault selectors, source isolation, frozen predictions and independent
 outcomes before any success claim. Repair technical failures with retained history;
 do not expand scenarios to obtain a positive result.
