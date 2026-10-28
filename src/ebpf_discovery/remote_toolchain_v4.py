@@ -109,17 +109,20 @@ def _read(path: Path):
 
 
 def _index_table_proof(path: Path) -> dict:
-    """Hash the logical closed index; SQLite file layout and WAL are irrelevant."""
+    """Hash every row and its preserved rowid by sequential table scans."""
     db = sqlite3.connect(f"file:{Path(path).resolve().as_posix()}?mode=ro&immutable=1", uri=True)
     try:
+        db.execute("PRAGMA cache_size=-65536")
+        db.execute("PRAGMA temp_store=FILE")
         if db.execute("PRAGMA quick_check").fetchone()[0] != "ok":
             raise ValueError("training observation index failed quick_check")
-        result = {}
-        ordering = {"spans": "digest", "links": "source,linked_trace,linked_span,trace",
-                    "files": "path"}
-        for table, order in ordering.items():
+        result = {"proof_basis": "rowid-and-all-columns-v1"}
+        # All three pinned tables are ordinary rowid tables. SQLite backup
+        # preserves rowids; scanning them avoids random full-row reads through
+        # the digest/path indexes while retaining every column in the proof.
+        for table in ("spans", "links", "files"):
             digest, count = hashlib.sha256(), 0
-            for row in db.execute(f"SELECT * FROM {table} ORDER BY {order}"):
+            for row in db.execute(f"SELECT rowid,* FROM {table} ORDER BY rowid"):
                 digest.update(json.dumps(row, separators=(",", ":"), ensure_ascii=False).encode())
                 digest.update(b"\n")
                 count += 1
@@ -494,7 +497,7 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(state / "training-index-proof.json", {
         "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
         "parent_after_worker": None,
-        "basis": "logical tables from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
+        "basis": "rowid and every table column from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
     cost["checkpoint_validation_seconds"] = (time.monotonic_ns() - validation_started) / 1e9
     _atomic_json(cost_path, cost)
     if (campaign.ctx.out / "toolchain").exists():

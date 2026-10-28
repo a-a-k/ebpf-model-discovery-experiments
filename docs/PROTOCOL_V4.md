@@ -368,6 +368,19 @@ or permission to skip its staged integrity/resource review.
 The replacement was dispatched as run `40754529169` at that reviewed head;
 the two preceding failed OTel attempts and the diagnostic remain retained.
 
+Before changing the verifier for future planned runs, root and the independent
+reviewer give **explicit ORIGINAL-criterion design GO** for sequential index
+verification. On the three pinned ordinary-rowid tables, hash `rowid` and every
+column in rowid order, retaining schema hashing and SQLite integrity checking.
+SQLite backup preserves those IDs; this adds physical-row identity to the full
+content proof. The existing digest-ordered query uses an index followed by
+nonsequential full-row reads, confirmed by a synthetic query-plan inspection.
+The proposed change avoids that access pattern without changing observations,
+graph construction, simulations or selection. Parent and worker must use the
+same implementation/proof definition. Backup equality and value/add/delete/rowid
+mutation checks precede use. The live run remains unchanged; its waiting time
+does not establish this query as the actual bottleneck or prove a cost advantage.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
