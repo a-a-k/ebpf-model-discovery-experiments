@@ -171,6 +171,25 @@ def fault_inputs(controlled, database_nodes=()):
     return {'schema_version': '1.0', 'profiles': profiles}
 
 
+def predicate_contract(model, binding, name):
+    """Score supplied operation endpoints; retain ancillary graph endpoints unscored."""
+    selected = set(binding['endpoints'])
+    predicate = {key: binding[key] for key in ('entry_service', 'mandatory_targets', 'required_edges')}
+    predicate.update(type='edge_aware', edge_modes=['sync'])
+    definitions, weights = {name: predicate}, {}
+    for endpoint in model['endpoints']:
+        chosen = endpoint['id'] in selected
+        weights[endpoint['id']] = 1 if chosen else 0
+        if not chosen:
+            reference = endpoint['success_predicate_ref']
+            if reference == name:
+                raise ValueError('Ancillary endpoint collides with the selected operation predicate')
+            definitions[reference] = {
+                'type': 'all_of', 'services': [endpoint['entry_service']],
+                'description': 'Unscored entry-service liveness only; no business-operation success semantics supplied'}
+    return {'schema_version': '1.1', 'predicates': definitions, 'endpoint_weights': weights}
+
+
 def reachable(model, start, end):
     pending, seen = [start], set()
     adjacency = defaultdict(set)
@@ -403,15 +422,7 @@ class Toolchain:
                     model, quality = self.discover(input_path, folder, folder/'overlay.json')
                     faults = fault_inputs(controlled, selected_db)
                     write_json(folder/'faults.json', faults)
-                    predicate = {k: binding[k] for k in ('entry_service', 'mandatory_targets', 'required_edges')}
-                    predicate.update(type='edge_aware', edge_modes=['sync'])
-                    definitions = {name: predicate}
-                    for endpoint in model['endpoints']:
-                        if endpoint['id'] not in binding['endpoints']:
-                            definitions[endpoint['success_predicate_ref']] = {
-                                'type': 'edge_aware', 'entry_service': endpoint['entry_service'],
-                                'mandatory_targets': [], 'edge_modes': ['sync']}
-                    write_json(folder/'predicates.json', {'schema_version': '1.1', 'predicates': definitions})
+                    write_json(folder/'predicates.json', predicate_contract(model, binding, name))
                     analysis = {'schema_version': '1.3', 'seed': self.ctx.seed, 'trials': 100000,
                         'predicate_contract': str(folder/'predicates.json'),
                         'reliability': {'node_live_probability': 1, 'edge_live_probability': 1},

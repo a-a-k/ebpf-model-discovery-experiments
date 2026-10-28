@@ -1,7 +1,7 @@
 import json
 from types import SimpleNamespace
 
-from ebpf_discovery.toolchain_v4 import Toolchain, exact_graph_outcome, fault_inputs, unique_path, resolve_contract
+from ebpf_discovery.toolchain_v4 import Toolchain, exact_graph_outcome, fault_inputs, unique_path, resolve_contract, predicate_contract
 
 
 def test_shared_database_requires_both_calls_and_affects_prediction():
@@ -15,6 +15,22 @@ def test_shared_database_requires_both_calls_and_affects_prediction():
     # One remaining route to the shared database does not satisfy both calls.
     assert exact_graph_outcome(model, binding, ['visits']) == 0
     assert exact_graph_outcome(model, dict(binding, required_edges=['c']), ['visits']) == 1
+
+
+def test_ancillary_endpoint_has_valid_but_unscored_liveness_without_changing_operation():
+    model = {'endpoints': [
+        {'id': 'selected', 'entry_service': 'gateway', 'success_predicate_ref': 'owner'},
+        {'id': 'other', 'entry_service': 'customers', 'success_predicate_ref': 'customers-get'}]}
+    binding = {'endpoints': ['selected'], 'entry_service': 'gateway',
+               'mandatory_targets': ['customers', 'db'], 'required_edges': ['gateway-customers', 'customers-db']}
+    contract = predicate_contract(model, binding, 'owner')
+    assert contract['predicates']['owner'] == {
+        'type': 'edge_aware', 'entry_service': 'gateway', 'mandatory_targets': ['customers', 'db'],
+        'required_edges': ['gateway-customers', 'customers-db'], 'edge_modes': ['sync']}
+    assert contract['endpoint_weights'] == {'selected': 1, 'other': 0}
+    assert contract['predicates']['customers-get']['type'] == 'all_of'
+    assert contract['predicates']['customers-get']['services'] == ['customers']
+    assert len(model['endpoints']) == 2
 
 
 def test_database_mapping_requires_port_system_and_compatible_network_scope(tmp_path):
