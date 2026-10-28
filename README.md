@@ -22,8 +22,8 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > failed before forecast import and target traffic: its
 > [worker log](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40764150238)
 > records severe RAM/swap pressure followed by runner shutdown (exit 143), without
-> a confirmed OOM kill. A reviewed [GC diagnostic is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-> on that full checkpoint;
+> a confirmed OOM kill. The [GC diagnostic completed](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
+> on that full checkpoint; its retained results are under independent review;
 > it cannot complete the failed cell. DSB's staged retry also failed after training
 > upload; its retained full checkpoint is now being checked in a
 > [separate reviewed diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812).

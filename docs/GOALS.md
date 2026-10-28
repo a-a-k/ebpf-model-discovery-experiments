@@ -107,8 +107,9 @@ with severe recorded RAM/swap pressure. No forecast import/freeze or target traf
 occurred. Parent artifacts and available logs are permanently archived by
 `40777355932`; OOM causality is not established.
 
-The reviewed OTel diagnostic `40778455040` is running on the larger, unchanged
-training checkpoint with Bering-child-only Go GC tuning, as recorded in PROTOCOL_V4.md.
+The reviewed OTel diagnostic `40778455040` completed on the larger, unchanged
+training checkpoint with Bering-child-only Go GC tuning; its retained results
+await independent integrity/resource review, as recorded in PROTOCOL_V4.md.
 It cannot complete or resume the failed campaign. After technical qualification,
 a fresh staged cell must pass integrity/resource review before that system's
 remaining eight cells proceed. One parallel immutable DSB checkpoint diagnostic

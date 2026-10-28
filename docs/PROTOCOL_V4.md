@@ -3,9 +3,10 @@
 Current status: all nine Petclinic cells are independently admitted, with the
 [generated nine-cell report](../results/iteration-4/SOURCE.md) retained; 9/27
 planned cells overall. OTel and DSB remain incomplete after technical failures.
-Separate full-checkpoint diagnostics are running for
-[OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-and [DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812).
+The full-checkpoint [OTel diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
+completed and awaits actual-result review;
+[DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
+is still running.
 Prepared remote-worker changes await their actual integrity/resource review and
 separate staged-execution decisions. A diagnostic cannot resume or complete a
 failed campaign.
