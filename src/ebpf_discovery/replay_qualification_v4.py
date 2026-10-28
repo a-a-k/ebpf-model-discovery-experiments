@@ -7,6 +7,7 @@ This is a technical diagnostic, never a new acquisition or a scored campaign.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import hashlib
 import importlib
 import json
@@ -176,8 +177,11 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
         plans = json.loads((original/'plans.json').read_text(encoding='utf-8'))
         if len(plans) != 240 or any(plan.get('phase') != 'qualification' for plan in plans):
             raise ValueError('retained capture lacks exactly 240 qualification intents')
-        if len({plan.get('attempt_id') for plan in plans}) != 240:
+        attempt_ids = [plan.get('attempt_id') for plan in plans]
+        if any(not isinstance(value, str) or not value for value in attempt_ids) or len(set(attempt_ids)) != 240:
             raise ValueError('retained qualification attempt IDs are missing or duplicate')
+        if Counter(plan.get('state') for plan in plans) != {'11': 120, '00': 120}:
+            raise ValueError('retained qualification states do not match fixed 120+120 design')
         binary_dir, old_root, binary_evidence = verified_binaries(original, out)
         index_evidence = relocate_index(original, out, old_root)
         shutil.copy2(original/'deployment.json', out/'deployment.json')
@@ -196,6 +200,7 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
             else:
                 os.environ['PBS_BIN'] = old_bin
         write_json(out/'replay-provenance.json', {'source_artifact': source,
+            'source_artifact_digest_basis': 'GitHub Actions API-advertised ZIP digest; extracted archive not independently ZIP-hashed',
             'original_status_sha256': original_files['status.json']['sha256'],
             'original_plans_sha256': original_files['plans.json']['sha256'],
             'original_deployment_sha256': original_files['deployment.json']['sha256'],
@@ -213,8 +218,15 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
         raise
     finally:
         status['ended_ns'] = time.time_ns()
-        status['original_files_unchanged'] = (file_manifest(original) == original_files
-                                             if original_files is not None else None)
+        try:
+            status['original_files_unchanged'] = (file_manifest(original) == original_files
+                                                 if original_files is not None else None)
+        except Exception as error:
+            status['original_files_unchanged'] = False
+            status['original_rehash_error'] = repr(error)
+        if status['original_files_unchanged'] is False:
+            status['status'] = 'capture_replay_technical_failure'
+            status['error'] = 'original qualification artifact changed or could not be rehashed during replay'
         write_json(out/'status.json', status)
         if status['original_files_unchanged'] is False:
             raise RuntimeError('original qualification artifact changed during replay')

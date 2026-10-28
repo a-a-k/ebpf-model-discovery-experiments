@@ -61,6 +61,7 @@ jobs:
                   'run_status':run['status'],'run_conclusion':run.get('conclusion'),
                   'run_url':run.get('html_url'),'artifact_id':item['id'],
                   'artifact_name':name,'artifact_digest':item.get('digest'),
+                  'artifact_digest_basis':'GitHub Actions API metadata; ZIP not independently hashed after download',
                   'artifact_bytes':item.get('size_in_bytes'),'expired':False,
                   'source_workflow_path':run.get('path')})
           output = pathlib.Path('work/replay')

@@ -7,6 +7,7 @@ import threading
 import pytest
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 
+import ebpf_discovery.replay_qualification_v4 as replay_module
 from ebpf_discovery.raw_v4 import export_selection
 from ebpf_discovery.receiver import create_server
 from ebpf_discovery.replay_qualification_v4 import (
@@ -155,6 +156,47 @@ def test_invalid_artifact_metadata_is_retained_as_technical_failure(tmp_path, mo
     status = json.loads((tmp_path/'replay'/'status.json').read_text())
     assert status['status'] == 'capture_replay_technical_failure'
     assert status['original_files_unchanged'] is True
+
+
+def _qualification_fixture(original, *, one_missing_id=False):
+    original.mkdir()
+    source = {'run_id':123, 'run_sha':'a'*40, 'run_status':'completed',
+              'artifact_id':456, 'artifact_name':'qualification-v4-deathstarbench-full-6-123',
+              'artifact_digest':'sha256:'+'b'*64, 'expired':False}
+    (original/'status.json').write_text(json.dumps({
+        'system':'deathstarbench','mode':'full','seed':6,
+        'run_id':'123','commit':'a'*40}))
+    plans = [{'attempt_id':f'attempt-{i}', 'phase':'qualification',
+              'state':'11' if i < 120 else '00'} for i in range(240)]
+    if one_missing_id:
+        plans[-1]['attempt_id'] = None
+    (original/'plans.json').write_text(json.dumps(plans))
+    return source
+
+
+def test_missing_attempt_id_cannot_pass_240_unique_count(tmp_path, monkeypatch):
+    original = tmp_path/'original'
+    source = _qualification_fixture(original, one_missing_id=True)
+    monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+    with pytest.raises(ValueError, match='attempt IDs'):
+        replay(original, tmp_path/'replay', 'deathstarbench', source)
+    status = json.loads((tmp_path/'replay'/'status.json').read_text())
+    assert status['status'] == 'capture_replay_technical_failure'
+
+
+def test_changed_original_is_recorded_as_failure_even_on_exception(tmp_path, monkeypatch):
+    original = tmp_path/'original'
+    source = _qualification_fixture(original)
+    monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+    def mutate_and_fail(_original, _replay):
+        (original/'unexpected').write_text('changed')
+        raise RuntimeError('synthetic replay failure after mutation')
+    monkeypatch.setattr(replay_module, 'verified_binaries', mutate_and_fail)
+    with pytest.raises(RuntimeError, match='original qualification artifact changed'):
+        replay(original, tmp_path/'replay', 'deathstarbench', source)
+    status = json.loads((tmp_path/'replay'/'status.json').read_text())
+    assert status['status'] == 'capture_replay_technical_failure'
+    assert status['original_files_unchanged'] is False
 
 
 def test_workflow_has_no_guest_or_capture_step():
