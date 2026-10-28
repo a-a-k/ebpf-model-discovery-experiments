@@ -7,6 +7,7 @@ import zipfile
 
 import pytest
 import requests
+import sqlite3
 
 from ebpf_discovery import remote_toolchain_v4 as remote
 
@@ -304,3 +305,16 @@ def test_zip_restored_verified_binary_is_made_executable(tmp_path):
     remote._make_binaries_executable(proof)
     result = __import__("subprocess").run([str(binary)], check=True, text=True, capture_output=True)
     assert result.stdout == "executable-mode-ok"
+
+
+def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path):
+    path = tmp_path / "index.sqlite"
+    with sqlite3.connect(path) as db:
+        db.execute("CREATE TABLE spans(value TEXT)")
+    store = remote._readonly_store(path)
+    try:
+        assert store.db.execute("PRAGMA query_only").fetchone()[0] == 1
+        assert store.db.execute("PRAGMA cache_size").fetchone()[0] == -65536
+        assert store.db.execute("PRAGMA temp_store").fetchone()[0] == 1
+    finally:
+        store.close()

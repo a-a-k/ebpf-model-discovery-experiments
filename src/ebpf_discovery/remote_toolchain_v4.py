@@ -154,6 +154,8 @@ def _readonly_store(path: Path) -> ObservationStore:
     store.same_trace_parents = True
     store.path = Path(path)
     store.db = sqlite3.connect(f"file:{store.path.resolve().as_posix()}?mode=ro&immutable=1", uri=True)
+    store.db.execute("PRAGMA cache_size=-65536")
+    store.db.execute("PRAGMA temp_store=FILE")
     store.db.execute("PRAGMA query_only=ON")
     return store
 
