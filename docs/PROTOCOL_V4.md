@@ -435,6 +435,13 @@ does not authorize new traffic: first require the diagnostic's actual integrity
 and resource review, then separate execution GO for one fresh planned OTel/full/6
 replacement. Its admission still precedes the remaining eight OTel cells. Local
 Petclinic/DSB execution and currently running jobs are unchanged.
+Prepared integration `d99862bf02189b4125bc708443b80f441f240e7a` received root GO
+and independent **ORIGINAL-criterion implementation/code-and-docs GO** after
+25 focused synthetic checks passed (one Windows executable-mode check skipped)
+and exact-head Linux CI `40779398938` succeeded. The synthetic worker tests exercise
+success and failure through restore, immutable checks, scoped settings and output
+retention; they do not establish actual resource capacity. Activation remains
+subject to the diagnostic and staged-execution decisions above.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
