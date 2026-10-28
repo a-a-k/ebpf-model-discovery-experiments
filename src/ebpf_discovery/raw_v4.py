@@ -307,6 +307,11 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path
                     continue
                 document = json.loads(raw_line)
                 raw_ref = document.get("raw_ref")
+                if "payload" in document and not raw_ref:
+                    raise ValueError(
+                        f"receiver wrapper lacks original wire capture: {path}; "
+                        "decoded MessageToDict payload is not a lossless OTLP export"
+                    )
                 if raw_ref:
                     original_path = Path(raw_ref)
                     if not original_path.is_absolute():

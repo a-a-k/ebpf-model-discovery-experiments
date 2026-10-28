@@ -6,6 +6,7 @@ import sqlite3
 from pathlib import Path
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
+import pytest
 
 from ebpf_discovery.raw_v4 import export_selection
 
@@ -141,6 +142,16 @@ def test_protobuf_copy_preserves_duplicate_variants_scope_attributes_and_links(t
     assert exported.resource_spans[0].scope_spans[0].scope.attributes[0].key == "scope.attr"
     assert spans[0].links[0].attributes[0].value.int_value == 7
     assert unknown_field in spans[0].SerializeToString()
+
+
+@pytest.mark.parametrize("name", ["a.jsonl", "native.jsonl"])
+def test_receiver_wrapper_without_original_wire_is_rejected(tmp_path: Path, name: str):
+    path = tmp_path / name
+    line = (json.dumps({"payload": _payload(_span("decoded-only")), "id_encoding": "base64"}) + "\n").encode()
+    path.write_bytes(line)
+    source = "ebpf" if name == "a.jsonl" else "native"
+    with pytest.raises(ValueError, match="lacks original wire capture"):
+        export_selection(Store([(str(path), len(line))]), {source: {(TRACE, SPAN)}}, tmp_path / "out")
 
 
 def test_jaeger_codec_preserves_typed_evidence_and_reference_semantics(tmp_path: Path):
