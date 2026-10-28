@@ -4,11 +4,13 @@ Current status: all nine Petclinic cells are independently admitted, with the
 [generated nine-cell report](../results/iteration-4/SOURCE.md) retained; 9/27
 planned cells overall. OTel and DSB remain incomplete after technical failures.
 The full-checkpoint [OTel diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-completed and awaits actual-result review;
+completed and passed independent integrity/resource review; its one
+[fresh OTel/full/6 replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012)
+is running;
 [DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 is still running.
-Prepared remote-worker changes await their actual integrity/resource review and
-separate staged-execution decisions. A diagnostic cannot resume or complete a
+DSB's prepared remote-worker changes await its actual diagnostic review and
+separate staged-execution decision. A diagnostic cannot resume or complete a
 failed campaign.
 
 Earlier qualification failures, repairs and executions remain in the
@@ -482,6 +484,36 @@ focused checks passed (28 checks, three Linux-only checks skipped on Windows),
 and exact-head Linux CI `40781856208` succeeded. Actual supervisor argument flow
 and synthetic worker success/failure were checked for both system declarations.
 This remains preparation approval, not acquisition authorization.
+
+Actual OTel diagnostic `40778455040` received root GO and independent
+**ORIGINAL-criterion actual-diagnostic GO**. The saved evidence binds the complete
+1,695,697-observation checkpoint and pinned binaries, verifies 603 original files
+unchanged, and retains exactly 24,600 training attempts plus 15 preparation
+operations. All 16 Bering executions completed with one publication, exact source
+counts and zero dropped observations; all saved tool commands succeeded, including
+10 actual Sheaft analyses with 100,000 trials. All source/variant branches remain:
+eBPF-only leaves all three operations unknown; native supports browse/cart but
+leaves checkout unknown; combined supports all three. Selected members were
+independently rehashed locally; the complete original output archive is retained
+in [data-40785555784](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40785555784).
+The 1,737,726,417-byte output artifact is `12858178880`, SHA-256
+`30b04998fc56833d79327a990ecf7210ea674dcab4c85e47ed01b51de51064d8`.
+
+Stored GNU time reports 50:21.52 elapsed, user/system CPU 4,106.62/267.27 seconds,
+maximum RSS 12,557,636 KiB and exit zero. Effective Bering settings are the declared
+12 GiB soft target with GC logging, with GOGC unset. This demonstrates feasibility
+for the exact retained input; it does not identify the previous shutdown cause,
+establish universal capacity or predictive accuracy, or admit a tenth cell.
+
+Root and the independent reviewer separately give **explicit ORIGINAL-criterion
+execution GO** for exactly one fresh planned OTel/full/6 technical replacement.
+It was dispatched as `40786403012` at `a0e7644362a4e1ac5913f33f06a9570f2a780000`
+after exact-head Linux CI `40785779972` succeeded. Keep the 34,800-attempt design,
+same binaries/contracts/baselines, unknown and negative outcomes, live parent
+guests, verified worker import and pretarget freeze, reserved worker capacity,
+and complete parent/worker costs. Remaining eight OTel cells await its actual
+admission. No Bering product optimization or additional release is required by
+the successful diagnostic at this point.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service

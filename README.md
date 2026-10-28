@@ -23,8 +23,9 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > [worker log](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40764150238)
 > records severe RAM/swap pressure followed by runner shutdown (exit 143), without
 > a confirmed OOM kill. The [GC diagnostic completed](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-> on that full checkpoint; its retained results are under independent review;
-> it cannot complete the failed cell. DSB's staged retry also failed after training
+> on that full checkpoint and passed independent integrity/resource review. A
+> [fresh OTel/full/6 replacement is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
+> The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
 > upload; its retained full checkpoint is now being checked in a
 > [separate reviewed diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812).
 > All failed attempts remain in the
@@ -128,9 +129,10 @@ experiment, not a two-physical-host failure study. Guest/runner CPU, memory, ker
 BTF, boot, image, process and network evidence are retained. Workflows use public
 runner resources and do not silently switch to a paid larger runner.
 
-The prepared OTel and DSB workflows compute the saved training model on a separate
-standard Actions runner. Activation awaits the diagnostic and staged-run reviews
-recorded in [the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
+The OTel and prepared DSB workflows compute the saved training model on a separate
+standard Actions runner. OTel's full-input diagnostic passed; its one fresh staged
+replacement is running. DSB activation awaits the reviews recorded in
+[the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
 This separates toolchain resource use from the application host; it does not move
 replicas to additional physical machines or change the application's placement.
@@ -405,7 +407,9 @@ The prepared worker applies `GOMEMLIMIT=12GiB` and GC logging to Bering children
 equally across source/variant branches. This is a soft Go runtime target on the
 standard runner, not an input limit or RSS guarantee; GOGC and other tools'
 environments are unchanged. Requested, inherited and effective settings are
-retained. This setting is still undergoing full-input empirical verification.
+retained. The OTel full-input diagnostic completed in 50:21.52 with GNU time
+maximum RSS 12,557,636 KiB; this establishes feasibility for that input, not a
+general capacity guarantee or proof of the earlier shutdown's cause.
 
 Worker job and artifact costs are separate series-computation costs. Include each
 `cost.remote_toolchain.worker_run_id` in the report workflow's `run_ids` alongside
