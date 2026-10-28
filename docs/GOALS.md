@@ -103,7 +103,8 @@ The first three already-planned full/seed6 cells are launched in run `4070475828
 at `fdec1a6`, after independent original-criterion GO and CI `40704617133`.
 OTel and Petclinic lost their runners during discovery after training acquisition,
 without artifact upload; the cause is not established. DSB's acquisition step also
-failed and its uploads were skipped; final platform status and logs are pending.
+failed and its uploads were skipped; its final annotation confirms runner
+communication loss, with the underlying cause and last campaign phase unknown.
 The checkpoint/streaming/swap repair passed independent review and Linux CI
 `40718306225` (413 tests). Unchanged OTel and Petclinic full/seed6 cells were
 relaunched at `ea2e278` in `40718665137` and `40718674400`, respectively.
@@ -113,8 +114,10 @@ as technical failure evidence while GitHub finalizes the outer original job.
 Petclinic/full/6 `40718674400` is complete and independently admitted: all 34,800
 primary operations and frozen graph/forecast integrity checks pass. Its remaining
 eight cells are running in `40733841068`, `40733846961`, `40733852492` and
-`40733858113`. Permanent archiving of the first Petclinic cell is in `40734810232`.
-Next: assess these cells and the OTel/DSB staged retries; retain the original attempt's available
+`40733858113`. Permanent archiving of the first Petclinic cell completed in
+`40734810232`. OTel's retry retained its training checkpoint but then failed during
+continuation; no completed cell is available and diagnosis is ongoing.
+Next: assess the running Petclinic/DSB cells and diagnose OTel; retain the original attempt's available
 logs/costs. Each system's remaining eight cells may proceed after its own staged
 integrity/resource review, independently of the other systems. Retain every
 valid cell regardless of accuracy or unknown coverage.

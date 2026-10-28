@@ -12,7 +12,8 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > measured. These are one-cell results, not a three-repeat or cross-system conclusion.
 > [Saved evaluation and provenance](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
 > passed independent integrity/resource review; the other eight Petclinic cells are running.
-> The OTel and DSB staged retries continue. All failed attempts remain in the
+> OTel's continuation failed after its training checkpoint was uploaded; diagnosis
+> is ongoing. The DSB staged retry continues. All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
