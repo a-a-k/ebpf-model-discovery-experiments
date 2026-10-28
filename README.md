@@ -122,6 +122,12 @@ experiment, not a two-physical-host failure study. Guest/runner CPU, memory, ker
 BTF, boot, image, process and network evidence are retained. Workflows use public
 runner resources and do not silently switch to a paid larger runner.
 
+OTel's repaired workflow computes the saved training model on a separate standard
+Actions runner. The two application guests stay on their original runner and
+remain alive until the returned model is verified and the same campaign completes.
+This separates toolchain resource use from the application host; it does not move
+replicas to additional physical machines or change the application's placement.
+
 Application adapters and their source-audited contracts are documented separately:
 [DeathStarBench](systems/deathstarbench/V4.md),
 [OTel Demo](systems/otel_demo/V4.md), and
@@ -347,6 +353,14 @@ The manual workflows are:
 - [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
   and complete Actions job/artifact costs, including declared failed preparation runs;
   render per-operation figures from that saved aggregate as SVG, PNG and PDF.
+- [archive.yml](.github/workflows/archive.yml): retain original artifact ZIPs, job
+  logs and provenance in permanent data releases, with lossless numbered parts
+  when an original file exceeds the release-asset delivery limit.
+
+For OTel, the series invokes [toolchain-worker-v4.yml](.github/workflows/toolchain-worker-v4.yml)
+automatically after the training upload. Schedule parent groups with capacity left
+for those workers; `max-parallel: 3` applies to each series workflow, not all
+separately dispatched workflows together.
 
 The acquisition entry point is:
 
@@ -369,6 +383,23 @@ is bound to the run, commit, cell and manifest SHA. Only then does that process
 continue on the same live guests; an unsuccessful upload is a technical failure.
 This checkpoint is partial evidence, not a finished campaign or permission to
 resume target measurements on a replacement host.
+
+For OTel the supervisor adds `--toolchain-execution worker`; the CLI default and
+the other systems remain `local`. The parent dispatches one child with the exact
+checkpoint artifact/manifest, parent run/attempt/cell and scientific commit. The
+worker checks out that commit, restores the original paths and verifies the pinned
+binaries before executing the same Bering/Sheaft pipeline. Its workflow revision
+is recorded separately from the scientific checkout. Complete outputs, including
+unknown branches, return as one manifested artifact. The parent verifies all
+toolchain files and its unchanged training index, imports the files, fits classes,
+then freezes everything before any target request. No later observation is used
+by that worker. A failed worker or inconsistent import is a technical failure.
+
+Worker job and artifact costs are separate series-computation costs. Include each
+`cost.remote_toolchain.worker_run_id` in the report workflow's `run_ids` alongside
+its parent; it is not another scientific cell. Parent waiting/idle-guest time is
+already included in campaign elapsed time and overlaps worker computation, so
+these durations must not be added as sequential wall time.
 
 The repaired series uses an additional measured 8 GiB swap file on the standard
 runner's local disk. Allocation failure remains explicit. Wire files are streamed
@@ -420,7 +451,13 @@ New report runs also retain `evaluation-v4.json.gz` for compact repository
 publication. Decompression must restore the exact original JSON SHA-256; both
 forms and `provenance/aggregate-packaging.json` remain in the Actions artifact.
 The table and figure commands accept either form. Compression removes no fields
-and changes no calculation; the existing interim snapshot remains unchanged.
+and changes no calculation. Earlier snapshots remain in Git history and permanent
+data releases. Use the `.json.gz` path when reading the compact repository copy.
+
+Permanent archives retain the original artifact digest. A large file may be
+delivered as numbered `.part0000`, `.part0001`, and subsequent parts. Its manifest
+inside `provenance.tar.gz` supplies the ordered parts, sizes, hashes and exact
+reassembly/verification commands. Reassembly restores the original ZIP bytes.
 
 A campaign artifact retains, as available:
 
@@ -444,6 +481,8 @@ toolchain/classes/classes-model.json, classes-v4.json (campaign root)
 async-*.json, infrastructure/         # SQL controls, VM/resource/platform evidence
 infrastructure/campaign-process/     # same-host supervisor identity, log and exit
 infrastructure/training-checkpoint/  # manifest, ready and upload acknowledgement
+infrastructure/remote-toolchain-v4/  # dispatch/import identity, index proofs and costs
+infrastructure/remote-toolchain-v4/worker/ # child provenance and resource evidence
 ```
 
 Artifact upload steps run on ordinary job failures, with raw-data-friendly compression
