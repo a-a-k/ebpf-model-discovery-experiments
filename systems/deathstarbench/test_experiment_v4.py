@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 import types
+from types import SimpleNamespace
 
 import requests
 
@@ -122,3 +123,25 @@ def test_v4_render_removes_only_injected_proxy_limits(monkeypatch, tmp_path):
     assert config.read_text(encoding="utf-8") == (
         "defaults\n  mode tcp\nbackend replicas\n  balance roundrobin\n"
     )
+
+
+def test_inherited_ready_uses_unscored_replica_probes(monkeypatch, tmp_path):
+    adapter = Adapter(_Context())
+    adapter.root = tmp_path
+    observed = []
+    timeline = ('[{"post_id":"1","text":"' + STABLE_FIXTURE_TEXT + '"}]').encode()
+
+    def get(url, *, timeout):
+        observed.append((url, timeout))
+        return _response(200, timeline if "/wrk2-api/" in url else b"ready")
+
+    monkeypatch.setattr(requests, "get", get)
+    monkeypatch.setattr(_Context, "node_exec", lambda self, node, command, **kwargs: SimpleNamespace(returncode=0), raising=False)
+    monkeypatch.setattr(adapter, "_container_running", lambda *_: True)
+    monkeypatch.setattr(adapter, "_initialize_fixtures", lambda: None)
+    monkeypatch.setattr(adapter, "_assert_stable_fixture", lambda **_: None)
+    monkeypatch.setattr(adapter, "operation", lambda *_args, **_kwargs: (_ for _ in ()).throw(AssertionError("readiness called scored operation")))
+
+    adapter.ready()
+    assert [timeout for _url, timeout in observed] == [2, 5, 5]
+    assert (tmp_path / "replica-readiness.json").exists()

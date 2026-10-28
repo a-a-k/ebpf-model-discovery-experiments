@@ -15,7 +15,10 @@ from typing import Any
 import requests
 
 from .adapter import Adapter as HistoricalAdapter
-from .adapter import DB_CONTAINER, DB_SERVICE, REPLICA_CONTAINERS, REPLICA_IPS
+from .adapter import (
+    AdapterError, CROSS_NODE_PORTS, DB_CONTAINER, DB_SERVICE,
+    REPLICA_CONTAINERS, REPLICA_IPS, _json_dump,
+)
 from .contracts_v3 import STABLE_FIXTURE_TEXT
 
 
@@ -96,6 +99,54 @@ class Adapter(HistoricalAdapter):
         if source.count(old) != 1:
             raise RuntimeError("unexpected injected HAProxy timeout configuration")
         configuration.write_text(source.replace(old, "", 1), encoding="utf-8")
+
+    def _verify_each_replica_serves(self) -> None:
+        """Technical readiness probe; never call the scored v4 operation here."""
+        evidence = []
+        path = "/wrk2-api/user-timeline/read?user_id=2&start=0&stop=10"
+        for selected, other in (("a", "b"), ("b", "a")):
+            self.ctx.node_exec(other, f"docker stop {REPLICA_CONTAINERS[other]}", timeout=120)
+            try:
+                until = time.monotonic() + 20
+                attempts = []
+                while time.monotonic() < until:
+                    try:
+                        response = requests.get(self.entry_url + path, timeout=5)
+                        body = response.content
+                        matched = response.ok and self._valid_timeline(body, STABLE_FIXTURE_TEXT)
+                        attempts.append({
+                            "status": response.status_code,
+                            "body_sha256": hashlib.sha256(body).hexdigest(),
+                            "matched": matched,
+                        })
+                        if matched:
+                            break
+                    except requests.RequestException as exc:
+                        attempts.append({"error": str(exc), "matched": False})
+                    time.sleep(1)
+                else:
+                    raise AdapterError(f"user-timeline replica {selected} did not serve the semantic readiness probe")
+                evidence.append({
+                    "selected_replica": selected,
+                    "other_replica_stopped": other,
+                    "attempts": attempts,
+                    "success": True,
+                    "purpose": "technical_readiness_only",
+                })
+            finally:
+                self.ctx.node_exec(other, f"docker start {REPLICA_CONTAINERS[other]}", timeout=120)
+        listener_until = time.monotonic() + 30
+        while time.monotonic() < listener_until:
+            checks = (
+                self.ctx.node_exec("a", f"timeout 1 bash -c '</dev/tcp/127.0.0.1/{CROSS_NODE_PORTS['user-timeline-replica']}'", check=False),
+                self.ctx.node_exec("b", f"timeout 1 bash -c '</dev/tcp/127.0.0.1/{CROSS_NODE_PORTS['user-timeline-replica']}'", check=False),
+            )
+            if all(check.returncode == 0 for check in checks):
+                break
+            time.sleep(1)
+        else:
+            raise AdapterError("both user-timeline replica listeners were not restored after readiness probes")
+        _json_dump(self.root / "replica-readiness.json", evidence)
 
     @staticmethod
     def plan_operation(name: str, index: int, namespace: str) -> dict[str, Any]:
