@@ -397,12 +397,18 @@ def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[d
             or str(release.get("mode")) != str(campaign.ctx.mode)
             or str(release.get("seed")) != str(campaign.ctx.seed)):
         raise ValueError("release differs from live parent cell")
+    parent_run_attempt = os.environ.get("GITHUB_RUN_ATTEMPT")
+    if (str(ready.get("run_id")) != str(os.environ.get("GITHUB_RUN_ID"))
+            or ready.get("commit") != os.environ.get("GITHUB_SHA")
+            or not str(parent_run_attempt or "").isdigit()
+            or int(parent_run_attempt) <= 0):
+        raise ValueError("checkpoint differs from current live parent run or attempt")
     for key in ("artifact_id", "artifact_url", "artifact_digest"):
         if not release.get(key):
             raise ValueError(f"checkpoint release lacks {key}")
     artifact_digest = _canonical_digest(release["artifact_digest"])
     expected = {key: ready[key] for key in IDENTITY_KEYS}
-    expected.update(parent_run_attempt=os.environ.get("GITHUB_RUN_ATTEMPT"),
+    expected.update(parent_run_attempt=parent_run_attempt,
                     parent_cell_id=f"{campaign.system}:{campaign.ctx.mode}:{campaign.ctx.seed}",
                     artifact_id=str(release["artifact_id"]),
                     artifact_url=release["artifact_url"],
@@ -527,7 +533,13 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
                         http_status=response.status_code, response_excerpt=response.text[:1000])
         _atomic_json(state / "dispatch.json", dispatch)
         raise RuntimeError(f"worker dispatch rejected with HTTP {response.status_code}")
-    body = response.json()
+    try:
+        body = response.json()
+    except (TypeError, ValueError) as error:
+        dispatch.update(status="post_200_invalid_identity_no_retry", ended_ns=time.time_ns(),
+                        error=repr(error))
+        _atomic_json(state / "dispatch.json", dispatch)
+        raise RuntimeError("worker dispatch returned invalid JSON; do not retry blindly") from error
     worker_run_id = body.get("workflow_run_id")
     if type(worker_run_id) is not int or worker_run_id <= 0:
         dispatch.update(status="post_200_invalid_identity_no_retry", ended_ns=time.time_ns(),

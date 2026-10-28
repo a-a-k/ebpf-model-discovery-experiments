@@ -152,6 +152,8 @@ def test_dispatch_transport_ambiguity_is_persisted_without_retry(tmp_path, monke
     monkeypatch.setenv("GITHUB_ACTIONS", "true")
     monkeypatch.setenv("GH_TOKEN", "secret")
     monkeypatch.setenv("GITHUB_REPOSITORY", "owner/repo")
+    monkeypatch.setenv("GITHUB_RUN_ID", identity()["run_id"])
+    monkeypatch.setenv("GITHUB_SHA", identity()["commit"])
     monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "3")
     monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
@@ -285,6 +287,9 @@ def test_actual_upload_artifact_bare_digest_is_canonicalized(tmp_path, monkeypat
                "upload_success": True, "artifact_id": "12830934533",
                "artifact_url": "https://github.example/artifact/12830934533",
                "artifact_digest": bare}
+    monkeypatch.setenv("GITHUB_RUN_ID", identity()["run_id"])
+    monkeypatch.setenv("GITHUB_SHA", identity()["commit"])
+    monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "4")
     monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
     expected, _ = remote._expected(Campaign(), cp, release, plans)
     assert expected["artifact_digest"] == "sha256:" + bare
