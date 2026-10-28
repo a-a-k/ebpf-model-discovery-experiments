@@ -287,12 +287,14 @@ All application builds, traffic, raw-data processing, discovery, simulation and 
 generation run in GitHub Actions. Local work is limited to static/unit fixtures; the
 evaluator CLI rejects research processing outside `GITHUB_ACTIONS=true`.
 
-The two manual workflows are:
+The manual workflows are:
 
 - [qualification-v4.yml](.github/workflows/qualification-v4.yml): three full-mode
   technical qualifications by default, with reviewed diagnostic inputs;
 - [series-v4.yml](.github/workflows/series-v4.yml): the fixed 27-cell matrix, maximum
-  parallelism three, with optional exact-cell inputs only for approved technical reruns.
+  parallelism three, with optional exact-cell inputs only for approved technical reruns;
+- [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
+  and complete Actions job/artifact costs, including declared failed preparation runs.
 
 The campaign command used by both workflows is:
 
@@ -312,6 +314,14 @@ python -m ebpf_discovery.evaluate_v4 --campaign PATH --out evaluation.json
 python -m ebpf_discovery.evaluate_v4 --aggregate ROOT [ROOT ...] \
   --report-dir report [--selection technical-replacements.json]
 ```
+
+The series evaluates each cell against its full retained evidence before upload.
+The report workflow downloads compact `v4-summary-*` artifacts, verifies their
+file hashes and original run/artifact identities, and aggregates those saved
+evaluations. It explicitly does not reverify raw originals. The full-artifact
+`--aggregate` command above remains available for independent recomputation in
+Actions. Technical attempts with no completed acquisition stay unscorable; their
+available costs and missing evidence remain in the report.
 
 A campaign artifact retains, as available:
 
