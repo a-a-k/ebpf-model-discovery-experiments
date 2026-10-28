@@ -1,5 +1,7 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
+The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
+
 > **Current status (iteration 4): qualification repair; no scientific results.**
 > [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
 > each acquired 240 planned requests, then failed on an invalid Procrustes goal
