@@ -1,0 +1,122 @@
+name: Iteration 4 technical qualification
+on:
+  workflow_dispatch:
+    inputs:
+      system:
+        description: Application to qualify; all creates exactly three jobs
+        type: choice
+        options: [all, deathstarbench, otel_demo, petclinic]
+        default: all
+      mode:
+        description: Source mode; non-full is only for a reviewed technical diagnostic
+        type: choice
+        options: [full, absent, partial]
+        default: full
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - id: matrix
+        env:
+          REQUESTED_SYSTEM: ${{ inputs.system }}
+          REQUESTED_MODE: ${{ inputs.mode }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          systems = ['deathstarbench', 'otel_demo', 'petclinic']
+          requested = os.environ['REQUESTED_SYSTEM']
+          if requested != 'all':
+              if requested not in systems: raise SystemExit(f'invalid system: {requested}')
+              systems = [requested]
+          mode = os.environ['REQUESTED_MODE']
+          if mode not in ('absent', 'partial', 'full'): raise SystemExit(f'invalid mode: {mode}')
+          print('matrix='+json.dumps({'include': [
+              {'system': system, 'mode': mode, 'seed': 6} for system in systems
+          ]}, separators=(',', ':')))
+          PY
+  qualify:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Initialize retained evidence
+        run: |
+          mkdir -p work/campaign/infrastructure
+          python - <<'PY'
+          import json, pathlib
+          pathlib.Path('work/campaign/infrastructure/platform-limit.json').write_text(json.dumps({
+            'experiment_timeout': None,
+            'runner_limit': 'GitHub-hosted platform maximum is external to the protocol',
+            'interrupted_or_evicted_result': 'technical unknown; retain partial evidence and do not score',
+          }, indent=2)+'\n')
+          PY
+      - name: Build exact source-pinned toolchain
+        run: |
+          chmod +x scripts/setup-toolchain-v4.sh
+          /usr/bin/time -v -o work/campaign/infrastructure/toolchain-setup-time.txt \
+            scripts/setup-toolchain-v4.sh work/campaign/toolchain-build
+          echo "PBS_BIN=$(realpath work/campaign/toolchain-build/bin)" >> "$GITHUB_ENV"
+      - name: Boot two independent guests
+        run: bash scripts/vms.sh start work/vms
+      - name: Run fixed 120+120 technical qualification
+        env:
+          PYTHONPATH: .
+        run: |
+          chmod +x scripts/capture-v3-resources.sh
+          scripts/capture-v3-resources.sh work/campaign/infrastructure/resources 15 work/vms &
+          sampler=$!
+          set +e
+          /usr/bin/time -v -o work/campaign/infrastructure/campaign-time.txt \
+            python -m ebpf_discovery.campaign_v4 --system '${{ matrix.system }}' \
+              --mode '${{ matrix.mode }}' --seed 6 --out work/campaign --qualification
+          rc=$?
+          kill "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$rc"
+      - name: Retain environment, status and cost evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/campaign/infrastructure
+          cp work/vms/*.json work/campaign/infrastructure/ 2>/dev/null || true
+          for n in a b; do mkdir -p "work/campaign/infrastructure/$n"; cp "work/vms/$n/check.txt" "work/vms/$n/serial.log" "work/campaign/infrastructure/$n/" 2>/dev/null || true; done
+          uname -a > work/campaign/infrastructure/runner-final.txt
+          free -m >> work/campaign/infrastructure/runner-final.txt
+          df -h >> work/campaign/infrastructure/runner-final.txt
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss > work/campaign/infrastructure/runner-processes-final.txt
+          python -m pip freeze > work/campaign/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" > work/campaign/infrastructure/workflow-jobs-snapshot.json 2>work/campaign/infrastructure/workflow-jobs-snapshot.err || true
+      - name: Stop guests
+        if: always()
+        run: bash scripts/vms.sh stop work/vms
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qualification-v4-${{ matrix.system }}-${{ matrix.mode }}-6-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
