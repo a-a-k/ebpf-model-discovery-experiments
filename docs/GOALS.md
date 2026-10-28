@@ -102,7 +102,8 @@ accuracy measurement. Bering-only resource evidence is retained.
 The first three already-planned full/seed6 cells are launched in run `40704758284`
 at `fdec1a6`, after independent original-criterion GO and CI `40704617133`.
 OTel and Petclinic lost their runners during discovery after training acquisition,
-without artifact upload; the cause is not established. DSB remains running.
+without artifact upload; the cause is not established. DSB's acquisition step also
+failed and its uploads were skipped; final platform status and logs are pending.
 The checkpoint/streaming/swap repair passed independent review and Linux CI
 `40718306225` (413 tests). Unchanged OTel and Petclinic full/seed6 cells were
 relaunched at `ea2e278` in `40718665137` and `40718674400`, respectively.

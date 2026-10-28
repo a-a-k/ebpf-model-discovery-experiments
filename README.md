@@ -13,7 +13,8 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > required service paths. [The first three planned full/seed6 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
 > launched at `fdec1a6`. OTel and Petclinic received runner shutdown signals during
 > graph discovery after training acquisition; their artifact uploads were skipped.
-> The logs do not establish the shutdown cause. DSB remains running. A reviewed
+> The logs do not establish the shutdown cause. DSB's acquisition step also failed
+> and its upload steps were skipped; final platform status/logs are pending. A reviewed
 > technical repair adds a saved training checkpoint, streamed input and measured
 > swap. After independent review and 413 passing Linux tests, the unchanged failed
 > cells were relaunched: [OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718665137)
