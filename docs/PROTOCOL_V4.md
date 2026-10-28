@@ -417,6 +417,13 @@ is authorized by this diagnostic. Implementation review and CI precede its singl
 execution; a completed diagnostic would still require a fresh staged campaign.
 Both agents' verdicts are GO for this technical check of the original criterion,
 not for a substitute contribution or a success claim.
+Implementation `5d1d3f35951fe99753c17cbdd80d53d7b9d8f877` received root GO and
+independent **explicit ORIGINAL-criterion implementation GO**, with 14 independent
+focused synthetic tests passing and exact-head full Linux CI `40778323259`
+successful. The single execution is `40778455040`. Bering records inherited and
+effective Go settings; a bounded live heartbeat also preserves recent GC lines
+in Actions logs if final uploads are lost. The earlier diagnostic remains a
+separate immutable default profile. No result is assumed at dispatch.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
