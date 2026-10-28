@@ -1,9 +1,14 @@
 import json
+import http.client
 from pathlib import Path
 import sqlite3
+import threading
 
 import pytest
+from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 
+from ebpf_discovery.raw_v4 import export_selection
+from ebpf_discovery.receiver import create_server
 from ebpf_discovery.replay_qualification_v4 import (
     PINS, digest, file_manifest, relocate_index, replay, verified_binaries,
 )
@@ -82,6 +87,56 @@ def test_index_rejects_indexed_path_outside_original_capture_root(tmp_path):
     store.close()
     with pytest.raises(ValueError, match='outside original capture root'):
         relocate_index(original, replay_dir, old)
+
+
+def test_actual_receiver_wire_wrapper_exports_after_index_relocation(tmp_path):
+    original, replay_dir, old = tmp_path/'original', tmp_path/'replay', tmp_path/'old-campaign'
+    output = original/'observations'/'a.jsonl'
+    output.parent.mkdir(parents=True)
+    replay_dir.mkdir()
+    trace, span_id = '00112233445566778899aabbccddeeff', '0102030405060708'
+    request = ExportTraceServiceRequest()
+    span = request.resource_spans.add().scope_spans.add().spans.add()
+    span.trace_id, span.span_id = bytes.fromhex(trace), bytes.fromhex(span_id)
+    span.name = 'GET /synthetic'
+    wire = request.SerializeToString()
+    server = create_server(0, output, 'ebpf:a', node='a', raw_capture=True)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    connection = http.client.HTTPConnection('127.0.0.1', server.server_port, timeout=5)
+    try:
+        connection.request('POST', '/v1/traces', body=wire,
+                           headers={'Content-Type':'application/x-protobuf'})
+        response = connection.getresponse()
+        response.read()
+        assert response.status == 200
+    finally:
+        connection.close()
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+    wrapper = json.loads(output.read_text().splitlines()[0])
+    assert not Path(wrapper['raw_ref']).is_absolute()
+    assert (output.parent/wrapper['raw_ref']).read_bytes() == wire
+    store = ObservationStore(original/'observation-index.sqlite')
+    store.db.execute('INSERT INTO files VALUES (?,?)',
+                     (str(old/'observations'/'a.jsonl'), output.stat().st_size))
+    store.db.commit()
+    store.close()
+    before = file_manifest(original)
+    relocate_index(original, replay_dir, old)
+    copied = ObservationStore(replay_dir/'observation-index.sqlite')
+    try:
+        exported = export_selection(copied, {'ebpf': {(trace, span_id)}},
+                                    replay_dir/'selected-inputs')
+    finally:
+        copied.close()
+    assert exported['observations'] == 1
+    body = Path(exported['exports'][0]['path']).read_bytes()
+    decoded = ExportTraceServiceRequest()
+    decoded.ParseFromString(body)
+    assert decoded.resource_spans[0].scope_spans[0].spans[0].trace_id.hex() == trace
+    assert file_manifest(original) == before
 
 
 def test_replay_is_actions_only_and_never_treats_local_fixture_as_qualification(tmp_path, monkeypatch):
