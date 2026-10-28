@@ -1,0 +1,11 @@
+{
+  "original": "evaluation-v4.json",
+  "original_sha256": "a58eb877ddb3bb140fb9844f20cbedc74402278c49695f2d2662d186d3e1f80c",
+  "original_bytes": 244640459,
+  "compressed": "evaluation-v4.json.gz",
+  "compressed_sha256": "62b37d36669552421c7017ba8ee10af2c14c64ecb032f3eff995d5efafb62f5c",
+  "compressed_bytes": 3741462,
+  "restored_sha256": "a58eb877ddb3bb140fb9844f20cbedc74402278c49695f2d2662d186d3e1f80c",
+  "same_uncompressed_bytes": true,
+  "original_json_retained_in_actions_artifact": true
+}

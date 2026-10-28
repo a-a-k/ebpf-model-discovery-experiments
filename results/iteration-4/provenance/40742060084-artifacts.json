@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12841476832,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg0MTQ3NjgzMg==",
+        "name": "diagnostic-v4-otel-training-checkpoint-40742060084",
+        "size_in_bytes": 1189214049,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12841476832",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12841476832/zip",
+        "expired": false,
+        "digest": "sha256:8f633889c4338d9ee24d62d2eaa9a45bc6341bc8e2c1e0b971c2f1d4db3b2f94",
+        "created_at": "2026-10-28T18:33:37Z",
+        "updated_at": "2026-10-28T18:33:37Z",
+        "expires_at": "2027-01-26T18:06:50Z",
+        "workflow_run": {
+          "id": 40742060084,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "0c75e0d874907b99007a1f1a0d12f29f5331ad3a"
+        }
+      }
+    ]
+  }
+]

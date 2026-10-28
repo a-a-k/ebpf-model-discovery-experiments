@@ -291,6 +291,17 @@ The remaining Petclinic cells were dispatched at `4276ea9`: absent/6–8 in
 `40733841068`, partial/6–8 in `40733846961`, full/7 in `40733852492` and full/8
 in `40733858113`. The admitted full/6 cell is not repeated.
 
+Petclinic completed admission: root and the independent reviewer admit all nine
+planned cells. Each retains 34,800 primary and 9,600 target operations, exact
+phase/state counts, unchanged pretarget freezes and actual Bering/Sheaft outputs.
+All three absent-mode runs have disabled native JVM instrumentation and zero
+native spans; all three partial-mode runs disable both Visits replicas while
+preserving the other services' native instrumentation. The generated nine-cell
+report is run `40751134324`. Equivalent direct-baseline forecasts, unavailable
+native paths, conditional/raw DB unknowns, weaker absent-mode downstream classes,
+and unmeasured manual costs remain visible. This is admission of one system's
+planned empirical evidence, not cross-system or full-cost success.
+
 After OTel retry `40718665137` lost its continuation and skipped final retention,
 the already uploaded training checkpoint `12830934533` remains available. Root
 and independent 6.1 Sol/xhigh skeptic give **ORIGINAL-criterion design GO** for

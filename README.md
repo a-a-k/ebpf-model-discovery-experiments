@@ -2,25 +2,29 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): six of 27 planned cells admitted; series incomplete.**
+> **Current status (iteration 4): all nine Petclinic cells admitted; 9/27 overall.**
 > [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
 > plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
-> and [Petclinic/partial/seeds7–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961)
+> and [Petclinic/partial/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961),
+> [full/seed7](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733852492) and
+> [full/seed8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733858113)
 > each completed 34,800 primary operations, including 9,600 held-out target operations.
 > Actual Bering graphs built from eBPF observations were consumed by Sheaft; all four
 > operation forecasts matched observed target frequencies in each admitted cell.
 > All three absent-mode repeats have verified disabled native instrumentation and zero
-> training/final native spans. In the two admitted partial-mode repeats, native-only
+> training/final native spans. In all three partial-mode repeats, native-only
 > graphs leave Visits-dependent operations unknown; eBPF supplies usable graphs for them.
 > This supports the requested path for Petclinic. The supplied-contract baseline makes the same
 > scalar predictions; no cost advantage or cross-system conclusion is established.
-> All six cells passed independent integrity/resource review; three Petclinic cells remain.
-> OTel's continuation failed after its training checkpoint was uploaded; diagnosis
-> is ongoing. The DSB staged retry continues. All failed attempts remain in the
+> All nine cells passed independent integrity/resource review.
+> OTel's retained training data completed the actual toolchain on a separate standard
+> runner; a live-campaign handoff is being implemented. This does not establish the
+> cause of the earlier runner loss. The DSB staged retry continues after its training upload.
+> All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
-The independently reviewed [interim report](results/iteration-4/SOURCE.md), an earlier
-one-cell snapshot, contains
+The [interim report](results/iteration-4/SOURCE.md), covering all nine independently
+reviewed Petclinic cells, contains
 generated per-operation tables, error figures and the actual Bering eBPF graph.
 Its cost ledger includes failed and running jobs at the report snapshot; it is not
 the final series total.
@@ -447,9 +451,8 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 currently has admitted Petclinic full/seed6, absent/seeds6–8 and
-partial/seeds7–8 cells. The remaining
-cells and source/tracing-mode comparisons are incomplete. The first qualification
+Iteration 4 has admitted all nine Petclinic cells: absent/partial/full tracing,
+seeds6–8. DeathStarBench and OTel cells remain incomplete. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;

@@ -146,34 +146,34 @@
           },
           {
             "name": "Acquire and close the training prefix on the live guests",
-            "status": "in_progress",
-            "conclusion": null,
+            "status": "completed",
+            "conclusion": "success",
             "number": 10,
             "started_at": "2026-10-28T17:00:50Z",
-            "completed_at": null
+            "completed_at": "2026-10-28T18:53:10Z"
           },
           {
             "name": "Persist the closed training checkpoint before discovery",
-            "status": "pending",
-            "conclusion": null,
+            "status": "completed",
+            "conclusion": "success",
             "number": 11,
-            "started_at": null,
-            "completed_at": null
+            "started_at": "2026-10-28T18:53:10Z",
+            "completed_at": "2026-10-28T18:55:22Z"
           },
           {
             "name": "Bind upload outcome to the same live campaign",
-            "status": "pending",
-            "conclusion": null,
+            "status": "completed",
+            "conclusion": "success",
             "number": 12,
-            "started_at": null,
-            "completed_at": null
+            "started_at": "2026-10-28T18:55:22Z",
+            "completed_at": "2026-10-28T18:55:22Z"
           },
           {
             "name": "Continue discovery and validation on the same live guests",
-            "status": "pending",
+            "status": "in_progress",
             "conclusion": null,
             "number": 13,
-            "started_at": null,
+            "started_at": "2026-10-28T18:55:22Z",
             "completed_at": null
           },
           {

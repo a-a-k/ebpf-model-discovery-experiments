@@ -1,76 +1,208 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="624">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1776">
 <style>text{font:12px monospace}.missing{fill:#777}.value{fill:#a33}</style>
 <text x="10" y="18">Worst-end absolute error by operation/source/variant/repeat group (no threshold)</text>
-<text x="10" y="48">petclinic/full/create_visit/combined/network_scope</text>
+<text x="10" y="48">petclinic/absent/create_visit/combined/network_scope</text>
 <rect class="value" x="650" y="34" width="0.000" height="10"/>
 <text x="1160" y="48">0.0000</text>
-<text x="10" y="72">petclinic/full/create_visit/combined/raw</text>
+<text x="10" y="72">petclinic/absent/create_visit/combined/raw</text>
 <rect class="value" x="650" y="58" width="0.000" height="10"/>
 <text x="1160" y="72">0.0000</text>
-<text x="10" y="96">petclinic/full/create_visit/ebpf/network_scope</text>
+<text x="10" y="96">petclinic/absent/create_visit/ebpf/network_scope</text>
 <rect class="value" x="650" y="82" width="0.000" height="10"/>
 <text x="1160" y="96">0.0000</text>
-<text x="10" y="120">petclinic/full/create_visit/ebpf/raw</text>
+<text x="10" y="120">petclinic/absent/create_visit/ebpf/raw</text>
 <rect class="value" x="650" y="106" width="0.000" height="10"/>
 <text x="1160" y="120">0.0000</text>
-<text x="10" y="144">petclinic/full/create_visit/native/network_scope</text>
-<rect class="value" x="650" y="130" width="0.000" height="10"/>
-<text x="1160" y="144">0.0000</text>
-<text x="10" y="168">petclinic/full/create_visit/native/raw</text>
-<rect class="value" x="650" y="154" width="0.000" height="10"/>
-<text x="1160" y="168">0.0000</text>
-<text x="10" y="192">petclinic/full/list_owners/combined/network_scope</text>
+<text x="10" y="144">petclinic/absent/create_visit/native/network_scope</text>
+<text class="missing" x="650" y="144">unknown</text>
+<text x="10" y="168">petclinic/absent/create_visit/native/raw</text>
+<text class="missing" x="650" y="168">unknown</text>
+<text x="10" y="192">petclinic/absent/list_owners/combined/network_scope</text>
 <rect class="value" x="650" y="178" width="0.000" height="10"/>
 <text x="1160" y="192">0.0000</text>
-<text x="10" y="216">petclinic/full/list_owners/combined/raw</text>
+<text x="10" y="216">petclinic/absent/list_owners/combined/raw</text>
 <rect class="value" x="650" y="202" width="0.000" height="10"/>
 <text x="1160" y="216">0.0000</text>
-<text x="10" y="240">petclinic/full/list_owners/ebpf/network_scope</text>
+<text x="10" y="240">petclinic/absent/list_owners/ebpf/network_scope</text>
 <rect class="value" x="650" y="226" width="0.000" height="10"/>
 <text x="1160" y="240">0.0000</text>
-<text x="10" y="264">petclinic/full/list_owners/ebpf/raw</text>
+<text x="10" y="264">petclinic/absent/list_owners/ebpf/raw</text>
 <rect class="value" x="650" y="250" width="0.000" height="10"/>
 <text x="1160" y="264">0.0000</text>
-<text x="10" y="288">petclinic/full/list_owners/native/network_scope</text>
-<rect class="value" x="650" y="274" width="0.000" height="10"/>
-<text x="1160" y="288">0.0000</text>
-<text x="10" y="312">petclinic/full/list_owners/native/raw</text>
-<rect class="value" x="650" y="298" width="0.000" height="10"/>
-<text x="1160" y="312">0.0000</text>
-<text x="10" y="336">petclinic/full/list_vets/combined/network_scope</text>
+<text x="10" y="288">petclinic/absent/list_owners/native/network_scope</text>
+<text class="missing" x="650" y="288">unknown</text>
+<text x="10" y="312">petclinic/absent/list_owners/native/raw</text>
+<text class="missing" x="650" y="312">unknown</text>
+<text x="10" y="336">petclinic/absent/list_vets/combined/network_scope</text>
 <rect class="value" x="650" y="322" width="0.000" height="10"/>
 <text x="1160" y="336">0.0000</text>
-<text x="10" y="360">petclinic/full/list_vets/combined/raw</text>
+<text x="10" y="360">petclinic/absent/list_vets/combined/raw</text>
 <rect class="value" x="650" y="346" width="0.000" height="10"/>
 <text x="1160" y="360">0.0000</text>
-<text x="10" y="384">petclinic/full/list_vets/ebpf/network_scope</text>
+<text x="10" y="384">petclinic/absent/list_vets/ebpf/network_scope</text>
 <rect class="value" x="650" y="370" width="0.000" height="10"/>
 <text x="1160" y="384">0.0000</text>
-<text x="10" y="408">petclinic/full/list_vets/ebpf/raw</text>
+<text x="10" y="408">petclinic/absent/list_vets/ebpf/raw</text>
 <rect class="value" x="650" y="394" width="0.000" height="10"/>
 <text x="1160" y="408">0.0000</text>
-<text x="10" y="432">petclinic/full/list_vets/native/network_scope</text>
-<rect class="value" x="650" y="418" width="0.000" height="10"/>
-<text x="1160" y="432">0.0000</text>
-<text x="10" y="456">petclinic/full/list_vets/native/raw</text>
-<rect class="value" x="650" y="442" width="0.000" height="10"/>
-<text x="1160" y="456">0.0000</text>
-<text x="10" y="480">petclinic/full/owner_details_with_visits/combined/network_scope</text>
+<text x="10" y="432">petclinic/absent/list_vets/native/network_scope</text>
+<text class="missing" x="650" y="432">unknown</text>
+<text x="10" y="456">petclinic/absent/list_vets/native/raw</text>
+<text class="missing" x="650" y="456">unknown</text>
+<text x="10" y="480">petclinic/absent/owner_details_with_visits/combined/network_scope</text>
 <rect class="value" x="650" y="466" width="0.000" height="10"/>
 <text x="1160" y="480">0.0000</text>
-<text x="10" y="504">petclinic/full/owner_details_with_visits/combined/raw</text>
+<text x="10" y="504">petclinic/absent/owner_details_with_visits/combined/raw</text>
 <rect class="value" x="650" y="490" width="0.000" height="10"/>
 <text x="1160" y="504">0.0000</text>
-<text x="10" y="528">petclinic/full/owner_details_with_visits/ebpf/network_scope</text>
+<text x="10" y="528">petclinic/absent/owner_details_with_visits/ebpf/network_scope</text>
 <rect class="value" x="650" y="514" width="0.000" height="10"/>
 <text x="1160" y="528">0.0000</text>
-<text x="10" y="552">petclinic/full/owner_details_with_visits/ebpf/raw</text>
+<text x="10" y="552">petclinic/absent/owner_details_with_visits/ebpf/raw</text>
 <rect class="value" x="650" y="538" width="0.000" height="10"/>
 <text x="1160" y="552">0.0000</text>
-<text x="10" y="576">petclinic/full/owner_details_with_visits/native/network_scope</text>
-<rect class="value" x="650" y="562" width="0.000" height="10"/>
-<text x="1160" y="576">0.0000</text>
-<text x="10" y="600">petclinic/full/owner_details_with_visits/native/raw</text>
-<rect class="value" x="650" y="586" width="0.000" height="10"/>
-<text x="1160" y="600">0.0000</text>
+<text x="10" y="576">petclinic/absent/owner_details_with_visits/native/network_scope</text>
+<text class="missing" x="650" y="576">unknown</text>
+<text x="10" y="600">petclinic/absent/owner_details_with_visits/native/raw</text>
+<text class="missing" x="650" y="600">unknown</text>
+<text x="10" y="624">petclinic/full/create_visit/combined/network_scope</text>
+<rect class="value" x="650" y="610" width="0.000" height="10"/>
+<text x="1160" y="624">0.0000</text>
+<text x="10" y="648">petclinic/full/create_visit/combined/raw</text>
+<rect class="value" x="650" y="634" width="0.000" height="10"/>
+<text x="1160" y="648">0.0000</text>
+<text x="10" y="672">petclinic/full/create_visit/ebpf/network_scope</text>
+<rect class="value" x="650" y="658" width="0.000" height="10"/>
+<text x="1160" y="672">0.0000</text>
+<text x="10" y="696">petclinic/full/create_visit/ebpf/raw</text>
+<rect class="value" x="650" y="682" width="0.000" height="10"/>
+<text x="1160" y="696">0.0000</text>
+<text x="10" y="720">petclinic/full/create_visit/native/network_scope</text>
+<rect class="value" x="650" y="706" width="0.000" height="10"/>
+<text x="1160" y="720">0.0000</text>
+<text x="10" y="744">petclinic/full/create_visit/native/raw</text>
+<rect class="value" x="650" y="730" width="0.000" height="10"/>
+<text x="1160" y="744">0.0000</text>
+<text x="10" y="768">petclinic/full/list_owners/combined/network_scope</text>
+<rect class="value" x="650" y="754" width="0.000" height="10"/>
+<text x="1160" y="768">0.0000</text>
+<text x="10" y="792">petclinic/full/list_owners/combined/raw</text>
+<rect class="value" x="650" y="778" width="0.000" height="10"/>
+<text x="1160" y="792">0.0000</text>
+<text x="10" y="816">petclinic/full/list_owners/ebpf/network_scope</text>
+<rect class="value" x="650" y="802" width="0.000" height="10"/>
+<text x="1160" y="816">0.0000</text>
+<text x="10" y="840">petclinic/full/list_owners/ebpf/raw</text>
+<rect class="value" x="650" y="826" width="0.000" height="10"/>
+<text x="1160" y="840">0.0000</text>
+<text x="10" y="864">petclinic/full/list_owners/native/network_scope</text>
+<rect class="value" x="650" y="850" width="0.000" height="10"/>
+<text x="1160" y="864">0.0000</text>
+<text x="10" y="888">petclinic/full/list_owners/native/raw</text>
+<rect class="value" x="650" y="874" width="0.000" height="10"/>
+<text x="1160" y="888">0.0000</text>
+<text x="10" y="912">petclinic/full/list_vets/combined/network_scope</text>
+<rect class="value" x="650" y="898" width="0.000" height="10"/>
+<text x="1160" y="912">0.0000</text>
+<text x="10" y="936">petclinic/full/list_vets/combined/raw</text>
+<rect class="value" x="650" y="922" width="0.000" height="10"/>
+<text x="1160" y="936">0.0000</text>
+<text x="10" y="960">petclinic/full/list_vets/ebpf/network_scope</text>
+<rect class="value" x="650" y="946" width="0.000" height="10"/>
+<text x="1160" y="960">0.0000</text>
+<text x="10" y="984">petclinic/full/list_vets/ebpf/raw</text>
+<rect class="value" x="650" y="970" width="0.000" height="10"/>
+<text x="1160" y="984">0.0000</text>
+<text x="10" y="1008">petclinic/full/list_vets/native/network_scope</text>
+<rect class="value" x="650" y="994" width="0.000" height="10"/>
+<text x="1160" y="1008">0.0000</text>
+<text x="10" y="1032">petclinic/full/list_vets/native/raw</text>
+<rect class="value" x="650" y="1018" width="0.000" height="10"/>
+<text x="1160" y="1032">0.0000</text>
+<text x="10" y="1056">petclinic/full/owner_details_with_visits/combined/network_scope</text>
+<rect class="value" x="650" y="1042" width="0.000" height="10"/>
+<text x="1160" y="1056">0.0000</text>
+<text x="10" y="1080">petclinic/full/owner_details_with_visits/combined/raw</text>
+<rect class="value" x="650" y="1066" width="0.000" height="10"/>
+<text x="1160" y="1080">0.0000</text>
+<text x="10" y="1104">petclinic/full/owner_details_with_visits/ebpf/network_scope</text>
+<rect class="value" x="650" y="1090" width="0.000" height="10"/>
+<text x="1160" y="1104">0.0000</text>
+<text x="10" y="1128">petclinic/full/owner_details_with_visits/ebpf/raw</text>
+<rect class="value" x="650" y="1114" width="0.000" height="10"/>
+<text x="1160" y="1128">0.0000</text>
+<text x="10" y="1152">petclinic/full/owner_details_with_visits/native/network_scope</text>
+<rect class="value" x="650" y="1138" width="0.000" height="10"/>
+<text x="1160" y="1152">0.0000</text>
+<text x="10" y="1176">petclinic/full/owner_details_with_visits/native/raw</text>
+<rect class="value" x="650" y="1162" width="0.000" height="10"/>
+<text x="1160" y="1176">0.0000</text>
+<text x="10" y="1200">petclinic/partial/create_visit/combined/network_scope</text>
+<rect class="value" x="650" y="1186" width="0.000" height="10"/>
+<text x="1160" y="1200">0.0000</text>
+<text x="10" y="1224">petclinic/partial/create_visit/combined/raw</text>
+<rect class="value" x="650" y="1210" width="0.000" height="10"/>
+<text x="1160" y="1224">0.0000</text>
+<text x="10" y="1248">petclinic/partial/create_visit/ebpf/network_scope</text>
+<rect class="value" x="650" y="1234" width="0.000" height="10"/>
+<text x="1160" y="1248">0.0000</text>
+<text x="10" y="1272">petclinic/partial/create_visit/ebpf/raw</text>
+<rect class="value" x="650" y="1258" width="0.000" height="10"/>
+<text x="1160" y="1272">0.0000</text>
+<text x="10" y="1296">petclinic/partial/create_visit/native/network_scope</text>
+<text class="missing" x="650" y="1296">unknown</text>
+<text x="10" y="1320">petclinic/partial/create_visit/native/raw</text>
+<text class="missing" x="650" y="1320">unknown</text>
+<text x="10" y="1344">petclinic/partial/list_owners/combined/network_scope</text>
+<rect class="value" x="650" y="1330" width="0.000" height="10"/>
+<text x="1160" y="1344">0.0000</text>
+<text x="10" y="1368">petclinic/partial/list_owners/combined/raw</text>
+<rect class="value" x="650" y="1354" width="0.000" height="10"/>
+<text x="1160" y="1368">0.0000</text>
+<text x="10" y="1392">petclinic/partial/list_owners/ebpf/network_scope</text>
+<rect class="value" x="650" y="1378" width="0.000" height="10"/>
+<text x="1160" y="1392">0.0000</text>
+<text x="10" y="1416">petclinic/partial/list_owners/ebpf/raw</text>
+<rect class="value" x="650" y="1402" width="0.000" height="10"/>
+<text x="1160" y="1416">0.0000</text>
+<text x="10" y="1440">petclinic/partial/list_owners/native/network_scope</text>
+<rect class="value" x="650" y="1426" width="0.000" height="10"/>
+<text x="1160" y="1440">0.0000</text>
+<text x="10" y="1464">petclinic/partial/list_owners/native/raw</text>
+<rect class="value" x="650" y="1450" width="0.000" height="10"/>
+<text x="1160" y="1464">0.0000</text>
+<text x="10" y="1488">petclinic/partial/list_vets/combined/network_scope</text>
+<rect class="value" x="650" y="1474" width="0.000" height="10"/>
+<text x="1160" y="1488">0.0000</text>
+<text x="10" y="1512">petclinic/partial/list_vets/combined/raw</text>
+<rect class="value" x="650" y="1498" width="0.000" height="10"/>
+<text x="1160" y="1512">0.0000</text>
+<text x="10" y="1536">petclinic/partial/list_vets/ebpf/network_scope</text>
+<rect class="value" x="650" y="1522" width="0.000" height="10"/>
+<text x="1160" y="1536">0.0000</text>
+<text x="10" y="1560">petclinic/partial/list_vets/ebpf/raw</text>
+<rect class="value" x="650" y="1546" width="0.000" height="10"/>
+<text x="1160" y="1560">0.0000</text>
+<text x="10" y="1584">petclinic/partial/list_vets/native/network_scope</text>
+<rect class="value" x="650" y="1570" width="0.000" height="10"/>
+<text x="1160" y="1584">0.0000</text>
+<text x="10" y="1608">petclinic/partial/list_vets/native/raw</text>
+<rect class="value" x="650" y="1594" width="0.000" height="10"/>
+<text x="1160" y="1608">0.0000</text>
+<text x="10" y="1632">petclinic/partial/owner_details_with_visits/combined/network_scope</text>
+<rect class="value" x="650" y="1618" width="0.000" height="10"/>
+<text x="1160" y="1632">0.0000</text>
+<text x="10" y="1656">petclinic/partial/owner_details_with_visits/combined/raw</text>
+<rect class="value" x="650" y="1642" width="0.000" height="10"/>
+<text x="1160" y="1656">0.0000</text>
+<text x="10" y="1680">petclinic/partial/owner_details_with_visits/ebpf/network_scope</text>
+<rect class="value" x="650" y="1666" width="0.000" height="10"/>
+<text x="1160" y="1680">0.0000</text>
+<text x="10" y="1704">petclinic/partial/owner_details_with_visits/ebpf/raw</text>
+<rect class="value" x="650" y="1690" width="0.000" height="10"/>
+<text x="1160" y="1704">0.0000</text>
+<text x="10" y="1728">petclinic/partial/owner_details_with_visits/native/network_scope</text>
+<text class="missing" x="650" y="1728">unknown</text>
+<text x="10" y="1752">petclinic/partial/owner_details_with_visits/native/raw</text>
+<text class="missing" x="650" y="1752">unknown</text>
 </svg>

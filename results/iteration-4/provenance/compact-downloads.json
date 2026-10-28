@@ -23,22 +23,58 @@
   },
   {
     "run_id": 40733841068,
-    "status": "not_uploaded",
-    "artifact_ids": []
+    "status": "downloaded",
+    "artifact_id": 12840556183,
+    "name": "v4-summary-petclinic-absent-8-40733841068",
+    "digest": "sha256:fee16fdb77443376e7568e5e34bfa2bb10a758ac32930ea39657829d04e91d70"
+  },
+  {
+    "run_id": 40733841068,
+    "status": "downloaded",
+    "artifact_id": 12839863596,
+    "name": "v4-summary-petclinic-absent-7-40733841068",
+    "digest": "sha256:7c29454e68ffe85a587d5f7ba1050a9cebec65796fa3f50080ef63aa1161f7ca"
+  },
+  {
+    "run_id": 40733841068,
+    "status": "downloaded",
+    "artifact_id": 12839653993,
+    "name": "v4-summary-petclinic-absent-6-40733841068",
+    "digest": "sha256:39b9c3ece41d78e0099b039a910c092a060f202ea5daf04ef3534f55d15a3fad"
   },
   {
     "run_id": 40733846961,
-    "status": "not_uploaded",
-    "artifact_ids": []
+    "status": "downloaded",
+    "artifact_id": 12841825376,
+    "name": "v4-summary-petclinic-partial-8-40733846961",
+    "digest": "sha256:41d45fb0afe503d65df6e35e33aa7ee2385d48cde44f64ed3948e84f957dd32b"
+  },
+  {
+    "run_id": 40733846961,
+    "status": "downloaded",
+    "artifact_id": 12841251276,
+    "name": "v4-summary-petclinic-partial-7-40733846961",
+    "digest": "sha256:8b67811e31e0647fecfbe00743c32517bb5d2936c32fe9c3692b2b78a3816ec4"
+  },
+  {
+    "run_id": 40733846961,
+    "status": "downloaded",
+    "artifact_id": 12841233237,
+    "name": "v4-summary-petclinic-partial-6-40733846961",
+    "digest": "sha256:3dbf4d435a6f745675ba37d18fa9e17e9378608a80b35c611757175258ee49b3"
   },
   {
     "run_id": 40733852492,
-    "status": "not_uploaded",
-    "artifact_ids": []
+    "status": "downloaded",
+    "artifact_id": 12841168157,
+    "name": "v4-summary-petclinic-full-7-40733852492",
+    "digest": "sha256:dbd4e402a801e61d1e89611bd31adcc73bcd2544bcf83a9ba9f7191cf48e0210"
   },
   {
     "run_id": 40733858113,
-    "status": "not_uploaded",
-    "artifact_ids": []
+    "status": "downloaded",
+    "artifact_id": 12842832029,
+    "name": "v4-summary-petclinic-full-8-40733858113",
+    "digest": "sha256:ebcf5681ea1b211845d3707bdb6cd8d444a2d6599988640ba15fcf67638fcfc2"
   }
 ]

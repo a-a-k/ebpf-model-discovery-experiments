@@ -23,5 +23,40 @@
     "run_id": 40674465933,
     "role": "replay",
     "note": "Final reviewed qualification replay"
+  },
+  {
+    "run_id": 40742060084,
+    "role": "replay",
+    "note": "Immutable OTel training checkpoint on standalone standard runner; technical feasibility only, no target validation"
+  },
+  {
+    "run_id": 40738379291,
+    "role": "evidence",
+    "note": "Earlier one-cell generated report; retained reporting cost"
+  },
+  {
+    "run_id": 40704387111,
+    "role": "evidence",
+    "note": "Original qualification and replay archive"
+  },
+  {
+    "run_id": 40734810232,
+    "role": "evidence",
+    "note": "Original full/6 Petclinic data archive"
+  },
+  {
+    "run_id": 40739554089,
+    "role": "evidence",
+    "note": "Failed archive attempt retained; ANSI log handling repaired"
+  },
+  {
+    "run_id": 40740761225,
+    "role": "evidence",
+    "note": "Archive of failed first series, first report, and failed archive evidence"
+  },
+  {
+    "run_id": 40745651023,
+    "role": "evidence",
+    "note": "Absent Petclinic data and failed OTel checkpoint archive"
   }
 ]
