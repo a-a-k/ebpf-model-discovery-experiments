@@ -206,6 +206,40 @@ child and VM resources, all costs and incomplete intents; technical resource
 failures remain unscored unknowns. No paid runner, shortened acquisition, input
 cap, reduced trial count or accuracy selection is authorized by this decision.
 
+### First-stage infrastructure loss and technical repair
+
+In first-stage run `40704758284`, OTel and Petclinic runners received shutdown
+signals (exit 143) during Bering discovery. Their always-run retention/upload steps
+were skipped, leaving no campaign artifacts. Job logs retain completed training
+blocks and the discovery start: OTel eBPF/raw had 947,706 observations and
+540,646,862 wire bytes; Petclinic combined/raw had 563,661 observations and
+378,274,206 bytes, after its separate-source models and simulations ran. These
+are technical losses, not evaluated predictions. The logs/annotations do not
+establish OOM; memory pressure is a hypothesis. DSB was still running when this
+repair decision was recorded and is not canceled or replaced on elapsed time.
+
+Root **GO** and independent 6.1 Sol/xhigh skeptic **explicit ORIGINAL-criterion
+design GO** for this repair, followed by implementation review and CI before
+rerunning only technically failed cells:
+
+- Retain a closed training checkpoint before discovery: consistent SQLite backups,
+  indexed raw prefixes and exact wire bodies, hashes, plans, journal, external
+  training observations and tool/deployment provenance. Upload it before releasing
+  the same campaign process and live guests. Upload failure aborts technically;
+  ready/release markers bind run, cell and manifest hash. No fresh-host target resume.
+- Stream the identical hashed wire files to Bering, preserving content length and
+  encoding. All observations, one-batch semantics and ingestion checks stay intact.
+- Add 8 GiB swap on the standard runner's local disk, with explicit allocation
+  failure and retained disk, I/O and timing evidence. No paid runner is selected.
+- Stream concise resource evidence to job logs. Prefer the Bering child as an OOM
+  victim using Linux `oom_score_adj=+1000`, recording readback; this is best-effort
+  host protection, not a memory/input cap or proof that memory caused the shutdown.
+
+Checkpoint creation, upload/hold, swap and failed-run costs remain part of the
+experiment. No observation cap, deduplication, shorter discovery window, reduced
+trial count, experimental deadline or weaker outcome contract is introduced.
+The remaining 24 cells still wait for the repaired first-stage review.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
