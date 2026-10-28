@@ -39,13 +39,13 @@ completed scientific cell.
 | [40778455040](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040) | One immutable large OTel checkpoint GC diagnostic at `5d1d3f3`, after independent original-criterion implementation GO and Linux CI `40778323259` | Full checkpoint `12847933267`, same pinned toolchain and branches; only Bering children use a soft 12 GiB Go memory target with GC logging. No new traffic, campaign resume or cell admission; technical diagnostic and its complete costs are retained |
 | [40780918812](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812) | One immutable DSB checkpoint diagnostic at `65843e5`, after independent original-criterion implementation GO and Linux CI `40780702510` | Entire checkpoint `12843610949`, DSB declaration, same pinned toolchain and all branches, with the same child-only soft GC target. No new traffic or campaign resume; this is technical preparation, not an admitted cell |
 
-Both retry uploads and release steps succeeded. The downloaded ready/manifest
-metadata matches its run, source commit, system, mode and seed; inspected metadata
-file hashes match the manifests. Selected ZIP members were read by HTTP ranges;
-this is not an independent verification of every raw body, SQLite backup or the
-entire archive digest. Original artifact identity and GitHub archive digests remain
-in the Actions metadata. The full evidence and final forecast-freeze chain are
-still subject to campaign evaluation and review.
+Training-checkpoint inspection is separate from cell admission. Selected
+ready/manifest members read locally by HTTP ranges establish their own CRC/hash
+and run/commit/cell binding; they do not independently verify an entire original
+ZIP. Whole-archive verification is attributed to the corresponding diagnostic or
+archive job, and local whole-ZIP checks are identified separately. A retained
+checkpoint or successful archive never establishes a completed forecast/target
+chain. Each admitted cell requires its own full integrity and outcome review.
 
 ## Iterations 1–3: retained historical attempts
 

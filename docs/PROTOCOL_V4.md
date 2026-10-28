@@ -1,25 +1,19 @@
 # Iteration 4: graph discovery and graph-driven prediction
 
-Status: original-criterion implementation GO for three technical qualification jobs;
-qualification [40655022146](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
-at `7e8deb9dfeb78723d87b254a3384bef735464d81` completed with three technical failures
-after acquisition: the Procrustes goal had empty mandatory targets. Repair `1284a5f`
-supplies existing per-step obligations. Retained replays subsequently reached Bering;
-Petclinic replay [40661273773](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773)
-also reached Sheaft for some combined models after an ancillary predicate repair.
-The later repaired replay
-[40674465933](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40674465933)
-at `2b72cd73d7fdb88c3dfa7f51a34e073b6e83d0b8` passed integrity checks for all three
-systems and produced the source-specific readouts described below. These are
-diagnostics, not fresh validation. The first full-size Petclinic/full/6 cell has
-since completed and passed staged admission; the rest of the series is incomplete.
-The first three planned full/seed6 cells are launched in
-[40704758284](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
-at `fdec1a6`, following original-criterion GO and CI `40704617133`. OTel and Petclinic
-lost their runners during discovery, without artifact upload. DSB's acquisition step
-also failed and uploads were skipped; its final annotation confirms runner
-communication loss, while the cause and last campaign phase remain unknown.
-The technical repair and original-criterion design GO are recorded below.
+Current status: all nine Petclinic cells are independently admitted, with the
+[generated nine-cell report](../results/iteration-4/SOURCE.md) retained; 9/27
+planned cells overall. OTel and DSB remain incomplete after technical failures.
+Separate full-checkpoint diagnostics are running for
+[OTel](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
+and [DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812).
+Prepared remote-worker changes await their actual integrity/resource review and
+separate staged-execution decisions. A diagnostic cannot resume or complete a
+failed campaign.
+
+Earlier qualification failures, repairs and executions remain in the
+[run history](RUN_HISTORY.md); detailed original-criterion review decisions are
+recorded below. The repaired qualification replay `40674465933` established tool
+path integrity for three small captures, not full-size capacity or fresh accuracy.
 This protocol supersedes the earlier observation deadlines and accuracy gates.
 Historical captures, code and results remain unchanged.
 
@@ -481,6 +475,12 @@ and parent-wait/worker costs. No new acquisition follows from this decision:
 require actual DSB diagnostic integrity/resource review and separate execution GO
 for one fresh full/6 cell, then its admission before the remaining eight. This
 does not establish contention as the earlier failure cause.
+Prepared routing `017bfba4eeadd9cd7682392e993ae17e07818ed3` received root GO and
+independent **ORIGINAL-criterion implementation/preparation GO**. Independent
+focused checks passed (28 checks, three Linux-only checks skipped on Windows),
+and exact-head Linux CI `40781856208` succeeded. Actual supervisor argument flow
+and synthetic worker success/failure were checked for both system declarations.
+This remains preparation approval, not acquisition authorization.
 
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
