@@ -185,4 +185,6 @@ def test_large_profile_workflow_retains_full_diagnostic_and_child_only_gc_settin
         assert str(value) in workflow
     assert f"--profile {diagnostic.LARGE_GC_PROFILE}" in workflow
     assert "GOMEMLIMIT" not in workflow and "GOGC" not in workflow and "GODEBUG" not in workflow
+    assert "BERING_GC_HEARTBEAT" in workflow and "tail -n 3" in workflow
+    assert "stat --printf='path=%n inode=%i bytes=%s mtime=%Y" in workflow
     assert "campaign_v4" not in workflow and "vms.sh start" not in workflow
