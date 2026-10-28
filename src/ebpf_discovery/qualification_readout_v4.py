@@ -39,10 +39,15 @@ def _command(path: Path, root: Path) -> dict:
     if not path.exists():
         return {"status": "not_run", "path": _relative(path, root)}
     value = _json(path)
+    stored_status = value.get("status")
+    completed = (value.get("returncode") == 0
+                 and (stored_status is None or stored_status == "complete"))
     return {
-        "status": "completed" if value.get("returncode") == 0 else "technical_error",
+        "status": "completed" if completed else "technical_error",
         "path": _relative(path, root),
         "returncode": value.get("returncode"),
+        "stored_status": stored_status,
+        "error": value.get("error"),
         "started_ns": value.get("started_ns"),
         "ended_ns": value.get("ended_ns"),
         "argv": value.get("argv", []),
@@ -140,6 +145,7 @@ def _input_reference(folder: Path, root: Path) -> tuple[dict | None, list[str]]:
     errors = []
     relative = value.get("path")
     target = (folder / relative).resolve() if isinstance(relative, str) and relative else None
+    manifest_observations = None
     if target is None:
         errors.append("input-reference:path_missing")
     else:
@@ -151,10 +157,19 @@ def _input_reference(folder: Path, root: Path) -> tuple[dict | None, list[str]]:
             errors.append("input-reference:target_missing")
         elif not isinstance(value.get("sha256"), str):
             errors.append("input-reference:hash_not_declared")
-        elif _digest(target) != value["sha256"]:
-            errors.append("input-reference:sha256_mismatch")
+        else:
+            if _digest(target) != value["sha256"]:
+                errors.append("input-reference:sha256_mismatch")
+            try:
+                manifest = _json(target)
+                manifest_observations = manifest.get("observations") if isinstance(manifest, dict) else None
+            except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+                errors.append("input-reference:manifest_invalid_json")
+            if manifest_observations != value.get("observations"):
+                errors.append("input-reference:observations_mismatch")
     return ({"path": relative, "sha256": value.get("sha256"),
              "observations": value.get("observations"), "shared": value.get("shared"),
+             "verified_observations": manifest_observations,
              "verified": not errors}, errors)
 
 
@@ -171,7 +186,8 @@ def _branch(folder: Path, root: Path) -> dict:
     no_source = (forecast_value is not None
                  and forecast_value.get("available") is False
                  and forecast_value.get("reason") == "no_frozen_source_observations"
-                 and input_reference is not None and input_reference.get("observations") == 0)
+                 and input_reference is not None
+                 and input_reference.get("verified_observations") == 0)
     if no_source:
         result.update({
             "status": "technical_error" if errors else "expected_unavailable",
