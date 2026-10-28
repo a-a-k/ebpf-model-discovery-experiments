@@ -1,0 +1,357 @@
+"""Loss-preserving export of source-local observations selected from a frozen index."""
+from __future__ import annotations
+
+import base64
+import copy
+import gzip
+import hashlib
+import json
+import os
+from pathlib import Path
+from typing import Any, Iterable
+
+import ijson
+
+from .store_v3 import LimitedReader
+
+
+def _hash_prefix(path: Path, size: int) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        remaining = size
+        while remaining:
+            chunk = stream.read(min(1024 * 1024, remaining))
+            if not chunk:
+                raise ValueError(f"indexed prefix exceeds file: {path}")
+            digest.update(chunk)
+            remaining -= len(chunk)
+    return digest.hexdigest()
+
+
+def _lines(reader: LimitedReader):
+    pending = b""
+    while True:
+        chunk = reader.read(65536)
+        if not chunk:
+            break
+        pending += chunk
+        while b"\n" in pending:
+            line, pending = pending.split(b"\n", 1)
+            yield line + b"\n"
+    if pending:
+        yield pending
+
+
+def _atomic_write(path: Path, data: bytes) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_bytes(data)
+    os.replace(temporary, path)
+
+
+def _source(path: Path) -> str:
+    return "ebpf" if path.name in {"a.jsonl", "b.jsonl"} else "native"
+
+
+def _identity(raw: Any, encoding: str) -> str:
+    if not raw:
+        return ""
+    if encoding == "base64":
+        try:
+            return base64.b64decode(raw).hex()
+        except Exception:
+            return ""
+    return str(raw).lower()
+
+
+def _add_network_scope_json(payload: dict, network_scope: str | None) -> None:
+    if network_scope is None:
+        return
+    for resource in payload.get("resourceSpans", []):
+        resource.setdefault("resource", {}).setdefault("attributes", []).append({
+            "key": "bering.network.scope", "value": {"stringValue": network_scope},
+        })
+
+
+def _filter_json(payload: dict, identities: set[tuple[str, str]], encoding: str,
+                 network_scope: str | None) -> tuple[dict, int, list[tuple[str, str]]]:
+    filtered = copy.deepcopy(payload)
+    kept_resources, found = [], []
+    for resource in filtered.get("resourceSpans", []):
+        scope_key = "scopeSpans" if "scopeSpans" in resource else "instrumentationLibrarySpans"
+        kept_scopes = []
+        for scope in resource.get(scope_key, []):
+            kept_spans = []
+            for span in scope.get("spans", []):
+                key = (_identity(span.get("traceId"), encoding), _identity(span.get("spanId"), encoding))
+                if key in identities:
+                    kept_spans.append(span)
+                    found.append(key)
+            if kept_spans:
+                scope["spans"] = kept_spans
+                kept_scopes.append(scope)
+        if kept_scopes:
+            resource[scope_key] = kept_scopes
+            kept_resources.append(resource)
+    filtered["resourceSpans"] = kept_resources
+    _add_network_scope_json(filtered, network_scope)
+    return filtered, len(found), found
+
+
+def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]],
+                     network_scope: str | None):
+    from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
+    from opentelemetry.proto.common.v1.common_pb2 import KeyValue
+
+    original = ExportTraceServiceRequest()
+    original.ParseFromString(wire)
+    filtered = ExportTraceServiceRequest()
+    filtered.CopyFrom(original)
+    filtered.ClearField("resource_spans")
+    found = []
+    for resource in original.resource_spans:
+        kept_resource = None
+        for scope in resource.scope_spans:
+            matches = []
+            for span in scope.spans:
+                key = (bytes(span.trace_id).hex(), bytes(span.span_id).hex())
+                if key in identities:
+                    matches.append(span)
+                    found.append(key)
+            if not matches:
+                continue
+            if kept_resource is None:
+                kept_resource = filtered.resource_spans.add()
+                kept_resource.CopyFrom(resource)
+                kept_resource.ClearField("scope_spans")
+                if network_scope is not None:
+                    attribute = KeyValue(key="bering.network.scope")
+                    attribute.value.string_value = network_scope
+                    kept_resource.resource.attributes.append(attribute)
+            kept_scope = kept_resource.scope_spans.add()
+            kept_scope.CopyFrom(scope)
+            kept_scope.ClearField("spans")
+            for span in matches:
+                kept_scope.spans.add().CopyFrom(span)
+    return filtered.SerializeToString(), len(found), found
+
+
+def _typed_value(tag: dict) -> dict:
+    value, kind = tag.get("value"), str(tag.get("type", "")).lower()
+    if kind == "bool" or isinstance(value, bool):
+        return {"boolValue": bool(value)}
+    if kind in {"int64", "int"} or isinstance(value, int):
+        return {"intValue": str(value)}
+    if kind in {"float64", "float"} or isinstance(value, float):
+        return {"doubleValue": value}
+    if kind == "binary":
+        return {"bytesValue": str(value)}
+    return {"stringValue": "" if value is None else str(value)}
+
+
+def _tags(tags: Iterable[dict]) -> list[dict]:
+    return [{"key": str(tag.get("key", "")), "value": _typed_value(tag)} for tag in tags]
+
+
+def _codec_id(raw: Any, width: int) -> str:
+    value = str(raw or "").lower()
+    if not value or len(value) > width or any(char not in "0123456789abcdef" for char in value):
+        return value
+    if int(value, 16) == 0:
+        return value
+    return value.zfill(width)
+
+
+def _jaeger_trace(trace: dict, identities: set[tuple[str, str]],
+                  network_scope: str | None) -> tuple[dict, int, list[tuple[str, str]]]:
+    processes = trace.get("processes", {})
+    resources: dict[str, dict] = {}
+    found = []
+    kinds = {
+        "server": "SPAN_KIND_SERVER", "client": "SPAN_KIND_CLIENT",
+        "producer": "SPAN_KIND_PRODUCER", "consumer": "SPAN_KIND_CONSUMER",
+        "internal": "SPAN_KIND_INTERNAL",
+    }
+    for span in trace.get("spans", []):
+        raw_key = (str(span.get("traceID", "")).lower(), str(span.get("spanID", "")).lower())
+        if raw_key not in identities:
+            continue
+        found.append(raw_key)
+        process_id = str(span.get("processID", ""))
+        process = processes.get(process_id, {})
+        resource = resources.setdefault(process_id, {
+            "resource": {"attributes": [
+                {"key": "service.name", "value": {"stringValue": str(process.get("serviceName", "unknown"))}},
+                *_tags(process.get("tags", [])),
+            ]},
+            "scopeSpans": [{"scope": {"name": "jaeger-api-faithful-codec"}, "spans": []}],
+        })
+        if network_scope is not None and not any(
+            item.get("key") == "bering.network.scope" and item.get("_supplied_by_raw_v4")
+            for item in resource["resource"]["attributes"]
+        ):
+            resource["resource"]["attributes"].append({
+                "key": "bering.network.scope", "value": {"stringValue": network_scope},
+                "_supplied_by_raw_v4": True,
+            })
+
+        same_trace_children = [ref for ref in span.get("references", [])
+            if ref.get("refType") == "CHILD_OF"
+            and str(ref.get("traceID", "")).lower() == raw_key[0]]
+        parent_ref = same_trace_children[0] if len(same_trace_children) == 1 else None
+        otlp_span = {
+            "traceId": _codec_id(span.get("traceID"), 32),
+            "spanId": _codec_id(span.get("spanID"), 16),
+            "name": str(span.get("operationName", "")),
+            "startTimeUnixNano": str(int(span.get("startTime", 0)) * 1000),
+            "endTimeUnixNano": str((int(span.get("startTime", 0)) + int(span.get("duration", 0))) * 1000),
+            "attributes": _tags(span.get("tags", [])),
+        }
+        if parent_ref is not None:
+            otlp_span["parentSpanId"] = _codec_id(parent_ref.get("spanID"), 16)
+        explicit_kind = next((str(tag.get("value", "")).lower() for tag in span.get("tags", [])
+                              if tag.get("key") == "span.kind"), "")
+        if explicit_kind in kinds:
+            otlp_span["kind"] = kinds[explicit_kind]
+        if any(tag.get("key") == "error" and bool(tag.get("value")) for tag in span.get("tags", [])):
+            otlp_span["status"] = {"code": "STATUS_CODE_ERROR"}
+        events = []
+        for log in span.get("logs", []):
+            events.append({"timeUnixNano": str(int(log.get("timestamp", 0)) * 1000),
+                           "name": "jaeger.log", "attributes": _tags(log.get("fields", []))})
+        if events:
+            otlp_span["events"] = events
+        links = []
+        for ref in span.get("references", []):
+            if ref is parent_ref:
+                continue
+            links.append({
+                "traceId": _codec_id(ref.get("traceID"), 32),
+                "spanId": _codec_id(ref.get("spanID"), 16),
+                "attributes": [{"key": "jaeger.ref_type", "value": {"stringValue": str(ref.get("refType", ""))}}],
+            })
+        if links:
+            otlp_span["links"] = links
+        resource["scopeSpans"][0]["spans"].append(otlp_span)
+
+    for resource in resources.values():
+        for attribute in resource["resource"]["attributes"]:
+            attribute.pop("_supplied_by_raw_v4", None)
+    return {"resourceSpans": list(resources.values())}, len(found), found
+
+
+def _write_export(out: Path, ordinal: int, source: str, content_type: str, body: bytes,
+                  raw_file: Path, raw_sha256: str, observations: int,
+                  selected_ids: list[tuple[str, str]], codec_steps: list[str],
+                  *, content_encoding: str = "", network_scope: str | None = None,
+                  raw_prefix_bytes: int | None = None) -> dict:
+    suffix = ".pb" if "protobuf" in content_type else ".json"
+    if content_encoding == "gzip":
+        suffix += ".gz"
+    path = (out / f"{source}-{ordinal:06d}{suffix}").resolve()
+    _atomic_write(path, body)
+    result = {
+        "path": str(path), "source": source, "content_type": content_type,
+        "content_encoding": content_encoding, "observations": observations,
+        "sha256": hashlib.sha256(body).hexdigest(), "raw_file": str(raw_file.resolve()),
+        "raw_sha256": raw_sha256, "selected_ids": [list(item) for item in selected_ids],
+        "codec_steps": codec_steps,
+    }
+    if raw_prefix_bytes is not None:
+        result["raw_prefix_bytes"] = raw_prefix_bytes
+    if network_scope is not None:
+        result["network_scope"] = network_scope
+        result["network_scope_provenance"] = "explicit experiment inventory enrichment"
+    return result
+
+
+def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path,
+                     network_scope: str | None = None) -> dict:
+    """Export selected raw variants from only byte prefixes frozen in ``store.files``."""
+    out = Path(out)
+    out.mkdir(parents=True, exist_ok=True)
+    exports, ordinal, total = [], 0, 0
+    rows = list(store.db.execute("SELECT path,consumed FROM files ORDER BY path"))
+    for raw_path, consumed in rows:
+        path = Path(raw_path)
+        source = _source(path)
+        identities = selected.get(source, set())
+        if not identities:
+            continue
+        if consumed < 0 or consumed > path.stat().st_size:
+            raise ValueError(f"invalid indexed prefix for {path}: {consumed}")
+        prefix_hash = _hash_prefix(path, consumed)
+        if path.name.startswith("traces-") and path.suffix == ".json":
+            with path.open("rb") as stream:
+                reader = LimitedReader(stream, consumed)
+                for trace in ijson.items(reader, "data.item", use_float=True):
+                    payload, count, found = _jaeger_trace(trace, identities, network_scope)
+                    if not count:
+                        continue
+                    ordinal += 1
+                    body = (json.dumps(payload, separators=(",", ":")) + "\n").encode()
+                    exports.append(_write_export(
+                        out, ordinal, source, "application/json", body, path, prefix_hash,
+                        count, found,
+                        ["jaeger tags/process tags/logs/references converted to typed OTLP JSON",
+                         "nonzero short hexadecimal IDs left-padded only to OTLP bit width"],
+                        network_scope=network_scope, raw_prefix_bytes=consumed,
+                    ))
+                    total += count
+            continue
+
+        with path.open("rb") as stream:
+            reader = LimitedReader(stream, consumed)
+            for raw_line in _lines(reader):
+                if not raw_line.strip():
+                    continue
+                document = json.loads(raw_line)
+                raw_ref = document.get("raw_ref")
+                if raw_ref:
+                    original_path = Path(raw_ref)
+                    if not original_path.is_absolute():
+                        original_path = path.parent / original_path
+                    original = original_path.read_bytes()
+                    raw_hash = hashlib.sha256(original).hexdigest()
+                    if raw_hash != document.get("raw_sha256"):
+                        raise ValueError(f"raw capture digest mismatch: {original_path}")
+                    content_type = document.get("content_type", "application/x-protobuf")
+                    content_encoding = document.get("content_encoding", "").lower().strip()
+                    decoded = gzip.decompress(original) if content_encoding == "gzip" else original
+                    if "json" in content_type.lower():
+                        payload, count, found = _filter_json(json.loads(decoded), identities,
+                                                             document.get("id_encoding", "hex"), network_scope)
+                        body = (json.dumps(payload, separators=(",", ":")) + "\n").encode()
+                    else:
+                        body, count, found = _filter_protobuf(decoded, identities, network_scope)
+                    if not count:
+                        continue
+                    if content_encoding == "gzip":
+                        body = gzip.compress(body, mtime=0)
+                    ordinal += 1
+                    exports.append(_write_export(
+                        out, ordinal, source, content_type, body, original_path, raw_hash,
+                        count, found, ["selected exact source-local IDs from original wire export",
+                                       "copied complete resource/scope/span structures"],
+                        content_encoding=content_encoding, network_scope=network_scope,
+                    ))
+                    total += count
+                    continue
+
+                payload = document.get("payload", document)
+                encoding = document.get("id_encoding", "hex")
+                filtered, count, found = _filter_json(payload, identities, encoding, network_scope)
+                if not count:
+                    continue
+                ordinal += 1
+                body = (json.dumps(filtered, separators=(",", ":")) + "\n").encode()
+                exported = _write_export(
+                    out, ordinal, source, "application/json", body, path,
+                    prefix_hash, count, found,
+                    ["filtered direct OTLP JSONL document without normalized reconstruction"],
+                    network_scope=network_scope, raw_prefix_bytes=consumed,
+                )
+                exported["raw_record_sha256"] = hashlib.sha256(raw_line).hexdigest()
+                exports.append(exported)
+                total += count
+    return {"exports": exports, "observations": total}
