@@ -9,10 +9,13 @@ from __future__ import annotations
 import base64
 import copy
 import hashlib
+import json
+from pathlib import Path
 import time
 from typing import Any
 
 import requests
+import yaml
 
 from .adapter import Adapter as HistoricalAdapter
 from .adapter import (
@@ -33,6 +36,78 @@ SELECTED_DATABASE = {
     "logical_identity": DB_SERVICE,
     "container": DB_CONTAINER,
 }
+
+
+def entry_identity_groups(deployment_dir: str | Path) -> list[dict[str, Any]]:
+    """Prove two entry telemetry names from this retained rendered deployment.
+
+    This does not rename observed nodes or supply a graph edge. Missing or
+    changed rendered files yield no identity equivalence.
+    """
+    root = Path(deployment_dir).resolve()
+    node = root / 'deathstarbench' / 'node-a'
+    compose_path = node / 'docker-compose.yml'
+    config_path = node / 'nginx-web-server' / 'jaeger-config.json'
+    nginx_path = node / 'nginx-web-server' / 'conf' / 'nginx.conf'
+    files = (compose_path, config_path, nginx_path)
+    if any(not path.is_file() or not path.resolve().is_relative_to(root) for path in files):
+        return []
+    try:
+        raw = {path: path.read_bytes() for path in files}
+        compose = yaml.safe_load(raw[compose_path].decode('utf-8'))
+        config = json.loads(raw[config_path].decode('utf-8'))
+        lines = raw[nginx_path].decode('utf-8').splitlines()
+    except (OSError, UnicodeError, ValueError, yaml.YAMLError):
+        return []
+    if not isinstance(compose, dict) or not isinstance(compose.get('services'), dict):
+        return []
+    service = compose['services'].get('nginx-thrift')
+    if not isinstance(service, dict) or not isinstance(config, dict):
+        return []
+    if (service.get('hostname') != 'nginx-thrift'
+            or service.get('container_name') != 'dsb-nginx-thrift'
+            or service.get('ports') != ['8080:8080']
+            or config.get('service_name') != 'nginx-web-server'):
+        return []
+    volumes = service.get('volumes')
+    if not isinstance(volumes, list) or not all(isinstance(value, str) for value in volumes):
+        return []
+    mounts = (
+        ('./nginx-web-server/conf/nginx.conf', '/usr/local/openresty/nginx/conf/nginx.conf'),
+        ('./nginx-web-server/jaeger-config.json', '/usr/local/openresty/nginx/jaeger-config.json'),
+    )
+    mount_indices = []
+    for source, target in mounts:
+        matches = [index for index, value in enumerate(volumes)
+                   if len(value.split(':')) >= 2 and value.split(':')[1] == target]
+        if len(matches) != 1 or volumes[matches[0]] != f'{source}:{target}':
+            return []
+        mount_indices.append(matches[0])
+    loader = ('opentracing_load_tracer /usr/local/lib/libjaegertracing_plugin.so '
+              '/usr/local/openresty/nginx/jaeger-config.json;')
+    loaders = [(index + 1, line.strip()) for index, line in enumerate(lines)
+               if line.strip().startswith('opentracing_load_tracer ')]
+    if len(loaders) != 1 or loaders[0][1] != loader:
+        return []
+
+    digests = {path: hashlib.sha256(raw[path]).hexdigest() for path in files}
+    def proof(path: Path, pointer: str, value: Any) -> dict[str, Any]:
+        return {'relative_path': path.relative_to(root).as_posix(),
+                'sha256': digests[path], 'pointer': pointer, 'observed_value': value}
+
+    return [{
+        'aliases': ['nginx-thrift', 'nginx-web-server'],
+        'scope': 'entry representation only; same declared container/listener; entry fixed fulfilled',
+        'proof': [
+            proof(compose_path, '/services/nginx-thrift/hostname', 'nginx-thrift'),
+            proof(compose_path, '/services/nginx-thrift/container_name', 'dsb-nginx-thrift'),
+            proof(compose_path, '/services/nginx-thrift/ports/0', '8080:8080'),
+            proof(compose_path, f'/services/nginx-thrift/volumes/{mount_indices[0]}', volumes[mount_indices[0]]),
+            proof(compose_path, f'/services/nginx-thrift/volumes/{mount_indices[1]}', volumes[mount_indices[1]]),
+            proof(nginx_path, f'line:{loaders[0][0]}', loader),
+            proof(config_path, '/service_name', 'nginx-web-server'),
+        ],
+    }]
 
 _NGINX = ENTRY_SERVICES
 _COMPOSE = ["compose-post-service"]
