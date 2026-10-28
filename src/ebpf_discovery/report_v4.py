@@ -39,8 +39,8 @@ def _table(headers: list[str], rows: list[list]) -> list[str]:
 
 def _identity(campaign: dict) -> tuple:
     status = campaign.get("status") or {}
-    provenance = campaign.get("artifact_provenance") or {}
-    return (status.get("run_id", provenance.get("run_id")), campaign.get("system"),
+    provenance = campaign.get("saved_evaluation_provenance") or {}
+    return (status.get("run_id") or provenance.get("run_id"), campaign.get("system"),
             campaign.get("mode"), campaign.get("seed"), campaign.get("root"))
 
 
@@ -90,6 +90,24 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
                              (campaign.get("counts") or {}).get("primary")])
     lines += _table(["Run", "System", "Mode", "Seed", "Complete", "Status", "Retained root", "Primary"],
                     attempt_rows)
+    lines.extend(["", "Saved artifact provenance:", ""])
+    provenance_rows = []
+    for campaign in campaigns:
+        run_id, system, mode, seed, root = _identity(campaign)
+        item = campaign.get("saved_evaluation_provenance") or {}
+        provenance_rows.append([
+            run_id, system, mode, seed, item.get("head_sha"), item.get("artifact_id"),
+            item.get("artifact_name"), item.get("artifact_digest"), item.get("full_artifact_id"),
+            item.get("full_artifact_name"), item.get("full_artifact_digest"),
+            item.get("evaluation_sha256"), item.get("manifest_sha256"),
+            campaign.get("original_campaign_root"), root,
+            item.get("full_originals_reverified_by_report_job"),
+        ])
+    lines += _table([
+        "Run", "System", "Mode", "Seed", "Head SHA", "Summary artifact ID", "Summary artifact",
+        "Summary digest", "Full artifact ID", "Full artifact", "Full digest", "Evaluation SHA-256",
+        "Manifest SHA-256", "Original campaign root", "Retained compact root", "Full originals reverified",
+    ], provenance_rows)
 
     _heading(lines, "Selection and technical replacements")
     selection = payload.get("selection") or {}

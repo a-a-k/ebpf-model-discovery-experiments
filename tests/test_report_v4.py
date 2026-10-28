@@ -9,7 +9,15 @@ from ebpf_discovery.report_v4 import main, render
 def campaign(complete=True):
     return {
         "root": "/retained/run", "system": "otel_demo", "mode": "full", "seed": 6,
+        "original_campaign_root": "/runner/original/campaign",
         "status": {"run_id": "123", "status": "acquisition_complete"},
+        "saved_evaluation_provenance": {
+            "run_id": "123", "head_sha": "deadbeef", "artifact_id": 41,
+            "artifact_name": "v4-summary-otel_demo-full-6-123", "artifact_digest": "sha256:summary",
+            "full_artifact_id": 40, "full_artifact_name": "v4-otel_demo-full-6-123",
+            "full_artifact_digest": "sha256:full", "evaluation_sha256": "evalsha",
+            "manifest_sha256": "manifestsha", "full_originals_reverified_by_report_job": False,
+        },
         "complete_for_evaluation": complete, "counts": {"primary": 34800},
         "evaluations": [{"operation": "browse", "source": "ebpf", "variant": "raw",
             "available": True, "point_prediction": .75, "forecast_interval": [.7, .8],
@@ -65,6 +73,8 @@ def test_report_copies_saved_tables_and_marks_unknown_cost(tmp_path):
     text = out.read_text(encoding="utf-8")
     assert result["attempts"] == 1
     assert "All retained attempts (not all are necessarily selected)" in text
+    assert "v4-summary-otel_demo-full-6-123" in text
+    assert "sha256:full" in text and "evalsha" in text and "manifestsha" in text
     assert "technical_incomplete_original" in text
     assert "0.7, 0.8" in text and "7 | 2 | 1" in text
     assert "healthy_state_11_minus_database_down" in text
@@ -87,6 +97,26 @@ def test_report_retains_excluded_incomplete_attempt(tmp_path):
     text = out.read_text(encoding="utf-8")
     assert "122 | otel_demo | full | 6 | false | technical_failure | /failed" in text
     assert "Every retained campaign is listed as an attempt" in text
+
+
+def test_statusless_saved_attempt_uses_actual_saved_provenance_schema(tmp_path):
+    failed = campaign(False)
+    failed["status"] = {}
+    failed["saved_evaluation_provenance"] = {
+        "run_id": "987", "head_sha": "feedface", "artifact_id": 52,
+        "artifact_name": "v4-summary-otel_demo-full-6-987", "artifact_digest": "sha256:compact",
+        "full_artifact_id": 51, "full_artifact_name": "v4-otel_demo-full-6-987",
+        "full_artifact_digest": "sha256:original", "evaluation_sha256": "saved-eval",
+        "manifest_sha256": "saved-manifest", "full_originals_reverified_by_report_job": False,
+    }
+    source = tmp_path / "evaluation-v4.json"
+    source.write_text(json.dumps(aggregate([failed])), encoding="utf-8")
+    out = tmp_path / "report-v4.md"
+    render(source, out)
+    text = out.read_text(encoding="utf-8")
+    assert "987 | otel_demo | full | 6 | false | unknown" in text
+    assert "52 | v4-summary-otel_demo-full-6-987 | sha256:compact" in text
+    assert "51 | v4-otel_demo-full-6-987 | sha256:original" in text
 
 
 def test_cli_requires_actions(monkeypatch, tmp_path):
