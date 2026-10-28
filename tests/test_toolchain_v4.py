@@ -56,6 +56,52 @@ def test_preflight_attachment_never_adds_missing_or_unconfirmed_nodes(tmp_path):
     assert evidence[0]['report'] == str(path)
 
 
+def test_preflight_uses_declared_required_services_as_nonempty_goal_targets(tmp_path):
+    deployment = tmp_path/'deployment'
+    deployment.mkdir()
+    (deployment/'compose.yaml').write_text('services: {}\n')
+    tool = object.__new__(Toolchain)
+    tool.root = tmp_path/'toolchain'
+    tool.ctx = SimpleNamespace(deployment_dir=deployment)
+    tool.system, tool.inventory = 'generic', {}
+    tool.declaration = SimpleNamespace(CONTRACTS={'read': {
+        'entry_services': ['edge', 'edge-alias'],
+        'steps': [{'method': 'GET', 'path': '/read'}],
+        'required_calls': [{'caller': ['edge', 'edge-alias'], 'callee': ['reader', 'reader-alias']},
+                           {'caller': ['reader'], 'db_system': 'postgresql'}]}})
+    goals = []
+    def command(tool_name, args, folder, name):
+        assert tool_name == 'procrustes'
+        goals.append(json.loads((folder/'goal.json').read_text()))
+    tool.command = command
+    tool.preflight()
+    assert len(goals) == 2
+    assert all(goal['operation']['mandatory_targets'] == ['reader'] for goal in goals)
+    assert all(goal['scope']['services'] == ['edge', 'reader'] for goal in goals)
+
+
+def test_composite_preflight_targets_describe_the_individual_http_step(tmp_path):
+    from systems.otel_demo import experiment_v4
+    deployment = tmp_path/'deployment'
+    deployment.mkdir()
+    (deployment/'compose.yaml').write_text('services: {}\n')
+    tool = object.__new__(Toolchain)
+    tool.root, tool.system, tool.inventory = tmp_path/'toolchain', 'generic', {}
+    tool.ctx = SimpleNamespace(deployment_dir=deployment)
+    tool.declaration = experiment_v4
+    goals = []
+    tool.command = lambda tool_name, args, folder, name: goals.append(json.loads((folder/'goal.json').read_text()))
+    tool.preflight()
+    for goal in goals:
+        operation = goal['operation']
+        if operation['method'] == 'GET':
+            assert operation['mandatory_targets'] == ['product-catalog']
+        elif operation['path'] == '/api/cart':
+            assert operation['mandatory_targets'] == ['cart']
+        else:
+            assert set(operation['mandatory_targets']) == {'checkout', 'cart', 'product-catalog', 'currency', 'shipping', 'payment'}
+
+
 def test_faults_scope_replica_loss_and_database_outage_separately():
     faults = fault_inputs('visits', ['shared-db'])['profiles']
     assert faults['state-10']['faults'][0]['selector'] == {

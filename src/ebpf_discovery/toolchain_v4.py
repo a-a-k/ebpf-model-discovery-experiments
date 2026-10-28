@@ -242,10 +242,16 @@ class Toolchain:
                 # Alias alternatives are not separate required workloads.
                 services = sorted({entry, *[aliases(c[key])[0] for c in contract['required_calls']
                                            for key in ('caller', 'callee') if c.get(key)]})
+                targets = step.get('preflight_targets')
+                if targets is None and len(contract['steps']) == 1:
+                    targets = [service for service in services if service != entry]
+                if not targets or not set(targets) <= set(services)-{entry}:
+                    raise ValueError('Procrustes requires declared nonempty service targets for each HTTP step: '+name)
                 goal = {'contract': {'name': 'io.mb3r.procrustes.goal', 'version': '0.1.0'},
                         'scope': {'namespaces': ['*'], 'services': services},
                         'operation': {'id': name+f'-step-{i}', 'entry_service': entry,
-                                      'method': step['method'], 'path': step['path'], 'mandatory_targets': []}}
+                                      'method': step['method'], 'path': step['path'],
+                                      'mandatory_targets': sorted(set(targets))}}
                 for source in ('native', 'ebpf'):
                     folder = self.root/'procrustes'/source/name/str(i)
                     folder.mkdir(parents=True, exist_ok=True)

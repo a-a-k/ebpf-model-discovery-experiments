@@ -207,23 +207,25 @@ _CHECKOUT_CALLS = [
 
 CONTRACTS: dict[str, dict[str, Any]] = {
     "browse_product": {
-        "steps": [{"method": "GET", "path": f"/api/products/{PRODUCT_ID}"}],
+        "steps": [{"method": "GET", "path": f"/api/products/{PRODUCT_ID}",
+                   "preflight_targets": [_CATALOG[0]]}],
         "entry_services": ENTRY_SERVICE_ALIASES,
         "required_calls": _BROWSE_CALLS,
     },
     "add_to_cart": {
         "steps": [
-            {"method": "GET", "path": f"/api/products/{PRODUCT_ID}"},
-            {"method": "POST", "path": "/api/cart"},
+            {"method": "GET", "path": f"/api/products/{PRODUCT_ID}", "preflight_targets": [_CATALOG[0]]},
+            {"method": "POST", "path": "/api/cart", "preflight_targets": [_CART[0]]},
         ],
         "entry_services": ENTRY_SERVICE_ALIASES,
         "required_calls": _ADD_CALLS,
     },
     "checkout": {
         "steps": [
-            {"method": "GET", "path": f"/api/products/{PRODUCT_ID}"},
-            {"method": "POST", "path": "/api/cart"},
-            {"method": "POST", "path": "/api/checkout?currencyCode=USD"},
+            {"method": "GET", "path": f"/api/products/{PRODUCT_ID}", "preflight_targets": [_CATALOG[0]]},
+            {"method": "POST", "path": "/api/cart", "preflight_targets": [_CART[0]]},
+            {"method": "POST", "path": "/api/checkout?currencyCode=USD",
+             "preflight_targets": [_CHECKOUT[0], _CART[0], _CATALOG[0], _CURRENCY[0], _SHIPPING[0], _PAYMENT[0]]},
         ],
         "entry_services": ENTRY_SERVICE_ALIASES,
         "required_calls": _CHECKOUT_CALLS,
