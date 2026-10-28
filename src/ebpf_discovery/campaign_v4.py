@@ -24,7 +24,7 @@ from .observations import census as intent_census
 
 
 class CampaignV4(Campaign):
-    def __init__(self, system, mode, seed, out, qualification=False):
+    def __init__(self, system, mode, seed, out, qualification=False, training_checkpoint=None):
         self.ctx = Context(out, mode, seed)
         self.ctx.observation_policy = 'uncapped-v4'
         self.ctx.journal = Journal(self.ctx.out/'attempt-journal.sqlite')
@@ -39,6 +39,7 @@ class CampaignV4(Campaign):
         self.rate, self.workers = 20, 256
         self.frozen = {}
         self.record_lock = threading.Lock()
+        self.training_checkpoint = Path(training_checkpoint) if training_checkpoint else None
 
     def snapshot(self, stage):
         self.collectors.snapshot()
@@ -189,6 +190,10 @@ class CampaignV4(Campaign):
                 for state in states:
                     self.block('calibration', state, 6000, names)
                 self.snapshot('training')
+                if self.training_checkpoint is not None:
+                    from .checkpoint_v4 import checkpoint_and_wait
+                    self.require_completed_transports()
+                    checkpoint_and_wait(self, self.training_checkpoint)
                 self.freeze()
                 states = ['11']*4+['10']*2+['01', '00']
                 self.rng.shuffle(states)
@@ -246,6 +251,8 @@ def main():
     parser.add_argument('--seed', type=int, choices=[6, 7, 8], required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--qualification', action='store_true')
+    parser.add_argument('--training-checkpoint', type=Path,
+                        help='Actions-only closed training-prefix upload handshake before Bering')
     args = parser.parse_args()
     CampaignV4(**vars(args)).run()
 
