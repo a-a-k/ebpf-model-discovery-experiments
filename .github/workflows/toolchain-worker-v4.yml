@@ -1,0 +1,127 @@
+name: Iteration 4 exact remote toolchain worker
+on:
+  workflow_dispatch:
+    inputs:
+      request_id: {required: true, type: string}
+      parent_repository: {required: true, type: string}
+      run_id: {required: true, type: string}
+      parent_run_attempt: {required: true, type: string}
+      parent_cell_id: {required: true, type: string}
+      commit: {required: true, type: string}
+      system: {required: true, type: string}
+      mode: {required: true, type: string}
+      seed: {required: true, type: string}
+      manifest_sha256: {required: true, type: string}
+      artifact_id: {required: true, type: string}
+      artifact_url: {required: true, type: string}
+      artifact_digest: {required: true, type: string}
+      artifact_name: {required: true, type: string}
+      plans_sha256: {required: true, type: string}
+      training_index_proof_sha256: {required: true, type: string}
+permissions:
+  contents: read
+  actions: read
+jobs:
+  toolchain:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.commit }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install exact experiment implementation
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Bind and download the immutable parent checkpoint
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUTS_JSON: ${{ toJSON(inputs) }}
+        run: |
+          set -euo pipefail
+          mkdir -p work/worker-artifact/infrastructure work/worker-input
+          printf '%s' "$INPUTS_JSON" > work/worker-input/expected.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/${{ inputs.artifact_id }}" \
+            > work/worker-input/artifact-api.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.run_id }}" \
+            > work/worker-input/parent-run-api.json
+          python - <<'PY'
+          import json, os, pathlib
+          expected=json.loads(pathlib.Path('work/worker-input/expected.json').read_text())
+          artifact=json.loads(pathlib.Path('work/worker-input/artifact-api.json').read_text())
+          run=json.loads(pathlib.Path('work/worker-input/parent-run-api.json').read_text())
+          parent=artifact.get('workflow_run') or {}
+          if (expected.get('parent_repository') != os.environ['GITHUB_REPOSITORY']
+                  or run.get('id') != int(expected['run_id'])
+                  or run.get('head_sha') != expected['commit']
+                  or run.get('run_attempt') != int(expected['parent_run_attempt'])
+                  or run.get('status') != 'in_progress'
+                  or artifact.get('id') != int(expected['artifact_id'])
+                  or artifact.get('name') != expected['artifact_name']
+                  or artifact.get('digest') != expected['artifact_digest']
+                  or artifact.get('expired') is True
+                  or parent.get('id') != int(expected['run_id'])
+                  or parent.get('head_sha') != expected['commit']):
+              raise SystemExit('checkpoint Actions artifact metadata differs from dispatched identity')
+          expected.update(worker_workflow_sha=os.environ['GITHUB_SHA'],
+                          worker_run_id=os.environ['GITHUB_RUN_ID'],
+                          worker_run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
+                          artifact_api={'id':artifact['id'],'name':artifact['name'],
+                              'digest':artifact['digest'],'size_in_bytes':artifact.get('size_in_bytes'),
+                              'workflow_run':parent})
+          pathlib.Path('work/worker-input/expected.json').write_text(json.dumps(expected,indent=2)+'\n')
+          PY
+          /usr/bin/time -v -o work/worker-artifact/infrastructure/checkpoint-download-time.txt \
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/${{ inputs.artifact_id }}/zip" \
+            > work/worker-input/checkpoint.zip
+          printf '%s  %s\n' "${{ inputs.artifact_digest }}" work/worker-input/checkpoint.zip \
+            | sed 's/^sha256://' > work/worker-input/checkpoint.sha256
+          sha256sum --check work/worker-input/checkpoint.sha256
+      - name: Allocate measured swap on the standard worker
+        run: bash scripts/setup-v4-swap.sh work/worker-artifact/infrastructure/swap
+      - name: Execute the unchanged full-prefix toolchain
+        env:
+          PYTHONPATH: src
+        run: |
+          set +e
+          bash scripts/capture-v4-resources.sh \
+            work/worker-artifact/infrastructure/resources 15 work/no-guests &
+          sampler=$!
+          printf '%s\n' "$sampler" > work/worker-artifact/infrastructure/resource-sampler.pid
+          /usr/bin/time -v -o work/worker-artifact/infrastructure/toolchain-time.txt \
+            python -m ebpf_discovery.remote_toolchain_v4 worker \
+              --checkpoint-zip work/worker-input/checkpoint.zip \
+              --campaign-root work/campaign \
+              --artifact-root work/worker-artifact \
+              --expected work/worker-input/expected.json
+          code=$?
+          kill -TERM "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$code"
+      - name: Retain worker environment and resource evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/worker-artifact/infrastructure
+          uname -a > work/worker-artifact/infrastructure/runner-final.txt
+          free -b >> work/worker-artifact/infrastructure/runner-final.txt
+          swapon --show --bytes >> work/worker-artifact/infrastructure/runner-final.txt
+          df -B1 >> work/worker-artifact/infrastructure/runner-final.txt
+          du -B1 -s work/worker-artifact work/worker-input work/campaign \
+            > work/worker-artifact/infrastructure/final-disk-bytes.txt 2>&1 || true
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss \
+            > work/worker-artifact/infrastructure/processes-final.txt
+          python -m pip freeze > work/worker-artifact/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+            > work/worker-artifact/infrastructure/workflow-jobs.json \
+            2>work/worker-artifact/infrastructure/workflow-jobs.err || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: toolchain-v4-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
+          path: work/worker-artifact/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
