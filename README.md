@@ -136,9 +136,13 @@ method, canonical route and a declared entry-service alias.
 
 Manual contracts declare business obligations equally for eBPF, native and combined
 arms. They may name required callers/callees or a database role, but they do not add
-expected edges to the recovered graph. A required call must resolve to an observed,
-unambiguous Bering edge. Missing structure produces an unavailable prediction with a
-reason. Conditional calls remain unknown when their condition is not established.
+expected edges to the recovered graph. Required service calls must resolve to
+observed, unambiguous Bering edges. Missing structure produces an unavailable
+prediction with a reason. In the primary replica-only intervention, nonintervened
+database obligations are explicitly assumed fulfilled even if their channels are
+unobserved; a primary forecast therefore does not prove discovery of every DB edge.
+The separate DB-down forecast requires observed, mapped mandatory DB channels.
+Conditional calls remain unknown when their condition is not established.
 
 The fixed inputs intentionally avoid injecting an expected topology:
 
