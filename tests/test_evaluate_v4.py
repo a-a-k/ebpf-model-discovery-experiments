@@ -268,6 +268,9 @@ def test_missing_journal_cost_is_unknown(tmp_path: Path):
     result = _cost(tmp_path, {})
     assert result["http_transport"] == {"available": False, "reason": "attempt_journal_missing"}
     assert result["auxiliary_timeline_probes"] is None
+    assert result["toolchain_clone_seconds"] is None
+    assert result["toolchain_command_seconds"] is None
+    assert result["bering_replay_command_seconds"] is None
 
 
 def _saved_summary(root: Path, run_id: int, monkeypatch):
@@ -333,3 +336,19 @@ def test_saved_aggregate_rejects_tamper_and_wrong_run_sha(tmp_path, monkeypatch)
         assert "artifact/run provenance mismatch" in str(exc)
     else:
         raise AssertionError("wrong artifact run SHA was accepted")
+
+
+def test_saved_preparation_failure_without_status_is_unscorable_but_retained(tmp_path, monkeypatch):
+    summary = _saved_summary(tmp_path, 102, monkeypatch)
+    (summary/"status.json").unlink()
+    _write(summary/"evaluation-v4.json", evaluate_campaign(tmp_path/"not-started"))
+    manifest = json.loads((summary/"evaluation-manifest.json").read_text())
+    manifest["files_sha256"]["status.json"] = None
+    manifest["files_sha256"]["evaluation-v4.json"] = _hash(summary/"evaluation-v4.json")
+    _write(summary/"evaluation-manifest.json", manifest)
+    result = aggregate([summary], tmp_path/"report", saved=True)
+    row = result["campaigns"][0]
+    assert (row["system"], row["mode"], row["seed"]) == ("fake", "full", 6)
+    assert row["technical_identity_from_workflow_matrix"] is True
+    assert row["complete_for_evaluation"] is False
+    assert all(item["available"] is False for item in row["evaluations"])

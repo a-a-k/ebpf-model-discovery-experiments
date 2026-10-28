@@ -56,6 +56,18 @@ jobs:
       matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+      - name: Record fixed cell identity before setup
+        run: |
+          mkdir -p work/campaign
+          python3 - <<'PY'
+          import json, os, pathlib, time
+          status = {'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
+                    'seed': ${{ matrix.seed }}, 'protocol_version': 'graph-v4',
+                    'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                    'started_ns': time.time_ns(), 'status': 'technical_preparation_pending',
+                    'technical_stage': 'before_toolchain_setup_or_guest_boot'}
+          pathlib.Path('work/campaign/status.json').write_text(json.dumps(status, indent=2)+'\n')
+          PY
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -114,6 +126,8 @@ jobs:
         run: bash scripts/vms.sh stop work/vms
       - name: Evaluate retained full campaign evidence
         if: always()
+        env:
+          PYTHONPATH: src
         run: |
           python -m ebpf_discovery.evaluate_v4 --campaign work/campaign \
             --out work/campaign/evaluation-v4.json

@@ -341,7 +341,8 @@ def _journal_transport_cost(root: Path) -> dict:
 
 
 def _cost(root: Path, status: dict) -> dict:
-    build = _read(root/"toolchain-build"/"toolchain-build.json", {})
+    build = _read(root/"toolchain-build"/"toolchain-build.json")
+    binaries = build.get("binaries", []) if isinstance(build, dict) else []
     commands, returncodes, bering_replays, replay_statuses = [], [], [], []
     for path in (root/"toolchain").rglob("*.command.json") if (root/"toolchain").exists() else []:
         row = _read(path, {})
@@ -369,16 +370,20 @@ def _cost(root: Path, status: dict) -> dict:
                     time_fields[key] = value.strip()
     return {
         "campaign_elapsed_seconds": status.get("elapsed_seconds"),
-        "toolchain_clone_seconds": sum(row.get("clone_seconds", 0) for row in build.get("binaries", [])),
-        "toolchain_build_seconds": sum(row.get("build_seconds", 0) for row in build.get("binaries", [])),
-        "toolchain_command_seconds": sum(commands), "toolchain_command_count": len(commands),
-        "bering_replay_command_seconds": sum(bering_replays),
+        "toolchain_build_evidence_present": bool(binaries),
+        "toolchain_clone_seconds": sum(row.get("clone_seconds", 0) for row in binaries) if binaries else None,
+        "toolchain_build_seconds": sum(row.get("build_seconds", 0) for row in binaries) if binaries else None,
+        "toolchain_command_seconds": sum(commands) if commands else None,
+        "toolchain_command_count": len(commands),
+        "bering_replay_command_seconds": sum(bering_replays) if bering_replays else None,
         "bering_replay_command_count": len(bering_replays),
         "bering_replay_attempts": len(replay_statuses),
         "bering_replay_statuses": dict(Counter(replay_statuses)),
         "toolchain_command_returncodes": returncodes,
-        "toolchain_command_failures": sum(code not in (0, None) for code in returncodes),
-        "infrastructure_time_file": str(time_file), "infrastructure_time_fields": time_fields,
+        "toolchain_command_failures": sum(code not in (0, None) for code in returncodes) if returncodes else None,
+        "infrastructure_time_file": str(time_file),
+        "infrastructure_time_file_present": time_file.is_file(),
+        "infrastructure_time_fields": time_fields if time_file.is_file() else None,
         "http_transport": transport_cost,
         "auxiliary_timeline_probes": (transport_cost.get("by_category") or {}).get("verification"),
         "manual_preparation": {"measured": False, "reason": "human preparation time was not instrumented; no full-cost advantage claimed"},
@@ -551,21 +556,33 @@ def _saved_reports(roots: list[Path]) -> list[dict]:
                 raise ValueError(f"saved v4 evaluation compact hash mismatch: {target}")
             if expected is None and target.is_file():
                 raise ValueError(f"unexpected unadmitted compact file: {target}")
-        if not hashes.get("evaluation-v4.json") or not hashes.get("status.json"):
-            raise ValueError(f"saved v4 evaluation or status missing: {path}")
+        if not hashes.get("evaluation-v4.json"):
+            raise ValueError(f"saved v4 evaluation missing: {path}")
         report = _read(path)
         if report.get("schema_version") != "evaluation-v4":
             raise ValueError(f"invalid saved v4 evaluation schema: {path}")
         status = _read(folder/"status.json")
         for key in ("system", "mode", "seed"):
-            if report.get(key) != manifest.get(key) or report.get(key) != status.get(key):
+            declared = manifest.get(key)
+            if (report.get(key) is not None and report.get(key) != declared) or (
+                    status is not None and status.get(key) is not None and status.get(key) != declared):
                 raise ValueError(f"saved v4 cell identity mismatch: {path}: {key}")
-        if report.get("status") != status:
+        if status is not None and report.get("status") != status:
             raise ValueError(f"saved v4 evaluation status differs from copied status: {path}")
+        if status is None and report.get("status") not in ({}, None):
+            raise ValueError(f"saved v4 evaluation has status absent from compact source: {path}")
         if report.get("complete_for_evaluation") and any(hashes.get(name) is None for name in
-                ("plans.json", "census.json", "blocks.json", "freeze-integrity.json",
+                ("status.json", "plans.json", "census.json", "blocks.json", "freeze-integrity.json",
                  "toolchain/forecasts.json")):
             raise ValueError(f"complete saved v4 evaluation lacks required compact proof files: {path}")
+        if status is None and report.get("complete_for_evaluation"):
+            raise ValueError(f"status-less saved v4 evaluation cannot be complete: {path}")
+        if status is None or any(report.get(key) is None for key in ("system", "mode", "seed")):
+            if report.get("complete_for_evaluation"):
+                raise ValueError(f"complete saved v4 evaluation lacks source cell identity: {path}")
+            for key in ("system", "mode", "seed"):
+                report[key] = manifest[key]
+            report["technical_identity_from_workflow_matrix"] = True
         report["original_campaign_root"] = report.get("root")
         report["root"] = str(folder.resolve())
         report["saved_evaluation_provenance"] = {
