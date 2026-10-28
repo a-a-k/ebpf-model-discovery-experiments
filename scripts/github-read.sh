@@ -20,7 +20,9 @@ gh_api_to_file() {
 gh_api_optional_log_to_file() {
   local destination="$1" status_file="$2" endpoint="$3" attempt code
   for attempt in 1 2 3; do
-    if gh api "$endpoint" > "${destination}.tmp" 2> "${destination}.error.tmp"; then
+    # Newer gh refuses ANSI-bearing log bodies unless explicitly allowed. The
+    # body is redirected to a retained file, never printed to the terminal.
+    if gh api "$endpoint" --allow-escape-sequences > "${destination}.tmp" 2> "${destination}.error.tmp"; then
       mv "${destination}.tmp" "$destination"
       rm -f "${destination}.error.tmp"
       jq -n --arg endpoint "$endpoint" --arg file "$(basename "$destination")" \

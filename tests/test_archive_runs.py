@@ -32,6 +32,9 @@ class ArchiveRunsTests(unittest.TestCase):
             scenario = os.environ.get("MOCK_SCENARIO", "metadata_only")
             artifact = b"PK\\x03\\x04synthetic-artifact-bytes"
             if endpoint.endswith("/logs"):
+                if scenario == "ansi_logs" and "--allow-escape-sequences" not in sys.argv:
+                    print("gh: the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway", file=sys.stderr)
+                    sys.exit(1)
                 if scenario == "auth_failure":
                     print("gh: Resource not accessible by integration (HTTP 403)", file=sys.stderr)
                     sys.exit(1)
@@ -56,6 +59,9 @@ class ArchiveRunsTests(unittest.TestCase):
                 if scenario == "artifact" and "/jobs/" in endpoint:
                     sys.stdout.buffer.write(b"synthetic job log\\n")
                     sys.exit(0)
+                if scenario == "ansi_logs" and "/jobs/" in endpoint:
+                    sys.stdout.buffer.write(b"\\x1b[31msynthetic job log\\x1b[0m\\n")
+                    sys.exit(0)
                 print("gh: HTTP 404 The specified blob does not exist.", file=sys.stderr)
                 sys.exit(1)
             if endpoint.endswith("/artifacts/42/zip"):
@@ -69,7 +75,7 @@ class ArchiveRunsTests(unittest.TestCase):
                 if scenario == "bad_digest": digest = "0" * 64
                 artifacts = ([] if scenario in ("metadata_only", "live", "auth_failure", "server_failure",
                                               "network_failure", "gone_logs", "workflow_only",
-                                              "workflow_corrupt")
+                                              "workflow_corrupt", "ansi_logs")
                              else [{"id":42,"name":"capture","digest":"sha256:"+digest}])
                 value = {"total_count":len(artifacts), "artifacts":artifacts}
             elif endpoint.endswith("/jobs?filter=all&per_page=100"):
@@ -144,6 +150,12 @@ class ArchiveRunsTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertEqual(json.loads((self.archive / "7-workflow-logs-status.json").read_text())
                          ["http_status"], 410)
+
+    def test_ansi_log_requires_explicit_flag_and_preserves_original_bytes(self):
+        completed = self.run_archive("ansi_logs")
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual((self.archive / "7-job-11.log").read_bytes(),
+                         b"\x1b[31msynthetic job log\x1b[0m\n")
 
     def test_live_run_and_missing_artifact_fail_closed(self):
         live = self.run_archive("live")
