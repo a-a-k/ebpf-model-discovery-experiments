@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import urlsplit
 
 import ijson
 
@@ -73,6 +74,60 @@ def _add_network_scope_json(payload: dict, network_scope: str | None) -> None:
         })
 
 
+def _observed_http_attributes(span, protobuf: bool) -> dict[str, str]:
+    """Read only route-relevant source strings, rejecting conflicting repetitions."""
+    wanted = {'http.url', 'url.full', 'url.path', 'http.target', 'http.route'}
+    result = {}
+    for item in span.attributes if protobuf else span.get('attributes', []):
+        key = item.key if protobuf else item.get('key')
+        if key not in wanted:
+            continue
+        if protobuf:
+            if item.value.WhichOneof('value') != 'string_value':
+                raise ValueError(f'non-string observed HTTP attribute: {key}')
+            value = item.value.string_value
+        else:
+            raw = item.get('value', {})
+            if set(raw) != {'stringValue'} or not isinstance(raw['stringValue'], str):
+                raise ValueError(f'non-string observed HTTP attribute: {key}')
+            value = raw['stringValue']
+        if key in result and result[key] != value:
+            raise ValueError(f'conflicting observed HTTP attribute: {key}')
+        result[key] = value
+    return result
+
+
+def _derived_path_from_actual_url(span, protobuf: bool, source: str, key):
+    attrs = _observed_http_attributes(span, protobuf)
+    candidates = []
+    for field in ('http.url', 'url.full'):
+        if not attrs.get(field):
+            continue
+        url = attrs[field]
+        parsed = urlsplit(url)
+        if parsed.scheme.lower() not in ('http', 'https') or not parsed.netloc or not parsed.path.startswith('/'):
+            raise ValueError(f'invalid observed full HTTP URL for supplied entry: {source} {key}')
+        candidates.append({'field': field, 'url': url, 'path': parsed.path,
+                           'query_stripped': bool(parsed.query), 'fragment_stripped': bool(parsed.fragment)})
+    if not candidates:
+        return None
+    paths = {candidate['path'] for candidate in candidates}
+    if len(paths) != 1:
+        raise ValueError(f'contradictory observed HTTP URL paths for supplied entry: {source} {key}')
+    path = candidates[0]['path']
+    for field in ('url.path', 'http.target'):
+        if attrs.get(field) and urlsplit(attrs[field]).path != path:
+            raise ValueError(f'contradictory observed HTTP URL and {field}: {source} {key}')
+    if any(attrs.get(field) for field in ('http.route', 'url.path', 'http.target')):
+        return None
+    if protobuf:
+        span.attributes.add(key='url.path').value.string_value = path
+    else:
+        span.setdefault('attributes', []).append({'key': 'url.path', 'value': {'stringValue': path}})
+    return {'source_urls': candidates, 'derived_path': path,
+            'rule': 'parsed path from actual observed full HTTP URL; query and fragment removed; declared path unused'}
+
+
 def _supply_server_role(span, key, source, roles, *, protobuf=False):
     declaration = roles.get((source, *key))
     if declaration is None:
@@ -89,7 +144,11 @@ def _supply_server_role(span, key, source, roles, *, protobuf=False):
         span["kind"] = "SPAN_KIND_SERVER"
     if declaration.get("original_kind") not in (None, 0, "0", "SPAN_KIND_UNSPECIFIED"):
         raise ValueError(f"invalid supplied server role provenance: {source} {key}")
-    return declaration
+    applied = dict(declaration)
+    derivation = _derived_path_from_actual_url(span, protobuf, source, key)
+    if derivation is not None:
+        applied['supplied_url_path'] = derivation
+    return applied
 
 
 def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encoding: str,

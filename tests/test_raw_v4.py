@@ -151,6 +151,7 @@ def test_supplied_role_changes_only_derived_protobuf_kind_and_preserves_unknown_
     request = ExportTraceServiceRequest()
     scope = request.resource_spans.add().scope_spans.add()
     root = scope.spans.add(trace_id=bytes.fromhex(TRACE), span_id=bytes.fromhex(SPAN), name='receiver')
+    root.attributes.add(key='http.url').value.string_value = 'https://example.test/lookup?token=fixture'
     unknown = b'\xa0\x06\x07'
     root.ParseFromString(root.SerializeToString() + unknown)
     wire = request.SerializeToString()
@@ -170,10 +171,15 @@ def test_supplied_role_changes_only_derived_protobuf_kind_and_preserves_unknown_
     output.ParseFromString(Path(result['exports'][0]['path']).read_bytes())
     exported_span = output.resource_spans[0].scope_spans[0].spans[0]
     assert exported_span.kind == 2
+    assert any(a.key == 'url.path' and a.value.string_value == '/lookup' for a in exported_span.attributes)
     assert unknown in exported_span.SerializeToString()
     assert raw.read_bytes() == wire
     assert result['exports'][0]['raw_sha256'] == hashlib.sha256(wire).hexdigest()
-    assert result['exports'][0]['supplied_server_roles'] == [role]
+    supplied = result['exports'][0]['supplied_server_roles'][0]
+    assert {k: supplied[k] for k in role} == role
+    assert supplied['supplied_url_path']['derived_path'] == '/lookup'
+    assert supplied['supplied_url_path']['source_urls'][0]['field'] == 'http.url'
+    assert supplied['supplied_url_path']['source_urls'][0]['query_stripped'] is True
     all_result = export_selection(Store([(str(index), len(line))]), {'ebpf': None},
                                   tmp_path/'all', supplied_server_roles={('ebpf', TRACE, SPAN): role})
     assert all_result['observations'] == 1
@@ -257,7 +263,8 @@ def test_supplied_role_on_jaeger_entry_does_not_rewrite_source_or_client(tmp_pat
                 'tags': tags, 'references': []}
     trace = {'data': [{'processes': {'p': {'serviceName': 'gateway'}}, 'spans': [
         raw_span(root_id, [{'key': 'component', 'type': 'string', 'value': 'nginx'},
-                           {'key': 'http.method', 'type': 'string', 'value': 'GET'}]),
+                           {'key': 'http.method', 'type': 'string', 'value': 'GET'},
+                           {'key': 'http.url', 'type': 'string', 'value': 'http://example.test/lookup?id=1'}]),
         raw_span(client_id, [{'key': 'span.kind', 'type': 'string', 'value': 'client'}]),
     ]}]}
     raw = tmp_path/'traces-gateway.json'
@@ -273,13 +280,15 @@ def test_supplied_role_on_jaeger_entry_does_not_rewrite_source_or_client(tmp_pat
     spans = payload['resourceSpans'][0]['scopeSpans'][0]['spans']
     assert {s['spanId']: s['kind'] for s in spans} == {
         root_id: 'SPAN_KIND_SERVER', client_id: 'SPAN_KIND_CLIENT'}
-    assert result['exports'][0]['supplied_server_roles'] == [role]
+    assert any(a['key'] == 'url.path' and a['value']['stringValue'] == '/lookup'
+               for a in next(s for s in spans if s['spanId'] == root_id)['attributes'])
+    assert result['exports'][0]['supplied_server_roles'][0]['supplied_url_path']['derived_path'] == '/lookup'
     assert raw.read_bytes() == original
     all_result = export_selection(Store([(str(raw), len(original))]), {'native': None},
                                   tmp_path/'all', supplied_server_roles={('native', trace_id, root_id): role})
     assert all_result['observations'] == 2
     assert 'selected_ids' not in all_result['exports'][0]
-    assert all_result['exports'][0]['supplied_server_roles'] == [role]
+    assert all_result['exports'][0]['supplied_server_roles'][0]['supplied_url_path']['derived_path'] == '/lookup'
 
 
 def test_all_frozen_source_records_excludes_unindexed_tail_and_other_source(tmp_path: Path):
@@ -310,3 +319,49 @@ def test_all_frozen_source_records_excludes_unindexed_tail_and_other_source(tmp_
     assert spans[1]['traceId'] == '0' * 32 and spans[1]['spanId'] == '0' * 16
     assert ebpf.read_bytes() == first+tail
     assert native.read_bytes() == first
+
+
+def test_supplied_url_path_uses_observed_url_only_and_rejects_contradictions(tmp_path: Path):
+    span = _span('one')
+    span.pop('kind')
+    attrs = span['attributes']
+    attrs.extend([
+        {'key': 'http.url', 'value': {'stringValue': 'https://example.test/actual/path?x=1'}},
+        {'key': 'url.full', 'value': {'stringValue': 'https://example.test/actual/path?x=2'}},
+    ])
+    role = {'source': 'native', 'trace_id': TRACE, 'span_id': SPAN,
+            'original_kind': None, 'path': '/declared/different',
+            'supplied_kind': 'SPAN_KIND_SERVER'}
+    raw = tmp_path/'native-node-a.jsonl'
+
+    def export(attributes, folder):
+        span['attributes'] = attributes
+        line = (json.dumps(_payload(span))+'\n').encode()
+        raw.write_bytes(line)
+        return export_selection(Store([(str(raw), len(line))]), {'native': None},
+                                tmp_path/folder, supplied_server_roles={('native', TRACE, SPAN): role})
+
+    result = export(attrs, 'derived')
+    item = result['exports'][0]
+    exported = json.loads(Path(item['path']).read_text())['resourceSpans'][0]['scopeSpans'][0]['spans'][0]
+    assert exported['kind'] == 'SPAN_KIND_SERVER'
+    assert [a['value']['stringValue'] for a in exported['attributes'] if a['key'] == 'url.path'] == ['/actual/path']
+    derivation = item['supplied_server_roles'][0]['supplied_url_path']
+    assert derivation['derived_path'] == '/actual/path' != role['path']
+    assert {a['field'] for a in derivation['source_urls']} == {'http.url', 'url.full'}
+    assert all(a['query_stripped'] for a in derivation['source_urls'])
+    original_attrs = json.loads(raw.read_text())['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['attributes']
+    assert all(a['key'] != 'url.path' for a in original_attrs)
+
+    existing = attrs + [{'key': 'url.path', 'value': {'stringValue': '/actual/path'}}]
+    result = export(existing, 'existing')
+    item = result['exports'][0]
+    assert 'supplied_url_path' not in item['supplied_server_roles'][0]
+    exported = json.loads(Path(item['path']).read_text())['resourceSpans'][0]['scopeSpans'][0]['spans'][0]
+    assert sum(a['key'] == 'url.path' for a in exported['attributes']) == 1
+
+    with pytest.raises(ValueError, match='contradictory observed HTTP URL and url.path'):
+        export(attrs + [{'key': 'url.path', 'value': {'stringValue': '/other'}}], 'bad-explicit')
+    with pytest.raises(ValueError, match='contradictory observed HTTP URL paths'):
+        export(attrs[:-1] + [{'key': 'url.full', 'value': {'stringValue': 'https://example.test/other'}}],
+               'bad-urls')
