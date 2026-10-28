@@ -274,6 +274,21 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
     lines += _table(["Run", "System", "Mode", "Seed", "Campaign s", "Clone s", "Build s", "Input prep s",
                      "Toolchain commands s", "Bering replay s", "Bering peak RSS KiB", "Infrastructure fields",
                      "Manual prep measured", "Unavailable reason"], cost_rows)
+    lines.extend(["", "Saved campaign phase costs (parallel evidence; checkpoint creation/upload/hold is nested "
+                  "inside campaign elapsed, while swap setup precedes it):", ""])
+    phase_rows = []
+    for campaign in campaigns:
+        run_id, system, mode, seed, _ = _identity(campaign)
+        item = campaign.get("cost") or {}
+        phase_rows.append([
+            run_id, system, mode, seed, item.get("training_checkpoint"),
+            item.get("training_checkpoint_upload"), item.get("swap_setup"),
+            item.get("cost_overlap_note"),
+        ])
+    lines += _table([
+        "Run", "System", "Mode", "Seed", "Training checkpoint creation/upload hold",
+        "Checkpoint upload release", "Swap setup (pre-campaign)", "Stored overlap note",
+    ], phase_rows)
     if cost_payload is not None:
         lines.extend(["", "Optional saved cost artifact metadata:", ""])
         lines += _table(["Stored field", "Value"], [
@@ -281,6 +296,39 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
             if not isinstance(value, (list, dict))])
         if not any(not isinstance(value, (list, dict)) for value in cost_payload.values()):
             lines.append("No scalar summary fields were stored; detailed cost data remains linked above and was not recomputed.")
+        lines.extend([
+            "",
+            "Saved Actions jobs (independent of retained campaign artifacts):",
+            "",
+            "A job with no stored artifact is retained here as a technical execution record. "
+            "It is not a campaign row and does not imply zero observations or any scientific outcome.",
+            "",
+        ])
+        job_rows = []
+        for run in cost_payload.get("runs") or []:
+            artifacts = run.get("artifacts")
+            artifact_names = ([item.get("name") for item in artifacts]
+                              if isinstance(artifacts, list) else None)
+            jobs = run.get("jobs")
+            if not isinstance(jobs, list) or not jobs:
+                job_rows.append([
+                    run.get("run_id"), run.get("role"), run.get("head_sha"),
+                    run.get("status"), run.get("conclusion"), None, None, None, None,
+                    None, len(artifacts) if isinstance(artifacts, list) else None, artifact_names,
+                ])
+                continue
+            for job in jobs:
+                job_rows.append([
+                    run.get("run_id"), run.get("role"), run.get("head_sha"),
+                    run.get("status"), run.get("conclusion"), job.get("id"),
+                    job.get("name"), job.get("status"), job.get("conclusion"),
+                    job.get("elapsed_seconds"),
+                    len(artifacts) if isinstance(artifacts, list) else None, artifact_names,
+                ])
+        lines += _table([
+            "Run", "Role", "Head SHA", "Run status", "Run conclusion", "Job ID", "Job name",
+            "Job status", "Job conclusion", "Stored elapsed s", "Stored artifacts", "Artifact names",
+        ], job_rows)
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return {"report": str(out.resolve()), "aggregate": str(aggregate.resolve()),

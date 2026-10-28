@@ -55,6 +55,11 @@ def campaign(complete=True):
             "toolchain_build_seconds": 4, "shared_input_preparation_seconds": 1,
             "toolchain_command_seconds": 3, "bering_replay_command_seconds": 2,
             "bering_child_peak_rss_kib": 100, "infrastructure_time_fields": None,
+            "training_checkpoint": {"ready": True, "upload_success": True,
+                "scope": "creation/upload/hold included in campaign elapsed"},
+            "training_checkpoint_upload": {"upload_success": True, "artifact_id": "42"},
+            "swap_setup": {"available": True, "elapsed_seconds": 3},
+            "cost_overlap_note": "checkpoint nested in campaign; swap precedes campaign",
             "manual_preparation": {"measured": False, "reason": "not instrumented"}},
     }
 
@@ -138,6 +143,35 @@ def test_missing_causal_evidence_is_unavailable_not_zero(tmp_path):
     text = out.read_text(encoding="utf-8")
     assert "unavailable | unavailable | unknown | unknown | unknown | unknown" in text
     assert "stored async attempt evidence missing" in text
+
+
+def test_report_retains_actions_job_without_campaign_artifact_and_parallel_phase_costs(tmp_path):
+    source = tmp_path / "evaluation-v4.json"
+    source.write_text(json.dumps(aggregate([campaign()])), encoding="utf-8")
+    costs = tmp_path / "costs-v4.json"
+    costs.write_text(json.dumps({
+        "schema_version": "v4-actions-costs",
+        "runs": [{
+            "run_id": 407, "role": "series", "head_sha": "abc123",
+            "status": "completed", "conclusion": "failure", "artifacts": [],
+            "jobs": [{"id": 91, "name": "campaign (otel_demo, full, 6)",
+                      "status": "completed", "conclusion": "failure",
+                      "elapsed_seconds": None}],
+        }],
+        "rule": "saved Actions values only",
+    }), encoding="utf-8")
+    out = tmp_path / "report-v4.md"
+    render(source, out, costs)
+    text = out.read_text(encoding="utf-8")
+    assert "Training checkpoint creation/upload hold" in text
+    assert "ready=true; scope=creation/upload/hold included in campaign elapsed; upload_success=true" in text
+    assert "checkpoint nested in campaign; swap precedes campaign" in text
+    assert "Saved Actions jobs (independent of retained campaign artifacts)" in text
+    assert "407 | series | abc123 | completed | failure | 91 | campaign (otel_demo, full, 6)" in text
+    assert "failure | unknown | 0 | none" in text
+    assert "does not imply zero observations or any scientific outcome" in text
+    # No synthetic campaign attempt is created from the Actions-only job.
+    assert "407 | otel_demo | full | 6" not in text
 
 
 def test_cli_requires_actions(monkeypatch, tmp_path):
