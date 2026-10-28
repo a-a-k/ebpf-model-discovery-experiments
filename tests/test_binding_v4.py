@@ -73,6 +73,33 @@ def test_endpoint_alias_requires_exact_selection_and_indexed_request_evidence():
         [root()], step, "frontend", endpoint)["endpoint_ids"]
 
 
+def test_relative_observed_route_matches_bering_leading_slash_endpoint_only():
+    pet_root = root(
+        service="customers-service", method="GET", path="/api/customer/owners")
+    pet_row = observed(
+        service="customers-service",
+        attributes={
+            "http.request.method": "GET",
+            "url.path": "/api/customer/owners",
+            "http.route": "customers",
+        },
+    )
+    endpoints = [
+        {"id": "framework-route", "entry_service": "customers-service",
+         "method": "GET", "path": "/customers"},
+        {"id": "wrong-route", "entry_service": "customers-service",
+         "method": "GET", "path": "/owners"},
+    ]
+    result = endpoint_alias_evidence(
+        Store(pet_row), [pet_root],
+        {"method": "GET", "path": "/api/customer/owners"},
+        "customers-service", endpoints,
+    )
+    assert result["endpoint_ids"] == ["framework-route"]
+    assert {item["path"] for item in result["evidence"][0]["observed_aliases"]} == {
+        "/api/customer/owners", "/customers"}
+
+
 def test_rpc_hint_accepts_exact_rpc_and_grpc_over_http_post_tokens():
     assert matches_call_hint({"operation": "Convert"}, "CurrencyService/Convert") == (
         True, "rpc_method_token_exact")

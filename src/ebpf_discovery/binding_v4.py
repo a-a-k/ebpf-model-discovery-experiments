@@ -20,7 +20,14 @@ _PATH_ATTRIBUTES = ("http.route", "url.path", "http.target", "url.full", "http.u
 def _path(value: object) -> str | None:
     if value is None or value == "":
         return None
-    return canonical_route(urlsplit(str(value)).path)
+    path = urlsplit(str(value)).path
+    # Bering represents HTTP endpoint paths with a leading slash, while some
+    # frameworks expose an otherwise identical route token without one (for
+    # example ``customers``).  Canonicalize that representation only; the
+    # token still comes from the exact request-bound observation.
+    if path and not path.startswith("/"):
+        path = "/" + path
+    return canonical_route(path)
 
 
 def _method(identity: dict) -> str:
