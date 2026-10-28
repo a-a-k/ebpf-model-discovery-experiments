@@ -30,17 +30,24 @@ def _training_files(root: Path):
                                   for state in ("11", "10", "01", "00"))]:
         for _ in range(count):
             attempt = f"attempt-{ordinal}"
-            plans.append({"attempt_id": attempt, "phase": phase, "state": state})
+            plans.append({"attempt_id": attempt, "phase": phase, "state": state,
+                          "http_steps": [{"request_id": f"request-{ordinal}"}]})
             records.append({"attempt_id": attempt, "phase": phase, "state": state})
-            census.append({"attempt_key": f"opaque-{ordinal}", "phase": phase, "state": state})
+            census.append({"attempt_key": hashlib.sha256(attempt.encode()).hexdigest(),
+                           "step_ids": [f"request-{ordinal}"], "phase": phase, "state": state})
             ordinal += 1
     blocks = [{"phase": "class_train", "state": "11", "attempts": 600,
                "completed_requests": 600}]
     blocks += [{"phase": "calibration", "state": state, "attempts": 6000,
                 "completed_requests": 6000} for state in ("11", "10", "01", "00")]
+    preparation = [{"attempt_id": f"warmup-{index}", "phase": "preparation",
+                    "state": "11" if index < 3 else ("10", "11", "01", "00")[(index-3)//3]}
+                   for index in range(15)]
+    records = [*records, *preparation]
     for name, value in (("plans.json", plans), ("external.json", records),
                         ("census.json", census), ("blocks.json", blocks)):
         _write(root/name, value)
+    _write(root/"preparation-operations.json", preparation)
     return plans
 
 
@@ -49,6 +56,9 @@ def test_exact_full_training_prefix_is_required(tmp_path):
     loaded, proof = diagnostic.validate_training_prefix(tmp_path)
     assert loaded == plans
     assert proof["plans"] == 24600 and proof["blocks"] == 5
+    assert proof["primary_external_records"] == 24600
+    assert proof["preparation_external_records"] == 15
+    assert proof["all_external_records"] == 24615
     assert proof["phase_state_counts"] == {
         "calibration:00": 6000, "calibration:01": 6000,
         "calibration:10": 6000, "calibration:11": 6000,
@@ -57,6 +67,22 @@ def test_exact_full_training_prefix_is_required(tmp_path):
     plans[-1]["state"] = "11"
     _write(tmp_path/"plans.json", plans)
     with pytest.raises(ValueError, match="exact 600"):
+        diagnostic.validate_training_prefix(tmp_path)
+
+
+def test_census_and_preparation_identities_must_match_their_sources(tmp_path):
+    _training_files(tmp_path)
+    census = json.loads((tmp_path/"census.json").read_text())
+    census[0]["attempt_key"] = "0" * 64
+    _write(tmp_path/"census.json", census)
+    with pytest.raises(ValueError, match="census or external attempt identities"):
+        diagnostic.validate_training_prefix(tmp_path)
+
+    _training_files(tmp_path)
+    records = json.loads((tmp_path/"external.json").read_text())
+    records[-1]["attempt_id"] = records[-2]["attempt_id"]
+    _write(tmp_path/"external.json", records)
+    with pytest.raises(ValueError, match="preparation records"):
         diagnostic.validate_training_prefix(tmp_path)
 
 

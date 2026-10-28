@@ -6,6 +6,7 @@ is not a campaign resume, a completed cell, or evidence about guest capacity.
 from __future__ import annotations
 
 from collections import Counter
+import hashlib
 import importlib
 import json
 import os
@@ -95,6 +96,7 @@ def validate_training_prefix(original: Path) -> tuple[list[dict], dict]:
     blocks = _read(Path(original)/"blocks.json")
     census = _read(Path(original)/"census.json")
     records = _read(Path(original)/"external.json")
+    preparation = _read(Path(original)/"preparation-operations.json")
     expected = Counter({("class_train", "11"): 600,
                         **{("calibration", state): 6000 for state in ("11", "10", "01", "00")}})
     plan_counts = Counter((row.get("phase"), row.get("state")) for row in plans)
@@ -108,16 +110,42 @@ def validate_training_prefix(original: Path) -> tuple[list[dict], dict]:
             or any(row.get("completed_requests") != row.get("attempts") for row in blocks)):
         raise ValueError("checkpoint completed blocks differ from exact training design")
     census_counts = Counter((row.get("phase"), row.get("state")) for row in census)
-    record_counts = Counter((row.get("phase"), row.get("state")) for row in records)
-    if len(census) != 24600 or census_counts != expected or len(records) != 24600 or record_counts != expected:
+    primary_records = [row for row in records if row.get("phase") in ("class_train", "calibration")]
+    preparation_records = [row for row in records if row.get("phase") == "preparation"]
+    other_records = [row for row in records
+                     if row.get("phase") not in ("class_train", "calibration", "preparation")]
+    record_counts = Counter((row.get("phase"), row.get("state")) for row in primary_records)
+    if len(census) != 24600 or census_counts != expected or len(primary_records) != 24600 or record_counts != expected:
         raise ValueError("checkpoint census or external records differ from completed training plans")
-    census_ids = [row.get("attempt_key") for row in census]
-    record_ids = [row.get("attempt_id") for row in records]
-    if (any(not isinstance(value, str) or not value for value in census_ids + record_ids)
-            or len(set(census_ids)) != 24600 or set(record_ids) != set(attempt_ids)):
+    expected_census = {}
+    for plan in plans:
+        key = hashlib.sha256(plan["attempt_id"].encode()).hexdigest()
+        expected_census[key] = {
+            "attempt_key": key,
+            "step_ids": [step.get("request_id") for step in plan.get("http_steps", [])],
+            "phase": plan.get("phase"), "state": plan.get("state"),
+        }
+    actual_census = {row.get("attempt_key"): row for row in census
+                     if isinstance(row.get("attempt_key"), str) and row.get("attempt_key")}
+    record_ids = [row.get("attempt_id") for row in primary_records]
+    if (len(actual_census) != 24600 or actual_census != expected_census
+            or any(not isinstance(value, str) or not value for value in record_ids)
+            or set(record_ids) != set(attempt_ids) or len(set(record_ids)) != 24600):
         raise ValueError("checkpoint census or external attempt identities are missing, duplicate, or mismatched")
+    preparation_ids = [row.get("attempt_id") for row in preparation_records]
+    retained_preparation_ids = [row.get("attempt_id") for row in preparation]
+    if (other_records or len(preparation_records) != len(preparation)
+            or any(not isinstance(value, str) or not value
+                   for value in preparation_ids + retained_preparation_ids)
+            or len(set(preparation_ids)) != len(preparation_ids)
+            or set(preparation_ids) & set(attempt_ids)
+            or {row["attempt_id"]: row for row in preparation_records}
+               != {row["attempt_id"]: row for row in preparation}):
+        raise ValueError("checkpoint preparation records differ from preparation-operations evidence")
     return plans, {"plans": len(plans), "blocks": len(blocks), "census": len(census),
-                   "external_records": len(records),
+                   "primary_external_records": len(primary_records),
+                   "preparation_external_records": len(preparation_records),
+                   "all_external_records": len(records),
                    "phase_state_counts": {f"{phase}:{state}": count
                                           for (phase, state), count in sorted(expected.items())}}
 
