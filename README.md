@@ -10,13 +10,18 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > reached actual Sheaft simulation for all four Petclinic operations using eBPF alone,
 > with shared-DB fault forecasts for the three operations with unconditional DB obligations
 > in the supplied network-scope variant. DSB and OTel eBPF-only branches still lack
-> required service paths. The 27 scientific campaigns have not started;
-> retained replay does not measure fresh predictive accuracy or full-campaign capacity.
+> required service paths. [The first three planned full/seed6 campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40704758284)
+> are now launched at `fdec1a6`; their results are pending. Retained replay does not
+> measure fresh predictive accuracy or full-campaign capacity.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
 with their captures, reports, timing rules and conditional-state predictors. Those
 historical predictors did not consume the recovered graph. Their results must not be
 read as evidence for the graph-to-simulation claim tested here.
+
+Original iteration-4 qualification captures and all four retained replay attempts,
+including the failed replay, are preserved with workflow logs, metadata and checksums
+in [this permanent data release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40704387111).
 
 ## 1. Research question and contribution criterion
 

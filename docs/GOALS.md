@@ -97,8 +97,9 @@ fault forecasts where the DB obligation is unconditional. DSB and OTel eBPF-only
 graphs still lack required service paths. This is technical evidence, not fresh
 accuracy measurement. Bering-only resource evidence is retained.
 
-Next: review the retained readout, then execute the first three already-planned
-full/seed6 cells with two guests and full-size acquisition. Retain every valid
-cell regardless of accuracy or unknown coverage, then execute the other 24 cells.
+The first three already-planned full/seed6 cells are launched in run `40704758284`
+at `fdec1a6`, after independent original-criterion GO and CI `40704617133`.
+Next: assess these cells with two guests and full-size acquisition. Retain every
+valid cell regardless of accuracy or unknown coverage, then execute the other 24 cells.
 Resource adequacy must be measured, not inferred from the small replay. Report,
 archive and review the actual results without weakening the original objective.
