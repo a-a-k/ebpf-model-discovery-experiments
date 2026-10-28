@@ -1,11 +1,18 @@
 import json
+import hashlib
 from types import SimpleNamespace
 
 from ebpf_discovery.evidence_v4 import _alias_key, _cross_guest, _graph, evaluate
 from ebpf_discovery.store_v3 import ObservationStore
 
 
-def _put(store, digest, source, node, trace, span, parent, request=None):
+def _id(value, width=16):
+    return hashlib.sha256(value.encode()).hexdigest()[:width] if value else value
+
+
+def _put(store, digest, source, node, trace, span, parent, request=None, *, invalid=False):
+    if not invalid:
+        trace, span, parent = _id(trace, 32), _id(span), _id(parent)
     data = {'source': source, 'node': node, 'trace_id': trace, 'span_id': span,
             'parent_id': parent, 'service': 'generic', 'kind': 'client', 'name': 'request',
             'start_ns': 1, 'end_ns': 2, 'attributes': {}, 'resource': {},
@@ -44,6 +51,15 @@ def test_conflicting_identity_does_not_become_cross_guest_link(tmp_path):
     _put(store, 'p2', 'ebpf', 'a', 'trace', 'parent', None, 'known')
     _put(store, 'c1', 'ebpf', 'b', 'trace', 'child', 'parent', 'known')
     assert _cross_guest(store, _plan('known'))['ebpf']['exact_parent_links'] == 0
+
+
+def test_invalid_cross_guest_ids_are_retained_but_not_confirmed(tmp_path):
+    store = ObservationStore(tmp_path/'index.sqlite')
+    _put(store, 'p1', 'ebpf', 'a', '0'*32, '1'*16, None, 'known', invalid=True)
+    _put(store, 'c1', 'ebpf', 'b', '0'*32, '2'*16, '1'*16, 'known', invalid=True)
+    result = _cross_guest(store, _plan('known'))['ebpf']
+    assert result['exact_parent_links'] == 0
+    assert result['invalid_identity_candidates'] == 1
 
 
 def test_database_alias_requires_complete_address_port_and_scope_and_counts_shared_callers(tmp_path):
@@ -96,33 +112,45 @@ def test_unsupported_async_trace_context_stays_unknown(tmp_path):
                       [{'attempt_id':'async-1','operation':'checkout','http_steps':[{'request_id':'req-1'}]}],
                       [record])
     for row in output['async']['attempts']:
-        assert row['four_stage_order_specific_chain'] == 'unknown'
+        assert row['four_stage_causal_chain'] == 'unknown'
         assert row['markers']['external_order_id'] is True
-        assert row['markers']['order_id_at_persistence'] is False
+        assert row['proofs'] == []
     assert (tmp_path/'evidence-v4.json').exists()
 
 
-def test_async_requires_same_order_and_message_identifiers_on_one_chain(tmp_path, monkeypatch):
+def test_async_span_link_proof_and_optional_business_corroboration_are_separate(tmp_path, monkeypatch):
     from ebpf_discovery.evidence_v4 import _async
     def span(name, attrs):
-        return {'source':'ebpf','trace_id':'t','span_id':name,'attributes':attrs,
+        return {'source':'ebpf','trace_id':'1'*32,'span_id':_id(name),'attributes':attrs,
                 'attribute_conflicts':[]}
     spans = [span('producer', {'demo.order.id':'order-1','messaging.message.id':'message-1'}),
              span('consumer', {'messaging.message.id':'message-1'}),
-             span('write', {'db.query.text':"INSERT INTO orders SELECT 1 WHERE order_id = 'order-1'"})]
+             span('write', {'db.query.text':"INSERT INTO orders SELECT 1 WHERE order_id = 'order-1'"}),
+             span('processing', {})]
     class FakeStore:
         def request_traces(self, rows, linked_consumers=False):
             assert linked_consumers
             return spans
-    chain = {'status':'linked', 'producer':{'source':'ebpf','trace_id':'t','span_id':'producer'},
-             'consumer':{'source':'ebpf','trace_id':'t','span_id':'consumer'},
-             'database_write':{'source':'ebpf','trace_id':'t','span_id':'write'}}
+    chain = {'status':'linked', **{key: {'source':'ebpf','trace_id':'1'*32,'span_id':_id(name)}
+              for key, name in [('producer','producer'), ('consumer','consumer'),
+                                ('database_write','write'), ('processing_root','processing')]}}
     monkeypatch.setattr('ebpf_discovery.async_links.message_chains',
                         lambda rows: {'req-1':{'sources':{'ebpf':chain}}})
     records = [{'attempt_id':'a','phase':'async_normal','order_id':'order-1',
                 'http_steps':[{'request_id':'req-1'}]}]
     result = _async(tmp_path, FakeStore(), records)
-    assert result['attempts'][0]['four_stage_order_specific_chain'] == 'observed'
+    assert result['attempts'][0]['four_stage_causal_chain'] == 'observed'
     spans[1]['attributes']['messaging.message.id'] = 'different-message'
     result = _async(tmp_path, FakeStore(), records)
-    assert result['attempts'][0]['four_stage_order_specific_chain'] == 'unknown'
+    assert result['attempts'][0]['four_stage_causal_chain'] == 'unknown'
+    for row in spans:
+        row['attributes'] = {}
+    result = _async(tmp_path, FakeStore(), records)
+    proof = result['attempts'][0]
+    assert proof['four_stage_causal_chain'] == 'observed'
+    assert proof['proofs'][0]['external_order_agreement'] is None
+    spans[0]['attributes']['demo.order.id'] = 'different-order'
+    result = _async(tmp_path, FakeStore(), records)
+    proof = result['attempts'][0]
+    assert proof['four_stage_causal_chain'] == 'observed'
+    assert proof['proofs'][0]['external_order_agreement'] is False

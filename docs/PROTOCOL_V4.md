@@ -184,6 +184,14 @@ remains unknown. Causal association requires an observed order ID or exact messa
 identifier chain; shared topics or nearby timestamps are insufficient. This is
 an association/recovery check, not simulated queue timing.
 
+The current readout supports exact source-local ancestry plus an explicit consumer
+SpanLink to the producer as the cross-queue identifier chain. It reports optional
+source order/message corroboration and external order agreement separately; their
+absence does not invalidate a complete causal chain. Contradictory linkage IDs
+remain unknown, while a business-order mismatch is a separate evaluation result.
+ID-only joins without a SpanLink are not implemented in this iteration. Such
+unknowns therefore cannot establish an inability of eBPF or its collector.
+
 ## Reporting and costs
 
 Retain every operation, source, tracing mode and repeat, including missing graphs,

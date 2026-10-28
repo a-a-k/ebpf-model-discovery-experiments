@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 
 from .runtime import write_json
+from .selection_v4 import valid_identity
 
 
 SOURCES = ('ebpf', 'native', 'combined')
@@ -156,9 +157,13 @@ def _cross_guest(store, plans):
                   ON pu.source=p.source AND pu.trace=p.trace AND pu.span=p.span
              WHERE c.node IN ('a','b') AND p.node IN ('a','b') AND c.node!=p.node'''
     counts = defaultdict(Counter)
+    invalid = Counter()
     witnesses = defaultdict(lambda: defaultdict(list))
     for source, child_node, trace, child, parent, child_req, child_digest, parent_node, _, parent_req, parent_digest in store.db.execute(sql):
         if source not in ('ebpf', 'native'):
+            continue
+        if not valid_identity(trace, child) or not valid_identity(trace, parent):
+            invalid[source] += 1
             continue
         if child_req and parent_req and child_req in ids and parent_req in ids:
             verdict = 'corroborated_same_planned_header' if child_req == parent_req else 'contradictory_planned_headers'
@@ -173,6 +178,7 @@ def _cross_guest(store, plans):
                 'parent_digest': parent_digest})
     store.db.execute('DROP TABLE temp.evidence_v4_unique')
     return {source: {'exact_parent_links': sum(counts[source].values()),
+                     'invalid_identity_candidates': invalid[source],
                      'header_verdicts': dict(counts[source]),
                      'witnesses': dict(witnesses[source]),
                      'interpretation': 'structural parent link; header comparison does not prove application correctness'}
@@ -186,6 +192,8 @@ def _async(root, store, records):
     rows = [{'step_ids': [s['request_id'] for s in r.get('http_steps', []) if s.get('request_id')]}
             for r in selected]
     spans = store.request_traces(rows, linked_consumers=True) if rows else []
+    invalid = [s for s in spans if not valid_identity(s.get('trace_id'), s.get('span_id'))]
+    spans = [s for s in spans if valid_identity(s.get('trace_id'), s.get('span_id'))]
     chains = message_chains(spans)
     by_identity = defaultdict(list)
     for span in spans:
@@ -204,7 +212,7 @@ def _async(root, store, records):
         values = {str(attrs['demo.order.id'])} if attrs.get('demo.order.id') else set()
         for key in ('http.request.body', 'http.response.body'):
             body = attrs.get(key)
-            if not isinstance(body, str) or len(body) > 65536:
+            if not isinstance(body, str):
                 continue
             try:
                 decoded = json.loads(body)
@@ -215,7 +223,7 @@ def _async(root, store, records):
                     if isinstance(decoded.get(field), str) and decoded[field]:
                         values.add(decoded[field])
         sql = attrs.get('db.query.text')
-        if isinstance(sql, str) and len(sql) <= 65536:
+        if isinstance(sql, str):
             # Only a literal explicitly attached to an order_id column qualifies.
             values.update(re.findall(r"\border_id\s*=\s*'([^']+)'", sql, re.I))
         return values
@@ -232,38 +240,52 @@ def _async(root, store, records):
         for source in ('ebpf', 'native'):
             links = [chains.get(rid, {}).get('sources', {}).get(source) for rid in request_ids]
             linked = [item for item in links if item and item.get('status') == 'linked']
-            matching_order = []
-            matching_message = []
-            persisted_order = []
+            proofs = []
             for item in linked:
                 producer = source_span(item.get('producer'))
                 consumer = source_span(item.get('consumer'))
                 write = source_span(item.get('database_write'))
-                order = record.get('order_id')
-                matching_order.append(bool(order and str(order) in explicit_order_ids(producer)))
+                processing = source_span(item.get('processing_root'))
+                participants_present = all(s is not None for s in (producer, consumer, write, processing))
                 left, right = message_id(producer), message_id(consumer)
-                matching_message.append(bool(left and left == right))
-                persisted_order.append(bool(order and str(order) in explicit_order_ids(write)))
+                source_orders = set().union(*(explicit_order_ids(s) for s in (producer, consumer, processing, write)))
+                # Source evidence selects the chain; external order IDs only
+                # evaluate its business identity after association is resolved.
+                declared_order = item.get('application_order_id', {}).get('value')
+                if declared_order:
+                    source_orders.add(str(declared_order))
+                contradiction = bool(left and right and left != right)
+                proofs.append({'proof_kind': 'exact_consumer_span_link',
+                    'association': 'observed' if participants_present and not contradiction else 'unknown',
+                    'unique_participants_present': participants_present,
+                    'message_identifier_conflict': contradiction,
+                    'explicit_message_id_corroboration': left == right if left and right else None,
+                    'source_order_ids': sorted(source_orders),
+                    'source_order_corroboration': bool(explicit_order_ids(producer) &
+                        (explicit_order_ids(consumer) | explicit_order_ids(processing) | explicit_order_ids(write))),
+                    'external_order_agreement': (all(value == str(record['order_id']) for value in source_orders)
+                        if source_orders and record.get('order_id') else None),
+                    'chain': item})
             markers = {'checkout_trace_context': bool(any(links)),
                        'kafka_producer_consumer_span_link': bool(linked),
                        'accounting_database_write_span': bool(linked),
                        'external_order_id': bool(record.get('order_id')),
-                       'source_order_id': any(matching_order),
-                       'same_explicit_message_id_across_stages': any(matching_message),
-                       'order_id_at_persistence': any(persisted_order)}
-            # A strong claim requires all markers on ONE confirmed source chain,
-            # not a union of unrelated rows with convenient identifiers.
-            strong = any(a and b and c for a,b,c in zip(matching_order, matching_message, persisted_order))
+                       'source_order_id': any(p['source_order_ids'] for p in proofs),
+                       'same_explicit_message_id_across_stages': any(p['explicit_message_id_corroboration'] is True for p in proofs)}
+            strong = len(proofs) == 1 and proofs[0]['association'] == 'observed'
             result.append({'attempt_id': record.get('attempt_id'), 'phase': record.get('phase'),
                            'source': source, 'request_ids': request_ids,
-                           'four_stage_order_specific_chain': 'observed' if strong else 'unknown',
+                           'four_stage_causal_chain': 'observed' if strong else 'unknown',
+                           'proofs': proofs,
                            'markers': markers,
                            'unresolved_markers': [k for k,v in markers.items() if not v],
                            'trace_context_reasons': [item.get('reason') for item in links if item]})
     external = {name: _read(root/name) for name in ('async-normal-persistence.json',
         'async-paused-snapshot.json', 'async-paused-after-resume.json',
         'async-recovered-persistence.json')}
-    return {'attempts': result, 'external_verification_files_present':
+    return {'attempts': result, 'invalid_identity_observations': len(invalid),
+            'linker_scope': 'exact source-local ancestry plus consumer SpanLink; ID-only joins without SpanLinks are not implemented and remain unknown',
+            'external_verification_files_present':
             {k: v is not None for k,v in external.items()},
             'interpretation': 'external order IDs and persistence files are evaluation evidence only'}
 
