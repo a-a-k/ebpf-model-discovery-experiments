@@ -390,7 +390,8 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 Iteration 4 currently has no scientific-series results. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
-resource capacity. Qualification review is still required before the fixed series.
+resource capacity. Independent review approved the first three planned cells;
+the remaining 24 follow their resource and protocol-validity review.
 The evaluator/cost component has passed independent review. After the
 series, the original criterion must be checked again against the external outcomes and
 the strongest baseline before any success claim.
