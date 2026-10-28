@@ -1,7 +1,10 @@
 import copy
+import hashlib
 import json
+from pathlib import Path
 
-from ebpf_discovery.selection_v4 import bind_entry, descendant_identities, select_planned
+from ebpf_discovery.raw_v4 import export_selection
+from ebpf_discovery.selection_v4 import bind_entry, descendant_identities, select_planned, supplied_entry_roles
 from ebpf_discovery.store_v3 import ObservationStore
 
 
@@ -107,3 +110,52 @@ def test_jaeger_cross_trace_reference_cannot_select_unrelated_child(tmp_path):
     assert set(descendant_identities(rows, {ROOT})) == {(TRACE, ROOT)}
     # Historical default behavior remains reproducible; only v4 opts in.
     assert list(jaeger(document))[1]['parent_id'] == ROOT
+
+
+def test_supplied_receiver_role_needs_unique_bound_native_root_and_keeps_raw(tmp_path):
+    native = span(kind=None)
+    native_span = native['resourceSpans'][0]['scopeSpans'][0]['spans'][0]
+    native_span['attributes'].append({'key': 'component', 'value': {'stringValue': 'nginx'}})
+    native_span['name'] = '/owners/6'
+    store = make_store(tmp_path, [span()], [native])
+    plans = [{'http_steps': [{'method': 'GET', 'path': '/owners/6', 'request_id': 'request-1'}]}]
+    selected, evidence = select_planned(store, plans, CONTRACT, 'combined', {'native': ['nginx']})
+    roles = supplied_entry_roles(store, evidence['roots'], ['gateway'], {'native': ['nginx']})
+    assert set(roles) == {('native', TRACE, ROOT)}
+    assert roles['native', TRACE, ROOT]['original_kind'] is None
+    raw_path = tmp_path/'native'/'native-node-a.jsonl'
+    before = hashlib.sha256(raw_path.read_bytes()).hexdigest()
+    result = export_selection(store, selected, tmp_path/'export', supplied_server_roles=roles)
+    assert hashlib.sha256(raw_path.read_bytes()).hexdigest() == before
+    exports = {item['source']: item for item in result['exports']}
+    assert exports['native']['supplied_server_roles'][0]['rule'].startswith('unique declared entry')
+    output = json.loads(Path(exports['native']['path']).read_text())
+    assert output['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['kind'] == 'SPAN_KIND_SERVER'
+    original = json.loads(raw_path.read_text())
+    assert original['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['kind'] is None
+    assert 'supplied_server_roles' not in exports['ebpf']
+    forged = [dict(evidence['roots'][-1], request_id='another-request')]
+    assert supplied_entry_roles(store, forged, ['gateway'], {'native': ['nginx']}) == {}
+    store.close()
+
+
+def test_supplied_role_rejects_client_and_conflicting_attributes(tmp_path):
+    untyped = span(kind=None)
+    attrs = untyped['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['attributes']
+    attrs.append({'key': 'component', 'value': {'stringValue': 'nginx'}})
+    attrs.append({'key': 'http.request.method', 'value': {'stringValue': 'POST'}})
+    store = make_store(tmp_path, [], [untyped])
+    plans = [{'http_steps': [{'method': 'GET', 'path': '/owners/6', 'request_id': 'request-1'}]}]
+    selected, evidence = select_planned(store, plans, CONTRACT, 'native', {'native': ['nginx']})
+    assert not evidence['roots']
+    assert supplied_entry_roles(store, evidence['roots'], ['gateway'], {'native': ['nginx']}) == {}
+    store.close()
+    client = span(kind=3)
+    client['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['attributes'].append(
+        {'key': 'component', 'value': {'stringValue': 'nginx'}})
+    (tmp_path/'client').mkdir()
+    store = make_store(tmp_path/'client', [], [client])
+    selected, evidence = select_planned(store, plans, CONTRACT, 'native', {'native': ['nginx']})
+    assert not evidence['roots']
+    assert supplied_entry_roles(store, evidence['roots'], ['gateway'], {'native': ['nginx']}) == {}
+    store.close()

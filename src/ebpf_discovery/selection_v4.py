@@ -106,7 +106,10 @@ def select_planned(store, plans, contract, source, untyped_components=None):
                 reasons[actual_source + ':' + reason] += 1
                 if root:
                     traces[actual_source, root['trace_id']].add(root['span_id'])
-                    roots.append({k: root[k] for k in ('source', 'trace_id', 'span_id', 'service')})
+                    roots.append({**{k: root[k] for k in ('source', 'trace_id', 'span_id', 'service')},
+                                  'request_id': step['request_id'],
+                                  'method': step['method'], 'path': canonical_route(step['path']),
+                                  'binding_reason': reason})
     selected = {s: set() for s in sources}
     for (actual_source, trace), ids in sorted(traces.items()):
         rows = [json.loads(encoded) for (encoded,) in store.db.execute(
@@ -116,3 +119,46 @@ def select_planned(store, plans, contract, source, untyped_components=None):
         'selected_identity_counts': {s: len(ids) for s, ids in selected.items()},
         'selection': 'declared routes, exact training request IDs and source-local ancestry',
         'clock_gate': False, 'outcomes_used': False, 'ids_rewritten': False}
+
+
+def supplied_entry_roles(store, roots, entry_services, untyped_components):
+    """Declare a server role only for exact, uniquely bound untyped HTTP roots.
+
+    The return keys retain the original source, trace and span IDs. This is a
+    supplied semantic interpretation of a receiver, not recovered telemetry.
+    """
+    result = {}
+    for root in roots:
+        source, trace, span = (root.get(k) for k in ('source', 'trace_id', 'span_id'))
+        if source not in untyped_components or root.get('service') not in entry_services:
+            continue
+        if root.get('binding_reason') != 'unique_declared_entry':
+            continue
+        rebound, reason = bind_entry(store, source, root.get('request_id'),
+            {'method': root.get('method'), 'path': root.get('path')},
+            entry_services, untyped_components[source])
+        if reason != 'unique_declared_entry' or rebound is None or (rebound['trace_id'], rebound['span_id']) != (trace, span):
+            continue
+        if not valid_identity(trace, span):
+            continue
+        variants = store.identity(source, trace, span)
+        if len(variants) != 1:
+            continue
+        row = variants[0]
+        if (row.get('service') != root['service'] or row.get('attribute_conflicts')
+                or row.get('kind') not in (None, 0, '0', 'SPAN_KIND_UNSPECIFIED')
+                or row.get('attributes', {}).get('component') not in untyped_components[source]):
+            continue
+        method, path = method_path(row)
+        if not method or not path:
+            continue
+        key = (source, trace, span)
+        result[key] = {
+            'source': source, 'trace_id': trace, 'span_id': span,
+            'service': row['service'], 'component': row['attributes']['component'],
+            'method': method, 'path': path, 'original_kind': row.get('kind'),
+            'request_id': root['request_id'],
+            'supplied_kind': 'SPAN_KIND_SERVER',
+            'rule': 'unique declared entry; untyped declared receiver component with actual HTTP method and path',
+        }
+    return result

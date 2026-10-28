@@ -144,6 +144,47 @@ def test_protobuf_copy_preserves_duplicate_variants_scope_attributes_and_links(t
     assert unknown_field in spans[0].SerializeToString()
 
 
+def test_supplied_role_changes_only_derived_protobuf_kind_and_preserves_unknown_wire(tmp_path: Path):
+    observations = tmp_path/'observations'
+    raw = observations/'a.raw'/'one'/'body.pb'
+    raw.parent.mkdir(parents=True)
+    request = ExportTraceServiceRequest()
+    scope = request.resource_spans.add().scope_spans.add()
+    root = scope.spans.add(trace_id=bytes.fromhex(TRACE), span_id=bytes.fromhex(SPAN), name='receiver')
+    unknown = b'\xa0\x06\x07'
+    root.ParseFromString(root.SerializeToString() + unknown)
+    wire = request.SerializeToString()
+    raw.write_bytes(wire)
+    wrapper = {'raw_ref': raw.relative_to(observations).as_posix(),
+               'raw_sha256': hashlib.sha256(wire).hexdigest(),
+               'content_type': 'application/x-protobuf'}
+    index = observations/'a.jsonl'
+    line = (json.dumps(wrapper)+'\n').encode()
+    index.write_bytes(line)
+    role = {'source': 'ebpf', 'trace_id': TRACE, 'span_id': SPAN,
+            'original_kind': None, 'supplied_kind': 'SPAN_KIND_SERVER',
+            'rule': 'unique declared entry; untyped declared receiver component with actual HTTP method and path'}
+    result = export_selection(Store([(str(index), len(line))]), {'ebpf': {(TRACE, SPAN)}},
+                              tmp_path/'out', supplied_server_roles={('ebpf', TRACE, SPAN): role})
+    output = ExportTraceServiceRequest()
+    output.ParseFromString(Path(result['exports'][0]['path']).read_bytes())
+    exported_span = output.resource_spans[0].scope_spans[0].spans[0]
+    assert exported_span.kind == 2
+    assert unknown in exported_span.SerializeToString()
+    assert raw.read_bytes() == wire
+    assert result['exports'][0]['raw_sha256'] == hashlib.sha256(wire).hexdigest()
+    assert result['exports'][0]['supplied_server_roles'] == [role]
+    root.kind = 3
+    wire_client = request.SerializeToString()
+    raw.write_bytes(wire_client)
+    wrapper['raw_sha256'] = hashlib.sha256(wire_client).hexdigest()
+    line = (json.dumps(wrapper)+'\n').encode()
+    index.write_bytes(line)
+    with pytest.raises(ValueError, match='conflicts with explicit kind'):
+        export_selection(Store([(str(index), len(line))]), {'ebpf': {(TRACE, SPAN)}},
+                         tmp_path/'reject', supplied_server_roles={('ebpf', TRACE, SPAN): role})
+
+
 @pytest.mark.parametrize("name", ["a.jsonl", "native.jsonl"])
 def test_receiver_wrapper_without_original_wire_is_rejected(tmp_path: Path, name: str):
     path = tmp_path / name
@@ -196,3 +237,31 @@ def test_jaeger_codec_preserves_typed_evidence_and_reference_semantics(tmp_path:
     invalid = next(item for item in spans if item["name"] == "invalid-zero-id")
     assert invalid["traceId"] == "0" * 32
     assert invalid["spanId"] == "0" * 16
+
+
+def test_supplied_role_on_jaeger_entry_does_not_rewrite_source_or_client(tmp_path: Path):
+    trace_id, root_id, client_id = 'abcdef0123456789', '1234567890abcdef', 'fedcba0987654321'
+    def raw_span(sid, tags):
+        return {'traceID': trace_id, 'spanID': sid, 'operationName': '/lookup',
+                'processID': 'p', 'startTime': 10, 'duration': 5,
+                'tags': tags, 'references': []}
+    trace = {'data': [{'processes': {'p': {'serviceName': 'gateway'}}, 'spans': [
+        raw_span(root_id, [{'key': 'component', 'type': 'string', 'value': 'nginx'},
+                           {'key': 'http.method', 'type': 'string', 'value': 'GET'}]),
+        raw_span(client_id, [{'key': 'span.kind', 'type': 'string', 'value': 'client'}]),
+    ]}]}
+    raw = tmp_path/'traces-gateway.json'
+    raw.write_text(json.dumps(trace), encoding='utf-8')
+    original = raw.read_bytes()
+    role = {'source': 'native', 'trace_id': trace_id, 'span_id': root_id,
+            'original_kind': None, 'supplied_kind': 'SPAN_KIND_SERVER',
+            'rule': 'unique declared entry; untyped declared receiver component with actual HTTP method and path'}
+    result = export_selection(Store([(str(raw), len(original))]),
+                              {'native': {(trace_id, root_id), (trace_id, client_id)}},
+                              tmp_path/'out', supplied_server_roles={('native', trace_id, root_id): role})
+    payload = json.loads(Path(result['exports'][0]['path']).read_text())
+    spans = payload['resourceSpans'][0]['scopeSpans'][0]['spans']
+    assert {s['spanId']: s['kind'] for s in spans} == {
+        root_id: 'SPAN_KIND_SERVER', client_id: 'SPAN_KIND_CLIENT'}
+    assert result['exports'][0]['supplied_server_roles'] == [role]
+    assert raw.read_bytes() == original
