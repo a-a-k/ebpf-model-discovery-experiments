@@ -109,9 +109,14 @@ def test_worker_output_requires_exact_complete_file_census_and_workflow_sha(tmp_
 
 
 class FakeResponse:
-    def __init__(self, status=200, value=None, content=b""):
+    def __init__(self, status=200, value=None, content=b"", headers=None):
         self.status_code, self.value, self.content = status, value or {}, content
         self.text = json.dumps(self.value)
+        self.headers = requests.structures.CaseInsensitiveDict(headers or {})
+        self.closed = False
+
+    def close(self):
+        self.closed = True
 
     def json(self):
         return self.value
@@ -179,6 +184,103 @@ def test_download_hashes_exact_archive_bytes(tmp_path):
     assert path.read_bytes() == payload
 
 
+@pytest.mark.parametrize("status,headers,value,wait", [
+    (403, {"X-RateLimit-Remaining": "0", "X-RateLimit-Reset": "1180"}, {}, 181),
+    (429, {"Retry-After": "1800"}, {}, 1800),
+    (403, {}, {"message": "You have exceeded a secondary rate limit."}, 60),
+    (403, {"Retry-After": "90", "X-RateLimit-Remaining": "50"}, {}, 90),
+    (429, {"Retry-After": "NaN", "X-RateLimit-Reset": "Infinity"}, {}, 60),
+])
+def test_get_honors_rate_limit_before_retry(status, headers, value, wait, monkeypatch):
+    limited = FakeResponse(status=status, headers=headers, value=value)
+    success = FakeResponse(value={"status": "completed"})
+    replies = iter([limited, success])
+    sleeps = []
+    class Session:
+        def get(self, *_args, **_kwargs):
+            return next(replies)
+    def sleep(seconds):
+        assert limited.closed
+        sleeps.append(seconds)
+    monkeypatch.setattr(remote.time, "time", lambda: 1000)
+    monkeypatch.setattr(remote.time, "sleep", sleep)
+    assert remote._get(Session(), "url", {}) is success
+    assert sleeps == [wait]
+
+
+def test_secondary_retries_back_off_and_log_only_sanitized_metadata(tmp_path, monkeypatch):
+    limited = [FakeResponse(status=403, value={"message": "Secondary rate limit; secret-body"})
+               for _ in range(6)]
+    success = FakeResponse()
+    replies = iter([*limited, success])
+    sleeps = []
+    class Session:
+        def get(self, *_args, **_kwargs):
+            return next(replies)
+    monkeypatch.setattr(remote.time, "sleep", sleeps.append)
+    log = tmp_path / "http-retries.jsonl"
+    assert remote._get(Session(), "https://api/secret-query", {"Authorization": "secret-token"},
+                       retry_log=log, operation="worker_status") is success
+    assert sleeps == [60, 120, 240, 480, 900, 900]
+    assert all(r.closed for r in limited)
+    text = log.read_text()
+    assert "secret" not in text and "https://" not in text
+    rows = [json.loads(line) for line in text.splitlines()]
+    assert [r["event"] for r in rows] == ["wait_started", "wait_ended"] * 6
+    assert [r["requested_wait_seconds"] for r in rows[::2]] == sleeps
+    assert all(r["reason"] == "rate_limit" for r in rows)
+
+
+@pytest.mark.parametrize("status", [401, 403, 404])
+def test_get_does_not_retry_permission_or_identity_failures(status, monkeypatch):
+    response = FakeResponse(status=status, value={"message": "Resource not accessible"})
+    class Session:
+        calls = 0
+        def get(self, *_args, **_kwargs):
+            self.calls += 1
+            return response
+    def unexpected_sleep(_seconds):
+        pytest.fail("hard failure must not be delayed")
+    monkeypatch.setattr(remote.time, "sleep", unexpected_sleep)
+    session = Session()
+    with pytest.raises(requests.HTTPError):
+        remote._get(session, "url", {})
+    assert session.calls == 1 and response.closed
+
+
+def test_artifact_get_retries_headers_but_never_partial_body(tmp_path, monkeypatch):
+    limited = FakeResponse(status=429, headers={"Retry-After": "61"})
+    payload = b"exact archive bytes"
+    response = FakeResponse(content=payload)
+    replies = iter([limited, response])
+    class Session:
+        calls = 0
+        def get(self, *_args, **kwargs):
+            assert kwargs["stream"] is True
+            self.calls += 1
+            return next(replies)
+    sleeps = []
+    monkeypatch.setattr(remote.time, "sleep", sleeps.append)
+    session = Session()
+    path = tmp_path / "artifact.zip"
+    assert remote._download(session, "url", {}, path) == hashlib.sha256(payload).hexdigest()
+    assert session.calls == 2 and sleeps == [61]
+    assert path.read_bytes() == payload and limited.closed and response.closed
+
+    def broken_body(_size):
+        yield b"partial"
+        raise requests.ConnectionError("body interrupted")
+    broken = FakeResponse()
+    broken.iter_content = broken_body
+    replies = iter([broken])
+    session = Session()
+    failed = tmp_path / "failed.zip"
+    with pytest.raises(requests.ConnectionError, match="body interrupted"):
+        remote._download(session, "url", {}, failed)
+    assert session.calls == 1 and broken.closed and not failed.exists()
+    assert (tmp_path / ".failed.zip.tmp").read_bytes() == b"partial"
+
+
 def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch):
     class Ctx:
         out = tmp_path / "campaign"
@@ -208,13 +310,16 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     digest = hashlib.sha256(wire).hexdigest()
 
     class Session:
+        status_reads = 0
         def post(self, *_args, **_kwargs):
             return FakeResponse(value={"workflow_run_id": 91, "run_url": "api/run/91",
                                        "html_url": "html/run/91"})
         def get(self, url, **_kwargs):
             if url.endswith("/actions/runs/91"):
+                self.status_reads += 1
                 return FakeResponse(value={"id": 91, "event": "workflow_dispatch",
-                    "path": ".github/workflows/toolchain-worker-v4.yml", "status": "completed",
+                    "path": ".github/workflows/toolchain-worker-v4.yml",
+                    "status": "in_progress" if self.status_reads == 1 else "completed",
                     "conclusion": "success", "head_sha": "w" * 40, "run_attempt": 1,
                     "repository": {"full_name": "owner/repo"}})
             if "artifacts?" in url:
@@ -236,6 +341,8 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
     monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
     monkeypatch.setattr(remote.requests, "Session", Session)
+    sleeps = []
+    monkeypatch.setattr(remote.time, "sleep", sleeps.append)
     forecasts = remote.forecast_on_worker(Campaign(), tmp_path / "checkpoint", {}, [])
     assert forecasts["ebpf"]["raw"]["browse"]["available"] is False
     assert (Ctx.out / "toolchain/forecasts.json").is_file()
@@ -244,6 +351,7 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     assert not (evidence / "worker-output.zip").exists()
     cost = json.loads((evidence / "cost.json").read_text())
     assert cost["worker_run_id"] == 91 and cost["worker_run_attempt"] == 1
+    assert cost["worker_poll_interval_seconds"] == 60 and sleeps == [60]
 
 
 def test_release_identity_failure_happens_before_dispatch(tmp_path, monkeypatch):

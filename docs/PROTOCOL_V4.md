@@ -678,6 +678,47 @@ remain unknown, while a business-order mismatch is a separate evaluation result.
 ID-only joins without a SpanLink are not implemented in this iteration. Such
 unknowns therefore cannot establish an inability of eBPF or its collector.
 
+## Parallel campaign scheduling and API waits
+
+Before implementation, root and the independent skeptic give **explicit
+ORIGINAL-criterion design GO** for a future-only orchestration repair. The
+hypothesis is operational: independent admitted campaigns can overlap without
+exhausting worker slots or the repository's API allowance. The strongest simple
+baseline is the same unchanged campaigns run sequentially or in smaller batches;
+no scientific or total-cost improvement is assumed. Both schedules use identical
+inputs, semantic contracts, tool binaries, model/forecast rules and external
+outcomes. The causal change is scheduling and API pacing only. All preparation,
+worker queue/compute, parent idle/compute, transfer and failed-attempt costs remain
+included; there is no observation deadline or accuracy-dependent early stopping.
+
+GitHub documents at least 20 concurrent standard jobs for Free accounts and
+1,000 `GITHUB_TOKEN` REST requests/hour/repository. Eight waiting parents polling
+every 15 seconds would request up to 1,920 reads/hour before overhead. Prepare
+60-second polling (480/hour for eight parents) and safe GET handling for positively
+identified rate-limit responses. Respect server retry/reset instructions, retain
+sanitized wait evidence, and keep authentication/permission errors fatal.
+Dispatch remains exactly one POST, with no blind mutation retry. Current live
+campaigns are not restarted or changed.
+
+The implementation received root and independent **ORIGINAL-criterion
+implementation GO**. Focused synthetic HTTP/handoff checks passed (23 tests,
+one Linux-only test skipped locally), as did 13 index/freeze checks. Exact-head
+Linux CI remains required before activating the changed parent code.
+
+After implementation review, exact-head CI, each system's staged-cell admission
+and separate execution GO, allow at most eight globally committed parent campaigns, budgeting one
+worker slot for each. Count queued/booting/matrix children as committed parents,
+not just running jobs. Before each batch, refresh owner activity and require
+`2 * committed_parents + other_committed_jobs <= 20`; four nominal spare slots
+are headroom, not a reservation against other activity. Pause new admission if
+outside activity grows; never put parent and child behind the same held slot.
+This scheduling approval does not authorize cells before their scientific and
+technical prerequisites are met, and calendar acceleration is not evidence of
+lower total effort or compute cost.
+
+Sources: [Actions limits](https://docs.github.com/en/actions/reference/limits),
+[REST rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api).
+
 ## Reporting and costs
 
 Retain every operation, source, tracing mode and repeat, including missing graphs,

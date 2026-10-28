@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import importlib
 import json
+import math
 import os
 from pathlib import Path
 import re
@@ -32,6 +33,7 @@ from .bering_v4 import child_go_environment
 
 API_VERSION = "2026-03-10"
 WORKFLOW = "toolchain-worker-v4.yml"
+WORKER_POLL_SECONDS = 60
 IDENTITY_KEYS = ("run_id", "commit", "system", "mode", "seed", "manifest_sha256")
 WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
 
@@ -369,31 +371,97 @@ def _headers(token: str) -> dict:
             "X-GitHub-Api-Version": API_VERSION}
 
 
-def _get(session, url: str, headers: dict):
+def _nonnegative_number(value):
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) and number >= 0 else None
+
+
+def _rate_limit_delay(response, retries: int):
+    if response.status_code not in (403, 429):
+        return None
+    retry_after = _nonnegative_number(response.headers.get("retry-after"))
+    remaining = _nonnegative_number(response.headers.get("x-ratelimit-remaining"))
+    reset = _nonnegative_number(response.headers.get("x-ratelimit-reset"))
+    if response.status_code == 403 and remaining != 0 and retry_after is None:
+        try:
+            body = response.json()
+        except (TypeError, ValueError):
+            body = {}
+        message = str(body.get("message", "")).lower() if isinstance(body, dict) else ""
+        if not (message.startswith("api rate limit exceeded") or "secondary rate limit" in message):
+            return None  # An ordinary permission failure is not temporary capacity.
+    delay = min(60 * 2 ** min(retries, 4), 900)
+    if retry_after is not None:
+        delay = max(delay, retry_after)
+    if remaining == 0 and reset is not None:
+        delay = max(delay, reset - time.time() + 1)
+    return delay
+
+
+def _wait_for_get_retry(delay, operation, reason, status, retry_log, rate_headers=None):
+    # No URL, response body, authorization header or signed download link is saved.
+    started_ns, started = time.time_ns(), time.monotonic()
+    def record(event, **extra):
+        if retry_log is not None:
+            with Path(retry_log).open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps({"event": event, "operation": operation,
+                    "reason": reason, "http_status": status, "started_ns": started_ns,
+                    "requested_wait_seconds": delay, "rate_headers": rate_headers, **extra}) + "\n")
+    record("wait_started")
+    try:
+        time.sleep(delay)
+    finally:
+        record("wait_ended", ended_ns=time.time_ns(), elapsed_seconds=time.monotonic() - started)
+
+
+def _get(session, url: str, headers: dict, *, stream=False, timeout=(20, 60),
+         retry_log=None, operation="metadata"):
+    rate_retries = 0
     while True:
         try:
-            response = session.get(url, headers=headers, timeout=(20, 60))
-            if response.status_code >= 500 or response.status_code in (408, 429):
-                time.sleep(15)
+            response = session.get(url, headers=headers, timeout=timeout, stream=stream)
+            delay = _rate_limit_delay(response, rate_retries)
+            if delay is not None:
+                rate_retries += 1
+                status = response.status_code
+                rate_headers = {name: _nonnegative_number(response.headers.get(name))
+                                for name in ("retry-after", "x-ratelimit-remaining", "x-ratelimit-reset")}
+                response.close()
+                _wait_for_get_retry(delay, operation, "rate_limit", status, retry_log, rate_headers)
                 continue
-            response.raise_for_status()
+            if response.status_code >= 500 or response.status_code == 408:
+                status = response.status_code
+                response.close()
+                _wait_for_get_retry(15, operation, "transient_http", status, retry_log)
+                continue
+            try:
+                response.raise_for_status()
+            except requests.HTTPError:
+                response.close()
+                raise
             return response
         except (requests.ConnectionError, requests.Timeout):
-            time.sleep(15)
+            _wait_for_get_retry(15, operation, "transport_before_body", None, retry_log)
 
 
-def _download(session, url: str, headers: dict, destination: Path) -> str:
-    response = session.get(url, headers=headers, timeout=(20, 300), stream=True)
-    response.raise_for_status()
+def _download(session, url: str, headers: dict, destination: Path, *, retry_log=None) -> str:
+    response = _get(session, url, headers, timeout=(20, 300), stream=True,
+                    retry_log=retry_log, operation="artifact_download")
     digest = hashlib.sha256()
     temporary = destination.with_name("." + destination.name + ".tmp")
-    with temporary.open("xb") as stream:
-        for chunk in response.iter_content(1024 * 1024):
-            if chunk:
-                stream.write(chunk)
-                digest.update(chunk)
-        stream.flush()
-        os.fsync(stream.fileno())
+    try:
+        with temporary.open("xb") as stream:
+            for chunk in response.iter_content(1024 * 1024):
+                if chunk:
+                    stream.write(chunk)
+                    digest.update(chunk)
+            stream.flush()
+            os.fsync(stream.fileno())
+    finally:
+        response.close()
     os.replace(temporary, destination)
     return digest.hexdigest()
 
@@ -487,6 +555,7 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     cost = {"schema_version": "remote-toolchain-cost-v4", "started_ns": time.time_ns(),
             "checkpoint_validation_seconds": None, "dispatch_seconds": None,
             "parent_wait_wall_seconds": None, "output_transfer_seconds": None,
+            "worker_poll_interval_seconds": WORKER_POLL_SECONDS,
             "verification_import_seconds": None, "worker_run_id": None,
             "worker_run_attempt": None,
             "scope": "parent-side checkpoint validation, dispatch, wait, transfer, verification and import",
@@ -567,16 +636,17 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
 
     run_url = f"https://api.github.com/repos/{repository}/actions/runs/{worker_run_id}"
     polls = state / "polls.jsonl"
+    retries = state / "http-retries.jsonl"
     wait_started = time.time_ns()
     while True:
-        run = _get(session, run_url, headers).json()
+        run = _get(session, run_url, headers, retry_log=retries, operation="worker_status").json()
         with polls.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps({"observed_ns": time.time_ns(), "id": run.get("id"),
                 "status": run.get("status"), "conclusion": run.get("conclusion"),
                 "head_sha": run.get("head_sha"), "run_attempt": run.get("run_attempt")}) + "\n")
         if run.get("status") == "completed":
             break
-        time.sleep(15)
+        time.sleep(WORKER_POLL_SECONDS)
     if (run.get("id") != worker_run_id or run.get("event") != "workflow_dispatch"
             or (run.get("repository") or {}).get("full_name") not in (None, repository)
             or not str(run.get("path", "")).endswith(WORKFLOW)):
@@ -589,7 +659,8 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(cost_path, cost)
 
     artifacts_url = f"https://api.github.com/repos/{repository}/actions/runs/{worker_run_id}/artifacts?per_page=100"
-    artifacts = _get(session, artifacts_url, headers).json().get("artifacts") or []
+    artifacts = _get(session, artifacts_url, headers, retry_log=retries,
+                     operation="worker_artifacts").json().get("artifacts") or []
     name = f"toolchain-v4-{campaign.system}-{campaign.ctx.mode}-{campaign.ctx.seed}-{worker_run_id}"
     matches = [row for row in artifacts if row.get("name") == name and row.get("expired") is not True]
     if len(matches) != 1:
@@ -601,7 +672,8 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         raise RuntimeError("worker artifact differs from returned workflow run")
     archive = state / "worker-output.zip"
     transfer_started = time.monotonic_ns()
-    archive_sha = _download(session, artifact["archive_download_url"], headers, archive)
+    archive_sha = _download(session, artifact["archive_download_url"], headers, archive,
+                            retry_log=retries)
     archive_bytes = archive.stat().st_size
     advertised = str(artifact.get("digest", ""))
     if advertised != "sha256:" + archive_sha:
