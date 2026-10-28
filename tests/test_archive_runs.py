@@ -44,11 +44,14 @@ class ArchiveRunsTests(unittest.TestCase):
                 if scenario == "gone_logs":
                     print("gh: Gone (HTTP 410)", file=sys.stderr)
                     sys.exit(1)
-                if scenario == "workflow_only" and "/jobs/" not in endpoint:
+                if scenario in ("workflow_only", "workflow_corrupt") and "/jobs/" not in endpoint:
                     out = io.BytesIO()
                     with zipfile.ZipFile(out, "w") as archive:
                         archive.writestr("other-job.txt", "available only in workflow ZIP")
-                    sys.stdout.buffer.write(out.getvalue())
+                    raw = out.getvalue()
+                    if scenario == "workflow_corrupt":
+                        raw = raw.replace(b"available only", b"xvailable only", 1)
+                    sys.stdout.buffer.write(raw)
                     sys.exit(0)
                 if scenario == "artifact" and "/jobs/" in endpoint:
                     sys.stdout.buffer.write(b"synthetic job log\\n")
@@ -65,7 +68,8 @@ class ArchiveRunsTests(unittest.TestCase):
                 digest = hashlib.sha256(artifact).hexdigest()
                 if scenario == "bad_digest": digest = "0" * 64
                 artifacts = ([] if scenario in ("metadata_only", "live", "auth_failure", "server_failure",
-                                              "network_failure", "gone_logs", "workflow_only")
+                                              "network_failure", "gone_logs", "workflow_only",
+                                              "workflow_corrupt")
                              else [{"id":42,"name":"capture","digest":"sha256:"+digest}])
                 value = {"total_count":len(artifacts), "artifacts":artifacts}
             elif endpoint.endswith("/jobs?filter=all&per_page=100"):
@@ -128,6 +132,12 @@ class ArchiveRunsTests(unittest.TestCase):
         self.assertTrue((self.archive / "7-workflow-logs.zip").exists())
         self.assertEqual(json.loads((self.archive / "7-job-11-logs-status.json").read_text())
                          ["state"], "unavailable")
+
+    def test_corrupt_workflow_log_zip_member_fails(self):
+        completed = self.run_archive("workflow_corrupt")
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn("Corrupt workflow log ZIP member", completed.stderr)
+        self.assertFalse((self.archive / "provenance.tar.gz").exists())
 
     def test_gone_log_is_explicit_absence(self):
         completed = self.run_archive("gone_logs")

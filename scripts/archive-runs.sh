@@ -51,7 +51,13 @@ for run_id in $RUN_IDS; do
   workflow_logs="$archive_dir/$run_id-workflow-logs.zip"
   gh_api_optional_log_to_file "$workflow_logs" \
     "$archive_dir/$run_id-workflow-logs-status.json" "$root/logs"
-  if [[ -f "$workflow_logs" ]]; then python3 -m zipfile -t "$workflow_logs" >/dev/null; fi
+  if [[ -f "$workflow_logs" ]]; then
+    python3 -c 'import sys, zipfile
+with zipfile.ZipFile(sys.argv[1]) as archive:
+    bad = archive.testzip()
+if bad is not None:
+    sys.exit("Corrupt workflow log ZIP member: " + bad)' "$workflow_logs"
+  fi
   # Whole-run ZIP presence does not prove that every job's log is inside it.
   for job_id in "${job_ids[@]}"; do
     gh_api_optional_log_to_file "$archive_dir/$run_id-job-$job_id.log" \
