@@ -48,6 +48,8 @@ while True: time.sleep(.05)
         assert data['wall_seconds'] > 0
         assert data['child_user_seconds'] >= 0
         assert data['child_system_seconds'] >= 0
+        assert data['oom_score_adjustment']['requested'] == 1000
+        assert data['oom_score_adjustment']['scope'] == 'direct child only; parent and VMs unchanged'
     finally:
         if process.poll() is None:
             process.kill()
@@ -66,6 +68,7 @@ def test_nonzero_child_exit_is_reported_and_propagated(tmp_path: Path):
     assert data['wrapper_exit_status'] == 7
     assert data['forwarded_signals'] == []
     assert data['child_peak_rss_kib'] > 0
+    assert data['oom_score_adjustment']['requested'] == 1000
 
 
 @pytest.mark.skipif(os.name != 'posix', reason='RUSAGE_CHILDREN is measured on Linux Actions')
@@ -76,3 +79,18 @@ def test_wrapper_error_cannot_be_reported_as_clean_exit(tmp_path: Path):
     assert code == data['wrapper_exit_status'] == 125
     assert data['exit_status'] is None
     assert 'error' in data
+    assert data['oom_score_adjustment']['available'] is False
+    assert data['oom_score_adjustment']['error'] == 'child was not started'
+
+
+def test_child_only_oom_adjustment_records_success_and_failure(tmp_path: Path):
+    target = tmp_path/'proc'/'42'/'oom_score_adj'
+    target.parent.mkdir(parents=True)
+    target.write_text('0\n')
+    success = child_resources_v4._adjust_child_oom_score(42, tmp_path/'proc')
+    assert success == {"requested": 1000, "target": str(target), "available": True,
+                       "actual": 1000, "scope": "direct child only; parent and VMs unchanged"}
+    failure = child_resources_v4._adjust_child_oom_score(43, tmp_path/'proc')
+    assert failure['requested'] == 1000
+    assert failure['available'] is False and failure['actual'] is None
+    assert 'error' in failure

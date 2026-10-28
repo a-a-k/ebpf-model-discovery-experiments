@@ -11,6 +11,26 @@ import sys
 import time
 
 
+def _adjust_child_oom_score(pid: int, proc_root: Path = Path("/proc")) -> dict:
+    """Best-effort preference for killing only the measured Bering child.
+
+    This is neither a memory cap nor proof that an OOM event occurred.  Failure
+    is retained explicitly and leaves the child running with the host default.
+    """
+    target = Path(proc_root) / str(pid) / "oom_score_adj"
+    result = {"requested": 1000, "target": str(target), "available": False,
+              "actual": None, "scope": "direct child only; parent and VMs unchanged"}
+    try:
+        target.write_text("1000\n", encoding="ascii")
+        result["actual"] = int(target.read_text(encoding="ascii").strip())
+        result["available"] = result["actual"] == 1000
+        if not result["available"]:
+            result["error"] = "kernel did not retain requested oom_score_adj"
+    except (OSError, ValueError) as exc:
+        result["error"] = repr(exc)
+    return result
+
+
 def run(command: list[str], report: Path) -> int:
     import resource  # Linux Actions runner; an isolated wrapper has exactly one child.
 
@@ -21,6 +41,9 @@ def run(command: list[str], report: Path) -> int:
     before = resource.getrusage(resource.RUSAGE_CHILDREN)
     started_ns, started_mono = time.time_ns(), time.monotonic()
     child = None
+    oom_adjustment = {"requested": 1000, "available": False, "actual": None,
+                      "scope": "direct child only; parent and VMs unchanged",
+                      "error": "child was not started"}
     forwarded: list[int] = []
     child_returncode, wrapper_returncode, error = None, 125, None
 
@@ -34,6 +57,7 @@ def run(command: list[str], report: Path) -> int:
         signal.signal(signum, forward)
     try:
         child = subprocess.Popen(command)
+        oom_adjustment = _adjust_child_oom_score(child.pid)
         for signum in forwarded:
             if child.poll() is None:
                 child.send_signal(signum)
@@ -57,6 +81,7 @@ def run(command: list[str], report: Path) -> int:
             "exit_status": child_returncode,
             "wrapper_exit_status": wrapper_returncode,
             "forwarded_signals": forwarded,
+            "oom_score_adjustment": oom_adjustment,
             "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
         }
         if error is not None:

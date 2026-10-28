@@ -59,15 +59,25 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
 def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path):
     manifest, graph, process = harness(tmp_path)
     response = Mock(status_code=200)
+    sent = []
+    def post(url, *, data, headers, timeout):
+        assert not isinstance(data, (bytes, bytearray))
+        sent.append((url, data.read(), dict(headers), timeout))
+        return response
     with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
             patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
-            patch('ebpf_discovery.bering_v4.requests.post', return_value=response) as send:
+            patch('ebpf_discovery.bering_v4.requests.post', side_effect=post):
         output, _ = replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
     assert output == graph
-    assert send.call_args_list[0].args[0].endswith('/sources/obi/v1/traces')
-    assert send.call_args_list[0].kwargs['headers']['Content-Encoding'] == 'gzip'
-    assert send.call_args_list[1].args[0].endswith('/v1/traces')
-    assert '/sources/' not in send.call_args_list[1].args[0]
+    assert sent[0][0].endswith('/sources/obi/v1/traces')
+    assert sent[0][1] == Path(manifest['exports'][0]['path']).read_bytes()
+    assert sent[0][2]['Content-Encoding'] == 'gzip'
+    assert sent[0][2]['Content-Length'] == str(len(sent[0][1]))
+    assert sent[0][3] is None
+    assert sent[1][0].endswith('/v1/traces')
+    assert '/sources/' not in sent[1][0]
+    assert sent[1][1] == Path(manifest['exports'][1]['path']).read_bytes()
+    assert sent[1][2]['Content-Length'] == str(len(sent[1][1]))
     config = yaml.safe_load((tmp_path / 'model-runtime/serve.yaml').read_text())
     assert config['sources'][0]['domain'] == 'same-deployment'
     assert config['runtime']['late_span_policy'] == 'current_window'
@@ -88,6 +98,18 @@ def test_compressed_export_limit_uses_decoded_bytes(tmp_path):
         replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
     config = yaml.safe_load((tmp_path / 'model-runtime/serve.yaml').read_text())
     assert len(data) < 5242880 < len(decoded) < config['server']['max_request_bytes']
+
+
+def test_streamed_hash_mismatch_never_posts_changed_wire(tmp_path):
+    manifest, _, process = harness(tmp_path)
+    manifest['exports'][0]['sha256'] = '0' * 64
+    response = Mock(status_code=200)
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
+            patch('ebpf_discovery.bering_v4.requests.post') as send:
+        with pytest.raises(RuntimeError, match='changed before Bering ingest'):
+            replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
+    send.assert_not_called()
 
 
 @pytest.mark.parametrize('ingest_count,dropped', [(1, 0), (2, 1)])

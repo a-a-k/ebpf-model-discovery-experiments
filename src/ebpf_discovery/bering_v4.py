@@ -90,15 +90,21 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
                     raise RuntimeError('Bering technical startup failed; inspect retained log')
                 time.sleep(.1)
             for export in exports:
-                data = Path(export['path']).read_bytes()
-                if hashlib.sha256(data).hexdigest() != export['sha256']:
-                    raise RuntimeError('Selected export changed before Bering ingest')
+                path = Path(export['path'])
                 endpoint = '/sources/obi/v1/traces' if export['source'] == 'ebpf' else '/v1/traces'
-                headers = {'Content-Type': export['content_type']}
+                headers = {'Content-Type': export['content_type'],
+                           'Content-Length': str(path.stat().st_size)}
                 if export.get('content_encoding'):
                     headers['Content-Encoding'] = export['content_encoding']
-                response = requests.post(base + endpoint, data=data,
-                    headers=headers, timeout=None)
+                # Verify, rewind, then stream the identical retained wire file.
+                # This avoids an avoidable whole-export sender copy; Bering still
+                # receives the original bytes, framing metadata, and encoding.
+                with path.open('rb') as stream:
+                    if hashlib.file_digest(stream, 'sha256').hexdigest() != export['sha256']:
+                        raise RuntimeError('Selected export changed before Bering ingest')
+                    stream.seek(0)
+                    response = requests.post(base + endpoint, data=stream,
+                        headers=headers, timeout=None)
                 response.raise_for_status()
             process.send_signal(signal.SIGTERM)
             record['returncode'] = process.wait()
