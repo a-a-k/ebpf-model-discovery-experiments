@@ -1,0 +1,159 @@
+"""Synthetic GitHub responses for the read-only release archive path."""
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import tarfile
+import tempfile
+import textwrap
+import unittest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+ARTIFACT = b"PK\x03\x04synthetic-artifact-bytes"
+
+
+@unittest.skipUnless(os.name == "posix", "shell archive fixture runs on Linux")
+class ArchiveRunsTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.home = Path(self.temp.name)
+        self.bin = self.home / "bin"
+        self.bin.mkdir()
+        gh = self.bin / "gh"
+        gh.write_text(textwrap.dedent('''\
+            #!/usr/bin/env python3
+            import hashlib, io, json, os, sys, zipfile
+            endpoint = sys.argv[2]
+            scenario = os.environ.get("MOCK_SCENARIO", "metadata_only")
+            artifact = b"PK\\x03\\x04synthetic-artifact-bytes"
+            if endpoint.endswith("/logs"):
+                if scenario == "auth_failure":
+                    print("gh: Resource not accessible by integration (HTTP 403)", file=sys.stderr)
+                    sys.exit(1)
+                if scenario == "server_failure":
+                    print("gh: HTTP 503 Unavailable", file=sys.stderr)
+                    sys.exit(1)
+                if scenario == "network_failure":
+                    print("gh: connection reset by peer", file=sys.stderr)
+                    sys.exit(1)
+                if scenario == "gone_logs":
+                    print("gh: Gone (HTTP 410)", file=sys.stderr)
+                    sys.exit(1)
+                if scenario == "workflow_only" and "/jobs/" not in endpoint:
+                    out = io.BytesIO()
+                    with zipfile.ZipFile(out, "w") as archive:
+                        archive.writestr("other-job.txt", "available only in workflow ZIP")
+                    sys.stdout.buffer.write(out.getvalue())
+                    sys.exit(0)
+                if scenario == "artifact" and "/jobs/" in endpoint:
+                    sys.stdout.buffer.write(b"synthetic job log\\n")
+                    sys.exit(0)
+                print("gh: HTTP 404 The specified blob does not exist.", file=sys.stderr)
+                sys.exit(1)
+            if endpoint.endswith("/artifacts/42/zip"):
+                if scenario == "artifact_missing":
+                    print("gh: HTTP 404 Artifact not found", file=sys.stderr)
+                    sys.exit(1)
+                sys.stdout.buffer.write(artifact)
+                sys.exit(0)
+            if endpoint.endswith("/artifacts?per_page=100"):
+                digest = hashlib.sha256(artifact).hexdigest()
+                if scenario == "bad_digest": digest = "0" * 64
+                artifacts = ([] if scenario in ("metadata_only", "live", "auth_failure", "server_failure",
+                                              "network_failure", "gone_logs", "workflow_only")
+                             else [{"id":42,"name":"capture","digest":"sha256:"+digest}])
+                value = {"total_count":len(artifacts), "artifacts":artifacts}
+            elif endpoint.endswith("/jobs?filter=all&per_page=100"):
+                value = [{"total_count":1,"jobs":[{"id":11,"name":"campaign",
+                    "run_attempt":1,
+                    "check_run_url":"https://api.github.com/repos/example/repo/check-runs/11"}]}]
+            elif endpoint.endswith("/check-runs/11/annotations?per_page=100"):
+                value = [[{"annotation_level":"failure","message":"runner lost communication"}]]
+            elif endpoint.endswith("/check-runs/11"):
+                value = {"output":{"annotations_count":1},"conclusion":"failure"}
+            elif endpoint.endswith("/runs/7"):
+                value = {"id":7,"status":"in_progress" if scenario == "live" else "completed"}
+            else:
+                print("unexpected endpoint: " + endpoint, file=sys.stderr)
+                sys.exit(2)
+            sys.stdout.write(json.dumps(value))
+        '''), encoding="utf-8")
+        gh.chmod(0o755)
+        sleep = self.bin / "sleep"
+        sleep.write_text("#!/usr/bin/env bash\nexit 0\n", encoding="utf-8")
+        sleep.chmod(0o755)
+        self.archive = self.home / "archive"
+
+    def run_archive(self, scenario):
+        env = dict(os.environ, PATH=f"{self.bin}:{os.environ['PATH']}",
+                   GITHUB_REPOSITORY="example/repo", RUN_IDS="7",
+                   ARCHIVE_DIR=str(self.archive), MOCK_SCENARIO=scenario)
+        return subprocess.run(["bash", str(ROOT / "scripts/archive-runs.sh")],
+                              cwd=ROOT, env=env, text=True, capture_output=True)
+
+    def test_metadata_only_failed_run_retains_annotations_and_explicit_absence(self):
+        completed = self.run_archive("metadata_only")
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(list(self.archive.glob("*.zip")), [])
+        self.assertEqual((self.archive / "SHA256SUMS.txt").read_text(), "")
+        self.assertEqual(json.loads((self.archive / "7-workflow-logs-status.json").read_text()),
+                         {"endpoint":"repos/example/repo/actions/runs/7/logs",
+                          "state":"unavailable","http_status":404})
+        self.assertEqual(json.loads((self.archive / "7-job-11-logs-status.json").read_text())
+                         ["http_status"], 404)
+        with tarfile.open(self.archive / "provenance.tar.gz", "r:gz") as archive:
+            names = archive.getnames()
+        self.assertIn("./7-job-11-annotations.json", names)
+        self.assertIn("./7-job-11-check-run.json", names)
+        self.assertIn("./7-jobs-pages.json", names)
+
+    def test_job_log_fallback_and_original_artifact_digest(self):
+        completed = self.run_archive("artifact")
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        original = self.archive / "7-artifact-42-capture.zip"
+        self.assertEqual(original.read_bytes(), ARTIFACT)
+        self.assertEqual((self.archive / "7-job-11.log").read_bytes(),
+                         b"synthetic job log\n")
+        self.assertIn(hashlib.sha256(ARTIFACT).hexdigest(),
+                      (self.archive / "SHA256SUMS.txt").read_text())
+
+    def test_whole_zip_does_not_claim_missing_job_log(self):
+        completed = self.run_archive("workflow_only")
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertTrue((self.archive / "7-workflow-logs.zip").exists())
+        self.assertEqual(json.loads((self.archive / "7-job-11-logs-status.json").read_text())
+                         ["state"], "unavailable")
+
+    def test_gone_log_is_explicit_absence(self):
+        completed = self.run_archive("gone_logs")
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(json.loads((self.archive / "7-workflow-logs-status.json").read_text())
+                         ["http_status"], 410)
+
+    def test_live_run_and_missing_artifact_fail_closed(self):
+        live = self.run_archive("live")
+        self.assertNotEqual(live.returncode, 0)
+        self.assertFalse((self.archive / "provenance.tar.gz").exists())
+        bad = self.run_archive("bad_digest")
+        self.assertNotEqual(bad.returncode, 0)
+        self.assertIn("digest mismatch", bad.stderr)
+        missing = self.run_archive("artifact_missing")
+        self.assertNotEqual(missing.returncode, 0)
+        self.assertFalse((self.archive / "provenance.tar.gz").exists())
+
+    def test_auth_and_server_errors_are_not_misreported_as_missing_logs(self):
+        for scenario in ("auth_failure", "server_failure", "network_failure"):
+            with self.subTest(scenario=scenario):
+                completed = self.run_archive(scenario)
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertFalse((self.archive / "7-workflow-logs-status.json").exists())
+                self.assertFalse((self.archive / "provenance.tar.gz").exists())
+
+
+if __name__ == "__main__":
+    unittest.main()

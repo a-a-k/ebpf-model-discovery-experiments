@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   actions: read
+  checks: read
 jobs:
   archive:
     runs-on: ubuntu-24.04
@@ -19,29 +20,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUN_IDS: ${{ inputs.run_ids }}
         run: |
-          source scripts/github-read.sh
-          mkdir -p work/archive
-          for run_id in $RUN_IDS; do
-            [[ "$run_id" =~ ^[0-9]+$ ]] || exit 2
-            gh_api_to_file "work/archive/$run_id-artifact-index.json" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/artifacts?per_page=100"
-            gh_api_to_file "work/archive/$run_id-run.json" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id"
-            [[ "$(jq -r .status "work/archive/$run_id-run.json")" == completed ]] || exit 2
-            gh_api_to_file "work/archive/$run_id-workflow-logs.zip" "repos/${GITHUB_REPOSITORY}/actions/runs/$run_id/logs"
-            while IFS=$'\t' read -r artifact_id artifact_name; do
-              [[ "$artifact_name" =~ ^[a-zA-Z0-9._-]+$ ]] || exit 2
-              gh_api_to_file "work/archive/$run_id-$artifact_name.zip" "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip"
-            done < <(jq -r '.artifacts[] | [.id, .name] | @tsv' "work/archive/$run_id-artifact-index.json")
-          done
-          cd work/archive
-          sha256sum *.zip > SHA256SUMS.txt
-          tar -czf provenance.tar.gz *-artifact-index.json *-run.json SHA256SUMS.txt
+          bash scripts/archive-runs.sh
       - name: Publish retained synthetic experiment data
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="data-${GITHUB_RUN_ID}"
           cat > work/archive/notes.md <<'EOF'
-          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes original artifact indexes, workflow metadata and SHA-256 checksums. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
+          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes artifact indexes, run and job metadata, check annotations, log availability, and SHA-256 checksums. A failed run may have no artifact or log blob; absence is recorded explicitly. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
           EOF
           gh release create "$tag" --target "$GITHUB_SHA" --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
-          gh release upload "$tag" work/archive/*.zip work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt
+          assets=(work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt)
+          for file in work/archive/*.zip; do
+            [[ -f "$file" ]] && assets+=("$file")
+          done
+          for file in work/archive/*.log; do
+            [[ -f "$file" ]] && assets+=("$file")
+          done
+          gh release upload "$tag" "${assets[@]}"
