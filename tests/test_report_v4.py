@@ -45,7 +45,12 @@ def campaign(complete=True):
         "evidence": {"cross_guest": {"ebpf": {"exact_parent_links": 4,
             "invalid_identity_candidates": 0, "placement_coverage": {"known_guest_observations": 9},
             "header_verdicts": {"corroborated_same_planned_header": 4}}},
-            "async": {"attempts": [{"four_stage_causal_chain": "unknown"}]}},
+            "async": {"attempts": [
+                {"source": "ebpf", "phase": "async_paused", "four_stage_causal_chain": "observed"},
+                {"source": "ebpf", "phase": "async_paused", "four_stage_causal_chain": "unknown"},
+                {"source": "ebpf", "phase": "async_paused"},
+                {"source": "native", "phase": "async_recovered", "four_stage_causal_chain": "conflicting"},
+            ]}},
         "cost": {"campaign_elapsed_seconds": 12, "toolchain_clone_seconds": None,
             "toolchain_build_seconds": 4, "shared_input_preparation_seconds": 1,
             "toolchain_command_seconds": 3, "bering_replay_command_seconds": 2,
@@ -83,6 +88,10 @@ def test_report_copies_saved_tables_and_marks_unknown_cost(tmp_path):
     assert "pending=2" in text
     assert "corroborated_same_planned_header=4" in text
     assert "linked attempt rows retained" in text
+    assert "`async_paused` identifies requests issued while the consumer was paused" in text
+    assert "ebpf | async_paused | 3 | 1 | 1 | 1 | none | 1/3" in text
+    assert "native | async_recovered | 1 | 0 | 0 | 0 | conflicting=1 | 0/1" in text
+    assert "do not establish SQL durability or business correctness" in text
     assert "unknown | 4" in text  # unavailable clone seconds is not rendered as zero
 
 
@@ -117,6 +126,18 @@ def test_statusless_saved_attempt_uses_actual_saved_provenance_schema(tmp_path):
     assert "987 | otel_demo | full | 6 | false | unknown" in text
     assert "52 | v4-summary-otel_demo-full-6-987 | sha256:compact" in text
     assert "51 | v4-otel_demo-full-6-987 | sha256:original" in text
+
+
+def test_missing_causal_evidence_is_unavailable_not_zero(tmp_path):
+    value = campaign()
+    value["evidence"] = {"available": False, "reason": "evidence-v4.json pending"}
+    source = tmp_path / "evaluation-v4.json"
+    source.write_text(json.dumps(aggregate([value])), encoding="utf-8")
+    out = tmp_path / "report-v4.md"
+    render(source, out)
+    text = out.read_text(encoding="utf-8")
+    assert "unavailable | unavailable | unknown | unknown | unknown | unknown" in text
+    assert "stored async attempt evidence missing" in text
 
 
 def test_cli_requires_actions(monkeypatch, tmp_path):

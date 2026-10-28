@@ -63,7 +63,7 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
         "",
         f"Aggregate input: [`evaluation-v4.json`]({aggregate_link})",
         "",
-        "This report copies stored evaluation fields. It introduces no threshold, pooling, forecast, or empirical recomputation.",
+        "This report copies stored evaluation metrics and descriptively counts retained causal verdicts. It introduces no threshold, cross-campaign pooling, relinking, refit, or new forecast.",
         "Every retained campaign is listed as an attempt; selection metadata determines evaluation inclusion.",
     ]
     if costs:
@@ -205,6 +205,8 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
                                item.get("states"), item.get("paused_absence_is_failure"), item.get("reason")])
     lines += _table(["Run", "System", "Mode", "Seed", "Async phase", "Available", "Records", "Stored states",
                      "Paused absence is failure", "Reason"], async_rows)
+    lines.extend(["", "`async_paused` identifies requests issued while the consumer was paused; it does not claim completion during the pause.",
+                  "The paused SQL snapshot and the separate after-resume/recovered verification remain distinct external observations.", ""])
 
     _heading(lines, "Cross-guest and causal evidence")
     cross_rows = []
@@ -226,6 +228,37 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
     lines.extend(["", "Causal evidence availability (not recomputed from attempt rows):", ""])
     lines += _table(["Run", "System", "Mode", "Seed", "Attempt evidence present", "Stored-summary status"],
                     causal_availability)
+    lines.extend(["", "Stored exact-chain association verdict census:", "",
+                  "These verdicts describe source-local exact chain association in the final capture. They do not establish SQL durability or business correctness.", ""])
+    causal_rows = []
+    for campaign in campaigns:
+        run_id, system, mode, seed, _ = _identity(campaign)
+        async_evidence = ((campaign.get("evidence") or {}).get("async"))
+        if not isinstance(async_evidence, dict) or not isinstance(async_evidence.get("attempts"), list):
+            causal_rows.append([run_id, system, mode, seed, "unavailable", "unavailable", None,
+                                None, None, None, None, "unavailable", "stored async attempt evidence missing"])
+            continue
+        grouped = {}
+        for item in async_evidence["attempts"]:
+            key = (item.get("source") or "not_recorded", item.get("phase") or "not_recorded")
+            state = item.get("four_stage_causal_chain")
+            state = "not_recorded" if state is None else str(state)
+            bucket = grouped.setdefault(key, {})
+            bucket[state] = bucket.get(state, 0) + 1
+        if not grouped:
+            causal_rows.append([run_id, system, mode, seed, "none", "none", 0, 0, 0, 0,
+                                "none", "0/0", "stored attempt list empty"])
+        for (source, phase), states in sorted(grouped.items()):
+            total = sum(states.values())
+            unexpected = {key: value for key, value in states.items()
+                          if key not in {"observed", "unknown", "not_recorded"}}
+            causal_rows.append([run_id, system, mode, seed, source, phase, total,
+                                states.get("observed", 0), states.get("unknown", 0),
+                                states.get("not_recorded", 0), unexpected or "none",
+                                f"{states.get('observed', 0)}/{total}", states])
+    lines += _table(["Run", "System", "Mode", "Seed", "Source", "Phase", "Total", "Observed",
+                     "Unknown", "Not recorded", "Unexpected states", "Coverage observed/total",
+                     "All stored states"], causal_rows)
 
     _heading(lines, "Costs")
     cost_rows = []
