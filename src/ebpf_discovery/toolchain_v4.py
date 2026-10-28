@@ -365,6 +365,7 @@ class Toolchain:
                         self.system+'-routed-network' if variant == 'network_scope' else None,
                         supplied_server_roles={key: value for key, value in roles.items() if key[0] == source})
                     manifest.update(graph_input='all source-separated frozen training-prefix observations',
+                        exported_wire_bytes=sum(Path(export['path']).stat().st_size for export in manifest['exports']),
                         causal_execution_inferred=False,
                         ambient_preparation_and_oracle_traffic='retained if present in frozen source prefixes',
                         supplied_role_policy='union of exact declared entry roots across all operations')
@@ -374,6 +375,8 @@ class Toolchain:
                 pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
                 manifest = {'exports': [export for _, piece in pieces for export in piece['exports']],
                     'observations': sum(piece['observations'] for _, piece in pieces),
+                    'exported_wire_bytes': sum(piece['exported_wire_bytes'] for _, piece in pieces),
+                    'additional_exported_wire_bytes': 0,
                     'graph_input': 'union of unchanged source-global exports; no cross-source causal join',
                     'source_manifests': [{'path': str(path), 'sha256': digest(path)} for path, _ in pieces],
                     'causal_execution_inferred': False}
@@ -433,6 +436,7 @@ class Toolchain:
         }
 
     def forecast(self, plans):
+        print(json.dumps({'toolchain_event': 'preflight_start', 'system': self.system}), flush=True)
         self.preflight()
         self.prepare_inputs(plans)
         results = {}
@@ -444,7 +448,13 @@ class Toolchain:
                 shared = self.root/'discovery'/source/variant
                 shared.mkdir(parents=True, exist_ok=True)
                 if manifest['observations']:
+                    print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
+                        'variant': variant, 'observations': manifest['observations'],
+                        'wire_bytes': manifest['exported_wire_bytes']}), flush=True)
                     observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
+                    print(json.dumps({'toolchain_event': 'shared_discovery_complete', 'source': source,
+                        'variant': variant, 'services': len(observed_model['services']),
+                        'edges': len(observed_model['edges']), 'endpoints': len(observed_model['endpoints'])}), flush=True)
                 for name, contract in self.declaration.CONTRACTS.items():
                     folder = self.root/source/variant/name
                     folder.mkdir(parents=True, exist_ok=True)
@@ -517,6 +527,8 @@ class Toolchain:
                         analysis['profiles'].append({'name': 'db-down', 'sampling_mode': 'independent_replica',
                                                      'fault_profile': 'db-down'})
                     write_json(folder/'analysis.json', analysis)
+                    print(json.dumps({'toolchain_event': 'simulation_start', 'source': source,
+                        'variant': variant, 'operation': name}), flush=True)
                     self.command('sheaft', ['run', '--model', folder/'model.json', '--analysis', folder/'analysis.json',
                                             '--out-dir', folder/'simulation'], folder, 'simulation')
                     report = json.loads((folder/'simulation'/'report.json').read_text())

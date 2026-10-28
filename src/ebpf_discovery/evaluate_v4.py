@@ -347,7 +347,7 @@ def _cost(root: Path, status: dict) -> dict:
     preparation = _read(root/"toolchain"/"input-preparation-cost.json", {})
     preparation_seconds = ((preparation['ended_ns']-preparation['started_ns'])/1e9
         if isinstance(preparation.get('started_ns'), int) and isinstance(preparation.get('ended_ns'), int) else None)
-    commands, returncodes, bering_replays, replay_statuses = [], [], [], []
+    commands, returncodes, bering_replays, replay_statuses, bering_resources = [], [], [], [], []
     for path in (root/"toolchain").rglob("*.command.json") if (root/"toolchain").exists() else []:
         row = _read(path, {})
         if isinstance(row.get("started_ns"), int) and isinstance(row.get("ended_ns"), int):
@@ -356,6 +356,9 @@ def _cost(root: Path, status: dict) -> dict:
     for path in (root/"toolchain").rglob("replay-command.json") if (root/"toolchain").exists() else []:
         row = _read(path, {})
         replay_statuses.append(row.get("status", "unknown"))
+        if isinstance(row.get('child_resources'), dict):
+            bering_resources.append({'command_record': str(path),
+                'input_observations': row.get('input_observations'), **row['child_resources']})
         if isinstance(row.get("started_ns"), int) and isinstance(row.get("ended_ns"), int):
             elapsed = (row["ended_ns"]-row["started_ns"])/1e9
             commands.append(elapsed)
@@ -385,6 +388,9 @@ def _cost(root: Path, status: dict) -> dict:
         "bering_replay_command_count": len(bering_replays),
         "bering_replay_attempts": len(replay_statuses),
         "bering_replay_statuses": dict(Counter(replay_statuses)),
+        "bering_child_resources": bering_resources,
+        "bering_child_peak_rss_kib": max((row['child_peak_rss_kib'] for row in bering_resources
+            if isinstance(row.get('child_peak_rss_kib'), (float, int))), default=None),
         "toolchain_command_returncodes": returncodes,
         "toolchain_command_failures": sum(code not in (0, None) for code in returncodes) if returncodes else None,
         "infrastructure_time_file": str(time_file),

@@ -52,6 +52,9 @@ def _command(path: Path, root: Path) -> dict:
         "ended_ns": value.get("ended_ns"),
         "argv": value.get("argv", []),
         "stderr": value.get("stderr", ""),
+        "input_observations": value.get("input_observations"),
+        "child_resources": value.get("child_resources"),
+        "child_resources_unavailable": value.get("child_resources_unavailable"),
     }
 
 

@@ -228,9 +228,11 @@ def test_cost_accounts_distinct_transport_ids_and_bering_replays(tmp_path: Path)
     _write(tmp_path/"preparation-operations.json", [
         {"http_steps":[{"request_id":"warm-1"}]}])
     _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"observed-runtime"/"replay-command.json",
-           {"started_ns":0,"ended_ns":5_000_000_000,"status":"complete"})
+           {"started_ns":0,"ended_ns":5_000_000_000,"status":"complete", "input_observations":15,
+            "child_resources":{"child_peak_rss_kib":1200,"child_user_seconds":1.5}})
     _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"model-runtime"/"replay-command.json",
-           {"started_ns":0,"ended_ns":3_000_000_000,"status":"complete"})
+           {"started_ns":0,"ended_ns":3_000_000_000,"status":"complete", "input_observations":15,
+            "child_resources":{"child_peak_rss_kib":900,"child_user_seconds":1}})
     _write(tmp_path/"toolchain"/"ebpf"/"raw"/"op"/"simulation.command.json",
            {"started_ns":0,"ended_ns":2_000_000_000,"returncode":0})
     def event(kind, identity, request, **data):
@@ -254,6 +256,8 @@ def test_cost_accounts_distinct_transport_ids_and_bering_replays(tmp_path: Path)
     assert result["bering_replay_command_seconds"] == 8
     assert result["bering_replay_statuses"] == {"complete": 2}
     assert result["toolchain_command_seconds"] == 10
+    assert result['bering_child_peak_rss_kib'] == 1200  # peak is not summed across replays
+    assert len(result['bering_child_resources']) == 2
     assert result["http_transport"]["summed_request_seconds_are_not_wall_clock"]
     assert result["http_transport"]["by_category"]["primary"]["completed_requests"] == 1
     assert result["http_transport"]["by_category"]["preparation"]["transport_unknown_requests"] == 1
