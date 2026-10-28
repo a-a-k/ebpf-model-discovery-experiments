@@ -128,8 +128,9 @@ experiment, not a two-physical-host failure study. Guest/runner CPU, memory, ker
 BTF, boot, image, process and network evidence are retained. Workflows use public
 runner resources and do not silently switch to a paid larger runner.
 
-OTel's repaired workflow computes the saved training model on a separate standard
-Actions runner. The two application guests stay on their original runner and
+The prepared OTel and DSB workflows compute the saved training model on a separate
+standard Actions runner. Activation awaits the diagnostic and staged-run reviews
+recorded in [the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
 This separates toolchain resource use from the application host; it does not move
 replicas to additional physical machines or change the application's placement.
@@ -363,7 +364,7 @@ The manual workflows are:
   logs and provenance in permanent data releases, with lossless numbered parts
   when an original file exceeds the release-asset delivery limit.
 
-For OTel, the series invokes [toolchain-worker-v4.yml](.github/workflows/toolchain-worker-v4.yml)
+For OTel and DSB, the series invokes [toolchain-worker-v4.yml](.github/workflows/toolchain-worker-v4.yml)
 automatically after the training upload. Schedule parent groups with capacity left
 for those workers; `max-parallel: 3` applies to each series workflow, not all
 separately dispatched workflows together.
@@ -390,8 +391,8 @@ continue on the same live guests; an unsuccessful upload is a technical failure.
 This checkpoint is partial evidence, not a finished campaign or permission to
 resume target measurements on a replacement host.
 
-For OTel the supervisor adds `--toolchain-execution worker`; the CLI default and
-the other systems remain `local`. The parent dispatches one child with the exact
+For OTel and DSB the supervisor adds `--toolchain-execution worker`; the CLI default
+and Petclinic remain `local`. The parent dispatches one child with the exact
 checkpoint artifact/manifest, parent run/attempt/cell and scientific commit. The
 worker checks out that commit, restores the original paths and verifies the pinned
 binaries before executing the same Bering/Sheaft pipeline. Its workflow revision
@@ -400,6 +401,11 @@ unknown branches, return as one manifested artifact. The parent verifies all
 toolchain files and its unchanged training index, imports the files, fits classes,
 then freezes everything before any target request. No later observation is used
 by that worker. A failed worker or inconsistent import is a technical failure.
+The prepared worker applies `GOMEMLIMIT=12GiB` and GC logging to Bering children
+equally across source/variant branches. This is a soft Go runtime target on the
+standard runner, not an input limit or RSS guarantee; GOGC and other tools'
+environments are unchanged. Requested, inherited and effective settings are
+retained. This setting is still undergoing full-input empirical verification.
 
 Worker job and artifact costs are separate series-computation costs. Include each
 `cost.remote_toolchain.worker_run_id` in the report workflow's `run_ids` alongside

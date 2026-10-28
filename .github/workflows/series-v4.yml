@@ -102,7 +102,7 @@ jobs:
         env:
           PYTHONPATH: src
           GH_TOKEN: ${{ github.token }}
-          TOOLCHAIN_EXECUTION: ${{ matrix.system == 'otel_demo' && 'worker' || 'local' }}
+          TOOLCHAIN_EXECUTION: ${{ (matrix.system == 'otel_demo' || matrix.system == 'deathstarbench') && 'worker' || 'local' }}
         run: |
           python -m ebpf_discovery.campaign_process_v4 start \
             --state-dir work/campaign-process --out work/campaign \

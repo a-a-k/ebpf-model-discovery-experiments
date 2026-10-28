@@ -321,8 +321,9 @@ def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path)
 
 
 @pytest.mark.parametrize('tool_failure', [False, True])
+@pytest.mark.parametrize('system_name', ['otel_demo', 'deathstarbench'])
 def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(
-        tmp_path, monkeypatch, tool_failure):
+        tmp_path, monkeypatch, tool_failure, system_name):
     from types import SimpleNamespace
     from ebpf_discovery.bering_v4 import _child_process_environment
     from ebpf_discovery.checkpoint_diagnostic_v4 import PROFILES, LARGE_GC_PROFILE
@@ -330,7 +331,8 @@ def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(
     # Exercise the worker's actual restore/verify/forecast/finalize path with a
     # tiny synthetic checkpoint; no product binary or empirical input is run.
     original = tmp_path / 'original'
-    manifest = checkpoint(original, identity())
+    cell = {**identity(), 'system': system_name}
+    manifest = checkpoint(original, cell)
     index = original / 'observation-index.sqlite'
     with sqlite3.connect(index) as db:
         for table in ('spans', 'links', 'files'):
@@ -340,10 +342,10 @@ def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(
         'bytes': index.stat().st_size, 'sha256': remote._sha(index)}
     write_json(original / 'manifest.json', manifest)
     manifest_sha = remote._sha(original / 'manifest.json')
-    write_json(original / 'ready.json', {**identity(), 'status': 'training_checkpoint_ready',
+    write_json(original / 'ready.json', {**cell, 'status': 'training_checkpoint_ready',
                                          'manifest_sha256': manifest_sha})
     plans = json.loads((original / 'plans.json').read_text())
-    expected = {**identity(), 'manifest_sha256': manifest_sha,
+    expected = {**cell, 'manifest_sha256': manifest_sha,
         'plans_sha256': remote._json_sha(plans),
         'training_index_proof_sha256': remote._json_sha(remote._index_table_proof(index))}
     archive = tmp_path / 'checkpoint.zip'
@@ -367,8 +369,8 @@ def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(
 
     class SyntheticToolchain:
         def __init__(self, ctx, system, store, declaration):
-            assert ctx.out == root.resolve() and system == 'otel_demo'
-            assert declaration.__name__ == 'systems.otel_demo.experiment_v4'
+            assert ctx.out == root.resolve() and system == system_name
+            assert declaration.__name__ == f'systems.{system_name}.experiment_v4'
             assert store.db.execute('PRAGMA query_only').fetchone()[0] == 1
 
         def forecast(self, actual_plans):

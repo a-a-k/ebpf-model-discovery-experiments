@@ -472,6 +472,16 @@ passed (28 checks, one Windows executable-mode skip), and exact-head Linux CI
 `40780702510` succeeded. The single DSB diagnostic was dispatched as
 `40780918812`; it has no application traffic or campaign-resume path.
 
+Root and the independent reviewer also give **explicit ORIGINAL-criterion design
+GO** to prepare future DSB series routing through the existing exact remote
+worker. Petclinic remains local; all inputs, contracts, baselines, source branches,
+parent ownership, immutable binding and freeze-before-target checks are unchanged.
+The preparation includes system-binding checks and retains worker-slot reservation
+and parent-wait/worker costs. No new acquisition follows from this decision:
+require actual DSB diagnostic integrity/resource review and separate execution GO
+for one fresh full/6 cell, then its admission before the remaining eight. This
+does not establish contention as the earlier failure cause.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
