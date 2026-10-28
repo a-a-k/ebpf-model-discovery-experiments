@@ -27,7 +27,7 @@ jobs:
         run: |
           tag="data-${GITHUB_RUN_ID}"
           cat > work/archive/notes.md <<'EOF'
-          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes artifact indexes, run and job metadata, check annotations, log availability, and SHA-256 checksums. A failed run may have no artifact or log blob; absence is recorded explicitly. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
+          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes artifact indexes, run and job metadata, check annotations, log availability, and SHA-256 checksums. Oversized assets are uploaded as lossless numbered parts; their manifests in provenance.tar.gz record the original hash, part hashes, and exact reassembly command. A failed run may have no artifact or log blob; absence is recorded explicitly. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
           EOF
           gh release create "$tag" --target "$GITHUB_SHA" --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
           assets=(work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt)
@@ -35,6 +35,9 @@ jobs:
             [[ -f "$file" ]] && assets+=("$file")
           done
           for file in work/archive/*.log; do
+            [[ -f "$file" ]] && assets+=("$file")
+          done
+          for file in work/archive/*.part[0-9][0-9][0-9][0-9]; do
             [[ -f "$file" ]] && assets+=("$file")
           done
           gh release upload "$tag" "${assets[@]}"

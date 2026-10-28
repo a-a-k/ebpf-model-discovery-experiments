@@ -99,10 +99,13 @@ class ArchiveRunsTests(unittest.TestCase):
         sleep.chmod(0o755)
         self.archive = self.home / "archive"
 
-    def run_archive(self, scenario):
+    def run_archive(self, scenario, *, max_asset_bytes=None, chunk_bytes=None):
         env = dict(os.environ, PATH=f"{self.bin}:{os.environ['PATH']}",
                    GITHUB_REPOSITORY="example/repo", RUN_IDS="7",
                    ARCHIVE_DIR=str(self.archive), MOCK_SCENARIO=scenario)
+        if max_asset_bytes is not None:
+            env['ARCHIVE_MAX_ASSET_BYTES'] = str(max_asset_bytes)
+            env['ARCHIVE_CHUNK_BYTES'] = str(chunk_bytes)
         return subprocess.run(["bash", str(ROOT / "scripts/archive-runs.sh")],
                               cwd=ROOT, env=env, text=True, capture_output=True)
 
@@ -156,6 +159,38 @@ class ArchiveRunsTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertEqual((self.archive / "7-job-11.log").read_bytes(),
                          b"\x1b[31msynthetic job log\x1b[0m\n")
+
+    def test_oversized_asset_parts_reassemble_exact_original(self):
+        completed = self.run_archive("artifact", max_asset_bytes=16, chunk_bytes=8)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        original = "7-artifact-42-capture.zip"
+        self.assertFalse((self.archive / original).exists())
+        manifest = json.loads((self.archive / (original + ".chunks.json")).read_text())
+        self.assertEqual(manifest["original_size_bytes"], len(ARTIFACT))
+        self.assertEqual(manifest["original_sha256"], hashlib.sha256(ARTIFACT).hexdigest())
+        self.assertEqual(manifest["source_api_digest"], "sha256:" + hashlib.sha256(ARTIFACT).hexdigest())
+        parts = manifest["parts"]
+        self.assertEqual([part["filename"] for part in parts],
+                         [f"{original}.part{index:04d}" for index in range(len(parts))])
+        self.assertEqual([part["offset_bytes"] for part in parts], [0, 8, 16, 24])
+        self.assertEqual(b"".join((self.archive / part["filename"]).read_bytes()
+                                  for part in parts), ARTIFACT)
+        for part in parts:
+            data = (self.archive / part["filename"]).read_bytes()
+            self.assertEqual(part["sha256"], hashlib.sha256(data).hexdigest())
+            self.assertLess(len(data), 16)
+        sums = (self.archive / "SHA256SUMS.txt").read_text()
+        self.assertIn(parts[0]["filename"], sums)
+        self.assertNotIn(original + "\n", sums)
+        with tarfile.open(self.archive / "provenance.tar.gz", "r:gz") as bundle:
+            self.assertIn("./" + original + ".chunks.json", bundle.getnames())
+        subprocess.run(["bash", "-c", manifest["reassembly_command"]],
+                       cwd=self.archive, check=True)
+        subprocess.run(["bash", "-c", manifest["verification_command"]],
+                       cwd=self.archive, check=True, capture_output=True)
+        self.assertEqual((self.archive / original).read_bytes(), ARTIFACT)
+        self.assertIn("*.part[0-9][0-9][0-9][0-9]",
+                      (ROOT / ".github/workflows/archive.yml").read_text())
 
     def test_live_run_and_missing_artifact_fail_closed(self):
         live = self.run_archive("live")
