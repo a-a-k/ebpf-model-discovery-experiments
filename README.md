@@ -309,6 +309,8 @@ explicit technical-selection manifest the cell is ambiguous and unscored, while 
 attempts and costs remain in the report. A manifest may retain only the sole complete
 campaign while excluding technically incomplete attempts; it cannot choose among two
 complete campaigns by outcome.
+Keep a committed selection manifest outside the generated `results/iteration-4`
+directory, which each report run replaces in its disposable Actions checkout.
 
 ## 9. Reproduction, workflows and retained artifacts
 
@@ -345,6 +347,8 @@ python -m ebpf_discovery.evaluate_v4 --aggregate ROOT [ROOT ...] \
   --report-dir report [--selection technical-replacements.json]
 python -m ebpf_discovery.plot_v4 --aggregate report/evaluation-v4.json \
   --out-dir report/figures
+python -m ebpf_discovery.report_v4 --aggregate report/evaluation-v4.json \
+  --costs report/costs-v4.json --out report/report-v4.md
 ```
 
 The report extra (`pip install -e '.[report]'`) pins
@@ -352,6 +356,18 @@ The report extra (`pip install -e '.[report]'`) pins
 each operation/source/mode separately, show unknown errors and available repeats,
 and label observed repeat min–max ranges as descriptive ranges, not confidence
 intervals. `figures/figures-v4.md` links the aggregate and lists the stored values.
+`report-v4.md` retains individual attempts, artifact provenance, selection metadata,
+operation outcomes, DB controls, class metrics, async verdicts and measured or
+unavailable costs. Async verdict counts describe the stored final-capture links;
+they do not change the linker or establish completion during a paused phase.
+
+The report also renders the fixed Petclinic/full/seed6 eBPF/network-scope observed
+graph when that cell has one complete unambiguous attempt, irrespective of its
+accuracy. It downloads the advertised full artifact and verifies the graph against
+the admitted frozen-file SHA before rendering with Graphviz. Every observed node,
+alias and edge is retained, with the original model, DOT, SVG, hash and Graphviz
+version. Missing or ambiguous examples stay unavailable. The picture precedes
+operation/placement overlays; it is not a per-request causal or physical-topology claim.
 
 The series evaluates each cell against its full retained evidence before upload.
 The report workflow downloads compact `v4-summary-*` artifacts, verifies their

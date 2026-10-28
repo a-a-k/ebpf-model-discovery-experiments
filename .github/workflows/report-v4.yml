@@ -28,6 +28,24 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -e '.[report]' opentelemetry-proto
+      - name: Prepare a fresh generated report directory
+        env:
+          SELECTION_MANIFEST: ${{ inputs.selection_manifest }}
+        run: |
+          python - <<'PY'
+          import os, pathlib, shutil
+          workspace = pathlib.Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          expected = workspace/'results'/'iteration-4'
+          target = expected.resolve()
+          if target != expected:
+              raise SystemExit('generated report path resolves outside its fixed directory')
+          selection = os.environ.get('SELECTION_MANIFEST')
+          if selection and pathlib.Path(selection).resolve().is_relative_to(target):
+              raise SystemExit('committed selection manifest must be outside generated results/iteration-4')
+          if target.exists():
+              shutil.rmtree(target)
+          target.mkdir(parents=True)
+          PY
       - name: Retain metadata and complete Actions cost ledger
         env:
           GH_TOKEN: ${{ github.token }}
@@ -160,6 +178,68 @@ jobs:
           python -m ebpf_discovery.plot_v4 --aggregate results/iteration-4/evaluation-v4.json \
             --out-dir results/iteration-4/figures
           python -m pip freeze > results/iteration-4/provenance/report-python-environment.txt
+      - name: Render saved evaluation tables
+        run: |
+          python -m ebpf_discovery.report_v4 --aggregate results/iteration-4/evaluation-v4.json \
+            --costs results/iteration-4/costs-v4.json --out results/iteration-4/report-v4.md
+      - name: Render the fixed observed model example with frozen-file verification
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, shutil, subprocess
+          from ebpf_discovery.model_figure_v4 import render_saved_model
+          report = pathlib.Path('results/iteration-4')
+          aggregate = json.loads((report/'evaluation-v4.json').read_text())
+          cell = ['petclinic', 'full', 6]
+          candidates = [row for row in aggregate['campaigns'] if
+              [row.get(k) for k in ('system','mode','seed')] == cell and
+              row.get('complete_for_evaluation') is True]
+          ambiguous = any(row.get('cell') == cell for row in aggregate['ambiguous_duplicate_cells'])
+          declaration = {'fixed_cell':cell, 'source':'ebpf', 'variant':'network_scope',
+              'choice_rule':'fixed planned cell; independent of accuracy, coverage or appearance'}
+          if ambiguous or len(candidates) != 1:
+              declaration.update(status='unavailable', reason='fixed cell lacks one complete unambiguous attempt')
+          else:
+              candidate = candidates[0]
+              provenance = candidate['saved_evaluation_provenance']
+              relative = 'toolchain/discovery/ebpf/network_scope/observed.json'
+              frozen = json.loads((pathlib.Path(candidate['root'])/'freeze-integrity.json').read_text())
+              expected = frozen['sha256_by_path'].get(relative)
+              if expected is None:
+                  declaration.update(status='unavailable', provenance=provenance,
+                      reason='fixed source/variant has no frozen observed model; source evidence may be absent')
+              else:
+                  if provenance.get('full_artifact_expired'):
+                      raise SystemExit('fixed example full artifact expired')
+                  downloaded = pathlib.Path('work/v4-model-example')
+                  subprocess.run(['gh','run','download',str(provenance['run_id']),
+                      '-n',provenance['full_artifact_name'],'-D',str(downloaded)],check=True)
+                  original = downloaded/relative
+                  actual = hashlib.sha256(original.read_bytes()).hexdigest()
+                  if expected != actual:
+                      raise SystemExit('example model does not match the admitted frozen file hash')
+                  target = report/'figures'/'petclinic-full-6-ebpf-network_scope.model.json'
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  shutil.copyfile(original,target)
+                  subprocess.run(['sudo','apt-get','update','-qq'],check=True)
+                  subprocess.run(['sudo','apt-get','install','-y','-qq','graphviz'],check=True)
+                  version = subprocess.run(['dot','-V'],capture_output=True,text=True,check=True)
+                  result = render_saved_model(target,report/'figures'/'petclinic-full-6-ebpf-network_scope',svg=True)
+                  declaration.update(status='rendered', provenance=provenance, frozen_model_sha256=actual,
+                      model_relative_path=str(target.relative_to(report)), renderer=result,
+                      graphviz_version=version.stderr.strip() or version.stdout.strip(),
+                      verification_scope='copied model file matched the admitted frozen SHA; full archive not re-evaluated')
+          (report/'provenance'/'model-example.json').write_text(json.dumps(declaration,indent=2)+'\n')
+          with (report/'report-v4.md').open('a') as stream:
+              stream.write('\n## Figures\n\n[Per-operation figures and stored values](figures/figures-v4.md).\n')
+              stream.write('\n[Fixed model example provenance](provenance/model-example.json).\n')
+              if declaration['status'] == 'rendered':
+                  stream.write('\n![Actual Bering eBPF graph](figures/petclinic-full-6-ebpf-network_scope.svg)\n')
+                  stream.write('\nObserved topology before operation/placement overlays. Every observed service and edge is retained; aliases are separate. Declared network scope and supplied entry-role interpretation are part of the input. Arrows are structural Bering output, not proof of per-request causality or shared physical identity.\n')
+              else:
+                  stream.write('\nThe fixed model example is unavailable; no alternative was selected by result.\n')
+          PY
       - uses: actions/upload-artifact@v4
         if: always()
         with:
