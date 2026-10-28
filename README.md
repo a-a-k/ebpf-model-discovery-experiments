@@ -6,9 +6,9 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > [The first three qualification jobs](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40655022146)
 > each acquired 240 planned requests, then failed on an invalid Procrustes goal
 > before discovery. Per-step goals and ancillary Sheaft predicates are repaired;
-> [Petclinic retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40661273773)
-> produced some combined-source forecasts. Diagnosis also exposed an incorrect
-> graph-input filter, now being removed and reviewed. The 27 scientific campaigns
+> [Global-input retained replay](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40668208749)
+> reached actual Sheaft simulation for every combined OTel/Petclinic operation.
+> Source-format, proxy and database-mapping repairs are being verified. The 27 scientific campaigns
 > have not started; retained replay does not measure fresh predictive accuracy.
 
 Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
@@ -175,8 +175,9 @@ The offline Bering batch still holds spans in memory; the SQLite index does not 
 that tool memory bounded. Actual guest/tool resource qualification remains necessary.
 
 There are two discovery variants. `raw` preserves the original wire structures,
-with separately attributed format conversion and explicitly supplied receiver roles
-where exact entry evidence permits them; it is not claimed to be entirely unaided.
+with separately attributed format conversion, source-URL path derivation and
+explicitly supplied receiver roles where exact entry evidence permits them; it is
+not claimed to be entirely unaided.
 `network_scope` differs only by adding the explicitly attributed
 `bering.network.scope` resource attribute. Existing conflicting attributes are
 retained rather than overwritten. Both variants receive the same contracts and

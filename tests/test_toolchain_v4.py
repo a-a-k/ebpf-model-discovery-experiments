@@ -1,7 +1,7 @@
 import json
 from types import SimpleNamespace
 
-from ebpf_discovery.toolchain_v4 import Toolchain, exact_graph_outcome, fault_inputs, unique_path, resolve_contract, predicate_contract
+from ebpf_discovery.toolchain_v4 import Toolchain, exact_graph_outcome, fault_inputs, unique_path, resolve_contract, predicate_contract, resolve_entry_representations
 
 
 def test_shared_database_requires_both_calls_and_affects_prediction():
@@ -47,12 +47,14 @@ def test_database_mapping_requires_port_system_and_compatible_network_scope(tmp_
         ('postgresql', '192.168.76.11', 15432, 'example-routed-network'),
         ('postgresql', '172.20.0.9', 5432, 'another-deployment'),
         ('mysql', '172.20.0.9', 5432, ''),
+        ('postgresql', '172.20.0.9', 5432, 'declared:example-routed-network'),
+        ('postgresql', '172.20.0.9', 5432, 'declared:another-deployment'),
     )]
     model = {'services': [{'id': str(i)} for i in range(len(databases))], 'edges': []}
     quality = {'observation_evidence': [{'entity_type': 'service', 'entity_id': str(i),
                 'evidence': {'database': database}} for i, database in enumerate(databases)]}
     selected, evidence = tool.database_nodes(model, quality)
-    assert selected == ['0', '2']
+    assert selected == ['0', '2', '5']
     assert evidence['physical_identity_inferred'] is False
 
 
@@ -256,3 +258,86 @@ def test_contract_rpc_wire_spelling_and_proven_endpoint_alias_preserve_graph():
     assert json.dumps(model, sort_keys=True) == original
     model['edges'][0]['identity']['route'] = '/another.CartService/AddItem'
     assert not resolve_contract(model, {}, contract, entry_proofs={0: proof})['available']
+
+
+def test_direct_and_transparent_proxy_representations_have_same_declared_fault_law():
+    model = {'services': [{'id': name} for name in ('entry', 'proxy', 'worker')],
+        'edges': [{'id': name, 'from': a, 'to': b, 'kind': 'sync'} for name, a, b in (
+            ('direct', 'entry', 'worker'), ('first', 'entry', 'proxy'), ('second', 'proxy', 'worker'))]}
+    evidence = {}
+    direct = unique_path(model, 'entry', 'worker', intermediates={'proxy'}, provenance=evidence)
+    assert direct == ['direct'] and 'direct observed' in evidence['policy']
+    proxy_model = {**model, 'edges': model['edges'][1:]}
+    indirect = unique_path(proxy_model, 'entry', 'worker', intermediates={'proxy'})
+    assert indirect == ['first', 'second']
+    assert unique_path(proxy_model, 'entry', 'worker', intermediates=set()) is None
+    base = {'entry_service': 'entry', 'mandatory_targets': ['worker']}
+    for unavailable in ([], ['worker']):
+        assert exact_graph_outcome(model, {**base, 'required_edges': direct}, unavailable) == \
+               exact_graph_outcome(proxy_model, {**base, 'required_edges': indirect}, unavailable)
+
+
+def test_mapped_database_alias_group_is_not_a_graph_merge_or_complete_db_coverage():
+    model = {'services': [{'id': name} for name in ('entry', 'worker', 'db-local', 'db-forward')],
+        'edges': [{'id': name, 'from': a, 'to': b, 'kind': 'sync'} for name, a, b in (
+            ('call', 'entry', 'worker'), ('local', 'worker', 'db-local'), ('forward', 'worker', 'db-forward'))],
+        'endpoints': [{'id': 'endpoint', 'entry_service': 'entry', 'method': 'GET', 'path': '/work'}]}
+    quality = {'observation_evidence': [{'entity_type': 'service', 'entity_id': name,
+        'evidence': {'database': {'system': 'mysql'}}} for name in ('db-local', 'db-forward')]}
+    contract = {'entry_services': ['entry'], 'steps': [{'method': 'GET', 'path': '/work'}],
+        'required_calls': [{'caller': ['entry'], 'callee': ['worker']},
+                           {'caller': ['worker'], 'db_system': 'mysql'},
+                           {'caller': ['worker'], 'db_system': 'redis'}]}
+    group = {'declared_system': 'mysql', 'matched_observed_nodes': ['db-local', 'db-forward'],
+             'fault_scope': 'same declared stopped container', 'mapping_basis': 'exact supplied endpoint aliases'}
+    before = json.dumps(model, sort_keys=True)
+    binding = resolve_contract(model, quality, contract, database_fault_group=group)
+    assert binding['available'] and binding['database_fault_prediction_available']
+    assert not binding['all_required_database_channels_observed']  # Redis remains unobserved
+    assert binding['required_edges'] == ['call', 'forward', 'local']
+    assert binding['database_fault_fixed_other_requirements'][0]['obligation']['db_system'] == 'redis'
+    assert exact_graph_outcome(model, binding) == 1
+    assert exact_graph_outcome(model, binding, group['matched_observed_nodes']) == 0
+    assert json.dumps(model, sort_keys=True) == before
+    incomplete = resolve_contract(model, quality, contract,
+        database_fault_group={**group, 'matched_observed_nodes': ['db-local']})
+    assert incomplete['available'] and not incomplete['database_fault_prediction_available']
+    assert not incomplete['all_required_database_channels_observed']
+
+
+def test_proven_entry_alias_selects_only_an_observed_supported_representation():
+    model = {'services': [{'id': name} for name in ('entry-ebpf', 'entry-native', 'worker')],
+        'edges': [{'id': 'call', 'from': 'entry-native', 'to': 'worker', 'kind': 'sync'}],
+        'endpoints': [{'id': name, 'entry_service': name, 'method': 'GET', 'path': '/work'}
+                      for name in ('entry-ebpf', 'entry-native')]}
+    contract = {'entry_services': ['entry-ebpf', 'entry-native'],
+        'steps': [{'method': 'GET', 'path': '/work'}], 'required_calls': [
+            {'caller': ['entry-ebpf', 'entry-native'], 'callee': ['worker']}]}
+    before = json.dumps(model, sort_keys=True)
+    assert not resolve_entry_representations(model, {}, contract, [], proof_builder=lambda _: {})['available']
+    binding = resolve_entry_representations(model, {}, contract, [], proof_builder=lambda _: {},
+        identity_groups=[{'aliases': ['entry-ebpf', 'entry-native'], 'proof': ['fixture retained configuration']}],
+        controlled='worker')
+    assert binding['available'] and binding['entry_service'] == 'entry-native'
+    assert binding['required_edges'] == ['call']
+    candidates = binding['entry_identity_resolution']['candidates']
+    assert not candidates[0]['binding']['available']
+    assert candidates[1]['exact_state_vector'] == {'11': 1, '10': 1, '01': 1, '00': 0}
+    assert json.dumps(model, sort_keys=True) == before
+
+
+def test_entry_representations_with_different_observed_fault_paths_remain_unknown():
+    model = {'services': [{'id': name} for name in ('entry-a', 'entry-b', 'controlled', 'caller', 'target')],
+        'edges': [{'id': name, 'from': a, 'to': b, 'kind': 'sync'} for name, a, b in (
+            ('a', 'entry-a', 'controlled'), ('b', 'controlled', 'caller'),
+            ('c', 'entry-b', 'caller'), ('d', 'caller', 'target'))],
+        'endpoints': [{'id': name, 'entry_service': name, 'method': 'GET', 'path': '/work'}
+                      for name in ('entry-a', 'entry-b')]}
+    contract = {'entry_services': ['entry-a', 'entry-b'], 'steps': [{'method': 'GET', 'path': '/work'}],
+                'required_calls': [{'caller': ['caller'], 'callee': ['target']}]}
+    binding = resolve_entry_representations(model, {}, contract, [], proof_builder=lambda _: {},
+        identity_groups=[{'aliases': ['entry-a', 'entry-b'], 'proof': ['fixture retained configuration']}],
+        controlled='controlled')
+    assert not binding['available']
+    assert not binding['entry_identity_resolution']['all_supported_state_vectors_agree']
+    assert binding['entry_identity_resolution']['selected_observed_entry'] is None

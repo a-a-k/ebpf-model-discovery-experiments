@@ -107,6 +107,50 @@ verification. This is not approval of full-series resource adequacy or a success
 claim. The later resource check may stage already-planned cells rather than add
 an unrelated scenario grid; that decision awaits these diagnostic outputs.
 
+The global-input retained replay
+[40668208749](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40668208749)
+at `1d3a7bd` completed for all three systems. Each original-file and index integrity
+check passed. Actual Sheaft outputs now exist for all combined OTel/Petclinic
+operations, native OTel browse/cart, native Petclinic owner details and eBPF Petclinic
+owners/vets. These are fits to qualification captures, not held-out accuracy results.
+DSB native entry paths and selected DB fault mappings still exposed representation
+errors, so unavailable forecasts are not attributed to collector capability.
+
+Root and independent 6.1 Sol/xhigh reviewer **GO under the ORIGINAL criterion**,
+2026-10-28, for the following evidence-bound repairs before the next retained replay:
+
+- Derive a missing entry `url.path` from its actual observed full HTTP URL only on
+  an exactly admitted supplied-role root. Preserve original attributes/bytes and
+  URL/path provenance; reject contradictory source paths. Never copy the declared
+  operation path into an observation.
+- Interpret Bering's exact `declared:<supplied-scope>` spelling and retain its raw
+  value. Relative observed HTTP route names use Bering's leading-slash spelling,
+  only with the existing exact request/root and concrete URL checks.
+- Read transparent-proxy names from the retained deployment inventory. Prefer a
+  direct observed channel; otherwise require a unique observed path through the
+  declared proxies. Record the rule and alternatives. This is justified only while
+  those proxies are fixed fulfilled; no expected edge is inserted.
+- Compile distinct observed DB aliases together only when every candidate belongs
+  to the same explicitly mapped stopped-container fault group. Preserve all nodes,
+  typed edges and scopes; no physical-identity discovery or graph merge is claimed.
+  Whole-endpoint faults make these channels coextensive. A selected DB-down forecast
+  requires the relevant mandatory channels and mapping; missing requirements for
+  other DB systems may retain the same explicit fixed-fulfilled condition. Global
+  DB completeness remains a separate field. Unattributed same-system requirements
+  remain unknown. The manual inventory baseline receives the same assumptions.
+- Resolve DSB entry representations only with the retained Compose mount → nginx
+  loader → Jaeger service-name proof and file hashes. Try only observed aliases and
+  substitute only their entry/caller role. Keep all candidate bindings and select
+  the sole supported one, or declared order after agreement of the complete exact
+  state vector and known DB forecasts. Conflicting predictions stay unknown; mixed
+  DB coverage remains unknown for that intervention. Neither graph IDs nor edges
+  change, and the entry remains fixed fulfilled, outside controlled-replica faults.
+
+Each source arm and baseline receives these supplied identity/fault-group facts.
+The repairs change compatibility and documented conditional interpretation, not
+the original usefulness criterion. Their preparation and replay costs remain part
+of the work; no scientific success follows from improved binding coverage.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed

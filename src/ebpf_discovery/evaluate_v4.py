@@ -505,6 +505,8 @@ def evaluate_campaign(root: Path) -> dict:
                    "blocks": len(blocks)},
         "evaluations": evaluations, "manual_baselines": _manual_baselines(status.get("system"), operations)
             if status.get("system") else {},
+        "manual_baseline_supplied_entry_identity_groups": _read(
+            root/"toolchain"/"static-inputs.json", {}).get('supplied_entry_identity_groups', []),
         "database": database, "async": _async_results(root),
         "classes": classes if classes is not None else {"available": False, "reason": "classes-v4.json pending"},
         "evidence": _read(root/"evidence-v4.json") or {"available": False, "reason": "evidence-v4.json pending"},

@@ -5,6 +5,7 @@ No evaluator response or outcome rate is accepted by this module.
 from __future__ import annotations
 
 from collections import defaultdict, deque
+from copy import deepcopy
 import hashlib
 import importlib
 import json
@@ -61,11 +62,13 @@ def db_aliases(model, quality):
     return result
 
 
-def unique_path(model, start, end, *, intermediates=None, call_hint=None, permitted_services=()):
+def unique_path(model, start, end, *, intermediates=None, call_hint=None, permitted_services=(), provenance=None):
     """A unique observed directed service path; keep every typed edge on its hops.
 
     Parallel operation identities on one channel are not alternate service paths.
-    More than one service path stays ambiguous rather than selecting a convenient one.
+    A direct observed channel takes precedence over its declared transparent-proxy
+    representation under this protocol's fixed-fulfilled proxy condition. Without
+    a direct call, more than one allowed service path remains ambiguous.
     """
     adjacency = defaultdict(set)
     by_pair = defaultdict(list)
@@ -78,6 +81,14 @@ def unique_path(model, start, end, *, intermediates=None, call_hint=None, permit
                     continue
             adjacency[edge['from']].add(edge['to'])
             by_pair[edge['from'], edge['to']].append(edge['id'])
+    if by_pair.get((start, end)):
+        if provenance is not None:
+            provenance.update(policy='direct observed channel before declared transparent-proxy representation',
+                basis='declared proxies remain fulfilled in all modeled node/whole-DB interventions',
+                allowed_proxy_services=sorted(intermediates or []),
+                other_observed_proxy_edge_ids=sorted(e['id'] for e in model['edges']
+                    if e['from'] in (intermediates or ()) or e['to'] in (intermediates or ())))
+        return sorted(by_pair[start, end])
     found = []
     queue = deque([(start, [start])])
     while queue:
@@ -93,18 +104,24 @@ def unique_path(model, start, end, *, intermediates=None, call_hint=None, permit
     if len(found) != 1:
         return None
     path = found[0]
+    if provenance is not None:
+        provenance.update(policy='unique observed service path through declared proxies',
+                          service_path=path, allowed_proxy_services=sorted(intermediates or []))
     return sorted({eid for a, b in zip(path, path[1:]) for eid in by_pair[a, b]})
 
 
-def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs=None):
+def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs=None, database_fault_group=None):
     """Compile supplied obligations against recovered structure, never add structure."""
     required, targets, resolved, unknown, assumed_database = set(), set(), [], [], []
     databases = db_aliases(model, quality)
+    group = database_fault_group or {}
+    group_nodes = set(group.get('matched_observed_nodes', []))
     entry = unique_service(model, contract['entry_services'])
     if not entry:
         unknown.append({'reason': 'entry_service_missing_or_ambiguous'})
     for call in contract['required_calls']:
         caller = unique_service(model, call['caller'])
+        grouped_callees, path_evidence = [], {}
         if 'db_system' in call:
             candidates = []
             for edge in model['edges']:
@@ -114,11 +131,21 @@ def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs
                     candidates.append(edge['to'])
             candidates = sorted(set(candidates))
             callee = candidates[0] if len(candidates) == 1 else None
+            if len(candidates) > 1 and set(candidates) <= group_nodes:
+                grouped_callees = candidates
         else:
             callee = unique_service(model, call['callee'])
         path = unique_path(model, caller, callee, intermediates=set(proxy_aliases),
                            call_hint=call.get('operation_hint') if 'db_system' not in call else None,
-                           permitted_services=aliases(call.get('callee'))) if caller and callee else None
+                           permitted_services=aliases(call.get('callee')),
+                           provenance=path_evidence) if caller and callee else None
+        if grouped_callees:
+            channels = [unique_path(model, caller, node) for node in grouped_callees]
+            path = sorted({edge for channel in channels for edge in channel}) if all(channels) else None
+            path_evidence = {'policy': 'all observed aliases in the same explicitly mapped whole-endpoint fault group',
+                'separate_node_ids': grouped_callees, 'physical_identity_inferred': False,
+                'fault_scope': group.get('fault_scope'), 'mapping_basis': group.get('mapping_basis'),
+                'validity': 'coextensive whole-endpoint intervention; no independent alias/command failures'}
         if 'db_system' in call and caller and entry and reachable(model, entry, caller) and path is None:
             assumed_database.append({'obligation': call, 'resolved_caller': caller,
                 'resolved_callee': callee, 'reason': 'database_channel_missing_or_ambiguous',
@@ -135,8 +162,9 @@ def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs
             unknown.append({'reason': 'required_caller_not_uniquely_reachable', 'obligation': call})
             continue
         required.update(path)
-        targets.update([caller, callee])
+        targets.update([caller, *(grouped_callees or [callee])])
         resolved.append({'obligation': call, 'caller': caller, 'callee': callee,
+                         'callee_nodes': grouped_callees or [callee], 'path_resolution': path_evidence,
                          'required_edge_ids': path,
                          'call_hint_evidence': [
                              {'edge_id': edge['id'], 'observed_identity': edge.get('identity'),
@@ -167,6 +195,14 @@ def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs
             endpoints.append(candidates[0]['id'])
             endpoint_bindings.append({'step': step, 'endpoint_ids': [candidates[0]['id']],
                                       'basis': 'unique observed entry method and canonical route'})
+    db_fault_unknown = [item for item in assumed_database
+                       if item['obligation']['db_system'] == group.get('declared_system')]
+    for item in resolved:
+        if (item['obligation'].get('db_system') == group.get('declared_system')
+                and not set(item['callee_nodes']) <= group_nodes):
+            db_fault_unknown.append({'obligation': item['obligation'],
+                'reason': 'required_database_endpoint_not_attributed_to_selected_fault_group',
+                'observed_nodes': item['callee_nodes']})
     return {'entry_service': entry, 'required_edges': sorted(required),
             'mandatory_targets': sorted(targets-{entry}), 'endpoints': sorted(set(endpoints)),
             'resolved_calls': resolved, 'endpoint_bindings': endpoint_bindings,
@@ -174,6 +210,10 @@ def resolve_contract(model, quality, contract, proxy_aliases=(), *, entry_proofs
             'assumed_satisfied_database_requirements': assumed_database,
             'all_required_database_channels_observed': not assumed_database and not any(
                 'db_system' in item.get('obligation', {}) for item in unknown),
+            'database_fault_prediction_available': bool(group_nodes) and not db_fault_unknown,
+            'database_fault_unknown': db_fault_unknown,
+            'database_fault_fixed_other_requirements': [item for item in assumed_database
+                if item['obligation']['db_system'] != group.get('declared_system')],
             'primary_scope': 'topology-only replica intervention conditional on nonintervened requirements being fulfilled'}
 
 
@@ -190,6 +230,56 @@ def fault_inputs(controlled, database_nodes=()):
                                         'only_failure_eligible': False,
                                         'selector': {'service_ids': sorted(database_nodes)}}]}
     return {'schema_version': '1.0', 'profiles': profiles}
+
+
+def resolve_entry_representations(model, quality, contract, proxy_aliases, *, proof_builder,
+                                  identity_groups=(), database_fault_group=None, controlled=None):
+    """Interpret independently proven entry names without rewriting Bering's graph."""
+    observed = {service['id'] for service in model['services']}
+    present = [name for name in aliases(contract['entry_services']) if name in observed]
+    groups = [group for group in identity_groups if set(present) <= set(group['aliases'])]
+    if len(present) < 2 or len(groups) != 1:
+        entry = unique_service(model, contract['entry_services'])
+        return resolve_contract(model, quality, contract, proxy_aliases,
+            entry_proofs=proof_builder(entry) if entry else {}, database_fault_group=database_fault_group)
+    group, candidates = groups[0], []
+    for entry in present:  # Explicit contract order, independent of outcomes.
+        candidate_contract = deepcopy(contract)
+        candidate_contract['entry_services'] = [entry]
+        for call in candidate_contract['required_calls']:
+            caller = set(aliases(call.get('caller')))
+            if caller and caller <= set(group['aliases']) and caller & set(contract['entry_services']):
+                call['caller'] = [entry]
+        binding = resolve_contract(model, quality, candidate_contract, proxy_aliases,
+            entry_proofs=proof_builder(entry), database_fault_group=database_fault_group)
+        states = ({state: exact_graph_outcome(model, binding,
+            [controlled] if controlled and state == '00' else []) for state in STATE_WEIGHTS}
+            if binding['available'] else None)
+        db_value = (exact_graph_outcome(model, binding, (database_fault_group or {}).get('matched_observed_nodes', []))
+            if binding['available'] and binding['database_fault_prediction_available'] and not contract.get('conditional_db') else None)
+        candidates.append({'entry': entry, 'binding': binding, 'exact_state_vector': states,
+                           'exact_database_down': db_value})
+    supported = [row for row in candidates if row['binding']['available']]
+    same_states = len({json.dumps(row['exact_state_vector'], sort_keys=True) for row in supported}) <= 1
+    known_db_values = {row['exact_database_down'] for row in supported if row['exact_database_down'] is not None}
+    agreement = same_states and len(known_db_values) <= 1
+    selected = supported[0] if supported and agreement else None
+    result = deepcopy((selected or candidates[0])['binding'])
+    if not selected:
+        result['available'] = False
+        result['unknown'].append({'reason': 'proven_entry_representations_unsupported_or_disagree'})
+    elif any(row['exact_database_down'] is None for row in supported):
+        result['database_fault_prediction_available'] = False
+        result['database_fault_unknown'].append({'reason': 'database_prediction_not_supported_by_every_supported_entry_representation'})
+    result['entry_identity_resolution'] = {
+        'supplied_identity_group': group, 'candidates': candidates,
+        'selection_rule': 'sole supported entry or declared order after full deterministic state-vector agreement',
+        'selected_observed_entry': selected['entry'] if selected else None,
+        'all_supported_state_vectors_agree': same_states,
+        'known_database_predictions_agree': len(known_db_values) <= 1,
+        'graph_modified': False, 'entry_failure_modeled': False,
+        'semantic_basis': 'same provided container/listener identity; fixed-fulfilled entry; no controlled-service identity inference'}
+    return result
 
 
 def predicate_contract(model, binding, name):
@@ -265,6 +355,8 @@ class Toolchain:
             raise RuntimeError(f'{tool} {name} failed: {result.stderr[-2500:]}')
 
     def preflight(self):
+        self.entry_identity_groups = (self.declaration.entry_identity_groups(self.ctx.deployment_dir)
+            if hasattr(self.declaration, 'entry_identity_groups') else [])
         candidates = [p for p in self.ctx.deployment_dir.rglob('*') if p.is_file()
                       and not any(part in ('source', 'upstream', '.git')
                                   for part in p.relative_to(self.ctx.deployment_dir).parts)]
@@ -302,6 +394,7 @@ class Toolchain:
                     self.preflight_reports[source, name].append(folder/'report.json')
         write_json(self.root/'static-inputs.json', {'deployment': self.inventory,
             'tool_pins': PINS, 'contracts': self.declaration.CONTRACTS,
+            'supplied_entry_identity_groups': self.entry_identity_groups,
             'procrustes_use': 'reports unchanged; only confirmed identity and replica facts attach to recovered nodes',
             'preflight_scope': 'one declared canonical name per alias group; all deployment namespaces',
             'scenario_limitation': 'custom workload driver is retained separately; no Tracetest scenario is fabricated to pass preflight',
@@ -421,7 +514,7 @@ class Toolchain:
             for value in values:
                 if (value.get('identity_kind') != 'logical_endpoint'
                         or value.get('system') != system
-                        or value.get('network_scope') not in (None, '', expected_scope)
+                        or value.get('network_scope') not in (None, '', expected_scope, 'declared:'+expected_scope)
                         or (value.get('address'), value.get('port')) not in endpoints):
                     continue
                 selected.add(node)
@@ -429,6 +522,7 @@ class Toolchain:
         return sorted(selected), {
             'declared_system': system, 'declared_endpoints': [list(pair) for pair in sorted(endpoints)],
             'declared_network_scope': expected_scope, 'matched_observed_nodes': sorted(selected),
+            'scope_representation_rule': 'exact declared: prefix is the Bering encoding of the supplied scope; original value retained',
             'witnesses': witnesses, 'physical_identity_inferred': False,
             'fault_scope': 'all namespaces of the stopped deployment endpoint',
             'mapping_basis': 'explicit deployment attribution of complete address/port pairs; no graph merge',
@@ -472,15 +566,19 @@ class Toolchain:
                         'files': {filename: digest(shared/filename) for filename in
                                   ('observed.json', 'observed.signal-quality.json', 'observed.snapshot.json')},
                         'basis': 'same actual Bering graph reused across operations; discovery cost counted once'})
-                    proxy_names = aliases(self.inventory.get('proxy', {}).get('name'))
-                    entry = unique_service(model, contract['entry_services'])
-                    proofs = {index: endpoint_alias_evidence(self.store,
-                        self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
-                        for index, step in enumerate(contract['steps'])} if entry else {}
-                    binding = resolve_contract(model, quality, contract, proxy_names, entry_proofs=proofs)
+                    proxy_names = sorted({name for key in ('proxy', 'proxy_discovery')
+                        for field in ('name', 'container')
+                        for name in aliases(self.inventory.get(key, {}).get(field))})
+                    def proof_builder(entry):
+                        return {index: endpoint_alias_evidence(self.store,
+                            self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
+                            for index, step in enumerate(contract['steps'])}
                     selected_db, mapping = self.database_nodes(model, quality)
                     write_json(folder/'database-mapping.json', mapping)
                     controlled = unique_service(model, self.declaration.CONTROLLED_SERVICE_ALIASES)
+                    binding = resolve_entry_representations(model, quality, contract, proxy_names,
+                        proof_builder=proof_builder, identity_groups=self.entry_identity_groups,
+                        database_fault_group=mapping, controlled=controlled)
                     # A missing controlled node is acceptable only for operations
                     # whose declared requirements do not include that service.
                     needs_controlled = any(set(aliases(c.get(role))) & set(self.declaration.CONTROLLED_SERVICE_ALIASES)
@@ -560,6 +658,8 @@ class Toolchain:
                               'database_conditional': bool(contract.get('conditional_db')),
                               'assumed_satisfied_database_requirements': binding['assumed_satisfied_database_requirements'],
                               'all_required_database_channels_observed': binding['all_required_database_channels_observed'],
+                              'database_fault_prediction_available': binding['database_fault_prediction_available'],
+                              'database_fault_fixed_other_requirements': binding['database_fault_fixed_other_requirements'],
                               'state_weights': STATE_WEIGHTS, 'simulator': 'Sheaft',
                               'graph_sha256': digest(folder/'model.json'),
                               'analysis_sha256': digest(folder/'analysis.json'),
@@ -567,9 +667,10 @@ class Toolchain:
                     if contract.get('conditional_db'):
                         answer['database_down_prediction'] = None
                         answer['database_unknown_reason'] = 'declared_conditional_database_requirement'
-                    if not binding['all_required_database_channels_observed']:
+                    if not binding['database_fault_prediction_available']:
                         answer['database_down_prediction'] = None
-                        answer['database_unknown_reason'] = 'unobserved_or_ambiguous_required_database_channel'
+                        answer['database_unknown_reason'] = 'required_selected_database_channel_or_fault_mapping_unknown'
+                        answer['database_fault_unknown'] = binding['database_fault_unknown']
                     write_json(folder/'forecast.json', answer)
                     results[source][variant][name] = answer
         write_json(self.root/'forecasts.json', results)
