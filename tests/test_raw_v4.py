@@ -174,6 +174,16 @@ def test_supplied_role_changes_only_derived_protobuf_kind_and_preserves_unknown_
     assert raw.read_bytes() == wire
     assert result['exports'][0]['raw_sha256'] == hashlib.sha256(wire).hexdigest()
     assert result['exports'][0]['supplied_server_roles'] == [role]
+    all_result = export_selection(Store([(str(index), len(line))]), {'ebpf': None},
+                                  tmp_path/'all', supplied_server_roles={('ebpf', TRACE, SPAN): role})
+    assert all_result['observations'] == 1
+    assert all_result['exports'][0]['selection'] == 'all_frozen_source_records'
+    assert 'selected_ids' not in all_result['exports'][0]
+    assert all_result['exports'][0]['raw_prefix_bytes'] == len(line)
+    assert all_result['exports'][0]['indexed_wrapper_prefix_sha256'] == hashlib.sha256(line).hexdigest()
+    all_wire = ExportTraceServiceRequest()
+    all_wire.ParseFromString(Path(all_result['exports'][0]['path']).read_bytes())
+    assert unknown in all_wire.resource_spans[0].scope_spans[0].spans[0].SerializeToString()
     root.kind = 3
     wire_client = request.SerializeToString()
     raw.write_bytes(wire_client)
@@ -265,3 +275,38 @@ def test_supplied_role_on_jaeger_entry_does_not_rewrite_source_or_client(tmp_pat
         root_id: 'SPAN_KIND_SERVER', client_id: 'SPAN_KIND_CLIENT'}
     assert result['exports'][0]['supplied_server_roles'] == [role]
     assert raw.read_bytes() == original
+    all_result = export_selection(Store([(str(raw), len(original))]), {'native': None},
+                                  tmp_path/'all', supplied_server_roles={('native', trace_id, root_id): role})
+    assert all_result['observations'] == 2
+    assert 'selected_ids' not in all_result['exports'][0]
+    assert all_result['exports'][0]['supplied_server_roles'] == [role]
+
+
+def test_all_frozen_source_records_excludes_unindexed_tail_and_other_source(tmp_path: Path):
+    observations = tmp_path/'observations'
+    observations.mkdir()
+    zero = _span('zero')
+    zero['traceId'] = '0' * 32
+    zero['spanId'] = '0' * 16
+    first = (json.dumps(_payload(_span('first'), zero))+'\n').encode()
+    tail = (json.dumps(_payload(_span('tail')))+'\n').encode()
+    ebpf = observations/'a.jsonl'
+    ebpf.write_bytes(first+tail)
+    native = observations/'native-node-a.jsonl'
+    native.write_bytes(first)
+    result = export_selection(Store([(str(ebpf), len(first)), (str(native), len(first))]),
+                              {'ebpf': None, 'native': set()}, tmp_path/'out')
+    assert result['observations'] == 2
+    assert len(result['exports']) == 1
+    item = result['exports'][0]
+    assert item['source'] == 'ebpf'
+    assert item['raw_prefix_bytes'] == len(first)
+    assert item['raw_sha256'] == hashlib.sha256(first).hexdigest()
+    assert item['selection'] == 'all_frozen_source_records'
+    assert 'selected_ids' not in item
+    payload = json.loads(Path(item['path']).read_text())
+    spans = payload['resourceSpans'][0]['scopeSpans'][0]['spans']
+    assert [s['attributes'][0]['value']['stringValue'] for s in spans] == ['first', 'zero']
+    assert spans[1]['traceId'] == '0' * 32 and spans[1]['spanId'] == '0' * 16
+    assert ebpf.read_bytes() == first+tail
+    assert native.read_bytes() == first

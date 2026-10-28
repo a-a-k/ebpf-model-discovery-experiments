@@ -92,11 +92,11 @@ def _supply_server_role(span, key, source, roles, *, protobuf=False):
     return declaration
 
 
-def _filter_json(payload: dict, identities: set[tuple[str, str]], encoding: str,
+def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encoding: str,
                  network_scope: str | None, source: str = "ebpf",
                  roles: dict | None = None) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
     filtered = copy.deepcopy(payload)
-    kept_resources, found, supplied = [], [], []
+    kept_resources, found, supplied, count = [], [] if identities is not None else None, [], 0
     for resource in filtered.get("resourceSpans", []):
         scope_key = "scopeSpans" if "scopeSpans" in resource else "instrumentationLibrarySpans"
         kept_scopes = []
@@ -104,12 +104,14 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]], encoding: str,
             kept_spans = []
             for span in scope.get("spans", []):
                 key = (_identity(span.get("traceId"), encoding), _identity(span.get("spanId"), encoding))
-                if key in identities:
+                if identities is None or key in identities:
                     role = _supply_server_role(span, key, source, roles or {})
                     if role is not None:
                         supplied.append(role)
                     kept_spans.append(span)
-                    found.append(key)
+                    count += 1
+                    if found is not None:
+                        found.append(key)
             if kept_spans:
                 scope["spans"] = kept_spans
                 kept_scopes.append(scope)
@@ -118,10 +120,10 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]], encoding: str,
             kept_resources.append(resource)
     filtered["resourceSpans"] = kept_resources
     _add_network_scope_json(filtered, network_scope)
-    return filtered, len(found), found, supplied
+    return filtered, count, found, supplied
 
 
-def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]],
+def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]] | None,
                      network_scope: str | None, source: str = "ebpf",
                      roles: dict | None = None):
     from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
@@ -132,16 +134,18 @@ def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]],
     filtered = ExportTraceServiceRequest()
     filtered.CopyFrom(original)
     filtered.ClearField("resource_spans")
-    found, supplied = [], []
+    found, supplied, count = [] if identities is not None else None, [], 0
     for resource in original.resource_spans:
         kept_resource = None
         for scope in resource.scope_spans:
             matches = []
             for span in scope.spans:
                 key = (bytes(span.trace_id).hex(), bytes(span.span_id).hex())
-                if key in identities:
+                if identities is None or key in identities:
                     matches.append(span)
-                    found.append(key)
+                    count += 1
+                    if found is not None:
+                        found.append(key)
             if not matches:
                 continue
             if kept_resource is None:
@@ -162,7 +166,7 @@ def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]],
                                            source, roles or {}, protobuf=True)
                 if role is not None:
                     supplied.append(role)
-    return filtered.SerializeToString(), len(found), found, supplied
+    return filtered.SerializeToString(), count, found, supplied
 
 
 def _typed_value(tag: dict) -> dict:
@@ -189,12 +193,12 @@ def _codec_id(raw: Any, width: int) -> str:
     return value.zfill(width)
 
 
-def _jaeger_trace(trace: dict, identities: set[tuple[str, str]],
+def _jaeger_trace(trace: dict, identities: set[tuple[str, str]] | None,
                   network_scope: str | None, roles: dict | None = None
                   ) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
     processes = trace.get("processes", {})
     resources: dict[str, dict] = {}
-    found, supplied = [], []
+    found, supplied, count = [] if identities is not None else None, [], 0
     kinds = {
         "server": "SPAN_KIND_SERVER", "client": "SPAN_KIND_CLIENT",
         "producer": "SPAN_KIND_PRODUCER", "consumer": "SPAN_KIND_CONSUMER",
@@ -202,9 +206,11 @@ def _jaeger_trace(trace: dict, identities: set[tuple[str, str]],
     }
     for span in trace.get("spans", []):
         raw_key = (str(span.get("traceID", "")).lower(), str(span.get("spanID", "")).lower())
-        if raw_key not in identities:
+        if identities is not None and raw_key not in identities:
             continue
-        found.append(raw_key)
+        count += 1
+        if found is not None:
+            found.append(raw_key)
         process_id = str(span.get("processID", ""))
         process = processes.get(process_id, {})
         resource = resources.setdefault(process_id, {
@@ -270,15 +276,17 @@ def _jaeger_trace(trace: dict, identities: set[tuple[str, str]],
     for resource in resources.values():
         for attribute in resource["resource"]["attributes"]:
             attribute.pop("_supplied_by_raw_v4", None)
-    return {"resourceSpans": list(resources.values())}, len(found), found, supplied
+    return {"resourceSpans": list(resources.values())}, count, found, supplied
 
 
 def _write_export(out: Path, ordinal: int, source: str, content_type: str, body: bytes,
                   raw_file: Path, raw_sha256: str, observations: int,
-                  selected_ids: list[tuple[str, str]], codec_steps: list[str],
+                  selected_ids: list[tuple[str, str]] | None, codec_steps: list[str],
                   *, content_encoding: str = "", network_scope: str | None = None,
                   raw_prefix_bytes: int | None = None,
-                  supplied_server_roles: list[dict] | None = None) -> dict:
+                  supplied_server_roles: list[dict] | None = None,
+                  index_file: Path | None = None,
+                  index_prefix_sha256: str | None = None) -> dict:
     suffix = ".pb" if "protobuf" in content_type else ".json"
     if content_encoding == "gzip":
         suffix += ".gz"
@@ -288,11 +296,18 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
         "path": str(path), "source": source, "content_type": content_type,
         "content_encoding": content_encoding, "observations": observations,
         "sha256": hashlib.sha256(body).hexdigest(), "raw_file": str(raw_file.resolve()),
-        "raw_sha256": raw_sha256, "selected_ids": [list(item) for item in selected_ids],
+        "raw_sha256": raw_sha256,
         "codec_steps": codec_steps,
     }
+    if selected_ids is None:
+        result["selection"] = "all_frozen_source_records"
+    else:
+        result["selected_ids"] = [list(item) for item in selected_ids]
     if raw_prefix_bytes is not None:
         result["raw_prefix_bytes"] = raw_prefix_bytes
+    if index_file is not None:
+        result["indexed_wrapper_file"] = str(index_file.resolve())
+        result["indexed_wrapper_prefix_sha256"] = index_prefix_sha256
     if network_scope is not None:
         result["network_scope"] = network_scope
         result["network_scope_provenance"] = "explicit experiment inventory enrichment"
@@ -301,10 +316,10 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
     return result
 
 
-def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path,
+def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], out: Path,
                      network_scope: str | None = None,
                      supplied_server_roles: dict | None = None) -> dict:
-    """Export selected raw variants from only byte prefixes frozen in ``store.files``."""
+    """Export frozen prefixes; a source value of None selects all its records."""
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     exports, ordinal, total = [], 0, 0
@@ -314,7 +329,7 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path
         path = Path(raw_path)
         source = _source(path)
         identities = selected.get(source, set())
-        if not identities:
+        if identities is not None and not identities:
             continue
         if consumed < 0 or consumed > path.stat().st_size:
             raise ValueError(f"invalid indexed prefix for {path}: {consumed}")
@@ -376,10 +391,13 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path
                     ordinal += 1
                     exports.append(_write_export(
                         out, ordinal, source, content_type, body, original_path, raw_hash,
-                        count, found, ["selected exact source-local IDs from original wire export",
+                        count, found, [("all source records in frozen indexed prefix from original wire export"
+                                       if identities is None else "selected exact source-local IDs from original wire export"),
                                        "copied complete resource/scope/span structures"],
                         content_encoding=content_encoding, network_scope=network_scope,
                         supplied_server_roles=supplied,
+                        **({'index_file': path, 'index_prefix_sha256': prefix_hash,
+                            'raw_prefix_bytes': consumed} if identities is None else {}),
                     ))
                     total += count
                     continue
@@ -395,7 +413,8 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path
                 exported = _write_export(
                     out, ordinal, source, "application/json", body, path,
                     prefix_hash, count, found,
-                    ["filtered direct OTLP JSONL document without normalized reconstruction"],
+                    [("all records in frozen direct OTLP JSONL document without normalized reconstruction"
+                      if identities is None else "filtered direct OTLP JSONL document without normalized reconstruction")],
                     network_scope=network_scope, raw_prefix_bytes=consumed,
                     supplied_server_roles=supplied,
                 )
@@ -407,4 +426,9 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]]], out: Path
                    for item in exports for role in item.get("supplied_server_roles", [])}
         if applied != set(roles):
             raise ValueError(f"supplied server roles not applied to exact selected source identities: {sorted(set(roles)-applied)}")
-    return {"exports": exports, "observations": total}
+    result = {"exports": exports, "observations": total}
+    if any(ids is None for ids in selected.values()):
+        result["selection_by_source"] = {
+            source: ("all_frozen_source_records" if ids is None
+                     else "exact_selected_source_identities") for source, ids in selected.items()}
+    return result
