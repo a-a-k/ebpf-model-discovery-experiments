@@ -114,9 +114,11 @@ as technical failure evidence while GitHub finalizes the outer original job.
 Petclinic/full/6 `40718674400` is complete and independently admitted: all 34,800
 primary operations and frozen graph/forecast integrity checks pass. Its remaining
 eight cells were launched in `40733841068`, `40733846961`, `40733852492` and
-`40733858113`. Petclinic/absent/8 is now also complete and independently admitted:
-runtime suppression and empty native captures support its eBPF-only result.
-Seven Petclinic cells remain. Permanent archiving of the first Petclinic cell completed in
+`40733858113`. All three Petclinic absent-mode repeats and partial/7–8 are now also
+complete and independently admitted. Runtime suppression and empty native captures
+support the absent-mode findings; partial-mode metadata confirms both Visits
+replicas have native instrumentation disabled. Three Petclinic cells remain.
+Permanent archiving of the first Petclinic cell completed in
 `40734810232`. OTel's retry retained its training checkpoint but then failed during
 continuation; no completed cell is available and diagnosis is ongoing.
 Next: assess the running Petclinic/DSB cells and diagnose OTel; retain the original attempt's available

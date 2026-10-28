@@ -2,17 +2,19 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): two of 27 planned cells admitted; series incomplete.**
+> **Current status (iteration 4): six of 27 planned cells admitted; series incomplete.**
 > [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
-> and [Petclinic/absent/seed8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068/artifacts/12840556183)
+> plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
+> and [Petclinic/partial/seeds7–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961)
 > each completed 34,800 primary operations, including 9,600 held-out target operations.
 > Actual Bering graphs built from eBPF observations were consumed by Sheaft; all four
-> operation forecasts matched observed target frequencies in both cells.
-> In absent/seed8, deployed runtime settings disable native instrumentation and both
-> training/final native captures contain zero spans. This supports the requested
-> no-native-tracing path for this cell. The supplied-contract baseline makes the same
+> operation forecasts matched observed target frequencies in each admitted cell.
+> All three absent-mode repeats have verified disabled native instrumentation and zero
+> training/final native spans. In the two admitted partial-mode repeats, native-only
+> graphs leave Visits-dependent operations unknown; eBPF supplies usable graphs for them.
+> This supports the requested path for Petclinic. The supplied-contract baseline makes the same
 > scalar predictions; no cost advantage or cross-system conclusion is established.
-> Both cells passed independent integrity/resource review; seven Petclinic cells remain.
+> All six cells passed independent integrity/resource review; three Petclinic cells remain.
 > OTel's continuation failed after its training checkpoint was uploaded; diagnosis
 > is ongoing. The DSB staged retry continues. All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
@@ -445,7 +447,8 @@ termination are reported. Unmeasured manual preparation remains unmeasured.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 currently has admitted Petclinic full/seed6 and absent/seed8 cells. The remaining
+Iteration 4 currently has admitted Petclinic full/seed6, absent/seeds6–8 and
+partial/seeds7–8 cells. The remaining
 cells and source/tracing-mode comparisons are incomplete. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
@@ -455,12 +458,14 @@ The evaluator/cost component has passed independent review. After the
 series, the original criterion must be checked again against the external outcomes and
 the strongest baseline before any success claim.
 
-The absent/seed8 cell also retains a negative operation-class result: route-based
-grouping covers all 600 healthy test attempts with ARI 1, while downstream-enriched
-grouping covers 580, leaves 20 unknown, and has ARI approximately 0.516 on its known
-subset. Accurate primary forecasts therefore do not establish better operation
-identification. These are [stored one-cell metrics](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068/artifacts/12840556183),
-not a repeat-level or causal explanation of the difference.
+All three absent-mode repeats retain a negative operation-class result:
+downstream-enriched grouping has known-subset ARI approximately 0.489, 0.504 and
+0.516 for seeds 6, 7 and 8, with 11, 46 and 20 unknown assignments out of 600.
+Route-based grouping has ARI 1 on its known subsets, with 0, 1 and 0 unknown
+assignments respectively. Accurate primary forecasts therefore do not establish
+better operation identification. These are the separately stored repeat metrics
+in the [retained absent-mode data](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40745651023),
+not a pooled statistic or causal explanation of the difference.
 
 The principal limitations are known in advance:
 
