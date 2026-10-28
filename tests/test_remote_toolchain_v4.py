@@ -153,7 +153,7 @@ def test_dispatch_transport_ambiguity_is_persisted_without_retry(tmp_path, monke
     monkeypatch.setenv("GH_TOKEN", "secret")
     monkeypatch.setenv("GITHUB_REPOSITORY", "owner/repo")
     monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "3")
-    monkeypatch.setattr(remote, "_verify_binaries", lambda *_: {})
+    monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
     monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
     session = AmbiguousSession()
@@ -266,3 +266,36 @@ def test_release_identity_failure_happens_before_dispatch(tmp_path, monkeypatch)
     monkeypatch.setattr(remote.requests, "Session", NeverSession)
     with pytest.raises(ValueError, match="release and checkpoint"):
         remote.forecast_on_worker(Campaign(), cp, release, [])
+
+
+def test_actual_upload_artifact_bare_digest_is_canonicalized(tmp_path, monkeypatch):
+    class Ctx:
+        out = tmp_path / "campaign"
+        mode = "full"
+        seed = 6
+    class Campaign:
+        ctx = Ctx()
+        system = "otel_demo"
+    Ctx.out.mkdir()
+    cp = tmp_path / "checkpoint"
+    checkpoint(cp, identity())
+    plans = json.loads((cp / "plans.json").read_text())
+    bare = "38149e16" + "a" * 56
+    release = {**identity(), "manifest_sha256": remote._sha(cp / "manifest.json"),
+               "upload_success": True, "artifact_id": "12830934533",
+               "artifact_url": "https://github.example/artifact/12830934533",
+               "artifact_digest": bare}
+    monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
+    expected, _ = remote._expected(Campaign(), cp, release, plans)
+    assert expected["artifact_digest"] == "sha256:" + bare
+
+
+@pytest.mark.skipif(os.name == "nt", reason="Linux executable-mode regression")
+def test_zip_restored_verified_binary_is_made_executable(tmp_path):
+    binary = tmp_path / "tool"
+    binary.write_text("#!/bin/sh\nprintf executable-mode-ok", encoding="utf-8")
+    binary.chmod(0o644)
+    proof = {"tool": {"path": str(binary), "sha256": remote._sha(binary)}}
+    remote._make_binaries_executable(proof)
+    result = __import__("subprocess").run([str(binary)], check=True, text=True, capture_output=True)
+    assert result.stdout == "executable-mode-ok"

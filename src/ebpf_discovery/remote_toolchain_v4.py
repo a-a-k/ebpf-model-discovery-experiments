@@ -44,6 +44,15 @@ def _json_sha(value) -> str:
                                      ensure_ascii=False).encode()).hexdigest()
 
 
+def _canonical_digest(value: str) -> str:
+    value = str(value or "")
+    if re.fullmatch(r"[0-9a-f]{64}", value):
+        return "sha256:" + value
+    if re.fullmatch(r"sha256:[0-9a-f]{64}", value):
+        return value
+    raise ValueError("Actions artifact digest is not SHA-256")
+
+
 def _atomic_json(path: Path, value: dict) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -195,18 +204,20 @@ def _validate_checkpoint(root: Path, expected: dict, *, allow_toolchain: bool = 
     return manifest, {"manifest_sha256": _sha(manifest_path), "files": actual}
 
 
-def _verify_binaries(root: Path, manifest: dict) -> dict:
+def _verify_binaries(root: Path, manifest: dict, *, runtime_root: Path | None = None) -> dict:
     build = _read(root / "toolchain-build" / "toolchain-build.json")
     rows = build.get("binaries") or []
     expected = {name.lower(): commit for name, commit in PINS.items()}
     if build.get("schema_version") != "toolchain-build-v4" or {r.get("name") for r in rows} != set(expected):
         raise ValueError("checkpoint toolchain build manifest differs from exact pins")
     proofs = {}
+    runtime_root = Path(runtime_root or root).resolve()
     for row in rows:
         name = row["name"]
         binary = (root / "toolchain-build" / "bin" / name).resolve()
         recorded = Path(str(row.get("binary", "")))
-        if (row.get("commit") != expected[name] or recorded != binary
+        expected_runtime_path = runtime_root / "toolchain-build" / "bin" / name
+        if (row.get("commit") != expected[name] or recorded != expected_runtime_path
                 or not binary.is_file() or binary.is_symlink()
                 or binary.stat().st_size != row.get("binary_bytes")
                 or _sha(binary) != row.get("binary_sha256")):
@@ -217,6 +228,14 @@ def _verify_binaries(root: Path, manifest: dict) -> dict:
     if {p.get("name") for p in manifest_pins} != set(expected):
         raise ValueError("checkpoint manifest lacks exact binary proofs")
     return proofs
+
+
+def _make_binaries_executable(proofs: dict) -> None:
+    for name, proof in proofs.items():
+        path = Path(proof["path"])
+        if not path.is_file() or _sha(path) != proof["sha256"]:
+            raise ValueError(f"verified binary changed before chmod: {name}")
+        path.chmod(path.stat().st_mode | 0o111)
 
 
 def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Path,
@@ -246,6 +265,7 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
         if implementation_sha != expected.get("commit"):
             raise ValueError("worker checkout differs from parent scientific implementation")
         binary_proof = _verify_binaries(campaign_root, manifest)
+        _make_binaries_executable(binary_proof)
         before = input_proof["files"]
         plans = _read(campaign_root / "plans.json")
         if _json_sha(plans) != expected.get("plans_sha256"):
@@ -380,18 +400,17 @@ def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[d
     for key in ("artifact_id", "artifact_url", "artifact_digest"):
         if not release.get(key):
             raise ValueError(f"checkpoint release lacks {key}")
-    if not re.fullmatch(r"sha256:[0-9a-f]{64}", str(release["artifact_digest"])):
-        raise ValueError("checkpoint artifact digest is invalid")
+    artifact_digest = _canonical_digest(release["artifact_digest"])
     expected = {key: ready[key] for key in IDENTITY_KEYS}
     expected.update(parent_run_attempt=os.environ.get("GITHUB_RUN_ATTEMPT"),
                     parent_cell_id=f"{campaign.system}:{campaign.ctx.mode}:{campaign.ctx.seed}",
                     artifact_id=str(release["artifact_id"]),
                     artifact_url=release["artifact_url"],
-                    artifact_digest=release["artifact_digest"],
+                    artifact_digest=artifact_digest,
                     artifact_name=f"training-v4-{campaign.system}-{campaign.ctx.mode}-{campaign.ctx.seed}-{ready['run_id']}",
                     plans_sha256=_json_sha(plans))
     manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
-    _verify_binaries(Path(checkpoint), manifest)
+    _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out)
     return expected, proof
 
 
