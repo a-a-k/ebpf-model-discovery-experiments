@@ -309,6 +309,12 @@ the original cause merely by succeeding, or support a usefulness claim on its ow
 Implementation review precedes execution. No OTLP splitting or model optimization
 is approved by this diagnostic decision.
 
+Diagnostic execution: root and independent reviewer **GO** at `0c75e0d`, after
+Linux CI `40741796026` and independent focused checks. Validation mirrors actual
+dispatch: preparation records are retained separately, and legitimate unissued
+HTTP-step suffixes are not required. The single diagnostic is
+`40742060084`; it does not replace or complete OTel/full/6.
+
 Bering receives actual observations. Required semantic calls are resolved against
 its output; they never create missing edges. Missing or ambiguous required service
 paths produce an unavailable prediction with a reason. The observed graph is analyzed
