@@ -55,10 +55,14 @@ def campaign(complete=True):
             "toolchain_build_seconds": 4, "shared_input_preparation_seconds": 1,
             "toolchain_command_seconds": 3, "bering_replay_command_seconds": 2,
             "bering_child_peak_rss_kib": 100, "infrastructure_time_fields": None,
-            "training_checkpoint": {"ready": True, "upload_success": True,
-                "scope": "creation/upload/hold included in campaign elapsed"},
+            "training_checkpoint": {"creation_wall_seconds": 2.5,
+                "upload_hold_wall_seconds": 7.5, "total_wall_seconds": 10.0,
+                "scope": "creation/upload/hold included in campaign elapsed",
+                "large_unrendered_record": "x" * 200},
             "training_checkpoint_upload": {"upload_success": True, "artifact_id": "42"},
-            "swap_setup": {"available": True, "elapsed_seconds": 3},
+            "swap_setup": {"status": "ready", "elapsed_seconds": 3,
+                "requested_additional_bytes": 8589934592, "meminfo": "large raw text"},
+            "resource_heartbeats_retained": True,
             "cost_overlap_note": "checkpoint nested in campaign; swap precedes campaign",
             "manual_preparation": {"measured": False, "reason": "not instrumented"}},
     }
@@ -163,13 +167,15 @@ def test_report_retains_actions_job_without_campaign_artifact_and_parallel_phase
     out = tmp_path / "report-v4.md"
     render(source, out, costs)
     text = out.read_text(encoding="utf-8")
-    assert "Training checkpoint creation/upload hold" in text
-    assert "ready=true; scope=creation/upload/hold included in campaign elapsed; upload_success=true" in text
-    assert "checkpoint nested in campaign; swap precedes campaign" in text
+    assert "Checkpoint creation s | Checkpoint upload hold s | Checkpoint total s" in text
+    assert "2.5 | 7.5 | 10.0 | true | 42 | 3 | ready | 8589934592 | true" in text
+    assert "Checkpoint creation/upload hold is nested inside campaign elapsed" in text
+    assert "large_unrendered_record" not in text and "large raw text" not in text
     assert "Saved Actions jobs (independent of retained campaign artifacts)" in text
     assert "407 | series | abc123 | completed | failure | 91 | campaign (otel_demo, full, 6)" in text
     assert "failure | unknown | 0 | none" in text
     assert "does not imply zero observations or any scientific outcome" in text
+    assert "Run artifacts | Run artifact names" in text
     # No synthetic campaign attempt is created from the Actions-only job.
     assert "407 | otel_demo | full | 6" not in text
 

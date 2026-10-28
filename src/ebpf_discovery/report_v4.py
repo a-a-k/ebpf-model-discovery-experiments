@@ -274,20 +274,27 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
     lines += _table(["Run", "System", "Mode", "Seed", "Campaign s", "Clone s", "Build s", "Input prep s",
                      "Toolchain commands s", "Bering replay s", "Bering peak RSS KiB", "Infrastructure fields",
                      "Manual prep measured", "Unavailable reason"], cost_rows)
-    lines.extend(["", "Saved campaign phase costs (parallel evidence; checkpoint creation/upload/hold is nested "
-                  "inside campaign elapsed, while swap setup precedes it):", ""])
+    lines.extend(["", "Saved campaign phase costs:", "",
+                  "Checkpoint creation/upload hold is nested inside campaign elapsed; swap setup precedes campaign elapsed. "
+                  "Full stored cost records remain in the linked evaluation input.", ""])
     phase_rows = []
     for campaign in campaigns:
         run_id, system, mode, seed, _ = _identity(campaign)
         item = campaign.get("cost") or {}
+        checkpoint = item.get("training_checkpoint") or {}
+        upload = item.get("training_checkpoint_upload") or {}
+        swap = item.get("swap_setup") or {}
         phase_rows.append([
-            run_id, system, mode, seed, item.get("training_checkpoint"),
-            item.get("training_checkpoint_upload"), item.get("swap_setup"),
-            item.get("cost_overlap_note"),
+            run_id, system, mode, seed,
+            checkpoint.get("creation_wall_seconds"), checkpoint.get("upload_hold_wall_seconds"),
+            checkpoint.get("total_wall_seconds"), upload.get("upload_success"),
+            upload.get("artifact_id"), swap.get("elapsed_seconds"), swap.get("status"),
+            swap.get("requested_additional_bytes"), item.get("resource_heartbeats_retained"),
         ])
     lines += _table([
-        "Run", "System", "Mode", "Seed", "Training checkpoint creation/upload hold",
-        "Checkpoint upload release", "Swap setup (pre-campaign)", "Stored overlap note",
+        "Run", "System", "Mode", "Seed", "Checkpoint creation s", "Checkpoint upload hold s",
+        "Checkpoint total s", "Upload success", "Upload artifact ID", "Swap setup s", "Swap status",
+        "Swap requested additional bytes", "Resource heartbeat retained",
     ], phase_rows)
     if cost_payload is not None:
         lines.extend(["", "Optional saved cost artifact metadata:", ""])
@@ -327,7 +334,7 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
                 ])
         lines += _table([
             "Run", "Role", "Head SHA", "Run status", "Run conclusion", "Job ID", "Job name",
-            "Job status", "Job conclusion", "Stored elapsed s", "Stored artifacts", "Artifact names",
+            "Job status", "Job conclusion", "Stored elapsed s", "Run artifacts", "Run artifact names",
         ], job_rows)
 
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
