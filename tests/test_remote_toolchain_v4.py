@@ -10,6 +10,7 @@ import requests
 import sqlite3
 
 from ebpf_discovery import remote_toolchain_v4 as remote
+from ebpf_discovery import artifact_transport_v4 as transport
 
 
 def write_json(path, value):
@@ -281,18 +282,20 @@ def test_artifact_get_retries_headers_but_never_partial_body(tmp_path, monkeypat
     assert (tmp_path / ".failed.zip.tmp").read_bytes() == b"partial"
 
 
-def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch):
+@pytest.mark.parametrize("system,fail_import", [("otel_demo", False),
+    ("deathstarbench", False), ("deathstarbench", True)])
+def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch, system, fail_import):
     class Ctx:
         out = tmp_path / "campaign"
         mode = "full"
         seed = 6
     class Campaign:
         ctx = Ctx()
-        system = "otel_demo"
         store = type("Store", (), {"db": object()})()
+    Campaign.system = system
     Ctx.out.mkdir()
-    expected = {**identity(), "manifest_sha256": "m" * 64,
-                "parent_run_attempt": "2", "parent_cell_id": "otel_demo:full:6",
+    expected = {**identity(), "system": system, "manifest_sha256": "m" * 64,
+                "parent_run_attempt": "2", "parent_cell_id": f"{system}:full:6",
                 "plans_sha256": "p" * 64, "artifact_id": "42",
                 "artifact_name": "training", "artifact_digest": "sha256:" + "a" * 64,
                 "training_index_proof_sha256": remote._json_sha({"spans": "same"}),
@@ -301,11 +304,15 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     bundle = tmp_path / "bundle"
     bundle.mkdir()
     worker_bundle(bundle, expected)
+    artifact_tree = bundle
+    if system == "deathstarbench":
+        artifact_tree = tmp_path / "package"
+        transport.package(bundle, artifact_tree, kind="worker")
     memory = io.BytesIO()
     with zipfile.ZipFile(memory, "w") as archive:
-        for path in sorted(bundle.rglob("*")):
+        for path in sorted(artifact_tree.rglob("*")):
             if path.is_file():
-                archive.write(path, path.relative_to(bundle).as_posix())
+                archive.write(path, path.relative_to(artifact_tree).as_posix())
     wire = memory.getvalue()
     digest = hashlib.sha256(wire).hexdigest()
 
@@ -324,7 +331,7 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
                     "repository": {"full_name": "owner/repo"}})
             if "artifacts?" in url:
                 return FakeResponse(value={"artifacts": [{"id": 100, "expired": False,
-                    "name": "toolchain-v4-otel_demo-full-6-91", "digest": "sha256:" + digest,
+                    "name": f"toolchain-v4-{system}-full-6-91", "digest": "sha256:" + digest,
                     "archive_download_url": "download", "workflow_run": {"id": 91,
                     "head_sha": "w" * 40}}]})
             if url == "download":
@@ -343,13 +350,33 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     monkeypatch.setattr(remote.requests, "Session", Session)
     sleeps = []
     monkeypatch.setattr(remote.time, "sleep", sleeps.append)
+    if fail_import:
+        original_replace = os.replace
+        def fail_final_import(source, destination):
+            if Path(source).name == "staged-worker-output-unpacked" and Path(destination).name == "worker":
+                raise OSError("injected import rename failure")
+            return original_replace(source, destination)
+        monkeypatch.setattr(remote.os, "replace", fail_final_import)
+        with pytest.raises(OSError, match="injected import rename failure"):
+            remote.forecast_on_worker(Campaign(), tmp_path / "checkpoint", {}, [])
+        evidence = Ctx.out / "infrastructure/remote-toolchain-v4"
+        assert (evidence / "worker-output.zip").is_file()
+        assert (evidence / "staged-worker-output/payload.tar.gz").is_file()
+        assert not (Ctx.out / "toolchain").exists()
+        assert not (evidence / "parent-import.json").exists()
+        return
     forecasts = remote.forecast_on_worker(Campaign(), tmp_path / "checkpoint", {}, [])
     assert forecasts["ebpf"]["raw"]["browse"]["available"] is False
     assert (Ctx.out / "toolchain/forecasts.json").is_file()
     evidence = Ctx.out / "infrastructure/remote-toolchain-v4"
     assert (evidence / "worker/output-manifest.json").is_file()
-    assert not (evidence / "worker-output.zip").exists()
     cost = json.loads((evidence / "cost.json").read_text())
+    if system == "deathstarbench":
+        assert (evidence / "worker/transport-proof/transport.json").is_file()
+        assert cost["output_package_unpack_seconds"] >= 0
+    else:
+        assert cost["output_package_unpack_seconds"] is None
+    assert not (evidence / "worker-output.zip").exists()
     assert cost["worker_run_id"] == 91 and cost["worker_run_attempt"] == 1
     assert cost["worker_poll_interval_seconds"] == 60 and sleeps == [60]
 

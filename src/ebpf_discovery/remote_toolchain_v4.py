@@ -29,6 +29,7 @@ from .runtime import Context
 from .store_v3 import ObservationStore
 from .toolchain_v4 import PINS, Toolchain
 from .bering_v4 import child_go_environment
+from .artifact_transport_v4 import unpack as unpack_transport
 
 
 API_VERSION = "2026-03-10"
@@ -557,6 +558,8 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
             "parent_wait_wall_seconds": None, "output_transfer_seconds": None,
             "worker_poll_interval_seconds": WORKER_POLL_SECONDS,
             "verification_import_seconds": None, "worker_run_id": None,
+            "archive_download_seconds": None, "output_zip_extract_seconds": None,
+            "output_package_unpack_seconds": None,
             "worker_run_attempt": None,
             "scope": "parent-side checkpoint validation, dispatch, wait, transfer, verification and import",
             "nesting": "parent_wait_wall_seconds contains worker compute; do not add it to worker command or compute costs"}
@@ -674,12 +677,32 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     transfer_started = time.monotonic_ns()
     archive_sha = _download(session, artifact["archive_download_url"], headers, archive,
                             retry_log=retries)
+    download_ended = time.monotonic_ns()
+    cost["archive_download_seconds"] = (download_ended - transfer_started) / 1e9
+    _atomic_json(cost_path, cost)
     archive_bytes = archive.stat().st_size
     advertised = str(artifact.get("digest", ""))
     if advertised != "sha256:" + archive_sha:
         raise RuntimeError("downloaded worker artifact differs from Actions digest")
-    stage = state / "staged-worker-output"
-    _safe_extract(archive, stage)
+    zip_stage = state / "staged-worker-output"
+    _safe_extract(archive, zip_stage)
+    zip_extract_ended = time.monotonic_ns()
+    cost["output_zip_extract_seconds"] = (zip_extract_ended - download_ended) / 1e9
+    _atomic_json(cost_path, cost)
+    stage = zip_stage
+    transport_proof = None
+    if campaign.system == "deathstarbench":
+        stage = state / "staged-worker-output-unpacked"
+        transport_proof = unpack_transport(zip_stage, stage, kind="worker")
+        # Keep the small exact transport proof alongside worker evidence.
+        proof_dir = stage / "transport-proof"
+        proof_dir.mkdir()
+        for name in ("payload.manifest.jsonl", "transport.json", "package-status.json", "packaging.json"):
+            shutil.copy2(zip_stage / name, proof_dir / name)
+        cost["output_package_unpack_seconds"] = (time.monotonic_ns() - zip_extract_ended) / 1e9
+        cost["worker_package_files"] = transport_proof["files"]
+        cost["worker_package_bytes"] = transport_proof["uncompressed_file_bytes"]
+        _atomic_json(cost_path, cost)
     expected["worker_workflow_sha"] = run.get("head_sha")
     expected["worker_run_attempt"] = run.get("run_attempt")
     verification_started = time.monotonic_ns()
@@ -697,12 +720,22 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
         "parent_after_worker": live_after,
         "basis": "logical tables from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
-    os.replace(stage / "toolchain", destination)
     worker_evidence = state / "worker"
     if worker_evidence.exists():
         raise ValueError("worker evidence destination appeared before import")
     os.replace(stage, worker_evidence)
-    archive.unlink()
+    os.replace(worker_evidence / "toolchain", destination)
+    cleanup_errors = []
+    if transport_proof is not None:
+        try:
+            shutil.rmtree(zip_stage)
+        except OSError as error:
+            cleanup_errors.append("package_stage: " + repr(error))
+    try:
+        archive.unlink()
+    except OSError as error:
+        cleanup_errors.append("archive: " + repr(error))
+    cost["post_import_cleanup_errors"] = cleanup_errors
     cost["output_transfer_seconds"] = (verification_started - transfer_started) / 1e9
     cost["verification_import_seconds"] = (time.monotonic_ns() - verification_started) / 1e9
     cost["worker_artifact_id"] = artifact.get("id")
@@ -718,12 +751,18 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         "worker_head_sha": run.get("head_sha"), "worker_artifact_id": artifact.get("id"),
         "worker_artifact_digest": advertised, "downloaded_archive_sha256": archive_sha,
         "downloaded_archive_bytes": archive_bytes,
-        "downloaded_archive_retained": False,
-        "downloaded_archive_disposition": "deleted after digest verification and successful atomic import; Actions artifact and complete imported files retained",
+        "downloaded_archive_retained": archive.exists(),
+        "downloaded_archive_disposition": ("retained after import due to cleanup error"
+            if archive.exists() else "deleted after digest verification and successful import; Actions artifact and complete imported files retained"),
+        "post_import_cleanup_errors": cleanup_errors,
         "checkpoint_manifest_sha256": expected["manifest_sha256"],
         "plans_sha256": expected["plans_sha256"], "imported_ns": time.time_ns(),
         "parent_wait_wall_seconds": cost["parent_wait_wall_seconds"],
         "output_transfer_seconds": cost["output_transfer_seconds"],
+        "archive_download_seconds": cost["archive_download_seconds"],
+        "output_zip_extract_seconds": cost["output_zip_extract_seconds"],
+        "output_package_unpack_seconds": cost["output_package_unpack_seconds"],
+        "worker_transport": transport_proof,
         "verification_import_seconds": cost["verification_import_seconds"],
         "new_application_traffic": False,
     })

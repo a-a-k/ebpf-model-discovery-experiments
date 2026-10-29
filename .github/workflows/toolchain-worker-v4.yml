@@ -131,8 +131,36 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
             > work/worker-artifact/infrastructure/workflow-jobs.json \
             2>work/worker-artifact/infrastructure/workflow-jobs.err || true
+      - name: Package the complete DSB worker output losslessly
+        if: always() && inputs.system == 'deathstarbench'
+        env:
+          PYTHONPATH: src
+        run: |
+          set -euo pipefail
+          python -m ebpf_discovery.artifact_transport_v4 package \
+            --source work/worker-artifact --out work/worker-package --kind worker || {
+              mkdir -p work/worker-package/failure-proof
+              if test -f work/worker-artifact/worker-status.json; then
+                cp work/worker-artifact/worker-status.json work/worker-package/failure-proof/
+              fi
+              for name in toolchain-time.txt runner-final.txt final-disk-bytes.txt; do
+                if test -f "work/worker-artifact/infrastructure/$name"; then
+                  cp "work/worker-artifact/infrastructure/$name" work/worker-package/failure-proof/
+                fi
+              done
+              exit 1
+            }
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && inputs.system == 'deathstarbench'
+        with:
+          name: toolchain-v4-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
+          path: work/worker-package/
+          compression-level: 0
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && inputs.system != 'deathstarbench'
         with:
           name: toolchain-v4-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
           path: work/worker-artifact/

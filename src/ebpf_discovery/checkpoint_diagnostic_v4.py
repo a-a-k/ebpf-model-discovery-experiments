@@ -320,7 +320,8 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
             with child_go_environment(profile["bering_child_go_environment"]):
                 forecasts = Toolchain(ctx, profile["system"], store, declaration,
                     tool_pins=toolchain_proof["effective"]["pins"],
-                    publication_mode=toolchain_proof["effective"]["publication_mode"]).forecast(plans)
+                    publication_mode=toolchain_proof["effective"]["publication_mode"],
+                    native_jaeger_envelope="per_trace").forecast(plans)
         finally:
             store.close()
             if old_bin is None:

@@ -195,7 +195,8 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
         try:
             declaration = importlib.import_module(f'systems.{system}.experiment_v4')
             forecasts = Toolchain(ctx, system, store, declaration,
-                tool_pins=ORIGINAL_PINS, publication_mode='windowed').forecast(plans)
+                tool_pins=ORIGINAL_PINS, publication_mode='windowed',
+                native_jaeger_envelope='per_trace').forecast(plans)
         finally:
             store.close()
             if old_bin is None:
