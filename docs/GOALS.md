@@ -58,7 +58,7 @@ complete costs. Missing human preparation costs are not zero.
 
 The genuine Bering eBPF source, product releases/charts and related repository
 updates are required deliverables. Current published versions are Bering 1.3.0,
-Sheaft 1.3.2, stack 1.4.0 and reproduction 1.3.5; Procrustes and the OTel
+Sheaft 1.3.2, stack 1.5.0 and reproduction 1.3.5; Procrustes and the OTel
 integration were updated. Earlier versions remain attributed to their original
 experiments. Product verification does not replace empirical work.
 
