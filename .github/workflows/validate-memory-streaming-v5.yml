@@ -19,7 +19,7 @@ jobs:
         run: |
           python -m pytest --import-mode=importlib \
             tests/test_supplied_alias_v5.py tests/test_identity_projection_v5.py \
-            tests/test_preparation_memory_v5.py -q \
+            tests/test_preparation_memory_v5.py tests/test_validate_memory_streaming_v5.py -q \
             | tee focused-tests.log
           python -m py_compile scripts/validate-memory-streaming-v5.py
           python scripts/validate-memory-streaming-v5.py --help >/dev/null

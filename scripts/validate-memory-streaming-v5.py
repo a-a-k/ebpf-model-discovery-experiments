@@ -95,6 +95,7 @@ def _verify_source(archive: Path, artifact: dict, run: dict) -> dict:
 
 def _wanted(name: str) -> bool:
     return (name in FIXED_MEMBERS or name.startswith("observations/")
+            or name.startswith("native/")
             or name.startswith("runtime-identity-v5/supplied-service-alias-admission-training"))
 
 
@@ -148,13 +149,18 @@ def _load_original(path: Path, name: str):
     return module
 
 
+def _retained_evidence_path(raw_file: str) -> Path:
+    parts = Path(raw_file).parts
+    roots = [parts.index(name) for name in ("observations", "native") if name in parts]
+    if not roots:
+        raise ValueError(f"provenance path has no retained evidence root: {raw_file}")
+    return Path(*parts[min(roots):])
+
+
 def _rebase_provenance(db: sqlite3.Connection, root: Path) -> dict:
     mappings = {}
     for (raw_file,) in db.execute("SELECT DISTINCT raw_file FROM observation_provenance"):
-        parts = Path(raw_file).parts
-        if "observations" not in parts:
-            raise ValueError(f"provenance path has no observations root: {raw_file}")
-        relative = Path(*parts[parts.index("observations"):])
+        relative = _retained_evidence_path(raw_file)
         target = (root / relative).resolve()
         target.relative_to(root.resolve())
         if not target.is_file():
