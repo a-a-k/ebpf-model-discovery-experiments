@@ -76,5 +76,233 @@
     "artifact_id": 12842832029,
     "name": "v4-summary-petclinic-full-8-40733858113",
     "digest": "sha256:ebcf5681ea1b211845d3707bdb6cd8d444a2d6599988640ba15fcf67638fcfc2"
+  },
+  {
+    "run_id": 40754529169,
+    "status": "downloaded",
+    "artifact_id": 12854148226,
+    "name": "v4-summary-otel_demo-full-6-40754529169",
+    "digest": "sha256:7289f4cacb7d648600a3f67a8e14034035b0171b1a51220f75e0c4988ef1e2ff"
+  },
+  {
+    "run_id": 40764150238,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40786403012,
+    "status": "downloaded",
+    "artifact_id": 12865817745,
+    "name": "v4-summary-otel_demo-full-6-40786403012",
+    "digest": "sha256:92f76b999a09878b6dbc7f63590d50d16be3b0822a9f11fdcf8773c7a4741f3a"
+  },
+  {
+    "run_id": 40792026316,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40803782214,
+    "status": "downloaded",
+    "artifact_id": 12871528415,
+    "name": "v4-summary-otel_demo-absent-7-40803782214",
+    "digest": "sha256:038fdb93f335f2c7a3d9723cea794e1a3d1585185ce1cc638453f83a47328d57"
+  },
+  {
+    "run_id": 40803782214,
+    "status": "downloaded",
+    "artifact_id": 12870948672,
+    "name": "v4-summary-otel_demo-absent-6-40803782214",
+    "digest": "sha256:6d230df0c85515512f53cda8078a8df1f58137aa692db840e36231a80e1bd27d"
+  },
+  {
+    "run_id": 40803782214,
+    "status": "downloaded",
+    "artifact_id": 12870904164,
+    "name": "v4-summary-otel_demo-absent-8-40803782214",
+    "digest": "sha256:782d1a22f3f326ff075c5ec441caef1aee8597ae4ad4c74042333efd90568d8a"
+  },
+  {
+    "run_id": 40803790289,
+    "status": "downloaded",
+    "artifact_id": 12871453500,
+    "name": "v4-summary-otel_demo-partial-7-40803790289",
+    "digest": "sha256:735fa712528cdd84d5cbda727a29688ae799125c2a8a577302035e26c62c169f"
+  },
+  {
+    "run_id": 40803790289,
+    "status": "downloaded",
+    "artifact_id": 12871384569,
+    "name": "v4-summary-otel_demo-partial-6-40803790289",
+    "digest": "sha256:33d181a89b7ac235fad4219de2305a661ce4a52c83b1e921df1e22908bb4ddd6"
+  },
+  {
+    "run_id": 40803790289,
+    "status": "downloaded",
+    "artifact_id": 12870714010,
+    "name": "v4-summary-otel_demo-partial-8-40803790289",
+    "digest": "sha256:38ef9bc835837f060183e7e353382d1e2b552e39cb0ff84d975a0451cbba8a8a"
+  },
+  {
+    "run_id": 40803798632,
+    "status": "downloaded",
+    "artifact_id": 12872983053,
+    "name": "v4-summary-otel_demo-full-7-40803798632",
+    "digest": "sha256:375efd078553f085b60453b9b5ebf46abec4a5b4f0a86dc845ab8fbe1ca68db8"
+  },
+  {
+    "run_id": 40803806299,
+    "status": "downloaded",
+    "artifact_id": 12872469826,
+    "name": "v4-summary-otel_demo-full-8-40803806299",
+    "digest": "sha256:293afe8f7957f5ac19cc9c031b43ff9256893ad506393f39aaf1c0d679cc29f4"
+  },
+  {
+    "run_id": 40808413535,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808520837,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808661139,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808666481,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808735563,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808806603,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808834064,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40808888799,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40821198727,
+    "status": "downloaded",
+    "artifact_id": 12887450951,
+    "name": "v4-summary-deathstarbench-full-6-40821198727",
+    "digest": "sha256:80669964701d785f7357082cc6ceec9e717a5eeababf4c6697c16e2b776e25d0"
+  },
+  {
+    "run_id": 40821214009,
+    "status": "downloaded",
+    "artifact_id": 12882771753,
+    "name": "v4-summary-deathstarbench-absent-7-40821214009",
+    "digest": "sha256:bcbce9de2393c1b1ab8e2ade788807217aefdee48fcab4a028d59d2289e434db"
+  },
+  {
+    "run_id": 40821214009,
+    "status": "downloaded",
+    "artifact_id": 12880795128,
+    "name": "v4-summary-deathstarbench-absent-8-40821214009",
+    "digest": "sha256:279db89f2ebb64a2fab0918a24640ecd62429ce66947c69c39db97ca8f3b7e5c"
+  },
+  {
+    "run_id": 40821214009,
+    "status": "downloaded",
+    "artifact_id": 12879185808,
+    "name": "v4-summary-deathstarbench-absent-6-40821214009",
+    "digest": "sha256:c4c777f54bf26c85bf19202f5b6495977330d41ea2943e4894a4f965ff669c55"
+  },
+  {
+    "run_id": 40821232082,
+    "status": "downloaded",
+    "artifact_id": 12883490831,
+    "name": "v4-summary-deathstarbench-partial-7-40821232082",
+    "digest": "sha256:eab3afa76dec84544e2d906c38577c2169acd0f1f7e9b7267a69235fb801fad8"
+  },
+  {
+    "run_id": 40821232082,
+    "status": "downloaded",
+    "artifact_id": 12883003691,
+    "name": "v4-summary-deathstarbench-partial-8-40821232082",
+    "digest": "sha256:f3b02e7f3a55ba3c0d269a6b0bbd2664a7a01069e6821564e420b81dcbf4965d"
+  },
+  {
+    "run_id": 40821232082,
+    "status": "downloaded",
+    "artifact_id": 12879651672,
+    "name": "v4-summary-deathstarbench-partial-6-40821232082",
+    "digest": "sha256:7d1c060769805a0895ae3106c027c843f7e249a86e4d47a65fcd5374ca408ab0"
+  },
+  {
+    "run_id": 40821255620,
+    "status": "downloaded",
+    "artifact_id": 12885596837,
+    "name": "v4-summary-deathstarbench-full-7-40821255620",
+    "digest": "sha256:aa84fd84d6a75b82e7389c7c4e639e35d2d91804ff745c80e3f2f21c501eb65d"
+  },
+  {
+    "run_id": 40821277823,
+    "status": "downloaded",
+    "artifact_id": 12885575667,
+    "name": "v4-summary-deathstarbench-full-8-40821277823",
+    "digest": "sha256:6fb10f0249c73db7e467945cd419f9723120532e8c0fd0c8ffd83797e3a36840"
+  },
+  {
+    "run_id": 40827363136,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40827566298,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40829685696,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40831271725,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40831685820,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40832082212,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40832412304,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40833191329,
+    "status": "not_uploaded",
+    "artifact_ids": []
+  },
+  {
+    "run_id": 40833707109,
+    "status": "not_uploaded",
+    "artifact_ids": []
   }
 ]

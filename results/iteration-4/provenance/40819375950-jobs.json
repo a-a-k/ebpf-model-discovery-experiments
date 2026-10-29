@@ -1,0 +1,171 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123267990494,
+        "run_id": 40819375950,
+        "workflow_name": "Iteration 4 fixed native envelope equivalence",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcs1hD3g",
+        "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123267990494",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950/job/123267990494",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T04:43:55Z",
+        "started_at": "2026-10-29T04:43:57Z",
+        "completed_at": "2026-10-29T04:57:53Z",
+        "name": "compare",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T04:43:58Z",
+            "completed_at": "2026-10-29T04:43:59Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T04:43:59Z",
+            "completed_at": "2026-10-29T04:44:00Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T04:44:00Z",
+            "completed_at": "2026-10-29T04:44:01Z"
+          },
+          {
+            "name": "Install experiment package",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T04:44:01Z",
+            "completed_at": "2026-10-29T04:44:06Z"
+          },
+          {
+            "name": "Retrieve and verify both fixed source artifacts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T04:44:06Z",
+            "completed_at": "2026-10-29T04:47:40Z"
+          },
+          {
+            "name": "Verify full reference archive and inspect the fixed branch",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T04:47:40Z",
+            "completed_at": "2026-10-29T04:48:51Z"
+          },
+          {
+            "name": "Build the same separately pinned released toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T04:48:51Z",
+            "completed_at": "2026-10-29T04:49:14Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard runner",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T04:49:14Z",
+            "completed_at": "2026-10-29T04:49:14Z"
+          },
+          {
+            "name": "Replay the one fixed combined network-scope compose-post branch",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T04:49:14Z",
+            "completed_at": "2026-10-29T04:56:49Z"
+          },
+          {
+            "name": "Retain final resources, build and compact result evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T04:56:49Z",
+            "completed_at": "2026-10-29T04:56:51Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T04:56:51Z",
+            "completed_at": "2026-10-29T04:56:53Z"
+          },
+          {
+            "name": "Preserve complete new outputs and verified reference inspection",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T04:56:53Z",
+            "completed_at": "2026-10-29T04:57:40Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T04:57:40Z",
+            "completed_at": "2026-10-29T04:57:48Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T04:57:48Z",
+            "completed_at": "2026-10-29T04:57:49Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 27,
+            "started_at": "2026-10-29T04:57:49Z",
+            "completed_at": "2026-10-29T04:57:50Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 28,
+            "started_at": "2026-10-29T04:57:50Z",
+            "completed_at": "2026-10-29T04:57:50Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 29,
+            "started_at": "2026-10-29T04:57:50Z",
+            "completed_at": "2026-10-29T04:57:50Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123267990494",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028503,
+        "runner_name": "GitHub Actions 1000028503",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

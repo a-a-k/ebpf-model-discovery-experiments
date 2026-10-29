@@ -91,54 +91,33 @@ calculations run in GitHub Actions. Local work is editing, static checks, focuse
 unit fixtures and inspection of saved outputs. Preserve original evidence; do not
 invent missing edges or infer success from elapsed time.
 
-## Current next work
+## Measurement completion and publication
 
-All nine Petclinic cells are independently admitted; the generated report is
-`40751134324`, published in `results/iteration-4`. Actual eBPF graphs and Sheaft
-forecasts are checked against independent target outcomes. Source limitations,
-manual-baseline equivalence, DB unknowns and adverse class results remain visible.
-All nine OTel cells are independently admitted: 18/27 overall,
-not an overall utility/superiority claim. OTel absent-mode eBPF graphs support
-browse and add-to-cart forecasts in all three repeats; checkout stays unknown.
-Partial/full-mode eBPF forecasts remain unknown. All primary errors and missing
-forecasts are retained without a threshold.
+All 27 planned cells have completed and passed independent evidence review:
+nine cells each for Petclinic, OpenTelemetry Demo and DeathStarBench. Admission
+checks source provenance, actual Bering and Sheaft use where forecasts are
+available, forecast-before-validation ordering, independent outcomes, exact
+workload/state counts and complete retained evidence. Unknown forecasts and
+unfavorable outcomes are retained; they are not implementation failures to rerun.
 
-DSB/full/seed6 `40731158179` failed its continuation after retaining the training
-checkpoint.
-GitHub finalized cancellation under its six-hour job limit; the earlier failed
-continuation still has no available log, so its cause and last phase remain unknown.
-OTel/full/seed6 parent `40754529169` failed after worker `40764150238` shut down
-with severe recorded RAM/swap pressure. No forecast import/freeze or target traffic
-occurred. Parent artifacts and available logs are permanently archived by
-`40777355932`; OOM causality is not established.
+The final saved-evidence report is
+[40853395506](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40853395506).
+Publication and retention status is recorded in [SOURCE.md](../results/iteration-4/SOURCE.md).
+The report inventory covers 38 series/worker runs and 111 preparation, diagnostic,
+CI, reporting and archival runs. Its snapshot is not a self-inclusive final cost:
+ongoing archival work and reporting/publication tail metadata are identified
+separately. Unmeasured human preparation remains unknown.
 
-The reviewed OTel diagnostic `40778455040` completed on the larger, unchanged
-training checkpoint with Bering-child-only Go GC tuning and passed independent
-integrity/resource review. Fresh OTel/full/6 replacement `40786403012` completed,
-passed independent admission review, and is archived with its worker in
-`data-40802785036`. Its remaining eight workflows completed at `19ad30e` and passed independent
-artifact/admission review in runs
-`40803782214`, `40803790289`, `40803798632`, `40803806299`, after separate execution
-GO, exact-head CI and a fresh owner-wide capacity check. Their Bering 1.2.0
-transition does not relabel or repeat the valid 1.1.1 cell.
-Immutable DSB checkpoint diagnostic `40780918812`
-failed during Bering ingestion with HTTP 500, then lost its output artifact to a
-separate upload failure. Logs are retained in `data-40791837386`; the exact server
-error remains unknown. Bering 1.2.0 and its chart now publish the generic batch
-repair; diagnostic retention has passed review and CI. A separately named DSB
-diagnostic adopts the released source commit, preserving the full input and
-original/effective toolchain provenance. It completed as `40799411526` and passed independent actual-result review.
-All 18 Bering replays retained complete counts, zero drops and one publication;
-the full output is losslessly retained. Driver-created per-trace native exports
-accounted for 349,904 of 356,585 retained files. The codec now emits one envelope
-per original query file without filtering or deduplication. The fixed full-prefix check `40819375950` passed with identical ordered input
-and complete normalized graph/evidence; exact-head CI and independent actual
-result/execution review passed. All nine fresh DSB cells are now running at
-`1ba67d0`: full6 `40821198727`, absent6-8 `40821214009`, partial6-8 `40821232082`,
-full7 `40821255620`, full8 `40821277823`. They are not admitted before completion.
-Worker/parent transport now preserves complete subtrees in verified packages,
-including failed-import handoff evidence. These repairs change no scientific criterion.
-The diagnostic cannot resume or complete its failed campaign.
-Retain every valid cell regardless of accuracy or unknown coverage, and include
-failed acquisition, worker, diagnostic, reporting and archival costs. Resource
-adequacy must be measured on the actual input, not inferred from a smaller replay.
+The observed eBPF applicability is operation- and system-specific. All four
+Petclinic operations have graph-driven forecasts; absent-mode OTel supports browse
+and add to cart, while its other eBPF forecasts and all DSB eBPF forecasts remain
+unknown. Native/combined availability, DB conditions and primary errors are kept
+per operation. Matching the equal-information direct predicate does not establish
+superiority, and total effort advantage is not demonstrated.
+
+Original failed acquisition, diagnostic and reporting attempts remain in
+[RUN_HISTORY.md](RUN_HISTORY.md). Their replacements address technical failures,
+not accuracy. The complete DSB native-envelope equivalence proof retained the same
+ordered observations and Bering result while removing the driver's unnecessary
+per-trace files; it is an engineering repair, not a completed experimental cell.
+No additional experiment is authorized merely to seek a positive finding.

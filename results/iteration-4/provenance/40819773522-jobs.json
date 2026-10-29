@@ -1,0 +1,83 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123269264465,
+        "run_id": 40819773522,
+        "workflow_name": "Archive original measurement artifacts",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819773522",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcs2u0UQ",
+        "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123269264465",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819773522/job/123269264465",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T04:48:14Z",
+        "started_at": "2026-10-29T04:48:16Z",
+        "completed_at": "2026-10-29T04:55:17Z",
+        "name": "archive",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T04:48:17Z",
+            "completed_at": "2026-10-29T04:48:18Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T04:48:18Z",
+            "completed_at": "2026-10-29T04:48:20Z"
+          },
+          {
+            "name": "Download original artifact archives and their provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T04:48:20Z",
+            "completed_at": "2026-10-29T04:53:03Z"
+          },
+          {
+            "name": "Publish retained synthetic experiment data",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T04:53:03Z",
+            "completed_at": "2026-10-29T04:55:14Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T04:55:14Z",
+            "completed_at": "2026-10-29T04:55:14Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T04:55:14Z",
+            "completed_at": "2026-10-29T04:55:14Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123269264465",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028507,
+        "runner_name": "GitHub Actions 1000028507",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

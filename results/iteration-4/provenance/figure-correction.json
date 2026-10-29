@@ -1,0 +1,182 @@
+{
+  "source_run": 40853395506,
+  "source_head": "1406e559d8d8f432179116460b33f118f666550f",
+  "source_artifact": {
+    "id": 12887858244,
+    "node_id": "MDg6QXJ0aWZhY3QxMjg4Nzg1ODI0NA==",
+    "name": "report-v4-40853395506",
+    "size_in_bytes": 57824593,
+    "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12887858244",
+    "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12887858244/zip",
+    "expired": false,
+    "digest": "sha256:deb9cc25fd3c3f450da67b90f52233038de71f9e34bcd59bf5ddc59f56cbc909",
+    "created_at": "2026-10-29T10:01:19Z",
+    "updated_at": "2026-10-29T10:01:19Z",
+    "expires_at": "2027-01-27T09:55:14Z",
+    "workflow_run": {
+      "id": 40853395506,
+      "repository_id": 1434356471,
+      "head_repository_id": 1434356471,
+      "head_branch": "main",
+      "head_sha": "1406e559d8d8f432179116460b33f118f666550f"
+    }
+  },
+  "source_archive_sha256": "deb9cc25fd3c3f450da67b90f52233038de71f9e34bcd59bf5ddc59f56cbc909",
+  "aggregate_packaging": {
+    "original": "evaluation-v4.json",
+    "original_sha256": "5e6aa5a299e06e4604f69bdcaafc89e008437332f53714136d76fc4ac7d94d85",
+    "original_bytes": 855633475,
+    "compressed": "evaluation-v4.json.gz",
+    "compressed_sha256": "9f04bf247430a3f735c70df2acbbf01f204a0a5db65230d5bd4f0841cebafd16",
+    "compressed_bytes": 29757695,
+    "restored_sha256": "5e6aa5a299e06e4604f69bdcaafc89e008437332f53714136d76fc4ac7d94d85",
+    "same_uncompressed_bytes": true,
+    "original_json_retained_in_actions_artifact": true
+  },
+  "renderer_head": "7ae587f1e284500c6aa498735f9923511a304626",
+  "renderer_run": "40856854477",
+  "purpose": "Figure layout only; original report, aggregate and numerical table preserved",
+  "files": {
+    "figures/errors-deathstarbench-absent.pdf": {
+      "bytes": 15795,
+      "sha256": "ae71bd7c117966e2c3903c39a49cbe13cdd222d95202df354387e8eede74f03d",
+      "original_sha256": "686175427becfd098e72f746cf5d9902a882999f725c52e4affb0cb867c7dd43"
+    },
+    "figures/errors-deathstarbench-absent.png": {
+      "bytes": 136624,
+      "sha256": "02cb431dd63fda96b0e563fccfc343a8f62cc61630e1197939efbef96064b086",
+      "original_sha256": "55dacbe75ea6c6ae38195e5511bc2333f0d529d5aac33c4d56f726ae4bb62f8b"
+    },
+    "figures/errors-deathstarbench-absent.svg": {
+      "bytes": 22055,
+      "sha256": "327c1e414258d67695f69e71dd5cdc897933bbc21551cc497516a66ac6cade79",
+      "original_sha256": "da5d55a5e53b84187aae5326d4d8f1a829dbff96106c3de762ae42c093f4faa8"
+    },
+    "figures/errors-deathstarbench-full.pdf": {
+      "bytes": 17192,
+      "sha256": "efce7c3eab38c7d720797904f4e30ec5480382fd41d74e381cf4ab9f1bc2e019",
+      "original_sha256": "b8fffbb186b7a6cd60e78dc4269ded971f0ef51a5c3cee85078cbe427c17c17e"
+    },
+    "figures/errors-deathstarbench-full.png": {
+      "bytes": 108454,
+      "sha256": "a9eaf4b05e48c70c19c008656423621574bd4c64d7337bae3c3d7e74e2e4003f",
+      "original_sha256": "ee37afe233242e1647898d870c66edb8a273e4ffe3503cd9ee1b97b59c5533a2"
+    },
+    "figures/errors-deathstarbench-full.svg": {
+      "bytes": 32086,
+      "sha256": "db0e03fc735532377c1c38e30c97db9430a6eff3f07795eba754931c8a897017",
+      "original_sha256": "9ed2fe7fe3d3589d60278b908c1a010eb8a3740206db8e3d4758c170a9a31440"
+    },
+    "figures/errors-deathstarbench-partial.pdf": {
+      "bytes": 16302,
+      "sha256": "2d296cd659023b14ba8e472bf70c8a4c4079ec713cd670e8796146ae99424fe8",
+      "original_sha256": "577ec2ef33f98e6664aa8a62ed9f337befeb7a0ae8923c4f8fe8ffe0f6b5a005"
+    },
+    "figures/errors-deathstarbench-partial.png": {
+      "bytes": 128431,
+      "sha256": "7d6f3032f6b7ba891459fd4e9a6e5582e87b890d7167b2e53ace8a48c386131c",
+      "original_sha256": "c30de8aca7a0358331078a5e4fab6d128a877bb39b4dff219066f2087597a96b"
+    },
+    "figures/errors-deathstarbench-partial.svg": {
+      "bytes": 26314,
+      "sha256": "cc7d8271fbc2885188dc8740f3da8b675eeb97a087d8e1fbc39a1f63161d5e08",
+      "original_sha256": "c9d8b8b34029fb58fa2bedcef74c97df644d7eea7838bbcff22eb5c3527d619f"
+    },
+    "figures/errors-otel_demo-absent.pdf": {
+      "bytes": 16814,
+      "sha256": "477c09635b48c5131fbbc6b312dfa7cd91d7f11c0525a807751351ebe088a2bb",
+      "original_sha256": "ea169fa622574d2122617703e900ca7371b7752eb3ab69a43716c6be11593e87"
+    },
+    "figures/errors-otel_demo-absent.png": {
+      "bytes": 117234,
+      "sha256": "8639e81e38883ddbdc5ef0ec7c8a0c1248567c71c9665ebebc3d8ead6592ab45",
+      "original_sha256": "a57eedc586da4c3cdb27c2f712a005a3f399de849376259a868bb1dcdd11341a"
+    },
+    "figures/errors-otel_demo-absent.svg": {
+      "bytes": 29174,
+      "sha256": "3f6bcc3549fe7da25667ab12e4c7ff438a3c3a5ed258e223d1af574dfb7fede6",
+      "original_sha256": "426f616a2aa3b9186e47fd70986cb50d0cfd057fa93a494cda4b68e8d2cb9a3e"
+    },
+    "figures/errors-otel_demo-full.pdf": {
+      "bytes": 17245,
+      "sha256": "11e9146428595cf646c5cb54fbf00ec72b1cdf98d03ab7b468943114e583faa1",
+      "original_sha256": "0d2c34c74daa776d9006447f0c8e6ecd23d0efc531b5d12c4517cf64288de38e"
+    },
+    "figures/errors-otel_demo-full.png": {
+      "bytes": 107091,
+      "sha256": "d89577c3301be982f0112204563723076638554a269aee45d9bd4f43b040c583",
+      "original_sha256": "56913196ef26870a0e3732b5f7c74fb839f394f33cd05bbb4d9557655f7a75fe"
+    },
+    "figures/errors-otel_demo-full.svg": {
+      "bytes": 32061,
+      "sha256": "95dfbd778bb2c1f9637b4fe4295f92e49a4b36711e3f219709473896a69e38aa",
+      "original_sha256": "d05ddd2de342e728903ccea0236caa68088742ceef570677a30c8a02f6da56a7"
+    },
+    "figures/errors-otel_demo-partial.pdf": {
+      "bytes": 15781,
+      "sha256": "e8c0bb69be17e19469dcf44446116e925fb577b56ea7367fd10a12f3c8602c05",
+      "original_sha256": "5dba918637ca3dc87936e3e2dc43de79cc29e1a6ac963dfb10e92d18c99e8a9c"
+    },
+    "figures/errors-otel_demo-partial.png": {
+      "bytes": 132046,
+      "sha256": "f4a9ccc2faad0ee5eedf752c102ec5d0cebcce96364bc4f80902ab8926fd4f60",
+      "original_sha256": "6bd7bed16bca72881261661da7d9afb0b5ba86bde036b3c34e765683d95245d2"
+    },
+    "figures/errors-otel_demo-partial.svg": {
+      "bytes": 22055,
+      "sha256": "c2e7f6d6561ee4d318d53af162943481e3047b7a3b578d7451ba73200c22a608",
+      "original_sha256": "348d55caeebdc3db857b0cc77a2de90e06b7a5f321244e2c620c47c652ce9f43"
+    },
+    "figures/errors-petclinic-absent.pdf": {
+      "bytes": 17545,
+      "sha256": "a7d469549eb14c5bb96d8900765790d5643a2f828eb7a09ca7b01b017a6bd399",
+      "original_sha256": "91520bcad3e14d251e0f574a9ba3cac9f2cfd850765512ed2d2d1284457b06b7"
+    },
+    "figures/errors-petclinic-absent.png": {
+      "bytes": 122243,
+      "sha256": "379d3db8c32f01681be1ad7c017c8436e7b137a3d4b2f67eb1d2b7505790da2a",
+      "original_sha256": "951fc40c8e6059e6e9e983f7f0b1b9e2babc0a934d6b8bc30505814885648163"
+    },
+    "figures/errors-petclinic-absent.svg": {
+      "bytes": 37752,
+      "sha256": "981c1a2998f7f905bab7122e5d120b0c1c5e4e3d367aebcd8df8a43814be76a5",
+      "original_sha256": "13b64473218fadae1122523ea2a555f1d3b6cd7f78cbd1f27c2a0bee0083e777"
+    },
+    "figures/errors-petclinic-full.pdf": {
+      "bytes": 18351,
+      "sha256": "9c7a56dd9cedae7986abae343e90cfc3000ab843d0b4c7c12d4392a57a9efa6c",
+      "original_sha256": "a8eee932e679802711372d29197ce3726b77d0ea2544539de809fc9c5eb65b45"
+    },
+    "figures/errors-petclinic-full.png": {
+      "bytes": 102387,
+      "sha256": "4efd608ba48482bce2beca55ed56b8fee02022e24bc2518f75182d4b8d30c7c8",
+      "original_sha256": "b825c73952da12e1684889cbcf71fe2c7dee5a74d047f3310b1ae1c79001c08e"
+    },
+    "figures/errors-petclinic-full.svg": {
+      "bytes": 44226,
+      "sha256": "3d5f93dace1f057809fd10a6ae87a1a18db5311a1ef3534f2e8f2519f975f351",
+      "original_sha256": "ba6a2fa8cdaec19319c51598d3df30b80eb2a4a06eec8774f0c45190dbf7a089"
+    },
+    "figures/errors-petclinic-partial.pdf": {
+      "bytes": 17977,
+      "sha256": "f3a79c36a5955ce18576c26097a9038cf7d9d30a984a433de7f74459dfe0625f",
+      "original_sha256": "e7d6b2648c319a5871d6f499458c6fde45cd38dabae5969ab62a5f062b07dbd4"
+    },
+    "figures/errors-petclinic-partial.png": {
+      "bytes": 112071,
+      "sha256": "66019cbebcdf6ea13d1aa10d7c7609f968f3bd9d272d35e254efd2e0bf8f2b95",
+      "original_sha256": "899f1f289ca1c487f3b4e25b972b1135e4d7fad9bc69eac58562c77f742c0e8b"
+    },
+    "figures/errors-petclinic-partial.svg": {
+      "bytes": 41339,
+      "sha256": "7fc2965d908e789cdc747caba45177dab20f07a25cbe03327e6d7cc07b39569c",
+      "original_sha256": "5b9fea071ea3267d2bf888347a1d297756aebcfd2ee5aefeec092c733ad26579"
+    },
+    "figures/figures-v4.md": {
+      "bytes": 17181,
+      "sha256": "ec7785c90a00f78775dd235aa9d8c9ed61a169eaa0ca2feab1a00598addb10e9",
+      "original_sha256": "ec7785c90a00f78775dd235aa9d8c9ed61a169eaa0ca2feab1a00598addb10e9"
+    }
+  },
+  "companion_value_table_byte_identical": true
+}

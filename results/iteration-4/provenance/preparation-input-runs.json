@@ -58,5 +58,500 @@
     "run_id": 40745651023,
     "role": "evidence",
     "note": "Absent Petclinic data and failed OTel checkpoint archive"
+  },
+  {
+    "run_id": 40751134324,
+    "role": "evidence",
+    "note": "Nine-cell Petclinic report; retained reporting cost"
+  },
+  {
+    "run_id": 40751164118,
+    "role": "evidence",
+    "note": "Archive of partial/full Petclinic and prior OTel diagnostic"
+  },
+  {
+    "run_id": 40753100009,
+    "role": "evidence",
+    "note": "Archive of nine-cell report and prior archive provenance"
+  },
+  {
+    "run_id": 40777355932,
+    "role": "evidence",
+    "note": "Archive of failed OTel parent and standalone worker; exact original logs/artifacts retained"
+  },
+  {
+    "run_id": 40778455040,
+    "role": "replay",
+    "note": "Single complete larger OTel checkpoint GC diagnostic; technical only, no target validation"
+  },
+  {
+    "run_id": 40780918812,
+    "role": "replay",
+    "note": "Single complete DSB checkpoint standalone GC diagnostic; no application traffic or target validation"
+  },
+  {
+    "run_id": 40784827755,
+    "role": "evidence",
+    "note": "Permanent archive of finalized failed DSB attempt; oversized checkpoint lossless parts and missing-log evidence"
+  },
+  {
+    "run_id": 40785555784,
+    "role": "evidence",
+    "note": "Archive of successful OTel full-input GC diagnostic and DSB archival-job provenance"
+  },
+  {
+    "run_id": 40653952677,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40655548976,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40658470818,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40661005833,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40663736496,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40667801775,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40668009770,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40668187874,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40669037976,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40669537390,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40669684799,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40674218814,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40674464484,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40704172324,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40704617133,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40704891608,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40705563363,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40706520728,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40707989860,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40711625088,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40714538768,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40718306225,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40718840512,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40719440646,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40719840460,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40720633599,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40722266989,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40726719204,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40730137143,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40731360062,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40735306394,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40737717063,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40738224062,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40738952465,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40739309766,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40740119846,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40740243461,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40740955249,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40741180198,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40741796026,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40742178560,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40743151740,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40744281428,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40747621820,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40749523012,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40753750042,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40754244720,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40754659027,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40765148985,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40765657304,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40766877503,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40769620673,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40778021968,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40778217106,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40778323259,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40778574829,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40779398938,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40779630505,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40780702510,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40781020613,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40781856208,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40782767000,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40785125918,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40785779972,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40787442630,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40789168167,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40791085245,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead, including docs checks and failures; not allocated as source instrumentation cost"
+  },
+  {
+    "run_id": 40791837386,
+    "role": "evidence",
+    "note": "Archive of failed DSB checkpoint diagnostic; available logs and explicit missing-output evidence"
+  },
+  {
+    "run_id": 40794474890,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead for complete failure evidence retention"
+  },
+  {
+    "run_id": 40798747501,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead for released batch-mode adoption and explicit original/effective provenance"
+  },
+  {
+    "run_id": 40798982219,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead for released batch-mode adoption and explicit original/effective provenance"
+  },
+  {
+    "run_id": 40799411526,
+    "role": "replay",
+    "note": "One immutable complete DSB checkpoint diagnostic with separately verified released Bering1.2.0 on_shutdown build; original binaries/pins retained, no application traffic"
+  },
+  {
+    "run_id": 40800562445,
+    "role": "evidence",
+    "note": "V4 repository CI/shared overhead for actual diagnostic execution and downstream-publication provenance documentation"
+  },
+  {
+    "run_id": 40802785036,
+    "role": "evidence",
+    "note": "Permanent archive of completed OTel full6 parent and separate full-input toolchain worker; original artifacts including oversized full ZIP retained losslessly"
+  },
+  {
+    "run_id": 40806001392,
+    "role": "evidence",
+    "note": "V4 repository CI/shared overhead for actual OTel admission, parallel-series records, and UTF-8 documentation repair"
+  },
+  {
+    "run_id": 40806331798,
+    "role": "evidence",
+    "note": "V4 repository CI/shared overhead for actual OTel admission, parallel-series records, and UTF-8 documentation repair"
+  },
+  {
+    "run_id": 40808225905,
+    "role": "evidence",
+    "note": "V4 repository CI/shared overhead for reviewed overlap scheduling and technical-only report selection"
+  },
+  {
+    "run_id": 40819158479,
+    "role": "evidence",
+    "note": "V4 repository CI for native query-file envelopes, lossless worker/parent handoff transport, and fixed actual-graph equivalence implementation"
+  },
+  {
+    "run_id": 40819375950,
+    "role": "replay",
+    "note": "Single fixed full-prefix native-envelope representation equivalence against authenticated old Bering graph; no application traffic or cell"
+  },
+  {
+    "run_id": 40819411131,
+    "role": "evidence",
+    "note": "Permanent archive of completed DSB full-checkpoint diagnostic and OTel full7 parent/worker"
+  },
+  {
+    "run_id": 40819413737,
+    "role": "evidence",
+    "note": "Permanent archive of completed OTel full8 parent/worker"
+  },
+  {
+    "run_id": 40819771129,
+    "role": "evidence",
+    "note": "Permanent archive of completed otel-absent parent matrix and all three standalone workers; original artifacts and logs retained"
+  },
+  {
+    "run_id": 40819773522,
+    "role": "evidence",
+    "note": "Permanent archive of completed otel-partial parent matrix and all three standalone workers; original artifacts and logs retained"
+  },
+  {
+    "run_id": 40821512930,
+    "role": "evidence",
+    "note": "V4 repository CI/shared preparation overhead for actual18cell admission, batching equivalence and finalDSB dispatch documentation"
+  },
+  {
+    "run_id": 40821883662,
+    "role": "evidence",
+    "note": "Permanent archive of fixed full-input native-envelope equivalence proof, complete outputs and source/binary/graph integrity evidence"
+  },
+  {
+    "run_id": 40830558372,
+    "role": "evidence",
+    "note": "Permanent original artifact/log archive for first three completed fresh DSB workers (absent6, partial6, absent8); whole ZIP hashes retained, no scientific admission implied"
+  },
+  {
+    "run_id": 40833189416,
+    "role": "evidence",
+    "note": "V4 repository CI/shared overhead for reviewed saved HTTP transport cost table, typed unpack guidance and first DSB cell admission documentation; no scientific input change"
+  },
+  {
+    "run_id": 40841674653,
+    "role": "evidence",
+    "note": "Permanent original archives for completed DSB absent6-8 parent matrix and previously unarchived absent7 worker; checkpoints/full captures/compact evaluations/retention proofs and logs retained losslessly"
+  },
+  {
+    "run_id": 40845311645,
+    "role": "evidence",
+    "note": "Permanent original archives for all three completed DSB partial-mode cells and previously unarchived partial7/8 workers; exact full captures/checkpoints/summaries/retention proofs and logs preserved"
+  },
+  {
+    "run_id": 40850799564,
+    "role": "evidence",
+    "note": "Permanent original archive of completed DSB full-mode campaign(s) and their standalone workers; all full captures, checkpoints, summaries, logs and retention proofs preserved losslessly"
+  },
+  {
+    "run_id": 40852591158,
+    "role": "evidence",
+    "note": "Permanent original archive of completed DSB full-mode campaign(s) and their standalone workers; all full captures, checkpoints, summaries, logs and retention proofs preserved losslessly"
   }
 ]

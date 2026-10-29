@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12871565920,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3MTU2NTkyMA==",
+        "name": "diagnostic-v4-dsb-checkpoint-batch-40799411526",
+        "size_in_bytes": 1008930007,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12871565920",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12871565920/zip",
+        "expired": false,
+        "digest": "sha256:e27c347dd4282db46cf8222bc79e33660c31c76ebe789462d73f12045fcee0c3",
+        "created_at": "2026-10-29T03:39:25Z",
+        "updated_at": "2026-10-29T03:39:25Z",
+        "expires_at": "2027-01-27T01:16:31Z",
+        "workflow_run": {
+          "id": 40799411526,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fa2c454eaa5cca1a20a534ceb6e72ab64f8f8af3"
+        }
+      },
+      {
+        "id": 12871136556,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3MTEzNjU1Ng==",
+        "name": "diagnostic-summary-v4-dsb-batch-40799411526",
+        "size_in_bytes": 711039,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12871136556",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12871136556/zip",
+        "expired": false,
+        "digest": "sha256:be108eb9f32e3758789702457f17f0c89668b877c0bb2a4805c10b4be584217a",
+        "created_at": "2026-10-29T03:34:26Z",
+        "updated_at": "2026-10-29T03:34:26Z",
+        "expires_at": "2027-01-27T01:16:31Z",
+        "workflow_run": {
+          "id": 40799411526,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fa2c454eaa5cca1a20a534ceb6e72ab64f8f8af3"
+        }
+      },
+      {
+        "id": 12870633783,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3MDYzMzc4Mw==",
+        "name": "diagnostic-packaging-v4-dsb-batch-40799411526",
+        "size_in_bytes": 688,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12870633783",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12870633783/zip",
+        "expired": false,
+        "digest": "sha256:fa538fb429152223af529368157dcae5ee36a2031b8d7aa670320c17bb468c27",
+        "created_at": "2026-10-29T03:39:26Z",
+        "updated_at": "2026-10-29T03:39:26Z",
+        "expires_at": "2027-01-27T01:16:31Z",
+        "workflow_run": {
+          "id": 40799411526,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fa2c454eaa5cca1a20a534ceb6e72ab64f8f8af3"
+        }
+      }
+    ]
+  }
+]

@@ -1,4 +1,112 @@
 system,mode,operation,source,variant,repeat_count,available_count,evaluable_error_count,prediction_mean,prediction_range,worst_end_error_mean,worst_end_error_range
+deathstarbench,absent,compose_post,combined,network_scope,3,0,0,,,,
+deathstarbench,absent,compose_post,combined,raw,3,0,0,,,,
+deathstarbench,absent,compose_post,ebpf,network_scope,3,0,0,,,,
+deathstarbench,absent,compose_post,ebpf,raw,3,0,0,,,,
+deathstarbench,absent,compose_post,native,network_scope,3,0,0,,,,
+deathstarbench,absent,compose_post,native,raw,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,combined,network_scope,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,combined,raw,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,native,network_scope,3,0,0,,,,
+deathstarbench,absent,read_home_timeline,native,raw,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,combined,network_scope,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,combined,raw,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,native,network_scope,3,0,0,,,,
+deathstarbench,absent,read_user_timeline,native,raw,3,0,0,,,,
+deathstarbench,full,compose_post,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.00010416666666668295,"[0.0, 0.00031250000000004885]"
+deathstarbench,full,compose_post,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.00010416666666668295,"[0.0, 0.00031250000000004885]"
+deathstarbench,full,compose_post,ebpf,network_scope,3,0,0,,,,
+deathstarbench,full,compose_post,ebpf,raw,3,0,0,,,,
+deathstarbench,full,compose_post,native,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.00010416666666668295,"[0.0, 0.00031250000000004885]"
+deathstarbench,full,compose_post,native,raw,3,3,3,0.875,"[0.875, 0.875]",0.00010416666666668295,"[0.0, 0.00031250000000004885]"
+deathstarbench,full,read_home_timeline,combined,network_scope,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_home_timeline,combined,raw,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_home_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,full,read_home_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,full,read_home_timeline,native,network_scope,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_home_timeline,native,raw,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_user_timeline,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_user_timeline,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_user_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,full,read_user_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,full,read_user_timeline,native,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
+deathstarbench,full,read_user_timeline,native,raw,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
+deathstarbench,partial,compose_post,combined,network_scope,3,0,0,,,,
+deathstarbench,partial,compose_post,combined,raw,3,0,0,,,,
+deathstarbench,partial,compose_post,ebpf,network_scope,3,0,0,,,,
+deathstarbench,partial,compose_post,ebpf,raw,3,0,0,,,,
+deathstarbench,partial,compose_post,native,network_scope,3,0,0,,,,
+deathstarbench,partial,compose_post,native,raw,3,0,0,,,,
+deathstarbench,partial,read_home_timeline,combined,network_scope,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,partial,read_home_timeline,combined,raw,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,partial,read_home_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,partial,read_home_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,partial,read_home_timeline,native,network_scope,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,partial,read_home_timeline,native,raw,3,3,3,1.0,"[1.0, 1.0]",0.0,"[0.0, 0.0]"
+deathstarbench,partial,read_user_timeline,combined,network_scope,3,0,0,,,,
+deathstarbench,partial,read_user_timeline,combined,raw,3,0,0,,,,
+deathstarbench,partial,read_user_timeline,ebpf,network_scope,3,0,0,,,,
+deathstarbench,partial,read_user_timeline,ebpf,raw,3,0,0,,,,
+deathstarbench,partial,read_user_timeline,native,network_scope,3,0,0,,,,
+deathstarbench,partial,read_user_timeline,native,raw,3,0,0,,,,
+otel_demo,absent,add_to_cart,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.010312499999999983,"[0.0, 0.03093749999999995]"
+otel_demo,absent,add_to_cart,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.010312499999999983,"[0.0, 0.03093749999999995]"
+otel_demo,absent,add_to_cart,ebpf,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.010312499999999983,"[0.0, 0.03093749999999995]"
+otel_demo,absent,add_to_cart,ebpf,raw,3,3,3,0.875,"[0.875, 0.875]",0.010312499999999983,"[0.0, 0.03093749999999995]"
+otel_demo,absent,add_to_cart,native,network_scope,3,0,0,,,,
+otel_demo,absent,add_to_cart,native,raw,3,0,0,,,,
+otel_demo,absent,browse_product,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.008958333333333327,"[0.0, 0.026874999999999982]"
+otel_demo,absent,browse_product,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.008958333333333327,"[0.0, 0.026874999999999982]"
+otel_demo,absent,browse_product,ebpf,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.008958333333333327,"[0.0, 0.026874999999999982]"
+otel_demo,absent,browse_product,ebpf,raw,3,3,3,0.875,"[0.875, 0.875]",0.008958333333333327,"[0.0, 0.026874999999999982]"
+otel_demo,absent,browse_product,native,network_scope,3,0,0,,,,
+otel_demo,absent,browse_product,native,raw,3,0,0,,,,
+otel_demo,absent,checkout,combined,network_scope,3,0,0,,,,
+otel_demo,absent,checkout,combined,raw,3,0,0,,,,
+otel_demo,absent,checkout,ebpf,network_scope,3,0,0,,,,
+otel_demo,absent,checkout,ebpf,raw,3,0,0,,,,
+otel_demo,absent,checkout,native,network_scope,3,0,0,,,,
+otel_demo,absent,checkout,native,raw,3,0,0,,,,
+otel_demo,full,add_to_cart,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,add_to_cart,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,add_to_cart,ebpf,network_scope,3,0,0,,,,
+otel_demo,full,add_to_cart,ebpf,raw,3,0,0,,,,
+otel_demo,full,add_to_cart,native,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,add_to_cart,native,raw,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,browse_product,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,browse_product,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,browse_product,ebpf,network_scope,3,0,0,,,,
+otel_demo,full,browse_product,ebpf,raw,3,0,0,,,,
+otel_demo,full,browse_product,native,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,browse_product,native,raw,3,3,3,0.875,"[0.875, 0.875]",0.011666666666666678,"[0.0, 0.03500000000000003]"
+otel_demo,full,checkout,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.017187499999999984,"[0.0, 0.051562499999999956]"
+otel_demo,full,checkout,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.017187499999999984,"[0.0, 0.051562499999999956]"
+otel_demo,full,checkout,ebpf,network_scope,3,0,0,,,,
+otel_demo,full,checkout,ebpf,raw,3,0,0,,,,
+otel_demo,full,checkout,native,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.017187499999999984,"[0.0, 0.051562499999999956]"
+otel_demo,full,checkout,native,raw,3,3,3,0.875,"[0.875, 0.875]",0.017187499999999984,"[0.0, 0.051562499999999956]"
+otel_demo,partial,add_to_cart,combined,network_scope,3,0,0,,,,
+otel_demo,partial,add_to_cart,combined,raw,3,0,0,,,,
+otel_demo,partial,add_to_cart,ebpf,network_scope,3,0,0,,,,
+otel_demo,partial,add_to_cart,ebpf,raw,3,0,0,,,,
+otel_demo,partial,add_to_cart,native,network_scope,3,0,0,,,,
+otel_demo,partial,add_to_cart,native,raw,3,0,0,,,,
+otel_demo,partial,browse_product,combined,network_scope,3,0,0,,,,
+otel_demo,partial,browse_product,combined,raw,3,0,0,,,,
+otel_demo,partial,browse_product,ebpf,network_scope,3,0,0,,,,
+otel_demo,partial,browse_product,ebpf,raw,3,0,0,,,,
+otel_demo,partial,browse_product,native,network_scope,3,0,0,,,,
+otel_demo,partial,browse_product,native,raw,3,0,0,,,,
+otel_demo,partial,checkout,combined,network_scope,3,0,0,,,,
+otel_demo,partial,checkout,combined,raw,3,0,0,,,,
+otel_demo,partial,checkout,ebpf,network_scope,3,0,0,,,,
+otel_demo,partial,checkout,ebpf,raw,3,0,0,,,,
+otel_demo,partial,checkout,native,network_scope,3,0,0,,,,
+otel_demo,partial,checkout,native,raw,3,0,0,,,,
 petclinic,absent,create_visit,combined,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
 petclinic,absent,create_visit,combined,raw,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"
 petclinic,absent,create_visit,ebpf,network_scope,3,3,3,0.875,"[0.875, 0.875]",0.0,"[0.0, 0.0]"

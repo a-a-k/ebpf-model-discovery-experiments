@@ -1,0 +1,115 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 122898143105,
+        "run_id": 40711625088,
+        "workflow_name": "Focused implementation checks",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40711625088",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcnUzXgQ",
+        "head_sha": "969bdfeb16ae123dfd2390f18dca40f2a14fe1d3",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/122898143105",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40711625088/job/122898143105",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-28T15:00:49Z",
+        "started_at": "2026-10-28T15:00:51Z",
+        "completed_at": "2026-10-28T15:01:16Z",
+        "name": "checks",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-28T15:00:52Z",
+            "completed_at": "2026-10-28T15:00:53Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-28T15:00:53Z",
+            "completed_at": "2026-10-28T15:00:55Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-28T15:00:55Z",
+            "completed_at": "2026-10-28T15:00:55Z"
+          },
+          {
+            "name": "Run python -m pip install -e '.[report]' pytest opentelemetry-proto",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-28T15:00:55Z",
+            "completed_at": "2026-10-28T15:01:05Z"
+          },
+          {
+            "name": "Run python -m compileall -q src systems",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-28T15:01:05Z",
+            "completed_at": "2026-10-28T15:01:05Z"
+          },
+          {
+            "name": "Run for script in scripts/*.sh; do bash -n \"$script\"; done",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-28T15:01:05Z",
+            "completed_at": "2026-10-28T15:01:05Z"
+          },
+          {
+            "name": "Run python -m pytest --import-mode=importlib tests systems",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-28T15:01:05Z",
+            "completed_at": "2026-10-28T15:01:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-28T15:01:13Z",
+            "completed_at": "2026-10-28T15:01:13Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-28T15:01:13Z",
+            "completed_at": "2026-10-28T15:01:13Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-28T15:01:13Z",
+            "completed_at": "2026-10-28T15:01:14Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/122898143105",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028386,
+        "runner_name": "GitHub Actions 1000028386",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

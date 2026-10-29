@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12858178880,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg1ODE3ODg4MA==",
+        "name": "diagnostic-v4-otel-large-checkpoint-gc-40778455040",
+        "size_in_bytes": 1737726417,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12858178880",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12858178880/zip",
+        "expired": false,
+        "digest": "sha256:30b04998fc56833d79327a990ecf7210ea674dcab4c85e47ed01b51de51064d8",
+        "created_at": "2026-10-28T23:08:15Z",
+        "updated_at": "2026-10-28T23:08:15Z",
+        "expires_at": "2027-01-26T22:14:46Z",
+        "workflow_run": {
+          "id": 40778455040,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5d1d3f35951fe99753c17cbdd80d53d7b9d8f877"
+        }
+      }
+    ]
+  }
+]

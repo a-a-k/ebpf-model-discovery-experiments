@@ -1,0 +1,247 @@
+[
+  {
+    "total_count": 12,
+    "artifacts": [
+      {
+        "id": 12883665487,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MzY2NTQ4Nw==",
+        "name": "retention-v4-deathstarbench-partial-7-40821232082",
+        "size_in_bytes": 2966,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883665487",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883665487/zip",
+        "expired": false,
+        "digest": "sha256:73f6ba1a24538b9841372c712fed40815d813c25c29706088c6ad86876e93217",
+        "created_at": "2026-10-29T08:26:46Z",
+        "updated_at": "2026-10-29T08:26:46Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12883490831,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MzQ5MDgzMQ==",
+        "name": "v4-summary-deathstarbench-partial-7-40821232082",
+        "size_in_bytes": 4925133,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883490831",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883490831/zip",
+        "expired": false,
+        "digest": "sha256:eab3afa76dec84544e2d906c38577c2169acd0f1f7e9b7267a69235fb801fad8",
+        "created_at": "2026-10-29T08:25:58Z",
+        "updated_at": "2026-10-29T08:25:58Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12883423696,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MzQyMzY5Ng==",
+        "name": "campaign-v4-deathstarbench-partial-8-40821232082",
+        "size_in_bytes": 6680367563,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883423696",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883423696/zip",
+        "expired": false,
+        "digest": "sha256:c80c8dff9c97f1ccc360a93908e1b087af61b9b244817f609219ed54ce3c28e8",
+        "created_at": "2026-10-29T08:39:03Z",
+        "updated_at": "2026-10-29T08:39:03Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12883023547,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MzAyMzU0Nw==",
+        "name": "campaign-v4-deathstarbench-partial-7-40821232082",
+        "size_in_bytes": 6689230960,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883023547",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883023547/zip",
+        "expired": false,
+        "digest": "sha256:fedaf5290654a0a469f2f688fdf8c0e0ab9e6bc6374dddfd5e6bdbe8a89e9143",
+        "created_at": "2026-10-29T08:32:22Z",
+        "updated_at": "2026-10-29T08:32:22Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12883003691,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MzAwMzY5MQ==",
+        "name": "v4-summary-deathstarbench-partial-8-40821232082",
+        "size_in_bytes": 4959717,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883003691",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12883003691/zip",
+        "expired": false,
+        "digest": "sha256:f3b02e7f3a55ba3c0d269a6b0bbd2664a7a01069e6821564e420b81dcbf4965d",
+        "created_at": "2026-10-29T08:32:09Z",
+        "updated_at": "2026-10-29T08:32:09Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12882724997,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg4MjcyNDk5Nw==",
+        "name": "retention-v4-deathstarbench-partial-8-40821232082",
+        "size_in_bytes": 2969,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12882724997",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12882724997/zip",
+        "expired": false,
+        "digest": "sha256:826a21ed6b22ed5f00e57c8fe3af94e435ffa47902d167346bc6e79212a712ee",
+        "created_at": "2026-10-29T08:32:55Z",
+        "updated_at": "2026-10-29T08:32:55Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12879866816,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3OTg2NjgxNg==",
+        "name": "campaign-v4-deathstarbench-partial-6-40821232082",
+        "size_in_bytes": 6664585693,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879866816",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879866816/zip",
+        "expired": false,
+        "digest": "sha256:975316c52415e89b1398405f9de4e61c2c2d95e8cc5ac627727411467822c189",
+        "created_at": "2026-10-29T07:15:28Z",
+        "updated_at": "2026-10-29T07:15:28Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12879651672,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3OTY1MTY3Mg==",
+        "name": "v4-summary-deathstarbench-partial-6-40821232082",
+        "size_in_bytes": 4366288,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879651672",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879651672/zip",
+        "expired": false,
+        "digest": "sha256:7d1c060769805a0895ae3106c027c843f7e249a86e4d47a65fcd5374ca408ab0",
+        "created_at": "2026-10-29T07:11:22Z",
+        "updated_at": "2026-10-29T07:11:22Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12879363743,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3OTM2Mzc0Mw==",
+        "name": "retention-v4-deathstarbench-partial-6-40821232082",
+        "size_in_bytes": 2964,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879363743",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12879363743/zip",
+        "expired": false,
+        "digest": "sha256:12d0b757a88b669e042b4182ba9cafa8c91da2ab60b9c98b931f6c9f3fa881a0",
+        "created_at": "2026-10-29T07:11:56Z",
+        "updated_at": "2026-10-29T07:11:56Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12878622790,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3ODYyMjc5MA==",
+        "name": "training-v4-deathstarbench-partial-8-40821232082",
+        "size_in_bytes": 2256847400,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12878622790",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12878622790/zip",
+        "expired": false,
+        "digest": "sha256:dd54be1feaec3ec2a3c14d8dde4928487e651c05a63b970a2ce6140207ac206b",
+        "created_at": "2026-10-29T06:53:40Z",
+        "updated_at": "2026-10-29T06:53:40Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12878418058,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3ODQxODA1OA==",
+        "name": "training-v4-deathstarbench-partial-7-40821232082",
+        "size_in_bytes": 2259548747,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12878418058",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12878418058/zip",
+        "expired": false,
+        "digest": "sha256:ea0ccff506755a5839d5c0fdbd0d7cb36300acd0284e450f2ae7b240b8257905",
+        "created_at": "2026-10-29T06:49:47Z",
+        "updated_at": "2026-10-29T06:49:47Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12877460736,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3NzQ2MDczNg==",
+        "name": "training-v4-deathstarbench-partial-6-40821232082",
+        "size_in_bytes": 2251915371,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12877460736",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12877460736/zip",
+        "expired": false,
+        "digest": "sha256:011537e59427ac27c1aa84fac4986e188b78561f51c7d986d73a3c7d659ead5a",
+        "created_at": "2026-10-29T06:09:02Z",
+        "updated_at": "2026-10-29T06:09:02Z",
+        "expires_at": "2027-01-27T05:04:05Z",
+        "workflow_run": {
+          "id": 40821232082,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      }
+    ]
+  }
+]

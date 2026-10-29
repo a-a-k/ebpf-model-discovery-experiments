@@ -1,0 +1,187 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123203644634,
+        "run_id": 40799411526,
+        "workflow_name": "Iteration 4 immutable DSB checkpoint Bering 1.2.0 batch diagnostic",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcr4Js2g",
+        "head_sha": "fa2c454eaa5cca1a20a534ceb6e72ab64f8f8af3",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123203644634",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526/job/123203644634",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T01:16:31Z",
+        "started_at": "2026-10-29T01:16:33Z",
+        "completed_at": "2026-10-29T03:39:29Z",
+        "name": "diagnose",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T01:16:34Z",
+            "completed_at": "2026-10-29T01:16:34Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T01:16:35Z",
+            "completed_at": "2026-10-29T01:16:36Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T01:16:36Z",
+            "completed_at": "2026-10-29T01:16:36Z"
+          },
+          {
+            "name": "Install experiment package",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T01:16:36Z",
+            "completed_at": "2026-10-29T01:16:45Z"
+          },
+          {
+            "name": "Admit the one immutable checkpoint artifact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T01:16:45Z",
+            "completed_at": "2026-10-29T01:16:45Z"
+          },
+          {
+            "name": "Download and verify the original artifact archive",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T01:16:45Z",
+            "completed_at": "2026-10-29T01:20:25Z"
+          },
+          {
+            "name": "Build the separately pinned released toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T01:20:25Z",
+            "completed_at": "2026-10-29T01:21:00Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard runner",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T01:21:00Z",
+            "completed_at": "2026-10-29T01:21:00Z"
+          },
+          {
+            "name": "Run full-prefix toolchain with Bering-child-only soft GC target",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T01:21:00Z",
+            "completed_at": "2026-10-29T03:34:21Z"
+          },
+          {
+            "name": "Retain available replacement build evidence even after build failure",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T03:34:21Z",
+            "completed_at": "2026-10-29T03:34:21Z"
+          },
+          {
+            "name": "Retain final runner and disk evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T03:34:21Z",
+            "completed_at": "2026-10-29T03:34:25Z"
+          },
+          {
+            "name": "Collect compact diagnostic evidence before full packaging",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T03:34:25Z",
+            "completed_at": "2026-10-29T03:34:25Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T03:34:25Z",
+            "completed_at": "2026-10-29T03:34:26Z"
+          },
+          {
+            "name": "Package and verify the complete diagnostic tree without filtering",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T03:34:26Z",
+            "completed_at": "2026-10-29T03:39:18Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T03:39:18Z",
+            "completed_at": "2026-10-29T03:39:26Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T03:39:26Z",
+            "completed_at": "2026-10-29T03:39:27Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31,
+            "started_at": "2026-10-29T03:39:27Z",
+            "completed_at": "2026-10-29T03:39:27Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-29T03:39:27Z",
+            "completed_at": "2026-10-29T03:39:27Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-29T03:39:27Z",
+            "completed_at": "2026-10-29T03:39:27Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123203644634",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028476,
+        "runner_name": "GitHub Actions 1000028476",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

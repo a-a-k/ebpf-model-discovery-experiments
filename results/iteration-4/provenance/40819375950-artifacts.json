@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12874835331,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3NDgzNTMzMQ==",
+        "name": "native-batch-packaging-v4-40819375950",
+        "size_in_bytes": 688,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874835331",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874835331/zip",
+        "expired": false,
+        "digest": "sha256:730c730e047bf9ca5d9ba0b2153cfdfe576419fd0712bbec68ee31a6d78428ee",
+        "created_at": "2026-10-29T04:57:49Z",
+        "updated_at": "2026-10-29T04:57:49Z",
+        "expires_at": "2027-01-27T04:43:55Z",
+        "workflow_run": {
+          "id": 40819375950,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12874507030,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3NDUwNzAzMA==",
+        "name": "native-batch-full-v4-40819375950",
+        "size_in_bytes": 685878914,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874507030",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874507030/zip",
+        "expired": false,
+        "digest": "sha256:6d19db4c24fffb3bd17962bcba24a446c7834c0bf96a2566b80b53824688a019",
+        "created_at": "2026-10-29T04:57:48Z",
+        "updated_at": "2026-10-29T04:57:48Z",
+        "expires_at": "2027-01-27T04:43:55Z",
+        "workflow_run": {
+          "id": 40819375950,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      },
+      {
+        "id": 12874197884,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3NDE5Nzg4NA==",
+        "name": "native-batch-summary-v4-40819375950",
+        "size_in_bytes": 2384518,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874197884",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12874197884/zip",
+        "expired": false,
+        "digest": "sha256:b04c11682f2381350b098667d2d4edff7d05ff865eabd1920da97d7a7a30273a",
+        "created_at": "2026-10-29T04:56:53Z",
+        "updated_at": "2026-10-29T04:56:53Z",
+        "expires_at": "2027-01-27T04:43:55Z",
+        "workflow_run": {
+          "id": 40819375950,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1ba67d0d6014bc905b82fe2425af48a5a994f264"
+        }
+      }
+    ]
+  }
+]

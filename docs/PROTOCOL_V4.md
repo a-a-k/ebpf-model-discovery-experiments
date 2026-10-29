@@ -1,26 +1,18 @@
 # Iteration 4: graph discovery and graph-driven prediction
 
-Current status: all nine Petclinic cells are independently admitted, with the
-[generated nine-cell report](../results/iteration-4/SOURCE.md) retained. OTel/full/6
-has also passed independent admission: 10/27 cells overall. Its remaining eight
-are running; DSB remains incomplete after technical failures.
-The full-checkpoint [OTel diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-completed and passed independent integrity/resource review; its one
-[fresh OTel/full/6 replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012)
-completed and is admitted;
-[DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
-failed during local Bering ingestion with HTTP 500. Its separate artifact upload
-also failed; the exact server error and final integrity proof are unavailable.
-DSB's prepared remote-worker changes await its actual diagnostic review and
-separate staged-execution decision. A diagnostic cannot resume or complete a
-failed campaign.
+All 27 planned cells have completed and passed independent evidence review.
+The [research README](../README.md) and [generated report provenance](../results/iteration-4/SOURCE.md)
+describe the actual findings and publication/retention status. This establishes
+complete empirical evidence, including unknowns and adverse results; it does not
+establish a utility or cost advantage over the equal-information direct predicate.
 
-Earlier qualification failures, repairs and executions remain in the
-[run history](RUN_HISTORY.md); detailed original-criterion review decisions are
-recorded below. The repaired qualification replay `40674465933` established tool
-path integrity for three small captures, not full-size capacity or fresh accuracy.
-This protocol supersedes the earlier observation deadlines and accuracy gates.
-Historical captures, code and results remain unchanged.
+The following protocol and review log records decisions as they were made.
+Historical statements that a diagnostic or campaign was awaiting execution refer
+to that entry's time, not to current completion status. Failed attempts and repairs
+remain in [RUN_HISTORY.md](RUN_HISTORY.md). A diagnostic cannot complete its failed
+live campaign, and a valid unfavorable cell was not reacquired for accuracy.
+The protocol supersedes the earlier observation deadlines and accuracy gates;
+historical captures, code and results remain unchanged.
 
 ## Original question and decision
 

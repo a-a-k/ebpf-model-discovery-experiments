@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12873830086,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3MzgzMDA4Ng==",
+        "name": "campaign-v4-otel_demo-full-8-40803806299",
+        "size_in_bytes": 2607940653,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12873830086",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12873830086/zip",
+        "expired": false,
+        "digest": "sha256:07ca25fad2d24379717f6501fb23a703f669cecb60bd357a82a630eb9ac6c6a1",
+        "created_at": "2026-10-29T04:32:46Z",
+        "updated_at": "2026-10-29T04:32:46Z",
+        "expires_at": "2027-01-27T02:00:48Z",
+        "workflow_run": {
+          "id": 40803806299,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "19ad30ea772ae5430432e2e05339a8c0d9fe0d1f"
+        }
+      },
+      {
+        "id": 12872469826,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg3MjQ2OTgyNg==",
+        "name": "v4-summary-otel_demo-full-8-40803806299",
+        "size_in_bytes": 7402201,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12872469826",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12872469826/zip",
+        "expired": false,
+        "digest": "sha256:293afe8f7957f5ac19cc9c031b43ff9256893ad506393f39aaf1c0d679cc29f4",
+        "created_at": "2026-10-29T04:32:47Z",
+        "updated_at": "2026-10-29T04:32:47Z",
+        "expires_at": "2027-01-27T02:00:48Z",
+        "workflow_run": {
+          "id": 40803806299,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "19ad30ea772ae5430432e2e05339a8c0d9fe0d1f"
+        }
+      },
+      {
+        "id": 12869017579,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg2OTAxNzU3OQ==",
+        "name": "training-v4-otel_demo-full-8-40803806299",
+        "size_in_bytes": 871100360,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12869017579",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12869017579/zip",
+        "expired": false,
+        "digest": "sha256:3fc42cd47ad92c8a69eea82d98d493902f08d65e53e7151000e5598c490967b8",
+        "created_at": "2026-10-29T02:45:38Z",
+        "updated_at": "2026-10-29T02:45:38Z",
+        "expires_at": "2027-01-27T02:00:48Z",
+        "workflow_run": {
+          "id": 40803806299,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "19ad30ea772ae5430432e2e05339a8c0d9fe0d1f"
+        }
+      }
+    ]
+  }
+]

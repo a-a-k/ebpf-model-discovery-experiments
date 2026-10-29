@@ -6,7 +6,7 @@ certifi==2026.10.23
 charset-normalizer==3.5.2
 contourpy==1.4.0
 cycler==0.12.1
--e git+https://github.com/a-a-k/ebpf-model-discovery-experiments@a839a94fe38d2c347f4156c528367bbef9d21116#egg=ebpf_model_discovery_experiments
+-e git+https://github.com/a-a-k/ebpf-model-discovery-experiments@1406e559d8d8f432179116460b33f118f666550f#egg=ebpf_model_discovery_experiments
 fonttools==4.68.0
 frozenlist==1.8.0
 idna==3.20

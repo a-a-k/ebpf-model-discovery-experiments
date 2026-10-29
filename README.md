@@ -1,71 +1,59 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
+**Completed experimental series (iteration 4).** All 27 planned campaigns completed
+and passed independent evidence review. The
+[generated report, figures and provenance](results/iteration-4/SOURCE.md) cover
+939,600 primary attempts. Original captures, models, forecasts and technical
+failures are retained. The [independent review](docs/REVIEW_V4.md) distinguishes
+empirical completion from a positive utility or cost-advantage claim, which is
+not established.
 
-> **Current status (iteration 4): all nine Petclinic, all nine OTel and DSB/absent/6 admitted; 19/27 overall.**
-> [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
-> plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
-> and [Petclinic/partial/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961),
-> [full/seed7](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733852492) and
-> [full/seed8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733858113)
-> each completed 34,800 primary operations, including 9,600 held-out target operations.
-> Actual Bering graphs built from eBPF observations were consumed by Sheaft; all four
-> operation forecasts matched observed target frequencies in each admitted cell.
-> All three absent-mode repeats have verified disabled native instrumentation and zero
-> training/final native spans. In all three partial-mode repeats, native-only
-> graphs leave Visits-dependent operations unknown; eBPF supplies usable graphs for them.
-> This supports the requested path for Petclinic. The supplied-contract baseline makes the same
-> scalar predictions; no cost advantage or cross-system conclusion is established.
-> All nine cells passed independent integrity/resource review.
-> OTel's earlier, smaller training checkpoint completed the toolchain on a separate
-> standard runner. The [larger replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40754529169)
-> failed before forecast import and target traffic: its
-> [worker log](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40764150238)
-> records severe RAM/swap pressure followed by runner shutdown (exit 143), without
-> a confirmed OOM kill. The [GC diagnostic completed](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
-> on that full checkpoint and passed independent integrity/resource review. A
-> [fresh OTel/full/6 replacement completed and passed independent review](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
-> Its eBPF forecasts remain unknown; native/combined forecasts are available but
-> differ from the independent outcomes. The remaining eight OTel cells also passed
-> independent admission review. In absent mode, eBPF/combined graphs support browse
-> and add-to-cart forecasts in all three repeats; checkout remains unknown.
-> Partial-mode forecasts remain unknown for every source. Full-mode native/combined
-> forecasts are available; eBPF forecasts remain unknown. This observed mode
-> dependence does not by itself identify its cause.
-> The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
-> upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
-> also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
-> upload failure. Available logs are [permanently retained](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40791837386).
-> The exact server error is unknown. Released Bering 1.2.0 removes calendar-window
-> publication from offline batches. A [new full-checkpoint DSB diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526)
-> completed and passed independent integrity/resource review: all 18 Bering replays
-> retained their full input with zero drops and one publication each. The fresh
-> [DSB/absent/6 cell](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40821214009/artifacts/12879185808)
-> passed independent admission review. Its observed eBPF graphs lack the required
-> operation evidence; all forecasts remain unknown and Sheaft was correctly skipped.
-> This is not successful simulation coverage. The driver now emits one native envelope per original query
-> file. A [fixed full-input check](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950)
-> verified identical ordered observations and graph/evidence with 323 envelopes
-> replacing 174,952 per-trace files for the compared variant. The remaining eight DSB
-> campaigns are running after independent execution review. Lossless packaging
-> separately preserves all output bytes and costs.
-> All failed attempts remain in the
-> [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
+## Abstract
 
-The [interim report](results/iteration-4/SOURCE.md), covering all nine independently
-reviewed Petclinic cells, contains
-generated per-operation tables, error figures and the actual Bering eBPF graph.
-Its cost ledger includes failed and running jobs at the report snapshot; it is not
-the final series total.
+Can runtime observations collected by eBPF support graph model discovery and
+simulation when application tracing is absent or incomplete? We study ten operations
+in DeathStarBench, OpenTelemetry Demo and Petclinic on two Linux guests, with three
+tracing modes and three repeats. Procrustes supplies documented static facts, Bering
+constructs graphs from retained observations, and Sheaft consumes those graphs to
+predict independently measured outcomes under controlled replica failures. All
+forecasts are frozen before validation. Available evidence supports this complete
+path for all four Petclinic operations and for two OTel operations without native
+tracing. Every eBPF-only DeathStarBench forecast remains unknown because required
+operation evidence is missing. Other OTel source/mode combinations also lack usable
+dependencies.
+A shared-database intervention in Petclinic shows observed DB edges participating
+in fault prediction, with explicitly supplied identity and semantic information.
+Richer operation signatures and asynchronous correlation do not show a consistent
+eBPF advantage. Available primary replica-failure forecasts equal a direct predicate
+given the same manual
+contracts; complete preparation effort is unmeasured. Thus the evidence establishes
+specific applicability and observed limits, not lower total effort or superior
+prediction. The retained cost snapshot includes preparation and failed attempts;
+later publication costs and unmeasured human effort are distinguished explicitly.
 
-Iterations 1–3 are retained unchanged in [README.iteration-3.md](README.iteration-3.md),
-with their captures, reports, timing rules and conditional-state predictors. Those
-historical predictors did not consume the recovered graph. Their results must not be
-read as evidence for the graph-to-simulation claim tested here.
+The agreed scope is [GOALS.md](docs/GOALS.md), and the executable method is
+[PROTOCOL_V4.md](docs/PROTOCOL_V4.md). The final report links every operation's
+saved evaluation, graph, forecast, uncertainty and costs. Original attempts and
+technical repairs remain in [RUN_HISTORY.md](docs/RUN_HISTORY.md).
 
-Original iteration-4 qualification captures and all four retained replay attempts,
-including the failed replay, are preserved with workflow logs, metadata and checksums
-in [this permanent data release](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40704387111).
+Application tracing can already represent service calls, database spans and
+asynchronous links. The question is whether the eBPF source recovers sufficient
+evidence for the same modelling task when those observations are unavailable.
+OBI provides observations; Bering supplies graph discovery; Sheaft supplies the
+simulator. Merely exporting OTLP is not the tested end result.
+
+The research questions are:
+
+1. Which operations retain a usable graph and an externally testable forecast
+   without complete native instrumentation?
+2. Which distributed and database dependencies are recovered, and do they actually
+   participate in a forecast rather than only enlarge the graph?
+3. Do downstream observations improve operation identification, and what accuracy,
+   coverage, uncertainty and preparation/computation costs accompany each source?
+
+Iterations 1–3 are preserved in [README.iteration-3.md](README.iteration-3.md).
+Their conditional-state predictors did not consume recovered graphs, so their
+results are not evidence for the graph-to-simulation claim tested here.
 
 ## 1. Research question and contribution criterion
 
@@ -90,8 +78,9 @@ controlled-service predicate `A OR B`. Under the planned state weights
 is mandatory and `1.0` when it is not. It may therefore be mathematically equivalent
 to the Sheaft result. That equivalence is reported, not hidden by Monte Carlo.
 
-The causal source of any additional value must be recovered structure that changes a
-sound prediction: for example, a required observed call or selected database edge.
+Additional value would require recovered evidence that changes a sound prediction
+or reduces measured preparation while preserving the useful external result. An
+example of the former is a required observed call or selected database edge.
 Manual semantic declarations are charged to both methods. Human/agent preparation
 time was not instrumented and remains explicitly unmeasured; no full-cost advantage
 will be claimed from runtime measurements alone.
@@ -119,7 +108,7 @@ source revisions (each campaign retains its own build manifest):
 | [Sheaft v1.3.2] | `686a602f4e7b71f3612f1810885e29dd66c8733a` | edge-aware predicates and deterministic state-profile simulation |
 | [mb3r-stack v1.3.0] | released integration bundle | published product integration reference, not the experiment runner |
 
-Future builds now pin [Bering v1.2.0](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0),
+The remaining eight OTel cells and all nine fresh DSB cells pin [Bering v1.2.0](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0),
 commit `6f806428509a640a6419058c2ad845ed44db7512`, and use explicit `on_shutdown`
 publication. This removes the calendar window from complete offline batches;
 it does not change graph construction, source scope, operation contracts or
@@ -127,9 +116,9 @@ the comparison baseline. The other two research tool pins remain as above.
 One separately named diagnostic reuses the full retained DSB checkpoint and
 records both the original 1.1.1 binaries and the separately verified new build.
 Historical replay profiles keep their original binaries and `windowed` mode.
-The new diagnostic and subsequent cells require independent execution review;
-published product tests do not establish their empirical outcome. Existing
-results are not relabelled or reacquired for a version change.
+The diagnostic and fresh dispatches received separate independent execution
+review. Product tests do not establish their empirical outcome; valid earlier
+cells were not relabelled or reacquired for a version change.
 
 The workflow reads each tool's declared Go version, downloads the corresponding
 official Go archive, verifies its digest, builds with `GOTOOLCHAIN=local`, and records
@@ -139,7 +128,9 @@ not substitute an unpinned container or a locally installed binary.
 Procrustes reports are consumed conservatively. Only `CONFIRMED` identity and replica
 facts can attach to nodes already observed by Bering. An unmatched inventory item
 stays in the sidecar; it cannot create a node or edge. Custom workload scenarios are
-not fabricated to make static preflight pass.
+not fabricated to make static preflight pass. Retained `BLOCKED` or unknown
+Procrustes reports remain visible; successful execution does not imply that every
+preflight requirement was satisfied.
 
 ## 3. Systems, operations and two-guest environment
 
@@ -163,11 +154,11 @@ experiment, not a two-physical-host failure study. Guest/runner CPU, memory, ker
 BTF, boot, image, process and network evidence are retained. Workflows use public
 runner resources and do not silently switch to a paid larger runner.
 
-The OTel and prepared DSB workflows compute the saved training model on a separate
+The OTel and DSB workflows compute the saved training model on a separate
 standard Actions runner. OTel's full-input diagnostic and fresh full/6 replacement
 passed independent review, as did all eight remaining OTel cells. DSB
 activation passed the reviews recorded in
-[the protocol](docs/PROTOCOL_V4.md), and all nine DSB cells are running. The two application guests stay on their original runner and
+[the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
 This separates toolchain resource use from the application host; it does not move
 replicas to additional physical machines or change the application's placement.
@@ -195,7 +186,9 @@ unobserved; a primary forecast therefore does not prove discovery of every DB ed
 The separate DB-down forecast requires observed, mapped mandatory DB channels.
 Conditional calls remain unknown when their condition is not established.
 
-The fixed inputs intentionally avoid injecting an expected topology:
+The inputs distinguish supplied semantic and inventory knowledge from observed
+nodes and edges. Mandatory caller/callee contracts supply structural knowledge, but
+cannot create a missing Bering edge:
 
 - operation plans supply step boundaries, methods, routes and opaque request IDs;
 - source contracts state which calls are semantically mandatory;
@@ -297,7 +290,7 @@ Each cell requests 20 operations/s with a balanced operation mixture:
 | independent healthy class test | 1 | 600 | 600 |
 | **total per campaign** | **14** | | **34,800** |
 
-The planned series contains 939,600 primary attempts. Calibration/discovery blocks
+The fixed series specifies 939,600 primary attempts. Calibration/discovery blocks
 supply observations to the graph path; their empirical success rates are not used as
 a replacement predictor. The target state counts are fixed at 4,800/2,400/1,200/1,200.
 
@@ -326,9 +319,11 @@ owns matching endpoints. An alias alone does not prove that multiple logical nod
 are one physical database. Unresolved or conflicting mapping stays unknown.
 
 Petclinic deliberately exercises a shared MySQL container. `owner_details_with_visits`
-requires both customers→MySQL and visits→MySQL edges. Both must remain present in the
-edge-aware predicate; merging them into one generic “database exists” node would make
-the fault prediction unsound. OTel selects catalog PostgreSQL. DSB selects
+requires both customers→MySQL and visits→MySQL edges. We retain each caller-specific
+witness so a generic DB node cannot substitute for missing caller evidence. Under
+the tested whole-endpoint outage and live-edge assumptions, their availability
+factors may be mathematically equivalent; matching that outcome alone does not
+prove both calls were recovered. OTel selects catalog PostgreSQL. DSB selects
 user-timeline MongoDB; its user-timeline read fallback is conditional, while home
 timeline is off that selected path. The manual baseline uses the same declarations:
 unconditional selected DB means 0 under DB-down, a conditional dependency is unknown,
@@ -389,89 +384,152 @@ complete campaigns by outcome.
 Keep a committed selection manifest outside the generated `results/iteration-4`
 directory, which each report run replaces in its disposable Actions checkout.
 
-The admitted OTel/full/6 result is retained in its [original compact artifact](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/data-40802785036/40786403012-artifact-12865817745-v4-summary-otel_demo-full-6-40786403012.zip),
-in `evaluation-v4.json`. All three eBPF operation forecasts remain unknown in both
-graph variants. Native and combined models predict 0.875 for each operation;
-independent target outcomes are 2,688/3,200 (0.84) for browse product and add to cart,
-and 2,635/3,200 (0.8234375) for checkout, with no unknown target outcomes. The stored
-absolute errors are 3.5, 3.5 and 5.15625 percentage points. The supplied-contract
-manual baseline makes the same primary predictions. These errors are retained
-without an accuracy gate, and one full-mode cell does not establish performance
-without native tracing. DB-up controls have 20 successes and DB-down controls
-20 failures, while all graph-based DB-down forecasts remain unknown. Observed DB
-nodes alone do not establish the required unambiguous fault mapping.
+## 9. Results
 
-The complete cell, training checkpoint and worker output are in the [permanent
-archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40802785036).
+The [Actions-generated report](results/iteration-4/report-v4.md) and
+[figures](results/iteration-4/figures/figures-v4.md) retain all 27 selected cells and
+939,600 primary attempts. One additional incomplete OTel attempt remains visible
+as a technical exclusion; it is not an extra repeat. Values below are copied from
+saved, independently reviewed evaluations;
+they are not local recalculations. Unknown forecasts are retained as unknown and
+are excluded from numerical error means rather than assigned a baseline value.
 
-All eight remaining OTel cells passed independent admission review. The following
-copies saved evaluations for both raw and network_scope, without pooling repeats:
+The following availability pattern holds in all three repeats and both graph
+variants. Availability is conditional on the stated nonintervened-component
+assumptions; it does not mean zero prediction error.
 
-| Native tracing / seeds | eBPF | Native | Combined |
-| --- | --- | --- | --- |
-| [Absent / 6, 7, 8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803782214) | Browse and add: 0.875; checkout unknown | All unknown; no native observations | Browse and add: 0.875; checkout unknown |
-| [Partial / 6, 7, 8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803790289) | All unknown | All unknown | All unknown |
-| Full / [7](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803798632), [8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803806299) | All unknown | All three: 0.875 | All three: 0.875 |
+| System | Native tracing | eBPF forecasts | Native forecasts | Combined forecasts |
+| --- | --- | --- | --- | --- |
+| Petclinic | Absent | All four operations | Unknown | All four operations |
+| Petclinic | Partial | All four operations | List owners, list vets | All four operations |
+| Petclinic | Full | All four operations | All four operations | All four operations |
+| OTel Demo | Absent | Browse product, add to cart | Unknown | Browse product, add to cart |
+| OTel Demo | Partial | Unknown | Unknown | Unknown |
+| OTel Demo | Full | Unknown | All three operations | All three operations |
+| DeathStarBench | Absent | Unknown | Unknown | Unknown |
+| DeathStarBench | Partial | Unknown | Home timeline | Home timeline |
+| DeathStarBench | Full | Unknown | All three operations | All three operations |
 
-Absent/6 stored actual success fractions are 0.848125 (browse), 0.8440625 (add),
-and 0.8078125 (checkout); absent/7 and absent/8 record 0.875 for each operation.
-Partial/6 records 0.8746875, 0.875 and 0.8740625 respectively; partial/7 and
-partial/8 record 0.875 for each. Full/7 and full/8 record 0.875 for each.
-Every target outcome is known. Unknown forecasts are not silently assigned the
-manual baseline's value. Matching 0.875 is not superiority: the equally informed
-supplied-contract baseline predicts that same value under the declared A_OR_B law.
-Full/6 used the earlier Bering 1.1.1 batch path; the eight later cells used 1.2.0.
+### Petclinic: graph-driven forecasts and a shared database
 
-In every additional OTel cell, DB controls record 20 successes up and 20 failures
-down, while graph DB-down predictions remain unknown. Observed database nodes
-are insufficient without an unambiguous mapping to the intervened dependency.
-Async SQL evidence records 20 exact persisted orders normally, 20 pending while
-accounting is paused, those same 20 persisted after resume, and 20 exact persisted
-orders in the recovery block. Native partial/full observations retain exact
-consumer-SpanLink chain witnesses; inspected eBPF witnesses remain unknown.
-Causal association is distinct from SQL durability. Route-based classes retain
-ARI 1 on their known cases; downstream eBPF grouping remains weak/incomplete.
+Across all nine Petclinic cells, eBPF and combined graphs supported all four operation forecasts in both raw and network_scope variants. Sheaft consumed the frozen graphs before target traffic. Forecasts matched the saved target frequencies: 0.875 for owner details with visits and create visit, and 1.0 for list owners and list vets. Each operation retained 2,400 target outcomes per cell; the Visits-dependent operations recorded 2,100 successes and 300 failures. Native observations were absent in all three absent-mode repeats. With Visits instrumentation disabled in partial mode, native-only models left Visits-dependent operations unknown while eBPF supplied usable graphs.
 
-These facts establish operation-specific applicability and limitations, not a
-causal explanation for the instrumentation-mode variation or a cost advantage.
-Each cell's evaluation and proof remain in its linked original artifacts. Whole
-compact ZIP hashes and CRCs were independently checked; local inspection of
-large full artifacts verified selected members, without claiming a local whole-ZIP
-hash. Completed archives preserve and verify complete original ZIPs for
-[absent6-8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819771129),
-[partial6-8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819773522),
-[full7](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819411131)
-and [full8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819413737).
-Their provenance assets bind whole original hashes and any lossless release parts.
+The shared-MySQL intervention tests a dependency used by multiple services. In the declared network_scope variant, eBPF graph-based DB-down forecasts were zero for the three mandatory DB-dependent operations, matching five failures per operation. Raw DB mappings and the cached-vets case remained unknown. This shows a recovered DB dependency participating in prediction under the supplied identity and operation contracts; it does not establish a capability exclusive to eBPF, since full native tracing retains DB spans.
 
-Representative resolved runtime configurations and unfiltered native collector
-suppression records were also inspected for absent/6, partial/6 and full/7.
-Absent disables all listed SDKs and retains zero native observations; partial
-disables both catalog replicas while other SDKs remain enabled; full includes
-catalog observations. In the saved eBPF graphs, absent/6 has the exact
-frontend-to-product-catalog GetProduct server edge and a matching operation
-binding. Partial/6 and full/7 lack that edge and report the required call as
-missing or ambiguous. All three retain eBPF frontend entry observations.
-A plausible hypothesis is that native context propagation changes OBI/Bering
-correlation or representation. The inspected graphs do not establish that
-mechanism, and do not support a universal claim that OBI cannot observe gRPC.
+The richer operation grouping did not improve identification against the declared labels. In absent-mode eBPF records, downstream grouping had known-subset ARI approximately 0.489, 0.504 and 0.516, versus route-grouping ARI 1, and retained more unknown assignments. The equally informed manual predicate made the same primary forecasts. These results support the concrete graph-to-simulator path for this application, without establishing comparative utility or a complete-cost advantage.
 
-The first admitted DSB cell, absent/6, retains 34,800 primary operations and 9,600
-target operations. Its saved target success fractions are 0.875 for compose post,
-0.875 for user timeline and 1.0 for home timeline, with no unknown target outcomes.
-All source/variant operation forecasts are unknown: eBPF and combined graphs lack
-required operation evidence; native observations are absent. Both DB-up and DB-down
-controls record 20 successful primary responses, which do not establish persistence
-or a DB-induced primary failure. eBPF/combined route and downstream classes both have ARI 1 on
-600 known cases; this does not recover the missing mandatory internal paths.
-These are copied values from the linked compact evaluation, not locally recomputed
-metrics. Parent import, unchanged training index, forecast-before-target ordering,
-final frozen hashes, clean exit and retained full evidence passed independent review.
+The [generated report](results/iteration-4/SOURCE.md) contains the
+per-operation evidence, source comparisons and fixed observed-model example.
 
-The existing generated aggregate still covers the nine Petclinic cells; the next
-aggregate will incorporate subsequent admitted cells without changing their inputs.
+### OpenTelemetry Demo: mode-dependent coverage and asynchronous limits
 
-## 9. Reproduction, workflows and retained artifacts
+Across the three admitted absent repeats, eBPF and combined graphs supported forecasts for `browse_product` and `add_to_cart`, but not `checkout`; native was unavailable by design. The fixed prediction was 0.875. In seed 6 its stored worst-end errors were 2.6875 percentage points for browse and 3.09375 for cart; seeds 7 and 8 had zero stored error. Partial tracing produced no forecast for any operation or source in all three repeats. Under full tracing, native and combined supported all three operations, whereas eBPF supported none. Full/6 errors were 3.5 points for browse/cart and 5.15625 for checkout; full/7 and full/8 had zero stored error. Raw and network-scope variants had the same availability pattern.
+
+This mode dependence is material, but its mechanism is unresolved. The retained absent/6 eBPF graph contains the exact `frontend -> product-catalog` `GetProduct` edge. Partial/6 and full/7 lack it and instead contain a proxy-to-reported-peer edge. Entry roots exist in every mode, but the retained entry-only proof does not establish descendant context behavior, so native context propagation changing OBI/Bering correlation remains a hypothesis—not evidence that OBI generally cannot observe gRPC.
+
+Database controls behaved externally as intended (all up checks succeeded and all down checks failed), yet every source's database-down prediction and prognostic impact remained unknown because the observations did not yield an unambiguous dependency usable for that fault forecast. For Kafka, native partial/full retained exact consumer `SpanLink` associations while eBPF remained unknown; independent SQL checks confirm the expected order and items at observation time; the links alone do not prove persistence.
+
+The route-only class baseline reached full known coverage and ARI 1.0 wherever its source existed; downstream features were not consistently better and could reduce coverage. Moreover, every available structural forecast equalled the 0.875 strong manual source-contract/inventory predicate. These cells therefore do not demonstrate an advantage over that equal-information baseline, nor an overall utility or cost advantage.
+
+Original complete archives are available for
+[full/6](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40802785036),
+[absent/6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819771129),
+[partial/6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819773522),
+[full/7](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819411131)
+and [full/8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819413737).
+
+### DeathStarBench: incomplete internal paths
+
+All nine repeats have passed independent review. Each retains 34,800 primary
+attempts, including 9,600 target operations.
+All eBPF-only forecasts remain unknown in both variants: the graph lacks required
+operation evidence. These branches do not execute Sheaft and are not counted as
+simulation coverage. Native observations are absent in absent mode. Under partial
+tracing, native and combined graphs support only home-timeline forecasts, each 1.0,
+matching the 3,200 successful target operations. The other forecasts remain unknown.
+The home-timeline forecast assumes its nonintervened Redis obligation fulfilled;
+it does not prove complete Redis discovery. The equal-information direct predicate
+also yields 1.0.
+
+Saved target success fractions are 0.875 for compose post and user timeline, and
+1.0 for home timeline in these repeats, except compose post in absent/8:
+2,799/3,200 = 0.8746875. No target outcome is unknown. Both selected-MongoDB-up and
+selected-MongoDB-down controls record 20 successful primary responses per cell.
+Those responses do not establish persistence or a DB-induced primary failure.
+Route and downstream classes both have ARI 1 on 600 known cases wherever the
+corresponding source exists; this does not recover the missing mandatory paths.
+
+In one retained absent/6 example, original OBI attributes label the endpoint
+`192.168.76.11:37020` as MySQL, whereas the saved runtime deployment exposes MongoDB
+there. The original body has SHA-256
+`fe6fef65ad29e774715ee12ea9c0ed4580ad87023b486c1b5384371d72dfeff8`.
+It is `toolchain/inputs/ebpf/raw/exports/ebpf-000217.pb` in worker
+`40827363136`, resource/scope/span indexes `1/0/0`. The deployment counterpart is
+`deployment/deathstarbench/runtime-resolved-node-a.yml` in parent artifact
+`12878682223`; both originals are retained in the releases linked below.
+The mismatch exists before Bering: a protocol label alone does not certify correct
+DB reconstruction. This single example establishes neither a mismatch frequency
+nor the cause of all missing application paths. Deployment truth was not used to
+rewrite the observations.
+
+Original evidence is preserved in
+[absent campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40841674653),
+[partial campaigns](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40845311645)
+and the [first three workers](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40830558372).
+In all three full-mode repeats, native and combined graphs support all three operations in
+both variants, with 12 actual Sheaft invocations per cell. Predictions are 0.875
+for compose and user timeline and 1.0 for home timeline. Full/6 and full/7 match the saved
+target frequencies; full/8 retains 2,799 successful compose operations out of 3,200,
+with saved absolute error 0.0003125 (0.03125 percentage points). The other full/8
+forecasts match their outcomes. The six eBPF-only branches per cell remain unknown
+and do not execute Sheaft. Native/combined compose forecasts conditionally assume
+missing or ambiguous MongoDB and Redis obligations fulfilled; every DB-fault
+forecast remains unknown. Native query manifests document the actual Jaeger
+queries; their service list does not establish exhaustive controlled-replica
+coverage even though the configured tracing mounts are enabled.
+
+### Distributed evidence and available costs
+
+Cross-guest placement is supplied and verified deployment information. A structural
+edge across guest endpoints is not, by itself, a confirmed causal link for a request.
+The per-source linker retains exact observed identifier witnesses or an explicit
+unknown. The asynchronous result above illustrates why a connection or common topic
+cannot substitute for that distinction.
+
+We report exact source-local parent-link counts, guest attribution and planned-header
+corroboration or contradictions. These do not estimate overall false-positive or
+false-negative linking rates: complete per-request cross-guest ground truth is
+unavailable. An unattributed link or zero observed links is not evidence of zero
+linking errors.
+
+The final report retains every source/variant/operation separately, including
+forecast availability, external identification bounds and repeated-run errors.
+It also reports campaign elapsed time, actual tool
+commands and peak memory, guest and runner evidence, checkpoint/import costs,
+worker job time, and the complete declared Actions preparation/failure/reporting/
+archival inventory. Parent waiting overlaps worker computation; these are not
+successive elapsed phases.
+
+Twenty operations/s is the requested primary workload, not the application's total
+HTTP traffic. Preparation, verification and control probes are separately retained.
+The HTTP cost table copies their recorded counts, response bytes and summed request
+durations; overlapping request durations are not wall time, and completed transports
+are not necessarily successful business operations. `auxiliary_timeline_probes`
+duplicates the verification category and must not be added again. For example,
+DSB/absent/6 records 18,428 verification GETs in addition to its primary operations.
+Human/agent preparation time is unavailable, not zero. Runtime totals therefore
+cannot establish a complete-cost advantage.
+
+The [Actions cost snapshot](results/iteration-4/costs-v4.json) covers 149 declared
+runs and 185 job rows, with 343,146 recorded completed job-seconds and
+141,072,330,122 retained Actions-artifact bytes. Job-seconds measure accumulated
+job duration, not sequential campaign wall time. Artifact bytes are not unique
+storage or total transfer bytes; release parts duplicate originals separately.
+Two archival jobs were still running when their metadata was read, and the report
+cannot record its own eventual duration. Their completed closing metadata is
+linked in [SOURCE.md](results/iteration-4/SOURCE.md), separately from this snapshot.
+
+## 10. Reproduction, workflows and retained artifacts
 
 All application builds, traffic, raw-data processing, discovery, simulation and report
 generation run in GitHub Actions. Local work is limited to static/unit fixtures; the
@@ -487,6 +545,10 @@ The manual workflows are:
 - [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
   and Actions job/artifact costs for the declared run inventory, including failed preparation runs;
   render per-operation figures from that saved aggregate as SVG, PNG and PDF.
+- [figures-v4.yml](.github/workflows/figures-v4.yml): render an immutable report's
+  saved aggregate, require its numerical companion table to remain byte-identical,
+  and retain source/image hashes. The final figures use the documented y-layout
+  correction in [SOURCE.md](results/iteration-4/SOURCE.md).
 - [native-batch-equivalence-v4.yml](.github/workflows/native-batch-equivalence-v4.yml):
   one fixed saved-input Bering comparison of per-trace and per-query native
   envelopes; this is an implementation check, not a completed campaign.
@@ -598,6 +660,24 @@ The table and figure commands accept either form. Compression removes no fields
 and changes no calculation. Earlier snapshots remain in Git history and permanent
 data releases. Use the `.json.gz` path when reading the compact repository copy.
 
+Fresh DSB full artifacts retain `toolchain/` and the closed remote handoff as
+typed lossless packages to avoid upload overhead from many small files. Restore
+them into absent destinations from the extracted campaign root:
+
+```text
+python -m ebpf_discovery.artifact_transport_v4 unpack --package toolchain-package --out toolchain --kind toolchain
+python -m ebpf_discovery.artifact_transport_v4 unpack --package infrastructure/handoff-package --out infrastructure/remote-toolchain-v4 --kind handoff
+```
+
+The manifests preserve original paths, bytes, SHA-256 values and modes. The original
+driver's native Jaeger codec unnecessarily created a file per trace. Its replacement
+creates one OTLP envelope per original query file, with no filtering or deduplication.
+The [fixed full-input check](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950)
+compared the same ordered observations and actual Bering output: 323 envelopes
+replaced 174,952 files for the checked variant, with identical normalized graph,
+snapshot and quality evidence. This is a representation repair, not a scientific
+result or a requirement imposed by Jaeger, OTLP or Bering.
+
 Permanent archives retain the original artifact digest. A large file may be
 delivered as numbered `.part0000`, `.part0001`, and subsequent parts. Its manifest
 inside `provenance.tar.gz` supplies the ordered parts, sizes, hashes and exact
@@ -644,50 +724,58 @@ failed and documentation-only checks, as shared preparation overhead alongside
 campaign, worker, qualification, diagnostic, report and archive jobs. Do not
 allocate shared CI overhead as instrumentation cost to one source. Earlier
 iterations and independent product development remain outside this v4 automation
-window; human/agent effort is unmeasured. The published interim ledger is its
-original declared subset, not a retroactive complete total for this wider scope.
+window; human/agent effort is unmeasured. Earlier interim ledgers retain their
+original declared subsets; the final snapshot uses the reconciled inventory above.
 
-## 10. Current limitations, review state and references
+## 11. Discussion, limitations and conclusions
 
-Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
-seeds6–8), all nine OTel cells and DSB/absent/6. DeathStarBench
-passed its full-input diagnostic, native-envelope equivalence check and fresh
-execution review. The remaining eight DSB cells are running within the reviewed worker-capacity budget;
-final full/6 admission is not a rollout gate. The first qualification
-exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
-replay can diagnose the actual tool path but cannot establish concurrent VM/tool
-resource capacity. Independent review approved the first three planned cells;
-each system's remaining eight follow its own resource and protocol-validity review.
-The evaluator/cost component has passed independent review. After the
-series, the original criterion must be checked again against the external outcomes and
-the strongest baseline before any success claim.
+The current evidence supports a precise, conditional statement: eBPF observations
+can supply an actual recovered graph that an existing simulator uses to predict
+independent outcomes for some applications and operations without native tracing.
+Petclinic also demonstrates recovery of a shared-DB dependency used in prediction
+under declared identity and business contracts. These observations are not evidence
+that all protocols, operations or native tracing modes are interchangeable.
 
-All three absent-mode repeats retain a negative operation-class result:
-downstream-enriched grouping has known-subset ARI approximately 0.489, 0.504 and
-0.516 for seeds 6, 7 and 8, with 11, 46 and 20 unknown assignments out of 600.
-Route-based grouping has ARI 1 on its known subsets, with 0, 1 and 0 unknown
-assignments respectively. Accurate primary forecasts therefore do not establish
-better operation identification. These are the separately stored repeat metrics
-in the [retained absent-mode data](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40745651023),
-not a pooled statistic or causal explanation of the difference.
+Graph accuracy and useful forecast coverage are separate. A correct available
+forecast does not resolve operations for which a mandatory call is absent or
+ambiguous. Similarly, a database node is not useful fault information until its
+identity, callers and mandatory role are established and the simulator uses it.
+The source comparison retains full native DB spans; database discovery is not
+claimed as exclusive to eBPF.
 
-The principal limitations are known in advance:
+The direct supplied-contract predicate equals the available primary replica-failure
+forecasts.
+Monte Carlo does not improve equivalent arithmetic. The study therefore does not
+establish better external predictions than that baseline. It also does not establish
+less overall preparation effort: manually supplied contracts, request/step grouping,
+identity and placement information remain essential, and their human costs are
+unmeasured. A class ARI of 1 does not establish automatic business semantics, and
+additional downstream features can reduce coverage or label agreement.
 
-- contracts and placement inventory are supplied semantic knowledge, not discovered;
-- the driver supplies operation/step grouping for the class diagnostic;
-- the two guests share one physical runner;
-- deterministic connectivity profiles assume every nonintervened required component
-  and edge is live and business logic/inputs remain correct;
-- Sheaft connectivity does not model queue durability, latency or transactional
-  semantics;
-- OBI/native protocol coverage can be absent or ambiguous, and such cases stay unknown;
-- Monte Carlo adds no mathematical advantage over the exact deterministic check;
-- preparation effort is incomplete because human/agent time is unavailable.
+OBI runs in every campaign, and source arms replay observations from the same
+campaign. These measurements do not isolate OBI's acquisition overhead against an
+uninstrumented deployment. Nominal primary load also coexists with recorded
+preparation and verification traffic, which can affect the application.
 
-Published product releases establish usable tooling, not empirical adequacy for this
-study. Historical iteration-3 evidence and limitations remain available in
-[README.iteration-3.md](README.iteration-3.md), [generated iteration-3 results](results/iteration-3/report.md),
-and [run history](docs/RUN_HISTORY.md). They are not pooled with the fresh seeds.
+Other limits are the common physical Actions host, three repeats per cell, one
+selected collector configuration, application-specific contracts and limited
+intervention scope. Nonintervened components are held conditionally live; Sheaft's
+connectivity model does not simulate queue timing, transactional semantics or
+durable delivery. Native collector queries and instrumentation may themselves have
+incomplete coverage. Bering versions differ between the retained earlier cells and
+later cells, with each revision explicitly recorded; valid cells were not rerun to
+remove that difference. Negative and unknown results are retained without accuracy
+thresholds or artificial response deadlines.
+
+Technical repairs, including failed deployments/replays, memory pressure, unavailable
+logs and excessive converter file counts, remain in the run history and cost ledger.
+Historical qualification proves only the input and capacity it actually exercised.
+Independent review checks final claims against retained artifacts, rather than
+treating CI, manifest validity or graph quality flags as the contribution.
+The [independent review record](docs/REVIEW_V4.md) documents these distinctions
+and its verification scope. The defensible finding is specific applicability of
+the observed graph-to-simulation path together with measured coverage failures;
+the original full-effort usefulness advantage remains unestablished.
 
 [OpenTelemetry eBPF Instrumentation]: https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/releases/tag/v0.15.2
 [Procrustes]: https://github.com/MB3R-Lab/Procrustes/tree/39f76000f8a39c971155e08ebffde829b525911b
