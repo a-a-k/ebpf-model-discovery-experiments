@@ -14,6 +14,8 @@ from ebpf_discovery.collectors_v5 import (
     create_collectors_v5,
     make_collectors,
 )
+from ebpf_discovery.receiver import _capture_wire_body
+from ebpf_discovery.receiver_v5 import _file, _raw_capture_audit
 
 
 class Result:
@@ -185,11 +187,25 @@ def test_resource_sampler_unavailability_is_explicit(tmp_path: Path) -> None:
     assert evidence["logs"]["available"] is True
 
 
-def test_close_retains_termination_barrier_and_unproven_flush(
+def test_final_drain_retains_clean_shutdown_closed_bytes_and_honest_flush_bound(
     tmp_path: Path, monkeypatch
 ) -> None:
     ctx = Context(tmp_path)
-    ctx.results["docker inspect --format"] = Result('{"Running":false,"ExitCode":0}')
+    ctx.results["date +%s"] = Result("100")
+    ctx.results["docker inspect"] = Result(json.dumps([{
+        "RestartCount": 0,
+        "State": {
+            "Running": False,
+            "ExitCode": 0,
+            "OOMKilled": False,
+            "Error": "",
+            "FinishedAt": "2026-10-29T12:00:00Z",
+        },
+    }]))
+    ctx.results["docker logs"] = Result("received terminated, shutting down\ncleanup completed\n")
+    ctx.results["docker events"] = Result(json.dumps({
+        "Action": "kill", "Actor": {"Attributes": {"signal": "15"}}
+    }) + "\n")
     collector = CorootCollectorsV5(ctx)
     monkeypatch.setattr(collector, "_retain_node_evidence", lambda node, stage: None)
     monkeypatch.setattr(
@@ -197,16 +213,109 @@ def test_close_retains_termination_barrier_and_unproven_flush(
         "_receiver_barrier",
         lambda node: {"accepted": True, "scope": "receiver write only"},
     )
-    collector.close()
+    monkeypatch.setattr(
+        collector,
+        "_close_receivers",
+        lambda: {node: {
+            "technical_valid": True,
+            "saved_bytes_valid": True,
+            "parent_hash_verification": True,
+            "in_flight_handlers_joined": True,
+        } for node in ("a", "b", "native")},
+    )
+    evidence = collector.final_drain()
     evidence = json.loads((collector.root / "drain-evidence.json").read_text())
-    assert evidence["collector_flush_proven"] is False
-    assert "not an exporter flush" in evidence["exporter_loss"]
-    assert all(value["accepted"] for value in evidence["receiver_write_barriers"].values())
+    assert evidence["technical_valid"] is True
+    assert evidence["technical_complete"] is True
+    assert evidence["accepted_receiver_bytes_closed_and_hashed"] is True
+    assert evidence["collector_exporter_flush"]["status"] == "unsupported_by_pinned_source"
+    assert evidence["kernel_or_producer_loss_absent"] is None
+    assert all(value["accepted"] for value in evidence["receiver_acceptance_barriers"].values())
     assert set(evidence["termination"]) == {"a", "b"}
     checkpoint = json.loads((collector.root / "collector.json").read_text())
     assert checkpoint["lifecycle"] == "closed"
     assert checkpoint["closed_checkpoint"] is True
     assert checkpoint["retained_file_hashes"]["drain-evidence.json"]["sha256"]
+    collector.snapshot()
+    final_snapshot = json.loads((collector.root / "final-snapshot.json").read_text())
+    assert final_snapshot["technical_complete"] is True
+    assert final_snapshot["accepted_receiver_bytes_closed_and_hashed"] is True
+    assert "pre-receiver exporter loss" in final_snapshot["scope"]
+    checkpoint = json.loads((collector.root / "collector.json").read_text())
+    assert checkpoint["retained_file_hashes"]["final-snapshot.json"]["sha256"]
+
+
+def test_termination_rejects_exit_137_oom_sigkill_and_missing_success(tmp_path: Path) -> None:
+    collector = OBICollectorsV5(Context(tmp_path))
+    inspect = Result(json.dumps([{
+        "RestartCount": 1,
+        "State": {
+            "Running": False,
+            "ExitCode": 137,
+            "OOMKilled": True,
+            "Error": "forced",
+            "FinishedAt": "2026-10-29T12:00:00Z",
+        },
+    }]))
+    events = Result(json.dumps({
+        "Action": "kill", "Actor": {"Attributes": {"signal": "9"}}
+    }) + "\n")
+    result = collector._termination_evidence(
+        stop=Result("study-obi-v5"), inspect=inspect, events=events, logs=""
+    )
+    assert result["technical_valid"] is False
+    assert "unexpected_exit_code:137" in result["technical_invalid_reasons"]
+    assert "oom_killed" in result["technical_invalid_reasons"]
+    assert "sigkill_observed" in result["technical_invalid_reasons"]
+    assert "obi_successful_exit_marker_missing" in result["technical_invalid_reasons"]
+
+
+def test_obi_clean_shutdown_claim_is_limited_to_source_queue_path(tmp_path: Path) -> None:
+    collector = OBICollectorsV5(Context(tmp_path))
+    inspect = Result(json.dumps([{
+        "RestartCount": 0,
+        "State": {
+            "Running": False,
+            "ExitCode": 0,
+            "OOMKilled": False,
+            "Error": "",
+            "FinishedAt": "2026-10-29T12:00:00Z",
+        },
+    }]))
+    result = collector._termination_evidence(
+        stop=Result("study-obi-v5"),
+        inspect=inspect,
+        events=Result(json.dumps({
+            "Action": "kill", "Actor": {"Attributes": {"signal": "15"}}
+        }) + "\n"),
+        logs="OpenTelemetry eBPF Instrumentation successfully exiting\n",
+    )
+    assert result["technical_valid"] is True
+    claim = collector._exporter_flush_claim({"a": result, "b": result})
+    assert claim["status"] == "graceful_source_path_observed"
+    assert claim["zero_pre_queue_or_kernel_loss_proven"] is False
+
+
+def test_parent_rehash_detects_post_checkpoint_raw_body_change(tmp_path: Path) -> None:
+    collector = OBICollectorsV5(Context(tmp_path))
+    output = collector.root / "a.jsonl"
+    output.write_text('{"complete":true}\n', encoding="utf-8")
+    capture = _capture_wire_body(
+        output,
+        b'{"resourceSpans":[]}',
+        source="ebpf-obi:a",
+        node="a",
+        received_ns=1,
+        headers={"Content-Type": "application/json"},
+    )
+    checkpoint = {
+        "wrapper": _file(output),
+        "errors": _file(output.with_suffix(".errors.jsonl")),
+        "raw_capture": _raw_capture_audit(output),
+    }
+    assert collector._verify_receiver_checkpoint("a", checkpoint) is True
+    (collector.root / capture["raw_ref"]).write_bytes(b"changed")
+    assert collector._verify_receiver_checkpoint("a", checkpoint) is False
 
 
 def test_control_image_is_existing_exact_pin() -> None:

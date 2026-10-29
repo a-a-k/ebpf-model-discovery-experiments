@@ -109,6 +109,7 @@ class CollectorsV5:
     image = ""
     source_version = ""
     source_commit: str | None = None
+    stop_grace_seconds = 30
 
     def __init__(self, ctx, *, semantic: bool = True):
         self.ctx = ctx
@@ -121,6 +122,8 @@ class CollectorsV5:
         self.logs: list[Any] = []
         self.started_ns: int | None = None
         self.positive_control_evidence: dict[str, Any] | None = None
+        self._drained = False
+        self._drain_evidence: dict[str, Any] | None = None
         self._closed = False
 
     @property
@@ -193,7 +196,7 @@ class CollectorsV5:
             command = [
                 sys.executable,
                 "-m",
-                "ebpf_discovery.receiver",
+                "ebpf_discovery.receiver_v5",
                 "--port",
                 str(port),
                 "--out",
@@ -202,7 +205,8 @@ class CollectorsV5:
                 source,
                 "--node",
                 node,
-                "--raw-capture",
+                "--checkpoint",
+                str(self.root / f"receiver-closed-{node}.json"),
             ]
             self.processes[node] = subprocess.Popen(
                 command, stdout=log, stderr=subprocess.STDOUT
@@ -416,9 +420,54 @@ class CollectorsV5:
         return {"proven": False, "reason": "marker_or_origin_missing", "malformed": malformed}
 
     def snapshot(self) -> None:
+        if self._drained:
+            evidence = self._drain_evidence or {}
+            final = {
+                "schema": "collector-final-snapshot-v5",
+                "collector": self.collector,
+                "captured_ns": time.time_ns(),
+                "collector_stopped": True,
+                "receivers_closed": True,
+                "technical_complete": evidence.get("technical_complete") is True,
+                "accepted_receiver_bytes_closed_and_hashed": (
+                    evidence.get("accepted_receiver_bytes_closed_and_hashed") is True
+                ),
+                "receiver_closed_checkpoints": evidence.get(
+                    "receiver_closed_checkpoints", {}
+                ),
+                "scope": (
+                    "all bytes accepted by the three local receivers are closed and "
+                    "hash checked; kernel, producer, and pre-receiver exporter loss "
+                    "remain outside this snapshot"
+                ),
+            }
+            _write_json(self.root / "final-snapshot.json", final)
+            # The final snapshot is created after the drain checkpoint, so
+            # refresh collector.json to bind this last retained artifact too.
+            self._finalize_checkpoint()
+            if not (
+                final["technical_complete"]
+                and final["accepted_receiver_bytes_closed_and_hashed"]
+            ):
+                raise RuntimeError(f"{self.collector} final snapshot is technically invalid")
+            return
         self.health()
         for node in ("a", "b"):
             self._retain_node_evidence(node, "snapshot")
+        _write_json(
+            self.root / "live-prefix.json",
+            {
+                "schema": "collector-live-prefix-v5",
+                "collector": self.collector,
+                "captured_ns": time.time_ns(),
+                "receivers_closed": False,
+                "producer_pending": True,
+                "scope": (
+                    "complete JSONL records currently saved; collector/kernel/exporter "
+                    "work may still be pending and is not part of this live prefix"
+                ),
+            },
+        )
 
     def _retain_node_evidence(self, node: str, stage: str) -> None:
         commands = {
@@ -438,60 +487,221 @@ class CollectorsV5:
             }
         _write_json(self.root / f"{stage}-{node}-evidence.json", statuses)
 
-    def close(self) -> None:
-        if self._closed:
-            return
-        self._closed = True
+    def final_drain(self) -> dict[str, Any]:
+        """Stop collectors and freeze closed, hash-checked receiver inputs."""
+        if self._drained:
+            evidence = dict(self._drain_evidence or {})
+            if not evidence.get("technical_valid"):
+                raise RuntimeError(f"{self.collector} final drain is technically invalid")
+            return evidence
         termination = {}
         for node in ("a", "b"):
-            self._retain_node_evidence(node, "pre-close")
+            self._retain_node_evidence(node, "pre-drain")
+            since_result = self.ctx.node_exec(node, "date +%s", timeout=10, check=False)
+            since = _stdout(since_result).strip()
             stop = self.ctx.node_exec(
                 node,
-                f"docker stop -t 30 {self.container_name}",
-                timeout=60,
+                f"docker stop -t {self.stop_grace_seconds} {self.container_name}",
+                timeout=self.stop_grace_seconds + 30,
                 check=False,
             )
             inspect = self.ctx.node_exec(
-                node,
-                f"docker inspect --format '{{{{json .State}}}}' {self.container_name}",
-                timeout=30,
-                check=False,
+                node, f"docker inspect {self.container_name}", timeout=30, check=False
             )
             logs = self.ctx.node_exec(
                 node, f"docker logs {self.container_name}", timeout=30, check=False
             )
+            log_text = _stdout(logs) + _stderr(logs)
             (self.root / f"final-{node}-collector.log").write_text(
-                _stdout(logs) + _stderr(logs), encoding="utf-8"
+                log_text, encoding="utf-8"
             )
-            termination[node] = {
-                "stop_returncode": _returncode(stop),
-                "stop_stdout": _stdout(stop).strip(),
-                "stop_stderr": _stderr(stop).strip(),
-                "state": _stdout(inspect).strip(),
-                "state_returncode": _returncode(inspect),
+            until_result = self.ctx.node_exec(node, "date +%s", timeout=10, check=False)
+            until = _stdout(until_result).strip()
+            events = self.ctx.node_exec(
+                node,
+                f"docker events --since {shlex.quote(since or '0')} --until {shlex.quote(until or '0')} "
+                f"--filter container={self.container_name} --format '{{{{json .}}}}'",
+                timeout=30,
+                check=False,
+            )
+            (self.root / f"final-{node}-docker-events.jsonl").write_text(
+                _stdout(events), encoding="utf-8"
+            )
+            termination[node] = self._termination_evidence(
+                stop=stop, inspect=inspect, events=events, logs=log_text
+            )
+            termination[node]["event_query"] = {
+                "since": since,
+                "until": until,
+                "returncode": _returncode(events),
+                "stderr": _stderr(events).strip(),
             }
 
-        barriers = {node: self._receiver_barrier(node) for node in ("a", "b")}
-        _write_json(
-            self.root / "drain-evidence.json",
-            {
-                "collector": self.collector,
-                "termination": termination,
-                "receiver_write_barriers": barriers,
-                "collector_flush_proven": False,
-                "exporter_loss": "unproven; collector termination plus receiver acceptance barrier is retained but is not an exporter flush acknowledgement",
-            },
+        # The acceptance record is only a boundary marker. The subsequent
+        # receiver shutdown joins all handlers and is the saved-byte closure.
+        barriers = {node: self._receiver_barrier(node) for node in RECEIVERS}
+        receivers = self._close_receivers()
+        valid = (
+            all(value.get("technical_valid") for value in termination.values())
+            and all(value.get("accepted") for value in barriers.values())
+            and all(value.get("technical_valid") for value in receivers.values())
         )
-        for process in self.processes.values():
+        evidence = {
+            "schema": "collector-final-drain-v5",
+            "collector": self.collector,
+            "source_version": self.source_version,
+            "source_shutdown_facts": self._shutdown_source_facts(),
+            "termination": termination,
+            "receiver_acceptance_barriers": barriers,
+            "receiver_closed_checkpoints": receivers,
+            "accepted_receiver_bytes_closed_and_hashed": all(
+                value.get("saved_bytes_valid")
+                and value.get("parent_hash_verification") is True
+                for value in receivers.values()
+            ),
+            "collector_exporter_flush": self._exporter_flush_claim(termination),
+            "kernel_or_producer_loss_absent": None,
+            "technical_complete": valid,
+            "technical_valid": valid,
+            "scope": (
+                "clean observed collector termination and complete saved receiver bytes; "
+                "zero kernel, producer, or pre-receiver exporter loss is not claimed"
+            ),
+        }
+        self._drain_evidence = evidence
+        _write_json(self.root / "drain-evidence.json", evidence)
+        self._finalize_checkpoint()
+        # Mark complete only after receiver closure and the durable checkpoint;
+        # an unexpected transport/filesystem exception remains retryable by the
+        # defensive close path.
+        self._drained = True
+        if not valid:
+            raise RuntimeError(f"{self.collector} final drain is technically invalid")
+        return dict(evidence)
+
+    def close(self) -> None:
+        if self._closed:
+            return
+        error = None
+        try:
+            if not self._drained:
+                self.final_drain()
+        except Exception as exc:
+            error = exc
+        finally:
+            for process in self.processes.values():
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        process.kill()
+                        process.wait(timeout=5)
+            for log in self.logs:
+                if not log.closed:
+                    log.close()
+            self._closed = True
+        if error is not None:
+            raise error
+
+    def _close_receivers(self) -> dict[str, Any]:
+        evidence = {}
+        for node, process in self.processes.items():
+            forced = False
             if process.poll() is None:
                 process.terminate()
                 try:
-                    process.wait(timeout=10)
+                    process.wait(timeout=30)
                 except subprocess.TimeoutExpired:
+                    forced = True
                     process.kill()
                     process.wait(timeout=5)
+            checkpoint_path = self.root / f"receiver-closed-{node}.json"
+            checkpoint = None
+            checkpoint_error = None
+            try:
+                checkpoint = json.loads(checkpoint_path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                checkpoint_error = repr(exc)
+            parent_verified = self._verify_receiver_checkpoint(node, checkpoint)
+            evidence[node] = {
+                "returncode": process.returncode,
+                "forced_kill": forced,
+                "checkpoint": checkpoint_path.name,
+                "checkpoint_error": checkpoint_error,
+                "in_flight_handlers_joined": bool(
+                    checkpoint and checkpoint.get("in_flight_handlers_joined")
+                ),
+                "saved_bytes_valid": bool(checkpoint and checkpoint.get("saved_bytes_valid")),
+                "parent_hash_verification": parent_verified,
+                "technical_valid": (
+                    process.returncode == 0
+                    and not forced
+                    and checkpoint_error is None
+                    and bool(checkpoint and checkpoint.get("in_flight_handlers_joined"))
+                    and bool(checkpoint and checkpoint.get("saved_bytes_valid"))
+                    and parent_verified
+                ),
+            }
+        return evidence
+
+    def _verify_receiver_checkpoint(self, node: str, checkpoint: Any) -> bool:
+        if not isinstance(checkpoint, dict):
+            return False
+
+        def matches(path: Path, expected: Any) -> bool:
+            if not isinstance(expected, dict):
+                return False
+            present = path.is_file()
+            if present != bool(expected.get("present")):
+                return False
+            if not present:
+                return expected.get("bytes") == 0 and expected.get("sha256") is None
+            return (
+                path.stat().st_size == expected.get("bytes")
+                and _sha256_file(path) == expected.get("sha256")
+            )
+
+        output = self.root / f"{node}.jsonl"
+        if not matches(output, checkpoint.get("wrapper")):
+            return False
+        if not matches(output.with_suffix(".errors.jsonl"), checkpoint.get("errors")):
+            return False
+        raw = checkpoint.get("raw_capture")
+        if not isinstance(raw, dict) or raw.get("errors"):
+            return False
+        captures = raw.get("captures")
+        if not isinstance(captures, list) or raw.get("capture_count") != len(captures):
+            return False
+        capture_root = output.with_suffix(".raw")
+        actual_directories = (
+            len([path for path in capture_root.iterdir() if path.is_dir()])
+            if capture_root.is_dir()
+            else 0
+        )
+        if actual_directories != len(captures):
+            return False
+        for capture in captures:
+            if not isinstance(capture, dict) or capture.get("valid") is not True:
+                return False
+            metadata = self.root / str(capture.get("metadata", ""))
+            body = self.root / str(capture.get("raw_ref", ""))
+            if not metadata.is_file() or not body.is_file():
+                return False
+            if _sha256_file(metadata) != capture.get("metadata_sha256"):
+                return False
+            if _sha256_file(body) != capture.get("raw_sha256"):
+                return False
+            if body.stat().st_size != capture.get("raw_size_bytes"):
+                return False
+        return True
+
+    def _finalize_checkpoint(self) -> None:
+        if any(process.poll() is None for process in self.processes.values()):
+            raise RuntimeError("cannot finalize checkpoint with a live receiver")
         for log in self.logs:
-            log.close()
+            if not log.closed:
+                log.flush()
         metadata_path = self.root / "collector.json"
         metadata = (
             json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -523,6 +733,74 @@ class CollectorsV5:
             drain_evidence="drain-evidence.json",
         )
         self._write_collector_metadata(metadata)
+
+    def _termination_evidence(self, *, stop, inspect, events, logs: str) -> dict[str, Any]:
+        parsed = None
+        parse_error = None
+        try:
+            rows = json.loads(_stdout(inspect))
+            parsed = rows[0] if isinstance(rows, list) else rows
+        except Exception as exc:
+            parse_error = repr(exc)
+        state = parsed.get("State", {}) if isinstance(parsed, dict) else {}
+        event_rows, event_errors = [], []
+        for line in _stdout(events).splitlines():
+            try:
+                event_rows.append(json.loads(line))
+            except json.JSONDecodeError as exc:
+                event_errors.append(str(exc))
+        sigkills = [
+            row for row in event_rows
+            if row.get("Action") == "kill"
+            and str(row.get("Actor", {}).get("Attributes", {}).get("signal")) == "9"
+        ]
+        log_assessment = self._assess_terminal_logs(logs)
+        reasons = []
+        if _returncode(stop) != 0:
+            reasons.append("docker_stop_failed")
+        if _returncode(inspect) != 0:
+            reasons.append("terminal_inspect_failed")
+        if parse_error or not isinstance(parsed, dict):
+            reasons.append("terminal_inspect_unavailable")
+        else:
+            if state.get("Running") is not False:
+                reasons.append("container_still_running")
+            if state.get("ExitCode") != 0:
+                reasons.append(f"unexpected_exit_code:{state.get('ExitCode')}")
+            if state.get("OOMKilled") is not False:
+                reasons.append("oom_killed")
+            if state.get("Error") not in ("", None):
+                reasons.append("docker_state_error")
+            if not state.get("FinishedAt"):
+                reasons.append("finished_at_missing")
+            if "RestartCount" not in parsed:
+                reasons.append("restart_count_missing")
+            elif parsed.get("RestartCount") != 0:
+                reasons.append(f"restarted:{parsed.get('RestartCount')}")
+        if sigkills:
+            reasons.append("sigkill_observed")
+        if event_errors:
+            reasons.append("docker_events_malformed")
+        reasons.extend(log_assessment["invalid_reasons"])
+        return {
+            "stop_returncode": _returncode(stop),
+            "stop_stdout": _stdout(stop).strip(),
+            "stop_stderr": _stderr(stop).strip(),
+            "inspect_returncode": _returncode(inspect),
+            "inspect_parse_error": parse_error,
+            "running": state.get("Running"),
+            "finished_at": state.get("FinishedAt"),
+            "exit_code": state.get("ExitCode"),
+            "oom_killed": state.get("OOMKilled"),
+            "state_error": state.get("Error"),
+            "restart_count": parsed.get("RestartCount") if isinstance(parsed, dict) else None,
+            "sigkill_events": len(sigkills),
+            "event_rows": len(event_rows),
+            "event_parse_errors": event_errors,
+            "log_assessment": log_assessment,
+            "technical_invalid_reasons": reasons,
+            "technical_valid": not reasons,
+        }
 
     def _receiver_barrier(self, node: str) -> dict[str, Any]:
         output = self.root / f"{node}.jsonl"
@@ -559,6 +837,15 @@ class CollectorsV5:
     def _config_summary(self) -> dict[str, Any]:
         raise NotImplementedError
 
+    def _assess_terminal_logs(self, logs: str) -> dict[str, Any]:
+        raise NotImplementedError
+
+    def _shutdown_source_facts(self) -> dict[str, Any]:
+        raise NotImplementedError
+
+    def _exporter_flush_claim(self, termination: dict[str, Any]) -> dict[str, Any]:
+        raise NotImplementedError
+
     def _write_config(self, node: str, port: int) -> tuple[Path, str]:
         raise NotImplementedError
 
@@ -571,6 +858,7 @@ class OBICollectorsV5(CollectorsV5):
     container_name = "study-obi-v5"
     image = OBI_IMAGE
     source_version = "v0.15.2"
+    stop_grace_seconds = 45
 
     def _config_summary(self) -> dict[str, Any]:
         return {
@@ -579,6 +867,55 @@ class OBICollectorsV5(CollectorsV5):
             "context_propagation": "all",
             "semantic_capture": self.semantic,
             "raw_wire_capture": True,
+        }
+
+    def _assess_terminal_logs(self, logs: str) -> dict[str, Any]:
+        success = "OpenTelemetry eBPF Instrumentation successfully exiting" in logs
+        exact_failures = [
+            marker for marker in (
+                "error shutting down traces exporter",
+                "OpenTelemetry eBPF Instrumentation ran with errors",
+                "graceful shutdown has timed out",
+                "error sending trace to consumer",
+                "sending queue is full",
+            )
+            if marker in logs
+        ]
+        reasons = []
+        if not success:
+            reasons.append("obi_successful_exit_marker_missing")
+        if exact_failures:
+            reasons.append("obi_unrecovered_export_or_shutdown_failure")
+        return {
+            "graceful_success_marker": success,
+            "source_specific_failure_markers": exact_failures,
+            "invalid_reasons": reasons,
+        }
+
+    def _shutdown_source_facts(self) -> dict[str, Any]:
+        return {
+            "pin": "v0.15.2 commit b28e4e7f",
+            "source_paths": [
+                "cmd/obi/main.go",
+                "pkg/obi/config.go",
+                "pkg/export/otel/traces.go",
+                "pkg/export/otel/trace_exporter.go",
+            ],
+            "signal": "main registers SIGINT/SIGTERM with signal.NotifyContext",
+            "pipeline": "instrumenter waits for application pipeline completion",
+            "exporter": (
+                "trace exporter Shutdown closes and drains its queue under a separate "
+                "10-second context, then stops the OTLP client"
+            ),
+            "configured_stop_grace_seconds": self.stop_grace_seconds,
+        }
+
+    def _exporter_flush_claim(self, termination: dict[str, Any]) -> dict[str, Any]:
+        clean = all(value.get("technical_valid") for value in termination.values())
+        return {
+            "status": "graceful_source_path_observed" if clean else "failed_or_unproven",
+            "queue_shutdown_implemented_by_pin": True,
+            "zero_pre_queue_or_kernel_loss_proven": False,
         }
 
     def _write_config(self, node: str, port: int) -> tuple[Path, str]:
@@ -662,6 +999,7 @@ class CorootCollectorsV5(CollectorsV5):
     image = COROOT_IMAGE
     source_version = "1.37.0"
     source_commit = COROOT_COMMIT
+    stop_grace_seconds = 30
 
     def _config_summary(self) -> dict[str, Any]:
         return {
@@ -672,6 +1010,49 @@ class CorootCollectorsV5(CollectorsV5):
             "additional_export_endpoints": [],
             "raw_wire_capture": True,
             "known_causal_limit": "independent outbound client roots; parent/async links unknown",
+        }
+
+    def _assess_terminal_logs(self, logs: str) -> dict[str, Any]:
+        success = "cleanup completed" in logs
+        timed_out = "cleanup timed out, forcing exit" in logs
+        reasons = []
+        if not success:
+            reasons.append("coroot_cleanup_completed_marker_missing")
+        if timed_out:
+            reasons.append("coroot_cleanup_timed_out")
+        return {
+            "graceful_success_marker": success,
+            "source_specific_failure_markers": (
+                ["cleanup timed out, forcing exit"] if timed_out else []
+            ),
+            "invalid_reasons": reasons,
+        }
+
+    def _shutdown_source_facts(self) -> dict[str, Any]:
+        return {
+            "pin": f"1.37.0 commit {self.source_commit}",
+            "source_paths": ["main.go", "tracing/tracing.go"],
+            "signal": "main handles SIGTERM/SIGINT and runs registry/log/profile cleanup",
+            "cleanup_timeout_seconds": 10,
+            "exporter": (
+                "each container tracer owns an SDK batch provider; pinned source exposes "
+                "no tracer-provider Shutdown during process cleanup"
+            ),
+            "configured_stop_grace_seconds": self.stop_grace_seconds,
+        }
+
+    def _exporter_flush_claim(self, termination: dict[str, Any]) -> dict[str, Any]:
+        return {
+            "status": "unsupported_by_pinned_source",
+            "queue_shutdown_implemented_by_pin": False,
+            "clean_process_cleanup_observed": all(
+                value.get("technical_valid") for value in termination.values()
+            ),
+            "zero_exporter_or_kernel_loss_proven": False,
+            "interpretation": (
+                "ambiguous internal exporter buffers are retained uncertainty, not an "
+                "automatic technical failure when process cleanup and saved bytes are valid"
+            ),
         }
 
     def _write_config(self, node: str, port: int) -> tuple[Path, str]:
