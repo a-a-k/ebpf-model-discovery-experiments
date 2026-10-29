@@ -1,4 +1,4 @@
-"""Iteration-5 OTel Demo adapter with context-neutral disabled tracing.
+"""Iteration-5 OTel Demo adapter with provider-neutral disabled tracing.
 
 The v4 adapter is intentionally left executable and unchanged.  This subclass
 keeps its deployment, workload, and native-enabled behavior, but makes the v5
@@ -37,8 +37,11 @@ class Adapter(AdapterV4):
                 "application_trace_exports": 0,
                 "application_sdk_trace_providers": 0,
                 "application_trace_propagators": 0,
-                "application_created_trace_contexts": 0,
             },
+            "context_scope": (
+                "no claim that the process carries no trace-context object: an "
+                "incoming carrier or the selected eBPF collector may provide one"
+            ),
             "raw_checks": [
                 "unfiltered native OTLP trace stream retained with hash",
                 "service census contains no disabled component",
@@ -122,7 +125,8 @@ class Adapter(AdapterV4):
             "sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
             "experiment_protocol": self.EXPERIMENT_PROTOCOL,
             "trace_context_policy": (
-                "disabled components install no SDK trace provider or propagator"
+                "disabled application paths install no SDK trace provider or propagator; "
+                "collector-provided or incoming context is outside this source guarantee"
             ),
             "services": sorted(set(base_record["services"]) | {"currency", "shipping"}),
         }

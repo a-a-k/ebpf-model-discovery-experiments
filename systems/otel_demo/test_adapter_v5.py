@@ -210,6 +210,8 @@ def test_v5_mode_audit_is_explicit_without_renaming_v4(
     assert audit["experiment_protocol"] == "iteration-5"
     assert audit["disabled_trace_components"] == disabled
     assert all(value == 0 for value in audit["disabled_trace_policy"].values())
+    assert "no claim" in audit["context_scope"]
+    assert "eBPF collector" in audit["context_scope"]
     description = adapter._suppression_description()
     assert description["experiment_protocol"] == "iteration-5"
     assert description["raw_mode_audit"] == audit
