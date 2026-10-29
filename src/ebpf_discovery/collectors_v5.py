@@ -124,8 +124,10 @@ def _control_server_script(port: int) -> str:
     )
 
 
-def _control_request_script(port: int, marker: str, *, persistent: bool) -> str:
-    request = f"busybox wget -T 2 -qO- http://127.0.0.1:{port}/{marker}"
+def _control_request_script(
+    port: int, marker: str, *, persistent: bool, host: str = "127.0.0.1"
+) -> str:
+    request = f"busybox wget -T 2 -qO- http://{host}:{port}/{marker}"
     if not persistent:
         return request
     return f"while true; do {request} >/dev/null || exit 1; sleep 1; done"
@@ -184,7 +186,6 @@ class CollectorsV5:
         self.logs: list[Any] = []
         self.started_ns: int | None = None
         self.positive_control_evidence: dict[str, Any] | None = None
-        self._prestarted_control_nodes: dict[str, dict[str, Any]] | None = None
         self._drained = False
         self._drain_evidence: dict[str, Any] | None = None
         self._closed = False
@@ -338,6 +339,7 @@ class CollectorsV5:
                 "server_container": f"study-ebpf-control-server-{node}",
                 "client_container": f"study-ebpf-control-client-{node}",
                 "probe_container": f"study-ebpf-control-client-{node}-probe",
+                "network": f"study-ebpf-control-net-{node}",
                 "control_image": CONTROL_IMAGE,
                 "request_attempts": [],
             }
@@ -348,6 +350,7 @@ class CollectorsV5:
         server = entry["server_container"]
         client = entry["client_container"]
         probe = entry["probe_container"]
+        network = entry["network"]
         pull = _safe_node_exec(
             self.ctx, node, f"docker pull {shlex.quote(CONTROL_IMAGE)}",
             timeout=300, check=False,
@@ -373,9 +376,44 @@ class CollectorsV5:
             f"docker rm -f {probe} {client} {server} >/dev/null 2>&1 || true",
             timeout=30, check=False,
         )
+        _safe_node_exec(
+            self.ctx, node, f"docker network rm {network} >/dev/null 2>&1 || true",
+            timeout=30, check=False,
+        )
+        network_create_command = f"docker network create --driver bridge {network}"
+        network_create_started_ns = time.time_ns()
+        network_create = _safe_node_exec(
+            self.ctx, node,
+            network_create_command,
+            timeout=30, check=False,
+        )
+        network_create_finished_ns = time.time_ns()
+        entry["network_create"] = {
+            **_result_evidence(network_create),
+            "command": network_create_command,
+            "started_ns": network_create_started_ns,
+            "finished_ns": network_create_finished_ns,
+            "duration_ns": network_create_finished_ns - network_create_started_ns,
+        }
+        if _returncode(network_create):
+            raise RuntimeError(f"technical control network failed to create on {node}")
+        network_inspect = _safe_node_exec(
+            self.ctx, node, f"docker network inspect {network}",
+            timeout=30, check=False,
+        )
+        network_path = self.root / f"control-{node}-network-inspect.json"
+        network_path.write_text(_stdout(network_inspect), encoding="utf-8")
+        entry["network_inspect"] = {
+            "path": network_path.relative_to(self.root).as_posix(),
+            "sha256": _sha256_file(network_path),
+            "returncode": _returncode(network_inspect),
+            "stderr": _stderr(network_inspect),
+        }
+        if _returncode(network_inspect):
+            raise RuntimeError(f"technical control network inspect failed on {node}")
         server_start = _safe_node_exec(
             self.ctx, node,
-            f"docker run -d --name {server} --network host --entrypoint /bin/sh "
+            f"docker run -d --name {server} --network {network} --entrypoint /bin/sh "
             f"{shlex.quote(CONTROL_IMAGE)} -ec "
             + shlex.quote(_control_server_script(entry["port"])),
             timeout=60, check=False,
@@ -395,15 +433,13 @@ class CollectorsV5:
         try:
             for node in ("a", "b"):
                 entry = nodes[node]
+                entry["control_started_ns"] = time.time_ns()
                 port = entry["port"]
                 server = entry["server_container"]
                 client = entry["client_container"]
                 probe = entry["probe_container"]
-                if self._prestarted_control_nodes is not None:
-                    entry.update(self._prestarted_control_nodes[node])
-                    entry["prestarted_before_collector"] = True
-                else:
-                    self._launch_control_server(node, entry)
+                network = entry["network"]
+                self._launch_control_server(node, entry)
 
                 ready_deadline = time.monotonic() + CONTROL_READY_TIMEOUT_SECONDS
                 while time.monotonic() < ready_deadline:
@@ -427,9 +463,11 @@ class CollectorsV5:
                         if _returncode(config_check) == 0:
                             request = _safe_node_exec(
                                 self.ctx, node,
-                                f"docker run --rm --name {probe} --network host "
+                                f"docker run --rm --name {probe} --network {network} "
                                 f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
-                                + shlex.quote(_control_request_script(port, marker, persistent=False)),
+                                + shlex.quote(_control_request_script(
+                                    port, marker, persistent=False, host=server
+                                )),
                                 timeout=30, check=False,
                             )
                             attempt["request"] = _result_evidence(request)
@@ -447,9 +485,11 @@ class CollectorsV5:
 
                 client_start = _safe_node_exec(
                     self.ctx, node,
-                    f"docker run -d --name {client} --network host --entrypoint /bin/sh "
+                    f"docker run -d --name {client} --network {network} --entrypoint /bin/sh "
                     f"{shlex.quote(CONTROL_IMAGE)} -ec "
-                    + shlex.quote(_control_request_script(port, marker, persistent=True)),
+                    + shlex.quote(_control_request_script(
+                        port, marker, persistent=True, host=server
+                    )),
                     timeout=60, check=False,
                 )
                 entry["client_start"] = _result_evidence(client_start)
@@ -462,6 +502,10 @@ class CollectorsV5:
                 entry["client_start_inspect"] = _result_evidence(client_inspect)
                 if not _inspect_running(client_inspect):
                     raise RuntimeError(f"technical control client exited during startup on {node}")
+                entry["control_ready_ns"] = time.time_ns()
+                entry["control_preparation_duration_ns"] = (
+                    entry["control_ready_ns"] - entry["control_started_ns"]
+                )
 
             deadline = time.monotonic() + timeout
             while time.monotonic() < deadline:
@@ -484,6 +528,7 @@ class CollectorsV5:
                 server = entry["server_container"]
                 client = entry["client_container"]
                 probe = entry["probe_container"]
+                network = entry["network"]
                 for label, command in (
                     ("server-inspect", f"docker inspect {server}"),
                     ("server-logs", f"docker logs {server}"),
@@ -537,6 +582,50 @@ class CollectorsV5:
                             "returncode": _returncode(verification),
                             "observed_names": observed_names,
                         })
+                network_cleanup_command = f"docker network rm {network}"
+                network_cleanup_started_ns = time.time_ns()
+                network_cleanup = _safe_node_exec(
+                    self.ctx, node, network_cleanup_command,
+                    timeout=30, check=False,
+                )
+                network_cleanup_finished_ns = time.time_ns()
+                entry["network_cleanup"] = {
+                    **_result_evidence(network_cleanup),
+                    "command": network_cleanup_command,
+                    "started_ns": network_cleanup_started_ns,
+                    "finished_ns": network_cleanup_finished_ns,
+                    "duration_ns": network_cleanup_finished_ns - network_cleanup_started_ns,
+                }
+                network_verification = _safe_node_exec(
+                    self.ctx,
+                    node,
+                    "docker network ls --format '{{.Name}}' --filter "
+                    + shlex.quote(f"name=^{network}$"),
+                    timeout=30,
+                    check=False,
+                )
+                observed_networks = [
+                    item.strip() for item in _stdout(network_verification).splitlines()
+                    if item.strip()
+                ]
+                network_absent = (
+                    _returncode(network_verification) == 0
+                    and network not in observed_networks
+                )
+                entry["network_cleanup_verification"] = {
+                    **_result_evidence(network_verification),
+                    "network": network,
+                    "observed_names": observed_networks,
+                    "absent": network_absent,
+                }
+                if not network_absent:
+                    cleanup_failures.append({
+                        "node": node,
+                        "role": "network",
+                        "network": network,
+                        "returncode": _returncode(network_verification),
+                        "observed_names": observed_networks,
+                    })
             if cleanup_failures and failure is None:
                 failure = RuntimeError("technical control cleanup absence verification failed")
             evidence = {
@@ -549,11 +638,7 @@ class CollectorsV5:
                 "selected_ebpf_origin_proven": bool(proofs)
                 and all(value["proven"] for value in proofs.values()),
                 "application_coverage": "not_assessed_by_technical_control",
-                "post_collector_start_process_admission_proven": (
-                    False if any(
-                        value.get("prestarted_before_collector") for value in nodes.values()
-                    ) else None
-                ),
+                "control_network_scope": "private_bridge_no_host_port_publication",
                 "native_sdk": False,
                 "cleanup_verified": not cleanup_failures,
                 "cleanup_failures": cleanup_failures,
@@ -561,7 +646,6 @@ class CollectorsV5:
             }
             _write_json(self.root / "technical-positive-control.json", evidence)
             self.positive_control_evidence = evidence
-            self._prestarted_control_nodes = None
 
         if failure is not None:
             raise failure
@@ -1066,23 +1150,11 @@ class OBICollectorsV5(CollectorsV5):
         self._obi_startup_error: str | None = None
 
     def start(self) -> None:
-        # OBI's initial generic-process admission can take about a minute on the
-        # full guests.  Keep the responder alive before OBI starts so that the
-        # selected agent can admit it during that initial scan.  No request is
-        # issued here; the marker exchange and raw-origin proof remain after
-        # application readiness in positive_control().
         try:
-            self._prestart_control_servers()
             super().start()
             self._obi_startup_complete = True
         except Exception as original:
             self._obi_startup_error = repr(original)
-            try:
-                self._cleanup_prestarted_control("collector_start_failed")
-            except Exception as cleanup_error:
-                original.add_note(
-                    "technical control cleanup also failed: " + repr(cleanup_error)
-                )
             raise
 
     def close(self) -> None:
@@ -1135,121 +1207,8 @@ class OBICollectorsV5(CollectorsV5):
             incomplete["accepted_receiver_bytes_closed_and_hashed"] = False
             _write_json(self.root / "startup-incomplete.json", incomplete)
             self._closed = True
-        try:
-            self._cleanup_prestarted_control("closed_before_positive_control")
-        except Exception as exc:
-            if error is None:
-                error = exc
         if error is not None:
             raise error
-
-    def _prestart_control_servers(self) -> None:
-        prestart_started_ns = time.time_ns()
-        nodes = self._control_nodes()
-        for entry in nodes.values():
-            entry.update(
-                prestarted_ns=prestart_started_ns,
-                proof_traffic_emitted=False,
-            )
-        self._prestarted_control_nodes = nodes
-        try:
-            for node, entry in nodes.items():
-                server = entry["server_container"]
-                self._launch_control_server(node, entry)
-                deadline = time.monotonic() + CONTROL_READY_TIMEOUT_SECONDS
-                while time.monotonic() < deadline:
-                    inspect = _safe_node_exec(
-                        self.ctx, node, f"docker inspect {server}",
-                        timeout=30, check=False,
-                    )
-                    if _inspect_running(inspect):
-                        config_check = _safe_node_exec(
-                            self.ctx, node,
-                            f"docker exec {server} haproxy -c -f /tmp/control-haproxy.cfg",
-                            timeout=30, check=False,
-                        )
-                        entry["prestart_config_check"] = _result_evidence(config_check)
-                        if _returncode(config_check) == 0:
-                            entry["prestart_ready"] = True
-                            break
-                    time.sleep(0.25)
-                if not entry.get("prestart_ready"):
-                    raise RuntimeError(f"technical control prestart failed on {node}")
-            ready_ns = time.time_ns()
-            self._write_prestart_record(nodes, prestart_started_ns, ready_ns=ready_ns)
-        except Exception as exc:
-            self._write_prestart_record(
-                nodes, prestart_started_ns, error=repr(exc)
-            )
-            raise
-
-    def _write_prestart_record(
-        self, nodes: dict[str, dict[str, Any]], started_ns: int, *,
-        ready_ns: int | None = None, error: str | None = None,
-    ) -> None:
-        finished_ns = ready_ns if ready_ns is not None else time.time_ns()
-        _write_json(
-            self.root / "control-prestart.json",
-            {
-                "schema": "collector-control-prestart-v5",
-                "collector": self.collector,
-                "nodes": nodes,
-                "started_ns": started_ns,
-                "ready_ns": ready_ns,
-                "finished_ns": finished_ns,
-                "duration_ns": finished_ns - started_ns,
-                "technical_complete": error is None,
-                "error": error,
-                "proof_traffic_emitted": False,
-                "post_collector_start_process_admission_proven": False,
-                "scope": "responder process admission only; not eBPF-origin proof",
-            },
-        )
-
-    def _cleanup_prestarted_control(self, reason: str) -> None:
-        nodes = self._prestarted_control_nodes
-        if nodes is None:
-            return
-        failures = []
-        retained = {}
-        for node, entry in nodes.items():
-            server = entry["server_container"]
-            client = entry["client_container"]
-            probe = entry["probe_container"]
-            for label, command in (
-                ("server-inspect", f"docker inspect {server}"),
-                ("server-logs", f"docker logs {server}"),
-            ):
-                result = _safe_node_exec(self.ctx, node, command, timeout=30, check=False)
-                retained[f"{node}-{label}"] = _result_evidence(result)
-            cleanup = _safe_node_exec(
-                self.ctx, node, f"docker rm -f {probe} {client} {server}",
-                timeout=30, check=False,
-            )
-            retained[f"{node}-cleanup"] = _result_evidence(cleanup)
-            for role, name in (("probe", probe), ("client", client), ("server", server)):
-                verification = _safe_node_exec(
-                    self.ctx, node,
-                    "docker ps -a --format '{{.Names}}' --filter "
-                    + shlex.quote(f"name=^/{name}$"),
-                    timeout=30, check=False,
-                )
-                observed = [value.strip() for value in _stdout(verification).splitlines() if value.strip()]
-                if _returncode(verification) != 0 or name in observed:
-                    failures.append({"node": node, "role": role, "container": name})
-        _write_json(
-            self.root / "control-prestart-cleanup.json",
-            {
-                "schema": "collector-control-prestart-cleanup-v5",
-                "reason": reason,
-                "retained": retained,
-                "cleanup_failures": failures,
-                "cleanup_verified": not failures,
-            },
-        )
-        if failures:
-            raise RuntimeError("technical control prestart cleanup verification failed")
-        self._prestarted_control_nodes = None
 
     def _config_summary(self) -> dict[str, Any]:
         return {
@@ -1258,7 +1217,7 @@ class OBICollectorsV5(CollectorsV5):
             "context_propagation": "all",
             "semantic_capture": self.semantic,
             "raw_wire_capture": True,
-            "control_responder_prestarted_before_collector": True,
+            "control_network": "private_bridge_no_host_port_publication",
         }
 
     def _assess_terminal_logs(self, logs: str) -> dict[str, Any]:

@@ -74,8 +74,6 @@ def test_start_manifest_identifies_collector_and_both_guest_receivers(
     collector = collector_type(ctx)
     monkeypatch.setattr(collector, "_start_receivers", lambda: None)
     monkeypatch.setattr(collector, "_wait_container_readiness", lambda: None)
-    if isinstance(collector, OBICollectorsV5):
-        monkeypatch.setattr(collector, "_prestart_control_servers", lambda: None)
     collector.start()
 
     manifest = json.loads((collector.root / "collector.json").read_text())
@@ -344,10 +342,10 @@ def test_control_server_uses_haproxy_not_missing_busybox_httpd() -> None:
     )
 
 
-def test_obi_prestarts_responders_before_collector_without_proof_traffic(
+def test_control_uses_private_network_dns_and_removes_network(
     tmp_path: Path, monkeypatch
 ) -> None:
-    class PrestartContext(Context):
+    class PrivateNetworkContext(Context):
         def node_exec(self, node, command, **kwargs):
             self.calls.append((node, command, kwargs))
             if command.startswith("docker inspect study-ebpf-control-"):
@@ -356,152 +354,61 @@ def test_obi_prestarts_responders_before_collector_without_proof_traffic(
                 return Result("Configuration file is valid\n")
             if "-probe" in command and command.startswith("docker run"):
                 return Result("ok\n")
-            if command.startswith("docker ps -a"):
-                return Result("")
             if command.startswith("docker image inspect"):
                 return Result('[{"Id":"sha256:pinned"}]')
+            if command.startswith("docker network inspect"):
+                return Result('[{"Driver":"bridge","Internal":false}]')
+            if command.startswith("docker ps -a") or command.startswith(
+                "docker network ls"
+            ):
+                return Result("")
             return Result("ok")
 
-    ctx = PrestartContext(tmp_path)
+    ctx = PrivateNetworkContext(tmp_path)
     collector = OBICollectorsV5(ctx)
-    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
-    monkeypatch.setattr(collector, "_wait_container_readiness", lambda: None)
-    collector.start()
-
-    commands = [command for _, command, _ in ctx.calls]
-    collector_start = next(
-        index for index, command in enumerate(commands)
-        if "--name study-obi-v5" in command
-    )
-    server_starts = [
-        index for index, command in enumerate(commands)
-        if command.startswith("docker run -d --name study-ebpf-control-server-")
-    ]
-    assert len(server_starts) == 2
-    assert all(index < collector_start for index in server_starts)
-    assert not any("busybox wget" in command for command in commands[:collector_start])
-    prestart = json.loads((collector.root / "control-prestart.json").read_text())
-    assert prestart["proof_traffic_emitted"] is False
-    assert prestart["duration_ns"] >= 0
-    assert prestart["post_collector_start_process_admission_proven"] is False
-
     monkeypatch.setattr(
         collector, "_control_proof",
         lambda node, marker: {"proven": True, "reason": "raw_collector_record"},
     )
     evidence = collector.positive_control(timeout=1)
-    assert evidence["selected_ebpf_origin_proven"] is True
-    assert evidence["post_collector_start_process_admission_proven"] is False
-    assert all(value["prestarted_before_collector"] for value in evidence["nodes"].values())
+
     commands = [command for _, command, _ in ctx.calls]
-    assert sum(
-        command.startswith("docker run -d --name study-ebpf-control-server-")
-        for command in commands
-    ) == 2
+    assert not any("--network host" in command for command in commands)
+    for node in ("a", "b"):
+        network = f"study-ebpf-control-net-{node}"
+        server = f"study-ebpf-control-server-{node}"
+        assert any(
+            command == f"docker network create --driver bridge {network}"
+            for command in commands
+        )
+        assert any(
+            f"--network {network}" in command and f"http://{server}:" in command
+            for command in commands
+        )
+        assert evidence["nodes"][node]["network_inspect"]["sha256"]
+        assert evidence["nodes"][node]["network_cleanup_verification"]["absent"]
+    assert evidence["control_network_scope"] == (
+        "private_bridge_no_host_port_publication"
+    )
+    assert evidence["cleanup_verified"] is True
 
 
-def test_obi_start_failure_cleans_prestarted_responders(
+def test_obi_failed_start_close_does_not_claim_drain(
     tmp_path: Path, monkeypatch
 ) -> None:
-    class CleanupContext(Context):
-        def node_exec(self, node, command, **kwargs):
-            self.calls.append((node, command, kwargs))
-            if command.startswith("docker inspect study-ebpf-control-server-"):
-                return Result(json.dumps([{"State": {"Running": True}}]))
-            if "docker exec study-ebpf-control-server-" in command:
-                return Result("Configuration file is valid\n")
-            if command.startswith("docker ps -a"):
-                return Result("")
-            if command.startswith("docker image inspect"):
-                return Result('[{"Id":"sha256:pinned"}]')
-            return Result("ok")
-
-    ctx = CleanupContext(tmp_path)
+    ctx = Context(tmp_path)
     collector = OBICollectorsV5(ctx)
     monkeypatch.setattr(collector, "_start_receivers", lambda: None)
     monkeypatch.setattr(
         collector, "_wait_container_readiness",
         lambda: (_ for _ in ()).throw(RuntimeError("collector readiness failed")),
     )
-    with pytest.raises(RuntimeError, match="collector readiness failed"):
-        collector.start()
-
-    cleanup = json.loads(
-        (collector.root / "control-prestart-cleanup.json").read_text()
-    )
-    assert cleanup["reason"] == "collector_start_failed"
-    assert cleanup["cleanup_verified"] is True
-    assert collector._prestarted_control_nodes is None
-    commands = [command for _, command, _ in ctx.calls]
-    assert sum(command.startswith("docker rm -f") for command in commands) >= 4
-
-
-def test_obi_start_preserves_original_error_when_control_cleanup_also_fails(
-    tmp_path: Path, monkeypatch
-) -> None:
-    class CleanupFailureContext(Context):
-        def node_exec(self, node, command, **kwargs):
-            self.calls.append((node, command, kwargs))
-            if command.startswith("docker inspect study-ebpf-control-server-"):
-                return Result(json.dumps([{"State": {"Running": True}}]))
-            if "docker exec study-ebpf-control-server-" in command:
-                return Result("Configuration file is valid\n")
-            if command.startswith("docker ps -a"):
-                return Result("study-ebpf-control-server-a\n")
-            if command.startswith("docker image inspect"):
-                return Result('[{"Id":"sha256:pinned"}]')
-            return Result("ok")
-
-    collector = OBICollectorsV5(CleanupFailureContext(tmp_path))
-    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
-    monkeypatch.setattr(
-        collector, "_wait_container_readiness",
-        lambda: (_ for _ in ()).throw(RuntimeError("original collector failure")),
-    )
-    with pytest.raises(RuntimeError, match="original collector failure") as caught:
-        collector.start()
-
-    assert any("control cleanup also failed" in note for note in caught.value.__notes__)
-    cleanup = json.loads(
-        (collector.root / "control-prestart-cleanup.json").read_text()
-    )
-    assert cleanup["cleanup_verified"] is False
-    assert collector._prestarted_control_nodes is not None
-
-
-def test_obi_failed_prestart_is_retained_and_close_does_not_claim_drain(
-    tmp_path: Path, monkeypatch
-) -> None:
-    class FailedPrestartContext(Context):
-        def node_exec(self, node, command, **kwargs):
-            self.calls.append((node, command, kwargs))
-            if command.startswith("docker pull"):
-                return Result("", "pull failed", 1)
-            if command.startswith("docker ps -a"):
-                return Result("")
-            return Result("", "not found", 1)
-
-    ctx = FailedPrestartContext(tmp_path)
-    collector = OBICollectorsV5(ctx)
-    receivers_started = False
-
-    def start_receivers() -> None:
-        nonlocal receivers_started
-        receivers_started = True
-
-    monkeypatch.setattr(collector, "_start_receivers", start_receivers)
     monkeypatch.setattr(
         collector, "final_drain",
         lambda: (_ for _ in ()).throw(AssertionError("final drain must not run")),
     )
-    with pytest.raises(RuntimeError, match="image pull failed"):
+    with pytest.raises(RuntimeError, match="collector readiness failed"):
         collector.start()
-    assert receivers_started is False
-
-    prestart = json.loads((collector.root / "control-prestart.json").read_text())
-    assert prestart["technical_complete"] is False
-    assert "image pull failed" in prestart["error"]
-    assert prestart["nodes"]["a"]["image_pull"]["returncode"] == 1
 
     collector.close()
     incomplete = json.loads((collector.root / "startup-incomplete.json").read_text())
@@ -605,6 +512,49 @@ def test_successful_origin_still_fails_if_control_container_remains(
     }]
 
 
+def test_successful_origin_still_fails_if_control_network_remains(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class NetworkRemnantContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if "-probe" in command and command.startswith("docker run"):
+                return Result("ok\n")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            if command.startswith("docker network inspect"):
+                return Result('[{"Driver":"bridge"}]')
+            if command.startswith("docker ps -a"):
+                return Result("")
+            if command.startswith("docker network ls"):
+                return Result("study-ebpf-control-net-a\n" if node == "a" else "")
+            return Result("ok")
+
+    collector = OBICollectorsV5(NetworkRemnantContext(tmp_path))
+    monkeypatch.setattr(
+        collector, "_control_proof", lambda node, marker: {
+            "proven": True, "reason": "raw_collector_record"
+        },
+    )
+    with pytest.raises(RuntimeError, match="cleanup absence verification failed"):
+        collector.positive_control(timeout=1)
+    evidence = json.loads(
+        (collector.root / "technical-positive-control.json").read_text()
+    )
+    assert evidence["cleanup_verified"] is False
+    assert evidence["cleanup_failures"] == [{
+        "network": "study-ebpf-control-net-a",
+        "node": "a",
+        "observed_names": ["study-ebpf-control-net-a"],
+        "returncode": 0,
+        "role": "network",
+    }]
+
+
 @pytest.mark.skipif(
     os.environ.get("RUN_DOCKER_CONTROL_FIXTURE") != "1",
     reason="technical Docker fixture runs in Actions only",
@@ -613,12 +563,21 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
     suffix = uuid.uuid4().hex[:10]
     server = f"study-control-fixture-{suffix}"
     client = f"study-control-client-{suffix}"
+    network = f"study-control-network-{suffix}"
     port = 18081
+    occupied = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    occupied.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    occupied.bind(("127.0.0.1", port))
+    occupied.listen(1)
     subprocess.run(["docker", "pull", CONTROL_IMAGE], check=True)
     try:
         subprocess.run(
+            ["docker", "network", "create", "--driver", "bridge", network],
+            check=True,
+        )
+        subprocess.run(
             [
-                "docker", "run", "-d", "--name", server, "--network", "host",
+                "docker", "run", "-d", "--name", server, "--network", network,
                 "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec", _control_server_script(port),
             ],
             check=True,
@@ -638,9 +597,11 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
                 if config.returncode == 0:
                     last = subprocess.run(
                         [
-                            "docker", "run", "--rm", "--network", "host",
+                            "docker", "run", "--rm", "--network", network,
                             "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
-                            _control_request_script(port, "fixture-marker", persistent=False),
+                            _control_request_script(
+                                port, "fixture-marker", persistent=False, host=server
+                            ),
                         ],
                         capture_output=True, text=True, check=False,
                     )
@@ -652,9 +613,11 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         assert last.stdout.strip() == "ok"
         subprocess.run(
             [
-                "docker", "run", "-d", "--name", client, "--network", "host",
+                "docker", "run", "-d", "--name", client, "--network", network,
                 "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
-                _control_request_script(port, "fixture-marker", persistent=True),
+                _control_request_script(
+                    port, "fixture-marker", persistent=True, host=server
+                ),
             ],
             check=True,
         )
@@ -664,6 +627,13 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         )
         assert persistent.returncode == 0
         assert persistent.stdout.strip() == "true"
+        for name in (server, client):
+            mode = subprocess.run(
+                ["docker", "inspect", "--format", "{{.HostConfig.NetworkMode}}", name],
+                capture_output=True, text=True, check=False,
+            )
+            assert mode.returncode == 0
+            assert mode.stdout.strip() == network
         exact_name = subprocess.run(
             [
                 "docker", "ps", "-a", "--format", "{{.Names}}", "--filter",
@@ -674,6 +644,7 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         assert exact_name.returncode == 0
         assert exact_name.stdout.splitlines() == [client]
         subprocess.run(["docker", "rm", "-f", client, server], check=True)
+        subprocess.run(["docker", "network", "rm", network], check=True)
         for removed in (client, server):
             absent = subprocess.run(
                 [
@@ -684,7 +655,18 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
             )
             assert absent.returncode == 0
             assert absent.stdout.strip() == ""
+        network_absent = subprocess.run(
+            [
+                "docker", "network", "ls", "--format", "{{.Name}}", "--filter",
+                f"name=^{network}$",
+            ],
+            capture_output=True, text=True, check=False,
+        )
+        assert network_absent.returncode == 0
+        assert network_absent.stdout.strip() == ""
     finally:
         subprocess.run(["docker", "logs", server], check=False)
         subprocess.run(["docker", "logs", client], check=False)
         subprocess.run(["docker", "rm", "-f", client, server], check=False)
+        subprocess.run(["docker", "network", "rm", network], check=False)
+        occupied.close()
