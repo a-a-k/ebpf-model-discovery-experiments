@@ -74,6 +74,8 @@ def test_start_manifest_identifies_collector_and_both_guest_receivers(
     collector = collector_type(ctx)
     monkeypatch.setattr(collector, "_start_receivers", lambda: None)
     monkeypatch.setattr(collector, "_wait_container_readiness", lambda: None)
+    if isinstance(collector, OBICollectorsV5):
+        monkeypatch.setattr(collector, "_prestart_control_servers", lambda: None)
     collector.start()
 
     manifest = json.loads((collector.root / "collector.json").read_text())
@@ -340,6 +342,98 @@ def test_control_server_uses_haproxy_not_missing_busybox_httpd() -> None:
     assert "collector-control-marker" in _control_request_script(
         18081, "collector-control-marker", persistent=False
     )
+
+
+def test_obi_prestarts_responders_before_collector_without_proof_traffic(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class PrestartContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if "-probe" in command and command.startswith("docker run"):
+                return Result("ok\n")
+            if command.startswith("docker ps -a"):
+                return Result("")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            return Result("ok")
+
+    ctx = PrestartContext(tmp_path)
+    collector = OBICollectorsV5(ctx)
+    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
+    monkeypatch.setattr(collector, "_wait_container_readiness", lambda: None)
+    collector.start()
+
+    commands = [command for _, command, _ in ctx.calls]
+    collector_start = next(
+        index for index, command in enumerate(commands)
+        if "--name study-obi-v5" in command
+    )
+    server_starts = [
+        index for index, command in enumerate(commands)
+        if command.startswith("docker run -d --name study-ebpf-control-server-")
+    ]
+    assert len(server_starts) == 2
+    assert all(index < collector_start for index in server_starts)
+    assert not any("busybox wget" in command for command in commands[:collector_start])
+    prestart = json.loads((collector.root / "control-prestart.json").read_text())
+    assert prestart["proof_traffic_emitted"] is False
+    assert prestart["duration_ns"] >= 0
+    assert prestart["post_collector_start_process_admission_proven"] is False
+
+    monkeypatch.setattr(
+        collector, "_control_proof",
+        lambda node, marker: {"proven": True, "reason": "raw_collector_record"},
+    )
+    evidence = collector.positive_control(timeout=1)
+    assert evidence["selected_ebpf_origin_proven"] is True
+    assert evidence["post_collector_start_process_admission_proven"] is False
+    assert all(value["prestarted_before_collector"] for value in evidence["nodes"].values())
+    commands = [command for _, command, _ in ctx.calls]
+    assert sum(
+        command.startswith("docker run -d --name study-ebpf-control-server-")
+        for command in commands
+    ) == 2
+
+
+def test_obi_start_failure_cleans_prestarted_responders(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class CleanupContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-server-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if command.startswith("docker ps -a"):
+                return Result("")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            return Result("ok")
+
+    ctx = CleanupContext(tmp_path)
+    collector = OBICollectorsV5(ctx)
+    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
+    monkeypatch.setattr(
+        collector, "_wait_container_readiness",
+        lambda: (_ for _ in ()).throw(RuntimeError("collector readiness failed")),
+    )
+    with pytest.raises(RuntimeError, match="collector readiness failed"):
+        collector.start()
+
+    cleanup = json.loads(
+        (collector.root / "control-prestart-cleanup.json").read_text()
+    )
+    assert cleanup["reason"] == "collector_start_failed"
+    assert cleanup["cleanup_verified"] is True
+    assert collector._prestarted_control_nodes is None
+    commands = [command for _, command, _ in ctx.calls]
+    assert sum(command.startswith("docker rm -f") for command in commands) >= 4
 
 
 def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
