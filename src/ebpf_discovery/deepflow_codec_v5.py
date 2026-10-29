@@ -318,6 +318,8 @@ def normalize_record(raw: RawRecord, *, node: str,
     runtime_identity = {
         "node": node,
         "host_pid": attributes.get("process.pid"),
+        "boot_id": pid_scope.get("boot_id"),
+        "pid_namespace": pid_scope.get("pid_namespace"),
         "pid_scope": pid_scope,
         "source_clock": SOURCE_CLOCK,
         "start": start_us,
@@ -332,8 +334,9 @@ def normalize_record(raw: RawRecord, *, node: str,
         runtime_identity["route"] = _string(decoded, "request_resource")
         if decoded.get("tap_side") == "ServerProcess":
             runtime_identity["event_role"] = "synchronous_server_entry"
-    for key in ("node", "host_pid", "pid_scope", "source_clock", "start", "end", "unit",
-                "locator", "request_nonce", "method", "route", "event_role"):
+    for key in ("node", "host_pid", "boot_id", "pid_namespace", "pid_scope", "source_clock",
+                "start", "end", "unit", "locator", "request_nonce", "method", "route",
+                "event_role"):
         _add_if(attributes, "_runtime_identity." + key, runtime_identity.get(key))
     side = decoded.get("tap_side")
     kind = "SPAN_KIND_CLIENT" if side == "ClientProcess" else (
