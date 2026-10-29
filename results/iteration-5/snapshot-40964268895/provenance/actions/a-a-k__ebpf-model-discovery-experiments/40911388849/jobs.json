@@ -1,0 +1,147 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123579984050,
+        "run_id": 40911388849,
+        "workflow_name": "Iteration 4 exact remote toolchain worker",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40911388849",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcxfDosg",
+        "head_sha": "6611fc6c21cc0a3bc6d3160e9291e05461ecc247",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123579984050",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40911388849/job/123579984050",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T16:25:16Z",
+        "started_at": "2026-10-29T16:25:18Z",
+        "completed_at": "2026-10-29T16:31:16Z",
+        "name": "toolchain",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T16:25:18Z",
+            "completed_at": "2026-10-29T16:25:19Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T16:25:19Z",
+            "completed_at": "2026-10-29T16:25:23Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T16:25:23Z",
+            "completed_at": "2026-10-29T16:25:23Z"
+          },
+          {
+            "name": "Install exact experiment implementation",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T16:25:23Z",
+            "completed_at": "2026-10-29T16:25:29Z"
+          },
+          {
+            "name": "Bind and download the immutable parent checkpoint",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T16:25:29Z",
+            "completed_at": "2026-10-29T16:25:32Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard worker",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T16:25:32Z",
+            "completed_at": "2026-10-29T16:25:32Z"
+          },
+          {
+            "name": "Execute the unchanged full-prefix toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T16:25:32Z",
+            "completed_at": "2026-10-29T16:31:10Z"
+          },
+          {
+            "name": "Retain worker environment and resource evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T16:31:10Z",
+            "completed_at": "2026-10-29T16:31:11Z"
+          },
+          {
+            "name": "Package the complete DSB worker output losslessly",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9,
+            "started_at": "2026-10-29T16:31:11Z",
+            "completed_at": "2026-10-29T16:31:11Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10,
+            "started_at": "2026-10-29T16:31:11Z",
+            "completed_at": "2026-10-29T16:31:11Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T16:31:11Z",
+            "completed_at": "2026-10-29T16:31:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-10-29T16:31:13Z",
+            "completed_at": "2026-10-29T16:31:13Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22,
+            "started_at": "2026-10-29T16:31:13Z",
+            "completed_at": "2026-10-29T16:31:14Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-10-29T16:31:14Z",
+            "completed_at": "2026-10-29T16:31:14Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123579984050",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028636,
+        "runner_name": "GitHub Actions 1000028636",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

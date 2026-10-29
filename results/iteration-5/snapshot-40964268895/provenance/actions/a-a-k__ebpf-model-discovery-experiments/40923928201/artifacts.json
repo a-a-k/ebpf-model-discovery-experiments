@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12922255527,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMjI1NTUyNw==",
+        "name": "v5-summary-coroot-smoke-otel_demo-absent-6-40923928201",
+        "size_in_bytes": 654113,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12922255527",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12922255527/zip",
+        "expired": false,
+        "digest": "sha256:f92609a08f32deedad5503712689dc4253b359f4344fcf25001faa0bb1f9480c",
+        "created_at": "2026-10-29T18:14:49Z",
+        "updated_at": "2026-10-29T18:14:49Z",
+        "expires_at": "2027-01-27T17:42:46Z",
+        "workflow_run": {
+          "id": 40923928201,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa"
+        }
+      },
+      {
+        "id": 12920991900,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMDk5MTkwMA==",
+        "name": "training-v4-otel_demo-absent-6-40923928201",
+        "size_in_bytes": 25728798,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920991900",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920991900/zip",
+        "expired": false,
+        "digest": "sha256:b1b4bb91b9ec112a960170851f4e4fe85ced98fbb442e6cb76d0b1918820e678",
+        "created_at": "2026-10-29T18:06:24Z",
+        "updated_at": "2026-10-29T18:06:24Z",
+        "expires_at": "2027-01-27T17:42:46Z",
+        "workflow_run": {
+          "id": 40923928201,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa"
+        }
+      },
+      {
+        "id": 12920908046,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMDkwODA0Ng==",
+        "name": "campaign-v5-coroot-smoke-otel_demo-absent-6-40923928201",
+        "size_in_bytes": 36882629,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920908046",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920908046/zip",
+        "expired": false,
+        "digest": "sha256:0d84ff3606631f016cf39c09a69355b2c8893d968bb888a1f2c27150b901d405",
+        "created_at": "2026-10-29T18:14:55Z",
+        "updated_at": "2026-10-29T18:14:55Z",
+        "expires_at": "2027-01-27T17:42:46Z",
+        "workflow_run": {
+          "id": 40923928201,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa"
+        }
+      }
+    ]
+  }
+]

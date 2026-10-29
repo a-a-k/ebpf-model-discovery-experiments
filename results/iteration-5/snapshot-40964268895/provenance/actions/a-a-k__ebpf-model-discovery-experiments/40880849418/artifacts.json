@@ -1,0 +1,307 @@
+[
+  {
+    "total_count": 15,
+    "artifacts": [
+      {
+        "id": 12901275629,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMTI3NTYyOQ==",
+        "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40880849418",
+        "size_in_bytes": 23787215,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12901275629",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12901275629/zip",
+        "expired": false,
+        "digest": "sha256:3b71143f7d10f849c9848e29f4d956f23c9adb7292eff71c7273d7b7e742eb64",
+        "created_at": "2026-10-29T13:25:56Z",
+        "updated_at": "2026-10-29T13:25:56Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900865939,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDg2NTkzOQ==",
+        "name": "retention-v4-deathstarbench-full-6-40880849418",
+        "size_in_bytes": 1163,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900865939",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900865939/zip",
+        "expired": false,
+        "digest": "sha256:518904290265c686f10961ca6c5335ef987c3240ccef13be4c1245af19ef843e",
+        "created_at": "2026-10-29T13:23:00Z",
+        "updated_at": "2026-10-29T13:23:00Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900786008,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDc4NjAwOA==",
+        "name": "campaign-v5-obi-smoke-deathstarbench-full-6-40880849418",
+        "size_in_bytes": 24032318,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900786008",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900786008/zip",
+        "expired": false,
+        "digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+        "created_at": "2026-10-29T13:23:03Z",
+        "updated_at": "2026-10-29T13:23:03Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900696318,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDY5NjMxOA==",
+        "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40880849418",
+        "size_in_bytes": 12565,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900696318",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900696318/zip",
+        "expired": false,
+        "digest": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+        "created_at": "2026-10-29T13:22:55Z",
+        "updated_at": "2026-10-29T13:22:55Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900367017,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDM2NzAxNw==",
+        "name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40880849418",
+        "size_in_bytes": 24025851,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900367017",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900367017/zip",
+        "expired": false,
+        "digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+        "created_at": "2026-10-29T13:23:31Z",
+        "updated_at": "2026-10-29T13:23:31Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900143007,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDE0MzAwNw==",
+        "name": "v5-summary-obi-smoke-otel_demo-absent-6-40880849418",
+        "size_in_bytes": 7431,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900143007",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900143007/zip",
+        "expired": false,
+        "digest": "sha256:4a1748f292cd1c71d335a5562dc839a069e964e82e86cfe94fc7f44114ec47d9",
+        "created_at": "2026-10-29T13:25:51Z",
+        "updated_at": "2026-10-29T13:25:51Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12900113822,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMDExMzgyMg==",
+        "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40880849418",
+        "size_in_bytes": 24031303,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900113822",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12900113822/zip",
+        "expired": false,
+        "digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+        "created_at": "2026-10-29T13:22:59Z",
+        "updated_at": "2026-10-29T13:22:59Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899978709,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTk3ODcwOQ==",
+        "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40880849418",
+        "size_in_bytes": 23783993,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899978709",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899978709/zip",
+        "expired": false,
+        "digest": "sha256:04d19d268542871564c53ab92179072528dd59a43b6ed832d9eec99cc1bec3a3",
+        "created_at": "2026-10-29T13:25:57Z",
+        "updated_at": "2026-10-29T13:25:57Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899834966,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTgzNDk2Ng==",
+        "name": "campaign-v5-obi-smoke-otel_demo-full-6-40880849418",
+        "size_in_bytes": 23784060,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899834966",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899834966/zip",
+        "expired": false,
+        "digest": "sha256:4b2e28a052715b95de222a2f6914f2b74dff3679f423c9c1238638184650e6a8",
+        "created_at": "2026-10-29T13:26:24Z",
+        "updated_at": "2026-10-29T13:26:24Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899824429,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTgyNDQyOQ==",
+        "name": "v5-summary-obi-smoke-otel_demo-partial-6-40880849418",
+        "size_in_bytes": 7428,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899824429",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899824429/zip",
+        "expired": false,
+        "digest": "sha256:9ef1fd01ce5ce8d6ecf8639d8f2d2be1d9c4b9b1b33d55d6805fb0b8f87efaa0",
+        "created_at": "2026-10-29T13:25:54Z",
+        "updated_at": "2026-10-29T13:25:54Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899759896,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTc1OTg5Ng==",
+        "name": "v5-summary-obi-smoke-otel_demo-full-6-40880849418",
+        "size_in_bytes": 7421,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899759896",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899759896/zip",
+        "expired": false,
+        "digest": "sha256:f9b45380bbf8998f35ace122001fbf6f400aa610ad57bf2fe0b66c38a12baead",
+        "created_at": "2026-10-29T13:26:20Z",
+        "updated_at": "2026-10-29T13:26:20Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899759198,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTc1OTE5OA==",
+        "name": "retention-v4-deathstarbench-partial-6-40880849418",
+        "size_in_bytes": 1163,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899759198",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899759198/zip",
+        "expired": false,
+        "digest": "sha256:82fc3c1222138277790d17c0fab963e3348606a1b591a61a1c1b700b11ca6ab1",
+        "created_at": "2026-10-29T13:22:56Z",
+        "updated_at": "2026-10-29T13:22:56Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899734266,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTczNDI2Ng==",
+        "name": "retention-v4-deathstarbench-absent-6-40880849418",
+        "size_in_bytes": 1163,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899734266",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899734266/zip",
+        "expired": false,
+        "digest": "sha256:3fe787721d94555134ab0fa6e55d118e828e0843e419e73159734b6b1ad33ca7",
+        "created_at": "2026-10-29T13:23:26Z",
+        "updated_at": "2026-10-29T13:23:26Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899729040,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTcyOTA0MA==",
+        "name": "v5-summary-obi-smoke-deathstarbench-full-6-40880849418",
+        "size_in_bytes": 12541,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899729040",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899729040/zip",
+        "expired": false,
+        "digest": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+        "created_at": "2026-10-29T13:22:58Z",
+        "updated_at": "2026-10-29T13:22:58Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      },
+      {
+        "id": 12899539679,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5OTUzOTY3OQ==",
+        "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40880849418",
+        "size_in_bytes": 12548,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899539679",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12899539679/zip",
+        "expired": false,
+        "digest": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+        "created_at": "2026-10-29T13:23:25Z",
+        "updated_at": "2026-10-29T13:23:25Z",
+        "expires_at": "2027-01-27T13:19:19Z",
+        "workflow_run": {
+          "id": 40880849418,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "e42442da532a815f928fefbbe961144cc412aeef"
+        }
+      }
+    ]
+  }
+]

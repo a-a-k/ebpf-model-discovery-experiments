@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12912599590,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMjU5OTU5MA==",
+        "name": "toolchain-v4-deathstarbench-absent-6-40910330302",
+        "size_in_bytes": 617324,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912599590",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912599590/zip",
+        "expired": false,
+        "digest": "sha256:b4a169da7146e8b4428e453b1f43458c951b75cccad35504154b55f12ce7c366",
+        "created_at": "2026-10-29T16:19:22Z",
+        "updated_at": "2026-10-29T16:19:22Z",
+        "expires_at": "2027-01-27T16:18:53Z",
+        "workflow_run": {
+          "id": 40910330302,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      }
+    ]
+  }
+]

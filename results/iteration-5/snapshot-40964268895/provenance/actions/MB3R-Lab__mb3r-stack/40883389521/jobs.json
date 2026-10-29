@@ -1,0 +1,195 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123480568136,
+        "run_id": 40883389521,
+        "workflow_name": "ci",
+        "head_branch": "feat/bering-1.3.0-neutral",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/runs/40883389521",
+        "run_attempt": 1,
+        "node_id": "CR_kwDORkTwrs8AAAAcwAPxSA",
+        "head_sha": "1d69e898be3ae40eeffd531ec294e864dd605a31",
+        "url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/jobs/123480568136",
+        "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40883389521/job/123480568136",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T13:35:52Z",
+        "started_at": "2026-10-29T13:35:55Z",
+        "completed_at": "2026-10-29T13:38:16Z",
+        "name": "validate",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T13:35:55Z",
+            "completed_at": "2026-10-29T13:35:57Z"
+          },
+          {
+            "name": "Run actions/checkout@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T13:35:57Z",
+            "completed_at": "2026-10-29T13:36:00Z"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T13:36:00Z",
+            "completed_at": "2026-10-29T13:36:00Z"
+          },
+          {
+            "name": "Run azure/setup-helm@v4.3.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T13:36:00Z",
+            "completed_at": "2026-10-29T13:36:01Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T13:36:01Z",
+            "completed_at": "2026-10-29T13:36:04Z"
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T13:36:04Z",
+            "completed_at": "2026-10-29T13:36:12Z"
+          },
+          {
+            "name": "Packaged Procrustes preflight and Bering overlay handoff",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T13:36:12Z",
+            "completed_at": "2026-10-29T13:36:22Z"
+          },
+          {
+            "name": "Validate repository",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T13:36:22Z",
+            "completed_at": "2026-10-29T13:36:23Z"
+          },
+          {
+            "name": "Native and declared OBI source runtime handoff",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T13:36:23Z",
+            "completed_at": "2026-10-29T13:36:36Z"
+          },
+          {
+            "name": "Adapter end-to-end contracts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T13:36:36Z",
+            "completed_at": "2026-10-29T13:36:37Z"
+          },
+          {
+            "name": "Failure-tolerance end-to-end",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T13:36:37Z",
+            "completed_at": "2026-10-29T13:36:51Z"
+          },
+          {
+            "name": "Generic live smoke with pinned GHCR images",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T13:36:51Z",
+            "completed_at": "2026-10-29T13:38:09Z"
+          },
+          {
+            "name": "Package chart",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T13:38:09Z",
+            "completed_at": "2026-10-29T13:38:09Z"
+          },
+          {
+            "name": "Package assets",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T13:38:09Z",
+            "completed_at": "2026-10-29T13:38:10Z"
+          },
+          {
+            "name": "Release dry run",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T13:38:10Z",
+            "completed_at": "2026-10-29T13:38:12Z"
+          },
+          {
+            "name": "Retain runtime handoff diagnostics",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T13:38:12Z",
+            "completed_at": "2026-10-29T13:38:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 30,
+            "started_at": "2026-10-29T13:38:13Z",
+            "completed_at": "2026-10-29T13:38:13Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 31,
+            "started_at": "2026-10-29T13:38:13Z",
+            "completed_at": "2026-10-29T13:38:13Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 32,
+            "started_at": "2026-10-29T13:38:13Z",
+            "completed_at": "2026-10-29T13:38:14Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 33,
+            "started_at": "2026-10-29T13:38:14Z",
+            "completed_at": "2026-10-29T13:38:14Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/check-runs/123480568136",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001087,
+        "runner_name": "GitHub Actions 1000001087",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

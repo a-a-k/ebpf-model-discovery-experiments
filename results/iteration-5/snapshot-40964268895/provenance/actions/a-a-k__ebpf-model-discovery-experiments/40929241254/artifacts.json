@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12922685243,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMjY4NTI0Mw==",
+        "name": "memory-streaming-validation-v5-40929241254",
+        "size_in_bytes": 4752,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12922685243",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12922685243/zip",
+        "expired": false,
+        "digest": "sha256:0972cde8a9aceecdb92416b1d923f614729a8167c3dc36e9544c716caeedab58",
+        "created_at": "2026-10-29T18:16:51Z",
+        "updated_at": "2026-10-29T18:16:51Z",
+        "expires_at": "2027-01-27T18:16:30Z",
+        "workflow_run": {
+          "id": 40929241254,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "0964eae6421f4fc36e5160919ac7666541ed7fb1"
+        }
+      }
+    ]
+  }
+]

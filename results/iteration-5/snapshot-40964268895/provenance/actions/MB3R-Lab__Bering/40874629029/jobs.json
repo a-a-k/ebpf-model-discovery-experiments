@@ -1,0 +1,147 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123450160168,
+        "run_id": 40874629029,
+        "workflow_name": "Release Dry Run",
+        "head_branch": "feat/generic-ebpf-otlp-provenance",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/runs/40874629029",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOPQ_M8c8AAAAcvjP0KA",
+        "head_sha": "f3913da98cbabb9681895a9d4c9925f9a677742d",
+        "url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/jobs/123450160168",
+        "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40874629029/job/123450160168",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T12:36:18Z",
+        "started_at": "2026-10-29T12:36:20Z",
+        "completed_at": "2026-10-29T12:41:29Z",
+        "name": "dry-run",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T12:36:21Z",
+            "completed_at": "2026-10-29T12:36:22Z"
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T12:36:22Z",
+            "completed_at": "2026-10-29T12:36:23Z"
+          },
+          {
+            "name": "Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T12:36:23Z",
+            "completed_at": "2026-10-29T12:36:32Z"
+          },
+          {
+            "name": "Setup Docker Buildx",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T12:36:32Z",
+            "completed_at": "2026-10-29T12:36:42Z"
+          },
+          {
+            "name": "Install GoReleaser",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T12:36:42Z",
+            "completed_at": "2026-10-29T12:38:09Z"
+          },
+          {
+            "name": "Install Syft",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T12:38:09Z",
+            "completed_at": "2026-10-29T12:39:25Z"
+          },
+          {
+            "name": "Install Helm",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T12:39:25Z",
+            "completed_at": "2026-10-29T12:39:29Z"
+          },
+          {
+            "name": "Add Go bin to PATH",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T12:39:29Z",
+            "completed_at": "2026-10-29T12:39:29Z"
+          },
+          {
+            "name": "Run Release Dry Run",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T12:39:29Z",
+            "completed_at": "2026-10-29T12:41:15Z"
+          },
+          {
+            "name": "Upload Dist Artifact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T12:41:15Z",
+            "completed_at": "2026-10-29T12:41:19Z"
+          },
+          {
+            "name": "Post Setup Docker Buildx",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-29T12:41:19Z",
+            "completed_at": "2026-10-29T12:41:26Z"
+          },
+          {
+            "name": "Post Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-29T12:41:26Z",
+            "completed_at": "2026-10-29T12:41:26Z"
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20,
+            "started_at": "2026-10-29T12:41:26Z",
+            "completed_at": "2026-10-29T12:41:26Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-10-29T12:41:26Z",
+            "completed_at": "2026-10-29T12:41:26Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/Bering/check-runs/123450160168",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001077,
+        "runner_name": "GitHub Actions 1000001077",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

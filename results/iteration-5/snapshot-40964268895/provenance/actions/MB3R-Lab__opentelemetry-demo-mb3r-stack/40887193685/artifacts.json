@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12902764254,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMjc2NDI1NA==",
+        "name": "mb3r-resilience-40887193685-1",
+        "size_in_bytes": 95375,
+        "url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/artifacts/12902764254",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/artifacts/12902764254/zip",
+        "expired": false,
+        "digest": "sha256:84a77059ded0159b3906dcd303957bdb6e9aad915712811e8fa481f781c58a31",
+        "created_at": "2026-10-29T14:05:43Z",
+        "updated_at": "2026-10-29T14:05:43Z",
+        "expires_at": "2026-11-01T14:05:42Z",
+        "workflow_run": {
+          "id": 40887193685,
+          "repository_id": 1181841238,
+          "head_repository_id": 1181841238,
+          "head_branch": "sync/bering-1.3.0",
+          "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7"
+        }
+      }
+    ]
+  }
+]

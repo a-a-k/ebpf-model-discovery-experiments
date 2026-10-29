@@ -1,0 +1,91 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123450160287,
+        "run_id": 40874629030,
+        "workflow_name": "CI",
+        "head_branch": "feat/generic-ebpf-otlp-provenance",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/runs/40874629030",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOPQ_M8c8AAAAcvjP0nw",
+        "head_sha": "f3913da98cbabb9681895a9d4c9925f9a677742d",
+        "url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/jobs/123450160287",
+        "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40874629030/job/123450160287",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T12:36:18Z",
+        "started_at": "2026-10-29T12:36:21Z",
+        "completed_at": "2026-10-29T12:36:44Z",
+        "name": "checks",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T12:36:22Z",
+            "completed_at": "2026-10-29T12:36:23Z"
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T12:36:23Z",
+            "completed_at": "2026-10-29T12:36:24Z"
+          },
+          {
+            "name": "Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T12:36:24Z",
+            "completed_at": "2026-10-29T12:36:35Z"
+          },
+          {
+            "name": "Run Checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T12:36:35Z",
+            "completed_at": "2026-10-29T12:36:41Z"
+          },
+          {
+            "name": "Post Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T12:36:41Z",
+            "completed_at": "2026-10-29T12:36:41Z"
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T12:36:41Z",
+            "completed_at": "2026-10-29T12:36:41Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T12:36:41Z",
+            "completed_at": "2026-10-29T12:36:41Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/Bering/check-runs/123450160287",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001076,
+        "runner_name": "GitHub Actions 1000001076",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

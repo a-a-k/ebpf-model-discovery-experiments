@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12897694822,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5NzY5NDgyMg==",
+        "name": "procrustes-smoke-report",
+        "size_in_bytes": 3419,
+        "url": "https://api.github.com/repos/MB3R-Lab/Procrustes/actions/artifacts/12897694822",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/Procrustes/actions/artifacts/12897694822/zip",
+        "expired": false,
+        "digest": "sha256:b51272269a89104e23b559ae32bb442ef0a02c685d8c66e345781bae7a440b24",
+        "created_at": "2026-10-29T12:50:43Z",
+        "updated_at": "2026-10-29T12:50:43Z",
+        "expires_at": "2027-01-27T12:50:26Z",
+        "workflow_run": {
+          "id": 40876610601,
+          "repository_id": 1312908921,
+          "head_repository_id": 1312908921,
+          "head_branch": "main",
+          "head_sha": "9648ae3fe9ef24725e665d008c79d0681ce40f85"
+        }
+      }
+    ]
+  }
+]

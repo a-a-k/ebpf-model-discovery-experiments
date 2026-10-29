@@ -1,0 +1,75 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123498331069,
+        "run_id": 40888435266,
+        "workflow_name": "FOSSA scanning",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435266",
+        "run_attempt": 1,
+        "node_id": "CR_kwDORnF3Vs8AAAAcwRL7vQ",
+        "head_sha": "2c50aa53cb63875bf3c7e442bf914bb26dea82ae",
+        "url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/jobs/123498331069",
+        "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435266/job/123498331069",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-29T14:07:52Z",
+        "started_at": "2026-10-29T14:07:55Z",
+        "completed_at": "2026-10-29T14:08:00Z",
+        "name": "fossa",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:07:56Z",
+            "completed_at": "2026-10-29T14:07:57Z"
+          },
+          {
+            "name": "Run actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:07:57Z",
+            "completed_at": "2026-10-29T14:07:58Z"
+          },
+          {
+            "name": "Run fossas/fossa-action@c414b9ad82eaad041e47a7cf62a4f02411f427a0",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 3,
+            "started_at": "2026-10-29T14:07:58Z",
+            "completed_at": "2026-10-29T14:07:58Z"
+          },
+          {
+            "name": "Post Run actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:07:58Z",
+            "completed_at": "2026-10-29T14:07:59Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T14:07:59Z",
+            "completed_at": "2026-10-29T14:07:59Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/check-runs/123498331069",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001134,
+        "runner_name": "GitHub Actions 1000001134",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

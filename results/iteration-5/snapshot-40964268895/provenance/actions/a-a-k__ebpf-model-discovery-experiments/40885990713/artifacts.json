@@ -1,0 +1,47 @@
+[
+  {
+    "total_count": 2,
+    "artifacts": [
+      {
+        "id": 12902762367,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMjc2MjM2Nw==",
+        "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40885990713",
+        "size_in_bytes": 8697,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12902762367",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12902762367/zip",
+        "expired": false,
+        "digest": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+        "created_at": "2026-10-29T13:55:49Z",
+        "updated_at": "2026-10-29T13:55:49Z",
+        "expires_at": "2027-01-27T13:52:37Z",
+        "workflow_run": {
+          "id": 40885990713,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2"
+        }
+      },
+      {
+        "id": 12902598140,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMjU5ODE0MA==",
+        "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40885990713",
+        "size_in_bytes": 23785425,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12902598140",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12902598140/zip",
+        "expired": false,
+        "digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+        "created_at": "2026-10-29T13:55:53Z",
+        "updated_at": "2026-10-29T13:55:53Z",
+        "expires_at": "2027-01-27T13:52:37Z",
+        "workflow_run": {
+          "id": 40885990713,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2"
+        }
+      }
+    ]
+  }
+]

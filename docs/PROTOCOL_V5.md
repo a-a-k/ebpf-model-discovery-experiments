@@ -1,7 +1,8 @@
 # Iteration 5: four collectors and stable operation families
 
-Status: implementation and technical qualification in progress; no iteration-5
-measurement result is claimed. Authorized on 2026-10-29: repair operation-class
+Status: matched main series in progress; intermediate measurements and their
+review boundaries are linked from the README. No completed-study or positive
+utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The user selected OBI, DeepFlow, New Relic eBPF Agent and Coroot.
 The [completed iteration 4](PROTOCOL_V4.md) remains historical evidence.

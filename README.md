@@ -30,14 +30,20 @@ journal copies in the report job.
 The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
 Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.
-The [current intermediate snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
-contains five main cells: three absent-tracing repeats and two partial-tracing
-repeats in Petclinic. These use actual eBPF graphs and Sheaft forecasts checked
-against external outcomes. One partial-tracing repeat retains an additional
-owner-details failure (`2099/2400` observed versus forecast `0.875`); the equally
+The [current intermediate snapshot](results/iteration-5/snapshot-40964268895/SOURCE.md)
+contains 14 technically selected main cells and
+[per-operation error figures](results/iteration-5/snapshot-40964268895/figures/figures-v5.md).
+Twelve Petclinic cells have separately passed actual evidence review; the first
+DeathStarBench and OTel candidates are still under review. OBI Petclinic uses
+actual recovered graphs and Sheaft forecasts checked against external outcomes;
+Coroot Petclinic/absent retains unavailable forecasts. The partial and full
+OBI seed-7 packets retain an additional owner-details failure (`2099/2400`
+observed versus forecast `0.875`), visible in the exact tables even though the
+difference is smaller than a pixel on the full-range error plots. The equally
 informed direct baseline gives the same forecast. The
-[earlier snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md) preserves
-the initial 13 smoke runs and zero-main status unchanged.
+[previous five-cell snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
+remains unchanged. The [earlier snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
+preserves the initial 13 smoke runs and zero-main status.
 The results below belong to completed iteration 4.
 
 **Completed experimental series (iteration 4).** All 27 planned campaigns completed

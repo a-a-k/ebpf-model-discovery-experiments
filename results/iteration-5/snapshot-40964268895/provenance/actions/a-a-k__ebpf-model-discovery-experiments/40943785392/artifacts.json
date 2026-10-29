@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12929061990,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyOTA2MTk5MA==",
+        "name": "toolchain-v4-otel_demo-full-6-40943785392",
+        "size_in_bytes": 17463209,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929061990",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929061990/zip",
+        "expired": false,
+        "digest": "sha256:bd8ce7d7b3225c5c8bb620f490ac0e40c7e14e8ae6857365722d08b07fc391c1",
+        "created_at": "2026-10-29T20:02:02Z",
+        "updated_at": "2026-10-29T20:02:02Z",
+        "expires_at": "2027-01-27T19:51:12Z",
+        "workflow_run": {
+          "id": 40943785392,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44"
+        }
+      }
+    ]
+  }
+]

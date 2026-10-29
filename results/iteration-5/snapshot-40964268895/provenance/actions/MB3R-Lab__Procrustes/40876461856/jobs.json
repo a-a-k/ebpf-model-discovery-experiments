@@ -1,0 +1,99 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123456423792,
+        "run_id": 40876461856,
+        "workflow_name": "CI",
+        "head_branch": "feat/generic-ebpf-collector-profile",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/Procrustes/actions/runs/40876461856",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOTkFmec8AAAAcvpOHcA",
+        "head_sha": "f8d322bbea376d55c22d4c4f2d9fed257cc09f9f",
+        "url": "https://api.github.com/repos/MB3R-Lab/Procrustes/actions/jobs/123456423792",
+        "html_url": "https://github.com/MB3R-Lab/Procrustes/actions/runs/40876461856/job/123456423792",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T12:49:23Z",
+        "started_at": "2026-10-29T12:49:26Z",
+        "completed_at": "2026-10-29T12:49:43Z",
+        "name": "checks",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T12:49:27Z",
+            "completed_at": "2026-10-29T12:49:29Z"
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T12:49:29Z",
+            "completed_at": "2026-10-29T12:49:30Z"
+          },
+          {
+            "name": "Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T12:49:30Z",
+            "completed_at": "2026-10-29T12:49:38Z"
+          },
+          {
+            "name": "Run checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T12:49:38Z",
+            "completed_at": "2026-10-29T12:49:39Z"
+          },
+          {
+            "name": "Upload smoke report",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T12:49:39Z",
+            "completed_at": "2026-10-29T12:49:41Z"
+          },
+          {
+            "name": "Post Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T12:49:41Z",
+            "completed_at": "2026-10-29T12:49:41Z"
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T12:49:41Z",
+            "completed_at": "2026-10-29T12:49:41Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T12:49:41Z",
+            "completed_at": "2026-10-29T12:49:41Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/Procrustes/check-runs/123456423792",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001079,
+        "runner_name": "GitHub Actions 1000001079",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

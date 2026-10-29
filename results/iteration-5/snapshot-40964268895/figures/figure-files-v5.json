@@ -1,0 +1,89 @@
+{
+  "aggregate": {
+    "path": "evaluation-v5.json.gz",
+    "sha256": "bafe4ee1629d46e0ba7250d402d4d9a86828530c6b495dcf5892de024bfc64cc"
+  },
+  "files": {
+    "errors-coroot-petclinic-absent.pdf": {
+      "bytes": 16999,
+      "sha256": "986c34b6f487204b94528960d7301610228e01a1ec51f749fca96b36968ca696"
+    },
+    "errors-coroot-petclinic-absent.png": {
+      "bytes": 314711,
+      "sha256": "93237cde387d1e0eb065d8a079f08db1c9c47e77af2b4633fcd6bcb3f3b522c1"
+    },
+    "errors-coroot-petclinic-absent.svg": {
+      "bytes": 51255,
+      "sha256": "2acfcead22dc3155e2db97b5c82c623a1a0cf3fb0fd9cee619e0c23cd39c8c5a"
+    },
+    "errors-obi-deathstarbench-absent.pdf": {
+      "bytes": 16175,
+      "sha256": "e5099ba5ca5da6e3ac951f5ba2cc6e8217f5fc52655863ad0830a794d968231f"
+    },
+    "errors-obi-deathstarbench-absent.png": {
+      "bytes": 191858,
+      "sha256": "12807b94a607a1c354632b36df4af17d1f71bae48a39b52387c95b854b1bc094"
+    },
+    "errors-obi-deathstarbench-absent.svg": {
+      "bytes": 27943,
+      "sha256": "088bcec0f72ee49fb5af4e0bd77b00ea297ac097008c4e4d89fe461242e309f7"
+    },
+    "errors-obi-otel_demo-absent.pdf": {
+      "bytes": 18076,
+      "sha256": "019d3fe808cb2cf880fe6711e195ba9de8a8358fa0139856b5b2f2bbecc60d40"
+    },
+    "errors-obi-otel_demo-absent.png": {
+      "bytes": 166741,
+      "sha256": "b9f7a1de16e3d4fb53f0cf8b572ec23c60f456968e8b5622185507bfe724f345"
+    },
+    "errors-obi-otel_demo-absent.svg": {
+      "bytes": 33289,
+      "sha256": "d3b52720885a78a7aa43e8c42e55c2bd915c06339e347d681beee95470b8eccf"
+    },
+    "errors-obi-petclinic-absent.pdf": {
+      "bytes": 20427,
+      "sha256": "69d6e3b8b774dcdc660fa7637f4bc9a684b9849995f3f6a56fcb34f5377bf068"
+    },
+    "errors-obi-petclinic-absent.png": {
+      "bytes": 263387,
+      "sha256": "013fa1fcb7c0a248c8980c91cdf61946f99d3f3faf09f616ebca3fae481c9a8e"
+    },
+    "errors-obi-petclinic-absent.svg": {
+      "bytes": 71830,
+      "sha256": "07d1e54a9f153a267f1112a95f9ea3d59747ce158ccce2d25efe9d34614987f2"
+    },
+    "errors-obi-petclinic-full.pdf": {
+      "bytes": 20860,
+      "sha256": "cca86056862d1d7d8a6a8a9c9eb7fa18845adb492303966e4bd43dd02e7a0d1a"
+    },
+    "errors-obi-petclinic-full.png": {
+      "bytes": 255673,
+      "sha256": "26a8976bb349150c7ad11f4bdb67be088480ca02e7666a6a46226b6f0a30d723"
+    },
+    "errors-obi-petclinic-full.svg": {
+      "bytes": 74986,
+      "sha256": "bbf2aa6cc31a29e7e9d134146b31ec1c6f58bb2356078ae1030c77003af0dd1f"
+    },
+    "errors-obi-petclinic-partial.pdf": {
+      "bytes": 20439,
+      "sha256": "695896a924978d6d3d2451729c40b0f10d2fbae74fdb80c8bf75e290fe42ef7b"
+    },
+    "errors-obi-petclinic-partial.png": {
+      "bytes": 263155,
+      "sha256": "1abde01688b6b174906488abf5a5aeb109696a9fb074deaf0b16da89ee898003"
+    },
+    "errors-obi-petclinic-partial.svg": {
+      "bytes": 71831,
+      "sha256": "4819aecb8b88974b5c7186f1d5339a4e80a297d6e7acad173a81fd0cc241c07f"
+    },
+    "figures-v5.md": {
+      "bytes": 76931,
+      "sha256": "0122b7ab06b03e66fd02dbe6720055c7ed5eef1d71cc0986a3cd6dac06010949"
+    },
+    "saved-values-v5.json": {
+      "bytes": 666417,
+      "sha256": "7a93d5ad00bd4c5a40bb1c86c9501043a74a231460907aaedf287849cbb9d59b"
+    }
+  },
+  "schema_version": "v5-saved-error-figure-files"
+}

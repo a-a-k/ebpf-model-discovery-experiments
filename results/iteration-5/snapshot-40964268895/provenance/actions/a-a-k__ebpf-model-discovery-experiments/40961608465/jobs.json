@@ -1,0 +1,123 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123755529336,
+        "run_id": 40961608465,
+        "workflow_name": "Validate v5 bounded report compact transport",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40961608465",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAc0GeEeA",
+        "head_sha": "4ebebfd30867c9227f629da8aed3302203334cd0",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123755529336",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40961608465/job/123755529336",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-29T21:54:10Z",
+        "started_at": "2026-10-29T21:54:12Z",
+        "completed_at": "2026-10-29T21:56:37Z",
+        "name": "validate",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T21:54:13Z",
+            "completed_at": "2026-10-29T21:54:13Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T21:54:13Z",
+            "completed_at": "2026-10-29T21:54:16Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T21:54:16Z",
+            "completed_at": "2026-10-29T21:54:17Z"
+          },
+          {
+            "name": "Run python -m pip install -e . pytest",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T21:54:17Z",
+            "completed_at": "2026-10-29T21:54:28Z"
+          },
+          {
+            "name": "Run focused checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T21:54:28Z",
+            "completed_at": "2026-10-29T21:54:29Z"
+          },
+          {
+            "name": "Fetch exact immutable saved DSB compact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T21:54:29Z",
+            "completed_at": "2026-10-29T21:54:52Z"
+          },
+          {
+            "name": "Compare exact extract-all report with bounded transport",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 7,
+            "started_at": "2026-10-29T21:54:52Z",
+            "completed_at": "2026-10-29T21:56:34Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T21:56:34Z",
+            "completed_at": "2026-10-29T21:56:35Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 15,
+            "started_at": "2026-10-29T21:56:35Z",
+            "completed_at": "2026-10-29T21:56:35Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T21:56:35Z",
+            "completed_at": "2026-10-29T21:56:35Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T21:56:35Z",
+            "completed_at": "2026-10-29T21:56:35Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123755529336",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028813,
+        "runner_name": "GitHub Actions 1000028813",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

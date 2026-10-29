@@ -1,0 +1,207 @@
+[
+  {
+    "total_count": 2,
+    "jobs": [
+      {
+        "id": 123506774788,
+        "run_id": 40890810980,
+        "workflow_name": "Focused implementation checks",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890810980",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcwZPTBA",
+        "head_sha": "92e1ca3ec4a2e0c14f8498306432fa518bc94eeb",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123506774788",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890810980/job/123506774788",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:22:27Z",
+        "started_at": "2026-10-29T14:22:29Z",
+        "completed_at": "2026-10-29T14:22:50Z",
+        "name": "control-fixture-v5",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:22:29Z",
+            "completed_at": "2026-10-29T14:22:30Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:22:30Z",
+            "completed_at": "2026-10-29T14:22:32Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:22:32Z",
+            "completed_at": "2026-10-29T14:22:33Z"
+          },
+          {
+            "name": "Run python -m pip install -e . pytest opentelemetry-proto",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:22:33Z",
+            "completed_at": "2026-10-29T14:22:44Z"
+          },
+          {
+            "name": "Execute pinned HAProxy technical control fixture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:22:44Z",
+            "completed_at": "2026-10-29T14:22:47Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T14:22:47Z",
+            "completed_at": "2026-10-29T14:22:47Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T14:22:47Z",
+            "completed_at": "2026-10-29T14:22:47Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T14:22:47Z",
+            "completed_at": "2026-10-29T14:22:47Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123506774788",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028572,
+        "runner_name": "GitHub Actions 1000028572",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 123506775225,
+        "run_id": 40890810980,
+        "workflow_name": "Focused implementation checks",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890810980",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcwZPUuQ",
+        "head_sha": "92e1ca3ec4a2e0c14f8498306432fa518bc94eeb",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123506775225",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890810980/job/123506775225",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:22:27Z",
+        "started_at": "2026-10-29T14:22:29Z",
+        "completed_at": "2026-10-29T14:23:14Z",
+        "name": "checks",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:22:29Z",
+            "completed_at": "2026-10-29T14:22:30Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:22:30Z",
+            "completed_at": "2026-10-29T14:22:32Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:22:32Z",
+            "completed_at": "2026-10-29T14:22:33Z"
+          },
+          {
+            "name": "Run python -m pip install -e '.[report]' pytest opentelemetry-proto",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:22:33Z",
+            "completed_at": "2026-10-29T14:22:48Z"
+          },
+          {
+            "name": "Run python -m compileall -q src systems",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:22:48Z",
+            "completed_at": "2026-10-29T14:22:48Z"
+          },
+          {
+            "name": "Run for script in scripts/*.sh; do bash -n \"$script\"; done",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:22:48Z",
+            "completed_at": "2026-10-29T14:22:48Z"
+          },
+          {
+            "name": "Run python -m pytest --import-mode=importlib tests systems",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T14:22:48Z",
+            "completed_at": "2026-10-29T14:23:12Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T14:23:12Z",
+            "completed_at": "2026-10-29T14:23:12Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T14:23:12Z",
+            "completed_at": "2026-10-29T14:23:13Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T14:23:13Z",
+            "completed_at": "2026-10-29T14:23:13Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123506775225",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028571,
+        "runner_name": "GitHub Actions 1000028571",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

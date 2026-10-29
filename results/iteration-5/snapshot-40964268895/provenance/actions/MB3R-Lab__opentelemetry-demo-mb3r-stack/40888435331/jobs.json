@@ -1,0 +1,107 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123498331039,
+        "run_id": 40888435331,
+        "workflow_name": "OSSF Scorecard",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435331",
+        "run_attempt": 1,
+        "node_id": "CR_kwDORnF3Vs8AAAAcwRL7nw",
+        "head_sha": "2c50aa53cb63875bf3c7e442bf914bb26dea82ae",
+        "url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/jobs/123498331039",
+        "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435331/job/123498331039",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:07:52Z",
+        "started_at": "2026-10-29T14:07:55Z",
+        "completed_at": "2026-10-29T14:08:49Z",
+        "name": "analysis",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:07:56Z",
+            "completed_at": "2026-10-29T14:07:57Z"
+          },
+          {
+            "name": "Pull ghcr.io/ossf/scorecard-action:v2.4.3",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:07:57Z",
+            "completed_at": "2026-10-29T14:07:59Z"
+          },
+          {
+            "name": "Run actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:07:59Z",
+            "completed_at": "2026-10-29T14:08:00Z"
+          },
+          {
+            "name": "Run ossf/scorecard-action@4eaacf0543bb3f2c246792bd56e8cdeffafb205a",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:08:00Z",
+            "completed_at": "2026-10-29T14:08:39Z"
+          },
+          {
+            "name": "Upload artifact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:08:39Z",
+            "completed_at": "2026-10-29T14:08:40Z"
+          },
+          {
+            "name": "Upload to code-scanning",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:08:40Z",
+            "completed_at": "2026-10-29T14:08:47Z"
+          },
+          {
+            "name": "Post Upload to code-scanning",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T14:08:47Z",
+            "completed_at": "2026-10-29T14:08:47Z"
+          },
+          {
+            "name": "Post Run actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T14:08:47Z",
+            "completed_at": "2026-10-29T14:08:47Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T14:08:47Z",
+            "completed_at": "2026-10-29T14:08:47Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/opentelemetry-demo-mb3r-stack/check-runs/123498331039",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001133,
+        "runner_name": "GitHub Actions 1000001133",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

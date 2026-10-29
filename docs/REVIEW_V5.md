@@ -656,3 +656,28 @@ passed actual review: all 485 dependency records and nine copied files were
 identical. This closes a preparation-equivalence check, not a scientific utility
 or full-scale speed/memory claim. The fixed study still contains 108 main cells,
 including the 27 access-blocked New Relic cells.
+
+## Intermediate report and actual figure inspection
+
+Report [40964268895](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40964268895)
+at `6ecd280207fbf850757c2c67e807054305f058ec` retains 14 technically selected main
+cells. Nine OBI Petclinic cells and three Coroot Petclinic/absent cells have
+separately passed actual evidence review. The included OBI DeathStarBench/absent
+seed 7 and OBI OTel/absent seed 6 remain candidates pending actual main-packet
+review; the reporter does not independently admit them.
+
+Independent publication inspection found all 623 selected members, all 68
+restored source-evaluation payloads and every figure-manifest file unchanged.
+All 324 plotted-value rows match their exact source fields. Six PNGs were
+visually inspected; the small adverse Petclinic partial/full seed-7 errors are
+below one pixel on the full-range axis and remain explicit in exact companion
+tables and the narrative. Unknown forecasts are distinct from zero errors and
+from the number of unknown external outcomes. The complete report ZIP was not
+hashed locally; the selected-member scope remains explicit.
+
+The [immutable snapshot and byte audit](../results/iteration-5/snapshot-40964268895/SOURCE.md)
+retain the conditional OTel primary-forecast assumptions, separate DB-fault and
+asynchronous unknowns, native Petclinic route-binding limitation, direct-baseline
+equivalence and incomplete human/active-job cost accounting. Faithful publication
+does not establish utility or complete-cost superiority, and does not alter the
+earlier five-cell snapshot or the fixed campaign design.

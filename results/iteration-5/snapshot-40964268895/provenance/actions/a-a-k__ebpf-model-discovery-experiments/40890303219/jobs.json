@@ -1,0 +1,311 @@
+[
+  {
+    "total_count": 2,
+    "jobs": [
+      {
+        "id": 123504981046,
+        "run_id": 40890303219,
+        "workflow_name": "Iteration 5 collector smoke and matched series",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcwXh0Ng",
+        "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123504981046",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219/job/123504981046",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:19:24Z",
+        "started_at": "2026-10-29T14:19:26Z",
+        "completed_at": "2026-10-29T14:19:29Z",
+        "name": "prepare",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:19:27Z",
+            "completed_at": "2026-10-29T14:19:27Z"
+          },
+          {
+            "name": "Run python - <<'PY' >> \"$GITHUB_OUTPUT\"",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:19:27Z",
+            "completed_at": "2026-10-29T14:19:27Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:19:27Z",
+            "completed_at": "2026-10-29T14:19:27Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123504981046",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028566,
+        "runner_name": "GitHub Actions 1000028566",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 123505033282,
+        "run_id": 40890303219,
+        "workflow_name": "Iteration 5 collector smoke and matched series",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcwXlAQg",
+        "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123505033282",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219/job/123505033282",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-29T14:19:29Z",
+        "started_at": "2026-10-29T14:19:32Z",
+        "completed_at": "2026-10-29T14:24:27Z",
+        "name": "campaign (petclinic, absent, 6)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:19:33Z",
+            "completed_at": "2026-10-29T14:19:34Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:19:34Z",
+            "completed_at": "2026-10-29T14:19:36Z"
+          },
+          {
+            "name": "Record fixed cell identity before setup",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:19:36Z",
+            "completed_at": "2026-10-29T14:19:36Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:19:36Z",
+            "completed_at": "2026-10-29T14:19:36Z"
+          },
+          {
+            "name": "Install experiment package",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:19:36Z",
+            "completed_at": "2026-10-29T14:19:45Z"
+          },
+          {
+            "name": "Initialize retained evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:19:45Z",
+            "completed_at": "2026-10-29T14:19:45Z"
+          },
+          {
+            "name": "Build exact source-pinned toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T14:19:45Z",
+            "completed_at": "2026-10-29T14:20:21Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard runner",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T14:20:21Z",
+            "completed_at": "2026-10-29T14:20:21Z"
+          },
+          {
+            "name": "Boot two independent guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T14:20:21Z",
+            "completed_at": "2026-10-29T14:21:35Z"
+          },
+          {
+            "name": "Acquire and close the training prefix on the live guests",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 10,
+            "started_at": "2026-10-29T14:21:35Z",
+            "completed_at": "2026-10-29T14:24:16Z"
+          },
+          {
+            "name": "Persist the closed training checkpoint before discovery",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11,
+            "started_at": "2026-10-29T14:24:16Z",
+            "completed_at": "2026-10-29T14:24:16Z"
+          },
+          {
+            "name": "Bind upload outcome to the same live campaign",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 12,
+            "started_at": "2026-10-29T14:24:16Z",
+            "completed_at": "2026-10-29T14:24:16Z"
+          },
+          {
+            "name": "Continue discovery and validation on the same live guests",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13,
+            "started_at": "2026-10-29T14:24:16Z",
+            "completed_at": "2026-10-29T14:24:16Z"
+          },
+          {
+            "name": "Stop only the owned campaign processes before retention",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-29T14:24:16Z",
+            "completed_at": "2026-10-29T14:24:16Z"
+          },
+          {
+            "name": "Retain environment, status and cost evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T14:24:16Z",
+            "completed_at": "2026-10-29T14:24:17Z"
+          },
+          {
+            "name": "Stop guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T14:24:17Z",
+            "completed_at": "2026-10-29T14:24:17Z"
+          },
+          {
+            "name": "Evaluate retained full campaign evidence",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 17,
+            "started_at": "2026-10-29T14:24:17Z",
+            "completed_at": "2026-10-29T14:24:18Z"
+          },
+          {
+            "name": "Record compact evaluation provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-29T14:24:18Z",
+            "completed_at": "2026-10-29T14:24:18Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-29T14:24:18Z",
+            "completed_at": "2026-10-29T14:24:19Z"
+          },
+          {
+            "name": "Package the complete DSB toolchain subtree without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 20,
+            "started_at": "2026-10-29T14:24:19Z",
+            "completed_at": "2026-10-29T14:24:19Z"
+          },
+          {
+            "name": "Package the closed DSB remote handoff evidence without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 21,
+            "started_at": "2026-10-29T14:24:19Z",
+            "completed_at": "2026-10-29T14:24:19Z"
+          },
+          {
+            "name": "Record DSB full artifact restore layout",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 22,
+            "started_at": "2026-10-29T14:24:19Z",
+            "completed_at": "2026-10-29T14:24:19Z"
+          },
+          {
+            "name": "Retain DSB packaging status independently of full upload",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 23,
+            "started_at": "2026-10-29T14:24:19Z",
+            "completed_at": "2026-10-29T14:24:19Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-10-29T14:24:19Z",
+            "completed_at": "2026-10-29T14:24:24Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 25,
+            "started_at": "2026-10-29T14:24:24Z",
+            "completed_at": "2026-10-29T14:24:24Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 49,
+            "started_at": "2026-10-29T14:24:24Z",
+            "completed_at": "2026-10-29T14:24:24Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 50,
+            "started_at": "2026-10-29T14:24:24Z",
+            "completed_at": "2026-10-29T14:24:24Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 51,
+            "started_at": "2026-10-29T14:24:24Z",
+            "completed_at": "2026-10-29T14:24:24Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123505033282",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028568,
+        "runner_name": "GitHub Actions 1000028568",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

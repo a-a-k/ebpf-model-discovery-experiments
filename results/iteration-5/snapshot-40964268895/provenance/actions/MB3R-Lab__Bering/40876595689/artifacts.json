@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12898219212,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5ODIxOTIxMg==",
+        "name": "release-dry-run-dist",
+        "size_in_bytes": 63523674,
+        "url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/artifacts/12898219212",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/artifacts/12898219212/zip",
+        "expired": false,
+        "digest": "sha256:071ea75dffcb56e6d558964cd3b504bd2d7a3b54d82646bb0396d17e1ea61639",
+        "created_at": "2026-10-29T12:56:50Z",
+        "updated_at": "2026-10-29T12:56:50Z",
+        "expires_at": "2027-01-27T12:50:20Z",
+        "workflow_run": {
+          "id": 40876595689,
+          "repository_id": 1024445681,
+          "head_repository_id": 1024445681,
+          "head_branch": "feat/generic-ebpf-otlp-provenance",
+          "head_sha": "75fe863c014388d525e2912a76be156fb3e5f037"
+        }
+      }
+    ]
+  }
+]

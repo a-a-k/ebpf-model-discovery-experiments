@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12927018015,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyNzAxODAxNQ==",
+        "name": "journal-memory-validation-v5-40941966903",
+        "size_in_bytes": 18080,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927018015",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927018015/zip",
+        "expired": false,
+        "digest": "sha256:037006a988a37828d055e21d2cb53a21444898ad42af0a4b775017f77b3b8e0d",
+        "created_at": "2026-10-29T19:39:16Z",
+        "updated_at": "2026-10-29T19:39:16Z",
+        "expires_at": "2027-01-27T19:38:50Z",
+        "workflow_run": {
+          "id": 40941966903,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      }
+    ]
+  }
+]

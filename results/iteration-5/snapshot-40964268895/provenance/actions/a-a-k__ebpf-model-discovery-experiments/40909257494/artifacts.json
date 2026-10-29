@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12912782868,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMjc4Mjg2OA==",
+        "name": "deepflow-derived-handoff-v5-40909257494",
+        "size_in_bytes": 21002,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912782868",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912782868/zip",
+        "expired": false,
+        "digest": "sha256:505631b53a8411640145571731f13ede17fd3e52370f5b59391779d8ee69d674",
+        "created_at": "2026-10-29T16:13:14Z",
+        "updated_at": "2026-10-29T16:13:14Z",
+        "expires_at": "2027-01-27T16:12:25Z",
+        "workflow_run": {
+          "id": 40909257494,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      }
+    ]
+  }
+]

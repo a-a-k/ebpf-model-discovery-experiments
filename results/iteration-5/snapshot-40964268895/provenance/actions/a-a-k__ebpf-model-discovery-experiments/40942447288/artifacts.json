@@ -1,0 +1,167 @@
+[
+  {
+    "total_count": 8,
+    "artifacts": [
+      {
+        "id": 12929555891,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyOTU1NTg5MQ==",
+        "name": "v5-summary-deepflow-smoke-otel_demo-partial-6-40942447288",
+        "size_in_bytes": 341293,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929555891",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929555891/zip",
+        "expired": false,
+        "digest": "sha256:0c15d6d0490d54d3130932b1d264cb5b0f8218346a0a9b39b5037b428c00e866",
+        "created_at": "2026-10-29T20:03:26Z",
+        "updated_at": "2026-10-29T20:03:26Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12929535044,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyOTUzNTA0NA==",
+        "name": "v5-summary-deepflow-smoke-otel_demo-absent-6-40942447288",
+        "size_in_bytes": 110073,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929535044",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929535044/zip",
+        "expired": false,
+        "digest": "sha256:00c3d7d9faada13408bb917ea05d7ad7392a0d42ee3ec30387a136ef25112746",
+        "created_at": "2026-10-29T19:58:28Z",
+        "updated_at": "2026-10-29T19:58:28Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12929530816,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyOTUzMDgxNg==",
+        "name": "campaign-v5-deepflow-smoke-otel_demo-partial-6-40942447288",
+        "size_in_bytes": 85977045,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929530816",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12929530816/zip",
+        "expired": false,
+        "digest": "sha256:5328c16f3e27b3d117794b20136626b46b0a12157ac2bd85142a3b8dd1b519f6",
+        "created_at": "2026-10-29T20:03:34Z",
+        "updated_at": "2026-10-29T20:03:34Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12928827818,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyODgyNzgxOA==",
+        "name": "v5-summary-deepflow-smoke-otel_demo-full-6-40942447288",
+        "size_in_bytes": 355582,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12928827818",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12928827818/zip",
+        "expired": false,
+        "digest": "sha256:7f90b1ce5ef8d1841c103bcff82bdca85adf58148431d830c68da3c4f168a132",
+        "created_at": "2026-10-29T20:08:45Z",
+        "updated_at": "2026-10-29T20:08:45Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12927989528,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyNzk4OTUyOA==",
+        "name": "campaign-v5-deepflow-smoke-otel_demo-full-6-40942447288",
+        "size_in_bytes": 106337974,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927989528",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927989528/zip",
+        "expired": false,
+        "digest": "sha256:d6be276af94d4d41888d82f40016f156a00145e8933e9a815c6bac0658c6703a",
+        "created_at": "2026-10-29T20:08:51Z",
+        "updated_at": "2026-10-29T20:08:51Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12927643290,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyNzY0MzI5MA==",
+        "name": "training-v4-otel_demo-partial-6-40942447288",
+        "size_in_bytes": 34388446,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927643290",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927643290/zip",
+        "expired": false,
+        "digest": "sha256:0c3009620765184d01ba107ae4bb07be24ddfc91fb974778a7c57a51f39f5bf4",
+        "created_at": "2026-10-29T19:53:44Z",
+        "updated_at": "2026-10-29T19:53:44Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12927583844,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyNzU4Mzg0NA==",
+        "name": "campaign-v5-deepflow-smoke-otel_demo-absent-6-40942447288",
+        "size_in_bytes": 32019973,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927583844",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927583844/zip",
+        "expired": false,
+        "digest": "sha256:6b8908edb75c0c6efd6192e1bcf8c381c979b8abc958ed687739919317975404",
+        "created_at": "2026-10-29T19:58:32Z",
+        "updated_at": "2026-10-29T19:58:32Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      },
+      {
+        "id": 12927093753,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyNzA5Mzc1Mw==",
+        "name": "training-v4-otel_demo-full-6-40942447288",
+        "size_in_bytes": 33423066,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927093753",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12927093753/zip",
+        "expired": false,
+        "digest": "sha256:6d3de1bdc3ba5074d606ccb4286a2593eb73b62070744282cdd3d31739ee3e3c",
+        "created_at": "2026-10-29T19:51:09Z",
+        "updated_at": "2026-10-29T19:51:09Z",
+        "expires_at": "2027-01-27T19:42:09Z",
+        "workflow_run": {
+          "id": 40942447288,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f"
+        }
+      }
+    ]
+  }
+]

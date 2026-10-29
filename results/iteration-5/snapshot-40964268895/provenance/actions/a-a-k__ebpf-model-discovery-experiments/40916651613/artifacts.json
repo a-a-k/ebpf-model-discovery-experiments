@@ -1,0 +1,247 @@
+[
+  {
+    "total_count": 12,
+    "artifacts": [
+      {
+        "id": 12918375033,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxODM3NTAzMw==",
+        "name": "retention-v4-deathstarbench-full-6-40916651613",
+        "size_in_bytes": 2947,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918375033",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918375033/zip",
+        "expired": false,
+        "digest": "sha256:03db6ae3591bbccaa26ac5fe6b8a8a079b4462be58bd06f4cf08416cef54ac3d",
+        "created_at": "2026-10-29T17:14:26Z",
+        "updated_at": "2026-10-29T17:14:26Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12917472672,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNzQ3MjY3Mg==",
+        "name": "campaign-v5-coroot-smoke-deathstarbench-full-6-40916651613",
+        "size_in_bytes": 37522162,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917472672",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917472672/zip",
+        "expired": false,
+        "digest": "sha256:7ae5939f65873e43cbbdde394379c08d1883072ee7a6db7286884915d9ed9fae",
+        "created_at": "2026-10-29T17:14:30Z",
+        "updated_at": "2026-10-29T17:14:30Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12917186844,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNzE4Njg0NA==",
+        "name": "retention-v4-deathstarbench-partial-6-40916651613",
+        "size_in_bytes": 2947,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917186844",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917186844/zip",
+        "expired": false,
+        "digest": "sha256:c86c522efb762bc50651267a14ebe8d12820d675fca8c6916d339d164b5fcfc0",
+        "created_at": "2026-10-29T17:11:05Z",
+        "updated_at": "2026-10-29T17:11:05Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916983473,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjk4MzQ3Mw==",
+        "name": "v5-summary-coroot-smoke-deathstarbench-full-6-40916651613",
+        "size_in_bytes": 431652,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916983473",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916983473/zip",
+        "expired": false,
+        "digest": "sha256:874b748e98de4257fae3ae4174f7b3fd0f09c1af8d6c26475f85aa6f75462ee5",
+        "created_at": "2026-10-29T17:14:24Z",
+        "updated_at": "2026-10-29T17:14:24Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916642863,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjY0Mjg2Mw==",
+        "name": "v5-summary-coroot-smoke-deathstarbench-absent-6-40916651613",
+        "size_in_bytes": 368252,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916642863",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916642863/zip",
+        "expired": false,
+        "digest": "sha256:8c6688ef356f4c76e2630f2285551cd53ad629ed2696dde9db559d4816796223",
+        "created_at": "2026-10-29T17:09:57Z",
+        "updated_at": "2026-10-29T17:09:57Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916313359,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjMxMzM1OQ==",
+        "name": "campaign-v5-coroot-smoke-deathstarbench-partial-6-40916651613",
+        "size_in_bytes": 35064320,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916313359",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916313359/zip",
+        "expired": false,
+        "digest": "sha256:e6f90ebf73db4603499bb018ac505b6e13c1d3bdbd83e544db32445ed3d9a290",
+        "created_at": "2026-10-29T17:11:10Z",
+        "updated_at": "2026-10-29T17:11:10Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916173375,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjE3MzM3NQ==",
+        "name": "retention-v4-deathstarbench-absent-6-40916651613",
+        "size_in_bytes": 2959,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916173375",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916173375/zip",
+        "expired": false,
+        "digest": "sha256:504e30aa20809b0625256a23ff830b7497ce7952571b5479f0bdf7567254fcbd",
+        "created_at": "2026-10-29T17:09:58Z",
+        "updated_at": "2026-10-29T17:09:58Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916113468,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjExMzQ2OA==",
+        "name": "training-v4-deathstarbench-partial-6-40916651613",
+        "size_in_bytes": 25938607,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916113468",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916113468/zip",
+        "expired": false,
+        "digest": "sha256:b007a78ec5263dd9f09f120a676f371c059c0b1ad93cca2e6dd1cd02f505af87",
+        "created_at": "2026-10-29T17:04:12Z",
+        "updated_at": "2026-10-29T17:04:12Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12916023033,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjAyMzAzMw==",
+        "name": "training-v4-deathstarbench-absent-6-40916651613",
+        "size_in_bytes": 25031257,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916023033",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916023033/zip",
+        "expired": false,
+        "digest": "sha256:c62f510c1412d2115f93b1cb3c29d9262d5ff8212904548355bd02a2dff2225c",
+        "created_at": "2026-10-29T17:04:06Z",
+        "updated_at": "2026-10-29T17:04:06Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12915784254,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTc4NDI1NA==",
+        "name": "campaign-v5-coroot-smoke-deathstarbench-absent-6-40916651613",
+        "size_in_bytes": 30381830,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915784254",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915784254/zip",
+        "expired": false,
+        "digest": "sha256:b2d197995b0e6addcc67207fa5a98df804d6a6d66bc7ac0b2e38eacd45969f66",
+        "created_at": "2026-10-29T17:10:04Z",
+        "updated_at": "2026-10-29T17:10:04Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12915733516,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTczMzUxNg==",
+        "name": "training-v4-deathstarbench-full-6-40916651613",
+        "size_in_bytes": 26180428,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915733516",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915733516/zip",
+        "expired": false,
+        "digest": "sha256:0384986037685286e63f6da83f463e06141c1ff85f33ca2d3143835d460caeeb",
+        "created_at": "2026-10-29T17:03:59Z",
+        "updated_at": "2026-10-29T17:03:59Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      },
+      {
+        "id": 12915724898,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTcyNDg5OA==",
+        "name": "v5-summary-coroot-smoke-deathstarbench-partial-6-40916651613",
+        "size_in_bytes": 410926,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915724898",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915724898/zip",
+        "expired": false,
+        "digest": "sha256:93b82327b7b37e6ea74dccd1208838d7dba91ca51fec5165bf6822e5dda076b2",
+        "created_at": "2026-10-29T17:11:03Z",
+        "updated_at": "2026-10-29T17:11:03Z",
+        "expires_at": "2027-01-27T16:57:35Z",
+        "workflow_run": {
+          "id": 40916651613,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2"
+        }
+      }
+    ]
+  }
+]

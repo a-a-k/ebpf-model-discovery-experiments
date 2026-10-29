@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12897494810,
+        "node_id": "MDg6QXJ0aWZhY3QxMjg5NzQ5NDgxMA==",
+        "name": "ebpf-obi-smoke-40876595722",
+        "size_in_bytes": 21152663,
+        "url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/artifacts/12897494810",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/Bering/actions/artifacts/12897494810/zip",
+        "expired": false,
+        "digest": "sha256:ad6938146e4ca2a4ecde71956d40e62b8c27f35cd85bfdf689af40e74f88cfd6",
+        "created_at": "2026-10-29T12:51:15Z",
+        "updated_at": "2026-10-29T12:51:15Z",
+        "expires_at": "2026-11-12T12:51:13Z",
+        "workflow_run": {
+          "id": 40876595722,
+          "repository_id": 1024445681,
+          "head_repository_id": 1024445681,
+          "head_branch": "feat/generic-ebpf-otlp-provenance",
+          "head_sha": "75fe863c014388d525e2912a76be156fb3e5f037"
+        }
+      }
+    ]
+  }
+]

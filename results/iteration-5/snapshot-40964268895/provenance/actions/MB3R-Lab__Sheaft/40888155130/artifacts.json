@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12903323446,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMzMyMzQ0Ng==",
+        "name": "sheaft-release-dry-run",
+        "size_in_bytes": 45081959,
+        "url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/artifacts/12903323446",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/artifacts/12903323446/zip",
+        "expired": false,
+        "digest": "sha256:f4215cdf41a7099aba82a8dea5310ff1bd85cefe371e338cb68b5530a11bfd51",
+        "created_at": "2026-10-29T14:13:35Z",
+        "updated_at": "2026-10-29T14:13:35Z",
+        "expires_at": "2026-11-01T14:13:32Z",
+        "workflow_run": {
+          "id": 40888155130,
+          "repository_id": 972758932,
+          "head_repository_id": 972758932,
+          "head_branch": "main",
+          "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411"
+        }
+      }
+    ]
+  }
+]

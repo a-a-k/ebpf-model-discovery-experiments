@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12933412698,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkzMzQxMjY5OA==",
+        "name": "training-v4-deathstarbench-full-7-40945578755",
+        "size_in_bytes": 2768331905,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933412698",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933412698/zip",
+        "expired": false,
+        "digest": "sha256:1f58ee5eccc6513441a29146cfb38e6df80ddfb357ed4c2f61c97a635c5cd704",
+        "created_at": "2026-10-29T21:14:21Z",
+        "updated_at": "2026-10-29T21:14:21Z",
+        "expires_at": "2027-01-27T20:03:22Z",
+        "workflow_run": {
+          "id": 40945578755,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44"
+        }
+      }
+    ]
+  }
+]

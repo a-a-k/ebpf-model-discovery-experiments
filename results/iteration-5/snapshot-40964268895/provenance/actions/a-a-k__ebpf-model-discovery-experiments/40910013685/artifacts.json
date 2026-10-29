@@ -1,0 +1,187 @@
+[
+  {
+    "total_count": 9,
+    "artifacts": [
+      {
+        "id": 12921655146,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMTY1NTE0Ng==",
+        "name": "v5-summary-obi-main-petclinic-absent-8-40910013685",
+        "size_in_bytes": 37618213,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921655146",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921655146/zip",
+        "expired": false,
+        "digest": "sha256:e4ce8d1a477a0f499bb8c67414d43bccc4ac634ce4735e7403b9a17577d2d7fe",
+        "created_at": "2026-10-29T18:00:04Z",
+        "updated_at": "2026-10-29T18:00:04Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12921031741,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMTAzMTc0MQ==",
+        "name": "campaign-v5-obi-main-petclinic-absent-8-40910013685",
+        "size_in_bytes": 1422384165,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921031741",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921031741/zip",
+        "expired": false,
+        "digest": "sha256:db777e637423fb224b5ea7581e9e90feed74b1dc0eff44ede41d5949a6166001",
+        "created_at": "2026-10-29T18:02:22Z",
+        "updated_at": "2026-10-29T18:02:22Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12920055481,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMDA1NTQ4MQ==",
+        "name": "v5-summary-obi-main-petclinic-absent-6-40910013685",
+        "size_in_bytes": 37354410,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920055481",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920055481/zip",
+        "expired": false,
+        "digest": "sha256:be9e31621a3b26dcb33a48bcf87f112323cc864ccf983e99467bfd3fc886d59a",
+        "created_at": "2026-10-29T17:37:05Z",
+        "updated_at": "2026-10-29T17:37:05Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12919317201,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxOTMxNzIwMQ==",
+        "name": "campaign-v5-obi-main-petclinic-absent-6-40910013685",
+        "size_in_bytes": 1412339936,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12919317201",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12919317201/zip",
+        "expired": false,
+        "digest": "sha256:8ee088e3e53e86e06c72bec7691636b56e2174388292b8ff99fbb10949a488d4",
+        "created_at": "2026-10-29T17:38:41Z",
+        "updated_at": "2026-10-29T17:38:41Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12918282707,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxODI4MjcwNw==",
+        "name": "campaign-v5-obi-main-petclinic-absent-7-40910013685",
+        "size_in_bytes": 1407882354,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918282707",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918282707/zip",
+        "expired": false,
+        "digest": "sha256:21becd9e616e533c94e54658e0cb533847d43d4de871d9855d53cb3a14157fd0",
+        "created_at": "2026-10-29T17:33:23Z",
+        "updated_at": "2026-10-29T17:33:23Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12917639119,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNzYzOTExOQ==",
+        "name": "v5-summary-obi-main-petclinic-absent-7-40910013685",
+        "size_in_bytes": 37180891,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917639119",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917639119/zip",
+        "expired": false,
+        "digest": "sha256:affffd6ff25c322c2e882d216c94e63a4a616dda1d1080c382326cf1f66baeb2",
+        "created_at": "2026-10-29T17:31:46Z",
+        "updated_at": "2026-10-29T17:31:46Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12916082820,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjA4MjgyMA==",
+        "name": "training-v4-petclinic-absent-8-40910013685",
+        "size_in_bytes": 353643858,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916082820",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916082820/zip",
+        "expired": false,
+        "digest": "sha256:d209a665503f960091f10dfef830bfd42d73d6a6cd754c498eb6285182c1ca5d",
+        "created_at": "2026-10-29T16:59:36Z",
+        "updated_at": "2026-10-29T16:59:36Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915687154,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTY4NzE1NA==",
+        "name": "training-v4-petclinic-absent-6-40910013685",
+        "size_in_bytes": 351793380,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915687154",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915687154/zip",
+        "expired": false,
+        "digest": "sha256:f4501310bc52665b2c55950491971c7717a28af2653eb242d39fb5db47681552",
+        "created_at": "2026-10-29T16:52:42Z",
+        "updated_at": "2026-10-29T16:52:42Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915183292,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTE4MzI5Mg==",
+        "name": "training-v4-petclinic-absent-7-40910013685",
+        "size_in_bytes": 351615872,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915183292",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915183292/zip",
+        "expired": false,
+        "digest": "sha256:736fe7dc37562d38dccaeed5f3305c6a85dbb8eb9a89e7972ec52a7d2573c929",
+        "created_at": "2026-10-29T16:51:44Z",
+        "updated_at": "2026-10-29T16:51:44Z",
+        "expires_at": "2027-01-27T16:16:57Z",
+        "workflow_run": {
+          "id": 40910013685,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      }
+    ]
+  }
+]

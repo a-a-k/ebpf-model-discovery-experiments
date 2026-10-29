@@ -1,0 +1,123 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123646532100,
+        "run_id": 40930267298,
+        "workflow_name": "Validate v5 streaming preprocessing equivalence",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930267298",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcyehaBA",
+        "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123646532100",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930267298/job/123646532100",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T18:23:00Z",
+        "started_at": "2026-10-29T18:23:02Z",
+        "completed_at": "2026-10-29T18:23:29Z",
+        "name": "validate",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T18:23:03Z",
+            "completed_at": "2026-10-29T18:23:04Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T18:23:04Z",
+            "completed_at": "2026-10-29T18:23:07Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T18:23:07Z",
+            "completed_at": "2026-10-29T18:23:07Z"
+          },
+          {
+            "name": "Run python -m pip install -e . pytest",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T18:23:07Z",
+            "completed_at": "2026-10-29T18:23:19Z"
+          },
+          {
+            "name": "Run focused preprocessing checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T18:23:19Z",
+            "completed_at": "2026-10-29T18:23:20Z"
+          },
+          {
+            "name": "Fetch exact immutable source metadata and full artifact",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T18:23:20Z",
+            "completed_at": "2026-10-29T18:23:22Z"
+          },
+          {
+            "name": "Compare original and streaming preprocessing",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T18:23:22Z",
+            "completed_at": "2026-10-29T18:23:25Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T18:23:25Z",
+            "completed_at": "2026-10-29T18:23:26Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-29T18:23:26Z",
+            "completed_at": "2026-10-29T18:23:26Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T18:23:26Z",
+            "completed_at": "2026-10-29T18:23:27Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T18:23:27Z",
+            "completed_at": "2026-10-29T18:23:27Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123646532100",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028693,
+        "runner_name": "GitHub Actions 1000028693",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12933000919,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkzMzAwMDkxOQ==",
+        "name": "deepflow-checkpoint-accounting-validation-v5-40953383041",
+        "size_in_bytes": 26035421,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933000919",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933000919/zip",
+        "expired": false,
+        "digest": "sha256:648479c00b818bf91257e6723fc60a503ad8667aef272a593b0fc60a5515f923",
+        "created_at": "2026-10-29T20:56:37Z",
+        "updated_at": "2026-10-29T20:56:37Z",
+        "expires_at": "2027-01-27T20:56:06Z",
+        "workflow_run": {
+          "id": 40953383041,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07"
+        }
+      }
+    ]
+  }
+]

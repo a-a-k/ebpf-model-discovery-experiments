@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12913714297,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMzcxNDI5Nw==",
+        "name": "dsb-native-adjudication-v5-40913965976",
+        "size_in_bytes": 181,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913714297",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913714297/zip",
+        "expired": false,
+        "digest": "sha256:25ce9d56d37397fc6ba8d67c6bc320ac67531a06236042565b867de8ffc65429",
+        "created_at": "2026-10-29T16:41:17Z",
+        "updated_at": "2026-10-29T16:41:17Z",
+        "expires_at": "2027-01-27T16:40:57Z",
+        "workflow_run": {
+          "id": 40913965976,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "225ed43d0fde39695b3667a737f9a57e6193184f"
+        }
+      }
+    ]
+  }
+]

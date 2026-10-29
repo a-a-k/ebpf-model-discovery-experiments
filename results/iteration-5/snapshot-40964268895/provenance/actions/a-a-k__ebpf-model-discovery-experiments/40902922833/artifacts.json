@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12911410794,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMTQxMDc5NA==",
+        "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+        "size_in_bytes": 102968,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12911410794",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12911410794/zip",
+        "expired": false,
+        "digest": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+        "created_at": "2026-10-29T15:44:36Z",
+        "updated_at": "2026-10-29T15:44:36Z",
+        "expires_at": "2027-01-27T15:34:24Z",
+        "workflow_run": {
+          "id": 40902922833,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "b9ae3065d56981e992e762b14b17453d86376570"
+        }
+      },
+      {
+        "id": 12910762488,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMDc2MjQ4OA==",
+        "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+        "size_in_bytes": 29715113,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12910762488",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12910762488/zip",
+        "expired": false,
+        "digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+        "created_at": "2026-10-29T15:44:41Z",
+        "updated_at": "2026-10-29T15:44:41Z",
+        "expires_at": "2027-01-27T15:34:24Z",
+        "workflow_run": {
+          "id": 40902922833,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "b9ae3065d56981e992e762b14b17453d86376570"
+        }
+      },
+      {
+        "id": 12910318208,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMDMxODIwOA==",
+        "name": "training-v4-petclinic-absent-6-40902922833",
+        "size_in_bytes": 27258862,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12910318208",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12910318208/zip",
+        "expired": false,
+        "digest": "sha256:6519ae3f8e3b1566de2fd0afd104d16f3281f9c6340fe7f17bd2d03dc326c0de",
+        "created_at": "2026-10-29T15:44:05Z",
+        "updated_at": "2026-10-29T15:44:05Z",
+        "expires_at": "2027-01-27T15:34:24Z",
+        "workflow_run": {
+          "id": 40902922833,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "b9ae3065d56981e992e762b14b17453d86376570"
+        }
+      }
+    ]
+  }
+]

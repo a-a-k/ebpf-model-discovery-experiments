@@ -1,0 +1,67 @@
+[
+  {
+    "total_count": 3,
+    "artifacts": [
+      {
+        "id": 12920435257,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMDQzNTI1Nw==",
+        "name": "v5-summary-coroot-smoke-petclinic-partial-6-40921056157",
+        "size_in_bytes": 534031,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920435257",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920435257/zip",
+        "expired": false,
+        "digest": "sha256:6cae68b5ba03081bcec4d9b156a351c4f077621704116c1e6439deede72829b6",
+        "created_at": "2026-10-29T17:43:16Z",
+        "updated_at": "2026-10-29T17:43:16Z",
+        "expires_at": "2027-01-27T17:24:41Z",
+        "workflow_run": {
+          "id": 40921056157,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6"
+        }
+      },
+      {
+        "id": 12918928976,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxODkyODk3Ng==",
+        "name": "campaign-v5-coroot-smoke-petclinic-partial-6-40921056157",
+        "size_in_bytes": 34265188,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918928976",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918928976/zip",
+        "expired": false,
+        "digest": "sha256:0d5189b449d96d2d6f9a2274e08f8f8d82fab47138aa7e5d7342ac9bb4083cf7",
+        "created_at": "2026-10-29T17:43:21Z",
+        "updated_at": "2026-10-29T17:43:21Z",
+        "expires_at": "2027-01-27T17:24:41Z",
+        "workflow_run": {
+          "id": 40921056157,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6"
+        }
+      },
+      {
+        "id": 12917999425,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNzk5OTQyNQ==",
+        "name": "training-v4-petclinic-partial-6-40921056157",
+        "size_in_bytes": 25658804,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917999425",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917999425/zip",
+        "expired": false,
+        "digest": "sha256:5ad7d9c789d43f1aa543accb62ffe07bdcad1f94a080a9673ab33ced982b8516",
+        "created_at": "2026-10-29T17:35:02Z",
+        "updated_at": "2026-10-29T17:35:02Z",
+        "expires_at": "2027-01-27T17:24:41Z",
+        "workflow_run": {
+          "id": 40921056157,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6"
+        }
+      }
+    ]
+  }
+]

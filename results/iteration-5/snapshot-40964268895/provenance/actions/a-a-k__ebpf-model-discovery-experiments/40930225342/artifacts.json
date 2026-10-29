@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12921733573,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMTczMzU3Mw==",
+        "name": "report-v5-40930225342",
+        "size_in_bytes": 638543351,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921733573",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12921733573/zip",
+        "expired": false,
+        "digest": "sha256:b997086495790899f2579338cb2345b464280c8581bae6bb1caa1d3ae6ff6e04",
+        "created_at": "2026-10-29T18:27:21Z",
+        "updated_at": "2026-10-29T18:27:21Z",
+        "expires_at": "2027-01-27T18:22:43Z",
+        "workflow_run": {
+          "id": 40930225342,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04"
+        }
+      }
+    ]
+  }
+]

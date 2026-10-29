@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12902607789,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkwMjYwNzc4OQ==",
+        "name": "stack-runtime-handoff",
+        "size_in_bytes": 94035,
+        "url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/artifacts/12902607789",
+        "archive_download_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/artifacts/12902607789/zip",
+        "expired": false,
+        "digest": "sha256:479eaaa4f38f299e22d07664294e971bd7b9c24050d710c8656a448bd45a2656",
+        "created_at": "2026-10-29T13:57:50Z",
+        "updated_at": "2026-10-29T13:57:50Z",
+        "expires_at": "2026-11-05T13:57:49Z",
+        "workflow_run": {
+          "id": 40886462764,
+          "repository_id": 1178923182,
+          "head_repository_id": 1178923182,
+          "head_branch": "main",
+          "head_sha": "4ba1d790d66c47976dc6cc05dfeb6e812427eb58"
+        }
+      }
+    ]
+  }
+]

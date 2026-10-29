@@ -1,0 +1,131 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123572426942,
+        "run_id": 40909257494,
+        "workflow_name": "Qualify DeepFlow derived OTLP handoff v5",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909257494",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAcxX2Yvg",
+        "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123572426942",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909257494/job/123572426942",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-10-29T16:12:25Z",
+        "started_at": "2026-10-29T16:12:27Z",
+        "completed_at": "2026-10-29T16:13:16Z",
+        "name": "qualify",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T16:12:28Z",
+            "completed_at": "2026-10-29T16:12:28Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T16:12:28Z",
+            "completed_at": "2026-10-29T16:12:31Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T16:12:31Z",
+            "completed_at": "2026-10-29T16:12:31Z"
+          },
+          {
+            "name": "Run python -m pip install -e . pytest opentelemetry-proto",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T16:12:31Z",
+            "completed_at": "2026-10-29T16:12:40Z"
+          },
+          {
+            "name": "Run focused source and handoff checks",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T16:12:40Z",
+            "completed_at": "2026-10-29T16:12:41Z"
+          },
+          {
+            "name": "Build exact graph-v5 product pins",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T16:12:41Z",
+            "completed_at": "2026-10-29T16:13:11Z"
+          },
+          {
+            "name": "Run no-VM actual-product input qualification",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 7,
+            "started_at": "2026-10-29T16:13:11Z",
+            "completed_at": "2026-10-29T16:13:11Z"
+          },
+          {
+            "name": "Retain runner and preparation costs",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T16:13:11Z",
+            "completed_at": "2026-10-29T16:13:13Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T16:13:13Z",
+            "completed_at": "2026-10-29T16:13:14Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 17,
+            "started_at": "2026-10-29T16:13:14Z",
+            "completed_at": "2026-10-29T16:13:14Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-29T16:13:14Z",
+            "completed_at": "2026-10-29T16:13:14Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-29T16:13:14Z",
+            "completed_at": "2026-10-29T16:13:14Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/123572426942",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000028606,
+        "runner_name": "GitHub Actions 1000028606",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

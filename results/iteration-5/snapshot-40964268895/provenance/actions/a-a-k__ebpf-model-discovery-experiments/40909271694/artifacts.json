@@ -1,0 +1,187 @@
+[
+  {
+    "total_count": 9,
+    "artifacts": [
+      {
+        "id": 12916535612,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjUzNTYxMg==",
+        "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40909271694",
+        "size_in_bytes": 56670595,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916535612",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916535612/zip",
+        "expired": false,
+        "digest": "sha256:493edbdf59f8f6a9b6a715464791333f23986deeaee379f9843e0f44ce6d1143",
+        "created_at": "2026-10-29T16:53:24Z",
+        "updated_at": "2026-10-29T16:53:24Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12916370886,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNjM3MDg4Ng==",
+        "name": "v5-summary-obi-smoke-otel_demo-absent-6-40909271694",
+        "size_in_bytes": 286495,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916370886",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12916370886/zip",
+        "expired": false,
+        "digest": "sha256:d58542e64adbc1684a9c15c38d2021f1d680e84ed792ea95fa403a6f5f3a9616",
+        "created_at": "2026-10-29T16:53:16Z",
+        "updated_at": "2026-10-29T16:53:16Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915685223,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTY4NTIyMw==",
+        "name": "campaign-v5-obi-smoke-otel_demo-full-6-40909271694",
+        "size_in_bytes": 56087284,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915685223",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915685223/zip",
+        "expired": false,
+        "digest": "sha256:40ccfa55a444162f51e55508765c177ecf7957444a26203a9467a1ec31dc6302",
+        "created_at": "2026-10-29T16:39:00Z",
+        "updated_at": "2026-10-29T16:39:00Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915476064,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTQ3NjA2NA==",
+        "name": "v5-summary-obi-smoke-otel_demo-full-6-40909271694",
+        "size_in_bytes": 287521,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915476064",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915476064/zip",
+        "expired": false,
+        "digest": "sha256:8e4d007c750f81229a7bfd859c0074e6ba9a8793da4ed359df8c7383f05cc117",
+        "created_at": "2026-10-29T16:38:53Z",
+        "updated_at": "2026-10-29T16:38:53Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915210909,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTIxMDkwOQ==",
+        "name": "v5-summary-obi-smoke-otel_demo-partial-6-40909271694",
+        "size_in_bytes": 269889,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915210909",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915210909/zip",
+        "expired": false,
+        "digest": "sha256:e321e8bfb351eb379871f62ecbb9cf28fd607de97b33283ce735073978a2a7bb",
+        "created_at": "2026-10-29T16:32:23Z",
+        "updated_at": "2026-10-29T16:32:23Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12915161149,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNTE2MTE0OQ==",
+        "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40909271694",
+        "size_in_bytes": 48085032,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915161149",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12915161149/zip",
+        "expired": false,
+        "digest": "sha256:77fe4a735c8ccfc1f04da7f05e0fd86953ecf6e7b232ff7c5e21616950d3a41d",
+        "created_at": "2026-10-29T16:32:28Z",
+        "updated_at": "2026-10-29T16:32:28Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12914741681,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxNDc0MTY4MQ==",
+        "name": "training-v4-otel_demo-absent-6-40909271694",
+        "size_in_bytes": 27698109,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12914741681",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12914741681/zip",
+        "expired": false,
+        "digest": "sha256:8c9278528f2922dee8da9e3977be7ef50a48be66a6e73703eda878a95f4f0069",
+        "created_at": "2026-10-29T16:35:35Z",
+        "updated_at": "2026-10-29T16:35:35Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12913722491,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMzcyMjQ5MQ==",
+        "name": "training-v4-otel_demo-partial-6-40909271694",
+        "size_in_bytes": 28617849,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913722491",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913722491/zip",
+        "expired": false,
+        "digest": "sha256:fae9e009b1191e174eaeeabd9789a9e6818cd23da6b3604982f92d5ae80aa8b4",
+        "created_at": "2026-10-29T16:24:16Z",
+        "updated_at": "2026-10-29T16:24:16Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      },
+      {
+        "id": 12912918709,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxMjkxODcwOQ==",
+        "name": "training-v4-otel_demo-full-6-40909271694",
+        "size_in_bytes": 28657240,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912918709",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12912918709/zip",
+        "expired": false,
+        "digest": "sha256:e7f48a9a875081031f0607a66d300f4c61ce4aa1ef3da532916bd22edac0991a",
+        "created_at": "2026-10-29T16:25:12Z",
+        "updated_at": "2026-10-29T16:25:12Z",
+        "expires_at": "2027-01-27T16:12:30Z",
+        "workflow_run": {
+          "id": 40909271694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530"
+        }
+      }
+    ]
+  }
+]

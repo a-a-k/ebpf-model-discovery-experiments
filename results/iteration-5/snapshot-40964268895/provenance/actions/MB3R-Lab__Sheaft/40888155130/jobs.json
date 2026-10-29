@@ -1,0 +1,179 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123497334477,
+        "run_id": 40888155130,
+        "workflow_name": "release-dry-run",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/runs/40888155130",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOOfsflM8AAAAcwQPGzQ",
+        "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411",
+        "url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/jobs/123497334477",
+        "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40888155130/job/123497334477",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:06:09Z",
+        "started_at": "2026-10-29T14:06:11Z",
+        "completed_at": "2026-10-29T14:14:01Z",
+        "name": "validate-release-surface",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:06:12Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:15Z"
+          },
+          {
+            "name": "Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T14:06:15Z",
+            "completed_at": "2026-10-29T14:06:22Z"
+          },
+          {
+            "name": "Setup QEMU",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:06:22Z",
+            "completed_at": "2026-10-29T14:06:27Z"
+          },
+          {
+            "name": "Setup Buildx",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:06:27Z",
+            "completed_at": "2026-10-29T14:06:31Z"
+          },
+          {
+            "name": "Setup Helm",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:06:31Z",
+            "completed_at": "2026-10-29T14:06:31Z"
+          },
+          {
+            "name": "Smoke checked-in examples",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T14:06:31Z",
+            "completed_at": "2026-10-29T14:07:10Z"
+          },
+          {
+            "name": "Resolve tested Bering app version",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T14:07:10Z",
+            "completed_at": "2026-10-29T14:07:10Z"
+          },
+          {
+            "name": "Download published Bering compatibility assets",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T14:07:10Z",
+            "completed_at": "2026-10-29T14:07:11Z"
+          },
+          {
+            "name": "Verify published Bering app compatibility",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T14:07:11Z",
+            "completed_at": "2026-10-29T14:07:11Z"
+          },
+          {
+            "name": "Validate release dry-run",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T14:07:11Z",
+            "completed_at": "2026-10-29T14:13:32Z"
+          },
+          {
+            "name": "Validate default config pack generation",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-10-29T14:13:32Z",
+            "completed_at": "2026-10-29T14:13:32Z"
+          },
+          {
+            "name": "Upload dry-run artifacts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-29T14:13:32Z",
+            "completed_at": "2026-10-29T14:13:36Z"
+          },
+          {
+            "name": "Post Setup Buildx",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23,
+            "started_at": "2026-10-29T14:13:36Z",
+            "completed_at": "2026-10-29T14:13:38Z"
+          },
+          {
+            "name": "Post Setup QEMU",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 24,
+            "started_at": "2026-10-29T14:13:38Z",
+            "completed_at": "2026-10-29T14:13:39Z"
+          },
+          {
+            "name": "Post Setup Go",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 25,
+            "started_at": "2026-10-29T14:13:39Z",
+            "completed_at": "2026-10-29T14:13:59Z"
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 26,
+            "started_at": "2026-10-29T14:13:59Z",
+            "completed_at": "2026-10-29T14:14:00Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 27,
+            "started_at": "2026-10-29T14:14:00Z",
+            "completed_at": "2026-10-29T14:14:00Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/Sheaft/check-runs/123497334477",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001131,
+        "runner_name": "GitHub Actions 1000001131",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

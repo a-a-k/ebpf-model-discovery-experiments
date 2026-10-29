@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12935877908,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkzNTg3NzkwOA==",
+        "name": "report-stream-transport-validation-v5-40961608465",
+        "size_in_bytes": 1630950,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12935877908",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12935877908/zip",
+        "expired": false,
+        "digest": "sha256:6b5327e8f57b4386fe0a69071ba83fc2feb179d26f0d8520f3d06a4602e484b6",
+        "created_at": "2026-10-29T21:56:35Z",
+        "updated_at": "2026-10-29T21:56:35Z",
+        "expires_at": "2027-01-27T21:54:10Z",
+        "workflow_run": {
+          "id": 40961608465,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "4ebebfd30867c9227f629da8aed3302203334cd0"
+        }
+      }
+    ]
+  }
+]

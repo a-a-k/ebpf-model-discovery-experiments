@@ -1,0 +1,223 @@
+[
+  {
+    "total_count": 2,
+    "jobs": [
+      {
+        "id": 123491831572,
+        "run_id": 40886588360,
+        "workflow_name": "release",
+        "head_branch": "v1.5.0",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/runs/40886588360",
+        "run_attempt": 1,
+        "node_id": "CR_kwDORkTwrs8AAAAcwK_PFA",
+        "head_sha": "4ba1d790d66c47976dc6cc05dfeb6e812427eb58",
+        "url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/jobs/123491831572",
+        "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40886588360/job/123491831572",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T13:56:25Z",
+        "started_at": "2026-10-29T13:56:28Z",
+        "completed_at": "2026-10-29T13:56:46Z",
+        "name": "release",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T13:56:29Z",
+            "completed_at": "2026-10-29T13:56:30Z"
+          },
+          {
+            "name": "Run actions/checkout@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T13:56:30Z",
+            "completed_at": "2026-10-29T13:56:31Z"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T13:56:31Z",
+            "completed_at": "2026-10-29T13:56:31Z"
+          },
+          {
+            "name": "Run azure/setup-helm@v4.3.1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T13:56:31Z",
+            "completed_at": "2026-10-29T13:56:32Z"
+          },
+          {
+            "name": "Install dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T13:56:32Z",
+            "completed_at": "2026-10-29T13:56:34Z"
+          },
+          {
+            "name": "Build release assets",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T13:56:34Z",
+            "completed_at": "2026-10-29T13:56:36Z"
+          },
+          {
+            "name": "Log in to GHCR",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T13:56:36Z",
+            "completed_at": "2026-10-29T13:56:37Z"
+          },
+          {
+            "name": "Push OCI chart",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T13:56:37Z",
+            "completed_at": "2026-10-29T13:56:39Z"
+          },
+          {
+            "name": "Publish GitHub release",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T13:56:39Z",
+            "completed_at": "2026-10-29T13:56:43Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T13:56:43Z",
+            "completed_at": "2026-10-29T13:56:43Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-29T13:56:43Z",
+            "completed_at": "2026-10-29T13:56:43Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-29T13:56:43Z",
+            "completed_at": "2026-10-29T13:56:43Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/check-runs/123491831572",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001090,
+        "runner_name": "GitHub Actions 1000001090",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 123492027379,
+        "run_id": 40886588360,
+        "workflow_name": "release",
+        "head_branch": "v1.5.0",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/runs/40886588360",
+        "run_attempt": 1,
+        "node_id": "CR_kwDORkTwrs8AAAAcwLLL8w",
+        "head_sha": "4ba1d790d66c47976dc6cc05dfeb6e812427eb58",
+        "url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/actions/jobs/123492027379",
+        "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40886588360/job/123492027379",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T13:56:46Z",
+        "started_at": "2026-10-29T13:56:49Z",
+        "completed_at": "2026-10-29T13:57:08Z",
+        "name": "Download and run the published preflight without authentication",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T13:56:50Z",
+            "completed_at": "2026-10-29T13:56:51Z"
+          },
+          {
+            "name": "Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T13:56:51Z",
+            "completed_at": "2026-10-29T13:56:51Z"
+          },
+          {
+            "name": "Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-29T13:56:51Z",
+            "completed_at": "2026-10-29T13:56:58Z"
+          },
+          {
+            "name": "Download and verify public release assets",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T13:56:58Z",
+            "completed_at": "2026-10-29T13:56:58Z"
+          },
+          {
+            "name": "Run the preflight from the extracted asset pack",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T13:56:58Z",
+            "completed_at": "2026-10-29T13:57:06Z"
+          },
+          {
+            "name": "Post Run actions/setup-go@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-29T13:57:06Z",
+            "completed_at": "2026-10-29T13:57:06Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v6",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-10-29T13:57:06Z",
+            "completed_at": "2026-10-29T13:57:06Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11,
+            "started_at": "2026-10-29T13:57:06Z",
+            "completed_at": "2026-10-29T13:57:06Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/mb3r-stack/check-runs/123492027379",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001094,
+        "runner_name": "GitHub Actions 1000001094",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]

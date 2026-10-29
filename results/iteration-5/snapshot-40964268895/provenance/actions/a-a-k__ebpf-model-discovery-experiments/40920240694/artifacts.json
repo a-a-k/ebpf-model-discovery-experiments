@@ -1,0 +1,27 @@
+[
+  {
+    "total_count": 1,
+    "artifacts": [
+      {
+        "id": 12918126146,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxODEyNjE0Ng==",
+        "name": "deepflow-clock-adjudication-v5-40920240694",
+        "size_in_bytes": 204320,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918126146",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12918126146/zip",
+        "expired": false,
+        "digest": "sha256:35b982f02b29f94992ff0fc79dda67491c552738a1825679fe7f71554ccb8a29",
+        "created_at": "2026-10-29T17:20:00Z",
+        "updated_at": "2026-10-29T17:20:00Z",
+        "expires_at": "2027-01-27T17:19:38Z",
+        "workflow_run": {
+          "id": 40920240694,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6"
+        }
+      }
+    ]
+  }
+]

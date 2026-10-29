@@ -1,0 +1,47 @@
+[
+  {
+    "total_count": 2,
+    "artifacts": [
+      {
+        "id": 12920375252,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkyMDM3NTI1Mg==",
+        "name": "campaign-v5-coroot-smoke-petclinic-full-6-40922905708",
+        "size_in_bytes": 24152584,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920375252",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12920375252/zip",
+        "expired": false,
+        "digest": "sha256:ec8d53ea0075db77a3bc152261c08f2bef55eafb54233273516cf8494aa6eb56",
+        "created_at": "2026-10-29T17:42:31Z",
+        "updated_at": "2026-10-29T17:42:31Z",
+        "expires_at": "2027-01-27T17:36:16Z",
+        "workflow_run": {
+          "id": 40922905708,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa"
+        }
+      },
+      {
+        "id": 12919252994,
+        "node_id": "MDg6QXJ0aWZhY3QxMjkxOTI1Mjk5NA==",
+        "name": "v5-summary-coroot-smoke-petclinic-full-6-40922905708",
+        "size_in_bytes": 90296,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12919252994",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12919252994/zip",
+        "expired": false,
+        "digest": "sha256:5b293661d41afaeb80b3e57acf8260f14f8633a7ae92334a670777cf895bd4b8",
+        "created_at": "2026-10-29T17:42:28Z",
+        "updated_at": "2026-10-29T17:42:28Z",
+        "expires_at": "2027-01-27T17:36:16Z",
+        "workflow_run": {
+          "id": 40922905708,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa"
+        }
+      }
+    ]
+  }
+]

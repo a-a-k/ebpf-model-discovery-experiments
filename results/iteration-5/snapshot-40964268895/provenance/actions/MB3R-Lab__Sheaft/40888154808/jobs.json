@@ -1,0 +1,115 @@
+[
+  {
+    "total_count": 1,
+    "jobs": [
+      {
+        "id": 123497332698,
+        "run_id": 40888154808,
+        "workflow_name": "schema-contract",
+        "head_branch": "main",
+        "run_url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/runs/40888154808",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOOfsflM8AAAAcwQO_2g",
+        "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411",
+        "url": "https://api.github.com/repos/MB3R-Lab/Sheaft/actions/jobs/123497332698",
+        "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40888154808/job/123497332698",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-29T14:06:09Z",
+        "started_at": "2026-10-29T14:06:12Z",
+        "completed_at": "2026-10-29T14:06:41Z",
+        "name": "verify-schema-contract",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-29T14:06:12Z",
+            "completed_at": "2026-10-29T14:06:13Z"
+          },
+          {
+            "name": "Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-29T14:06:13Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Fetch base ref",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 3,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Verify remote schema sync",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Verify Bering release metadata",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Verify compatibility matrix",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:14Z"
+          },
+          {
+            "name": "Verify compatibility manifest",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-29T14:06:14Z",
+            "completed_at": "2026-10-29T14:06:27Z"
+          },
+          {
+            "name": "Verify contract policy fixtures",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-29T14:06:27Z",
+            "completed_at": "2026-10-29T14:06:39Z"
+          },
+          {
+            "name": "Post Checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-29T14:06:39Z",
+            "completed_at": "2026-10-29T14:06:39Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-29T14:06:39Z",
+            "completed_at": "2026-10-29T14:06:40Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/MB3R-Lab/Sheaft/check-runs/123497332698",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000001130,
+        "runner_name": "GitHub Actions 1000001130",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      }
+    ]
+  }
+]
