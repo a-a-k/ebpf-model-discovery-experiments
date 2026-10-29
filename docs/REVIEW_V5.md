@@ -494,8 +494,9 @@ explicit. The [intermediate snapshot](../results/iteration-5/snapshot-4093022534
 copies the saved evaluations without recalculation; its transport eligibility
 flags remain distinct from this independent actual review.
 
-Coroot Petclinic/partial and OTel/absent also passed actual smoke review, bringing
-matching Coroot main-setting admission to six of nine. Their unavailable eBPF
+Coroot Petclinic/partial, OTel/absent, Petclinic/full (`40933885726`) and
+OTel/partial (`40933892507`) also passed actual smoke review, bringing
+matching Coroot main-setting admission to eight of nine. Their unavailable eBPF
 forecasts remain valid negative/unknown evidence, without an availability gate.
 
 The memory-only implementation at `f5ac530` passed actual saved-input validation
@@ -505,3 +506,24 @@ remained unchanged. This is preprocessing equivalence on retained final-packet
 inputs, not a reproduction of the original training result. Both variants used
 the same measured peak RSS on that small packet; no full-scale memory bound or
 research advantage follows. Failed validation `40929241254` remains retained.
+
+Petclinic/partial seed 8 from `40914709370` subsequently passed actual main
+review, bringing reviewed main packets to six. This later review does not change
+the immutable five-cell publication snapshot or its declared boundary.
+
+Corrected DeepFlow Petclinic/absent pilot `40930786566` passed actual review:
+raw bytes, clock/identity proofs, pre-target freeze and actual Bering imports were
+checked. The graph contains observed HTTP and MySQL edges but all primary
+forecasts remain unknown; no named peer or ancestry was invented. Matching main
+execution is qualified, without a positive scientific contribution claim.
+
+The v5-only OTel native audit correction (`9a8e517`) removes a positive-coverage
+gate: missing full-mode native observations remain unknown, while malformed data
+and observed suppression contradictions still fail. Historical v4 behavior is
+unchanged. Independent code review and CI `40939886539` passed.
+
+The subsequent journal memory repair (`eaa9643`) received original-criterion
+design and actual-code GO, followed by CI `40940370220`. Its
+[scope and evidence contract](JOURNAL_MEMORY_V5.md) require saved-journal byte
+equivalence before affected new starts. It does not establish the shutdown cause
+or remove all possible full-campaign memory risks.
