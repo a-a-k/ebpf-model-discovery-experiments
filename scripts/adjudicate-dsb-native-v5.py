@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
@@ -141,15 +142,34 @@ def adjudicate(
         raise ValueError("saved status differs from the fixed DSB smoke cell")
 
     new_acquisition = acquisition_fn(original, status, declaration)
+    adjudicator_sha = os.environ.get("GITHUB_SHA", "")
+    adjudicator_run_id = os.environ.get("GITHUB_RUN_ID", "")
+    if (len(adjudicator_sha) != 40
+            or any(character not in "0123456789abcdef" for character in adjudicator_sha)
+            or not adjudicator_run_id.isdigit()):
+        raise ValueError("adjudicator GitHub revision/run provenance is missing or invalid")
+    adjudicator = {
+        "repository": os.environ.get("GITHUB_REPOSITORY"),
+        "run_id": adjudicator_run_id,
+        "head_sha": adjudicator_sha,
+        "sources_sha256": {
+            "scripts/adjudicate-dsb-native-v5.py": _sha256(Path(__file__)),
+            "src/ebpf_discovery/evaluate_v5.py": _sha256(Path(evaluate_v5.__file__)),
+            "systems/deathstarbench/experiment_v4.py": _sha256(Path(declaration.__file__)),
+        },
+    }
     report = {
         "schema_version": "dsb-native-acquisition-adjudication-v5",
         "scope": "acquisition_checks_only",
         "source": source,
+        "adjudicator": adjudicator,
         "members": members,
         "old_evaluation": old_evaluation,
         "old_acquisition": old_acquisition,
         "new_acquisition": new_acquisition,
-        "originals_preserved": True,
+        "selected_original_members_preserved": True,
+        "source_full_artifact_unchanged": True,
+        "source_full_artifact_retained_in_output": False,
         "original_evaluation_overwritten": False,
         "model_refit_or_replay_performed": False,
         "sheaft_or_forecast_recomputation_performed": False,

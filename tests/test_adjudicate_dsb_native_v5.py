@@ -18,6 +18,9 @@ def _dump(value) -> bytes:
 
 
 def test_preserves_originals_and_calls_only_acquisition_checks(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setenv("GITHUB_SHA", "b" * 40)
+    monkeypatch.setenv("GITHUB_RUN_ID", "123")
+    monkeypatch.setenv("GITHUB_REPOSITORY", module.REPOSITORY)
     status = {"system": "deathstarbench", "mode": "absent", "seed": 6,
               "collector": "obi", "smoke": True, "protocol_version": "graph-v5"}
     old = {"complete_for_evaluation": False, "legacy_complete_for_evaluation": True,
@@ -88,6 +91,15 @@ def test_preserves_originals_and_calls_only_acquisition_checks(tmp_path: Path, m
     assert result["new_acquisition"]["native_audit_observations_by_service"] == {
         "jaeger-all-in-one": 1}
     assert result["empirical_metrics_recomputed"] is False
+    assert result["selected_original_members_preserved"] is True
+    assert result["source_full_artifact_unchanged"] is True
+    assert result["source_full_artifact_retained_in_output"] is False
+    assert result["adjudicator"]["head_sha"] == "b" * 40
+    assert set(result["adjudicator"]["sources_sha256"]) == {
+        "scripts/adjudicate-dsb-native-v5.py",
+        "src/ebpf_discovery/evaluate_v5.py",
+        "systems/deathstarbench/experiment_v4.py",
+    }
     assert (tmp_path / "out/original/evaluation-v5.json").read_bytes() == files["evaluation-v5.json"]
 
 
