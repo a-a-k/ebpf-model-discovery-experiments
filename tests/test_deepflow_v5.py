@@ -588,6 +588,8 @@ def test_deepflow_raw_control_proof_uses_retained_ebpf_record(tmp_path: Path) ->
     assert proof["proven"] is True
     assert proof["reason"] == "raw_deepflow_ebpf_http_record"
     assert proof["signal_source"] == "EBPF"
+    assert proof["tap_side"] == "ServerProcess"
+    assert proof["process_command"] == "server"
     assert proof["raw_sha256"]
 
 
@@ -611,6 +613,8 @@ def test_deepflow_raw_control_proof_accepts_pinned_flattened_session_row(
     assert proof["proven"] is True
     assert proof["reason"] == "raw_deepflow_ebpf_http_record"
     assert proof["signal_source"] == "EBPF"
+    assert proof["tap_side"] == "ServerProcess"
+    assert proof["process_command"] == "haproxy"
     assert proof["raw_sha256"] == __import__("hashlib").sha256(raw).hexdigest()
 
 

@@ -1126,6 +1126,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
                             "raw_sha256": actual,
                             "signal_source": "EBPF",
                             "protocol": attrs.get("deepflow.l7_protocol"),
+                            "tap_side": attrs.get("deepflow.tap_side"),
+                            "process_command": attrs.get("process.command"),
                         }
         return {"proven": False, "reason": "marker_or_ebpf_origin_missing"}
 

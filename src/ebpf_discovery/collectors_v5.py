@@ -124,6 +124,34 @@ def _control_server_script(port: int) -> str:
     )
 
 
+def _control_forwarder_script(
+    listen_port: int, server_port: int, *, server_host: str
+) -> str:
+    """Run a persistent HAProxy worker as the selected HTTP client origin."""
+    config = "\n".join((
+        "global",
+        "  log stdout format raw local0",
+        "defaults",
+        "  mode http",
+        "  log global",
+        "  option httplog",
+        "  timeout connect 5s",
+        "  timeout client 30s",
+        "  timeout server 30s",
+        "frontend control_client",
+        f"  bind 0.0.0.0:{listen_port}",
+        "  default_backend control_server",
+        "backend control_server",
+        f"  server responder {server_host}:{server_port}",
+        "",
+    ))
+    return (
+        f"printf %s {shlex.quote(config)} > /tmp/control-haproxy-client.cfg; "
+        "haproxy -c -f /tmp/control-haproxy-client.cfg; "
+        "exec haproxy -W -db -f /tmp/control-haproxy-client.cfg"
+    )
+
+
 def _control_request_script(
     port: int, marker: str, *, persistent: bool, host: str = "127.0.0.1"
 ) -> str:
@@ -336,12 +364,15 @@ class CollectorsV5:
         return {
             node: {
                 "port": 18081 + index,
+                "client_port": 19081 + index,
                 "server_container": f"study-ebpf-control-server-{node}",
                 "client_container": f"study-ebpf-control-client-{node}",
                 "probe_container": f"study-ebpf-control-client-{node}-probe",
+                "load_container": f"study-ebpf-control-client-{node}-load",
                 "network": f"study-ebpf-control-net-{node}",
                 "control_image": CONTROL_IMAGE,
                 "request_attempts": [],
+                "forwarder_request_attempts": [],
             }
             for index, node in enumerate(("a", "b"))
         }
@@ -350,6 +381,7 @@ class CollectorsV5:
         server = entry["server_container"]
         client = entry["client_container"]
         probe = entry["probe_container"]
+        load = entry["load_container"]
         network = entry["network"]
         pull = _safe_node_exec(
             self.ctx, node, f"docker pull {shlex.quote(CONTROL_IMAGE)}",
@@ -373,7 +405,7 @@ class CollectorsV5:
             raise RuntimeError(f"technical control image inspect failed on {node}")
         _safe_node_exec(
             self.ctx, node,
-            f"docker rm -f {probe} {client} {server} >/dev/null 2>&1 || true",
+            f"docker rm -f {probe} {load} {client} {server} >/dev/null 2>&1 || true",
             timeout=30, check=False,
         )
         _safe_node_exec(
@@ -438,6 +470,7 @@ class CollectorsV5:
                 server = entry["server_container"]
                 client = entry["client_container"]
                 probe = entry["probe_container"]
+                load = entry["load_container"]
                 network = entry["network"]
                 self._launch_control_server(node, entry)
 
@@ -483,15 +516,17 @@ class CollectorsV5:
                 if not entry.get("server_ready"):
                     raise RuntimeError(f"technical control HTTP readiness failed on {node}")
 
+                client_script = _control_forwarder_script(
+                    entry["client_port"], port, server_host=server
+                )
                 client_start = _safe_node_exec(
                     self.ctx, node,
                     f"docker run -d --name {client} --network {network} --entrypoint /bin/sh "
                     f"{shlex.quote(CONTROL_IMAGE)} -ec "
-                    + shlex.quote(_control_request_script(
-                        port, marker, persistent=True, host=server
-                    )),
+                    + shlex.quote(client_script),
                     timeout=60, check=False,
                 )
+                entry["client_script"] = client_script
                 entry["client_start"] = _result_evidence(client_start)
                 if _returncode(client_start):
                     raise RuntimeError(f"technical control client failed to start on {node}")
@@ -502,6 +537,65 @@ class CollectorsV5:
                 entry["client_start_inspect"] = _result_evidence(client_inspect)
                 if not _inspect_running(client_inspect):
                     raise RuntimeError(f"technical control client exited during startup on {node}")
+                client_config_check = _safe_node_exec(
+                    self.ctx, node,
+                    f"docker exec {client} haproxy -c -f /tmp/control-haproxy-client.cfg",
+                    timeout=30, check=False,
+                )
+                entry["client_config_check"] = _result_evidence(client_config_check)
+                if _returncode(client_config_check):
+                    raise RuntimeError(
+                        f"technical control forwarder config invalid on {node}"
+                    )
+
+                forward_request = _safe_node_exec(
+                    self.ctx, node,
+                    f"docker run --rm --name {probe} --network {network} "
+                    f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
+                    + shlex.quote(_control_request_script(
+                        entry["client_port"], marker,
+                        persistent=False, host=client,
+                    )),
+                    timeout=30, check=False,
+                )
+                forward_attempt = {
+                    "attempt": 1,
+                    "observed_ns": time.time_ns(),
+                    "request": _result_evidence(forward_request),
+                }
+                entry["forwarder_request_attempts"].append(forward_attempt)
+                if (
+                    _returncode(forward_request) != 0
+                    or _stdout(forward_request).strip() != "ok"
+                ):
+                    raise RuntimeError(
+                        f"technical control forwarder request failed on {node}"
+                    )
+
+                load_start = _safe_node_exec(
+                    self.ctx, node,
+                    f"docker run -d --name {load} --network {network} --entrypoint /bin/sh "
+                    f"{shlex.quote(CONTROL_IMAGE)} -ec "
+                    + shlex.quote(_control_request_script(
+                        entry["client_port"], marker,
+                        persistent=True, host=client,
+                    )),
+                    timeout=60, check=False,
+                )
+                entry["load_start"] = _result_evidence(load_start)
+                if _returncode(load_start):
+                    raise RuntimeError(
+                        f"technical control load generator failed to start on {node}"
+                    )
+                load_inspect = _safe_node_exec(
+                    self.ctx, node, f"docker inspect {load}",
+                    timeout=30, check=False,
+                )
+                entry["load_start_inspect"] = _result_evidence(load_inspect)
+                if not _inspect_running(load_inspect):
+                    raise RuntimeError(
+                        f"technical control load generator exited during startup on {node}"
+                    )
                 entry["control_ready_ns"] = time.time_ns()
                 entry["control_preparation_duration_ns"] = (
                     entry["control_ready_ns"] - entry["control_started_ns"]
@@ -528,12 +622,17 @@ class CollectorsV5:
                 server = entry["server_container"]
                 client = entry["client_container"]
                 probe = entry["probe_container"]
+                load = entry["load_container"]
                 network = entry["network"]
                 for label, command in (
                     ("server-inspect", f"docker inspect {server}"),
                     ("server-logs", f"docker logs {server}"),
                     ("client-inspect", f"docker inspect {client}"),
                     ("client-logs", f"docker logs {client}"),
+                    ("client-top", f"docker top {client} -eo pid,ppid,lstart,args"),
+                    ("load-inspect", f"docker inspect {load}"),
+                    ("load-logs", f"docker logs {load}"),
+                    ("load-top", f"docker top {load} -eo pid,ppid,lstart,args"),
                 ):
                     result = _safe_node_exec(
                         self.ctx, node, command, timeout=30, check=False
@@ -549,12 +648,15 @@ class CollectorsV5:
                         "returncode": _returncode(result),
                     }
                 cleanup = _safe_node_exec(
-                    self.ctx, node, f"docker rm -f {probe} {client} {server}",
+                    self.ctx, node, f"docker rm -f {probe} {load} {client} {server}",
                     timeout=30, check=False
                 )
                 entry["cleanup"] = _result_evidence(cleanup)
                 entry["cleanup_verification"] = {}
-                for role, name in (("probe", probe), ("client", client), ("server", server)):
+                for role, name in (
+                    ("probe", probe), ("load", load),
+                    ("client", client), ("server", server),
+                ):
                     verification = _safe_node_exec(
                         self.ctx,
                         node,
@@ -639,6 +741,8 @@ class CollectorsV5:
                 and all(value["proven"] for value in proofs.values()),
                 "application_coverage": "not_assessed_by_technical_control",
                 "control_network_scope": "private_bridge_no_host_port_publication",
+                "control_process_design": "persistent_haproxy_forwarder_with_separate_wget_generator",
+                "traffic_generator": "separate_wget_loop_not_selected_origin",
                 "native_sdk": False,
                 "cleanup_verified": not cleanup_failures,
                 "cleanup_failures": cleanup_failures,
@@ -677,7 +781,7 @@ class CollectorsV5:
             for resource in record.get("payload", {}).get("resourceSpans", []):
                 attrs = _attributes(resource.get("resource", {}).get("attributes", []))
                 origin = self._origin_proof(resource, attrs)
-                if not origin:
+                if not origin or not self._control_origin_matches(node, origin, attrs):
                     continue
                 for scope in resource.get("scopeSpans", []):
                     for span in scope.get("spans", []):
@@ -702,6 +806,28 @@ class CollectorsV5:
                                 "span_name": span.get("name"),
                             }
         return {"proven": False, "reason": "marker_or_origin_missing", "malformed": malformed}
+
+    @staticmethod
+    def _control_origin_matches(
+        node: str, origin: dict[str, Any], attrs: dict[str, Any]
+    ) -> bool:
+        """Preserve each collector's origin rule unless it narrows this hook."""
+        return True
+
+    @staticmethod
+    def _control_origin_names(
+        origin: dict[str, Any], attrs: dict[str, Any]
+    ) -> set[str]:
+        values = {
+            str(value)
+            for value in (
+                attrs.get("container.name"), attrs.get("container.id"),
+                attrs.get("service.name"), origin.get("container.name"),
+                origin.get("container.id"), origin.get("service.name"),
+            )
+            if value
+        }
+        return {value.removeprefix("/docker/") for value in values}
 
     def snapshot(self) -> None:
         if self._drained:
@@ -1144,6 +1270,18 @@ class OBICollectorsV5(CollectorsV5):
     source_version = "v0.15.2"
     stop_grace_seconds = 45
 
+    @staticmethod
+    def _control_origin_matches(
+        node: str, origin: dict[str, Any], attrs: dict[str, Any]
+    ) -> bool:
+        # OBI may legitimately report either persistent HAProxy side of the
+        # exchange.  Exclude the short-lived readiness probe/load generator.
+        expected = {
+            f"study-ebpf-control-server-{node}",
+            f"study-ebpf-control-client-{node}",
+        }
+        return bool(expected & CollectorsV5._control_origin_names(origin, attrs))
+
     def __init__(self, ctx, *, semantic: bool = True):
         super().__init__(ctx, semantic=semantic)
         self._obi_startup_complete = False
@@ -1351,6 +1489,13 @@ class CorootCollectorsV5(CollectorsV5):
     source_version = "1.37.0"
     source_commit = COROOT_COMMIT
     stop_grace_seconds = 30
+
+    @staticmethod
+    def _control_origin_matches(
+        node: str, origin: dict[str, Any], attrs: dict[str, Any]
+    ) -> bool:
+        expected = f"study-ebpf-control-client-{node}"
+        return expected in CollectorsV5._control_origin_names(origin, attrs)
 
     def _config_summary(self) -> dict[str, Any]:
         return {

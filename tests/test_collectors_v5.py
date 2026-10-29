@@ -18,6 +18,7 @@ from ebpf_discovery.collectors_v5 import (
     OBICollectorsV5,
     create_collectors_v5,
     make_collectors,
+    _control_forwarder_script,
     _control_request_script,
     _control_server_script,
 )
@@ -134,13 +135,13 @@ def test_obi_config_keeps_raw_semantic_capture_and_direct_local_otlp(tmp_path: P
 
 def _write_record(collector, node: str, *, coroot: bool) -> None:
     raw_dir = collector.root / f"{node}.raw" / "capture"
-    raw_dir.mkdir(parents=True)
+    raw_dir.mkdir(parents=True, exist_ok=True)
     (raw_dir / "body.json").write_text("{}")
     marker = "collector-control-v5-marker"
     attrs = (
         [
-            {"key": "service.name", "value": {"stringValue": "control"}},
-            {"key": "container.id", "value": {"stringValue": "container"}},
+            {"key": "service.name", "value": {"stringValue": "/docker/study-ebpf-control-client-a"}},
+            {"key": "container.id", "value": {"stringValue": "/docker/study-ebpf-control-client-a"}},
         ]
         if coroot
         else [
@@ -179,6 +180,23 @@ def test_positive_control_requires_raw_marker_and_collector_origin(
     assert proof["reason"] == "raw_collector_record"
     assert proof["raw_ref"] == "a.raw/capture/body.json"
 
+    row = json.loads((collector.root / "a.jsonl").read_text())
+    attributes = row["payload"]["resourceSpans"][0]["resource"]["attributes"]
+    if not coroot:
+        for attribute in attributes:
+            if attribute["key"] in {"container.name", "container.id", "service.name"}:
+                attribute["value"]["stringValue"] = "study-ebpf-control-server-a"
+        (collector.root / "a.jsonl").write_text(json.dumps(row) + "\n")
+        assert collector._control_proof(
+            "a", "collector-control-v5-marker"
+        )["proven"] is True
+    for attribute in attributes:
+        if attribute["key"] in {"container.name", "container.id", "service.name"}:
+            attribute["value"]["stringValue"] = "study-ebpf-control-client-a-load"
+    (collector.root / "a.jsonl").write_text(json.dumps(row) + "\n")
+    assert collector._control_proof("a", "collector-control-v5-marker")["proven"] is False
+
+    _write_record(collector, "a", coroot=coroot)
     row = json.loads((collector.root / "a.jsonl").read_text())
     row["source"] = "ebpf-other:a"
     (collector.root / "a.jsonl").write_text(json.dumps(row) + "\n")
@@ -341,6 +359,12 @@ def test_control_server_uses_haproxy_not_missing_busybox_httpd() -> None:
     assert "collector-control-marker" in _control_request_script(
         18081, "collector-control-marker", persistent=False
     )
+    forwarder = _control_forwarder_script(
+        19081, 18081, server_host="study-ebpf-control-server-a"
+    )
+    assert "bind 0.0.0.0:19081" in forwarder
+    assert "server responder study-ebpf-control-server-a:18081" in forwarder
+    assert "exec haproxy -W -db -f /tmp/control-haproxy-client.cfg" in forwarder
 
 
 def test_control_uses_private_network_dns_and_removes_network(
@@ -378,6 +402,8 @@ def test_control_uses_private_network_dns_and_removes_network(
     for node in ("a", "b"):
         network = f"study-ebpf-control-net-{node}"
         server = f"study-ebpf-control-server-{node}"
+        client = f"study-ebpf-control-client-{node}"
+        load = f"study-ebpf-control-client-{node}-load"
         assert any(
             command == f"docker network create --driver bridge {network}"
             for command in commands
@@ -386,10 +412,29 @@ def test_control_uses_private_network_dns_and_removes_network(
             f"--network {network}" in command and f"http://{server}:" in command
             for command in commands
         )
+        assert any(
+            f"--name {client}" in command
+            and "control-haproxy-client.cfg" in command
+            and f"server responder {server}:" in command
+            for command in commands
+        )
+        assert any(
+            f"--name {load}" in command and f"http://{client}:" in command
+            for command in commands
+        )
+        assert evidence["nodes"][node]["client_config_check"]["returncode"] == 0
+        assert evidence["nodes"][node]["forwarder_request_attempts"][0][
+            "request"
+        ]["stdout"].strip() == "ok"
+        assert evidence["nodes"][node]["client_top"]["sha256"]
+        assert evidence["nodes"][node]["load_top"]["sha256"]
         assert evidence["nodes"][node]["network_inspect"]["sha256"]
         assert evidence["nodes"][node]["network_cleanup_verification"]["absent"]
     assert evidence["control_network_scope"] == (
         "private_bridge_no_host_port_publication"
+    )
+    assert evidence["control_process_design"] == (
+        "persistent_haproxy_forwarder_with_separate_wget_generator"
     )
     assert evidence["cleanup_verified"] is True
 
@@ -459,8 +504,8 @@ def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
     assert evidence["nodes"]["a"]["server_inspect"]["sha256"]
     assert evidence["nodes"]["a"]["server_logs"]["sha256"]
     cleanup = [command for _, command, _ in ctx.calls if command.startswith("docker rm -f")]
-    assert any("control-client-a" in command and "control-server-a" in command for command in cleanup)
-    assert any("control-client-b" in command and "control-server-b" in command for command in cleanup)
+    assert any("control-client-a-load" in command and "control-server-a" in command for command in cleanup)
+    assert any("control-client-b-load" in command and "control-server-b" in command for command in cleanup)
     assert evidence["cleanup_verified"] is False
     assert evidence["technical_failure"] == "technical control HTTP readiness failed on a"
 
@@ -564,8 +609,11 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
     suffix = uuid.uuid4().hex[:10]
     server = f"study-control-fixture-{suffix}"
     client = f"study-control-client-{suffix}"
+    load = f"study-control-load-{suffix}"
     network = f"study-control-network-{suffix}"
     port = 18081
+    client_port = 19081
+    marker = "fixture-marker"
     occupied = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     occupied.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     occupied.bind(("127.0.0.1", port))
@@ -601,7 +649,7 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
                             "docker", "run", "--rm", "--network", network,
                             "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
                             _control_request_script(
-                                port, "fixture-marker", persistent=False, host=server
+                                port, marker, persistent=False, host=server
                             ),
                         ],
                         capture_output=True, text=True, check=False,
@@ -616,8 +664,8 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
             [
                 "docker", "run", "-d", "--name", client, "--network", network,
                 "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
-                _control_request_script(
-                    port, "fixture-marker", persistent=True, host=server
+                _control_forwarder_script(
+                    client_port, port, server_host=server
                 ),
             ],
             check=True,
@@ -628,7 +676,55 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         )
         assert persistent.returncode == 0
         assert persistent.stdout.strip() == "true"
-        for name in (server, client):
+        config = subprocess.run(
+            [
+                "docker", "exec", client, "haproxy", "-c", "-f",
+                "/tmp/control-haproxy-client.cfg",
+            ],
+            capture_output=True, text=True, check=False,
+        )
+        assert config.returncode == 0, config.stderr
+        forwarded = subprocess.run(
+            [
+                "docker", "run", "--rm", "--network", network,
+                "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
+                _control_request_script(
+                    client_port, marker, persistent=False, host=client
+                ),
+            ],
+            capture_output=True, text=True, check=False,
+        )
+        assert forwarded.returncode == 0, forwarded.stderr
+        assert forwarded.stdout.strip() == "ok"
+        subprocess.run(
+            [
+                "docker", "run", "-d", "--name", load, "--network", network,
+                "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
+                _control_request_script(
+                    client_port, marker, persistent=True, host=client
+                ),
+            ],
+            check=True,
+        )
+        time.sleep(2)
+        load_running = subprocess.run(
+            ["docker", "inspect", "--format", "{{.State.Running}}", load],
+            capture_output=True, text=True, check=False,
+        )
+        assert load_running.returncode == 0
+        assert load_running.stdout.strip() == "true"
+        client_top = subprocess.run(
+            ["docker", "top", client, "-eo", "pid,ppid,lstart,args"],
+            capture_output=True, text=True, check=False,
+        )
+        assert client_top.returncode == 0
+        assert "haproxy" in client_top.stdout
+        server_logs = subprocess.run(
+            ["docker", "logs", server], capture_output=True, text=True, check=False
+        )
+        assert server_logs.returncode == 0
+        assert server_logs.stdout.count(marker) >= 2
+        for name in (server, client, load):
             mode = subprocess.run(
                 ["docker", "inspect", "--format", "{{.HostConfig.NetworkMode}}", name],
                 capture_output=True, text=True, check=False,
@@ -644,9 +740,9 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         )
         assert exact_name.returncode == 0
         assert exact_name.stdout.splitlines() == [client]
-        subprocess.run(["docker", "rm", "-f", client, server], check=True)
+        subprocess.run(["docker", "rm", "-f", load, client, server], check=True)
         subprocess.run(["docker", "network", "rm", network], check=True)
-        for removed in (client, server):
+        for removed in (load, client, server):
             absent = subprocess.run(
                 [
                     "docker", "ps", "-a", "--format", "{{.Names}}", "--filter",
@@ -668,6 +764,7 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
     finally:
         subprocess.run(["docker", "logs", server], check=False)
         subprocess.run(["docker", "logs", client], check=False)
-        subprocess.run(["docker", "rm", "-f", client, server], check=False)
+        subprocess.run(["docker", "logs", load], check=False)
+        subprocess.run(["docker", "rm", "-f", load, client, server], check=False)
         subprocess.run(["docker", "network", "rm", network], check=False)
         occupied.close()
