@@ -123,6 +123,58 @@ def test_smoke_is_separate_and_main_evaluation_is_verbatim(tmp_path: Path) -> No
     assert selected["independently_admitted"] is False
 
 
+def test_figures_copy_main_errors_and_preserve_unknowns_and_source_proofs(tmp_path):
+    from ebpf_discovery.plot_v5 import display_value, saved_values
+
+    summary(tmp_path / 'inputs', 1, 'smoke')
+    folder, evaluation = summary(tmp_path / 'inputs', 2, 'main')
+    row = evaluation['evaluations'][0]
+    row['error'] = {'range': [0.0, .1], 'worst_end_error': .1}
+    unknown = {**row, 'source': 'native', 'available': False, 'prediction': None,
+               'forecast_interval': [0, 1], 'error': {'range': None, 'worst_end_error': None}}
+    zero = {**row, 'source': 'combined', 'error': {'range': [0, 0], 'worst_end_error': 0}}
+    evaluation['evaluations'] += [unknown, zero]
+    write(folder / 'evaluation-v5.json', evaluation)
+    manifest = json.loads((folder / 'evaluation-manifest.json').read_text())
+    manifest['files_sha256']['evaluation-v5.json'] = sha(folder / 'evaluation-v5.json')
+    write(folder / 'evaluation-manifest.json', manifest)
+    declarations = declared(tmp_path / 'declared.json', [run(1, 'smoke'), run(2, 'main')],
+                            blocked=[{'collector': 'newrelic', 'system': 'petclinic',
+                                      'mode': 'absent', 'seed': 6, 'reason': 'credential absent'}])
+    build([tmp_path / 'inputs'], declarations, tmp_path / 'report')
+    aggregate = tmp_path / 'report/evaluation-v5.json'
+    values = saved_values(aggregate)
+    assert len(values['rows']) == 3
+    assert {item['run_id'] for item in values['rows']} == {2}
+    assert values['grid']['declared_main_cells'] == 108
+    assert len(values['grid']['blocked_main_cells']) == 1
+    assert values['independent_admission']['performed_by_reporter'] is False
+    assert values['rows'][0]['saved']['error'] == row['error']
+    assert values['rows'][0]['evaluation_reference']['source_sha256'] == sha(folder / 'evaluation-v5.json')
+    assert display_value(values['rows'][0]) == (.1, [0.0, .1], 1)
+    assert display_value(values['rows'][1]) == (None, None, 1)
+    assert display_value(values['rows'][2]) == (0, [0, 0], 1)
+    # Reusing the independent hash-bound loader rejects corruption before a plot.
+    reference = values['rows'][0]['evaluation_reference']
+    (aggregate.parent / reference['path']).write_bytes(b'corrupted')
+    with pytest.raises(ValueError, match='gzip proof mismatch'):
+        saved_values(aggregate)
+
+
+def test_figures_render_unknown_rows_without_collapsing_y_limits(tmp_path):
+    from ebpf_discovery.plot_v5 import _figure
+
+    _figure([{'seed': seed, 'saved': {'operation': 'operation', 'source': 'ebpf',
+               'variant': 'raw', 'available': False,
+               'error': {'range': None, 'worst_end_error': None},
+               'actual_counts': {'success': 0, 'failure': 0, 'unknown': 3}}}
+             for seed in (6, 7, 8)], 'Synthetic unknown example', tmp_path / 'unknown')
+    svg = (tmp_path / 'unknown.svg').read_text(encoding='utf-8')
+    assert svg.count('unknown; U=3') == 3
+    for suffix in ('svg', 'png', 'pdf'):
+        assert (tmp_path / ('unknown.' + suffix)).stat().st_size > 0
+
+
 def test_failed_no_artifact_and_blocked_are_retained_not_coverage(tmp_path: Path) -> None:
     summary(tmp_path / "inputs", 3, "main", complete=False)
     declarations = declared(tmp_path / "declared.json", [run(3, "main"), run(4, "main", "partial")],

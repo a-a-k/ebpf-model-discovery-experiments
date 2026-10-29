@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e .
+      - run: python -m pip install -e '.[report]'
       - name: Prepare fixed output and retain declarations
         env:
           DECLARATIONS: ${{ inputs.declarations }}
@@ -297,6 +297,11 @@ jobs:
             --costs results/iteration-5/costs-v5.json \
             --out results/iteration-5/report-v5.md
           python -m pip freeze > results/iteration-5/provenance/report-python-environment.txt
+      - name: Render per-seed errors from hash-verified saved evaluations
+        run: |
+          python -m ebpf_discovery.plot_v5 \
+            --aggregate results/iteration-5/evaluation-v5.json.gz \
+            --out-dir results/iteration-5/figures
       - uses: actions/upload-artifact@v4
         if: always()
         with:
