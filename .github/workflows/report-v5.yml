@@ -1,0 +1,235 @@
+name: Iteration 5 saved-artifact report
+on:
+  workflow_dispatch:
+    inputs:
+      declarations:
+        description: JSON v5-report-declarations with attempt cells and related cost runs
+        required: true
+        type: string
+      selection_manifest:
+        description: Optional committed technical-only duplicate selection path
+        required: false
+        default: ''
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Prepare fixed output and retain declarations
+        env:
+          DECLARATIONS: ${{ inputs.declarations }}
+        run: |
+          rm -rf results/iteration-5 work/v5-inputs
+          mkdir -p results/iteration-5/provenance work/v5-inputs
+          python - <<'PY'
+          import json, os, pathlib
+          from ebpf_discovery.report_v5 import _declarations
+          value=json.loads(os.environ['DECLARATIONS'])
+          path=pathlib.Path('results/iteration-5/provenance/declarations.json')
+          path.write_text(json.dumps(value,indent=2,sort_keys=True)+'\n')
+          _declarations(path)
+          PY
+      - name: Retain Actions metadata and complete declared cost scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import datetime as dt, json, os, pathlib, subprocess
+          root=pathlib.Path('results/iteration-5/provenance')
+          declaration=json.loads((root/'declarations.json').read_text())
+          rows=[]
+          def elapsed(a,b):
+              if not a or not b: return None
+              return (dt.datetime.fromisoformat(b.replace('Z','+00:00'))-
+                      dt.datetime.fromisoformat(a.replace('Z','+00:00'))).total_seconds()
+          declared=[]
+          for row in declaration.get('attempt_runs',[]):
+              declared.append((row,'series'))
+          for row in declaration.get('related_runs',[]):
+              declared.append((row,row['role']))
+          for item,role in declared:
+              run_id=item['run_id']
+              repo=item.get('repository') or os.environ['GITHUB_REPOSITORY']
+              destination=root/'actions'/repo.replace('/','__')/str(run_id)
+              destination.mkdir(parents=True,exist_ok=True)
+              base=f'repos/{repo}/actions/runs/{run_id}'
+              try:
+                  run=json.loads(subprocess.check_output(['gh','api',base],text=True,stderr=subprocess.STDOUT))
+                  jobs=json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',base+'/jobs?filter=all&per_page=100'],text=True,stderr=subprocess.STDOUT))
+                  artifacts=json.loads(subprocess.check_output(['gh','api','--paginate','--slurp',base+'/artifacts?per_page=100'],text=True,stderr=subprocess.STDOUT))
+              except subprocess.CalledProcessError as exc:
+                  (destination/'metadata-error.txt').write_text(exc.output or repr(exc))
+                  rows.append({'run_id':run_id,'repository':repo,'role':role,'note':item.get('note'),
+                      'metadata_status':'unavailable','metadata_error':exc.output or repr(exc),
+                      'status':None,'conclusion':None,'jobs':None,'artifacts':None,
+                      'completed_job_elapsed_seconds':None,'stored_artifact_bytes':None})
+                  continue
+              job_rows=[job for page in jobs for job in page['jobs']]
+              artifact_rows=[artifact for page in artifacts for artifact in page['artifacts']]
+              if run.get('id') != run_id or any(job.get('run_id') != run_id for job in job_rows):
+                  raise SystemExit(f'Actions identity mismatch for {repo} run {run_id}')
+              (destination/'run.json').write_text(json.dumps(run,indent=2)+'\n')
+              (destination/'jobs.json').write_text(json.dumps(jobs,indent=2)+'\n')
+              (destination/'artifacts.json').write_text(json.dumps(artifacts,indent=2)+'\n')
+              durations=[elapsed(job.get('started_at'),job.get('completed_at')) for job in job_rows]
+              rows.append({'run_id':run_id,'repository':repo,'role':role,'note':item.get('note'),
+                  'metadata_status':'retained','head_sha':run.get('head_sha'),
+                  'status':run.get('status'),'conclusion':run.get('conclusion'),'html_url':run.get('html_url'),
+                  'jobs':[{'id':job.get('id'),'name':job.get('name'),'status':job.get('status'),
+                           'conclusion':job.get('conclusion'),'elapsed_seconds':duration}
+                          for job,duration in zip(job_rows,durations)],
+                  'completed_job_elapsed_seconds':sum(v for v in durations if v is not None),
+                  'jobs_with_unknown_elapsed':sum(v is None for v in durations),
+                  'artifacts':[{'id':a.get('id'),'name':a.get('name'),'digest':a.get('digest'),
+                                'expired':a.get('expired'),'size_in_bytes':a.get('size_in_bytes')}
+                               for a in artifact_rows],
+                  'stored_artifact_bytes':sum(a.get('size_in_bytes') or 0 for a in artifact_rows)})
+          known_seconds=[row['completed_job_elapsed_seconds'] for row in rows
+                         if row.get('completed_job_elapsed_seconds') is not None]
+          known_bytes=[row['stored_artifact_bytes'] for row in rows
+                       if row.get('stored_artifact_bytes') is not None]
+          ledger={'schema_version':'v5-actions-costs','runs':rows,
+              'known_completed_job_elapsed_seconds':sum(known_seconds),
+              'runs_with_unknown_job_elapsed':sum(row.get('completed_job_elapsed_seconds') is None for row in rows),
+              'known_stored_artifact_bytes':sum(known_bytes),
+              'runs_with_unknown_artifact_bytes':sum(row.get('stored_artifact_bytes') is None for row in rows),
+              'human_agent_seconds':None,'current_report_job_tail_seconds':None,
+              'scope':'only explicitly declared repositories/runs; omitted or inaccessible product work remains unknown',
+              'overlap_rule':'job seconds are compute use; overlapping jobs and parent waits are not campaign wall time'}
+          pathlib.Path('results/iteration-5/costs-v5.json').write_text(json.dumps(ledger,indent=2)+'\n')
+          PY
+      - name: Download declared compact summaries with retained retrieval outcomes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os, pathlib, stat, subprocess, zipfile
+          provenance=pathlib.Path('results/iteration-5/provenance')
+          declaration=json.loads((provenance/'declarations.json').read_text())
+          costs=json.loads(pathlib.Path('results/iteration-5/costs-v5.json').read_text())
+          metadata={(row['repository'],row['run_id']):row for row in costs['runs']}
+          rows=[]
+          for run in declaration.get('attempt_runs',[]):
+              run_id=run['run_id']; collector=run['collector']; stage=run['stage']
+              repo=run.get('repository') or os.environ['GITHUB_REPOSITORY']
+              retained=metadata.get((repo,run_id),{})
+              artifacts=retained.get('artifacts')
+              for cell in run['cells']:
+                  identity=[collector,cell['system'],cell['mode'],cell['seed']]
+                  name=f"v5-summary-{collector}-{stage}-{cell['system']}-{cell['mode']}-{cell['seed']}-{run_id}"
+                  full_name=name.replace('v5-summary-','campaign-v5-',1)
+                  row={'run_id':run_id,'repository':repo,'cell':identity,'stage':stage,
+                       'name':name,'full_artifact_name':full_name}
+                  if not isinstance(artifacts,list):
+                      rows.append({**row,'status':'actions_metadata_unavailable'}); continue
+                  compact=[a for a in artifacts if a.get('name')==name]
+                  full=[a for a in artifacts if a.get('name')==full_name]
+                  if len(compact)>1 or len(full)>1:
+                      raise SystemExit(f'ambiguous artifact identity: {name}')
+                  if not compact:
+                      rows.append({**row,'status':'not_uploaded'}); continue
+                  if compact[0].get('expired') is True:
+                      rows.append({**row,'status':'compact_expired','artifact':compact[0]}); continue
+                  destination=pathlib.Path('work/v5-inputs')/str(run_id)/name
+                  destination.mkdir(parents=True,exist_ok=False)
+                  archive=pathlib.Path('results/iteration-5/source-artifacts')/repo.replace('/','__')/f"{compact[0]['id']}.zip"
+                  archive.parent.mkdir(parents=True,exist_ok=True)
+                  with archive.open('wb') as stream:
+                      completed=subprocess.run(['gh','api',
+                          f"repos/{repo}/actions/artifacts/{compact[0]['id']}/zip"],
+                          stdout=stream,stderr=subprocess.PIPE)
+                  if completed.returncode:
+                      rows.append({**row,'status':'download_failed','artifact':compact[0],
+                                   'returncode':completed.returncode,
+                                   'stderr':completed.stderr.decode(errors='replace')}); continue
+                  received=archive.read_bytes()
+                  computed='sha256:'+hashlib.sha256(received).hexdigest()
+                  expected=compact[0].get('digest')
+                  if computed != expected:
+                      rows.append({**row,'status':'compact_zip_digest_mismatch','artifact':compact[0],
+                                   'expected_digest':expected,'computed_digest':computed,
+                                   'received_bytes':len(received)}); continue
+                  with zipfile.ZipFile(archive) as bundle:
+                      members=bundle.infolist(); names=[member.filename for member in members]
+                      for member in members:
+                          parts=pathlib.PurePosixPath(member.filename).parts
+                          mode=member.external_attr >> 16
+                          if (not member.filename or '\\' in member.filename
+                                  or pathlib.PurePosixPath(member.filename).is_absolute()
+                                  or '..' in parts or stat.S_ISLNK(mode)):
+                              raise SystemExit(f'unsafe compact artifact member: {member.filename!r}')
+                      if len(names) != len(set(names)):
+                          raise SystemExit(f'duplicate compact artifact member in {name}')
+                      bundle.extractall(destination)
+                  full_artifact=full[0] if full else None
+                  full_available=bool(full_artifact and full_artifact.get('expired') is False)
+                  zip_proof={'expected_sha256':expected,'computed_sha256':computed,
+                      'received_bytes':len(received),'member_count':len(names),'safe_extract':True,
+                      'retained_path':str(archive)}
+                  sidecar={'run_id':run_id,'repository':repo,'head_sha':retained.get('head_sha'),
+                      'artifact_id':compact[0]['id'],'name':name,'digest':compact[0].get('digest'),
+                      'expired':False,
+                      'full_artifact_id':full_artifact.get('id') if full_artifact else None,
+                      'full_artifact_name':full_name,
+                      'full_artifact_digest':full_artifact.get('digest') if full_artifact else None,
+                      'full_artifact_expired':full_artifact.get('expired') if full_artifact else None,
+                      'compact_zip_verification':zip_proof}
+                  (destination/'artifact-provenance.json').write_text(json.dumps(sidecar,indent=2)+'\n')
+                  status=('downloaded' if full_available else
+                          'downloaded_full_artifact_expired' if full_artifact else
+                          'downloaded_full_artifact_missing')
+                  rows.append({**row,'status':status,'artifact':compact[0],
+                               'full_artifact':full_artifact,
+                               'compact_zip_verification':zip_proof})
+          (provenance/'retrieval.json').write_text(json.dumps(rows,indent=2)+'\n')
+          PY
+      - name: Validate and aggregate saved source evaluations without recomputation
+        env:
+          SELECTION: ${{ inputs.selection_manifest }}
+        run: |
+          args=()
+          if [[ -n "$SELECTION" ]]; then
+            git ls-files --error-unmatch "$SELECTION" >/dev/null
+            test -f "$SELECTION"
+            args+=(--selection "$SELECTION")
+          fi
+          GITHUB_ACTIONS=true python -m ebpf_discovery.report_v5 \
+            --inputs work/v5-inputs \
+            --declarations results/iteration-5/provenance/declarations.json \
+            --retrieval results/iteration-5/provenance/retrieval.json \
+            --report-dir results/iteration-5 "${args[@]}"
+      - name: Retain lossless compressed aggregate
+        run: |
+          gzip -n -c results/iteration-5/evaluation-v5.json > results/iteration-5/evaluation-v5.json.gz
+          python - <<'PY'
+          import gzip,hashlib,json,pathlib
+          root=pathlib.Path('results/iteration-5'); original=root/'evaluation-v5.json'; packed=root/'evaluation-v5.json.gz'
+          raw=original.read_bytes(); restored=gzip.open(packed,'rb').read()
+          if raw != restored: raise SystemExit('compressed v5 aggregate does not restore original bytes')
+          (root/'provenance'/'aggregate-packaging.json').write_text(json.dumps({
+              'original_sha256':hashlib.sha256(raw).hexdigest(),'original_bytes':len(raw),
+              'compressed_sha256':hashlib.sha256(packed.read_bytes()).hexdigest(),
+              'compressed_bytes':packed.stat().st_size,'same_uncompressed_bytes':True},indent=2)+'\n')
+          PY
+      - name: Render copied saved fields and cost ledger
+        run: |
+          GITHUB_ACTIONS=true python -m ebpf_discovery.report_v5 \
+            --aggregate results/iteration-5/evaluation-v5.json.gz \
+            --costs results/iteration-5/costs-v5.json \
+            --out results/iteration-5/report-v5.md
+          python -m pip freeze > results/iteration-5/provenance/report-python-environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-v5-${{ github.run_id }}
+          path: results/iteration-5/
+          retention-days: 90
+          if-no-files-found: error

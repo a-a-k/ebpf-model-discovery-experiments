@@ -1,0 +1,590 @@
+"""Saved-artifact-only reporting for the fixed iteration-5 collector matrix.
+
+The reporter validates and copies evaluations produced by the source campaign.
+It never invokes acquisition, fitting, graph discovery, simulation, or scoring.
+"""
+from __future__ import annotations
+
+import argparse
+import gzip
+import hashlib
+import json
+import os
+from pathlib import Path
+from typing import Any
+
+
+COLLECTORS = ("obi", "deepflow", "newrelic", "coroot")
+SYSTEMS = ("deathstarbench", "otel_demo", "petclinic")
+MODES = ("absent", "partial", "full")
+SEEDS = (6, 7, 8)
+STAGES = ("smoke", "main")
+EXPECTED_MAIN = {
+    (collector, system, mode, seed)
+    for collector in COLLECTORS
+    for system in SYSTEMS
+    for mode in MODES
+    for seed in SEEDS
+}
+SOURCE_PINS = {
+    "obi": {
+        "source_version": "v0.15.2",
+        "source_commit": None,
+        "image": "otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38bfb0e7091f26e813c08d649f35dca253e",
+    },
+    "deepflow": {
+        "source_version": "v7.2.3",
+        "source_commit": "9a1219fa5cf1471ba2ec8742019661567d98002e",
+        "image": "deepflowce/deepflow-agent:v7.2.3@sha256:5f72c0996fdb5008fdb8fd0524f427a895fc54c61690b26ba2cae648929ea95a",
+    },
+    "coroot": {
+        "source_version": "1.37.0",
+        "source_commit": "89a858a0ee35c4eb938b86d56f23168fb0ac7573",
+        "image": "ghcr.io/coroot/coroot-node-agent:1.37.0@sha256:f360c31c5e2fa75550c0029f3c02a0e54b83831bae59201b9fe76bab2fe564b4",
+    },
+    "newrelic": None,
+}
+
+
+def _read(path: Path, default: Any = None) -> Any:
+    if not path.is_file():
+        return default
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as stream:
+        return json.load(stream)
+
+
+def _digest(path: Path) -> str:
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def _cell(row: dict[str, Any]) -> tuple[str, str, str, int]:
+    value = (row.get("collector"), row.get("system"), row.get("mode"), row.get("seed"))
+    if (value[0] not in COLLECTORS or value[1] not in SYSTEMS
+            or value[2] not in MODES or value[3] not in SEEDS):
+        raise ValueError(f"invalid v5 cell identity: {value}")
+    return value  # type: ignore[return-value]
+
+
+def _declarations(path: Path) -> tuple[dict[str, Any], dict[tuple[int, tuple], dict]]:
+    value = _read(path)
+    if not isinstance(value, dict) or value.get("schema_version") != "v5-report-declarations":
+        raise ValueError("v5 report declarations have the wrong schema")
+    attempts: dict[tuple[int, tuple], dict] = {}
+    run_ids: set[int] = set()
+    for run in value.get("attempt_runs") or []:
+        repository = run.get("repository")
+        if repository is not None and (
+            not isinstance(repository, str) or repository.count("/") != 1
+            or any(not part for part in repository.split("/"))
+        ):
+            raise ValueError(f"invalid attempt repository: {repository}")
+        run_id = run.get("run_id")
+        if type(run_id) is not int or run_id <= 0 or run_id in run_ids:
+            raise ValueError("attempt run IDs must be unique positive integers")
+        run_ids.add(run_id)
+        collector, stage = run.get("collector"), run.get("stage")
+        if collector not in COLLECTORS or stage not in STAGES:
+            raise ValueError(f"invalid attempt declaration: {run}")
+        cells = run.get("cells")
+        if not isinstance(cells, list) or not cells:
+            raise ValueError("each attempt run must declare at least one cell")
+        for raw in cells:
+            declared = {**raw, "collector": collector}
+            identity = _cell(declared)
+            if stage == "smoke" and identity[3] != 6:
+                raise ValueError("smoke declarations are fixed to seed 6")
+            key = (run_id, identity)
+            if key in attempts:
+                raise ValueError(f"duplicate declared attempt cell: {key}")
+            attempts[key] = {
+                "run_id": run_id, "collector": collector, "stage": stage,
+                "system": identity[1], "mode": identity[2], "seed": identity[3],
+                "repository": repository, "note": run.get("note"),
+            }
+    related_ids = set()
+    roles = {"preparation", "product_ci", "worker", "wait", "report", "archive", "evidence"}
+    for run in value.get("related_runs") or []:
+        run_id = run.get("run_id")
+        repository = run.get("repository")
+        if (type(run_id) is not int or run_id <= 0 or run_id in run_ids
+                or run_id in related_ids or run.get("role") not in roles
+                or not isinstance(run.get("note"), str)
+                or (repository is not None and (
+                    not isinstance(repository, str) or repository.count("/") != 1
+                    or any(not part for part in repository.split("/"))))):
+            raise ValueError(f"invalid related run declaration: {run}")
+        related_ids.add(run_id)
+    blocked = set()
+    for row in value.get("blocked_main_cells") or []:
+        identity = _cell(row)
+        if identity in blocked or not isinstance(row.get("reason"), str):
+            raise ValueError(f"invalid blocked cell declaration: {row}")
+        blocked.add(identity)
+    return value, attempts
+
+
+def _validate_source(folder: Path, evaluation: dict, collector: str) -> dict[str, Any]:
+    path = folder / "observations" / "collector.json"
+    retained = _read(path)
+    if not isinstance(retained, dict):
+        raise ValueError(f"saved v5 summary lacks collector provenance: {path}")
+    expected = SOURCE_PINS[collector]
+    if expected is None:
+        raise ValueError("blocked New Relic cells cannot contain a completed collector evaluation")
+    for key, wanted in expected.items():
+        if retained.get(key) != wanted:
+            raise ValueError(f"saved collector source pin mismatch: {path}: {key}")
+    acquisition = evaluation.get("acquisition") or {}
+    provenance = acquisition.get("provenance") or {}
+    if (retained.get("collector") != collector or provenance.get("collector") != collector
+            or provenance.get("source_domain") != retained.get("source_domain")):
+        raise ValueError(f"saved collector provenance mismatch: {path}")
+    drain = acquisition.get("final_drain") or {}
+    control = acquisition.get("positive_control") or {}
+    if (drain.get("collector") != collector or control.get("collector") != collector
+            or drain.get("source_version") != retained.get("source_version")):
+        raise ValueError(f"saved collector technical provenance mismatch: {path}")
+    return {
+        "path": "observations/collector.json", "sha256": _digest(path),
+        **{key: retained.get(key) for key in
+           ("collector", "source_domain", "source_version", "source_commit", "image")},
+    }
+
+
+def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], dict]) -> list[dict]:
+    folders = set()
+    for root in roots:
+        folders.update(path.parent.resolve() for path in Path(root).rglob("evaluation-manifest.json"))
+    reports = []
+    artifact_ids = set()
+    for folder in sorted(folders):
+        manifest = _read(folder / "evaluation-manifest.json")
+        artifact = _read(folder / "artifact-provenance.json")
+        if not isinstance(manifest, dict) or manifest.get("schema_version") != "v5-cell-summary-manifest":
+            raise ValueError(f"invalid v5 summary manifest: {folder}")
+        if not isinstance(artifact, dict) or type(artifact.get("artifact_id")) is not int:
+            raise ValueError(f"v5 summary lacks immutable artifact identity: {folder}")
+        artifact_id = artifact["artifact_id"]
+        if artifact_id in artifact_ids:
+            raise ValueError("duplicate v5 summary artifact ID")
+        artifact_ids.add(artifact_id)
+        stage = "smoke" if manifest.get("smoke") is True else "main"
+        identity = _cell(manifest)
+        run_id = int(manifest.get("run_id"))
+        declaration = declarations.get((run_id, identity))
+        if declaration is None or declaration["stage"] != stage:
+            raise ValueError(f"saved summary was not declared with the same cell/stage: {folder}")
+        artifact_repository = artifact.get("repository")
+        if (not isinstance(artifact_repository, str)
+                or artifact_repository.count("/") != 1
+                or any(not part for part in artifact_repository.split("/"))
+                or (declaration.get("repository") is not None
+                    and artifact_repository != declaration["repository"])):
+            raise ValueError(f"saved v5 artifact repository mismatch: {folder}")
+        expected_name = (
+            f"v5-summary-{identity[0]}-{stage}-{identity[1]}-{identity[2]}-"
+            f"{identity[3]}-{run_id}"
+        )
+        expected_full = expected_name.replace("v5-summary-", "campaign-v5-", 1)
+        if (artifact.get("name") != expected_name or artifact.get("run_id") != run_id
+                or artifact.get("head_sha") != manifest.get("commit")
+                or artifact.get("full_artifact_name") != expected_full
+                or manifest.get("full_artifact_name") != expected_full
+                or not artifact.get("digest")):
+            raise ValueError(f"saved v5 artifact/run/full provenance mismatch: {folder}")
+        zip_proof = artifact.get("compact_zip_verification") or {}
+        if (zip_proof.get("expected_sha256") != artifact.get("digest")
+                or zip_proof.get("computed_sha256") != artifact.get("digest")
+                or zip_proof.get("safe_extract") is not True
+                or type(zip_proof.get("received_bytes")) is not int
+                or zip_proof.get("received_bytes") <= 0):
+            raise ValueError(f"saved compact ZIP was not byte-verified before extraction: {folder}")
+        full_available = (
+            type(artifact.get("full_artifact_id")) is int
+            and bool(artifact.get("full_artifact_digest"))
+            and artifact.get("full_artifact_expired") is False
+        )
+        full_unavailable_reason = (
+            None if full_available else
+            "full_artifact_expired" if artifact.get("full_artifact_expired") is True else
+            "full_artifact_missing" if artifact.get("full_artifact_id") is None else
+            "full_artifact_provenance_incomplete"
+        )
+        hashes = manifest.get("files_sha256")
+        if not isinstance(hashes, dict):
+            raise ValueError(f"saved v5 summary lacks file hashes: {folder}")
+        for name, expected in hashes.items():
+            target = folder / name
+            if expected is None:
+                if target.is_file():
+                    raise ValueError(f"unexpected unhashed compact file: {target}")
+            elif not target.is_file() or _digest(target) != expected:
+                raise ValueError(f"saved v5 compact hash mismatch: {target}")
+        evaluation_path = folder / "evaluation-v5.json"
+        evaluation = _read(evaluation_path)
+        if evaluation is None:
+            reports.append({
+                **declaration, "artifact": artifact, "manifest": manifest,
+                "root": str(folder), "evaluation": None,
+                "technical_complete_self_reported": False,
+                "full_source_artifact_available": full_available,
+                "full_source_artifact_reason": full_unavailable_reason,
+                "eligible_main_coverage": False,
+                "independently_admitted": False,
+                "reason": "saved_evaluation_missing",
+            })
+            continue
+        if hashes.get("evaluation-v5.json") != _digest(evaluation_path):
+            raise ValueError(f"saved evaluation is not hash-bound: {evaluation_path}")
+        if evaluation.get("schema_version") != "evaluation-v5":
+            raise ValueError(f"invalid saved v5 evaluation schema: {evaluation_path}")
+        status = _read(folder / "status.json")
+        if not isinstance(status, dict):
+            raise ValueError(f"saved v5 evaluation lacks status identity: {evaluation_path}")
+        try:
+            status_run_id = int(status.get("run_id"))
+        except (TypeError, ValueError):
+            status_run_id = None
+        if (status_run_id != run_id or status.get("commit") != manifest.get("commit")
+                or status.get("smoke") is not (stage == "smoke")):
+            raise ValueError(f"saved v5 status run/commit/stage mismatch: {evaluation_path}")
+        for key, wanted in zip(("collector", "system", "mode", "seed"), identity):
+            if evaluation.get(key) != wanted or status.get(key) != wanted:
+                raise ValueError(f"saved v5 evaluation identity mismatch: {evaluation_path}: {key}")
+        if evaluation.get("smoke") is not (stage == "smoke"):
+            raise ValueError(f"saved v5 evaluation stage mismatch: {evaluation_path}")
+        if status is not None and evaluation.get("status") != status:
+            raise ValueError(f"saved v5 evaluation status mismatch: {evaluation_path}")
+        complete = evaluation.get("complete_for_evaluation") is True
+        if evaluation.get("smoke_technical_pass") is not (stage == "smoke" and complete):
+            raise ValueError(f"saved smoke verdict inconsistent with completeness: {evaluation_path}")
+        if evaluation.get("primary_series_result") is not (stage == "main" and complete):
+            raise ValueError(f"saved main verdict inconsistent with completeness: {evaluation_path}")
+        source = _validate_source(folder, evaluation, identity[0]) if complete else None
+        coverage_eligible = complete and full_available
+        reports.append({
+            **declaration, "artifact": artifact, "manifest": manifest,
+            "root": str(folder), "evaluation": evaluation,
+            "source_provenance": source,
+            "technical_complete_self_reported": complete,
+            "full_source_artifact_available": full_available,
+            "full_source_artifact_reason": full_unavailable_reason,
+            "eligible_main_coverage": coverage_eligible,
+            "independently_admitted": False,
+            "reason": (
+                None if coverage_eligible else
+                full_unavailable_reason if complete else
+                "source_evaluation_technically_incomplete"
+            ),
+        })
+    return reports
+
+
+def _selection(path: Path | None, attempts: list[dict]) -> tuple[dict[tuple, int], dict]:
+    if path is None:
+        return {}, {"provided": False}
+    value = _read(path)
+    if (not isinstance(value, dict)
+            or value.get("policy") != "technical_replacement_only_no_outcome_selection"):
+        raise ValueError("v5 selection must assert technical-only outcome-independent replacement")
+    chosen = {}
+    for row in value.get("cells") or []:
+        identity = _cell(row)
+        if identity in chosen or type(row.get("selected_artifact_id")) is not int:
+            raise ValueError(f"invalid v5 technical selection: {row}")
+        candidates = [item for item in attempts
+                      if item["stage"] == "main" and _cell(item) == identity]
+        candidate_ids = {
+            item["artifact"]["artifact_id"] for item in candidates if item.get("artifact")
+        }
+        candidate_runs = {item["run_id"] for item in candidates}
+        declared = set(row.get("candidate_artifact_ids") or [])
+        declared_runs = set(row.get("candidate_run_ids") or [])
+        selected = row["selected_artifact_id"]
+        complete = [item["artifact"]["artifact_id"] for item in candidates
+                    if item.get("eligible_main_coverage") and item.get("artifact")]
+        if (len(candidates) <= 1 or declared != candidate_ids
+                or declared_runs != candidate_runs or selected not in candidate_ids
+                or len(complete) != 1
+                or selected != complete[0]
+                or not str(row.get("reason_code", "")).startswith("technical_")):
+            raise ValueError(f"invalid technical-only replacement for {identity}")
+        chosen[identity] = selected
+    return chosen, {"provided": True, "path": str(path.resolve()),
+                    "sha256": _digest(path), "manifest": value}
+
+
+def build(
+    roots: list[Path], declarations_path: Path, report_dir: Path,
+    *, retrieval_path: Path | None = None, selection_path: Path | None = None,
+) -> dict[str, Any]:
+    declarations, declared_attempts = _declarations(declarations_path)
+    reports = _saved_summaries(roots, declared_attempts)
+    by_declared = {}
+    for item in reports:
+        key = (item["run_id"], _cell(item))
+        if key in by_declared:
+            raise ValueError(f"multiple saved summaries claim the same declared run/cell: {key}")
+        by_declared[key] = item
+    attempts = []
+    retrieval = _read(retrieval_path, []) if retrieval_path else []
+    retrieval_by_key = {
+        (row.get("run_id"), tuple(row.get("cell") or [])): row
+        for row in retrieval if isinstance(row, dict)
+    }
+    for key, declaration in sorted(declared_attempts.items(), key=str):
+        saved = by_declared.get(key)
+        attempts.append(saved or {
+            **declaration, "root": None, "artifact": None, "manifest": None,
+            "evaluation": None, "technical_complete_self_reported": False,
+            "full_source_artifact_available": False,
+            "full_source_artifact_reason": "compact_artifact_not_retained",
+            "eligible_main_coverage": False,
+            "independently_admitted": False,
+            "reason": (retrieval_by_key.get((key[0], key[1])) or {}).get(
+                "status", "compact_artifact_not_retained"
+            ),
+        })
+    selected_ids, selection = _selection(selection_path, attempts)
+    grouped: dict[tuple, list[dict]] = {}
+    for item in attempts:
+        if item["stage"] == "main":
+            grouped.setdefault(_cell(item), []).append(item)
+    selected = {}
+    ambiguous = []
+    for identity, candidates in sorted(grouped.items()):
+        complete = [item for item in candidates if item.get("eligible_main_coverage")]
+        if len(candidates) == 1 and len(complete) == 1:
+            selected[identity] = complete[0]
+        elif len(candidates) > 1:
+            artifact_id = selected_ids.get(identity)
+            if artifact_id is None:
+                ambiguous.append({
+                    "cell": list(identity),
+                    "candidate_artifact_ids": [
+                        (item.get("artifact") or {}).get("artifact_id") for item in candidates
+                    ],
+                    "reason": "duplicate_main_cell_requires_technical_selection",
+                })
+            else:
+                selected[identity] = next(
+                    item for item in candidates
+                    if (item.get("artifact") or {}).get("artifact_id") == artifact_id
+                )
+    blocked = {_cell(row): row["reason"] for row in declarations.get("blocked_main_cells") or []}
+    undeclared_blocks = set(blocked) - EXPECTED_MAIN
+    if undeclared_blocks:
+        raise ValueError(f"blocked cells outside fixed main grid: {sorted(undeclared_blocks)}")
+    result = {
+        "schema_version": "evaluation-v5-saved-aggregate",
+        "input_mode": "saved_source_evaluations_no_raw_recompute",
+        "declarations": declarations,
+        "declarations_sha256": _digest(declarations_path),
+        "retrieval": retrieval,
+        "retrieval_sha256": _digest(retrieval_path) if retrieval_path else None,
+        "source_pins": SOURCE_PINS,
+        "source_pin_validation_scope": (
+            "collector manifests only; full toolchain/input admission remains external"
+        ),
+        "attempts": attempts,
+        "smoke_attempts": [item for item in attempts if item["stage"] == "smoke"],
+        "main_attempts": [item for item in attempts if item["stage"] == "main"],
+        "selected_main_evaluations": [selected[key] for key in sorted(selected)],
+        "selection": selection,
+        "ambiguous_duplicate_main_cells": ambiguous,
+        "grid": {
+            "declared_main_cells": len(EXPECTED_MAIN),
+            "technically_complete_main_cells": len(selected),
+            "blocked_main_cells": [list(key) + [blocked[key]] for key in sorted(blocked)],
+            "incomplete_or_missing_main_cells": [
+                list(key) for key in sorted(EXPECTED_MAIN - set(selected))
+            ],
+            "smoke_attempts_excluded_from_main_coverage": True,
+        },
+        "independent_admission": {
+            "performed_by_reporter": False,
+            "self_reported_technical_completeness_is_not_independent_review": True,
+        },
+        "claim": (
+            "saved fields only; no acquisition, refit, relinking, rescoring, "
+            "threshold, or positive contribution claim"
+        ),
+    }
+    report_dir.mkdir(parents=True, exist_ok=True)
+    target = report_dir / "evaluation-v5.json"
+    target.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return result
+
+
+def _value(value: Any) -> str:
+    if value is None:
+        return "unknown"
+    if value is True:
+        return "true"
+    if value is False:
+        return "false"
+    if isinstance(value, (list, dict)):
+        return json.dumps(value, sort_keys=True, separators=(",", ":")).replace("|", "\\|")
+    return str(value).replace("|", "\\|").replace("\n", " ")
+
+
+def _table(headers: list[str], rows: list[list[Any]]) -> list[str]:
+    lines = ["| " + " | ".join(headers) + " |", "|" + "|".join("---" for _ in headers) + "|"]
+    lines += ["| " + " | ".join(_value(item) for item in row) + " |" for row in rows]
+    if not rows:
+        lines.append("| unavailable |" + " unknown |" * (len(headers) - 1))
+    return lines
+
+
+def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> dict[str, Any]:
+    payload = _read(aggregate_path)
+    if not isinstance(payload, dict) or payload.get("schema_version") != "evaluation-v5-saved-aggregate":
+        raise ValueError("report_v5 requires an evaluation-v5 saved aggregate")
+    attempts = payload.get("attempts") or []
+    costs = _read(costs_path, {}) if costs_path else {}
+    if costs_path and (
+        not isinstance(costs, dict) or costs.get("schema_version") != "v5-actions-costs"
+    ):
+        raise ValueError("report_v5 requires a v5 Actions cost ledger")
+    lines = [
+        "# Iteration-5 saved-artifact report", "",
+        "This report copies source-produced evaluations and technical records. It performs no refit, relinking, rescoring, thresholding, or accuracy-based selection.",
+        "Technical smoke status is separate from the 108-cell main grid and is not an independent admission or positive contribution claim.",
+        "", "## Fixed grid and execution boundary", "",
+    ]
+    lines += _table(["Stored field", "Value"], [
+        [key, value] for key, value in (payload.get("grid") or {}).items()
+    ])
+    lines += ["", "## Every declared attempt", ""]
+    attempt_rows = []
+    for item in attempts:
+        evaluation = item.get("evaluation") or {}
+        artifact = item.get("artifact") or {}
+        status = evaluation.get("status") or {}
+        attempt_rows.append([
+            item.get("run_id"), item.get("repository"), item.get("collector"), item.get("stage"),
+            item.get("system"), item.get("mode"), item.get("seed"),
+            item.get("technical_complete_self_reported"),
+            item.get("full_source_artifact_available"),
+            item.get("eligible_main_coverage"), False,
+            status.get("status"), artifact.get("artifact_id"), artifact.get("digest"),
+            artifact.get("full_artifact_id"), artifact.get("full_artifact_digest"),
+            item.get("reason"),
+        ])
+    lines += _table([
+        "Run", "Repository", "Collector", "Stage", "System", "Mode", "Seed", "Self-reported complete",
+        "Full source artifact available", "Coverage eligible", "Independently admitted",
+        "Status", "Summary artifact", "Summary digest",
+        "Full artifact", "Full digest", "Missing/incomplete reason",
+    ], attempt_rows)
+    lines += ["", "## Technical smoke qualification records", ""]
+    smoke_rows = []
+    for item in payload.get("smoke_attempts") or []:
+        evaluation = item.get("evaluation") or {}
+        acquisition = evaluation.get("acquisition") or {}
+        smoke_rows.append([
+            item.get("run_id"), item.get("collector"), item.get("system"), item.get("mode"),
+            item.get("seed"), evaluation.get("smoke_technical_pass"),
+            acquisition.get("valid"), acquisition.get("problems"), False,
+        ])
+    lines += _table([
+        "Run", "Collector", "System", "Mode", "Seed", "Source technical pass",
+        "Acquisition valid", "Stored problems", "Independent admission",
+    ], smoke_rows)
+    lines += ["", "## Saved main forecasts and external outcomes", ""]
+    forecast_rows = []
+    for item in payload.get("main_attempts") or []:
+        evaluation = item.get("evaluation") or {}
+        for row in evaluation.get("evaluations") or []:
+            counts = row.get("actual_target_success_counts") or row.get("actual_counts") or {}
+            forecast_rows.append([
+                item.get("run_id"), item.get("collector"), item.get("system"), item.get("mode"),
+                item.get("seed"), item.get("technical_complete_self_reported"),
+                row.get("operation"), row.get("source"), row.get("variant"), row.get("available"),
+                row.get("prediction", row.get("point_prediction")), row.get("forecast_interval"),
+                counts.get("true", counts.get("success")), counts.get("false", counts.get("failure")),
+                counts.get("none", counts.get("unknown")), row.get("reason"),
+            ])
+    lines += _table([
+        "Run", "Collector", "System", "Mode", "Seed", "Complete", "Operation", "Source",
+        "Variant", "Available", "Stored forecast", "Stored interval", "Actual true",
+        "Actual false", "Actual unknown", "Stored reason",
+    ], forecast_rows)
+    lines += ["", "## Saved campaign and Actions costs", ""]
+    lines += _table(["Ledger field", "Stored value"], [
+        [key, costs.get(key)] for key in (
+            "known_completed_job_elapsed_seconds", "runs_with_unknown_job_elapsed",
+            "known_stored_artifact_bytes", "runs_with_unknown_artifact_bytes",
+            "scope", "overlap_rule",
+        )
+    ])
+    lines += [""]
+    campaign_cost_rows = []
+    for item in attempts:
+        evaluation = item.get("evaluation") or {}
+        cost = evaluation.get("cost") or {}
+        campaign_cost_rows.append([
+            item.get("run_id"), item.get("collector"), item.get("stage"), item.get("system"),
+            item.get("mode"), item.get("seed"), cost.get("campaign_elapsed_seconds"),
+            cost.get("toolchain_build_seconds"), cost.get("toolchain_command_seconds"),
+            (cost.get("manual_preparation") or {}).get("measured"),
+            (cost.get("manual_preparation") or {}).get("reason"),
+        ])
+    lines += _table([
+        "Run", "Collector", "Stage", "System", "Mode", "Seed", "Campaign s",
+        "Toolchain build s", "Toolchain command s", "Manual effort measured", "Reason",
+    ], campaign_cost_rows)
+    lines += ["", "Actions jobs, including runs without a campaign artifact:", ""]
+    job_rows = []
+    for run in costs.get("runs") or []:
+        jobs = run.get("jobs") or [None]
+        for job in jobs:
+            job = job or {}
+            job_rows.append([
+                run.get("run_id"), run.get("repository"), run.get("role"),
+                run.get("status"), run.get("conclusion"),
+                job.get("id"), job.get("name"), job.get("status"), job.get("conclusion"),
+                job.get("elapsed_seconds"), len(run.get("artifacts") or []),
+            ])
+    lines += _table([
+        "Run", "Repository", "Role", "Run status", "Run conclusion", "Job", "Job name", "Job status",
+        "Job conclusion", "Stored elapsed s", "Artifacts",
+    ], job_rows)
+    lines += [
+        "", "Human/agent preparation effort: " + _value(costs.get("human_agent_seconds")),
+        "", "Current report-job unfinished tail: " + _value(costs.get("current_report_job_tail_seconds")),
+        "", "The lossless aggregate retains every source evaluation object, including detailed DB, baseline, class, async, causal and cost fields not expanded into new summaries here.",
+    ]
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return {"attempts": len(attempts), "report": str(out.resolve())}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--inputs", type=Path, nargs="+")
+    parser.add_argument("--declarations", type=Path)
+    parser.add_argument("--retrieval", type=Path)
+    parser.add_argument("--selection", type=Path)
+    parser.add_argument("--report-dir", type=Path)
+    parser.add_argument("--aggregate", type=Path)
+    parser.add_argument("--costs", type=Path)
+    parser.add_argument("--out", type=Path)
+    args = parser.parse_args()
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        parser.error("v5 research reporting is permitted only in GitHub Actions")
+    if args.inputs:
+        if not args.declarations or not args.report_dir:
+            parser.error("--inputs requires --declarations and --report-dir")
+        build(args.inputs, args.declarations, args.report_dir,
+              retrieval_path=args.retrieval, selection_path=args.selection)
+    elif args.aggregate and args.out:
+        render(args.aggregate, args.out, args.costs)
+    else:
+        parser.error("choose saved aggregation or rendering")
+
+
+if __name__ == "__main__":
+    main()

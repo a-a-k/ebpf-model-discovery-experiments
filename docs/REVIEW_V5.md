@@ -148,3 +148,25 @@ before the corresponding main campaigns. No accuracy threshold is used.
 Published product releases and compatibility changes are documented separately
 in [TOOLCHAIN_RELEASES.md](TOOLCHAIN_RELEASES.md). Product CI cannot substitute
 for empirical qualification.
+
+## Saved-artifact reporting boundary
+
+The orchestrator and independent skeptic approved a reporting-only extension
+under the unchanged original criterion. It may validate and copy saved v5
+evaluation objects, artifact identities, hashes, technical verdicts, unknowns
+and costs. It may not reacquire traffic, refit, rescore, relink, introduce a
+metric or threshold, or choose an attempt using accuracy or coverage.
+
+Technical smokes remain separate from the 108 declared main cells keyed by
+collector, system, mode and seed. A smoke pass is only a self-reported technical
+qualification pending independent artifact review. Only a technically complete
+main evaluation can occupy main-grid coverage; incomplete, failed, cancelled,
+blocked and no-artifact attempts remain in the attempt and cost ledgers. The
+four-collector declaration includes the blocked New Relic arm rather than
+silently shrinking the grid. Human effort and the reporting job's unfinished
+tail remain unknown, not zero. This is implementation GO for the saved-artifact
+reporter, not main-series or contribution GO.
+
+Pinned-source validation in this reporter covers the retained collector
+manifest. It is not independent admission of the full toolchain or its inputs;
+that review remains external and is represented as not performed here.
