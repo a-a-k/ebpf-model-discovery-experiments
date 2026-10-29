@@ -176,7 +176,7 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
               'source_domain': domain, 'source_profile': profile,
               'clock_admission_filter': False,
               'discovery_mode': 'one offline batch; no historical reconciliation',
-              'child_resource_report': str(resource_path)}
+              'child_resource_report': str(resource_path), 'accepted_ingest_requests': []}
     child_env, go_environment = _child_process_environment()
     record['go_runtime_environment'] = go_environment
     process = None
@@ -219,6 +219,13 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
                     record['ingest_error'] = _retain_ingest_error(
                         response, export, run_dir, endpoint, export_index)
                 response.raise_for_status()
+                record['accepted_ingest_requests'].append({
+                    'http_status': response.status_code,
+                    'endpoint': endpoint,
+                    'export_index': export_index,
+                    'content_bytes': path.stat().st_size,
+                    'content_sha256': export['sha256'],
+                })
             process.send_signal(signal.SIGTERM)
             record['returncode'] = process.wait()
             if record['returncode']:

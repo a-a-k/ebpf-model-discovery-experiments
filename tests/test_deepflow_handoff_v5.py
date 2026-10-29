@@ -158,3 +158,16 @@ def test_full_dependency_hashes_are_cached_but_each_segment_is_checked(
     export_selection(Store(wrapper), {"ebpf": None}, tmp_path / "exports")
     assert counts[raw.resolve()] == 1
     assert counts[(raw.parent / "snapshot.json").resolve()] == 1
+
+
+def test_actions_qualification_is_no_vm_and_uses_exact_v5_build_path() -> None:
+    root = Path(__file__).resolve().parents[1]
+    workflow = (root / ".github" / "workflows" /
+                "qualify-deepflow-handoff-v5.yml").read_text(encoding="utf-8")
+    script = (root / "scripts" / "qualify-deepflow-handoff-v5.py").read_text(
+        encoding="utf-8")
+    assert "scripts/setup-toolchain-v4.sh work/toolchain-build v5" in workflow
+    assert "scripts/qualify-deepflow-handoff-v5.py" in workflow
+    assert "vms.sh" not in workflow and "campaign_v5" not in workflow
+    assert "sheaft_executed\": False" in script
+    assert "refit_rescore_or_external_outcomes_used\": False" in script

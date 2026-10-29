@@ -96,6 +96,11 @@ def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path, pub
         assert config['runtime']['window_size'] == config['runtime']['flush_interval'] == '24h'
         assert 'publication_mode' not in config['runtime']
     assert json.loads((tmp_path/'model-runtime/replay-command.json').read_text())['publication_mode'] == publication_mode
+    accepted = json.loads((tmp_path/'model-runtime/replay-command.json').read_text())[
+        'accepted_ingest_requests']
+    assert [row['http_status'] for row in accepted] == [200, 200]
+    assert [row['content_sha256'] for row in accepted] == [
+        item['sha256'] for item in manifest['exports']]
     assert json.loads((tmp_path / 'model.json').read_text()) == graph
     assert 'env' not in process.kwargs
 
