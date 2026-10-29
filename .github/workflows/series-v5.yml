@@ -260,6 +260,13 @@ jobs:
             work/campaign/observations/collector.json
             work/campaign/observations/drain-evidence.json
             work/campaign/observations/technical-positive-control.json
+            work/campaign/observations/control-prestart*.json
+            work/campaign/observations/startup-*.json
+            work/campaign/observations/startup-*.log
+            work/campaign/observations/readiness.json
+            work/campaign/observations/receiver-*.log
+            work/campaign/observations/pre-drain-*-logs.log
+            work/campaign/observations/final-*-collector.log
           retention-days: 90
           if-no-files-found: warn
       - name: Package the complete DSB toolchain subtree without changing its files
