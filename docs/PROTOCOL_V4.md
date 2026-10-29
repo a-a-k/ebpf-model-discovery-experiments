@@ -874,3 +874,43 @@ The strongest baseline is the same unchanged work scheduled at eight parents or
 sequentially; only calendar overlap is proposed to improve. All compute, setup,
 queue, wait, transfers and failure costs remain, with no outcome gate, extra
 scenario, observation cap or valid-cell rerun. DSB dispatch is not yet approved.
+
+
+### Calendar-overlap refinement after the request to accelerate (2026-10-29)
+
+Root and the independent 6.1 Sol/xhigh skeptic give **explicit ORIGINAL-criterion
+scheduling-design GO** to remove the requirement that fresh DSB/full/6 finish its
+final targets and admission before the other eight already-planned DSB cells
+launch. This supersedes the earlier per-system rollout gate and the restriction
+of nine-parent overlap to one DSB plus eight OTel parents. Actual complete DSB
+diagnostic integrity/resource/all-branch review and separate fresh execution GO
+are still required; this scheduling decision alone authorizes no DSB dispatch.
+
+The causal change is calendar overlap only. The strongest scheduling baseline is
+the same work at eight parents or sequentially. Complete DSB training already
+covers all four states, and the generic worker import, freeze and target path is
+validated by admitted OTel. Waiting for another final cell is an effort-risk
+policy, not additional independent evidence required for each scheduled cell.
+The newly encountered DSB target/auxiliary path can still fail technically; parallel
+launches can multiply that cost. This risk is accepted explicitly, with every
+failed attempt and preparation/worker/idle/wait/transfer cost retained. No total-
+cost or efficiency improvement is claimed from overlap.
+
+Launch only the remaining fixed cells as actual capacity becomes available, with
+at most nine committed parents and a fresh owner-wide
+`2*committed parents + all other committed jobs <=20` check. Count queued matrix
+children, preparation, CI and archive jobs; each parent has budget for its worker.
+A newly observed technical defect may hold further launches. Forecast unknowns,
+poor accuracy or elapsed time do not decide which cells run. All 27 planned cells,
+source prefixes, operation contracts, trials, faults and external outcomes stay
+unchanged. The original scientific criterion and final independent result review
+remain required.
+
+The report's [technical selection manifest](report-v4-technical-selection.json)
+retains both OTel/full/6 attempts and selects only the completed replacement.
+Independent review checked both original compact manifests: failed `40754529169`
+has 24,600 primary attempts and zero targets; admitted `40786403012` has 34,800
+primary attempts and 9,600 targets. The existing aggregate rejects any selection
+that would exclude a complete campaign. Unknown eBPF forecasts and observed
+errors remain in the selected result; the failed attempt remains in the full
+attempt list and cost ledger.

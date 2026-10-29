@@ -21,10 +21,11 @@ Current Bering and Sheaft annotated release tags resolve to the exact commits in
 `toolchain_v4.PINS` and `scripts/setup-toolchain-v4.sh`; `ORIGINAL_PINS` retains
 Bering 1.1.1 for historical diagnostics. Both releases contain
 their versioned Helm chart packages. The stack release packages both stack and
-asset charts and the existing 1.3.0 compatibility matrix names Bering 1.1.1, Sheaft
-1.3.2 and the same Procrustes revision. The reproduction release's toolchain lock
-pins those revisions as well; its existing `candidate` status is retained rather
-than reinterpreted as evidence of scientific adequacy.
+asset charts. The historical stack 1.3.0 compatibility matrix and reproduction
+1.3.4 lock name Bering 1.1.1, Sheaft 1.3.2 and the same Procrustes revision. Current
+stack 1.4.0 and reproduction 1.3.5 instead name Bering 1.2.0. The reproduction
+package's existing `candidate` status is retained rather than reinterpreted as
+evidence of scientific adequacy.
 
 The [Bering chart metadata](https://github.com/MB3R-Lab/Bering/releases/download/v1.1.1/chart-metadata.json)
 records `ghcr.io/mb3r-lab/charts/bering:1.1.1` at
@@ -87,3 +88,9 @@ The annotated tag and image revision both identify `2b2e012d...`. The attached
 999-byte lock file matches its Git blob and API SHA-256
 `d61957058992146d85c271bf2dbd47c14fa125ffd330a5b03663c12f931e2829`.
 These product compatibility checks are not additional empirical cells.
+
+Postpublication reproduction documentation [PR 5](https://github.com/MB3R-Lab/mb3r-software-complex-repro/pull/5)
+passed [exact-head source and packaged checks](https://github.com/MB3R-Lab/mb3r-software-complex-repro/actions/runs/40806219605)
+and independent review, then merged as `90828e39b3b261625ceee8d29b0c6db8dcb05589`.
+It changes release documentation only; the immutable v1.3.5 tag and image revision
+remain `2b2e012d8e85088d6d7bb9e231d0f9cc79ae634f`.

@@ -1,0 +1,17 @@
+{
+  "policy": "technical_replacement_only_no_outcome_selection",
+  "cells": [
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "candidate_roots": [
+        "work/v4-inputs/40754529169/v4-summary-otel_demo-full-6-40754529169",
+        "work/v4-inputs/40786403012/v4-summary-otel_demo-full-6-40786403012"
+      ],
+      "selected_root": "work/v4-inputs/40786403012/v4-summary-otel_demo-full-6-40786403012",
+      "reason_code": "technical_worker_interruption_before_forecast_and_validation",
+      "explanation": "The first attempt failed before forecast import and target traffic; the separately reviewed replacement is the sole complete campaign. Both original summaries and all costs remain retained. Selection does not depend on forecast availability or accuracy."
+    }
+  ]
+}

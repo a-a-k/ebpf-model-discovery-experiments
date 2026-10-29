@@ -54,9 +54,10 @@ complete costs. Missing human preparation costs are not zero.
 ## Product and repository boundaries
 
 The genuine Bering eBPF source, product releases/charts and related repository
-updates are required deliverables. They have been published: Bering 1.1.1,
-Sheaft 1.3.2, stack 1.3.0 and reproduction 1.3.4; Procrustes and the OTel
-integration were updated. Product verification does not replace empirical work.
+updates are required deliverables. Current published versions are Bering 1.2.0,
+Sheaft 1.3.2, stack 1.4.0 and reproduction 1.3.5; Procrustes and the OTel
+integration were updated. Earlier versions remain attributed to their original
+experiments. Product verification does not replace empirical work.
 
 No study code, data, results, mentions or links belong in Bering. Further product
 work must be necessary generic functionality, not migration of experiment code.

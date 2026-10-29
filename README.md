@@ -151,8 +151,9 @@ BTF, boot, image, process and network evidence are retained. Workflows use publi
 runner resources and do not silently switch to a paid larger runner.
 
 The OTel and prepared DSB workflows compute the saved training model on a separate
-standard Actions runner. OTel's full-input diagnostic passed; its one fresh staged
-replacement is running. DSB activation awaits the reviews recorded in
+standard Actions runner. OTel's full-input diagnostic and fresh full/6 replacement
+passed independent review; its eight remaining planned cells are running. DSB
+activation awaits the reviews recorded in
 [the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
 This separates toolchain resource use from the application host; it does not move
@@ -569,7 +570,9 @@ original declared subset, not a retroactive complete total for this wider scope.
 
 Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
 seeds6–8) and OTel/full/6. The remaining eight OTel cells are running; DeathStarBench
-still awaits its full-input diagnostic and staged cell. The first qualification
+still awaits its full-input diagnostic and fresh execution review. After those
+checks, its remaining cells may overlap as worker capacity permits; final full/6
+admission is no longer a rollout gate. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;
