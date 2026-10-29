@@ -85,6 +85,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self._capture_counter = 0
         self._capture_evidence: list[dict[str, Any]] = []
         self._startup_complete = False
+        self._startup_helper_nodes: set[str] = set()
+        self._startup_agent_attempted_nodes: set[str] = set()
 
     def _start_receivers(self) -> None:
         """DeepFlow is file-backed; only the unchanged native OTLP path listens."""
@@ -202,6 +204,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             remote_helper = remote + "/deepflow_snapshot_v5.py"
             self.ctx.node_put(node, config, remote_config)
             self.ctx.node_put(node, helper, remote_helper)
+            self._startup_helper_nodes.add(node)
             configs[node] = {
                 "path": config.name,
                 "sha256": _sha256_file(config),
@@ -218,6 +221,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
             )
             command = self._docker_command(node, remote_config, NATIVE_RECEIVER_PORT)
             commands[node] = command
+            # The transport result can be lost after Docker accepted the run.
+            self._startup_agent_attempted_nodes.add(node)
             self.ctx.node_exec(node, command, timeout=180)
             inspect = self.ctx.node_exec(
                 node, f"docker image inspect {shlex.quote(self.image)}", timeout=60
@@ -281,8 +286,63 @@ class DeepFlowCollectorsV5(CollectorsV5):
 
     def _cleanup_incomplete_start(self) -> dict[str, Any]:
         """Best-effort resource cleanup without claiming a completed collector drain."""
-        containers, receivers, errors = {}, {}, []
+        containers, diagnostics, raw_prefixes, receivers, errors = {}, {}, {}, {}, []
         for node in sorted(self.remote_roots):
+            node_diagnostics = {}
+            for label, command in (
+                    ("inspect", f"docker inspect {self.container_name}"),
+                    ("logs", f"docker logs {self.container_name}")):
+                path = self.root / f"startup-failure-{node}-{label}.log"
+                try:
+                    result = self.ctx.node_exec(node, command, timeout=60, check=False)
+                    stdout, stderr = _stdout(result), _stderr(result)
+                    content = stdout + ("\n--- stderr ---\n" + stderr if stderr else "")
+                    path.write_text(content, encoding="utf-8")
+                    node_diagnostics[label] = {
+                        "command": command,
+                        "path": path.relative_to(self.root).as_posix(),
+                        "sha256": _sha256_file(path),
+                        "bytes": path.stat().st_size,
+                        "returncode": _returncode(result),
+                        "stdout_bytes": len(stdout.encode("utf-8")),
+                        "stdout_sha256": hashlib.sha256(stdout.encode("utf-8")).hexdigest(),
+                        "stderr": stderr,
+                        "stderr_bytes": len(stderr.encode("utf-8")),
+                        "stderr_sha256": hashlib.sha256(stderr.encode("utf-8")).hexdigest(),
+                        "available": _returncode(result) == 0,
+                        "missing_or_unavailable": _returncode(result) != 0,
+                    }
+                except Exception as exc:
+                    node_diagnostics[label] = {
+                        "command": command,
+                        "available": False,
+                        "missing_or_unavailable": True,
+                        "transport_error": repr(exc),
+                    }
+                    errors.append(f"diagnostic:{node}:{label}:{exc!r}")
+            diagnostics[node] = node_diagnostics
+            if (node in self._startup_helper_nodes
+                    and node in self._startup_agent_attempted_nodes):
+                try:
+                    manifest = self._capture_node(node, "startup-failure", final=False)
+                    snapshot = self.root / "deepflow-raw" / f"node-{node}" / "startup-failure"
+                    raw_prefixes[node] = {
+                        "retained": True,
+                        "path": snapshot.relative_to(self.root).as_posix(),
+                        "manifest_technical_valid": manifest.get("technical_valid") is True,
+                        "startup_incomplete": True,
+                        "producer_closed": False,
+                        "closed_checkpoint": False,
+                    }
+                except Exception as exc:
+                    raw_prefixes[node] = {
+                        "retained": False,
+                        "startup_incomplete": True,
+                        "producer_closed": False,
+                        "closed_checkpoint": False,
+                        "error": repr(exc),
+                    }
+                    errors.append(f"raw-prefix:{node}:{exc!r}")
             try:
                 result = self.ctx.node_exec(
                     node, f"docker rm -f {self.container_name}", timeout=60, check=False)
@@ -318,6 +378,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self._closed = True
         return {
             "containers": containers,
+            "diagnostics_before_removal": diagnostics,
+            "available_raw_prefixes_before_removal": raw_prefixes,
             "receivers": receivers,
             "errors": errors,
             "best_effort": True,

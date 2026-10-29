@@ -98,13 +98,16 @@ def capture(ctx, stage: str) -> dict:
     helper_sha = _sha(helper)
     remote = f"/tmp/runtime-identity-v5-{helper_sha}.py"
     started_ns, started_mono = time.time_ns(), time.monotonic_ns()
-    samples, files, node_costs = [], [], {}
+    samples, files, node_costs, commands = [], [], {}, {}
     errors = []
     for node in ("a", "b"):
         acquisition_started = time.monotonic_ns()
         ctx.node_put(node, helper, remote)
+        command = (f"sudo python3 {shlex.quote(remote)} --node {node} "
+                   f"--stage {shlex.quote(stage)}")
+        commands[node] = command
         result = ctx.node_exec(
-            node, f"python3 {shlex.quote(remote)} --node {node} --stage {shlex.quote(stage)}",
+            node, command,
             timeout=120, check=False)
         acquisition_ended = time.monotonic_ns()
         raw_path = root / f"raw-{stage}-{node}.json"
@@ -116,6 +119,8 @@ def capture(ctx, stage: str) -> dict:
         if int(getattr(result, "returncode", 0)) != 0:
             errors.append(f"{node}:helper_returncode:{getattr(result, 'returncode', None)}")
             node_costs[node] = {
+                "command": command,
+                "privilege_scope": "sudo read-only guest process/container inventory helper",
                 "capture_and_transfer_seconds": (acquisition_ended - acquisition_started) / 1e9,
                 "normalization_seconds": (time.monotonic_ns() - normalization_started) / 1e9}
             continue
@@ -124,6 +129,8 @@ def capture(ctx, stage: str) -> dict:
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             errors.append(f"{node}:invalid_sample:{exc}")
             node_costs[node] = {
+                "command": command,
+                "privilege_scope": "sudo read-only guest process/container inventory helper",
                 "capture_and_transfer_seconds": (acquisition_ended - acquisition_started) / 1e9,
                 "normalization_seconds": (time.monotonic_ns() - normalization_started) / 1e9}
             continue
@@ -132,6 +139,8 @@ def capture(ctx, stage: str) -> dict:
         files.append(normalized_path)
         samples.append(sample)
         node_costs[node] = {
+            "command": command,
+            "privilege_scope": "sudo read-only guest process/container inventory helper",
             "capture_and_transfer_seconds": (acquisition_ended - acquisition_started) / 1e9,
             "normalization_seconds": (time.monotonic_ns() - normalization_started) / 1e9}
     ended_mono, ended_ns = time.monotonic_ns(), time.time_ns()
@@ -148,7 +157,9 @@ def capture(ctx, stage: str) -> dict:
     manifest = {
         "schema": "runtime-identity-capture-v5", "stage": stage,
         "helper": {"path": helper.relative_to(Path(__file__).resolve().parents[2]).as_posix(),
-                   "sha256": helper_sha, "remote_path": remote},
+                   "sha256": helper_sha, "remote_path": remote,
+                   "commands": commands,
+                   "privilege_scope": "sudo read-only guest process/container inventory helper"},
         "samples": samples, "errors": errors,
         "runner_interval": {"started_monotonic_ns": started_mono,
                             "ended_monotonic_ns": ended_mono},

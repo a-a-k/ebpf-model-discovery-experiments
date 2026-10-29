@@ -310,11 +310,14 @@ class _Context:
     def __init__(self, root):
         self.out = root
         self.puts = []
+        self.calls = []
 
     def node_put(self, node, source, destination):
         self.puts.append((node, Path(source), destination))
 
     def node_exec(self, node, command, **kwargs):
+        self.calls.append((node, command, kwargs))
+        assert command.startswith("sudo python3 /tmp/runtime-identity-v5-")
         sample = _sample("before-block-1", edge="before")
         sample["node"] = node
         return _Result(json.dumps(sample))
@@ -335,5 +338,14 @@ def test_capture_retains_raw_normalized_and_cost_separately(tmp_path):
     assert len(merged["samples"]) == 2
     assert all(len(value["sha256"]) == 64 for value in retained["files"].values())
     assert len(ctx.puts) == 2
+    assert len(ctx.calls) == 2
+    assert retained["helper"]["commands"] == {
+        node: command for node, command, _ in ctx.calls}
+    cost = json.loads((tmp_path / "runtime-identity-v5" /
+                       "cost-before-block-1.json").read_text())
+    assert all(row["command"].startswith("sudo python3 ")
+               for row in cost["by_node"].values())
+    assert all("read-only" in row["privilege_scope"]
+               for row in cost["by_node"].values())
     assert retained["runner_interval"]["started_monotonic_ns"] <= (
         retained["runner_interval"]["ended_monotonic_ns"])

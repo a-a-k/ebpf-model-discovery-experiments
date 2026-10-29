@@ -8,6 +8,7 @@ import pytest
 
 from ebpf_discovery.collectors_v5 import CollectorsV5
 from ebpf_discovery.deepflow_v5 import (
+    DEEPFLOW_CONTAINER,
     DEEPFLOW_IMAGE,
     MAX_DATA_FILE_SIZE_BYTES,
     MAX_DATA_FILE_SIZE_MIB,
@@ -138,6 +139,58 @@ def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(
     assert not (collector.root / "drain-evidence.json").exists()
     assert not (collector.root / "final-snapshot.json").exists()
     assert not any("deepflow_snapshot_v5.py" in command for _, command, _ in ctx.calls)
+
+
+def test_late_startup_failure_retains_diagnostics_and_raw_prefix_before_removal(
+        tmp_path: Path, monkeypatch) -> None:
+    class LateFailureContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            if command == f"docker logs {DEEPFLOW_CONTAINER}":
+                self.calls.append((node, command, kwargs))
+                return Result("sole startup error: dispatcher did not stabilize\n")
+            if command == f"docker inspect {DEEPFLOW_CONTAINER}":
+                self.calls.append((node, command, kwargs))
+                return Result('[{"State":{"Running":true}}]\n')
+            return super().node_exec(node, command, **kwargs)
+
+    ctx = LateFailureContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
+
+    def late_failure():
+        for node in ("a", "b"):
+            _remote_snapshot(ctx, collector, tmp_path, node, "startup-failure", [_row("/late")])
+        raise RuntimeError("late readiness failure must remain primary")
+
+    monkeypatch.setattr(collector, "_wait_container_readiness", late_failure)
+    with pytest.raises(RuntimeError, match="late readiness failure must remain primary"):
+        collector.start()
+    collector.close()
+
+    failure = json.loads((collector.root / "startup-failure.json").read_text())
+    assert failure["original_error"]["message"] == "late readiness failure must remain primary"
+    assert failure["cleanup"]["drain_attempted"] is False
+    for node in ("a", "b"):
+        diagnostics = failure["cleanup"]["diagnostics_before_removal"][node]
+        assert diagnostics["inspect"]["available"] is True
+        assert diagnostics["logs"]["available"] is True
+        log_path = collector.root / diagnostics["logs"]["path"]
+        assert log_path.read_text() == "sole startup error: dispatcher did not stabilize\n"
+        assert diagnostics["logs"]["sha256"] == __import__("hashlib").sha256(
+            log_path.read_bytes()).hexdigest()
+        prefix = failure["cleanup"]["available_raw_prefixes_before_removal"][node]
+        assert prefix["retained"] is True
+        assert prefix["startup_incomplete"] is True
+        assert prefix["producer_closed"] is False
+        assert (collector.root / prefix["path"] / "l7_flow_log").is_file()
+        commands = [command for call_node, command, _ in ctx.calls if call_node == node]
+        assert commands.index(f"docker logs {DEEPFLOW_CONTAINER}") < commands.index(
+            f"docker rm -f {DEEPFLOW_CONTAINER}")
+        assert next(i for i, command in enumerate(commands)
+                    if "deepflow_snapshot_v5.py" in command) < commands.index(
+                        f"docker rm -f {DEEPFLOW_CONTAINER}")
+    assert not (collector.root / "drain-evidence.json").exists()
+    assert not (collector.root / "final-snapshot.json").exists()
 
 
 def _remote_snapshot(ctx: Context, collector: DeepFlowCollectorsV5, tmp_path: Path,
