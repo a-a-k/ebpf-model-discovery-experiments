@@ -83,6 +83,7 @@ class CampaignV4(Campaign):
             self.adapter.reset()
             self.adapter.set_replicas(state)
         state_evidence = self.state_barrier(state)
+        self.before_workload_block(block_id, phase, state)
         ordered = [names[i % len(names)] for i in range(count)]
         self.rng.shuffle(ordered)
         # Preparation requests use the same durable path but are not scored.
@@ -118,6 +119,7 @@ class CampaignV4(Campaign):
         with self.record_lock:
             self.records = [by_id.get(r['attempt_id'], r) for r in self.records]
         self.require_completed_transports()
+        self.after_workload_block(block_id, phase, state)
         self.census.extend(intent_census(rows, phase, state))
         block = dict(id=block_id, phase=phase, state=state, attempts=count, started_ns=started_ns,
                      load_started_ns=load_started_ns, ended_ns=time.time_ns(),
@@ -131,6 +133,12 @@ class CampaignV4(Campaign):
         write_json(self.ctx.out/'plans.json', self.plans)
         print(json.dumps(block), flush=True)
         return rows
+
+    def before_workload_block(self, block_id, phase, state):
+        """V5 extension point; v4 acquisition remains byte-for-byte unchanged."""
+
+    def after_workload_block(self, block_id, phase, state):
+        """V5 extension point; v4 acquisition remains byte-for-byte unchanged."""
 
     def require_completed_transports(self):
         pending = self.ctx.journal.unresolved_transports()

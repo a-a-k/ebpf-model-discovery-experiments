@@ -118,6 +118,15 @@ def test_protobuf_copy_preserves_duplicate_variants_scope_attributes_and_links(t
     for value in ("one", "two"):
         span = scope.spans.add(trace_id=bytes.fromhex(TRACE), span_id=bytes.fromhex(SPAN), name="lookup")
         span.attributes.add(key="variant").value.string_value = value
+        locator = span.attributes.add(key="_runtime_identity.locator").value.kvlist_value
+        for key, locator_value in {
+                "source_file": "a/l7_flow_log", "retained_file": "deepflow-raw/a/l7_flow_log",
+                "offset": 7, "length": 11, "sha256": "a" * 64}.items():
+            entry = locator.values.add(key=key)
+            if isinstance(locator_value, int):
+                entry.value.int_value = locator_value
+            else:
+                entry.value.string_value = locator_value
         link = span.links.add(trace_id=b"\xff" * 16, span_id=b"\xee" * 8)
         link.attributes.add(key="link").value.int_value = 7
         if value == "one":
@@ -133,7 +142,10 @@ def test_protobuf_copy_preserves_duplicate_variants_scope_attributes_and_links(t
     index = observations / "a.jsonl"
     line = (json.dumps(wrapper) + "\n").encode()
     index.write_bytes(line)
-    result = export_selection(Store([(str(index), len(line))]), {"ebpf": {(TRACE, SPAN)}}, tmp_path / "out")
+    projection = {("a/l7_flow_log", "deepflow-raw/a/l7_flow_log", 7, 11, "a" * 64): {
+        "service": "lookup-api", "resolution": {"status": "resolved"}}}
+    result = export_selection(Store([(str(index), len(line))]), {"ebpf": {(TRACE, SPAN)}},
+                              tmp_path / "out", service_projections=projection)
     assert result["observations"] == 2
     exported = ExportTraceServiceRequest()
     exported.ParseFromString(Path(result["exports"][0]["path"]).read_bytes())
@@ -142,6 +154,9 @@ def test_protobuf_copy_preserves_duplicate_variants_scope_attributes_and_links(t
     assert exported.resource_spans[0].scope_spans[0].scope.attributes[0].key == "scope.attr"
     assert spans[0].links[0].attributes[0].value.int_value == 7
     assert unknown_field in spans[0].SerializeToString()
+    assert result["runtime_identity_projected_observations"] == 2
+    assert result["exports"][0]["original_wire_unchanged"] is True
+    assert raw_path.read_bytes() == wire
 
 
 def test_supplied_role_changes_only_derived_protobuf_kind_and_preserves_unknown_wire(tmp_path: Path):

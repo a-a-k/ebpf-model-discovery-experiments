@@ -5,7 +5,7 @@ from pathlib import Path
 import sqlite3
 from types import SimpleNamespace
 
-from ebpf_discovery import campaign_v5, evaluate_v5
+from ebpf_discovery import campaign_v5, evaluate_v5, identity_projection_v5
 
 
 class _Journal:
@@ -93,6 +93,8 @@ def test_campaign_drains_before_the_final_store_ingest(tmp_path, monkeypatch):
     value.save_records = lambda: None
     monkeypatch.setattr(campaign_v5, "evaluate_classes", lambda *args: calls.append("classes"))
     monkeypatch.setattr(campaign_v5, "evaluate_evidence", lambda *args: calls.append("evidence"))
+    monkeypatch.setattr(identity_projection_v5, "refresh",
+                        lambda *args: calls.append("identity-projection"))
 
     value.run()
 

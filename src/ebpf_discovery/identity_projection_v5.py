@@ -1,0 +1,195 @@
+"""Hash-verified runtime identity enclosures and immutable service projections."""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import time
+from urllib.parse import urlsplit
+
+from .runtime_identity_v5 import _locator, inventory
+
+
+def _sha(path: Path) -> str:
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def _write(path: Path, value) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def journal_event_sha256(seq, kind, wall_ns, monotonic_ns, encoded_data) -> str:
+    """Digest the exact retained SQLite event fields, including the original JSON bytes."""
+    value = [seq, kind, wall_ns, monotonic_ns, encoded_data]
+    return hashlib.sha256(json.dumps(
+        value, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def _runtime(row: dict) -> dict | None:
+    value = row.get("_runtime_identity")
+    attributes = row.get("attributes") or {}
+    if not isinstance(value, dict):
+        value = attributes.get("_runtime_identity")
+    if not isinstance(value, dict):
+        prefix = "_runtime_identity."
+        value = {key[len(prefix):]: item for key, item in attributes.items()
+                 if isinstance(key, str) and key.startswith(prefix)}
+    return value or None
+
+
+def _verified_capture(root: Path, stage: str) -> tuple[dict, dict]:
+    path = root / "runtime-identity-v5" / f"capture-{stage}.json"
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if value.get("schema") != "runtime-identity-capture-v5" or value.get("stage") != stage:
+        raise ValueError(f"runtime identity capture schema/stage mismatch: {stage}")
+    verified = {}
+    for name, proof in (value.get("files") or {}).items():
+        member = path.parent / name
+        if (not member.is_file() or member.stat().st_size != proof.get("bytes")
+                or _sha(member) != proof.get("sha256")):
+            raise ValueError(f"runtime identity capture member changed: {member}")
+        verified[name] = dict(proof)
+    interval = value.get("runner_interval") or {}
+    if not all(type(interval.get(key)) is int for key in
+               ("started_monotonic_ns", "ended_monotonic_ns")):
+        raise ValueError(f"runtime identity capture lacks runner interval: {stage}")
+    return value, {"path": path.relative_to(root).as_posix(), "sha256": _sha(path),
+                   "files": verified, "runner_interval": interval}
+
+
+def _verify_locator(root: Path, raw) -> tuple[dict, dict]:
+    canonical = _locator(raw)
+    if canonical is None:
+        raise ValueError("runtime identity event lacks a canonical raw locator")
+    path = Path(canonical["retained_file"])
+    path = path if path.is_absolute() else root / "observations" / path
+    path = path.resolve()
+    if not path.is_relative_to(root.resolve()):
+        raise ValueError("runtime identity raw locator leaves campaign root")
+    with path.open("rb") as stream:
+        stream.seek(canonical["offset"])
+        body = stream.read(canonical["length"])
+    if len(body) != canonical["length"] or hashlib.sha256(body).hexdigest() != canonical["sha256"]:
+        raise ValueError("runtime identity raw locator byte proof failed")
+    return canonical, {"path": path.relative_to(root).as_posix(),
+                       "offset": canonical["offset"], "length": canonical["length"],
+                       "sha256": canonical["sha256"]}
+
+
+def _journal_transports(journal) -> dict[str, dict]:
+    with journal.lock:
+        rows = list(journal.db.execute(
+            "SELECT seq,kind,wall_ns,monotonic_ns,data FROM events "
+            "WHERE kind IN ('step_started','step_finished','step_transport_unknown') ORDER BY seq"))
+    by_transport = {}
+    for seq, kind, wall_ns, monotonic_ns, encoded in rows:
+        data = json.loads(encoded)
+        identity = data.get("transport_id")
+        if not identity:
+            continue
+        row = by_transport.setdefault(identity, {"started": [], "terminal": []})
+        target = "started" if kind == "step_started" else "terminal"
+        row[target].append({
+            "seq": seq, "kind": kind, "wall_ns": wall_ns,
+            "monotonic_ns": monotonic_ns, "data": data, "data_json": encoded,
+            "event_row_sha256": journal_event_sha256(
+                seq, kind, wall_ns, monotonic_ns, encoded),
+        })
+    result = {}
+    for identity, row in by_transport.items():
+        if len(row["started"]) != 1 or len(row["terminal"]) != 1:
+            continue
+        start, terminal = row["started"][0], row["terminal"][0]
+        request_id = start["data"].get("request_id")
+        if (terminal["kind"] != "step_finished" or terminal["data"].get("request_id") != request_id):
+            continue
+        if request_id in result:
+            result[request_id] = None
+        else:
+            result[request_id] = {"transport_id": identity, "started": start, "terminal": terminal}
+    return result
+
+
+def refresh(campaign, stage: str) -> dict:
+    """Resolve indexed observations using only retained, hash-checked evidence."""
+    root, started = campaign.ctx.out, time.monotonic_ns()
+    capture_cache = {}
+    plan_by_request = {}
+    for plan in campaign.plans:
+        for step in plan.get("http_steps", []):
+            plan_by_request[step.get("request_id")] = {
+                "block_id": plan.get("block_id"), "method": str(step.get("method") or "").upper(),
+                "route": urlsplit(step.get("path") or "").path}
+    transports = _journal_transports(campaign.ctx.journal)
+    enclosure_rows, evidence_files = [], []
+    for digest, encoded in campaign.store.db.execute("SELECT digest,data FROM spans ORDER BY digest"):
+        row = json.loads(encoded)
+        runtime = _runtime(row)
+        if not runtime or runtime.get("event_role") != "synchronous_server_entry":
+            continue
+        request_id = runtime.get("request_nonce")
+        plan, transport = plan_by_request.get(request_id), transports.get(request_id)
+        if not plan or not transport or not plan.get("block_id"):
+            continue
+        if (str(runtime.get("method") or "").upper() != plan["method"]
+                or urlsplit(runtime.get("route") or "").path != plan["route"]):
+            continue
+        before_stage, after_stage = "before-" + plan["block_id"], "after-" + plan["block_id"]
+        for sample_stage in (before_stage, after_stage):
+            if sample_stage not in capture_cache:
+                capture_cache[sample_stage] = _verified_capture(root, sample_stage)
+        before, before_proof = capture_cache[before_stage]
+        after, after_proof = capture_cache[after_stage]
+        sequence = {
+            "before_sample_completed_ns": before["runner_interval"]["ended_monotonic_ns"],
+            "request_started_ns": transport["started"]["monotonic_ns"],
+            "request_completed_ns": transport["terminal"]["monotonic_ns"],
+            "after_sample_started_ns": after["runner_interval"]["started_monotonic_ns"],
+        }
+        if list(sequence.values()) != sorted(sequence.values()):
+            continue
+        canonical, raw_proof = _verify_locator(root, runtime.get("locator"))
+        evidence = {
+            "schema": "runtime-identity-enclosure-evidence-v5", "observation_digest": digest,
+            "request_nonce": request_id, "method": plan["method"], "route": plan["route"],
+            "transport": transport, "runner_monotonic_sequence": sequence,
+            "before_capture": before_proof, "after_capture": after_proof,
+            "raw_locator": raw_proof, "source_event_role": runtime["event_role"],
+        }
+        evidence_path = root / "runtime-identity-v5" / "enclosures" / f"{digest}.json"
+        _write(evidence_path, evidence)
+        evidence_files.append({"path": evidence_path.relative_to(root).as_posix(),
+                               "sha256": _sha(evidence_path), "bytes": evidence_path.stat().st_size})
+        enclosure_rows.append({
+            "request_nonce": request_id, "node": runtime.get("node"),
+            "record_locator": canonical, "method": plan["method"], "route": plan["route"],
+            "before_stage": before_stage, "after_stage": after_stage,
+            "source_event_contains_exact_nonce": True, "synchronous_server_entry": True,
+            "terminal_request_exchange": True, "technical_complete": True,
+            "runner_monotonic_sequence": sequence,
+            "evidence": {"kind": "retained_exact_nonce",
+                         "locator": evidence_path.relative_to(root).as_posix(),
+                         "sha256": _sha(evidence_path)},
+        })
+    for path in sorted((root / "runtime-identity-v5").glob("capture-*.json")):
+        sample_stage = path.stem.removeprefix("capture-")
+        if sample_stage not in capture_cache:
+            capture_cache[sample_stage] = _verified_capture(root, sample_stage)
+    captures = [capture_cache[key][0] for key in sorted(capture_cache)]
+    retained = inventory(captures, event_enclosures=enclosure_rows)
+    inventory_path = root / "runtime-identity-v5" / f"inventory-{stage}.json"
+    _write(inventory_path, retained)
+    inventory_proof = {"path": inventory_path.relative_to(root).as_posix(),
+                       "sha256": _sha(inventory_path), "bytes": inventory_path.stat().st_size}
+    projection = campaign.store.apply_runtime_identity(
+        retained, root / "runtime-identity-v5" / f"projection-{stage}.jsonl",
+        inventory_proof=inventory_proof, stage=stage)
+    cost = {"schema": "runtime-identity-refresh-cost-v5", "stage": stage,
+            "elapsed_seconds": (time.monotonic_ns() - started) / 1e9,
+            "captures": len(captures), "enclosures": len(enclosure_rows),
+            "evidence_files": evidence_files, "inventory": inventory_proof,
+            "projection": projection}
+    _write(root / "runtime-identity-v5" / f"refresh-cost-{stage}.json", cost)
+    return cost

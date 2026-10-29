@@ -151,32 +151,93 @@ def _supply_server_role(span, key, source, roles, *, protobuf=False):
     return applied
 
 
+def _json_value(value):
+    if 'kvlistValue' in value:
+        return {item['key']: _json_value(item.get('value', {}))
+                for item in value['kvlistValue'].get('values', [])}
+    if 'arrayValue' in value:
+        return [_json_value(item) for item in value['arrayValue'].get('values', [])]
+    return next(iter(value.values()), None)
+
+
+def _span_projection(span, projections, *, protobuf=False):
+    if not projections:
+        return None
+    from .runtime_identity_v5 import _locator
+    raw = None
+    if protobuf:
+        for item in span.attributes:
+            if item.key == '_runtime_identity.locator' and item.value.WhichOneof('value') == 'kvlist_value':
+                raw = {entry.key: (entry.value.string_value if entry.value.WhichOneof('value') == 'string_value'
+                                   else entry.value.int_value if entry.value.WhichOneof('value') == 'int_value'
+                                   else None) for entry in item.value.kvlist_value.values}
+                break
+    else:
+        raw = next((_json_value(item.get('value', {})) for item in span.get('attributes', [])
+                    if item.get('key') == '_runtime_identity.locator'), None)
+    canonical = _locator(raw)
+    if canonical is None:
+        return None
+    key = tuple(canonical[name] for name in
+                ('source_file', 'retained_file', 'offset', 'length', 'sha256'))
+    return projections.get(key)
+
+
+def _project_resource_json(resource, service):
+    attributes = resource.setdefault('resource', {}).setdefault('attributes', [])
+    found = [item for item in attributes if item.get('key') == 'service.name']
+    if len(found) > 1:
+        raise ValueError('conflicting repeated service.name before runtime identity projection')
+    if found:
+        original = _json_value(found[0].get('value', {}))
+        if original not in (None, '', 'unknown', service):
+            raise ValueError('runtime identity projection conflicts with nonempty source service label')
+        found[0]['value'] = {'stringValue': service}
+    else:
+        attributes.append({'key': 'service.name', 'value': {'stringValue': service}})
+
+
 def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encoding: str,
                  network_scope: str | None, source: str = "ebpf",
-                 roles: dict | None = None) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
+                 roles: dict | None = None, service_projections: dict | None = None,
+                 transformations: list | None = None) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
     filtered = copy.deepcopy(payload)
     kept_resources, found, supplied, count = [], [] if identities is not None else None, [], 0
     for resource in filtered.get("resourceSpans", []):
         scope_key = "scopeSpans" if "scopeSpans" in resource else "instrumentationLibrarySpans"
-        kept_scopes = []
+        grouped = {}
         for scope in resource.get(scope_key, []):
-            kept_spans = []
             for span in scope.get("spans", []):
                 key = (_identity(span.get("traceId"), encoding), _identity(span.get("spanId"), encoding))
                 if identities is None or key in identities:
                     role = _supply_server_role(span, key, source, roles or {})
                     if role is not None:
                         supplied.append(role)
-                    kept_spans.append(span)
+                    projection = _span_projection(span, service_projections)
+                    group = projection.get('service') if projection else None
+                    if group not in grouped:
+                        projected_resource = copy.deepcopy(resource)
+                        projected_resource[scope_key] = []
+                        if group is not None:
+                            _project_resource_json(projected_resource, group)
+                        grouped[group] = projected_resource
+                    projected_scope = next((item for item in grouped[group][scope_key]
+                                            if item.get('_projection_scope_ordinal') == id(scope)), None)
+                    if projected_scope is None:
+                        projected_scope = copy.deepcopy(scope)
+                        projected_scope['spans'] = []
+                        projected_scope['_projection_scope_ordinal'] = id(scope)
+                        grouped[group][scope_key].append(projected_scope)
+                    projected_scope['spans'].append(span)
+                    if projection and transformations is not None:
+                        transformations.append(projection)
                     count += 1
                     if found is not None:
                         found.append(key)
-            if kept_spans:
-                scope["spans"] = kept_spans
-                kept_scopes.append(scope)
-        if kept_scopes:
-            resource[scope_key] = kept_scopes
-            kept_resources.append(resource)
+        for projected_resource in grouped.values():
+            for projected_scope in projected_resource[scope_key]:
+                projected_scope.pop('_projection_scope_ordinal', None)
+            kept_resources.append(projected_resource)
     filtered["resourceSpans"] = kept_resources
     _add_network_scope_json(filtered, network_scope)
     return filtered, count, found, supplied
@@ -184,7 +245,8 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encodin
 
 def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]] | None,
                      network_scope: str | None, source: str = "ebpf",
-                     roles: dict | None = None):
+                     roles: dict | None = None, service_projections: dict | None = None,
+                     transformations: list | None = None):
     from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
     from opentelemetry.proto.common.v1.common_pb2 import KeyValue
 
@@ -195,36 +257,50 @@ def _filter_protobuf(wire: bytes, identities: set[tuple[str, str]] | None,
     filtered.ClearField("resource_spans")
     found, supplied, count = [] if identities is not None else None, [], 0
     for resource in original.resource_spans:
-        kept_resource = None
         for scope in resource.scope_spans:
             matches = []
             for span in scope.spans:
                 key = (bytes(span.trace_id).hex(), bytes(span.span_id).hex())
                 if identities is None or key in identities:
-                    matches.append(span)
+                    matches.append((span, _span_projection(span, service_projections, protobuf=True)))
                     count += 1
                     if found is not None:
                         found.append(key)
             if not matches:
                 continue
-            if kept_resource is None:
-                kept_resource = filtered.resource_spans.add()
-                kept_resource.CopyFrom(resource)
-                kept_resource.ClearField("scope_spans")
-                if network_scope is not None:
-                    attribute = KeyValue(key="bering.network.scope")
-                    attribute.value.string_value = network_scope
-                    kept_resource.resource.attributes.append(attribute)
-            kept_scope = kept_resource.scope_spans.add()
-            kept_scope.CopyFrom(scope)
-            kept_scope.ClearField("spans")
-            for span in matches:
+            groups = {}
+            for span, projection in matches:
+                service = projection.get('service') if projection else None
+                if service not in groups:
+                    kept_resource = filtered.resource_spans.add()
+                    kept_resource.CopyFrom(resource)
+                    kept_resource.ClearField("scope_spans")
+                    if network_scope is not None:
+                        attribute = KeyValue(key="bering.network.scope")
+                        attribute.value.string_value = network_scope
+                        kept_resource.resource.attributes.append(attribute)
+                    if service is not None:
+                        names = [item for item in kept_resource.resource.attributes if item.key == 'service.name']
+                        if len(names) > 1 or (names and names[0].value.string_value not in ('', 'unknown', service)):
+                            raise ValueError('runtime identity projection conflicts with source service label')
+                        if names:
+                            names[0].value.string_value = service
+                        else:
+                            kept_resource.resource.attributes.add(
+                                key='service.name').value.string_value = service
+                    kept_scope = kept_resource.scope_spans.add()
+                    kept_scope.CopyFrom(scope)
+                    kept_scope.ClearField("spans")
+                    groups[service] = kept_scope
+                kept_scope = groups[service]
                 copied = kept_scope.spans.add()
                 copied.CopyFrom(span)
                 role = _supply_server_role(copied, (bytes(span.trace_id).hex(), bytes(span.span_id).hex()),
                                            source, roles or {}, protobuf=True)
                 if role is not None:
                     supplied.append(role)
+                if projection and transformations is not None:
+                    transformations.append(projection)
     return filtered.SerializeToString(), count, found, supplied
 
 
@@ -386,7 +462,8 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
 def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], out: Path,
                      network_scope: str | None = None,
                      supplied_server_roles: dict | None = None,
-                     native_jaeger_envelope: str = "per_file") -> dict:
+                     native_jaeger_envelope: str = "per_file",
+                     service_projections: dict | None = None) -> dict:
     """Export frozen prefixes; a source value of None selects all its records."""
     if native_jaeger_envelope not in ("per_file", "per_trace"):
         raise ValueError("unsupported native Jaeger envelope granularity")
@@ -498,19 +575,21 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                     content_type = document.get("content_type", "application/x-protobuf")
                     content_encoding = document.get("content_encoding", "").lower().strip()
                     decoded = gzip.decompress(original) if content_encoding == "gzip" else original
+                    transformations = []
                     if "json" in content_type.lower():
                         payload, count, found, supplied = _filter_json(json.loads(decoded), identities,
-                            document.get("id_encoding", "hex"), network_scope, source, roles)
+                            document.get("id_encoding", "hex"), network_scope, source, roles,
+                            service_projections, transformations)
                         body = (json.dumps(payload, separators=(",", ":")) + "\n").encode()
                     else:
                         body, count, found, supplied = _filter_protobuf(decoded, identities,
-                                                                       network_scope, source, roles)
+                            network_scope, source, roles, service_projections, transformations)
                     if not count:
                         continue
                     if content_encoding == "gzip":
                         body = gzip.compress(body, mtime=0)
                     ordinal += 1
-                    exports.append(_write_export(
+                    exported = _write_export(
                         out, ordinal, source, content_type, body, original_path, raw_hash,
                         count, found, [("all source records in frozen indexed prefix from original wire export"
                                        if identities is None else "selected exact source-local IDs from original wire export"),
@@ -519,14 +598,20 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                         supplied_server_roles=supplied,
                         **({'index_file': path, 'index_prefix_sha256': prefix_hash,
                             'raw_prefix_bytes': consumed} if identities is None else {}),
-                    ))
+                    )
+                    if transformations:
+                        exported['runtime_identity_transformations'] = transformations
+                        exported['original_wire_unchanged'] = True
+                        exported['graph_edges_injected'] = False
+                    exports.append(exported)
                     total += count
                     continue
 
                 payload = document.get("payload", document)
                 encoding = document.get("id_encoding", "hex")
+                transformations = []
                 filtered, count, found, supplied = _filter_json(payload, identities, encoding,
-                                                                 network_scope, source, roles)
+                    network_scope, source, roles, service_projections, transformations)
                 if not count:
                     continue
                 ordinal += 1
@@ -540,6 +625,10 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                     supplied_server_roles=supplied,
                 )
                 exported["raw_record_sha256"] = hashlib.sha256(raw_line).hexdigest()
+                if transformations:
+                    exported['runtime_identity_transformations'] = transformations
+                    exported['original_wire_unchanged'] = True
+                    exported['graph_edges_injected'] = False
                 exports.append(exported)
                 total += count
     if roles:
@@ -547,7 +636,12 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                    for item in exports for role in item.get("supplied_server_roles", [])}
         if applied != set(roles):
             raise ValueError(f"supplied server roles not applied to exact selected source identities: {sorted(set(roles)-applied)}")
-    result = {"exports": exports, "observations": total}
+    result = {"exports": exports, "observations": total,
+              "runtime_identity_projected_observations": sum(
+                  len(item.get('runtime_identity_transformations', [])) for item in exports),
+              "runtime_identity_projection_policy": (
+                  "actual hash-verified Compose identity on copied exports only; originals retained; no edges"
+                  if service_projections else "no runtime identity projection requested")}
     if "native" in selected:
         result["native_jaeger_envelope"] = native_jaeger_envelope
     if any(ids is None for ids in selected.values()):

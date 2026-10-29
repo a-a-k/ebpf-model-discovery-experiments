@@ -8,7 +8,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from ebpf_discovery.checkpoint_v4 import _inside, create_checkpoint, wait_for_release
+from ebpf_discovery.checkpoint_v4 import (
+    _inside, _runtime_observation_dependencies, create_checkpoint, wait_for_release)
 from ebpf_discovery.store_v3 import ObservationStore
 from ebpf_discovery.toolchain_v4 import PINS
 from ebpf_discovery.toolchain_v5 import PINS as V5_PINS
@@ -126,6 +127,9 @@ def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Pa
         _json(live/'observations'/'collector.json', {
             'schema': 'collector-lifecycle-v5', 'collector': 'coroot',
             'source_domain': 'ebpf-coroot'})
+        _json(live/'runtime-identity-v5'/'inventory-training.json', {
+            'schema': 'runtime-identity-inventory-v5', 'samples': [],
+            'captures': [], 'capture_lifetimes': [], 'event_enclosures': []})
         rows = []
         for name, commit in V5_PINS.items():
             path = live/'toolchain-build'/'bin'/name.lower()
@@ -142,10 +146,47 @@ def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Pa
         assert manifest['collector_provenance']['collector'] == 'coroot'
         assert manifest['files']['observations/collector.json']['sha256'] == hashlib.sha256(
             (live/'observations'/'collector.json').read_bytes()).hexdigest()
+        dependency = manifest['runtime_identity_dependencies'][0]
+        relative = dependency['relative_path']
+        assert relative == 'runtime-identity-v5/inventory-training.json'
+        assert manifest['files'][relative]['sha256'] == hashlib.sha256(
+            (live/relative).read_bytes()).hexdigest() == dependency['sha256']
+        assert (folder/relative).read_bytes() == (live/relative).read_bytes()
         assert {row['commit'] for row in manifest['toolchain']['binaries']} == set(V5_PINS.values())
     finally:
         campaign.store.close()
         campaign.ctx.journal.close()
+
+
+def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(tmp_path: Path):
+    live = tmp_path/'campaign'; checkpoint = tmp_path/'checkpoint'
+    checkpoint.mkdir(); observations = live/'observations'
+    raw = observations/'deepflow-raw'/'node-a'/'training'/'l7_flow_log'
+    raw.parent.mkdir(parents=True)
+    body = b'{"request":"retained"}\n'; raw.write_bytes(body)
+    locator = {'source_file': 'a/l7_flow_log',
+               'retained_file': raw.relative_to(observations).as_posix(),
+               'offset': 0, 'length': len(body),
+               'sha256': hashlib.sha256(body).hexdigest()}
+    _json(raw.parent/'snapshot.json', {'files': [{
+        'snapshot_name': raw.name, 'copied_bytes': len(body),
+        'copied_sha256': hashlib.sha256(body).hexdigest()}]})
+    _json(observations/'deepflow-codec-accounting.jsonl', {
+        **locator, '_runtime_identity': {'locator': locator}, 'status': 'normalized'})
+    with sqlite3.connect(checkpoint/'observation-index.sqlite') as db:
+        db.execute('CREATE TABLE spans(digest TEXT, data TEXT)')
+        db.execute('INSERT INTO spans VALUES (?,?)', ('digest', json.dumps({
+            '_runtime_identity': {'locator': locator}})))
+    copied = {}
+    proofs = _runtime_observation_dependencies(live.resolve(), checkpoint, copied)
+    assert len(proofs) == 1
+    assert proofs[0]['locator'] == locator
+    assert proofs[0]['codec_accounting_matching_rows'] == 1
+    for relative in (raw.relative_to(live),
+                     (raw.parent/'snapshot.json').relative_to(live),
+                     (observations/'deepflow-codec-accounting.jsonl').relative_to(live)):
+        assert (checkpoint/relative).read_bytes() == (live/relative).read_bytes()
+        assert relative.as_posix() in copied
 
 
 def test_release_requires_exact_binding_and_upload_success(tmp_path: Path, monkeypatch):

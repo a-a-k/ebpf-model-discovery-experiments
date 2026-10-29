@@ -161,6 +161,77 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
     return source_records, wire_records, metadata_records, absent_metadata
 
 
+def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
+                                      copied: dict) -> list[dict]:
+    """Copy exact raw-locator inputs that normalized OTLP wrappers do not reference."""
+    from .identity_projection_v5 import _runtime
+    from .runtime_identity_v5 import _locator
+
+    locators = {}
+    with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
+        for (encoded,) in frozen_index.execute('SELECT data FROM spans ORDER BY digest'):
+            runtime = _runtime(json.loads(encoded))
+            canonical = _locator((runtime or {}).get('locator'))
+            if canonical is not None:
+                key = tuple(canonical[name] for name in (
+                    'source_file', 'retained_file', 'offset', 'length', 'sha256'))
+                locators[key] = canonical
+    if not locators:
+        return []
+
+    accounting_path = live_root/'observations'/'deepflow-codec-accounting.jsonl'
+    accounting = []
+    if accounting_path.is_file():
+        for line in accounting_path.read_text(encoding='utf-8').splitlines():
+            if line.strip():
+                row = json.loads(line)
+                canonical = _locator(row.get('_runtime_identity', {}).get('locator') or row)
+                if canonical is not None:
+                    accounting.append((canonical, row))
+    records = []
+    for canonical in locators.values():
+        retained = Path(canonical['retained_file'])
+        if retained.is_absolute():
+            raise ValueError('runtime observation locator must be campaign-relative')
+        raw_path = live_root/'observations'/retained
+        raw_source, raw_relative = _inside(raw_path, live_root)
+        with raw_source.open('rb') as stream:
+            stream.seek(canonical['offset'])
+            segment = stream.read(canonical['length'])
+        if (len(segment) != canonical['length']
+                or hashlib.sha256(segment).hexdigest() != canonical['sha256']):
+            raise ValueError(f'runtime observation raw locator changed: {raw_relative}')
+        raw_key = raw_relative.as_posix()
+        if raw_key not in copied:
+            _copy(raw_source, live_root, checkpoint, copied)
+        proof = {'locator': canonical, 'raw_file': copied[raw_key]}
+        if retained.parts and retained.parts[0] == 'deepflow-raw':
+            matches = [row for locator, row in accounting if locator == canonical]
+            if not matches:
+                raise ValueError(f'DeepFlow locator lacks codec accounting: {raw_relative}')
+            snapshot_path = raw_source.parent/'snapshot.json'
+            snapshot = json.loads(snapshot_path.read_text(encoding='utf-8'))
+            declarations = [row for row in snapshot.get('files', [])
+                            if row.get('snapshot_name') == raw_source.name]
+            if (len(declarations) != 1
+                    or declarations[0].get('copied_bytes') != raw_source.stat().st_size
+                    or declarations[0].get('copied_sha256') != _sha(raw_source)):
+                raise ValueError(f'DeepFlow snapshot does not bind retained raw file: {raw_relative}')
+            for dependency in (accounting_path, snapshot_path):
+                _, relative = _inside(dependency, live_root)
+                if relative.as_posix() not in copied:
+                    _copy(dependency, live_root, checkpoint, copied)
+            proof.update({
+                'codec_accounting_file': copied[
+                    accounting_path.resolve().relative_to(live_root).as_posix()],
+                'codec_accounting_matching_rows': len(matches),
+                'snapshot_manifest': copied[
+                    snapshot_path.resolve().relative_to(live_root).as_posix()],
+            })
+        records.append(proof)
+    return records
+
+
 def _toolchain(campaign, checkpoint: Path, copied: dict, pins: dict) -> dict:
     live_root = campaign.ctx.out.resolve()
     path = live_root/'toolchain-build'/'toolchain-build.json'
@@ -209,11 +280,21 @@ def create_checkpoint(campaign, folder: Path) -> dict:
     if any(original_status.get(key) != identity[key] for key in ('system', 'mode', 'seed', 'commit')):
         raise ValueError('checkpoint identity differs from running campaign')
     collector = None
+    runtime_identity_dependencies = []
     pins = V4_PINS
     if original_status.get('protocol_version') == 'graph-v5':
         from .toolchain_v5 import PINS as V5_PINS, collector_provenance
         collector = collector_provenance(live_root, original_status)
         _copy(live_root/collector['collector_file'], live_root, folder, copied)
+        identity_root = live_root/'runtime-identity-v5'
+        if not identity_root.is_dir():
+            raise ValueError('graph-v5 checkpoint lacks runtime identity evidence')
+        for path in sorted(identity_root.rglob('*')):
+            if path.is_symlink():
+                raise ValueError(f'runtime identity checkpoint input is a symlink: {path}')
+            if path.is_file():
+                runtime_identity_dependencies.append(
+                    _copy(path, live_root, folder, copied))
         pins = V5_PINS
     index = _backup(campaign.store.db, folder/'observation-index.sqlite')
     with campaign.ctx.journal.lock:
@@ -221,6 +302,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
     copied[index['relative_path']] = index
     copied[journal['relative_path']] = journal
     sources, wires, wire_metadata, absent_metadata = _indexed_sources(campaign, folder, copied)
+    runtime_observation_dependencies = _runtime_observation_dependencies(live_root, folder, copied)
     deployment = live_root/'deployment'
     if deployment.is_dir():
         for path in sorted(deployment.rglob('*')):
@@ -239,6 +321,10 @@ def create_checkpoint(campaign, folder: Path) -> dict:
                 'referenced_wire_bodies': wires, 'referenced_wire_metadata': wire_metadata,
                 'metadata_reference_absent': absent_metadata,
                 'toolchain': binaries,
+                **({'runtime_identity_dependencies': runtime_identity_dependencies}
+                   if runtime_identity_dependencies else {}),
+                **({'runtime_observation_dependencies': runtime_observation_dependencies}
+                   if runtime_observation_dependencies else {}),
                 **({'collector_provenance': collector} if collector is not None else {}),
                 'files': copied, 'created_ns': time.time_ns(),
                 'new_application_traffic': False, 'same_live_campaign_required_to_continue': True}

@@ -25,6 +25,8 @@ def _entry_aliases(declaration) -> set[str]:
 
 
 def _rows_for_trace(store, source: str, trace: str) -> list[dict]:
+    if hasattr(store, 'trace_v5'):
+        return store.trace_v5(source, trace)
     return [json.loads(row[0]) for row in store.db.execute(
         "SELECT data FROM spans WHERE source=? AND trace=? ORDER BY digest", (source, trace))]
 

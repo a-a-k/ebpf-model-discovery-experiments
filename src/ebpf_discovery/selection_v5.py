@@ -94,9 +94,11 @@ def select_planned(store, plans, contract, source, untyped_components=None, *,
                 if not include_descendants:
                     selected[actual_source].add((root['trace_id'], root['span_id']))
                     continue
-                rows = [json.loads(encoded) for (encoded,) in store.db.execute(
-                    'SELECT data FROM spans WHERE source=? AND trace=? ORDER BY digest',
-                    (actual_source, root['trace_id']))]
+                rows = (store.trace_v5(actual_source, root['trace_id'])
+                        if hasattr(store, 'trace_v5') else
+                        [json.loads(encoded) for (encoded,) in store.db.execute(
+                         'SELECT data FROM spans WHERE source=? AND trace=? ORDER BY digest',
+                         (actual_source, root['trace_id']))])
                 selected[actual_source].update(descendant_identities(rows, {root['span_id']}))
     return selected, {
         'source': source, 'roots': roots, 'binding_reasons': dict(reasons),

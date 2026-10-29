@@ -50,6 +50,19 @@ class CampaignV5(CampaignV4):
         from .collectors_v5 import make_collectors
         self.collectors = make_collectors(self.ctx, collector)
 
+    def before_workload_block(self, block_id, phase, state):
+        from .runtime_identity_v5 import capture
+        capture(self.ctx, "before-" + block_id)
+
+    def after_workload_block(self, block_id, phase, state):
+        from .runtime_identity_v5 import capture
+        capture(self.ctx, "after-" + block_id)
+
+    def snapshot(self, stage):
+        super().snapshot(stage)
+        from .identity_projection_v5 import refresh
+        refresh(self, stage)
+
     def freeze(self):
         plans = [p for p in self.plans if p["phase"] in ("class_train", "calibration")]
         if self.toolchain_execution == "worker":

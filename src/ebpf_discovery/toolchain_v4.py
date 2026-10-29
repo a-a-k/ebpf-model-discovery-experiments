@@ -492,7 +492,9 @@ class Toolchain:
                     manifest = export_selection(self.store, {source: None}, folder/'exports',
                         self.system+'-routed-network' if variant == 'network_scope' else None,
                         supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
-                        native_jaeger_envelope=self.native_jaeger_envelope)
+                        native_jaeger_envelope=self.native_jaeger_envelope,
+                        service_projections=(self.store.service_projections()
+                            if hasattr(self.store, 'service_projections') else None))
                     manifest.update(graph_input='all source-separated frozen training-prefix observations',
                         exported_wire_bytes=sum(Path(export['path']).stat().st_size for export in manifest['exports']),
                         causal_execution_inferred=False,
