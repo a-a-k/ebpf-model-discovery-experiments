@@ -90,6 +90,23 @@ approved after that CI passes on the integrated revision. DeepFlow also needs
 its separate reviewed startup/resource configuration before a repeat. No
 main-series or positive-result verdict is issued by this correction.
 
+The integrated private-network revision `a333cdd697b201c3168e4d8f9e5ede771f6d996a`
+passed [Linux and Docker CI 40895444290](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895444290).
+The preceding CI failed because the new Docker regression omitted its `socket`
+import; that test-only error was repaired before either pilot was repeated.
+
+DeepFlow startup and resource changes `06cc491` through `d548c984` received
+independent actual-code review: 78 relevant tests passed. They disable only the
+unrelated on-CPU profiler, use the pinned post-start marker, and derive positive
+memory/CPU settings from each guest's actual inventory. Memory is serialized in
+the MiB units required by the pinned agent. Docker and cgroup hard limits,
+including shared ancestor limits, are retained and checked. The resource claim
+is the common guest-wide envelope, not unlimited resources or zero data loss.
+Both orchestrator and skeptic give **GO for the original criterion** for one
+fixed DeepFlow Petclinic/absent/seed-6 repeat after the integrated Linux and
+private-network Docker checks pass. The raw selected-agent origin requirement,
+baselines, unknown handling and complete cost accounting are unchanged.
+
 Technical controls establish actual selected-agent acquisition and preserved
 bytes on both guests. They do not prove application protocol coverage, causal
 completeness, business semantics, or forecast accuracy. A technically valid

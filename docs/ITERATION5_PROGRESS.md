@@ -130,3 +130,19 @@ and GitHub artifact digests remain available in the linked runs.
 Smoke preparation, failed attempts, artifact retention and implementation effort
 remain costs of this iteration. A CI pass or technically complete all-unknown
 output does not establish the required graph-to-Sheaft-to-external-outcome path.
+
+The common private-network fixture passed real Docker CI on
+`a333cdd697b201c3168e4d8f9e5ede771f6d996a`
+([40895444290](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895444290)),
+including the occupied-host-port regression. The prior CI failure was a missing
+`socket` import in that new test, corrected before dispatch.
+The fixed [OBI repeat 40895622472](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895622472)
+and [Coroot repeat 40895637294](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895637294)
+were then dispatched at the same passing revision. Their results are pending.
+
+The DeepFlow repair also replaces the agent's default memory/CPU limits with
+positive settings derived from each guest's available resources, retaining raw
+inventory, generated configurations, actual Docker/cgroup constraints and
+preparation costs. It does not remove the common VM capacity bound. Independent
+review approved one fixed repeat after integrated CI; no application-capability
+or main-series conclusion follows from this configuration repair.
