@@ -43,6 +43,7 @@ DEEPFLOW_CONTAINER = "study-deepflow-v5"
 MAX_DATA_FILE_SIZE_MIB = 1_048_576
 MAX_DATA_FILE_SIZE_BYTES = 1 << 40
 NATIVE_RECEIVER_PORT = 4319
+DEEPFLOW_EBPF_READY_MARKER = "ebpf collector started"
 
 
 def _config() -> dict[str, Any]:
@@ -53,6 +54,15 @@ def _config() -> dict[str, Any]:
                 "max_data_file_size": MAX_DATA_FILE_SIZE_MIB,
                 "data_file_dir": "/var/log/deepflow-agent/",
             },
+        },
+        # Continuous CPU profiling is unrelated to L7 request collection and
+        # loads an additional DWARF-unwind BPF program during agent startup.
+        "inputs": {
+            "ebpf": {
+                "profile": {
+                    "on_cpu": {"disabled": True},
+                }
+            }
         },
         "processors": {
             "request_log": {
@@ -451,13 +461,16 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     node,
                     f"docker exec {self.container_name} sh -c "
                     + shlex.quote(
-                        "grep -h -E 'Start (.* )?dispatcher' "
+                        f"grep -h -F '{DEEPFLOW_EBPF_READY_MARKER}' "
                         "/var/log/deepflow-agent/* 2>/dev/null | head -n 1"
                     ),
                     timeout=30, check=False,
                 )
                 running.append(_returncode(state) == 0 and _stdout(state).strip() == "true")
-                dispatcher.append(_returncode(ready) == 0 and "dispatcher" in _stdout(ready).lower())
+                dispatcher.append(
+                    _returncode(ready) == 0
+                    and DEEPFLOW_EBPF_READY_MARKER in _stdout(ready).lower()
+                )
             if all(running) and all(dispatcher):
                 consecutive += 1
                 if consecutive >= 2:

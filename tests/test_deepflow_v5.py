@@ -9,6 +9,7 @@ import pytest
 from ebpf_discovery.collectors_v5 import CollectorsV5
 from ebpf_discovery.deepflow_v5 import (
     DEEPFLOW_CONTAINER,
+    DEEPFLOW_EBPF_READY_MARKER,
     DEEPFLOW_IMAGE,
     MAX_DATA_FILE_SIZE_BYTES,
     MAX_DATA_FILE_SIZE_MIB,
@@ -50,8 +51,8 @@ class Context:
             return Result('[{"Id":"sha256:pinned"}]')
         if "docker inspect" in command and "--format" in command:
             return Result("true\n")
-        if "grep -h -E" in command:
-            return Result("Start eBPF dispatcher\n")
+        if "grep -h -F" in command:
+            return Result("ebpf collector started\n")
         return Result("ok\n")
 
 
@@ -79,6 +80,47 @@ def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
     assert config["processors"]["request_log"]["tag_extraction"]["tracing_tag"]["x_request_id"] == [
         "x-experiment-request-id"
     ]
+    assert config["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
+
+
+def test_readiness_uses_pinned_success_marker_not_initialization_marker(
+        tmp_path: Path, monkeypatch) -> None:
+    ctx = Context(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    monkeypatch.setattr("ebpf_discovery.deepflow_v5.time.sleep", lambda _: None)
+
+    collector._wait_container_readiness()
+
+    commands = [command for _, command, _ in ctx.calls if "grep -h -F" in command]
+    assert len(commands) == 4
+    assert all(DEEPFLOW_EBPF_READY_MARKER in command for command in commands)
+    assert all("Start (.* )?dispatcher" not in command for command in commands)
+    assert json.loads((collector.root / "readiness.json").read_text()) == {
+        "ebpf_origin_proven": False,
+        "operational_only": True,
+        "ready": True,
+    }
+
+
+def test_readiness_does_not_accept_collector_initialization_line(
+        tmp_path: Path, monkeypatch) -> None:
+    class InitializingContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            result = super().node_exec(node, command, **kwargs)
+            if "grep -h -F" in command:
+                return Result("ebpf collector init... uprobe_meltdown: false\n")
+            return result
+
+    ctx = InitializingContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    clock = iter((0.0, 1.0, 91.0))
+    monkeypatch.setattr("ebpf_discovery.deepflow_v5.time.monotonic", lambda: next(clock))
+    monkeypatch.setattr("ebpf_discovery.deepflow_v5.time.sleep", lambda _: None)
+
+    with pytest.raises(RuntimeError, match="readiness not established"):
+        collector._wait_container_readiness()
+
+    assert json.loads((collector.root / "readiness.json").read_text())["ready"] is False
 
 
 def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path: Path, monkeypatch) -> None:
