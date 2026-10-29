@@ -130,6 +130,14 @@ for the same fixed OBI and DeepFlow smoke repeats after the integrated Linux and
 private-network Docker CI passes. The Coroot attempt remains separate; no
 main-series or positive-result approval is inferred from these repairs.
 
+The integrated `e24c9289afa5595ee17e6d33c697fc245bfde6ac` passed
+[Linux and Docker CI 40898462595](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898462595).
+Both agents also give original-criterion GO for the next predeclared OBI
+Petclinic/absent/seed-6 smoke at that revision. It exercises the local toolchain
+independently of the DeathStarBench remote worker; it adds no new experimental
+cell or favorable-result condition. Unavailable forecasts are not technical
+failures and cannot be required to become available for qualification.
+
 Technical controls establish actual selected-agent acquisition and preserved
 bytes on both guests. They do not prove application protocol coverage, causal
 completeness, business semantics, or forecast accuracy. A technically valid
