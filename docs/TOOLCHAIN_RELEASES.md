@@ -45,6 +45,27 @@ chart version and appVersion are both `1.3.0`. Published metadata checksums,
 chart contents, anonymous image manifests/configs and anonymous chart retrieval
 were verified. The model/snapshot contracts remain `1.3.0`.
 
+Stack 1.5.0 passed exact-head integration CI and publication, including the
+anonymous packaged preflight. Its chart was also pulled anonymously from OCI:
+manifest `sha256:8217a7f12616ba348ef89716ca747c95fdff596b923611ffb5a900a1c1956958`,
+chart bytes `sha256:6385eeb7df3c97065608671c72795dd0969e4aabe6bd8b01ba5b91af89e64099`.
+The package matches the GitHub release asset and has version/appVersion `1.5.0`.
+
+Related current-main updates passed independent review and exact-head CI:
+
+- [Sheaft PR 101](https://github.com/MB3R-Lab/Sheaft/pull/101), merge
+  `d59cfc63031095bf1f2346cf24849b060411d411`, verifies the actual published Bering
+  1.3.0 package and canonical model/snapshot fixtures in
+  [run 40886639089](https://github.com/MB3R-Lab/Sheaft/actions/runs/40886639089).
+  This updates current app compatibility; it does not retag Sheaft 1.3.2 or
+  change model schemas or simulation behavior.
+- [OTel integration PR 8](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/8),
+  merge `2c50aa53cb63875bf3c7e442bf914bb26dea82ae`, updates its runtime Bering image
+  to the published 1.3.0 digest. [Checks](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193770)
+  and the [existing gate](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193685)
+  passed. Native OTLP configuration and the historical reproduction package remain
+  unchanged. No collector vendor configuration was added to the integration.
+
 The [Bering chart metadata](https://github.com/MB3R-Lab/Bering/releases/download/v1.1.1/chart-metadata.json)
 records `ghcr.io/mb3r-lab/charts/bering:1.1.1` at
 `sha256:8895a5c1e8b208f58c66d526e9663578f9402f139b1f983253afb5f3bd6c87a6`.

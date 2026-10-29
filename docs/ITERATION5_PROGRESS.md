@@ -30,6 +30,12 @@ retained in the study manifests. Logical source IDs/domains isolate observations
   and its chart passed [publication and anonymous preflight download/run](https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40886588360).
   Downloaded manifest and chart hashes match the published assets; the chart
   version/appVersion are `1.5.0`, and its prerelease annotation is false.
+- [Sheaft PR 101](https://github.com/MB3R-Lab/Sheaft/pull/101) and
+  [OTel integration PR 8](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/8)
+  merged after their required checks. They update published-package compatibility
+  and the runtime image respectively; the existing Sheaft release and schemas
+  remain unchanged. Full revision, run and digest evidence is in
+  [TOOLCHAIN_RELEASES.md](TOOLCHAIN_RELEASES.md).
 
 ## Smoke history
 
