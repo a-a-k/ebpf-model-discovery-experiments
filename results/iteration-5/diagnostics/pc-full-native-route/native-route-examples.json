@@ -1,0 +1,69 @@
+{
+  "scope": "Exact representative saved raw native OTLP attributes, not corpusmetric/reclassification/recompute",
+  "examples": [
+    {
+      "file": "toolchain/inputs/native/raw/exports/native-000400.json",
+      "file_sha256": "ab99cbd2d00b1290f73fc28bfd3a731b18ca132717dcb0c19be540c2af562724",
+      "service": "api-gateway",
+      "span_name": "GET /api/gateway/owners/{ownerId}",
+      "span_id": "bf1e72fe3cef8c9e",
+      "kind": 2,
+      "attributes": {
+        "http.request.method": {"stringValue": "GET"},
+        "url.path": {"stringValue": "/api/gateway/owners/6"},
+        "url.scheme": {"stringValue": "http"},
+        "http.request.header.x-experiment-request-id": {"arrayValue": {"values": [{"stringValue": "req-b235e1450f4573c7bd793761974e86b74ec3dddc25b0ad0354f855c6c37f52cc"}]}},
+        "http.route": {"stringValue": "/api/gateway/owners/{ownerId}"},
+        "http.response.status_code": {"intValue": "200"}
+      }
+    },
+    {
+      "file": "toolchain/inputs/native/raw/exports/native-000400.json",
+      "file_sha256": "ab99cbd2d00b1290f73fc28bfd3a731b18ca132717dcb0c19be540c2af562724",
+      "service": "api-gateway",
+      "span_name": "GET customers",
+      "span_id": "4f988940cc7f9b6c",
+      "kind": 2,
+      "attributes": {
+        "http.request.method": {"stringValue": "GET"},
+        "url.path": {"stringValue": "/api/customer/owners"},
+        "url.scheme": {"stringValue": "http"},
+        "http.request.header.x-experiment-request-id": {"arrayValue": {"values": [{"stringValue": "req-30db96203ef91a8a42a406cab34eba51ab491b6b1c8a52ca8333fcdfef70be4b"}]}},
+        "http.route": {"stringValue": "customers"},
+        "http.response.status_code": {"intValue": "200"}
+      }
+    },
+    {
+      "file": "toolchain/inputs/native/raw/exports/native-000400.json",
+      "file_sha256": "ab99cbd2d00b1290f73fc28bfd3a731b18ca132717dcb0c19be540c2af562724",
+      "service": "api-gateway",
+      "span_name": "GET vets",
+      "span_id": "90c345dd1b26c553",
+      "kind": 2,
+      "attributes": {
+        "http.request.method": {"stringValue": "GET"},
+        "url.path": {"stringValue": "/api/vet/vets"},
+        "url.scheme": {"stringValue": "http"},
+        "http.request.header.x-experiment-request-id": {"arrayValue": {"values": [{"stringValue": "req-235ca2050adecdd8ebd6ec45a6b3d39a8dbcc75f3bd47dffd295fa76174a9610"}]}},
+        "http.route": {"stringValue": "vets"},
+        "http.response.status_code": {"intValue": "200"}
+      }
+    },
+    {
+      "file": "toolchain/inputs/native/raw/exports/native-000400.json",
+      "file_sha256": "ab99cbd2d00b1290f73fc28bfd3a731b18ca132717dcb0c19be540c2af562724",
+      "service": "api-gateway",
+      "span_name": "POST visits",
+      "span_id": "3747d01ecefce898",
+      "kind": 2,
+      "attributes": {
+        "http.request.method": {"stringValue": "POST"},
+        "url.path": {"stringValue": "/api/visit/owners/1/pets/1/visits"},
+        "url.scheme": {"stringValue": "http"},
+        "http.request.header.x-experiment-request-id": {"arrayValue": {"values": [{"stringValue": "req-77e352ef32fef6c8d5db21502562c1b47b7a6966a8e7eaf97e6e9ca6382ce256"}]}},
+        "http.route": {"stringValue": "visits"},
+        "http.response.status_code": {"intValue": "201"}
+      }
+    }
+  ]
+}
