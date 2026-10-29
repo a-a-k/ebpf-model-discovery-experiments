@@ -117,7 +117,7 @@ def _retain_ingest_error(response, export, run_dir, endpoint, export_index):
 
 
 def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
-           publication_mode='on_shutdown', collector_profile=None):
+           publication_mode='on_shutdown', source_profile=None):
     """One offline discovery batch, with all graph construction inside Bering.
 
     New runs publish only on shutdown, without a clock window. Explicit windowed
@@ -137,17 +137,18 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
     quality_path = folder / (prefix + '.signal-quality.json')
     exports = manifest['exports']
     count = manifest['observations']
-    profile = dict(collector_profile or {'collector': 'obi', 'input_type': 'ebpf-obi'})
-    collector, input_type = profile.get('collector'), profile.get('input_type')
-    if input_type == 'ebpf-obi' and collector == 'obi':
+    profile = dict(source_profile or {'source_id': 'obi', 'input_type': 'ebpf-obi'})
+    source_id, input_type = profile.get('source_id'), profile.get('input_type')
+    if input_type == 'ebpf-obi' and source_id == 'obi':
         source_id, source = 'obi', {'id': 'obi', 'type': 'ebpf-obi', 'domain': domain,
                                     'capture_directory': str(run_dir / 'obi-capture')}
-    elif input_type == 'ebpf-otlp' and isinstance(collector, str):
-        source_id = 'ebpf'
-        source = {'id': source_id, 'type': 'ebpf-otlp', 'collector': collector,
+        expected_connector = 'obi'
+    elif input_type == 'ebpf-otlp' and isinstance(source_id, str) and source_id:
+        source = {'id': source_id, 'type': 'ebpf-otlp',
                   'domain': domain, 'capture_directory': str(run_dir / 'ebpf-capture')}
+        expected_connector = 'ebpf-otlp'
     else:
-        raise ValueError('invalid Bering collector profile')
+        raise ValueError('invalid Bering logical source profile')
     config = {
         'server': {'listen_address': f'127.0.0.1:{port}', 'grpc_listen_address': '',
                    'max_request_bytes': max([5242880, *(decoded_size(e) + 1 for e in exports)])},
@@ -172,7 +173,7 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
                        '--report', str(resource_path), '--', *argv]
     record = {'argv': argv, 'started_ns': time.time_ns(), 'input_observations': count,
               'publication_mode': publication_mode,
-              'source_domain': domain, 'collector_profile': profile,
+              'source_domain': domain, 'source_profile': profile,
               'clock_admission_filter': False,
               'discovery_mode': 'one offline batch; no historical reconciliation',
               'child_resource_report': str(resource_path)}
@@ -232,8 +233,9 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
         if sum(s.get('observations', 0) for s in snapshot['sources']) != count:
             raise RuntimeError('Bering source accounting differs from replayed raw inputs')
         if any(e['source'] == 'ebpf' for e in exports) and not any(
-                s['type'] == 'ebpf' and s['connector'] == collector for s in snapshot['sources']):
-            raise RuntimeError('Bering output lost its declared collector source attribution')
+                s['type'] == 'ebpf' and s['connector'] == expected_connector
+                for s in snapshot['sources']):
+            raise RuntimeError('Bering output lost its declared logical source attribution')
         # Extract the model emitted by Bering without adding nodes or edges.
         write_json(folder / (prefix + '.json'), snapshot['model'])
         record['status'] = 'complete'

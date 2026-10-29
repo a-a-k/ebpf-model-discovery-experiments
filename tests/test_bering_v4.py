@@ -43,7 +43,7 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
         def send_signal(self, _):
             sink = self.config['sink']
             selected = self.config['sources'][0]
-            connector = selected.get('collector', 'obi')
+            connector = 'obi' if selected['type'] == 'ebpf-obi' else 'ebpf-otlp'
             payload = {'model': graph, 'ingest': {'spans': ingest_count, 'dropped_spans': dropped},
                        'sources': [{'type': 'ebpf', 'connector': connector, 'observations': 1},
                                    {'type': 'traces', 'connector': 'otlp', 'observations': 1}]}
@@ -100,7 +100,7 @@ def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path, pub
     assert 'env' not in process.kwargs
 
 
-def test_replay_routes_named_collector_without_obi_label(tmp_path):
+def test_replay_routes_generic_source_without_collector_label(tmp_path):
     manifest, _, process = harness(tmp_path)
     response = Mock(status_code=200)
     sent = []
@@ -108,14 +108,15 @@ def test_replay_routes_named_collector_without_obi_label(tmp_path):
             patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
             patch('ebpf_discovery.bering_v4.requests.post', side_effect=lambda url, **kwargs: sent.append(url) or response):
         replay(tmp_path/'bering', manifest, tmp_path, 'same-deployment',
-               collector_profile={'collector': 'coroot', 'input_type': 'ebpf-otlp'})
+               source_profile={'source_id': 'ebpf', 'input_type': 'ebpf-otlp'})
     config = yaml.safe_load((tmp_path/'model-runtime'/'serve.yaml').read_text())
-    assert config['sources'] == [{'id': 'ebpf', 'type': 'ebpf-otlp', 'collector': 'coroot',
+    assert config['sources'] == [{'id': 'ebpf', 'type': 'ebpf-otlp',
                                   'domain': 'same-deployment',
                                   'capture_directory': str(tmp_path.resolve()/'model-runtime'/'ebpf-capture')}]
     assert sent[0].endswith('/sources/ebpf/v1/traces')
     evidence = json.loads((tmp_path/'model-runtime'/'replay-command.json').read_text())
-    assert evidence['collector_profile'] == {'collector': 'coroot', 'input_type': 'ebpf-otlp'}
+    assert evidence['source_profile'] == {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}
+    assert 'collector' not in config['sources'][0]
 
 
 def test_diagnostic_go_environment_is_child_only_and_retained(tmp_path, monkeypatch):

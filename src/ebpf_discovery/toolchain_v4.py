@@ -360,7 +360,7 @@ class Toolchain:
     def collector_static_input(self):
         return None
 
-    def bering_collector_profile(self):
+    def bering_source_profile(self):
         return None
 
     def select_entry_evidence(self, plans, contract, source, untyped):
@@ -523,7 +523,7 @@ class Toolchain:
         manifest = json.loads(input_path.read_text(encoding='utf-8'))
         return replay(self.bin/'bering', manifest, folder, self.system+'-deployment', overlay, prefix,
                       publication_mode=self.publication_mode,
-                      collector_profile=self.bering_collector_profile())
+                      source_profile=self.bering_source_profile())
 
     def database_nodes(self, model, quality):
         reference = self.inventory.get('database', {})

@@ -10,8 +10,8 @@ from .toolchain_v4 import Toolchain as ToolchainV4
 
 PROTOCOL_VERSION = 'graph-v5'
 PINS = {
-    'Procrustes': '6fe94072c841af0ce6e3e9117d4153095e910ed9',
-    'Bering': 'e0b7f1c0f79e34a57de50f9e10d40eb84f660859',
+    'Procrustes': 'f8d322bbea376d55c22d4c4f2d9fed257cc09f9f',
+    'Bering': '75fe863c014388d525e2912a76be156fb3e5f037',
     'Sheaft': '686a602f4e7b71f3612f1810885e29dd66c8733a',
 }
 _COLLECTOR = re.compile(r'[a-z0-9][a-z0-9._-]{0,63}')
@@ -50,22 +50,21 @@ class Toolchain(ToolchainV4):
         kwargs.setdefault('tool_pins', PINS)
         super().__init__(ctx, system, store, declaration, **kwargs)
 
-    def _legacy_obi(self):
-        return self.collector_provenance['collector'] == 'obi'
-
     def ebpf_collection_args(self):
-        args = ['--collection-source', 'ebpf-obi'] if self._legacy_obi() else [
-            '--collection-source', 'ebpf-otlp', '--collector', self.collector_provenance['collector']]
-        return [*args, '--source-domain', self.system+'-deployment']
+        return ['--collection-source', 'ebpf-otlp',
+                '--source-domain', self.system+'-deployment']
 
     def collector_static_input(self):
         return {**self.collector_provenance,
-                'procrustes_profile': 'ebpf-obi' if self._legacy_obi() else 'ebpf-otlp',
-                'bering_profile': 'ebpf-obi' if self._legacy_obi() else 'ebpf-otlp'}
+                'study_provenance_only': True,
+                'product_profile_contains_collector_identity': False,
+                'logical_source_id': 'ebpf',
+                'logical_source_domain': self.system+'-deployment',
+                'procrustes_profile': 'ebpf-otlp',
+                'bering_profile': 'ebpf-otlp'}
 
-    def bering_collector_profile(self):
-        return {'collector': self.collector_provenance['collector'],
-                'input_type': 'ebpf-obi' if self._legacy_obi() else 'ebpf-otlp'}
+    def bering_source_profile(self):
+        return {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}
 
     def select_entry_evidence(self, plans, contract, source, untyped):
         from .selection_v5 import select_planned
