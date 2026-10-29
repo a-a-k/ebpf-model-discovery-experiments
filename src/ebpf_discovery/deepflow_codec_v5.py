@@ -272,7 +272,14 @@ def _protocol_attributes(record: dict[str, Any], attributes: dict[str, Any]) -> 
     if protocol in {"Http1", "Http2"}:
         _add_if(attributes, "http.request.method", request_type)
         _add_if(attributes, "url.path", resource)
-        _add_if(attributes, "server.address", record.get("request_domain"))
+        # DeepFlow's request_domain is an HTTP authority and may include a
+        # port. Keep it as source provenance instead of overwriting the
+        # separately observed socket endpoint required by OTLP server.address
+        # and server.port.
+        _add_if(attributes, "deepflow.http.request_domain", record.get("request_domain"))
+        if record.get("tap_side") == "ServerProcess":
+            _add_if(attributes, "server.address", record.get("ip_dst"))
+            _add_if(attributes, "server.port", _integer(record, "port_dst"))
         _add_if(attributes, "network.protocol.version", record.get("version"))
         _add_if(attributes, "http.response.status_code", _integer(record, "response_code"))
         _add_if(attributes, "deepflow.http.endpoint", record.get("endpoint"))

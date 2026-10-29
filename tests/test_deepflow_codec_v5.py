@@ -97,6 +97,9 @@ def test_http_record_has_exact_time_raw_locator_and_no_invented_identity(tmp_pat
     assert attrs["process.command"] == "frontend"
     assert attrs["client.address"] == "192.0.2.1"
     assert attrs["client.port"] == "41000"
+    assert attrs["server.address"] == "192.0.2.2"
+    assert attrs["server.port"] == "8080"
+    assert attrs["deepflow.http.request_domain"] == "shop.test"
     assert attrs["deepflow.raw.offset"] == "0"
     raw = path.read_bytes()[:-1]
     assert attrs["deepflow.raw.length"] == str(len(raw))
@@ -119,6 +122,37 @@ def test_http_record_has_exact_time_raw_locator_and_no_invented_identity(tmp_pat
     assert accounting[0]["_runtime_identity"]["request_nonce"] == "attempt-step-1"
     assert accounting[0]["_runtime_identity"]["event_role"] == "synchronous_server_entry"
     assert accounting[0]["_runtime_identity"]["locator"]["sha256"] == attrs["deepflow.raw.sha256"]
+
+
+def test_http_client_authority_does_not_overwrite_observed_destination(tmp_path: Path) -> None:
+    path = tmp_path / "l7_flow_log"
+    _write(path, [_base(
+        tap_side="ClientProcess", process_id_0=321,
+        ip_dst="172.28.11.12", port_dst=8080,
+        request_domain="172.28.11.12:8080",
+    )])
+    batches, _, _ = codec_file(path, node="a")
+    attrs = _attrs(_spans(batches[0])[0])
+    assert attrs["server.address"] == "172.28.11.12"
+    assert attrs["server.port"] == "8080"
+    assert attrs["deepflow.http.request_domain"] == "172.28.11.12:8080"
+
+
+def test_http_server_retains_local_destination_and_exact_authority(tmp_path: Path) -> None:
+    path = tmp_path / "l7_flow_log"
+    _write(path, [_base(
+        tap_side="ServerProcess",
+        ip_src="192.0.2.51", port_src=49152,
+        ip_dst="192.0.2.52", port_dst=8080,
+        request_domain="api.internal:18080",
+    )])
+    batches, _, _ = codec_file(path, node="a")
+    attrs = _attrs(_spans(batches[0])[0])
+    assert attrs["client.address"] == "192.0.2.51"
+    assert attrs["client.port"] == "49152"
+    assert attrs["server.address"] == "192.0.2.52"
+    assert attrs["server.port"] == "8080"
+    assert attrs["deepflow.http.request_domain"] == "api.internal:18080"
 
 
 def test_documented_runtime_clock_is_projected_without_offset_estimation(tmp_path: Path) -> None:
