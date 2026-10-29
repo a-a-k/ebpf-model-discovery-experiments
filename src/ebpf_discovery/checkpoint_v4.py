@@ -190,7 +190,7 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
                     key = tuple(canonical[name] for name in (
                         'source_file', 'retained_file', 'offset', 'length', 'sha256'))
                     accounting_by_locator.setdefault(key, []).append(row)
-    records = []
+    records, snapshot_cache, deepflow_file_proofs = [], {}, {}
     for canonical in locators.values():
         retained = Path(canonical['retained_file'])
         if retained.is_absolute():
@@ -204,34 +204,53 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
                 or hashlib.sha256(segment).hexdigest() != canonical['sha256']):
             raise ValueError(f'runtime observation raw locator changed: {raw_relative}')
         raw_key = raw_relative.as_posix()
-        if raw_key not in copied:
-            _copy(raw_source, live_root, checkpoint, copied)
-        proof = {'locator': canonical, 'raw_file': copied[raw_key]}
         if retained.parts and retained.parts[0] == 'deepflow-raw':
             locator_key = tuple(canonical[name] for name in (
                 'source_file', 'retained_file', 'offset', 'length', 'sha256'))
             matches = accounting_by_locator.get(locator_key, [])
             if not matches:
                 raise ValueError(f'DeepFlow locator lacks codec accounting: {raw_relative}')
-            snapshot_path = raw_source.parent/'snapshot.json'
-            snapshot = json.loads(snapshot_path.read_text(encoding='utf-8'))
-            declarations = [row for row in snapshot.get('files', [])
-                            if row.get('snapshot_name') == raw_source.name]
-            if (len(declarations) != 1
-                    or declarations[0].get('copied_bytes') != raw_source.stat().st_size
-                    or declarations[0].get('copied_sha256') != _sha(raw_source)):
-                raise ValueError(f'DeepFlow snapshot does not bind retained raw file: {raw_relative}')
-            for dependency in (accounting_path, snapshot_path):
-                _, relative = _inside(dependency, live_root)
-                if relative.as_posix() not in copied:
-                    _copy(dependency, live_root, checkpoint, copied)
-            proof.update({
+            if raw_key not in deepflow_file_proofs:
+                snapshot_path = raw_source.parent/'snapshot.json'
+                _, snapshot_relative = _inside(snapshot_path, live_root)
+                snapshot_key = snapshot_relative.as_posix()
+                if snapshot_key not in snapshot_cache:
+                    snapshot = json.loads(snapshot_path.read_text(encoding='utf-8'))
+                    if snapshot_key not in copied:
+                        _copy(snapshot_path, live_root, checkpoint, copied)
+                    snapshot_cache[snapshot_key] = snapshot
+                else:
+                    snapshot = snapshot_cache[snapshot_key]
+                declarations = [row for row in snapshot.get('files', [])
+                                if row.get('snapshot_name') == raw_source.name]
+                if len(declarations) != 1:
+                    raise ValueError(f'DeepFlow snapshot does not uniquely declare raw file: {raw_relative}')
+                declaration = declarations[0]
+                expected_bytes, expected_sha = (declaration.get('copied_bytes'),
+                                                declaration.get('copied_sha256'))
+                if (type(expected_bytes) is not int or expected_bytes != raw_source.stat().st_size
+                        or not isinstance(expected_sha, str) or expected_sha != _sha(raw_source)):
+                    raise ValueError(f'DeepFlow snapshot does not bind retained raw file: {raw_relative}')
+                if raw_key not in copied:
+                    _copy(raw_source, live_root, checkpoint, copied)
+                deepflow_file_proofs[raw_key] = {
+                    'snapshot_manifest': copied[snapshot_key],
+                    'snapshot_expected_raw_bytes': expected_bytes,
+                    'snapshot_expected_raw_sha256': expected_sha,
+                }
+            accounting_relative = accounting_path.resolve().relative_to(live_root).as_posix()
+            if accounting_relative not in copied:
+                _copy(accounting_path, live_root, checkpoint, copied)
+            proof = {'locator': canonical, 'raw_file': copied[raw_key],
                 'codec_accounting_file': copied[
-                    accounting_path.resolve().relative_to(live_root).as_posix()],
+                    accounting_relative],
                 'codec_accounting_matching_rows': len(matches),
-                'snapshot_manifest': copied[
-                    snapshot_path.resolve().relative_to(live_root).as_posix()],
-            })
+                **deepflow_file_proofs[raw_key],
+            }
+        else:
+            if raw_key not in copied:
+                _copy(raw_source, live_root, checkpoint, copied)
+            proof = {'locator': canonical, 'raw_file': copied[raw_key]}
         records.append(proof)
     return records
 

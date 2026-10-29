@@ -8,6 +8,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from ebpf_discovery import checkpoint_v4 as checkpoint_module
 from ebpf_discovery.checkpoint_v4 import (
     _inside, _runtime_observation_dependencies, create_checkpoint, wait_for_release)
 from ebpf_discovery.store_v3 import ObservationStore
@@ -158,21 +159,28 @@ def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Pa
         campaign.ctx.journal.close()
 
 
-def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(tmp_path: Path):
+def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
+        tmp_path: Path, monkeypatch):
     live = tmp_path/'campaign'; checkpoint = tmp_path/'checkpoint'
     checkpoint.mkdir(); observations = live/'observations'
     raw = observations/'deepflow-raw'/'node-a'/'training'/'l7_flow_log'
     raw.parent.mkdir(parents=True)
-    body = b'{"request":"retained"}\n'; raw.write_bytes(body)
+    first, second = b'{"request":"first"}\n', b'{"request":"second"}\n'
+    body = first + second; raw.write_bytes(body)
     locator = {'source_file': 'a/l7_flow_log',
                'retained_file': raw.relative_to(observations).as_posix(),
-               'offset': 0, 'length': len(body),
-               'sha256': hashlib.sha256(body).hexdigest()}
+               'offset': 0, 'length': len(first),
+               'sha256': hashlib.sha256(first).hexdigest()}
+    second_locator = {**locator, 'offset': len(first), 'length': len(second),
+                      'sha256': hashlib.sha256(second).hexdigest()}
     _json(raw.parent/'snapshot.json', {'files': [{
         'snapshot_name': raw.name, 'copied_bytes': len(body),
         'copied_sha256': hashlib.sha256(body).hexdigest()}]})
-    accounting_rows = [{
-        **locator, '_runtime_identity': {'locator': locator}, 'status': 'normalized'}]
+    accounting_rows = [
+        {**locator, '_runtime_identity': {'locator': locator}, 'status': 'normalized'},
+        {**second_locator, '_runtime_identity': {'locator': second_locator},
+         'status': 'normalized'},
+    ]
     for ordinal in range(100):
         other = {**locator, 'source_file': f'a/irrelevant-{ordinal}',
                  'sha256': hashlib.sha256(str(ordinal).encode()).hexdigest()}
@@ -184,11 +192,24 @@ def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
         db.execute('CREATE TABLE spans(digest TEXT, data TEXT)')
         db.execute('INSERT INTO spans VALUES (?,?)', ('digest', json.dumps({
             '_runtime_identity': {'locator': locator}})))
+        db.execute('INSERT INTO spans VALUES (?,?)', ('digest-2', json.dumps({
+            '_runtime_identity': {'locator': second_locator}})))
     copied = {}
+    source_raw_hashes = 0
+    original_sha = checkpoint_module._sha
+    def tracked_sha(path):
+        nonlocal source_raw_hashes
+        if Path(path).resolve() == raw.resolve():
+            source_raw_hashes += 1
+        return original_sha(path)
+    monkeypatch.setattr(checkpoint_module, '_sha', tracked_sha)
     proofs = _runtime_observation_dependencies(live.resolve(), checkpoint, copied)
-    assert len(proofs) == 1
-    assert proofs[0]['locator'] == locator
-    assert proofs[0]['codec_accounting_matching_rows'] == 1
+    assert len(proofs) == 2
+    assert {proof['locator']['sha256'] for proof in proofs} == {
+        locator['sha256'], second_locator['sha256']}
+    assert all(proof['codec_accounting_matching_rows'] == 1 for proof in proofs)
+    assert source_raw_hashes == 1
+    assert len({proof['snapshot_manifest']['sha256'] for proof in proofs}) == 1
     for relative in (raw.relative_to(live),
                      (raw.parent/'snapshot.json').relative_to(live),
                      (observations/'deepflow-codec-accounting.jsonl').relative_to(live)):
