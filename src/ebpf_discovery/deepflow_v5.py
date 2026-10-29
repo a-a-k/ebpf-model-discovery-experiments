@@ -209,6 +209,9 @@ class DeepFlowCollectorsV5(CollectorsV5):
     def start(self) -> None:
         if self.started_ns is not None:
             raise RuntimeError("DeepFlow collector lifecycle cannot be restarted")
+        # This override creates its own receivers and containers, so it must
+        # enter the common lifecycle before any of those resources are made.
+        self._start_entered = True
         self.started_ns = time.time_ns()
         try:
             self._start_impl()

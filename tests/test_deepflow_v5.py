@@ -716,6 +716,29 @@ def test_start_rejects_rotation_threshold_not_above_guest_capacity(tmp_path: Pat
         collector.start()
 
 
+def test_successful_start_close_uses_normal_drain_not_never_started_branch(
+    tmp_path: Path, monkeypatch
+) -> None:
+    collector = DeepFlowCollectorsV5(Context(tmp_path))
+    drain_calls = []
+    monkeypatch.setattr(collector, "_start_impl", lambda: None)
+
+    def drain() -> dict:
+        drain_calls.append("drain")
+        return {"technical_valid": True}
+
+    monkeypatch.setattr(collector, "final_drain", drain)
+
+    collector.start()
+    collector.close()
+
+    assert collector._start_entered is True
+    assert collector._startup_complete is True
+    assert drain_calls == ["drain"]
+    assert collector._closed is True
+    assert not (collector.root / "startup-incomplete.json").exists()
+
+
 def test_final_drain_separates_retained_bytes_from_unproven_internal_flush(
     tmp_path: Path, monkeypatch
 ) -> None:

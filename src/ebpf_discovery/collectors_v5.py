@@ -213,6 +213,7 @@ class CollectorsV5:
         self.processes: dict[str, subprocess.Popen] = {}
         self.logs: list[Any] = []
         self.started_ns: int | None = None
+        self._start_entered = False
         self.positive_control_evidence: dict[str, Any] | None = None
         self._drained = False
         self._drain_evidence: dict[str, Any] | None = None
@@ -223,6 +224,9 @@ class CollectorsV5:
         return f"ebpf-{self.collector}"
 
     def start(self) -> None:
+        # Set this before creating receivers or guest containers.  close() may
+        # skip acquisition drain only when startup was never entered at all.
+        self._start_entered = True
         self.started_ns = time.time_ns()
         self._start_receivers()
         commands = {}
@@ -1011,6 +1015,38 @@ class CollectorsV5:
     def close(self) -> None:
         if self._closed:
             return
+        if not self._start_entered:
+            incomplete = {
+                "schema": "collector-incomplete-startup-v5",
+                "collector": self.collector,
+                "source_domain": self.source_domain,
+                "source_version": self.source_version,
+                "start_entered": False,
+                "startup_complete": False,
+                "cleanup_required": False,
+                "final_drain_attempted": False,
+                "technical_valid": False,
+                "closure_status": "unknown_start_never_entered",
+                "accepted_receiver_bytes_closed_and_hashed": None,
+            }
+            _write_json(self.root / "startup-incomplete.json", incomplete)
+            self._write_collector_metadata(
+                {
+                    "schema": "collector-lifecycle-v5",
+                    "collector": self.collector,
+                    "source_domain": self.source_domain,
+                    "source_version": self.source_version,
+                    "image": self.image,
+                    "lifecycle": "not_started",
+                    "closed_checkpoint": False,
+                    "selected_ebpf_origin_proven": None,
+                    "technical_valid": False,
+                    "closure_status": "unknown_start_never_entered",
+                    "startup_evidence": "startup-incomplete.json",
+                }
+            )
+            self._closed = True
+            return
         error = None
         try:
             if not self._drained:
@@ -1151,9 +1187,18 @@ class CollectorsV5:
                 "bytes": path.stat().st_size,
                 "sha256": _sha256_file(path),
             }
+        technical_valid = bool(
+            self._drain_evidence and self._drain_evidence.get("technical_valid")
+        )
         metadata.update(
-            lifecycle="closed",
-            closed_checkpoint=True,
+            lifecycle="closed" if technical_valid else "closed_incomplete",
+            closed_checkpoint=technical_valid,
+            technical_valid=technical_valid,
+            closure_status=(
+                "complete_saved_receiver_bytes"
+                if technical_valid
+                else "invalid_or_unknown_saved_receiver_closure"
+            ),
             closed_ns=time.time_ns(),
             selected_ebpf_origin_proven=(
                 self.positive_control_evidence or {}

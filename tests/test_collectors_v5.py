@@ -475,6 +475,85 @@ def test_obi_failed_start_close_does_not_claim_drain(
     assert not list(collector.root.glob("receiver-closed-*.json"))
 
 
+def test_coroot_never_started_close_records_unknown_without_drain(
+    tmp_path: Path, monkeypatch
+) -> None:
+    collector = CorootCollectorsV5(Context(tmp_path))
+    monkeypatch.setattr(
+        collector,
+        "final_drain",
+        lambda: (_ for _ in ()).throw(AssertionError("final drain must not run")),
+    )
+
+    collector.close()
+
+    incomplete = json.loads((collector.root / "startup-incomplete.json").read_text())
+    assert incomplete["start_entered"] is False
+    assert incomplete["cleanup_required"] is False
+    assert incomplete["final_drain_attempted"] is False
+    assert incomplete["technical_valid"] is False
+    assert incomplete["accepted_receiver_bytes_closed_and_hashed"] is None
+    manifest = json.loads((collector.root / "collector.json").read_text())
+    assert manifest["lifecycle"] == "not_started"
+    assert manifest["closed_checkpoint"] is False
+    assert manifest["closure_status"] == "unknown_start_never_entered"
+    assert manifest["selected_ebpf_origin_proven"] is None
+    assert not (collector.root / "drain-evidence.json").exists()
+    assert not list(collector.root.glob("receiver-closed-*.json"))
+
+
+def test_coroot_partial_start_still_cleans_created_resources(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class PartialReceiver:
+        def __init__(self) -> None:
+            self.returncode = None
+            self.terminated = False
+
+        def poll(self):
+            return self.returncode
+
+        def terminate(self) -> None:
+            self.terminated = True
+            self.returncode = 0
+
+        def wait(self, timeout=None):
+            return self.returncode
+
+    collector = CorootCollectorsV5(Context(tmp_path))
+    receiver = PartialReceiver()
+
+    def partial_receivers() -> None:
+        collector.processes["a"] = receiver
+        raise RuntimeError("receiver startup failed")
+
+    drain_calls = []
+
+    def cleanup_partial_start() -> dict:
+        drain_calls.append("collector-and-receiver-cleanup")
+        receiver.terminate()
+        collector._drain_evidence = {"technical_valid": False}
+        collector._finalize_checkpoint()
+        return dict(collector._drain_evidence)
+
+    monkeypatch.setattr(collector, "_start_receivers", partial_receivers)
+    monkeypatch.setattr(collector, "final_drain", cleanup_partial_start)
+
+    with pytest.raises(RuntimeError, match="receiver startup failed"):
+        collector.start()
+    collector.close()
+
+    assert collector._start_entered is True
+    assert drain_calls == ["collector-and-receiver-cleanup"]
+    assert receiver.terminated is True
+    assert not (collector.root / "startup-incomplete.json").exists()
+    manifest = json.loads((collector.root / "collector.json").read_text())
+    assert manifest["lifecycle"] == "closed_incomplete"
+    assert manifest["closed_checkpoint"] is False
+    assert manifest["technical_valid"] is False
+    assert manifest["closure_status"] == "invalid_or_unknown_saved_receiver_closure"
+
+
 def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
     tmp_path: Path, monkeypatch
 ) -> None:
