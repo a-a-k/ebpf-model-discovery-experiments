@@ -334,3 +334,35 @@ verify source hashes and attribute the corrected acquisition check to its new
 revision. It may not refit, replay, simulate or recompute empirical metrics.
 Actual implementation and adjudication evidence require independent review
 before DeathStarBench/absent main admission.
+
+## Shared guest clock domain for observed process identity
+
+Before implementation, both agents give ORIGINAL-criterion design GO for a
+minimal correction of the DeepFlow runtime-clock adapter. Actual pilot
+`40910393953` captured process IDs, guest identity and before/after inventories,
+but the adapter did not supply the documented clock relation expected by the
+resolver. Its sparse graph is conditional on that old adapter policy; it is not
+an intrinsic collector-capability result.
+
+Independent inspection of pinned DeepFlow `9a1219` shows that its eBPF timestamps
+use kernel monotonic time plus a freshly computed guest CLOCK_REALTIME minus
+CLOCK_MONOTONIC offset. The standalone configuration disables source NTP
+correction. The inventory helper reads these same guest clocks. This establishes
+the shared semantic clock domain. Observed endpoint-offset ranges do not prove
+hard bounds between samples, and must not be described that way.
+
+The corrected relation must be bound to pinned source, actual configuration,
+guest identity and retained hashes. It retains microsecond quantization and the
+possibility of unobserved clock steps. A universal hard adjustment bound was an
+extra proof requirement, beyond the original empirical criterion and strongest
+reasonable baseline. No arbitrary age, tolerance or eligibility threshold is
+introduced in its place. Actual reversed/order, boot, namespace, PID, process
+start, container ownership and before/after contradictions remain unknown.
+No service, PID, dependency or ancestry is guessed. The same relation and facts
+are available to every qualifying source and the direct baseline, with all
+preparation and validation costs retained.
+
+Actual code review, saved-input validation in Actions and a fresh fixed DeepFlow
+qualification precede any DeepFlow main dispatch. Original sparse outputs remain
+unchanged; no clock correction by itself establishes useful prediction or a cost
+advantage.

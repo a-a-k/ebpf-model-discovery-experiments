@@ -270,3 +270,49 @@ normalization and ingestion of the two observations. This is a reviewed handoff
 result only; no graph or measured ingest summary was emitted. The failed job and
 its costs remain retained. Both agents approved one fixed live Petclinic/absent/6
 repeat, without changing replay guards or claiming full qualification success.
+
+## Further actual-packet review and staged main groups
+
+The seven remaining OBI smoke cells completed acquisition. The DeathStarBench
+absent run `40909279346` failed its final application-mode check because that
+check incorrectly counted the retained Jaeger query API self trace. The original
+adapter policy already distinguishes this exact audit service from application
+tracing. The source trace, all raw records and original failed evaluation remain
+unchanged. After the reviewed correction, the first immutable adjudication
+`40913965976` failed before analysis due to a missing script import path. The
+corrected [adjudication 40914666129](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914666129)
+verified the full source ZIP and recomputed only acquisition validation. It
+confirms zero native application spans and one audit span, with no model replay,
+simulation or forecast/class/outcome metric recalculation.
+
+Independent actual-packet review has admitted all three DeathStarBench and all
+three Petclinic OBI modes for their matching fixed main repeats. OTel smoke
+packets are under review. Available forecasts and unknowns remain distinct from
+technical admission. These main groups have been dispatched:
+
+| Collector | System/mode | Seeds | Run |
+| --- | --- | --- | --- |
+| OBI | Petclinic/absent | 6, 7, 8 | [40910013685](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685) |
+| OBI | DeathStarBench/partial | 6, 7, 8 | [40910021896](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896) |
+| OBI | DeathStarBench/full | 6, 7, 8 | [40913407822](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822) |
+| OBI | Petclinic/partial | 6, 7, 8 | [40914709370](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370) |
+
+Coroot repeat `40909264363` passed actual-packet review after the supplied alias
+repair. Exact aliases resolve six observed callers; raw records remain unchanged
+and the semantic view retains the original 17 edges and zero endpoints. The raw
+capture contains CLIENT observations without the required server entry/header
+evidence, and forecasts remain unknown. This is a valid source/configuration
+result, not a graph-to-Sheaft success. Matching Petclinic/absent main repeats and
+remaining fixed smokes are admitted. [Run 40916651613](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40916651613)
+executes the three DeathStarBench smoke modes. Further dispatches leave runner
+capacity for separate toolchain workers; no workload, repeat or outcome rule is
+changed by staging.
+
+DeepFlow pilot `40910393953` completed capture and genuine Bering execution but
+produced a sparse graph. Investigation found an adapter omission: observed
+process IDs could not pass the runtime join because the adapter omitted a
+documented shared-guest-clock relation. The original sparse result is retained
+as a result of that configuration and policy, not attributed intrinsically to
+DeepFlow. The [reviewed correction design](REVIEW_V5.md) preserves actual identity
+contradictions, source-clock limitations and costs. No DeepFlow main group is
+admitted before its implementation and new fixed qualification are checked.
