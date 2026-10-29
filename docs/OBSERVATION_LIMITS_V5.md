@@ -1,6 +1,6 @@
 # Iteration 5 observation limits
 
-This note records two mechanisms established from retained iteration-5 evidence. It does not repair or recompute a result, change an admission decision, or claim that one observation source is generally superior.
+This note records mechanisms established from retained iteration-5 evidence and pinned collector source. It distinguishes observed failures from configuration risks. It does not recompute an existing result or claim that one observation source is generally superior.
 
 ## Petclinic native endpoint identity
 
@@ -18,7 +18,7 @@ The stable sources are [compact artifact `12929535044`](https://github.com/a-a-k
 
 At pinned DeepFlow v7.2.3 commit `9a1219fa5cf1471ba2ec8742019661567d98002e`, [`RelativeSysLoad`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/config/config.rs#L2597-L2622) defaults to `trigger_threshold: 1.0`, `recovery_threshold: 0.9`, and `metric: Load15`. [`SystemLoadGuard::check`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/utils/guard.rs#L84-L142) divides load by the reported CPU count (`system.cpus().len()`) and treats zero trigger or recovery as disabling this guard; it does not establish an affinity-available CPU count. The check raises or clears the guard exception; the surrounding guard loop performs the agent state transition.
 
-Research commit `6a616c685c10a7e17a80b1dda452d9da9e02a693` serializes explicit zero trigger and recovery values for that ambient-load guard in all DeepFlow arms. It does not alter other guards, collector source, codec, identity rules, workload, or resource envelope. The fixed OTel/absent smoke `40948057864` is still pending, so this note does not claim that the revision succeeded or that the earlier miss had no additional cause. Its emitted runtime YAML and acquisition evidence must be reviewed before that setting is admitted.
+Research commit `6a616c685c10a7e17a80b1dda452d9da9e02a693` serializes explicit zero trigger and recovery values for that ambient-load guard in all DeepFlow arms. It does not alter other guards, collector source, codec, identity rules, workload, or resource envelope. The fixed [OTel/absent smoke `40948057864`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948057864) subsequently passed independent actual-packet review: both guests captured the exact raw eBPF control, and the retained configuration and logs confirm the guard change. All 18 forecasts remain unknown. This establishes repaired technical collection for that setting, without attributing every missing application relation to the old guard.
 
 ## DeepFlow aggregate local-log retention
 

@@ -621,3 +621,38 @@ conversion, and the campaign must retain the pinned agent's typed update on both
 guests before application workload. No protocol, workload, collector identity,
 resource envelope, codec, graph rule, forecast rule or positive-result gate is
 changed. Actual-code review and integrated CI remain required.
+
+## Completed DeepFlow setting qualification and shared closure repair
+
+All nine DeepFlow system/mode settings subsequently passed independent actual
+review. The matching sources are Petclinic/absent `40930786566`,
+DeathStarBench/absent `40936796228`, Petclinic/partial `40943915967`,
+Petclinic/full `40943924937`, DeathStarBench/partial `40943318871`,
+DeathStarBench/full `40944249737`, OTel/partial and OTel/full `40942447288`,
+and the corrected OTel/absent repeat `40948057864`.
+
+Review covered exact compact/worker hashes, both raw eBPF controls, collector
+configuration, tracing mode, source clocks, the closed source index through
+worker import, pre-target graph/forecast freeze, real Bering executions, and
+actual Sheaft executions where frozen evidence admitted a forecast; unavailable
+cases did not execute Sheaft. Saved external outcomes and unknown forecasts
+remain unchanged. Complete old
+logs and unchanged raw prefixes show that the relevant old load/log guards did
+not activate in the accepted packets. The failed OTel/absent packet in
+`40942447288` remains a separate technical failure.
+
+The receiver normal-close repair and DeepFlow aggregate-retention repair passed
+independent code review and [integrated checks `40958092919`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40958092919)
+at `8a985f99bfd2ecd4ebe13274e100c86feaae0560`. Future DeepFlow starts must retain
+the actual typed retention-config update on both guests before workload. Earlier
+packets are not relabelled with the new configuration. The two failed OBI
+OTel/absent cells are repeated by [seed 7 run `40958365058`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40958365058)
+and [seed 8 run `40959052743`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40959052743);
+their earlier closure failures and all preparation costs remain retained.
+
+The separate saved DeepFlow checkpoint-accounting validation
+[`40953383041`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40953383041)
+passed actual review: all 485 dependency records and nine copied files were
+identical. This closes a preparation-equivalence check, not a scientific utility
+or full-scale speed/memory claim. The fixed study still contains 108 main cells,
+including the 27 access-blocked New Relic cells.

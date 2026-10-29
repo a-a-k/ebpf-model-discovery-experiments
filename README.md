@@ -2,11 +2,12 @@
 
 **Current work: iteration 5, matched main series and remaining collector qualification.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
-plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine OBI
-system/mode settings and all nine Coroot settings have passed actual smoke review;
-main groups are being staged. All nine OBI Petclinic main cells have passed actual
-evidence review. DeepFlow's corrected Petclinic/absent and DeathStarBench/absent
-pilots have also passed actual review; the other settings remain under qualification.
+plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine
+system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
+review; main groups are being staged. All nine OBI Petclinic main cells have passed
+actual evidence review. Coroot Petclinic/absent main packets and the first completed
+DeathStarBench repeat are under independent review. Technical smoke admission does
+not require an available or accurate forecast.
 The 27 New Relic main cells remain access-blocked. No utility or complete-cost
 advantage is claimed.
 Original large DeathStarBench runs failed during training-prefix preparation;
@@ -23,8 +24,8 @@ representation mismatch despite the exact URL being present in the raw traces;
 this is a pipeline limitation, not evidence of native information inferiority.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
-Two retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
-Petclinic native endpoint-binding mismatch and a DeepFlow technical guard failure
+The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
+Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.
 The [current intermediate snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
 contains five main cells: three absent-tracing repeats and two partial-tracing
