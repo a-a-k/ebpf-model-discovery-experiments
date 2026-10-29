@@ -681,3 +681,28 @@ asynchronous unknowns, native Petclinic route-binding limitation, direct-baselin
 equivalence and incomplete human/active-job cost accounting. Faithful publication
 does not establish utility or complete-cost superiority, and does not alter the
 earlier five-cell snapshot or the fixed campaign design.
+
+## Subsequent OBI OTel main evidence review
+
+OBI OpenTelemetry Demo/absent seed 6 from
+[40930805848](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848)
+at `f5ac530ec4a13cecd6178fffcdd886628f47af04` passed independent actual-main
+review. This brings the reviewed total to 13; the published intermediate
+snapshot's 12-at-preparation review boundary remains unchanged.
+
+Review verified the complete compact, 120 selected full-artifact members,
+96 frozen file bodies, all 6,088 worker declarations against the parent freeze,
+unchanged source-index/import identity, real tracing-mode configuration and
+closed capture. Four actual Bering branches processed the retained evidence;
+12 actual Sheaft invocations consumed models whose required calls and exact
+edge/endpoint IDs occur in the saved graphs. Forecasts precede validation.
+
+All three primary operations retain eBPF and combined forecasts of `0.875`
+against `2800/3200` independent outcomes for both variants. Native forecasts
+remain unavailable. Missing or ambiguous DB channels are manually assumed
+fulfilled in these conditional replica-only forecasts, equally for the direct
+baseline; DB-fault forecasts remain unknown. This does not establish asynchronous
+checkout completion, a classification gain over the base entry method, or a
+utility/complete-cost advantage. The successful cell used the original
+30-second receiver-close implementation and does not demonstrate an effect of
+the later closure repair. The failed seeds and all costs remain retained.
