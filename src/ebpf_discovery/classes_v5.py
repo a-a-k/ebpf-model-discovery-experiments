@@ -103,7 +103,7 @@ def fit(store, plans, declaration, out):
     training = [p for p in plans if p.get("phase") == "class_train"]
     model = {"schema_version": "classes-v5-family", "fit_phase": "class_train",
              "legacy_model": "classes-model.json", "sources": {},
-             "family_rule": "identical to frozen base entry/step/source signature",
+             "family_rule": "common graph-v5 entry-only observation baseline; legacy v4 exact-ID admission is retained separately",
              "structural_rule": "all distinct positive semantic sets retained, including nested sets",
              "multiplicity_rule": "retained in descriptors; never changes family or set-pattern identity",
              "business_subclasses": "unresolved; structural patterns are not business-operation labels",

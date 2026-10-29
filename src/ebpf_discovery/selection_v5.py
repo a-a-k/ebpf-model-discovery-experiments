@@ -36,9 +36,9 @@ def bind_entry(store, source, request_id, expected, entry_services, untyped_comp
         return None, 'request_identity_missing'
     expected_identity = (str(expected.get('method') or '').upper(),
                          canonical_route(expected.get('path') or ''))
-    matches = {}
+    matches, conflicted_matches = {}, {}
     for row in _candidates(store, source, request_id):
-        if row.get('service') not in entry_services or row.get('attribute_conflicts'):
+        if row.get('service') not in entry_services:
             continue
         explicit = row.get('kind') in _SERVER_KINDS
         supplied = (row.get('kind') in _UNTYPED_KINDS
@@ -50,7 +50,10 @@ def bind_entry(store, source, request_id, expected, entry_services, untyped_comp
         if observed_identity != expected_identity:
             continue
         row['_entry_server_role'] = 'observed_server' if explicit else 'declared_untyped_receiver'
-        matches[row['_observation_digest']] = row
+        target = conflicted_matches if row.get('attribute_conflicts') else matches
+        target[row['_observation_digest']] = row
+    if conflicted_matches:
+        return None, 'conflicting_matching_entry_evidence'
     if len(matches) != 1:
         return None, 'entry_missing' if not matches else 'multiple_distinct_entries'
     return next(iter(matches.values())), 'unique_observation_entry'

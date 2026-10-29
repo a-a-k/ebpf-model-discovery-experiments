@@ -83,6 +83,22 @@ def test_distinct_matches_are_ambiguous_even_with_same_header_method_and_route(t
         store.close()
 
 
+def test_matching_conflicted_entry_prevents_unique_selection(tmp_path):
+    conflicted = _span(name='conflicted')
+    conflicted['attributes'].extend([
+        _attribute('custom.entry.attribute', 'one'),
+        _attribute('custom.entry.attribute', 'two'),
+    ])
+    store = _store(tmp_path, [_span(name='valid'), conflicted])
+    try:
+        rows = store.candidates_v5('ebpf', 'opaque')
+        assert sum(bool(row.get('attribute_conflicts')) for row in rows) == 1
+        root, reason = bind_entry(store, 'ebpf', 'opaque', _plan()[0]['http_steps'][0], ['entry'])
+        assert root is None and reason == 'conflicting_matching_entry_evidence'
+    finally:
+        store.close()
+
+
 def test_same_semantics_from_distinct_guests_do_not_deduplicate(tmp_path):
     observations, native = tmp_path/'observations', tmp_path/'native'
     observations.mkdir(); native.mkdir()
