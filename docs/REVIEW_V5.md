@@ -418,3 +418,41 @@ validation and repeat costs remain reportable, with unknown human effort explici
 Required checks are old-code synthetic byte equivalence, malformed/tampered input,
 bounded allocation and rollback/publication behavior, followed by an immutable
 saved-packet comparison in Actions before affected repeats are admitted.
+
+## Persistent-process technical control
+
+Both agents give ORIGINAL-criterion design GO for a bounded common-fixture
+repair after Coroot Petclinic/full smoke `40922905708` failed the selected-eBPF
+positive control on one guest. The HTTP responder and private-network traffic
+were healthy and Coroot discovered the control containers, but no qualifying
+raw marker arrived from that guest. This is a technical acquisition miss, not
+application coverage or a collector-capability result.
+
+The old direct baseline keeps a shell alive while starting a fresh `wget`
+process for each request. Pinned Coroot source can silently decline an L7 record
+when its PID/FD connection association is missing or has a different timestamp.
+That makes short-lived socket ownership a supported hypothesis, not the proven
+cause of the failed run. The old fixture has also passed other cells, and all
+old successes, failures and costs remain unchanged.
+
+The reviewed design inserts a pinned long-lived HAProxy forwarder between the
+explicit wget load generator and the existing pinned HAProxy responder. It uses
+the same private bridge, fresh marker, 60-second technical-readiness bound and
+raw selected-agent proof in every collector arm. Coroot must bind the exact
+forwarder-client origin, excluding the load generator. OBI continues to accept
+either exact persistent HAProxy endpoint; DeepFlow retains its raw EBPF
+marker/locator/source rule and reports observed role/process descriptively.
+This does not require identical protocol roles across collectors or assert that
+the proxy is the only possible origin.
+
+Both HAProxy configurations and checks, container process evidence, generator
+and responder diagnostics, preparation/runtime resource costs, and complete
+container/network cleanup are retained. The forwarder's added setup and runtime
+cost apply equally to all arms and the direct/manual comparison ledger. No
+application, accuracy or positive-forecast gate is added, and no timeout is
+extended. A passing repeat would qualify only this technical fixture; it would
+not prove the old miss's internal cause or the research contribution.
+
+Implementation `293d2ab` is awaiting independent actual-code and Linux/Docker
+fixture review. No fixed failed-setting repeat or main admission is authorized
+by the design verdict alone.
