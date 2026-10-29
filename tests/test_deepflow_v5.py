@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from ebpf_discovery.collectors_v5 import CollectorsV5
 from ebpf_discovery.deepflow_v5 import (
     DEEPFLOW_IMAGE,
     MAX_DATA_FILE_SIZE_BYTES,
@@ -179,6 +180,60 @@ def test_capture_batches_flat_raw_with_portable_per_record_provenance(tmp_path: 
     )
     assert all({"offset", "length", "sha256", "retained_file"} <= item.keys()
                for item in accounting)
+
+
+def test_deepflow_raw_control_proof_uses_retained_ebpf_record(tmp_path: Path) -> None:
+    ctx = Context(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector.remote_roots = {"a": "/remote/a", "b": "/remote/b"}
+    marker = "deepflow-control-marker"
+    _remote_snapshot(ctx, collector, tmp_path, "a", "001-control", [_row(f"/{marker}")])
+    _remote_snapshot(ctx, collector, tmp_path, "b", "001-control", [_row("/other")])
+    capture = collector._capture_all("control")
+    assert capture["technical_valid"] is True
+    proof = collector._control_proof("a", marker)
+    assert proof["proven"] is True
+    assert proof["reason"] == "raw_deepflow_ebpf_http_record"
+    assert proof["signal_source"] == "EBPF"
+    assert proof["raw_sha256"]
+
+
+def test_deepflow_reuses_shared_haproxy_control_lifecycle(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class ControlContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if "-probe" in command and command.startswith("docker run"):
+                return Result("ok\n")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            if command.startswith("docker ps -a"):
+                return Result("")
+            return Result("ok\n")
+
+    ctx = ControlContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    captures = []
+    monkeypatch.setattr(
+        collector, "_capture_all",
+        lambda label, final=False: captures.append((label, final)) or {"technical_valid": True},
+    )
+    monkeypatch.setattr(
+        collector, "_control_proof",
+        lambda node, marker: {"proven": True, "reason": "raw_deepflow_ebpf_http_record"},
+    )
+    evidence = collector.certify_controls(timeout=1)
+    assert DeepFlowCollectorsV5.certify_controls is CollectorsV5.certify_controls
+    assert captures == [("positive-control", False)]
+    assert evidence["selected_ebpf_origin_proven"] is True
+    assert evidence["cleanup_verified"] is True
+    assert all("busybox httpd" not in command for _, command, _ in ctx.calls)
+    assert any("exec haproxy -W -db" in command for _, command, _ in ctx.calls)
 
 
 def test_clean_empty_live_capture_remains_pending_not_invalid(tmp_path: Path) -> None:

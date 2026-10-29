@@ -451,6 +451,7 @@ class CollectorsV5:
 
             deadline = time.monotonic() + timeout
             while time.monotonic() < deadline:
+                self._before_control_proof_poll(marker)
                 proofs = {
                     node: self._control_proof(node, marker) for node in ("a", "b")
                 }
@@ -547,6 +548,9 @@ class CollectorsV5:
         if not evidence["selected_ebpf_origin_proven"]:
             raise RuntimeError(f"{self.collector} eBPF positive control was not observed")
         return evidence
+
+    def _before_control_proof_poll(self, marker: str) -> None:
+        """Allow file-backed collectors to expose a fresh retained prefix."""
 
     def certify_controls(self, timeout: float = 60.0) -> dict[str, Any]:
         """Campaign-facing name for the retained, non-SDK eBPF positive control."""

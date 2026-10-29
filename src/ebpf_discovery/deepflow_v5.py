@@ -19,7 +19,6 @@ from typing import Any
 import yaml
 
 from .collectors_v5 import (
-    CONTROL_IMAGE,
     CollectorsV5,
     _attributes,
     _returncode,
@@ -546,76 +545,10 @@ class DeepFlowCollectorsV5(CollectorsV5):
                         }
         return {"proven": False, "reason": "marker_or_ebpf_origin_missing"}
 
-    def certify_controls(self, timeout: float = 60.0) -> dict[str, Any]:
-        marker = f"collector-control-v5-deepflow-{time.time_ns()}"
-        nodes: dict[str, Any] = {}
-        for index, node in enumerate(("a", "b")):
-            port = 18081 + index
-            self.ctx.node_exec(node, f"docker pull {shlex.quote(CONTROL_IMAGE)}", timeout=300)
-            server = f"study-ebpf-control-server-{node}"
-            client = f"study-ebpf-control-client-{node}"
-            self.ctx.node_exec(
-                node,
-                f"docker rm -f {server} {client} >/dev/null 2>&1 || true; "
-                f"docker run -d --name {server} --network host --entrypoint /bin/sh "
-                f"{shlex.quote(CONTROL_IMAGE)} -c "
-                + shlex.quote(
-                    f"mkdir -p /tmp/control; printf ok > /tmp/control/{marker}; "
-                    f"exec busybox httpd -f -p {port} -h /tmp/control"
-                ),
-                timeout=60,
-            )
-            request = self.ctx.node_exec(
-                node,
-                f"docker run -d --name {client} --network host --entrypoint /bin/sh "
-                f"{shlex.quote(CONTROL_IMAGE)} -c "
-                + shlex.quote(
-                    f"while true; do busybox wget -qO- http://127.0.0.1:{port}/{marker} "
-                    ">/dev/null || exit 1; sleep 1; done"
-                ),
-                timeout=60, check=False,
-            )
-            nodes[node] = {
-                "port": port, "server_container": server, "client_container": client,
-                "client_start_returncode": _returncode(request),
-                "control_image": CONTROL_IMAGE,
-            }
-            if _returncode(request):
-                raise RuntimeError(f"DeepFlow technical control failed to start on {node}")
-        deadline, proofs = time.monotonic() + timeout, {}
-        while time.monotonic() < deadline:
-            capture = self._capture_all("positive-control", final=False)
-            if not capture["technical_valid"]:
-                break
-            proofs = {node: self._control_proof(node, marker) for node in ("a", "b")}
-            if all(item.get("proven") for item in proofs.values()):
-                break
-            self.health()
-            time.sleep(1)
-        for node in ("a", "b"):
-            self.ctx.node_exec(
-                node,
-                f"docker rm -f study-ebpf-control-client-{node} study-ebpf-control-server-{node}",
-                timeout=30, check=False,
-            )
-        evidence = {
-            "schema": "collector-positive-control-v5",
-            "collector": self.collector,
-            "source_domain": self.source_domain,
-            "marker": marker,
-            "nodes": nodes,
-            "proofs": proofs,
-            "selected_ebpf_origin_proven": bool(proofs) and all(
-                item.get("proven") for item in proofs.values()
-            ),
-            "application_coverage": "not_assessed_by_technical_control",
-            "native_sdk": False,
-        }
-        _write_json(self.root / "technical-positive-control.json", evidence)
-        self.positive_control_evidence = evidence
-        if not evidence["selected_ebpf_origin_proven"]:
-            raise RuntimeError("DeepFlow eBPF HTTP positive control was not observed on both guests")
-        return evidence
+    def _before_control_proof_poll(self, marker: str) -> None:
+        capture = self._capture_all("positive-control", final=False)
+        if not capture["technical_valid"]:
+            raise RuntimeError("DeepFlow positive-control prefix capture is technically invalid")
 
     def _assess_terminal_logs(self, logs: str) -> dict[str, Any]:
         failures = [line for line in logs.splitlines()
