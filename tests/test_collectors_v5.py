@@ -495,6 +495,26 @@ def test_pinned_haproxy_control_fixture_executes() -> None:
         )
         assert persistent.returncode == 0
         assert persistent.stdout.strip() == "true"
+        exact_name = subprocess.run(
+            [
+                "docker", "ps", "-a", "--format", "{{.Names}}", "--filter",
+                f"name=^/{client}$",
+            ],
+            capture_output=True, text=True, check=False,
+        )
+        assert exact_name.returncode == 0
+        assert exact_name.stdout.splitlines() == [client]
+        subprocess.run(["docker", "rm", "-f", client, server], check=True)
+        for removed in (client, server):
+            absent = subprocess.run(
+                [
+                    "docker", "ps", "-a", "--format", "{{.Names}}", "--filter",
+                    f"name=^/{removed}$",
+                ],
+                capture_output=True, text=True, check=False,
+            )
+            assert absent.returncode == 0
+            assert absent.stdout.strip() == ""
     finally:
         subprocess.run(["docker", "logs", server], check=False)
         subprocess.run(["docker", "logs", client], check=False)
