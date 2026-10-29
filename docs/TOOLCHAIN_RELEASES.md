@@ -48,3 +48,20 @@ the OCI chart is `sha256:f76f6cddea288af4174e7a70ae986fc19145117646c5ba8b926a7aa
 Model and snapshot schemas remain 1.3.0. Related integration updates are under
 review; their older releases above remain historical evidence until new releases
 are verified. No research materials were added to Bering.
+
+
+Related current-main compatibility updates passed independent review and exact-head
+CI and were merged on 2026-10-29:
+
+- [Procrustes PR 2](https://github.com/MB3R-Lab/Procrustes/pull/2),
+  `ede4ae9b6595e57a32bf4ee886799cefb97e7f83`, updates the current release handoff link.
+- [Sheaft PR 100](https://github.com/MB3R-Lab/Sheaft/pull/100),
+  `e3cf8e158f004219568c7401b1fd486e4010d9c8`, verifies actual published Bering 1.2.0
+  fixtures without changing accepted schema pins or the simulator. It does not
+  relabel the existing Sheaft 1.3.2 release.
+- [OTel integration PR 6](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/6),
+  `ce25b8f2aa4132884a49ab7fd6019e45f0ceea4f`, updates the runtime Bering image.
+  The CI reproduction-package image remains separately pinned until a replacement
+  package is measured, published and verified.
+
+These changes do not silently change the research's fixed Procrustes/Sheaft pins.

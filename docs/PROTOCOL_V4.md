@@ -53,11 +53,17 @@ artifacts and the final evaluator/cost implementation.
 
 ## Versions and product boundary
 
+Original pins for the nine admitted Petclinic cells and staged OTel/full/6:
+
 | Tool | Source revision |
 |---|---|
 | Procrustes | `39f76000f8a39c971155e08ebffde829b525911b` |
 | Bering | `dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3` (v1.1.1) |
 | Sheaft | `686a602f4e7b71f3612f1810885e29dd66c8733a` (v1.3.2) |
+
+Future builds use Bering 1.2.0 at `6f806428509a640a6419058c2ad845ed44db7512`;
+the other two pins are unchanged. The adoption and exact historical replay modes
+are recorded below. Each cell retains its actual build provenance.
 
 All experimental adaptations, workload semantics, data and reports belong here.
 Procrustes is used as its current diagnostic static analyzer. Native and explicit
@@ -822,3 +828,18 @@ also require its staged-cell admission and an explicit version-transition review
 No valid cell is repeated merely to change the tool version or obtain a positive
 result. The original DSB HTTP 500 body remains unavailable: this is a supported
 batching-contract repair, not proof of that failure's exact cause.
+
+
+Implementation/execution review completed on 2026-10-29: root and independent
+6.1 Sol/xhigh reviewer gave explicit ORIGINAL-criterion GO for exactly one new
+DSB retained-input diagnostic at `fa2c454eaa5cca1a20a534ceb6e72ab64f8f8af3`, after
+independently repeating 86 focused tests and verifying exact-head CI `40798982219`.
+Run `40799411526` was dispatched once and bound to that head. Actual diagnostic
+integrity/resources remain required before fresh DSB traffic.
+
+The reviewer also approved the Bering 1.2.0 version transition for OTel's remaining
+eight cells after its current full/6 cell is admitted. No extra OTel diagnostic is
+required: generic mixed-source/overlay equivalence and the old worker's full-count,
+zero-drop, single-publication evidence address the publication-only change.
+Window metadata, timestamps and accepted-late counters need not be identical.
+This transition approval is neither parent-cell admission nor bulk execution GO.

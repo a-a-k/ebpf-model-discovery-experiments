@@ -29,8 +29,10 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 > also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
 > upload failure. Available logs are [permanently retained](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40791837386).
-> The exact server error is unknown. A calendar-boundary batching risk and failure
-> evidence retention are being repaired; no DSB cell is admitted.
+> The exact server error is unknown. Released Bering 1.2.0 removes calendar-window
+> publication from offline batches. A [new full-checkpoint DSB diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526)
+> is running after independent review and exact-head CI, with stronger failure
+> evidence retention; no DSB cell is admitted.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
