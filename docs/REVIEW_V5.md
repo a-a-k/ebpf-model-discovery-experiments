@@ -453,6 +453,24 @@ application, accuracy or positive-forecast gate is added, and no timeout is
 extended. A passing repeat would qualify only this technical fixture; it would
 not prove the old miss's internal cause or the research contribution.
 
-Implementation `293d2ab` is awaiting independent actual-code and Linux/Docker
-fixture review. No fixed failed-setting repeat or main admission is authorized
-by the design verdict alone.
+Implementation `293d2ab` plus readiness/provenance correction `45d6fca` passed
+independent actual-code review. Linux/Docker CI and one fixed Coroot
+Petclinic/full repeat must pass before matching full-mode main admission.
+
+## DeepFlow destination-address normalization
+
+Inspection of fresh pilot `40920573691` found that the research codec overwrote
+the observed destination IP with an HTTP authority (`host:port`) while also
+retaining a separate port. Pinned Bering expects the host and port separately.
+This known normalization defect superseded the initial matching-main GO; the
+pilot remains unchanged as evidence of its original configuration.
+
+Root and the skeptic approved the narrow source-faithful correction before
+implementation: preserve observed `ip_dst` and `port_dst` separately for both
+HTTP client and server records; retain exact `request_domain` as passive
+provenance. Actual code `ae6e1f3`, integrated at `3de01f8`, passed independent
+review and Linux/Docker CI `40928823255`. No service identity, ancestry, socket
+join or graph edge is inferred. A corrected fixed pilot still precedes main
+admission; absent genuine ancestry or named peer evidence can remain unknown.
+All sources and the direct baseline retain the same supplied semantic knowledge
+and complete preparation costs. This repair establishes no utility advantage.
