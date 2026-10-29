@@ -9,7 +9,7 @@ import re
 import sqlite3
 import time
 
-from .toolchain_v4 import PINS
+from .toolchain_v4 import PINS as V4_PINS
 
 
 CORE_FILES = (
@@ -161,11 +161,11 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
     return source_records, wire_records, metadata_records, absent_metadata
 
 
-def _toolchain(campaign, checkpoint: Path, copied: dict) -> dict:
+def _toolchain(campaign, checkpoint: Path, copied: dict, pins: dict) -> dict:
     live_root = campaign.ctx.out.resolve()
     path = live_root/'toolchain-build'/'toolchain-build.json'
     manifest = json.loads(path.read_text(encoding='utf-8'))
-    expected = {name.lower(): commit for name, commit in PINS.items()}
+    expected = {name.lower(): commit for name, commit in pins.items()}
     rows = manifest.get('binaries') or []
     if manifest.get('schema_version') != 'toolchain-build-v4' or len(rows) != len(expected):
         raise ValueError('training checkpoint lacks exact toolchain build manifest')
@@ -208,6 +208,13 @@ def create_checkpoint(campaign, folder: Path) -> dict:
     original_status = json.loads((folder/'status.json').read_text(encoding='utf-8'))
     if any(original_status.get(key) != identity[key] for key in ('system', 'mode', 'seed', 'commit')):
         raise ValueError('checkpoint identity differs from running campaign')
+    collector = None
+    pins = V4_PINS
+    if original_status.get('protocol_version') == 'graph-v5':
+        from .toolchain_v5 import PINS as V5_PINS, collector_provenance
+        collector = collector_provenance(live_root, original_status)
+        _copy(live_root/collector['collector_file'], live_root, folder, copied)
+        pins = V5_PINS
     index = _backup(campaign.store.db, folder/'observation-index.sqlite')
     with campaign.ctx.journal.lock:
         journal = _backup(campaign.ctx.journal.db, folder/'attempt-journal.sqlite')
@@ -224,7 +231,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
                 raise ValueError(f'deployment checkpoint contains a symlink: {path}')
             if path.is_file():
                 _copy(path, live_root, folder, copied)
-    binaries = _toolchain(campaign, folder, copied)
+    binaries = _toolchain(campaign, folder, copied, pins)
     manifest = {'schema_version': 'v4-training-prefix-checkpoint', 'identity': identity,
                 'status': 'partial_training_capture_only; no forecast or completed cell',
                 'source_cutoff_rule': 'exact files.consumed byte prefixes in backed-up observation-index.sqlite',
@@ -232,6 +239,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
                 'referenced_wire_bodies': wires, 'referenced_wire_metadata': wire_metadata,
                 'metadata_reference_absent': absent_metadata,
                 'toolchain': binaries,
+                **({'collector_provenance': collector} if collector is not None else {}),
                 'files': copied, 'created_ns': time.time_ns(),
                 'new_application_traffic': False, 'same_live_campaign_required_to_continue': True}
     _atomic_json(folder/'manifest.json', manifest)

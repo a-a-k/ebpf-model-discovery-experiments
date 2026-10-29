@@ -353,6 +353,25 @@ class Toolchain:
         self.bin = Path(os.environ.get('PBS_BIN', 'work/toolchain/bin')).resolve()
         self.inventory = json.loads((ctx.out/'deployment.json').read_text())
 
+    def ebpf_collection_args(self):
+        """Legacy v4 selection; v5 overrides this without relabeling v4 runs."""
+        return ['--collection-source', 'ebpf-obi', '--source-domain', self.system+'-deployment']
+
+    def collector_static_input(self):
+        return None
+
+    def bering_collector_profile(self):
+        return None
+
+    def select_entry_evidence(self, plans, contract, source, untyped):
+        """Compatibility seam for protocol-specific observation selection."""
+        return select_planned(self.store, plans, contract, source, untyped,
+                              include_descendants=False)
+
+    def endpoint_entry_evidence(self, roots, step, entry, endpoints):
+        """Compatibility seam for protocol-specific retained entry binding."""
+        return endpoint_alias_evidence(self.store, roots, step, entry, endpoints)
+
     def command(self, tool, args, folder, name):
         started = time.time_ns()
         result = self.ctx.run([str(self.bin/tool), *map(str, args)], timeout=None, check=False)
@@ -396,11 +415,11 @@ class Toolchain:
                     folder = self.root/'procrustes'/source/name/str(i)
                     folder.mkdir(parents=True, exist_ok=True)
                     write_json(folder/'goal.json', goal)
-                    selection = ['--collection-source', 'ebpf-obi', '--source-domain', self.system+'-deployment'] if source == 'ebpf' else []
+                    selection = self.ebpf_collection_args() if source == 'ebpf' else []
                     self.command('procrustes', ['analyze', *args, '--goal', folder/'goal.json',
                                                '--out-dir', folder, *selection], folder, 'preflight')
                     self.preflight_reports[source, name].append(folder/'report.json')
-        write_json(self.root/'static-inputs.json', {'deployment': self.inventory,
+        static_inputs = {'deployment': self.inventory,
             'tool_pins': self.tool_pins, 'bering_publication_mode': self.publication_mode,
             'native_jaeger_envelope': self.native_jaeger_envelope,
             'contracts': self.declaration.CONTRACTS,
@@ -410,7 +429,11 @@ class Toolchain:
             'scenario_limitation': 'custom workload driver is retained separately; no Tracetest scenario is fabricated to pass preflight',
             'supplied_placement_basis': 'rendered controlled-replica inventory, independently attributed',
             'network_scope_rule': 'one declared routed application address space on these two guests',
-            'unmatched_inventory': 'retained here; never inserted into graph'})
+            'unmatched_inventory': 'retained here; never inserted into graph'}
+        collector = self.collector_static_input()
+        if collector is not None:
+            static_inputs['collector'] = collector
+        write_json(self.root/'static-inputs.json', static_inputs)
 
     def static_overlay(self, model, source, operation):
         """Consume confirmed Procrustes output without importing expected topology."""
@@ -446,8 +469,7 @@ class Toolchain:
         try:
             for name, contract in self.declaration.CONTRACTS.items():
                 for source in ('ebpf', 'native'):
-                    _, evidence = select_planned(self.store, plans, contract, source, untyped,
-                                                 include_descendants=False)
+                    _, evidence = self.select_entry_evidence(plans, contract, source, untyped)
                     self.entry_evidence[source, name] = evidence
                     for identity, declaration in supplied_entry_roles(
                             self.store, evidence['roots'], contract['entry_services'], untyped).items():
@@ -497,7 +519,8 @@ class Toolchain:
     def discover(self, input_path, folder, overlay=None, prefix='model'):
         manifest = json.loads(input_path.read_text(encoding='utf-8'))
         return replay(self.bin/'bering', manifest, folder, self.system+'-deployment', overlay, prefix,
-                      publication_mode=self.publication_mode)
+                      publication_mode=self.publication_mode,
+                      collector_profile=self.bering_collector_profile())
 
     def database_nodes(self, model, quality):
         reference = self.inventory.get('database', {})
@@ -583,7 +606,7 @@ class Toolchain:
                         for field in ('name', 'container')
                         for name in aliases(self.inventory.get(key, {}).get(field))})
                     def proof_builder(entry):
-                        return {index: endpoint_alias_evidence(self.store,
+                        return {index: self.endpoint_entry_evidence(
                             self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
                             for index, step in enumerate(contract['steps'])}
                     selected_db, mapping = self.database_nodes(model, quality)

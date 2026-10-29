@@ -11,6 +11,7 @@ import pytest
 from ebpf_discovery.checkpoint_v4 import _inside, create_checkpoint, wait_for_release
 from ebpf_discovery.store_v3 import ObservationStore
 from ebpf_discovery.toolchain_v4 import PINS
+from ebpf_discovery.toolchain_v5 import PINS as V5_PINS
 from ebpf_discovery.transport_v4 import Journal
 
 
@@ -110,6 +111,38 @@ def test_checkpoint_is_closed_training_prefix_with_independent_sqlite_backups(tm
         campaign.ctx.journal.append('later_event')
         with sqlite3.connect(folder/'attempt-journal.sqlite') as db:
             assert db.execute('SELECT COUNT(*) FROM events').fetchone()[0] == 1
+    finally:
+        campaign.store.close()
+        campaign.ctx.journal.close()
+
+
+def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Path, monkeypatch):
+    campaign, _, _ = _capture(tmp_path, monkeypatch)
+    try:
+        live = campaign.ctx.out
+        status = json.loads((live/'status.json').read_text())
+        status.update(protocol_version='graph-v5', collector='coroot')
+        _json(live/'status.json', status)
+        _json(live/'observations'/'collector.json', {
+            'schema': 'collector-lifecycle-v5', 'collector': 'coroot',
+            'source_domain': 'ebpf-coroot'})
+        rows = []
+        for name, commit in V5_PINS.items():
+            path = live/'toolchain-build'/'bin'/name.lower()
+            data = ('v5-'+name).encode()
+            path.write_bytes(data)
+            rows.append({'name': name.lower(), 'commit': commit, 'binary': str(path.resolve()),
+                         'binary_sha256': hashlib.sha256(data).hexdigest(),
+                         'binary_bytes': len(data)})
+        _json(live/'toolchain-build'/'toolchain-build.json', {
+            'schema_version': 'toolchain-build-v4', 'binaries': rows})
+        folder = tmp_path/'v5-checkpoint'
+        create_checkpoint(campaign, folder)
+        manifest = json.loads((folder/'manifest.json').read_text())
+        assert manifest['collector_provenance']['collector'] == 'coroot'
+        assert manifest['files']['observations/collector.json']['sha256'] == hashlib.sha256(
+            (live/'observations'/'collector.json').read_bytes()).hexdigest()
+        assert {row['commit'] for row in manifest['toolchain']['binaries']} == set(V5_PINS.values())
     finally:
         campaign.store.close()
         campaign.ctx.journal.close()

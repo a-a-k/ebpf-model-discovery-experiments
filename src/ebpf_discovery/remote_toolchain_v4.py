@@ -27,7 +27,7 @@ import requests
 
 from .runtime import Context
 from .store_v3 import ObservationStore
-from .toolchain_v4 import PINS, Toolchain
+from .toolchain_v4 import PINS as V4_PINS, Toolchain as ToolchainV4
 from .bering_v4 import child_go_environment
 from .artifact_transport_v4 import unpack as unpack_transport
 
@@ -37,6 +37,8 @@ WORKFLOW = "toolchain-worker-v4.yml"
 WORKER_POLL_SECONDS = 60
 IDENTITY_KEYS = ("run_id", "commit", "system", "mode", "seed", "manifest_sha256")
 WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
+# Public compatibility seam used by existing v4 worker tests and callers.
+Toolchain = ToolchainV4
 
 
 def _sha(path: Path) -> str:
@@ -214,10 +216,25 @@ def _validate_checkpoint(root: Path, expected: dict, *, allow_toolchain: bool = 
     return manifest, {"manifest_sha256": _sha(manifest_path), "files": actual}
 
 
-def _verify_binaries(root: Path, manifest: dict, *, runtime_root: Path | None = None) -> dict:
+def _checkpoint_toolchain(root: Path, manifest: dict):
+    status_path = root / 'status.json'
+    if not status_path.is_file():
+        return V4_PINS, Toolchain, None
+    status = _read(status_path)
+    if status.get('protocol_version') != 'graph-v5':
+        return V4_PINS, Toolchain, None
+    from .toolchain_v5 import PINS as V5_PINS, Toolchain as ToolchainV5, collector_provenance
+    provenance = collector_provenance(root, status)
+    if manifest.get('collector_provenance') != provenance:
+        raise ValueError('checkpoint manifest collector provenance mismatch')
+    return V5_PINS, ToolchainV5, provenance
+
+
+def _verify_binaries(root: Path, manifest: dict, *, runtime_root: Path | None = None,
+                     pins: dict | None = None) -> dict:
     build = _read(root / "toolchain-build" / "toolchain-build.json")
     rows = build.get("binaries") or []
-    expected = {name.lower(): commit for name, commit in PINS.items()}
+    expected = {name.lower(): commit for name, commit in (V4_PINS if pins is None else pins).items()}
     if build.get("schema_version") != "toolchain-build-v4" or {r.get("name") for r in rows} != set(expected):
         raise ValueError("checkpoint toolchain build manifest differs from exact pins")
     proofs = {}
@@ -265,6 +282,7 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
             raise ValueError("exact worker campaign restore root is not empty")
         _safe_extract(checkpoint_zip, campaign_root)
         manifest, input_proof = _validate_checkpoint(campaign_root, expected)
+        pins, toolchain_type, collector_provenance = _checkpoint_toolchain(campaign_root, manifest)
         index_proof = _index_table_proof(campaign_root / "observation-index.sqlite")
         if _json_sha(index_proof) != expected.get("training_index_proof_sha256"):
             raise ValueError("worker checkpoint index differs logically from live parent training index")
@@ -274,7 +292,7 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
             text=True, capture_output=True).stdout.strip()
         if implementation_sha != expected.get("commit"):
             raise ValueError("worker checkout differs from parent scientific implementation")
-        binary_proof = _verify_binaries(campaign_root, manifest)
+        binary_proof = _verify_binaries(campaign_root, manifest, pins=pins)
         _make_binaries_executable(binary_proof)
         before = input_proof["files"]
         plans = _read(campaign_root / "plans.json")
@@ -295,7 +313,7 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
                 # This setting affects every Bering branch, not the Python
                 # parent, Procrustes or Sheaft. Retain it even if tools fail.
                 _atomic_json(artifact_root / "bering-go-environment.json", go_environment)
-                forecasts = Toolchain(ctx, expected["system"], store, declaration).forecast(plans)
+                forecasts = toolchain_type(ctx, expected["system"], store, declaration).forecast(plans)
         finally:
             store.close()
             if old_bin is None:
@@ -327,6 +345,8 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
                 ("artifact_id", "artifact_name", "artifact_digest")},
             "checkpoint_input": input_proof,
             "binaries": binary_proof,
+            **({"collector_provenance": collector_provenance}
+               if collector_provenance is not None else {}),
             "bering_go_environment": go_environment,
             "plans_sha256": expected["plans_sha256"],
             "training_index_proof": index_proof,
@@ -347,6 +367,8 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
             "workflow_sha": provenance["workflow_sha"],
             "plans_sha256": provenance["plans_sha256"],
             "training_index_proof_sha256": _json_sha(index_proof),
+            **({"collector_provenance": collector_provenance}
+               if collector_provenance is not None else {}),
             "toolchain_files": output_files,
         })
         status.update(status="complete", ended_ns=time.time_ns(), checkpoint_unchanged=True,
@@ -497,7 +519,10 @@ def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[d
                     artifact_name=f"training-v4-{campaign.system}-{campaign.ctx.mode}-{campaign.ctx.seed}-{ready['run_id']}",
                     plans_sha256=_json_sha(plans))
     manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
-    _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out)
+    pins, _, collector_provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
+    _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+    if collector_provenance is not None:
+        expected['collector_provenance'] = collector_provenance
     return expected, proof
 
 
@@ -514,6 +539,8 @@ def _verify_worker_output(root: Path, expected: dict, worker_run_id: int) -> dic
             or output.get("plans_sha256") != expected["plans_sha256"]
             or output.get("training_index_proof_sha256") != expected.get("training_index_proof_sha256")):
         raise ValueError("worker output status, run or plans binding mismatch")
+    if output.get('collector_provenance') != expected.get('collector_provenance'):
+        raise ValueError('worker output collector provenance mismatch')
     for key in IDENTITY_KEYS:
         if str(output.get("identity", {}).get(key)) != str(expected.get(key)):
             raise ValueError(f"worker output identity mismatch: {key}")

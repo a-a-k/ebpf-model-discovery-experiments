@@ -11,11 +11,29 @@ import sqlite3
 
 from ebpf_discovery import remote_toolchain_v4 as remote
 from ebpf_discovery import artifact_transport_v4 as transport
+from ebpf_discovery.toolchain_v5 import PINS as V5_PINS
 
 
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+
+def test_graph_v5_checkpoint_selects_v5_toolchain_from_bound_collector(tmp_path):
+    from ebpf_discovery.toolchain_v5 import Toolchain as V5Toolchain
+    write_json(tmp_path/'status.json', {'protocol_version': 'graph-v5', 'collector': 'coroot'})
+    write_json(tmp_path/'observations'/'collector.json', {
+        'schema': 'collector-lifecycle-v5', 'collector': 'coroot',
+        'source_domain': 'ebpf-coroot'})
+    provenance = {
+        'protocol_version': 'graph-v5', 'collector': 'coroot',
+        'source_domain': 'ebpf-coroot', 'collector_schema': 'collector-lifecycle-v5',
+        'collector_file': 'observations/collector.json'}
+    pins, toolchain, selected = remote._checkpoint_toolchain(
+        tmp_path, {'collector_provenance': provenance})
+    assert pins == V5_PINS
+    assert toolchain is V5Toolchain
+    assert selected == provenance
 
 
 def checkpoint(root, identity):
