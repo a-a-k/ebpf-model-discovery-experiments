@@ -260,20 +260,7 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
                 or recovery.get("status") == "recovered"
             ):
                 raise ValueError(f"invalid declared-file recovery proof: {folder}")
-            reports.append({
-                **declaration, "artifact": artifact, "manifest": manifest,
-                "root": str(folder), "evaluation": None,
-                "technical_complete_self_reported": False,
-                "full_source_artifact_available": full_available,
-                "full_source_artifact_reason": full_unavailable_reason,
-                "eligible_main_coverage": False,
-                "independently_admitted": False,
-                "missing_manifest_declared_files": missing_declared,
-                "declared_file_recovery": recovery,
-                "reason": "manifest_declared_file_unavailable",
-            })
-            continue
-        if recovery is not None:
+        elif recovery is not None:
             requested = recovery.get("requested_files")
             recovered = recovery.get("recovered_files")
             full_zip = (recovery.get("source") or {}).get("full_zip_verification")
@@ -331,6 +318,9 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
                 "full_source_artifact_reason": full_unavailable_reason,
                 "eligible_main_coverage": False,
                 "independently_admitted": False,
+                "manifest_declared_transport_complete": not missing_declared,
+                "missing_manifest_declared_files": missing_declared,
+                "declared_file_recovery": recovery,
                 "reason": "saved_evaluation_missing",
             })
             continue
@@ -361,7 +351,7 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
         if evaluation.get("primary_series_result") is not (stage == "main" and complete):
             raise ValueError(f"saved main verdict inconsistent with completeness: {evaluation_path}")
         source = _validate_source(folder, evaluation, identity[0]) if complete else None
-        coverage_eligible = complete and full_available
+        coverage_eligible = complete and full_available and not missing_declared
         reports.append({
             **declaration, "artifact": artifact, "manifest": manifest,
             "root": str(folder), "evaluation": evaluation,
@@ -371,8 +361,12 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
             "full_source_artifact_reason": full_unavailable_reason,
             "eligible_main_coverage": coverage_eligible,
             "independently_admitted": False,
+            "manifest_declared_transport_complete": not missing_declared,
+            "missing_manifest_declared_files": missing_declared,
+            "declared_file_recovery": recovery,
             "reason": (
                 None if coverage_eligible else
+                "manifest_declared_file_unavailable" if missing_declared else
                 full_unavailable_reason if complete else
                 "source_evaluation_technically_incomplete"
             ),
@@ -437,6 +431,7 @@ def build(
         attempts.append(saved or {
             **declaration, "root": None, "artifact": None, "manifest": None,
             "evaluation": None, "technical_complete_self_reported": False,
+            "manifest_declared_transport_complete": False,
             "full_source_artifact_available": False,
             "full_source_artifact_reason": "compact_artifact_not_retained",
             "eligible_main_coverage": False,
@@ -565,6 +560,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             item.get("run_id"), item.get("repository"), item.get("collector"), item.get("stage"),
             item.get("system"), item.get("mode"), item.get("seed"),
             item.get("technical_complete_self_reported"),
+            item.get("manifest_declared_transport_complete"),
             item.get("full_source_artifact_available"),
             item.get("eligible_main_coverage"), False,
             status.get("status"), artifact.get("artifact_id"), artifact.get("digest"),
@@ -572,7 +568,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             item.get("reason"),
         ])
     lines += _table([
-        "Run", "Repository", "Collector", "Stage", "System", "Mode", "Seed", "Self-reported complete",
+        "Run", "Repository", "Collector", "Stage", "System", "Mode", "Seed",
+        "Self-reported complete", "Declared transport complete",
         "Full source artifact available", "Coverage eligible", "Independently admitted",
         "Status", "Summary artifact", "Summary digest",
         "Full artifact", "Full digest", "Missing/incomplete reason",

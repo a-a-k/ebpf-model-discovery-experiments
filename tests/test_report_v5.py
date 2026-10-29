@@ -144,7 +144,7 @@ def test_hash_stage_and_source_pin_mismatches_are_rejected(tmp_path: Path) -> No
 
 def test_historically_omitted_declared_file_is_retained_unavailable(
         tmp_path: Path) -> None:
-    folder, _ = summary(tmp_path / "inputs", 18, "main")
+    folder, evaluation = summary(tmp_path / "inputs", 18, "main")
     journal = b'{"attempt":1}\n'
     manifest = json.loads((folder / "evaluation-manifest.json").read_text())
     manifest["files_sha256"]["attempt-journal.jsonl"] = hashlib.sha256(
@@ -152,6 +152,8 @@ def test_historically_omitted_declared_file_is_retained_unavailable(
     write(folder / "evaluation-manifest.json", manifest)
     provenance_path = folder / "artifact-provenance.json"
     provenance = json.loads(provenance_path.read_text())
+    provenance.update(full_artifact_id=None, full_artifact_digest=None,
+                      full_artifact_expired=None)
     source = {
         "repository": provenance["repository"], "run_id": 18,
         "head_sha": "a" * 40,
@@ -180,7 +182,11 @@ def test_historically_omitted_declared_file_is_retained_unavailable(
     attempt = result["main_attempts"][0]
     assert attempt["reason"] == "manifest_declared_file_unavailable"
     assert attempt["eligible_main_coverage"] is False
-    assert attempt["evaluation"] is None
+    assert attempt["evaluation"] == evaluation
+    assert attempt["technical_complete_self_reported"] is True
+    assert attempt["manifest_declared_transport_complete"] is False
+    assert attempt["full_source_artifact_available"] is False
+    assert attempt["independently_admitted"] is False
     assert attempt["missing_manifest_declared_files"] == proof["requested_files"]
     assert result["grid"]["technically_complete_main_cells"] == 0
 
