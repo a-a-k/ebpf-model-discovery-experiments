@@ -84,6 +84,49 @@ preparation defects, not evidence of application protocol coverage.
 Coroot has no completed smoke yet. New Relic access and license conditions remain
 unresolved; it has not been silently substituted or counted as measured.
 
+## Further fixed smoke attempts and diagnosis
+
+The integrated revision `161eb1d606a444e59ec18d6084bbcd62a256fd86` passed
+[Linux and Docker CI 40889975595](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40889975595).
+Three independently reviewed single-cell attempts ran at that revision:
+
+| Collector and fixed cell | Run | Actual preparation outcome |
+|---|---|---|
+| OBI, DeathStarBench/partial/6 | [40890296710](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890296710) | Prestarting the responder did not establish the required raw eBPF-origin proof. |
+| DeepFlow, Petclinic/absent/6 | [40890303219](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219) | Protected process access succeeded; collector readiness was not established. |
+| Coroot, Petclinic/absent/6 | [40890763831](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890763831) | The control server could not bind its port. |
+
+All three failed before primary workload operations. Their failures are not
+application forecast or protocol-capability findings.
+
+For OBI, the concrete fixture incompatibility is now established from configuration,
+container inspection and pinned source. Both controls used Docker host networking.
+OBI's `containers_only` process matcher rejects processes in the instrumenter's
+own network namespace when it has host PID access
+([pinned matcher](https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/b28e4e7fe0a01f1961b7c4747a13b8ff486d6fec/pkg/appolly/discover/matcher.go#L255)).
+The observed instrumented HAProxy PID on guest A belonged to a different process,
+not the control server. Starting the same host-networked control earlier could
+not address that filter. The provisional prestart workaround is being removed.
+
+Coroot's retained HAProxy log explicitly reports `Address in use` for
+`0.0.0.0:18081`; Petclinic already publishes its visits replica on the guest's
+port 18081. The common control is being moved to an owned private Docker network
+with no host port publication, for every collector. It retains the same fresh
+request and raw selected-agent origin requirements. All network preparation and
+cleanup costs remain attributable to the experiment.
+
+DeepFlow's retained logs show socket-tracer initialization followed by a failed
+load of the separate on-CPU profiler's `df_PE_dwarf_unwind` program (`errno 7`)
+and watchdog intervention. The attempted readiness marker also differed from
+the pinned version's actual post-start marker. The proposed repair disables
+unrelated CPU profiling and uses that exact marker; successful request acquisition
+still requires the unchanged raw eBPF control. The effect awaits a repeated smoke.
+
+For these three attempts, selected original ZIP members were inspected using
+HTTP byte ranges, with a local member hash inventory. No independent full-ZIP
+hash verification is claimed for those partial downloads; original full artifacts
+and GitHub artifact digests remain available in the linked runs.
+
 Smoke preparation, failed attempts, artifact retention and implementation effort
 remain costs of this iteration. A CI pass or technically complete all-unknown
 output does not establish the required graph-to-Sheaft-to-external-outcome path.
