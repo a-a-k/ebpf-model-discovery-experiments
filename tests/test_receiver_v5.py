@@ -119,3 +119,18 @@ def test_saved_byte_audit_rejects_incomplete_capture_directory(tmp_path: Path) -
     raw = _raw_capture_audit(output)
     assert raw["captures"] == []
     assert "incomplete raw capture directory" in raw["errors"][0]
+
+
+def test_jsonl_audit_counts_receiver_failures_and_corrupt_wrapper(tmp_path: Path) -> None:
+    wrapper = tmp_path / "a.jsonl"
+    wrapper.write_text('{"ok":true}\nnot-json\n', encoding="utf-8")
+    audited = _file(wrapper)
+    assert audited["record_count"] == 1
+    assert audited["json_decode_error_count"] == 1
+    assert audited["complete_jsonl"] is True
+
+    errors = tmp_path / "a.errors.jsonl"
+    errors.write_text('{"error":"invalid protobuf"}\n', encoding="utf-8")
+    failed = _file(errors)
+    assert failed["record_count"] == 1
+    assert failed["json_decode_error_count"] == 0

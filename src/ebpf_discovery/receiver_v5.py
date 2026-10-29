@@ -29,7 +29,10 @@ def _sha256(path: Path) -> str:
 
 def _file(path: Path) -> dict:
     if not path.exists():
-        return {"present": False, "bytes": 0, "sha256": None, "complete_jsonl": True}
+        return {
+            "present": False, "bytes": 0, "sha256": None, "complete_jsonl": True,
+            "record_count": 0, "json_decode_error_count": 0, "json_decode_errors": [],
+        }
     size = path.stat().st_size
     with path.open("rb") as stream:
         if size:
@@ -37,11 +40,27 @@ def _file(path: Path) -> dict:
             complete = stream.read(1) == b"\n"
         else:
             complete = True
+    records, decode_errors = 0, []
+    with path.open("rb") as stream:
+        for ordinal, line in enumerate(stream, 1):
+            if not line.strip():
+                decode_errors.append({"line": ordinal, "error": "blank JSONL record"})
+                continue
+            try:
+                value = json.loads(line.decode("utf-8"))
+                if not isinstance(value, dict):
+                    raise ValueError("JSONL record is not an object")
+                records += 1
+            except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
+                decode_errors.append({"line": ordinal, "error": str(exc)})
     return {
         "present": True,
         "bytes": size,
         "sha256": _sha256(path),
         "complete_jsonl": complete,
+        "record_count": records,
+        "json_decode_error_count": len(decode_errors),
+        "json_decode_errors": decode_errors[:20],
     }
 
 
@@ -110,7 +129,10 @@ def serve(port: int, output: Path, source: str, *, node: str, checkpoint: Path) 
         raw = _raw_capture_audit(output)
         valid = (
             wrapper["complete_jsonl"]
+            and wrapper["json_decode_error_count"] == 0
             and errors_file["complete_jsonl"]
+            and errors_file["json_decode_error_count"] == 0
+            and errors_file["record_count"] == 0
             and not raw["errors"]
         )
         checkpoint.write_text(
@@ -126,6 +148,9 @@ def serve(port: int, output: Path, source: str, *, node: str, checkpoint: Path) 
                     "wrapper": wrapper,
                     "errors": errors_file,
                     "raw_capture": raw,
+                    "receiver_parse_or_read_failure_count": errors_file["record_count"],
+                    "wrapper_json_decode_error_count": wrapper["json_decode_error_count"],
+                    "errors_json_decode_error_count": errors_file["json_decode_error_count"],
                     "saved_bytes_valid": valid,
                     "scope": (
                         "complete saved receiver bytes only; kernel, producer, and "
