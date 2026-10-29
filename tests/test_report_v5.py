@@ -411,6 +411,27 @@ def test_reference_tamper_and_stage_reference_tamper_are_rejected(tmp_path: Path
         render(tmp_path / "report2/evaluation-v5.json", tmp_path / "bad-stage.md")
 
 
+@pytest.mark.parametrize("recompute_self_hash", [False, True])
+def test_projection_cannot_diverge_from_source_payload(
+        tmp_path: Path, recompute_self_hash: bool) -> None:
+    summary(tmp_path / "inputs", 24, "main")
+    declarations = declared(tmp_path / "declared.json", [run(24, "main")])
+    build([tmp_path / "inputs"], declarations, tmp_path / "report")
+    aggregate_path = tmp_path / "report/evaluation-v5.json"
+    aggregate = json.loads(aggregate_path.read_text(encoding="utf-8"))
+    projection = aggregate["attempts"][0]["evaluation_projection"]
+    projection["evaluations"][0]["prediction"] = 0.99
+    if recompute_self_hash:
+        unhashed = {key: value for key, value in projection.items()
+                    if key != "projection_sha256"}
+        projection["projection_sha256"] = hashlib.sha256(json.dumps(
+            unhashed, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+        ).encode("utf-8")).hexdigest()
+    write(aggregate_path, aggregate)
+    with pytest.raises(ValueError, match="projection does not match source payload"):
+        render(aggregate_path, tmp_path / "bad-projection.md")
+
+
 def test_referenced_and_legacy_schemas_render_identical_tables(tmp_path: Path) -> None:
     summary(tmp_path / "inputs", 22, "smoke")
     summary(tmp_path / "inputs", 23, "main")

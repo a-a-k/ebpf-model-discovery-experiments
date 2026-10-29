@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 from pathlib import Path
 import zipfile
 
@@ -29,7 +30,8 @@ def test_compact_extraction_retains_exact_evaluation_bytes(tmp_path: Path) -> No
         bundle.writestr("evaluation-v5.json", original)
         bundle.writestr("status.json", b"{}\n")
     result = VALIDATOR._safe_extract(archive, tmp_path / "out")
-    assert result == {"evaluation-v5.json": original}
+    assert result["evaluation-v5.json"]["bytes"] == len(original)
+    assert result["evaluation-v5.json"]["sha256"] == hashlib.sha256(original).hexdigest()
     assert (tmp_path / "out/evaluation-v5.json").read_bytes() == original
 
 

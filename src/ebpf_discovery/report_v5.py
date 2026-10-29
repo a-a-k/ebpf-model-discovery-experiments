@@ -11,6 +11,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import tempfile
 from typing import Any
 import zlib
 
@@ -173,12 +174,18 @@ def resolve_evaluation_reference(reference: dict[str, Any], aggregate_path: Path
     if (not payload.is_file() or _digest(payload) != reference.get("gzip_sha256")
             or payload.stat().st_size != reference.get("gzip_bytes")):
         raise ValueError("saved evaluation payload gzip proof mismatch")
-    with gzip.open(payload, "rb") as stream:
-        restored = stream.read()
-    if (len(restored) != reference.get("source_bytes")
-            or hashlib.sha256(restored).hexdigest() != reference.get("source_sha256")):
-        raise ValueError("saved evaluation payload source proof mismatch")
-    value = json.loads(restored)
+    with tempfile.TemporaryFile(mode="w+b") as restored:
+        digest, size = hashlib.sha256(), 0
+        with gzip.open(payload, "rb") as stream:
+            while chunk := stream.read(1024 * 1024):
+                digest.update(chunk)
+                size += len(chunk)
+                restored.write(chunk)
+        if (size != reference.get("source_bytes")
+                or digest.hexdigest() != reference.get("source_sha256")):
+            raise ValueError("saved evaluation payload source proof mismatch")
+        restored.seek(0)
+        value = json.load(restored)
     if not isinstance(value, dict) or value.get("schema_version") != "evaluation-v5":
         raise ValueError("saved evaluation payload has wrong schema")
     return value
@@ -755,6 +762,17 @@ def _validate_payload_manifest(payload: dict[str, Any], aggregate_path: Path) ->
         if (not payload_path.is_file() or payload_path.stat().st_size != item.get("gzip_bytes")
                 or _digest(payload_path) != item.get("gzip_sha256")):
             raise ValueError("saved evaluation payload gzip proof mismatch")
+    for attempt in attempts:
+        evaluation_reference = attempt.get("evaluation_reference")
+        projection = attempt.get("evaluation_projection")
+        if evaluation_reference is None:
+            if projection is not None:
+                raise ValueError("projection exists without a source evaluation reference")
+            continue
+        evaluation = resolve_evaluation_reference(evaluation_reference, aggregate_path)
+        if _evaluation_projection(evaluation) != projection:
+            raise ValueError("saved evaluation projection does not match source payload")
+        del evaluation
 
 
 def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> dict[str, Any]:

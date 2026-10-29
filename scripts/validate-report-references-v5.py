@@ -97,7 +97,7 @@ def _extract_source_report(archive: Path, destination: Path) -> list[dict]:
     return proofs
 
 
-def _safe_extract(archive: Path, destination: Path) -> dict[str, bytes]:
+def _safe_extract(archive: Path, destination: Path) -> dict[str, dict]:
     destination.mkdir(parents=True, exist_ok=False)
     evaluations = {}
     with zipfile.ZipFile(archive) as bundle:
@@ -108,13 +108,19 @@ def _safe_extract(archive: Path, destination: Path) -> dict[str, bytes]:
         for entry in entries:
             if entry.is_dir():
                 continue
-            body = bundle.read(entry)  # verifies CRC
             target = (destination / PurePosixPath(entry.filename)).resolve()
             target.relative_to(destination.resolve())
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(body)
+            digest, size = hashlib.sha256(), 0
+            with bundle.open(entry) as source, target.open("wb") as output:
+                while chunk := source.read(1024 * 1024):  # verifies CRC at EOF
+                    output.write(chunk)
+                    digest.update(chunk)
+                    size += len(chunk)
             if entry.filename == "evaluation-v5.json":
-                evaluations[entry.filename] = body
+                evaluations[entry.filename] = {
+                    "path": target, "sha256": digest.hexdigest(), "bytes": size,
+                }
     return evaluations
 
 
@@ -138,9 +144,9 @@ def _recovery_semantics(value: dict) -> dict:
     return copied
 
 
-def _reconstruct_inputs(source: Path, destination: Path) -> tuple[dict[int, bytes], dict]:
+def _reconstruct_inputs(source: Path, destination: Path) -> tuple[dict[int, dict], dict]:
     retrieval = _json(source / "provenance/retrieval.json")
-    exact_evaluations: dict[int, bytes] = {}
+    exact_evaluations: dict[int, dict] = {}
     restored = []
     for row in retrieval:
         artifact = row.get("artifact")
@@ -194,7 +200,8 @@ def _reconstruct_inputs(source: Path, destination: Path) -> tuple[dict[int, byte
         _write(folder / "artifact-provenance.json", sidecar)
         restored.append({"run_id": row["run_id"], "status": row["status"],
                          "artifact_id": artifact_id,
-                         "evaluation_sha256": hashlib.sha256(found["evaluation-v5.json"]).hexdigest()})
+                         "evaluation_sha256": found["evaluation-v5.json"]["sha256"],
+                         "evaluation_bytes": found["evaluation-v5.json"]["bytes"]})
     return exact_evaluations, {"retrieval_rows": len(retrieval), "restored": restored}
 
 
@@ -212,6 +219,17 @@ def _old_selection_and_ids(aggregate_gzip: Path) -> tuple[dict | None, list[int]
 def _tables(path: Path) -> list[str]:
     return [line for line in path.read_text(encoding="utf-8").splitlines()
             if line.startswith("|")]
+
+
+def _same_uncompressed_bytes(source: Path, packed: Path) -> bool:
+    with source.open("rb") as left, gzip.open(packed, "rb") as right:
+        while True:
+            left_chunk = left.read(1024 * 1024)
+            right_chunk = right.read(1024 * 1024)
+            if left_chunk != right_chunk:
+                return False
+            if not left_chunk:
+                return True
 
 
 def validate(archive: Path, artifact_metadata: Path, run_metadata: Path, out: Path) -> dict:
@@ -255,9 +273,13 @@ def validate(archive: Path, artifact_metadata: Path, run_metadata: Path, out: Pa
         if original is None:
             raise ValueError("payload reference lacks original compact source bytes")
         value = resolve_evaluation_reference(reference, report_dir / "evaluation-v5.json")
-        restored_bytes = gzip.open(report_dir / reference["path"], "rb").read()
-        if restored_bytes != original or value != json.loads(original):
+        if (reference["source_sha256"] != original["sha256"]
+                or reference["source_bytes"] != original["bytes"]
+                or not _same_uncompressed_bytes(
+                    original["path"], report_dir / reference["path"],
+                )):
             raise ValueError("referenced payload does not restore exact source evaluation")
+        del value
         restored.append({"artifact_id": artifact_id, "source_sha256": reference["source_sha256"],
                          "source_bytes": reference["source_bytes"],
                          "gzip_sha256": reference["gzip_sha256"],
