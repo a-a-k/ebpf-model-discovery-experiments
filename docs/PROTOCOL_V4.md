@@ -854,11 +854,11 @@ CI `40800562445`. The review verified the complete compact ZIP digest/CRC,
 hashes, identical logical index before/after the worker, byte-identical imported
 forecasts and import-before-freeze-before-target ordering. Supervisor exit was
 clean. eBPF unknowns, native/combined errors and DB mapping unknowns remain valid
-results. Eight cells were dispatched once: absent6–8 `40803782214`, partial6–8
+results. Eight cells were dispatched once: absent6-8 `40803782214`, partial6-8
 `40803790289`, full7 `40803798632`, full8 `40803806299`. All four runs bind to
 `19ad30ea772ae5430432e2e05339a8c0d9fe0d1f`. A fresh 01:59:03 UTC owner-wide check
-found only the one DSB diagnostic active, so eight parent/worker pairs reserved
-17 jobs including that diagnostic. Archival run `40802785036` had completed.
+found only the one DSB diagnostic active, so eight parent/worker pairs budgeted
+17 job slots including that diagnostic. Archival run `40802785036` had completed.
 
 Subsequent scheduling refinement, before execution: root and independent skeptic
 also give explicit ORIGINAL-criterion operational-design GO to overlap ONE fresh
