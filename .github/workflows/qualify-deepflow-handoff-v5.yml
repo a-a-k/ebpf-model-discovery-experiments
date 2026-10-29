@@ -6,16 +6,15 @@ permissions:
 jobs:
   qualify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e .
+      - run: python -m pip install -e . pytest opentelemetry-proto
       - name: Run focused source and handoff checks
         run: |
-          python -m pytest \
+          python -m pytest --import-mode=importlib \
             tests/test_deepflow_handoff_v5.py \
             tests/test_deepflow_codec_v5.py \
             tests/test_raw_v4.py \

@@ -208,3 +208,36 @@ and recovery costs, and changes no saved evaluations. Missing recovery evidence
 remains explicitly incomplete while any valid saved evaluation is preserved.
 An Actions report-only repeat is approved after integrated CI; no campaign
 repeat, refitting or rescoring is needed for this transport defect.
+
+## Supplied logical aliases and derived-source handoff
+
+Both agents approved a minimal supplied logical-service alias policy. Exact
+container-name/guest mappings come from retained Compose inventory and are given
+equally to all observation arms and the direct baseline. They are supplied
+deployment semantics, not discovered process, instance, lifetime or causal
+identity. Restarts with the same logical role do not require a clock gate.
+Conflicting roles and incompatible model metadata remain explicit uncertainty;
+no server roles, headers, peer identities, dependencies or endpoints are created.
+
+Actual implementation `770cbd3` received independent original-criterion GO
+(49 relevant tests passed, one platform skip). Parent training freezes the table
+and its admission evidence before checkpointing; worker validation is read-only;
+later observations use the same frozen scoped map. Raw source records and Bering
+outputs are retained. One fixed Coroot Petclinic/absent/seed-6 repeat and remaining
+predeclared OBI smokes are approved after integrated CI. Prior qualifying cells
+may remain evidence only where unchanged semantics are demonstrated.
+
+DeepFlow handoff `1c8d51f` also received independent original-criterion GO
+(88 relevant checks). Derived OTLP is explicitly marked as non-original agent
+wire and bound to raw JSONL, accounting, snapshots and the codec through exact
+hash and deterministic payload checks. Ordinary OTLP wire checks are unchanged.
+The old failed checkpoint is not silently upgraded or called validated.
+
+Before another live DeepFlow repeat, `832b500` adds a bounded software
+qualification in Actions using actual pinned Procrustes and Bering binaries.
+Its synthetic non-control fixture tests export/ingestion, not application
+capability, simulation or scientific usefulness. No VM, workload, Sheaft run or
+favorable graph-shape requirement is introduced. Independent review passed 77
+selected checks. The arbitrary workflow duration cap was removed, and explicit
+test/protobuf dependencies and repository test mode were restored before dispatch.
+The actual Actions qualification result must be reviewed before the live repeat.

@@ -130,6 +130,16 @@ New Relic's local export, credential and license conditions remain unresolved;
 that arm must not be substituted or presented as measured while unavailable.
 No key is published, synthesized or passed into retained telemetry artifacts.
 
+Supplied logical-service aliases use exact guest-scoped container names and
+retained Compose deployment labels. The same frozen table is available to every
+source, both class variants and the direct baseline; direct methods are not
+restricted to the source-observed graph's admission rules. This is disclosed
+deployment knowledge, not automatic semantic discovery or physical instance
+identification. A restart with the same supplied role does not require temporal
+filtering. Ambiguous roles or incompatible merged metadata remain unknown, and
+raw names/graphs are retained. The alias layer cannot create server roles,
+request headers, causal links, peers, graph edges or endpoints.
+
 Product changes are generic source capabilities only. Experimental
 code, names, data, routes, results and links remain outside Bering and other product
 repositories. All four arms must eventually use the same reviewed toolchain pins.
