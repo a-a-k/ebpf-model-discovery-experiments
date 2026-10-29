@@ -35,3 +35,18 @@ semantic/evidence equality and execution costs. Small-input allocation results
 must not be generalized to a full campaign. Failed runs and repair/validation
 costs remain part of the history; preparation versions confound collector-only
 cost comparisons.
+
+The exact implementation at `5cfdd7c` passed CI `40941821118` and saved-journal
+validation [40941966903](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40941966903).
+Independent actual-output review verified the complete 18,080-byte output ZIP
+against API SHA-256 `037006a988a37828d055e21d2cb53a21444898ad42af0a4b775017f77b3b8e0d`.
+Actions verified the whole pinned source artifact and compared all 144 request
+transports in the 706-row journal: complete canonical transport bytes, per-request
+hashes and ambiguity handling matched. The full canonical stream was 1,347,695
+bytes with SHA-256 `5d3d323003489db1e1036f75daaa38c421001181a1249998a30d90d7303ccafb`.
+Both worker processes returned zero. This establishes saved-evidence equivalence;
+the small packet does not prove a full-campaign memory bound or shutdown cause.
+
+Previously qualified matching-setting execution resumed at that exact revision.
+Earlier failures and older running attempts retain their original source and
+cost attribution; no saved graph, forecast or outcome was recomputed by this check.

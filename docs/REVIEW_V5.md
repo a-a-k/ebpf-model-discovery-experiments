@@ -544,3 +544,23 @@ are retained, but validation success claims only evidence equivalence; it does
 not claim a memory improvement, run workloads, refit models, or compute graphs,
 forecasts, scores or outcomes. Independent actual-code review and an Actions
 result are still required before this check can qualify the repair.
+
+Actual output `40941966903` subsequently passed independent review at exact
+`5cfdd7c`, after CI `40941821118`: the 144 saved transports and full canonical
+stream matched, source integrity held, and both workers returned zero.
+[The validation record](JOURNAL_MEMORY_V5.md) gives exact hashes and limits.
+Matching-setting execution resumed; no contribution or shutdown-cause claim follows.
+
+DeepFlow DeathStarBench/absent pilot `40936796228` also passed actual technical
+review, bringing DeepFlow setting qualification to two of nine. Its real Bering
+graph contains 15 services, 13 Redis-hint edges and three endpoints; all 18 primary
+forecasts remain unknown and no Sheaft invocation is claimed. The retained raw
+protocol evidence does not justify a universal statement about Thrift or MongoDB.
+
+The referenced report representation passed independent actual-output review in
+`40940389382`: 39 exact source payloads restore unchanged, all 538 rendered table
+lines match the old representation, and the same five main cells are selected.
+The old snapshot is immutable. Per-seed figure code (`3bc6061`, layout correction
+`99b5db0`) passed independent review and CI; actual figures still require visual
+and companion-data inspection before publication. No new forecasts, uncertainty
+estimates, averages or accuracy thresholds are introduced.

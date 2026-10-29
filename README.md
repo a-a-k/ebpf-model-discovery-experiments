@@ -5,15 +5,16 @@ The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation an
 plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine OBI
 system/mode settings and eight Coroot settings have passed actual smoke review;
 main groups are being staged. Six OBI Petclinic main cells have passed actual
-evidence review. DeepFlow's corrected Petclinic/absent pilot has also passed
-actual review; its DeathStarBench/absent pilot is awaiting packet review.
+evidence review. DeepFlow's corrected Petclinic/absent and DeathStarBench/absent
+pilots have also passed actual review; the other settings remain under qualification.
 The 27 New Relic main cells remain access-blocked. No utility or complete-cost
 advantage is claimed.
 Original large DeathStarBench runs failed during training-prefix preparation;
 severe host memory pressure was observed, but the precise shutdown cause remains
 unproved. A [journal memory repair](docs/JOURNAL_MEMORY_V5.md) preserves exact
-evidence while avoiding retention of every response body. New affected starts
-await saved-data equivalence validation; failed attempts and their costs remain.
+evidence while avoiding retention of every response body. Independent saved-data
+equivalence validation passed and affected starts resumed; failed attempts and
+their costs remain.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
 The [current intermediate snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
