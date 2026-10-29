@@ -565,6 +565,20 @@ The old snapshot is immutable. Per-seed figure code (`3bc6061`, layout correctio
 and companion-data inspection before publication. No new forecasts, uncertainty
 estimates, averages or accuracy thresholds are introduced.
 
+All three OBI Petclinic/full main packets from `40924968145` subsequently passed
+actual review, bringing independently reviewed main cells to nine. Seed 7 keeps
+the owner-details outcome `2099/2400` against forecast `0.875` for all available
+sources and both variants; it is not excluded or rerun. Native entry-path
+limitations are explained from frozen raw inputs in
+[OBSERVATION_LIMITS_V5.md](OBSERVATION_LIMITS_V5.md). The earlier five-cell snapshot
+retains its original publication boundary.
+
+Coroot OTel/full smoke `40942437542` passed independent actual review of its
+complete compact and worker artifacts, all 950 worker payload files, both raw
+CLIENT controls, tracing configuration, source-index/closure proofs and pre-target
+freeze. All 18 forecasts remain unknown. Coroot now has nine matching settings
+technically qualified, without a positive-forecast or contribution gate.
+
 ## DeepFlow ambient-load circuit breaker
 
 DeepFlow OTel/absent smoke `40942447288` retained a technical acquisition
