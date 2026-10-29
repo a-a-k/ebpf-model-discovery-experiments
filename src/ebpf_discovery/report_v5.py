@@ -15,6 +15,8 @@ import tempfile
 from typing import Any
 import zlib
 
+from .compact_transport_v5 import PROOF_SCHEMA, verified_nonmaterialized_files
+
 
 COLLECTORS = ("obi", "deepflow", "newrelic", "coroot")
 SYSTEMS = ("deathstarbench", "otel_demo", "petclinic")
@@ -377,6 +379,11 @@ def _saved_summaries(
         hashes = manifest.get("files_sha256")
         if not isinstance(hashes, dict):
             raise ValueError(f"saved v5 summary lacks file hashes: {folder}")
+        nonmaterialized = set()
+        if zip_proof.get("schema_version") == PROOF_SCHEMA:
+            nonmaterialized = verified_nonmaterialized_files(
+                zip_proof, folder / "evaluation-manifest.json", artifact["digest"]
+            )
         missing_declared = []
         for name, expected in hashes.items():
             target = folder / name
@@ -384,7 +391,8 @@ def _saved_summaries(
                 if target.is_file():
                     raise ValueError(f"unexpected unhashed compact file: {target}")
             elif not target.is_file():
-                missing_declared.append({"name": name, "manifest_sha256": expected})
+                if name not in nonmaterialized:
+                    missing_declared.append({"name": name, "manifest_sha256": expected})
             elif _digest(target) != expected:
                 raise ValueError(f"saved v5 compact hash mismatch: {target}")
         if missing_declared:
@@ -454,6 +462,7 @@ def _saved_summaries(
                 "independently_admitted": False,
                 "manifest_declared_transport_complete": not missing_declared,
                 "missing_manifest_declared_files": missing_declared,
+                "verified_nonmaterialized_manifest_files": sorted(nonmaterialized),
                 "declared_file_recovery": recovery,
                 "reason": "saved_evaluation_missing",
             })
@@ -502,6 +511,7 @@ def _saved_summaries(
             "independently_admitted": False,
             "manifest_declared_transport_complete": not missing_declared,
             "missing_manifest_declared_files": missing_declared,
+            "verified_nonmaterialized_manifest_files": sorted(nonmaterialized),
             "declared_file_recovery": recovery,
             "reason": (
                 None if coverage_eligible else

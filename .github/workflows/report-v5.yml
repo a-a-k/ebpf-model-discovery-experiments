@@ -111,10 +111,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import hashlib, json, os, pathlib, stat, subprocess, zipfile
+          import hashlib, json, os, pathlib, subprocess, time
           from ebpf_discovery.artifact_recovery_v5 import (
               PROOF_NAME, missing_declared_files, recover_declared_files,
               retain_unavailable,
+          )
+          from ebpf_discovery.compact_transport_v5 import (
+              extract_verified_compact, remove_verified_working_copy,
+              verified_nonmaterialized_files,
           )
           provenance=pathlib.Path('results/iteration-5/provenance')
           declaration=json.loads((provenance/'declarations.json').read_text())
@@ -146,43 +150,39 @@ jobs:
                   destination.mkdir(parents=True,exist_ok=False)
                   archive=pathlib.Path('results/iteration-5/source-artifacts')/repo.replace('/','__')/f"{compact[0]['id']}.zip"
                   archive.parent.mkdir(parents=True,exist_ok=True)
+                  download_started=time.monotonic()
                   with archive.open('wb') as stream:
                       completed=subprocess.run(['gh','api',
                           f"repos/{repo}/actions/artifacts/{compact[0]['id']}/zip"],
                           stdout=stream,stderr=subprocess.PIPE)
+                  download_elapsed=time.monotonic()-download_started
                   if completed.returncode:
                       rows.append({**row,'status':'download_failed','artifact':compact[0],
                                    'returncode':completed.returncode,
                                    'stderr':completed.stderr.decode(errors='replace'),
-                                   'received_bytes':archive.stat().st_size}); continue
-                  received=archive.read_bytes()
-                  computed='sha256:'+hashlib.sha256(received).hexdigest()
+                                   'received_bytes':archive.stat().st_size,
+                                   'download_elapsed_seconds':download_elapsed}); continue
                   expected=compact[0].get('digest')
-                  if computed != expected:
-                      rows.append({**row,'status':'compact_zip_digest_mismatch','artifact':compact[0],
-                                   'expected_digest':expected,'computed_digest':computed,
-                                   'received_bytes':len(received)}); continue
-                  with zipfile.ZipFile(archive) as bundle:
-                      members=bundle.infolist(); names=[member.filename for member in members]
-                      for member in members:
-                          parts=pathlib.PurePosixPath(member.filename).parts
-                          mode=member.external_attr >> 16
-                          if (not member.filename or '\\' in member.filename
-                                  or pathlib.PurePosixPath(member.filename).is_absolute()
-                                  or '..' in parts or stat.S_ISLNK(mode)):
-                              raise SystemExit(f'unsafe compact artifact member: {member.filename!r}')
-                      if len(names) != len(set(names)):
-                          raise SystemExit(f'duplicate compact artifact member in {name}')
-                      bundle.extractall(destination)
+                  try:
+                      zip_proof=extract_verified_compact(
+                          archive,destination,expected_digest=expected,
+                          expected_bytes=compact[0].get('size_in_bytes'))
+                  except (OSError,ValueError) as error:
+                      raise SystemExit(f'compact ZIP verification failed for {name}: {error}')
+                  remove_verified_working_copy(archive,zip_proof)
+                  zip_proof['download_elapsed_seconds']=download_elapsed
+                  nonmaterialized=verified_nonmaterialized_files(
+                      zip_proof,destination/'evaluation-manifest.json',expected)
                   full_artifact=full[0] if full else None
                   full_available=bool(full_artifact and full_artifact.get('expired') is False)
-                  missing=missing_declared_files(destination)
+                  missing=missing_declared_files(destination,nonmaterialized)
                   recovery=None
                   recovery_source={
                       'repository':repo,'run_id':run_id,'head_sha':retained.get('head_sha'),
                       'compact_artifact_id':compact[0]['id'],'compact_artifact_name':name,
                       'compact_artifact_digest':compact[0].get('digest'),
-                      'compact_archive_path':str(archive),
+                      'compact_archive_path':None,
+                      'compact_archive_disposition':zip_proof['working_copy_disposition'],
                       'full_artifact_id':full_artifact.get('id') if full_artifact else None,
                       'full_artifact_name':full_name,
                       'full_artifact_digest':full_artifact.get('digest') if full_artifact else None,
@@ -204,15 +204,12 @@ jobs:
                               full_download.stderr.decode(errors='replace'))
                       else:
                           recovery=recover_declared_files(
-                              destination,full_archive,recovery_source)
+                              destination,full_archive,recovery_source,nonmaterialized)
                   elif missing:
                       unavailable=('full_artifact_expired' if full_artifact else
                                    'full_artifact_missing')
                       recovery=retain_unavailable(
                           destination,missing,recovery_source,unavailable)
-                  zip_proof={'expected_sha256':expected,'computed_sha256':computed,
-                      'received_bytes':len(received),'member_count':len(names),'safe_extract':True,
-                      'retained_path':str(archive)}
                   sidecar={'run_id':run_id,'repository':repo,'head_sha':retained.get('head_sha'),
                       'artifact_id':compact[0]['id'],'name':name,'digest':compact[0].get('digest'),
                       'expired':False,
@@ -241,6 +238,15 @@ jobs:
               else row.get('received_bytes',0)
               for row in rows if isinstance(row.get('compact_zip_verification'),dict)
               or type(row.get('received_bytes')) is int]
+          compact_download_seconds=[
+              (row['compact_zip_verification']['download_elapsed_seconds']
+               if isinstance(row.get('compact_zip_verification'),dict)
+               else row['download_elapsed_seconds'])
+              for row in rows if isinstance(row.get('compact_zip_verification'),dict)
+              or isinstance(row.get('download_elapsed_seconds'),(int,float))]
+          compact_verification_seconds=[
+              row['compact_zip_verification']['verification_elapsed_seconds']
+              for row in rows if isinstance(row.get('compact_zip_verification'),dict)]
           full_transfers=[]
           for row in rows:
               recovery=row.get('declared_file_recovery')
@@ -254,6 +260,8 @@ jobs:
           costs['report_artifact_transfer']={
               'compact_zip_downloads':len(compact_transfers),
               'compact_zip_received_bytes':sum(compact_transfers),
+              'compact_zip_download_elapsed_seconds':sum(compact_download_seconds),
+              'compact_zip_verification_elapsed_seconds':sum(compact_verification_seconds),
               'full_zip_recovery_downloads':len(full_transfers),
               'full_zip_recovery_received_bytes':sum(full_transfers),
               'total_received_bytes':sum(compact_transfers)+sum(full_transfers),

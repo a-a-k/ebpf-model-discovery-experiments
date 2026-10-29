@@ -1,0 +1,70 @@
+name: Validate v5 bounded report compact transport
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest
+      - name: Run focused checks
+        run: |
+          python -m pytest --import-mode=importlib \
+            tests/test_compact_transport_v5.py tests/test_report_v5.py -q \
+            | tee focused-tests.log
+          python -m py_compile scripts/validate-report-stream-transport-v5.py
+      - name: Fetch exact immutable saved DSB compact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/report-stream-validation-input
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097 \
+            > work/report-stream-validation-input/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933554459 \
+            > work/report-stream-validation-input/artifact-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933019490 \
+            > work/report-stream-validation-input/full-artifact-api.json
+          gh api -H 'Accept: application/vnd.github+json' \
+            repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12933554459/zip \
+            > work/report-stream-validation-input/compact.zip
+      - name: Compare exact extract-all report with bounded transport
+        env:
+          PYTHONPATH: src:.
+          GITHUB_ACTIONS: 'true'
+        run: |
+          python scripts/validate-report-stream-transport-v5.py \
+            --archive work/report-stream-validation-input/compact.zip \
+            --artifact-metadata work/report-stream-validation-input/artifact-api.json \
+            --full-artifact-metadata work/report-stream-validation-input/full-artifact-api.json \
+            --run-metadata work/report-stream-validation-input/run-api.json \
+            --out work/report-stream-validation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: report-stream-transport-validation-v5-${{ github.run_id }}
+          path: |
+            work/report-stream-validation/validation.json
+            work/report-stream-validation/failure.json
+            work/report-stream-validation/declarations.json
+            work/report-stream-validation/old-report/evaluation-v5.json
+            work/report-stream-validation/old-report/report-v5.md
+            work/report-stream-validation/old-report/evaluation-payload-manifest.json
+            work/report-stream-validation/old-report/evaluation-payloads/
+            work/report-stream-validation/new-report/evaluation-v5.json
+            work/report-stream-validation/new-report/report-v5.md
+            work/report-stream-validation/new-report/evaluation-payload-manifest.json
+            work/report-stream-validation/new-report/evaluation-payloads/
+            work/report-stream-validation-input/run-api.json
+            work/report-stream-validation-input/artifact-api.json
+            work/report-stream-validation-input/full-artifact-api.json
+            focused-tests.log
+          retention-days: 90
+          if-no-files-found: warn

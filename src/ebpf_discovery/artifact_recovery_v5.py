@@ -23,12 +23,17 @@ def _safe_name(name: str) -> bool:
                 and ".." not in parts)
 
 
-def missing_declared_files(folder: Path) -> list[dict[str, str]]:
+def missing_declared_files(
+    folder: Path, verified_nonmaterialized: set[str] | None = None,
+) -> list[dict[str, str]]:
     manifest_path = folder / "evaluation-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     hashes = manifest.get("files_sha256")
     if not isinstance(hashes, dict):
         raise ValueError("saved v5 summary lacks file hashes")
+    represented = verified_nonmaterialized or set()
+    if represented - {"attempt-journal.jsonl"}:
+        raise ValueError("only the attempt journal may be nonmaterialized")
     missing = []
     for name, expected in hashes.items():
         if expected is None:
@@ -38,7 +43,7 @@ def missing_declared_files(folder: Path) -> list[dict[str, str]]:
                 or any(character not in "0123456789abcdef" for character in expected)):
             raise ValueError(f"invalid manifest file claim: {name!r}")
         target = folder / PurePosixPath(name)
-        if not target.is_file():
+        if not target.is_file() and name not in represented:
             missing.append({"name": name, "manifest_sha256": expected})
     return missing
 
@@ -65,9 +70,10 @@ def retain_unavailable(
 
 def recover_declared_files(
     folder: Path, full_archive: Path, source: dict[str, Any],
+    verified_nonmaterialized: set[str] | None = None,
 ) -> dict[str, Any]:
     """Recover only absent manifest-declared members from one exact full ZIP."""
-    missing = missing_declared_files(folder)
+    missing = missing_declared_files(folder, verified_nonmaterialized)
     if not missing:
         return retain_unavailable(folder, [], source, "not_required")
     expected_digest = source.get("full_artifact_digest")

@@ -7,6 +7,9 @@ import zipfile
 import pytest
 
 from ebpf_discovery.artifact_recovery_v5 import recover_declared_files, retain_unavailable
+from ebpf_discovery.compact_transport_v5 import (
+    extract_verified_compact, remove_verified_working_copy,
+)
 from ebpf_discovery.report_v5 import build, render, resolve_evaluation_reference
 
 
@@ -299,6 +302,70 @@ def test_recovered_declared_file_and_full_source_are_revalidated(
     assert restored(tmp_path / "report", attempt) == evaluation
     assert attempt["eligible_main_coverage"] is True
     assert result["grid"]["technically_complete_main_cells"] == 1
+
+
+def test_recovery_does_not_rematerialize_stream_verified_journal(tmp_path: Path) -> None:
+    folder, _ = summary(tmp_path / "inputs", 19, "main")
+    journal, other = b'{"attempt":1}\n', b"other\n"
+    manifest_path = folder / "evaluation-manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["files_sha256"].update({
+        "attempt-journal.jsonl": hashlib.sha256(journal).hexdigest(),
+        "other.txt": hashlib.sha256(other).hexdigest(),
+    })
+    write(manifest_path, manifest)
+    archive = tmp_path / "full.zip"
+    with zipfile.ZipFile(archive, "w") as bundle:
+        bundle.writestr("attempt-journal.jsonl", journal)
+        bundle.writestr("other.txt", other)
+    source = {
+        "full_artifact_digest": "sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest(),
+        "full_artifact_size_in_bytes": archive.stat().st_size,
+    }
+
+    proof = recover_declared_files(
+        folder, archive, source, {"attempt-journal.jsonl"})
+
+    assert proof["status"] == "recovered"
+    assert [row["name"] for row in proof["requested_files"]] == ["other.txt"]
+    assert (folder / "other.txt").read_bytes() == other
+    assert not (folder / "attempt-journal.jsonl").exists()
+
+
+def test_stream_verified_nonmaterialized_journal_preserves_coverage(tmp_path: Path) -> None:
+    folder, evaluation = summary(tmp_path / "inputs", 20, "main")
+    journal = b'{"attempt":1}\n'
+    manifest_path = folder / "evaluation-manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    manifest["files_sha256"]["attempt-journal.jsonl"] = hashlib.sha256(
+        journal).hexdigest()
+    write(manifest_path, manifest)
+    archive = tmp_path / "compact.zip"
+    with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as bundle:
+        for name in ("evaluation-manifest.json", "evaluation-v5.json", "status.json"):
+            bundle.write(folder / name, name)
+        bundle.writestr("attempt-journal.jsonl", journal)
+    digest = "sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest()
+    proof = extract_verified_compact(archive, folder, expected_digest=digest)
+    remove_verified_working_copy(archive, proof)
+    provenance_path = folder / "artifact-provenance.json"
+    provenance = json.loads(provenance_path.read_text())
+    provenance["digest"] = digest
+    provenance["compact_zip_verification"] = proof
+    write(provenance_path, provenance)
+
+    result = build(
+        [tmp_path / "inputs"], declared(tmp_path / "declared.json", [run(20, "main")]),
+        tmp_path / "report",
+    )
+
+    attempt = attempts(result, "main")[0]
+    assert restored(tmp_path / "report", attempt) == evaluation
+    assert attempt["eligible_main_coverage"] is True
+    assert attempt["manifest_declared_transport_complete"] is True
+    assert attempt["verified_nonmaterialized_manifest_files"] == [
+        "attempt-journal.jsonl"]
+    assert not (folder / "attempt-journal.jsonl").exists()
 
 
 def test_status_identity_and_compact_zip_proof_are_cross_checked(tmp_path: Path) -> None:
