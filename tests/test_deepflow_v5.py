@@ -102,7 +102,7 @@ def _row(path="/control"):
 
 
 def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
-    config = _config(max_memory=2 * (1 << 30), max_millicpus=2000)
+    config = _config(max_memory_mib=2048, max_millicpus=2000)
     assert config["global"]["standalone_mode"]["max_data_file_size"] == MAX_DATA_FILE_SIZE_MIB
     assert MAX_DATA_FILE_SIZE_BYTES == 1 << 40
     assert config["processors"]["request_log"]["tag_extraction"]["tracing_tag"]["x_request_id"] == [
@@ -110,15 +110,16 @@ def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
     ]
     assert config["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
     assert config["global"]["limits"] == {
-        "max_memory": 2 * (1 << 30), "max_millicpus": 2000,
+        "max_memory": 2048, "max_millicpus": 2000,
     }
+    assert config["global"]["limits"]["max_memory"] << 20 == 2 * (1 << 30)
 
 
 def test_config_rejects_zero_resource_envelopes() -> None:
     with pytest.raises(ValueError, match="positive guest envelopes"):
-        _config(max_memory=0, max_millicpus=1000)
+        _config(max_memory_mib=0, max_millicpus=1000)
     with pytest.raises(ValueError, match="positive guest envelopes"):
-        _config(max_memory=1 << 30, max_millicpus=0)
+        _config(max_memory_mib=1024, max_millicpus=0)
 
 
 def test_readiness_uses_pinned_success_marker_not_initialization_marker(
@@ -195,10 +196,10 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
         for node in ("a", "b")
     }
     assert configs["a"]["global"]["limits"] == {
-        "max_memory": 2049 * (1 << 20), "max_millicpus": 2000,
+        "max_memory": 2049, "max_millicpus": 2000,
     }
     assert configs["b"]["global"]["limits"] == {
-        "max_memory": 3072 * (1 << 20), "max_millicpus": 4000,
+        "max_memory": 3072, "max_millicpus": 4000,
     }
     assert configs["a"] != configs["b"]
     for node in ("a", "b"):
@@ -209,6 +210,8 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
         assert inventory["effective_container_constraints"]["host_pid"] == 4242
         assert inventory["commands"]["meminfo"]["stdout"].startswith("MemTotal:")
         assert inventory["commands"]["cpu_count"]["command"] == "nproc"
+        assert configs[node]["global"]["limits"]["max_memory"] << 20 == (
+            inventory["parsed"]["max_memory_bytes"])
 
 
 def test_resource_policy_rejects_extra_lower_docker_or_leaf_cgroup_limit(
@@ -246,6 +249,39 @@ def test_resource_policy_rejects_extra_lower_docker_or_leaf_cgroup_limit(
         collector._guest_resource_inventory("a")
         with pytest.raises(RuntimeError, match=error):
             collector._verify_container_resource_envelope("a")
+
+
+def test_resource_policy_accepts_leaf_equal_to_shared_parent_below_root(
+        tmp_path: Path) -> None:
+    shared_memory = 1 << 30
+
+    class SharedLimitContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            if "cgroup_file_begin" in command:
+                return Result(
+                    "host_pid=4242\ncgroup_file_begin\n"
+                    "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                    f"limit|/system.slice/docker-test.scope|memory.max|{shared_memory}\n"
+                    "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                    f"limit|/system.slice|memory.max|{shared_memory}\n"
+                    "limit|/system.slice|cpu.max|max 100000\n"
+                    "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+                )
+            if "memory.max=" in command and "cpu.max=" in command:
+                return Result(
+                    f"memory.max={shared_memory}\ncpu.max=max 100000\nnproc=2\n"
+                )
+            return super().node_exec(node, command, **kwargs)
+
+    ctx = SharedLimitContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector._guest_resource_inventory("a")
+    collector._verify_container_resource_envelope("a")
+
+    constraints = collector.resource_inventory["a"]["effective_container_constraints"]
+    assert constraints["effective_shared_ancestor_hard_limit"]["memory.max"] == shared_memory
+    assert constraints["shared_hard_limit_below_declared_guest_envelope"]["memory.max"] is True
+    assert constraints["verification_complete"] is True
 
 
 def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(

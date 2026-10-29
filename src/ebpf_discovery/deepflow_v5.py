@@ -48,14 +48,15 @@ DEEPFLOW_EBPF_READY_MARKER = "ebpf collector started"
 MIB = 1 << 20
 
 
-def _config(*, max_memory: int, max_millicpus: int) -> dict[str, Any]:
-    if max_memory <= 0 or max_millicpus <= 0:
+def _config(*, max_memory_mib: int, max_millicpus: int) -> dict[str, Any]:
+    if max_memory_mib <= 0 or max_millicpus <= 0:
         raise ValueError("DeepFlow resource limits must be positive guest envelopes")
     return {
         "global": {
             "communication": {"proactive_request_interval": "10s"},
             "limits": {
-                "max_memory": max_memory,
+                # DeepFlow's pinned deser_u64_with_mega_unit expands MiB to bytes.
+                "max_memory": max_memory_mib,
                 "max_millicpus": max_millicpus,
             },
             "standalone_mode": {
@@ -310,6 +311,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             return int(quota) * 1000 // int(period)
 
         shared_hard_limit_below_declared: dict[str, bool] = {}
+        effective_shared_ancestor_hard_limit: dict[str, int | None] = {}
         for kind, declared in (
             ("memory.max", parsed["max_memory_bytes"]),
             ("cpu.max", parsed["max_millicpus"]),
@@ -322,13 +324,18 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 ancestor_limits = [hard_limit(kind, item["value"]) for item in chain[1:]]
             except (ValueError, ZeroDivisionError) as exc:
                 raise RuntimeError(f"cannot parse {kind} cgroup hierarchy on {node}") from exc
+            finite_ancestors = [parent for parent in ancestor_limits if parent is not None]
+            shared_ancestor_limit = min(finite_ancestors) if finite_ancestors else None
             below = leaf_limit is not None and leaf_limit < declared
-            extra_collector_limit = below and any(
-                parent is None or parent > leaf_limit for parent in ancestor_limits
+            extra_collector_limit = below and (
+                shared_ancestor_limit is None or leaf_limit < shared_ancestor_limit
             )
             if extra_collector_limit:
                 raise RuntimeError(f"collector-specific {kind} is below guest envelope on {node}")
-            shared_hard_limit_below_declared[kind] = bool(below)
+            effective_shared_ancestor_hard_limit[kind] = shared_ancestor_limit
+            shared_hard_limit_below_declared[kind] = bool(
+                shared_ancestor_limit is not None and shared_ancestor_limit < declared
+            )
         cgroup = self._inventory_command(
             node,
             f"docker exec {self.container_name} sh -c "
@@ -375,6 +382,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "cgroup_hard_limits_leaf_to_root": limits,
             "hierarchy_complete_to_root": True,
             "shared_hard_limit_below_declared_guest_envelope": shared_hard_limit_below_declared,
+            "effective_shared_ancestor_hard_limit": effective_shared_ancestor_hard_limit,
             "cgroup_values": values,
             "verified_no_explicit_docker_hard_limit_below_guest_envelope": True,
             "leaf_and_ancestor_hard_limits_retained": True,
@@ -444,7 +452,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             config.write_text(
                 yaml.safe_dump(
                     _config(
-                        max_memory=limits["max_memory_bytes"],
+                        max_memory_mib=limits["max_memory_mib"],
                         max_millicpus=limits["max_millicpus"],
                     ),
                     sort_keys=False,
