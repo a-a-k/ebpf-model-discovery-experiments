@@ -177,6 +177,31 @@ def test_complete_invalid_json_is_codec_failure_not_protocol_unknown(tmp_path: P
     assert prefix["technical_failure_records"] == 1
 
 
+@pytest.mark.parametrize("start,end", [(-1, 1), (1, -1), ((1 << 64) // 1000 + 1, 2)])
+def test_nonrepresentable_otlp_time_is_retained_as_technical_failure(
+    tmp_path: Path, start: int, end: int
+) -> None:
+    path = tmp_path / "l7_flow_log"
+    _write(path, [_base(start_time=start, end_time=end)])
+    batches, accounting, prefix = codec_file(path, node="a")
+    assert batches == []
+    assert accounting[0]["technical_failure"] is True
+    assert accounting[0]["reasons"] == [
+        "start_time_or_end_time_not_representable_as_otlp_unix_nano"
+    ]
+    assert prefix["technical_failure_records"] == 1
+
+
+def test_reversed_source_time_is_preserved_with_uncertainty_warning(tmp_path: Path) -> None:
+    path = tmp_path / "l7_flow_log"
+    _write(path, [_base(start_time=20, end_time=10)])
+    batches, accounting, prefix = codec_file(path, node="a")
+    assert len(_spans(batches[0])) == 1
+    assert accounting[0]["technical_failure"] is False
+    assert "end_time_precedes_start_time_source_clock_uncertainty" in accounting[0]["warnings"]
+    assert prefix["technical_failure_records"] == 0
+
+
 @pytest.mark.parametrize(
     ("protocol", "updates", "expected"),
     [

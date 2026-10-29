@@ -303,7 +303,6 @@ class DeepFlowCollectorsV5(CollectorsV5):
         remote = self.remote_roots[node]
         return (
             f"docker run -d --name {self.container_name} --privileged --pid=host --network=host "
-            "--log-opt max-size=50m --log-opt max-file=2 "
             f"-v {shlex.quote(remote_config)}:/etc/deepflow-agent-standalone.yaml:ro "
             f"-v {shlex.quote(remote + '/data')}:/var/log/deepflow-agent "
             "-v /sys/kernel/debug:/sys/kernel/debug -v /sys/fs/bpf:/sys/fs/bpf "
@@ -414,7 +413,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "codec_technical_failure_records": codec_failures,
             "standalone_file_log_write_failures": file_log_write_failures,
             "technical_valid": (
-                bool(manifest.get("files"))
+                (bool(manifest.get("files")) or not final)
                 and not manifest.get("rotation_observed")
                 and codec_failures == 0
                 and not file_log_write_failures
@@ -428,6 +427,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     for item in manifest.get("files", [])
                 ))
             ),
+            "pending_no_standalone_files": not bool(manifest.get("files")),
         })
         _write_json(local / "snapshot.json", manifest)
         return manifest
@@ -704,6 +704,20 @@ class DeepFlowCollectorsV5(CollectorsV5):
             termination[node] = self._termination_evidence(
                 stop=stop, inspect=inspect, events=events, logs=logs
             )
+            raw_evidence = {}
+            for label, result in (("stop", stop), ("inspect", inspect), ("events", events)):
+                path = self.root / f"final-{node}-{label}.txt"
+                path.write_text(
+                    _stdout(result) + ("\n--- stderr ---\n" + _stderr(result) if _stderr(result) else ""),
+                    encoding="utf-8",
+                )
+                raw_evidence[label] = {
+                    "path": path.relative_to(self.root).as_posix(),
+                    "sha256": _sha256_file(path),
+                    "returncode": _returncode(result),
+                }
+            raw_evidence["events_time_range"] = {"since_epoch_s": since, "until_epoch_s": until}
+            termination[node]["raw_evidence"] = raw_evidence
         final_capture = self._capture_all("final", final=True)
         prefix_checks = self._verify_prefixes(final_capture)
         native_barrier = self._receiver_barrier("native")

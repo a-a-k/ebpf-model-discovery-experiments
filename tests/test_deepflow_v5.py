@@ -96,6 +96,7 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
     assert set(manifest["configs"]) == {"a", "b"}
     assert all("--memory" not in command and "--cpus" not in command
                for command in manifest["commands"].values())
+    assert all("--log-opt" not in command for command in manifest["commands"].values())
     assert all("--privileged --pid=host --network=host" in command
                for command in manifest["commands"].values())
     assert len(ctx.puts) == 4  # config and immutable snapshot helper on each guest
@@ -178,6 +179,26 @@ def test_capture_batches_flat_raw_with_portable_per_record_provenance(tmp_path: 
     )
     assert all({"offset", "length", "sha256", "retained_file"} <= item.keys()
                for item in accounting)
+
+
+def test_clean_empty_live_capture_remains_pending_not_invalid(tmp_path: Path) -> None:
+    ctx = Context(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector.remote_roots = {"a": "/remote/a", "b": "/remote/b"}
+    for node in ("a", "b"):
+        source = tmp_path / f"empty-{node}"
+        source.mkdir()
+        manifest = {
+            "schema": "deepflow-standalone-snapshot-v5", "mode": "prefix", "files": [],
+            "l7_rotation_observed": False, "rotation_observed": False,
+        }
+        snapshot = source / "snapshot.json"
+        snapshot.write_text(json.dumps(manifest), encoding="utf-8")
+        remote = collector.remote_roots[node] + "/snapshots/001-live"
+        ctx.remote_files[(node, remote + "/snapshot.json")] = snapshot
+    capture = collector._capture_all("live")
+    assert capture["technical_valid"] is True
+    assert all(item["pending_no_standalone_files"] for item in capture["nodes"].values())
 
 
 def test_source_specific_write_failure_marker_is_narrow() -> None:

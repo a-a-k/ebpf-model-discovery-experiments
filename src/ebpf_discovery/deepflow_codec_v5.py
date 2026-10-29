@@ -19,6 +19,7 @@ DEEPFLOW_SOURCE_COMMIT = "9a1219fa5cf1471ba2ec8742019661567d98002e"
 SUPPORTED_PROTOCOLS = {
     "Http1", "Http2", "Grpc", "MySQL", "PostgreSQL", "Redis", "MongoDB", "Kafka"
 }
+MAX_OTLP_UNIX_NANO = (1 << 64) - 1
 # Pinned v7.2.3 eBPF socket timestamps are kernel monotonic nanoseconds plus
 # DeepFlow's periodically refreshed CLOCK_REALTIME-CLOCK_MONOTONIC boot offset.
 # Standalone mode disables DeepFlow controller NTP correction.  The serialized
@@ -306,11 +307,20 @@ def normalize_record(raw: RawRecord, *, node: str,
         return None, {**locator, "status": "unclassified",
                       "reasons": ["start_time_or_end_time_not_integer_microseconds"],
                       "technical_failure": True}
+    if (start_us < 0 or end_us < 0
+            or start_us > MAX_OTLP_UNIX_NANO // 1000
+            or end_us > MAX_OTLP_UNIX_NANO // 1000):
+        return None, {**locator, "status": "unclassified",
+                      "reasons": ["start_time_or_end_time_not_representable_as_otlp_unix_nano"],
+                      "raw_start_time_us": start_us, "raw_end_time_us": end_us,
+                      "technical_failure": True}
     attributes, warnings = _common_attributes(decoded, raw, node, guest_context)
     attributes["deepflow.event.start_time_us"] = start_us
     attributes["deepflow.event.end_time_us"] = end_us
     name, protocol_warnings = _protocol_attributes(decoded, attributes)
     warnings.extend(protocol_warnings)
+    if end_us < start_us:
+        warnings.append("end_time_precedes_start_time_source_clock_uncertainty")
     guest_scope = {
         key: value for key, value in (guest_context or {}).items()
         if key in {"boot_id", "pid_namespace"} and value
