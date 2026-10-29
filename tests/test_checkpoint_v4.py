@@ -229,6 +229,50 @@ def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
         assert relative.as_posix() in copied
 
 
+def test_deepflow_accounting_count_stream_preserves_rows_and_boundaries(tmp_path: Path):
+    locator = {'source_file': 'a/l7_flow_log', 'retained_file': 'deepflow-raw/a/log',
+               'offset': 0, 'length': 12, 'sha256': 'a' * 64}
+    key = tuple(locator[name] for name in
+                ('source_file', 'retained_file', 'offset', 'length', 'sha256'))
+    irrelevant = {**locator, 'source_file': 'b/l7_flow_log'}
+    path = tmp_path/'deepflow-codec-accounting.jsonl'
+    rows = [{'_runtime_identity': {'locator': locator}, 'padding': 'x' * (512 * 1024)},
+            locator, {'_runtime_identity': {'locator': irrelevant}}, {'status': 'ignored'}]
+    path.write_text('\r\n'.join(json.dumps(row) for row in rows), encoding='utf-8')
+    assert checkpoint_module._deepflow_accounting_counts(path, {key: locator}) == {key: 2}
+
+    # The old read_text().splitlines() parser split an unescaped Unicode line
+    # separator inside JSON and rejected the resulting fragments. Streaming must
+    # retain that behavior even though the producer permits ensure_ascii=False.
+    path.write_text(json.dumps({**locator, 'text': 'left\u2028right'}, ensure_ascii=False) + '\n',
+                    encoding='utf-8')
+    with pytest.raises(json.JSONDecodeError):
+        checkpoint_module._deepflow_accounting_counts(path, {key: locator})
+    path.write_text('[]\n', encoding='utf-8')
+    with pytest.raises(AttributeError):
+        checkpoint_module._deepflow_accounting_counts(path, {key: locator})
+
+
+def test_deepflow_accounting_count_stream_does_not_retain_all_rows(tmp_path: Path):
+    import tracemalloc
+    locator = {'source_file': 'a/l7_flow_log', 'retained_file': 'deepflow-raw/a/log',
+               'offset': 0, 'length': 12, 'sha256': 'a' * 64}
+    key = tuple(locator[name] for name in
+                ('source_file', 'retained_file', 'offset', 'length', 'sha256'))
+    path = tmp_path/'deepflow-codec-accounting.jsonl'
+    with path.open('w', encoding='utf-8') as stream:
+        for _ in range(32):
+            stream.write(json.dumps({**locator, 'padding': 'x' * (512 * 1024)}) + '\n')
+    tracemalloc.start()
+    try:
+        assert checkpoint_module._deepflow_accounting_counts(path, {key: locator}) == {key: 32}
+        _, peak = tracemalloc.get_traced_memory()
+    finally:
+        tracemalloc.stop()
+    assert path.stat().st_size > 16 * 1024 * 1024
+    assert peak < 8 * 1024 * 1024
+
+
 def test_release_requires_exact_binding_and_upload_success(tmp_path: Path, monkeypatch):
     campaign, _, _ = _capture(tmp_path, monkeypatch)
     try:
