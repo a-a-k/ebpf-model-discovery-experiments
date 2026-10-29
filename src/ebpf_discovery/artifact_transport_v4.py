@@ -80,7 +80,11 @@ def package(source: Path, destination: Path, *, kind: str) -> dict:
         os.replace(intermediate / "output-manifest.jsonl", destination / MANIFEST)
         os.replace(intermediate / "packaging.json", destination / "packaging.json")
         intermediate.rmdir()
-        proof.update(archive_file=ARCHIVE, manifest_file=MANIFEST)
+        proof.update(archive_file=ARCHIVE, manifest_file=MANIFEST,
+                     extraction=("From the package directory, run "
+                                 "python -m ebpf_discovery.artifact_transport_v4 unpack "
+                                 f"--package . --out ../restored-{kind} --kind {kind}; "
+                                 "the output directory must be absent."))
         _write(destination / "packaging.json", proof)
         marker = {"schema_version": SCHEMA, "kind": kind,
                   "archive": ARCHIVE, "archive_bytes": (destination / ARCHIVE).stat().st_size,

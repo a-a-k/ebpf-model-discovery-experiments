@@ -277,6 +277,33 @@ def render(aggregate: Path, out: Path, costs: Path | None = None) -> dict:
     lines += _table(["Run", "System", "Mode", "Seed", "Campaign s", "Clone s", "Build s", "Input prep s",
                      "Toolchain commands s", "Bering replay s", "Bering peak RSS KiB", "Infrastructure fields",
                      "Manual prep measured", "Unavailable reason"], cost_rows)
+    lines.extend(["", "Saved HTTP transport costs by workload category:", "",
+                  "These are stored request counts, response bytes and summed request durations, not recomputed metrics. "
+                  "Preparation, verification probes and controls are additional to primary operations. "
+                  "Completed transport does not imply business success. Concurrent request durations overlap "
+                  "and must not be added to campaign wall time. Verification probes are shown once here; "
+                  "the auxiliary_timeline_probes field is an alias, not an additional charge.", ""])
+    transport_rows = []
+    transport_fields = ("started_requests", "completed_requests", "transport_unknown_requests",
+                        "unresolved_requests", "summed_completed_request_seconds",
+                        "summed_transport_unknown_seconds", "completed_response_body_bytes",
+                        "http_error_responses")
+    for campaign in campaigns:
+        run_id, system, mode, seed, _ = _identity(campaign)
+        transport = (campaign.get("cost") or {}).get("http_transport") or {}
+        categories = transport.get("by_category")
+        if not isinstance(categories, dict) or not categories:
+            transport_rows.append([run_id, system, mode, seed, "unavailable"] +
+                                  [None] * len(transport_fields))
+            continue
+        for category, values in sorted(categories.items()):
+            values = values if isinstance(values, dict) else {}
+            transport_rows.append([run_id, system, mode, seed, category] +
+                                  [values.get(field) for field in transport_fields])
+    lines += _table(["Run", "System", "Mode", "Seed", "Category", "Started", "Completed",
+                     "Transport unknown", "Unresolved", "Sum completed request s",
+                     "Sum unknown request s", "Completed response bytes", "HTTP error responses"],
+                    transport_rows)
     lines.extend(["", "Saved campaign phase costs:", "",
                   "Checkpoint creation/upload hold is nested inside campaign elapsed; swap setup precedes campaign elapsed. "
                   "Full stored cost records remain in the linked evaluation input.", ""])

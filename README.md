@@ -2,7 +2,7 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): all nine Petclinic and all nine OTel cells admitted; 18/27 overall.**
+> **Current status (iteration 4): all nine Petclinic, all nine OTel and DSB/absent/6 admitted; 19/27 overall.**
 > [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
 > plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
 > and [Petclinic/partial/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961),
@@ -39,12 +39,15 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > The exact server error is unknown. Released Bering 1.2.0 removes calendar-window
 > publication from offline batches. A [new full-checkpoint DSB diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526)
 > completed and passed independent integrity/resource review: all 18 Bering replays
-> retained their full input with zero drops and one publication each. No DSB cell
-> is admitted yet. The driver now emits one native envelope per original query
+> retained their full input with zero drops and one publication each. The fresh
+> [DSB/absent/6 cell](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40821214009/artifacts/12879185808)
+> passed independent admission review. Its observed eBPF graphs lack the required
+> operation evidence; all forecasts remain unknown and Sheaft was correctly skipped.
+> This is not successful simulation coverage. The driver now emits one native envelope per original query
 > file. A [fixed full-input check](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950)
 > verified identical ordered observations and graph/evidence with 323 envelopes
-> replacing 174,952 per-trace files for the compared variant. All nine fresh DSB
-> campaigns are now running after independent execution review. Lossless packaging
+> replacing 174,952 per-trace files for the compared variant. The remaining eight DSB
+> campaigns are running after independent execution review. Lossless packaging
 > separately preserves all output bytes and costs.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
@@ -453,6 +456,18 @@ A plausible hypothesis is that native context propagation changes OBI/Bering
 correlation or representation. The inspected graphs do not establish that
 mechanism, and do not support a universal claim that OBI cannot observe gRPC.
 
+The first admitted DSB cell, absent/6, retains 34,800 primary operations and 9,600
+target operations. Its saved target success fractions are 0.875 for compose post,
+0.875 for user timeline and 1.0 for home timeline, with no unknown target outcomes.
+All source/variant operation forecasts are unknown: eBPF and combined graphs lack
+required operation evidence; native observations are absent. Both DB-up and DB-down
+controls record 20 successful primary responses, which do not establish persistence
+or a DB-induced primary failure. eBPF/combined route and downstream classes both have ARI 1 on
+600 known cases; this does not recover the missing mandatory internal paths.
+These are copied values from the linked compact evaluation, not locally recomputed
+metrics. Parent import, unchanged training index, forecast-before-target ordering,
+final frozen hashes, clean exit and retained full evidence passed independent review.
+
 The existing generated aggregate still covers the nine Petclinic cells; the next
 aggregate will incorporate subsequent admitted cells without changing their inputs.
 
@@ -635,9 +650,9 @@ original declared subset, not a retroactive complete total for this wider scope.
 ## 10. Current limitations, review state and references
 
 Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
-seeds6–8) and all nine OTel cells. DeathStarBench
+seeds6–8), all nine OTel cells and DSB/absent/6. DeathStarBench
 passed its full-input diagnostic, native-envelope equivalence check and fresh
-execution review. All nine DSB cells are running with reserved worker capacity;
+execution review. The remaining eight DSB cells are running within the reviewed worker-capacity budget;
 final full/6 admission is not a rollout gate. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
