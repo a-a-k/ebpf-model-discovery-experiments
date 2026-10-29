@@ -17,6 +17,9 @@ equivalence validation passed and affected starts resumed; failed attempts and
 their costs remain.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
+Two retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
+Petclinic native endpoint-binding mismatch and a DeepFlow technical guard failure
+without relabelling their original evidence.
 The [current intermediate snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
 contains five main cells: three absent-tracing repeats and two partial-tracing
 repeats in Petclinic. These use actual eBPF graphs and Sheaft forecasts checked
