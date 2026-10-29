@@ -113,8 +113,11 @@ integrity/resource review. One fresh OTel/full/6 replacement is running as
 `40786403012`, after separate execution GO and exact-head CI. The diagnostic
 cannot complete or resume the failed campaign. The fresh staged cell must pass
 integrity/resource review before that system's
-remaining eight cells proceed. One parallel immutable DSB checkpoint diagnostic
-is running as `40780918812`; it cannot resume or complete its failed campaign.
+remaining eight cells proceed. Immutable DSB checkpoint diagnostic `40780918812`
+failed during Bering ingestion with HTTP 500, then lost its output artifact to a
+separate upload failure. Logs are retained in `data-40791837386`; the exact server
+error remains unknown. A generic batch-publication repair and stronger diagnostic
+retention are in progress. The diagnostic cannot resume or complete its failed campaign.
 Retain every valid cell regardless of accuracy or unknown coverage, and include
 failed acquisition, worker, diagnostic, reporting and archival costs. Resource
 adequacy must be measured on the actual input, not inferred from a smaller replay.

@@ -76,6 +76,46 @@ def decoded_size(export):
     return size
 
 
+def _tail(path, limit=8192):
+    with Path(path).open('rb') as stream:
+        stream.seek(0, os.SEEK_END)
+        stream.seek(max(0, stream.tell() - limit))
+        return stream.read().decode('utf-8', errors='replace')
+
+
+def _retain_ingest_error(response, export, run_dir, endpoint, export_index):
+    """Keep the full failure body; console excerpts never replace stored bytes."""
+    body = response.content
+    evidence = {'http_status': response.status_code, 'endpoint': endpoint,
+                'export_index': export_index, 'export': dict(export),
+                'response_headers': dict(response.headers),
+                'response_body_file': 'ingest-error-body.bin',
+                'response_body_representation': 'requests response.content, with content encoding decoded',
+                'response_body_bytes': len(body),
+                'response_body_sha256': hashlib.sha256(body).hexdigest(),
+                'observed_ns': time.time_ns(), 'branch_runtime': str(run_dir),
+                'ingest_retried': False}
+    try:
+        (run_dir / evidence['response_body_file']).write_bytes(body)
+        write_json(run_dir / 'ingest-error.json', evidence)
+    except OSError as error:
+        # Disk failure must not erase the original receiver error from stdout.
+        evidence['retention_error'] = repr(error)
+    console = {key: evidence[key] for key in ('http_status', 'endpoint', 'export_index',
+        'response_body_bytes', 'response_body_sha256', 'branch_runtime', 'ingest_retried')}
+    console['export_source'] = export['source']
+    console['export_sha256'] = export['sha256']
+    console['body_tail'] = body[-8192:].decode('utf-8', errors='replace')
+    if evidence.get('retention_error'):
+        console['retention_error'] = evidence['retention_error']
+    try:
+        console['bering_log_tail'] = _tail(run_dir / 'bering.log')
+    except OSError as error:
+        console['bering_log_error'] = repr(error)
+    print('BERING_INGEST_FAILURE ' + json.dumps(console), flush=True)
+    return evidence
+
+
 def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
     """One offline discovery batch, with all graph construction inside Bering.
 
@@ -138,7 +178,7 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
                 if time.monotonic() - ready_started > 120:
                     raise RuntimeError('Bering technical startup failed; inspect retained log')
                 time.sleep(.1)
-            for export in exports:
+            for export_index, export in enumerate(exports):
                 path = Path(export['path'])
                 endpoint = '/sources/obi/v1/traces' if export['source'] == 'ebpf' else '/v1/traces'
                 headers = {'Content-Type': export['content_type'],
@@ -154,6 +194,9 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
                     stream.seek(0)
                     response = requests.post(base + endpoint, data=stream,
                         headers=headers, timeout=None)
+                if response.status_code >= 400:
+                    record['ingest_error'] = _retain_ingest_error(
+                        response, export, run_dir, endpoint, export_index)
                 response.raise_for_status()
             process.send_signal(signal.SIGTERM)
             record['returncode'] = process.wait()

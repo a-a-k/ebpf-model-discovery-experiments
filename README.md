@@ -26,8 +26,11 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > on that full checkpoint and passed independent integrity/resource review. A
 > [fresh OTel/full/6 replacement is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
 > The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
-> upload; its retained full checkpoint is now being checked in a
-> [separate reviewed diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812).
+> upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
+> also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
+> upload failure. Available logs are [permanently retained](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40791837386).
+> The exact server error is unknown. A calendar-boundary batching risk and failure
+> evidence retention are being repaired; no DSB cell is admitted.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 

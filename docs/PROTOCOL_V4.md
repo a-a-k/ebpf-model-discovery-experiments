@@ -8,7 +8,8 @@ completed and passed independent integrity/resource review; its one
 [fresh OTel/full/6 replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012)
 is running;
 [DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
-is still running.
+failed during local Bering ingestion with HTTP 500. Its separate artifact upload
+also failed; the exact server error and final integrity proof are unavailable.
 DSB's prepared remote-worker changes await its actual diagnostic review and
 separate staged-execution decision. A diagnostic cannot resume or complete a
 failed campaign.
@@ -677,6 +678,51 @@ absence does not invalidate a complete causal chain. Contradictory linkage IDs
 remain unknown, while a business-order mismatch is a separate evaluation result.
 ID-only joins without a SpanLink are not implemented in this iteration. Such
 unknowns therefore cannot establish an inability of eBPF or its collector.
+
+## Diagnostic failure evidence
+
+DSB diagnostic `40780918812` failed at 2026-10-29 00:00:49 UTC while posting native
+exports to Bering's `/v1/traces` during the last combined/network-scope operation
+replay. The original checkpoint archive passed its SHA-256 check. The separate
+`upload-artifact` step failed with `Maximum call stack size exceeded`, retaining no
+output artifact. Logs do not establish OOM, disk exhaustion or the exact server
+error. Available logs/metadata are permanently archived in
+[data-40791837386](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40791837386).
+
+Source inspection exposes a separate batching-contract risk: the configured 24h
+window is aligned to UTC midnight, which this replay crossed. Ingestion can trigger
+a flush of partial input before the next POST. This is a possible trigger for the
+HTTP 500, not proof of the underlying flush error. Scheduling around midnight or
+choosing an arbitrarily larger window would not satisfy the full-batch contract.
+
+Before implementation, root and the independent skeptic give **explicit
+ORIGINAL-criterion design GO** for an evidence-only repair: preserve complete
+failed-ingest response bytes and identity, expose concise failure/resource evidence,
+upload compact evidence first, and then losslessly package full output for upload.
+The hypothesis is improved diagnosability, not scientific accuracy; the strongest
+simple baseline is the same full-input toolchain with ordinary file retention.
+Inputs, source semantics, graph construction, forecasts and external outcomes are
+unchanged. Packaging, verification, transfers and failed attempts are charged.
+Do not retry an ingest, trim input, hide the original failure, or interpret partial
+output as a valid forecast. Implementation review precedes execution; a new
+diagnostic is held pending the batching-contract investigation.
+
+The pinned runtime has no supported clock-independent combined-input batch mode;
+its separate discovery CLI does not preserve the same combined source metadata.
+Root and the independent skeptic therefore give **explicit ORIGINAL-criterion
+design GO** for a generic opt-in Bering `on_shutdown` publication mode, keeping
+`windowed` as its unchanged default. The engineering hypothesis is one complete
+source-aware batch independent of calendar boundaries. The strongest simple
+baseline is the existing runtime on the same complete input within one window;
+graph construction, supplied semantics and external-outcome criteria must remain
+equivalent. No forecast accuracy or total-cost benefit is assumed. Overflow must
+fail the entire batch, close must publish at most once, historical reconciliation
+must be explicitly excluded, and finalization must not inherit a fixed HTTP
+shutdown deadline. Generic synthetic product tests, independent implementation
+review, releases and separate research-pin adoption/retained-input qualification
+remain required. Product code and documentation contain no study material.
+Existing jobs remain pinned and existing results are never relabelled as runs of
+the new version. The exact earlier HTTP 500 cause remains unknown.
 
 ## Parallel campaign scheduling and API waits
 

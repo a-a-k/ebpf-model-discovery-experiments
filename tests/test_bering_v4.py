@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 import pytest
+import requests
 import yaml
 
 from ebpf_discovery.bering_v4 import child_go_environment, replay
@@ -153,3 +154,36 @@ def test_partial_ingest_is_a_retained_technical_failure(tmp_path, ingest_count, 
     evidence = json.loads((tmp_path / 'model-runtime/replay-command.json').read_text())
     assert evidence['status'] == 'technical_failure'
     assert evidence['ingest']['dropped_spans'] == dropped
+
+
+def test_failed_ingest_retains_full_binary_response_and_never_retries(tmp_path, capsys):
+    manifest, _, process = harness(tmp_path)
+    ready = Mock(status_code=200)
+    body = b'\xff\x00' + b'complete server error\n' * 1000
+    failure = requests.Response()
+    failure.status_code = 500
+    failure._content = body
+    failure.headers['Content-Type'] = 'application/octet-stream'
+    failure.url = 'http://127.0.0.1/v1/traces'
+    success = Mock(status_code=200)
+    original_wires = [Path(e['path']).read_bytes() for e in manifest['exports']]
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=ready), \
+            patch('ebpf_discovery.bering_v4.requests.post', side_effect=[success, failure]) as send:
+        with pytest.raises(requests.HTTPError, match='500'):
+            replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
+    assert send.call_count == 2  # One request per input, with no retry of failed native ingest.
+    assert not (tmp_path / 'model.json').exists()
+    runtime = tmp_path / 'model-runtime'
+    assert (runtime / 'ingest-error-body.bin').read_bytes() == body
+    evidence = json.loads((runtime / 'ingest-error.json').read_text())
+    assert evidence['response_body_sha256'] == hashlib.sha256(body).hexdigest()
+    assert evidence['response_body_bytes'] == len(body)
+    assert evidence['export'] == manifest['exports'][1]
+    assert evidence['endpoint'] == '/v1/traces' and evidence['export_index'] == 1
+    assert evidence['response_headers']['Content-Type'] == 'application/octet-stream'
+    command = json.loads((runtime / 'replay-command.json').read_text())
+    assert command['status'] == 'technical_failure' and command['ingest_error'] == evidence
+    assert [Path(e['path']).read_bytes() for e in manifest['exports']] == original_wires
+    console = capsys.readouterr().out
+    assert 'BERING_INGEST_FAILURE' in console and len(console) < len(body)

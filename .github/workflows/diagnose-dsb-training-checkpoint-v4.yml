@@ -111,7 +111,8 @@ jobs:
           uname -a > work/diagnostic/infrastructure/runner-final.txt
           free -b >> work/diagnostic/infrastructure/runner-final.txt
           swapon --show --bytes >> work/diagnostic/infrastructure/runner-final.txt
-          df -B1 >> work/diagnostic/infrastructure/runner-final.txt
+          df -B1 | tee -a work/diagnostic/infrastructure/runner-final.txt
+          df -i | tee work/diagnostic/infrastructure/inodes-final.txt
           du -B1 -s work/diagnostic work/original work/checkpoint.zip \
             > work/diagnostic/infrastructure/final-disk-bytes.txt 2>&1 || true
           ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss \
@@ -119,12 +120,52 @@ jobs:
           python -m pip freeze > work/diagnostic/infrastructure/python-environment.txt
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
             > work/diagnostic/infrastructure/workflow-jobs.json 2>work/diagnostic/infrastructure/workflow-jobs.err || true
+          cat work/diagnostic/output/status.json work/diagnostic/infrastructure/diagnostic-time.txt \
+            work/diagnostic/infrastructure/final-disk-bytes.txt || true
+          find work/diagnostic -type f -printf '%s\n' \
+            | awk '{files++; bytes+=$1} END {printf "{\"files\":%d,\"bytes\":%.0f}\n", files, bytes}' \
+            | tee work/diagnostic/infrastructure/pre-packaging-file-census.json
+      - name: Collect compact diagnostic evidence before full packaging
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.diagnostic_artifacts_v4 compact \
+            --source work/diagnostic --out work/diagnostic-summary
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: diagnostic-v4-dsb-checkpoint-gc-${{ github.run_id }}
-          path: work/diagnostic/
+          name: diagnostic-summary-v4-dsb-${{ github.run_id }}
+          path: work/diagnostic-summary/
           compression-level: 1
           include-hidden-files: true
           retention-days: 90
           if-no-files-found: error
+      - name: Package and verify the complete diagnostic tree without filtering
+        id: package
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.diagnostic_artifacts_v4 package \
+            --source work/diagnostic --out work/diagnostic-package
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.package.outcome == 'success'
+        with:
+          name: diagnostic-v4-dsb-checkpoint-gc-${{ github.run_id }}
+          path: |
+            work/diagnostic-package/diagnostic-output.tar.gz
+            work/diagnostic-package/output-manifest.jsonl
+            work/diagnostic-package/packaging.json
+          compression-level: 0
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostic-packaging-v4-dsb-${{ github.run_id }}
+          path: work/diagnostic-package/packaging.json
+          compression-level: 1
+          retention-days: 90
+          if-no-files-found: warn
