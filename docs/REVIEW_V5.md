@@ -393,3 +393,28 @@ modes remain pending their smokes. Existing OBI/Coroot admissions extend to
 the existing other-source formats, supplied aliases and resolution semantics
 are unchanged. This is a source-specific no-op assessment, not a universal
 admission. Running main groups retain their original execution revisions.
+
+## Snapshot memory repair: original-criterion check before implementation
+
+DeathStarBench/full/6 main job `123587179847` in run `40913407822` ended with
+runner shutdown/143 before uploading a checkpoint. Its last resource samples
+show substantial Python memory growth and near-exhausted swap; the exact
+shutdown cause is unproven and the observed OOM counter remained zero. This is
+retained as a technical interruption, not a scored model result.
+
+Source inspection found whole-segment bytes, decoded wrapper lists and normalized
+span lists held together by supplied-alias verification, plus an all-span list
+in runtime-identity projection serialization. The narrow repair processes these
+same records incrementally. It retains the same ordinal/digest checks, raw-body
+and metadata validation, resolver, sorted projection bytes, immutable training
+rows and declared information for every comparator. No observations are sampled
+or truncated, and no workload or criterion changes.
+
+Root and the separate skeptic approved this design for the **original criterion**
+before implementation. The strongest equally informed direct/manual comparator
+still receives the same observations and supplied mappings; the repair itself
+establishes no predictive or effort advantage. Complete failed-run, preparation,
+validation and repeat costs remain reportable, with unknown human effort explicit.
+Required checks are old-code synthetic byte equivalence, malformed/tampered input,
+bounded allocation and rollback/publication behavior, followed by an immutable
+saved-packet comparison in Actions before affected repeats are admitted.

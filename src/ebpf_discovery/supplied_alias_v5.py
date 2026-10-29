@@ -14,7 +14,69 @@ ADMISSION_SCHEMA = "supplied-logical-alias-admission-v5"
 
 
 def _sha(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    with path.open('rb') as stream:
+        return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+
+def _verified_segment(path, start, end, expected, node, expected_source_prefix,
+                      same_trace_parents):
+    """Recheck identical receiver evidence without retaining all decoded spans."""
+    if not (isinstance(start, int) and isinstance(end, int) and 0 <= start <= end):
+        raise ValueError('supplied alias receiver provenance changed')
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        stream.seek(start)
+        remaining = end - start
+        while remaining:
+            chunk = stream.read(min(1024 * 1024, remaining))
+            if not chunk:
+                raise ValueError('supplied alias receiver provenance changed')
+            digest.update(chunk)
+            remaining -= len(chunk)
+    if digest.hexdigest() != expected:
+        raise ValueError('supplied alias receiver provenance changed')
+    wrapper_sources = set()
+    with path.open('rb') as stream:
+        stream.seek(start)
+        remaining = end - start
+        while remaining:
+            line = stream.readline(remaining)
+            if not line:
+                raise ValueError('supplied alias receiver provenance changed')
+            remaining -= len(line)
+            if not line.strip():
+                continue
+            try:
+                wrapper = json.loads(line)
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                raise ValueError('supplied alias receiver segment is malformed') from exc
+            wrapper_node, wrapper_source = wrapper.get('node'), wrapper.get('source')
+            if (wrapper_node != node or not isinstance(wrapper_source, str)
+                    or wrapper_source != (expected_source_prefix + ':' + node
+                        if expected_source_prefix else wrapper_source)
+                    or not wrapper_source.endswith(':' + node)
+                    or not isinstance(wrapper.get('payload'), dict)):
+                raise ValueError('supplied alias wrapper source/node mismatch')
+            raw_ref, metadata_ref = wrapper.get('raw_ref'), wrapper.get('raw_metadata_ref')
+            if not isinstance(raw_ref, str) or not isinstance(metadata_ref, str):
+                raise ValueError('supplied alias wrapper lacks raw receiver references')
+            raw_path, metadata_path = path.parent / raw_ref, path.parent / metadata_ref
+            if (not raw_path.is_file() or not metadata_path.is_file()
+                    or _sha(raw_path) != wrapper.get('raw_sha256')
+                    or raw_path.stat().st_size != wrapper.get('raw_size_bytes')):
+                raise ValueError('supplied alias raw receiver body changed')
+            metadata = json.loads(metadata_path.read_text(encoding='utf-8'))
+            required = ('source', 'node', 'received_ns', 'raw_ref',
+                        'raw_sha256', 'raw_size_bytes')
+            if any(metadata.get(field) != wrapper.get(field) for field in required):
+                raise ValueError('supplied alias raw receiver metadata mismatch')
+            wrapper_sources.add(wrapper_source)
+    from .store_v5 import _digest
+    from .store_v3 import normalized_file
+    return {'node': node, 'sources': sorted(wrapper_sources),
+            'ordinals': {index: _digest(record) for index, record in enumerate(
+                normalized_file(path, 'ebpf', start, end,
+                                same_trace_parents=same_trace_parents))}}
 
 
 def admission_core(value: dict) -> dict:
@@ -198,48 +260,9 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
                 continue
             key = (str(path.resolve()), start, end, expected)
             if key not in segment_cache:
-                with path.open("rb") as stream:
-                    stream.seek(start)
-                    body = stream.read(end - start)
-                if len(body) != end - start or hashlib.sha256(body).hexdigest() != expected:
-                    raise ValueError("supplied alias receiver provenance changed")
-                try:
-                    wrappers = [json.loads(line) for line in body.splitlines() if line.strip()]
-                except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-                    raise ValueError("supplied alias receiver segment is malformed") from exc
-                wrapper_sources = set()
-                for wrapper in wrappers:
-                    wrapper_node, wrapper_source = wrapper.get("node"), wrapper.get("source")
-                    if (wrapper_node != node or not isinstance(wrapper_source, str)
-                            or wrapper_source != (expected_source_prefix + ":" + node
-                                if expected_source_prefix else wrapper_source)
-                            or not wrapper_source.endswith(":" + node)
-                            or not isinstance(wrapper.get("payload"), dict)):
-                        raise ValueError("supplied alias wrapper source/node mismatch")
-                    raw_ref, metadata_ref = wrapper.get("raw_ref"), wrapper.get("raw_metadata_ref")
-                    if not isinstance(raw_ref, str) or not isinstance(metadata_ref, str):
-                        raise ValueError("supplied alias wrapper lacks raw receiver references")
-                    raw_path, metadata_path = path.parent / raw_ref, path.parent / metadata_ref
-                    if (not raw_path.is_file() or not metadata_path.is_file()
-                            or hashlib.sha256(raw_path.read_bytes()).hexdigest()
-                            != wrapper.get("raw_sha256")
-                            or raw_path.stat().st_size != wrapper.get("raw_size_bytes")):
-                        raise ValueError("supplied alias raw receiver body changed")
-                    metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-                    required = ("source", "node", "received_ns", "raw_ref",
-                                "raw_sha256", "raw_size_bytes")
-                    if any(metadata.get(field) != wrapper.get(field) for field in required):
-                        raise ValueError("supplied alias raw receiver metadata mismatch")
-                    wrapper_sources.add(wrapper_source)
-                from .store_v5 import _digest
-                from .store_v3 import normalized_file
-                normalized = list(normalized_file(
-                    path, "ebpf", start, end,
-                    same_trace_parents=getattr(store, "same_trace_parents", False)))
-                segment_cache[key] = {
-                    "node": node, "sources": sorted(wrapper_sources),
-                    "ordinals": {index: _digest(record)
-                                 for index, record in enumerate(normalized)}}
+                segment_cache[key] = _verified_segment(
+                    path, start, end, expected, node, expected_source_prefix,
+                    getattr(store, 'same_trace_parents', False))
             verified = segment_cache[key]
             if verified["ordinals"].get(ordinal) != digest:
                 raise ValueError("supplied alias normalized ordinal/digest mismatch")

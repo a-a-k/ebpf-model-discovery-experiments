@@ -1,0 +1,10 @@
+{
+  "purpose": "Synthetic serialization regression, not an empirical observation",
+  "implementation_commit": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+  "implementation_path": "src/ebpf_discovery/store_v5.py",
+  "fixture_builder": "tests/test_preparation_memory_v5.py::_store",
+  "resolver_stub": "tests/test_preparation_memory_v5.py::_resolution",
+  "services": ["unknown", "app", "other", "native"],
+  "stage": "training",
+  "line_endings": "Compare text after platform newline normalization"
+}

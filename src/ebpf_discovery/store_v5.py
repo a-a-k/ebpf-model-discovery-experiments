@@ -223,10 +223,36 @@ class ObservationStoreV5(ObservationStore):
         return output
 
     def apply_runtime_identity(self, retained_inventory, out, *, inventory_proof, stage):
+        from tempfile import NamedTemporaryFile
         out = Path(out)
         out.parent.mkdir(parents=True, exist_ok=True)
-        rows, counts = [], {'resolved_enriched': 0, 'resolved_existing': 0,
-                            'label_conflict': 0, 'unknown': 0}
+        counts = {'resolved_enriched': 0, 'resolved_existing': 0,
+                  'label_conflict': 0, 'unknown': 0}
+        rows, temporary = 0, None
+        try:
+            with NamedTemporaryFile(mode='w', encoding='utf-8', dir=out.parent,
+                                    prefix=out.name + '.', suffix='.pending', delete=False) as stream:
+                temporary = Path(stream.name)
+                for row in self._runtime_identity_rows(
+                        retained_inventory, inventory_proof=inventory_proof,
+                        stage=stage, counts=counts):
+                    stream.write(json.dumps(row, sort_keys=True) + '\n')
+                    rows += 1
+            self.db.commit()
+            temporary.replace(out)
+            temporary = None
+        except BaseException:
+            self.db.rollback()
+            raise
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
+        with out.open('rb') as stream:
+            output_sha256 = hashlib.file_digest(stream, 'sha256').hexdigest()
+        return {'rows': rows, 'counts': counts, 'path': str(out),
+                'sha256': output_sha256, 'training_rows_immutable': True}
+
+    def _runtime_identity_rows(self, retained_inventory, *, inventory_proof, stage, counts):
         for digest, encoded in self.db.execute('SELECT digest,data FROM spans ORDER BY digest'):
             original = json.loads(encoded)
             result = resolve(original, retained_inventory)
@@ -287,14 +313,7 @@ class ObservationStoreV5(ObservationStore):
             elif existing[:3] != (status, projected_encoded, resolution_encoded):
                 # Training identity is immutable; later target evidence cannot rewrite it.
                 record['existing_projection_retained'] = True
-            rows.append(record)
-        self.db.commit()
-        with out.open('w', encoding='utf-8') as stream:
-            for row in rows:
-                stream.write(json.dumps(row, sort_keys=True) + '\n')
-        return {'rows': len(rows), 'counts': counts, 'path': str(out),
-                'sha256': hashlib.sha256(out.read_bytes()).hexdigest(),
-                'training_rows_immutable': True}
+            yield record
 
     def service_projections(self):
         from .identity_projection_v5 import (_verified_clock_relations,
