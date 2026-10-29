@@ -169,6 +169,86 @@ def test_duplicate_keys_identical_coalesce_but_conflicts_are_raw_only(tmp_path: 
     assert path.read_bytes().endswith(conflict + b"\n")
 
 
+def test_pinned_deepflow_flattened_msg_type_namespaces_are_explicit() -> None:
+    path = Path(__file__).parent / "fixtures" / "deepflow-v7.2.3-http-session.jsonl"
+    raw = path.read_bytes().removesuffix(b"\n")
+    batches, accounting, prefix = codec_file(path, node="a")
+    spans = _spans(batches[0])
+    attrs = _attrs(spans[0])
+
+    assert len(spans) == 1
+    assert attrs["deepflow.msg_type"] == "Session"
+    assert attrs["deepflow.base_head.msg_type"] == "Session"
+    assert attrs["deepflow.protocol_info.msg_type"] == "Request"
+    assert attrs["deepflow.raw.sha256"] == hashlib.sha256(raw).hexdigest()
+    assert accounting[0]["source_namespace_split"] == {
+        "path": "$.msg_type",
+        "ordered_values": ["Session", "Request"],
+        "base_head_msg_type": "Session",
+        "protocol_info_msg_type": "Request",
+    }
+    assert accounting[0]["status"] == "normalized"
+    assert prefix["normalized_records"] == 1
+    assert path.read_bytes() == raw + b"\n"
+
+
+@pytest.mark.parametrize("duplicates", [
+    b'"msg_type":"Request","msg_type":"Session"',
+    b'"msg_type":"Request","msg_type":"Response"',
+    b'"msg_type":"Session","msg_type":"Request","msg_type":"Response"',
+    b'"msg_type":"Session","msg_type":"Unknown"',
+])
+def test_non_source_msg_type_duplicate_shapes_remain_raw_only(
+        tmp_path: Path, duplicates: bytes) -> None:
+    path = tmp_path / "l7_flow_log"
+    raw = (
+        b'{"signal_source":"EBPF","l7_protocol":"Http1",'
+        b'"tap_side":"ClientProcess","start_time":1,"end_time":2,'
+        b'"request_type":"GET","request_resource":"/",' + duplicates + b'}'
+    )
+    _write(path, [raw])
+    batches, accounting, prefix = codec_file(path, node="a")
+    assert batches == []
+    assert accounting[0]["status"] == "unclassified"
+    assert accounting[0]["reasons"] == ["conflicting_duplicate_keys"]
+    assert prefix["unclassified_records"] == 1
+    assert path.read_bytes() == raw + b"\n"
+
+
+@pytest.mark.parametrize("collision", [
+    b'"base_head_msg_type":"Session"',
+    b'"protocol_info_msg_type":"Request"',
+    b'"__deepflow_msg_type_source_namespaces":{}',
+])
+def test_msg_type_namespace_derived_key_collisions_remain_raw_only(
+        tmp_path: Path, collision: bytes) -> None:
+    path = tmp_path / "l7_flow_log"
+    raw = (
+        b'{"signal_source":"EBPF","l7_protocol":"Http1",'
+        b'"tap_side":"ClientProcess","start_time":1,"end_time":2,' + collision
+        + b',"msg_type":"Session","msg_type":"Request"}'
+    )
+    _write(path, [raw])
+    batches, accounting, _ = codec_file(path, node="a")
+    assert batches == []
+    assert accounting[0]["reasons"] == ["conflicting_duplicate_keys"]
+
+
+def test_nested_msg_type_conflict_remains_raw_only(tmp_path: Path) -> None:
+    path = tmp_path / "l7_flow_log"
+    raw = (
+        b'{"signal_source":"EBPF","l7_protocol":"Http1",'
+        b'"tap_side":"ClientProcess","start_time":1,"end_time":2,'
+        b'"msg_type":"Request","nested":{"msg_type":"Session",'
+        b'"msg_type":"Request"}}'
+    )
+    _write(path, [raw])
+    batches, accounting, _ = codec_file(path, node="a")
+    assert batches == []
+    assert accounting[0]["reasons"] == ["conflicting_duplicate_keys"]
+    assert accounting[0]["conflicts"][0]["path"] == "$.nested.msg_type"
+
+
 @pytest.mark.parametrize("signal", ["Packet", "XFlow", "OTel", None])
 def test_non_ebpf_signal_is_retained_but_not_normalized(tmp_path: Path, signal) -> None:
     path = tmp_path / "l7_flow_log"

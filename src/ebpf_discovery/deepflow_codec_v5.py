@@ -26,6 +26,8 @@ MAX_OTLP_UNIX_NANO = (1 << 64) - 1
 # start_time/end_time fields below are therefore guest-realtime-derived Unix
 # epoch microseconds, not host receiver arrival times.
 SOURCE_CLOCK = "deepflow_guest_realtime_derived_epoch_us_standalone_ntp_disabled"
+_MSG_TYPE_NAMESPACE = "__deepflow_msg_type_source_namespaces"
+_MSG_TYPE_NAMESPACE_FIELDS = ("base_head_msg_type", "protocol_info_msg_type")
 
 
 class _Pairs(list):
@@ -60,6 +62,23 @@ def _decode_pairs(value: Any, path: str = "$") -> tuple[Any, list[dict[str, Any]
             unique = {_canonical(item): item for item in variants}
             if len(unique) == 1:
                 output[key] = next(iter(unique.values()))
+            elif (path == "$" and key == "msg_type" and len(variants) == 2
+                  and variants[0] == "Session"
+                  and variants[1] in ("Request", "Response")
+                  and _MSG_TYPE_NAMESPACE not in grouped
+                  and all(field not in grouped for field in _MSG_TYPE_NAMESPACE_FIELDS)):
+                # Pinned DeepFlow v7.2.3 flattens AppProtoLogsBaseInfo before
+                # protocol-specific L7 info. Both structures serialize a
+                # msg_type: the merged base head is Session while HTTP retains
+                # its Request/Response phase. This is an ordered source-schema
+                # namespace split, not general duplicate-key last-wins.
+                output[key] = variants[0]
+                output[_MSG_TYPE_NAMESPACE] = {
+                    "path": "$.msg_type",
+                    "ordered_values": list(variants),
+                    "base_head_msg_type": variants[0],
+                    "protocol_info_msg_type": variants[1],
+                }
             else:
                 conflicts.append({
                     "path": f"{path}.{key}",
@@ -203,6 +222,12 @@ def _common_attributes(record: dict[str, Any], raw: RawRecord, node: str,
         "ip_src", "ip_dst", "port_src", "port_dst", "response_duration",
     ):
         _add_if(attributes, "deepflow." + field, record.get(field))
+    namespace = record.get(_MSG_TYPE_NAMESPACE)
+    if isinstance(namespace, dict):
+        _add_if(attributes, "deepflow.base_head.msg_type",
+                namespace.get("base_head_msg_type"))
+        _add_if(attributes, "deepflow.protocol_info.msg_type",
+                namespace.get("protocol_info_msg_type"))
     for field in ("trace_ids", "span_id"):
         _add_if(attributes, "deepflow.carrier." + field, record.get(field))
     _add_if(attributes, "deepflow.x_request_id_0", record.get("x_request_id_0"))
@@ -384,6 +409,9 @@ def normalize_record(raw: RawRecord, *, node: str,
                   "start_time_us": start_us, "end_time_us": end_us,
                   "warnings": warnings, "ids_invented": False,
                   "service_identity_enriched": False, "technical_failure": False}
+    namespace = decoded.get(_MSG_TYPE_NAMESPACE)
+    if isinstance(namespace, dict):
+        accounting["source_namespace_split"] = dict(namespace)
     accounting["_runtime_identity"] = runtime_identity
     return span, accounting
 

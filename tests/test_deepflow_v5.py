@@ -484,7 +484,11 @@ def _remote_snapshot(ctx: Context, collector: DeepFlowCollectorsV5, tmp_path: Pa
                      node: str, stage: str, rows) -> None:
     source = tmp_path / f"remote-{node}-{stage}"
     source.mkdir()
-    body = b"".join(json.dumps(row, separators=(",", ":")).encode() + b"\n" for row in rows)
+    body = b"".join(
+        (row if isinstance(row, bytes) else
+         json.dumps(row, separators=(",", ":")).encode()) + b"\n"
+        for row in rows
+    )
     raw = source / "l7_flow_log"
     raw.write_bytes(body)
     manifest = {
@@ -573,6 +577,29 @@ def test_deepflow_raw_control_proof_uses_retained_ebpf_record(tmp_path: Path) ->
     assert proof["reason"] == "raw_deepflow_ebpf_http_record"
     assert proof["signal_source"] == "EBPF"
     assert proof["raw_sha256"]
+
+
+def test_deepflow_raw_control_proof_accepts_pinned_flattened_session_row(
+        tmp_path: Path) -> None:
+    ctx = Context(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector.remote_roots = {"a": "/remote/a", "b": "/remote/b"}
+    fixture = (
+        Path(__file__).parent / "fixtures" / "deepflow-v7.2.3-http-session.jsonl"
+    )
+    raw = fixture.read_bytes().removesuffix(b"\n")
+    marker = "collector-control-v5-deepflow-1793286908082095797"
+    _remote_snapshot(ctx, collector, tmp_path, "a", "001-control", [raw])
+    _remote_snapshot(ctx, collector, tmp_path, "b", "001-control", [_row("/other")])
+
+    capture = collector._capture_all("control")
+    proof = collector._control_proof("a", marker)
+
+    assert capture["technical_valid"] is True
+    assert proof["proven"] is True
+    assert proof["reason"] == "raw_deepflow_ebpf_http_record"
+    assert proof["signal_source"] == "EBPF"
+    assert proof["raw_sha256"] == __import__("hashlib").sha256(raw).hexdigest()
 
 
 def test_deepflow_reuses_shared_haproxy_control_lifecycle(
