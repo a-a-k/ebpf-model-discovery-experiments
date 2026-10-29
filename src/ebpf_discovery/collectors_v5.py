@@ -548,26 +548,40 @@ class CollectorsV5:
                         f"technical control forwarder config invalid on {node}"
                     )
 
-                forward_request = _safe_node_exec(
-                    self.ctx, node,
-                    f"docker run --rm --name {probe} --network {network} "
-                    f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
-                    + shlex.quote(_control_request_script(
-                        entry["client_port"], marker,
-                        persistent=False, host=client,
-                    )),
-                    timeout=30, check=False,
+                forwarder_ready_deadline = (
+                    time.monotonic() + CONTROL_READY_TIMEOUT_SECONDS
                 )
-                forward_attempt = {
-                    "attempt": 1,
-                    "observed_ns": time.time_ns(),
-                    "request": _result_evidence(forward_request),
-                }
-                entry["forwarder_request_attempts"].append(forward_attempt)
-                if (
-                    _returncode(forward_request) != 0
-                    or _stdout(forward_request).strip() != "ok"
-                ):
+                while time.monotonic() < forwarder_ready_deadline:
+                    probe_cleanup = _safe_node_exec(
+                        self.ctx, node,
+                        f"docker rm -f {probe} >/dev/null 2>&1 || true",
+                        timeout=30, check=False,
+                    )
+                    forward_request = _safe_node_exec(
+                        self.ctx, node,
+                        f"docker run --rm --name {probe} --network {network} "
+                        f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
+                        + shlex.quote(_control_request_script(
+                            entry["client_port"], marker,
+                            persistent=False, host=client,
+                        )),
+                        timeout=30, check=False,
+                    )
+                    forward_attempt = {
+                        "attempt": len(entry["forwarder_request_attempts"]) + 1,
+                        "observed_ns": time.time_ns(),
+                        "probe_cleanup_before": _result_evidence(probe_cleanup),
+                        "request": _result_evidence(forward_request),
+                    }
+                    entry["forwarder_request_attempts"].append(forward_attempt)
+                    if (
+                        _returncode(forward_request) == 0
+                        and _stdout(forward_request).strip() == "ok"
+                    ):
+                        entry["forwarder_ready"] = True
+                        break
+                    time.sleep(0.25)
+                if not entry.get("forwarder_ready"):
                     raise RuntimeError(
                         f"technical control forwarder request failed on {node}"
                     )
@@ -742,7 +756,12 @@ class CollectorsV5:
                 "application_coverage": "not_assessed_by_technical_control",
                 "control_network_scope": "private_bridge_no_host_port_publication",
                 "control_process_design": "persistent_haproxy_forwarder_with_separate_wget_generator",
-                "traffic_generator": "separate_wget_loop_not_selected_origin",
+                "traffic_generator": "separate_wget_loop",
+                "origin_interpretation": (
+                    "collector-specific retained raw marker rule; Coroot binds the "
+                    "forwarder client, OBI accepts either persistent HAProxy endpoint, "
+                    "and DeepFlow may observe any marker side"
+                ),
                 "native_sdk": False,
                 "cleanup_verified": not cleanup_failures,
                 "cleanup_failures": cleanup_failures,

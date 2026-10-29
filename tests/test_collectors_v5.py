@@ -378,6 +378,11 @@ def test_control_uses_private_network_dns_and_removes_network(
             if "docker exec study-ebpf-control-server-" in command:
                 return Result("Configuration file is valid\n")
             if "-probe" in command and command.startswith("docker run"):
+                if "http://study-ebpf-control-client-" in command:
+                    attempts = getattr(self, "forwarder_attempts", 0) + 1
+                    self.forwarder_attempts = attempts
+                    if attempts == 1:
+                        return Result(stderr="connection refused", returncode=1)
                 return Result("ok\n")
             if command.startswith("docker image inspect"):
                 return Result('[{"Id":"sha256:pinned"}]')
@@ -423,9 +428,13 @@ def test_control_uses_private_network_dns_and_removes_network(
             for command in commands
         )
         assert evidence["nodes"][node]["client_config_check"]["returncode"] == 0
-        assert evidence["nodes"][node]["forwarder_request_attempts"][0][
-            "request"
-        ]["stdout"].strip() == "ok"
+        attempts = evidence["nodes"][node]["forwarder_request_attempts"]
+        if node == "a":
+            assert [item["request"]["returncode"] for item in attempts] == [1, 0]
+        else:
+            assert [item["request"]["returncode"] for item in attempts] == [0]
+        assert attempts[-1]["request"]["stdout"].strip() == "ok"
+        assert evidence["nodes"][node]["forwarder_ready"] is True
         assert evidence["nodes"][node]["client_top"]["sha256"]
         assert evidence["nodes"][node]["load_top"]["sha256"]
         assert evidence["nodes"][node]["network_inspect"]["sha256"]
@@ -436,6 +445,8 @@ def test_control_uses_private_network_dns_and_removes_network(
     assert evidence["control_process_design"] == (
         "persistent_haproxy_forwarder_with_separate_wget_generator"
     )
+    assert evidence["traffic_generator"] == "separate_wget_loop"
+    assert "DeepFlow may observe any marker side" in evidence["origin_interpretation"]
     assert evidence["cleanup_verified"] is True
 
 
