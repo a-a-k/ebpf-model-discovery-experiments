@@ -42,11 +42,14 @@ Subsequent review approved these bounded repairs for one fixed repeat per agent:
 
 - OBI `7d7e6318d5735d299bb675912fbb4a62f8cdd471` through
   `d87b38511e63fb3040d35c106fe1823444139eaa`: start the persistent control
-  responder before the agent's initial process scan. Emit no prestart proof
+  responder before agent startup so it is present for initial discovery. Emit no prestart proof
   traffic; retain the same fresh marker and raw eBPF-origin check after
   application readiness. Record the added preparation cost. This control does
   not prove admission of processes created after agent startup. Independent
   verification: 63 relevant tests passed, two environment-specific skips.
+  This tests an unproven dynamic-process-admission hypothesis: no PID-map
+  snapshot was retained. HAProxy-specific discovery, probe, namespace or
+  transport behavior remain alternative explanations for the prior miss.
 - DeepFlow `97b60f012235aada3a0255849cdbd1df85a093bc` through
   `34773b525f6dad0d419f956b512f0fa2fd35502e` and
   `898636f4d18ff736b86f2d1a64faeeb00eb704d2`: privileged read-only process

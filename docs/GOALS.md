@@ -94,9 +94,9 @@ calculations run in GitHub Actions. Local work is editing, static checks, focuse
 unit fixtures and inspection of saved outputs. Preserve original evidence; do not
 invent missing edges or infer success from elapsed time.
 
-## Measurement completion and publication
+## Iteration 4 measurement completion and publication
 
-All 27 planned cells have completed and passed independent evidence review:
+All 27 planned iteration-4 cells have completed and passed independent evidence review:
 nine cells each for Petclinic, OpenTelemetry Demo and DeathStarBench. Admission
 checks source provenance, actual Bering and Sheaft use where forecasts are
 available, forecast-before-validation ordering, independent outcomes, exact
