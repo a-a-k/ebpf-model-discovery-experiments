@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e . pytest ijson
+      - run: python -m pip install -e '.[report]' pytest ijson
       - name: Run focused referenced-report checks
         run: |
           python -m pytest --import-mode=importlib \
