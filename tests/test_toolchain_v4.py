@@ -35,6 +35,7 @@ def test_ancillary_endpoint_has_valid_but_unscored_liveness_without_changing_ope
 
 def test_database_mapping_requires_port_system_and_compatible_network_scope(tmp_path):
     tool = object.__new__(Toolchain)
+    tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
     tool.system = 'example'
     tool.ctx = SimpleNamespace(deployment_dir=tmp_path)
     tool.declaration = SimpleNamespace(SELECTED_DATABASE={'db_system': 'postgresql'})
@@ -66,6 +67,7 @@ def test_preflight_attachment_never_adds_missing_or_unconfirmed_nodes(tmp_path):
     path = tmp_path / 'report.json'
     path.write_text(json.dumps(report))
     tool = object.__new__(Toolchain)
+    tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
     tool.preflight_reports = {('ebpf', 'operation'): [path]}
     model = {'services': [{'id': 'observed'}, {'id': 'ambiguous'}]}
     overlay, evidence = tool.static_overlay(model, 'ebpf', 'operation')
@@ -79,6 +81,7 @@ def test_preflight_uses_declared_required_services_as_nonempty_goal_targets(tmp_
     deployment.mkdir()
     (deployment/'compose.yaml').write_text('services: {}\n')
     tool = object.__new__(Toolchain)
+    tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
     tool.root = tmp_path/'toolchain'
     tool.ctx = SimpleNamespace(deployment_dir=deployment)
     tool.system, tool.inventory = 'generic', {}
@@ -104,6 +107,7 @@ def test_composite_preflight_targets_describe_the_individual_http_step(tmp_path)
     deployment.mkdir()
     (deployment/'compose.yaml').write_text('services: {}\n')
     tool = object.__new__(Toolchain)
+    tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
     tool.root, tool.system, tool.inventory = tmp_path/'toolchain', 'generic', {}
     tool.ctx = SimpleNamespace(deployment_dir=deployment)
     tool.declaration = experiment_v4
@@ -219,6 +223,7 @@ def test_global_inputs_keep_unlinked_calls_without_request_roots_and_reuse_wire(
         path.write_text(json.dumps(payload)+'\n', encoding='utf-8')
         store.db.execute('INSERT INTO files VALUES (?, ?)', (str(path), path.stat().st_size))
     tool = object.__new__(Toolchain)
+    tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
     tool.root, tool.store, tool.system = tmp_path/'toolchain', store, 'generic'
     tool.root.mkdir()
     tool.declaration = SimpleNamespace(CONTRACTS={name: {'entry_services': ['entry'],

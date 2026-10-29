@@ -60,7 +60,8 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
     return {'exports': inputs, 'observations': 2}, graph, Process
 
 
-def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path):
+@pytest.mark.parametrize('publication_mode', ['on_shutdown', 'windowed'])
+def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path, publication_mode):
     manifest, graph, process = harness(tmp_path)
     response = Mock(status_code=200)
     sent = []
@@ -71,7 +72,8 @@ def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path):
     with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
             patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
             patch('ebpf_discovery.bering_v4.requests.post', side_effect=post):
-        output, _ = replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment')
+        output, _ = replay(tmp_path / 'bering', manifest, tmp_path, 'same-deployment',
+                           publication_mode=publication_mode)
     assert output == graph
     assert sent[0][0].endswith('/sources/obi/v1/traces')
     assert sent[0][1] == Path(manifest['exports'][0]['path']).read_bytes()
@@ -84,7 +86,14 @@ def test_replay_routes_actual_sources_and_preserves_producer_graph(tmp_path):
     assert sent[1][2]['Content-Length'] == str(len(sent[1][1]))
     config = yaml.safe_load((tmp_path / 'model-runtime/serve.yaml').read_text())
     assert config['sources'][0]['domain'] == 'same-deployment'
-    assert config['runtime']['late_span_policy'] == 'current_window'
+    if publication_mode == 'on_shutdown':
+        assert config['runtime']['publication_mode'] == 'on_shutdown'
+        assert not {'window_size', 'flush_interval', 'late_span_policy'} & config['runtime'].keys()
+    else:
+        assert config['runtime']['late_span_policy'] == 'current_window'
+        assert config['runtime']['window_size'] == config['runtime']['flush_interval'] == '24h'
+        assert 'publication_mode' not in config['runtime']
+    assert json.loads((tmp_path/'model-runtime/replay-command.json').read_text())['publication_mode'] == publication_mode
     assert json.loads((tmp_path / 'model.json').read_text()) == graph
     assert 'env' not in process.kwargs
 

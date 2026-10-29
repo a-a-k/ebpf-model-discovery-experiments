@@ -54,7 +54,8 @@ def compact(source, destination):
         root = source / directory
         if root.is_dir():
             paths.extend(path for path, row in _entries(root) if row['type'] == 'file')
-    for name in ('status.json', 'checkpoint-validation.json', 'diagnostic-provenance.json'):
+    for name in ('status.json', 'checkpoint-validation.json', 'diagnostic-provenance.json',
+                 'toolchain-provenance.json'):
         path = source / 'output' / name
         if path.is_file():
             paths.append(path)

@@ -23,11 +23,12 @@ from .raw_v4 import export_selection
 from .bering_v4 import replay
 from .binding_v4 import endpoint_alias_evidence, matches_call_hint
 
-PINS = {
+ORIGINAL_PINS = {
     'Procrustes': '39f76000f8a39c971155e08ebffde829b525911b',
     'Bering': 'dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3',
     'Sheaft': '686a602f4e7b71f3612f1810885e29dd66c8733a',
 }
+PINS = {**ORIGINAL_PINS, 'Bering': '6f806428509a640a6419058c2ad845ed44db7512'}
 STATE_WEIGHTS = {'11': .5, '10': .25, '01': .125, '00': .125}
 
 
@@ -338,8 +339,11 @@ def exact_graph_outcome(model, binding, unavailable_services=()):
 
 
 class Toolchain:
-    def __init__(self, ctx, system, store, declaration):
+    def __init__(self, ctx, system, store, declaration, *, tool_pins=None,
+                 publication_mode='on_shutdown'):
         self.ctx, self.system, self.store, self.declaration = ctx, system, store, declaration
+        self.tool_pins = dict(PINS if tool_pins is None else tool_pins)
+        self.publication_mode = publication_mode
         self.root = ctx.out/'toolchain'
         self.root.mkdir(exist_ok=True)
         self.bin = Path(os.environ.get('PBS_BIN', 'work/toolchain/bin')).resolve()
@@ -393,7 +397,8 @@ class Toolchain:
                                                '--out-dir', folder, *selection], folder, 'preflight')
                     self.preflight_reports[source, name].append(folder/'report.json')
         write_json(self.root/'static-inputs.json', {'deployment': self.inventory,
-            'tool_pins': PINS, 'contracts': self.declaration.CONTRACTS,
+            'tool_pins': self.tool_pins, 'bering_publication_mode': self.publication_mode,
+            'contracts': self.declaration.CONTRACTS,
             'supplied_entry_identity_groups': self.entry_identity_groups,
             'procrustes_use': 'reports unchanged; only confirmed identity and replica facts attach to recovered nodes',
             'preflight_scope': 'one declared canonical name per alias group; all deployment namespaces',
@@ -484,7 +489,8 @@ class Toolchain:
 
     def discover(self, input_path, folder, overlay=None, prefix='model'):
         manifest = json.loads(input_path.read_text(encoding='utf-8'))
-        return replay(self.bin/'bering', manifest, folder, self.system+'-deployment', overlay, prefix)
+        return replay(self.bin/'bering', manifest, folder, self.system+'-deployment', overlay, prefix,
+                      publication_mode=self.publication_mode)
 
     def database_nodes(self, model, quality):
         reference = self.inventory.get('database', {})

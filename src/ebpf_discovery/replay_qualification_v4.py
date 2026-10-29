@@ -20,7 +20,7 @@ import time
 
 from .runtime import Context, write_json
 from .store_v3 import ObservationStore
-from .toolchain_v4 import PINS, Toolchain
+from .toolchain_v4 import ORIGINAL_PINS, PINS, Toolchain
 
 
 SYSTEMS = ('deathstarbench', 'otel_demo', 'petclinic')
@@ -43,13 +43,14 @@ def file_manifest(root: Path) -> dict[str, dict]:
     return result
 
 
-def verified_binaries(original: Path, replay: Path) -> tuple[Path, Path, dict]:
+def verified_binaries(original: Path, replay: Path, *, expected_pins=None) -> tuple[Path, Path, dict]:
     manifest_path = original/'toolchain-build'/'toolchain-build.json'
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     if manifest.get('schema_version') != 'toolchain-build-v4':
         raise ValueError('retained toolchain build manifest schema mismatch')
     rows = manifest.get('binaries') or []
-    expected = {name.lower(): commit for name, commit in PINS.items()}
+    expected = {name.lower(): commit for name, commit in
+                (PINS if expected_pins is None else expected_pins).items()}
     if len(rows) != len(expected) or {r.get('name') for r in rows} != set(expected):
         raise ValueError('retained toolchain does not contain exactly the pinned tools')
     old_roots, binary_evidence = set(), {}
@@ -182,7 +183,8 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
             raise ValueError('retained qualification attempt IDs are missing or duplicate')
         if Counter(plan.get('state') for plan in plans) != {'11': 120, '00': 120}:
             raise ValueError('retained qualification states do not match fixed 120+120 design')
-        binary_dir, old_root, binary_evidence = verified_binaries(original, out)
+        binary_dir, old_root, binary_evidence = verified_binaries(
+            original, out, expected_pins=ORIGINAL_PINS)
         index_evidence = relocate_index(original, out, old_root)
         shutil.copy2(original/'deployment.json', out/'deployment.json')
         ctx = Context(out, 'full', 6)
@@ -192,7 +194,8 @@ def replay(original: Path, out: Path, system: str, source: dict) -> dict:
         store = ObservationStore(out/'observation-index.sqlite', same_trace_parents=True)
         try:
             declaration = importlib.import_module(f'systems.{system}.experiment_v4')
-            forecasts = Toolchain(ctx, system, store, declaration).forecast(plans)
+            forecasts = Toolchain(ctx, system, store, declaration,
+                tool_pins=ORIGINAL_PINS, publication_mode='windowed').forecast(plans)
         finally:
             store.close()
             if old_bin is None:

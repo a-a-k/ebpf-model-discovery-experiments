@@ -782,3 +782,43 @@ imply that every source path was exercised. Reviewer checks actual generated
 models, fault selectors, source isolation, frozen predictions and independent
 outcomes before any success claim. Repair technical failures with retained history;
 do not expand scenarios to obtain a positive result.
+
+## Released Bering 1.2.0 adoption (2026-10-29)
+
+Before implementation, root and the independent skeptic gave explicit
+**ORIGINAL-criterion design GO** for this adoption, conditional only on actual
+publication; release `40796211973` has now completed and the tag resolves to
+`6f806428509a640a6419058c2ad845ed44db7512`. The engineering hypothesis is that
+explicit final publication can process the same full source-aware batch without
+a calendar rollover. The strongest simple baseline remains the same complete
+batch in the original runtime within a single window, plus the existing
+same-contract manual graph baseline for the external forecasts. Graph semantics,
+manual knowledge, observations, intervention distributions and independent
+outcomes are unchanged. No accuracy or total-cost advantage is inferred from
+this repair. Build, preparation, failed diagnosis, packaging, transfers and
+computation are retained; no accuracy-dependent stopping is introduced.
+
+Future default tool builds use released Bering 1.2.0 and `on_shutdown`, without
+24-hour window/flush settings. Procrustes and Sheaft source pins are unchanged.
+`ORIGINAL_PINS` and explicit `windowed` execution preserve historical qualification
+replays and all three original checkpoint profiles. Existing admitted cells and
+the running OTel parent remain attributed to their actual old binaries.
+
+The one new profile `full6-40731158179-dsb-bering120-on-shutdown` uses exactly
+checkpoint `12843610949`: 600 class-training and four 6,000-operation blocks, the
+entire indexed source prefix, all source/variant/operation branches and the same
+12 GiB Bering-child GC target. It verifies original 1.1.1 binaries before
+relocating a copy of the index, then separately validates the new source build,
+compiler/archive hashes and executable hashes. Original and effective manifests,
+pins, publication modes and build costs are retained separately. Source-built
+executables are not asserted to equal the published binary assets byte for byte.
+Full-count, zero-drop and single-publication checks still gate technical validity.
+
+Root implementation checks passed 86 synthetic tests (one Linux-only check
+skipped locally); independent implementation review and exact-head Actions CI
+precede one diagnostic dispatch. Actual diagnostic review and a separate fresh
+DSB/full/6 admission precede that system's remaining cells. OTel's remaining eight
+also require its staged-cell admission and an explicit version-transition review.
+No valid cell is repeated merely to change the tool version or obtain a positive
+result. The original DSB HTTP 500 body remains unavailable: this is a supported
+batching-contract repair, not proof of that failure's exact cause.

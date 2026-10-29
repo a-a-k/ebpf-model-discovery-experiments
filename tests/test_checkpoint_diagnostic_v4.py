@@ -205,3 +205,69 @@ def test_large_profile_workflow_retains_full_diagnostic_and_child_only_gc_settin
     assert "BERING_GC_HEARTBEAT" in workflow and "tail -n 3" in workflow
     assert "stat --printf='path=%n inode=%i bytes=%s mtime=%Y" in workflow
     assert "campaign_v4" not in workflow and "vms.sh start" not in workflow
+
+
+def _synthetic_build(root, pins):
+    build = root/'toolchain-build'
+    (build/'bin').mkdir(parents=True)
+    compiler = build/'go'/'1.26.0'/'bin'/'go'
+    compiler.parent.mkdir(parents=True)
+    compiler.write_bytes(b'synthetic compiler')
+    archive = build/'go'/'go1.26.0.linux-amd64.tar.gz'
+    archive.write_bytes(b'synthetic archive')
+    rows = []
+    for name, commit in pins.items():
+        binary = build/'bin'/name.lower()
+        binary.write_bytes((name+commit).encode())
+        rows.append({'name': name.lower(), 'commit': commit, 'binary': str(binary),
+            'binary_bytes': binary.stat().st_size, 'binary_sha256': diagnostic.digest(binary),
+            'go_version': '1.26.0', 'go_binary': str(compiler)})
+    _write(build/'toolchain-build.json', {'schema_version': 'toolchain-build-v4',
+        'binaries': rows, 'go_archives': [{'path': str(archive), 'sha256': diagnostic.digest(archive)}]})
+    for name in ('builds.tsv', 'pins.tsv'):
+        (build/name).write_text('synthetic build provenance')
+    (build/'logs').mkdir()
+    (build/'logs'/'build.log').write_text('synthetic build log')
+    return build
+
+
+def test_new_profile_verifies_both_versions_without_relabeling_original(tmp_path):
+    original, replacement, out = tmp_path/'original', tmp_path/'replacement', tmp_path/'out'
+    _synthetic_build(original, diagnostic.ORIGINAL_PINS)
+    build = _synthetic_build(replacement, diagnostic.PINS)
+    before = diagnostic.file_manifest(original)
+    profile = diagnostic.PROFILES[diagnostic.DSB_SHUTDOWN_PROFILE]
+    assert profile['artifact_id'] == diagnostic.PROFILES[diagnostic.DSB_GC_PROFILE]['artifact_id']
+    binary_dir, old_root, proof = diagnostic.runtime_binaries(original, out, profile, replacement)
+    assert old_root == original
+    assert binary_dir == out/'effective-toolchain'/'pinned-bin'
+    assert proof['original']['pins'] == diagnostic.ORIGINAL_PINS
+    assert proof['original']['publication_mode'] == 'windowed'
+    assert proof['effective']['pins'] == diagnostic.PINS
+    assert proof['effective']['publication_mode'] == 'on_shutdown'
+    assert proof['original']['binaries']['bering']['sha256'] != proof['effective']['binaries']['bering']['sha256']
+    assert proof['effective']['compilers'][0]['sha256'] == diagnostic.digest(build/'go'/'1.26.0'/'bin'/'go')
+    assert diagnostic.file_manifest(original) == before
+    assert (out/'effective-toolchain'/'logs'/'build.log').is_file()
+
+
+@pytest.mark.parametrize('defect', ['wrong-original', 'wrong-replacement', 'missing-replacement', 'archive-digest'])
+def test_replacement_rejects_wrong_identity_or_missing_build(tmp_path, defect):
+    original, replacement, out = tmp_path/'original', tmp_path/'replacement', tmp_path/'out'
+    _synthetic_build(original, diagnostic.PINS if defect == 'wrong-original' else diagnostic.ORIGINAL_PINS)
+    build = _synthetic_build(replacement, diagnostic.ORIGINAL_PINS if defect == 'wrong-replacement' else diagnostic.PINS)
+    if defect == 'archive-digest':
+        (build/'go'/'go1.26.0.linux-amd64.tar.gz').write_bytes(b'changed archive')
+    with pytest.raises(ValueError):
+        diagnostic.runtime_binaries(original, out, diagnostic.PROFILES[diagnostic.DSB_SHUTDOWN_PROFILE],
+                                    None if defect == 'missing-replacement' else replacement)
+
+
+def test_historical_profile_keeps_original_binary_and_publication_mode(tmp_path):
+    original, out = tmp_path/'original', tmp_path/'out'
+    _synthetic_build(original, diagnostic.ORIGINAL_PINS)
+    binary_dir, old_root, proof = diagnostic.runtime_binaries(
+        original, out, diagnostic.PROFILES[diagnostic.DSB_GC_PROFILE])
+    assert binary_dir == out/'original-toolchain'/'pinned-bin'
+    assert old_root == original and proof['original'] == proof['effective']
+    assert proof['effective']['publication_mode'] == 'windowed'

@@ -90,7 +90,8 @@ is a published product release with an actual SDK-free OBI input and a generic L
 smoke test. That proves the product accepts real OBI OTLP and emits a graph in its own
 acceptance environment. It is **not** a result for these applications or interventions.
 
-Iteration 4 builds exact source revisions in every GitHub Actions campaign:
+The nine admitted Petclinic cells and the staged OTel/full/6 run use these exact
+source revisions (each campaign retains its own build manifest):
 
 | Component | Revision or release | Role |
 |---|---|---|
@@ -99,6 +100,18 @@ Iteration 4 builds exact source revisions in every GitHub Actions campaign:
 | [Bering v1.1.1] | `dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3` | source-domain-aware OBI/native discovery and graph publication |
 | [Sheaft v1.3.2] | `686a602f4e7b71f3612f1810885e29dd66c8733a` | edge-aware predicates and deterministic state-profile simulation |
 | [mb3r-stack v1.3.0] | released integration bundle | published product integration reference, not the experiment runner |
+
+Future builds now pin [Bering v1.2.0](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0),
+commit `6f806428509a640a6419058c2ad845ed44db7512`, and use explicit `on_shutdown`
+publication. This removes the calendar window from complete offline batches;
+it does not change graph construction, source scope, operation contracts or
+the comparison baseline. The other two research tool pins remain as above.
+One separately named diagnostic reuses the full retained DSB checkpoint and
+records both the original 1.1.1 binaries and the separately verified new build.
+Historical replay profiles keep their original binaries and `windowed` mode.
+The new diagnostic and subsequent cells require independent execution review;
+published product tests do not establish their empirical outcome. Existing
+results are not relabelled or reacquired for a version change.
 
 The workflow reads each tool's declared Go version, downloads the corresponding
 official Go archive, verifies its digest, builds with `GOTOOLCHAIN=local`, and records
@@ -210,6 +223,13 @@ runtime and its observed graph is reused across operations:
    relationships;
 4. Bering flushes after all input. Each operation overlay is then applied by Bering
    in a separate replay, and only its published model is passed to Sheaft.
+
+New Bering 1.2.0 runs implement this with `on_shutdown`, without a window size or
+publication timer. Earlier 1.1.1 runs used a 24-hour runtime window and checked
+that every source observation was present, none were dropped and exactly one
+snapshot was published. The failed DSB diagnostic crossed a UTC window boundary;
+this exposed a possible early-publication path, but its unavailable HTTP 500
+body prevents attributing the precise error. The failed attempt is retained.
 
 This corrects the first v4 implementation, which required complete parent chains
 before admitting downstream calls. Structural calls do not by themselves establish

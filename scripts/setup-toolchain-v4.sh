@@ -7,7 +7,7 @@ OUT="$(realpath "$OUT")"
 
 cat >"$OUT/pins.tsv" <<'EOF'
 procrustes	https://github.com/MB3R-Lab/Procrustes.git	39f76000f8a39c971155e08ebffde829b525911b	./cmd/procrustes
-bering	https://github.com/MB3R-Lab/Bering.git	dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3	./cmd/bering
+bering	https://github.com/MB3R-Lab/Bering.git	6f806428509a640a6419058c2ad845ed44db7512	./cmd/bering
 sheaft	https://github.com/MB3R-Lab/Sheaft.git	686a602f4e7b71f3612f1810885e29dd66c8733a	./cmd/sheaft
 EOF
 

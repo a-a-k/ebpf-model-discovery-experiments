@@ -116,8 +116,11 @@ integrity/resource review before that system's
 remaining eight cells proceed. Immutable DSB checkpoint diagnostic `40780918812`
 failed during Bering ingestion with HTTP 500, then lost its output artifact to a
 separate upload failure. Logs are retained in `data-40791837386`; the exact server
-error remains unknown. A generic batch-publication repair and stronger diagnostic
-retention are in progress. The diagnostic cannot resume or complete its failed campaign.
+error remains unknown. Bering 1.2.0 and its chart now publish the generic batch
+repair; diagnostic retention has passed review and CI. A separately named DSB
+diagnostic adopts the released source commit, preserving the full input and
+original/effective toolchain provenance. It still requires implementation/CI and
+execution review. The diagnostic cannot resume or complete its failed campaign.
 Retain every valid cell regardless of accuracy or unknown coverage, and include
 failed acquisition, worker, diagnostic, reporting and archival costs. Resource
 adequacy must be measured on the actual input, not inferred from a smaller replay.

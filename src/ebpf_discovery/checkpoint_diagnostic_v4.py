@@ -20,7 +20,7 @@ from .replay_qualification_v4 import (
 )
 from .runtime import Context, write_json
 from .store_v3 import ObservationStore
-from .toolchain_v4 import Toolchain
+from .toolchain_v4 import ORIGINAL_PINS, PINS, Toolchain
 from .bering_v4 import child_go_environment
 
 
@@ -33,6 +33,7 @@ SOURCE_MANIFEST_SHA256 = "1947882e9a8ce92732ca31e14907afde9c5def9dd33050658b2e66
 DEFAULT_PROFILE = "original-40718665137"
 LARGE_GC_PROFILE = "full6-40754529169-gomemlimit12g"
 DSB_GC_PROFILE = "full6-40731158179-dsb-gomemlimit12g"
+DSB_SHUTDOWN_PROFILE = "full6-40731158179-dsb-bering120-on-shutdown"
 PROFILES = {
     DEFAULT_PROFILE: {
         "system": "otel_demo",
@@ -65,6 +66,73 @@ PROFILES = {
         "bering_child_go_environment": {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"},
     },
 }
+PROFILES[DSB_SHUTDOWN_PROFILE] = {**PROFILES[DSB_GC_PROFILE],
+    "replacement_pins": dict(PINS), "publication_mode": "on_shutdown"}
+
+
+def runtime_binaries(original: Path, out: Path, profile: dict,
+                     replacement_root: Path | None = None):
+    """Verify original binaries first, then an explicitly separate released-source build."""
+    original_bin, old_root, original_proof = verified_binaries(
+        original, out/"original-toolchain", expected_pins=ORIGINAL_PINS)
+    original_manifest = original/"toolchain-build"/"toolchain-build.json"
+    shutil.copy2(original_manifest, out/"original-toolchain"/"toolchain-build.json")
+    proof = {"original": {"pins": ORIGINAL_PINS, "binaries": original_proof,
+        "build_manifest_sha256": digest(original_manifest), "publication_mode": "windowed"}}
+    replacement_pins = profile.get("replacement_pins")
+    if replacement_pins is None:
+        if replacement_root is not None:
+            raise ValueError("historical diagnostic does not accept a replacement toolchain")
+        proof["effective"] = dict(proof["original"])
+        return original_bin, old_root, proof
+    if replacement_root is None:
+        raise ValueError("this named diagnostic requires a separate replacement toolchain build")
+    replacement_root = Path(replacement_root).resolve()
+    for other in (original.resolve(), out.resolve()):
+        if replacement_root == other or replacement_root in other.parents or other in replacement_root.parents:
+            raise ValueError("replacement toolchain build must be separate from source and output")
+    effective = out/"effective-toolchain"
+    binary_dir, build_root, binary_proof = verified_binaries(
+        replacement_root, effective, expected_pins=replacement_pins)
+    if build_root != replacement_root:
+        raise ValueError("replacement manifest must identify this Actions build location")
+    build = replacement_root/"toolchain-build"
+    manifest = _read(build/"toolchain-build.json")
+    compiler_proof = []
+    for row in manifest["binaries"]:
+        compiler = Path(row["go_binary"]).resolve()
+        if (compiler != build/"go"/row["go_version"]/"bin"/"go"
+                or not compiler.is_file() or compiler.is_symlink()):
+            raise ValueError("replacement compiler path or file mismatch")
+        compiler_proof.append({"tool": row["name"], "version": row["go_version"],
+            "path": str(compiler), "bytes": compiler.stat().st_size, "sha256": digest(compiler)})
+    archive_proof = []
+    for row in manifest["go_archives"]:
+        archive = Path(row["path"]).resolve()
+        if archive.parent != build/"go" or archive.is_symlink() or not archive.is_file():
+            raise ValueError("replacement compiler archive path mismatch")
+        actual = digest(archive)
+        if actual != row["sha256"]:
+            raise ValueError("replacement compiler archive digest mismatch")
+        archive_proof.append({**row, "bytes": archive.stat().st_size})
+    expected_archives = {str(build/"go"/f"go{row['go_version']}.linux-amd64.tar.gz")
+                         for row in manifest["binaries"]}
+    if {row["path"] for row in archive_proof} != expected_archives or len(archive_proof) != len(expected_archives):
+        raise ValueError("replacement compiler archive census mismatch")
+    # Preserve measured build commands, compiler identity and logs, without
+    # pretending these source builds are byte-identical to release binaries.
+    for name in ("toolchain-build.json", "builds.tsv", "pins.tsv"):
+        shutil.copy2(build/name, effective/name)
+    shutil.copytree(build/"logs", effective/"logs")
+    (effective/"go-metadata").mkdir()
+    for path in (build/"go").glob("go*.json"):
+        shutil.copy2(path, effective/"go-metadata"/path.name)
+    proof["effective"] = {"pins": replacement_pins, "binaries": binary_proof,
+        "build_manifest_sha256": digest(build/"toolchain-build.json"),
+        "publication_mode": profile["publication_mode"],
+        "compilers": compiler_proof, "compiler_archives": archive_proof,
+        "binary_basis": "Actions source build of exact released commits; not published-asset byte identity"}
+    return binary_dir, old_root, proof
 
 
 def _profile(name=DEFAULT_PROFILE):
@@ -208,7 +276,8 @@ def validate_training_prefix(original: Path) -> tuple[list[dict], dict]:
                                           for (phase, state), count in sorted(expected.items())}}
 
 
-def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFILE) -> dict:
+def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFILE,
+             replacement_root: Path | None = None) -> dict:
     if os.environ.get("GITHUB_ACTIONS") != "true":
         raise RuntimeError("v4 training-checkpoint diagnostic is permitted only in GitHub Actions")
     profile = _profile(profile_name)
@@ -236,7 +305,9 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
             "artifact_digest_basis": "GitHub Actions API immutable artifact digest",
             "full_checkpoint_rehashed_before_tools": True,
         })
-        binary_dir, old_root, binary_proof = verified_binaries(original, out)
+        binary_dir, old_root, toolchain_proof = runtime_binaries(
+            original, out, profile, replacement_root)
+        write_json(out/"toolchain-provenance.json", toolchain_proof)
         index_proof = relocate_index(original, out, old_root)
         shutil.copy2(original/"deployment.json", out/"deployment.json")
         ctx = Context(out, "full", 6)
@@ -247,7 +318,9 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
         try:
             declaration = importlib.import_module(f"systems.{profile['system']}.experiment_v4")
             with child_go_environment(profile["bering_child_go_environment"]):
-                forecasts = Toolchain(ctx, profile["system"], store, declaration).forecast(plans)
+                forecasts = Toolchain(ctx, profile["system"], store, declaration,
+                    tool_pins=toolchain_proof["effective"]["pins"],
+                    publication_mode=toolchain_proof["effective"]["publication_mode"]).forecast(plans)
         finally:
             store.close()
             if old_bin is None:
@@ -256,7 +329,8 @@ def diagnose(original: Path, out: Path, source: dict, profile_name=DEFAULT_PROFI
                 os.environ["PBS_BIN"] = old_bin
         write_json(out/"diagnostic-provenance.json", {
             "source_artifact": source, "manifest": manifest_proof,
-            "training": census_proof, "binary_evidence": binary_proof,
+            "training": census_proof, "binary_evidence": toolchain_proof["effective"]["binaries"],
+            "toolchain": toolchain_proof,
             "index": index_proof, "forecast_branches": {
                 source_name: {variant: {operation: {"available": bool(value.get("available")),
                     "reason": value.get("reason")} for operation, value in operations.items()}
@@ -299,8 +373,9 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--profile", choices=sorted(PROFILES), default=DEFAULT_PROFILE)
+    parser.add_argument("--replacement-root", type=Path)
     args = parser.parse_args()
-    diagnose(args.original, args.out, _read(args.source), args.profile)
+    diagnose(args.original, args.out, _read(args.source), args.profile, args.replacement_root)
 
 
 if __name__ == "__main__":

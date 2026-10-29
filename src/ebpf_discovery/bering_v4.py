@@ -116,13 +116,16 @@ def _retain_ingest_error(response, export, run_dir, endpoint, export_index):
     return evidence
 
 
-def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
+def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
+           publication_mode='on_shutdown'):
     """One offline discovery batch, with all graph construction inside Bering.
 
-    The publication timer is not an observation filter. Native late records are
-    admitted; OBI uses receipt-time admission. A split or dropped batch is a
-    technical failure and never becomes a partial successful forecast.
+    New runs publish only on shutdown, without a clock window. Explicit windowed
+    mode preserves historical diagnostics on their original Bering binary. A
+    split or dropped batch is a technical failure, never a successful forecast.
     """
+    if publication_mode not in ('on_shutdown', 'windowed'):
+        raise ValueError('unsupported Bering publication mode: '+str(publication_mode))
     folder = Path(folder).resolve()
     run_dir = folder / (prefix + '-runtime')
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -139,13 +142,18 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
                    'max_request_bytes': max([5242880, *(decoded_size(e) + 1 for e in exports)])},
         'sources': [{'id': 'obi', 'type': 'ebpf-obi', 'domain': domain,
                      'capture_directory': str(run_dir / 'obi-capture')}],
-        'runtime': {'flush_interval': '24h', 'window_size': '24h',
-                    'max_in_memory_spans': max(1, count + 1), 'late_span_policy': 'current_window',
+        'runtime': {'max_in_memory_spans': max(1, count + 1),
                     'reconciliation': {'enabled': False}},
         'sink': {'directory': str(run_dir / 'snapshots'), 'latest_path': str(snapshot_path),
                  'signal_quality_path': str(quality_path)},
         'logging': {'structured': True}, 'overlays': [str(Path(overlay).resolve())] if overlay else [],
     }
+    if publication_mode == 'on_shutdown':
+        config['runtime']['publication_mode'] = 'on_shutdown'
+    else:
+        # Bering 1.1.1 predates publication_mode; keep its original configuration.
+        config['runtime'].update(flush_interval='24h', window_size='24h',
+                                 late_span_policy='current_window')
     config_path = run_dir / 'serve.yaml'
     config_path.write_text(yaml.safe_dump(config), encoding='utf-8')
     argv = [str(Path(binary).resolve()), 'serve', '--config', str(config_path)]
@@ -153,6 +161,7 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model'):
     supervisor_argv = [sys.executable, str(Path(__file__).with_name('child_resources_v4.py')),
                        '--report', str(resource_path), '--', *argv]
     record = {'argv': argv, 'started_ns': time.time_ns(), 'input_observations': count,
+              'publication_mode': publication_mode,
               'source_domain': domain, 'clock_admission_filter': False,
               'discovery_mode': 'one offline batch; no historical reconciliation',
               'child_resource_report': str(resource_path)}

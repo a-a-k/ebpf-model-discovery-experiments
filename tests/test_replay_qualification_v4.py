@@ -188,7 +188,7 @@ def test_changed_original_is_recorded_as_failure_even_on_exception(tmp_path, mon
     original = tmp_path/'original'
     source = _qualification_fixture(original)
     monkeypatch.setenv('GITHUB_ACTIONS', 'true')
-    def mutate_and_fail(_original, _replay):
+    def mutate_and_fail(_original, _replay, *, expected_pins):
         (original/'unexpected').write_text('changed')
         raise RuntimeError('synthetic replay failure after mutation')
     monkeypatch.setattr(replay_module, 'verified_binaries', mutate_and_fail)
