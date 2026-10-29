@@ -100,7 +100,44 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
     assert all("--log-opt" not in command for command in manifest["commands"].values())
     assert all("--privileged --pid=host --network=host" in command
                for command in manifest["commands"].values())
+    assert [command for _, command, _ in ctx.calls
+            if command == "sudo readlink /proc/1/ns/pid"] == [
+                "sudo readlink /proc/1/ns/pid", "sudo readlink /proc/1/ns/pid"]
+    assert "common post-capture projection" in manifest["service_identity_enrichment"]
+    questions = json.loads((collector.root / "deepflow-integration-questions.json").read_text())
+    assert questions["service_identity"]["status"] == (
+        "available_via_common_verified_runtime_identity_projection")
     assert len(ctx.puts) == 4  # config and immutable snapshot helper on each guest
+
+
+def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(
+        tmp_path: Path, monkeypatch) -> None:
+    class ProtectedProcContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            if command == "readlink /proc/1/ns/pid":
+                raise AssertionError("unprivileged protected-proc read attempted")
+            if command == "sudo readlink /proc/1/ns/pid":
+                self.calls.append((node, command, kwargs))
+                raise RuntimeError("sudo readlink failed: protected proc unavailable")
+            return super().node_exec(node, command, **kwargs)
+
+    ctx = ProtectedProcContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
+    with pytest.raises(RuntimeError, match="protected proc unavailable"):
+        collector.start()
+    collector.close()  # defensive campaign cleanup must not attempt a final snapshot/drain
+
+    failure = json.loads((collector.root / "startup-failure.json").read_text())
+    assert failure["original_error"]["message"] == (
+        "sudo readlink failed: protected proc unavailable")
+    assert failure["cleanup"]["drain_attempted"] is False
+    assert failure["cleanup"]["collector_closed_checkpoint_created"] is False
+    assert failure["collector_closed_checkpoint"] is False
+    assert failure["accepted_receiver_bytes_closed_and_hashed"] is False
+    assert not (collector.root / "drain-evidence.json").exists()
+    assert not (collector.root / "final-snapshot.json").exists()
+    assert not any("deepflow_snapshot_v5.py" in command for _, command, _ in ctx.calls)
 
 
 def _remote_snapshot(ctx: Context, collector: DeepFlowCollectorsV5, tmp_path: Path,

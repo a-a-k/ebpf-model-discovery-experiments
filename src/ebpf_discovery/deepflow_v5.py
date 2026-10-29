@@ -84,6 +84,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self._prefixes: dict[str, dict[str, dict[str, Any]]] = {"a": {}, "b": {}}
         self._capture_counter = 0
         self._capture_evidence: list[dict[str, Any]] = []
+        self._startup_complete = False
 
     def _start_receivers(self) -> None:
         """DeepFlow is file-backed; only the unchanged native OTLP path listens."""
@@ -120,6 +121,35 @@ class DeepFlowCollectorsV5(CollectorsV5):
         if self.started_ns is not None:
             raise RuntimeError("DeepFlow collector lifecycle cannot be restarted")
         self.started_ns = time.time_ns()
+        try:
+            self._start_impl()
+        except BaseException as exc:
+            cleanup = self._cleanup_incomplete_start()
+            evidence = {
+                "schema": "deepflow-startup-failure-v5",
+                "collector": self.collector,
+                "started_ns": self.started_ns,
+                "failed_ns": time.time_ns(),
+                "startup_complete": False,
+                "original_error": {
+                    "type": type(exc).__name__,
+                    "message": str(exc),
+                    "repr": repr(exc),
+                },
+                "cleanup": cleanup,
+                "collector_closed_checkpoint": False,
+                "accepted_receiver_bytes_closed_and_hashed": False,
+                "scope": "best-effort cleanup after incomplete startup; no drain or closed collector claim",
+            }
+            try:
+                _write_json(self.root / "startup-failure.json", evidence)
+            except Exception:
+                # Never replace the original technical failure with evidence-writing failure.
+                pass
+            raise
+        self._startup_complete = True
+
+    def _start_impl(self) -> None:
         self._start_receivers()
         config = self.root / "deepflow-agent-standalone.yaml"
         config.write_text(yaml.safe_dump(_config(), sort_keys=False), encoding="utf-8")
@@ -160,7 +190,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 node, "cat /proc/sys/kernel/random/boot_id", timeout=30
             )).strip()
             pid_namespace = _stdout(self.ctx.node_exec(
-                node, "readlink /proc/1/ns/pid", timeout=30
+                node, "sudo readlink /proc/1/ns/pid", timeout=30
             )).strip()
             if not boot_id or not pid_namespace:
                 raise RuntimeError(f"guest boot/PID namespace identity unavailable on {node}")
@@ -222,7 +252,10 @@ class DeepFlowCollectorsV5(CollectorsV5):
             },
             "operational_readiness_only": True,
             "application_coverage_proven": False,
-            "service_identity_enrichment": "not_implemented_without_verified_runtime_inventory",
+            "service_identity_enrichment": (
+                "common post-capture projection uses verified runtime inventory; "
+                "collector-normalized observations remain unchanged"
+            ),
             "started_ns": self.started_ns,
             "lifecycle": "started",
             "closed_checkpoint": False,
@@ -230,10 +263,10 @@ class DeepFlowCollectorsV5(CollectorsV5):
         _write_json(self.root / "deepflow-integration-questions.json", {
             "schema": "deepflow-integration-questions-v5",
             "service_identity": {
-                "status": "required_for_entry_binding_not_implemented",
-                "question": (
-                    "Which reviewed runtime inventory artifact will join observed guest boot ID, "
-                    "PID namespace/cgroup and observation-time PID to a container/service identity?"
+                "status": "available_via_common_verified_runtime_identity_projection",
+                "scope": (
+                    "post-capture projection may attach actual Compose service identity only when "
+                    "hash-bound runtime inventory and lifecycle evidence resolve the observed PID"
                 ),
                 "forbidden_fallbacks": [
                     "process_kname_as_service_name", "pid_as_service_name",
@@ -241,10 +274,64 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 ],
             },
             "http_graph_to_sheaft_smoke": (
-                "blocked until the verified runtime identity join is supplied; codec output alone "
-                "must remain service.name=unknown"
+                "codec output remains service.name=unknown; graph input may use the separate common "
+                "projection only after its runtime inventory and lifecycle proofs verify"
             ),
         })
+
+    def _cleanup_incomplete_start(self) -> dict[str, Any]:
+        """Best-effort resource cleanup without claiming a completed collector drain."""
+        containers, receivers, errors = {}, {}, []
+        for node in sorted(self.remote_roots):
+            try:
+                result = self.ctx.node_exec(
+                    node, f"docker rm -f {self.container_name}", timeout=60, check=False)
+                containers[node] = {
+                    "returncode": _returncode(result),
+                    "stdout": _stdout(result),
+                    "stderr": _stderr(result),
+                }
+            except Exception as exc:
+                containers[node] = {"error": repr(exc)}
+                errors.append(f"container:{node}:{exc!r}")
+        for name, process in self.processes.items():
+            forced = False
+            try:
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        forced = True
+                        process.kill()
+                        process.wait(timeout=5)
+                receivers[name] = {"returncode": process.poll(), "forced": forced}
+            except Exception as exc:
+                receivers[name] = {"error": repr(exc), "forced": forced}
+                errors.append(f"receiver:{name}:{exc!r}")
+        for log in self.logs:
+            try:
+                if not log.closed:
+                    log.close()
+            except Exception as exc:
+                errors.append(f"log:{exc!r}")
+        self._closed = True
+        return {
+            "containers": containers,
+            "receivers": receivers,
+            "errors": errors,
+            "best_effort": True,
+            "drain_attempted": False,
+            "collector_closed_checkpoint_created": False,
+        }
+
+    def close(self) -> None:
+        if self._closed:
+            return
+        if not self._startup_complete:
+            self._cleanup_incomplete_start()
+            return
+        super().close()
 
     def _wait_container_readiness(self) -> None:
         deadline = time.monotonic() + 90
