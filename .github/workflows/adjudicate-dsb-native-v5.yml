@@ -1,0 +1,47 @@
+name: Adjudicate immutable DSB native acquisition v5
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  adjudicate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest
+      - name: Run focused adjudication checks
+        run: python -m pytest --import-mode=importlib tests/test_adjudicate_dsb_native_v5.py -q | tee focused-tests.log
+      - name: Fetch exact immutable source metadata and full artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/dsb-native-adjudication-input
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909279346 \
+            > work/dsb-native-adjudication-input/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913642774 \
+            > work/dsb-native-adjudication-input/artifact-api.json
+          gh api -H 'Accept: application/vnd.github+json' \
+            repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12913642774/zip \
+            > work/dsb-native-adjudication-input/full.zip
+      - name: Re-run only acquisition checks on preserved originals
+        env:
+          PYTHONPATH: src
+        run: |
+          python scripts/adjudicate-dsb-native-v5.py \
+            --archive work/dsb-native-adjudication-input/full.zip \
+            --artifact-metadata work/dsb-native-adjudication-input/artifact-api.json \
+            --run-metadata work/dsb-native-adjudication-input/run-api.json \
+            --out work/dsb-native-adjudication
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dsb-native-adjudication-v5-${{ github.run_id }}
+          path: |
+            work/dsb-native-adjudication/
+            focused-tests.log
+          retention-days: 90
+          if-no-files-found: error
