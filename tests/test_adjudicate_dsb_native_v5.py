@@ -90,7 +90,8 @@ def test_preserves_originals_and_calls_only_acquisition_checks(tmp_path: Path, m
     assert result["new_acquisition"]["native_application_observations_by_service"] == {}
     assert result["new_acquisition"]["native_audit_observations_by_service"] == {
         "jaeger-all-in-one": 1}
-    assert result["empirical_metrics_recomputed"] is False
+    assert result["acquisition_validation_counts_recomputed"] is True
+    assert result["forecast_class_outcome_metrics_recomputed"] is False
     assert result["selected_original_members_preserved"] is True
     assert result["source_full_artifact_unchanged"] is True
     assert result["source_full_artifact_retained_in_output"] is False

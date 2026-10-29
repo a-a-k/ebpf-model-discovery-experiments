@@ -173,7 +173,8 @@ def adjudicate(
         "original_evaluation_overwritten": False,
         "model_refit_or_replay_performed": False,
         "sheaft_or_forecast_recomputation_performed": False,
-        "empirical_metrics_recomputed": False,
+        "acquisition_validation_counts_recomputed": True,
+        "forecast_class_outcome_metrics_recomputed": False,
     }
     (out / "adjudication.json").write_text(
         json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
