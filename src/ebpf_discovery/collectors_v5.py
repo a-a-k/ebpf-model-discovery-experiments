@@ -463,6 +463,7 @@ class CollectorsV5:
         except Exception as exc:
             failure = exc
         finally:
+            cleanup_failures: list[dict[str, Any]] = []
             for node in ("a", "b"):
                 entry = nodes[node]
                 server = entry["server_container"]
@@ -492,6 +493,37 @@ class CollectorsV5:
                     timeout=30, check=False
                 )
                 entry["cleanup"] = _result_evidence(cleanup)
+                entry["cleanup_verification"] = {}
+                for role, name in (("probe", probe), ("client", client), ("server", server)):
+                    verification = _safe_node_exec(
+                        self.ctx,
+                        node,
+                        "docker ps -a --format '{{.Names}}' --filter "
+                        + shlex.quote(f"name=^/{name}$"),
+                        timeout=30,
+                        check=False,
+                    )
+                    observed_names = [
+                        item.strip() for item in _stdout(verification).splitlines()
+                        if item.strip()
+                    ]
+                    absent = _returncode(verification) == 0 and name not in observed_names
+                    entry["cleanup_verification"][role] = {
+                        **_result_evidence(verification),
+                        "container": name,
+                        "observed_names": observed_names,
+                        "absent": absent,
+                    }
+                    if not absent:
+                        cleanup_failures.append({
+                            "node": node,
+                            "role": role,
+                            "container": name,
+                            "returncode": _returncode(verification),
+                            "observed_names": observed_names,
+                        })
+            if cleanup_failures and failure is None:
+                failure = RuntimeError("technical control cleanup absence verification failed")
             evidence = {
                 "schema": "collector-positive-control-v5",
                 "collector": self.collector,
@@ -503,6 +535,8 @@ class CollectorsV5:
                 and all(value["proven"] for value in proofs.values()),
                 "application_coverage": "not_assessed_by_technical_control",
                 "native_sdk": False,
+                "cleanup_verified": not cleanup_failures,
+                "cleanup_failures": cleanup_failures,
                 "technical_failure": str(failure) if failure is not None else None,
             }
             _write_json(self.root / "technical-positive-control.json", evidence)

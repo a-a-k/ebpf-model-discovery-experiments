@@ -384,6 +384,56 @@ def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
     cleanup = [command for _, command, _ in ctx.calls if command.startswith("docker rm -f")]
     assert any("control-client-a" in command and "control-server-a" in command for command in cleanup)
     assert any("control-client-b" in command and "control-server-b" in command for command in cleanup)
+    assert evidence["cleanup_verified"] is False
+    assert evidence["technical_failure"] == "technical control HTTP readiness failed on a"
+
+
+def test_successful_origin_still_fails_if_control_container_remains(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class RemnantContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-server-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if command.startswith("docker inspect study-ebpf-control-client-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if "-probe" in command and command.startswith("docker run"):
+                return Result("ok\n")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            if command.startswith("docker ps -a"):
+                if node == "a" and "control-client-a-probe" in command:
+                    return Result("study-ebpf-control-client-a-probe\n")
+                return Result("")
+            return Result("ok")
+
+    ctx = RemnantContext(tmp_path)
+    collector = OBICollectorsV5(ctx)
+    monkeypatch.setattr(
+        collector, "_control_proof", lambda node, marker: {
+            "proven": True, "reason": "raw_collector_record"
+        }
+    )
+    with pytest.raises(RuntimeError, match="cleanup absence verification failed"):
+        collector.positive_control(timeout=1)
+    evidence = json.loads(
+        (collector.root / "technical-positive-control.json").read_text(encoding="utf-8")
+    )
+    assert evidence["selected_ebpf_origin_proven"] is True
+    assert evidence["cleanup_verified"] is False
+    assert evidence["technical_failure"] == (
+        "technical control cleanup absence verification failed"
+    )
+    assert evidence["cleanup_failures"] == [{
+        "container": "study-ebpf-control-client-a-probe",
+        "node": "a",
+        "observed_names": ["study-ebpf-control-client-a-probe"],
+        "returncode": 0,
+        "role": "probe",
+    }]
 
 
 @pytest.mark.skipif(
