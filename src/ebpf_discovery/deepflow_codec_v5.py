@@ -11,7 +11,7 @@ from dataclasses import dataclass
 import hashlib
 import json
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 
 DEEPFLOW_VERSION = "v7.2.3"
@@ -90,41 +90,56 @@ def _parse(raw: bytes) -> tuple[dict[str, Any] | None, list[dict[str, Any]], str
 def complete_records(path: Path, *, source_file: str | None = None,
                      retained_file: str | None = None,
                      limit: int | None = None) -> tuple[list[RawRecord], dict[str, Any]]:
-    """Locate complete newline-terminated records without discarding a tail."""
+    """Compatibility materializer for small fixtures; acquisition streams below."""
+    prefix = {}
+    records = list(iter_complete_records(path, prefix, source_file=source_file,
+                                        retained_file=retained_file, limit=limit))
+    return records, prefix
+
+
+def iter_complete_records(path: Path, prefix: dict[str, Any], *,
+                          source_file: str | None = None,
+                          retained_file: str | None = None,
+                          limit: int | None = None) -> Iterable[RawRecord]:
+    """Read one JSONL record at a time; preserve exact prefix/tail accounting."""
     path = Path(path)
-    data = path.read_bytes()
-    if limit is not None:
-        if limit < 0 or limit > len(data):
-            raise ValueError(f"invalid prefix limit {limit} for {path} ({len(data)} bytes)")
-        data = data[:limit]
-    complete = data.rfind(b"\n") + 1
-    records: list[RawRecord] = []
-    cursor = 0
+    size = path.stat().st_size
+    limit = size if limit is None else limit
+    if type(limit) is not int or not 0 <= limit <= size:
+        raise ValueError(f"invalid prefix limit {limit} for {path} ({size} bytes)")
+    cursor, count, pending = 0, 0, 0
+    complete_hash, pending_hash = hashlib.sha256(), hashlib.sha256()
     logical = source_file or path.name
-    for line in data[:complete].splitlines(keepends=True):
-        content = line[:-1]
-        if content.endswith(b"\r"):
-            content = content[:-1]
-        length = len(content)
-        records.append(RawRecord(
-            source_file=logical,
-            retained_file=retained_file or str(path),
-            offset=cursor,
-            length=length,
-            sha256=hashlib.sha256(content).hexdigest(),
-            raw=content,
-        ))
-        cursor += len(line)
-    return records, {
+    with path.open("rb") as stream:
+        remaining = limit
+        while remaining:
+            line = stream.readline(remaining)
+            if not line:
+                raise ValueError(f"retained DeepFlow prefix truncated during read: {path}")
+            remaining -= len(line)
+            if not line.endswith(b"\n"):
+                pending_hash.update(line)
+                pending += len(line)
+                continue
+            content = line[:-1]
+            if content.endswith(b"\r"):
+                content = content[:-1]
+            complete_hash.update(line)
+            yield RawRecord(source_file=logical, retained_file=retained_file or str(path),
+                            offset=cursor, length=len(content),
+                            sha256=hashlib.sha256(content).hexdigest(), raw=content)
+            cursor += len(line)
+            count += 1
+    prefix.update({
         "retained_file": retained_file or str(path),
         "source_file": logical,
-        "file_bytes": len(data),
-        "complete_prefix_bytes": complete,
-        "complete_prefix_sha256": hashlib.sha256(data[:complete]).hexdigest(),
-        "pending_tail_bytes": len(data) - complete,
-        "pending_tail_sha256": hashlib.sha256(data[complete:]).hexdigest(),
-        "record_count": len(records),
-    }
+        "file_bytes": limit,
+        "complete_prefix_bytes": cursor,
+        "complete_prefix_sha256": complete_hash.hexdigest(),
+        "pending_tail_bytes": pending,
+        "pending_tail_sha256": pending_hash.hexdigest(),
+        "record_count": count,
+    })
 
 
 def _value(value: Any) -> dict[str, Any]:
@@ -408,37 +423,51 @@ def codec_file(path: Path, *, node: str, source_file: str | None = None,
                limit: int | None = None, seen: set[tuple[str, int, str]] | None = None,
                batch_size: int = 256,
                guest_context: dict[str, str] | None = None,
+               on_batch: Callable[[dict[str, Any]], None] | None = None,
+               on_accounting: Callable[[dict[str, Any]], None] | None = None,
                ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
-    """Decode one retained file into batches and a per-record accounting index."""
-    records, prefix = complete_records(
-        path, source_file=source_file, retained_file=retained_file, limit=limit
-    )
+    """Stream to sinks in acquisition; materialize outputs only when requested."""
+    if type(batch_size) is not int or batch_size <= 0:
+        raise ValueError("batch_size must be a positive envelope size, never an observation cap")
+    prefix = {}
+    records = iter_complete_records(path, prefix, source_file=source_file,
+                                    retained_file=retained_file, limit=limit)
     seen = seen if seen is not None else set()
-    spans, accounting = [], []
+    batches, accounting, pending = [], [], []
+    counts = {key: 0 for key in ("normalized_records", "unclassified_records", "non_ebpf_records",
+                                "already_normalized_records", "technical_failure_records",
+                                "normalized_batches")}
+    def emit_batch():
+        envelope = _envelope(list(pending), node)
+        (on_batch if on_batch is not None else batches.append)(envelope)
+        counts["normalized_batches"] += 1
+        pending.clear()
     for raw in records:
         key = (raw.source_file, raw.offset, raw.sha256)
         if key in seen:
-            accounting.append({
+            span = None
+            entry = {
                 "source_file": raw.source_file, "retained_file": raw.retained_file,
                 "offset": raw.offset, "length": raw.length, "sha256": raw.sha256,
                 "status": "already_normalized",
                 "technical_failure": False,
-            })
-            continue
-        span, entry = normalize_record(raw, node=node, guest_context=guest_context)
-        accounting.append(entry)
-        seen.add(key)
+            }
+        else:
+            span, entry = normalize_record(raw, node=node, guest_context=guest_context)
+            seen.add(key)
+        (on_accounting if on_accounting is not None else accounting.append)(entry)
+        counts["unclassified_records"] += entry["status"] == "unclassified"
+        counts["non_ebpf_records"] += entry["status"] == "retained_non_ebpf"
+        counts["already_normalized_records"] += entry["status"] == "already_normalized"
+        counts["technical_failure_records"] += bool(entry.get("technical_failure"))
         if span is not None:
-            spans.append(span)
-    batches = list(_batch(spans, node=node, batch_size=batch_size))
-    prefix.update({
-        "normalized_records": len(spans),
-        "unclassified_records": sum(item["status"] == "unclassified" for item in accounting),
-        "non_ebpf_records": sum(item["status"] == "retained_non_ebpf" for item in accounting),
-        "already_normalized_records": sum(item["status"] == "already_normalized" for item in accounting),
-        "technical_failure_records": sum(bool(item.get("technical_failure")) for item in accounting),
-        "normalized_batches": len(batches),
-    })
+            counts["normalized_records"] += 1
+            pending.append(span)
+            if len(pending) == batch_size:
+                emit_batch()
+    if pending:
+        emit_batch()
+    prefix.update(counts)
     return batches, accounting, prefix
 
 

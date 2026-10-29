@@ -51,6 +51,32 @@ def _attrs(span):
     return attributes(span["attributes"])
 
 
+def test_streaming_preserves_all_records_prefix_tail_and_repeated_capture(tmp_path, monkeypatch):
+    path = tmp_path / "l7_flow_log"
+    rows = [_base(x_request_id_0=str(i)) for i in range(11)]
+    rows.insert(4, _base(signal_source="Packet"))
+    _write(path, rows)
+    with path.open("ab") as output:
+        output.write(b'{"pending":')
+    expected_batches, expected_accounting, expected_prefix = codec_file(path, node="a", batch_size=3)
+    # Acquisition must not restore whole-file reads behind its streaming API.
+    monkeypatch.setattr(Path, "read_bytes", lambda _: pytest.fail("whole-file heap copy"))
+    batches, accounting, seen = [], [], set()
+    empty_batches, empty_accounting, prefix = codec_file(
+        path, node="a", batch_size=3, seen=seen,
+        on_batch=batches.append, on_accounting=accounting.append)
+    assert empty_batches == empty_accounting == []
+    assert (batches, accounting, prefix) == (expected_batches, expected_accounting, expected_prefix)
+    assert prefix["pending_tail_bytes"] == len(b'{"pending":')
+    assert prefix["non_ebpf_records"] == 1
+    repeated = []
+    _, _, second = codec_file(path, node="a", batch_size=3, seen=seen,
+                              on_batch=lambda _: pytest.fail("duplicate output"),
+                              on_accounting=repeated.append)
+    assert len(repeated) == second["already_normalized_records"] == len(rows)
+    assert second["normalized_records"] == second["normalized_batches"] == 0
+
+
 def test_http_record_has_exact_time_raw_locator_and_no_invented_identity(tmp_path: Path) -> None:
     path = tmp_path / "l7_flow_log"
     _write(path, [_base()])

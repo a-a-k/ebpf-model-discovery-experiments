@@ -32,7 +32,6 @@ from .deepflow_codec_v5 import (
     DEEPFLOW_SOURCE_COMMIT,
     DEEPFLOW_VERSION,
     SOURCE_CLOCK,
-    append_jsonl,
     codec_file,
 )
 
@@ -380,22 +379,31 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     file_log_write_failures.extend(self._standalone_write_failures(target))
                 continue
             source_file = f"{node}/{item['source_name']}"
-            batches, rows, prefix = codec_file(
-                target, node=node, source_file=source_file,
-                retained_file=target.relative_to(self.root).as_posix(), seen=self._seen,
-                guest_context=self.guest_context.get(node),
-            )
-            for row in rows:
-                key = (source_file, int(row["offset"]))
-                previous = self._seen_offsets.get(key)
-                if previous is not None and previous != row["sha256"]:
-                    raise RuntimeError(
-                        f"DeepFlow source bytes changed at {source_file}:{row['offset']}"
-                    )
-                self._seen_offsets[key] = row["sha256"]
-                row.update(node=node, capture_stage=stage)
-            normalized += append_jsonl(self.root / f"{node}.jsonl", batches)
-            accounting += append_jsonl(self.root / "deepflow-codec-accounting.jsonl", rows)
+            with (self.root / f"{node}.jsonl").open("a", encoding="utf-8", newline="\n") as output, (
+                self.root / "deepflow-codec-accounting.jsonl"
+            ).open("a", encoding="utf-8", newline="\n") as evidence:
+                def retain_batch(batch):
+                    output.write(json.dumps(batch, separators=(",", ":"), ensure_ascii=False) + "\n")
+
+                def retain_accounting(row):
+                    key = (source_file, int(row["offset"]))
+                    previous = self._seen_offsets.get(key)
+                    if previous is not None and previous != row["sha256"]:
+                        raise RuntimeError(
+                            f"DeepFlow source bytes changed at {source_file}:{row['offset']}"
+                        )
+                    self._seen_offsets[key] = row["sha256"]
+                    row.update(node=node, capture_stage=stage)
+                    evidence.write(json.dumps(row, separators=(",", ":"), ensure_ascii=False) + "\n")
+
+                _, _, prefix = codec_file(
+                    target, node=node, source_file=source_file,
+                    retained_file=target.relative_to(self.root).as_posix(), seen=self._seen,
+                    guest_context=self.guest_context.get(node),
+                    on_batch=retain_batch, on_accounting=retain_accounting,
+                )
+            normalized += prefix["normalized_batches"]
+            accounting += prefix["record_count"]
             codec_failures += prefix["technical_failure_records"]
             item["codec"] = prefix
             if not final:
