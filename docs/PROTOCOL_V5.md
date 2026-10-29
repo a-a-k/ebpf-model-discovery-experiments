@@ -1,0 +1,158 @@
+# Iteration 5: four collectors and stable operation families
+
+Status: implementation and technical qualification in progress; no iteration-5
+measurement result is claimed. Authorized on 2026-10-29: repair operation-class
+fragmentation, compare different eBPF collectors, and run smoke tests before the
+main experiments. The user selected OBI, DeepFlow, New Relic eBPF Agent and Coroot.
+The [completed iteration 4](PROTOCOL_V4.md) remains historical evidence.
+
+## Question, comparison and pre-implementation review
+
+The primary question remains whether actual eBPF observations can replace or
+complement incomplete native tracing in this executable chain:
+
+`Procrustes preparation -> Bering discovered graph -> Sheaft simulation -> independent application outcomes`
+
+Collector choice may change observed protocol, identity and association coverage,
+and consequently the availability or error of externally checked forecasts.
+Fixing a diagnostic classifier alone does not establish that contribution.
+The original useful-outcome/complete-effort criterion remains in force. No positive
+result, accuracy threshold or superiority over equivalent arithmetic is required.
+
+Comparisons retain the equally informed direct contract/inventory predicate,
+native/eBPF/combined sources, the base entry classifier and the former exact
+downstream classifier. The direct primary availability calculation remains
+mathematically equivalent where the same mandatory replica law is available.
+All sources receive the same supplied operation semantics, identity/placement
+facts, fault assumptions and source-global observation scope.
+
+Root and independent 6.1 Sol/xhigh skeptic gave explicit ORIGINAL-criterion design
+GO for the hierarchical repair and common collector framework before implementation.
+The actual classifier passed independent code review and 10 focused v4/v5 tests.
+Collector-specific acquisition contracts, implementation and real smoke artifacts
+must be reviewed before their main campaigns. This is not a positive-result verdict.
+
+## Stable family identity and uncertain structure
+
+The new family ID is exactly the frozen base method/route/step/source signature.
+Optional, repeated, missing or conflicting descendants cannot split a known entry
+family. A missing, conflicting or unseen entry still leaves family identity unknown.
+This has the same family-level classification as the base method; an ARI gain over
+that baseline is neither possible by construction nor claimed.
+
+Source-local HTTP/RPC/DB call sets and observed multiplicities are attached as
+structural descriptors. Runtime/name-only tokens remain separately retained rather
+than defining semantic operation patterns. Counts are never discarded from the
+descriptor. All distinct observed positive call-set prototypes are retained,
+including nested sets. At evaluation, positive evidence may be compatible with
+one or several frozen patterns. Empty evidence, conflicts, multiple candidates
+and unseen patterns remain explicit structural uncertainty. A unique compatible
+pattern does not prove complete execution of its calls or a business subclass.
+
+In particular, pruning `{x}` in favor of `{x,y}` is prohibited: an observation of
+`x` would otherwise incorrectly establish the larger pattern. Same-entry business
+subclasses remain unresolved without discriminating evidence. Driver-supplied
+attempt/step boundaries are disclosed; operation labels and external outcomes do
+not enter fitting. The legacy exact and base outputs remain available on the same
+new observations. Models are learned only from `class_train` and saved before
+target and class-test traffic.
+
+## Matched campaign matrix
+
+Four separate collector arms each run three systems, three native tracing modes
+and seeds 6/7/8: **108 fresh campaigns**. All ten original operations remain. OBI
+is freshly rerun on the common pipeline/tool pins; old v4 measurements cannot stand
+in for a matched new OBI arm. Collectors run separately to avoid mutual interference.
+
+Each campaign uses two Linux guests with separate kernels on the same standard
+Actions runner, the same application versions, replica placement, workload and
+fault scenarios. There is no asymmetric per-collector CPU/memory cap. Actual
+resource use, drops and platform failures are retained. Paid resources and new
+vendor accounts are not provisioned automatically.
+
+The full workload retains v4 counts: 600 class-training attempts, four 6,000-attempt
+discovery state blocks, eight 1,200-attempt target blocks with state multiplicities
+4/2/1/1, and 600 independent class-test attempts, at nominal 20 primary attempts/s.
+DB controls retain 20 up and 20 down attempts. OTel retains 20 normal, 20 paused
+and 20 recovered checkouts, including post-resume verification of the same paused
+orders. Preparation, additional HTTP steps and independent verification are charged.
+No experimental response deadline or accuracy cutoff is introduced.
+
+Iteration-5 OTel absent mode removes the v4 disabled branches' non-recording SDK
+providers and context propagators as well as native export. Enabled tracing paths
+are retained. This correction is explicit and receives fresh native-mode audits;
+it does not retroactively relabel or repair v4 observations.
+
+## Collector data contract
+
+Raw bytes, actual image/source/configuration identity, per-guest provenance,
+complete file prefixes, drain evidence and normalization locators are retained.
+Bering must identify the actual collector rather than labeling every source OBI.
+Application trace/span/parent identifiers are preserved when actually present.
+Generated per-event IDs, syscall IDs, an IP, common topic or temporal proximity
+cannot silently become distributed execution ancestry. A structural client
+dependency remains distinct from a request-specific causal chain.
+
+DeepFlow standalone JSONL needs a documented field-preserving codec and lossless
+retention; the old bounded fallback is insufficient. Unconverted fields remain
+accessible through the original record and locator. Codec errors or overwritten
+rotations are technical failures. Missing protocol support is an observed limit.
+No expected topology, business outcome or native label is inserted into eBPF data.
+
+Coroot's outbound root spans may support structural dependencies without providing
+propagated parents or server entry spans. Those distinctions must remain visible.
+New Relic's local export, credential and license conditions remain unresolved;
+that arm must not be substituted or presented as measured while unavailable.
+No key is published, synthesized or passed into retained telemetry artifacts.
+
+Product changes are generic collector/source capabilities only. Experimental
+code, names, data, routes, results and links remain outside Bering and other product
+repositories. All four arms must eventually use the same reviewed toolchain pins.
+
+## Smoke tests before main experiments
+
+The fixed smoke grid is four collectors x three systems x three modes, seed 6:
+**36 settings**. Startup controls must establish real supported HTTP observation
+on each guest and actual eBPF source attribution. A running container, dispatcher
+message, packet record or nonempty file alone is insufficient.
+
+Each smoke runs three class-training attempts per operation, all four discovery
+states with one attempt per operation each, the actual graph/model/forecast save,
+eight target states with one attempt per operation each, and three class-test
+attempts per operation. Each operation also receives one DB-up and one DB-down
+attempt. OTel adds one normal, one paused then resumed, and one recovered checkout.
+The standard preparation and independent verification paths remain enabled.
+Small smoke counts exercise mechanics; they do not estimate forecast accuracy.
+
+Qualification checks actual collection, raw-to-normalized accounting, native-mode
+suppression, two-guest placement, intervention/restore behavior, closed training
+checkpoint/import, model-before-target integrity, and Bering/Sheaft invocation
+where binding is supported. It also checks descriptor and full-input resource
+behavior before mass dispatch; input size or simulator trials are not silently
+capped to make a run pass. Synthetic fixtures test codec/classifier edge cases
+but cannot replace these real-system smoke observations.
+
+Technical invalidity includes broken startup/export, wrong source attribution,
+lossy conversion/copy, failed drain, inconsistent accounting, ineffective native
+suppression, broken intervention or failure of an invoked tool. Unsupported Thrift,
+missing Kafka ancestry, absent entry evidence or a graph that cannot support a
+forecast remains an empirical unknown once the acquisition path is qualified.
+Smoke admission never requires a favorable prediction or complete protocol coverage.
+
+## Results, costs and completion
+
+Report per operation, collector, source, tracing mode and repeat: external outcomes,
+forecast availability/error/uncertainty, DB participation, causal-link evidence,
+stable families and uncertain descriptors. Preserve valid unfavorable results and
+all technical attempts. Only technical failures warrant replacement runs.
+
+Costs include generic adapter/product preparation, builds, collector installation,
+smokes, failed starts, early stopping, guest/agent/receiver resources, analysis,
+raw retention, transfer and reporting. Parent/worker intervals overlap and are not
+summed as sequential wall time. Human effort remains unknown where not recorded.
+Complete-effort superiority cannot be inferred from incomplete measurements.
+
+Completion requires implemented and reviewed collectors, actual smoke decisions,
+the authorized fresh matrix or explicitly unresolved external blockers, retained
+data/models/forecasts/outcomes, generated reports and an independently checked
+research README. A passing unit test, PR or queued workflow is an intermediate step.
