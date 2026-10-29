@@ -1072,15 +1072,18 @@ class CollectorsV5:
     def _close_receivers(self) -> dict[str, Any]:
         evidence = {}
         for node, process in self.processes.items():
+            closure_started_ns = time.time_ns()
+            closure_started_monotonic_ns = time.monotonic_ns()
             forced = False
-            if process.poll() is None:
+            running_at_close = process.poll() is None
+            signal_sent = False
+            if running_at_close:
                 process.terminate()
-                try:
-                    process.wait(timeout=30)
-                except subprocess.TimeoutExpired:
-                    forced = True
-                    process.kill()
-                    process.wait(timeout=5)
+                signal_sent = True
+                # Normal finalization has no experimental deadline.  The receiver
+                # exits only after joining request handlers and writing its durable
+                # closure checkpoint; the gates below then verify that evidence.
+                process.wait()
             checkpoint_path = self.root / f"receiver-closed-{node}.json"
             checkpoint = None
             checkpoint_error = None
@@ -1089,9 +1092,22 @@ class CollectorsV5:
             except Exception as exc:
                 checkpoint_error = repr(exc)
             parent_verified = self._verify_receiver_checkpoint(node, checkpoint)
+            closure_ended_monotonic_ns = time.monotonic_ns()
+            closure_ended_ns = time.time_ns()
             evidence[node] = {
                 "returncode": process.returncode,
                 "forced_kill": forced,
+                "normal_closure": {
+                    "completion_rule": "wait_for_receiver_exit_then_verify_durable_checkpoint",
+                    "deadline_seconds": None,
+                    "running_at_close": running_at_close,
+                    "termination_signal_sent": signal_sent,
+                    "started_ns": closure_started_ns,
+                    "ended_ns": closure_ended_ns,
+                    "elapsed_seconds": (
+                        closure_ended_monotonic_ns - closure_started_monotonic_ns
+                    ) / 1e9,
+                },
                 "checkpoint": checkpoint_path.name,
                 "checkpoint_error": checkpoint_error,
                 "in_flight_handlers_joined": bool(

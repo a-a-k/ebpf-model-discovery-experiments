@@ -33,6 +33,34 @@ class Result:
         self.returncode = returncode
 
 
+class ReceiverProcess:
+    def __init__(self, *, returncode=None, timeout_once=False):
+        self.returncode = returncode
+        self.timeout_once = timeout_once
+        self.terminated = 0
+        self.killed = 0
+        self.wait_calls = []
+
+    def poll(self):
+        return self.returncode
+
+    def terminate(self):
+        self.terminated += 1
+
+    def wait(self, *args, **kwargs):
+        self.wait_calls.append((args, kwargs))
+        timeout = kwargs.get("timeout", args[0] if args else None)
+        if self.timeout_once and timeout == 10:
+            self.timeout_once = False
+            raise subprocess.TimeoutExpired("receiver", timeout)
+        self.returncode = -9 if self.killed else 0
+        return self.returncode
+
+    def kill(self):
+        self.killed += 1
+        self.returncode = -9
+
+
 class Context:
     def __init__(self, root: Path):
         self.out = root
@@ -270,6 +298,77 @@ def test_final_drain_retains_clean_shutdown_closed_bytes_and_honest_flush_bound(
     assert "pre-receiver exporter loss" in final_snapshot["scope"]
     checkpoint = json.loads((collector.root / "collector.json").read_text())
     assert checkpoint["retained_file_hashes"]["final-snapshot.json"]["sha256"]
+
+
+@pytest.mark.parametrize("kind", ["obi", "deepflow"])
+def test_normal_receiver_close_has_no_deadline_and_keeps_all_proof_gates(
+    tmp_path: Path, monkeypatch, kind: str
+) -> None:
+    if kind == "deepflow":
+        from ebpf_discovery.deepflow_v5 import DeepFlowCollectorsV5
+        collector = DeepFlowCollectorsV5(Context(tmp_path))
+    else:
+        collector = OBICollectorsV5(Context(tmp_path))
+    process = ReceiverProcess()
+    collector.processes = {"native": process}
+    (collector.root / "receiver-closed-native.json").write_text(json.dumps({
+        "in_flight_handlers_joined": True,
+        "saved_bytes_valid": True,
+    }))
+    monkeypatch.setattr(collector, "_verify_receiver_checkpoint", lambda node, value: True)
+
+    evidence = collector._close_receivers()["native"]
+
+    assert process.terminated == 1
+    assert process.killed == 0
+    assert process.wait_calls == [((), {})]
+    assert evidence["forced_kill"] is False
+    assert evidence["returncode"] == 0
+    assert evidence["technical_valid"] is True
+    closure = evidence["normal_closure"]
+    assert closure["completion_rule"] == "wait_for_receiver_exit_then_verify_durable_checkpoint"
+    assert closure["deadline_seconds"] is None
+    assert closure["running_at_close"] is True
+    assert closure["termination_signal_sent"] is True
+    assert closure["ended_ns"] >= closure["started_ns"]
+    assert closure["elapsed_seconds"] >= 0
+
+
+def test_normal_receiver_close_does_not_admit_missing_checkpoint_or_signal_exited_process(
+    tmp_path: Path
+) -> None:
+    collector = OBICollectorsV5(Context(tmp_path))
+    process = ReceiverProcess(returncode=0)
+    collector.processes = {"a": process}
+
+    evidence = collector._close_receivers()["a"]
+
+    assert process.terminated == process.killed == 0
+    assert process.wait_calls == []
+    assert evidence["checkpoint_error"].startswith("FileNotFoundError")
+    assert evidence["technical_valid"] is False
+    assert evidence["normal_closure"]["running_at_close"] is False
+    assert evidence["normal_closure"]["termination_signal_sent"] is False
+    assert evidence["normal_closure"]["elapsed_seconds"] >= 0
+
+
+def test_exception_cleanup_keeps_bounded_force_kill_and_original_error(
+    tmp_path: Path, monkeypatch
+) -> None:
+    collector = OBICollectorsV5(Context(tmp_path))
+    collector._start_entered = True
+    collector._obi_startup_complete = True
+    process = ReceiverProcess(timeout_once=True)
+    collector.processes = {"a": process}
+    monkeypatch.setattr(
+        collector, "final_drain", lambda: (_ for _ in ()).throw(RuntimeError("primary drain error")))
+
+    with pytest.raises(RuntimeError, match="primary drain error"):
+        collector.close()
+
+    assert process.terminated == 1
+    assert process.killed == 1
+    assert process.wait_calls == [((), {"timeout": 10}), ((), {"timeout": 5})]
 
 
 def test_termination_rejects_exit_137_oom_sigkill_and_missing_success(tmp_path: Path) -> None:

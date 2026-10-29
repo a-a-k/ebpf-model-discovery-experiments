@@ -15,6 +15,9 @@ unproved. A [journal memory repair](docs/JOURNAL_MEMORY_V5.md) preserves exact
 evidence while avoiding retention of every response body. Independent saved-data
 equivalence validation passed and affected starts resumed; failed attempts and
 their costs remain.
+Normal [receiver closure](docs/RECEIVER_CLOSE_V5.md) now waits for the durable
+closure proof without an artificial experiment deadline; all exit, join, byte,
+and parent-hash gates remain unchanged, and earlier failures remain failures.
 The native Petclinic comparison is affected by a verified route-versus-URL
 representation mismatch despite the exact URL being present in the raw traces;
 this is a pipeline limitation, not evidence of native information inferiority.
