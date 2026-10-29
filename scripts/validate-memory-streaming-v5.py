@@ -323,7 +323,8 @@ def validate(args) -> dict:
 
     result = {
         "schema": "memory-streaming-validation-v5",
-        "scope": "preprocessing equivalence only; no graph, forecast, class, outcome, or metric recomputation",
+        "scope": ("preprocessing equivalence and preparation costs newly calculated; "
+                  "no graph, forecast, class, or outcome metrics recomputed"),
         "source": source,
         "selected_members": member_proofs,
         "original_implementation": {"commit": ORIGINAL_COMMIT,
