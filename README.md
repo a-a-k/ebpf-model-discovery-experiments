@@ -4,9 +4,9 @@
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
-review; main groups are being staged. All nine OBI Petclinic main cells have passed
-actual evidence review. Coroot Petclinic/absent main packets and the first completed
-DeathStarBench repeat are under independent review. Technical smoke admission does
+review; main groups are being staged. All nine OBI Petclinic main cells and three
+Coroot Petclinic/absent main cells have passed actual evidence review. The first
+completed DeathStarBench and OTel main packets are under independent review. Technical smoke admission does
 not require an available or accurate forecast.
 The 27 New Relic main cells remain access-blocked. No utility or complete-cost
 advantage is claimed.
@@ -24,6 +24,9 @@ representation mismatch despite the exact URL being present in the raw traces;
 this is a pipeline limitation, not evidence of native information inferiority.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
+The [report transport check](docs/REPORT_TRANSPORT_V5.md) preserves exact saved
+evaluations and verifies the original journals without accumulating unpacked
+journal copies in the report job.
 The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
 Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.

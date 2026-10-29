@@ -1,0 +1,17 @@
+{
+  "policy": "technical_replacement_only_no_outcome_selection",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [12933554459],
+      "selected_artifact_id": 12933554459,
+      "candidate_run_ids": [40919005648, 40942429097],
+      "reason_code": "technical_no_artifact_original",
+      "reason": "The original run failed during training preparation and retained no artifact. The exact-cell repeat retained its complete evaluation. Selection uses technical completeness only; forecasts, errors and independent review status are not selection criteria.",
+      "independent_review_claim": false
+    }
+  ]
+}
