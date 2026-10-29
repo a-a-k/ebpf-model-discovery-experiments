@@ -1,12 +1,13 @@
 import hashlib
 import json
+import copy
 from pathlib import Path
 import zipfile
 
 import pytest
 
 from ebpf_discovery.artifact_recovery_v5 import recover_declared_files, retain_unavailable
-from ebpf_discovery.report_v5 import build, render
+from ebpf_discovery.report_v5 import build, render, resolve_evaluation_reference
 
 
 OBI_IMAGE = (
@@ -22,6 +23,17 @@ def write(path: Path, value) -> None:
 
 def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def attempts(result: dict, stage: str) -> list[dict]:
+    by_key = {row["attempt_key"]: row for row in result["attempts"]}
+    return [by_key[key] for key in result[f"{stage}_attempt_references"]]
+
+
+def restored(report_dir: Path, attempt: dict) -> dict:
+    return resolve_evaluation_reference(
+        attempt["evaluation_reference"], report_dir / "evaluation-v5.json",
+    )
 
 
 def declared(path: Path, runs: list[dict], blocked=None) -> Path:
@@ -103,9 +115,12 @@ def test_smoke_is_separate_and_main_evaluation_is_verbatim(tmp_path: Path) -> No
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
     assert result["grid"]["declared_main_cells"] == 108
     assert result["grid"]["technically_complete_main_cells"] == 1
-    assert result["smoke_attempts"][0]["evaluation"] == smoke
-    assert result["selected_main_evaluations"][0]["evaluation"] == main
-    assert result["selected_main_evaluations"][0]["independently_admitted"] is False
+    assert restored(tmp_path / "report", attempts(result, "smoke")[0]) == smoke
+    selected = {row["attempt_key"]: row for row in result["attempts"]}[
+        result["selected_main_attempt_references"][0]
+    ]
+    assert restored(tmp_path / "report", selected) == main
+    assert selected["independently_admitted"] is False
 
 
 def test_failed_no_artifact_and_blocked_are_retained_not_coverage(tmp_path: Path) -> None:
@@ -115,7 +130,7 @@ def test_failed_no_artifact_and_blocked_are_retained_not_coverage(tmp_path: Path
           "seed": 6, "reason": "license unavailable"}])
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
     assert result["grid"]["technically_complete_main_cells"] == 0
-    assert {row["reason"] for row in result["main_attempts"]} == {
+    assert {row["reason"] for row in attempts(result, "main")} == {
         "source_evaluation_technically_incomplete", "compact_artifact_not_retained"}
     assert result["grid"]["blocked_main_cells"] == [
         ["newrelic", "petclinic", "absent", 6, "license unavailable"]]
@@ -179,10 +194,10 @@ def test_historically_omitted_declared_file_is_retained_unavailable(
 
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
 
-    attempt = result["main_attempts"][0]
+    attempt = attempts(result, "main")[0]
     assert attempt["reason"] == "manifest_declared_file_unavailable"
     assert attempt["eligible_main_coverage"] is False
-    assert attempt["evaluation"] == evaluation
+    assert restored(tmp_path / "report", attempt) == evaluation
     assert attempt["technical_complete_self_reported"] is True
     assert attempt["manifest_declared_transport_complete"] is False
     assert attempt["full_source_artifact_available"] is False
@@ -228,8 +243,8 @@ def test_recovered_declared_file_and_full_source_are_revalidated(
 
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
 
-    attempt = result["main_attempts"][0]
-    assert attempt["evaluation"] == evaluation
+    attempt = attempts(result, "main")[0]
+    assert restored(tmp_path / "report", attempt) == evaluation
     assert attempt["eligible_main_coverage"] is True
     assert result["grid"]["technically_complete_main_cells"] == 1
 
@@ -263,8 +278,8 @@ def test_available_compact_with_missing_full_is_retained_but_not_coverage(tmp_pa
     write(folder / "artifact-provenance.json", provenance)
     declarations = declared(tmp_path / "declared.json", [run(16, "main")])
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
-    attempt = result["main_attempts"][0]
-    assert attempt["evaluation"] == evaluation
+    attempt = attempts(result, "main")[0]
+    assert restored(tmp_path / "report", attempt) == evaluation
     assert attempt["technical_complete_self_reported"] is True
     assert attempt["full_source_artifact_available"] is False
     assert attempt["eligible_main_coverage"] is False
@@ -298,8 +313,11 @@ def test_duplicate_requires_exact_technical_selection(tmp_path: Path) -> None:
     selected = build([tmp_path / "inputs"], declarations, tmp_path / "selected",
                      selection_path=selection)
     assert selected["grid"]["technically_complete_main_cells"] == 1
-    assert selected["selected_main_evaluations"][0]["run_id"] == 9
-    assert len(selected["main_attempts"]) == 2
+    selected_item = {row["attempt_key"]: row for row in selected["attempts"]}[
+        selected["selected_main_attempt_references"][0]
+    ]
+    assert selected_item["run_id"] == 9
+    assert len(attempts(selected, "main")) == 2
     value = json.loads(selection.read_text())
     value["cells"][0]["reason_code"] = "best_accuracy"
     write(selection, value)
@@ -331,8 +349,8 @@ def test_technical_selection_retains_a_prior_no_artifact_attempt(tmp_path: Path)
     result = build([tmp_path / "inputs"], declarations, tmp_path / "selected",
                    selection_path=selection)
     assert result["grid"]["technically_complete_main_cells"] == 1
-    assert len(result["main_attempts"]) == 2
-    assert result["main_attempts"][0]["reason"] == "compact_artifact_not_retained"
+    assert len(attempts(result, "main")) == 2
+    assert attempts(result, "main")[0]["reason"] == "compact_artifact_not_retained"
 
 
 def test_renderer_keeps_unknown_cost_and_actions_failure(tmp_path: Path) -> None:
@@ -351,5 +369,79 @@ def test_renderer_keeps_unknown_cost_and_actions_failure(tmp_path: Path) -> None
     assert "108" in text and "Self-reported complete" in text
     assert "99 | unknown | product_ci | completed | failure | 101 | checks" in text
     assert "Human/agent preparation effort: unknown" in text
-    assert result["attempts"][0]["evaluation"]["classes"] == {
+    assert restored(tmp_path / "report", result["attempts"][0])["classes"] == {
         "sentinel": "preserved-verbatim"}
+
+
+def test_payload_is_lossless_deterministic_and_not_duplicated_inline(tmp_path: Path) -> None:
+    _, evaluation = summary(tmp_path / "inputs", 20, "main", complete=False)
+    declarations = declared(tmp_path / "declared.json", [run(20, "main")])
+    first = build([tmp_path / "inputs"], declarations, tmp_path / "first")
+    second = build([tmp_path / "inputs"], declarations, tmp_path / "second")
+    first_attempt = first["attempts"][0]
+    second_attempt = second["attempts"][0]
+
+    assert first_attempt["technical_complete_self_reported"] is False
+    assert restored(tmp_path / "first", first_attempt) == evaluation
+    assert first_attempt["evaluation_reference"]["gzip_sha256"] == (
+        second_attempt["evaluation_reference"]["gzip_sha256"]
+    )
+    assert first_attempt["evaluation_reference"]["source_sha256"] == sha(
+        tmp_path / "inputs/20/v5-summary-obi-main-petclinic-absent-6-20/evaluation-v5.json"
+    )
+    aggregate_text = (tmp_path / "first/evaluation-v5.json").read_text(encoding="utf-8")
+    assert '"evaluation": {' not in aggregate_text
+    assert aggregate_text.count('"evaluation_reference"') == 1
+
+
+def test_reference_tamper_and_stage_reference_tamper_are_rejected(tmp_path: Path) -> None:
+    summary(tmp_path / "inputs", 21, "main")
+    declarations = declared(tmp_path / "declared.json", [run(21, "main")])
+    result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
+    payload_path = tmp_path / "report" / result["attempts"][0]["evaluation_reference"]["path"]
+    payload_path.write_bytes(payload_path.read_bytes() + b"tamper")
+    with pytest.raises(ValueError, match="gzip proof mismatch"):
+        render(tmp_path / "report/evaluation-v5.json", tmp_path / "bad.md")
+
+    build([tmp_path / "inputs"], declarations, tmp_path / "report2")
+    aggregate = json.loads((tmp_path / "report2/evaluation-v5.json").read_text())
+    aggregate["smoke_attempt_references"] = aggregate["main_attempt_references"]
+    write(tmp_path / "report2/evaluation-v5.json", aggregate)
+    with pytest.raises(ValueError, match="canonical attempt reference"):
+        render(tmp_path / "report2/evaluation-v5.json", tmp_path / "bad-stage.md")
+
+
+def test_referenced_and_legacy_schemas_render_identical_tables(tmp_path: Path) -> None:
+    summary(tmp_path / "inputs", 22, "smoke")
+    summary(tmp_path / "inputs", 23, "main")
+    declarations = declared(tmp_path / "declared.json", [run(22, "smoke"), run(23, "main")])
+    result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
+    new_out = tmp_path / "new.md"
+    render(tmp_path / "report/evaluation-v5.json", new_out)
+
+    legacy = copy.deepcopy(json.loads(
+        (tmp_path / "report/evaluation-v5.json").read_text(encoding="utf-8")
+    ))
+    legacy["schema_version"] = "evaluation-v5-saved-aggregate"
+    for item in legacy["attempts"]:
+        item["evaluation"] = resolve_evaluation_reference(
+            item["evaluation_reference"], tmp_path / "report/evaluation-v5.json",
+        )
+    legacy["smoke_attempts"] = [item for item in legacy["attempts"]
+                                if item["stage"] == "smoke"]
+    legacy["main_attempts"] = [item for item in legacy["attempts"]
+                               if item["stage"] == "main"]
+    legacy["selected_main_evaluations"] = [
+        next(item for item in legacy["attempts"] if item["attempt_key"] == key)
+        for key in legacy["selected_main_attempt_references"]
+    ]
+    for field in ("smoke_attempt_references", "main_attempt_references",
+                  "selected_main_attempt_references", "evaluation_payload_manifest"):
+        legacy.pop(field, None)
+    write(tmp_path / "legacy.json", legacy)
+    old_out = tmp_path / "old.md"
+    render(tmp_path / "legacy.json", old_out)
+
+    new_tables = [line for line in new_out.read_text().splitlines() if line.startswith("|")]
+    old_tables = [line for line in old_out.read_text().splitlines() if line.startswith("|")]
+    assert new_tables == old_tables

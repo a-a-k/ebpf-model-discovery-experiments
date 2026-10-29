@@ -46,6 +46,11 @@ SOURCE_PINS = {
     "newrelic": None,
 }
 
+LEGACY_AGGREGATE_SCHEMA = "evaluation-v5-saved-aggregate"
+REFERENCED_AGGREGATE_SCHEMA = "evaluation-v5-saved-aggregate-referenced-v1"
+EVALUATION_REFERENCE_SCHEMA = "evaluation-v5-source-evaluation-reference-v1"
+PAYLOAD_MANIFEST_SCHEMA = "evaluation-v5-payload-manifest-v1"
+
 
 def _read(path: Path, default: Any = None) -> Any:
     if not path.is_file():
@@ -58,6 +63,125 @@ def _read(path: Path, default: Any = None) -> Any:
 def _digest(path: Path) -> str:
     with path.open("rb") as stream:
         return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def _stream_digest(stream) -> tuple[str, int]:
+    digest, size = hashlib.sha256(), 0
+    while chunk := stream.read(1024 * 1024):
+        digest.update(chunk)
+        size += len(chunk)
+    return digest.hexdigest(), size
+
+
+def _evaluation_projection(evaluation: dict[str, Any]) -> dict[str, Any]:
+    """Retain only exact fields consumed by render; the reference is lossless."""
+    status = evaluation.get("status") or {}
+    acquisition = evaluation.get("acquisition") or {}
+    cost = evaluation.get("cost") or {}
+    manual = cost.get("manual_preparation") or {}
+    rows = []
+    row_keys = (
+        "operation", "source", "variant", "available", "prediction",
+        "point_prediction", "forecast_interval", "actual_target_success_counts",
+        "actual_counts", "reason",
+    )
+    for row in evaluation.get("evaluations") or []:
+        rows.append({key: row[key] for key in row_keys if key in row})
+    projection = {
+        "status": {"status": status.get("status")},
+        "smoke_technical_pass": evaluation.get("smoke_technical_pass"),
+        "acquisition": {
+            "valid": acquisition.get("valid"),
+            "problems": acquisition.get("problems"),
+        },
+        "evaluations": rows,
+        "cost": {
+            "campaign_elapsed_seconds": cost.get("campaign_elapsed_seconds"),
+            "toolchain_build_seconds": cost.get("toolchain_build_seconds"),
+            "toolchain_command_seconds": cost.get("toolchain_command_seconds"),
+            "manual_preparation": {
+                "measured": manual.get("measured"),
+                "reason": manual.get("reason"),
+            },
+        },
+    }
+    encoded = json.dumps(
+        projection, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
+    ).encode("utf-8")
+    return {**projection, "projection_sha256": hashlib.sha256(encoded).hexdigest()}
+
+
+def _retain_evaluation_payload(
+    source: Path, report_dir: Path, *, artifact_id: int, run_id: int,
+    head_sha: str, expected_sha256: str,
+) -> dict[str, Any]:
+    payload_dir = report_dir / "evaluation-payloads"
+    payload_dir.mkdir(parents=True, exist_ok=True)
+    target = payload_dir / f"{artifact_id}.evaluation-v5.json.gz"
+    temporary = target.with_suffix(target.suffix + ".tmp")
+    raw_digest, raw_bytes = hashlib.sha256(), 0
+    with source.open("rb") as input_stream, temporary.open("wb") as output_stream:
+        with gzip.GzipFile(
+            filename="", mode="wb", fileobj=output_stream, compresslevel=9, mtime=0,
+        ) as packed:
+            while chunk := input_stream.read(1024 * 1024):
+                raw_digest.update(chunk)
+                raw_bytes += len(chunk)
+                packed.write(chunk)
+    source_sha256 = raw_digest.hexdigest()
+    if source_sha256 != expected_sha256:
+        temporary.unlink(missing_ok=True)
+        raise ValueError(f"evaluation payload source hash changed: {source}")
+    os.replace(temporary, target)
+    gzip_sha256, gzip_bytes = _digest(target), target.stat().st_size
+    with gzip.open(target, "rb") as restored:
+        restored_sha256, restored_bytes = _stream_digest(restored)
+    if (restored_sha256, restored_bytes) != (source_sha256, raw_bytes):
+        raise ValueError(f"evaluation payload does not restore source bytes: {source}")
+    return {
+        "schema_version": EVALUATION_REFERENCE_SCHEMA,
+        "path": target.relative_to(report_dir).as_posix(),
+        "encoding": "gzip",
+        "deterministic_gzip": {"filename": "", "mtime": 0, "compresslevel": 9},
+        "source_member": "evaluation-v5.json",
+        "source_sha256": source_sha256,
+        "source_bytes": raw_bytes,
+        "gzip_sha256": gzip_sha256,
+        "gzip_bytes": gzip_bytes,
+        "restore_verified": True,
+        "exact_original_bytes": True,
+        "artifact_id": artifact_id,
+        "run_id": run_id,
+        "head_sha": head_sha,
+    }
+
+
+def resolve_evaluation_reference(reference: dict[str, Any], aggregate_path: Path) -> dict:
+    """Resolve one explicit lossless reference; legacy inline objects never enter here."""
+    if (not isinstance(reference, dict)
+            or reference.get("schema_version") != EVALUATION_REFERENCE_SCHEMA
+            or reference.get("encoding") != "gzip"
+            or reference.get("restore_verified") is not True
+            or reference.get("exact_original_bytes") is not True):
+        raise ValueError("invalid saved evaluation reference")
+    root = Path(aggregate_path).resolve().parent
+    payload = (root / str(reference.get("path", ""))).resolve()
+    try:
+        payload.relative_to(root)
+    except ValueError as error:
+        raise ValueError("saved evaluation reference escapes aggregate directory") from error
+    if (not payload.is_file() or _digest(payload) != reference.get("gzip_sha256")
+            or payload.stat().st_size != reference.get("gzip_bytes")):
+        raise ValueError("saved evaluation payload gzip proof mismatch")
+    with gzip.open(payload, "rb") as stream:
+        restored = stream.read()
+    if (len(restored) != reference.get("source_bytes")
+            or hashlib.sha256(restored).hexdigest() != reference.get("source_sha256")):
+        raise ValueError("saved evaluation payload source proof mismatch")
+    value = json.loads(restored)
+    if not isinstance(value, dict) or value.get("schema_version") != "evaluation-v5":
+        raise ValueError("saved evaluation payload has wrong schema")
+    return value
 
 
 def _cell(row: dict[str, Any]) -> tuple[str, str, str, int]:
@@ -154,7 +278,9 @@ def _validate_source(folder: Path, evaluation: dict, collector: str) -> dict[str
     }
 
 
-def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], dict]) -> list[dict]:
+def _saved_summaries(
+    roots: list[Path], declarations: dict[tuple[int, tuple], dict], report_dir: Path,
+) -> list[dict]:
     folders = set()
     for root in roots:
         folders.update(path.parent.resolve() for path in Path(root).rglob("evaluation-manifest.json"))
@@ -312,7 +438,8 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
         if evaluation is None:
             reports.append({
                 **declaration, "artifact": artifact, "manifest": manifest,
-                "root": str(folder), "evaluation": None,
+                "root": str(folder), "evaluation_reference": None,
+                "evaluation_projection": None,
                 "technical_complete_self_reported": False,
                 "full_source_artifact_available": full_available,
                 "full_source_artifact_reason": full_unavailable_reason,
@@ -352,9 +479,14 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
             raise ValueError(f"saved main verdict inconsistent with completeness: {evaluation_path}")
         source = _validate_source(folder, evaluation, identity[0]) if complete else None
         coverage_eligible = complete and full_available and not missing_declared
+        reference = _retain_evaluation_payload(
+            evaluation_path, report_dir, artifact_id=artifact_id, run_id=run_id,
+            head_sha=manifest["commit"], expected_sha256=hashes["evaluation-v5.json"],
+        )
         reports.append({
             **declaration, "artifact": artifact, "manifest": manifest,
-            "root": str(folder), "evaluation": evaluation,
+            "root": str(folder), "evaluation_reference": reference,
+            "evaluation_projection": _evaluation_projection(evaluation),
             "source_provenance": source,
             "technical_complete_self_reported": complete,
             "full_source_artifact_available": full_available,
@@ -412,8 +544,9 @@ def build(
     roots: list[Path], declarations_path: Path, report_dir: Path,
     *, retrieval_path: Path | None = None, selection_path: Path | None = None,
 ) -> dict[str, Any]:
+    report_dir.mkdir(parents=True, exist_ok=True)
     declarations, declared_attempts = _declarations(declarations_path)
-    reports = _saved_summaries(roots, declared_attempts)
+    reports = _saved_summaries(roots, declared_attempts, report_dir)
     by_declared = {}
     for item in reports:
         key = (item["run_id"], _cell(item))
@@ -430,7 +563,8 @@ def build(
         saved = by_declared.get(key)
         attempts.append(saved or {
             **declaration, "root": None, "artifact": None, "manifest": None,
-            "evaluation": None, "technical_complete_self_reported": False,
+            "evaluation_reference": None, "evaluation_projection": None,
+            "technical_complete_self_reported": False,
             "manifest_declared_transport_complete": False,
             "full_source_artifact_available": False,
             "full_source_artifact_reason": "compact_artifact_not_retained",
@@ -440,6 +574,14 @@ def build(
                 "status", "compact_artifact_not_retained"
             ),
         })
+    for item in attempts:
+        item["attempt_key"] = ":".join(str(value) for value in (
+            item["run_id"], item["collector"], item["stage"], item["system"],
+            item["mode"], item["seed"],
+        ))
+    attempt_keys = [item["attempt_key"] for item in attempts]
+    if len(set(attempt_keys)) != len(attempt_keys):
+        raise ValueError("duplicate canonical v5 attempt key")
     selected_ids, selection = _selection(selection_path, attempts)
     grouped: dict[tuple, list[dict]] = {}
     for item in attempts:
@@ -470,8 +612,22 @@ def build(
     undeclared_blocks = set(blocked) - EXPECTED_MAIN
     if undeclared_blocks:
         raise ValueError(f"blocked cells outside fixed main grid: {sorted(undeclared_blocks)}")
+    payload_references = [
+        item["evaluation_reference"] for item in attempts
+        if item.get("evaluation_reference") is not None
+    ]
+    payload_manifest = {
+        "schema_version": PAYLOAD_MANIFEST_SCHEMA,
+        "payloads": sorted(payload_references, key=lambda row: row["artifact_id"]),
+        "payload_count": len(payload_references),
+        "claim": "exact retained source evaluation bytes; no scientific recomputation",
+    }
+    payload_manifest_path = report_dir / "evaluation-payload-manifest.json"
+    payload_manifest_path.write_text(
+        json.dumps(payload_manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8",
+    )
     result = {
-        "schema_version": "evaluation-v5-saved-aggregate",
+        "schema_version": REFERENCED_AGGREGATE_SCHEMA,
         "input_mode": "saved_source_evaluations_no_raw_recompute",
         "declarations": declarations,
         "declarations_sha256": _digest(declarations_path),
@@ -482,9 +638,21 @@ def build(
             "collector manifests only; full toolchain/input admission remains external"
         ),
         "attempts": attempts,
-        "smoke_attempts": [item for item in attempts if item["stage"] == "smoke"],
-        "main_attempts": [item for item in attempts if item["stage"] == "main"],
-        "selected_main_evaluations": [selected[key] for key in sorted(selected)],
+        "smoke_attempt_references": [
+            item["attempt_key"] for item in attempts if item["stage"] == "smoke"
+        ],
+        "main_attempt_references": [
+            item["attempt_key"] for item in attempts if item["stage"] == "main"
+        ],
+        "selected_main_attempt_references": [
+            selected[key]["attempt_key"] for key in sorted(selected)
+        ],
+        "evaluation_payload_manifest": {
+            "schema_version": PAYLOAD_MANIFEST_SCHEMA,
+            "path": payload_manifest_path.relative_to(report_dir).as_posix(),
+            "sha256": _digest(payload_manifest_path),
+            "payload_count": len(payload_references),
+        },
         "selection": selection,
         "ambiguous_duplicate_main_cells": ambiguous,
         "grid": {
@@ -505,7 +673,6 @@ def build(
             "threshold, or positive contribution claim"
         ),
     }
-    report_dir.mkdir(parents=True, exist_ok=True)
     target = report_dir / "evaluation-v5.json"
     target.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return result
@@ -531,11 +698,92 @@ def _table(headers: list[str], rows: list[list[Any]]) -> list[str]:
     return lines
 
 
+def _referenced_attempts(
+    payload: dict[str, Any], aggregate_path: Path, field: str, *, stage: str,
+) -> list[dict[str, Any]]:
+    attempts = payload.get("attempts") or []
+    by_key = {}
+    for item in attempts:
+        key = item.get("attempt_key") if isinstance(item, dict) else None
+        if not isinstance(key, str) or not key or key in by_key:
+            raise ValueError("invalid canonical attempt index")
+        by_key[key] = item
+    references = payload.get(field)
+    if not isinstance(references, list) or any(not isinstance(key, str) for key in references):
+        raise ValueError(f"invalid {field}")
+    result = []
+    seen = set()
+    for key in references:
+        item = by_key.get(key)
+        if item is None or key in seen or item.get("stage") != stage:
+            raise ValueError(f"invalid canonical attempt reference: {key}")
+        seen.add(key)
+        result.append(item)
+    return result
+
+
+def _validate_payload_manifest(payload: dict[str, Any], aggregate_path: Path) -> None:
+    reference = payload.get("evaluation_payload_manifest")
+    if (not isinstance(reference, dict)
+            or reference.get("schema_version") != PAYLOAD_MANIFEST_SCHEMA
+            or not isinstance(reference.get("path"), str)
+            or not isinstance(reference.get("sha256"), str)):
+        raise ValueError("invalid evaluation payload manifest reference")
+    root = aggregate_path.resolve().parent
+    path = (root / reference["path"]).resolve()
+    try:
+        path.relative_to(root)
+    except ValueError as error:
+        raise ValueError("evaluation payload manifest escapes aggregate directory") from error
+    manifest = _read(path)
+    attempts = payload.get("attempts") or []
+    expected = [item.get("evaluation_reference") for item in attempts
+                if item.get("evaluation_reference") is not None]
+    if (not path.is_file() or _digest(path) != reference["sha256"]
+            or not isinstance(manifest, dict)
+            or manifest.get("schema_version") != PAYLOAD_MANIFEST_SCHEMA
+            or manifest.get("payloads") != sorted(expected, key=lambda row: row["artifact_id"])
+            or manifest.get("payload_count") != len(expected)
+            or reference.get("payload_count") != len(expected)):
+        raise ValueError("evaluation payload manifest proof mismatch")
+    for item in expected:
+        payload_path = (root / str(item.get("path", ""))).resolve()
+        try:
+            payload_path.relative_to(root)
+        except ValueError as error:
+            raise ValueError("saved evaluation reference escapes aggregate directory") from error
+        if (not payload_path.is_file() or payload_path.stat().st_size != item.get("gzip_bytes")
+                or _digest(payload_path) != item.get("gzip_sha256")):
+            raise ValueError("saved evaluation payload gzip proof mismatch")
+
+
 def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> dict[str, Any]:
     payload = _read(aggregate_path)
-    if not isinstance(payload, dict) or payload.get("schema_version") != "evaluation-v5-saved-aggregate":
+    schema = payload.get("schema_version") if isinstance(payload, dict) else None
+    if schema not in (LEGACY_AGGREGATE_SCHEMA, REFERENCED_AGGREGATE_SCHEMA):
         raise ValueError("report_v5 requires an evaluation-v5 saved aggregate")
     attempts = payload.get("attempts") or []
+    if schema == REFERENCED_AGGREGATE_SCHEMA:
+        _validate_payload_manifest(payload, aggregate_path)
+        smoke_attempts = _referenced_attempts(
+            payload, aggregate_path, "smoke_attempt_references", stage="smoke",
+        )
+        main_attempts = _referenced_attempts(
+            payload, aggregate_path, "main_attempt_references", stage="main",
+        )
+        selected_main_attempts = _referenced_attempts(
+            payload, aggregate_path, "selected_main_attempt_references", stage="main",
+        )
+        expected_smoke = [item for item in attempts if item.get("stage") == "smoke"]
+        expected_main = [item for item in attempts if item.get("stage") == "main"]
+        if smoke_attempts != expected_smoke or main_attempts != expected_main:
+            raise ValueError("canonical stage references do not cover attempts in stored order")
+        if any(item.get("eligible_main_coverage") is not True
+               for item in selected_main_attempts):
+            raise ValueError("selected main reference is not coverage eligible")
+    else:
+        smoke_attempts = payload.get("smoke_attempts") or []
+        main_attempts = payload.get("main_attempts") or []
     costs = _read(costs_path, {}) if costs_path else {}
     if costs_path and (
         not isinstance(costs, dict) or costs.get("schema_version") != "v5-actions-costs"
@@ -553,7 +801,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:
-        evaluation = item.get("evaluation") or {}
+        evaluation = (item.get("evaluation_projection") if schema == REFERENCED_AGGREGATE_SCHEMA
+                      else item.get("evaluation")) or {}
         artifact = item.get("artifact") or {}
         status = evaluation.get("status") or {}
         attempt_rows.append([
@@ -576,8 +825,9 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     ], attempt_rows)
     lines += ["", "## Technical smoke qualification records", ""]
     smoke_rows = []
-    for item in payload.get("smoke_attempts") or []:
-        evaluation = item.get("evaluation") or {}
+    for item in smoke_attempts:
+        evaluation = (item.get("evaluation_projection") if schema == REFERENCED_AGGREGATE_SCHEMA
+                      else item.get("evaluation")) or {}
         acquisition = evaluation.get("acquisition") or {}
         smoke_rows.append([
             item.get("run_id"), item.get("collector"), item.get("system"), item.get("mode"),
@@ -590,8 +840,9 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     ], smoke_rows)
     lines += ["", "## Saved main forecasts and external outcomes", ""]
     forecast_rows = []
-    for item in payload.get("main_attempts") or []:
-        evaluation = item.get("evaluation") or {}
+    for item in main_attempts:
+        evaluation = (item.get("evaluation_projection") if schema == REFERENCED_AGGREGATE_SCHEMA
+                      else item.get("evaluation")) or {}
         for row in evaluation.get("evaluations") or []:
             counts = row.get("actual_target_success_counts") or row.get("actual_counts") or {}
             forecast_rows.append([
@@ -620,7 +871,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += [""]
     campaign_cost_rows = []
     for item in attempts:
-        evaluation = item.get("evaluation") or {}
+        evaluation = (item.get("evaluation_projection") if schema == REFERENCED_AGGREGATE_SCHEMA
+                      else item.get("evaluation")) or {}
         cost = evaluation.get("cost") or {}
         campaign_cost_rows.append([
             item.get("run_id"), item.get("collector"), item.get("stage"), item.get("system"),
@@ -652,7 +904,13 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += [
         "", "Human/agent preparation effort: " + _value(costs.get("human_agent_seconds")),
         "", "Current report-job unfinished tail: " + _value(costs.get("current_report_job_tail_seconds")),
-        "", "The lossless aggregate retains every source evaluation object, including detailed DB, baseline, class, async, causal and cost fields not expanded into new summaries here.",
+        "", (
+            "Every source evaluation remains losslessly restorable from an explicit hash-bound "
+            "payload reference. The small aggregate retains only fields used by these tables."
+            if schema == REFERENCED_AGGREGATE_SCHEMA else
+            "The legacy aggregate retains every source evaluation object, including detailed "
+            "DB, baseline, class, async, causal and cost fields not expanded here."
+        ),
     ]
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")

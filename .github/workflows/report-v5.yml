@@ -277,14 +277,14 @@ jobs:
             --declarations results/iteration-5/provenance/declarations.json \
             --retrieval results/iteration-5/provenance/retrieval.json \
             --report-dir results/iteration-5 "${args[@]}"
-      - name: Retain lossless compressed aggregate
+      - name: Retain compressed referenced aggregate
         run: |
           gzip -n -c results/iteration-5/evaluation-v5.json > results/iteration-5/evaluation-v5.json.gz
           python - <<'PY'
           import gzip,hashlib,json,pathlib
           root=pathlib.Path('results/iteration-5'); original=root/'evaluation-v5.json'; packed=root/'evaluation-v5.json.gz'
           raw=original.read_bytes(); restored=gzip.open(packed,'rb').read()
-          if raw != restored: raise SystemExit('compressed v5 aggregate does not restore original bytes')
+          if raw != restored: raise SystemExit('compressed referenced aggregate does not restore original bytes')
           (root/'provenance'/'aggregate-packaging.json').write_text(json.dumps({
               'original_sha256':hashlib.sha256(raw).hexdigest(),'original_bytes':len(raw),
               'compressed_sha256':hashlib.sha256(packed.read_bytes()).hexdigest(),
