@@ -318,6 +318,47 @@ def test_resource_policy_still_rejects_hierarchy_without_root_visit(tmp_path: Pa
         collector._verify_container_resource_envelope("a")
 
 
+@pytest.mark.parametrize(
+    ("mutation", "error"),
+    [
+        ("control", "missing non-root cgroup hard-limit evidence"),
+        ("directory", "unreadable container cgroup hierarchy directory"),
+    ],
+)
+def test_resource_policy_rejects_missing_nonroot_hard_limit_evidence(
+        tmp_path: Path, mutation: str, error: str) -> None:
+    class BrokenHierarchyContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            result = super().node_exec(node, command, **kwargs)
+            if "cgroup_file_begin" not in command:
+                return result
+            if mutation == "control":
+                result.stdout = result.stdout.replace(
+                    "limit|/system.slice|memory.max|max\n",
+                    "control|/system.slice|memory.max|unreadable\n",
+                )
+            else:
+                result.stdout = result.stdout.replace(
+                    "visit|/system.slice|directory\n",
+                    "visit|/system.slice|missing\n",
+                )
+            return result
+
+    ctx = BrokenHierarchyContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector._guest_resource_inventory("a")
+    with pytest.raises(RuntimeError, match=error):
+        collector._verify_container_resource_envelope("a")
+
+    retained = json.loads((collector.root / "resource-inventory-a.json").read_text())
+    constraints = retained["effective_container_constraints"]
+    assert constraints["verification_complete"] is False
+    assert constraints["cgroup_directory_visits_leaf_to_root"]
+    if mutation == "control":
+        assert {"path": "/system.slice", "kind": "memory.max", "status": "unreadable"} in (
+            constraints["cgroup_missing_or_unreadable_controls"])
+
+
 def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(
         tmp_path: Path, monkeypatch) -> None:
     class ProtectedProcContext(Context):

@@ -311,9 +311,26 @@ class DeepFlowCollectorsV5(CollectorsV5):
                         or parts[3] not in {"absent", "unreadable"}):
                     raise RuntimeError(f"cannot parse cgroup control evidence on {node}")
                 controls.append({"path": parts[1], "kind": parts[2], "status": parts[3]})
+        evidence["cgroup_hard_limits_leaf_to_root"] = limits
+        evidence["cgroup_directory_visits_leaf_to_root"] = visits
+        evidence["cgroup_missing_or_unreadable_controls"] = controls
+        self._write_resource_inventory(node)
         root_visits = [item for item in visits if item["path"] == "/"]
         if not limits or root_visits != [{"path": "/", "status": "directory"}]:
             raise RuntimeError(f"incomplete container cgroup hierarchy on {node}")
+        if any(item["status"] != "directory" for item in visits):
+            raise RuntimeError(f"unreadable container cgroup hierarchy directory on {node}")
+        root_controls = [item for item in controls if item["path"] == "/"]
+        if any(item["status"] != "absent" for item in root_controls):
+            raise RuntimeError(f"unreadable root cgroup control evidence on {node}")
+        nonroot_paths = {item["path"] for item in visits if item["path"] != "/"}
+        readable_nonroot = {(item["path"], item["kind"]) for item in limits
+                            if item["path"] != "/"}
+        expected_nonroot = {(path, kind) for path in nonroot_paths
+                            for kind in ("memory.max", "cpu.max")}
+        if (readable_nonroot != expected_nonroot
+                or any(item["path"] != "/" for item in controls)):
+            raise RuntimeError(f"missing non-root cgroup hard-limit evidence on {node}")
 
         def hard_limit(kind: str, value: str) -> int | None:
             if kind == "memory.max":
@@ -394,9 +411,6 @@ class DeepFlowCollectorsV5(CollectorsV5):
             raise RuntimeError(f"container CPU availability is below guest envelope on {node}")
         evidence.update({
             "docker_resources": resources,
-            "cgroup_hard_limits_leaf_to_root": limits,
-            "cgroup_directory_visits_leaf_to_root": visits,
-            "cgroup_missing_or_unreadable_controls": controls,
             "hierarchy_complete_to_root": True,
             "root_controls_expected": False,
             "root_visit_is_traversal_evidence_not_unlimited_limit": True,
