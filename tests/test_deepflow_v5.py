@@ -159,7 +159,42 @@ def test_late_startup_failure_retains_diagnostics_and_raw_prefix_before_removal(
 
     def late_failure():
         for node in ("a", "b"):
-            _remote_snapshot(ctx, collector, tmp_path, node, "startup-failure", [_row("/late")])
+            source = tmp_path / f"remote-{node}-startup-failure"
+            source.mkdir()
+            complete = json.dumps(_row("/late"), separators=(",", ":")).encode() + b"\n"
+            pending = b'{"pending":'
+            raw = source / "l7_flow_log"
+            agent_log = source / "deepflow-agent.log"
+            raw.write_bytes(complete + pending)
+            agent_log.write_bytes(b"sole raw agent file error\n")
+            files = []
+            for path, prefix in ((raw, len(complete)), (agent_log, agent_log.stat().st_size)):
+                body = path.read_bytes()
+                files.append({
+                    "source_name": path.name, "snapshot_name": path.name,
+                    "source_size_before": len(body), "source_size_after": len(body),
+                    "source_changed_during_snapshot": False,
+                    "copied_bytes": len(body),
+                    "copied_sha256": __import__("hashlib").sha256(body).hexdigest(),
+                    "complete_prefix_bytes": prefix,
+                    "complete_prefix_sha256": __import__("hashlib").sha256(
+                        body[:prefix]).hexdigest(),
+                    "pending_tail_bytes_at_read": len(body) - prefix,
+                    "full_file_retained": True,
+                })
+            manifest = {
+                "schema": "deepflow-standalone-snapshot-v5", "mode": "failure",
+                "files": files, "l7_rotation_observed": False,
+                "rotation_observed": False, "complete_prefix_only": False,
+                "startup_incomplete": True, "producer_closed": False,
+                "closed_checkpoint": False,
+            }
+            snapshot_path = source / "snapshot.json"
+            snapshot_path.write_text(json.dumps(manifest), encoding="utf-8")
+            remote = collector.remote_roots[node] + "/snapshots/startup-failure"
+            ctx.remote_files[(node, remote + "/snapshot.json")] = snapshot_path
+            ctx.remote_files[(node, remote + "/l7_flow_log")] = raw
+            ctx.remote_files[(node, remote + "/deepflow-agent.log")] = agent_log
         raise RuntimeError("late readiness failure must remain primary")
 
     monkeypatch.setattr(collector, "_wait_container_readiness", late_failure)
@@ -182,7 +217,11 @@ def test_late_startup_failure_retains_diagnostics_and_raw_prefix_before_removal(
         assert prefix["retained"] is True
         assert prefix["startup_incomplete"] is True
         assert prefix["producer_closed"] is False
-        assert (collector.root / prefix["path"] / "l7_flow_log").is_file()
+        retained_root = collector.root / prefix["path"]
+        assert (retained_root / "l7_flow_log").read_bytes().endswith(b'{"pending":')
+        assert (retained_root / "deepflow-agent.log").read_bytes() == (
+            b"sole raw agent file error\n")
+        assert prefix["normalization_performed"] is False
         commands = [command for call_node, command, _ in ctx.calls if call_node == node]
         assert commands.index(f"docker logs {DEEPFLOW_CONTAINER}") < commands.index(
             f"docker rm -f {DEEPFLOW_CONTAINER}")

@@ -1,8 +1,9 @@
 """Create immutable DeepFlow standalone file snapshots on a guest.
 
 This file is intentionally stdlib-only: the campaign uploads and executes it on
-each guest.  Prefix mode copies only complete JSONL records.  Final mode runs
-after collector termination and copies every regular standalone output byte.
+each guest. Prefix mode copies only complete JSONL records. Failure mode copies
+all currently available bytes without claiming producer closure. Final mode
+runs after collector termination and copies every regular standalone byte.
 """
 from __future__ import annotations
 
@@ -90,7 +91,7 @@ def snapshot(data: Path, out: Path, mode: str) -> dict:
             "complete_prefix_bytes": prefix,
             "complete_prefix_sha256": _sha256(target, min(prefix, copied)),
             "pending_tail_bytes_at_read": before - prefix,
-            "full_file_retained": mode == "final",
+            "full_file_retained": mode in {"failure", "final"},
         })
     manifest = {
         "schema": "deepflow-standalone-snapshot-v5",
@@ -100,6 +101,9 @@ def snapshot(data: Path, out: Path, mode: str) -> dict:
         "l7_rotation_observed": any(item["source_name"] == "l7_flow_log.pre" for item in files),
         "rotation_observed": any(item["source_name"].endswith(".pre") for item in files),
         "complete_prefix_only": mode == "prefix",
+        "startup_incomplete": mode == "failure",
+        "producer_closed": mode == "final",
+        "closed_checkpoint": mode == "final",
     }
     (out / "snapshot.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -111,7 +115,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--mode", choices=("prefix", "final"), required=True)
+    parser.add_argument("--mode", choices=("prefix", "failure", "final"), required=True)
     args = parser.parse_args()
     snapshot(args.data, args.out, args.mode)
 

@@ -324,7 +324,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             if (node in self._startup_helper_nodes
                     and node in self._startup_agent_attempted_nodes):
                 try:
-                    manifest = self._capture_node(node, "startup-failure", final=False)
+                    manifest = self._capture_startup_failure_node(node)
                     snapshot = self.root / "deepflow-raw" / f"node-{node}" / "startup-failure"
                     raw_prefixes[node] = {
                         "retained": True,
@@ -333,6 +333,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                         "startup_incomplete": True,
                         "producer_closed": False,
                         "closed_checkpoint": False,
+                        "normalization_performed": False,
                     }
                 except Exception as exc:
                     raw_prefixes[node] = {
@@ -340,6 +341,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                         "startup_incomplete": True,
                         "producer_closed": False,
                         "closed_checkpoint": False,
+                        "normalization_performed": False,
                         "error": repr(exc),
                     }
                     errors.append(f"raw-prefix:{node}:{exc!r}")
@@ -394,6 +396,45 @@ class DeepFlowCollectorsV5(CollectorsV5):
             self._cleanup_incomplete_start()
             return
         super().close()
+
+    def _capture_startup_failure_node(self, node: str) -> dict[str, Any]:
+        """Retain every available raw byte without decoding an unfinished producer file."""
+        remote = self.remote_roots[node]
+        stage = "startup-failure"
+        remote_stage = remote + "/snapshots/" + stage
+        command = (
+            f"python3 {shlex.quote(remote + '/deepflow_snapshot_v5.py')} "
+            f"--data {shlex.quote(remote + '/data')} --out {shlex.quote(remote_stage)} "
+            "--mode failure"
+        )
+        permissions = self.ctx.node_exec(
+            node, f"sudo chmod -R a+rX {shlex.quote(remote + '/data')}",
+            timeout=60, check=False)
+        if _returncode(permissions):
+            raise RuntimeError(f"cannot read incomplete DeepFlow files on {node}")
+        result = self.ctx.node_exec(node, command, timeout=300, check=False)
+        if _returncode(result):
+            raise RuntimeError(
+                f"DeepFlow failure snapshot failed on {node}: {_stderr(result).strip()}")
+        local = self.root / "deepflow-raw" / f"node-{node}" / stage
+        local.mkdir(parents=True, exist_ok=False)
+        self.ctx.node_get(node, remote_stage + "/snapshot.json", local / "snapshot.json")
+        manifest = json.loads((local / "snapshot.json").read_text(encoding="utf-8"))
+        if (manifest.get("schema") != "deepflow-standalone-snapshot-v5"
+                or manifest.get("mode") != "failure"
+                or manifest.get("startup_incomplete") is not True
+                or manifest.get("producer_closed") is not False):
+            raise RuntimeError(f"DeepFlow failure snapshot manifest is invalid on {node}")
+        for item in manifest.get("files", []):
+            name = item.get("snapshot_name")
+            if not isinstance(name, str) or not name or "/" in name or "\\" in name:
+                raise RuntimeError(f"unsafe DeepFlow failure snapshot filename on {node}: {name!r}")
+            target = local / name
+            self.ctx.node_get(node, remote_stage + "/" + name, target)
+            if (target.stat().st_size != item.get("copied_bytes")
+                    or _sha256_file(target) != item.get("copied_sha256")):
+                raise RuntimeError(f"DeepFlow failure snapshot mismatch: {target}")
+        return manifest
 
     def _wait_container_readiness(self) -> None:
         deadline = time.monotonic() + 90

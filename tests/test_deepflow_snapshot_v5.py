@@ -43,6 +43,27 @@ def test_final_snapshot_retains_every_file_and_flags_rotation(tmp_path: Path) ->
     assert current["full_file_retained"] is True
 
 
+def test_failure_snapshot_retains_pending_tail_and_non_l7_without_closure_claim(
+        tmp_path: Path) -> None:
+    data = tmp_path / "data"
+    data.mkdir()
+    l7 = b'{"complete":true}\n{"pending":'
+    other = b"sole agent error\n"
+    (data / "l7_flow_log").write_bytes(l7)
+    (data / "deepflow-agent.log").write_bytes(other)
+    out = tmp_path / "failure"
+    manifest = snapshot(data, out, "failure")
+    assert (out / "l7_flow_log").read_bytes() == l7
+    assert (out / "deepflow-agent.log").read_bytes() == other
+    current = next(item for item in manifest["files"]
+                   if item["source_name"] == "l7_flow_log")
+    assert current["pending_tail_bytes_at_read"] == len(b'{"pending":')
+    assert current["full_file_retained"] is True
+    assert manifest["startup_incomplete"] is True
+    assert manifest["producer_closed"] is False
+    assert manifest["closed_checkpoint"] is False
+
+
 def test_snapshot_output_is_fresh_and_never_overwritten(tmp_path: Path) -> None:
     data = tmp_path / "data"
     data.mkdir()
