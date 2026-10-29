@@ -1,0 +1,414 @@
+name: Iteration 5 collector smoke and matched series
+on:
+  workflow_dispatch:
+    inputs:
+      collector:
+        description: One isolated collector per dispatch
+        type: choice
+        options: [obi, deepflow, newrelic, coroot]
+        default: obi
+      stage:
+        description: Smoke first; main requires a reviewed passing smoke for each selected mode
+        type: choice
+        options: [smoke, main]
+        default: smoke
+      system:
+        description: Select planned cells for reviewed staging or a technical rerun
+        type: choice
+        options: [all, deathstarbench, otel_demo, petclinic]
+        default: all
+      mode:
+        description: Select planned cells for reviewed staging or a technical rerun
+        type: choice
+        options: [all, absent, partial, full]
+        default: all
+      seed:
+        description: Select planned cells for reviewed staging or a technical rerun
+        type: choice
+        options: [all, '6', '7', '8']
+        default: all
+permissions:
+  contents: read
+  actions: read
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - id: matrix
+        env:
+          REQUESTED_SYSTEM: ${{ inputs.system }}
+          REQUESTED_MODE: ${{ inputs.mode }}
+          REQUESTED_SEED: ${{ inputs.seed }}
+          REQUESTED_STAGE: ${{ inputs.stage }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          dimensions = {'system': ['deathstarbench','otel_demo','petclinic'],
+                        'mode': ['absent','partial','full'], 'seed': [6,7,8]}
+          selected = {}
+          for name, values in dimensions.items():
+              requested = os.environ['REQUESTED_'+name.upper()]
+              value = int(requested) if name == 'seed' and requested != 'all' else requested
+              if requested == 'all': selected[name] = values
+              elif value in values: selected[name] = [value]
+              else: raise SystemExit(f'invalid {name}: {requested}')
+          if os.environ['REQUESTED_STAGE'] == 'smoke':
+              selected['seed'] = [6]
+          include = [{'system': s, 'mode': m, 'seed': z}
+                     for s in selected['system'] for m in selected['mode'] for z in selected['seed']]
+          print('matrix='+json.dumps({'include': include}, separators=(',', ':')))
+          PY
+  campaign:
+    needs: prepare
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJSON(needs.prepare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record fixed cell identity before setup
+        run: |
+          mkdir -p work/campaign
+          python3 - <<'PY'
+          import json, os, pathlib, time
+          status = {'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
+                    'seed': ${{ matrix.seed }}, 'protocol_version': 'graph-v5',
+                    'collector': '${{ inputs.collector }}', 'smoke': '${{ inputs.stage }}' == 'smoke',
+                    'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                    'started_ns': time.time_ns(), 'status': 'technical_preparation_pending',
+                    'technical_stage': 'before_toolchain_setup_or_guest_boot'}
+          pathlib.Path('work/campaign/status.json').write_text(json.dumps(status, indent=2)+'\n')
+          PY
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Initialize retained evidence
+        run: |
+          mkdir -p work/campaign/infrastructure
+          python - <<'PY'
+          import json, pathlib
+          pathlib.Path('work/campaign/infrastructure/platform-limit.json').write_text(json.dumps({
+            'experiment_timeout': None,
+            'runner_limit': 'GitHub-hosted platform maximum is external to the protocol',
+            'interrupted_or_evicted_result': 'technical unknown; retain partial evidence and do not score',
+          }, indent=2)+'\n')
+          PY
+      - name: Build exact source-pinned toolchain
+        run: |
+          chmod +x scripts/setup-toolchain-v4.sh
+          /usr/bin/time -v -o work/campaign/infrastructure/toolchain-setup-time.txt \
+            scripts/setup-toolchain-v4.sh work/campaign/toolchain-build v5
+          echo "PBS_BIN=$(realpath work/campaign/toolchain-build/bin)" >> "$GITHUB_ENV"
+      - name: Allocate measured swap on the standard runner
+        run: bash scripts/setup-v4-swap.sh work/campaign/infrastructure
+      - name: Boot two independent guests
+        run: bash scripts/vms.sh start work/vms
+      - name: Acquire and close the training prefix on the live guests
+        id: training
+        env:
+          PYTHONPATH: src
+          GH_TOKEN: ${{ github.token }}
+          SELECTED_COLLECTOR: ${{ inputs.collector }}
+          SELECTED_STAGE: ${{ inputs.stage }}
+          TOOLCHAIN_EXECUTION: ${{ (matrix.system == 'otel_demo' || matrix.system == 'deathstarbench') && 'worker' || 'local' }}
+        run: |
+          smoke_args=()
+          if [[ "$SELECTED_STAGE" == smoke ]]; then smoke_args+=(--smoke); fi
+          python -m ebpf_discovery.campaign_process_v4 start \
+            --state-dir work/campaign-process --out work/campaign \
+            --checkpoint work/training-checkpoint --vms work/vms \
+            --toolchain-execution "$TOOLCHAIN_EXECUTION" --collector "$SELECTED_COLLECTOR" "${smoke_args[@]}" \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
+          python -m ebpf_discovery.campaign_process_v4 wait \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --until checkpoint
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, pathlib
+          ready = json.loads(pathlib.Path('work/training-checkpoint/ready.json').read_text())
+          print('manifest_sha256='+ready['manifest_sha256'])
+          PY
+      - name: Persist the closed training checkpoint before discovery
+        id: training_checkpoint
+        if: always() && steps.training.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-v4-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: work/training-checkpoint/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Bind upload outcome to the same live campaign
+        id: release
+        if: always() && steps.training.outcome == 'success'
+        env:
+          PYTHONPATH: src
+          MANIFEST_SHA256: ${{ steps.training.outputs.manifest_sha256 }}
+          UPLOAD_SUCCESS: ${{ steps.training_checkpoint.outcome == 'success' }}
+          ARTIFACT_ID: ${{ steps.training_checkpoint.outputs.artifact-id }}
+          ARTIFACT_URL: ${{ steps.training_checkpoint.outputs.artifact-url }}
+          ARTIFACT_DIGEST: ${{ steps.training_checkpoint.outputs.artifact-digest }}
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 release \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --manifest-sha256 "$MANIFEST_SHA256" --upload-success "$UPLOAD_SUCCESS" \
+            --artifact-id "$ARTIFACT_ID" --artifact-url "$ARTIFACT_URL" --artifact-digest "$ARTIFACT_DIGEST"
+      - name: Continue discovery and validation on the same live guests
+        if: always() && steps.training.outcome == 'success' && steps.release.outcome == 'success'
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 wait \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --until exit
+      - name: Stop only the owned campaign processes before retention
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.campaign_process_v4 stop \
+            --state-dir work/campaign-process --checkpoint work/training-checkpoint \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
+      - name: Retain environment, status and cost evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/campaign/infrastructure
+          if [[ -d work/campaign-process ]]; then cp -a work/campaign-process work/campaign/infrastructure/; fi
+          mkdir -p work/campaign/infrastructure/training-checkpoint
+          for name in manifest ready release; do
+            if [[ -f "work/training-checkpoint/$name.json" ]]; then
+              cp "work/training-checkpoint/$name.json" work/campaign/infrastructure/training-checkpoint/
+            fi
+          done
+          cp work/vms/*.json work/campaign/infrastructure/ 2>/dev/null || true
+          for n in a b; do mkdir -p "work/campaign/infrastructure/$n"; cp "work/vms/$n/check.txt" "work/vms/$n/serial.log" "work/campaign/infrastructure/$n/" 2>/dev/null || true; done
+          uname -a > work/campaign/infrastructure/runner-final.txt
+          free -m >> work/campaign/infrastructure/runner-final.txt
+          df -h >> work/campaign/infrastructure/runner-final.txt
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss > work/campaign/infrastructure/runner-processes-final.txt
+          python -m pip freeze > work/campaign/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" > work/campaign/infrastructure/workflow-jobs-snapshot.json 2>work/campaign/infrastructure/workflow-jobs-snapshot.err || true
+      - name: Stop guests
+        if: always()
+        run: bash scripts/vms.sh stop work/vms
+      - name: Evaluate retained full campaign evidence
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.evaluate_v5 --campaign work/campaign \
+            --out work/campaign/evaluation-v5.json
+      - name: Record compact evaluation provenance
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('work/campaign')
+          names = ['evaluation-v5.json', 'status.json', 'plans.json', 'census.json',
+                   'blocks.json', 'freeze-integrity.json', 'toolchain/forecasts.json',
+                   'evidence-v4.json', 'attempt-journal.jsonl']
+          files = {}
+          for name in names:
+              path = root/name
+              if path.is_file():
+                  with path.open('rb') as stream:
+                      files[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
+              else:
+                  files[name] = None
+          manifest = {'schema_version': 'v5-cell-summary-manifest',
+                      'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                      'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
+                      'seed': ${{ matrix.seed }}, 'collector': '${{ inputs.collector }}',
+                      'smoke': '${{ inputs.stage }}' == 'smoke',
+                      'full_artifact_name': 'campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}',
+                      'files_sha256': files,
+                      'full_artifact_transport': ('dsb-subtree-retention-v1'
+                          if '${{ matrix.system }}' == 'deathstarbench' else 'original-file-tree'),
+                      'original_evidence_reverified_by_compact_report': False}
+          (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v5-summary-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/evaluation-v5.json
+            work/campaign/evaluation-manifest.json
+            work/campaign/status.json
+            work/campaign/plans.json
+            work/campaign/census.json
+            work/campaign/blocks.json
+            work/campaign/freeze-integrity.json
+            work/campaign/toolchain/forecasts.json
+            work/campaign/evidence-v4.json
+            work/campaign/classes-v5.json
+            work/campaign/classes-v4.json
+            work/campaign/observations/collector.json
+            work/campaign/observations/drain-evidence.json
+            work/campaign/observations/technical-positive-control.json
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Package the complete DSB toolchain subtree without changing its files
+        id: full_toolchain_package
+        if: always() && matrix.system == 'deathstarbench'
+        env:
+          PYTHONPATH: src
+        run: |
+          set -euo pipefail
+          if [[ -d work/campaign/toolchain ]]; then
+            python -m ebpf_discovery.artifact_transport_v4 package \
+              --source work/campaign/toolchain --out work/campaign/toolchain-package \
+              --kind toolchain
+          else
+            python - <<'PY'
+          import json, pathlib
+          root = pathlib.Path('work/campaign')
+          status_path = root/'status.json'
+          status = json.loads(status_path.read_text()) if status_path.is_file() else {}
+          if status.get('status') == 'acquisition_complete':
+              raise SystemExit('completed DSB campaign is missing its full toolchain evidence')
+          (root/'toolchain-package-missing.json').write_text(json.dumps({
+              'schema_version':'v4-toolchain-retention',
+              'status':'not_produced_before_technical_failure',
+              'campaign_status':status.get('status'),
+              'source_deleted_or_trimmed':False,
+          },indent=2)+'\n')
+          PY
+          fi
+          echo 'ready=true' >> "$GITHUB_OUTPUT"
+      - name: Package the closed DSB remote handoff evidence without changing its files
+        id: full_handoff_package
+        if: always() && matrix.system == 'deathstarbench'
+        env:
+          PYTHONPATH: src
+        run: |
+          set -euo pipefail
+          if [[ -d work/campaign/infrastructure/remote-toolchain-v4 ]]; then
+            python -m ebpf_discovery.artifact_transport_v4 package \
+              --source work/campaign/infrastructure/remote-toolchain-v4 \
+              --out work/campaign/infrastructure/handoff-package --kind handoff
+          else
+            python - <<'PY'
+          import json, pathlib
+          root = pathlib.Path('work/campaign')
+          status_path = root/'status.json'
+          status = json.loads(status_path.read_text()) if status_path.is_file() else {}
+          if status.get('status') == 'acquisition_complete':
+              raise SystemExit('completed DSB campaign is missing its remote handoff evidence')
+          (root/'infrastructure'/'handoff-package-missing.json').write_text(json.dumps({
+              'schema_version':'v4-handoff-retention',
+              'status':'not_produced_before_technical_failure',
+              'campaign_status':status.get('status'),
+              'source_deleted_or_trimmed':False,
+          },indent=2)+'\n')
+          PY
+          fi
+          echo 'ready=true' >> "$GITHUB_OUTPUT"
+      - name: Record DSB full artifact restore layout
+        id: retention_layout
+        if: always() && matrix.system == 'deathstarbench'
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          root = Path('work/campaign')
+          packages = []
+          for source, package, kind, missing in (
+              ('toolchain', 'toolchain-package', 'toolchain', 'toolchain-package-missing.json'),
+              ('infrastructure/remote-toolchain-v4', 'infrastructure/handoff-package',
+               'handoff', 'infrastructure/handoff-package-missing.json')):
+              marker = root/package/'transport.json'
+              status = root/package/'package-status.json'
+              absent = root/missing
+              proof = json.loads(marker.read_text()) if marker.is_file() else None
+              status_record = json.loads(status.read_text()) if status.is_file() else None
+              packages.append({
+                  'original_subtree': source, 'package_subtree': package, 'kind': kind,
+                  'marker': str(marker.relative_to(root)) if marker.is_file() else None,
+                  'marker_sha256': hashlib.sha256(marker.read_bytes()).hexdigest() if marker.is_file() else None,
+                  'status': str(status.relative_to(root)) if status.is_file() else None,
+                  'status_value': status_record.get('status') if status_record else None,
+                  'missing_proof': missing if absent.is_file() else None,
+                  'archive_sha256': proof.get('archive_sha256') if proof else None,
+                  'archive_bytes': proof.get('archive_bytes') if proof else None,
+                  'manifest_sha256': proof.get('manifest_sha256') if proof else None,
+                  'files': proof.get('files') if proof else None,
+                  'directories': proof.get('directories') if proof else None,
+                  'uncompressed_file_bytes': proof.get('uncompressed_file_bytes') if proof else None,
+                  'restore_cwd': 'campaign artifact root',
+                  'restore_command': (f'python -m ebpf_discovery.artifact_transport_v4 unpack '
+                      f'--package {package} --out {source} --kind {kind}'),
+              })
+          (root/'retention-layout.json').write_text(json.dumps({
+              'schema_version':'v4-full-artifact-retention-layout',
+              'transport':'dsb-subtree-retention-v1',
+              'packages':packages,
+              'original_subtrees_deleted_or_trimmed':False,
+              'unpacked_subtrees_excluded_only_from_full_artifact_delivery':True,
+          },indent=2)+'\n')
+          PY
+          echo 'ready=true' >> "$GITHUB_OUTPUT"
+      - name: Retain DSB packaging status independently of full upload
+        if: always() && matrix.system == 'deathstarbench'
+        uses: actions/upload-artifact@v4
+        with:
+          name: retention-v4-deathstarbench-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/toolchain-package/package-status.json
+            work/campaign/toolchain-package/transport.json
+            work/campaign/toolchain-package-missing.json
+            work/campaign/infrastructure/handoff-package/package-status.json
+            work/campaign/infrastructure/handoff-package/transport.json
+            work/campaign/infrastructure/handoff-package-missing.json
+            work/campaign/retention-layout.json
+          retention-days: 90
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.system != 'deathstarbench'
+        with:
+          name: campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.system == 'deathstarbench' && steps.full_toolchain_package.outputs.ready == 'true' && steps.full_handoff_package.outputs.ready == 'true' && steps.retention_layout.outputs.ready == 'true'
+        with:
+          name: campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+            !work/campaign/toolchain/**
+            !work/campaign/infrastructure/remote-toolchain-v4/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error

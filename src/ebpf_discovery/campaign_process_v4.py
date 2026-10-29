@@ -152,12 +152,17 @@ def _commands(config: dict) -> tuple[list[str], list[str]]:
     out = Path(config["out"])
     campaign = [
         "/usr/bin/time", "-v", "-o", str(out / "infrastructure" / "campaign-time.txt"),
-        sys.executable, "-m", "ebpf_discovery.campaign_v4",
+        sys.executable, "-m", ("ebpf_discovery.campaign_v5" if config.get("collector")
+                               else "ebpf_discovery.campaign_v4"),
         "--system", config["system"], "--mode", config["mode"],
         "--seed", str(config["seed"]), "--out", str(out),
         "--training-checkpoint", config["checkpoint"],
         "--toolchain-execution", config.get("toolchain_execution", "local"),
     ]
+    if config.get("collector"):
+        campaign.extend(["--collector", config["collector"]])
+        if config.get("smoke"):
+            campaign.append("--smoke")
     resources = ["bash", str(root / "scripts" / "capture-v4-resources.sh"),
                  str(out / "infrastructure" / "resources"), "15", config["vms"]]
     return campaign, resources
@@ -251,6 +256,10 @@ def _spawn(args) -> int:
               "checkpoint": str(Path(args.checkpoint).resolve()),
               "vms": str(Path(args.vms).resolve()),
               "toolchain_execution": args.toolchain_execution}
+    if getattr(args, "collector", None):
+        config.update(collector=args.collector, smoke=bool(args.smoke))
+    elif getattr(args, "smoke", False):
+        raise ValueError("--smoke requires an iteration-5 collector")
     config_path = state_dir / "config.json"
     _atomic_json(config_path, config)
     # Preserve RUNNER_TRACKING_ID: explicit stop is normal cleanup, while the
@@ -379,6 +388,8 @@ def main() -> None:
     start.add_argument("--out", type=Path, required=True)
     start.add_argument("--vms", type=Path, required=True)
     start.add_argument("--toolchain-execution", choices=("local", "worker"), default="local")
+    start.add_argument("--collector", choices=("obi", "deepflow", "newrelic", "coroot"))
+    start.add_argument("--smoke", action="store_true")
     wait = commands.add_parser("wait")
     _common(wait)
     wait.add_argument("--until", choices=("checkpoint", "exit"), required=True)

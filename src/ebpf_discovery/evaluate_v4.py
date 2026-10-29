@@ -119,20 +119,23 @@ def _integrity(root: Path, frozen: dict, forecasts: dict) -> dict:
             "rule": "all frozen hashes and every available forecast's actual Sheaft graph hash must match"}
 
 
-def _completeness(records: list[dict], plans: list[dict], census: list[dict]) -> dict:
+def _completeness(records: list[dict], plans: list[dict], census: list[dict], *,
+                  expected_phases=None, expected_states=None) -> dict:
     """Validate the fixed primary acquisition and its three durable identity views."""
+    expected_phases = EXPECTED_PHASE_COUNTS if expected_phases is None else expected_phases
+    expected_states = EXPECTED_TARGET_STATES if expected_states is None else expected_states
     primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
     primary_plans = [row for row in plans if row.get("phase") in PRIMARY_PHASES]
     primary_census = [row for row in census if row.get("phase") in PRIMARY_PHASES]
     phase_counts = {phase: sum(row.get("phase") == phase for row in primary)
-                    for phase in EXPECTED_PHASE_COUNTS}
+                    for phase in expected_phases}
     target = [row for row in primary if row.get("phase") == "target"]
     state_counts = {state: sum(row.get("state") == state for row in target)
-                    for state in EXPECTED_TARGET_STATES}
+                    for state in expected_states}
     problems = []
-    if phase_counts != EXPECTED_PHASE_COUNTS:
+    if phase_counts != expected_phases:
         problems.append("primary_phase_counts_mismatch")
-    if state_counts != EXPECTED_TARGET_STATES:
+    if state_counts != expected_states:
         problems.append("target_state_counts_mismatch")
 
     record_ids = [row.get("attempt_id") for row in primary]
@@ -178,8 +181,8 @@ def _completeness(records: list[dict], plans: list[dict], census: list[dict]) ->
         problems.append("invalid_success_values")
     return {
         "valid": not problems, "problems": problems,
-        "phase_counts": phase_counts, "expected_phase_counts": EXPECTED_PHASE_COUNTS,
-        "target_state_counts": state_counts, "expected_target_state_counts": EXPECTED_TARGET_STATES,
+        "phase_counts": phase_counts, "expected_phase_counts": expected_phases,
+        "target_state_counts": state_counts, "expected_target_state_counts": expected_states,
         "primary_records": len(primary), "primary_plans": len(primary_plans),
         "primary_census": len(primary_census), "invalid_success_attempt_ids": invalid,
         "rule": "fixed phase/state counts, unique attempt identities, and matching records/plans/census",
@@ -408,7 +411,8 @@ def _cost(root: Path, status: dict) -> dict:
     }
 
 
-def evaluate_campaign(root: Path) -> dict:
+def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
+                      completed_status="acquisition_complete") -> dict:
     root = Path(root)
     status = _read(root/"status.json", {})
     records = _read(root/"external.json", [])
@@ -427,8 +431,10 @@ def evaluate_campaign(root: Path) -> dict:
     primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
     target = [row for row in records if row.get("phase") == "target"]
     integrity = _integrity(root, frozen, forecasts)
-    completeness = _completeness(records, plans, census)
-    complete = (status.get("status") == "acquisition_complete" and integrity["valid"]
+    completeness = _completeness(records, plans, census, expected_phases=expected_phases,
+                                 expected_states=expected_states)
+    expected_primary = sum(completeness["expected_phase_counts"].values())
+    complete = (status.get("status") == completed_status and integrity["valid"]
                 and completeness["valid"])
     evaluations = []
     for operation in operations:
@@ -504,8 +510,8 @@ def evaluate_campaign(root: Path) -> dict:
         "status": status, "integrity": integrity, "completeness": completeness,
         "complete_for_evaluation": complete,
         "counts": {"all_records": len(records), "primary": len(primary), "target": len(target),
-                   "expected_primary": sum(EXPECTED_PHASE_COUNTS.values()),
-                   "primary_count_matches": len(primary) == sum(EXPECTED_PHASE_COUNTS.values()),
+                   "expected_primary": expected_primary,
+                   "primary_count_matches": len(primary) == expected_primary,
                    "target_state_counts": {state: sum(row.get("state") == state for row in target)
                                            for state in ("11", "10", "01", "00")},
                    "blocks": len(blocks)},

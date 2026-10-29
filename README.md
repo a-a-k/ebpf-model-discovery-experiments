@@ -1,5 +1,11 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
+**Current work: iteration 5, implementation and smoke qualification.**
+The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
+plans matched OBI, DeepFlow, New Relic and Coroot campaigns. No new measurement
+result is claimed yet; New Relic access and license conditions remain unresolved.
+The results below belong to completed iteration 4.
+
 **Completed experimental series (iteration 4).** All 27 planned campaigns completed
 and passed independent evidence review. The
 [generated report, figures and provenance](results/iteration-4/SOURCE.md) cover

@@ -6,6 +6,29 @@ fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The user selected OBI, DeepFlow, New Relic eBPF Agent and Coroot.
 The [completed iteration 4](PROTOCOL_V4.md) remains historical evidence.
 
+### Collector-neutral observation identity review
+
+Pre-implementation decision (2026-10-29): both orchestrator and independent
+skeptic give **GO for the original graph-to-simulation criterion** to a common
+entry selector using an actually captured request header, method/path, server
+role and verified service identity. Missing trace/span IDs do not invalidate
+that observation. Distinct matching observations remain ambiguous; only identical
+content is deduplicated, with all original provenance retained. Genuine causal
+IDs remain mandatory for descendant traversal. File offsets and carrier IDs
+never become fabricated trace/span/parent IDs. The policy applies to every
+collector and native source, with the legacy exact selector retained as a paired
+baseline. The simple entry-only classifier receives the same observations and
+semantic declarations; family identity remains equivalent to that baseline.
+
+Reason: DeepFlow standalone exports valid request observations without an own
+span ID. Feeding them to a trace-ID-only adapter and reporting the resulting
+unknowns as a collector limitation would be unfair. A supported HTTP acquisition
+through Bering and Sheaft must be technically qualified before main campaigns;
+unsupported application protocols and unknown ancestry remain empirical results.
+The change adds adapter preparation and validation costs, retained with the
+same complete-cost accounting as the other arms. It does not claim a forecast
+or classification advantage over the equally informed direct baselines.
+
 ## Question, comparison and pre-implementation review
 
 The primary question remains whether actual eBPF observations can replace or
@@ -87,7 +110,9 @@ it does not retroactively relabel or repair v4 observations.
 
 Raw bytes, actual image/source/configuration identity, per-guest provenance,
 complete file prefixes, drain evidence and normalization locators are retained.
-Bering must identify the actual collector rather than labeling every source OBI.
+Study manifests identify the actual collector. Every fresh arm uses Bering's
+vendor-neutral `ebpf-otlp` input with the same logical source ID and domain;
+collector names and vendor adapters are not product configuration parameters.
 Application trace/span/parent identifiers are preserved when actually present.
 Generated per-event IDs, syscall IDs, an IP, common topic or temporal proximity
 cannot silently become distributed execution ancestry. A structural client
@@ -105,9 +130,17 @@ New Relic's local export, credential and license conditions remain unresolved;
 that arm must not be substituted or presented as measured while unavailable.
 No key is published, synthesized or passed into retained telemetry artifacts.
 
-Product changes are generic collector/source capabilities only. Experimental
+Product changes are generic source capabilities only. Experimental
 code, names, data, routes, results and links remain outside Bering and other product
 repositories. All four arms must eventually use the same reviewed toolchain pins.
+
+The independent skeptic and orchestrator approved this vendor-neutral boundary
+for the original criterion before revision. Runtime identity inventory may attach
+service identity only to an observed process with verified guest/boot/PID-start
+and container ownership evidence. Delayed observations are not assigned using
+receiver time or PID alone. Ambiguous identity remains unknown and raw data remain
+retained. The same inventory is available to every arm and the direct baseline;
+normalization costs are charged only to methods that actually need that work.
 
 ## Smoke tests before main experiments
 

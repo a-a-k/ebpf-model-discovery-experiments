@@ -1,7 +1,8 @@
 # Agreed objective and completion criteria
 
 Recorded at the user's explicit request on 2026-10-28. This document fixes the
-purpose of the work; implementation details remain in [PROTOCOL_V4.md](PROTOCOL_V4.md).
+purpose of the work; the active iteration is [PROTOCOL_V5.md](PROTOCOL_V5.md),
+following the completed [iteration 4](PROTOCOL_V4.md).
 The study is empirical. Positive results are not assumed.
 
 ## Primary objective
@@ -27,7 +28,9 @@ complete costs. Missing human preparation costs are not zero.
 ## Required empirical scope
 
 - DeathStarBench, OpenTelemetry Demo and Petclinic; all ten agreed operations.
-- Absent, partial and full native tracing; three repetitions: 27 planned campaigns.
+- Absent, partial and full native tracing; three repetitions. Iteration 4 completed
+  27 campaigns. Iteration 5 plans the same 27 cells for each of four collectors,
+  after fixed smoke tests and repair of operation-class fragmentation.
 - Two Linux guests with separate kernels, replicas and calls across guests;
   the shared physical Actions runner remains an explicit limitation.
 - Fresh predictions saved before independent validation traffic. Report each

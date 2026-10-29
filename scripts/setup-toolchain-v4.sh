@@ -5,11 +5,25 @@ OUT="${1:?usage: setup-toolchain-v4.sh OUT_DIR}"
 mkdir -p "$OUT/checkouts" "$OUT/bin" "$OUT/go" "$OUT/logs"
 OUT="$(realpath "$OUT")"
 
+PROFILE="${2:-v4}"
+if [[ "$PROFILE" == v5 ]]; then
+  python - "$OUT/pins.tsv" <<'PY'
+import pathlib, sys
+from ebpf_discovery.toolchain_v5 import PINS
+rows = [f'{name.lower()}\thttps://github.com/MB3R-Lab/{name}.git\t{pin}\t./cmd/{name.lower()}\n'
+        for name, pin in PINS.items()]
+pathlib.Path(sys.argv[1]).write_text(''.join(rows))
+PY
+elif [[ "$PROFILE" == v4 ]]; then
 cat >"$OUT/pins.tsv" <<'EOF'
 procrustes	https://github.com/MB3R-Lab/Procrustes.git	39f76000f8a39c971155e08ebffde829b525911b	./cmd/procrustes
 bering	https://github.com/MB3R-Lab/Bering.git	6f806428509a640a6419058c2ad845ed44db7512	./cmd/bering
 sheaft	https://github.com/MB3R-Lab/Sheaft.git	686a602f4e7b71f3612f1810885e29dd66c8733a	./cmd/sheaft
 EOF
+else
+  echo "unknown toolchain profile: $PROFILE" >&2
+  exit 1
+fi
 
 printf 'name\tcommit\ttree\tgo_version\tgo_binary\tbinary\tbinary_sha256\tbinary_bytes\tclone_seconds\tbuild_seconds\n' >"$OUT/builds.tsv"
 while IFS=$'\t' read -r name repository commit package; do
