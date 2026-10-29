@@ -81,7 +81,8 @@ def test_clock_relation_verifies_exact_source_config_guest_proof(tmp_path):
         _verified_clock_relations(root)
 
 
-def test_source_clock_projection_export_revalidates_relation_captures_and_raw(tmp_path):
+def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
+        tmp_path, monkeypatch):
     root = tmp_path / "campaign"; observations = root / "observations"
     raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
     raw.parent.mkdir(parents=True); raw.write_bytes(b'{"saved":"row"}\n')
@@ -151,8 +152,21 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(tm
     store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
         "digest", "training", "resolved_enriched", "unknown", "database", "{}",
         json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
+    store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
+        "second-digest", "training", "resolved_enriched", "unknown", "database", "{}",
+        json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
     store.db.commit()
+    inventory_decodes = 0
+    original_loads = json.loads
+    inventory_bytes = inventory_path.read_bytes()
+    def tracked_loads(value, *args, **kwargs):
+        nonlocal inventory_decodes
+        if value == inventory_bytes:
+            inventory_decodes += 1
+        return original_loads(value, *args, **kwargs)
+    monkeypatch.setattr("ebpf_discovery.store_v5.json.loads", tracked_loads)
     assert next(iter(store.service_projections().values()))["service"] == "database"
+    assert inventory_decodes == 1
     assert not (root / "attempt-journal.sqlite").exists()
     config.write_text("changed: true\n")
     with pytest.raises(ValueError, match="configuration changed"):

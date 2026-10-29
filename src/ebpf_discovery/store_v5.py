@@ -306,6 +306,7 @@ class ObservationStoreV5(ObservationStore):
                 "SELECT resolution,inventory_path,inventory_sha256 FROM runtime_identity_projection "
                 "WHERE status='resolved_enriched'"))
         verified_files = {}
+        parsed_inventories = {}
 
         def verified(path, expected_sha, expected_bytes, description):
             try:
@@ -341,7 +342,11 @@ class ObservationStoreV5(ObservationStore):
                 inventory_body = verified(
                     path, inventory_sha, inventory_proof.get('bytes'),
                     'runtime identity inventory dependency')
-                retained_inventory = json.loads(inventory_body)
+                inventory_key = (str(path.resolve()), inventory_sha,
+                                 int(inventory_proof.get('bytes')))
+                if inventory_key not in parsed_inventories:
+                    parsed_inventories[inventory_key] = json.loads(inventory_body)
+                retained_inventory = parsed_inventories[inventory_key]
                 evidence = row.get('clock_evidence') or {}
                 bracket = row.get('bracket') or {}
                 if bracket.get('kind') == 'source_event_clock':
