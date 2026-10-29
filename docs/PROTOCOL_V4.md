@@ -1001,3 +1001,89 @@ Linux CI passing on the committed exact head. Root concurs. The proof additional
 requires byte-identical original/effective tool binaries, snapshot/quality identity
 coherence before normalization, and retained primary errors if final rehash fails.
 Actual equivalence review and separate fresh-campaign execution GO remain pending.
+
+
+### Admission of the remaining eight OTel cells (2026-10-29)
+
+Root and independent 6.1 Sol/xhigh reviewer give explicit ORIGINAL-criterion
+admission GO for absent6-8 `40803782214`, partial6-8 `40803790289`, full7
+`40803798632` and full8 `40803806299`. This is 18/27 valid cells with Petclinic;
+it is not overall utility/superiority GO. Whole compact ZIP SHA/bytes/CRC,
+compact manifests, selected full-artifact member hashes, worker output against
+parent frozen hashes, identical checkpoint/before/after logical index,
+import-before-freeze-before-target ordering and unchanged final frozen hashes
+were independently checked. Each cell retains 34,800 primary attempts, 9,600
+targets, 19 blocks, clean process exit/drain and all completeness/integrity flags.
+Large full ZIPs were not locally hashed in full; archival Actions verify them.
+
+Native-mode evidence in this admission audit is declared mode, observed source
+absence/presence and the completed guarded snapshot path; the reviewer did not
+independently download every resolved SDK configuration file. Unknown forecasts
+and unfavorable errors remain valid results. The README copies source-specific
+saved results; final Actions reporting will render every operation/repeat and
+include all worker, transfer, waiting, failed preparation and archival costs.
+
+Subsequent representative mode inspection selected and verified the resolved
+node-A/node-B Compose files and unfiltered native collector audits from absent/6,
+partial/6 and full/7. They confirm all listed SDKs disabled and zero native data
+in absent, both catalog SDKs disabled/excluded in partial, and catalog native
+observations in full. This supplies independent representative configuration
+evidence, not a claim that every runtime file in every cell was downloaded.
+Retained eBPF graph/binding inspection finds frontend-to-catalog GetProduct only
+in the absent representative; direct context/parent-chain causality remains
+unproven. No new traffic, metrics, model reconstruction or admission gate was added.
+
+All eight new cells and their workers are now archived by successful runs
+`40819411131` (full7 and the old complete DSB diagnostic), `40819413737` (full8),
+`40819771129` (absent6-8) and `40819773522` (partial6-8). Each archival job verifies
+original ZIP hashes and any lossless parts. Local small provenance asset hashes,
+published asset hashes/lengths and part offsets match those retained manifests;
+this does not claim a local download/hash of all large ZIPs.
+
+
+### Actual envelope equivalence and nine-cell DSB dispatch (2026-10-29)
+
+Exact-head Linux CI `40819158479` passed at
+`1ba67d0d6014bc905b82fe2425af48a5a994f264`. The single fixed proof `40819375950`
+then completed at that same head. Compact artifact `12874197884` has SHA-256
+`b04c11682f2381350b098667d2d4edff7d05ff865eabd1920da97d7a7a30273a`;
+its whole ZIP/CRC and all 57 manifested files were independently checked.
+The proof retains 1,298,938 ordered native resource groups and 3,126,552 native
+observations in both representations, with identical ordered fingerprint
+`df062d3ab7c8167353bb90a528a2c2aa278434662450146e70436c29b8f620d2`.
+Native exports for the compared variant fall from 174,952 to 323; OBI exports
+remain byte-identical. The complete normalized model/snapshot/quality projection
+has SHA-256 `b606d7842640c4a207ebea00f23831efc749062e8c99ef9f9bdf1840b4045d64`
+on both sides. The overlay and original/effective executable hashes match.
+
+Actual Bering accepted 3,402,505 observations, published once on shutdown, dropped
+none and returned zero; child wall time was 174.9147 seconds and peak RSS
+12,544,540 KiB. Whole comparison wall time was 7:34.88. Source checkpoint files
+remain unchanged. Full output `12874507030` is retained losslessly; separate
+packaging proof `12874835331` verifies 2,287 files, 46 directories, 6,066,522,138
+uncompressed file bytes and gzip CRC without trimming the original tree.
+Whole compact/packaging ZIPs were checked locally; the large full ZIP was not
+locally rehashed. These measurements establish this repair, not a general
+performance advantage, a completed cell or causality for the old HTTP 500.
+
+Root and independent 6.1 Sol/xhigh reviewer gave explicit ORIGINAL-criterion
+actual-proof GO and, separately, execution GO for the nine fixed DSB cells at
+that exact scientific head. A fresh owner-wide observation at 05:02:51 UTC
+checked all five nonterminal statuses across 43 owned repositories with zero
+active runs and zero API errors. Dispatches were made once, in this order:
+
+| Planned cells | Run | Reserved budget including then-active preparation |
+| --- | --- | --- |
+| Full / 6 | 40821198727 | 3 |
+| Absent / 6, 7, 8 | 40821214009 | 9 |
+| Partial / 6, 7, 8 | 40821232082 | 15 |
+| Full / 7 | 40821255620 | 17 |
+| Full / 8 | 40821277823 | 19 |
+
+Each dispatch's head and workflow path were verified. The final reservation is
+nine parent/worker pairs (18 slots), with at most two other committed jobs under
+the reviewed budget. Every preparation/matrix child was counted; no platform
+capacity reservation is implied. Full/6 completion is not a rollout gate.
+Unknown forecasts and adverse outcomes do not decide admission or reruns.
+Later worker workflow heads can contain documentation changes; the mandatory
+scientific checkout remains `1ba67d0`, separately bound by worker provenance.

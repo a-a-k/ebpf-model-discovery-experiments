@@ -2,7 +2,7 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): nine Petclinic cells and OTel/full/6 admitted; 10/27 overall.**
+> **Current status (iteration 4): all nine Petclinic and all nine OTel cells admitted; 18/27 overall.**
 > [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
 > plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
 > and [Petclinic/partial/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961),
@@ -26,9 +26,12 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > on that full checkpoint and passed independent integrity/resource review. A
 > [fresh OTel/full/6 replacement completed and passed independent review](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
 > Its eBPF forecasts remain unknown; native/combined forecasts are available but
-> differ from the independent outcomes. All eight remaining OTel workflows have
-> completed; independent artifact/admission review is in progress. They used the
-> same design and the reviewed Bering 1.2.0 publication repair.
+> differ from the independent outcomes. The remaining eight OTel cells also passed
+> independent admission review. In absent mode, eBPF/combined graphs support browse
+> and add-to-cart forecasts in all three repeats; checkout remains unknown.
+> Partial-mode forecasts remain unknown for every source. Full-mode native/combined
+> forecasts are available; eBPF forecasts remain unknown. This observed mode
+> dependence does not by itself identify its cause.
 > The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
 > upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 > also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
@@ -37,10 +40,12 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > publication from offline batches. A [new full-checkpoint DSB diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526)
 > completed and passed independent integrity/resource review: all 18 Bering replays
 > retained their full input with zero drops and one publication each. No DSB cell
-> is admitted. Before fresh collection, the driver is replacing unnecessary
-> per-trace native export files with one envelope per original query file; a fixed
-> saved-input comparison must verify that the graph and evidence remain unchanged.
-> Lossless artifact packaging separately preserves all output bytes and costs.
+> is admitted yet. The driver now emits one native envelope per original query
+> file. A [fixed full-input check](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40819375950)
+> verified identical ordered observations and graph/evidence with 323 envelopes
+> replacing 174,952 per-trace files for the compared variant. All nine fresh DSB
+> campaigns are now running after independent execution review. Lossless packaging
+> separately preserves all output bytes and costs.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
@@ -157,10 +162,9 @@ runner resources and do not silently switch to a paid larger runner.
 
 The OTel and prepared DSB workflows compute the saved training model on a separate
 standard Actions runner. OTel's full-input diagnostic and fresh full/6 replacement
-passed independent review; its eight remaining workflows completed and await
-final admission review. DSB
-activation awaits the reviews recorded in
-[the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
+passed independent review, as did all eight remaining OTel cells. DSB
+activation passed the reviews recorded in
+[the protocol](docs/PROTOCOL_V4.md), and all nine DSB cells are running. The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
 This separates toolchain resource use from the application host; it does not move
 replicas to additional physical machines or change the application's placement.
@@ -396,6 +400,59 @@ nodes alone do not establish the required unambiguous fault mapping.
 
 The complete cell, training checkpoint and worker output are in the [permanent
 archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40802785036).
+
+All eight remaining OTel cells passed independent admission review. The following
+copies saved evaluations for both raw and network_scope, without pooling repeats:
+
+| Native tracing / seeds | eBPF | Native | Combined |
+| --- | --- | --- | --- |
+| [Absent / 6, 7, 8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803782214) | Browse and add: 0.875; checkout unknown | All unknown; no native observations | Browse and add: 0.875; checkout unknown |
+| [Partial / 6, 7, 8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803790289) | All unknown | All unknown | All unknown |
+| Full / [7](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803798632), [8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40803806299) | All unknown | All three: 0.875 | All three: 0.875 |
+
+Absent/6 stored actual success fractions are 0.848125 (browse), 0.8440625 (add),
+and 0.8078125 (checkout); absent/7 and absent/8 record 0.875 for each operation.
+Partial/6 records 0.8746875, 0.875 and 0.8740625 respectively; partial/7 and
+partial/8 record 0.875 for each. Full/7 and full/8 record 0.875 for each.
+Every target outcome is known. Unknown forecasts are not silently assigned the
+manual baseline's value. Matching 0.875 is not superiority: the equally informed
+supplied-contract baseline predicts that same value under the declared A_OR_B law.
+Full/6 used the earlier Bering 1.1.1 batch path; the eight later cells used 1.2.0.
+
+In every additional OTel cell, DB controls record 20 successes up and 20 failures
+down, while graph DB-down predictions remain unknown. Observed database nodes
+are insufficient without an unambiguous mapping to the intervened dependency.
+Async SQL evidence records 20 exact persisted orders normally, 20 pending while
+accounting is paused, those same 20 persisted after resume, and 20 exact persisted
+orders in the recovery block. Native partial/full observations retain exact
+consumer-SpanLink chain witnesses; inspected eBPF witnesses remain unknown.
+Causal association is distinct from SQL durability. Route-based classes retain
+ARI 1 on their known cases; downstream eBPF grouping remains weak/incomplete.
+
+These facts establish operation-specific applicability and limitations, not a
+causal explanation for the instrumentation-mode variation or a cost advantage.
+Each cell's evaluation and proof remain in its linked original artifacts. Whole
+compact ZIP hashes and CRCs were independently checked; local inspection of
+large full artifacts verified selected members, without claiming a local whole-ZIP
+hash. Completed archives preserve and verify complete original ZIPs for
+[absent6-8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819771129),
+[partial6-8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819773522),
+[full7](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819411131)
+and [full8](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40819413737).
+Their provenance assets bind whole original hashes and any lossless release parts.
+
+Representative resolved runtime configurations and unfiltered native collector
+suppression records were also inspected for absent/6, partial/6 and full/7.
+Absent disables all listed SDKs and retains zero native observations; partial
+disables both catalog replicas while other SDKs remain enabled; full includes
+catalog observations. In the saved eBPF graphs, absent/6 has the exact
+frontend-to-product-catalog GetProduct server edge and a matching operation
+binding. Partial/6 and full/7 lack that edge and report the required call as
+missing or ambiguous. All three retain eBPF frontend entry observations.
+A plausible hypothesis is that native context propagation changes OBI/Bering
+correlation or representation. The inspected graphs do not establish that
+mechanism, and do not support a universal claim that OBI cannot observe gRPC.
+
 The existing generated aggregate still covers the nine Petclinic cells; the next
 aggregate will incorporate subsequent admitted cells without changing their inputs.
 
@@ -415,6 +472,9 @@ The manual workflows are:
 - [report-v4.yml](.github/workflows/report-v4.yml): aggregate saved cell evaluations
   and Actions job/artifact costs for the declared run inventory, including failed preparation runs;
   render per-operation figures from that saved aggregate as SVG, PNG and PDF.
+- [native-batch-equivalence-v4.yml](.github/workflows/native-batch-equivalence-v4.yml):
+  one fixed saved-input Bering comparison of per-trace and per-query native
+  envelopes; this is an implementation check, not a completed campaign.
 - [archive.yml](.github/workflows/archive.yml): retain original artifact ZIPs, job
   logs and provenance in permanent data releases, with lossless numbered parts
   when an original file exceeds the release-asset delivery limit.
@@ -575,11 +635,10 @@ original declared subset, not a retroactive complete total for this wider scope.
 ## 10. Current limitations, review state and references
 
 Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
-seeds6–8) and OTel/full/6. The remaining eight OTel workflows completed and await final admission; DeathStarBench
-has passed its full-input diagnostic and awaits the native-envelope equivalence
-check and fresh execution review. After those
-checks, its remaining cells may overlap as worker capacity permits; final full/6
-admission is no longer a rollout gate. The first qualification
+seeds6–8) and all nine OTel cells. DeathStarBench
+passed its full-input diagnostic, native-envelope equivalence check and fresh
+execution review. All nine DSB cells are running with reserved worker capacity;
+final full/6 admission is not a rollout gate. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;

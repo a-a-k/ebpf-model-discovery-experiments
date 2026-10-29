@@ -97,9 +97,11 @@ All nine Petclinic cells are independently admitted; the generated report is
 `40751134324`, published in `results/iteration-4`. Actual eBPF graphs and Sheaft
 forecasts are checked against independent target outcomes. Source limitations,
 manual-baseline equivalence, DB unknowns and adverse class results remain visible.
-OTel/full/6 `40786403012` is also independently admitted: 10/27 overall,
-not a cross-system success claim. Its eBPF forecasts remain unknown and its
-native/combined primary errors are retained without a threshold.
+All nine OTel cells are independently admitted: 18/27 overall,
+not an overall utility/superiority claim. OTel absent-mode eBPF graphs support
+browse and add-to-cart forecasts in all three repeats; checkout stays unknown.
+Partial/full-mode eBPF forecasts remain unknown. All primary errors and missing
+forecasts are retained without a threshold.
 
 DSB/full/seed6 `40731158179` failed its continuation after retaining the training
 checkpoint.
@@ -114,8 +116,8 @@ The reviewed OTel diagnostic `40778455040` completed on the larger, unchanged
 training checkpoint with Bering-child-only Go GC tuning and passed independent
 integrity/resource review. Fresh OTel/full/6 replacement `40786403012` completed,
 passed independent admission review, and is archived with its worker in
-`data-40802785036`. Its remaining eight workflows completed at `19ad30e` and await final artifact
-admission review in runs
+`data-40802785036`. Its remaining eight workflows completed at `19ad30e` and passed independent
+artifact/admission review in runs
 `40803782214`, `40803790289`, `40803798632`, `40803806299`, after separate execution
 GO, exact-head CI and a fresh owner-wide capacity check. Their Bering 1.2.0
 transition does not relabel or repeat the valid 1.1.1 cell.
@@ -129,8 +131,11 @@ original/effective toolchain provenance. It completed as `40799411526` and passe
 All 18 Bering replays retained complete counts, zero drops and one publication;
 the full output is losslessly retained. Driver-created per-trace native exports
 accounted for 349,904 of 356,585 retained files. The codec now emits one envelope
-per original query file without filtering or deduplication. Fresh DSB execution
-awaits the fixed full-prefix graph/evidence equivalence check and final CI.
+per original query file without filtering or deduplication. The fixed full-prefix check `40819375950` passed with identical ordered input
+and complete normalized graph/evidence; exact-head CI and independent actual
+result/execution review passed. All nine fresh DSB cells are now running at
+`1ba67d0`: full6 `40821198727`, absent6-8 `40821214009`, partial6-8 `40821232082`,
+full7 `40821255620`, full8 `40821277823`. They are not admitted before completion.
 Worker/parent transport now preserves complete subtrees in verified packages,
 including failed-import handoff evidence. These repairs change no scientific criterion.
 The diagnostic cannot resume or complete its failed campaign.
