@@ -170,3 +170,27 @@ reporter, not main-series or contribution GO.
 Pinned-source validation in this reporter covers the retained collector
 manifest. It is not independent admission of the full toolchain or its inputs;
 that review remains external and is represented as not performed here.
+
+Actual reporter `31504e06` received independent implementation GO: ten tests,
+workflow parsing, ZIP hash verification, saved identity checks, failed-attempt
+retention and the complete declared main frame were reviewed. Its integrated
+`3332c068b7a960e401932d78e7479ee25d874cbd` passed
+[CI 40900996676](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40900996676).
+Actions report assembly is approved; generated content still requires review.
+
+## DeepFlow source-schema correction
+
+The repeat `40898777011` passed collector startup but its technical control was
+rejected by the research codec. Actual retained rows on both guests contain the
+fresh marker. Pinned source serializes base/session and HTTP-phase fields under
+the same flattened `msg_type` name. The former decoder treated this known
+namespace collision as arbitrary conflicting data and excluded the observation.
+
+Both agents approved the original-criterion correction `4065265` through
+`4adfe8a`: preserve both ordered values and their source namespaces, original
+bytes and hashes, while retaining the unchanged eBPF-origin proof. Other
+conflicting duplicates and producer-supplied reserved parser metadata remain
+raw-only. Independent actual-code review passed 56 relevant tests, including a
+byte-exact saved-row fixture. One fixed DeepFlow Petclinic/absent/seed-6 repeat
+is approved after integrated Linux and Docker CI. No main or contribution GO is
+implied, and all failed preparation costs remain attributable.

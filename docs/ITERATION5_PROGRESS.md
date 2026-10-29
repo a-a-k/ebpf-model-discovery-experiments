@@ -169,3 +169,29 @@ the undeclared `collector_provenance` input. The correction removes this redunda
 API input while preserving the collector binding in the checkpoint and verified
 worker output. This attempt is a technical failure with partial training data,
 not a complete campaign or a forecast result.
+
+At the passing `e24c9289afa5595ee17e6d33c697fc245bfde6ac` revision
+([CI 40898462595](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898462595)),
+the corrected [OBI DeathStarBench/partial repeat 40898769649](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898769649)
+completed its smoke, including the separate
+[toolchain worker 40899833610](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40899833610).
+Its saved evaluation reports technical completeness. eBPF forecasts remain
+unknown; the native and combined home-timeline forecasts are available. These
+small smoke observations are qualification evidence, not main-series estimates.
+
+[Coroot Petclinic/absent smoke 40895637294](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895637294)
+also reports technical completeness. Bering produced a graph, while all four
+operation forecasts remain unknown. Original Coroot observations are independent
+client spans without the server entries and request header used for operation
+association. Separately, the research normalizer failed to use observed Docker
+names with supplied deployment aliases; that is not a demonstrated collector
+identity limitation. The intended repair supplies logical-role aliases equally
+to every source and direct baseline, without inventing runtime or causal identity.
+
+[DeepFlow repeat 40898777011](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898777011)
+passed startup and resource checks but failed the raw control before workloads.
+The raw marker was actually present on both guests. A known duplicated
+`msg_type` in the pinned source format was rejected by the research codec.
+The reviewed correction preserves both source-defined namespaces and raw bytes;
+its repeated acquisition check is pending. This is an adapter defect, not evidence
+that DeepFlow failed to observe the requests.
