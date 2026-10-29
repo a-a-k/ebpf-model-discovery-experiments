@@ -51,7 +51,9 @@ class Context:
 def test_factory_has_no_cross_arm_substitution(tmp_path: Path, name, kind) -> None:
     assert isinstance(create_collectors_v5(Context(tmp_path), name), kind)
     assert isinstance(make_collectors(Context(tmp_path), name), kind)
-    for blocked in ("deepflow", "newrelic", "unknown"):
+    from ebpf_discovery.deepflow_v5 import DeepFlowCollectorsV5
+    assert isinstance(create_collectors_v5(Context(tmp_path), "deepflow"), DeepFlowCollectorsV5)
+    for blocked in ("newrelic", "unknown"):
         with pytest.raises(CollectorUnavailable) as exc:
             create_collectors_v5(Context(tmp_path), blocked)
         assert exc.value.collector == blocked

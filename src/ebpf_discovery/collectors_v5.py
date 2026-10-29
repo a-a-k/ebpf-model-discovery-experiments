@@ -51,9 +51,8 @@ def create_collectors_v5(ctx, collector: str, *, semantic: bool = True):
     if name == "coroot":
         return CorootCollectorsV5(ctx, semantic=semantic)
     if name == "deepflow":
-        raise CollectorUnavailable(
-            name, "owned by the DeepFlow adapter; no substitution by OBI or Coroot"
-        )
+        from .deepflow_v5 import DeepFlowCollectorsV5
+        return DeepFlowCollectorsV5(ctx, semantic=semantic)
     if name in {"newrelic", "new-relic"}:
         raise CollectorUnavailable(
             "newrelic",
