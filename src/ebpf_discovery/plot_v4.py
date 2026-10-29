@@ -79,6 +79,8 @@ def _render(rows: list[dict], system: str, mode: str, output: Path) -> None:
 
     axis.set_yticks(range(len(operations)), operations)
     axis.set_xlim(0, 100)
+    # Text-only unknown rows do not contribute to Matplotlib's data limits.
+    axis.set_ylim(-0.5, len(operations) - 0.5)
     axis.set_xlabel("Worst-end absolute error (percentage points)")
     axis.set_title(f"{system} / {mode}: mean and observed repeat min–max range")
     axis.grid(axis="x", alpha=0.25)

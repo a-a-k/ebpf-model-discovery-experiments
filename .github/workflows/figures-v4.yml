@@ -1,0 +1,97 @@
+name: Render figures from an immutable retained v4 report
+on:
+  workflow_dispatch:
+    inputs:
+      report_run:
+        description: Completed report-v4 run whose saved aggregate and value table are preserved
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  figures:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[report]'
+      - name: Verify original report archive and restore its unchanged aggregate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPORT_RUN: ${{ inputs.report_run }}
+        run: |
+          python - <<'PY'
+          import gzip, hashlib, json, os, pathlib, subprocess, zipfile
+          run = int(os.environ['REPORT_RUN'])
+          if run <= 0: raise SystemExit('positive report run required')
+          base = f"repos/{os.environ['GITHUB_REPOSITORY']}/actions"
+          def api(path):
+              return json.loads(subprocess.check_output(['gh','api',path]))
+          meta = api(f'{base}/runs/{run}')
+          if meta['status'] != 'completed' or meta['conclusion'] != 'success':
+              raise SystemExit('source report must have completed successfully')
+          if meta['path'] != '.github/workflows/report-v4.yml':
+              raise SystemExit('source must be the retained evaluation report workflow')
+          listing = api(f'{base}/runs/{run}/artifacts?per_page=100')
+          if listing['total_count'] != len(listing['artifacts']):
+              raise SystemExit('artifact listing incomplete')
+          candidates = [a for a in listing['artifacts'] if a['name'] == f'report-v4-{run}']
+          if len(candidates) != 1 or candidates[0]['expired']:
+              raise SystemExit('one unexpired original report required')
+          artifact = candidates[0]
+          root = pathlib.Path('work/corrected-report')
+          (root/'provenance').mkdir(parents=True)
+          archive = pathlib.Path('work/source-report.zip')
+          with archive.open('wb') as out:
+              subprocess.run(['gh','api',f"{base}/artifacts/{artifact['id']}/zip"],stdout=out,check=True)
+          with archive.open('rb') as stream:
+              archive_sha = hashlib.file_digest(stream,'sha256').hexdigest()
+          if artifact['digest'] != 'sha256:'+archive_sha or artifact['size_in_bytes'] != archive.stat().st_size:
+              raise SystemExit('original report archive identity mismatch')
+          with zipfile.ZipFile(archive) as source:
+              packed = source.read('evaluation-v4.json.gz')
+              package = json.loads(source.read('provenance/aggregate-packaging.json'))
+              (root/'evaluation-v4.json.gz').write_bytes(packed)
+              pathlib.Path('work/original-figures-v4.md').write_bytes(source.read('figures/figures-v4.md'))
+          if hashlib.sha256(packed).hexdigest() != package['compressed_sha256']:
+              raise SystemExit('saved compressed aggregate changed')
+          with gzip.open(root/'evaluation-v4.json.gz','rb') as stream:
+              restored_sha = hashlib.file_digest(stream,'sha256').hexdigest()
+          if restored_sha != package['original_sha256']:
+              raise SystemExit('aggregate restore hash mismatch')
+          provenance = dict(source_run=run, source_head=meta['head_sha'], source_artifact=artifact,
+              source_archive_sha256=archive_sha, aggregate_packaging=package,
+              renderer_head=os.environ['GITHUB_SHA'], renderer_run=os.environ['GITHUB_RUN_ID'],
+              purpose='Figure layout only; original report, aggregate and numerical table preserved')
+          (root/'provenance/figure-correction.json').write_text(json.dumps(provenance,indent=2)+'\n')
+          PY
+      - name: Render saved values and require an identical companion value table
+        run: |
+          python -m ebpf_discovery.plot_v4 --aggregate work/corrected-report/evaluation-v4.json.gz --out-dir work/corrected-report/figures
+          cmp work/original-figures-v4.md work/corrected-report/figures/figures-v4.md
+          python - <<'PY'
+          import hashlib, json, pathlib, zipfile
+          root = pathlib.Path('work/corrected-report')
+          path = root/'provenance/figure-correction.json'
+          proof = json.loads(path.read_text())
+          with zipfile.ZipFile('work/source-report.zip') as original:
+              proof['files'] = {str(p.relative_to(root)):dict(bytes=p.stat().st_size,
+                  sha256=hashlib.sha256(p.read_bytes()).hexdigest(),
+                  original_sha256=hashlib.sha256(original.read(str(p.relative_to(root)))).hexdigest())
+                  for p in sorted((root/'figures').iterdir()) if p.is_file()}
+          proof['companion_value_table_byte_identical'] = True
+          path.write_text(json.dumps(proof,indent=2)+'\n')
+          PY
+          python -m pip freeze > work/corrected-report/provenance/figure-python-environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: figures-v4-${{ github.run_id }}
+          path: |
+            work/corrected-report/figures/
+            work/corrected-report/provenance/
+          retention-days: 90
+          if-no-files-found: error
