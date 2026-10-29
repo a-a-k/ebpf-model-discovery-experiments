@@ -1060,25 +1060,81 @@ class OBICollectorsV5(CollectorsV5):
     source_version = "v0.15.2"
     stop_grace_seconds = 45
 
+    def __init__(self, ctx, *, semantic: bool = True):
+        super().__init__(ctx, semantic=semantic)
+        self._obi_startup_complete = False
+        self._obi_startup_error: str | None = None
+
     def start(self) -> None:
         # OBI's initial generic-process admission can take about a minute on the
         # full guests.  Keep the responder alive before OBI starts so that the
         # selected agent can admit it during that initial scan.  No request is
         # issued here; the marker exchange and raw-origin proof remain after
         # application readiness in positive_control().
-        self._prestart_control_servers()
         try:
+            self._prestart_control_servers()
             super().start()
-        except Exception:
-            self._cleanup_prestarted_control("collector_start_failed")
+            self._obi_startup_complete = True
+        except Exception as original:
+            self._obi_startup_error = repr(original)
+            try:
+                self._cleanup_prestarted_control("collector_start_failed")
+            except Exception as cleanup_error:
+                original.add_note(
+                    "technical control cleanup also failed: " + repr(cleanup_error)
+                )
             raise
 
     def close(self) -> None:
         error: Exception | None = None
-        try:
-            super().close()
-        except Exception as exc:
-            error = exc
+        if self._obi_startup_complete:
+            try:
+                super().close()
+            except Exception as exc:
+                error = exc
+        elif not self._closed:
+            incomplete = {"schema": "collector-incomplete-startup-v5", "collector": self.collector,
+                          "startup_complete": False, "startup_error": self._obi_startup_error,
+                          "collector_cleanup": {}, "receiver_processes": {}}
+            for node in ("a", "b"):
+                inspect = _safe_node_exec(
+                    self.ctx, node, f"docker inspect {self.container_name}",
+                    timeout=30, check=False,
+                )
+                logs = _safe_node_exec(
+                    self.ctx, node, f"docker logs {self.container_name}",
+                    timeout=30, check=False,
+                )
+                removal = _safe_node_exec(
+                    self.ctx, node, f"docker rm -f {self.container_name}",
+                    timeout=30, check=False,
+                )
+                incomplete["collector_cleanup"][node] = {
+                    "inspect": _result_evidence(inspect),
+                    "logs": _result_evidence(logs),
+                    "removal": _result_evidence(removal),
+                }
+            for node, process in self.processes.items():
+                forced = False
+                if process.poll() is None:
+                    process.terminate()
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        forced = True
+                        process.kill()
+                        process.wait(timeout=5)
+                incomplete["receiver_processes"][node] = {
+                    "returncode": process.returncode,
+                    "forced_kill": forced,
+                }
+            for log in self.logs:
+                if not log.closed:
+                    log.close()
+            incomplete["final_drain_attempted"] = False
+            incomplete["accepted_receiver_bytes_closed_and_hashed"] = False
+            _write_json(self.root / "startup-incomplete.json", incomplete)
+            self._closed = True
         try:
             self._cleanup_prestarted_control("closed_before_positive_control")
         except Exception as exc:
@@ -1120,23 +1176,35 @@ class OBICollectorsV5(CollectorsV5):
                 if not entry.get("prestart_ready"):
                     raise RuntimeError(f"technical control prestart failed on {node}")
             ready_ns = time.time_ns()
-            _write_json(
-                self.root / "control-prestart.json",
-                {
-                    "schema": "collector-control-prestart-v5",
-                    "collector": self.collector,
-                    "nodes": nodes,
-                    "started_ns": prestart_started_ns,
-                    "ready_ns": ready_ns,
-                    "duration_ns": ready_ns - prestart_started_ns,
-                    "proof_traffic_emitted": False,
-                    "post_collector_start_process_admission_proven": False,
-                    "scope": "responder process admission only; not eBPF-origin proof",
-                },
+            self._write_prestart_record(nodes, prestart_started_ns, ready_ns=ready_ns)
+        except Exception as exc:
+            self._write_prestart_record(
+                nodes, prestart_started_ns, error=repr(exc)
             )
-        except Exception:
-            self._cleanup_prestarted_control("prestart_failed")
             raise
+
+    def _write_prestart_record(
+        self, nodes: dict[str, dict[str, Any]], started_ns: int, *,
+        ready_ns: int | None = None, error: str | None = None,
+    ) -> None:
+        finished_ns = ready_ns if ready_ns is not None else time.time_ns()
+        _write_json(
+            self.root / "control-prestart.json",
+            {
+                "schema": "collector-control-prestart-v5",
+                "collector": self.collector,
+                "nodes": nodes,
+                "started_ns": started_ns,
+                "ready_ns": ready_ns,
+                "finished_ns": finished_ns,
+                "duration_ns": finished_ns - started_ns,
+                "technical_complete": error is None,
+                "error": error,
+                "proof_traffic_emitted": False,
+                "post_collector_start_process_admission_proven": False,
+                "scope": "responder process admission only; not eBPF-origin proof",
+            },
+        )
 
     def _cleanup_prestarted_control(self, reason: str) -> None:
         nodes = self._prestarted_control_nodes
@@ -1169,7 +1237,6 @@ class OBICollectorsV5(CollectorsV5):
                 observed = [value.strip() for value in _stdout(verification).splitlines() if value.strip()]
                 if _returncode(verification) != 0 or name in observed:
                     failures.append({"node": node, "role": role, "container": name})
-        self._prestarted_control_nodes = None
         _write_json(
             self.root / "control-prestart-cleanup.json",
             {
@@ -1182,6 +1249,7 @@ class OBICollectorsV5(CollectorsV5):
         )
         if failures:
             raise RuntimeError("technical control prestart cleanup verification failed")
+        self._prestarted_control_nodes = None
 
     def _config_summary(self) -> dict[str, Any]:
         return {

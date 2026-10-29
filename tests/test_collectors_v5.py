@@ -436,6 +436,81 @@ def test_obi_start_failure_cleans_prestarted_responders(
     assert sum(command.startswith("docker rm -f") for command in commands) >= 4
 
 
+def test_obi_start_preserves_original_error_when_control_cleanup_also_fails(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class CleanupFailureContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-server-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if command.startswith("docker ps -a"):
+                return Result("study-ebpf-control-server-a\n")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            return Result("ok")
+
+    collector = OBICollectorsV5(CleanupFailureContext(tmp_path))
+    monkeypatch.setattr(collector, "_start_receivers", lambda: None)
+    monkeypatch.setattr(
+        collector, "_wait_container_readiness",
+        lambda: (_ for _ in ()).throw(RuntimeError("original collector failure")),
+    )
+    with pytest.raises(RuntimeError, match="original collector failure") as caught:
+        collector.start()
+
+    assert any("control cleanup also failed" in note for note in caught.value.__notes__)
+    cleanup = json.loads(
+        (collector.root / "control-prestart-cleanup.json").read_text()
+    )
+    assert cleanup["cleanup_verified"] is False
+    assert collector._prestarted_control_nodes is not None
+
+
+def test_obi_failed_prestart_is_retained_and_close_does_not_claim_drain(
+    tmp_path: Path, monkeypatch
+) -> None:
+    class FailedPrestartContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker pull"):
+                return Result("", "pull failed", 1)
+            if command.startswith("docker ps -a"):
+                return Result("")
+            return Result("", "not found", 1)
+
+    ctx = FailedPrestartContext(tmp_path)
+    collector = OBICollectorsV5(ctx)
+    receivers_started = False
+
+    def start_receivers() -> None:
+        nonlocal receivers_started
+        receivers_started = True
+
+    monkeypatch.setattr(collector, "_start_receivers", start_receivers)
+    monkeypatch.setattr(
+        collector, "final_drain",
+        lambda: (_ for _ in ()).throw(AssertionError("final drain must not run")),
+    )
+    with pytest.raises(RuntimeError, match="image pull failed"):
+        collector.start()
+    assert receivers_started is False
+
+    prestart = json.loads((collector.root / "control-prestart.json").read_text())
+    assert prestart["technical_complete"] is False
+    assert "image pull failed" in prestart["error"]
+    assert prestart["nodes"]["a"]["image_pull"]["returncode"] == 1
+
+    collector.close()
+    incomplete = json.loads((collector.root / "startup-incomplete.json").read_text())
+    assert incomplete["final_drain_attempted"] is False
+    assert incomplete["accepted_receiver_bytes_closed_and_hashed"] is False
+    assert not (collector.root / "drain-evidence.json").exists()
+    assert not list(collector.root.glob("receiver-closed-*.json"))
+
+
 def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
     tmp_path: Path, monkeypatch
 ) -> None:
