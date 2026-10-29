@@ -195,3 +195,23 @@ The raw marker was actually present on both guests. A known duplicated
 The reviewed correction preserves both source-defined namespaces and raw bytes;
 its repeated acquisition check is pending. This is an adapter defect, not evidence
 that DeepFlow failed to observe the requests.
+
+[OBI Petclinic/absent smoke 40899601511](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40899601511)
+completed with saved eBPF graph-based forecasts for all four operations. Its
+technical result is being checked against the full input/model/freeze/outcome
+packet; it is not a main-series estimate or an advantage over the direct baseline.
+
+[DeepFlow repeat 40902922833](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40902922833)
+passed raw controls and training capture after the source-schema correction.
+It then stopped at the Bering input handoff: the shared exporter requires original
+OTLP wire bodies, whereas DeepFlow produces JSONL with an explicit normalized
+OTLP representation. The original JSONL and its locators remain retained. The
+repair must support this declared derived transport and verify its source proof,
+without describing it as original agent OTLP wire or weakening native OTLP checks.
+This is a handoff implementation defect, not a measured lack of protocol support.
+
+[Initial saved-artifact report 40902931486](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40902931486)
+stopped because the compact package omitted the manifest-listed request journal.
+The journal is retained in the full source artifact. The reviewed transport
+repair recovers the exact historical bytes and includes the file in future
+compact packages; source evaluations are not recalculated or rewritten.

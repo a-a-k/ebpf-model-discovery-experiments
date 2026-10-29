@@ -194,3 +194,17 @@ raw-only. Independent actual-code review passed 56 relevant tests, including a
 byte-exact saved-row fixture. One fixed DeepFlow Petclinic/absent/seed-6 repeat
 is approved after integrated Linux and Docker CI. No main or contribution GO is
 implied, and all failed preparation costs remain attributable.
+
+## Compact journal recovery
+
+The first report assembly `40902931486` exposed a delivery omission: the source
+manifest hashes `attempt-journal.jsonl`, but the compact upload did not include
+it. The journal remains in the immutable full artifact. Both agents approved
+the original-criterion transport repair `b185d8f` through `a4374a8`; independent
+review passed 16 tests and parsed the workflow's embedded Python. Future compact
+uploads include the journal. Historical recovery checks the received full ZIP's
+API size/digest, safe member path and original manifest hash, retains originals
+and recovery costs, and changes no saved evaluations. Missing recovery evidence
+remains explicitly incomplete while any valid saved evaluation is preserved.
+An Actions report-only repeat is approved after integrated CI; no campaign
+repeat, refitting or rescoring is needed for this transport defect.
