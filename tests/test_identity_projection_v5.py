@@ -14,6 +14,8 @@ from ebpf_discovery.raw_v4 import export_selection
 from ebpf_discovery.selection_v4 import bind_entry as bind_entry_v4
 from ebpf_discovery.selection_v5 import bind_entry as bind_entry_v5
 from ebpf_discovery.store_v5 import ObservationStoreV5
+from ebpf_discovery.toolchain_v5 import Toolchain
+from ebpf_discovery.remote_toolchain_v4 import _readonly_store
 from ebpf_discovery.transport_v4 import Journal
 
 
@@ -38,7 +40,10 @@ def _sample(stage, point):
             "clock_ticks_per_second": 100,
             "clocks": {edge: {"realtime_unix_ns": point, "monotonic_ns": point,
                                "boottime_ns": point} for edge in ("started", "ended")},
-            "containers": [], "docker_proof": {"list_returncode": 0, "inspect_returncode": 0},
+            "containers": [{"id": "a" * 64, "name": "frontend-1",
+                            "state": {"StartedAt": "2026-10-29T00:00:00Z"},
+                            "compose": owner["compose"]}],
+            "docker_proof": {"list_returncode": 0, "inspect_returncode": 0},
             "processes": [{"host_pid": 123, "state": "S", "comm": "frontend",
                            "start_ticks": 900, "pid_namespace": "pid:[200]",
                            "cgroups": [{"path": "/docker/" + "a" * 64}],
@@ -57,6 +62,120 @@ def _capture(root, stage, point):
                                            "sha256": _sha(sample_path)}},
              "cost_file": None}
     _write(folder / f"capture-{stage}.json", value)
+
+
+def _append_receiver_span(observations, *, request_id, trace, span, capture, node="a"):
+    capture_dir = observations / f"{node}.raw" / capture
+    capture_dir.mkdir(parents=True)
+    body = capture_dir / "body.pb"
+    body.write_bytes(("wire-" + request_id).encode())
+    raw_ref = body.relative_to(observations).as_posix()
+    metadata_ref = (capture_dir / "metadata.json").relative_to(observations).as_posix()
+    raw_sha = hashlib.sha256(body.read_bytes()).hexdigest()
+    metadata = {"source": f"ebpf-coroot:{node}", "node": node,
+                "received_ns": len(request_id),
+                "raw_ref": raw_ref, "raw_sha256": raw_sha,
+                "raw_size_bytes": body.stat().st_size}
+    _write(capture_dir / "metadata.json", metadata)
+    payload = {"resourceSpans": [{"resource": {"attributes": [
+        {"key": "service.name", "value": {"stringValue": "/docker/frontend-1"}},
+        {"key": "container.id", "value": {"stringValue": "/docker/frontend-1"}}]},
+        "scopeSpans": [{"spans": [{"traceId": trace, "spanId": span,
+            "name": "GET", "kind": "SPAN_KIND_SERVER", "startTimeUnixNano": "1",
+            "endTimeUnixNano": "2", "attributes": [
+                {"key": "http.request.header.x-experiment-request-id",
+                 "value": {"arrayValue": {"values": [{"stringValue": request_id}]}}},
+                {"key": "http.request.method", "value": {"stringValue": "GET"}},
+                {"key": "url.path", "value": {"stringValue": "/entry"}}]}]}]}]}
+    wrapper = {**metadata, "raw_metadata_ref": metadata_ref, "id_encoding": "hex",
+               "payload": payload}
+    with (observations / f"{node}.jsonl").open("a", encoding="utf-8") as stream:
+        stream.write(json.dumps(wrapper, separators=(",", ":")) + "\n")
+
+
+def test_parent_training_freezes_alias_and_final_append_uses_same_effective_rows(tmp_path):
+    root = tmp_path / "campaign"; observations = root / "observations"
+    observations.mkdir(parents=True); (root / "native").mkdir()
+    (observations / "b.jsonl").write_text("")
+    _append_receiver_span(observations, request_id="training-request",
+                          trace="1" * 32, span="2" * 16, capture="training")
+    store = ObservationStoreV5(root / "observation-index.sqlite", same_trace_parents=True)
+    store.ingest(observations, root / "native")
+    _capture(root, "training-sample", 10)
+    journal = Journal(root / "attempt-journal.sqlite")
+    campaign = SimpleNamespace(ctx=SimpleNamespace(out=root, journal=journal), store=store,
+                               collector="coroot", plans=[])
+    training = refresh(campaign, "training")
+    assert training["supplied_logical_alias_admission"][
+        "effective_store_projection"]["rows"] == 1
+    assert store.candidates_v5("ebpf", "training-request")[0]["service"] == "frontend"
+    admission_path = root / training["supplied_logical_alias_admission"]["path"]
+    retained_admission = json.loads(admission_path.read_text())
+    assert {row["path"] for row in retained_admission["occurrence_proofs"]} == {
+        "observations/a.jsonl"}
+    frozen_admission = admission_path.read_bytes()
+
+    _write(root / "status.json", {"protocol_version": "graph-v5", "collector": "coroot"})
+    _write(observations / "collector.json", {"schema": "collector-lifecycle-v5",
+                                              "collector": "coroot",
+                                              "source_domain": "ebpf-coroot"})
+    _write(root / "deployment.json", {})
+    store.close()
+    readonly = _readonly_store(root / "observation-index.sqlite", ObservationStoreV5)
+    try:
+        worker_view = Toolchain(SimpleNamespace(out=root), "demo", readonly,
+                                SimpleNamespace())
+        assert worker_view.supplied_alias_projection_verification[
+            "logical_projection_verified"] is True
+    finally:
+        readonly.close()
+    store = ObservationStoreV5(root / "observation-index.sqlite", same_trace_parents=True)
+    campaign.store = store
+
+    _append_receiver_span(observations, request_id="target-request",
+                          trace="3" * 32, span="4" * 16, capture="target")
+    _append_receiver_span(observations, request_id="other-guest-request",
+                          trace="5" * 32, span="6" * 16, capture="other-guest", node="b")
+    store.ingest(observations, root / "native")
+    columns = [row[1] for row in store.db.execute("PRAGMA table_info(spans)")]
+    base = dict(zip(columns, store.db.execute("SELECT * FROM spans LIMIT 1").fetchone()))
+    for digest, source, node in (("missing-node-digest", "ebpf", None),
+                                 ("native-carrier-digest", "native", "a")):
+        data = json.loads(base["data"])
+        data.update(source=source, node=node, request=digest)
+        values = {**base, "digest": digest, "source": source, "node": node,
+                  "request": digest,
+                  "data": json.dumps(data, sort_keys=True, separators=(",", ":"))}
+        store.db.execute(
+            f"INSERT INTO spans({','.join(columns)}) VALUES ({','.join('?' for _ in columns)})",
+            tuple(values[column] for column in columns))
+    store.db.commit()
+    final = refresh(campaign, "final")
+    assert final["supplied_logical_alias_admission"][
+        "effective_store_projection"]["rows"] == 2
+    assert admission_path.read_bytes() == frozen_admission
+    assert store.candidates_v5("ebpf", "target-request")[0]["service"] == "frontend"
+    assert store.candidates_v5("ebpf", "other-guest-request")[0]["service"] == (
+        "/docker/frontend-1")
+    assert store.observation_v5("missing-node-digest")["service"] == "/docker/frontend-1"
+    assert store.observation_v5("native-carrier-digest")["service"] == "/docker/frontend-1"
+    expected = {"method": "GET", "path": "/entry"}
+    assert bind_entry_v5(store, "ebpf", "target-request", expected, ["frontend"])[0][
+        "service"] == "frontend"
+    assert bind_entry_v4(store, "ebpf", "target-request", expected, ["frontend"])[0][
+        "service"] == "frontend"
+    assert {json.loads(row[0])["service"] for row in store.db.execute(
+        "SELECT data FROM spans")} == {"/docker/frontend-1"}
+    scope_proof = json.loads((root / final["supplied_logical_alias_admission"]
+                              ["effective_store_projection"]["scope_revalidation"]
+                              ["path"]).read_text())
+    assert set(scope_proof["scoped_digest_aliases"]) == {
+        row[0] for row in store.db.execute(
+            "SELECT digest FROM spans WHERE request IN ('training-request','target-request')")}
+    assert scope_proof["new_mappings_admitted"] is False
+    assert store.db.execute(
+        "SELECT COUNT(*) FROM supplied_logical_alias_projection").fetchone()[0] == 2
+    journal.close(); store.close()
 
 
 def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypatch):
@@ -107,6 +226,7 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypat
                        ("step_finished", 2, 30, json.dumps({**started, "transport_state": "complete"})))
     journal.db.commit()
     campaign = SimpleNamespace(ctx=SimpleNamespace(out=root, journal=journal), store=store,
+        collector="deepflow",
         plans=[{"block_id": "target-00", "http_steps": [{"request_id": "request-1",
                                                             "method": "GET", "path": "/items/7"}]}])
     result = refresh(campaign, "training")

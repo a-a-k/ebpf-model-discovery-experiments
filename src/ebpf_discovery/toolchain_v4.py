@@ -375,6 +375,17 @@ class Toolchain:
     def supplied_entry_role_evidence(self, roots, entry_services, untyped_components):
         return supplied_entry_roles(self.store, roots, entry_services, untyped_components)
 
+    def binding_uncertainties(self, model, quality):
+        """Protocol-specific retained uncertainty; legacy graphs add none."""
+        return []
+
+    def apply_binding_uncertainties(self, binding, model, quality):
+        additional = self.binding_uncertainties(model, quality)
+        if additional:
+            binding['unknown'].extend(additional)
+            binding['available'] = False
+        return binding
+
     def command(self, tool, args, folder, name):
         started = time.time_ns()
         result = self.ctx.run([str(self.bin/tool), *map(str, args)], timeout=None, check=False)
@@ -621,6 +632,7 @@ class Toolchain:
                     binding = resolve_entry_representations(model, quality, contract, proxy_names,
                         proof_builder=proof_builder, identity_groups=self.entry_identity_groups,
                         database_fault_group=mapping, controlled=controlled)
+                    binding = self.apply_binding_uncertainties(binding, model, quality)
                     # A missing controlled node is acceptable only for operations
                     # whose declared requirements do not include that service.
                     needs_controlled = any(set(aliases(c.get(role))) & set(self.declaration.CONTROLLED_SERVICE_ALIASES)

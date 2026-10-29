@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from ebpf_discovery import campaign_v4
+from ebpf_discovery import campaign_v4, campaign_v5
 
 
 def campaign(tmp_path):
@@ -92,3 +92,43 @@ def test_worker_cannot_start_before_checkpoint_release(tmp_path):
     with pytest.raises(RuntimeError, match='checkpoint release'):
         value.freeze()
     assert not (tmp_path/'forecast-saved.json').exists()
+
+
+def test_v5_freezes_supplied_alias_table_and_admission_for_final_integrity(tmp_path, monkeypatch):
+    value = campaign_v5.CampaignV5.__new__(campaign_v5.CampaignV5)
+    value.ctx = SimpleNamespace(out=tmp_path)
+    value.system = 'otel_demo'; value.store = object(); value.declaration = object()
+    value.plans = [{'phase': 'class_train'}, {'phase': 'calibration'}]
+    value.toolchain_execution = 'local'; value.frozen = {}
+    value.collector = 'coroot'; value.smoke = True
+    alias_root = tmp_path/'runtime-identity-v5'; alias_root.mkdir()
+    table = alias_root/'supplied-service-aliases-training.json'
+    admission = alias_root/'supplied-service-alias-admission-training.json'
+    table.write_text('{"table":true}')
+    admission.write_text('{"admission":true}')
+
+    class FakeToolchain:
+        def __init__(self, *args):
+            pass
+        def forecast(self, plans):
+            folder = tmp_path/'toolchain'; folder.mkdir()
+            (folder/'forecasts.json').write_text('{}')
+            return {}
+
+    def classes(store, plans, declaration, out):
+        out.mkdir(parents=True)
+        (out/'classes-family-model.json').write_text('{}')
+
+    monkeypatch.setattr(campaign_v5, 'Toolchain', FakeToolchain)
+    monkeypatch.setattr(campaign_v5, 'fit_classes', classes)
+    value.freeze()
+    saved = {Path(path).as_posix(): sha for path, sha in json.loads(
+        (tmp_path/'forecast-saved.json').read_text())['sha256_by_path'].items()}
+    assert saved['runtime-identity-v5/supplied-service-aliases-training.json'] == (
+        campaign_v4.digest(table))
+    assert saved['runtime-identity-v5/supplied-service-alias-admission-training.json'] == (
+        campaign_v4.digest(admission))
+    admission.write_text('{"admission":"changed"}')
+    frozen = {Path(path).as_posix(): sha for path, sha in value.frozen.items()}
+    assert campaign_v4.digest(admission) != frozen[
+        'runtime-identity-v5/supplied-service-alias-admission-training.json']

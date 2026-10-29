@@ -124,7 +124,7 @@ def _index_table_proof(path: Path) -> dict:
         if db.execute("PRAGMA quick_check").fetchone()[0] != "ok":
             raise ValueError("training observation index failed quick_check")
         result = {"proof_basis": "rowid-and-all-columns-v1"}
-        # All three pinned tables are ordinary rowid tables. SQLite backup
+        # Every admitted logical table is an ordinary rowid table. SQLite backup
         # preserves rowids; scanning them avoids random full-row reads through
         # the digest/path indexes while retaining every column in the proof.
         tables = ["spans", "links", "files"]
@@ -132,6 +132,8 @@ def _index_table_proof(path: Path) -> dict:
             tables.append("observation_provenance")
         if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='runtime_identity_projection'").fetchone():
             tables.append("runtime_identity_projection")
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='supplied_logical_alias_projection'").fetchone():
+            tables.append("supplied_logical_alias_projection")
         for table in tables:
             digest, count = hashlib.sha256(), 0
             for row in db.execute(f"SELECT rowid,* FROM {table} ORDER BY rowid"):

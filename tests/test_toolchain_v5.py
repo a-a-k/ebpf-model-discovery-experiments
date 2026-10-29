@@ -5,6 +5,7 @@ from types import SimpleNamespace
 import pytest
 
 from ebpf_discovery.toolchain_v5 import PINS, Toolchain, collector_provenance
+from ebpf_discovery.supplied_alias_v5 import admit_observed, write_admission, write_training
 
 
 def _write(root: Path, status_collector='coroot', retained_collector='coroot'):
@@ -14,6 +15,13 @@ def _write(root: Path, status_collector='coroot', retained_collector='coroot'):
     (root/'observations'/'collector.json').write_text(json.dumps({
         'schema': 'collector-lifecycle-v5', 'collector': retained_collector,
         'source_domain': 'ebpf-'+retained_collector}))
+    inventory = root/'runtime-identity-v5'/'inventory-training.json'
+    inventory.parent.mkdir(parents=True)
+    inventory.write_text(json.dumps({'schema': 'runtime-identity-inventory-v5', 'samples': []}))
+    table = inventory.parent/'supplied-service-aliases-training.json'
+    write_training(json.loads(inventory.read_text()), inventory, table)
+    write_admission(admit_observed(None, json.loads(table.read_text())), table,
+                    inventory.parent/'supplied-service-alias-admission-training.json')
 
 
 def test_study_collector_uses_vendor_neutral_product_profiles_and_pins(tmp_path):

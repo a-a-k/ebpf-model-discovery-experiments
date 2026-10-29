@@ -6,6 +6,7 @@ import pytest
 
 from ebpf_discovery import remote_toolchain_v4 as remote
 from ebpf_discovery.store_v3 import ObservationStore
+from ebpf_discovery.store_v5 import ObservationStoreV5
 
 
 def populated(path):
@@ -83,3 +84,24 @@ def test_actual_proof_queries_scan_tables_sequentially(tmp_path, monkeypatch):
             assert 'SCAN ' in plan
             assert 'USING INDEX' not in plan
             assert 'TEMP B-TREE' not in plan
+
+
+def test_graph_v5_proof_binds_supplied_logical_projection_rows(tmp_path):
+    path = tmp_path/'index-v5.sqlite'
+    store = ObservationStoreV5(path, same_trace_parents=True)
+    store.db.execute('INSERT INTO spans(digest,conflicted,data) VALUES (?,0,?)',
+                     ('d', '{"source":"ebpf","service":"/docker/app"}'))
+    admission = {'schema': 'supplied-logical-alias-admission-v5',
+                 'origin': 'supplied_deployment_inventory_alias',
+                 'aliases': {'/docker/app': 'app'}, 'conflicts': [],
+                 'occurrence_proofs': [], 'unique_verified_segments': 0,
+                 'receiver_segments_reverified': True,
+                 'same_table_all_sources_and_direct_baseline': True,
+                 'physical_identity_inferred': False}
+    store.apply_supplied_logical_aliases(admission, scoped_digest_aliases={'d': 'app'})
+    store.close()
+    before = remote._index_table_proof(path)
+    assert before['supplied_logical_alias_projection']['rows'] == 1
+    with sqlite3.connect(path) as db:
+        db.execute("UPDATE supplied_logical_alias_projection SET logical_service='changed'")
+    assert remote._index_table_proof(path) != before

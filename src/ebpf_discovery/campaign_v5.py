@@ -76,6 +76,14 @@ class CampaignV5(CampaignV4):
         for path in (self.ctx.out / "toolchain").rglob("*"):
             if path.is_file():
                 self.frozen[str(path.relative_to(self.ctx.out))] = digest(path)
+        alias_root = self.ctx.out / "runtime-identity-v5"
+        alias_paths = (
+            alias_root / "supplied-service-aliases-training.json",
+            alias_root / "supplied-service-alias-admission-training.json")
+        if any(not path.is_file() for path in alias_paths):
+            raise RuntimeError("training-frozen supplied logical alias table/admission is missing")
+        for path in alias_paths:
+            self.frozen[str(path.relative_to(self.ctx.out))] = digest(path)
         write_json(self.ctx.out / "forecast-saved.json", {
             "saved_ns": time.time_ns(), "sha256_by_path": self.frozen,
             "uses_actual_graph_simulator": True, "collector": self.collector,

@@ -34,6 +34,10 @@ class ObservationStoreV5(ObservationStore):
             original_service TEXT, projected_service TEXT, projected_data TEXT,
             resolution TEXT NOT NULL, inventory_path TEXT NOT NULL,
             inventory_sha256 TEXT NOT NULL);
+          CREATE TABLE IF NOT EXISTS supplied_logical_alias_projection (
+            digest TEXT PRIMARY KEY, original_service TEXT NOT NULL,
+            logical_service TEXT NOT NULL, projected_data TEXT NOT NULL,
+            origin TEXT NOT NULL, admission_sha256 TEXT NOT NULL);
         ''')
 
     def ingest(self, observation_root, native_root):
@@ -83,8 +87,9 @@ class ObservationStoreV5(ObservationStore):
 
     @staticmethod
     def _effective_sql(where):
-        return ("SELECT s.digest,COALESCE(p.projected_data,s.data) FROM spans s "
-                "LEFT JOIN runtime_identity_projection p ON p.digest=s.digest " + where)
+        return ("SELECT s.digest,COALESCE(a.projected_data,p.projected_data,s.data) FROM spans s "
+                "LEFT JOIN runtime_identity_projection p ON p.digest=s.digest "
+                "LEFT JOIN supplied_logical_alias_projection a ON a.digest=s.digest " + where)
 
     def candidates_v5(self, source, request_id):
         return self._with_provenance(
@@ -98,8 +103,96 @@ class ObservationStoreV5(ObservationStore):
 
     def _effective_records(self, where, params=()):
         return [json.loads(row[0]) for row in self.db.execute(
-            "SELECT COALESCE(p.projected_data,s.data) FROM spans s "
-            "LEFT JOIN runtime_identity_projection p ON p.digest=s.digest " + where, params)]
+            "SELECT COALESCE(a.projected_data,p.projected_data,s.data) FROM spans s "
+            "LEFT JOIN runtime_identity_projection p ON p.digest=s.digest "
+            "LEFT JOIN supplied_logical_alias_projection a ON a.digest=s.digest " + where, params)]
+
+    def apply_supplied_logical_aliases(self, admission, *, scoped_digest_aliases=None):
+        """Create an immutable effective logical-role view; original rows remain unchanged."""
+        from .supplied_alias_v5 import admission_sha256
+        aliases = admission.get('aliases') or {}
+        scoped = (admission.get('scoped_digest_aliases') or {}
+                  if scoped_digest_aliases is None else scoped_digest_aliases)
+        admission_sha = admission_sha256(admission)
+        applied = 0
+        for digest, encoded in self.db.execute('SELECT digest,data FROM spans ORDER BY digest'):
+            original = json.loads(encoded)
+            raw = original.get('service')
+            logical = aliases.get(raw)
+            if not logical or logical == raw or scoped.get(digest) != logical:
+                continue
+            runtime = self.db.execute(
+                'SELECT status,projected_data,resolution FROM runtime_identity_projection '
+                'WHERE digest=?', (digest,)).fetchone()
+            projected = dict(original)
+            reconciled_runtime_conflict = False
+            if runtime and runtime[0] == 'label_conflict':
+                resolution = json.loads(runtime[2])
+                if resolution.get('observed_runtime_compose_service') != logical:
+                    continue
+                reconciled_runtime_conflict = True
+            elif runtime and runtime[1]:
+                projected = json.loads(runtime[1])
+            projected['service'] = logical
+            projected['_supplied_logical_alias'] = {
+                'raw_service': raw, 'logical_service': logical,
+                'origin': 'supplied_deployment_inventory_alias',
+                'physical_identity_inferred': False, 'graph_edges_injected': False,
+                'runtime_label_conflict_reconciled': reconciled_runtime_conflict}
+            projected_encoded = json.dumps(
+                projected, sort_keys=True, separators=(',', ':'), allow_nan=False)
+            existing = self.db.execute(
+                'SELECT original_service,logical_service,projected_data,origin,admission_sha256 '
+                'FROM supplied_logical_alias_projection WHERE digest=?', (digest,)).fetchone()
+            value = (raw, logical, projected_encoded,
+                     'supplied_deployment_inventory_alias', admission_sha)
+            if existing is None:
+                self.db.execute(
+                    'INSERT INTO supplied_logical_alias_projection VALUES (?,?,?,?,?,?)',
+                    (digest, *value))
+            elif existing != value:
+                raise ValueError('training-frozen supplied logical alias changed')
+            applied += 1
+        self.db.commit()
+        return {'rows': applied, 'origin': 'supplied_deployment_inventory_alias',
+                'training_rows_immutable': True, 'raw_observations_unchanged': True,
+                'same_table_all_sources_and_direct_baseline': True}
+
+    def verify_supplied_logical_aliases(self, admission):
+        """Verify the frozen effective rows without mutating a worker checkpoint."""
+        from .supplied_alias_v5 import admission_sha256
+        expected_sha = admission_sha256(admission)
+        aliases = admission.get('aliases') or {}
+        scoped = admission.get('scoped_digest_aliases') or {}
+        actual = {digest: (raw, logical, projected, origin, sha)
+                  for digest, raw, logical, projected, origin, sha in self.db.execute(
+                      'SELECT digest,original_service,logical_service,projected_data,origin,'
+                      'admission_sha256 FROM supplied_logical_alias_projection')}
+        expected_digests = set()
+        for digest, encoded in self.db.execute('SELECT digest,data FROM spans ORDER BY digest'):
+            original = json.loads(encoded)
+            raw, logical = original.get('service'), aliases.get(original.get('service'))
+            if not logical or logical == raw or scoped.get(digest) != logical:
+                continue
+            runtime = self.db.execute(
+                'SELECT status,resolution FROM runtime_identity_projection WHERE digest=?',
+                (digest,)).fetchone()
+            if (runtime and runtime[0] == 'label_conflict'
+                    and json.loads(runtime[1]).get('observed_runtime_compose_service') != logical):
+                continue
+            expected_digests.add(digest)
+            row = actual.get(digest)
+            if (row is None or row[0] != raw or row[1] != logical
+                    or row[3] != 'supplied_deployment_inventory_alias' or row[4] != expected_sha):
+                raise ValueError('frozen supplied logical projection row differs from admission')
+            projected = json.loads(row[2])
+            if (projected.get('service') != logical
+                    or (projected.get('_supplied_logical_alias') or {}).get('raw_service') != raw):
+                raise ValueError('frozen supplied logical projection payload is inconsistent')
+        if set(actual) != expected_digests:
+            raise ValueError('frozen supplied logical projection membership differs from admission')
+        return {'rows': len(actual), 'admission_sha256': expected_sha,
+                'logical_projection_verified': True, 'mutation_performed': False}
 
     def candidates(self, source, request_id):
         return self._effective_records('WHERE s.source=? AND s.request=?', (source, request_id))

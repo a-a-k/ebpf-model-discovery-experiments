@@ -638,7 +638,10 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                   len(item.get('runtime_identity_transformations', [])) for item in exports),
               "runtime_identity_projection_policy": (
                   "actual hash-verified Compose identity on copied exports only; originals retained; no edges"
-                  if service_projections else "no runtime identity projection requested")}
+                  if service_projections else
+                  "projection attempted; no admissible runtime-identity transformation"
+                  if service_projections is not None else
+                  "no runtime identity projection requested")}
     if "native" in selected:
         result["native_jaeger_envelope"] = native_jaeger_envelope
     if any(ids is None for ids in selected.values()):

@@ -1,8 +1,10 @@
 """Collector-true graph-v5 toolchain selection over the v4 scientific pipeline."""
 from __future__ import annotations
 
+import hashlib
 import json
 import re
+import shutil
 from pathlib import Path
 
 from .toolchain_v4 import Toolchain as ToolchainV4
@@ -47,8 +49,36 @@ class Toolchain(ToolchainV4):
         if collector is not None and collector != provenance['collector']:
             raise ValueError('requested collector differs from hash-bound collector provenance')
         self.collector_provenance = provenance
+        from .supplied_alias_v5 import load, load_admission
+        alias_path = Path(ctx.out) / "runtime-identity-v5" / "supplied-service-aliases-training.json"
+        if not alias_path.is_file():
+            raise ValueError("graph-v5 training prefix lacks supplied logical alias table")
+        self.supplied_alias_path = alias_path
+        self.supplied_alias_table = load(alias_path, Path(ctx.out))
+        self.supplied_alias_admission_path = (
+            Path(ctx.out) / 'runtime-identity-v5' /
+            'supplied-service-alias-admission-training.json')
+        if not self.supplied_alias_admission_path.is_file():
+            raise ValueError('graph-v5 training prefix lacks supplied logical alias admission')
+        self.supplied_alias_admission = load_admission(
+            self.supplied_alias_admission_path, Path(ctx.out), self.supplied_alias_table)
         kwargs.setdefault('tool_pins', PINS)
         super().__init__(ctx, system, store, declaration, **kwargs)
+        if self.store is not None and hasattr(self.store, 'db'):
+            from .supplied_alias_v5 import admission_core, admit_observed
+            recomputed = admit_observed(
+                self.store, self.supplied_alias_table,
+                expected_source_prefix='ebpf-' + self.collector_provenance['collector'])
+            if admission_core(recomputed) != admission_core(self.supplied_alias_admission):
+                raise ValueError('frozen supplied logical alias admission does not revalidate')
+            if not hasattr(self.store, 'verify_supplied_logical_aliases'):
+                raise ValueError('graph-v5 Store cannot verify supplied logical projections')
+            self.supplied_alias_projection_verification = (
+                self.store.verify_supplied_logical_aliases(self.supplied_alias_admission))
+        else:
+            self.supplied_alias_projection_verification = {
+                'logical_projection_verified': False,
+                'reason': 'observation_store_unavailable'}
 
     def ebpf_collection_args(self):
         return ['--collection-source', 'ebpf-otlp',
@@ -61,7 +91,49 @@ class Toolchain(ToolchainV4):
                 'logical_source_id': 'ebpf',
                 'logical_source_domain': self.system+'-deployment',
                 'procrustes_profile': 'ebpf-otlp',
-                'bering_profile': 'ebpf-otlp'}
+                'bering_profile': 'ebpf-otlp',
+                'supplied_logical_aliases': {
+                    'path': self.supplied_alias_path.relative_to(self.ctx.out).as_posix(),
+                    'origin': 'supplied_deployment_inventory_alias',
+                    'same_table_all_sources_and_direct_baseline': True,
+                    'admission_path': self.supplied_alias_admission_path.relative_to(
+                        self.ctx.out).as_posix(),
+                    'projection_verification': self.supplied_alias_projection_verification,
+                    'physical_identity_inferred': False}}
+
+    def discover(self, input_path, folder, overlay=None, prefix='model'):
+        """Keep exact Bering output and bind only a copied semantic presentation."""
+        raw_model, raw_quality = super().discover(input_path, folder, overlay, prefix)
+        model_path = Path(folder) / f"{prefix}.json"
+        quality_path = Path(folder) / f"{prefix}.signal-quality.json"
+        raw_model_path = Path(folder) / f"{prefix}.bering-raw.json"
+        raw_quality_path = Path(folder) / f"{prefix}.bering-raw.signal-quality.json"
+        shutil.copyfile(model_path, raw_model_path)
+        shutil.copyfile(quality_path, raw_quality_path)
+        from .runtime import write_json
+        from .supplied_alias_v5 import semantic_view
+        model, quality, proof = semantic_view(
+            raw_model, raw_quality, self.supplied_alias_table,
+            self.supplied_alias_admission['aliases'])
+        proof.update({
+            'table_path': self.supplied_alias_path.relative_to(self.ctx.out).as_posix(),
+            'table_sha256': hashlib.sha256(self.supplied_alias_path.read_bytes()).hexdigest(),
+            'raw_model_path': raw_model_path.name,
+            'raw_model_sha256': hashlib.sha256(raw_model_path.read_bytes()).hexdigest(),
+            'raw_quality_path': raw_quality_path.name,
+            'raw_quality_sha256': hashlib.sha256(raw_quality_path.read_bytes()).hexdigest(),
+        })
+        write_json(model_path, model)
+        write_json(quality_path, quality)
+        write_json(Path(folder) / f"{prefix}.supplied-aliases.json", proof)
+        return model, quality
+
+    def binding_uncertainties(self, model, quality):
+        collisions = quality.get('supplied_logical_alias_uncertainty') or []
+        return ([{'reason': 'supplied_logical_alias_metadata_collision',
+                  'logical_services': sorted({row['logical_service'] for row in collisions}),
+                  'variants_retained': True, 'binding_suppressed': True}]
+                if collisions else [])
 
     def bering_source_profile(self):
         return {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}

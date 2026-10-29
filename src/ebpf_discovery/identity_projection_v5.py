@@ -185,13 +185,60 @@ def refresh(campaign, stage: str) -> dict:
     _write(inventory_path, retained)
     inventory_proof = {"path": inventory_path.relative_to(root).as_posix(),
                        "sha256": _sha(inventory_path), "bytes": inventory_path.stat().st_size}
+    supplied_aliases = None
+    alias_path = root / "runtime-identity-v5" / "supplied-service-aliases-training.json"
+    admission_path = root / "runtime-identity-v5" / "supplied-service-alias-admission-training.json"
+    if stage == "training":
+        from .supplied_alias_v5 import write_training
+        supplied_aliases = write_training(
+            retained, inventory_path, alias_path)
     projection = campaign.store.apply_runtime_identity(
         retained, root / "runtime-identity-v5" / f"projection-{stage}.jsonl",
         inventory_proof=inventory_proof, stage=stage)
+    from .supplied_alias_v5 import (admission_sha256, admit_observed, load,
+                                    load_admission, write_admission)
+    alias_table = load(alias_path, root)
+    if stage == "training":
+        alias_admission = admit_observed(
+            campaign.store, alias_table,
+            expected_source_prefix="ebpf-" + campaign.collector)
+        alias_admission["effective_store_projection"] = (
+            campaign.store.apply_supplied_logical_aliases(alias_admission))
+        effective_alias_projection = alias_admission["effective_store_projection"]
+        alias_admission = write_admission(
+            alias_admission, alias_path, admission_path)
+    else:
+        alias_admission = load_admission(admission_path, root, alias_table)
+        scoped = admit_observed(
+            campaign.store, alias_table,
+            expected_source_prefix="ebpf-" + campaign.collector)
+        final_digest_aliases = {
+            digest: role["logical_service"]
+            for digest, role in scoped["verified_scoped_digest_roles"].items()
+            if alias_admission.get("aliases", {}).get(role["carrier"])
+            == role["logical_service"]}
+        scope_path = root / "runtime-identity-v5" / f"supplied-alias-scope-{stage}.json"
+        _write(scope_path, {
+            "schema": "supplied-logical-alias-scope-revalidation-v5", "stage": stage,
+            "frozen_admission_sha256": admission_sha256(alias_admission),
+            "new_mappings_admitted": False,
+            "scoped_digest_aliases": final_digest_aliases,
+            "verified_scoped_digest_roles": scoped["verified_scoped_digest_roles"],
+            "occurrence_proofs": scoped["occurrence_proofs"],
+            "conflicts": scoped["conflicts"]})
+        effective_alias_projection = campaign.store.apply_supplied_logical_aliases(
+            alias_admission, scoped_digest_aliases=final_digest_aliases)
+        effective_alias_projection["scope_revalidation"] = {
+            "path": scope_path.relative_to(root).as_posix(),
+            "sha256": _sha(scope_path), "bytes": scope_path.stat().st_size}
     cost = {"schema": "runtime-identity-refresh-cost-v5", "stage": stage,
             "elapsed_seconds": (time.monotonic_ns() - started) / 1e9,
             "captures": len(captures), "enclosures": len(enclosure_rows),
             "evidence_files": evidence_files, "inventory": inventory_proof,
-            "projection": projection}
+            "projection": projection, "supplied_logical_aliases": supplied_aliases,
+            "supplied_logical_alias_admission": {
+                "path": admission_path.relative_to(root).as_posix(),
+                "sha256": _sha(admission_path), "bytes": admission_path.stat().st_size,
+                "effective_store_projection": effective_alias_projection}}
     _write(root / "runtime-identity-v5" / f"refresh-cost-{stage}.json", cost)
     return cost
