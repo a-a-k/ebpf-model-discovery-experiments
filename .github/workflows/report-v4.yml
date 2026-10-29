@@ -136,10 +136,23 @@ jobs:
                       raise SystemExit(f'unexpected compact artifact name in run {run}: {name}')
                   full_name = name.replace('v4-summary-', 'campaign-v4-', 1)
                   full = [a for a in all_artifacts if a.get('name') == full_name]
-                  if len(full) != 1:
-                      raise SystemExit(f'compact summary lacks one retained full artifact: {name}')
+                  if len(full) > 1:
+                      raise SystemExit(f'compact summary has ambiguous full artifacts: {name}')
                   if artifact.get('expired') is True:
-                      rows.append({'run_id':run,'status':'expired','artifact_id':artifact_id,'name':name})
+                      rows.append({'run_id':run,'status':'expired','artifact_id':artifact_id,'name':name,
+                          'digest':artifact.get('digest'), 'bytes':artifact.get('size_in_bytes'),
+                          'expired':True, 'compact_remains_at_original_actions_artifact':False})
+                      continue
+                  if not full:
+                      rows.append({'run_id':run,
+                          'status':('full_retention_pending' if run_meta.get('status') != 'completed'
+                                    else 'full_retention_unavailable'),
+                          'artifact_id':artifact_id, 'name':name,
+                          'digest':artifact.get('digest'), 'bytes':artifact.get('size_in_bytes'),
+                          'expired':False,
+                          'full_artifact_name':full_name, 'run_status':run_meta.get('status'),
+                          'scientific_admission':'not_admitted_without_retained_full_evidence',
+                          'compact_remains_at_original_actions_artifact':True})
                       continue
                   destination = pathlib.Path('work/v4-inputs')/str(run)/name
                   destination.mkdir(parents=True, exist_ok=False)
@@ -206,6 +219,20 @@ jobs:
         run: |
           python -m ebpf_discovery.report_v4 --aggregate results/iteration-4/evaluation-v4.json.gz \
             --costs results/iteration-4/costs-v4.json --out results/iteration-4/report-v4.md
+      - name: Show original artifact availability separately from scientific admission
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          root = pathlib.Path('results/iteration-4')
+          rows = json.loads((root/'provenance'/'compact-downloads.json').read_text())
+          with (root/'report-v4.md').open('a', encoding='utf-8') as stream:
+              stream.write('\n## Original artifact availability\n\n')
+              stream.write('This is retrieval status, not a scientific verdict. Worker-only runs need not contain cell summaries. A compact summary whose full artifact is pending or unavailable is retained at its original Actions location and excluded from scientific aggregation; its run metadata and costs remain in this report.\n\n')
+              stream.write('| Run | Compact artifact | Retrieval status |\n| --- | --- | --- |\n')
+              for row in rows:
+                  stream.write(f"| {row['run_id']} | {row.get('name', 'not uploaded')} | {row['status']} |\n")
+              stream.write('\n[Exact retrieval records](provenance/compact-downloads.json).\n')
+          PY
       - name: Render the fixed observed model example with frozen-file verification
         env:
           GH_TOKEN: ${{ github.token }}

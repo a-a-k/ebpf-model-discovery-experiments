@@ -914,3 +914,90 @@ primary attempts and 9,600 targets. The existing aggregate rejects any selection
 that would exclude a complete campaign. Unknown eBPF forecasts and observed
 errors remain in the selected result; the failed attempt remains in the full
 attempt list and cost ledger.
+
+
+### Full DSB diagnostic result and native envelope repair (2026-10-29)
+
+Actual diagnostic `40799411526` at `fa2c454e` completed and received independent
+ORIGINAL-criterion integrity/resource GO, without becoming a completed campaign
+or an empirical-success claim. All 1,777 immutable checkpoint files rehashed
+unchanged. Eighteen real Bering invocations completed with full source counts,
+zero dropped/late spans and one publication: 275,953 eBPF, 3,126,552 native and
+3,402,505 combined observations for the corresponding branches. Six eBPF
+forecasts remained unknown; twelve native/combined branches used actual Sheaft
+commands, all returning zero. Logical index counts are distinct from wire
+observation counts because repeated native query observations remain retained.
+The measured whole diagnostic took 2:13:15 with peak RSS 12,555,348 KiB.
+These are saved fields in compact artifact `12871136556` and full artifact
+`12871565920`, not a new local empirical calculation.
+
+The original output archive verifies 356,585 files, 140 directories and
+7,935,895,415 uncompressed file bytes. Its manifest identifies 349,904 native
+OTLP exports: 174,952 for each of raw and network_scope. They were created by
+our Jaeger converter, which unnecessarily equated a trace boundary with a file
+boundary. This was not a requirement of Bering or OTLP. Bering's configured
+OBI capture accounted for 5,160 other files. The per-trace codec and actual old
+outputs remain reproducible; no historical profile silently adopts the new codec.
+
+**Hypothesis and strongest baseline.** One OTLP envelope per original frozen
+Jaeger query file can preserve the exact ordered resourceSpans and graph while
+avoiding per-trace file/HTTP overhead. The baseline is the unchanged per-trace
+codec over the same complete prefix, including all repeats/conflicts, typed
+attributes, IDs, parents, events, links and supplied entry roles. No accuracy
+advantage is proposed. Preparation, full reference verification, conversion,
+requests, Bering CPU/RSS, packaging, transfer and failure costs remain measured;
+no savings are claimed before comparable measurements.
+
+Root and the independent 6.1 Sol/xhigh skeptic give **explicit ORIGINAL-criterion
+design GO** for lossless worker/parent transport and this codec-equivalence check.
+This is a technical repair within the original graph-to-simulation task, not a
+substitute contribution or a lower success criterion. Independent implementation
+review approved the exporter (31 focused tests) and transport/historical/report
+integration (63 tests, two Windows-only skips). The new full-prefix proof still
+requires its own implementation review and exact-head CI before execution.
+
+The minimum actual proof uses immutable checkpoint `12843610949` from
+`40731158179` and the already retained reference `12871565920` from `40799411526`.
+It fingerprints the complete ordered native resourceSpans and unchanged OBI
+export bytes, then runs **one fixed combined/network_scope/compose_post Bering
+branch** using the exact old operation overlay and released Bering 1.2.0 pins.
+It compares complete model, snapshot discovery/provenance and signal quality,
+including IDs, support, observed timestamps, instances, DB facts and unknowns.
+The checked-in normalization allowlist only removes publication clock/listener
+metadata, maps OBI capture paths to their unchanged ordinal/payload SHA, and
+maps the copied overlay path to its exact SHA. The topology digest includes
+runtime model metadata in Bering, so comparison replaces it with a hash of the
+complete normalized model; original digests and all objects remain retained.
+Application attributes and unlisted differences remain exact. No traffic,
+new scenario, new cell or eighteen-branch rerun is needed. A mismatch holds fresh
+execution for investigation; the allowlist is not widened merely to pass.
+
+Worker outputs now use typed lossless packages for DSB. Parent full artifacts
+package the canonical toolchain subtree and the entire closed remote handoff
+subtree (including any failed-import staging evidence). Originals are not trimmed.
+Each package contains payload.tar.gz, payload.manifest.jsonl, transport.json,
+package-status.json and packaging.json. Every archived path, byte hash, mode,
+count and gzip CRC is verified. Compact evidence uploads first; scientific
+aggregation excludes a compact summary until its full artifact is retained.
+A pending artifact is retrieval status, not a scientific finding.
+
+After downloading a new DSB full artifact, inspect retention-layout.json. From
+its root, restore the two absent output directories with:
+
+```sh
+python -m ebpf_discovery.artifact_transport_v4 unpack --package toolchain-package --out toolchain --kind toolchain
+python -m ebpf_discovery.artifact_transport_v4 unpack --package infrastructure/handoff-package --out infrastructure/remote-toolchain-v4 --kind handoff
+```
+
+Unpack verifies the package and stages it before publishing the restored tree.
+Technical failures before a subtree existed have an explicit missing-proof
+record instead; a complete campaign must have both subtrees. The parent retains
+per-phase transport costs; workflow durations include retention work.
+
+Independent proof review completed before execution: the 6.1 Sol/xhigh reviewer
+repeated all 17 focused tests and gave explicit ORIGINAL-criterion implementation
+GO and execution GO for exactly the fixed one-branch check, conditional only on
+Linux CI passing on the committed exact head. Root concurs. The proof additionally
+requires byte-identical original/effective tool binaries, snapshot/quality identity
+coherence before normalization, and retained primary errors if final rehash fails.
+Actual equivalence review and separate fresh-campaign execution GO remain pending.

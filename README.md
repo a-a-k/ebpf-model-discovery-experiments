@@ -26,16 +26,21 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > on that full checkpoint and passed independent integrity/resource review. A
 > [fresh OTel/full/6 replacement completed and passed independent review](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
 > Its eBPF forecasts remain unknown; native/combined forecasts are available but
-> differ from the independent outcomes. The remaining eight OTel cells are running
-> with the same design and the reviewed Bering 1.2.0 publication repair.
+> differ from the independent outcomes. All eight remaining OTel workflows have
+> completed; independent artifact/admission review is in progress. They used the
+> same design and the reviewed Bering 1.2.0 publication repair.
 > The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
 > upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 > also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
 > upload failure. Available logs are [permanently retained](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40791837386).
 > The exact server error is unknown. Released Bering 1.2.0 removes calendar-window
 > publication from offline batches. A [new full-checkpoint DSB diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40799411526)
-> is running after independent review and exact-head CI, with stronger failure
-> evidence retention; no DSB cell is admitted.
+> completed and passed independent integrity/resource review: all 18 Bering replays
+> retained their full input with zero drops and one publication each. No DSB cell
+> is admitted. Before fresh collection, the driver is replacing unnecessary
+> per-trace native export files with one envelope per original query file; a fixed
+> saved-input comparison must verify that the graph and evidence remain unchanged.
+> Lossless artifact packaging separately preserves all output bytes and costs.
 > All failed attempts remain in the
 > [run history](docs/RUN_HISTORY.md); training checkpoints protect completed collection.
 
@@ -152,7 +157,8 @@ runner resources and do not silently switch to a paid larger runner.
 
 The OTel and prepared DSB workflows compute the saved training model on a separate
 standard Actions runner. OTel's full-input diagnostic and fresh full/6 replacement
-passed independent review; its eight remaining planned cells are running. DSB
+passed independent review; its eight remaining workflows completed and await
+final admission review. DSB
 activation awaits the reviews recorded in
 [the protocol](docs/PROTOCOL_V4.md). The two application guests stay on their original runner and
 remain alive until the returned model is verified and the same campaign completes.
@@ -569,8 +575,9 @@ original declared subset, not a retroactive complete total for this wider scope.
 ## 10. Current limitations, review state and references
 
 Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
-seeds6–8) and OTel/full/6. The remaining eight OTel cells are running; DeathStarBench
-still awaits its full-input diagnostic and fresh execution review. After those
+seeds6–8) and OTel/full/6. The remaining eight OTel workflows completed and await final admission; DeathStarBench
+has passed its full-input diagnostic and awaits the native-envelope equivalence
+check and fresh execution review. After those
 checks, its remaining cells may overlap as worker capacity permits; final full/6
 admission is no longer a rollout gate. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture

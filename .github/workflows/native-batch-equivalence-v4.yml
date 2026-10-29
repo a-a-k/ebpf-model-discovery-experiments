@@ -1,0 +1,126 @@
+name: Iteration 4 fixed native envelope equivalence
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Retrieve and verify both fixed source artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/batch-proof/infrastructure
+          /usr/bin/time -v -o work/batch-proof/infrastructure/preparation-time.txt \
+            python scripts/prepare-native-batch-equivalence-v4.py
+      - name: Verify full reference archive and inspect the fixed branch
+        run: |
+          /usr/bin/time -v -o work/batch-proof/infrastructure/reference-time.txt \
+            python -m ebpf_discovery.native_batch_equivalence_v4 reference \
+              --package work/reference-package --out work/batch-proof/reference-view \
+              --source work/batch-proof/source-metadata/reference-identity.json
+      - name: Build the same separately pinned released toolchain
+        run: |
+          /usr/bin/time -v -o work/batch-proof/infrastructure/build-time.txt \
+            bash scripts/setup-toolchain-v4.sh work/replacement/toolchain-build
+      - name: Allocate measured swap on the standard runner
+        run: bash scripts/setup-v4-swap.sh work/batch-proof/infrastructure/swap
+      - name: Replay the one fixed combined network-scope compose-post branch
+        env:
+          PYTHONPATH: src
+        run: |
+          set +e
+          bash scripts/capture-v4-resources.sh work/batch-proof/infrastructure/resources 15 work/no-guests &
+          sampler=$!
+          /usr/bin/time -v -o work/batch-proof/infrastructure/comparison-time.txt \
+            python -m ebpf_discovery.native_batch_equivalence_v4 compare \
+              --original work/original --reference work/batch-proof/reference-view \
+              --out work/batch-proof/output --replacement-root work/replacement \
+              --source work/batch-proof/source-metadata/checkpoint-identity.json
+          code=$?
+          kill -TERM "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$code"
+      - name: Retain final resources, build and compact result evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/batch-proof/infrastructure work/batch-summary
+          uname -a > work/batch-proof/infrastructure/runner-final.txt
+          free -b >> work/batch-proof/infrastructure/runner-final.txt
+          swapon --show --bytes >> work/batch-proof/infrastructure/runner-final.txt
+          df -B1 >> work/batch-proof/infrastructure/runner-final.txt
+          df -i > work/batch-proof/infrastructure/inodes-final.txt
+          python -m pip freeze > work/batch-proof/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+            > work/batch-proof/infrastructure/workflow-jobs.json 2>work/batch-proof/infrastructure/jobs.err || true
+          python - <<'PY'
+          import hashlib, json, pathlib, shutil
+          root=pathlib.Path('work/batch-proof')
+          build=pathlib.Path('work/replacement/toolchain-build')
+          for source in [*(build/name for name in ('toolchain-build.json','builds.tsv','pins.tsv')),
+                         *(build/'logs').rglob('*'), *(build/'go').glob('go*.json')]:
+              if source.is_file():
+                  target=root/'build-evidence'/source.relative_to(build)
+                  target.parent.mkdir(parents=True,exist_ok=True)
+                  shutil.copy2(source,target)
+          paths=[]
+          for directory in ('infrastructure','source-metadata','build-evidence'):
+              paths.extend(p for p in (root/directory).rglob('*') if p.is_file())
+          for name in ('status.json','comparison.json','input-equivalence.json','provenance.json'):
+              if (root/'output'/name).is_file(): paths.append(root/'output'/name)
+          paths.extend(p for p in (root/'output'/'fixed-branch'/'model-runtime').glob('*') if p.is_file())
+          paths.extend(p for p in (root/'output'/'fixed-branch').glob('*.json') if p.is_file())
+          paths.extend(p for p in (root/'reference-view'/'output'/'toolchain'/'combined'/'network_scope'/'compose_post').glob('*.json') if p.is_file())
+          reference=root/'reference-view'/'reference-verification.json'
+          if reference.is_file(): paths.append(reference)
+          manifest=[]
+          for source in sorted(set(paths)):
+              target=pathlib.Path('work/batch-summary')/source.relative_to(root)
+              target.parent.mkdir(parents=True,exist_ok=True)
+              shutil.copy2(source,target)
+              with target.open('rb') as stream: digest=hashlib.file_digest(stream,'sha256').hexdigest()
+              manifest.append({'path':source.relative_to(root).as_posix(),'sha256':digest,'bytes':source.stat().st_size})
+          pathlib.Path('work/batch-summary/compact-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-batch-summary-v4-${{ github.run_id }}
+          path: work/batch-summary/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Preserve complete new outputs and verified reference inspection
+        id: package
+        if: always()
+        run: |
+          python -m ebpf_discovery.diagnostic_artifacts_v4 package \
+            --source work/batch-proof --out work/batch-package
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.package.outcome == 'success'
+        with:
+          name: native-batch-full-v4-${{ github.run_id }}
+          path: work/batch-package/
+          compression-level: 0
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-batch-packaging-v4-${{ github.run_id }}
+          path: work/batch-package/packaging.json
+          compression-level: 1
+          retention-days: 90
+          if-no-files-found: warn

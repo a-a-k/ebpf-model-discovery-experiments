@@ -114,7 +114,8 @@ The reviewed OTel diagnostic `40778455040` completed on the larger, unchanged
 training checkpoint with Bering-child-only Go GC tuning and passed independent
 integrity/resource review. Fresh OTel/full/6 replacement `40786403012` completed,
 passed independent admission review, and is archived with its worker in
-`data-40802785036`. Its remaining eight cells are running at `19ad30e` in runs
+`data-40802785036`. Its remaining eight workflows completed at `19ad30e` and await final artifact
+admission review in runs
 `40803782214`, `40803790289`, `40803798632`, `40803806299`, after separate execution
 GO, exact-head CI and a fresh owner-wide capacity check. Their Bering 1.2.0
 transition does not relabel or repeat the valid 1.1.1 cell.
@@ -124,8 +125,14 @@ separate upload failure. Logs are retained in `data-40791837386`; the exact serv
 error remains unknown. Bering 1.2.0 and its chart now publish the generic batch
 repair; diagnostic retention has passed review and CI. A separately named DSB
 diagnostic adopts the released source commit, preserving the full input and
-original/effective toolchain provenance. It is running as `40799411526` after
-independent implementation/execution GO and exact-head CI `40798982219`.
+original/effective toolchain provenance. It completed as `40799411526` and passed independent actual-result review.
+All 18 Bering replays retained complete counts, zero drops and one publication;
+the full output is losslessly retained. Driver-created per-trace native exports
+accounted for 349,904 of 356,585 retained files. The codec now emits one envelope
+per original query file without filtering or deduplication. Fresh DSB execution
+awaits the fixed full-prefix graph/evidence equivalence check and final CI.
+Worker/parent transport now preserves complete subtrees in verified packages,
+including failed-import handoff evidence. These repairs change no scientific criterion.
 The diagnostic cannot resume or complete its failed campaign.
 Retain every valid cell regardless of accuracy or unknown coverage, and include
 failed acquisition, worker, diagnostic, reporting and archival costs. Resource
