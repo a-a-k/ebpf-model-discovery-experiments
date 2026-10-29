@@ -108,6 +108,32 @@ jobs:
           kill -TERM "$sampler" 2>/dev/null || true
           wait "$sampler" 2>/dev/null || true
           exit "$code"
+      - name: Retain available replacement build evidence even after build failure
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, shutil
+          build=pathlib.Path('work/replacement/toolchain-build')
+          out=pathlib.Path('work/diagnostic/replacement-build-evidence')
+          out.mkdir(parents=True, exist_ok=True)
+          errors=[]
+          paths=[*(build/name for name in ('toolchain-build.json','builds.tsv','pins.tsv')),
+                 *(build/'logs').rglob('*'), *(build/'go').glob('go*.json')]
+          for source in paths:
+              if not source.is_file():
+                  continue
+              try:
+                  target=out/source.relative_to(build)
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  shutil.copy2(source,target)
+              except OSError as error:
+                  errors.append({'path':str(source),'error':repr(error)})
+          status={'available_build_evidence_copied':True,'copy_errors':errors}
+          print(json.dumps(status),flush=True)
+          (out/'retention.json').write_text(json.dumps(status,indent=2)+'\n')
+          if errors:
+              raise SystemExit('replacement build evidence copy failed; see retained status')
+          PY
       - name: Retain final runner and disk evidence
         if: always()
         env:

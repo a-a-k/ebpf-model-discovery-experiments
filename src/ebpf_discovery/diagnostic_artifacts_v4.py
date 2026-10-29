@@ -50,7 +50,7 @@ def _entries(root):
 def compact(source, destination):
     source, destination = _roots(source, destination)
     paths = []
-    for directory in ('infrastructure', 'source-metadata'):
+    for directory in ('infrastructure', 'source-metadata', 'replacement-build-evidence'):
         root = source / directory
         if root.is_dir():
             paths.extend(path for path, row in _entries(root) if row['type'] == 'file')

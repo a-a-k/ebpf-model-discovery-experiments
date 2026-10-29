@@ -234,7 +234,7 @@ def _synthetic_build(root, pins):
 def test_new_profile_verifies_both_versions_without_relabeling_original(tmp_path):
     original, replacement, out = tmp_path/'original', tmp_path/'replacement', tmp_path/'out'
     _synthetic_build(original, diagnostic.ORIGINAL_PINS)
-    build = _synthetic_build(replacement, diagnostic.PINS)
+    build = _synthetic_build(replacement, diagnostic.BERING_120_PINS)
     before = diagnostic.file_manifest(original)
     profile = diagnostic.PROFILES[diagnostic.DSB_SHUTDOWN_PROFILE]
     assert profile['artifact_id'] == diagnostic.PROFILES[diagnostic.DSB_GC_PROFILE]['artifact_id']
@@ -243,7 +243,7 @@ def test_new_profile_verifies_both_versions_without_relabeling_original(tmp_path
     assert binary_dir == out/'effective-toolchain'/'pinned-bin'
     assert proof['original']['pins'] == diagnostic.ORIGINAL_PINS
     assert proof['original']['publication_mode'] == 'windowed'
-    assert proof['effective']['pins'] == diagnostic.PINS
+    assert proof['effective']['pins'] == diagnostic.BERING_120_PINS
     assert proof['effective']['publication_mode'] == 'on_shutdown'
     assert proof['original']['binaries']['bering']['sha256'] != proof['effective']['binaries']['bering']['sha256']
     assert proof['effective']['compilers'][0]['sha256'] == diagnostic.digest(build/'go'/'1.26.0'/'bin'/'go')
@@ -254,8 +254,8 @@ def test_new_profile_verifies_both_versions_without_relabeling_original(tmp_path
 @pytest.mark.parametrize('defect', ['wrong-original', 'wrong-replacement', 'missing-replacement', 'archive-digest'])
 def test_replacement_rejects_wrong_identity_or_missing_build(tmp_path, defect):
     original, replacement, out = tmp_path/'original', tmp_path/'replacement', tmp_path/'out'
-    _synthetic_build(original, diagnostic.PINS if defect == 'wrong-original' else diagnostic.ORIGINAL_PINS)
-    build = _synthetic_build(replacement, diagnostic.ORIGINAL_PINS if defect == 'wrong-replacement' else diagnostic.PINS)
+    _synthetic_build(original, diagnostic.BERING_120_PINS if defect == 'wrong-original' else diagnostic.ORIGINAL_PINS)
+    build = _synthetic_build(replacement, diagnostic.ORIGINAL_PINS if defect == 'wrong-replacement' else diagnostic.BERING_120_PINS)
     if defect == 'archive-digest':
         (build/'go'/'go1.26.0.linux-amd64.tar.gz').write_bytes(b'changed archive')
     with pytest.raises(ValueError):

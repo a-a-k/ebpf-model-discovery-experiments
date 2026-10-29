@@ -20,7 +20,7 @@ from .replay_qualification_v4 import (
 )
 from .runtime import Context, write_json
 from .store_v3 import ObservationStore
-from .toolchain_v4 import ORIGINAL_PINS, PINS, Toolchain
+from .toolchain_v4 import BERING_120_PINS, ORIGINAL_PINS, Toolchain
 from .bering_v4 import child_go_environment
 
 
@@ -67,7 +67,7 @@ PROFILES = {
     },
 }
 PROFILES[DSB_SHUTDOWN_PROFILE] = {**PROFILES[DSB_GC_PROFILE],
-    "replacement_pins": dict(PINS), "publication_mode": "on_shutdown"}
+    "replacement_pins": dict(BERING_120_PINS), "publication_mode": "on_shutdown"}
 
 
 def runtime_binaries(original: Path, out: Path, profile: dict,
