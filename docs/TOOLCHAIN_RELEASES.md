@@ -6,10 +6,12 @@ its three tools from exact source commits and retains binary hashes per campaign
 
 | Component | Published or merged revision | Release / integration evidence |
 |---|---|---|
-| Bering, current | v1.2.0, `6f806428509a640a6419058c2ad845ed44db7512` | [Release](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0), [successful release workflow](https://github.com/MB3R-Lab/Bering/actions/runs/40796211973), [generic batch publication](https://github.com/MB3R-Lab/Bering/pull/53) |
+| Bering, iteration 5 | v1.3.0, `70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a` | [Release and chart](https://github.com/MB3R-Lab/Bering/releases/tag/v1.3.0), [successful publication](https://github.com/MB3R-Lab/Bering/actions/runs/40879223434), [vendor-neutral eBPF input](https://github.com/MB3R-Lab/Bering/pull/54) |
+| Bering, later iteration-4 pin | v1.2.0, `6f806428509a640a6419058c2ad845ed44db7512` | [Release](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0), [successful release workflow](https://github.com/MB3R-Lab/Bering/actions/runs/40796211973), [generic batch publication](https://github.com/MB3R-Lab/Bering/pull/53) |
 | Bering, original iteration-4 pin | v1.1.1, `dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3` | [Release](https://github.com/MB3R-Lab/Bering/releases/tag/v1.1.1), [successful release workflow](https://github.com/MB3R-Lab/Bering/actions/runs/40638893415), [merged fix](https://github.com/MB3R-Lab/Bering/pull/52) |
 | Sheaft | v1.3.2, `686a602f4e7b71f3612f1810885e29dd66c8733a` | [Release](https://github.com/MB3R-Lab/Sheaft/releases/tag/v1.3.2), [successful release workflow](https://github.com/MB3R-Lab/Sheaft/actions/runs/40635411908) |
-| Procrustes | `39f76000f8a39c971155e08ebffde829b525911b` | [Merged explicit OBI preflight and handoff](https://github.com/MB3R-Lab/Procrustes/pull/1); source-built preview, not a newly asserted product release |
+| Procrustes, iteration 5 | `9648ae3fe9ef24725e665d008c79d0681ce40f85` | [Merged vendor-neutral source preflight and handoff](https://github.com/MB3R-Lab/Procrustes/pull/3); source-built preview |
+| Procrustes, iteration 4 | `39f76000f8a39c971155e08ebffde829b525911b` | [Merged explicit OBI preflight and handoff](https://github.com/MB3R-Lab/Procrustes/pull/1); source-built preview, not a newly asserted product release |
 | mb3r-stack | v1.3.0, `8a6dc136d67a55a8609cb9a82f6385895713603c` | [Release](https://github.com/MB3R-Lab/mb3r-stack/releases/tag/v1.3.0), [successful release workflow](https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40642477259), [integration update](https://github.com/MB3R-Lab/mb3r-stack/pull/27) |
 | mb3r-software-complex-repro | v1.3.4, `44d97ef075d2d2d11a2069dc8d2f9c45a01f3866` | [Release](https://github.com/MB3R-Lab/mb3r-software-complex-repro/releases/tag/v1.3.4), [successful release workflow](https://github.com/MB3R-Lab/mb3r-software-complex-repro/actions/runs/40642871942), [immutable image-tag guard](https://github.com/MB3R-Lab/mb3r-software-complex-repro/pull/3) |
 | OTel stack integration | `a81989e294ffa28843c8dc1fdeb629028fa51c78` | [Merged runtime and CI pins](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/5), [CI](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40653840325), [gate](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40653840261) |
@@ -17,7 +19,7 @@ its three tools from exact source commits and retains binary hashes per campaign
 | Reproduction package, current | v1.3.5, `2b2e012d8e85088d6d7bb9e231d0f9cc79ae634f` | [Release](https://github.com/MB3R-Lab/mb3r-software-complex-repro/releases/tag/v1.3.5), [source/container/publication/anonymous replay](https://github.com/MB3R-Lab/mb3r-software-complex-repro/actions/runs/40802150679) |
 | OTel package gate, current | `3a615abf38a4e42cbfa3b7e8bdfec06ed9d0d7d4` | [Merged package pin](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/7), [exact-head gate](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40804237780) |
 
-Current Bering and Sheaft annotated release tags resolve to the exact commits in
+Iteration-4 Bering and Sheaft annotated release tags resolve to the exact commits in
 `toolchain_v4.PINS` and `scripts/setup-toolchain-v4.sh`; `ORIGINAL_PINS` retains
 Bering 1.1.1 for historical diagnostics. Both releases contain
 their versioned Helm chart packages. The stack release packages both stack and
@@ -26,6 +28,21 @@ asset charts. The historical stack 1.3.0 compatibility matrix and reproduction
 stack 1.4.0 and reproduction 1.3.5 instead name Bering 1.2.0. The reproduction
 package's existing `candidate` status is retained rather than reinterpreted as
 evidence of scientific adequacy.
+
+Iteration 5 uses `toolchain_v5.PINS`: Bering 1.3.0 and the merged generic
+Procrustes revision above, with the same Sheaft 1.3.2 revision. Every collector
+uses the same `ebpf-otlp` source kind, logical source ID and deployment domain.
+No vendor parameter, API, SDK or collector-specific fingerprint enters this
+product interface. Collector deployment and raw-format conversion stay in the
+research repository. Historical pins and results are not rewritten.
+
+The published Bering 1.3.0 image digest is
+`sha256:95c29e311edfb5297c8bc22da6201a122f07e9492770a384fe93d8fac7d0da9c`.
+Its OCI chart manifest digest is
+`sha256:e3128dc852f2ecac9358e447442266ae420beb087f80a65ddd725d95f09b0f19`;
+chart version and appVersion are both `1.3.0`. Published metadata checksums,
+chart contents, anonymous image manifests/configs and anonymous chart retrieval
+were verified. The model/snapshot contracts remain `1.3.0`.
 
 The [Bering chart metadata](https://github.com/MB3R-Lab/Bering/releases/download/v1.1.1/chart-metadata.json)
 records `ghcr.io/mb3r-lab/charts/bering:1.1.1` at

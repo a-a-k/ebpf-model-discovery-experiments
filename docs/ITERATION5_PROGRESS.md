@@ -41,6 +41,14 @@ summary artifacts were retained, and the remaining queue was cancelled after the
 common failure was identified. This is a preparation failure, not an unavailable
 or inaccurate application forecast.
 
+The repaired fixture passed both the full Linux unit suite and a separate real
+Docker fixture check at `b0c068aee35571565abfe6a8389599c71683d5df` in
+[checks 40883942639](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40883942639).
+The reviewer approved one fixed repeat before requeueing the matrix.
+[Repeat smoke 40884914635](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40884914635)
+uses OBI, DeathStarBench, partial tracing and seed 6 at that revision. Its outcome
+is pending; fixture success alone is not application-path qualification.
+
 The original fixture assumed the pinned HAProxy image could run `busybox httpd`
 and did not preserve sufficient failed-request diagnostics. The revised fixture
 uses HAProxy itself, checks configuration/process/HTTP readiness, retains every
