@@ -109,7 +109,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self._startup_helper_nodes: set[str] = set()
         self._startup_agent_attempted_nodes: set[str] = set()
 
-    def _write_clock_relation(self, node: str, config: Path) -> dict[str, Any]:
+    def _write_clock_relation(self, node: str, config: Path,
+                              runtime_command: str) -> dict[str, Any]:
         """Retain the pinned same-guest timestamp construction; never estimate an offset."""
         guest = self.guest_context[node]
         campaign_root = self.root.parent
@@ -125,6 +126,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "producer": {
                 "name": "deepflow-agent", "version": self.source_version,
                 "source_commit": self.source_commit,
+                "image": self.image,
+                "runtime_command": runtime_command,
                 "pinned_source_paths": [
                     "agent/src/ebpf/user/utils.h",
                     "agent/src/ebpf/user/socket.h",
@@ -142,6 +145,11 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 "sha256": _sha256_file(config), "bytes": config.stat().st_size,
                 "event_clock_adjustment_to_external_domain_enabled": False,
                 "producer_mode": "standalone_controller_ntp_disabled",
+                "validated_effective_facts": {
+                    "standalone_mode_config_present": True,
+                    "standalone_cli_enabled": True,
+                    "controller_ntp_correction_enabled": False,
+                },
             },
             "event_serialization": {
                 "fields": ["start_time", "end_time"], "unit": "microseconds",
@@ -551,7 +559,6 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 ),
                 encoding="utf-8",
             )
-            self.runtime_clocks[node] = self._write_clock_relation(node, config)
             remote_config = remote + "/deepflow-agent-standalone.yaml"
             remote_helper = remote + "/deepflow_snapshot_v5.py"
             self.ctx.node_put(node, config, remote_config)
@@ -573,6 +580,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             )
             command = self._docker_command(node, remote_config, NATIVE_RECEIVER_PORT)
             commands[node] = command
+            self.runtime_clocks[node] = self._write_clock_relation(node, config, command)
             # The transport result can be lost after Docker accepted the run.
             self._startup_agent_attempted_nodes.add(node)
             self.ctx.node_exec(node, command, timeout=180)

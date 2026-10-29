@@ -404,7 +404,15 @@ def normalize_record(raw: RawRecord, *, node: str,
         runtime_identity.update({
             "clock": dict(runtime_clock),
             "event_start_ns": start_us * 1000,
-            "event_end_ns": end_us * 1000,
+            # DeepFlow serializes integer microseconds.  The lifecycle proof
+            # conservatively encloses the complete source quantization bin;
+            # the original OTLP/raw timestamps remain the exact floor values.
+            "event_end_ns": end_us * 1000 + 999,
+            "event_time_quantization": {
+                "unit": "microseconds", "bin_width_ns": 1000,
+                "start_bound": "serialized_floor_inclusive",
+                "end_bound": "serialized_floor_plus_999_inclusive",
+            },
         })
     request_nonce = _string(decoded, "x_request_id_0")
     if protocol in {"Http1", "Http2", "Grpc"} and request_nonce:
@@ -415,6 +423,7 @@ def normalize_record(raw: RawRecord, *, node: str,
             runtime_identity["event_role"] = "synchronous_server_entry"
     for key in ("node", "host_pid", "boot_id", "pid_namespace", "pid_scope", "source_clock",
                 "start", "end", "unit", "locator", "clock", "event_start_ns", "event_end_ns",
+                "event_time_quantization",
                 "request_nonce", "method", "route", "event_role"):
         _add_if(attributes, "_runtime_identity." + key, runtime_identity.get(key))
     side = decoded.get("tap_side")

@@ -357,6 +357,12 @@ def test_real_deepflow_codec_clock_relation_survives_otlp_numeric_representation
     assert result["status"] == "resolved"
     assert result["service_identity"]["compose_service"] == "frontend"
     assert normalized["attributes"]["_runtime_identity.clock"]["evidence"]["bytes"] == "123"
+    # The serialized end floor (20_000) would fit, but its exact source-defined
+    # microsecond bin extends through 20_999 and therefore is not bracketed.
+    normalized["attributes"]["_runtime_identity.before_stage"] = "before-block-1"
+    normalized["attributes"]["_runtime_identity.after_stage"] = "after-block-1"
+    after["clocks"]["started"]["realtime_unix_ns"] = 20_500
+    assert resolve(normalized, retained)["unknown_reasons"] == ["source_event_not_bracketed"]
 
 
 def test_coverage_reports_unknowns_without_dropping_original_locators():

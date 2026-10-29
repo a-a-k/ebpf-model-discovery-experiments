@@ -7,6 +7,8 @@ from pathlib import Path
 import time
 from urllib.parse import urlsplit
 
+import yaml
+
 from .runtime_identity_v5 import _locator, inventory
 
 
@@ -81,6 +83,13 @@ def _verify_locator(root: Path, raw) -> tuple[dict, dict]:
 
 def _verified_clock_relations(root: Path) -> list[dict]:
     """Verify retained source/config/guest clock declarations before resolution."""
+    from .deepflow_codec_v5 import DEEPFLOW_SOURCE_COMMIT, DEEPFLOW_VERSION
+    from .deepflow_v5 import DEEPFLOW_IMAGE
+
+    collector_path = root / "observations" / "collector.json"
+    if not collector_path.is_file():
+        return []
+    collector = json.loads(collector_path.read_text(encoding="utf-8"))
     rows = []
     for path in sorted((root / "runtime-identity-v5").glob("clock-relation-*.json")):
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -93,10 +102,10 @@ def _verified_clock_relations(root: Path) -> list[dict]:
                 or not isinstance(value.get("pid_namespace"), str) or not value["pid_namespace"]
                 or value.get("domain") != "guest_realtime_unix_ns"
                 or value.get("relation") != "documented_same_guest_realtime_relation"
-                or not isinstance(producer.get("source_commit"), str)
-                or len(producer["source_commit"]) != 40
-                or any(character not in "0123456789abcdef"
-                       for character in producer["source_commit"])
+                or producer.get("name") != "deepflow-agent"
+                or producer.get("version") != DEEPFLOW_VERSION
+                or producer.get("source_commit") != DEEPFLOW_SOURCE_COMMIT
+                or producer.get("image") != DEEPFLOW_IMAGE
                 or not all(isinstance(item, str) and item
                            for item in producer.get("pinned_source_paths") or [])
                 or serialization.get("unit") != "microseconds"
@@ -109,6 +118,16 @@ def _verified_clock_relations(root: Path) -> list[dict]:
                 or value.get("arbitrary_tolerance_or_age_filter_used") is not False
                 or value.get("clock_step_limitation_retained") is not True):
             raise ValueError(f"runtime clock relation declaration is incomplete: {path}")
+        if (collector.get("schema") != "collector-lifecycle-v5"
+                or collector.get("collector") != "deepflow"
+                or collector.get("source_version") != DEEPFLOW_VERSION
+                or collector.get("source_commit") != DEEPFLOW_SOURCE_COMMIT
+                or collector.get("image") != DEEPFLOW_IMAGE
+                or (collector.get("commands") or {}).get(value["node"])
+                != producer.get("runtime_command")
+                or (collector.get("runtime_clock_relations") or {}).get(value["node"], {}).get(
+                    "evidence", {}).get("locator") != path.relative_to(root).as_posix()):
+            raise ValueError(f"runtime clock relation differs from collector manifest: {path}")
         config_path = Path(str(config.get("path", "")))
         if config_path.is_absolute():
             raise ValueError("runtime clock relation config path must be campaign-relative")
@@ -117,6 +136,17 @@ def _verified_clock_relations(root: Path) -> list[dict]:
                 or config_path.stat().st_size != config.get("bytes")
                 or _sha(config_path) != config.get("sha256")):
             raise ValueError(f"runtime clock relation configuration changed: {config_path}")
+        manifest_config = (collector.get("configs") or {}).get(value["node"]) or {}
+        parsed_config = yaml.safe_load(config_path.read_text(encoding="utf-8")) or {}
+        facts = config.get("validated_effective_facts") or {}
+        if (manifest_config.get("path") != config_path.name
+                or manifest_config.get("sha256") != config.get("sha256")
+                or not isinstance((parsed_config.get("global") or {}).get("standalone_mode"), dict)
+                or facts != {"standalone_mode_config_present": True,
+                             "standalone_cli_enabled": True,
+                             "controller_ntp_correction_enabled": False}
+                or " --standalone " not in str(producer.get("runtime_command", ""))):
+            raise ValueError(f"runtime clock relation effective standalone facts failed: {path}")
         evidence = {"kind": "documented_clock_relation",
                     "locator": path.relative_to(root).as_posix(),
                     "sha256": _sha(path), "bytes": path.stat().st_size}

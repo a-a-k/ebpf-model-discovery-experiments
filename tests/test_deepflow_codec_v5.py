@@ -138,7 +138,8 @@ def test_documented_runtime_clock_is_projected_without_offset_estimation(tmp_pat
         **clock, "evidence": {**clock["evidence"], "bytes": "321"}}
     assert runtime["clock"] == clock
     assert runtime["event_start_ns"] == runtime["start"] * 1000
-    assert runtime["event_end_ns"] == runtime["end"] * 1000
+    assert runtime["event_end_ns"] == runtime["end"] * 1000 + 999
+    assert runtime["event_time_quantization"]["bin_width_ns"] == 1000
     assert "clock_adjustment_uncertainty" not in runtime["clock"]["evidence"]
 
 

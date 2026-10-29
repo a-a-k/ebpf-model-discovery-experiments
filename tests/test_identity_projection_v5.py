@@ -7,7 +7,9 @@ from types import SimpleNamespace
 
 import pytest
 
-from ebpf_discovery.deepflow_codec_v5 import codec_file
+from ebpf_discovery.deepflow_codec_v5 import (DEEPFLOW_SOURCE_COMMIT,
+                                               DEEPFLOW_VERSION, codec_file)
+from ebpf_discovery.deepflow_v5 import DEEPFLOW_IMAGE
 from ebpf_discovery.identity_projection_v5 import _verified_clock_relations, refresh
 from ebpf_discovery.observations import attributes
 from ebpf_discovery.raw_v4 import export_selection
@@ -31,18 +33,25 @@ def _write(path, value):
 def test_clock_relation_verifies_exact_source_config_guest_proof(tmp_path):
     root = tmp_path / "campaign"
     config = root / "deepflow-agent-standalone-a.yaml"
-    config.parent.mkdir(parents=True); config.write_text("global: {}\n")
+    config.parent.mkdir(parents=True); config.write_text("global:\n  standalone_mode: {}\n")
+    command = "docker run pinned /bin/deepflow-agent --standalone -f config"
     relation = root / "runtime-identity-v5" / "clock-relation-a.json"
     _write(relation, {
         "schema": "runtime-identity-clock-relation-v5", "node": "a",
         "boot_id": "boot-a", "pid_namespace": "pid:[1]",
         "domain": "guest_realtime_unix_ns",
         "relation": "documented_same_guest_realtime_relation",
-        "producer": {"source_commit": "9" * 40,
+        "producer": {"name": "deepflow-agent", "version": DEEPFLOW_VERSION,
+                     "source_commit": DEEPFLOW_SOURCE_COMMIT, "image": DEEPFLOW_IMAGE,
+                     "runtime_command": command,
                      "pinned_source_paths": ["agent/src/ebpf/user/socket.h"]},
         "runtime_configuration": {"path": config.relative_to(root).as_posix(),
                                   "sha256": _sha(config), "bytes": config.stat().st_size,
-                                  "event_clock_adjustment_to_external_domain_enabled": False},
+                                  "event_clock_adjustment_to_external_domain_enabled": False,
+                                  "validated_effective_facts": {
+                                      "standalone_mode_config_present": True,
+                                      "standalone_cli_enabled": True,
+                                      "controller_ntp_correction_enabled": False}},
         "event_serialization": {"unit": "microseconds", "quantization_ns": 1000,
                                 "unix_nanosecond_conversion":
                                 "exact_integer_multiply_by_1000"},
@@ -50,10 +59,23 @@ def test_clock_relation_verifies_exact_source_config_guest_proof(tmp_path):
         "empirical_endpoint_offsets_used_as_hard_bound": False,
         "arbitrary_tolerance_or_age_filter_used": False,
         "clock_step_limitation_retained": True})
+    _write(root / "observations" / "collector.json", {
+        "schema": "collector-lifecycle-v5", "collector": "deepflow",
+        "source_version": DEEPFLOW_VERSION, "source_commit": DEEPFLOW_SOURCE_COMMIT,
+        "image": DEEPFLOW_IMAGE, "commands": {"a": command},
+        "configs": {"a": {"path": config.name, "sha256": _sha(config)}},
+        "runtime_clock_relations": {"a": {"evidence": {
+            "locator": relation.relative_to(root).as_posix()}}}})
     rows = _verified_clock_relations(root)
     assert rows[0]["verified_hash_bound_source_config_guest_relation"] is True
     assert rows[0]["evidence"]["sha256"] == _sha(relation)
 
+    collector_path = root / "observations" / "collector.json"
+    collector = json.loads(collector_path.read_text()); collector["commands"]["a"] += " changed"
+    _write(collector_path, collector)
+    with pytest.raises(ValueError, match="differs from collector manifest"):
+        _verified_clock_relations(root)
+    collector["commands"]["a"] = command; _write(collector_path, collector)
     config.write_text("global: {changed: true}\n")
     with pytest.raises(ValueError, match="configuration changed"):
         _verified_clock_relations(root)
@@ -64,17 +86,24 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(tm
     raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
     raw.parent.mkdir(parents=True); raw.write_bytes(b'{"saved":"row"}\n')
     config = observations / "deepflow-agent-standalone-a.yaml"
-    config.write_text("global: {}\n")
+    config.write_text("global:\n  standalone_mode: {}\n")
+    command = "docker run pinned /bin/deepflow-agent --standalone -f config"
     relation_path = root / "runtime-identity-v5" / "clock-relation-a.json"
     _write(relation_path, {
         "schema": "runtime-identity-clock-relation-v5", "node": "a",
         "boot_id": "boot-a", "pid_namespace": "pid:[100]",
         "domain": "guest_realtime_unix_ns",
         "relation": "documented_same_guest_realtime_relation",
-        "producer": {"source_commit": "9" * 40, "pinned_source_paths": ["socket.h"]},
+        "producer": {"name": "deepflow-agent", "version": DEEPFLOW_VERSION,
+                     "source_commit": DEEPFLOW_SOURCE_COMMIT, "image": DEEPFLOW_IMAGE,
+                     "runtime_command": command, "pinned_source_paths": ["socket.h"]},
         "runtime_configuration": {"path": config.relative_to(root).as_posix(),
                                   "sha256": _sha(config), "bytes": config.stat().st_size,
-                                  "event_clock_adjustment_to_external_domain_enabled": False},
+                                  "event_clock_adjustment_to_external_domain_enabled": False,
+                                  "validated_effective_facts": {
+                                      "standalone_mode_config_present": True,
+                                      "standalone_cli_enabled": True,
+                                      "controller_ntp_correction_enabled": False}},
         "event_serialization": {"unit": "microseconds", "quantization_ns": 1000,
                                 "unix_nanosecond_conversion":
                                 "exact_integer_multiply_by_1000"},
@@ -82,6 +111,13 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(tm
         "empirical_endpoint_offsets_used_as_hard_bound": False,
         "arbitrary_tolerance_or_age_filter_used": False,
         "clock_step_limitation_retained": True})
+    _write(observations / "collector.json", {
+        "schema": "collector-lifecycle-v5", "collector": "deepflow",
+        "source_version": DEEPFLOW_VERSION, "source_commit": DEEPFLOW_SOURCE_COMMIT,
+        "image": DEEPFLOW_IMAGE, "commands": {"a": command},
+        "configs": {"a": {"path": config.name, "sha256": _sha(config)}},
+        "runtime_clock_relations": {"a": {"evidence": {
+            "locator": relation_path.relative_to(root).as_posix()}}}})
     evidence = {"kind": "documented_clock_relation",
                 "locator": relation_path.relative_to(root).as_posix(),
                 "sha256": _sha(relation_path), "bytes": relation_path.stat().st_size}
