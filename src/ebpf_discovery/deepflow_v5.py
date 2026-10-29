@@ -280,8 +280,12 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "cg=$(awk -F: '$1 == \"0\" {print $3}' \"/proc/$pid/cgroup\"); "
             "test -n \"$cg\"; p=\"$cg\"; "
             "while :; do base=\"/sys/fs/cgroup$p\"; "
+            "if test -d \"$base\"; then printf 'visit|%s|directory\\n' \"$p\"; "
+            "else printf 'visit|%s|missing\\n' \"$p\"; fi; "
             "for f in memory.max cpu.max; do if test -r \"$base/$f\"; then "
-            "printf 'limit|%s|%s|' \"$p\" \"$f\"; cat \"$base/$f\"; fi; done; "
+            "printf 'limit|%s|%s|' \"$p\" \"$f\"; cat \"$base/$f\"; "
+            "elif test -e \"$base/$f\"; then printf 'control|%s|%s|unreadable\\n' \"$p\" \"$f\"; "
+            "else printf 'control|%s|%s|absent\\n' \"$p\" \"$f\"; fi; done; "
             "test \"$p\" = / && break; p=$(dirname \"$p\"); done"
         )
         hierarchy = self._inventory_command(
@@ -290,14 +294,25 @@ class DeepFlowCollectorsV5(CollectorsV5):
         evidence["cgroup_hierarchy"] = hierarchy
         self._write_resource_inventory(node)
         limits: list[dict[str, str]] = []
+        visits: list[dict[str, str]] = []
+        controls: list[dict[str, str]] = []
         for line in hierarchy["stdout"].splitlines():
-            if not line.startswith("limit|"):
-                continue
             parts = line.split("|", 3)
-            if len(parts) != 4 or not parts[1].startswith("/"):
-                raise RuntimeError(f"cannot parse cgroup hierarchy limit on {node}")
-            limits.append({"path": parts[1], "kind": parts[2], "value": parts[3]})
-        if not limits or not any(item["path"] == "/" for item in limits):
+            if line.startswith("limit|"):
+                if len(parts) != 4 or not parts[1].startswith("/"):
+                    raise RuntimeError(f"cannot parse cgroup hierarchy limit on {node}")
+                limits.append({"path": parts[1], "kind": parts[2], "value": parts[3]})
+            elif line.startswith("visit|"):
+                if len(parts) != 3 or not parts[1].startswith("/"):
+                    raise RuntimeError(f"cannot parse cgroup hierarchy visit on {node}")
+                visits.append({"path": parts[1], "status": parts[2]})
+            elif line.startswith("control|"):
+                if (len(parts) != 4 or not parts[1].startswith("/")
+                        or parts[3] not in {"absent", "unreadable"}):
+                    raise RuntimeError(f"cannot parse cgroup control evidence on {node}")
+                controls.append({"path": parts[1], "kind": parts[2], "status": parts[3]})
+        root_visits = [item for item in visits if item["path"] == "/"]
+        if not limits or root_visits != [{"path": "/", "status": "directory"}]:
             raise RuntimeError(f"incomplete container cgroup hierarchy on {node}")
 
         def hard_limit(kind: str, value: str) -> int | None:
@@ -380,7 +395,11 @@ class DeepFlowCollectorsV5(CollectorsV5):
         evidence.update({
             "docker_resources": resources,
             "cgroup_hard_limits_leaf_to_root": limits,
+            "cgroup_directory_visits_leaf_to_root": visits,
+            "cgroup_missing_or_unreadable_controls": controls,
             "hierarchy_complete_to_root": True,
+            "root_controls_expected": False,
+            "root_visit_is_traversal_evidence_not_unlimited_limit": True,
             "shared_hard_limit_below_declared_guest_envelope": shared_hard_limit_below_declared,
             "effective_shared_ancestor_hard_limit": effective_shared_ancestor_hard_limit,
             "cgroup_values": values,

@@ -66,11 +66,14 @@ class Context:
             return Result(
                 "host_pid=4242\ncgroup_file_begin\n"
                 "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                "visit|/system.slice/docker-test.scope|directory\n"
                 "limit|/system.slice/docker-test.scope|memory.max|max\n"
                 "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                "visit|/system.slice|directory\n"
                 "limit|/system.slice|memory.max|max\n"
                 "limit|/system.slice|cpu.max|max 100000\n"
-                "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+                "visit|/|directory\n"
+                "control|/|memory.max|absent\ncontrol|/|cpu.max|absent\n"
             )
         if "memory.max=" in command and "cpu.max=" in command:
             return Result(
@@ -207,6 +210,13 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
         assert inventory["effective_container_constraints"][
             "verified_no_explicit_docker_hard_limit_below_guest_envelope"] is True
         assert inventory["effective_container_constraints"]["hierarchy_complete_to_root"] is True
+        assert inventory["effective_container_constraints"][
+            "root_visit_is_traversal_evidence_not_unlimited_limit"] is True
+        assert inventory["effective_container_constraints"][
+            "cgroup_missing_or_unreadable_controls"] == [
+                {"path": "/", "kind": "memory.max", "status": "absent"},
+                {"path": "/", "kind": "cpu.max", "status": "absent"},
+            ]
         assert inventory["effective_container_constraints"]["host_pid"] == 4242
         assert inventory["commands"]["meminfo"]["stdout"].startswith("MemTotal:")
         assert inventory["commands"]["cpu_count"]["command"] == "nproc"
@@ -231,11 +241,14 @@ def test_resource_policy_rejects_extra_lower_docker_or_leaf_cgroup_limit(
                 return Result(
                     "host_pid=4242\ncgroup_file_begin\n"
                     "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                    "visit|/system.slice/docker-test.scope|directory\n"
                     f"limit|/system.slice/docker-test.scope|memory.max|{1 << 30}\n"
                     "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                    "visit|/system.slice|directory\n"
                     "limit|/system.slice|memory.max|max\n"
                     "limit|/system.slice|cpu.max|max 100000\n"
-                    "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+                    "visit|/|directory\n"
+                    "control|/|memory.max|absent\ncontrol|/|cpu.max|absent\n"
                 )
             return super().node_exec(node, command, **kwargs)
 
@@ -261,11 +274,14 @@ def test_resource_policy_accepts_leaf_equal_to_shared_parent_below_root(
                 return Result(
                     "host_pid=4242\ncgroup_file_begin\n"
                     "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                    "visit|/system.slice/docker-test.scope|directory\n"
                     f"limit|/system.slice/docker-test.scope|memory.max|{shared_memory}\n"
                     "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                    "visit|/system.slice|directory\n"
                     f"limit|/system.slice|memory.max|{shared_memory}\n"
                     "limit|/system.slice|cpu.max|max 100000\n"
-                    "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+                    "visit|/|directory\n"
+                    "control|/|memory.max|absent\ncontrol|/|cpu.max|absent\n"
                 )
             if "memory.max=" in command and "cpu.max=" in command:
                 return Result(
@@ -282,6 +298,24 @@ def test_resource_policy_accepts_leaf_equal_to_shared_parent_below_root(
     assert constraints["effective_shared_ancestor_hard_limit"]["memory.max"] == shared_memory
     assert constraints["shared_hard_limit_below_declared_guest_envelope"]["memory.max"] is True
     assert constraints["verification_complete"] is True
+
+
+def test_resource_policy_still_rejects_hierarchy_without_root_visit(tmp_path: Path) -> None:
+    class TruncatedHierarchyContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            result = super().node_exec(node, command, **kwargs)
+            if "cgroup_file_begin" in command:
+                result.stdout = "\n".join(
+                    line for line in result.stdout.splitlines()
+                    if not line.startswith(("visit|/|", "control|/|"))
+                ) + "\n"
+            return result
+
+    ctx = TruncatedHierarchyContext(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector._guest_resource_inventory("a")
+    with pytest.raises(RuntimeError, match="incomplete container cgroup hierarchy"):
+        collector._verify_container_resource_envelope("a")
 
 
 def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(
