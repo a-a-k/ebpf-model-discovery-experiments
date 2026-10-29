@@ -146,3 +146,26 @@ inventory, generated configurations, actual Docker/cgroup constraints and
 preparation costs. It does not remove the common VM capacity bound. Independent
 review approved one fixed repeat after integrated CI; no application-capability
 or main-series conclusion follows from this configuration repair.
+
+The integrated DeepFlow repair passed
+[CI 40895877074](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895877074)
+at `8b725b8895f0704fdf84f6c1086937dd22dfe6f6`.
+Its [fixed repeat 40896064246](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40896064246)
+stopped before workload traffic because the new resource verifier incorrectly
+required root-cgroup limit files. Retained resource inventory shows unlimited
+leaf and `system.slice` CPU/memory values and a successful traversal command;
+root `memory.max` and `cpu.max` are absent as specified by the
+[Linux cgroup-v2 interface](https://www.kernel.org/doc/html/v6.6/admin-guide/cgroup-v2.html).
+The agent log confirms that the intended memory/CPU configuration and disabled
+on-CPU profiler were applied. This attempt identifies a verifier defect, not an
+application observation limit. The correction must record traversal to the root
+separately from the presence of controller files, retaining all actual limits.
+
+OBI repeat `40895622472` passed the raw selected-agent controls on both guests and
+closed its training checkpoint. It then failed before forecasting and target
+traffic: GitHub rejected the remote worker dispatch with HTTP 422. The exact
+response, retained inside `infrastructure/handoff-package/payload.tar.gz`, names
+the undeclared `collector_provenance` input. The correction removes this redundant
+API input while preserving the collector binding in the checkpoint and verified
+worker output. This attempt is a technical failure with partial training data,
+not a complete campaign or a forecast result.

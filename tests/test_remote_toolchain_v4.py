@@ -8,6 +8,7 @@ import zipfile
 import pytest
 import requests
 import sqlite3
+import yaml
 
 from ebpf_discovery import remote_toolchain_v4 as remote
 from ebpf_discovery import artifact_transport_v4 as transport
@@ -119,6 +120,8 @@ def worker_bundle(root, expected, worker_run_id=91):
               "plans_sha256": expected["plans_sha256"],
               "training_index_proof_sha256": expected["training_index_proof_sha256"],
               "toolchain_files": files}
+    if "collector_provenance" in expected:
+        common["collector_provenance"] = expected["collector_provenance"]
     write_json(root / "output-manifest.json", common)
     write_json(root / "worker-provenance.json", {
         "identity": common["identity"], "worker_run_id": str(worker_run_id),
@@ -319,9 +322,10 @@ def test_artifact_get_retries_headers_but_never_partial_body(tmp_path, monkeypat
     assert (tmp_path / ".failed.zip.tmp").read_bytes() == b"partial"
 
 
-@pytest.mark.parametrize("system,fail_import", [("otel_demo", False),
-    ("deathstarbench", False), ("deathstarbench", True)])
-def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch, system, fail_import):
+@pytest.mark.parametrize("system,fail_import,collector", [("otel_demo", False, None),
+    ("deathstarbench", False, None), ("deathstarbench", True, None),
+    ("deathstarbench", False, "obi")])
+def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch, system, fail_import, collector):
     class Ctx:
         out = tmp_path / "campaign"
         mode = "full"
@@ -334,10 +338,16 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     expected = {**identity(), "system": system, "manifest_sha256": "m" * 64,
                 "parent_run_attempt": "2", "parent_cell_id": f"{system}:full:6",
                 "plans_sha256": "p" * 64, "artifact_id": "42",
+                "artifact_url": "https://github.com/owner/repo/actions/artifacts/42",
                 "artifact_name": "training", "artifact_digest": "sha256:" + "a" * 64,
                 "training_index_proof_sha256": remote._json_sha({"spans": "same"}),
                 "worker_workflow_sha": "w" * 40, "worker_run_attempt": "1",
                 "request_id": "00000000-0000-0000-0000-000000000001"}
+    if collector:
+        expected["collector_provenance"] = {
+            "protocol_version": "graph-v5", "collector": collector,
+            "source_domain": "ebpf-" + collector,
+        }
     bundle = tmp_path / "bundle"
     bundle.mkdir()
     worker_bundle(bundle, expected)
@@ -356,6 +366,11 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     class Session:
         status_reads = 0
         def post(self, *_args, **_kwargs):
+            workflow = yaml.safe_load((Path(__file__).resolve().parents[1] /
+                ".github/workflows/toolchain-worker-v4.yml").read_text())
+            declared = (workflow.get("on") or workflow[True])["workflow_dispatch"]["inputs"]
+            assert set(_kwargs["json"]["inputs"]) == set(declared)
+            assert "collector_provenance" not in _kwargs["json"]["inputs"]
             return FakeResponse(value={"workflow_run_id": 91, "run_url": "api/run/91",
                                        "html_url": "html/run/91"})
         def get(self, url, **_kwargs):
@@ -416,6 +431,14 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     assert not (evidence / "worker-output.zip").exists()
     assert cost["worker_run_id"] == 91 and cost["worker_run_attempt"] == 1
     assert cost["worker_poll_interval_seconds"] == 60 and sleeps == [60]
+    if collector:
+        output_path = evidence / "worker/output-manifest.json"
+        output = json.loads(output_path.read_text())
+        assert output["collector_provenance"] == expected["collector_provenance"]
+        output["collector_provenance"]["collector"] = "different-source"
+        write_json(output_path, output)
+        with pytest.raises(ValueError, match="collector provenance mismatch"):
+            remote._verify_worker_output(output_path.parent, expected, 91)
 
 
 def test_release_identity_failure_happens_before_dispatch(tmp_path, monkeypatch):

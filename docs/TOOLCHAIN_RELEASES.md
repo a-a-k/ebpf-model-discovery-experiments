@@ -25,8 +25,9 @@ Iteration-4 Bering and Sheaft annotated release tags resolve to the exact commit
 Bering 1.1.1 for historical diagnostics. Both releases contain
 their versioned Helm chart packages. The stack release packages both stack and
 asset charts. The historical stack 1.3.0 compatibility matrix and reproduction
-1.3.4 lock name Bering 1.1.1, Sheaft 1.3.2 and the same Procrustes revision. Current
-stack 1.4.0 and reproduction 1.3.5 instead name Bering 1.2.0. The reproduction
+1.3.4 lock name Bering 1.1.1, Sheaft 1.3.2 and the same Procrustes revision. The
+previous stack 1.4.0 and retained reproduction 1.3.5 name Bering 1.2.0;
+current stack 1.5.0 names Bering 1.3.0. The reproduction
 package's existing `candidate` status is retained rather than reinterpreted as
 evidence of scientific adequacy.
 

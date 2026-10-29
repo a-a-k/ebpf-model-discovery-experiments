@@ -619,7 +619,10 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         raise ValueError("remote toolchain destination must be previously absent")
     request_id = str(uuid.uuid4())
     expected["request_id"] = request_id
-    inputs = {key: str(value) for key, value in expected.items() if value is not None}
+    # Collector provenance travels in the hash-bound checkpoint and is checked
+    # again against worker output. It is not a declared workflow API input.
+    inputs = {key: str(value) for key, value in expected.items()
+              if value is not None and key != "collector_provenance"}
     inputs["request_id"] = request_id
     inputs["parent_repository"] = repository
     dispatch = {"schema_version": "remote-toolchain-dispatch-v4", "request_id": request_id,

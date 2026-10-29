@@ -107,6 +107,22 @@ fixed DeepFlow Petclinic/absent/seed-6 repeat after the integrated Linux and
 private-network Docker checks pass. The raw selected-agent origin requirement,
 baselines, unknown handling and complete cost accounting are unchanged.
 
+Actual OBI repeat `40895622472` passed raw acquisition controls on both guests,
+then GitHub rejected worker dispatch with HTTP 422. The packaged handoff retains
+the exact response: the extra `collector_provenance` workflow input is undeclared.
+Both agents give original-criterion design GO to omit only that redundant API
+input. Collector provenance remains in the parent expectation, hash-bound
+checkpoint, worker-derived output and import comparison. The regression checks
+actual dispatch keys against the workflow declaration and rejects a changed
+collector in returned output. This transport correction changes no observations,
+models, baselines or scoring. Actual-code review and CI precede a fixed repeat.
+
+The DeepFlow resource-verifier correction similarly retains the same resource
+policy. Both agents approve recording explicit traversal to the cgroup root
+without demanding root-only limit files that the Linux interface does not expose.
+Missing non-root evidence and real extra limits must still fail verification.
+This is a preparation repair, not collector capability or main-series approval.
+
 Technical controls establish actual selected-agent acquisition and preserved
 bytes on both guests. They do not prove application protocol coverage, causal
 completeness, business semantics, or forecast accuracy. A technically valid
