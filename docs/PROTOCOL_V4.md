@@ -1,12 +1,13 @@
 # Iteration 4: graph discovery and graph-driven prediction
 
 Current status: all nine Petclinic cells are independently admitted, with the
-[generated nine-cell report](../results/iteration-4/SOURCE.md) retained; 9/27
-planned cells overall. OTel and DSB remain incomplete after technical failures.
+[generated nine-cell report](../results/iteration-4/SOURCE.md) retained. OTel/full/6
+has also passed independent admission: 10/27 cells overall. Its remaining eight
+are running; DSB remains incomplete after technical failures.
 The full-checkpoint [OTel diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
 completed and passed independent integrity/resource review; its one
 [fresh OTel/full/6 replacement](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012)
-is running;
+completed and is admitted;
 [DSB](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 failed during local Bering ingestion with HTTP 500. Its separate artifact upload
 also failed; the exact server error and final integrity proof are unavailable.
@@ -53,7 +54,7 @@ artifacts and the final evaluator/cost implementation.
 
 ## Versions and product boundary
 
-Original pins for the nine admitted Petclinic cells and staged OTel/full/6:
+Original pins for the nine admitted Petclinic cells and admitted OTel/full/6:
 
 | Tool | Source revision |
 |---|---|
@@ -843,3 +844,33 @@ required: generic mixed-source/overlay equivalence and the old worker's full-cou
 zero-drop, single-publication evidence address the publication-only change.
 Window metadata, timestamps and accepted-late counters need not be identical.
 This transition approval is neither parent-cell admission nor bulk execution GO.
+
+
+Actual OTel admission and execution review (2026-10-29): root and the independent
+6.1 Sol/xhigh reviewer gave explicit ORIGINAL-criterion GO for full/6 `40786403012`
+and, separately, exactly the remaining eight planned OTel cells at `19ad30e` after
+CI `40800562445`. The review verified the complete compact ZIP digest/CRC,
+34,800 primary and 9,600 target attempts, 19 blocks, 7,539 unchanged frozen-file
+hashes, identical logical index before/after the worker, byte-identical imported
+forecasts and import-before-freeze-before-target ordering. Supervisor exit was
+clean. eBPF unknowns, native/combined errors and DB mapping unknowns remain valid
+results. Eight cells were dispatched once: absent6–8 `40803782214`, partial6–8
+`40803790289`, full7 `40803798632`, full8 `40803806299`. All four runs bind to
+`19ad30ea772ae5430432e2e05339a8c0d9fe0d1f`. A fresh 01:59:03 UTC owner-wide check
+found only the one DSB diagnostic active, so eight parent/worker pairs reserved
+17 jobs including that diagnostic. Archival run `40802785036` had completed.
+
+Subsequent scheduling refinement, before execution: root and independent skeptic
+also give explicit ORIGINAL-criterion operational-design GO to overlap ONE fresh
+DSB/full/6 with those eight OTel parents, only after actual DSB diagnostic review
+and separate staged-cell execution GO. This supersedes the eight-parent ceiling
+above solely for that overlap: at most nine committed parents, each with a worker
+slot reserved, and a fresh owner-wide `2*parents + all other committed jobs <=20`
+check including queued/matrix/prepare/CI/archive jobs. At nine parents only two
+noncampaign slots remain in total; they are not extra spare slots or a platform
+reservation. Sixty-second polling requires at most 540 ordinary status reads/hour
+for nine waiting parents before other reads, with existing rate-limit backoff.
+The strongest baseline is the same unchanged work scheduled at eight parents or
+sequentially; only calendar overlap is proposed to improve. All compute, setup,
+queue, wait, transfers and failure costs remain, with no outcome gate, extra
+scenario, observation cap or valid-cell rerun. DSB dispatch is not yet approved.

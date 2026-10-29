@@ -2,7 +2,7 @@
 
 The agreed objective and completion criteria are recorded in [docs/GOALS.md](docs/GOALS.md).
 
-> **Current status (iteration 4): all nine Petclinic cells admitted; 9/27 overall.**
+> **Current status (iteration 4): nine Petclinic cells and OTel/full/6 admitted; 10/27 overall.**
 > [Petclinic/full/seed6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40718674400/artifacts/12834368897)
 > plus [Petclinic/absent/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733841068)
 > and [Petclinic/partial/seeds6–8](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40733846961),
@@ -24,7 +24,10 @@ The agreed objective and completion criteria are recorded in [docs/GOALS.md](doc
 > records severe RAM/swap pressure followed by runner shutdown (exit 143), without
 > a confirmed OOM kill. The [GC diagnostic completed](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40778455040)
 > on that full checkpoint and passed independent integrity/resource review. A
-> [fresh OTel/full/6 replacement is running](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
+> [fresh OTel/full/6 replacement completed and passed independent review](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40786403012).
+> Its eBPF forecasts remain unknown; native/combined forecasts are available but
+> differ from the independent outcomes. The remaining eight OTel cells are running
+> with the same design and the reviewed Bering 1.2.0 publication repair.
 > The diagnostic cannot complete the failed cell. DSB's staged retry also failed after training
 > upload; its [separate checkpoint diagnostic](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40780918812)
 > also failed with HTTP 500 during Bering ingestion, followed by a separate artifact
@@ -92,7 +95,7 @@ is a published product release with an actual SDK-free OBI input and a generic L
 smoke test. That proves the product accepts real OBI OTLP and emits a graph in its own
 acceptance environment. It is **not** a result for these applications or interventions.
 
-The nine admitted Petclinic cells and the staged OTel/full/6 run use these exact
+The nine admitted Petclinic cells and the admitted OTel/full/6 run use these exact
 source revisions (each campaign retains its own build manifest):
 
 | Component | Revision or release | Role |
@@ -372,6 +375,23 @@ complete campaigns by outcome.
 Keep a committed selection manifest outside the generated `results/iteration-4`
 directory, which each report run replaces in its disposable Actions checkout.
 
+The admitted OTel/full/6 result is retained in its [original compact artifact](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/data-40802785036/40786403012-artifact-12865817745-v4-summary-otel_demo-full-6-40786403012.zip),
+in `evaluation-v4.json`. All three eBPF operation forecasts remain unknown in both
+graph variants. Native and combined models predict 0.875 for each operation;
+independent target outcomes are 2,688/3,200 (0.84) for browse product and add to cart,
+and 2,635/3,200 (0.8234375) for checkout, with no unknown target outcomes. The stored
+absolute errors are 3.5, 3.5 and 5.15625 percentage points. The supplied-contract
+manual baseline makes the same primary predictions. These errors are retained
+without an accuracy gate, and one full-mode cell does not establish performance
+without native tracing. DB-up controls have 20 successes and DB-down controls
+20 failures, while all graph-based DB-down forecasts remain unknown. Observed DB
+nodes alone do not establish the required unambiguous fault mapping.
+
+The complete cell, training checkpoint and worker output are in the [permanent
+archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-40802785036).
+The existing generated aggregate still covers the nine Petclinic cells; the next
+aggregate will incorporate subsequent admitted cells without changing their inputs.
+
 ## 9. Reproduction, workflows and retained artifacts
 
 All application builds, traffic, raw-data processing, discovery, simulation and report
@@ -547,8 +567,9 @@ original declared subset, not a retroactive complete total for this wider scope.
 
 ## 10. Current limitations, review state and references
 
-Iteration 4 has admitted all nine Petclinic cells: absent/partial/full tracing,
-seeds6–8. DeathStarBench and OTel cells remain incomplete. The first qualification
+Iteration 4 has admitted all nine Petclinic cells (absent/partial/full tracing,
+seeds6–8) and OTel/full/6. The remaining eight OTel cells are running; DeathStarBench
+still awaits its full-input diagnostic and staged cell. The first qualification
 exposed an invalid static-analysis input, repaired in `1284a5f`. Retained-capture
 replay can diagnose the actual tool path but cannot establish concurrent VM/tool
 resource capacity. Independent review approved the first three planned cells;

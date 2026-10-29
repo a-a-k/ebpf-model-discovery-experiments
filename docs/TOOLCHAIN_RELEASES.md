@@ -13,6 +13,9 @@ its three tools from exact source commits and retains binary hashes per campaign
 | mb3r-stack | v1.3.0, `8a6dc136d67a55a8609cb9a82f6385895713603c` | [Release](https://github.com/MB3R-Lab/mb3r-stack/releases/tag/v1.3.0), [successful release workflow](https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40642477259), [integration update](https://github.com/MB3R-Lab/mb3r-stack/pull/27) |
 | mb3r-software-complex-repro | v1.3.4, `44d97ef075d2d2d11a2069dc8d2f9c45a01f3866` | [Release](https://github.com/MB3R-Lab/mb3r-software-complex-repro/releases/tag/v1.3.4), [successful release workflow](https://github.com/MB3R-Lab/mb3r-software-complex-repro/actions/runs/40642871942), [immutable image-tag guard](https://github.com/MB3R-Lab/mb3r-software-complex-repro/pull/3) |
 | OTel stack integration | `a81989e294ffa28843c8dc1fdeb629028fa51c78` | [Merged runtime and CI pins](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/5), [CI](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40653840325), [gate](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40653840261) |
+| mb3r-stack, current | v1.4.0, `06dc632c24771f91abf7472f9d73887757e7b603` | [Release](https://github.com/MB3R-Lab/mb3r-stack/releases/tag/v1.4.0), [publication and anonymous download](https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40800899484), [integration PR](https://github.com/MB3R-Lab/mb3r-stack/pull/29) |
+| Reproduction package, current | v1.3.5, `2b2e012d8e85088d6d7bb9e231d0f9cc79ae634f` | [Release](https://github.com/MB3R-Lab/mb3r-software-complex-repro/releases/tag/v1.3.5), [source/container/publication/anonymous replay](https://github.com/MB3R-Lab/mb3r-software-complex-repro/actions/runs/40802150679) |
+| OTel package gate, current | `3a615abf38a4e42cbfa3b7e8bdfec06ed9d0d7d4` | [Merged package pin](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/7), [exact-head gate](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40804237780) |
 
 Current Bering and Sheaft annotated release tags resolve to the exact commits in
 `toolchain_v4.PINS` and `scripts/setup-toolchain-v4.sh`; `ORIGINAL_PINS` retains
@@ -45,9 +48,9 @@ published chart and app version 1.2.0. Downloaded manifest/chart assets were
 checked against GitHub asset digests and the chart's actual metadata inspected.
 The published image is `sha256:f706b79172a8322d53422de8d08a47d7779d0fbe2909511fa08385608b74c15b`;
 the OCI chart is `sha256:f76f6cddea288af4174e7a70ae986fc19145117646c5ba8b926a7aac58d2af03`.
-Model and snapshot schemas remain 1.3.0. Related integration updates are under
-review; their older releases above remain historical evidence until new releases
-are verified. No research materials were added to Bering.
+Model and snapshot schemas remain 1.3.0. The related integration updates and new
+package releases are now verified below; the older releases remain historical
+evidence. No research materials were added to Bering.
 
 
 Related current-main compatibility updates passed independent review and exact-head
@@ -61,7 +64,26 @@ CI and were merged on 2026-10-29:
   relabel the existing Sheaft 1.3.2 release.
 - [OTel integration PR 6](https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/pull/6),
   `ce25b8f2aa4132884a49ab7fd6019e45f0ceea4f`, updates the runtime Bering image.
-  The CI reproduction-package image remains separately pinned until a replacement
-  package is measured, published and verified.
+  PR 7 subsequently pins the separately verified reproduction-package image;
+  that package digest is distinct from the Bering runtime image digest.
 
 These changes do not silently change the research's fixed Procrustes/Sheaft pins.
+
+Stack 1.4.0 passed full integration CI before publication, including the actual
+native/OBI runtime handoff and pinned-image Kubernetes startup. Its public OCI
+chart was pulled at `sha256:05cb6e2e6e8523d28fd1c2f01d1dead6dc5decc90eb33498696220dd0623c60e`;
+the package matched the published asset and chart/app versions were both 1.4.0.
+Postpublication documentation PR 30 is `ae64ef41d2330b4b7af379a792970b21d9339a5b`;
+the release tag still points to the verified release commit above.
+
+Reproduction 1.3.5 retains its `candidate` classification and historical references.
+Its current operation reference was actually acquired in run `40798202806`, then
+passed an independent strict replay in `40800779500`. The complete original graph
+was used; diagnostic graph copies were not adopted. Main run `40802150679` passed
+source verification, packaged checks, publication and an anonymous AMD64 Compose
+replay with persisted-output and revision-label checks. The public multi-platform
+image digest is `sha256:61061c9a0e54b38af0adc12d66aacace5ad9c4acce782bb6c92be294c2e9dfa3`.
+The annotated tag and image revision both identify `2b2e012d...`. The attached
+999-byte lock file matches its Git blob and API SHA-256
+`d61957058992146d85c271bf2dbd47c14fa125ffd330a5b03663c12f931e2829`.
+These product compatibility checks are not additional empirical cells.

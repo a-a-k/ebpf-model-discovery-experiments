@@ -96,7 +96,9 @@ All nine Petclinic cells are independently admitted; the generated report is
 `40751134324`, published in `results/iteration-4`. Actual eBPF graphs and Sheaft
 forecasts are checked against independent target outcomes. Source limitations,
 manual-baseline equivalence, DB unknowns and adverse class results remain visible.
-The overall completion count is 9/27, not a cross-system success claim.
+OTel/full/6 `40786403012` is also independently admitted: 10/27 overall,
+not a cross-system success claim. Its eBPF forecasts remain unknown and its
+native/combined primary errors are retained without a threshold.
 
 DSB/full/seed6 `40731158179` failed its continuation after retaining the training
 checkpoint.
@@ -109,11 +111,13 @@ occurred. Parent artifacts and available logs are permanently archived by
 
 The reviewed OTel diagnostic `40778455040` completed on the larger, unchanged
 training checkpoint with Bering-child-only Go GC tuning and passed independent
-integrity/resource review. One fresh OTel/full/6 replacement is running as
-`40786403012`, after separate execution GO and exact-head CI. The diagnostic
-cannot complete or resume the failed campaign. The fresh staged cell must pass
-integrity/resource review before that system's
-remaining eight cells proceed. Immutable DSB checkpoint diagnostic `40780918812`
+integrity/resource review. Fresh OTel/full/6 replacement `40786403012` completed,
+passed independent admission review, and is archived with its worker in
+`data-40802785036`. Its remaining eight cells are running at `19ad30e` in runs
+`40803782214`, `40803790289`, `40803798632`, `40803806299`, after separate execution
+GO, exact-head CI and a fresh owner-wide capacity check. Their Bering 1.2.0
+transition does not relabel or repeat the valid 1.1.1 cell.
+Immutable DSB checkpoint diagnostic `40780918812`
 failed during Bering ingestion with HTTP 500, then lost its output artifact to a
 separate upload failure. Logs are retained in `data-40791837386`; the exact server
 error remains unknown. Bering 1.2.0 and its chart now publish the generic batch
