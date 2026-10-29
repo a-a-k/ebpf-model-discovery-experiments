@@ -42,6 +42,21 @@ def _inventory(before=None, after=None):
                         after or _sample("after-block-1", edge="after")]}
 
 
+def _realtime_relation(*, node="a", boot="boot-a", pid_namespace="pid:[100]"):
+    evidence = {"kind": "documented_clock_relation", "locator":
+                f"runtime-identity-v5/clock-relation-{node}.json", "sha256": "f" * 64,
+                "bytes": 123}
+    return ({"domain": "guest_realtime_unix_ns",
+             "relation": "documented_same_guest_realtime_relation", "evidence": evidence},
+            {"node": node, "boot_id": boot, "pid_namespace": pid_namespace,
+             "domain": "guest_realtime_unix_ns",
+             "relation": "documented_same_guest_realtime_relation", "evidence": evidence,
+             "verified_hash_bound_source_config_guest_relation": True,
+             "host_receipt_time_used": False,
+             "arbitrary_tolerance_or_age_filter_used": False,
+             "clock_step_limitation_retained": True})
+
+
 def _record(**updates):
     runtime = {"node": "a", "host_pid": 41, "pid_scope": "guest_host",
                "block_id": "block-1", "event_start_ns": 120, "event_end_ns": 180,
@@ -195,20 +210,51 @@ def test_clock_domain_requires_documented_compatible_source_relation():
                                  "evidence": {"guess": True}})
     assert resolve(unsupported, _inventory())["unknown_reasons"] == [
         "source_clock_relation_unsupported"]
-    realtime = _record(clock={"domain": "guest_realtime_unix_ns",
-                              "relation": "documented_same_guest_realtime_relation",
-                              "evidence": {"kind": "documented_clock_relation",
-                                           "locator": "clock-proof.json", "sha256": "f" * 64,
-                                           "clock_adjustment_uncertainty":
-                                           "included_in_event_interval_bounds"}})
-    assert resolve(realtime, _inventory())["status"] == "resolved"
-    realtime["_runtime_identity"]["clock"]["evidence"].pop("clock_adjustment_uncertainty")
+    clock, relation = _realtime_relation()
+    realtime = _record(clock=clock)
+    retained = _inventory(); retained["clock_relations"] = [relation]
+    assert resolve(realtime, retained)["status"] == "resolved"
     assert resolve(realtime, _inventory())["unknown_reasons"] == [
-        "realtime_clock_adjustment_uncertainty_unbounded"]
+        "source_clock_relation_evidence_unverified"]
     unproven = _record(clock={"domain": "guest_monotonic_ns", "relation": "assumed",
                               "evidence": {"guess": True}})
     assert resolve(unproven, _inventory())["unknown_reasons"] == [
         "source_clock_compatibility_unproven"]
+
+
+def test_saved_deepflow_database_row_uses_shared_domain_but_keeps_identity_contradictions():
+    """Values are a minimized exact-field fixture from saved pilot 40910393953."""
+    start, end = 1793291175425018000, 1793291175425170000
+    boot, host_ns, process_ns = ("11dd547e-1a21-4b17-888c-897ad58c5137",
+                                  "pid:[4026531836]", "pid:[4026532325]")
+    container = "220cfb2db41cdb524a5733691f264e6e9b10ce03ddf98927f2d1472c69dccdee"
+    owner = _owner(service="database", container=container)
+    owner.update(container_name="petclinic-a-database-1",
+                 container_started_at="2026-10-29T16:23:44.874129527Z")
+    owner["compose"].update(project="petclinic-a")
+    before = _sample("before-calibration-01", edge="before", pid=6367, boot=boot,
+                     host_ns=host_ns, process_ns=process_ns, start_ticks=18479, owner=owner)
+    after = _sample("after-calibration-01", edge="after", pid=6367, boot=boot,
+                    host_ns=host_ns, process_ns=process_ns, start_ticks=18479, owner=owner)
+    before["clocks"]["ended"]["realtime_unix_ns"] = 1793291174315809454
+    after["clocks"]["started"]["realtime_unix_ns"] = 1793291176727728171
+    clock, relation = _realtime_relation(boot=boot, pid_namespace=host_ns)
+    retained = _inventory(before, after); retained["clock_relations"] = [relation]
+    row = _record(host_pid="6367", before_stage=None,
+                  after_stage=None, block_id=None, event_start_ns=str(start),
+                  event_end_ns=str(end), clock=clock, boot_id=boot, pid_namespace=host_ns,
+                  locator={"source_file": "a/l7_flow_log",
+                           "retained_file": "deepflow-raw/node-a/002-live-prefix/l7_flow_log",
+                           "offset": "1758911", "length": "1168",
+                           "sha256": "e1d15827e5ff030d17f215791ee5114c538681292840e91ff7ae5aeebdebb967"})
+    result = resolve(row, retained)
+    assert result["status"] == "resolved"
+    assert result["service_identity"]["compose_service"] == "database"
+    assert result["bracket"]["kind"] == "source_event_clock"
+    assert result["canonical_record_locator"]["offset"] == 1758911
+
+    after["processes"][0]["start_ticks"] = 18480
+    assert resolve(row, retained)["unknown_reasons"] == ["process_lifecycle_identity_changed"]
 
 
 def test_actual_compose_labels_are_required_not_expected_topology():
@@ -287,6 +333,30 @@ def test_real_deepflow_codec_otlp_round_trip_resolves_canonical_locator(tmp_path
     assert locator_proof["canonical"] == accounting_locator
     assert locator_proof["enclosure_original"] == accounting_locator
     assert locator_proof["enclosure_canonical"] == accounting_locator
+
+
+def test_real_deepflow_codec_clock_relation_survives_otlp_numeric_representation(tmp_path):
+    raw = tmp_path / "l7_flow_log"
+    row = {"signal_source": "EBPF", "tap_side": "ClientProcess",
+           "ebpf_type": "TracePoint", "l7_protocol": "MySQL", "msg_type": "Session",
+           "start_time": 10, "end_time": 20, "ip_src": "192.0.2.1",
+           "ip_dst": "192.0.2.2", "port_src": 41000, "port_dst": 3306,
+           "process_id_0": 41, "process_kname_0": "mysqld", "request_type": "COM_QUERY"}
+    raw.write_text(json.dumps(row, separators=(",", ":")) + "\n", encoding="utf-8")
+    clock, relation = _realtime_relation()
+    batches, _, _ = codec_file(
+        raw, node="a", guest_context={"boot_id": "boot-a", "pid_namespace": "pid:[100]"},
+        runtime_clock=clock)
+    normalized = list(otlp(batches[0]["payload"], "ebpf", "a"))[0]
+    before, after = _sample("before-block-1", edge="before"), _sample(
+        "after-block-1", edge="after")
+    before["clocks"]["ended"]["realtime_unix_ns"] = 9_000
+    after["clocks"]["started"]["realtime_unix_ns"] = 21_000
+    retained = _inventory(before, after); retained["clock_relations"] = [relation]
+    result = resolve(normalized, retained)
+    assert result["status"] == "resolved"
+    assert result["service_identity"]["compose_service"] == "frontend"
+    assert normalized["attributes"]["_runtime_identity.clock"]["evidence"]["bytes"] == "123"
 
 
 def test_coverage_reports_unknowns_without_dropping_original_locators():

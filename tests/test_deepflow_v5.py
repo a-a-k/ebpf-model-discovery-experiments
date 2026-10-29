@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 from pathlib import Path
@@ -178,6 +179,17 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
     assert manifest["fresh_directory_per_attempt"] is True
     assert manifest["restart_permitted"] is False
     assert manifest["rotation_threshold_above_guest_capacity"] is True
+    assert set(manifest["runtime_clock_relations"]) == {"a", "b"}
+    for node in ("a", "b"):
+        proof = manifest["runtime_clock_relations"][node]
+        relation_path = collector.root.parent / proof["evidence"]["locator"]
+        relation = json.loads(relation_path.read_text())
+        assert relation["boot_id"] == f"boot-{node}"
+        assert relation["event_serialization"]["quantization_ns"] == 1000
+        assert relation["clock_step_limitation_retained"] is True
+        assert relation["empirical_endpoint_offsets_used_as_hard_bound"] is False
+        assert proof["evidence"]["sha256"] == hashlib.sha256(
+            relation_path.read_bytes()).hexdigest()
     assert set(manifest["remote_roots"]) == {"a", "b"}
     assert set(manifest["configs"]) == {"a", "b"}
     assert all("--memory" not in command and "--cpus" not in command

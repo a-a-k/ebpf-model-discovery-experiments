@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import pytest
 
 from ebpf_discovery.deepflow_codec_v5 import codec_file
-from ebpf_discovery.identity_projection_v5 import refresh
+from ebpf_discovery.identity_projection_v5 import _verified_clock_relations, refresh
 from ebpf_discovery.observations import attributes
 from ebpf_discovery.raw_v4 import export_selection
 from ebpf_discovery.selection_v4 import bind_entry as bind_entry_v4
@@ -26,6 +26,102 @@ def _sha(path):
 def _write(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def test_clock_relation_verifies_exact_source_config_guest_proof(tmp_path):
+    root = tmp_path / "campaign"
+    config = root / "deepflow-agent-standalone-a.yaml"
+    config.parent.mkdir(parents=True); config.write_text("global: {}\n")
+    relation = root / "runtime-identity-v5" / "clock-relation-a.json"
+    _write(relation, {
+        "schema": "runtime-identity-clock-relation-v5", "node": "a",
+        "boot_id": "boot-a", "pid_namespace": "pid:[1]",
+        "domain": "guest_realtime_unix_ns",
+        "relation": "documented_same_guest_realtime_relation",
+        "producer": {"source_commit": "9" * 40,
+                     "pinned_source_paths": ["agent/src/ebpf/user/socket.h"]},
+        "runtime_configuration": {"path": config.relative_to(root).as_posix(),
+                                  "sha256": _sha(config), "bytes": config.stat().st_size,
+                                  "event_clock_adjustment_to_external_domain_enabled": False},
+        "event_serialization": {"unit": "microseconds", "quantization_ns": 1000,
+                                "unix_nanosecond_conversion":
+                                "exact_integer_multiply_by_1000"},
+        "host_receipt_time_used": False,
+        "empirical_endpoint_offsets_used_as_hard_bound": False,
+        "arbitrary_tolerance_or_age_filter_used": False,
+        "clock_step_limitation_retained": True})
+    rows = _verified_clock_relations(root)
+    assert rows[0]["verified_hash_bound_source_config_guest_relation"] is True
+    assert rows[0]["evidence"]["sha256"] == _sha(relation)
+
+    config.write_text("global: {changed: true}\n")
+    with pytest.raises(ValueError, match="configuration changed"):
+        _verified_clock_relations(root)
+
+
+def test_source_clock_projection_export_revalidates_relation_captures_and_raw(tmp_path):
+    root = tmp_path / "campaign"; observations = root / "observations"
+    raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
+    raw.parent.mkdir(parents=True); raw.write_bytes(b'{"saved":"row"}\n')
+    config = observations / "deepflow-agent-standalone-a.yaml"
+    config.write_text("global: {}\n")
+    relation_path = root / "runtime-identity-v5" / "clock-relation-a.json"
+    _write(relation_path, {
+        "schema": "runtime-identity-clock-relation-v5", "node": "a",
+        "boot_id": "boot-a", "pid_namespace": "pid:[100]",
+        "domain": "guest_realtime_unix_ns",
+        "relation": "documented_same_guest_realtime_relation",
+        "producer": {"source_commit": "9" * 40, "pinned_source_paths": ["socket.h"]},
+        "runtime_configuration": {"path": config.relative_to(root).as_posix(),
+                                  "sha256": _sha(config), "bytes": config.stat().st_size,
+                                  "event_clock_adjustment_to_external_domain_enabled": False},
+        "event_serialization": {"unit": "microseconds", "quantization_ns": 1000,
+                                "unix_nanosecond_conversion":
+                                "exact_integer_multiply_by_1000"},
+        "host_receipt_time_used": False,
+        "empirical_endpoint_offsets_used_as_hard_bound": False,
+        "arbitrary_tolerance_or_age_filter_used": False,
+        "clock_step_limitation_retained": True})
+    evidence = {"kind": "documented_clock_relation",
+                "locator": relation_path.relative_to(root).as_posix(),
+                "sha256": _sha(relation_path), "bytes": relation_path.stat().st_size}
+    proofs = {}
+    for stage, point in (("before-block-1", 10), ("after-block-1", 40)):
+        _capture(root, stage, point)
+        capture_path = root / "runtime-identity-v5" / f"capture-{stage}.json"
+        capture = json.loads(capture_path.read_text())
+        proofs[stage] = {"path": capture_path.relative_to(root).as_posix(),
+                         "sha256": _sha(capture_path), "bytes": capture_path.stat().st_size,
+                         "files": capture["files"], "runner_interval": capture["runner_interval"]}
+    inventory_path = root / "runtime-identity-v5" / "inventory-training.json"
+    _write(inventory_path, {"schema": "runtime-identity-inventory-v5", "samples": [],
+                            "captures": [], "capture_lifetimes": [], "event_enclosures": [],
+                            "clock_relations": _verified_clock_relations(root),
+                            "capture_proofs": proofs})
+    locator = {"source_file": "a/l7_flow_log",
+               "retained_file": raw.relative_to(observations).as_posix(), "offset": 0,
+               "length": raw.stat().st_size, "sha256": _sha(raw)}
+    resolution = {"status": "resolved", "service_identity": {"compose_service": "database"},
+                  "process_identity": {"node": "a"}, "record_locator": locator,
+                  "clock_evidence": evidence,
+                  "bracket": {"kind": "source_event_clock",
+                              "before_stage": "before-block-1", "after_stage": "after-block-1",
+                              "clock_domain": "guest_realtime_unix_ns",
+                              "clock_relation": "documented_same_guest_realtime_relation"},
+                  "inventory_proof": {"path": inventory_path.relative_to(root).as_posix(),
+                                      "sha256": _sha(inventory_path),
+                                      "bytes": inventory_path.stat().st_size}}
+    store = ObservationStoreV5(root / "observation-index.sqlite", same_trace_parents=True)
+    store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
+        "digest", "training", "resolved_enriched", "unknown", "database", "{}",
+        json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
+    store.db.commit()
+    assert next(iter(store.service_projections().values()))["service"] == "database"
+    assert not (root / "attempt-journal.sqlite").exists()
+    config.write_text("changed: true\n")
+    with pytest.raises(ValueError, match="configuration changed"):
+        store.service_projections()
+    store.close()
 
 
 def _sample(stage, point):

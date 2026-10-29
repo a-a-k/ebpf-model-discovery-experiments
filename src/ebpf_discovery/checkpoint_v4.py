@@ -318,6 +318,19 @@ def create_checkpoint(campaign, folder: Path) -> dict:
             if path.is_file():
                 runtime_identity_dependencies.append(
                     _copy(path, live_root, folder, copied))
+        for relation_path in sorted(identity_root.glob('clock-relation-*.json')):
+            relation = json.loads(relation_path.read_text(encoding='utf-8'))
+            config_ref = (relation.get('runtime_configuration') or {}).get('path')
+            if not isinstance(config_ref, str) or not config_ref:
+                raise ValueError('runtime clock relation lacks its configuration dependency')
+            config_path = Path(config_ref)
+            if config_path.is_absolute():
+                raise ValueError('runtime clock relation configuration must be campaign-relative')
+            config_source, config_relative = _inside(live_root/config_path, live_root)
+            key = config_relative.as_posix()
+            if key not in copied:
+                runtime_identity_dependencies.append(
+                    _copy(config_source, live_root, folder, copied))
         pins = V5_PINS
     index = _backup(campaign.store.db, folder/'observation-index.sqlite')
     with campaign.ctx.journal.lock:

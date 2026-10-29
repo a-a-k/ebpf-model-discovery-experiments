@@ -131,6 +131,14 @@ def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Pa
         _json(live/'runtime-identity-v5'/'inventory-training.json', {
             'schema': 'runtime-identity-inventory-v5', 'samples': [],
             'captures': [], 'capture_lifetimes': [], 'event_enclosures': []})
+        config = live/'deepflow-agent-standalone-a.yaml'
+        config.write_text('global: {}\n', encoding='utf-8')
+        _json(live/'runtime-identity-v5'/'clock-relation-a.json', {
+            'schema': 'runtime-identity-clock-relation-v5',
+            'runtime_configuration': {
+                'path': config.relative_to(live).as_posix(),
+                'sha256': hashlib.sha256(config.read_bytes()).hexdigest(),
+                'bytes': config.stat().st_size}})
         rows = []
         for name, commit in V5_PINS.items():
             path = live/'toolchain-build'/'bin'/name.lower()
@@ -147,12 +155,16 @@ def test_graph_v5_checkpoint_binds_collector_and_common_binary_pins(tmp_path: Pa
         assert manifest['collector_provenance']['collector'] == 'coroot'
         assert manifest['files']['observations/collector.json']['sha256'] == hashlib.sha256(
             (live/'observations'/'collector.json').read_bytes()).hexdigest()
-        dependency = manifest['runtime_identity_dependencies'][0]
+        dependency = next(row for row in manifest['runtime_identity_dependencies']
+                          if row['relative_path'] == 'runtime-identity-v5/inventory-training.json')
         relative = dependency['relative_path']
         assert relative == 'runtime-identity-v5/inventory-training.json'
         assert manifest['files'][relative]['sha256'] == hashlib.sha256(
             (live/relative).read_bytes()).hexdigest() == dependency['sha256']
         assert (folder/relative).read_bytes() == (live/relative).read_bytes()
+        assert (folder/'deepflow-agent-standalone-a.yaml').read_bytes() == config.read_bytes()
+        assert any(row['relative_path'] == 'deepflow-agent-standalone-a.yaml'
+                   for row in manifest['runtime_identity_dependencies'])
         assert {row['commit'] for row in manifest['toolchain']['binaries']} == set(V5_PINS.values())
     finally:
         campaign.store.close()

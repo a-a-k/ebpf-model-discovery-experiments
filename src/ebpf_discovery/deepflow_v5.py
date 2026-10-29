@@ -98,6 +98,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self.remote_roots: dict[str, str] = {}
         self.filesystem_capacity: dict[str, int] = {}
         self.guest_context: dict[str, dict[str, str]] = {}
+        self.runtime_clocks: dict[str, dict[str, Any]] = {}
         self.resource_inventory: dict[str, dict[str, Any]] = {}
         self._seen: set[tuple[str, int, str]] = set()
         self._seen_offsets: dict[tuple[str, int], str] = {}
@@ -107,6 +108,64 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self._startup_complete = False
         self._startup_helper_nodes: set[str] = set()
         self._startup_agent_attempted_nodes: set[str] = set()
+
+    def _write_clock_relation(self, node: str, config: Path) -> dict[str, Any]:
+        """Retain the pinned same-guest timestamp construction; never estimate an offset."""
+        guest = self.guest_context[node]
+        campaign_root = self.root.parent
+        path = campaign_root / "runtime-identity-v5" / f"clock-relation-{node}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        declaration = {
+            "schema": "runtime-identity-clock-relation-v5",
+            "node": node,
+            "boot_id": guest["boot_id"],
+            "pid_namespace": guest["pid_namespace"],
+            "domain": "guest_realtime_unix_ns",
+            "relation": "documented_same_guest_realtime_relation",
+            "producer": {
+                "name": "deepflow-agent", "version": self.source_version,
+                "source_commit": self.source_commit,
+                "pinned_source_paths": [
+                    "agent/src/ebpf/user/utils.h",
+                    "agent/src/ebpf/user/socket.h",
+                    "agent/src/ebpf/user/tracer.c",
+                    "agent/src/ebpf_dispatcher.rs",
+                    "agent/src/trident.rs",
+                ],
+                "timestamp_construction": (
+                    "kernel monotonic event timestamp plus a same-guest "
+                    "CLOCK_REALTIME-CLOCK_MONOTONIC offset refreshed by the pinned producer"
+                ),
+            },
+            "runtime_configuration": {
+                "path": config.relative_to(campaign_root).as_posix(),
+                "sha256": _sha256_file(config), "bytes": config.stat().st_size,
+                "event_clock_adjustment_to_external_domain_enabled": False,
+                "producer_mode": "standalone_controller_ntp_disabled",
+            },
+            "event_serialization": {
+                "fields": ["start_time", "end_time"], "unit": "microseconds",
+                "unix_nanosecond_conversion": "exact_integer_multiply_by_1000",
+                "quantization_ns": 1000,
+            },
+            "host_receipt_time_used": False,
+            "empirical_endpoint_offsets_used_as_hard_bound": False,
+            "arbitrary_tolerance_or_age_filter_used": False,
+            "clock_step_limitation_retained": True,
+            "limitation": (
+                "an unseen guest realtime clock step between retained lifecycle samples is not "
+                "excluded; the relation establishes a shared semantic clock domain, not a "
+                "universal adjustment bound"
+            ),
+        }
+        _write_json(path, declaration)
+        evidence = {
+            "kind": "documented_clock_relation",
+            "locator": path.relative_to(campaign_root).as_posix(),
+            "sha256": _sha256_file(path), "bytes": path.stat().st_size,
+        }
+        return {"domain": declaration["domain"], "relation": declaration["relation"],
+                "evidence": evidence}
 
     def _start_receivers(self) -> None:
         """DeepFlow is file-backed; only the unchanged native OTLP path listens."""
@@ -492,6 +551,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 ),
                 encoding="utf-8",
             )
+            self.runtime_clocks[node] = self._write_clock_relation(node, config)
             remote_config = remote + "/deepflow-agent-standalone.yaml"
             remote_helper = remote + "/deepflow_snapshot_v5.py"
             self.ctx.node_put(node, config, remote_config)
@@ -543,6 +603,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "restart_permitted": False,
             "filesystem_capacity_bytes": capacities,
             "guest_context": self.guest_context,
+            "runtime_clock_relations": self.runtime_clocks,
             "resource_inventory": {
                 node: {
                     "path": f"resource-inventory-{node}.json",
@@ -834,8 +895,14 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 "controller_ntp_correction": "disabled by pinned standalone set_standalone",
                 "host_receiver_arrival_used": False,
                 "zero_guest_wall_clock_adjustment_claimed": False,
-                "hashed_runtime_clock_relation_included": False,
-                "direct_bracketing_admissible_from_config_alone": False,
+                "hashed_runtime_clock_relation_included": True,
+                "relation_scope": (
+                    "pinned source construction plus actual guest identity and runtime config; "
+                    "configuration alone is not the proof"
+                ),
+                "clock_step_limitation_retained": True,
+                "empirical_endpoint_offsets_used_as_hard_bound": False,
+                "arbitrary_tolerance_or_age_filter_used": False,
                 "pinned_source_paths": [
                     "agent/src/ebpf/user/tracer.c",
                     "agent/src/ebpf_dispatcher.rs",
@@ -907,6 +974,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     target, node=node, source_file=source_file,
                     retained_file=target.relative_to(self.root).as_posix(), seen=self._seen,
                     guest_context=self.guest_context.get(node),
+                    runtime_clock=self.runtime_clocks.get(node),
                     on_batch=retain_batch, on_accounting=retain_accounting,
                 )
             normalized += prefix["normalized_batches"]

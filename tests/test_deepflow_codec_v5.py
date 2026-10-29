@@ -121,6 +121,27 @@ def test_http_record_has_exact_time_raw_locator_and_no_invented_identity(tmp_pat
     assert accounting[0]["_runtime_identity"]["locator"]["sha256"] == attrs["deepflow.raw.sha256"]
 
 
+def test_documented_runtime_clock_is_projected_without_offset_estimation(tmp_path: Path) -> None:
+    path = tmp_path / "l7_flow_log"
+    _write(path, [_base()])
+    clock = {"domain": "guest_realtime_unix_ns",
+             "relation": "documented_same_guest_realtime_relation",
+             "evidence": {"kind": "documented_clock_relation",
+                          "locator": "runtime-identity-v5/clock-relation-a.json",
+                          "sha256": "a" * 64, "bytes": 321}}
+    batches, accounting, _ = codec_file(
+        path, node="a", guest_context={"boot_id": "boot-a", "pid_namespace": "pid:[1]"},
+        runtime_clock=clock)
+    attrs = _attrs(_spans(batches[0])[0])
+    runtime = accounting[0]["_runtime_identity"]
+    assert attrs["_runtime_identity.clock"] == {
+        **clock, "evidence": {**clock["evidence"], "bytes": "321"}}
+    assert runtime["clock"] == clock
+    assert runtime["event_start_ns"] == runtime["start"] * 1000
+    assert runtime["event_end_ns"] == runtime["end"] * 1000
+    assert "clock_adjustment_uncertainty" not in runtime["clock"]["evidence"]
+
+
 def test_http2_stream_id_and_response_header_are_not_experiment_request_id(tmp_path: Path) -> None:
     path = tmp_path / "l7_flow_log"
     _write(path, [_base(

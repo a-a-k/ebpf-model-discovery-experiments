@@ -79,6 +79,61 @@ def _verify_locator(root: Path, raw) -> tuple[dict, dict]:
                        "sha256": canonical["sha256"]}
 
 
+def _verified_clock_relations(root: Path) -> list[dict]:
+    """Verify retained source/config/guest clock declarations before resolution."""
+    rows = []
+    for path in sorted((root / "runtime-identity-v5").glob("clock-relation-*.json")):
+        value = json.loads(path.read_text(encoding="utf-8"))
+        producer, config, serialization = (value.get("producer") or {},
+                                            value.get("runtime_configuration") or {},
+                                            value.get("event_serialization") or {})
+        if (value.get("schema") != "runtime-identity-clock-relation-v5"
+                or value.get("node") not in ("a", "b")
+                or not isinstance(value.get("boot_id"), str) or not value["boot_id"]
+                or not isinstance(value.get("pid_namespace"), str) or not value["pid_namespace"]
+                or value.get("domain") != "guest_realtime_unix_ns"
+                or value.get("relation") != "documented_same_guest_realtime_relation"
+                or not isinstance(producer.get("source_commit"), str)
+                or len(producer["source_commit"]) != 40
+                or any(character not in "0123456789abcdef"
+                       for character in producer["source_commit"])
+                or not all(isinstance(item, str) and item
+                           for item in producer.get("pinned_source_paths") or [])
+                or serialization.get("unit") != "microseconds"
+                or serialization.get("quantization_ns") != 1000
+                or serialization.get("unix_nanosecond_conversion")
+                != "exact_integer_multiply_by_1000"
+                or config.get("event_clock_adjustment_to_external_domain_enabled") is not False
+                or value.get("host_receipt_time_used") is not False
+                or value.get("empirical_endpoint_offsets_used_as_hard_bound") is not False
+                or value.get("arbitrary_tolerance_or_age_filter_used") is not False
+                or value.get("clock_step_limitation_retained") is not True):
+            raise ValueError(f"runtime clock relation declaration is incomplete: {path}")
+        config_path = Path(str(config.get("path", "")))
+        if config_path.is_absolute():
+            raise ValueError("runtime clock relation config path must be campaign-relative")
+        config_path = (root / config_path).resolve()
+        if (not config_path.is_relative_to(root.resolve()) or not config_path.is_file()
+                or config_path.stat().st_size != config.get("bytes")
+                or _sha(config_path) != config.get("sha256")):
+            raise ValueError(f"runtime clock relation configuration changed: {config_path}")
+        evidence = {"kind": "documented_clock_relation",
+                    "locator": path.relative_to(root).as_posix(),
+                    "sha256": _sha(path), "bytes": path.stat().st_size}
+        rows.append({
+            "node": value["node"], "boot_id": value["boot_id"],
+            "pid_namespace": value["pid_namespace"], "domain": value["domain"],
+            "relation": value["relation"], "evidence": evidence,
+            "configuration": dict(config), "producer": dict(producer),
+            "event_serialization": dict(serialization),
+            "verified_hash_bound_source_config_guest_relation": True,
+            "host_receipt_time_used": False,
+            "arbitrary_tolerance_or_age_filter_used": False,
+            "clock_step_limitation_retained": True,
+        })
+    return rows
+
+
 def _journal_transports(journal) -> dict[str, dict]:
     with journal.lock:
         rows = list(journal.db.execute(
@@ -180,7 +235,10 @@ def refresh(campaign, stage: str) -> dict:
         if sample_stage not in capture_cache:
             capture_cache[sample_stage] = _verified_capture(root, sample_stage)
     captures = [capture_cache[key][0] for key in sorted(capture_cache)]
-    retained = inventory(captures, event_enclosures=enclosure_rows)
+    retained = inventory(captures, event_enclosures=enclosure_rows,
+                         clock_relations=_verified_clock_relations(root))
+    retained["capture_proofs"] = {
+        key: capture_cache[key][1] for key in sorted(capture_cache)}
     inventory_path = root / "runtime-identity-v5" / f"inventory-{stage}.json"
     _write(inventory_path, retained)
     inventory_proof = {"path": inventory_path.relative_to(root).as_posix(),

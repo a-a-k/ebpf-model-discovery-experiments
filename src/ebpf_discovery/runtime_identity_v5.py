@@ -175,7 +175,8 @@ def capture(ctx, stage: str) -> dict:
 
 
 def inventory(captures: Iterable[dict], capture_lifetimes: Iterable[dict] = (),
-              event_enclosures: Iterable[dict] = ()) -> dict:
+              event_enclosures: Iterable[dict] = (),
+              clock_relations: Iterable[dict] = ()) -> dict:
     samples = []
     capture_rows = []
     for item in captures:
@@ -197,8 +198,14 @@ def inventory(captures: Iterable[dict], capture_lifetimes: Iterable[dict] = (),
                       for row in enclosures if isinstance(row, dict)]
     if len(enclosure_keys) != len(enclosures) or len(set(map(repr, enclosure_keys))) != len(enclosure_keys):
         raise ValueError("runtime identity inventory has invalid or duplicate event enclosures")
+    relations = list(clock_relations)
+    relation_keys = [(row.get("node"), row.get("domain"), row.get("relation"))
+                     for row in relations if isinstance(row, dict)]
+    if len(relation_keys) != len(relations) or len(set(relation_keys)) != len(relation_keys):
+        raise ValueError("runtime identity inventory has invalid or duplicate clock relations")
     return {"schema": SCHEMA, "samples": samples, "captures": capture_rows,
-            "capture_lifetimes": lifetimes, "event_enclosures": enclosures}
+            "capture_lifetimes": lifetimes, "event_enclosures": enclosures,
+            "clock_relations": relations}
 
 
 def _unknown(runtime: Any, *reasons: str) -> dict:
@@ -218,6 +225,27 @@ def _process(sample: dict, pid: int) -> dict | None:
     return rows[0] if len(rows) == 1 else None
 
 
+def _clock_bracket(index: dict, node: str, field: str, start_ns: int,
+                   end_ns: int) -> tuple[str, str] | None:
+    """Find one exact before/after workload bracket in the declared clock domain."""
+    matches = []
+    for (stage, sample_node), before_rows in index.items():
+        if sample_node != node or not isinstance(stage, str) or not stage.startswith("before-"):
+            continue
+        after_stage = "after-" + stage.removeprefix("before-")
+        after_rows = index.get((after_stage, node), [])
+        if len(before_rows) != 1 or len(after_rows) != 1:
+            continue
+        try:
+            bracketed = (before_rows[0]["clocks"]["ended"][field] <= start_ns
+                         and end_ns <= after_rows[0]["clocks"]["started"][field])
+        except (KeyError, TypeError):
+            continue
+        if bracketed:
+            matches.append((stage, after_stage))
+    return matches[0] if len(matches) == 1 else None
+
+
 def _documented_evidence(value: Any) -> bool:
     return bool(
         isinstance(value, dict)
@@ -228,6 +256,37 @@ def _documented_evidence(value: Any) -> bool:
         and isinstance(value.get("sha256"), str)
         and re.fullmatch(r"[0-9a-f]{64}", value["sha256"])
     )
+
+
+def _evidence_key(value: Any) -> tuple | None:
+    if not _documented_evidence(value):
+        return None
+    size = _integer(value.get("bytes"), positive=False)
+    if value.get("bytes") is not None and size is None:
+        return None
+    return value.get("kind"), value.get("locator"), value.get("sha256"), size
+
+
+def _clock_relation(runtime: dict, retained_inventory: dict, clock: dict) -> dict | None:
+    """Match a source declaration to one independently hash-verified retained relation."""
+    evidence = clock.get("evidence")
+    if not _documented_evidence(evidence):
+        return None
+    rows = [row for row in retained_inventory.get("clock_relations") or []
+            if isinstance(row, dict)
+            and row.get("node") == runtime.get("node")
+            and row.get("boot_id") == runtime.get("boot_id")
+            and row.get("pid_namespace") == runtime.get("pid_namespace")
+            and row.get("domain") == clock.get("domain")
+            and row.get("relation") == clock.get("relation")
+            and _evidence_key(row.get("evidence")) == _evidence_key(evidence)]
+    if len(rows) != 1:
+        return None
+    row = rows[0]
+    return row if (row.get("verified_hash_bound_source_config_guest_relation") is True
+                   and row.get("host_receipt_time_used") is False
+                   and row.get("arbitrary_tolerance_or_age_filter_used") is False
+                   and row.get("clock_step_limitation_retained") is True) else None
 
 
 def _ordered_runner_sequence(value: Any, keys: tuple[str, ...]) -> bool:
@@ -334,10 +393,9 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
         if clock.get("relation") not in relations or not _documented_evidence(evidence):
             return _unknown(runtime, "source_clock_compatibility_unproven")
         if (clock["domain"] == "guest_realtime_unix_ns"
-                and not (evidence.get("kind") == "documented_clock_relation"
-                         and evidence.get("clock_adjustment_uncertainty")
-                         == "included_in_event_interval_bounds")):
-            return _unknown(runtime, "realtime_clock_adjustment_uncertainty_unbounded")
+                and clock.get("relation") == "documented_same_guest_realtime_relation"
+                and _clock_relation(runtime, retained_inventory, clock) is None):
+            return _unknown(runtime, "source_clock_relation_evidence_unverified")
         bracket_kind = "source_event_clock"
     else:
         enclosure = _event_enclosure(runtime, retained_inventory, node)
@@ -352,6 +410,18 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
             before_stage, after_stage = lifetime["before_stage"], lifetime["after_stage"]
             field, evidence = None, lifetime["evidence"]
             bracket_kind = "whole_fresh_capture_lifetime"
+    raw_start_ns, raw_end_ns = runtime.get("event_start_ns"), runtime.get("event_end_ns")
+    start_ns = _integer(raw_start_ns, positive=False)
+    end_ns = _integer(raw_end_ns, positive=False)
+    if bracket_kind == "source_event_clock" and (start_ns is None or end_ns is None
+                                                   or end_ns < start_ns):
+        return _unknown(runtime, "source_event_interval_invalid")
+    if (bracket_kind == "source_event_clock"
+            and (not isinstance(before_stage, str) or not isinstance(after_stage, str))):
+        selected = _clock_bracket(index, node, field, start_ns, end_ns)
+        if selected is None:
+            return _unknown(runtime, "unique_lifecycle_clock_bracket_missing")
+        before_stage, after_stage = selected
     if not isinstance(before_stage, str) or not isinstance(after_stage, str):
         return _unknown(runtime, "lifecycle_bracket_stage_missing")
     before, after = _sample(index, before_stage, node), _sample(index, after_stage, node)
@@ -362,12 +432,7 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
             or source_guest_identity != (before.get("boot_id"), before.get("host_pid_namespace"))
             or source_guest_identity != (after.get("boot_id"), after.get("host_pid_namespace"))):
         return _unknown(runtime, "source_guest_boot_or_pid_namespace_mismatch")
-    raw_start_ns, raw_end_ns = runtime.get("event_start_ns"), runtime.get("event_end_ns")
-    start_ns = _integer(raw_start_ns, positive=False)
-    end_ns = _integer(raw_end_ns, positive=False)
     if bracket_kind == "source_event_clock":
-        if start_ns is None or end_ns is None or end_ns < start_ns:
-            return _unknown(runtime, "source_event_interval_invalid")
         try:
             bracketed = (before["clocks"]["ended"][field] <= start_ns
                          and end_ns <= after["clocks"]["started"][field])

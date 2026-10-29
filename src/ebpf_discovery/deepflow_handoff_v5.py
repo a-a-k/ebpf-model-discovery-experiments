@@ -216,6 +216,8 @@ class DeepFlowDerivedValidator:
                              if isinstance(runtime.get(key), str) and runtime[key]}
             expected_span, expected_accounting = normalize_record(
                 RawRecord(**locator, raw=raw), node=node, guest_context=guest_context,
+                runtime_clock=(runtime.get("clock")
+                               if isinstance(runtime.get("clock"), dict) else None),
             )
             if expected_span is None or any(
                 saved_accounting.get(key) != value

@@ -297,7 +297,9 @@ class ObservationStoreV5(ObservationStore):
                 'training_rows_immutable': True}
 
     def service_projections(self):
-        from .identity_projection_v5 import journal_event_sha256
+        from .identity_projection_v5 import (_verified_clock_relations,
+                                              journal_event_sha256)
+        from .runtime_identity_v5 import _evidence_key
         result = {}
         root = self.path.parent
         rows = list(self.db.execute(
@@ -320,38 +322,63 @@ class ObservationStoreV5(ObservationStore):
                 verified_files[key] = body
             return verified_files[key]
 
+        decoded_rows = [(json.loads(resolution), inventory_path, inventory_sha)
+                        for resolution, inventory_path, inventory_sha in rows]
+        needs_journal = any((row.get('bracket') or {}).get('kind') != 'source_event_clock'
+                            for row, _, _ in decoded_rows)
         journal_path = root / 'attempt-journal.sqlite'
-        if rows and not journal_path.is_file():
+        if needs_journal and not journal_path.is_file():
             raise ValueError('runtime identity journal dependency unavailable before export')
-        journal = sqlite3.connect(journal_path) if rows else None
+        journal = sqlite3.connect(journal_path) if needs_journal else None
         if journal is not None:
             journal.execute('BEGIN')
         journal_events = {}
         try:
-            for resolution, inventory_path, inventory_sha in rows:
+            verified_relations = None
+            for row, inventory_path, inventory_sha in decoded_rows:
                 path = root / inventory_path
-                row = json.loads(resolution)
                 inventory_proof = row.get('inventory_proof') or {}
-                verified(path, inventory_sha, inventory_proof.get('bytes'),
-                         'runtime identity inventory dependency')
+                inventory_body = verified(
+                    path, inventory_sha, inventory_proof.get('bytes'),
+                    'runtime identity inventory dependency')
+                retained_inventory = json.loads(inventory_body)
                 evidence = row.get('clock_evidence') or {}
-                evidence_path = root / str(evidence.get('locator', ''))
-                enclosure = json.loads(verified(
-                    evidence_path, evidence.get('sha256'), evidence.get('bytes'),
-                    'runtime identity enclosure evidence'))
-                for label in ('started', 'terminal'):
-                    event = (enclosure.get('transport') or {}).get(label) or {}
-                    sequence = event.get('seq')
-                    if sequence not in journal_events:
-                        journal_events[sequence] = journal.execute(
-                            'SELECT seq,kind,wall_ns,monotonic_ns,data FROM events WHERE seq=?',
-                            (sequence,)).fetchone()
-                    actual = journal_events[sequence]
-                    if (actual is None or journal_event_sha256(*actual)
-                            != event.get('event_row_sha256')):
-                        raise ValueError('runtime identity journal event changed before export')
-                for label in ('before_capture', 'after_capture'):
-                    proof = enclosure.get(label) or {}
+                bracket = row.get('bracket') or {}
+                if bracket.get('kind') == 'source_event_clock':
+                    if verified_relations is None:
+                        verified_relations = _verified_clock_relations(root)
+                    matches = [relation for relation in verified_relations
+                               if relation.get('node') == (row.get('process_identity') or {}).get('node')
+                               and relation.get('domain') == bracket.get('clock_domain')
+                               and relation.get('relation') == bracket.get('clock_relation')
+                               and _evidence_key(relation.get('evidence'))
+                               == _evidence_key(evidence)]
+                    if len(matches) != 1:
+                        raise ValueError('runtime identity clock relation changed before export')
+                    capture_proofs = retained_inventory.get('capture_proofs') or {}
+                    lifecycle_proofs = [capture_proofs.get(bracket.get(name))
+                                        for name in ('before_stage', 'after_stage')]
+                    if any(not isinstance(proof, dict) for proof in lifecycle_proofs):
+                        raise ValueError('runtime identity clock bracket proof is unavailable')
+                else:
+                    evidence_path = root / str(evidence.get('locator', ''))
+                    enclosure = json.loads(verified(
+                        evidence_path, evidence.get('sha256'), evidence.get('bytes'),
+                        'runtime identity enclosure evidence'))
+                    for label in ('started', 'terminal'):
+                        event = (enclosure.get('transport') or {}).get(label) or {}
+                        sequence = event.get('seq')
+                        if sequence not in journal_events:
+                            journal_events[sequence] = journal.execute(
+                                'SELECT seq,kind,wall_ns,monotonic_ns,data FROM events WHERE seq=?',
+                                (sequence,)).fetchone()
+                        actual = journal_events[sequence]
+                        if (actual is None or journal_event_sha256(*actual)
+                                != event.get('event_row_sha256')):
+                            raise ValueError('runtime identity journal event changed before export')
+                    lifecycle_proofs = [(enclosure.get(label) or {})
+                                        for label in ('before_capture', 'after_capture')]
+                for proof in lifecycle_proofs:
                     capture = root / str(proof.get('path', ''))
                     verified(capture, proof.get('sha256'), proof.get('bytes'),
                              'runtime identity capture manifest')
@@ -359,19 +386,29 @@ class ObservationStoreV5(ObservationStore):
                         member = capture.parent / name
                         verified(member, member_proof.get('sha256'), member_proof.get('bytes'),
                                  'runtime identity capture member')
-                raw_proof = enclosure.get('raw_locator') or {}
-                raw_path = root / str(raw_proof.get('path', ''))
-                try:
-                    with raw_path.open('rb') as stream:
-                        stream.seek(int(raw_proof['offset']))
-                        raw_bytes = stream.read(int(raw_proof['length']))
-                except (OSError, KeyError, TypeError, ValueError) as exc:
-                    raise ValueError('runtime identity raw locator unavailable before export') from exc
-                if hashlib.sha256(raw_bytes).hexdigest() != raw_proof.get('sha256'):
-                    raise ValueError('runtime identity raw locator changed before export')
                 canonical = _locator(row.get('record_locator'))
                 if canonical is None:
                     raise ValueError('resolved runtime identity lacks canonical raw locator')
+                if bracket.get('kind') == 'source_event_clock':
+                    raw_path = (root / 'observations' / canonical['retained_file']).resolve()
+                    if not raw_path.is_relative_to(root.resolve()):
+                        raise ValueError('runtime identity raw locator leaves campaign root')
+                    raw_offset, raw_length, raw_sha = (canonical['offset'], canonical['length'],
+                                                       canonical['sha256'])
+                else:
+                    raw_proof = enclosure.get('raw_locator') or {}
+                    raw_path = root / str(raw_proof.get('path', ''))
+                    raw_offset, raw_length, raw_sha = (raw_proof.get('offset'),
+                                                       raw_proof.get('length'),
+                                                       raw_proof.get('sha256'))
+                try:
+                    with raw_path.open('rb') as stream:
+                        stream.seek(int(raw_offset))
+                        raw_bytes = stream.read(int(raw_length))
+                except (OSError, KeyError, TypeError, ValueError) as exc:
+                    raise ValueError('runtime identity raw locator unavailable before export') from exc
+                if hashlib.sha256(raw_bytes).hexdigest() != raw_sha:
+                    raise ValueError('runtime identity raw locator changed before export')
                 key = tuple(canonical[name] for name in
                             ('source_file', 'retained_file', 'offset', 'length', 'sha256'))
                 value = {'service': row['service_identity']['compose_service'],

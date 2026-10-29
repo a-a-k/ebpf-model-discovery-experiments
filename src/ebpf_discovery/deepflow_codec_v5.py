@@ -332,7 +332,9 @@ def _protocol_attributes(record: dict[str, Any], attributes: dict[str, Any]) -> 
 
 
 def normalize_record(raw: RawRecord, *, node: str,
-                     guest_context: dict[str, str] | None = None) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+                     guest_context: dict[str, str] | None = None,
+                     runtime_clock: dict[str, Any] | None = None,
+                     ) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     decoded, conflicts, parse_error = _parse(raw.raw)
     locator = {
         "source_file": raw.source_file, "retained_file": raw.retained_file,
@@ -394,6 +396,16 @@ def normalize_record(raw: RawRecord, *, node: str,
         "unit": "microseconds",
         "locator": dict(locator),
     }
+    if runtime_clock is not None:
+        if (runtime_clock.get("domain") != "guest_realtime_unix_ns"
+                or runtime_clock.get("relation") != "documented_same_guest_realtime_relation"
+                or not isinstance(runtime_clock.get("evidence"), dict)):
+            raise ValueError("DeepFlow runtime clock relation has an unsupported declaration")
+        runtime_identity.update({
+            "clock": dict(runtime_clock),
+            "event_start_ns": start_us * 1000,
+            "event_end_ns": end_us * 1000,
+        })
     request_nonce = _string(decoded, "x_request_id_0")
     if protocol in {"Http1", "Http2", "Grpc"} and request_nonce:
         runtime_identity["request_nonce"] = request_nonce
@@ -402,8 +414,8 @@ def normalize_record(raw: RawRecord, *, node: str,
         if decoded.get("tap_side") == "ServerProcess":
             runtime_identity["event_role"] = "synchronous_server_entry"
     for key in ("node", "host_pid", "boot_id", "pid_namespace", "pid_scope", "source_clock",
-                "start", "end", "unit", "locator", "request_nonce", "method", "route",
-                "event_role"):
+                "start", "end", "unit", "locator", "clock", "event_start_ns", "event_end_ns",
+                "request_nonce", "method", "route", "event_role"):
         _add_if(attributes, "_runtime_identity." + key, runtime_identity.get(key))
     side = decoded.get("tap_side")
     kind = "SPAN_KIND_CLIENT" if side == "ClientProcess" else (
@@ -476,6 +488,7 @@ def codec_file(path: Path, *, node: str, source_file: str | None = None,
                limit: int | None = None, seen: set[tuple[str, int, str]] | None = None,
                batch_size: int = 256,
                guest_context: dict[str, str] | None = None,
+               runtime_clock: dict[str, Any] | None = None,
                on_batch: Callable[[dict[str, Any]], None] | None = None,
                on_accounting: Callable[[dict[str, Any]], None] | None = None,
                ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -506,7 +519,8 @@ def codec_file(path: Path, *, node: str, source_file: str | None = None,
                 "technical_failure": False,
             }
         else:
-            span, entry = normalize_record(raw, node=node, guest_context=guest_context)
+            span, entry = normalize_record(
+                raw, node=node, guest_context=guest_context, runtime_clock=runtime_clock)
             seen.add(key)
         (on_accounting if on_accounting is not None else accounting.append)(entry)
         counts["unclassified_records"] += entry["status"] == "unclassified"
