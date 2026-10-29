@@ -527,3 +527,20 @@ design and actual-code GO, followed by CI `40940370220`. Its
 [scope and evidence contract](JOURNAL_MEMORY_V5.md) require saved-journal byte
 equivalence before affected new starts. It does not establish the shutdown cause
 or remove all possible full-campaign memory risks.
+## Saved journal hydration validation
+
+The root agent and independent skeptic approved a bounded saved-evidence check
+for the journal-memory repair under the original criterion. The strongest
+baseline is the exact `f6cb591` bulk `_journal_transports` implementation, not
+a graph or accuracy proxy. The candidate must reconstruct the same complete
+transport dictionary or `None` for every request from immutable artifact
+`12917472672`, using the same retained SQLite journal and semantic knowledge.
+
+The validator verifies the complete artifact against its API digest, extracts
+only `attempt-journal.sqlite`, and runs the old bulk implementation and current
+one-at-a-time hydration in separate processes. It compares canonical serialized
+bytes and hashes for every request. Timing, peak RSS and the reused campaign cost
+are retained, but validation success claims only evidence equivalence; it does
+not claim a memory improvement, run workloads, refit models, or compute graphs,
+forecasts, scores or outcomes. Independent actual-code review and an Actions
+result are still required before this check can qualify the repair.
