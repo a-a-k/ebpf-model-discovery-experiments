@@ -311,16 +311,20 @@ def normalize_record(raw: RawRecord, *, node: str,
     attributes["deepflow.event.end_time_us"] = end_us
     name, protocol_warnings = _protocol_attributes(decoded, attributes)
     warnings.extend(protocol_warnings)
-    pid_scope = {
+    guest_scope = {
         key: value for key, value in (guest_context or {}).items()
         if key in {"boot_id", "pid_namespace"} and value
     }
+    host_pid = attributes.get("process.pid")
     runtime_identity = {
         "node": node,
-        "host_pid": attributes.get("process.pid"),
-        "boot_id": pid_scope.get("boot_id"),
-        "pid_namespace": pid_scope.get("pid_namespace"),
-        "pid_scope": pid_scope,
+        "host_pid": host_pid,
+        "boot_id": guest_scope.get("boot_id"),
+        "pid_namespace": guest_scope.get("pid_namespace"),
+        # The collector runs with --pid=host and DeepFlow serializes the
+        # kernel-observed process_id_0/1, so this coordinate is the guest host
+        # PID namespace, not the collector container's private namespace.
+        "pid_scope": "guest_host" if host_pid is not None else None,
         "source_clock": SOURCE_CLOCK,
         "start": start_us,
         "end": end_us,

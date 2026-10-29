@@ -78,6 +78,7 @@ def test_http_record_has_exact_time_raw_locator_and_no_invented_identity(tmp_pat
     assert attrs["_runtime_identity.request_nonce"] == "attempt-step-1"
     assert attrs["_runtime_identity.node"] == "a"
     assert attrs["_runtime_identity.host_pid"] == "123"
+    assert attrs["_runtime_identity.pid_scope"] == "guest_host"
     assert attrs["_runtime_identity.source_clock"].startswith("deepflow_guest_realtime")
     assert attrs["_runtime_identity.locator"]["sha256"] == attrs["deepflow.raw.sha256"]
     assert attrs["_runtime_identity.method"] == "GET"

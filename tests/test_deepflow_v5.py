@@ -159,6 +159,7 @@ def test_capture_batches_flat_raw_with_portable_per_record_provenance(tmp_path: 
     assert attrs["_runtime_identity.request_nonce"] == "step-1"
     assert attrs["_runtime_identity.boot_id"] == "boot-a"
     assert attrs["_runtime_identity.pid_namespace"] == "pid:[1]"
+    assert attrs["_runtime_identity.pid_scope"] == "guest_host"
     assert attrs["_runtime_identity.locator"]["sha256"] == attrs["deepflow.raw.sha256"]
     assert not Path(attrs["deepflow.raw.retained_file"]).is_absolute()
     assert "traceId" not in spans[0] and "spanId" not in spans[0]
@@ -171,6 +172,7 @@ def test_capture_batches_flat_raw_with_portable_per_record_provenance(tmp_path: 
     assert accounting[0]["_runtime_identity"]["request_nonce"] == "step-1"
     assert accounting[0]["_runtime_identity"]["boot_id"] == "boot-a"
     assert accounting[0]["_runtime_identity"]["pid_namespace"] == "pid:[1]"
+    assert accounting[0]["_runtime_identity"]["pid_scope"] == "guest_host"
     assert accounting[0]["_runtime_identity"]["locator"]["sha256"] == (
         attrs["deepflow.raw.sha256"]
     )
