@@ -66,3 +66,26 @@ class Toolchain(ToolchainV4):
     def bering_collector_profile(self):
         return {'collector': self.collector_provenance['collector'],
                 'input_type': 'ebpf-obi' if self._legacy_obi() else 'ebpf-otlp'}
+
+    def select_entry_evidence(self, plans, contract, source, untyped):
+        from .selection_v5 import select_planned
+        from .selection_v4 import select_planned as select_planned_v4
+        selected, evidence = select_planned(
+            self.store, plans, contract, source, untyped, include_descendants=False)
+        legacy_selected, legacy_evidence = select_planned_v4(
+            self.store, plans, contract, source, untyped, include_descendants=False)
+        evidence['legacy_v4_exact_selector'] = {
+            'evidence': legacy_evidence,
+            'selected_identity_counts': {key: len(value)
+                                         for key, value in legacy_selected.items()},
+            'paired_diagnostic_only': True,
+        }
+        return selected, evidence
+
+    def endpoint_entry_evidence(self, roots, step, entry, endpoints):
+        from .binding_v5 import endpoint_alias_evidence
+        return endpoint_alias_evidence(self.store, roots, step, entry, endpoints)
+
+    def supplied_entry_role_evidence(self, roots, entry_services, untyped_components):
+        from .selection_v5 import supplied_entry_roles
+        return supplied_entry_roles(self.store, roots, entry_services, untyped_components)

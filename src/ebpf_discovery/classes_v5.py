@@ -11,7 +11,8 @@ from pathlib import Path
 
 from . import classes_v4 as legacy
 from .evaluate import ari
-from .selection_v4 import bind_entry
+from .selection_v4 import method_path, valid_identity
+from .selection_v5 import bind_entry
 
 
 def _write(path, value):
@@ -36,6 +37,12 @@ def describe(store, plan, declaration, source):
                 row["status"] = "entry_unavailable"
                 if reason != "entry_missing":
                     errors.append(reason)
+                steps.append(row)
+                continue
+            if not valid_identity(root.get('trace_id'), root.get('span_id')):
+                row['status'] = 'entry_bound_without_genuine_ancestry'
+                row['observation_digest'] = root.get('_observation_digest')
+                row['observation_provenance'] = root.get('_observation_provenance', [])
                 steps.append(row)
                 continue
             tokens, error = legacy._descendant_tokens(store, root)
@@ -68,6 +75,28 @@ def describe(store, plan, declaration, source):
             "interpretation": "positive source-local ancestry only; absence is not a negative call fact"}
 
 
+def _attempt_signature(store, plan, declaration, source):
+    aliases = legacy._entry_aliases(declaration)
+    untyped = getattr(declaration, 'UNTYPED_ENTRY_COMPONENTS', {})
+    sources = ('ebpf', 'native') if source == 'combined' else (source,)
+    sequence, reasons = [], Counter()
+    for step in plan.get('http_steps', []):
+        observed, ambiguous = [], False
+        for actual_source in sources:
+            root, reason = bind_entry(store, actual_source, step.get('request_id'), step,
+                                      aliases, untyped.get(actual_source, ()))
+            reasons[actual_source+':'+reason] += 1
+            if reason not in ('unique_observation_entry', 'entry_missing'):
+                ambiguous = True
+            if root is not None:
+                method, route = method_path(root)
+                observed.append({'source': actual_source, 'method': method, 'route': route})
+        if ambiguous or not observed:
+            return None, dict(reasons)
+        sequence.append(observed)
+    return (sequence, dict(reasons)) if sequence else (None, dict(reasons))
+
+
 def fit(store, plans, declaration, out):
     out = Path(out)
     old = legacy.fit(store, plans, declaration, out)
@@ -82,14 +111,23 @@ def fit(store, plans, declaration, out):
              "fit_features_exclude": old["fit_features_exclude"]}
     for source in legacy.SOURCES:
         families = {}
-        for family in old["sources"][source]["base"]["classes"]:
-            families[legacy._key(family["signature"])] = {
-                **family, "structural_patterns": [], "descriptor_states": {},
-                "training_descriptors": []}
+        counts = Counter()
+        unknown = Counter()
+        for plan in training:
+            signature, reasons = _attempt_signature(store, plan, declaration, source)
+            if signature is None:
+                unknown.update(reasons or {'unbound_attempt': 1})
+            else:
+                counts[legacy._key(signature)] += 1
+        for signature, count in sorted(counts.items()):
+            families[signature] = {
+                'class_id': legacy._class_id(signature), 'signature': json.loads(signature),
+                'training_count': count, 'structural_patterns': [],
+                'descriptor_states': {}, 'training_descriptors': []}
         patterns = {key: Counter() for key in families}
         states = {key: Counter() for key in families}
         for plan in training:
-            signature, _ = legacy._attempt_signature(store, plan, declaration, source, "base")
+            signature, _ = _attempt_signature(store, plan, declaration, source)
             key = legacy._key(signature)
             if signature is None or key not in families:
                 continue
@@ -109,7 +147,9 @@ def fit(store, plans, declaration, out):
                 for pattern, count in sorted(patterns[key].items())]
             family["descriptor_states"] = dict(states[key])
         model["sources"][source] = {"families": list(families.values()),
-                                    "training_attempts": len(training)}
+                                    "training_attempts": len(training),
+                                    'unknown_attempts': len(training)-sum(counts.values()),
+                                    'binding_reasons': dict(unknown)}
     _write(out / "classes-family-model.json", model)
     return model
 
@@ -136,7 +176,7 @@ def _assign(store, plans, declaration, model, phase):
         for plan in plans:
             if plan.get("phase") != phase:
                 continue
-            signature, reasons = legacy._attempt_signature(store, plan, declaration, source, "base")
+            signature, reasons = _attempt_signature(store, plan, declaration, source)
             family = families.get(legacy._key(signature)) if signature is not None else None
             descriptor = describe(store, plan, declaration, source)
             rows.append({"attempt_id": plan.get("attempt_id"), "phase": phase,

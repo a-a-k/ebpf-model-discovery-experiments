@@ -127,7 +127,10 @@ def _index_table_proof(path: Path) -> dict:
         # All three pinned tables are ordinary rowid tables. SQLite backup
         # preserves rowids; scanning them avoids random full-row reads through
         # the digest/path indexes while retaining every column in the proof.
-        for table in ("spans", "links", "files"):
+        tables = ["spans", "links", "files"]
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='observation_provenance'").fetchone():
+            tables.append("observation_provenance")
+        for table in tables:
             digest, count = hashlib.sha256(), 0
             for row in db.execute(f"SELECT rowid,* FROM {table} ORDER BY rowid"):
                 digest.update(json.dumps(row, separators=(",", ":"), ensure_ascii=False).encode())
@@ -159,8 +162,8 @@ def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path
         temporary.unlink(missing_ok=True)
 
 
-def _readonly_store(path: Path) -> ObservationStore:
-    store = ObservationStore.__new__(ObservationStore)
+def _readonly_store(path: Path, store_type=ObservationStore) -> ObservationStore:
+    store = store_type.__new__(store_type)
     store.same_trace_parents = True
     store.path = Path(path)
     store.db = sqlite3.connect(f"file:{store.path.resolve().as_posix()}?mode=ro&immutable=1", uri=True)
@@ -307,7 +310,11 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
         declaration = importlib.import_module(f"systems.{expected['system']}.experiment_v4")
         old_bin = os.environ.get("PBS_BIN")
         os.environ["PBS_BIN"] = str((campaign_root / "toolchain-build" / "bin").resolve())
-        store = _readonly_store(campaign_root / "observation-index.sqlite")
+        store_type = ObservationStore
+        if collector_provenance is not None:
+            from .store_v5 import ObservationStoreV5
+            store_type = ObservationStoreV5
+        store = _readonly_store(campaign_root / "observation-index.sqlite", store_type)
         try:
             with child_go_environment(WORKER_BERING_GO_ENV) as go_environment:
                 # This setting affects every Bering branch, not the Python

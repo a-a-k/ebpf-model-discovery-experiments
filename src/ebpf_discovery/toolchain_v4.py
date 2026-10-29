@@ -372,6 +372,9 @@ class Toolchain:
         """Compatibility seam for protocol-specific retained entry binding."""
         return endpoint_alias_evidence(self.store, roots, step, entry, endpoints)
 
+    def supplied_entry_role_evidence(self, roots, entry_services, untyped_components):
+        return supplied_entry_roles(self.store, roots, entry_services, untyped_components)
+
     def command(self, tool, args, folder, name):
         started = time.time_ns()
         result = self.ctx.run([str(self.bin/tool), *map(str, args)], timeout=None, check=False)
@@ -471,8 +474,8 @@ class Toolchain:
                 for source in ('ebpf', 'native'):
                     _, evidence = self.select_entry_evidence(plans, contract, source, untyped)
                     self.entry_evidence[source, name] = evidence
-                    for identity, declaration in supplied_entry_roles(
-                            self.store, evidence['roots'], contract['entry_services'], untyped).items():
+                    for identity, declaration in self.supplied_entry_role_evidence(
+                            evidence['roots'], contract['entry_services'], untyped).items():
                         if identity in roles and roles[identity] != declaration:
                             raise ValueError('Conflicting supplied role declarations for one source identity')
                         roles[identity] = declaration
