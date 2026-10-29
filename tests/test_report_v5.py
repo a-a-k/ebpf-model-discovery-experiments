@@ -1,9 +1,11 @@
 import hashlib
 import json
 from pathlib import Path
+import zipfile
 
 import pytest
 
+from ebpf_discovery.artifact_recovery_v5 import recover_declared_files, retain_unavailable
 from ebpf_discovery.report_v5 import build, render
 
 
@@ -138,6 +140,92 @@ def test_hash_stage_and_source_pin_mismatches_are_rejected(tmp_path: Path) -> No
     declarations = declared(tmp_path / "three.json", [run(7, "main")])
     with pytest.raises(ValueError, match="source pin mismatch"):
         build([tmp_path / "three"], declarations, tmp_path / "out3")
+
+
+def test_historically_omitted_declared_file_is_retained_unavailable(
+        tmp_path: Path) -> None:
+    folder, _ = summary(tmp_path / "inputs", 18, "main")
+    journal = b'{"attempt":1}\n'
+    manifest = json.loads((folder / "evaluation-manifest.json").read_text())
+    manifest["files_sha256"]["attempt-journal.jsonl"] = hashlib.sha256(
+        journal).hexdigest()
+    write(folder / "evaluation-manifest.json", manifest)
+    provenance_path = folder / "artifact-provenance.json"
+    provenance = json.loads(provenance_path.read_text())
+    source = {
+        "repository": provenance["repository"], "run_id": 18,
+        "head_sha": "a" * 40,
+        "compact_artifact_id": provenance["artifact_id"],
+        "compact_artifact_name": provenance["name"],
+        "compact_artifact_digest": provenance["digest"],
+        "full_artifact_id": provenance["full_artifact_id"],
+        "full_artifact_name": provenance["full_artifact_name"],
+        "full_artifact_digest": provenance["full_artifact_digest"],
+        "full_artifact_size_in_bytes": None,
+    }
+    proof = retain_unavailable(folder, [{
+        "name": "attempt-journal.jsonl",
+        "manifest_sha256": hashlib.sha256(journal).hexdigest(),
+    }], source, "full_artifact_missing")
+    proof_path = folder / "declared-file-recovery.json"
+    provenance["declared_file_recovery"] = {
+        "path": proof_path.name, "sha256": sha(proof_path),
+        "status": proof["status"],
+    }
+    write(provenance_path, provenance)
+    declarations = declared(tmp_path / "declared.json", [run(18, "main")])
+
+    result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
+
+    attempt = result["main_attempts"][0]
+    assert attempt["reason"] == "manifest_declared_file_unavailable"
+    assert attempt["eligible_main_coverage"] is False
+    assert attempt["evaluation"] is None
+    assert attempt["missing_manifest_declared_files"] == proof["requested_files"]
+    assert result["grid"]["technically_complete_main_cells"] == 0
+
+
+def test_recovered_declared_file_and_full_source_are_revalidated(
+        tmp_path: Path) -> None:
+    folder, evaluation = summary(tmp_path / "inputs", 19, "main")
+    journal = b'{"attempt":1}\n'
+    manifest = json.loads((folder / "evaluation-manifest.json").read_text())
+    manifest["files_sha256"]["attempt-journal.jsonl"] = hashlib.sha256(
+        journal).hexdigest()
+    write(folder / "evaluation-manifest.json", manifest)
+    archive = tmp_path / "full.zip"
+    with zipfile.ZipFile(archive, "w") as bundle:
+        bundle.writestr("attempt-journal.jsonl", journal)
+    full_digest = "sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest()
+    provenance_path = folder / "artifact-provenance.json"
+    provenance = json.loads(provenance_path.read_text())
+    provenance["full_artifact_digest"] = full_digest
+    source = {
+        "repository": provenance["repository"], "run_id": 19,
+        "head_sha": "a" * 40,
+        "compact_artifact_id": provenance["artifact_id"],
+        "compact_artifact_name": provenance["name"],
+        "compact_artifact_digest": provenance["digest"],
+        "full_artifact_id": provenance["full_artifact_id"],
+        "full_artifact_name": provenance["full_artifact_name"],
+        "full_artifact_digest": full_digest,
+        "full_artifact_size_in_bytes": archive.stat().st_size,
+    }
+    proof = recover_declared_files(folder, archive, source)
+    proof_path = folder / "declared-file-recovery.json"
+    provenance["declared_file_recovery"] = {
+        "path": proof_path.name, "sha256": sha(proof_path),
+        "status": proof["status"],
+    }
+    write(provenance_path, provenance)
+    declarations = declared(tmp_path / "declared.json", [run(19, "main")])
+
+    result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
+
+    attempt = result["main_attempts"][0]
+    assert attempt["evaluation"] == evaluation
+    assert attempt["eligible_main_coverage"] is True
+    assert result["grid"]["technically_complete_main_cells"] == 1
 
 
 def test_status_identity_and_compact_zip_proof_are_cross_checked(tmp_path: Path) -> None:

@@ -255,6 +255,7 @@ jobs:
             work/campaign/freeze-integrity.json
             work/campaign/toolchain/forecasts.json
             work/campaign/evidence-v4.json
+            work/campaign/attempt-journal.jsonl
             work/campaign/classes-v5.json
             work/campaign/classes-v4.json
             work/campaign/observations/collector.json

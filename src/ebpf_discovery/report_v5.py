@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 from typing import Any
+import zlib
 
 
 COLLECTORS = ("obi", "deepflow", "newrelic", "coroot")
@@ -212,16 +213,113 @@ def _saved_summaries(roots: list[Path], declarations: dict[tuple[int, tuple], di
             "full_artifact_missing" if artifact.get("full_artifact_id") is None else
             "full_artifact_provenance_incomplete"
         )
+        recovery_ref = artifact.get("declared_file_recovery")
+        recovery = None
+        if recovery_ref is not None:
+            if (not isinstance(recovery_ref, dict)
+                    or recovery_ref.get("path") != "declared-file-recovery.json"
+                    or not isinstance(recovery_ref.get("sha256"), str)):
+                raise ValueError(f"invalid declared-file recovery reference: {folder}")
+            recovery_path = folder / recovery_ref["path"]
+            if (not recovery_path.is_file()
+                    or _digest(recovery_path) != recovery_ref["sha256"]):
+                raise ValueError(f"declared-file recovery proof mismatch: {folder}")
+            recovery = _read(recovery_path)
+            source = recovery.get("source") if isinstance(recovery, dict) else None
+            if (not isinstance(recovery, dict)
+                    or recovery.get("schema_version") != "v5-declared-file-recovery"
+                    or recovery_ref.get("status") != recovery.get("status")
+                    or not isinstance(source, dict)
+                    or source.get("repository") != artifact_repository
+                    or source.get("run_id") != run_id
+                    or source.get("head_sha") != manifest.get("commit")
+                    or source.get("compact_artifact_id") != artifact_id
+                    or source.get("compact_artifact_name") != artifact.get("name")
+                    or source.get("compact_artifact_digest") != artifact.get("digest")
+                    or source.get("full_artifact_id") != artifact.get("full_artifact_id")
+                    or source.get("full_artifact_name") != artifact.get("full_artifact_name")
+                    or source.get("full_artifact_digest") != artifact.get(
+                        "full_artifact_digest")):
+                raise ValueError(f"invalid declared-file recovery proof: {folder}")
         hashes = manifest.get("files_sha256")
         if not isinstance(hashes, dict):
             raise ValueError(f"saved v5 summary lacks file hashes: {folder}")
+        missing_declared = []
         for name, expected in hashes.items():
             target = folder / name
             if expected is None:
                 if target.is_file():
                     raise ValueError(f"unexpected unhashed compact file: {target}")
-            elif not target.is_file() or _digest(target) != expected:
+            elif not target.is_file():
+                missing_declared.append({"name": name, "manifest_sha256": expected})
+            elif _digest(target) != expected:
                 raise ValueError(f"saved v5 compact hash mismatch: {target}")
+        if missing_declared:
+            if recovery is not None and (
+                recovery.get("requested_files") != missing_declared
+                or recovery.get("status") == "recovered"
+            ):
+                raise ValueError(f"invalid declared-file recovery proof: {folder}")
+            reports.append({
+                **declaration, "artifact": artifact, "manifest": manifest,
+                "root": str(folder), "evaluation": None,
+                "technical_complete_self_reported": False,
+                "full_source_artifact_available": full_available,
+                "full_source_artifact_reason": full_unavailable_reason,
+                "eligible_main_coverage": False,
+                "independently_admitted": False,
+                "missing_manifest_declared_files": missing_declared,
+                "declared_file_recovery": recovery,
+                "reason": "manifest_declared_file_unavailable",
+            })
+            continue
+        if recovery is not None:
+            requested = recovery.get("requested_files")
+            recovered = recovery.get("recovered_files")
+            full_zip = (recovery.get("source") or {}).get("full_zip_verification")
+            source = recovery.get("source") or {}
+            full_archive = (
+                Path(full_zip.get("path")) if isinstance(full_zip, dict)
+                and isinstance(full_zip.get("path"), str) else None
+            )
+            if (recovery.get("status") != "recovered"
+                    or recovery.get("nested_retention_transport_traversed") is not False
+                    or not isinstance(requested, list) or not requested
+                    or not isinstance(recovered, list) or len(recovered) != len(requested)
+                    or not isinstance(full_zip, dict)
+                    or full_zip.get("expected_digest") != artifact.get("full_artifact_digest")
+                    or full_zip.get("computed_digest") != artifact.get("full_artifact_digest")
+                    or type(full_zip.get("received_bytes")) is not int
+                    or full_zip.get("received_bytes") <= 0
+                    or full_archive is None or not full_archive.is_file()
+                    or full_archive.stat().st_size != full_zip.get("received_bytes")
+                    or "sha256:" + _digest(full_archive)
+                    != full_zip.get("computed_digest")
+                    or (type(source.get("full_artifact_size_in_bytes")) is int
+                        and source.get("full_artifact_size_in_bytes")
+                        != full_zip.get("received_bytes"))):
+                raise ValueError(f"invalid successful declared-file recovery: {folder}")
+            recovered_by_name = {row.get("name"): row for row in recovered
+                                 if isinstance(row, dict)}
+            if len(recovered_by_name) != len(recovered):
+                raise ValueError(f"invalid successful declared-file recovery: {folder}")
+            for request in requested:
+                row = recovered_by_name.get(request.get("name")) if isinstance(request, dict) else None
+                expected = hashes.get(request.get("name")) if isinstance(request, dict) else None
+                target = folder / request.get("name") if isinstance(request, dict) else None
+                target_bytes = target.read_bytes() if target is not None and target.is_file() else None
+                if (not isinstance(row, dict) or expected != request.get("manifest_sha256")
+                        or row.get("copied_sha256") != expected
+                        or row.get("zip_member_name") != request.get("name")
+                        or row.get("lineage") != "direct_full_artifact_zip_member"
+                        or type(row.get("copied_bytes")) is not int
+                        or target_bytes is None
+                        or row.get("copied_bytes") != len(target_bytes)
+                        or row.get("zip_member_file_size") != len(target_bytes)
+                        or row.get("zip_member_crc32") != f"{zlib.crc32(target_bytes):08x}"
+                        or type(row.get("zip_member_compress_size")) is not int
+                        or row.get("zip_member_compress_size") < 0):
+                    raise ValueError(f"invalid successful declared-file recovery: {folder}")
         evaluation_path = folder / "evaluation-v5.json"
         evaluation = _read(evaluation_path)
         if evaluation is None:
@@ -517,6 +615,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         [key, costs.get(key)] for key in (
             "known_completed_job_elapsed_seconds", "runs_with_unknown_job_elapsed",
             "known_stored_artifact_bytes", "runs_with_unknown_artifact_bytes",
+            "report_artifact_transfer", "human_agent_seconds",
+            "current_report_job_tail_seconds",
             "scope", "overlap_rule",
         )
     ])
