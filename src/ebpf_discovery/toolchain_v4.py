@@ -341,10 +341,13 @@ def exact_graph_outcome(model, binding, unavailable_services=()):
 
 class Toolchain:
     def __init__(self, ctx, system, store, declaration, *, tool_pins=None,
-                 publication_mode='on_shutdown'):
+                 publication_mode='on_shutdown', native_jaeger_envelope='per_file'):
         self.ctx, self.system, self.store, self.declaration = ctx, system, store, declaration
         self.tool_pins = dict(PINS if tool_pins is None else tool_pins)
         self.publication_mode = publication_mode
+        if native_jaeger_envelope not in ('per_file', 'per_trace'):
+            raise ValueError('unsupported native Jaeger envelope granularity')
+        self.native_jaeger_envelope = native_jaeger_envelope
         self.root = ctx.out/'toolchain'
         self.root.mkdir(exist_ok=True)
         self.bin = Path(os.environ.get('PBS_BIN', 'work/toolchain/bin')).resolve()
@@ -399,6 +402,7 @@ class Toolchain:
                     self.preflight_reports[source, name].append(folder/'report.json')
         write_json(self.root/'static-inputs.json', {'deployment': self.inventory,
             'tool_pins': self.tool_pins, 'bering_publication_mode': self.publication_mode,
+            'native_jaeger_envelope': self.native_jaeger_envelope,
             'contracts': self.declaration.CONTRACTS,
             'supplied_entry_identity_groups': self.entry_identity_groups,
             'procrustes_use': 'reports unchanged; only confirmed identity and replica facts attach to recovered nodes',
@@ -462,7 +466,8 @@ class Toolchain:
                     folder.mkdir(parents=True, exist_ok=True)
                     manifest = export_selection(self.store, {source: None}, folder/'exports',
                         self.system+'-routed-network' if variant == 'network_scope' else None,
-                        supplied_server_roles={key: value for key, value in roles.items() if key[0] == source})
+                        supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
+                        native_jaeger_envelope=self.native_jaeger_envelope)
                     manifest.update(graph_input='all source-separated frozen training-prefix observations',
                         exported_wire_bytes=sum(Path(export['path']).stat().st_size for export in manifest['exports']),
                         causal_execution_inferred=False,
@@ -476,6 +481,7 @@ class Toolchain:
                     'observations': sum(piece['observations'] for _, piece in pieces),
                     'exported_wire_bytes': sum(piece['exported_wire_bytes'] for _, piece in pieces),
                     'additional_exported_wire_bytes': 0,
+                    'native_jaeger_envelope': self.native_jaeger_envelope,
                     'graph_input': 'union of unchanged source-global exports; no cross-source causal join',
                     'source_manifests': [{'path': str(path), 'sha256': digest(path)} for path, _ in pieces],
                     'causal_execution_inferred': False}

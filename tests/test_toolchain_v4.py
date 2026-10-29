@@ -82,6 +82,7 @@ def test_preflight_uses_declared_required_services_as_nonempty_goal_targets(tmp_
     (deployment/'compose.yaml').write_text('services: {}\n')
     tool = object.__new__(Toolchain)
     tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
+    tool.native_jaeger_envelope = 'per_file'
     tool.root = tmp_path/'toolchain'
     tool.ctx = SimpleNamespace(deployment_dir=deployment)
     tool.system, tool.inventory = 'generic', {}
@@ -108,6 +109,7 @@ def test_composite_preflight_targets_describe_the_individual_http_step(tmp_path)
     (deployment/'compose.yaml').write_text('services: {}\n')
     tool = object.__new__(Toolchain)
     tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
+    tool.native_jaeger_envelope = 'per_file'
     tool.root, tool.system, tool.inventory = tmp_path/'toolchain', 'generic', {}
     tool.ctx = SimpleNamespace(deployment_dir=deployment)
     tool.declaration = experiment_v4
@@ -224,6 +226,7 @@ def test_global_inputs_keep_unlinked_calls_without_request_roots_and_reuse_wire(
         store.db.execute('INSERT INTO files VALUES (?, ?)', (str(path), path.stat().st_size))
     tool = object.__new__(Toolchain)
     tool.tool_pins, tool.publication_mode = {}, 'on_shutdown'
+    tool.native_jaeger_envelope = 'per_file'
     tool.root, tool.store, tool.system = tmp_path/'toolchain', store, 'generic'
     tool.root.mkdir()
     tool.declaration = SimpleNamespace(CONTRACTS={name: {'entry_services': ['entry'],

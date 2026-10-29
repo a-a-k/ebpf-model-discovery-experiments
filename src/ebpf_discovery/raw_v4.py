@@ -345,16 +345,24 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
                   raw_prefix_bytes: int | None = None,
                   supplied_server_roles: list[dict] | None = None,
                   index_file: Path | None = None,
-                  index_prefix_sha256: str | None = None) -> dict:
+                  index_prefix_sha256: str | None = None,
+                  prepared_path: Path | None = None) -> dict:
     suffix = ".pb" if "protobuf" in content_type else ".json"
     if content_encoding == "gzip":
         suffix += ".gz"
     path = (out / f"{source}-{ordinal:06d}{suffix}").resolve()
-    _atomic_write(path, body)
+    if prepared_path is None:
+        _atomic_write(path, body)
+        exported_sha256 = hashlib.sha256(body).hexdigest()
+    else:
+        if Path(prepared_path).resolve() != path or not path.is_file():
+            raise ValueError("prepared export path differs from declared export")
+        with path.open("rb") as stream:
+            exported_sha256 = hashlib.file_digest(stream, "sha256").hexdigest()
     result = {
         "path": str(path), "source": source, "content_type": content_type,
         "content_encoding": content_encoding, "observations": observations,
-        "sha256": hashlib.sha256(body).hexdigest(), "raw_file": str(raw_file.resolve()),
+        "sha256": exported_sha256, "raw_file": str(raw_file.resolve()),
         "raw_sha256": raw_sha256,
         "codec_steps": codec_steps,
     }
@@ -377,8 +385,11 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
 
 def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], out: Path,
                      network_scope: str | None = None,
-                     supplied_server_roles: dict | None = None) -> dict:
+                     supplied_server_roles: dict | None = None,
+                     native_jaeger_envelope: str = "per_file") -> dict:
     """Export frozen prefixes; a source value of None selects all its records."""
+    if native_jaeger_envelope not in ("per_file", "per_trace"):
+        raise ValueError("unsupported native Jaeger envelope granularity")
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     exports, ordinal, total = [], 0, 0
@@ -394,6 +405,57 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
             raise ValueError(f"invalid indexed prefix for {path}: {consumed}")
         prefix_hash = _hash_prefix(path, consumed)
         if path.name.startswith("traces-") and path.suffix == ".json":
+            if native_jaeger_envelope == "per_file":
+                prepared = (out / f"{source}-{ordinal + 1:06d}.json").resolve()
+                temporary = prepared.with_name(f".{prepared.name}.tmp")
+                file_count, traces_seen, traces_exported = 0, 0, 0
+                found_all = [] if identities is not None else None
+                supplied_all = []
+                first_resource = True
+                try:
+                    with path.open("rb") as stream, temporary.open("wb") as output:
+                        reader = LimitedReader(stream, consumed)
+                        output.write(b'{"resourceSpans":[')
+                        for trace in ijson.items(reader, "data.item", use_float=True):
+                            traces_seen += 1
+                            payload, count, found, supplied = _jaeger_trace(
+                                trace, identities, network_scope, roles)
+                            if not count:
+                                continue
+                            traces_exported += 1
+                            file_count += count
+                            if found_all is not None:
+                                found_all.extend(found)
+                            supplied_all.extend(supplied)
+                            for resource in payload["resourceSpans"]:
+                                if not first_resource:
+                                    output.write(b",")
+                                first_resource = False
+                                output.write(json.dumps(resource, separators=(",", ":")).encode())
+                        output.write(b"]}\n")
+                    if file_count:
+                        os.replace(temporary, prepared)
+                        ordinal += 1
+                        exported = _write_export(
+                            out, ordinal, source, "application/json", b"", path, prefix_hash,
+                            file_count, found_all,
+                            ["jaeger tags/process tags/logs/references converted to typed OTLP JSON",
+                             "nonzero short hexadecimal IDs left-padded only to OTLP bit width",
+                             "resourceSpans appended from each original Jaeger trace in query order without merging"],
+                            network_scope=network_scope, raw_prefix_bytes=consumed,
+                            supplied_server_roles=supplied_all, prepared_path=prepared,
+                        )
+                        exported.update(native_jaeger_envelope="per_file",
+                                        jaeger_query_traces_seen=traces_seen,
+                                        jaeger_query_traces_exported=traces_exported)
+                        exports.append(exported)
+                        total += file_count
+                    else:
+                        temporary.unlink(missing_ok=True)
+                except BaseException:
+                    temporary.unlink(missing_ok=True)
+                    raise
+                continue
             with path.open("rb") as stream:
                 reader = LimitedReader(stream, consumed)
                 for trace in ijson.items(reader, "data.item", use_float=True):
@@ -486,6 +548,8 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
         if applied != set(roles):
             raise ValueError(f"supplied server roles not applied to exact selected source identities: {sorted(set(roles)-applied)}")
     result = {"exports": exports, "observations": total}
+    if "native" in selected:
+        result["native_jaeger_envelope"] = native_jaeger_envelope
     if any(ids is None for ids in selected.values()):
         result["selection_by_source"] = {
             source: ("all_frozen_source_records" if ids is None

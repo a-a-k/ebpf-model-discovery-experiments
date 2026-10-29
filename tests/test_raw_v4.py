@@ -255,6 +255,136 @@ def test_jaeger_codec_preserves_typed_evidence_and_reference_semantics(tmp_path:
     assert invalid["spanId"] == "0" * 16
 
 
+def test_jaeger_per_file_stream_matches_all_per_trace_resource_spans_and_provenance(tmp_path: Path):
+    trace_id = "abcdef0123456789"
+    def jaeger_span(span_id, value, kind):
+        return {"traceID": trace_id, "spanID": span_id,
+                "operationName": "GET /same", "processID": "p",
+                "startTime": 100, "duration": 4,
+                "tags": [{"key": "span.kind", "type": "string", "value": kind},
+                         {"key": "conflicting.value", "type": "string", "value": value}],
+                "logs": [{"timestamp": 101, "fields": [
+                    {"key": "event.id", "type": "int64", "value": 7}]}],
+                "references": [{"refType": "FOLLOWS_FROM", "traceID": trace_id,
+                                "spanID": "3"}]}
+    def trace(*spans):
+        return {"traceID": trace_id, "processes": {"p": {
+            "serviceName": "api", "tags": [{"key": "process.pid", "type": "int64", "value": 12}]}},
+            "spans": list(spans)}
+    # Repeated exact source-local identity with disagreeing typed values is
+    # retained twice, including cross-trace order and reference evidence.
+    queries = [trace(jaeger_span("1", "first", "client")),
+               trace(jaeger_span("1", "second", "server"), jaeger_span("2", "third", "client"))]
+    raw = tmp_path / "traces-api.json"
+    frozen = json.dumps({"data": queries}, separators=(",", ":")).encode()
+    raw.write_bytes(frozen + b"\n" + json.dumps({"data": [trace(jaeger_span("4", "tail", "client"))]}).encode())
+    store = Store([(str(raw), len(frozen))])
+    old = export_selection(store, {"native": None}, tmp_path / "per-trace",
+                           native_jaeger_envelope="per_trace")
+    new = export_selection(store, {"native": None}, tmp_path / "per-file",
+                           native_jaeger_envelope="per_file")
+    assert old["observations"] == new["observations"] == 3
+    assert len(old["exports"]) == 2 and len(new["exports"]) == 1
+    old_resources = [resource for item in old["exports"]
+                     for resource in json.loads(Path(item["path"]).read_text())["resourceSpans"]]
+    new_resources = json.loads(Path(new["exports"][0]["path"]).read_text())["resourceSpans"]
+    assert new_resources == old_resources
+    spans = [span for resource in new_resources for span in resource["scopeSpans"][0]["spans"]]
+    assert [span["attributes"][1]["value"]["stringValue"] for span in spans] == [
+        "first", "second", "third"]
+    assert [span["kind"] for span in spans] == [
+        "SPAN_KIND_CLIENT", "SPAN_KIND_SERVER", "SPAN_KIND_CLIENT"]
+    assert all(span["events"][0]["attributes"][0]["value"]["intValue"] == "7" for span in spans)
+    assert all(span["links"][0]["attributes"][0]["value"]["stringValue"] == "FOLLOWS_FROM"
+               for span in spans)
+    manifest = new["exports"][0]
+    assert manifest["native_jaeger_envelope"] == "per_file"
+    assert manifest["raw_file"] == str(raw.resolve())
+    assert manifest["raw_prefix_bytes"] == len(frozen)
+    assert manifest["raw_sha256"] == hashlib.sha256(frozen).hexdigest()
+    assert manifest["jaeger_query_traces_seen"] == manifest["jaeger_query_traces_exported"] == 2
+    assert manifest["selection"] == "all_frozen_source_records"
+    assert "selected_ids" not in manifest
+    assert new["native_jaeger_envelope"] == "per_file"
+    assert old["native_jaeger_envelope"] == "per_trace"
+
+
+def test_jaeger_empty_frozen_file_emits_no_envelope(tmp_path: Path):
+    raw = tmp_path / "traces-empty.json"
+    frozen = b'{"data":[]}'
+    raw.write_bytes(frozen + b'\n{"data":[{"spans":[{"spanID":"tail"}]}]}')
+    result = export_selection(Store([(str(raw), len(frozen))]), {"native": None}, tmp_path / "out")
+    assert result["observations"] == 0
+    assert result["exports"] == []
+    assert not list((tmp_path / "out").iterdir())
+
+
+def test_jaeger_query_files_remain_separate_with_their_own_frozen_prefixes(tmp_path: Path):
+    rows = []
+    for name, value in (("traces-a.json", "a"), ("traces-b.json", "b")):
+        path = tmp_path / name
+        frozen = json.dumps({"data": [{"processes": {"p": {"serviceName": "same"}},
+            "spans": [{"traceID": TRACE, "spanID": SPAN, "processID": "p",
+                       "operationName": value, "startTime": 1, "duration": 1}]}]}).encode()
+        path.write_bytes(frozen + b"\nignored unindexed tail")
+        rows.append((str(path), len(frozen)))
+    result = export_selection(Store(rows), {"native": None}, tmp_path / "out")
+    assert len(result["exports"]) == 2
+    assert [item["raw_file"] for item in result["exports"]] == [
+        str((tmp_path / "traces-a.json").resolve()), str((tmp_path / "traces-b.json").resolve())]
+    assert [item["observations"] for item in result["exports"]] == [1, 1]
+    assert [json.loads(Path(item["path"]).read_text())["resourceSpans"][0]["scopeSpans"][0]["spans"][0]["name"]
+            for item in result["exports"]] == ["a", "b"]
+    with pytest.raises(ValueError, match="unsupported native Jaeger envelope"):
+        export_selection(Store(rows), {"native": None}, tmp_path / "bad",
+                         native_jaeger_envelope="per_minute")
+
+
+def test_jaeger_per_file_preserves_ordered_supplied_roles_and_network_scope(tmp_path: Path):
+    trace_id = "abcdef0123456789"
+    roots = ("1234567890abcdef", "1234567890abcdee")
+    traces = []
+    roles = {}
+    for number, span_id in enumerate(roots):
+        traces.append({"traceID": trace_id,
+            "processes": {"p": {"serviceName": "gateway", "tags": [
+                {"key": "host.id", "type": "string", "value": "host-a"}]}},
+            "spans": [{"traceID": trace_id, "spanID": span_id, "processID": "p",
+                "operationName": "/lookup", "startTime": 10 + number, "duration": 5,
+                "tags": [{"key": "component", "type": "string", "value": "nginx"},
+                         {"key": "http.method", "type": "string", "value": "GET"},
+                         {"key": "http.url", "type": "string",
+                          "value": f"https://example.test/lookup/{number}?private=fixture"}],
+                "references": []}]})
+        roles[("native", trace_id, span_id)] = {
+            "source": "native", "trace_id": trace_id, "span_id": span_id,
+            "original_kind": None, "supplied_kind": "SPAN_KIND_SERVER",
+            "rule": "unique declared entry with observed HTTP URL"}
+    raw = tmp_path / "traces-gateway.json"
+    frozen = json.dumps({"data": traces}, separators=(",", ":")).encode()
+    raw.write_bytes(frozen)
+    store = Store([(str(raw), len(frozen))])
+    old = export_selection(store, {"native": None}, tmp_path / "old",
+                           network_scope="declared-network", supplied_server_roles=roles,
+                           native_jaeger_envelope="per_trace")
+    new = export_selection(store, {"native": None}, tmp_path / "new",
+                           network_scope="declared-network", supplied_server_roles=roles,
+                           native_jaeger_envelope="per_file")
+    old_resources = [resource for item in old["exports"]
+                     for resource in json.loads(Path(item["path"]).read_text())["resourceSpans"]]
+    new_resources = json.loads(Path(new["exports"][0]["path"]).read_text())["resourceSpans"]
+    assert new_resources == old_resources
+    old_roles = [role for item in old["exports"] for role in item["supplied_server_roles"]]
+    assert new["exports"][0]["supplied_server_roles"] == old_roles
+    assert [role["supplied_url_path"]["derived_path"] for role in old_roles] == [
+        "/lookup/0", "/lookup/1"]
+    assert all(role["supplied_url_path"]["source_urls"][0]["query_stripped"]
+               for role in old_roles)
+    assert [resource["resource"]["attributes"][-1]["value"]["stringValue"]
+            for resource in new_resources] == ["declared-network", "declared-network"]
+    assert raw.read_bytes() == frozen
+
+
 def test_supplied_role_on_jaeger_entry_does_not_rewrite_source_or_client(tmp_path: Path):
     trace_id, root_id, client_id = 'abcdef0123456789', '1234567890abcdef', 'fedcba0987654321'
     def raw_span(sid, tags):
