@@ -279,7 +279,7 @@ jobs:
           root = pathlib.Path('work/campaign')
           status_path = root/'status.json'
           status = json.loads(status_path.read_text()) if status_path.is_file() else {}
-          if status.get('status') == 'acquisition_complete':
+          if status.get('status') in ('smoke_complete', 'acquisition_complete'):
               raise SystemExit('completed DSB campaign is missing its full toolchain evidence')
           (root/'toolchain-package-missing.json').write_text(json.dumps({
               'schema_version':'v4-toolchain-retention',
@@ -307,7 +307,7 @@ jobs:
           root = pathlib.Path('work/campaign')
           status_path = root/'status.json'
           status = json.loads(status_path.read_text()) if status_path.is_file() else {}
-          if status.get('status') == 'acquisition_complete':
+          if status.get('status') in ('smoke_complete', 'acquisition_complete'):
               raise SystemExit('completed DSB campaign is missing its remote handoff evidence')
           (root/'infrastructure'/'handoff-package-missing.json').write_text(json.dumps({
               'schema_version':'v4-handoff-retention',

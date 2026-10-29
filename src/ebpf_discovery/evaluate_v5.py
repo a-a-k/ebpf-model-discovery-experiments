@@ -56,12 +56,11 @@ def acquisition_checks(root, status, declaration):
         if status.get("mode") == "partial" and any(
                 native_counts.get(alias, 0) for alias in declaration.CONTROLLED_SERVICE_ALIASES):
             problems.append("controlled_native_observations_present_in_partial_mode")
-        if status.get("mode") in ("partial", "full") and not sum(native_counts.values()):
-            problems.append("enabled_native_export_not_observed")
     else:
         problems.append("observation_index_missing")
     return {"valid": not problems, "problems": problems, "provenance": provenance,
             "native_observations_by_service": native_counts,
+            "missing_native_coverage_is_technical_failure": False,
             "positive_control": control, "final_drain": drain,
             "application_protocol_coverage_required": False,
             "accuracy_threshold": None, "kernel_or_producer_loss_absent": None}

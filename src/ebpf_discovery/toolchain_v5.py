@@ -10,8 +10,8 @@ from .toolchain_v4 import Toolchain as ToolchainV4
 
 PROTOCOL_VERSION = 'graph-v5'
 PINS = {
-    'Procrustes': 'f8d322bbea376d55c22d4c4f2d9fed257cc09f9f',
-    'Bering': '75fe863c014388d525e2912a76be156fb3e5f037',
+    'Procrustes': '9648ae3fe9ef24725e665d008c79d0681ce40f85',
+    'Bering': '70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a',
     'Sheaft': '686a602f4e7b71f3612f1810885e29dd66c8733a',
 }
 _COLLECTOR = re.compile(r'[a-z0-9][a-z0-9._-]{0,63}')

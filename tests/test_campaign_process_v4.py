@@ -144,6 +144,22 @@ def test_default_commands_preserve_full_campaign_and_resource_sampler(tmp_path, 
     assert resources[-2:] == ["15", str(tmp_path/"vms")]
 
 
+def test_v5_commands_select_the_collector_campaign_without_changing_v4(tmp_path):
+    config = {**IDENTITY, "state_dir": str(tmp_path/"state"),
+              "out": str(tmp_path/"out"), "checkpoint": str(tmp_path/"checkpoint"),
+              "vms": str(tmp_path/"vms"), "collector": "coroot", "smoke": True}
+    campaign, _ = process_v4._commands(config)
+    assert "ebpf_discovery.campaign_v5" in campaign
+    assert campaign[campaign.index("--collector") + 1] == "coroot"
+    assert "--smoke" in campaign
+
+    legacy, _ = process_v4._commands({key: value for key, value in config.items()
+                                      if key not in ("collector", "smoke")})
+    assert "ebpf_discovery.campaign_v4" in legacy
+    assert "--collector" not in legacy
+    assert "--smoke" not in legacy
+
+
 def test_supervisor_preserves_runner_tracking_for_job_end_cleanup(monkeypatch):
     monkeypatch.setenv("RUNNER_TRACKING_ID", "actions-owned-tree")
     environment = process_v4._supervisor_environment()
