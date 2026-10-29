@@ -306,3 +306,31 @@ live DeepFlow Petclinic/absent/6 pilot at `33d98e2`. No replay guard is weakened
 no failed status is rewritten, and no extra favorable fixture is introduced to
 make the qualification job green. Actual application acquisition, fair identity
 handling and graph/simulation evidence still require that live smoke review.
+
+## Native application-mode check and Jaeger audit observations
+
+Before correction, both agents give ORIGINAL-criterion design GO to reconcile
+the new evaluator with DeathStarBench's existing exact-name audit policy. Smoke
+`40909279346` completed all 108 operations and passed integrity, capture and
+closure checks, but its final evaluator treated one `jaeger-all-in-one` native
+span as an application tracing leak. The actual span is the runner's GET
+`/api/services` request to Jaeger's query API. The retained native manifest already
+reports zero application traces, one audit trace and verified absence, consistently
+with the adapter and README policy that preceded this run.
+
+The correction separates native application and audit **span** counts while
+preserving the original total/by-service counts and raw records. It excludes only
+the explicitly declared exact audit service from the application-mode compliance
+check; lookalikes, unknown services and all other application observations still
+contradict absent mode. Partial-mode controlled-service checks remain unchanged.
+No observation is removed from fitting, graphs or outcome evaluation, and the
+same declaration applies to every collector and comparison arm. The direct
+baseline receives no less information; forecast arithmetic and complete costs
+are unchanged. This repair establishes no empirical advantage.
+
+An Actions-only adjudication of the immutable saved packet is preferred over
+repeating traffic. It must retain the original evaluation and source artifact,
+verify source hashes and attribute the corrected acquisition check to its new
+revision. It may not refit, replay, simulate or recompute empirical metrics.
+Actual implementation and adjudication evidence require independent review
+before DeathStarBench/absent main admission.

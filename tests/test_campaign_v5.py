@@ -154,3 +154,53 @@ def test_native_coverage_shortfall_remains_an_empirical_result(tmp_path):
     assert evaluate_v5.acquisition_checks(tmp_path, status, declaration)["valid"] is True
     status["mode"] = "partial"
     assert evaluate_v5.acquisition_checks(tmp_path, status, declaration)["valid"] is True
+
+
+def test_absent_mode_uses_existing_dsb_audit_scope_without_removing_spans(tmp_path):
+    from systems.deathstarbench import experiment_v4 as dsb
+
+    status = {"protocol_version": "graph-v5", "collector": "obi", "mode": "absent"}
+    _write(tmp_path / "observations" / "collector.json", {
+        "schema": "collector-lifecycle-v5", "collector": "obi", "source_domain": "ebpf-obi"})
+    _write(tmp_path / "observations" / "technical-positive-control.json", {
+        "collector": "obi", "selected_ebpf_origin_proven": True,
+        "proofs": {"a": {"proven": True}, "b": {"proven": True}}})
+    _write(tmp_path / "observations" / "drain-evidence.json", {
+        "collector": "obi", "technical_complete": True,
+        "accepted_receiver_bytes_closed_and_hashed": True})
+    database = tmp_path / "observation-index.sqlite"
+    with sqlite3.connect(database) as connection:
+        connection.execute("CREATE TABLE spans(source TEXT, service TEXT)")
+        connection.executemany("INSERT INTO spans VALUES ('native', ?)",
+                               [("jaeger-all-in-one",), ("jaeger-all-in-one",)])
+    original_bytes = database.read_bytes()
+    report = evaluate_v5.acquisition_checks(tmp_path, status, dsb)
+    assert report["valid"] is True
+    assert report["native_observations_by_service"] == {"jaeger-all-in-one": 2}
+    assert report["native_audit_observations_by_service"] == {"jaeger-all-in-one": 2}
+    assert report["native_application_observations_by_service"] == {}
+    assert report["native_observation_count_unit"] == "span"
+    assert database.read_bytes() == original_bytes
+
+    # The same name is not a global exemption for another system/declaration.
+    other = SimpleNamespace(CONTROLLED_SERVICE_ALIASES=["controlled"])
+    report = evaluate_v5.acquisition_checks(tmp_path, status, other)
+    assert "native_observations_present_in_absent_mode" in report["problems"]
+    assert report["native_audit_observations_by_service"] == {}
+    assert report["native_application_observations_by_service"] == {"jaeger-all-in-one": 2}
+
+    # Neither a similar name nor a genuinely instrumented application is hidden.
+    for service in ("jaeger-all-in-one-extra", "nginx-thrift", "unknown-service", ""):
+        with sqlite3.connect(database) as connection:
+            connection.execute("INSERT INTO spans VALUES ('native', ?)", (service,))
+        report = evaluate_v5.acquisition_checks(tmp_path, status, dsb)
+        assert "native_observations_present_in_absent_mode" in report["problems"]
+        assert report["native_application_observations_by_service"][service] == 1
+
+    # Audit declarations cannot suppress partial-mode controlled-service checks.
+    status["mode"] = "partial"
+    controlled_audit = SimpleNamespace(
+        CONTROLLED_SERVICE_ALIASES=["jaeger-all-in-one"],
+        NATIVE_AUDIT_SERVICES=dsb.NATIVE_AUDIT_SERVICES)
+    report = evaluate_v5.acquisition_checks(tmp_path, status, controlled_audit)
+    assert "controlled_native_observations_present_in_partial_mode" in report["problems"]

@@ -30,6 +30,12 @@ ENTRY_SERVICES = ["nginx-thrift", "nginx-web-server"]
 # unchanged; exact bound roots receive attributed SERVER roles in derived input.
 UNTYPED_ENTRY_COMPONENTS = {"native": ["nginx"]}
 CONTROLLED_SERVICE_ALIASES = ["user-timeline-service"]
+# The adapter's pre-existing native audit policy retains this exact service's
+# query-API self traces, separately from application tracing-mode compliance.
+# This supplies scope semantics only; raw observations and graph inputs stay intact.
+NATIVE_AUDIT_SERVICES = {
+    "jaeger-all-in-one": "Jaeger query API self instrumentation; exact audit-service name",
+}
 SELECTED_DATABASE = {
     "db_system": "mongodb",
     "db_role": "user-timeline",

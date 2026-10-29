@@ -43,6 +43,9 @@ def acquisition_checks(root, status, declaration):
             or drain.get("accepted_receiver_bytes_closed_and_hashed") is not True):
         problems.append("accepted_observation_capture_not_closed")
     native_counts = {}
+    audit_services = dict(getattr(declaration, "NATIVE_AUDIT_SERVICES", {}))
+    native_audit_counts = {}
+    native_application_counts = {}
     index = root / "observation-index.sqlite"
     if index.is_file():
         connection = sqlite3.connect(index.resolve().as_uri() + "?mode=ro", uri=True)
@@ -51,7 +54,11 @@ def acquisition_checks(root, status, declaration):
                 "SELECT service, COUNT(*) FROM spans WHERE source='native' GROUP BY service"))
         finally:
             connection.close()
-        if status.get("mode") == "absent" and sum(native_counts.values()):
+        native_audit_counts = {service: count for service, count in native_counts.items()
+                               if service in audit_services}
+        native_application_counts = {service: count for service, count in native_counts.items()
+                                     if service not in audit_services}
+        if status.get("mode") == "absent" and sum(native_application_counts.values()):
             problems.append("native_observations_present_in_absent_mode")
         if status.get("mode") == "partial" and any(
                 native_counts.get(alias, 0) for alias in declaration.CONTROLLED_SERVICE_ALIASES):
@@ -60,6 +67,11 @@ def acquisition_checks(root, status, declaration):
         problems.append("observation_index_missing")
     return {"valid": not problems, "problems": problems, "provenance": provenance,
             "native_observations_by_service": native_counts,
+            "native_application_observations_by_service": native_application_counts,
+            "native_audit_observations_by_service": native_audit_counts,
+            "native_audit_service_declarations": audit_services,
+            "native_observation_count_unit": "span",
+            "native_audit_exclusion_scope": "application_tracing_mode_check_only",
             "missing_native_coverage_is_technical_failure": False,
             "positive_control": control, "final_drain": drain,
             "application_protocol_coverage_required": False,
