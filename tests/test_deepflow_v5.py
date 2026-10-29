@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 import pytest
+import yaml
 
 from ebpf_discovery.collectors_v5 import CollectorsV5
 from ebpf_discovery.deepflow_v5 import (
@@ -47,8 +48,35 @@ class Context:
             return Result(f"boot-{node}\n")
         if "readlink /proc/1/ns/pid" in command:
             return Result("pid:[4026531836]\n")
+        if command == "cat /proc/meminfo":
+            total = {"a": 2_097_153, "b": 3_145_728}[node]
+            return Result(f"MemTotal:       {total} kB\nMemFree:          123 kB\n")
+        if command == "nproc":
+            return Result({"a": "2\n", "b": "4\n"}[node])
         if "docker image inspect" in command:
             return Result('[{"Id":"sha256:pinned"}]')
+        if "json .HostConfig" in command:
+            return Result(json.dumps({
+                "Memory": 0, "NanoCpus": 0, "CpuQuota": 0, "CpuPeriod": 0,
+                "CpusetCpus": "",
+            }) + "\n")
+        if ".State.Pid" in command:
+            return Result("4242\n")
+        if "cgroup_file_begin" in command:
+            return Result(
+                "host_pid=4242\ncgroup_file_begin\n"
+                "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                "limit|/system.slice/docker-test.scope|memory.max|max\n"
+                "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                "limit|/system.slice|memory.max|max\n"
+                "limit|/system.slice|cpu.max|max 100000\n"
+                "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+            )
+        if "memory.max=" in command and "cpu.max=" in command:
+            return Result(
+                "memory.max=max\ncpu.max=max 100000\nnproc="
+                + {"a": "2\n", "b": "4\n"}[node]
+            )
         if "docker inspect" in command and "--format" in command:
             return Result("true\n")
         if "grep -h -F" in command:
@@ -74,13 +102,23 @@ def _row(path="/control"):
 
 
 def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
-    config = _config()
+    config = _config(max_memory=2 * (1 << 30), max_millicpus=2000)
     assert config["global"]["standalone_mode"]["max_data_file_size"] == MAX_DATA_FILE_SIZE_MIB
     assert MAX_DATA_FILE_SIZE_BYTES == 1 << 40
     assert config["processors"]["request_log"]["tag_extraction"]["tracing_tag"]["x_request_id"] == [
         "x-experiment-request-id"
     ]
     assert config["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
+    assert config["global"]["limits"] == {
+        "max_memory": 2 * (1 << 30), "max_millicpus": 2000,
+    }
+
+
+def test_config_rejects_zero_resource_envelopes() -> None:
+    with pytest.raises(ValueError, match="positive guest envelopes"):
+        _config(max_memory=0, max_millicpus=1000)
+    with pytest.raises(ValueError, match="positive guest envelopes"):
+        _config(max_memory=1 << 30, max_millicpus=0)
 
 
 def test_readiness_uses_pinned_success_marker_not_initialization_marker(
@@ -151,6 +189,63 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
     assert questions["service_identity"]["status"] == (
         "available_via_common_verified_runtime_identity_projection")
     assert len(ctx.puts) == 4  # config and immutable snapshot helper on each guest
+    configs = {
+        node: yaml.safe_load(next(source for put_node, source, _ in ctx.puts
+                                  if put_node == node and source.suffix == ".yaml").read_text())
+        for node in ("a", "b")
+    }
+    assert configs["a"]["global"]["limits"] == {
+        "max_memory": 2049 * (1 << 20), "max_millicpus": 2000,
+    }
+    assert configs["b"]["global"]["limits"] == {
+        "max_memory": 3072 * (1 << 20), "max_millicpus": 4000,
+    }
+    assert configs["a"] != configs["b"]
+    for node in ("a", "b"):
+        inventory = json.loads((collector.root / f"resource-inventory-{node}.json").read_text())
+        assert inventory["effective_container_constraints"][
+            "verified_no_explicit_docker_hard_limit_below_guest_envelope"] is True
+        assert inventory["effective_container_constraints"]["hierarchy_complete_to_root"] is True
+        assert inventory["effective_container_constraints"]["host_pid"] == 4242
+        assert inventory["commands"]["meminfo"]["stdout"].startswith("MemTotal:")
+        assert inventory["commands"]["cpu_count"]["command"] == "nproc"
+
+
+def test_resource_policy_rejects_extra_lower_docker_or_leaf_cgroup_limit(
+        tmp_path: Path) -> None:
+    class LimitedContext(Context):
+        def __init__(self, root: Path, limit_source: str):
+            super().__init__(root)
+            self.limit_source = limit_source
+
+        def node_exec(self, node, command, **kwargs):
+            if "json .HostConfig" in command and self.limit_source == "docker":
+                return Result(json.dumps({
+                    "Memory": 1 << 30, "NanoCpus": 0,
+                    "CpuQuota": 0, "CpuPeriod": 0,
+                }) + "\n")
+            if "cgroup_file_begin" in command and self.limit_source == "leaf":
+                return Result(
+                    "host_pid=4242\ncgroup_file_begin\n"
+                    "0::/system.slice/docker-test.scope\ncgroup_file_end\n"
+                    f"limit|/system.slice/docker-test.scope|memory.max|{1 << 30}\n"
+                    "limit|/system.slice/docker-test.scope|cpu.max|max 100000\n"
+                    "limit|/system.slice|memory.max|max\n"
+                    "limit|/system.slice|cpu.max|max 100000\n"
+                    "limit|/|memory.max|max\nlimit|/|cpu.max|max 100000\n"
+                )
+            return super().node_exec(node, command, **kwargs)
+
+    for source, error in (
+        ("docker", "Docker memory limit is below guest envelope"),
+        ("leaf", "collector-specific memory.max is below guest envelope"),
+    ):
+        root = tmp_path / source
+        ctx = LimitedContext(root, source)
+        collector = DeepFlowCollectorsV5(ctx)
+        collector._guest_resource_inventory("a")
+        with pytest.raises(RuntimeError, match=error):
+            collector._verify_container_resource_envelope("a")
 
 
 def test_protected_pid_namespace_read_uses_sudo_and_preserves_startup_failure(

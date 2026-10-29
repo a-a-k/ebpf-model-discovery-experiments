@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import shlex
 import subprocess
 import sys
@@ -44,12 +45,19 @@ MAX_DATA_FILE_SIZE_MIB = 1_048_576
 MAX_DATA_FILE_SIZE_BYTES = 1 << 40
 NATIVE_RECEIVER_PORT = 4319
 DEEPFLOW_EBPF_READY_MARKER = "ebpf collector started"
+MIB = 1 << 20
 
 
-def _config() -> dict[str, Any]:
+def _config(*, max_memory: int, max_millicpus: int) -> dict[str, Any]:
+    if max_memory <= 0 or max_millicpus <= 0:
+        raise ValueError("DeepFlow resource limits must be positive guest envelopes")
     return {
         "global": {
             "communication": {"proactive_request_interval": "10s"},
+            "limits": {
+                "max_memory": max_memory,
+                "max_millicpus": max_millicpus,
+            },
             "standalone_mode": {
                 "max_data_file_size": MAX_DATA_FILE_SIZE_MIB,
                 "data_file_dir": "/var/log/deepflow-agent/",
@@ -89,6 +97,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
         self.remote_roots: dict[str, str] = {}
         self.filesystem_capacity: dict[str, int] = {}
         self.guest_context: dict[str, dict[str, str]] = {}
+        self.resource_inventory: dict[str, dict[str, Any]] = {}
         self._seen: set[tuple[str, int, str]] = set()
         self._seen_offsets: dict[tuple[str, int], str] = {}
         self._prefixes: dict[str, dict[str, dict[str, Any]]] = {"a": {}, "b": {}}
@@ -161,10 +170,229 @@ class DeepFlowCollectorsV5(CollectorsV5):
             raise
         self._startup_complete = True
 
+    def _inventory_command(self, node: str, command: str) -> dict[str, Any]:
+        started_ns = time.time_ns()
+        result = self.ctx.node_exec(node, command, timeout=30, check=False)
+        finished_ns = time.time_ns()
+        record = {
+            "command": command,
+            "started_ns": started_ns,
+            "finished_ns": finished_ns,
+            "duration_ns": finished_ns - started_ns,
+            "returncode": _returncode(result),
+            "stdout": _stdout(result),
+            "stderr": _stderr(result),
+        }
+        if record["returncode"] != 0:
+            raise RuntimeError(f"DeepFlow resource inventory command failed on {node}: {command}")
+        return record
+
+    def _guest_resource_inventory(self, node: str) -> dict[str, Any]:
+        meminfo = self._inventory_command(node, "cat /proc/meminfo")
+        cpu = self._inventory_command(node, "nproc")
+        cpu_tool = self._inventory_command(node, "nproc --version | head -n 1")
+        matches = re.findall(r"^MemTotal:\s*([0-9]+)\s+kB\s*$", meminfo["stdout"], re.MULTILINE)
+        if len(matches) != 1:
+            raise RuntimeError(f"cannot parse unique MemTotal from guest {node}")
+        try:
+            mem_total_kib = int(matches[0])
+            cpu_count = int(cpu["stdout"].strip())
+        except ValueError as exc:
+            raise RuntimeError(f"cannot parse guest resource inventory on {node}") from exc
+        if mem_total_kib <= 0 or cpu_count <= 0:
+            raise RuntimeError(f"non-positive guest resource inventory on {node}")
+        max_memory = ((mem_total_kib + 1023) // 1024) * MIB
+        inventory = {
+            "schema": "deepflow-guest-resource-inventory-v5",
+            "node": node,
+            "derivation": {
+                "max_memory": "ceil(MemTotal_kB / 1024) MiB",
+                "max_millicpus": "nproc * 1000",
+                "scope": "same guest-wide resource envelope; not infinite",
+            },
+            "source_paths": ["/proc/meminfo", "nproc"],
+            "commands": {"meminfo": meminfo, "cpu_count": cpu, "cpu_tool": cpu_tool},
+            "parsed": {
+                "mem_total_kib": mem_total_kib,
+                "cpu_count": cpu_count,
+                "cpu_count_scope": "available processing units reported by nproc",
+                "max_memory_bytes": max_memory,
+                "max_memory_mib": max_memory // MIB,
+                "max_millicpus": cpu_count * 1000,
+            },
+            "effective_container_constraints": None,
+        }
+        self.resource_inventory[node] = inventory
+        self._write_resource_inventory(node)
+        return inventory
+
+    def _write_resource_inventory(self, node: str) -> Path:
+        path = self.root / f"resource-inventory-{node}.json"
+        _write_json(path, self.resource_inventory[node])
+        return path
+
+    def _verify_container_resource_envelope(self, node: str) -> None:
+        inventory = self.resource_inventory[node]
+        parsed = inventory["parsed"]
+        evidence: dict[str, Any] = {"verification_complete": False}
+        inventory["effective_container_constraints"] = evidence
+        docker = self._inventory_command(
+            node,
+            f"docker inspect --format '{{{{json .HostConfig}}}}' {self.container_name}",
+        )
+        evidence["docker"] = docker
+        self._write_resource_inventory(node)
+        try:
+            resources = json.loads(docker["stdout"])
+        except json.JSONDecodeError as exc:
+            raise RuntimeError(f"cannot parse Docker resource constraints on {node}") from exc
+        memory = int(resources.get("Memory", 0) or 0)
+        nano_cpus = int(resources.get("NanoCpus", 0) or 0)
+        cpu_quota = int(resources.get("CpuQuota", 0) or 0)
+        cpu_period = int(resources.get("CpuPeriod", 0) or 0)
+        if memory > 0 and memory < parsed["max_memory_bytes"]:
+            raise RuntimeError(f"Docker memory limit is below guest envelope on {node}")
+        requested_nano_cpus = parsed["max_millicpus"] * 1_000_000
+        if nano_cpus > 0 and nano_cpus < requested_nano_cpus:
+            raise RuntimeError(f"Docker CPU limit is below guest envelope on {node}")
+        if cpu_quota > 0 and cpu_period > 0:
+            quota_millicpus = cpu_quota * 1000 // cpu_period
+            if quota_millicpus < parsed["max_millicpus"]:
+                raise RuntimeError(f"Docker CPU quota is below guest envelope on {node}")
+        pid_result = self._inventory_command(
+            node, f"docker inspect --format '{{{{.State.Pid}}}}' {self.container_name}",
+        )
+        try:
+            host_pid = int(pid_result["stdout"].strip())
+        except ValueError as exc:
+            raise RuntimeError(f"cannot parse DeepFlow container host PID on {node}") from exc
+        if host_pid <= 0:
+            raise RuntimeError(f"invalid DeepFlow container host PID on {node}")
+        evidence["host_pid"] = host_pid
+        evidence["host_pid_command"] = pid_result
+        self._write_resource_inventory(node)
+        hierarchy_script = (
+            f"pid={host_pid}; "
+            "printf 'host_pid=%s\\n' \"$pid\"; "
+            "printf 'cgroup_file_begin\\n'; cat \"/proc/$pid/cgroup\"; "
+            "printf 'cgroup_file_end\\n'; "
+            "cg=$(awk -F: '$1 == \"0\" {print $3}' \"/proc/$pid/cgroup\"); "
+            "test -n \"$cg\"; p=\"$cg\"; "
+            "while :; do base=\"/sys/fs/cgroup$p\"; "
+            "for f in memory.max cpu.max; do if test -r \"$base/$f\"; then "
+            "printf 'limit|%s|%s|' \"$p\" \"$f\"; cat \"$base/$f\"; fi; done; "
+            "test \"$p\" = / && break; p=$(dirname \"$p\"); done"
+        )
+        hierarchy = self._inventory_command(
+            node, "sudo sh -c " + shlex.quote(hierarchy_script),
+        )
+        evidence["cgroup_hierarchy"] = hierarchy
+        self._write_resource_inventory(node)
+        limits: list[dict[str, str]] = []
+        for line in hierarchy["stdout"].splitlines():
+            if not line.startswith("limit|"):
+                continue
+            parts = line.split("|", 3)
+            if len(parts) != 4 or not parts[1].startswith("/"):
+                raise RuntimeError(f"cannot parse cgroup hierarchy limit on {node}")
+            limits.append({"path": parts[1], "kind": parts[2], "value": parts[3]})
+        if not limits or not any(item["path"] == "/" for item in limits):
+            raise RuntimeError(f"incomplete container cgroup hierarchy on {node}")
+
+        def hard_limit(kind: str, value: str) -> int | None:
+            if kind == "memory.max":
+                if value == "max":
+                    return None
+                return int(value)
+            quota, period = value.split()
+            if quota == "max":
+                return None
+            return int(quota) * 1000 // int(period)
+
+        shared_hard_limit_below_declared: dict[str, bool] = {}
+        for kind, declared in (
+            ("memory.max", parsed["max_memory_bytes"]),
+            ("cpu.max", parsed["max_millicpus"]),
+        ):
+            chain = [item for item in limits if item["kind"] == kind]
+            if not chain:
+                raise RuntimeError(f"missing {kind} cgroup hierarchy on {node}")
+            try:
+                leaf_limit = hard_limit(kind, chain[0]["value"])
+                ancestor_limits = [hard_limit(kind, item["value"]) for item in chain[1:]]
+            except (ValueError, ZeroDivisionError) as exc:
+                raise RuntimeError(f"cannot parse {kind} cgroup hierarchy on {node}") from exc
+            below = leaf_limit is not None and leaf_limit < declared
+            extra_collector_limit = below and any(
+                parent is None or parent > leaf_limit for parent in ancestor_limits
+            )
+            if extra_collector_limit:
+                raise RuntimeError(f"collector-specific {kind} is below guest envelope on {node}")
+            shared_hard_limit_below_declared[kind] = bool(below)
+        cgroup = self._inventory_command(
+            node,
+            f"docker exec {self.container_name} sh -c "
+            + shlex.quote(
+                "test -r /sys/fs/cgroup/memory.max && "
+                "printf 'memory.max=' && cat /sys/fs/cgroup/memory.max && "
+                "printf 'cpu.max=' && cat /sys/fs/cgroup/cpu.max && "
+                "printf 'nproc=' && nproc"
+            ),
+        )
+        evidence["cgroup"] = cgroup
+        self._write_resource_inventory(node)
+        values = dict(
+            line.split("=", 1) for line in cgroup["stdout"].splitlines() if "=" in line
+        )
+        memory_max = values.get("memory.max", "")
+        cpu_max = values.get("cpu.max", "")
+        try:
+            namespace_memory_limit = hard_limit("memory.max", memory_max)
+        except ValueError as exc:
+            raise RuntimeError(f"cannot parse container memory.max on {node}") from exc
+        cpu_parts = cpu_max.split()
+        if len(cpu_parts) != 2:
+            raise RuntimeError(f"cannot parse container cpu.max on {node}")
+        try:
+            namespace_cpu_limit = hard_limit("cpu.max", cpu_max)
+        except (ValueError, ZeroDivisionError) as exc:
+            raise RuntimeError(f"cannot parse container cpu.max on {node}") from exc
+        leaf_by_kind = {
+            kind: hard_limit(kind, next(item["value"] for item in limits if item["kind"] == kind))
+            for kind in ("memory.max", "cpu.max")
+        }
+        if (namespace_memory_limit != leaf_by_kind["memory.max"]
+                or namespace_cpu_limit != leaf_by_kind["cpu.max"]):
+            raise RuntimeError(f"container and host cgroup hard-limit views disagree on {node}")
+        try:
+            container_cpus = int(values.get("nproc", ""))
+        except ValueError as exc:
+            raise RuntimeError(f"cannot parse container nproc on {node}") from exc
+        if container_cpus * 1000 < parsed["max_millicpus"]:
+            raise RuntimeError(f"container CPU availability is below guest envelope on {node}")
+        evidence.update({
+            "docker_resources": resources,
+            "cgroup_hard_limits_leaf_to_root": limits,
+            "hierarchy_complete_to_root": True,
+            "shared_hard_limit_below_declared_guest_envelope": shared_hard_limit_below_declared,
+            "cgroup_values": values,
+            "verified_no_explicit_docker_hard_limit_below_guest_envelope": True,
+            "leaf_and_ancestor_hard_limits_retained": True,
+            "soft_weights_and_memory_high_not_treated_as_hard_caps": True,
+            "verification_complete": True,
+        })
+        command_records = list(inventory["commands"].values()) + [
+            docker, pid_result, hierarchy, cgroup,
+        ]
+        inventory["capture_cost"] = {
+            "remote_command_count": len(command_records),
+            "observed_command_duration_ns": sum(item["duration_ns"] for item in command_records),
+            "monetary_cost_scope": "included in the enclosing campaign Action runtime",
+        }
+        self._write_resource_inventory(node)
+
     def _start_impl(self) -> None:
         self._start_receivers()
-        config = self.root / "deepflow-agent-standalone.yaml"
-        config.write_text(yaml.safe_dump(_config(), sort_keys=False), encoding="utf-8")
         helper = Path(__file__).with_name("deepflow_snapshot_v5.py")
         commands, configs, capacities = {}, {}, {}
         for node in ("a", "b"):
@@ -210,6 +438,19 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 "boot_id": boot_id,
                 "pid_namespace": pid_namespace,
             }
+            inventory = self._guest_resource_inventory(node)
+            limits = inventory["parsed"]
+            config = self.root / f"deepflow-agent-standalone-{node}.yaml"
+            config.write_text(
+                yaml.safe_dump(
+                    _config(
+                        max_memory=limits["max_memory_bytes"],
+                        max_millicpus=limits["max_millicpus"],
+                    ),
+                    sort_keys=False,
+                ),
+                encoding="utf-8",
+            )
             remote_config = remote + "/deepflow-agent-standalone.yaml"
             remote_helper = remote + "/deepflow_snapshot_v5.py"
             self.ctx.node_put(node, config, remote_config)
@@ -234,6 +475,10 @@ class DeepFlowCollectorsV5(CollectorsV5):
             # The transport result can be lost after Docker accepted the run.
             self._startup_agent_attempted_nodes.add(node)
             self.ctx.node_exec(node, command, timeout=180)
+            self._verify_container_resource_envelope(node)
+            inventory_path = self._write_resource_inventory(node)
+            configs[node]["resource_inventory_path"] = inventory_path.name
+            configs[node]["resource_inventory_sha256"] = _sha256_file(inventory_path)
             inspect = self.ctx.node_exec(
                 node, f"docker image inspect {shlex.quote(self.image)}", timeout=60
             )
@@ -257,6 +502,15 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "restart_permitted": False,
             "filesystem_capacity_bytes": capacities,
             "guest_context": self.guest_context,
+            "resource_inventory": {
+                node: {
+                    "path": f"resource-inventory-{node}.json",
+                    "sha256": configs[node]["resource_inventory_sha256"],
+                    "max_memory_bytes": self.resource_inventory[node]["parsed"]["max_memory_bytes"],
+                    "max_millicpus": self.resource_inventory[node]["parsed"]["max_millicpus"],
+                }
+                for node in ("a", "b")
+            },
             "rotation_threshold_bytes": MAX_DATA_FILE_SIZE_BYTES,
             "rotation_threshold_above_guest_capacity": all(
                 MAX_DATA_FILE_SIZE_BYTES > value for value in capacities.values()
@@ -518,6 +772,16 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "max_data_file_size_mib": MAX_DATA_FILE_SIZE_MIB,
             "max_data_file_size_bytes": MAX_DATA_FILE_SIZE_BYTES,
             "request_header": "x-experiment-request-id",
+            "resource_policy": {
+                "max_memory": "per-guest ceil(/proc/meminfo MemTotal to MiB)",
+                "max_millicpus": "per-guest nproc * 1000",
+                "scope": "guest-wide positive envelope, with Docker/cgroup lower-limit rejection",
+                "pinned_source_paths": [
+                    "agent/src/config/config.rs",
+                    "agent/src/utils/guard.rs",
+                    "agent/src/policy/first_path.rs",
+                ],
+            },
             "native_receiver": f"OTLP/HTTP {NATIVE_RECEIVER_PORT}",
             "service_identity": "unknown until separately verified runtime inventory enrichment",
             "raw_wire_reconstruction": False,
