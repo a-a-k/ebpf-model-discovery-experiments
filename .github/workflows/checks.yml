@@ -16,3 +16,16 @@ jobs:
       - run: python -m pytest --import-mode=importlib tests systems
         env:
           PYTHONPATH: .
+  control-fixture-v5:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest opentelemetry-proto
+      - name: Execute pinned HAProxy technical control fixture
+        run: python -m pytest --import-mode=importlib tests/test_collectors_v5.py -k pinned_haproxy_control_fixture_executes
+        env:
+          PYTHONPATH: .
+          RUN_DOCKER_CONTROL_FIXTURE: '1'

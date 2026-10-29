@@ -16,6 +16,7 @@ import sys
 import time
 import urllib.request
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 
 import yaml
@@ -33,6 +34,7 @@ CONTROL_IMAGE = (
     "sha256:34cc7d1f6142464d7d2b73e2a1eef7392556dbf304160aef543e513cfd9e5162"
 )
 RECEIVERS = {"a": 4318, "b": 4320, "native": 4319}
+CONTROL_READY_TIMEOUT_SECONDS = 30.0
 
 
 class CollectorUnavailable(RuntimeError):
@@ -88,6 +90,67 @@ def _sha256_file(path: Path) -> str:
         while chunk := stream.read(1024 * 1024):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _result_evidence(result: Any) -> dict[str, Any]:
+    return {
+        "returncode": _returncode(result),
+        "stdout": _stdout(result),
+        "stderr": _stderr(result),
+    }
+
+
+def _control_server_script(port: int) -> str:
+    """Run HAProxy itself as the pinned non-SDK HTTP responder."""
+    config = "\n".join((
+        "global",
+        "  log stdout format raw local0",
+        "defaults",
+        "  mode http",
+        "  log global",
+        "  option httplog",
+        "  timeout connect 5s",
+        "  timeout client 30s",
+        "  timeout server 30s",
+        "frontend control",
+        f"  bind 0.0.0.0:{port}",
+        "  http-request return status 200 content-type text/plain string ok",
+        "",
+    ))
+    return (
+        f"printf %s {shlex.quote(config)} > /tmp/control-haproxy.cfg; "
+        "haproxy -c -f /tmp/control-haproxy.cfg; "
+        "exec haproxy -W -db -f /tmp/control-haproxy.cfg"
+    )
+
+
+def _control_request_script(port: int, marker: str, *, persistent: bool) -> str:
+    request = f"busybox wget -T 2 -qO- http://127.0.0.1:{port}/{marker}"
+    if not persistent:
+        return request
+    return f"while true; do {request} >/dev/null || exit 1; sleep 1; done"
+
+
+def _inspect_running(result: Any) -> bool:
+    if _returncode(result):
+        return False
+    try:
+        payload = json.loads(_stdout(result))
+        return bool(payload and payload[0].get("State", {}).get("Running") is True)
+    except (json.JSONDecodeError, TypeError, AttributeError, IndexError):
+        return False
+
+
+def _safe_node_exec(ctx: Any, node: str, command: str, **kwargs: Any) -> Any:
+    """Best-effort diagnostic/cleanup call that preserves transport failures."""
+    try:
+        return ctx.node_exec(node, command, **kwargs)
+    except Exception as exc:
+        return SimpleNamespace(
+            returncode=255,
+            stdout="",
+            stderr=f"{type(exc).__name__}: {exc}",
+        )
 
 
 def _attributes(items: list[dict[str, Any]]) -> dict[str, Any]:
@@ -270,103 +333,172 @@ class CollectorsV5:
     def positive_control(self, timeout: float = 60.0) -> dict[str, Any]:
         """Prove selected eBPF origin with a non-SDK container HTTP exchange."""
         marker = f"collector-control-v5-{self.collector}-{time.time_ns()}"
-        nodes: dict[str, Any] = {}
-        for index, node in enumerate(("a", "b")):
-            port = 18081 + index
-            pull = self.ctx.node_exec(
-                node, f"docker pull {shlex.quote(CONTROL_IMAGE)}", timeout=300
-            )
-            (self.root / f"control-pull-{node}.log").write_text(
-                _stdout(pull) + _stderr(pull), encoding="utf-8"
-            )
-            image_inspect = self.ctx.node_exec(
-                node, f"docker image inspect {shlex.quote(CONTROL_IMAGE)}", timeout=60
-            )
-            (self.root / f"control-image-{node}.json").write_text(
-                _stdout(image_inspect), encoding="utf-8"
-            )
-            server = f"study-ebpf-control-server-{node}"
-            client = f"study-ebpf-control-client-{node}"
-            self.ctx.node_exec(
-                node,
-                f"docker rm -f {server} >/dev/null 2>&1 || true; "
-                f"docker run -d --name {server} --network host --entrypoint /bin/sh "
-                f"{shlex.quote(CONTROL_IMAGE)} -c "
-                + shlex.quote(
-                    f"mkdir -p /tmp/control; printf ok > /tmp/control/{marker}; "
-                    f"exec busybox httpd -f -p {port} -h /tmp/control"
-                ),
-                timeout=60,
-            )
-            request = self.ctx.node_exec(
-                node,
-                f"docker run --rm --name {client}-probe --network host --entrypoint /bin/sh "
-                f"{shlex.quote(CONTROL_IMAGE)} -c "
-                + shlex.quote(f"busybox wget -qO- http://127.0.0.1:{port}/{marker}"),
-                timeout=60,
-                check=False,
-            )
-            client_start = self.ctx.node_exec(
-                node,
-                f"docker rm -f {client} >/dev/null 2>&1 || true; "
-                f"docker run -d --name {client} --network host --entrypoint /bin/sh "
-                f"{shlex.quote(CONTROL_IMAGE)} -c "
-                + shlex.quote(
-                    f"while true; do busybox wget -qO- http://127.0.0.1:{port}/{marker} "
-                    ">/dev/null || exit 1; sleep 1; done"
-                ),
-                timeout=60,
-                check=False,
-            )
-            nodes[node] = {
-                "port": port,
-                "server_container": server,
-                "client_container": client,
-                "request_returncode": _returncode(request),
-                "request_stdout": _stdout(request),
-                "request_stderr": _stderr(request),
-                "client_start_returncode": _returncode(client_start),
-                "client_start_stdout": _stdout(client_start).strip(),
+        nodes: dict[str, Any] = {
+            node: {
+                "port": 18081 + index,
+                "server_container": f"study-ebpf-control-server-{node}",
+                "client_container": f"study-ebpf-control-client-{node}",
+                "probe_container": f"study-ebpf-control-client-{node}-probe",
                 "control_image": CONTROL_IMAGE,
+                "request_attempts": [],
             }
-            if (
-                _returncode(request)
-                or _stdout(request).strip() != "ok"
-                or _returncode(client_start)
-            ):
-                raise RuntimeError(f"technical control HTTP request failed on {node}")
-
-        deadline = time.monotonic() + timeout
-        proofs = {}
-        while time.monotonic() < deadline:
-            proofs = {
-                node: self._control_proof(node, marker) for node in ("a", "b")
-            }
-            if all(value["proven"] for value in proofs.values()):
-                break
-            self.health()
-            time.sleep(0.5)
-        for node in ("a", "b"):
-            self.ctx.node_exec(
-                node,
-                f"docker rm -f study-ebpf-control-client-{node} study-ebpf-control-server-{node}",
-                timeout=30,
-                check=False,
-            )
-        evidence = {
-            "schema": "collector-positive-control-v5",
-            "collector": self.collector,
-            "source_domain": self.source_domain,
-            "marker": marker,
-            "nodes": nodes,
-            "proofs": proofs,
-            "selected_ebpf_origin_proven": bool(proofs)
-            and all(value["proven"] for value in proofs.values()),
-            "application_coverage": "not_assessed_by_technical_control",
-            "native_sdk": False,
+            for index, node in enumerate(("a", "b"))
         }
-        _write_json(self.root / "technical-positive-control.json", evidence)
-        self.positive_control_evidence = evidence
+        proofs: dict[str, Any] = {}
+        failure: Exception | None = None
+        evidence: dict[str, Any] = {}
+        try:
+            for node in ("a", "b"):
+                entry = nodes[node]
+                port = entry["port"]
+                server = entry["server_container"]
+                client = entry["client_container"]
+                probe = entry["probe_container"]
+                pull = self.ctx.node_exec(
+                    node, f"docker pull {shlex.quote(CONTROL_IMAGE)}", timeout=300
+                )
+                (self.root / f"control-pull-{node}.log").write_text(
+                    _stdout(pull) + _stderr(pull), encoding="utf-8"
+                )
+                image_inspect = self.ctx.node_exec(
+                    node, f"docker image inspect {shlex.quote(CONTROL_IMAGE)}", timeout=60
+                )
+                (self.root / f"control-image-{node}.json").write_text(
+                    _stdout(image_inspect), encoding="utf-8"
+                )
+                self.ctx.node_exec(
+                    node, f"docker rm -f {probe} {client} {server} >/dev/null 2>&1 || true",
+                    timeout=30, check=False,
+                )
+                server_start = self.ctx.node_exec(
+                    node,
+                    f"docker run -d --name {server} --network host --entrypoint /bin/sh "
+                    f"{shlex.quote(CONTROL_IMAGE)} -ec "
+                    + shlex.quote(_control_server_script(port)),
+                    timeout=60, check=False,
+                )
+                entry["server_script"] = _control_server_script(port)
+                entry["server_start"] = _result_evidence(server_start)
+                if _returncode(server_start):
+                    raise RuntimeError(f"technical control server failed to start on {node}")
+
+                ready_deadline = time.monotonic() + CONTROL_READY_TIMEOUT_SECONDS
+                while time.monotonic() < ready_deadline:
+                    inspect = self.ctx.node_exec(
+                        node, f"docker inspect {server}", timeout=30, check=False
+                    )
+                    attempt: dict[str, Any] = {
+                        "attempt": len(entry["request_attempts"]) + 1,
+                        "observed_ns": time.time_ns(),
+                        "server_running": _inspect_running(inspect),
+                        "server_inspect_returncode": _returncode(inspect),
+                    }
+                    if attempt["server_running"]:
+                        config_check = self.ctx.node_exec(
+                            node,
+                            f"docker exec {server} haproxy -c -f /tmp/control-haproxy.cfg",
+                            timeout=30, check=False,
+                        )
+                        attempt["config_check"] = _result_evidence(config_check)
+                        if _returncode(config_check) == 0:
+                            request = self.ctx.node_exec(
+                                node,
+                                f"docker run --rm --name {probe} --network host "
+                                f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
+                                + shlex.quote(_control_request_script(port, marker, persistent=False)),
+                                timeout=30, check=False,
+                            )
+                            attempt["request"] = _result_evidence(request)
+                            entry["request_attempts"].append(attempt)
+                            if _returncode(request) == 0 and _stdout(request).strip() == "ok":
+                                entry["server_ready"] = True
+                                break
+                        else:
+                            entry["request_attempts"].append(attempt)
+                    else:
+                        entry["request_attempts"].append(attempt)
+                    time.sleep(0.25)
+                if not entry.get("server_ready"):
+                    raise RuntimeError(f"technical control HTTP readiness failed on {node}")
+
+                client_start = self.ctx.node_exec(
+                    node,
+                    f"docker run -d --name {client} --network host --entrypoint /bin/sh "
+                    f"{shlex.quote(CONTROL_IMAGE)} -ec "
+                    + shlex.quote(_control_request_script(port, marker, persistent=True)),
+                    timeout=60, check=False,
+                )
+                entry["client_start"] = _result_evidence(client_start)
+                if _returncode(client_start):
+                    raise RuntimeError(f"technical control client failed to start on {node}")
+                client_inspect = self.ctx.node_exec(
+                    node, f"docker inspect {client}", timeout=30, check=False
+                )
+                entry["client_start_inspect"] = _result_evidence(client_inspect)
+                if not _inspect_running(client_inspect):
+                    raise RuntimeError(f"technical control client exited during startup on {node}")
+
+            deadline = time.monotonic() + timeout
+            while time.monotonic() < deadline:
+                proofs = {
+                    node: self._control_proof(node, marker) for node in ("a", "b")
+                }
+                if all(value["proven"] for value in proofs.values()):
+                    break
+                self.health()
+                time.sleep(0.5)
+            if not proofs or not all(value["proven"] for value in proofs.values()):
+                raise RuntimeError(f"{self.collector} eBPF positive control was not observed")
+        except Exception as exc:
+            failure = exc
+        finally:
+            for node in ("a", "b"):
+                entry = nodes[node]
+                server = entry["server_container"]
+                client = entry["client_container"]
+                probe = entry["probe_container"]
+                for label, command in (
+                    ("server-inspect", f"docker inspect {server}"),
+                    ("server-logs", f"docker logs {server}"),
+                    ("client-inspect", f"docker inspect {client}"),
+                    ("client-logs", f"docker logs {client}"),
+                ):
+                    result = _safe_node_exec(
+                        self.ctx, node, command, timeout=30, check=False
+                    )
+                    path = self.root / f"control-{node}-{label}.txt"
+                    path.write_text(
+                        _stdout(result) + ("\n--- stderr ---\n" + _stderr(result) if _stderr(result) else ""),
+                        encoding="utf-8",
+                    )
+                    entry[label.replace("-", "_")] = {
+                        "path": path.relative_to(self.root).as_posix(),
+                        "sha256": _sha256_file(path),
+                        "returncode": _returncode(result),
+                    }
+                cleanup = _safe_node_exec(
+                    self.ctx, node, f"docker rm -f {probe} {client} {server}",
+                    timeout=30, check=False
+                )
+                entry["cleanup"] = _result_evidence(cleanup)
+            evidence = {
+                "schema": "collector-positive-control-v5",
+                "collector": self.collector,
+                "source_domain": self.source_domain,
+                "marker": marker,
+                "nodes": nodes,
+                "proofs": proofs,
+                "selected_ebpf_origin_proven": bool(proofs)
+                and all(value["proven"] for value in proofs.values()),
+                "application_coverage": "not_assessed_by_technical_control",
+                "native_sdk": False,
+                "technical_failure": str(failure) if failure is not None else None,
+            }
+            _write_json(self.root / "technical-positive-control.json", evidence)
+            self.positive_control_evidence = evidence
+
+        if failure is not None:
+            raise failure
         if not evidence["selected_ebpf_origin_proven"]:
             raise RuntimeError(f"{self.collector} eBPF positive control was not observed")
         return evidence

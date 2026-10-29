@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
+import time
+import uuid
 from pathlib import Path
 
 import pytest
@@ -13,6 +17,8 @@ from ebpf_discovery.collectors_v5 import (
     OBICollectorsV5,
     create_collectors_v5,
     make_collectors,
+    _control_request_script,
+    _control_server_script,
 )
 from ebpf_discovery.receiver import _capture_wire_body
 from ebpf_discovery.receiver_v5 import _file, _raw_capture_audit
@@ -323,3 +329,123 @@ def test_parent_rehash_detects_post_checkpoint_raw_body_change(tmp_path: Path) -
 def test_control_image_is_existing_exact_pin() -> None:
     assert CONTROL_IMAGE.startswith("haproxy:3.0-alpine@sha256:")
     assert len(CONTROL_IMAGE.rsplit(":", 1)[1]) == 64
+
+
+def test_control_server_uses_haproxy_not_missing_busybox_httpd() -> None:
+    script = _control_server_script(18081)
+    assert "haproxy -c -f /tmp/control-haproxy.cfg" in script
+    assert "exec haproxy -W -db -f /tmp/control-haproxy.cfg" in script
+    assert "bind 0.0.0.0:18081" in script
+    assert "busybox httpd" not in script
+    assert "collector-control-marker" in _control_request_script(
+        18081, "collector-control-marker", persistent=False
+    )
+
+
+def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
+    tmp_path: Path, monkeypatch
+) -> None:
+    from ebpf_discovery import collectors_v5 as module
+
+    class FailureContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            self.calls.append((node, command, kwargs))
+            if command.startswith("docker inspect study-ebpf-control-server-"):
+                return Result(json.dumps([{"State": {"Running": True}}]))
+            if "docker exec study-ebpf-control-server-" in command:
+                return Result("Configuration file is valid\n")
+            if "-probe" in command:
+                return Result("", "connection refused", 1)
+            if command.startswith("docker logs"):
+                return Result("retained server log\n")
+            if command.startswith("docker image inspect"):
+                return Result('[{"Id":"sha256:pinned"}]')
+            return Result("ok")
+
+    ticks = iter((0.0, 0.5, 2.0))
+    monkeypatch.setattr(module, "CONTROL_READY_TIMEOUT_SECONDS", 1.0)
+    monkeypatch.setattr(module.time, "monotonic", lambda: next(ticks))
+    monkeypatch.setattr(module.time, "sleep", lambda _: None)
+    ctx = FailureContext(tmp_path)
+    collector = OBICollectorsV5(ctx)
+    with pytest.raises(RuntimeError, match="HTTP readiness failed on a"):
+        collector.positive_control()
+
+    evidence = json.loads(
+        (collector.root / "technical-positive-control.json").read_text(encoding="utf-8")
+    )
+    assert evidence["technical_failure"] == "technical control HTTP readiness failed on a"
+    assert len(evidence["nodes"]["a"]["request_attempts"]) == 1
+    attempt = evidence["nodes"]["a"]["request_attempts"][0]
+    assert attempt["request"]["returncode"] == 1
+    assert attempt["request"]["stderr"] == "connection refused"
+    assert evidence["nodes"]["a"]["server_inspect"]["sha256"]
+    assert evidence["nodes"]["a"]["server_logs"]["sha256"]
+    cleanup = [command for _, command, _ in ctx.calls if command.startswith("docker rm -f")]
+    assert any("control-client-a" in command and "control-server-a" in command for command in cleanup)
+    assert any("control-client-b" in command and "control-server-b" in command for command in cleanup)
+
+
+@pytest.mark.skipif(
+    os.environ.get("RUN_DOCKER_CONTROL_FIXTURE") != "1",
+    reason="technical Docker fixture runs in Actions only",
+)
+def test_pinned_haproxy_control_fixture_executes() -> None:
+    suffix = uuid.uuid4().hex[:10]
+    server = f"study-control-fixture-{suffix}"
+    client = f"study-control-client-{suffix}"
+    port = 18081
+    subprocess.run(["docker", "pull", CONTROL_IMAGE], check=True)
+    try:
+        subprocess.run(
+            [
+                "docker", "run", "-d", "--name", server, "--network", "host",
+                "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec", _control_server_script(port),
+            ],
+            check=True,
+        )
+        deadline = time.monotonic() + 30
+        last = None
+        while time.monotonic() < deadline:
+            inspect = subprocess.run(
+                ["docker", "inspect", "--format", "{{.State.Running}}", server],
+                capture_output=True, text=True, check=False,
+            )
+            if inspect.returncode == 0 and inspect.stdout.strip() == "true":
+                config = subprocess.run(
+                    ["docker", "exec", server, "haproxy", "-c", "-f", "/tmp/control-haproxy.cfg"],
+                    capture_output=True, text=True, check=False,
+                )
+                if config.returncode == 0:
+                    last = subprocess.run(
+                        [
+                            "docker", "run", "--rm", "--network", "host",
+                            "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
+                            _control_request_script(port, "fixture-marker", persistent=False),
+                        ],
+                        capture_output=True, text=True, check=False,
+                    )
+                    if last.returncode == 0 and last.stdout.strip() == "ok":
+                        break
+            time.sleep(0.25)
+        assert last is not None
+        assert last.returncode == 0, last.stderr
+        assert last.stdout.strip() == "ok"
+        subprocess.run(
+            [
+                "docker", "run", "-d", "--name", client, "--network", "host",
+                "--entrypoint", "/bin/sh", CONTROL_IMAGE, "-ec",
+                _control_request_script(port, "fixture-marker", persistent=True),
+            ],
+            check=True,
+        )
+        persistent = subprocess.run(
+            ["docker", "inspect", "--format", "{{.State.Running}}", client],
+            capture_output=True, text=True, check=False,
+        )
+        assert persistent.returncode == 0
+        assert persistent.stdout.strip() == "true"
+    finally:
+        subprocess.run(["docker", "logs", server], check=False)
+        subprocess.run(["docker", "logs", client], check=False)
+        subprocess.run(["docker", "rm", "-f", client, server], check=False)
