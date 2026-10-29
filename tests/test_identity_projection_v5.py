@@ -11,6 +11,8 @@ from ebpf_discovery.deepflow_codec_v5 import codec_file
 from ebpf_discovery.identity_projection_v5 import refresh
 from ebpf_discovery.observations import attributes
 from ebpf_discovery.raw_v4 import export_selection
+from ebpf_discovery.selection_v4 import bind_entry as bind_entry_v4
+from ebpf_discovery.selection_v5 import bind_entry as bind_entry_v5
 from ebpf_discovery.store_v5 import ObservationStoreV5
 from ebpf_discovery.transport_v4 import Journal
 
@@ -162,4 +164,22 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path):
     assert resolution["status"] == "unknown"
     assert resolution["unknown_reasons"] == [
         "existing_source_label_conflicts_with_runtime_identity"]
+    effective_conflict = store.candidates_v5("ebpf", "request-1")[0]
+    assert effective_conflict["service"] == "source-declared-other"
+    assert effective_conflict["attribute_conflicts"][-1]["key"] == "service.name"
+    assert effective_conflict["_runtime_identity_uncertainty"][
+        "admissible_service_identity"] is None
+    # Give the synthetic DeepFlow row genuine IDs so legacy rejection is tested
+    # specifically on the identity contradiction, not its usual missing ancestry.
+    effective_conflict["trace_id"], effective_conflict["span_id"] = "1" * 32, "2" * 16
+    store.db.execute("UPDATE runtime_identity_projection SET projected_data=?", (
+        json.dumps(effective_conflict, sort_keys=True, separators=(",", ":")),))
+    store.db.commit()
+    expected = {"method": "GET", "path": "/items/7"}
+    root_v5, reason_v5 = bind_entry_v5(
+        store, "ebpf", "request-1", expected, ["source-declared-other"])
+    root_v4, reason_v4 = bind_entry_v4(
+        store, "ebpf", "request-1", expected, ["source-declared-other"])
+    assert root_v5 is None and reason_v5 == "conflicting_matching_entry_evidence"
+    assert root_v4 is None and reason_v4 == "conflicting_entry_attributes"
     journal.close(); store.close()

@@ -180,14 +180,16 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
         return []
 
     accounting_path = live_root/'observations'/'deepflow-codec-accounting.jsonl'
-    accounting = []
+    accounting_by_locator = {}
     if accounting_path.is_file():
         for line in accounting_path.read_text(encoding='utf-8').splitlines():
             if line.strip():
                 row = json.loads(line)
                 canonical = _locator(row.get('_runtime_identity', {}).get('locator') or row)
                 if canonical is not None:
-                    accounting.append((canonical, row))
+                    key = tuple(canonical[name] for name in (
+                        'source_file', 'retained_file', 'offset', 'length', 'sha256'))
+                    accounting_by_locator.setdefault(key, []).append(row)
     records = []
     for canonical in locators.values():
         retained = Path(canonical['retained_file'])
@@ -206,7 +208,9 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
             _copy(raw_source, live_root, checkpoint, copied)
         proof = {'locator': canonical, 'raw_file': copied[raw_key]}
         if retained.parts and retained.parts[0] == 'deepflow-raw':
-            matches = [row for locator, row in accounting if locator == canonical]
+            locator_key = tuple(canonical[name] for name in (
+                'source_file', 'retained_file', 'offset', 'length', 'sha256'))
+            matches = accounting_by_locator.get(locator_key, [])
             if not matches:
                 raise ValueError(f'DeepFlow locator lacks codec accounting: {raw_relative}')
             snapshot_path = raw_source.parent/'snapshot.json'

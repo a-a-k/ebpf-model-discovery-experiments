@@ -130,6 +130,8 @@ def _index_table_proof(path: Path) -> dict:
         tables = ["spans", "links", "files"]
         if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='observation_provenance'").fetchone():
             tables.append("observation_provenance")
+        if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='runtime_identity_projection'").fetchone():
+            tables.append("runtime_identity_projection")
         for table in tables:
             digest, count = hashlib.sha256(), 0
             for row in db.execute(f"SELECT rowid,* FROM {table} ORDER BY rowid"):

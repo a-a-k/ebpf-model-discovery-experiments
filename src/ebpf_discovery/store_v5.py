@@ -149,6 +149,23 @@ class ObservationStoreV5(ObservationStore):
                     status = 'resolved_existing'
                 else:
                     status = 'label_conflict'
+                    projected = dict(original)
+                    conflicts = list(projected.get('attribute_conflicts') or [])
+                    conflicts.append({
+                        'key': 'service.name',
+                        'raw_values': [
+                            {'stringValue': original_service, 'origin': 'source_observation'},
+                            {'stringValue': observed, 'origin': 'verified_runtime_identity'},
+                        ],
+                        'basis': 'source_label_conflicts_with_verified_runtime_identity',
+                    })
+                    projected['attribute_conflicts'] = conflicts
+                    projected['_runtime_identity_uncertainty'] = {
+                        'kind': 'service_identity_conflict',
+                        'original_source_service': original_service,
+                        'observed_runtime_compose_service': observed,
+                        'admissible_service_identity': None,
+                    }
                     result = {**result, 'status': 'unknown', 'service_identity': None,
                               'unknown_reasons': ['existing_source_label_conflicts_with_runtime_identity'],
                               'observed_runtime_compose_service': observed,

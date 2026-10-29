@@ -171,8 +171,15 @@ def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
     _json(raw.parent/'snapshot.json', {'files': [{
         'snapshot_name': raw.name, 'copied_bytes': len(body),
         'copied_sha256': hashlib.sha256(body).hexdigest()}]})
-    _json(observations/'deepflow-codec-accounting.jsonl', {
-        **locator, '_runtime_identity': {'locator': locator}, 'status': 'normalized'})
+    accounting_rows = [{
+        **locator, '_runtime_identity': {'locator': locator}, 'status': 'normalized'}]
+    for ordinal in range(100):
+        other = {**locator, 'source_file': f'a/irrelevant-{ordinal}',
+                 'sha256': hashlib.sha256(str(ordinal).encode()).hexdigest()}
+        accounting_rows.append({**other, '_runtime_identity': {'locator': other},
+                                'status': 'normalized'})
+    (observations/'deepflow-codec-accounting.jsonl').write_text(
+        ''.join(json.dumps(row) + '\n' for row in accounting_rows), encoding='utf-8')
     with sqlite3.connect(checkpoint/'observation-index.sqlite') as db:
         db.execute('CREATE TABLE spans(digest TEXT, data TEXT)')
         db.execute('INSERT INTO spans VALUES (?,?)', ('digest', json.dumps({

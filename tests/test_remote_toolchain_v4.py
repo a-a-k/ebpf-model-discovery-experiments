@@ -14,6 +14,25 @@ from ebpf_discovery import artifact_transport_v4 as transport
 from ebpf_discovery.toolchain_v5 import PINS as V5_PINS
 
 
+def test_index_logical_proof_binds_runtime_identity_projection_rows(tmp_path):
+    index = tmp_path / "index.sqlite"
+    with sqlite3.connect(index) as db:
+        for table in ("spans", "links", "files"):
+            db.execute(f"CREATE TABLE {table}(value TEXT)")
+        db.execute("CREATE TABLE runtime_identity_projection(digest TEXT, resolution TEXT)")
+        db.execute("INSERT INTO runtime_identity_projection VALUES (?,?)",
+                   ("digest", '{"status":"resolved"}'))
+    before = remote._index_table_proof(index)
+    assert before["runtime_identity_projection"]["rows"] == 1
+    with sqlite3.connect(index) as db:
+        db.execute("UPDATE runtime_identity_projection SET resolution=?",
+                   ('{"status":"unknown"}',))
+    after = remote._index_table_proof(index)
+    assert before["spans"] == after["spans"]
+    assert before["runtime_identity_projection"] != after["runtime_identity_projection"]
+    assert remote._json_sha(before) != remote._json_sha(after)
+
+
 def write_json(path, value):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
