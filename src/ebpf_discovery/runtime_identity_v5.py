@@ -19,6 +19,36 @@ _CLOCKS = {
     "guest_realtime_unix_ns": ("realtime_unix_ns", {
         "direct_clock_gettime_realtime", "documented_same_guest_realtime_relation"}),
 }
+_CANONICAL_UNSIGNED = re.compile(r"0|[1-9][0-9]*")
+_CANONICAL_POSITIVE = re.compile(r"[1-9][0-9]*")
+_SHA256 = re.compile(r"[0-9a-f]{64}")
+
+
+def _integer(value: Any, *, positive: bool) -> int | None:
+    if type(value) is int:
+        if positive:
+            return value if value > 0 else None
+        return value if value >= 0 else None
+    pattern = _CANONICAL_POSITIVE if positive else _CANONICAL_UNSIGNED
+    if isinstance(value, str) and pattern.fullmatch(value):
+        return int(value)
+    return None
+
+
+def _locator(value: Any) -> dict | None:
+    if not isinstance(value, dict):
+        return None
+    source, retained, digest = (value.get("source_file"), value.get("retained_file"),
+                                value.get("sha256"))
+    offset = _integer(value.get("offset"), positive=False)
+    length = _integer(value.get("length"), positive=False)
+    if (not isinstance(source, str) or not source
+            or not isinstance(retained, str) or not retained
+            or not isinstance(digest, str) or _SHA256.fullmatch(digest) is None
+            or offset is None or length is None):
+        return None
+    return {"source_file": source, "retained_file": retained, "offset": offset,
+            "length": length, "sha256": digest}
 
 
 def _sha(path: Path) -> str:
@@ -152,7 +182,7 @@ def inventory(captures: Iterable[dict], capture_lifetimes: Iterable[dict] = (),
     if len(lifetime_keys) != len(lifetimes) or len(set(lifetime_keys)) != len(lifetime_keys):
         raise ValueError("runtime identity inventory has invalid or duplicate source capture lifetimes")
     enclosures = list(event_enclosures)
-    enclosure_keys = [(row.get("request_nonce"), row.get("node"), row.get("record_locator"))
+    enclosure_keys = [(row.get("request_nonce"), row.get("node"), _locator(row.get("record_locator")))
                       for row in enclosures if isinstance(row, dict)]
     if len(enclosure_keys) != len(enclosures) or len(set(map(repr, enclosure_keys))) != len(enclosure_keys):
         raise ValueError("runtime identity inventory has invalid or duplicate event enclosures")
@@ -224,7 +254,8 @@ def _capture_lifetime(runtime: dict, retained_inventory: dict, node: str) -> dic
 
 
 def _event_enclosure(runtime: dict, retained_inventory: dict, node: str) -> dict | None:
-    nonce, locator = runtime.get("request_nonce"), runtime.get("locator")
+    nonce, original_locator = runtime.get("request_nonce"), runtime.get("locator")
+    locator = _locator(original_locator)
     method, route = runtime.get("method"), runtime.get("route")
     if (not isinstance(nonce, str) or not nonce or locator is None
             or runtime.get("event_role") != "synchronous_server_entry"
@@ -233,7 +264,7 @@ def _event_enclosure(runtime: dict, retained_inventory: dict, node: str) -> dict
         return None
     rows = [row for row in retained_inventory.get("event_enclosures") or []
             if isinstance(row, dict) and row.get("request_nonce") == nonce
-            and row.get("node") == node and row.get("record_locator") == locator
+            and row.get("node") == node and _locator(row.get("record_locator")) == locator
             and row.get("method") == method and row.get("route") == route]
     if len(rows) != 1:
         return None
@@ -271,8 +302,9 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
             runtime = {**runtime, "locator": retained_locator}
     if not isinstance(retained_inventory, dict) or retained_inventory.get("schema") != SCHEMA:
         return _unknown(runtime, "runtime_identity_inventory_invalid")
-    node, pid = runtime.get("node"), runtime.get("host_pid")
-    if node not in ("a", "b") or type(pid) is not int or pid <= 0:
+    node, raw_pid = runtime.get("node"), runtime.get("host_pid")
+    pid = _integer(raw_pid, positive=True)
+    if node not in ("a", "b") or pid is None:
         return _unknown(runtime, "guest_node_or_host_pid_invalid")
     if runtime.get("pid_scope") != "guest_host":
         return _unknown(runtime, "pid_scope_is_not_guest_host")
@@ -284,7 +316,7 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
         if isinstance(sample, dict):
             index.setdefault((sample.get("stage"), sample.get("node")), []).append(sample)
     clock = runtime.get("clock")
-    lifetime = None
+    lifetime = enclosure = None
     if isinstance(clock, dict) and clock.get("domain") in _CLOCKS:
         field, relations = _CLOCKS[clock["domain"]]
         evidence = clock.get("evidence")
@@ -319,9 +351,11 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
             or source_guest_identity != (before.get("boot_id"), before.get("host_pid_namespace"))
             or source_guest_identity != (after.get("boot_id"), after.get("host_pid_namespace"))):
         return _unknown(runtime, "source_guest_boot_or_pid_namespace_mismatch")
-    start_ns, end_ns = runtime.get("event_start_ns"), runtime.get("event_end_ns")
+    raw_start_ns, raw_end_ns = runtime.get("event_start_ns"), runtime.get("event_end_ns")
+    start_ns = _integer(raw_start_ns, positive=False)
+    end_ns = _integer(raw_end_ns, positive=False)
     if bracket_kind == "source_event_clock":
-        if type(start_ns) is not int or type(end_ns) is not int or start_ns < 0 or end_ns < start_ns:
+        if start_ns is None or end_ns is None or end_ns < start_ns:
             return _unknown(runtime, "source_event_interval_invalid")
         try:
             bracketed = (before["clocks"]["ended"][field] <= start_ns
@@ -349,7 +383,11 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
     if any(first_owner.get(key) != second_owner.get(key) for key in owner_keys):
         return _unknown(runtime, "container_owner_changed")
     first_proofs, second_proofs = first_owner.get("ownership_proofs"), second_owner.get("ownership_proofs")
-    if (first_owner.get("container_running") is not True
+    required_owner = ("container_id", "container_name", "image", "container_started_at")
+    if (any(not isinstance(first_owner.get(key), str) or not first_owner[key]
+            or not isinstance(second_owner.get(key), str) or not second_owner[key]
+            for key in required_owner)
+            or first_owner.get("container_running") is not True
             or second_owner.get("container_running") is not True
             or not isinstance(first_proofs, list) or not first_proofs
             or not isinstance(second_proofs, list) or not second_proofs):
@@ -382,6 +420,16 @@ def resolve(record: dict, retained_inventory: dict) -> dict:
                     if bracket_kind == "exact_request_nonce" else None},
         "ownership_proofs": {"before": first_proofs, "after": second_proofs},
         "clock_evidence": evidence, "record_locator": runtime.get("locator"),
+        "canonical_record_locator": _locator(runtime.get("locator")),
+        "representation_normalization": {
+            "host_pid": {"original": raw_pid, "canonical_integer": pid},
+            "event_start_ns": {"original": raw_start_ns, "canonical_integer": start_ns},
+            "event_end_ns": {"original": raw_end_ns, "canonical_integer": end_ns},
+            "locator": {"original": runtime.get("locator"),
+                        "canonical": _locator(runtime.get("locator")),
+                        "enclosure_original": enclosure.get("record_locator") if enclosure else None,
+                        "enclosure_canonical": (_locator(enclosure.get("record_locator"))
+                                                if enclosure else None)}},
         "unknown_reasons": [], "graph_edges_injected": False,
     }
 

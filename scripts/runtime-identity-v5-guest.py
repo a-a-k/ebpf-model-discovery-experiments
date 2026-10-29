@@ -97,7 +97,9 @@ def _owner(pid: int, groups: list[dict], containers: list[dict]) -> dict | None:
         if pid == int((container.get("state") or {}).get("Pid") or 0):
             reasons.add("container_init_host_pid")
         init_paths = {item["path"] for item in container.get("init_cgroups", [])}
-        if group_paths and init_paths and group_paths == init_paths:
+        # '/' is shared by ordinary host processes and proves no container owner.
+        if (group_paths and init_paths and group_paths == init_paths
+                and any(path not in ("", "/") for path in group_paths)):
             reasons.add("exact_container_init_cgroup_set")
         if any(identity in path for path in group_paths):
             reasons.add("container_id_in_process_cgroup")

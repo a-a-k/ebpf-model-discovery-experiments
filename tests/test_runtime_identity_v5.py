@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import runpy
 
 import pytest
 
+from ebpf_discovery.deepflow_codec_v5 import codec_file
+from ebpf_discovery.observations import otlp
 from ebpf_discovery.runtime_identity_v5 import capture, inventory, resolve, resolve_all
 
 
@@ -111,6 +114,21 @@ def test_delayed_or_unbracketed_records_and_receipt_time_do_not_bind():
 def test_source_record_must_carry_the_same_guest_boot_and_host_pid_namespace():
     assert resolve(_record(boot_id="other"), _inventory())["unknown_reasons"] == [
         "source_guest_boot_or_pid_namespace_mismatch"]
+
+
+@pytest.mark.parametrize("value", ["01", "0", "-1", "+1", "1.0", 1.0, True])
+def test_host_pid_rejects_noncanonical_or_coerced_values(value):
+    assert resolve(_record(host_pid=value), _inventory())["unknown_reasons"] == [
+        "guest_node_or_host_pid_invalid"]
+
+
+def test_canonical_decimal_event_bounds_are_supported_and_recorded():
+    result = resolve(_record(host_pid="41", event_start_ns="120", event_end_ns="180"),
+                     _inventory())
+    assert result["status"] == "resolved"
+    assert result["representation_normalization"]["host_pid"] == {
+        "original": "41", "canonical_integer": 41}
+    assert result["representation_normalization"]["event_start_ns"]["canonical_integer"] == 120
     assert resolve(_record(pid_namespace="pid:[999]"), _inventory())["unknown_reasons"] == [
         "source_guest_boot_or_pid_namespace_mismatch"]
 
@@ -141,7 +159,8 @@ def test_whole_fresh_capture_lifetime_is_the_only_clockless_alternative():
 
 def test_exact_fresh_request_nonce_encloses_event_without_clock_conversion():
     retained = _inventory()
-    locator = {"raw_file": "events.jsonl", "offset": 17}
+    locator = {"source_file": "events.jsonl", "retained_file": "raw/events.jsonl",
+               "offset": 17, "length": 42, "sha256": "a" * 64}
     retained["event_enclosures"] = [{
         "request_nonce": "fresh-opaque-nonce", "node": "a", "record_locator": locator,
         "method": "GET", "route": "/entry",
@@ -200,6 +219,74 @@ def test_actual_compose_labels_are_required_not_expected_topology():
     result = resolve(_record(expected_service="frontend", ip="10.0.0.4"),
                      _inventory(before, after))
     assert result["unknown_reasons"] == ["actual_compose_service_identity_unobserved"]
+
+
+@pytest.mark.parametrize("field", ["container_id", "container_name", "image", "container_started_at"])
+def test_container_lifetime_identity_fields_must_be_nonempty(field):
+    owner = _owner()
+    owner[field] = None
+    before = _sample("before-block-1", edge="before", owner=owner)
+    after = _sample("after-block-1", edge="after", owner=owner)
+    assert resolve(_record(), _inventory(before, after))["unknown_reasons"] == [
+        "container_lifecycle_or_ownership_proof_missing"]
+
+
+def test_shared_root_cgroup_is_not_container_ownership_evidence():
+    helper = runpy.run_path(str(Path(__file__).parents[1] / "scripts" /
+                                "runtime-identity-v5-guest.py"))
+    owner = helper["_owner"]
+    container = {"id": "a" * 64, "name": "service-1", "image": "sha256:image",
+                 "config_image": "image", "state": {"Pid": 10, "Running": True,
+                 "StartedAt": "now"}, "compose": {"project": "p", "service": "s"},
+                 "init_cgroups": [{"path": "/"}]}
+    assert owner(11, [{"path": "/"}], [container]) is None
+    assert "container_init_host_pid" in owner(10, [{"path": "/"}], [container])[
+        "ownership_proofs"]
+    container["init_cgroups"] = [{"path": "/docker/" + "a" * 64}]
+    assert "exact_container_init_cgroup_set" in owner(
+        11, [{"path": "/docker/" + "a" * 64}], [container])["ownership_proofs"]
+
+
+def test_real_deepflow_codec_otlp_round_trip_resolves_canonical_locator(tmp_path):
+    raw = tmp_path / "l7_flow_log"
+    row = {"signal_source": "EBPF", "tap_side": "ServerProcess",
+           "ebpf_type": "TracePoint", "l7_protocol": "Http1", "msg_type": "Request",
+           "start_time": 10, "end_time": 20, "ip_src": "192.0.2.1",
+           "ip_dst": "192.0.2.2", "port_src": 41000, "port_dst": 8080,
+           "process_id_1": 123, "process_kname_1": "frontend",
+           "request_type": "GET", "request_resource": "/items/7",
+           "request_domain": "example.test", "version": "1.1",
+           "x_request_id_0": "fresh-codec-nonce"}
+    raw.write_text(json.dumps(row, separators=(",", ":")) + "\n", encoding="utf-8")
+    batches, accounting, _ = codec_file(
+        raw, node="a", source_file="a/l7_flow_log", retained_file="raw/a/l7_flow_log",
+        guest_context={"boot_id": "boot-a", "pid_namespace": "pid:[100]"})
+    normalized = list(otlp(batches[0]["payload"], "ebpf", "a"))[0]
+    retained = _inventory(
+        _sample("before-block-1", edge="before", pid=123),
+        _sample("after-block-1", edge="after", pid=123))
+    accounting_locator = accounting[0]["_runtime_identity"]["locator"]
+    retained["event_enclosures"] = [{
+        "request_nonce": "fresh-codec-nonce", "node": "a",
+        "record_locator": accounting_locator, "method": "GET", "route": "/items/7",
+        "before_stage": "before-block-1", "after_stage": "after-block-1",
+        "source_event_contains_exact_nonce": True, "synchronous_server_entry": True,
+        "terminal_request_exchange": True, "technical_complete": True,
+        "runner_monotonic_sequence": {"before_sample_completed_ns": 10,
+                                      "request_started_ns": 20, "request_completed_ns": 30,
+                                      "after_sample_started_ns": 40},
+        "evidence": {"kind": "retained_exact_nonce", "locator": "nonce-proof.json",
+                     "sha256": "e" * 64}}]
+    result = resolve(normalized, retained)
+    assert result["status"] == "resolved"
+    assert type(result["record_locator"]["offset"]) is str
+    assert type(accounting_locator["offset"]) is int
+    assert result["canonical_record_locator"] == accounting_locator
+    locator_proof = result["representation_normalization"]["locator"]
+    assert locator_proof["original"] == result["record_locator"]
+    assert locator_proof["canonical"] == accounting_locator
+    assert locator_proof["enclosure_original"] == accounting_locator
+    assert locator_proof["enclosure_canonical"] == accounting_locator
 
 
 def test_coverage_reports_unknowns_without_dropping_original_locators():
