@@ -1,0 +1,56 @@
+name: Validate v5 streaming preprocessing equivalence
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest
+      - name: Run focused preprocessing checks
+        run: |
+          python -m pytest --import-mode=importlib \
+            tests/test_supplied_alias_v5.py tests/test_identity_projection_v5.py -q \
+            | tee focused-tests.log
+          python -m py_compile scripts/validate-memory-streaming-v5.py
+          python scripts/validate-memory-streaming-v5.py --help >/dev/null
+      - name: Fetch exact immutable source metadata and full artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/memory-streaming-validation-input
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40916651613 \
+            > work/memory-streaming-validation-input/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917472672 \
+            > work/memory-streaming-validation-input/artifact-api.json
+          gh api -H 'Accept: application/vnd.github+json' \
+            repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12917472672/zip \
+            > work/memory-streaming-validation-input/full.zip
+      - name: Compare original and streaming preprocessing
+        env:
+          PYTHONPATH: src:.
+        run: |
+          python scripts/validate-memory-streaming-v5.py \
+            --archive work/memory-streaming-validation-input/full.zip \
+            --artifact-metadata work/memory-streaming-validation-input/artifact-api.json \
+            --run-metadata work/memory-streaming-validation-input/run-api.json \
+            --out work/memory-streaming-validation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: memory-streaming-validation-v5-${{ github.run_id }}
+          path: |
+            work/memory-streaming-validation/
+            work/memory-streaming-validation-input/run-api.json
+            work/memory-streaming-validation-input/artifact-api.json
+            focused-tests.log
+          retention-days: 90
+          if-no-files-found: error
