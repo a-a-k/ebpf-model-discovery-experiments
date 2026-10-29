@@ -285,6 +285,9 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
     assert manifest["aggregate_log_retention_config"]["sha256"] == hashlib.sha256(
         (collector.root / "effective-retention-config.json").read_bytes()
     ).hexdigest()
+    summary = manifest["config_summary"]["aggregate_log_retention"]
+    assert summary["effective_config_check"] == "required_before_workload"
+    assert "verified_before_workload" not in summary
     retention_checks = [
         (node, command, kwargs) for node, command, kwargs in ctx.calls
         if "max_local_log_file_size from" in command

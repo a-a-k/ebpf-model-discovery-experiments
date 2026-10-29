@@ -976,7 +976,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     "including standalone L7 data"
                 ),
                 "alignment": "same 1 TiB ceiling as standalone max_data_file_size",
-                "effective_config_checked_before_workload": True,
+                "effective_config_check": "required_before_workload",
                 "pinned_source_paths": [
                     "agent/src/config/config.rs",
                     "agent/src/utils/guard.rs",
