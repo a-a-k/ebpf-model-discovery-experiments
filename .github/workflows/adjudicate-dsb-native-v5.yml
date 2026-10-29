@@ -29,7 +29,7 @@ jobs:
             > work/dsb-native-adjudication-input/full.zip
       - name: Re-run only acquisition checks on preserved originals
         env:
-          PYTHONPATH: src
+          PYTHONPATH: src:.
         run: |
           python scripts/adjudicate-dsb-native-v5.py \
             --archive work/dsb-native-adjudication-input/full.zip \

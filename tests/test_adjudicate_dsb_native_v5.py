@@ -1,8 +1,11 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sqlite3
+import subprocess
+import sys
 import zipfile
 
 
@@ -126,3 +129,14 @@ def test_workflow_is_fixed_and_does_not_run_campaign_or_evaluator() -> None:
     assert "campaign_v5" not in workflow
     assert "evaluate_v5 --campaign" not in workflow
     assert "adjudicate-dsb-native-v5.py" in workflow
+
+
+def test_adjudicator_cli_imports_source_and_system_adapters() -> None:
+    root = SCRIPT.parents[1]
+    environment = dict(os.environ, PYTHONPATH=os.pathsep.join((str(root / "src"), str(root))))
+    result = subprocess.run([sys.executable, str(SCRIPT), "--help"], cwd=root,
+                            env=environment, text=True, capture_output=True)
+    assert result.returncode == 0, result.stderr
+    assert "--artifact-metadata" in result.stdout
+    workflow = (root / ".github/workflows/adjudicate-dsb-native-v5.yml").read_text()
+    assert "PYTHONPATH: src:." in workflow
