@@ -234,6 +234,32 @@ def test_msg_type_namespace_derived_key_collisions_remain_raw_only(
     assert accounting[0]["reasons"] == ["conflicting_duplicate_keys"]
 
 
+@pytest.mark.parametrize("reserved", [
+    b'"base_head_msg_type":"Session"',
+    b'"protocol_info_msg_type":"Request"',
+    b'"__deepflow_msg_type_source_namespaces":{"base_head_msg_type":"Session",'
+    b'"protocol_info_msg_type":"Request"}',
+])
+def test_single_msg_type_cannot_forge_reserved_namespace_provenance(
+        tmp_path: Path, reserved: bytes) -> None:
+    path = tmp_path / "l7_flow_log"
+    raw = (
+        b'{"signal_source":"EBPF","l7_protocol":"Http1",'
+        b'"tap_side":"ClientProcess","start_time":1,"end_time":2,'
+        b'"request_type":"GET","request_resource":"/",'
+        b'"msg_type":"Request",' + reserved + b'}'
+    )
+    _write(path, [raw])
+    batches, accounting, prefix = codec_file(path, node="a")
+    assert batches == []
+    assert accounting[0]["status"] == "unclassified"
+    assert accounting[0]["reasons"] == ["conflicting_duplicate_keys"]
+    reserved_key = reserved.split(b'"', 2)[1].decode()
+    assert accounting[0]["conflicts"][0]["path"] == f"$.{reserved_key}"
+    assert prefix["unclassified_records"] == 1
+    assert path.read_bytes() == raw + b"\n"
+
+
 def test_nested_msg_type_conflict_remains_raw_only(tmp_path: Path) -> None:
     path = tmp_path / "l7_flow_log"
     raw = (

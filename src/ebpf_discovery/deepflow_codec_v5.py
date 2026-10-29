@@ -28,6 +28,9 @@ MAX_OTLP_UNIX_NANO = (1 << 64) - 1
 SOURCE_CLOCK = "deepflow_guest_realtime_derived_epoch_us_standalone_ntp_disabled"
 _MSG_TYPE_NAMESPACE = "__deepflow_msg_type_source_namespaces"
 _MSG_TYPE_NAMESPACE_FIELDS = ("base_head_msg_type", "protocol_info_msg_type")
+_RESERVED_ROOT_PROVENANCE_KEYS = {
+    _MSG_TYPE_NAMESPACE, *_MSG_TYPE_NAMESPACE_FIELDS,
+}
 
 
 class _Pairs(list):
@@ -60,7 +63,15 @@ def _decode_pairs(value: Any, path: str = "$") -> tuple[Any, list[dict[str, Any]
         output = {}
         for key, variants in grouped.items():
             unique = {_canonical(item): item for item in variants}
-            if len(unique) == 1:
+            if path == "$" and key in _RESERVED_ROOT_PROVENANCE_KEYS:
+                # These names belong exclusively to codec-derived provenance.
+                # A producer-supplied value must never be interpreted as proof
+                # of the pinned source-schema namespace split.
+                conflicts.append({
+                    "path": f"{path}.{key}",
+                    "values": [unique[item] for item in sorted(unique)],
+                })
+            elif len(unique) == 1:
                 output[key] = next(iter(unique.values()))
             elif (path == "$" and key == "msg_type" and len(variants) == 2
                   and variants[0] == "Session"
