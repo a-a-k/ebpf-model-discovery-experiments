@@ -15,6 +15,7 @@ CAPTION = (
     "Points and horizontal ranges copy saved worst-end errors and error ranges, "
     "converted from fractions to percentage points. Ranges are not confidence intervals. "
     "Unavailable errors stay unknown. U is the saved number of unknown external outcomes. "
+    "An absent seed row means no technically selected cell, not zero error; see the fixed grid. "
     "Technical selection is not independent admission. Predictive error alone does not "
     "establish a utility or effort advantage; the equally informed direct baseline shares "
     "the stated arithmetic. Different source/preparation revisions prevent attribution "
@@ -106,10 +107,10 @@ def _figure(rows: list[dict], title: str, target: Path) -> None:
     axis.set_xlabel('Saved absolute error (percentage points)')
     axis.set_title(title + '\nPer-seed saved values; technical selection only', fontsize=10)
     axis.grid(axis='x', alpha=.2)
-    axis.legend(handles=[Line2D([], [], marker=marker, color='#444444', linestyle='none',
+    fig.legend(handles=[Line2D([], [], marker=marker, color='#444444', linestyle='none',
                                 label=f'seed {seed}') for seed, marker in markers.items()],
-                ncol=3, fontsize=7, loc='lower center', bbox_to_anchor=(.5, -.12))
-    fig.tight_layout()
+               ncol=3, fontsize=7, loc='lower center', bbox_to_anchor=(.5, .005))
+    fig.tight_layout(rect=(0, .08, 1, 1))
     for suffix in ('svg', 'png', 'pdf'):
         fig.savefig(target.with_suffix('.' + suffix), dpi=180, bbox_inches='tight')
     plt.close(fig)
