@@ -19,3 +19,29 @@ The stable sources are [compact artifact `12929535044`](https://github.com/a-a-k
 At pinned DeepFlow v7.2.3 commit `9a1219fa5cf1471ba2ec8742019661567d98002e`, [`RelativeSysLoad`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/config/config.rs#L2597-L2622) defaults to `trigger_threshold: 1.0`, `recovery_threshold: 0.9`, and `metric: Load15`. [`SystemLoadGuard::check`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/utils/guard.rs#L84-L142) divides load by the reported CPU count (`system.cpus().len()`) and treats zero trigger or recovery as disabling this guard; it does not establish an affinity-available CPU count. The check raises or clears the guard exception; the surrounding guard loop performs the agent state transition.
 
 Research commit `6a616c685c10a7e17a80b1dda452d9da9e02a693` serializes explicit zero trigger and recovery values for that ambient-load guard in all DeepFlow arms. It does not alter other guards, collector source, codec, identity rules, workload, or resource envelope. The fixed OTel/absent smoke `40948057864` is still pending, so this note does not claim that the revision succeeded or that the earlier miss had no additional cause. Its emitted runtime YAML and acquisition evidence must be reviewed before that setting is admitted.
+
+## DeepFlow aggregate local-log retention
+
+Pinned DeepFlow v7.2.3 uses the standalone `data_file_dir` as the logger parent in
+this deployment. Its logger guard sums every regular file below that parent, not
+only agent text logs. The default `global.limits.max_local_log_file_size` is
+1000 MiB and can therefore invoke log-file release before the separately
+configured 1 TiB standalone-file rotation threshold. The retained startup logs
+from completed fixed OTel/absent run `40948057864` confirm that the agent parsed
+the old effective default as `1048576000` bytes. This is a raw-retention risk in
+the collection configuration, not an observed protocol limitation or a reason
+to reinterpret an existing packet.
+
+At pinned commit `9a1219fa5cf1471ba2ec8742019661567d98002e`,
+[`Limits`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/config/config.rs)
+deserializes `max_local_log_file_size` from MiB by shifting the configured value
+left 20 bits. The logger guard and file enumeration are implemented in
+[`agent/src/utils/guard.rs`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/utils/guard.rs)
+and
+[`agent/src/utils/process/process.rs`](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/utils/process/process.rs).
+Root and the independent skeptic gave original-criterion GO to align only this
+aggregate cap with the existing `MAX_DATA_FILE_SIZE_MIB` value. The candidate
+must retain an actual typed agent-config update on both guests before workload.
+It does not change the collector, protocols, workload, identity policy, codec,
+resource envelope, ambient-load decision, or any previous result. Preparation,
+verification and any failed attempt remain campaign costs.

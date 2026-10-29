@@ -83,6 +83,11 @@ class Context:
             )
         if "docker inspect" in command and "--format" in command:
             return Result("true\n")
+        if "max_local_log_file_size from" in command:
+            return Result(
+                "Update global.limits.max_local_log_file_size from "
+                "1048576000 to 1099511627776.\n"
+            )
         if "grep -h -F" in command:
             return Result("ebpf collector started\n")
         return Result("ok\n")
@@ -114,9 +119,14 @@ def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
     ]
     assert config["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
     assert config["global"]["limits"] == {
-        "max_memory": 2048, "max_millicpus": 2000,
+        "max_memory": 2048,
+        "max_millicpus": 2000,
+        "max_local_log_file_size": MAX_DATA_FILE_SIZE_MIB,
     }
     assert config["global"]["limits"]["max_memory"] << 20 == 2 * (1 << 30)
+    assert config["global"]["limits"]["max_local_log_file_size"] << 20 == (
+        MAX_DATA_FILE_SIZE_BYTES
+    )
 
 
 def test_config_disables_only_pinned_relative_load_circuit_breaker() -> None:
@@ -136,6 +146,7 @@ def test_config_disables_only_pinned_relative_load_circuit_breaker() -> None:
     assert rendered["global"]["limits"] == {
         "max_memory": 2048,
         "max_millicpus": 2000,
+        "max_local_log_file_size": MAX_DATA_FILE_SIZE_MIB,
     }
     assert rendered["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
     assert rendered["processors"]["request_log"]["tag_extraction"]["tracing_tag"] == {
@@ -148,6 +159,26 @@ def test_config_rejects_zero_resource_envelopes() -> None:
         _config(max_memory_mib=0, max_millicpus=1000)
     with pytest.raises(ValueError, match="positive guest envelopes"):
         _config(max_memory_mib=1024, max_millicpus=0)
+
+
+def test_effective_retention_config_requires_typed_agent_update(tmp_path: Path) -> None:
+    class OldCapContext(Context):
+        def node_exec(self, node, command, **kwargs):
+            if "max_local_log_file_size from" in command:
+                self.calls.append((node, command, kwargs))
+                return Result("max_local_log_file_size: 1048576000\n")
+            return super().node_exec(node, command, **kwargs)
+
+    collector = DeepFlowCollectorsV5(OldCapContext(tmp_path))
+    with pytest.raises(RuntimeError, match="aggregate log-retention config"):
+        collector._verify_retention_config()
+
+    proof = json.loads((collector.root / "effective-retention-config.json").read_text())
+    assert proof["verified_before_workload"] is False
+    assert proof["configured_mib"] == MAX_DATA_FILE_SIZE_MIB
+    assert proof["effective_bytes"] == MAX_DATA_FILE_SIZE_BYTES
+    assert all(not item["typed_update_observed"] for item in proof["nodes"].values())
+    assert proof["capture_cost"]["remote_command_count"] == 2
 
 
 def test_readiness_uses_pinned_success_marker_not_initialization_marker(
@@ -235,12 +266,32 @@ def test_start_uses_fresh_two_guest_directories_without_asymmetric_caps(tmp_path
         for node in ("a", "b")
     }
     assert configs["a"]["global"]["limits"] == {
-        "max_memory": 2049, "max_millicpus": 2000,
+        "max_memory": 2049,
+        "max_millicpus": 2000,
+        "max_local_log_file_size": MAX_DATA_FILE_SIZE_MIB,
     }
     assert configs["b"]["global"]["limits"] == {
-        "max_memory": 3072, "max_millicpus": 4000,
+        "max_memory": 3072,
+        "max_millicpus": 4000,
+        "max_local_log_file_size": MAX_DATA_FILE_SIZE_MIB,
     }
     assert configs["a"] != configs["b"]
+    proof = json.loads((collector.root / "effective-retention-config.json").read_text())
+    assert proof["verified_before_workload"] is True
+    assert proof["configured_mib"] == MAX_DATA_FILE_SIZE_MIB
+    assert proof["effective_bytes"] == MAX_DATA_FILE_SIZE_BYTES
+    assert set(proof["nodes"]) == {"a", "b"}
+    assert all(item["typed_update_observed"] for item in proof["nodes"].values())
+    assert manifest["aggregate_log_retention_config"]["sha256"] == hashlib.sha256(
+        (collector.root / "effective-retention-config.json").read_bytes()
+    ).hexdigest()
+    retention_checks = [
+        (node, command, kwargs) for node, command, kwargs in ctx.calls
+        if "max_local_log_file_size from" in command
+    ]
+    assert [node for node, _, _ in retention_checks] == ["a", "b"]
+    assert all(kwargs == {"timeout": 60, "check": False}
+               for _, _, kwargs in retention_checks)
     for node in ("a", "b"):
         inventory = json.loads((collector.root / f"resource-inventory-{node}.json").read_text())
         assert inventory["effective_container_constraints"][

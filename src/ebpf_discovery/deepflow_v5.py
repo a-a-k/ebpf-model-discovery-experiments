@@ -43,6 +43,7 @@ DEEPFLOW_IMAGE = (
 DEEPFLOW_CONTAINER = "study-deepflow-v5"
 MAX_DATA_FILE_SIZE_MIB = 1_048_576
 MAX_DATA_FILE_SIZE_BYTES = 1 << 40
+DEFAULT_LOCAL_LOG_FILE_SIZE_BYTES = 1000 << 20
 NATIVE_RECEIVER_PORT = 4319
 DEEPFLOW_EBPF_READY_MARKER = "ebpf collector started"
 MIB = 1 << 20
@@ -71,6 +72,12 @@ def _config(*, max_memory_mib: int, max_millicpus: int) -> dict[str, Any]:
                 # DeepFlow's pinned deser_u64_with_mega_unit expands MiB to bytes.
                 "max_memory": max_memory_mib,
                 "max_millicpus": max_millicpus,
+                # The pinned logger guard sums every regular file below the
+                # logger parent, which is also the standalone L7 data directory.
+                # Keep that aggregate cap aligned with the separately declared
+                # 1 TiB standalone-file ceiling so it cannot truncate a retained
+                # L7 file first.
+                "max_local_log_file_size": MAX_DATA_FILE_SIZE_MIB,
             },
             "standalone_mode": {
                 "max_data_file_size": MAX_DATA_FILE_SIZE_MIB,
@@ -609,6 +616,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
             )
             (self.root / f"image-{node}.json").write_text(_stdout(inspect), encoding="utf-8")
         self._wait_container_readiness()
+        retention_config = self._verify_retention_config()
         self._write_collector_metadata({
             "schema": "collector-lifecycle-v5",
             "collector": self.collector,
@@ -638,6 +646,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 for node in ("a", "b")
             },
             "rotation_threshold_bytes": MAX_DATA_FILE_SIZE_BYTES,
+            "aggregate_log_retention_config": retention_config,
             "rotation_threshold_above_guest_capacity": all(
                 MAX_DATA_FILE_SIZE_BYTES > value for value in capacities.values()
             ),
@@ -867,6 +876,68 @@ class DeepFlowCollectorsV5(CollectorsV5):
         })
         raise RuntimeError("DeepFlow dispatcher readiness not established on both guests")
 
+    def _verify_retention_config(self) -> dict[str, Any]:
+        """Retain the pinned agent's typed config update before any workload."""
+        expected = (
+            "Update global.limits.max_local_log_file_size from "
+            f"{DEFAULT_LOCAL_LOG_FILE_SIZE_BYTES} to {MAX_DATA_FILE_SIZE_BYTES}."
+        )
+        nodes: dict[str, dict[str, Any]] = {}
+        for node in ("a", "b"):
+            command = (
+                f"docker logs {self.container_name} 2>&1 | "
+                f"grep -F -- {shlex.quote(expected)}"
+            )
+            started_ns = time.time_ns()
+            result = self.ctx.node_exec(node, command, timeout=60, check=False)
+            finished_ns = time.time_ns()
+            stdout = _stdout(result)
+            nodes[node] = {
+                "command": command,
+                "started_ns": started_ns,
+                "finished_ns": finished_ns,
+                "duration_ns": finished_ns - started_ns,
+                "returncode": _returncode(result),
+                "stdout": stdout,
+                "stderr": _stderr(result),
+                "typed_update_observed": (
+                    _returncode(result) == 0 and expected in stdout
+                ),
+            }
+        evidence = {
+            "schema": "deepflow-effective-retention-config-v5",
+            "source_version": self.source_version,
+            "source_commit": self.source_commit,
+            "expected_typed_update": expected,
+            "configured_mib": MAX_DATA_FILE_SIZE_MIB,
+            "effective_bytes": MAX_DATA_FILE_SIZE_BYTES,
+            "parser": "global.limits.max_local_log_file_size MiB value shifted left 20 bits",
+            "verified_before_workload": all(
+                item["typed_update_observed"] for item in nodes.values()
+            ),
+            "nodes": nodes,
+            "capture_cost": {
+                "remote_command_count": len(nodes),
+                "observed_command_duration_ns": sum(
+                    item["duration_ns"] for item in nodes.values()
+                ),
+                "monetary_cost_scope": "included in the enclosing campaign Action runtime",
+            },
+        }
+        path = self.root / "effective-retention-config.json"
+        _write_json(path, evidence)
+        if not evidence["verified_before_workload"]:
+            raise RuntimeError(
+                "DeepFlow effective aggregate log-retention config was not proven on both guests"
+            )
+        return {
+            "path": path.name,
+            "sha256": _sha256_file(path),
+            "verified_before_workload": True,
+            "configured_mib": MAX_DATA_FILE_SIZE_MIB,
+            "effective_bytes": MAX_DATA_FILE_SIZE_BYTES,
+        }
+
     def health(self) -> None:
         for node in ("a", "b"):
             result = self.ctx.node_exec(
@@ -897,6 +968,21 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "mode": "standalone flat JSONL",
             "max_data_file_size_mib": MAX_DATA_FILE_SIZE_MIB,
             "max_data_file_size_bytes": MAX_DATA_FILE_SIZE_BYTES,
+            "max_local_log_file_size_mib": MAX_DATA_FILE_SIZE_MIB,
+            "max_local_log_file_size_bytes": MAX_DATA_FILE_SIZE_BYTES,
+            "aggregate_log_retention": {
+                "scope": (
+                    "all regular files below the pinned logger parent, "
+                    "including standalone L7 data"
+                ),
+                "alignment": "same 1 TiB ceiling as standalone max_data_file_size",
+                "effective_config_checked_before_workload": True,
+                "pinned_source_paths": [
+                    "agent/src/config/config.rs",
+                    "agent/src/utils/guard.rs",
+                    "agent/src/utils/process/process.rs",
+                ],
+            },
             "request_header": "x-experiment-request-id",
             "resource_policy": {
                 "max_memory": "per-guest ceil(/proc/meminfo MemTotal to MiB)",

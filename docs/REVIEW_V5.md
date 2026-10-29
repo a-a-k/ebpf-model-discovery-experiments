@@ -602,3 +602,22 @@ memory/CPU envelope, all other guards, source codec, identity policy and exact
 two-guest positive control remain unchanged. This is not threshold tuning, an
 accuracy gate, or a claim of unlimited resources. Actual-code review, integrated
 CI and one fixed OTel/absent repeat are required before admitting that setting.
+
+## DeepFlow aggregate raw-retention cap
+
+Subsequent pinned-source audit found an independent retention boundary: the
+v7.2.3 logger guard counts every regular file below `/var/log/deepflow-agent`,
+which is also the configured standalone L7 directory, against the default
+1000 MiB `global.limits.max_local_log_file_size`. That aggregate guard can act
+before the already reviewed 1 TiB standalone-file rotation ceiling. Retained
+agent logs from the fixed OTel/absent packet show the typed default value
+`1048576000`; the old packets and their costs remain unchanged.
+
+The root agent and independent skeptic recorded explicit original-criterion GO
+before implementation in `work/deepflow-aggregate-retention-decision.json`.
+The approved change aligns only `max_local_log_file_size` with the existing
+`MAX_DATA_FILE_SIZE_MIB`. A source-aware regression must prove the MiB-to-byte
+conversion, and the campaign must retain the pinned agent's typed update on both
+guests before application workload. No protocol, workload, collector identity,
+resource envelope, codec, graph rule, forecast rule or positive-result gate is
+changed. Actual-code review and integrated CI remain required.
