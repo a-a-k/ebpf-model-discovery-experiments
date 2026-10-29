@@ -27,8 +27,8 @@ before implementation; [PROTOCOL_V5.md](PROTOCOL_V5.md) records the design.
 
 ## Reviewed implementation
 
-The reviewer checked the generic vendor-neutral product interface, actual
-source-specific decoding, entry selection without invented trace identifiers,
+The reviewer checked the generic vendor-neutral product interface,
+implemented source-specific decoding, entry selection without invented trace identifiers,
 runtime identity evidence, class fitting, checkpoint closure, worker input
 equivalence and prediction freezing. Conflicting identity remains unknown;
 causal links still require observed identifiers. Runtime projection does not
@@ -62,6 +62,17 @@ Both orchestrator and reviewer give explicit **GO for the original criterion**
 to repeat the fixed OBI DeathStarBench/partial/seed-6 smoke and DeepFlow
 Petclinic/absent/seed-6 smoke after the integrated revision passes Linux and
 Docker CI. This is an execution decision, not a result or main-series GO.
+
+The reviewer also approved one Coroot Petclinic/absent/seed-6 pilot at the
+passing integrated `161eb1d606a444e59ec18d6084bbcd62a256fd86` revision
+([CI 40889975595](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40889975595)).
+The pinned source exports independent client roots; server entries, request
+headers and causal parents are not presumed. Its process cleanup does not prove
+SDK exporter shutdown or zero internal loss. These remain explicit uncertainties.
+The same source-origin checks, complete graph/simulation path, baseline information
+and cost accounting apply. Independent checks: 57 tests passed, two
+environment-specific skips. Both agents give GO for this original-criterion
+technical pilot only; no main-series or positive-result approval is implied.
 
 ## Interpretation of qualification
 
