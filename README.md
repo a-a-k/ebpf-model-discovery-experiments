@@ -741,7 +741,26 @@ forecast does not resolve operations for which a mandatory call is absent or
 ambiguous. Similarly, a database node is not useful fault information until its
 identity, callers and mandatory role are established and the simulator uses it.
 The source comparison retains full native DB spans; database discovery is not
-claimed as exclusive to eBPF.
+claimed as exclusive to eBPF. The saved Petclinic full-mode native observations
+also support the shared-DB fault predictions. The eBPF result is recovery without
+native tracing, not extra DB information beyond full native tracing.
+
+A [preliminary diagnosis](docs/PRELIMINARY_DIAGNOSIS.md) separates collector,
+graph-joining and evaluation effects without changing the reported results.
+For OTel, exact entry roots survive in inspected partial/full examples while
+required downstream graph edges disappear. Native/non-recording context interacting
+with OBI and Bering's exact source-local parent join is a concrete hypothesis;
+the missing raw parent correspondence is not yet proven. The async check also
+requires consumer SpanLinks and does not implement alternative ID-only joins.
+For classes, saved examples directly show one route-defined operation split by
+empty, nonempty and repeated descendant signatures under exact matching.
+These findings cannot all be attributed to the eBPF collector.
+
+Collector choice can nevertheless affect protocol recognition, available
+identifiers and context association. The empirical limits here concern OBI
+v0.15.2 and the actual configuration and processing method. Documentation for
+another collector is not an observed improvement, and no collector replacement
+was evaluated in this follow-up.
 
 The direct supplied-contract predicate equals the available primary replica-failure
 forecasts.
