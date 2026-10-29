@@ -179,6 +179,10 @@ def _tables(path: Path) -> list[str]:
             if line.startswith("|")]
 
 
+def _ambiguous_duplicate_main_cells(aggregate: dict) -> list:
+    return aggregate["ambiguous_duplicate_main_cells"]
+
+
 def _comparison(old_report: Path, new_report: Path) -> dict:
     old, new = _json(old_report / "evaluation-v5.json"), _json(
         new_report / "evaluation-v5.json")
@@ -198,8 +202,9 @@ def _comparison(old_report: Path, new_report: Path) -> dict:
         "selected_main_attempt_references_equal": (
             old["selected_main_attempt_references"]
             == new["selected_main_attempt_references"]),
-        "ambiguous_main_cells_equal": old["ambiguous_main_cells"]
-                                      == new["ambiguous_main_cells"],
+        "ambiguous_duplicate_main_cells_equal": (
+            _ambiguous_duplicate_main_cells(old)
+            == _ambiguous_duplicate_main_cells(new)),
         "rendered_tables_equal": (_tables(old_report / "report-v5.md")
                                   == _tables(new_report / "report-v5.md")),
         "evaluation_reference_source_sha256_equal": (
