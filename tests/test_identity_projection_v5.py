@@ -59,7 +59,7 @@ def _capture(root, stage, point):
     _write(folder / f"capture-{stage}.json", value)
 
 
-def test_hash_verified_enclosure_projects_copied_export_only(tmp_path):
+def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypatch):
     root = tmp_path / "campaign"; observations = root / "observations"
     raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
     row = {"signal_source": "EBPF", "tap_side": "ServerProcess", "ebpf_type": "TracePoint",
@@ -75,6 +75,8 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path):
         guest_context={"boot_id": "boot-a", "pid_namespace": "pid:[100]"})
     payload = batches[0]["payload"]
     payload["resourceSpans"][0]["schemaUrl"] = "retained-unknown-envelope-field"
+    payload["resourceSpans"][0]["scopeSpans"][0][
+        "_projection_scope_ordinal"] = "original-unknown-field"
     receiver_wire = (json.dumps(payload, separators=(",", ":")) + "\n").encode()
     receiver_raw = observations / "a.raw" / "capture" / "body.json"
     receiver_raw.parent.mkdir(parents=True)
@@ -118,11 +120,30 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path):
     exported = json.loads(Path(manifest["exports"][0]["path"]).read_text())
     resource = exported["resourceSpans"][0]
     assert resource["schemaUrl"] == "retained-unknown-envelope-field"
+    assert resource["scopeSpans"][0]["_projection_scope_ordinal"] == "original-unknown-field"
     assert attributes(resource["resource"]["attributes"])["service.name"] == "frontend"
     assert wrapper.read_bytes() == original_wrapper
     assert raw.read_bytes() == original_raw
     assert manifest["exports"][0]["original_wire_unchanged"] is True
     assert manifest["exports"][0]["graph_edges_injected"] is False
+
+    # Multiple resolved rows sharing immutable dependencies hash each full file once per call.
+    store.db.execute('''INSERT INTO runtime_identity_projection
+        SELECT ?,stage,status,original_service,projected_service,projected_data,resolution,
+               inventory_path,inventory_sha256 FROM runtime_identity_projection LIMIT 1''',
+        ("second-digest",))
+    store.db.commit()
+    reads = {}
+    original_read_bytes = Path.read_bytes
+    def tracked_read_bytes(path):
+        key = str(path.resolve()); reads[key] = reads.get(key, 0) + 1
+        return original_read_bytes(path)
+    monkeypatch.setattr(Path, "read_bytes", tracked_read_bytes)
+    assert len(store.service_projections()) == 1
+    inventory_dependency = str((root / result["inventory"]["path"]).resolve())
+    assert reads[inventory_dependency] == 1
+    store.db.execute("DELETE FROM runtime_identity_projection WHERE digest='second-digest'")
+    store.db.commit()
 
     journal.db.execute("UPDATE events SET wall_ns=999 WHERE kind='step_finished'")
     journal.db.commit()

@@ -485,6 +485,8 @@ class Toolchain:
                     'binding_reasons': {key: value for piece in pieces for key, value in piece['binding_reasons'].items()},
                     'selection': 'union of source-local exact entry proofs; no cross-source causal join',
                     'includes_descendants': False, 'outcomes_used': False, 'clock_gate': False}
+            service_projections = (self.store.service_projections()
+                if hasattr(self.store, 'service_projections') else None)
             for variant in ('raw', 'network_scope'):
                 for source in ('ebpf', 'native'):
                     folder = self.root/'inputs'/source/variant
@@ -493,8 +495,7 @@ class Toolchain:
                         self.system+'-routed-network' if variant == 'network_scope' else None,
                         supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
                         native_jaeger_envelope=self.native_jaeger_envelope,
-                        service_projections=(self.store.service_projections()
-                            if hasattr(self.store, 'service_projections') else None))
+                        service_projections=service_projections)
                     manifest.update(graph_input='all source-separated frozen training-prefix observations',
                         exported_wire_bytes=sum(Path(export['path']).stat().st_size for export in manifest['exports']),
                         causal_execution_inferred=False,

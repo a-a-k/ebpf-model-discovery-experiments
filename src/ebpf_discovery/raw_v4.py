@@ -206,7 +206,7 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encodin
     for resource in filtered.get("resourceSpans", []):
         scope_key = "scopeSpans" if "scopeSpans" in resource else "instrumentationLibrarySpans"
         grouped = {}
-        for scope in resource.get(scope_key, []):
+        for scope_ordinal, scope in enumerate(resource.get(scope_key, [])):
             for span in scope.get("spans", []):
                 key = (_identity(span.get("traceId"), encoding), _identity(span.get("spanId"), encoding))
                 if identities is None or key in identities:
@@ -220,24 +220,21 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encodin
                         projected_resource[scope_key] = []
                         if group is not None:
                             _project_resource_json(projected_resource, group)
-                        grouped[group] = projected_resource
-                    projected_scope = next((item for item in grouped[group][scope_key]
-                                            if item.get('_projection_scope_ordinal') == id(scope)), None)
+                        grouped[group] = {'resource': projected_resource, 'scopes': {}}
+                    state = grouped[group]
+                    projected_scope = state['scopes'].get(scope_ordinal)
                     if projected_scope is None:
                         projected_scope = copy.deepcopy(scope)
                         projected_scope['spans'] = []
-                        projected_scope['_projection_scope_ordinal'] = id(scope)
-                        grouped[group][scope_key].append(projected_scope)
+                        state['resource'][scope_key].append(projected_scope)
+                        state['scopes'][scope_ordinal] = projected_scope
                     projected_scope['spans'].append(span)
                     if projection and transformations is not None:
                         transformations.append(projection)
                     count += 1
                     if found is not None:
                         found.append(key)
-        for projected_resource in grouped.values():
-            for projected_scope in projected_resource[scope_key]:
-                projected_scope.pop('_projection_scope_ordinal', None)
-            kept_resources.append(projected_resource)
+        kept_resources.extend(state['resource'] for state in grouped.values())
     filtered["resourceSpans"] = kept_resources
     _add_network_scope_json(filtered, network_scope)
     return filtered, count, found, supplied

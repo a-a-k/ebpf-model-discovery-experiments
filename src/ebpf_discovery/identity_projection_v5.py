@@ -56,6 +56,7 @@ def _verified_capture(root: Path, stage: str) -> tuple[dict, dict]:
                ("started_monotonic_ns", "ended_monotonic_ns")):
         raise ValueError(f"runtime identity capture lacks runner interval: {stage}")
     return value, {"path": path.relative_to(root).as_posix(), "sha256": _sha(path),
+                   "bytes": path.stat().st_size,
                    "files": verified, "runner_interval": interval}
 
 
@@ -171,7 +172,8 @@ def refresh(campaign, stage: str) -> dict:
             "runner_monotonic_sequence": sequence,
             "evidence": {"kind": "retained_exact_nonce",
                          "locator": evidence_path.relative_to(root).as_posix(),
-                         "sha256": _sha(evidence_path)},
+                         "sha256": _sha(evidence_path),
+                         "bytes": evidence_path.stat().st_size},
         })
     for path in sorted((root / "runtime-identity-v5").glob("capture-*.json")):
         sample_stage = path.stem.removeprefix("capture-")
