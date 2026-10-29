@@ -81,7 +81,7 @@ unprivileged read of `/proc/1/ns/pid`, before the collector and workload started
 cleanup also attempted to use the not-yet-installed snapshot helper. These are
 preparation defects, not evidence of application protocol coverage.
 
-Coroot has no completed smoke yet. New Relic access and license conditions remain
+Coroot has not yet passed smoke qualification. New Relic access and license conditions remain
 unresolved; it has not been silently substituted or counted as measured.
 
 ## Further fixed smoke attempts and diagnosis
@@ -106,11 +106,11 @@ own network namespace when it has host PID access
 ([pinned matcher](https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/b28e4e7fe0a01f1961b7c4747a13b8ff486d6fec/pkg/appolly/discover/matcher.go#L255)).
 The observed instrumented HAProxy PID on guest A belonged to a different process,
 not the control server. Starting the same host-networked control earlier could
-not address that filter. The provisional prestart workaround is being removed.
+not address that filter. The provisional prestart workaround has been removed.
 
 Coroot's retained HAProxy log explicitly reports `Address in use` for
 `0.0.0.0:18081`; Petclinic already publishes its visits replica on the guest's
-port 18081. The common control is being moved to an owned private Docker network
+port 18081. The common control now uses an owned private Docker network
 with no host port publication, for every collector. It retains the same fresh
 request and raw selected-agent origin requirements. All network preparation and
 cleanup costs remain attributable to the experiment.

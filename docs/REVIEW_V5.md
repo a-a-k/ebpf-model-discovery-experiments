@@ -76,6 +76,20 @@ technical pilot only; no main-series or positive-result approval is implied.
 
 ## Interpretation of qualification
 
+Follow-up actual evidence rejected the OBI prestart workaround as sufficient:
+the host-networked control was excluded by the pinned `containers_only` matcher.
+Coroot's Petclinic smoke additionally exposed a control/app host-port collision.
+Both agents approved the common private bridge/DNS control correction for the
+original criterion; no host port is published and the same raw-origin proof is
+required. Implementation `6046aea39a732a7b501c1038819bd621e6c657b7` removes
+the provisional OBI prestart path and retains creation/cleanup evidence and
+costs. Independent checks: 39 relevant tests passed, two environment-specific
+skips. The real Docker CI fixture now occupies the former host port and checks
+private-network operation and cleanup. One fixed OBI and Coroot repeat is
+approved after that CI passes on the integrated revision. DeepFlow also needs
+its separate reviewed startup/resource configuration before a repeat. No
+main-series or positive-result verdict is issued by this correction.
+
 Technical controls establish actual selected-agent acquisition and preserved
 bytes on both guests. They do not prove application protocol coverage, causal
 completeness, business semantics, or forecast accuracy. A technically valid
