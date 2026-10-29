@@ -1,0 +1,701 @@
+{
+  "attempt_runs": [
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40880849418,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40884914635,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40885990713,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890296710,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890303219,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890763831,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40895622472,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40895637294,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40896064246,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40898769649,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40898777011,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40899601511,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "note": "Fixed source-schema repeat; preserve actual handoff technical failure.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40902922833,
+      "stage": "smoke"
+    }
+  ],
+  "blocked_main_cells": [
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "deathstarbench"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "otel_demo"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "absent",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "partial",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 6,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 7,
+      "system": "petclinic"
+    },
+    {
+      "collector": "newrelic",
+      "mode": "full",
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials.",
+      "seed": 8,
+      "system": "petclinic"
+    }
+  ],
+  "related_runs": [
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40900996676
+    },
+    {
+      "note": "Iteration 4 exact remote toolchain worker; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40899833610
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40898462595
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40895877074
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40895444290
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40894248440
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40890810980
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40889975595
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40885659304
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40883942639
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40878924384
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40879223434
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40877778287
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595689
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595701
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595722
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629052
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629030
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629029
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40876610601
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40876461856
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40874642494
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888915800
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888384949
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40886588360
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40886462764
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40885945200
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40883389521
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40881171793
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888154808
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888154744
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888155130
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639089
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639081
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639078
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435266
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435331
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435462
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193858
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193681
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193928
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193770
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193685
+    },
+    {
+      "note": "Integrated source-schema repair and report implementation CI; not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40902646348
+    },
+    {
+      "note": "Initial report stopped on compact journal omission; no source evaluation was changed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "run_id": 40902931486
+    },
+    {
+      "note": "Integrated exact journal recovery and report CI; not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40905568198
+    }
+  ],
+  "schema_version": "v5-report-declarations",
+  "scope_notes": [
+    "Qualification snapshot, not the final main-series report.",
+    "Research Actions inventory begins at the first iteration-5 protocol commit on 2026-10-29 12:18 UTC. Product CI/release runs are explicitly declared. Earlier preparation, unrecorded human/agent effort, and reporting/publication tail remain unknown.",
+    "Elapsed parent waits may overlap worker compute; do not treat their sum as wall-clock elapsed time."
+  ]
+}

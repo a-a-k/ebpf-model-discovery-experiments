@@ -1,0 +1,24 @@
+{
+  "artifact_id": 12912435473,
+  "archive_size_bytes": 402010349,
+  "full_archive_sha256_verified": false,
+  "method": "HTTP ranges; selected ZIP member CRC and recorded SHA-256",
+  "files": {
+    "provenance/aggregate-packaging.json": {
+      "bytes": 277,
+      "sha256": "9fd9bbac1cd8065cd4cede8b0ec69829cf751f003a3b1756fdb64cfa03a2acf2"
+    },
+    "provenance/declarations.json": {
+      "bytes": 24835,
+      "sha256": "9ec7e12f2965338a4832f9c659d2f9a84e9f042970d01eb0db407576f2c4c166"
+    },
+    "costs-v5.json": {
+      "bytes": 92086,
+      "sha256": "1d052ecc3f1253d93c2892caf57948851b34cf51ed3e67002c7f8be6a022dcfb"
+    },
+    "provenance/retrieval.json": {
+      "bytes": 60176,
+      "sha256": "b623e055757b51352d6d4fc2dd16dad0886643cf0474f9a19deaca78ba56c464"
+    }
+  }
+}

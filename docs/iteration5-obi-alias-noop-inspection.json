@@ -1,0 +1,112 @@
+{
+  "40898769649": {
+    "inspection": "Stored source/node/service columns and retained actual training inventory name/project/service fields only; no normalization/refit/forecast/rescore",
+    "stored_ebpf_labels": [
+      [
+        "a",
+        "home-timeline-redis"
+      ],
+      [
+        "a",
+        "home-timeline-service"
+      ],
+      [
+        "a",
+        "nginx-thrift"
+      ],
+      [
+        "a",
+        "post-storage-memcached"
+      ],
+      [
+        "a",
+        "post-storage-service"
+      ],
+      [
+        "a",
+        "social-graph-redis"
+      ],
+      [
+        "a",
+        "social-graph-service"
+      ],
+      [
+        "a",
+        "study-ebpf-control-server-a"
+      ],
+      [
+        "a",
+        "user-timeline-redis"
+      ],
+      [
+        "a",
+        "user-timeline-service"
+      ],
+      [
+        "a",
+        "user-timeline-service-replica-a"
+      ],
+      [
+        "b",
+        "study-ebpf-control-server-b"
+      ],
+      [
+        "b",
+        "user-timeline-service-replica-b"
+      ]
+    ],
+    "exact_supplied_carrier_matches": [],
+    "nonidentity_alias_candidates": [],
+    "result": "Supplied alias normalization is a name-level no-op on this retained packet",
+    "observation_index_sha256": "8eb9ff83204b0c8290fc596e6de69ea0e0ac3d4f4b4698a38e70eaadb19d1f6f",
+    "inventory_sha256": "a07c3dac4991076321969f8ad8614fc2e8a6f615ff933bc65352bf00671ee90b",
+    "range_proof": "work\\obi-smoke-40898769649-review-alias\\download-provenance.json"
+  },
+  "40899601511": {
+    "inspection": "Stored source/node/service columns and retained actual training inventory name/project/service fields only; no normalization/refit/forecast/rescore",
+    "stored_ebpf_labels": [
+      [
+        "a",
+        "api-gateway"
+      ],
+      [
+        "a",
+        "customers-service"
+      ],
+      [
+        "a",
+        "database"
+      ],
+      [
+        "a",
+        "study-ebpf-control-server-a"
+      ],
+      [
+        "a",
+        "vets-service"
+      ],
+      [
+        "a",
+        "visits-proxy"
+      ],
+      [
+        "a",
+        "visits-service"
+      ],
+      [
+        "b",
+        "study-ebpf-control-server-b"
+      ],
+      [
+        "b",
+        "visits-service"
+      ]
+    ],
+    "exact_supplied_carrier_matches": [],
+    "nonidentity_alias_candidates": [],
+    "result": "Supplied alias normalization is a name-level no-op on this retained packet",
+    "observation_index_sha256": "0db4d110af609d2ee8bff458f21e4fc4b41e5cd5d8e7f22729e890b6d8e34ccb",
+    "inventory_sha256": "c0f2bcc1195b92c6071c4716843776b9541d63eab4390f334685e450c87fd1ea",
+    "range_proof": "work\\obi-smoke-40899601511-review-alias\\download-provenance.json"
+  }
+}

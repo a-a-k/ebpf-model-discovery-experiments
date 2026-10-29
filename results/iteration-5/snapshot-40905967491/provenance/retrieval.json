@@ -1,0 +1,1385 @@
+[
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12899539679,
+      "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40880849418",
+      "digest": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+      "expired": false,
+      "size_in_bytes": 12548
+    },
+    "full_artifact": {
+      "id": 12900367017,
+      "name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40880849418",
+      "digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+      "expired": false,
+      "size_in_bytes": 24025851
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+      "computed_sha256": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+      "received_bytes": 12548,
+      "member_count": 7,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899539679.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40880849418,
+        "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+        "compact_artifact_id": 12899539679,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-absent-6-40880849418",
+        "compact_artifact_digest": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899539679.zip",
+        "full_artifact_id": 12900367017,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40880849418",
+        "full_artifact_digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+        "full_artifact_size_in_bytes": 24025851,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900367017.zip",
+          "expected_digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+          "computed_digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+          "received_bytes": 24025851
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12900696318,
+      "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40880849418",
+      "digest": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+      "expired": false,
+      "size_in_bytes": 12565
+    },
+    "full_artifact": {
+      "id": 12900113822,
+      "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40880849418",
+      "digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+      "expired": false,
+      "size_in_bytes": 24031303
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+      "computed_sha256": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+      "received_bytes": 12565,
+      "member_count": 7,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900696318.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40880849418,
+        "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+        "compact_artifact_id": 12900696318,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-partial-6-40880849418",
+        "compact_artifact_digest": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900696318.zip",
+        "full_artifact_id": 12900113822,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40880849418",
+        "full_artifact_digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+        "full_artifact_size_in_bytes": 24031303,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900113822.zip",
+          "expected_digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+          "computed_digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+          "received_bytes": 24031303
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "full",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-full-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-full-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12899729040,
+      "name": "v5-summary-obi-smoke-deathstarbench-full-6-40880849418",
+      "digest": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+      "expired": false,
+      "size_in_bytes": 12541
+    },
+    "full_artifact": {
+      "id": 12900786008,
+      "name": "campaign-v5-obi-smoke-deathstarbench-full-6-40880849418",
+      "digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+      "expired": false,
+      "size_in_bytes": 24032318
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+      "computed_sha256": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+      "received_bytes": 12541,
+      "member_count": 7,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899729040.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40880849418,
+        "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+        "compact_artifact_id": 12899729040,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-full-6-40880849418",
+        "compact_artifact_digest": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899729040.zip",
+        "full_artifact_id": 12900786008,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-full-6-40880849418",
+        "full_artifact_digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+        "full_artifact_size_in_bytes": 24032318,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900786008.zip",
+          "expected_digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+          "computed_digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+          "received_bytes": 24032318
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "otel_demo",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-otel_demo-absent-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-otel_demo-absent-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12900143007,
+      "name": "v5-summary-obi-smoke-otel_demo-absent-6-40880849418",
+      "digest": "sha256:4a1748f292cd1c71d335a5562dc839a069e964e82e86cfe94fc7f44114ec47d9",
+      "expired": false,
+      "size_in_bytes": 7431
+    },
+    "full_artifact": {
+      "id": 12901275629,
+      "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40880849418",
+      "digest": "sha256:3b71143f7d10f849c9848e29f4d956f23c9adb7292eff71c7273d7b7e742eb64",
+      "expired": false,
+      "size_in_bytes": 23787215
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:4a1748f292cd1c71d335a5562dc839a069e964e82e86cfe94fc7f44114ec47d9",
+      "computed_sha256": "sha256:4a1748f292cd1c71d335a5562dc839a069e964e82e86cfe94fc7f44114ec47d9",
+      "received_bytes": 7431,
+      "member_count": 4,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12900143007.zip"
+    },
+    "declared_file_recovery": null
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "otel_demo",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-otel_demo-partial-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-otel_demo-partial-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12899824429,
+      "name": "v5-summary-obi-smoke-otel_demo-partial-6-40880849418",
+      "digest": "sha256:9ef1fd01ce5ce8d6ecf8639d8f2d2be1d9c4b9b1b33d55d6805fb0b8f87efaa0",
+      "expired": false,
+      "size_in_bytes": 7428
+    },
+    "full_artifact": {
+      "id": 12899978709,
+      "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40880849418",
+      "digest": "sha256:04d19d268542871564c53ab92179072528dd59a43b6ed832d9eec99cc1bec3a3",
+      "expired": false,
+      "size_in_bytes": 23783993
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:9ef1fd01ce5ce8d6ecf8639d8f2d2be1d9c4b9b1b33d55d6805fb0b8f87efaa0",
+      "computed_sha256": "sha256:9ef1fd01ce5ce8d6ecf8639d8f2d2be1d9c4b9b1b33d55d6805fb0b8f87efaa0",
+      "received_bytes": 7428,
+      "member_count": 4,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899824429.zip"
+    },
+    "declared_file_recovery": null
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "otel_demo",
+      "full",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-otel_demo-full-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-otel_demo-full-6-40880849418",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12899759896,
+      "name": "v5-summary-obi-smoke-otel_demo-full-6-40880849418",
+      "digest": "sha256:f9b45380bbf8998f35ace122001fbf6f400aa610ad57bf2fe0b66c38a12baead",
+      "expired": false,
+      "size_in_bytes": 7421
+    },
+    "full_artifact": {
+      "id": 12899834966,
+      "name": "campaign-v5-obi-smoke-otel_demo-full-6-40880849418",
+      "digest": "sha256:4b2e28a052715b95de222a2f6914f2b74dff3679f423c9c1238638184650e6a8",
+      "expired": false,
+      "size_in_bytes": 23784060
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:f9b45380bbf8998f35ace122001fbf6f400aa610ad57bf2fe0b66c38a12baead",
+      "computed_sha256": "sha256:f9b45380bbf8998f35ace122001fbf6f400aa610ad57bf2fe0b66c38a12baead",
+      "received_bytes": 7421,
+      "member_count": 4,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12899759896.zip"
+    },
+    "declared_file_recovery": null
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-petclinic-absent-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-petclinic-absent-6-40880849418",
+    "status": "not_uploaded"
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "petclinic",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-petclinic-partial-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-petclinic-partial-6-40880849418",
+    "status": "not_uploaded"
+  },
+  {
+    "run_id": 40880849418,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "petclinic",
+      "full",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-petclinic-full-6-40880849418",
+    "full_artifact_name": "campaign-v5-obi-smoke-petclinic-full-6-40880849418",
+    "status": "not_uploaded"
+  },
+  {
+    "run_id": 40884914635,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40884914635",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40884914635",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12902441322,
+      "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40884914635",
+      "digest": "sha256:f22e92d08b3b1d73c8505dd2592cbf5e9f5bcfa653885bff8c4ed664aa379b36",
+      "expired": false,
+      "size_in_bytes": 23528
+    },
+    "full_artifact": {
+      "id": 12901603339,
+      "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40884914635",
+      "digest": "sha256:5b0dcec2b879fcbbca8d1f7fb90a5eccf17866bb264fd85a66a8cd03d65f04d3",
+      "expired": false,
+      "size_in_bytes": 24084311
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:f22e92d08b3b1d73c8505dd2592cbf5e9f5bcfa653885bff8c4ed664aa379b36",
+      "computed_sha256": "sha256:f22e92d08b3b1d73c8505dd2592cbf5e9f5bcfa653885bff8c4ed664aa379b36",
+      "received_bytes": 23528,
+      "member_count": 8,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12902441322.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40884914635,
+        "head_sha": "b0c068aee35571565abfe6a8389599c71683d5df",
+        "compact_artifact_id": 12902441322,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-partial-6-40884914635",
+        "compact_artifact_digest": "sha256:f22e92d08b3b1d73c8505dd2592cbf5e9f5bcfa653885bff8c4ed664aa379b36",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12902441322.zip",
+        "full_artifact_id": 12901603339,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40884914635",
+        "full_artifact_digest": "sha256:5b0dcec2b879fcbbca8d1f7fb90a5eccf17866bb264fd85a66a8cd03d65f04d3",
+        "full_artifact_size_in_bytes": 24084311,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12901603339.zip",
+          "expected_digest": "sha256:5b0dcec2b879fcbbca8d1f7fb90a5eccf17866bb264fd85a66a8cd03d65f04d3",
+          "computed_digest": "sha256:5b0dcec2b879fcbbca8d1f7fb90a5eccf17866bb264fd85a66a8cd03d65f04d3",
+          "received_bytes": 24084311
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40885990713,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "deepflow",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40885990713",
+    "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40885990713",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12902762367,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40885990713",
+      "digest": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+      "expired": false,
+      "size_in_bytes": 8697
+    },
+    "full_artifact": {
+      "id": 12902598140,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40885990713",
+      "digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+      "expired": false,
+      "size_in_bytes": 23785425
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+      "computed_sha256": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+      "received_bytes": 8697,
+      "member_count": 5,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12902762367.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40885990713,
+        "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2",
+        "compact_artifact_id": 12902762367,
+        "compact_artifact_name": "v5-summary-deepflow-smoke-petclinic-absent-6-40885990713",
+        "compact_artifact_digest": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12902762367.zip",
+        "full_artifact_id": 12902598140,
+        "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40885990713",
+        "full_artifact_digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+        "full_artifact_size_in_bytes": 23785425,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12902598140.zip",
+          "expected_digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+          "computed_digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+          "received_bytes": 23785425
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40890296710,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40890296710",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40890296710",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12903798377,
+      "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40890296710",
+      "digest": "sha256:02a8d063aceb03d146ac7c45aa5881a6e412304841605c349ce77299d8fb7870",
+      "expired": false,
+      "size_in_bytes": 23852
+    },
+    "full_artifact": {
+      "id": 12905535158,
+      "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40890296710",
+      "digest": "sha256:694fe0a6f92b49e6c2bf523c7e6a73ab5d117ec5f1c9b43f9e21fd4c76a010ac",
+      "expired": false,
+      "size_in_bytes": 24089499
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:02a8d063aceb03d146ac7c45aa5881a6e412304841605c349ce77299d8fb7870",
+      "computed_sha256": "sha256:02a8d063aceb03d146ac7c45aa5881a6e412304841605c349ce77299d8fb7870",
+      "received_bytes": 23852,
+      "member_count": 8,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12903798377.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40890296710,
+        "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+        "compact_artifact_id": 12903798377,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-partial-6-40890296710",
+        "compact_artifact_digest": "sha256:02a8d063aceb03d146ac7c45aa5881a6e412304841605c349ce77299d8fb7870",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12903798377.zip",
+        "full_artifact_id": 12905535158,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40890296710",
+        "full_artifact_digest": "sha256:694fe0a6f92b49e6c2bf523c7e6a73ab5d117ec5f1c9b43f9e21fd4c76a010ac",
+        "full_artifact_size_in_bytes": 24089499,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12905535158.zip",
+          "expected_digest": "sha256:694fe0a6f92b49e6c2bf523c7e6a73ab5d117ec5f1c9b43f9e21fd4c76a010ac",
+          "computed_digest": "sha256:694fe0a6f92b49e6c2bf523c7e6a73ab5d117ec5f1c9b43f9e21fd4c76a010ac",
+          "received_bytes": 24089499
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40890303219,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "deepflow",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40890303219",
+    "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40890303219",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12904504707,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40890303219",
+      "digest": "sha256:3ba47030bdc0617b8bbfac6ef37433561639908d50a2db4e414f841e1982555f",
+      "expired": false,
+      "size_in_bytes": 8052
+    },
+    "full_artifact": {
+      "id": 12904339074,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40890303219",
+      "digest": "sha256:4114a2aebb2019a14be2a8fdc669220b3c37b7799aba5e182909064d414053e6",
+      "expired": false,
+      "size_in_bytes": 23925696
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:3ba47030bdc0617b8bbfac6ef37433561639908d50a2db4e414f841e1982555f",
+      "computed_sha256": "sha256:3ba47030bdc0617b8bbfac6ef37433561639908d50a2db4e414f841e1982555f",
+      "received_bytes": 8052,
+      "member_count": 5,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12904504707.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40890303219,
+        "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+        "compact_artifact_id": 12904504707,
+        "compact_artifact_name": "v5-summary-deepflow-smoke-petclinic-absent-6-40890303219",
+        "compact_artifact_digest": "sha256:3ba47030bdc0617b8bbfac6ef37433561639908d50a2db4e414f841e1982555f",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12904504707.zip",
+        "full_artifact_id": 12904339074,
+        "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40890303219",
+        "full_artifact_digest": "sha256:4114a2aebb2019a14be2a8fdc669220b3c37b7799aba5e182909064d414053e6",
+        "full_artifact_size_in_bytes": 23925696,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12904339074.zip",
+          "expected_digest": "sha256:4114a2aebb2019a14be2a8fdc669220b3c37b7799aba5e182909064d414053e6",
+          "computed_digest": "sha256:4114a2aebb2019a14be2a8fdc669220b3c37b7799aba5e182909064d414053e6",
+          "received_bytes": 23925696
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40890763831,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "coroot",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-coroot-smoke-petclinic-absent-6-40890763831",
+    "full_artifact_name": "campaign-v5-coroot-smoke-petclinic-absent-6-40890763831",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12905425997,
+      "name": "v5-summary-coroot-smoke-petclinic-absent-6-40890763831",
+      "digest": "sha256:361b6521a236b2c0aa04d0657a60252d1834eb6ee03aedce63c7087e7fb298c3",
+      "expired": false,
+      "size_in_bytes": 19954
+    },
+    "full_artifact": {
+      "id": 12905002563,
+      "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40890763831",
+      "digest": "sha256:bbd7b5cbcd8e59862e0e7a77780bc357696036bdeca4a8f4ab8c0453ac7a930c",
+      "expired": false,
+      "size_in_bytes": 24091250
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:361b6521a236b2c0aa04d0657a60252d1834eb6ee03aedce63c7087e7fb298c3",
+      "computed_sha256": "sha256:361b6521a236b2c0aa04d0657a60252d1834eb6ee03aedce63c7087e7fb298c3",
+      "received_bytes": 19954,
+      "member_count": 8,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12905425997.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40890763831,
+        "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+        "compact_artifact_id": 12905425997,
+        "compact_artifact_name": "v5-summary-coroot-smoke-petclinic-absent-6-40890763831",
+        "compact_artifact_digest": "sha256:361b6521a236b2c0aa04d0657a60252d1834eb6ee03aedce63c7087e7fb298c3",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12905425997.zip",
+        "full_artifact_id": 12905002563,
+        "full_artifact_name": "campaign-v5-coroot-smoke-petclinic-absent-6-40890763831",
+        "full_artifact_digest": "sha256:bbd7b5cbcd8e59862e0e7a77780bc357696036bdeca4a8f4ab8c0453ac7a930c",
+        "full_artifact_size_in_bytes": 24091250,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12905002563.zip",
+          "expected_digest": "sha256:bbd7b5cbcd8e59862e0e7a77780bc357696036bdeca4a8f4ab8c0453ac7a930c",
+          "computed_digest": "sha256:bbd7b5cbcd8e59862e0e7a77780bc357696036bdeca4a8f4ab8c0453ac7a930c",
+          "received_bytes": 24091250
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40895622472,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40895622472",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40895622472",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12908010750,
+      "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40895622472",
+      "digest": "sha256:2845d17c641dbdb1c4f18c76b0b26c0e0367eccfcbf3407a32b044cb2b5ed33f",
+      "expired": false,
+      "size_in_bytes": 37171
+    },
+    "full_artifact": {
+      "id": 12907756205,
+      "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40895622472",
+      "digest": "sha256:f84764ef3eb4d2968d5bfee68381dfc74a8cc29fd637bde63df709595af89a91",
+      "expired": false,
+      "size_in_bytes": 26571051
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:2845d17c641dbdb1c4f18c76b0b26c0e0367eccfcbf3407a32b044cb2b5ed33f",
+      "computed_sha256": "sha256:2845d17c641dbdb1c4f18c76b0b26c0e0367eccfcbf3407a32b044cb2b5ed33f",
+      "received_bytes": 37171,
+      "member_count": 17,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12908010750.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40895622472,
+        "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+        "compact_artifact_id": 12908010750,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-partial-6-40895622472",
+        "compact_artifact_digest": "sha256:2845d17c641dbdb1c4f18c76b0b26c0e0367eccfcbf3407a32b044cb2b5ed33f",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12908010750.zip",
+        "full_artifact_id": 12907756205,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40895622472",
+        "full_artifact_digest": "sha256:f84764ef3eb4d2968d5bfee68381dfc74a8cc29fd637bde63df709595af89a91",
+        "full_artifact_size_in_bytes": 26571051,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907756205.zip",
+          "expected_digest": "sha256:f84764ef3eb4d2968d5bfee68381dfc74a8cc29fd637bde63df709595af89a91",
+          "computed_digest": "sha256:f84764ef3eb4d2968d5bfee68381dfc74a8cc29fd637bde63df709595af89a91",
+          "received_bytes": 26571051
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "1823200b1d98a841df7e4bcfd2a6f013e2c80af86577b50c882e7e45dff27525"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "1823200b1d98a841df7e4bcfd2a6f013e2c80af86577b50c882e7e45dff27525",
+          "copied_sha256": "1823200b1d98a841df7e4bcfd2a6f013e2c80af86577b50c882e7e45dff27525",
+          "copied_bytes": 256151,
+          "zip_member_crc32": "9dddfea2",
+          "zip_member_file_size": 256151,
+          "zip_member_compress_size": 35983,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40895637294,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "coroot",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-coroot-smoke-petclinic-absent-6-40895637294",
+    "full_artifact_name": "campaign-v5-coroot-smoke-petclinic-absent-6-40895637294",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12907518474,
+      "name": "v5-summary-coroot-smoke-petclinic-absent-6-40895637294",
+      "digest": "sha256:1a110ad94d1964f6b8d7fe9d119f09ffcb7572bc8ed3cff04519cc3653a469b3",
+      "expired": false,
+      "size_in_bytes": 336395
+    },
+    "full_artifact": {
+      "id": 12907623166,
+      "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40895637294",
+      "digest": "sha256:911d8758eb5a6625cdbd0afe3e070e7035a7362c640236084c4ff0ccdaaf8e22",
+      "expired": false,
+      "size_in_bytes": 30948207
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:1a110ad94d1964f6b8d7fe9d119f09ffcb7572bc8ed3cff04519cc3653a469b3",
+      "computed_sha256": "sha256:1a110ad94d1964f6b8d7fe9d119f09ffcb7572bc8ed3cff04519cc3653a469b3",
+      "received_bytes": 336395,
+      "member_count": 22,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907518474.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40895637294,
+        "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+        "compact_artifact_id": 12907518474,
+        "compact_artifact_name": "v5-summary-coroot-smoke-petclinic-absent-6-40895637294",
+        "compact_artifact_digest": "sha256:1a110ad94d1964f6b8d7fe9d119f09ffcb7572bc8ed3cff04519cc3653a469b3",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907518474.zip",
+        "full_artifact_id": 12907623166,
+        "full_artifact_name": "campaign-v5-coroot-smoke-petclinic-absent-6-40895637294",
+        "full_artifact_digest": "sha256:911d8758eb5a6625cdbd0afe3e070e7035a7362c640236084c4ff0ccdaaf8e22",
+        "full_artifact_size_in_bytes": 30948207,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907623166.zip",
+          "expected_digest": "sha256:911d8758eb5a6625cdbd0afe3e070e7035a7362c640236084c4ff0ccdaaf8e22",
+          "computed_digest": "sha256:911d8758eb5a6625cdbd0afe3e070e7035a7362c640236084c4ff0ccdaaf8e22",
+          "received_bytes": 30948207
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "b24fcd5d2abf5f7ab6c2e1a65f112234550291cb04f0ce5d29d98b8ae4d5f0c9"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "b24fcd5d2abf5f7ab6c2e1a65f112234550291cb04f0ce5d29d98b8ae4d5f0c9",
+          "copied_sha256": "b24fcd5d2abf5f7ab6c2e1a65f112234550291cb04f0ce5d29d98b8ae4d5f0c9",
+          "copied_bytes": 1386239,
+          "zip_member_crc32": "07b0d5a4",
+          "zip_member_file_size": 1386239,
+          "zip_member_compress_size": 199072,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40896064246,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "deepflow",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40896064246",
+    "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40896064246",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12907516425,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40896064246",
+      "digest": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+      "expired": false,
+      "size_in_bytes": 26515
+    },
+    "full_artifact": {
+      "id": 12907860762,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40896064246",
+      "digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+      "expired": false,
+      "size_in_bytes": 23826385
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+      "computed_sha256": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+      "received_bytes": 26515,
+      "member_count": 9,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907516425.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40896064246,
+        "head_sha": "8b725b8895f0704fdf84f6c1086937dd22dfe6f6",
+        "compact_artifact_id": 12907516425,
+        "compact_artifact_name": "v5-summary-deepflow-smoke-petclinic-absent-6-40896064246",
+        "compact_artifact_digest": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907516425.zip",
+        "full_artifact_id": 12907860762,
+        "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40896064246",
+        "full_artifact_digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+        "full_artifact_size_in_bytes": 23826385,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907860762.zip",
+          "expected_digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+          "computed_digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+          "received_bytes": 23826385
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40898769649,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "deathstarbench",
+      "partial",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40898769649",
+    "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40898769649",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12909436226,
+      "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40898769649",
+      "digest": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+      "expired": false,
+      "size_in_bytes": 86853
+    },
+    "full_artifact": {
+      "id": 12909541061,
+      "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40898769649",
+      "digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+      "expired": false,
+      "size_in_bytes": 34021155
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+      "computed_sha256": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+      "received_bytes": 86853,
+      "member_count": 22,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12909436226.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40898769649,
+        "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+        "compact_artifact_id": 12909436226,
+        "compact_artifact_name": "v5-summary-obi-smoke-deathstarbench-partial-6-40898769649",
+        "compact_artifact_digest": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12909436226.zip",
+        "full_artifact_id": 12909541061,
+        "full_artifact_name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40898769649",
+        "full_artifact_digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+        "full_artifact_size_in_bytes": 34021155,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12909541061.zip",
+          "expected_digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+          "computed_digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+          "received_bytes": 34021155
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "792a02d5008fa6ece9d5ebbf13641b223552a612b454361c8c352068303fa929"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "792a02d5008fa6ece9d5ebbf13641b223552a612b454361c8c352068303fa929",
+          "copied_sha256": "792a02d5008fa6ece9d5ebbf13641b223552a612b454361c8c352068303fa929",
+          "copied_bytes": 997834,
+          "zip_member_crc32": "5bfcf1fd",
+          "zip_member_file_size": 997834,
+          "zip_member_compress_size": 141991,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40898777011,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "deepflow",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40898777011",
+    "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40898777011",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12907604591,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40898777011",
+      "digest": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+      "expired": false,
+      "size_in_bytes": 92419
+    },
+    "full_artifact": {
+      "id": 12908028942,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40898777011",
+      "digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+      "expired": false,
+      "size_in_bytes": 28376195
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+      "computed_sha256": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+      "received_bytes": 92419,
+      "member_count": 14,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907604591.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40898777011,
+        "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+        "compact_artifact_id": 12907604591,
+        "compact_artifact_name": "v5-summary-deepflow-smoke-petclinic-absent-6-40898777011",
+        "compact_artifact_digest": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12907604591.zip",
+        "full_artifact_id": 12908028942,
+        "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40898777011",
+        "full_artifact_digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+        "full_artifact_size_in_bytes": 28376195,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12908028942.zip",
+          "expected_digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+          "computed_digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+          "received_bytes": 28376195
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copied_bytes": 0,
+          "zip_member_crc32": "00000000",
+          "zip_member_file_size": 0,
+          "zip_member_compress_size": 2,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40899601511,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "obi",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-obi-smoke-petclinic-absent-6-40899601511",
+    "full_artifact_name": "campaign-v5-obi-smoke-petclinic-absent-6-40899601511",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12910541431,
+      "name": "v5-summary-obi-smoke-petclinic-absent-6-40899601511",
+      "digest": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+      "expired": false,
+      "size_in_bytes": 117912
+    },
+    "full_artifact": {
+      "id": 12911020083,
+      "name": "campaign-v5-obi-smoke-petclinic-absent-6-40899601511",
+      "digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+      "expired": false,
+      "size_in_bytes": 36671072
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+      "computed_sha256": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+      "received_bytes": 117912,
+      "member_count": 22,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12910541431.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40899601511,
+        "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+        "compact_artifact_id": 12910541431,
+        "compact_artifact_name": "v5-summary-obi-smoke-petclinic-absent-6-40899601511",
+        "compact_artifact_digest": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12910541431.zip",
+        "full_artifact_id": 12911020083,
+        "full_artifact_name": "campaign-v5-obi-smoke-petclinic-absent-6-40899601511",
+        "full_artifact_digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+        "full_artifact_size_in_bytes": 36671072,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12911020083.zip",
+          "expected_digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+          "computed_digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+          "received_bytes": 36671072
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "9a6aad516c5910aea9078f1f6d57b63f687ee0975f0acae00857d75aefbf852f"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "9a6aad516c5910aea9078f1f6d57b63f687ee0975f0acae00857d75aefbf852f",
+          "copied_sha256": "9a6aad516c5910aea9078f1f6d57b63f687ee0975f0acae00857d75aefbf852f",
+          "copied_bytes": 1386476,
+          "zip_member_crc32": "ee2fb65c",
+          "zip_member_file_size": 1386476,
+          "zip_member_compress_size": 198895,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  },
+  {
+    "run_id": 40902922833,
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "cell": [
+      "deepflow",
+      "petclinic",
+      "absent",
+      6
+    ],
+    "stage": "smoke",
+    "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+    "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+    "status": "downloaded",
+    "artifact": {
+      "id": 12911410794,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+      "digest": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+      "expired": false,
+      "size_in_bytes": 102968
+    },
+    "full_artifact": {
+      "id": 12910762488,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+      "digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+      "expired": false,
+      "size_in_bytes": 29715113
+    },
+    "compact_zip_verification": {
+      "expected_sha256": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+      "computed_sha256": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+      "received_bytes": 102968,
+      "member_count": 15,
+      "safe_extract": true,
+      "retained_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12911410794.zip"
+    },
+    "declared_file_recovery": {
+      "schema_version": "v5-declared-file-recovery",
+      "status": "recovered",
+      "source": {
+        "repository": "a-a-k/ebpf-model-discovery-experiments",
+        "run_id": 40902922833,
+        "head_sha": "b9ae3065d56981e992e762b14b17453d86376570",
+        "compact_artifact_id": 12911410794,
+        "compact_artifact_name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+        "compact_artifact_digest": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+        "compact_archive_path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12911410794.zip",
+        "full_artifact_id": 12910762488,
+        "full_artifact_name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+        "full_artifact_digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+        "full_artifact_size_in_bytes": 29715113,
+        "full_zip_verification": {
+          "path": "results/iteration-5/source-artifacts/a-a-k__ebpf-model-discovery-experiments/12910762488.zip",
+          "expected_digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+          "computed_digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+          "received_bytes": 29715113
+        }
+      },
+      "requested_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "d4d2c4573ddf1d4744d5d685df5cfe4bd628e7c0a3b4d6206a9d03c19a265799"
+        }
+      ],
+      "recovered_files": [
+        {
+          "name": "attempt-journal.jsonl",
+          "manifest_sha256": "d4d2c4573ddf1d4744d5d685df5cfe4bd628e7c0a3b4d6206a9d03c19a265799",
+          "copied_sha256": "d4d2c4573ddf1d4744d5d685df5cfe4bd628e7c0a3b4d6206a9d03c19a265799",
+          "copied_bytes": 479059,
+          "zip_member_crc32": "58d028a6",
+          "zip_member_file_size": 479059,
+          "zip_member_compress_size": 70394,
+          "zip_member_name": "attempt-journal.jsonl",
+          "lineage": "direct_full_artifact_zip_member"
+        }
+      ],
+      "detail": null,
+      "nested_retention_transport_traversed": false,
+      "original_compact_unchanged": true,
+      "empirical_recomputation_performed": false
+    }
+  }
+]

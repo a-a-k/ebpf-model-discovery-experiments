@@ -1,0 +1,10 @@
+{
+  "full_zip_hash_verified": false,
+  "source_zip_bytes": 402010349,
+  "members": {
+    "evaluation-v5.json.gz": {
+      "bytes": 563141,
+      "sha256": "3b073e88c3962e417e25d588f7dafa2bcb39e19eda6bb43e8543bfdaffe5ec2c"
+    }
+  }
+}

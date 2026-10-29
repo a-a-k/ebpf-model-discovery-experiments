@@ -241,3 +241,68 @@ favorable graph-shape requirement is introduced. Independent review passed 77
 selected checks. The arbitrary workflow duration cap was removed, and explicit
 test/protobuf dependencies and repository test mode were restored before dispatch.
 The actual Actions qualification result must be reviewed before the live repeat.
+
+## Independent saved-packet and progress-snapshot review
+
+The reviewer checked actual retained inputs, hashes, models, command records,
+closed training prefixes and external outcome journals for OBI runs `40898769649`
+(DeathStarBench/partial/6) and `40899601511` (Petclinic/absent/6), plus Coroot
+`40895637294` (Petclinic/absent/6). All three receive technical smoke GO with
+their original source bindings. Unknown forecasts remain empirical unknowns.
+Petclinic OBI has real graph-to-Sheaft execution for all four operations; its
+Procrustes goal-admission report remains BLOCKED. No favorable source quality,
+forecast availability, accuracy or cost-advantage claim follows from smoke GO.
+
+Inspection of only the two OBI packets' stored source/guest/service columns and
+retained training inventory found no matching supplied container-name alias.
+Thus the newly introduced logical aliases are a name-level no-op for these saved
+packets. The [inspection record](iteration5-obi-alias-noop-inspection.json) retains
+the actual input hashes; neither fitting nor scoring was rerun locally.
+
+Both agents approved [report 40905967491](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40905967491)
+for publication as a snapshot of declared work. Independent review checked the
+terminal run/head/artifact binding, selected-member CRC and hashes, gzip restored
+hash, declared input/retrieval provenance, unchanged source evaluations and the
+separation of smoke from the 108-cell main grid. The snapshot contains zero main
+cells and retains all 27 New Relic access-blocked cells. Its costs cover declared
+runs only; unknown human effort and later work are explicit. This is not final
+cost accounting or a positive-contribution verdict. The reporter's transport
+eligibility fields are not independent admission or main-series coverage.
+
+For subsequent main dispatch, a matching collector/system/mode smoke is reviewed
+against the same existing evidence: pinned acquisition and two-guest provenance;
+mode suppression and raw origin/closure; frozen training and worker proof; actual
+Procrustes/Bering and Sheaft where supported; all planned workload states and
+independent outcomes; equal-information baselines and complete declared costs.
+Unsupported application evidence may remain unknown. No accuracy, ARI, latency
+or favorable-forecast gate is added. New Relic's access block does not prevent
+reviewed execution of the other predeclared collector arms.
+
+Actual review grants ORIGINAL-criterion main-execution GO at `33d98e2` for OBI
+Petclinic/absent and DeathStarBench/partial, each fixed seeds 6/7/8. The preceding
+packet reviews, demonstrated alias no-op and integrated CI support those matching
+cells; the other modes/systems remain pending their own smoke review. Runs
+`40910013685` and `40910021896` were dispatched accordingly. This is permission
+to execute the comparison, not an empirical-success verdict.
+
+## Actual DeepFlow software handoff qualification
+
+Run `40909257494` remains a FAILED qualification workflow. Its synthetic fixture
+has no resolved service identity, so Bering's shutdown publication reports
+`discovery produced no services`. No Bering graph, emitted ingest summary or
+Sheaft execution is claimed for this run.
+
+The narrower source-to-product handoff is nevertheless established: the posted
+and Bering-retained bodies are identical 6,444-byte payloads with SHA-256
+`97f6083b87ca65f8d1a27484d60fdb747e5dafb67cc94b855e7e63d84ae7663e`,
+containing two decoded observations. Independent inspection of the pinned Bering
+handler verifies that HTTP 200 follows decoding, generic normalization and
+ingestion. The configured capacity is three and the source code atomically
+accepts the complete two-observation batch or returns an error. Zero capacity
+drops are therefore source-derived, not a retained measured counter.
+
+Both agents give ORIGINAL-criterion handoff-only engineering GO for one fixed
+live DeepFlow Petclinic/absent/6 pilot at `33d98e2`. No replay guard is weakened,
+no failed status is rewritten, and no extra favorable fixture is introduced to
+make the qualification job green. Actual application acquisition, fair identity
+handling and graph/simulation evidence still require that live smoke review.

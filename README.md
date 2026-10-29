@@ -6,6 +6,9 @@ plans matched OBI, DeepFlow, New Relic and Coroot campaigns. No new measurement
 result is claimed yet; New Relic access and license conditions remain unresolved.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
+The [reviewed progress snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
+retains the first 13 smoke runs and their preparation history; it contains no
+main-series measurements (0/108 cells).
 The results below belong to completed iteration 4.
 
 **Completed experimental series (iteration 4).** All 27 planned campaigns completed

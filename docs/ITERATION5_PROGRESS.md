@@ -48,7 +48,9 @@ reached the DeathStarBench guest deployments, then failed in the auxiliary HTTP
 control before training/validation measurements. All three DeathStarBench modes
 reported `technical control HTTP request failed on a`. Completed campaign and
 summary artifacts were retained, and the remaining queue was cancelled after the
-common failure was identified. This is a preparation failure, not an unavailable
+common failure was identified. The three OTel cells had already started and
+retain incomplete artifacts; the three Petclinic cells have no uploaded packet.
+This is a preparation failure, not an unavailable
 or inaccurate application forecast.
 
 The repaired fixture passed both the full Linux unit suite and a separate real
@@ -81,7 +83,8 @@ unprivileged read of `/proc/1/ns/pid`, before the collector and workload started
 cleanup also attempted to use the not-yet-installed snapshot helper. These are
 preparation defects, not evidence of application protocol coverage.
 
-Coroot has not yet passed smoke qualification. New Relic access and license conditions remain
+At this point in the history Coroot had not passed smoke qualification; its later
+attempt is recorded below. New Relic access and license conditions remain
 unresolved; it has not been silently substituted or counted as measured.
 
 ## Further fixed smoke attempts and diagnosis
@@ -215,3 +218,55 @@ stopped because the compact package omitted the manifest-listed request journal.
 The journal is retained in the full source artifact. The reviewed transport
 repair recovers the exact historical bytes and includes the file in future
 compact packages; source evaluations are not recalculated or rewritten.
+
+## Reviewed snapshot and current execution
+
+[Report 40905967491](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40905967491)
+successfully assembled the declared saved evidence. Independent review approved
+it as a progress snapshot: 13 smoke runs, 21 declared attempt cells, 46 related
+preparation/product/worker/report runs, and zero main-series cells. All 27 New
+Relic main cells remain explicitly blocked. The [retained report and provenance](../results/iteration-5/snapshot-40905967491/SOURCE.md)
+are copied without empirical recalculation. The known job-time sum covers only
+declared work; human effort and later publication/reporting costs remain unknown.
+
+Independent actual-packet review admitted OBI DeathStarBench/partial/6
+(`40898769649`), OBI Petclinic/absent/6 (`40899601511`) and the earlier Coroot
+Petclinic/absent/6 (`40895637294`) as technical smoke evidence. Unknown forecasts
+remain unknown. The OBI Petclinic packet contains actual Bering-to-Sheaft execution,
+but Procrustes' own admission report is BLOCKED; this is disclosed rather than
+turned into a positive scientific verdict.
+
+The new supplied logical aliases are a verified name-level no-op for both earlier
+OBI packets, based only on their retained source/guest/name columns and training
+inventory. Those two cells remain bound to their original source revision. No
+refitting or rescoring was used to retain them. Coroot is repeated because that
+mapping does affect its observed Docker names.
+
+Integrated revision `33d98e2ba522af1b740ec4465dc6ba6e7b3e0530` passed full Linux
+and real Docker [CI 40908572301](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40908572301).
+The following fixed smoke work was dispatched from that revision; dispatch is
+not completion or main-series admission:
+
+| Scope | Run |
+| --- | --- |
+| DeepFlow derived handoff, synthetic no-VM input through actual products | [40909257494](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909257494) |
+| Coroot Petclinic/absent/6 | [40909264363](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909264363) |
+| OBI OTel Demo, all three modes, seed 6 | [40909271694](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909271694) |
+| OBI DeathStarBench/absent/6 | [40909279346](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909279346) |
+| OBI DeathStarBench/full/6 | [40909288192](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909288192) |
+| OBI Petclinic/partial/6 | [40909294990](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909294990) |
+| OBI Petclinic/full/6 | [40909303154](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909303154) |
+
+Independent review then admitted the already-qualified OBI Petclinic/absent and
+DeathStarBench/partial cells for their three fixed main repeats at the same
+revision. They were dispatched in [40910013685](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685)
+and [40910021896](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896).
+Their results are pending; the published snapshot predates these dispatches.
+
+The DeepFlow software qualification job failed at graph publication because its
+minimal synthetic fixture supplies no resolved service identity. Its actual
+posted/captured bytes and pinned handler contract independently confirm decoding,
+normalization and ingestion of the two observations. This is a reviewed handoff
+result only; no graph or measured ingest summary was emitted. The failed job and
+its costs remain retained. Both agents approved one fixed live Petclinic/absent/6
+repeat, without changing replay guards or claiming full qualification success.
