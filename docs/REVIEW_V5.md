@@ -1,7 +1,7 @@
 # Iteration 5 review and execution boundary
 
-Status: implementation and smoke qualification. No main-series approval or
-positive empirical contribution is claimed. The independent reviewer is the
+Status: matching main cells have been admitted as documented below; the complete
+108-cell study and any contribution verdict remain pending. The independent reviewer is the
 separate 6.1 Sol/xhigh agent requested by the user, not an external peer reviewer.
 
 ## Original criterion and strongest baseline
@@ -366,3 +366,30 @@ Actual code review, saved-input validation in Actions and a fresh fixed DeepFlow
 qualification precede any DeepFlow main dispatch. Original sparse outputs remain
 unchanged; no clock correction by itself establishes useful prediction or a cost
 advantage.
+
+Actual implementation of the shared-clock correction (`e8df74d` through
+`31962a4`, integrated at `a26740c`) passed independent code review and Linux/Docker
+CI `40919785943`. The retained relation binds the audited producer version,
+commit, image, actual standalone command/configuration and guest identity.
+Runtime intervals account for known microsecond truncation as a deterministic
+representation bound; canonical OTLP/raw timestamps are unchanged. Repeated
+inventory parsing is cached per immutable dependency, preserving per-row checks.
+
+Saved-training validation `40920240694` then passed independent actual-artifact
+review. Its original full ZIP is verified in Actions; the compact ZIP and source
+implementation hashes were independently checked. This is new derived
+preparation from old immutable training observations: 882 resolutions and 743
+unknowns, with the exact retained database record correctly bound. These counts
+are preparation diagnostics, not new graph or forecast results. No original
+evaluation, graph, class, Sheaft output or external outcome was recomputed.
+One fresh fixed DeepFlow Petclinic/absent/6 pilot is approved; DeepFlow main
+admission awaits that packet.
+
+All nine OBI system/mode settings now have independent actual-packet admission
+for their matching main seeds 6/7/8. Coroot Petclinic/absent and all three
+DeathStarBench modes have the same matching-cell main admission. Other Coroot
+modes remain pending their smokes. Existing OBI/Coroot admissions extend to
+`a26740c` after its passing CI: only DeepFlow emits the new clock declarations;
+the existing other-source formats, supplied aliases and resolution semantics
+are unchanged. This is a source-specific no-op assessment, not a universal
+admission. Running main groups retain their original execution revisions.

@@ -1,9 +1,12 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: iteration 5, implementation and smoke qualification.**
+**Current work: iteration 5, matched main series and remaining collector qualification.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
-plans matched OBI, DeepFlow, New Relic and Coroot campaigns. No new measurement
-result is claimed yet; New Relic access and license conditions remain unresolved.
+plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine OBI
+system/mode settings and four Coroot settings have passed actual smoke review;
+main groups are being staged. DeepFlow's clock adapter correction is under fresh
+qualification. No iteration-5 main result or contribution is claimed yet;
+New Relic access and license conditions remain unresolved.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
 The [reviewed progress snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
