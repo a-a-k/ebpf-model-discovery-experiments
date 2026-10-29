@@ -123,6 +123,13 @@ without demanding root-only limit files that the Linux interface does not expose
 Missing non-root evidence and real extra limits must still fail verification.
 This is a preparation repair, not collector capability or main-series approval.
 
+Independent actual-code review approved dispatch repair `8e427b4` (30 relevant
+tests passed, one POSIX-specific skip) and DeepFlow `9ac7258` through `3ee27ec`
+(47 relevant tests passed). Both agents give **GO for the original criterion**
+for the same fixed OBI and DeepFlow smoke repeats after the integrated Linux and
+private-network Docker CI passes. The Coroot attempt remains separate; no
+main-series or positive-result approval is inferred from these repairs.
+
 Technical controls establish actual selected-agent acquisition and preserved
 bytes on both guests. They do not prove application protocol coverage, causal
 completeness, business semantics, or forecast accuracy. A technically valid
