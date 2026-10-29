@@ -1,0 +1,4600 @@
+{
+  "schema_version": "v5-actions-costs",
+  "runs": [
+    {
+      "run_id": 40880849418,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40880849418",
+      "jobs": [
+        {
+          "id": 123471648094,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123471696616,
+          "name": "campaign (petclinic, partial, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 369.0
+        },
+        {
+          "id": 123471696629,
+          "name": "campaign (otel_demo, full, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 171.0
+        },
+        {
+          "id": 123471696690,
+          "name": "campaign (otel_demo, partial, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 173.0
+        },
+        {
+          "id": 123471696742,
+          "name": "campaign (otel_demo, absent, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 175.0
+        },
+        {
+          "id": 123471696793,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 369.0
+        },
+        {
+          "id": 123471696803,
+          "name": "campaign (deathstarbench, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 245.0
+        },
+        {
+          "id": 123471696819,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 214.0
+        },
+        {
+          "id": 123471696826,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 218.0
+        },
+        {
+          "id": 123471696833,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "elapsed_seconds": 369.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 2307.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12901275629,
+          "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40880849418",
+          "digest": "sha256:3b71143f7d10f849c9848e29f4d956f23c9adb7292eff71c7273d7b7e742eb64",
+          "expired": false,
+          "size_in_bytes": 23787215
+        },
+        {
+          "id": 12900865939,
+          "name": "retention-v4-deathstarbench-full-6-40880849418",
+          "digest": "sha256:518904290265c686f10961ca6c5335ef987c3240ccef13be4c1245af19ef843e",
+          "expired": false,
+          "size_in_bytes": 1163
+        },
+        {
+          "id": 12900786008,
+          "name": "campaign-v5-obi-smoke-deathstarbench-full-6-40880849418",
+          "digest": "sha256:a9b3fc6590afe5b91f60638be6bd724bfe19a5512e7dc83f87eb2b71e3a2a148",
+          "expired": false,
+          "size_in_bytes": 24032318
+        },
+        {
+          "id": 12900696318,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40880849418",
+          "digest": "sha256:6db9894081c147f3ab095cd89c2a25b0f548b13f3c4e46711d84395bc16b7fb7",
+          "expired": false,
+          "size_in_bytes": 12565
+        },
+        {
+          "id": 12900367017,
+          "name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40880849418",
+          "digest": "sha256:5137d6a3a505a10c9b9ab17cb4f8576e31524797e31b3d8a7cca672b8e2dc6d8",
+          "expired": false,
+          "size_in_bytes": 24025851
+        },
+        {
+          "id": 12900143007,
+          "name": "v5-summary-obi-smoke-otel_demo-absent-6-40880849418",
+          "digest": "sha256:4a1748f292cd1c71d335a5562dc839a069e964e82e86cfe94fc7f44114ec47d9",
+          "expired": false,
+          "size_in_bytes": 7431
+        },
+        {
+          "id": 12900113822,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40880849418",
+          "digest": "sha256:139d1a89b3bb8dc35b0d233253827e49c440a31fd80876c0ca0024d468fa5c41",
+          "expired": false,
+          "size_in_bytes": 24031303
+        },
+        {
+          "id": 12899978709,
+          "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40880849418",
+          "digest": "sha256:04d19d268542871564c53ab92179072528dd59a43b6ed832d9eec99cc1bec3a3",
+          "expired": false,
+          "size_in_bytes": 23783993
+        },
+        {
+          "id": 12899834966,
+          "name": "campaign-v5-obi-smoke-otel_demo-full-6-40880849418",
+          "digest": "sha256:4b2e28a052715b95de222a2f6914f2b74dff3679f423c9c1238638184650e6a8",
+          "expired": false,
+          "size_in_bytes": 23784060
+        },
+        {
+          "id": 12899824429,
+          "name": "v5-summary-obi-smoke-otel_demo-partial-6-40880849418",
+          "digest": "sha256:9ef1fd01ce5ce8d6ecf8639d8f2d2be1d9c4b9b1b33d55d6805fb0b8f87efaa0",
+          "expired": false,
+          "size_in_bytes": 7428
+        },
+        {
+          "id": 12899759896,
+          "name": "v5-summary-obi-smoke-otel_demo-full-6-40880849418",
+          "digest": "sha256:f9b45380bbf8998f35ace122001fbf6f400aa610ad57bf2fe0b66c38a12baead",
+          "expired": false,
+          "size_in_bytes": 7421
+        },
+        {
+          "id": 12899759198,
+          "name": "retention-v4-deathstarbench-partial-6-40880849418",
+          "digest": "sha256:82fc3c1222138277790d17c0fab963e3348606a1b591a61a1c1b700b11ca6ab1",
+          "expired": false,
+          "size_in_bytes": 1163
+        },
+        {
+          "id": 12899734266,
+          "name": "retention-v4-deathstarbench-absent-6-40880849418",
+          "digest": "sha256:3fe787721d94555134ab0fa6e55d118e828e0843e419e73159734b6b1ad33ca7",
+          "expired": false,
+          "size_in_bytes": 1163
+        },
+        {
+          "id": 12899729040,
+          "name": "v5-summary-obi-smoke-deathstarbench-full-6-40880849418",
+          "digest": "sha256:c3105c13f55b7318f0b85493577b82b0d315aba17d065d13ebaefcefc02daa33",
+          "expired": false,
+          "size_in_bytes": 12541
+        },
+        {
+          "id": 12899539679,
+          "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40880849418",
+          "digest": "sha256:5f7c91b5707bae0f8f9463d745f371cb33afa4cf3dbfc7c4ee2dcfc82fa7d454",
+          "expired": false,
+          "size_in_bytes": 12548
+        }
+      ],
+      "stored_artifact_bytes": 143508163
+    },
+    {
+      "run_id": 40884914635,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "b0c068aee35571565abfe6a8389599c71683d5df",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40884914635",
+      "jobs": [
+        {
+          "id": 123485923133,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123485975559,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 342.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 345.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902441322,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40884914635",
+          "digest": "sha256:f22e92d08b3b1d73c8505dd2592cbf5e9f5bcfa653885bff8c4ed664aa379b36",
+          "expired": false,
+          "size_in_bytes": 23528
+        },
+        {
+          "id": 12901603339,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40884914635",
+          "digest": "sha256:5b0dcec2b879fcbbca8d1f7fb90a5eccf17866bb264fd85a66a8cd03d65f04d3",
+          "expired": false,
+          "size_in_bytes": 24084311
+        },
+        {
+          "id": 12900809507,
+          "name": "retention-v4-deathstarbench-partial-6-40884914635",
+          "digest": "sha256:e3a5b22974224f481e4beea5d6fe96fbbbb4e8b841a81d6ab44b42f70288b610",
+          "expired": false,
+          "size_in_bytes": 1163
+        }
+      ],
+      "stored_artifact_bytes": 24109002
+    },
+    {
+      "run_id": 40885990713,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40885990713",
+      "jobs": [
+        {
+          "id": 123489723504,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123489768574,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 190.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 193.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902762367,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40885990713",
+          "digest": "sha256:4187629055b16aa82645782dc4fbef2c41791953f9e75958d29f6f4e242143ca",
+          "expired": false,
+          "size_in_bytes": 8697
+        },
+        {
+          "id": 12902598140,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40885990713",
+          "digest": "sha256:fab2b8ad69fc5c863308ce1a1d392577ed090ed374f1f41e38c2aa3c9b838f5c",
+          "expired": false,
+          "size_in_bytes": 23785425
+        }
+      ],
+      "stored_artifact_bytes": 23794122
+    },
+    {
+      "run_id": 40890296710,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890296710",
+      "jobs": [
+        {
+          "id": 123504955360,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123504998136,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 338.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 341.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12905535158,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40890296710",
+          "digest": "sha256:694fe0a6f92b49e6c2bf523c7e6a73ab5d117ec5f1c9b43f9e21fd4c76a010ac",
+          "expired": false,
+          "size_in_bytes": 24089499
+        },
+        {
+          "id": 12903798377,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40890296710",
+          "digest": "sha256:02a8d063aceb03d146ac7c45aa5881a6e412304841605c349ce77299d8fb7870",
+          "expired": false,
+          "size_in_bytes": 23852
+        },
+        {
+          "id": 12902979882,
+          "name": "retention-v4-deathstarbench-partial-6-40890296710",
+          "digest": "sha256:8af46ed1eaa0affba939b4da741cf4139a122954fe763df8f24408590cb41c4f",
+          "expired": false,
+          "size_in_bytes": 1163
+        }
+      ],
+      "stored_artifact_bytes": 24114514
+    },
+    {
+      "run_id": 40890303219,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890303219",
+      "jobs": [
+        {
+          "id": 123504981046,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123505033282,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 295.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 298.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12904504707,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40890303219",
+          "digest": "sha256:3ba47030bdc0617b8bbfac6ef37433561639908d50a2db4e414f841e1982555f",
+          "expired": false,
+          "size_in_bytes": 8052
+        },
+        {
+          "id": 12904339074,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40890303219",
+          "digest": "sha256:4114a2aebb2019a14be2a8fdc669220b3c37b7799aba5e182909064d414053e6",
+          "expired": false,
+          "size_in_bytes": 23925696
+        }
+      ],
+      "stored_artifact_bytes": 23933748
+    },
+    {
+      "run_id": 40890763831,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890763831",
+      "jobs": [
+        {
+          "id": 123506616975,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123506670186,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 397.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 400.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12905425997,
+          "name": "v5-summary-coroot-smoke-petclinic-absent-6-40890763831",
+          "digest": "sha256:361b6521a236b2c0aa04d0657a60252d1834eb6ee03aedce63c7087e7fb298c3",
+          "expired": false,
+          "size_in_bytes": 19954
+        },
+        {
+          "id": 12905002563,
+          "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40890763831",
+          "digest": "sha256:bbd7b5cbcd8e59862e0e7a77780bc357696036bdeca4a8f4ab8c0453ac7a930c",
+          "expired": false,
+          "size_in_bytes": 24091250
+        }
+      ],
+      "stored_artifact_bytes": 24111204
+    },
+    {
+      "run_id": 40895622472,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895622472",
+      "jobs": [
+        {
+          "id": 123523801259,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 123523845192,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 421.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 423.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12908155307,
+          "name": "retention-v4-deathstarbench-partial-6-40895622472",
+          "digest": "sha256:7a89e8d11e16bec097bca665876c233b3a70c91a543673f6ebfed17d7fac8187",
+          "expired": false,
+          "size_in_bytes": 2106
+        },
+        {
+          "id": 12908010750,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40895622472",
+          "digest": "sha256:2845d17c641dbdb1c4f18c76b0b26c0e0367eccfcbf3407a32b044cb2b5ed33f",
+          "expired": false,
+          "size_in_bytes": 37171
+        },
+        {
+          "id": 12907756205,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40895622472",
+          "digest": "sha256:f84764ef3eb4d2968d5bfee68381dfc74a8cc29fd637bde63df709595af89a91",
+          "expired": false,
+          "size_in_bytes": 26571051
+        },
+        {
+          "id": 12907067906,
+          "name": "training-v4-deathstarbench-partial-6-40895622472",
+          "digest": "sha256:8c5adbd45d3e97f72de590cc3a1db814df6d998d4359036c43631d4a6801a332",
+          "expired": false,
+          "size_in_bytes": 26054391
+        }
+      ],
+      "stored_artifact_bytes": 52664719
+    },
+    {
+      "run_id": 40895637294,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895637294",
+      "jobs": [
+        {
+          "id": 123523850039,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 123523890856,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1067.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1069.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12907623166,
+          "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40895637294",
+          "digest": "sha256:911d8758eb5a6625cdbd0afe3e070e7035a7362c640236084c4ff0ccdaaf8e22",
+          "expired": false,
+          "size_in_bytes": 30948207
+        },
+        {
+          "id": 12907577027,
+          "name": "training-v4-petclinic-absent-6-40895637294",
+          "digest": "sha256:a61e35427075f639ae6467adb0abf577ff9a230c1de8f81ef5cb3d777dbafc2f",
+          "expired": false,
+          "size_in_bytes": 24987480
+        },
+        {
+          "id": 12907518474,
+          "name": "v5-summary-coroot-smoke-petclinic-absent-6-40895637294",
+          "digest": "sha256:1a110ad94d1964f6b8d7fe9d119f09ffcb7572bc8ed3cff04519cc3653a469b3",
+          "expired": false,
+          "size_in_bytes": 336395
+        }
+      ],
+      "stored_artifact_bytes": 56272082
+    },
+    {
+      "run_id": 40896064246,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "8b725b8895f0704fdf84f6c1086937dd22dfe6f6",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40896064246",
+      "jobs": [
+        {
+          "id": 123525383445,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123525437245,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 208.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 211.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12907860762,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40896064246",
+          "digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+          "expired": false,
+          "size_in_bytes": 23826385
+        },
+        {
+          "id": 12907516425,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40896064246",
+          "digest": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+          "expired": false,
+          "size_in_bytes": 26515
+        }
+      ],
+      "stored_artifact_bytes": 23852900
+    },
+    {
+      "run_id": 40898769649,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898769649",
+      "jobs": [
+        {
+          "id": 123535031052,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123535085159,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 757.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 760.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12909541061,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40898769649",
+          "digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+          "expired": false,
+          "size_in_bytes": 34021155
+        },
+        {
+          "id": 12909436226,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40898769649",
+          "digest": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+          "expired": false,
+          "size_in_bytes": 86853
+        },
+        {
+          "id": 12908871224,
+          "name": "training-v4-deathstarbench-partial-6-40898769649",
+          "digest": "sha256:e490e44b58001e1bec751408cdab18b59220ce8438f552c6ac9e6f5cf550c3fb",
+          "expired": false,
+          "size_in_bytes": 26023953
+        },
+        {
+          "id": 12908528008,
+          "name": "retention-v4-deathstarbench-partial-6-40898769649",
+          "digest": "sha256:a193dd078cb0b99211aa01ce016a96ee8be403bfc7ea74d86e3040a2579a37ad",
+          "expired": false,
+          "size_in_bytes": 2940
+        }
+      ],
+      "stored_artifact_bytes": 60134901
+    },
+    {
+      "run_id": 40898777011,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898777011",
+      "jobs": [
+        {
+          "id": 123535061359,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123535116154,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 404.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 407.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12908028942,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40898777011",
+          "digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+          "expired": false,
+          "size_in_bytes": 28376195
+        },
+        {
+          "id": 12907604591,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40898777011",
+          "digest": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+          "expired": false,
+          "size_in_bytes": 92419
+        }
+      ],
+      "stored_artifact_bytes": 28468614
+    },
+    {
+      "run_id": 40899601511,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts.",
+      "metadata_status": "retained",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40899601511",
+      "jobs": [
+        {
+          "id": 123537952353,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123538022599,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1263.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1267.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12911020083,
+          "name": "campaign-v5-obi-smoke-petclinic-absent-6-40899601511",
+          "digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+          "expired": false,
+          "size_in_bytes": 36671072
+        },
+        {
+          "id": 12910541431,
+          "name": "v5-summary-obi-smoke-petclinic-absent-6-40899601511",
+          "digest": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+          "expired": false,
+          "size_in_bytes": 117912
+        },
+        {
+          "id": 12910065453,
+          "name": "training-v4-petclinic-absent-6-40899601511",
+          "digest": "sha256:2ec3b5e91fe53d86ef8ecf670287bdf78d11ab5bf69dc2abda04b59f25488904",
+          "expired": false,
+          "size_in_bytes": 25616692
+        }
+      ],
+      "stored_artifact_bytes": 62405676
+    },
+    {
+      "run_id": 40902922833,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed source-schema repeat; preserve actual handoff technical failure.",
+      "metadata_status": "retained",
+      "head_sha": "b9ae3065d56981e992e762b14b17453d86376570",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40902922833",
+      "jobs": [
+        {
+          "id": 123549819222,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123549868522,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 613.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 616.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12911410794,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+          "digest": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+          "expired": false,
+          "size_in_bytes": 102968
+        },
+        {
+          "id": 12910762488,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+          "digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+          "expired": false,
+          "size_in_bytes": 29715113
+        },
+        {
+          "id": 12910318208,
+          "name": "training-v4-petclinic-absent-6-40902922833",
+          "digest": "sha256:6519ae3f8e3b1566de2fd0afd104d16f3281f9c6340fe7f17bd2d03dc326c0de",
+          "expired": false,
+          "size_in_bytes": 27258862
+        }
+      ],
+      "stored_artifact_bytes": 57076943
+    },
+    {
+      "run_id": 40909264363,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909264363",
+      "jobs": [
+        {
+          "id": 123572464552,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123572527270,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1062.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1065.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915105479,
+          "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40909264363",
+          "digest": "sha256:d30990e0b0ecc061d18008096900da24bf37e72be4d5d3f0027795627fb7cf9c",
+          "expired": false,
+          "size_in_bytes": 31867475
+        },
+        {
+          "id": 12914820744,
+          "name": "v5-summary-coroot-smoke-petclinic-absent-6-40909264363",
+          "digest": "sha256:7c7a78513bbe155f6cfc5af05950b71ea1023c6efb35f1d0ef6e3d6a5c772557",
+          "expired": false,
+          "size_in_bytes": 468825
+        },
+        {
+          "id": 12913771376,
+          "name": "training-v4-petclinic-absent-6-40909264363",
+          "digest": "sha256:91ec72f9f072decaf9d1614dbab949314d157af71a9e5f0f7278511bd6083fe9",
+          "expired": false,
+          "size_in_bytes": 25206812
+        }
+      ],
+      "stored_artifact_bytes": 57543112
+    },
+    {
+      "run_id": 40909271694,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909271694",
+      "jobs": [
+        {
+          "id": 123572478870,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123572542685,
+          "name": "campaign (otel_demo, full, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1585.0
+        },
+        {
+          "id": 123572542815,
+          "name": "campaign (otel_demo, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2448.0
+        },
+        {
+          "id": 123572542996,
+          "name": "campaign (otel_demo, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1191.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 5228.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12916535612,
+          "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40909271694",
+          "digest": "sha256:493edbdf59f8f6a9b6a715464791333f23986deeaee379f9843e0f44ce6d1143",
+          "expired": false,
+          "size_in_bytes": 56670595
+        },
+        {
+          "id": 12916370886,
+          "name": "v5-summary-obi-smoke-otel_demo-absent-6-40909271694",
+          "digest": "sha256:d58542e64adbc1684a9c15c38d2021f1d680e84ed792ea95fa403a6f5f3a9616",
+          "expired": false,
+          "size_in_bytes": 286495
+        },
+        {
+          "id": 12915685223,
+          "name": "campaign-v5-obi-smoke-otel_demo-full-6-40909271694",
+          "digest": "sha256:40ccfa55a444162f51e55508765c177ecf7957444a26203a9467a1ec31dc6302",
+          "expired": false,
+          "size_in_bytes": 56087284
+        },
+        {
+          "id": 12915476064,
+          "name": "v5-summary-obi-smoke-otel_demo-full-6-40909271694",
+          "digest": "sha256:8e4d007c750f81229a7bfd859c0074e6ba9a8793da4ed359df8c7383f05cc117",
+          "expired": false,
+          "size_in_bytes": 287521
+        },
+        {
+          "id": 12915210909,
+          "name": "v5-summary-obi-smoke-otel_demo-partial-6-40909271694",
+          "digest": "sha256:e321e8bfb351eb379871f62ecbb9cf28fd607de97b33283ce735073978a2a7bb",
+          "expired": false,
+          "size_in_bytes": 269889
+        },
+        {
+          "id": 12915161149,
+          "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40909271694",
+          "digest": "sha256:77fe4a735c8ccfc1f04da7f05e0fd86953ecf6e7b232ff7c5e21616950d3a41d",
+          "expired": false,
+          "size_in_bytes": 48085032
+        },
+        {
+          "id": 12914741681,
+          "name": "training-v4-otel_demo-absent-6-40909271694",
+          "digest": "sha256:8c9278528f2922dee8da9e3977be7ef50a48be66a6e73703eda878a95f4f0069",
+          "expired": false,
+          "size_in_bytes": 27698109
+        },
+        {
+          "id": 12913722491,
+          "name": "training-v4-otel_demo-partial-6-40909271694",
+          "digest": "sha256:fae9e009b1191e174eaeeabd9789a9e6818cd23da6b3604982f92d5ae80aa8b4",
+          "expired": false,
+          "size_in_bytes": 28617849
+        },
+        {
+          "id": 12912918709,
+          "name": "training-v4-otel_demo-full-6-40909271694",
+          "digest": "sha256:e7f48a9a875081031f0607a66d300f4c61ce4aa1ef3da532916bd22edac0991a",
+          "expired": false,
+          "size_in_bytes": 28657240
+        }
+      ],
+      "stored_artifact_bytes": 246660014
+    },
+    {
+      "run_id": 40909279346,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909279346",
+      "jobs": [
+        {
+          "id": 123572504162,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123572563107,
+          "name": "campaign (deathstarbench, absent, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 709.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 712.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12914900054,
+          "name": "retention-v4-deathstarbench-absent-6-40909279346",
+          "digest": "sha256:c180ba815f3ec949c05de6aa0cff0c330cbd0253875c2e4d8d6162038698d13b",
+          "expired": false,
+          "size_in_bytes": 2950
+        },
+        {
+          "id": 12913642774,
+          "name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40909279346",
+          "digest": "sha256:5ebb00ea990594ee00ea5c2070bd4cf4d1f3e8b8c651d8483702cd1f44d70bdb",
+          "expired": false,
+          "size_in_bytes": 29877697
+        },
+        {
+          "id": 12913303429,
+          "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40909279346",
+          "digest": "sha256:ca320c3e9f195983aa4c1c50419cbfa381edf881857415af1b9f88b967c1b6fd",
+          "expired": false,
+          "size_in_bytes": 179864
+        },
+        {
+          "id": 12913043053,
+          "name": "training-v4-deathstarbench-absent-6-40909279346",
+          "digest": "sha256:d67396eb16e9bd9746b6d9e1fd687bd9b7d3f9871645670f0283bb46d7be4a7a",
+          "expired": false,
+          "size_in_bytes": 25112332
+        }
+      ],
+      "stored_artifact_bytes": 55172843
+    },
+    {
+      "run_id": 40909288192,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909288192",
+      "jobs": [
+        {
+          "id": 123572533954,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123572592259,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 920.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 923.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915020206,
+          "name": "retention-v4-deathstarbench-full-6-40909288192",
+          "digest": "sha256:4da119af06c4ad15dc7a78d94816cc408e2b5cc4cd01aa5b0503469a7d1fa21e",
+          "expired": false,
+          "size_in_bytes": 2957
+        },
+        {
+          "id": 12914535843,
+          "name": "v5-summary-obi-smoke-deathstarbench-full-6-40909288192",
+          "digest": "sha256:68118d4adc080078e66ce781572dcb8247d059e0be450d986c953208cc821e45",
+          "expired": false,
+          "size_in_bytes": 207109
+        },
+        {
+          "id": 12914341783,
+          "name": "campaign-v5-obi-smoke-deathstarbench-full-6-40909288192",
+          "digest": "sha256:680fd0f94b45690e7b16e191bbc45ce33509e83b628b0dd828fd12193d11cd0b",
+          "expired": false,
+          "size_in_bytes": 35927083
+        },
+        {
+          "id": 12913641797,
+          "name": "training-v4-deathstarbench-full-6-40909288192",
+          "digest": "sha256:24ae47bcf8591936ddf43cdab045ec9ddfa457851cb24be8e2304c3de70c5ff3",
+          "expired": false,
+          "size_in_bytes": 26229458
+        }
+      ],
+      "stored_artifact_bytes": 62366607
+    },
+    {
+      "run_id": 40909294990,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909294990",
+      "jobs": [
+        {
+          "id": 123572556734,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123572606867,
+          "name": "campaign (petclinic, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1115.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1118.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915185493,
+          "name": "campaign-v5-obi-smoke-petclinic-partial-6-40909294990",
+          "digest": "sha256:d8104ccee1a5920afc4219936cd1492bcb36e971988253075a3e043819fd77bd",
+          "expired": false,
+          "size_in_bytes": 38657174
+        },
+        {
+          "id": 12914631223,
+          "name": "v5-summary-obi-smoke-petclinic-partial-6-40909294990",
+          "digest": "sha256:c5c661d83fa29296ab0ad46a509644302ebb7517989ebc136cee3f6a20963460",
+          "expired": false,
+          "size_in_bytes": 255306
+        },
+        {
+          "id": 12912744289,
+          "name": "training-v4-petclinic-partial-6-40909294990",
+          "digest": "sha256:e1519652100718fc5356bd6991879c0fdc009322be9e01e4a5e5a8b59505f773",
+          "expired": false,
+          "size_in_bytes": 25876158
+        }
+      ],
+      "stored_artifact_bytes": 64788638
+    },
+    {
+      "run_id": 40909303154,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909303154",
+      "jobs": [
+        {
+          "id": 123572585499,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123572639451,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1258.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1261.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915031097,
+          "name": "v5-summary-obi-smoke-petclinic-full-6-40909303154",
+          "digest": "sha256:a7b3ec3beb9d9477a306b43383f5b594238b62e07dab9c0abd9429439d76ddbc",
+          "expired": false,
+          "size_in_bytes": 269058
+        },
+        {
+          "id": 12913644553,
+          "name": "campaign-v5-obi-smoke-petclinic-full-6-40909303154",
+          "digest": "sha256:79d8f85db0521c0889be36fca1ec2124a67d5e0b710cf6b2be3e13f64374fbe9",
+          "expired": false,
+          "size_in_bytes": 40246855
+        },
+        {
+          "id": 12912664548,
+          "name": "training-v4-petclinic-full-6-40909303154",
+          "digest": "sha256:8663991f663c1080c8931130d433a0b8e758a9afd20dd432a7cb5b781a659f07",
+          "expired": false,
+          "size_in_bytes": 26034694
+        }
+      ],
+      "stored_artifact_bytes": 66550607
+    },
+    {
+      "run_id": 40910013685,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685",
+      "jobs": [
+        {
+          "id": 123575126495,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 123575172279,
+          "name": "campaign (petclinic, absent, 8)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 6320.0
+        },
+        {
+          "id": 123575172315,
+          "name": "campaign (petclinic, absent, 7)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4582.0
+        },
+        {
+          "id": 123575172535,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4899.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 15803.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12921655146,
+          "name": "v5-summary-obi-main-petclinic-absent-8-40910013685",
+          "digest": "sha256:e4ce8d1a477a0f499bb8c67414d43bccc4ac634ce4735e7403b9a17577d2d7fe",
+          "expired": false,
+          "size_in_bytes": 37618213
+        },
+        {
+          "id": 12921031741,
+          "name": "campaign-v5-obi-main-petclinic-absent-8-40910013685",
+          "digest": "sha256:db777e637423fb224b5ea7581e9e90feed74b1dc0eff44ede41d5949a6166001",
+          "expired": false,
+          "size_in_bytes": 1422384165
+        },
+        {
+          "id": 12920055481,
+          "name": "v5-summary-obi-main-petclinic-absent-6-40910013685",
+          "digest": "sha256:be9e31621a3b26dcb33a48bcf87f112323cc864ccf983e99467bfd3fc886d59a",
+          "expired": false,
+          "size_in_bytes": 37354410
+        },
+        {
+          "id": 12919317201,
+          "name": "campaign-v5-obi-main-petclinic-absent-6-40910013685",
+          "digest": "sha256:8ee088e3e53e86e06c72bec7691636b56e2174388292b8ff99fbb10949a488d4",
+          "expired": false,
+          "size_in_bytes": 1412339936
+        },
+        {
+          "id": 12918282707,
+          "name": "campaign-v5-obi-main-petclinic-absent-7-40910013685",
+          "digest": "sha256:21becd9e616e533c94e54658e0cb533847d43d4de871d9855d53cb3a14157fd0",
+          "expired": false,
+          "size_in_bytes": 1407882354
+        },
+        {
+          "id": 12917639119,
+          "name": "v5-summary-obi-main-petclinic-absent-7-40910013685",
+          "digest": "sha256:affffd6ff25c322c2e882d216c94e63a4a616dda1d1080c382326cf1f66baeb2",
+          "expired": false,
+          "size_in_bytes": 37180891
+        },
+        {
+          "id": 12916082820,
+          "name": "training-v4-petclinic-absent-8-40910013685",
+          "digest": "sha256:d209a665503f960091f10dfef830bfd42d73d6a6cd754c498eb6285182c1ca5d",
+          "expired": false,
+          "size_in_bytes": 353643858
+        },
+        {
+          "id": 12915687154,
+          "name": "training-v4-petclinic-absent-6-40910013685",
+          "digest": "sha256:f4501310bc52665b2c55950491971c7717a28af2653eb242d39fb5db47681552",
+          "expired": false,
+          "size_in_bytes": 351793380
+        },
+        {
+          "id": 12915183292,
+          "name": "training-v4-petclinic-absent-7-40910013685",
+          "digest": "sha256:736fe7dc37562d38dccaeed5f3305c6a85dbb8eb9a89e7972ec52a7d2573c929",
+          "expired": false,
+          "size_in_bytes": 351615872
+        }
+      ],
+      "stored_artifact_bytes": 5411813079
+    },
+    {
+      "run_id": 40910021896,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896",
+      "jobs": [
+        {
+          "id": 123575154880,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123575210321,
+          "name": "campaign (deathstarbench, partial, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123575210440,
+          "name": "campaign (deathstarbench, partial, 7)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 6972.0
+        },
+        {
+          "id": 123575210516,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 7127.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 14102.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40910393953,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed live pilot after reviewed actual derived-handoff seam; failed software qualification is retained separately.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910393953",
+      "jobs": [
+        {
+          "id": 123576483454,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123576553435,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1060.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1064.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915510227,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40910393953",
+          "digest": "sha256:d9f63fd47a81e73d09153132f41002b764f189abc2c539dc334e31ea738e8746",
+          "expired": false,
+          "size_in_bytes": 280561
+        },
+        {
+          "id": 12915445515,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40910393953",
+          "digest": "sha256:988cb584fba3a29a1967a7fb18cf7ea57f55769eaec38e4aed636ead81dd676c",
+          "expired": false,
+          "size_in_bytes": 40795835
+        },
+        {
+          "id": 12913737480,
+          "name": "training-v4-petclinic-absent-6-40910393953",
+          "digest": "sha256:740b5340576bfa51c04206c647232295b01f166131409b99fee196b6f7260106",
+          "expired": false,
+          "size_in_bytes": 27161654
+        }
+      ],
+      "stored_artifact_bytes": 68238050
+    },
+    {
+      "run_id": 40913407822,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed three-seed main group admitted from actual full-mode smoke; exact source9ab77cb.",
+      "metadata_status": "retained",
+      "head_sha": "9ab77cb22fc84de73b790c853378d050d2e8c1f3",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822",
+      "jobs": [
+        {
+          "id": 123587138277,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123587179829,
+          "name": "campaign (deathstarbench, full, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123587179847,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 4336.0
+        },
+        {
+          "id": 123587179972,
+          "name": "campaign (deathstarbench, full, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 4339.0,
+      "jobs_with_unknown_elapsed": 2,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40914709370,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed three-seed main group admitted from actual partial-mode smoke; exact source5457d14.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370",
+      "jobs": [
+        {
+          "id": 123591742382,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123591790633,
+          "name": "campaign (petclinic, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 5014.0
+        },
+        {
+          "id": 123591790713,
+          "name": "campaign (petclinic, partial, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123591790794,
+          "name": "campaign (petclinic, partial, 7)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 5443.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 10460.0,
+      "jobs_with_unknown_elapsed": 1,
+      "artifacts": [
+        {
+          "id": 12921916343,
+          "name": "v5-summary-obi-main-petclinic-partial-7-40914709370",
+          "digest": "sha256:4363a9f4ae5e4eea9a469f98da740d9a56ef03fb0760693d4e7b702490f1c494",
+          "expired": false,
+          "size_in_bytes": 37009268
+        },
+        {
+          "id": 12921571169,
+          "name": "v5-summary-obi-main-petclinic-partial-6-40914709370",
+          "digest": "sha256:53b09b3e433809928a7ff378e154f74b8e1ca323954ade37d2431a5abfb46468",
+          "expired": false,
+          "size_in_bytes": 36992920
+        },
+        {
+          "id": 12921038049,
+          "name": "campaign-v5-obi-main-petclinic-partial-7-40914709370",
+          "digest": "sha256:53c019c8ba5a1a4f2d01e5b832b2cdff5c303761f8001cca7eeaa345b52db635",
+          "expired": false,
+          "size_in_bytes": 1737885988
+        },
+        {
+          "id": 12920992250,
+          "name": "campaign-v5-obi-main-petclinic-partial-6-40914709370",
+          "digest": "sha256:1e646840222979ebceea09e5a88ce0cc1493f79dde22a19e22d7970a8095ce6a",
+          "expired": false,
+          "size_in_bytes": 1740597910
+        },
+        {
+          "id": 12919405058,
+          "name": "training-v4-petclinic-partial-8-40914709370",
+          "digest": "sha256:3afa49222da92cbfc91834cffa583b3f9fca57c22eb9358e37d9f9fe4d1cd2b2",
+          "expired": false,
+          "size_in_bytes": 483918171
+        },
+        {
+          "id": 12918331828,
+          "name": "training-v4-petclinic-partial-7-40914709370",
+          "digest": "sha256:7349cee4dc6bb7cb1aa3ca81ff8b8b6a727636479e8f38b434870a4e24da26df",
+          "expired": false,
+          "size_in_bytes": 483024258
+        },
+        {
+          "id": 12916799000,
+          "name": "training-v4-petclinic-partial-6-40914709370",
+          "digest": "sha256:a27579e5086c10b3fa060cd322923b037f21b0463d220db5b89d30761f8c49d1",
+          "expired": false,
+          "size_in_bytes": 483365129
+        }
+      ],
+      "stored_artifact_bytes": 5002793644
+    },
+    {
+      "run_id": 40916651613,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Remaining fixed Coroot smokes admitted after exact scoped alias and capture review; scientific head5457d14.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40916651613",
+      "jobs": [
+        {
+          "id": 123598557302,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123598607263,
+          "name": "campaign (deathstarbench, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 743.0
+        },
+        {
+          "id": 123598607345,
+          "name": "campaign (deathstarbench, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 810.0
+        },
+        {
+          "id": 123598607439,
+          "name": "campaign (deathstarbench, full, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1010.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 2566.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12918375033,
+          "name": "retention-v4-deathstarbench-full-6-40916651613",
+          "digest": "sha256:03db6ae3591bbccaa26ac5fe6b8a8a079b4462be58bd06f4cf08416cef54ac3d",
+          "expired": false,
+          "size_in_bytes": 2947
+        },
+        {
+          "id": 12917472672,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-full-6-40916651613",
+          "digest": "sha256:7ae5939f65873e43cbbdde394379c08d1883072ee7a6db7286884915d9ed9fae",
+          "expired": false,
+          "size_in_bytes": 37522162
+        },
+        {
+          "id": 12917186844,
+          "name": "retention-v4-deathstarbench-partial-6-40916651613",
+          "digest": "sha256:c86c522efb762bc50651267a14ebe8d12820d675fca8c6916d339d164b5fcfc0",
+          "expired": false,
+          "size_in_bytes": 2947
+        },
+        {
+          "id": 12916983473,
+          "name": "v5-summary-coroot-smoke-deathstarbench-full-6-40916651613",
+          "digest": "sha256:874b748e98de4257fae3ae4174f7b3fd0f09c1af8d6c26475f85aa6f75462ee5",
+          "expired": false,
+          "size_in_bytes": 431652
+        },
+        {
+          "id": 12916642863,
+          "name": "v5-summary-coroot-smoke-deathstarbench-absent-6-40916651613",
+          "digest": "sha256:8c6688ef356f4c76e2630f2285551cd53ad629ed2696dde9db559d4816796223",
+          "expired": false,
+          "size_in_bytes": 368252
+        },
+        {
+          "id": 12916313359,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-partial-6-40916651613",
+          "digest": "sha256:e6f90ebf73db4603499bb018ac505b6e13c1d3bdbd83e544db32445ed3d9a290",
+          "expired": false,
+          "size_in_bytes": 35064320
+        },
+        {
+          "id": 12916173375,
+          "name": "retention-v4-deathstarbench-absent-6-40916651613",
+          "digest": "sha256:504e30aa20809b0625256a23ff830b7497ce7952571b5479f0bdf7567254fcbd",
+          "expired": false,
+          "size_in_bytes": 2959
+        },
+        {
+          "id": 12916113468,
+          "name": "training-v4-deathstarbench-partial-6-40916651613",
+          "digest": "sha256:b007a78ec5263dd9f09f120a676f371c059c0b1ad93cca2e6dd1cd02f505af87",
+          "expired": false,
+          "size_in_bytes": 25938607
+        },
+        {
+          "id": 12916023033,
+          "name": "training-v4-deathstarbench-absent-6-40916651613",
+          "digest": "sha256:c62f510c1412d2115f93b1cb3c29d9262d5ff8212904548355bd02a2dff2225c",
+          "expired": false,
+          "size_in_bytes": 25031257
+        },
+        {
+          "id": 12915784254,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-absent-6-40916651613",
+          "digest": "sha256:b2d197995b0e6addcc67207fa5a98df804d6a6d66bc7ac0b2e38eacd45969f66",
+          "expired": false,
+          "size_in_bytes": 30381830
+        },
+        {
+          "id": 12915733516,
+          "name": "training-v4-deathstarbench-full-6-40916651613",
+          "digest": "sha256:0384986037685286e63f6da83f463e06141c1ff85f33ca2d3143835d460caeeb",
+          "expired": false,
+          "size_in_bytes": 26180428
+        },
+        {
+          "id": 12915724898,
+          "name": "v5-summary-coroot-smoke-deathstarbench-partial-6-40916651613",
+          "digest": "sha256:93b82327b7b37e6ea74dccd1208838d7dba91ca51fec5165bf6822e5dda076b2",
+          "expired": false,
+          "size_in_bytes": 410926
+        }
+      ],
+      "stored_artifact_bytes": 181338287
+    },
+    {
+      "run_id": 40919005648,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648",
+      "jobs": [
+        {
+          "id": 123606849340,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123606897153,
+          "name": "campaign (deathstarbench, absent, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123606897296,
+          "name": "campaign (deathstarbench, absent, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123606897356,
+          "name": "campaign (deathstarbench, absent, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 3.0,
+      "jobs_with_unknown_elapsed": 3,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40920573691,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes.",
+      "metadata_status": "retained",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40920573691",
+      "jobs": [
+        {
+          "id": 123612367739,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 123612417198,
+          "name": "campaign (petclinic, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 946.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 948.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12919590912,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40920573691",
+          "digest": "sha256:b6646be1c74e76533a28631fe5c88a11f4942fa768e06becc8928752af77c9f9",
+          "expired": false,
+          "size_in_bytes": 44668161
+        },
+        {
+          "id": 12918985925,
+          "name": "training-v4-petclinic-absent-6-40920573691",
+          "digest": "sha256:25b2777955fb0692a7c518166286d5d6ad9c333dce98263b50c9b1d856c086fe",
+          "expired": false,
+          "size_in_bytes": 28053428
+        },
+        {
+          "id": 12918178508,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40920573691",
+          "digest": "sha256:e2a3c8daed6041095a042115d7d9ba1008d42ed5b2c48577a78dbaf77d2f313b",
+          "expired": false,
+          "size_in_bytes": 290456
+        }
+      ],
+      "stored_artifact_bytes": 73012045
+    },
+    {
+      "run_id": 40921056157,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes.",
+      "metadata_status": "retained",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40921056157",
+      "jobs": [
+        {
+          "id": 123614070873,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 2.0
+        },
+        {
+          "id": 123614121293,
+          "name": "campaign (petclinic, partial, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1115.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1117.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12920435257,
+          "name": "v5-summary-coroot-smoke-petclinic-partial-6-40921056157",
+          "digest": "sha256:6cae68b5ba03081bcec4d9b156a351c4f077621704116c1e6439deede72829b6",
+          "expired": false,
+          "size_in_bytes": 534031
+        },
+        {
+          "id": 12918928976,
+          "name": "campaign-v5-coroot-smoke-petclinic-partial-6-40921056157",
+          "digest": "sha256:0d5189b449d96d2d6f9a2274e08f8f8d82fab47138aa7e5d7342ac9bb4083cf7",
+          "expired": false,
+          "size_in_bytes": 34265188
+        },
+        {
+          "id": 12917999425,
+          "name": "training-v4-petclinic-partial-6-40921056157",
+          "digest": "sha256:5ad7d9c789d43f1aa543accb62ffe07bdcad1f94a080a9673ab33ced982b8516",
+          "expired": false,
+          "size_in_bytes": 25658804
+        }
+      ],
+      "stored_artifact_bytes": 60458023
+    },
+    {
+      "run_id": 40922905708,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Remaining fixed Coroot smoke; docs-only sourcefb33958, scientific codea26740c.",
+      "metadata_status": "retained",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40922905708",
+      "jobs": [
+        {
+          "id": 123620638597,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123620691943,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 369.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 373.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12920375252,
+          "name": "campaign-v5-coroot-smoke-petclinic-full-6-40922905708",
+          "digest": "sha256:ec8d53ea0075db77a3bc152261c08f2bef55eafb54233273516cf8494aa6eb56",
+          "expired": false,
+          "size_in_bytes": 24152584
+        },
+        {
+          "id": 12919252994,
+          "name": "v5-summary-coroot-smoke-petclinic-full-6-40922905708",
+          "digest": "sha256:5b293661d41afaeb80b3e57acf8260f14f8633a7ae92334a670777cf895bd4b8",
+          "expired": false,
+          "size_in_bytes": 90296
+        }
+      ],
+      "stored_artifact_bytes": 24242880
+    },
+    {
+      "run_id": 40923928201,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "Remaining fixed Coroot OTel absent smoke; stage by available hosted runner capacity.",
+      "metadata_status": "retained",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40923928201",
+      "jobs": [
+        {
+          "id": 123624273475,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123624318547,
+          "name": "campaign (otel_demo, absent, 6)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 1924.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 1927.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12922255527,
+          "name": "v5-summary-coroot-smoke-otel_demo-absent-6-40923928201",
+          "digest": "sha256:f92609a08f32deedad5503712689dc4253b359f4344fcf25001faa0bb1f9480c",
+          "expired": false,
+          "size_in_bytes": 654113
+        },
+        {
+          "id": 12920991900,
+          "name": "training-v4-otel_demo-absent-6-40923928201",
+          "digest": "sha256:b1b4bb91b9ec112a960170851f4e4fe85ced98fbb442e6cb76d0b1918820e678",
+          "expired": false,
+          "size_in_bytes": 25728798
+        },
+        {
+          "id": 12920908046,
+          "name": "campaign-v5-coroot-smoke-otel_demo-absent-6-40923928201",
+          "digest": "sha256:0d84ff3606631f016cf39c09a69355b2c8893d968bb888a1f2c27150b901d405",
+          "expired": false,
+          "size_in_bytes": 36882629
+        }
+      ],
+      "stored_artifact_bytes": 63265540
+    },
+    {
+      "run_id": 40924968145,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "series",
+      "note": "All three fixed seeds after independently reviewed full-mode smoke40909303154; sourcefb33958 docs-only equivalent.",
+      "metadata_status": "retained",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "status": "in_progress",
+      "conclusion": null,
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145",
+      "jobs": [
+        {
+          "id": 123627925518,
+          "name": "prepare",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 3.0
+        },
+        {
+          "id": 123627981286,
+          "name": "campaign (petclinic, full, 7)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123627981288,
+          "name": "campaign (petclinic, full, 6)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        },
+        {
+          "id": 123627981435,
+          "name": "campaign (petclinic, full, 8)",
+          "status": "in_progress",
+          "conclusion": null,
+          "elapsed_seconds": null
+        }
+      ],
+      "completed_job_elapsed_seconds": 3.0,
+      "jobs_with_unknown_elapsed": 3,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40900996676,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "3332c068b7a960e401932d78e7479ee25d874cbd",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40900996676",
+      "jobs": [
+        {
+          "id": 123542915526,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 39.0
+        },
+        {
+          "id": 123542916005,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 35.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 74.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40899833610,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40899833610",
+      "jobs": [
+        {
+          "id": 123538765475,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 76.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 76.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12909506003,
+          "name": "toolchain-v4-deathstarbench-partial-6-40899833610",
+          "digest": "sha256:fd69dbcd661acccd1e7920971896b2cdf2e3403785bd182f916ff43bc6ba0302",
+          "expired": false,
+          "size_in_bytes": 1531793
+        }
+      ],
+      "stored_artifact_bytes": 1531793
+    },
+    {
+      "run_id": 40898462595,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40898462595",
+      "jobs": [
+        {
+          "id": 123533933163,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 38.0
+        },
+        {
+          "id": 123533933778,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 57.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40895877074,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "8b725b8895f0704fdf84f6c1086937dd22dfe6f6",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895877074",
+      "jobs": [
+        {
+          "id": 123524700863,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 17.0
+        },
+        {
+          "id": 123524701341,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 37.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 54.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40895444290,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40895444290",
+      "jobs": [
+        {
+          "id": 123523158263,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 41.0
+        },
+        {
+          "id": 123523158968,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 63.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40894248440,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "9a0dc9402029299dbee0253529f3d128887ea09b",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40894248440",
+      "jobs": [
+        {
+          "id": 123518918701,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 45.0
+        },
+        {
+          "id": 123518919237,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 16.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 61.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40890810980,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "92e1ca3ec4a2e0c14f8498306432fa518bc94eeb",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40890810980",
+      "jobs": [
+        {
+          "id": 123506774788,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        },
+        {
+          "id": 123506775225,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 45.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 66.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40889975595,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40889975595",
+      "jobs": [
+        {
+          "id": 123503794910,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0
+        },
+        {
+          "id": 123503795442,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 47.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 65.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40885659304,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40885659304",
+      "jobs": [
+        {
+          "id": 123488542805,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 42.0
+        },
+        {
+          "id": 123488543376,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 62.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40883942639,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "b0c068aee35571565abfe6a8389599c71683d5df",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40883942639",
+      "jobs": [
+        {
+          "id": 123482513643,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0
+        },
+        {
+          "id": 123482513972,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 44.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 64.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40878924384,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40878924384",
+      "jobs": [
+        {
+          "id": 123464898796,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 53.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 53.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40879223434,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40879223434",
+      "jobs": [
+        {
+          "id": 123465947870,
+          "name": "release",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 468.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 468.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40877778287,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40877778287",
+      "jobs": [
+        {
+          "id": 123460959558,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 63.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 63.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40876595689,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "75fe863c014388d525e2912a76be156fb3e5f037",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40876595689",
+      "jobs": [
+        {
+          "id": 123456890583,
+          "name": "dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 395.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 395.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12898219212,
+          "name": "release-dry-run-dist",
+          "digest": "sha256:071ea75dffcb56e6d558964cd3b504bd2d7a3b54d82646bb0396d17e1ea61639",
+          "expired": false,
+          "size_in_bytes": 63523674
+        }
+      ],
+      "stored_artifact_bytes": 63523674
+    },
+    {
+      "run_id": 40876595701,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "75fe863c014388d525e2912a76be156fb3e5f037",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40876595701",
+      "jobs": [
+        {
+          "id": 123456891005,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 22.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40876595722,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "75fe863c014388d525e2912a76be156fb3e5f037",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40876595722",
+      "jobs": [
+        {
+          "id": 123456890416,
+          "name": "smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 55.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 55.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12897494810,
+          "name": "ebpf-obi-smoke-40876595722",
+          "digest": "sha256:ad6938146e4ca2a4ecde71956d40e62b8c27f35cd85bfdf689af40e74f88cfd6",
+          "expired": false,
+          "size_in_bytes": 21152663
+        }
+      ],
+      "stored_artifact_bytes": 21152663
+    },
+    {
+      "run_id": 40874629052,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "f3913da98cbabb9681895a9d4c9925f9a677742d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40874629052",
+      "jobs": [
+        {
+          "id": 123450160020,
+          "name": "smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 57.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 57.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12897293193,
+          "name": "ebpf-obi-smoke-40874629052",
+          "digest": "sha256:5e8e5c8c8e0b92726859ec0056609cafdba46d51b06f8ac86da82b38253457cc",
+          "expired": false,
+          "size_in_bytes": 21152269
+        }
+      ],
+      "stored_artifact_bytes": 21152269
+    },
+    {
+      "run_id": 40874629030,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "f3913da98cbabb9681895a9d4c9925f9a677742d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40874629030",
+      "jobs": [
+        {
+          "id": 123450160287,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 23.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 23.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40874629029,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "f3913da98cbabb9681895a9d4c9925f9a677742d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Bering/actions/runs/40874629029",
+      "jobs": [
+        {
+          "id": 123450160168,
+          "name": "dry-run",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 309.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 309.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12896749105,
+          "name": "release-dry-run-dist",
+          "digest": "sha256:2dd4928ba14e64d9c50367f34b133aac23504931bf24d530adf8b877400c1867",
+          "expired": false,
+          "size_in_bytes": 63517791
+        }
+      ],
+      "stored_artifact_bytes": 63517791
+    },
+    {
+      "run_id": 40876610601,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Procrustes/actions/runs/40876610601",
+      "jobs": [
+        {
+          "id": 123456938131,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 16.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12897694822,
+          "name": "procrustes-smoke-report",
+          "digest": "sha256:b51272269a89104e23b559ae32bb442ef0a02c685d8c66e345781bae7a440b24",
+          "expired": false,
+          "size_in_bytes": 3419
+        }
+      ],
+      "stored_artifact_bytes": 3419
+    },
+    {
+      "run_id": 40876461856,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "f8d322bbea376d55c22d4c4f2d9fed257cc09f9f",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Procrustes/actions/runs/40876461856",
+      "jobs": [
+        {
+          "id": 123456423792,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 17.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 17.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12897729514,
+          "name": "procrustes-smoke-report",
+          "digest": "sha256:084ab096f05224648bf3f212d3bd9b0a0a46e7aaa5f08a4a2dcbca65a8ffb58d",
+          "expired": false,
+          "size_in_bytes": 3422
+        }
+      ],
+      "stored_artifact_bytes": 3422
+    },
+    {
+      "run_id": 40874642494,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "6fe94072c841af0ce6e3e9117d4153095e910ed9",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Procrustes/actions/runs/40874642494",
+      "jobs": [
+        {
+          "id": 123450206067,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 19.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12897238215,
+          "name": "procrustes-smoke-report",
+          "digest": "sha256:adfc219c68f0dfea31ad56d8907433536830e1ac35f7a452db7bda230b51e0b9",
+          "expired": false,
+          "size_in_bytes": 3419
+        }
+      ],
+      "stored_artifact_bytes": 3419
+    },
+    {
+      "run_id": 40888915800,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "716a1569ba31983ff4b12ed429f77b336168d767",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40888915800",
+      "jobs": [
+        {
+          "id": 123500040811,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 143.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 143.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12904131658,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:81f6f7eece285d3dae79db119a620bab19b5fdd4211f7d353413adfb188b1852",
+          "expired": false,
+          "size_in_bytes": 94015
+        }
+      ],
+      "stored_artifact_bytes": 94015
+    },
+    {
+      "run_id": 40888384949,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "873b3a8f2c58b984931fdf1bd1175ba9e86fb20f",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40888384949",
+      "jobs": [
+        {
+          "id": 123498153197,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 135.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 135.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12904440492,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:f94e2d1d830fc94f773f621486875486c3b6a71042638e5a2612a96a2230901e",
+          "expired": false,
+          "size_in_bytes": 93996
+        }
+      ],
+      "stored_artifact_bytes": 93996
+    },
+    {
+      "run_id": 40886588360,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4ba1d790d66c47976dc6cc05dfeb6e812427eb58",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40886588360",
+      "jobs": [
+        {
+          "id": 123491831572,
+          "name": "release",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0
+        },
+        {
+          "id": 123492027379,
+          "name": "Download and run the published preflight without authentication",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 37.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40886462764,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4ba1d790d66c47976dc6cc05dfeb6e812427eb58",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40886462764",
+      "jobs": [
+        {
+          "id": 123491386951,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 133.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 133.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902607789,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:479eaaa4f38f299e22d07664294e971bd7b9c24050d710c8656a448bd45a2656",
+          "expired": false,
+          "size_in_bytes": 94035
+        }
+      ],
+      "stored_artifact_bytes": 94035
+    },
+    {
+      "run_id": 40885945200,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "84607558c4718804b72f012456573a4039fe526e",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40885945200",
+      "jobs": [
+        {
+          "id": 123489550982,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 139.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 139.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902766986,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:ca0c60655acd86d9d1edea0acfaed39354b2a286fe3fc08ee16adfda0ee57e64",
+          "expired": false,
+          "size_in_bytes": 94052
+        }
+      ],
+      "stored_artifact_bytes": 94052
+    },
+    {
+      "run_id": 40883389521,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "1d69e898be3ae40eeffd531ec294e864dd605a31",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40883389521",
+      "jobs": [
+        {
+          "id": 123480568136,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 141.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 141.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12901671820,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:3e88de68fe53f36976ccae93cebf1e5cbccd2af1ada0a56fd9b937f2f04152dd",
+          "expired": false,
+          "size_in_bytes": 94046
+        }
+      ],
+      "stored_artifact_bytes": 94046
+    },
+    {
+      "run_id": 40881171793,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "533e9a7afb548fd5a68b93828b6c8335159a808b",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/MB3R-Lab/mb3r-stack/actions/runs/40881171793",
+      "jobs": [
+        {
+          "id": 123472761595,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 46.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 46.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12899289990,
+          "name": "stack-runtime-handoff",
+          "digest": "sha256:71ed74cd0bb5a743726feaf608f57b84cf0c48fc9b790c40af4f538b5baa7cbd",
+          "expired": false,
+          "size_in_bytes": 94043
+        }
+      ],
+      "stored_artifact_bytes": 94043
+    },
+    {
+      "run_id": 40888154808,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40888154808",
+      "jobs": [
+        {
+          "id": 123497332698,
+          "name": "verify-schema-contract",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 29.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 29.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40888154744,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40888154744",
+      "jobs": [
+        {
+          "id": 123497332818,
+          "name": "verify-ci-template-smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 60.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 60.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40888155130,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "d59cfc63031095bf1f2346cf24849b060411d411",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40888155130",
+      "jobs": [
+        {
+          "id": 123497334477,
+          "name": "validate-release-surface",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 470.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 470.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12903323446,
+          "name": "sheaft-release-dry-run",
+          "digest": "sha256:f4215cdf41a7099aba82a8dea5310ff1bd85cefe371e338cb68b5530a11bfd51",
+          "expired": false,
+          "size_in_bytes": 45081959
+        }
+      ],
+      "stored_artifact_bytes": 45081959
+    },
+    {
+      "run_id": 40886639089,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "3139c1854320323f7f18232933d8f642dda5923d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40886639089",
+      "jobs": [
+        {
+          "id": 123492016277,
+          "name": "validate-release-surface",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 456.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 456.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12903616824,
+          "name": "sheaft-release-dry-run",
+          "digest": "sha256:4faafd2fe6e305cebe978af022d69720f4f00e99025082638a03fd1dfa2ffd39",
+          "expired": false,
+          "size_in_bytes": 45081652
+        }
+      ],
+      "stored_artifact_bytes": 45081652
+    },
+    {
+      "run_id": 40886639081,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "3139c1854320323f7f18232933d8f642dda5923d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40886639081",
+      "jobs": [
+        {
+          "id": 123492016371,
+          "name": "verify-schema-contract",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 33.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 33.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40886639078,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "3139c1854320323f7f18232933d8f642dda5923d",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/Sheaft/actions/runs/40886639078",
+      "jobs": [
+        {
+          "id": 123492016328,
+          "name": "verify-ci-template-smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 55.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 55.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40888435266,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "2c50aa53cb63875bf3c7e442bf914bb26dea82ae",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435266",
+      "jobs": [
+        {
+          "id": 123498331069,
+          "name": "fossa",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 5.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 5.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40888435331,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "2c50aa53cb63875bf3c7e442bf914bb26dea82ae",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435331",
+      "jobs": [
+        {
+          "id": 123498331039,
+          "name": "analysis",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 54.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 54.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902879249,
+          "name": "SARIF file",
+          "digest": "sha256:241e8cd1effbe83da3a3aaa85e647c1f1ae846ab4f8104bb640ab131ac22f380",
+          "expired": false,
+          "size_in_bytes": 27713
+        }
+      ],
+      "stored_artifact_bytes": 27713
+    },
+    {
+      "run_id": 40888435462,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "2c50aa53cb63875bf3c7e442bf914bb26dea82ae",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40888435462",
+      "jobs": [
+        {
+          "id": 123498334321,
+          "name": "checklicense",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 10.0
+        },
+        {
+          "id": 123498334608,
+          "name": "yamllint",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 7.0
+        },
+        {
+          "id": 123498334872,
+          "name": "misspell",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 14.0
+        },
+        {
+          "id": 123498335068,
+          "name": "linkspector",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 63.0
+        },
+        {
+          "id": 123498335221,
+          "name": "build_images / protobufcheck",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 220.0
+        },
+        {
+          "id": 123498335452,
+          "name": "Procrustes static preflight",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 27.0
+        },
+        {
+          "id": 123498335574,
+          "name": "markdownlint",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 30.0
+        },
+        {
+          "id": 123498335722,
+          "name": "sanity",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123500492474,
+          "name": "build_images / build_and_push_images (./src/email/Dockerfile, email, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500492480,
+          "name": "build_images / build_and_push_images (./src/accounting/Dockerfile, accounting, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 10.0
+        },
+        {
+          "id": 123500492568,
+          "name": "build_images / build_and_push_images (./src/ad/Dockerfile, ad, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500492631,
+          "name": "build_images / build_and_push_images (./src/frontend/Dockerfile, frontend, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500492633,
+          "name": "build_images / build_and_push_images (./src/flagd-ui/Dockerfile, flagd-ui, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500492688,
+          "name": "build_images / build_and_push_images (./src/frontend/Dockerfile.cypress, frontend-tests, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 8.0
+        },
+        {
+          "id": 123500492864,
+          "name": "build_images / build_and_push_images (./src/frontend-proxy/Dockerfile, frontend-proxy, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 9.0
+        },
+        {
+          "id": 123500492916,
+          "name": "build_images / build_and_push_images (./src/product-catalog/Dockerfile, product-catalog, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 7.0
+        },
+        {
+          "id": 123500492973,
+          "name": "build_images / build_and_push_images (./src/kafka/Dockerfile, kafka, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 10.0
+        },
+        {
+          "id": 123500492980,
+          "name": "build_images / build_and_push_images (./src/opensearch/Dockerfile, opensearch, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 12.0
+        },
+        {
+          "id": 123500493000,
+          "name": "build_images / build_and_push_images (./src/payment/Dockerfile, payment, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 9.0
+        },
+        {
+          "id": 123500493022,
+          "name": "build_images / build_and_push_images (./src/image-provider/Dockerfile, image-provider, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500493026,
+          "name": "build_images / build_and_push_images (./src/checkout/Dockerfile, checkout, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 9.0
+        },
+        {
+          "id": 123500493046,
+          "name": "build_images / build_and_push_images (./test/tracetesting/Dockerfile, traceBasedTests, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 13.0
+        },
+        {
+          "id": 123500493052,
+          "name": "build_images / build_and_push_images (./src/shipping/Dockerfile, shipping, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 8.0
+        },
+        {
+          "id": 123500493063,
+          "name": "build_images / build_and_push_images (./src/llm/Dockerfile, llm, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 9.0
+        },
+        {
+          "id": 123500493115,
+          "name": "build_images / build_and_push_images (./src/recommendation/Dockerfile, recommendation, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500493132,
+          "name": "build_images / build_and_push_images (./src/cart/src/Dockerfile, cart, ./, false)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 12.0
+        },
+        {
+          "id": 123500493200,
+          "name": "build_images / build_and_push_images (./src/load-generator/Dockerfile, load-generator, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 10.0
+        },
+        {
+          "id": 123500493219,
+          "name": "build_images / build_and_push_images (./src/currency/Dockerfile, currency, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 7.0
+        },
+        {
+          "id": 123500493223,
+          "name": "build_images / build_and_push_images (./src/fraud-detection/Dockerfile, fraud-detection, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 8.0
+        },
+        {
+          "id": 123500493517,
+          "name": "build_images / build_and_push_images (./src/product-reviews/Dockerfile, product-reviews, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 7.0
+        },
+        {
+          "id": 123500494780,
+          "name": "build_images / build_and_push_images (./src/quote/Dockerfile, quote, ./, true)",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123500740176,
+          "name": "build-test",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 3.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 603.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12904051424,
+          "name": "opentelemetry-demo-procrustes-preflight",
+          "digest": "sha256:43d1947f00de5b5acca68dd1fdbc1efde59fcb369e29ec652d51b87c0d99ea0f",
+          "expired": false,
+          "size_in_bytes": 3677
+        }
+      ],
+      "stored_artifact_bytes": 3677
+    },
+    {
+      "run_id": 40887193858,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7",
+      "status": "completed",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193858",
+      "jobs": [
+        {
+          "id": 123494074883,
+          "name": "assign-reviewers",
+          "status": "completed",
+          "conclusion": "skipped",
+          "elapsed_seconds": -9.0
+        }
+      ],
+      "completed_job_elapsed_seconds": -9.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40887193681,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7",
+      "status": "completed",
+      "conclusion": "skipped",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193681",
+      "jobs": [
+        {
+          "id": 123493991657,
+          "name": "dependabot-auto-update-protobuf-diff",
+          "status": "completed",
+          "conclusion": "skipped",
+          "elapsed_seconds": 0.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 0.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40887193928,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193928",
+      "jobs": [
+        {
+          "id": 123493988529,
+          "name": "label",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 5.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 5.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40887193770,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193770",
+      "jobs": [
+        {
+          "id": 123493986113,
+          "name": "checklicense",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0
+        },
+        {
+          "id": 123493986161,
+          "name": "sanity",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        },
+        {
+          "id": 123493986212,
+          "name": "linkspector",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 62.0
+        },
+        {
+          "id": 123493986291,
+          "name": "Procrustes static preflight",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        },
+        {
+          "id": 123493986319,
+          "name": "yamllint",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 7.0
+        },
+        {
+          "id": 123493986332,
+          "name": "markdownlint",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 24.0
+        },
+        {
+          "id": 123493986385,
+          "name": "misspell",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        },
+        {
+          "id": 123493986437,
+          "name": "build_images / protobufcheck",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 202.0
+        },
+        {
+          "id": 123495941882,
+          "name": "build_images / build_and_push_images (./src/recommendation/Dockerfile, recommendation, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        },
+        {
+          "id": 123495941898,
+          "name": "build_images / build_and_push_images (./src/flagd-ui/Dockerfile, flagd-ui, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        },
+        {
+          "id": 123495941908,
+          "name": "build_images / build_and_push_images (./src/opensearch/Dockerfile, opensearch, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 23.0
+        },
+        {
+          "id": 123495941925,
+          "name": "build_images / build_and_push_images (./src/payment/Dockerfile, payment, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        },
+        {
+          "id": 123495941927,
+          "name": "build_images / build_and_push_images (./src/frontend-proxy/Dockerfile, frontend-proxy, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 15.0
+        },
+        {
+          "id": 123495941931,
+          "name": "build_images / build_and_push_images (./src/email/Dockerfile, email, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 14.0
+        },
+        {
+          "id": 123495941982,
+          "name": "build_images / build_and_push_images (./src/accounting/Dockerfile, accounting, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 16.0
+        },
+        {
+          "id": 123495941997,
+          "name": "build_images / build_and_push_images (./src/frontend/Dockerfile, frontend, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0
+        },
+        {
+          "id": 123495942037,
+          "name": "build_images / build_and_push_images (./src/product-reviews/Dockerfile, product-reviews, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 13.0
+        },
+        {
+          "id": 123495942074,
+          "name": "build_images / build_and_push_images (./src/checkout/Dockerfile, checkout, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        },
+        {
+          "id": 123495942085,
+          "name": "build_images / build_and_push_images (./src/product-catalog/Dockerfile, product-catalog, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 15.0
+        },
+        {
+          "id": 123495942096,
+          "name": "build_images / build_and_push_images (./src/frontend/Dockerfile.cypress, frontend-tests, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 17.0
+        },
+        {
+          "id": 123495942100,
+          "name": "build_images / build_and_push_images (./src/ad/Dockerfile, ad, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 15.0
+        },
+        {
+          "id": 123495942125,
+          "name": "build_images / build_and_push_images (./src/load-generator/Dockerfile, load-generator, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        },
+        {
+          "id": 123495942140,
+          "name": "build_images / build_and_push_images (./src/fraud-detection/Dockerfile, fraud-detection, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 15.0
+        },
+        {
+          "id": 123495942173,
+          "name": "build_images / build_and_push_images (./src/llm/Dockerfile, llm, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        },
+        {
+          "id": 123495942213,
+          "name": "build_images / build_and_push_images (./src/shipping/Dockerfile, shipping, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0
+        },
+        {
+          "id": 123495942265,
+          "name": "build_images / build_and_push_images (./src/cart/src/Dockerfile, cart, ./, false)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 11.0
+        },
+        {
+          "id": 123495942345,
+          "name": "build_images / build_and_push_images (./src/image-provider/Dockerfile, image-provider, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 14.0
+        },
+        {
+          "id": 123495942370,
+          "name": "build_images / build_and_push_images (./src/kafka/Dockerfile, kafka, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0
+        },
+        {
+          "id": 123495942621,
+          "name": "build_images / build_and_push_images (./src/quote/Dockerfile, quote, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0
+        },
+        {
+          "id": 123495943003,
+          "name": "build_images / build_and_push_images (./src/currency/Dockerfile, currency, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 14.0
+        },
+        {
+          "id": 123495943225,
+          "name": "build_images / build_and_push_images (./test/tracetesting/Dockerfile, traceBasedTests, ./, true)",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 20.0
+        },
+        {
+          "id": 123496316671,
+          "name": "build-test",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 4.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 761.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902599195,
+          "name": "opentelemetry-demo-procrustes-preflight",
+          "digest": "sha256:e9c808e78d3506a8a0b5d57c7186be9153ea55b5254dbcf634e761ead27a82b0",
+          "expired": false,
+          "size_in_bytes": 3673
+        }
+      ],
+      "stored_artifact_bytes": 3673
+    },
+    {
+      "run_id": 40887193685,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "metadata_status": "retained",
+      "head_sha": "4d7d42b98c960e04ae4942b3f59a5c583ec910d7",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/MB3R-Lab/opentelemetry-demo-mb3r-stack/actions/runs/40887193685",
+      "jobs": [
+        {
+          "id": 123493986146,
+          "name": "MB3R / recommendations gate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 326.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 326.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12902764254,
+          "name": "mb3r-resilience-40887193685-1",
+          "digest": "sha256:84a77059ded0159b3906dcd303957bdb6e9aad915712811e8fa481f781c58a31",
+          "expired": false,
+          "size_in_bytes": 95375
+        }
+      ],
+      "stored_artifact_bytes": 95375
+    },
+    {
+      "run_id": 40902646348,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated source-schema repair and report implementation CI; not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "b9ae3065d56981e992e762b14b17453d86376570",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40902646348",
+      "jobs": [
+        {
+          "id": 123548819409,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 47.0
+        },
+        {
+          "id": 123548819649,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 24.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 71.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40902931486,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "Initial report stopped on compact journal omission; no source evaluation was changed.",
+      "metadata_status": "retained",
+      "head_sha": "b9ae3065d56981e992e762b14b17453d86376570",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40902931486",
+      "jobs": [
+        {
+          "id": 123549848327,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 80.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 80.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12909903553,
+          "name": "report-v5-40902931486",
+          "digest": "sha256:208a59cf3237db95ce025e31a0848e94813e97f25c15ef574f460561bf9d8618",
+          "expired": false,
+          "size_in_bytes": 919123
+        }
+      ],
+      "stored_artifact_bytes": 919123
+    },
+    {
+      "run_id": 40905568198,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated exact journal recovery and report CI; not a main measurement.",
+      "metadata_status": "retained",
+      "head_sha": "84dd7532acbad466343cf34976abc3bbfec40cfa",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40905568198",
+      "jobs": [
+        {
+          "id": 123559248398,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        },
+        {
+          "id": 123559248816,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 36.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 58.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40905967491,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "Reviewed saved-evidence snapshot; no main measurements.",
+      "metadata_status": "retained",
+      "head_sha": "84dd7532acbad466343cf34976abc3bbfec40cfa",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40905967491",
+      "jobs": [
+        {
+          "id": 123560684221,
+          "name": "report",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 146.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 146.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12912435473,
+          "name": "report-v5-40905967491",
+          "digest": "sha256:047fbeb2f1cad93fa97a44c40d3c502a3412dfd6e0adc3c17f149a9d01d4b5ac",
+          "expired": false,
+          "size_in_bytes": 402010349
+        }
+      ],
+      "stored_artifact_bytes": 402010349
+    },
+    {
+      "run_id": 40908572301,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated alias/derived-handoff Linux and Docker CI.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40908572301",
+      "jobs": [
+        {
+          "id": 123569971211,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 38.0
+        },
+        {
+          "id": 123569971729,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 59.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40909257494,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Synthetic DeepFlow actual-product handoff qualification; preserve terminal failure and actual ingestion evidence.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40909257494",
+      "jobs": [
+        {
+          "id": 123572426942,
+          "name": "qualify",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 49.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 49.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12912782868,
+          "name": "deepflow-derived-handoff-v5-40909257494",
+          "digest": "sha256:505631b53a8411640145571731f13ede17fd3e52370f5b59391779d8ee69d674",
+          "expired": false,
+          "size_in_bytes": 21002
+        }
+      ],
+      "stored_artifact_bytes": 21002
+    },
+    {
+      "run_id": 40910461222,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Documentation/snapshot publication Linux and Docker CI.",
+      "metadata_status": "retained",
+      "head_sha": "6611fc6c21cc0a3bc6d3160e9291e05461ecc247",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910461222",
+      "jobs": [
+        {
+          "id": 123576718086,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 33.0
+        },
+        {
+          "id": 123576719073,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 25.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 58.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40910330302,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910330302",
+      "jobs": [
+        {
+          "id": 123576255676,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 30.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 30.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12912599590,
+          "name": "toolchain-v4-deathstarbench-absent-6-40910330302",
+          "digest": "sha256:b4a169da7146e8b4428e453b1f43458c951b75cccad35504154b55f12ce7c366",
+          "expired": false,
+          "size_in_bytes": 617324
+        }
+      ],
+      "stored_artifact_bytes": 617324
+    },
+    {
+      "run_id": 40910404800,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap.",
+      "metadata_status": "retained",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910404800",
+      "jobs": [
+        {
+          "id": 123576521322,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 209.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 209.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12912739646,
+          "name": "toolchain-v4-deathstarbench-full-6-40910404800",
+          "digest": "sha256:a53c15018fac1e5283a16b2b8ff0e8839176cb175d51a6bdf1deac47b1190b1b",
+          "expired": false,
+          "size_in_bytes": 2534245
+        }
+      ],
+      "stored_artifact_bytes": 2534245
+    },
+    {
+      "run_id": 40911232159,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "metadata_status": "retained",
+      "head_sha": "6611fc6c21cc0a3bc6d3160e9291e05461ecc247",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40911232159",
+      "jobs": [
+        {
+          "id": 123579444498,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 33.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 33.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12913563051,
+          "name": "toolchain-v4-otel_demo-partial-6-40911232159",
+          "digest": "sha256:632adfe86866d3508caa4edd2b2b9ddb576ad55397a07d21d1069a15692d4b3e",
+          "expired": false,
+          "size_in_bytes": 4451849
+        }
+      ],
+      "stored_artifact_bytes": 4451849
+    },
+    {
+      "run_id": 40911388849,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "metadata_status": "retained",
+      "head_sha": "6611fc6c21cc0a3bc6d3160e9291e05461ecc247",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40911388849",
+      "jobs": [
+        {
+          "id": 123579984050,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 358.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 358.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12914875948,
+          "name": "toolchain-v4-otel_demo-full-6-40911388849",
+          "digest": "sha256:aa0f7466a2613d3307fd97756f113f2fa3d2700bfb688e303a3dcf94c282acdd",
+          "expired": false,
+          "size_in_bytes": 9291585
+        }
+      ],
+      "stored_artifact_bytes": 9291585
+    },
+    {
+      "run_id": 40913108121,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "metadata_status": "retained",
+      "head_sha": "9ab77cb22fc84de73b790c853378d050d2e8c1f3",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913108121",
+      "jobs": [
+        {
+          "id": 123586074073,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 551.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 551.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12915895646,
+          "name": "toolchain-v4-otel_demo-absent-6-40913108121",
+          "digest": "sha256:ea7710d511ff664d1e849100c7de0d0d9362aea065c5adc98acddef53faa254e",
+          "expired": false,
+          "size_in_bytes": 13006801
+        }
+      ],
+      "stored_artifact_bytes": 13006801
+    },
+    {
+      "run_id": 40912701537,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "metadata_status": "retained",
+      "head_sha": "9ab77cb22fc84de73b790c853378d050d2e8c1f3",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40912701537",
+      "jobs": [
+        {
+          "id": 123584627460,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 21.0
+        },
+        {
+          "id": 123584627992,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 45.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 66.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40913421361,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "metadata_status": "retained",
+      "head_sha": "225ed43d0fde39695b3667a737f9a57e6193184f",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913421361",
+      "jobs": [
+        {
+          "id": 123587180237,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 23.0
+        },
+        {
+          "id": 123587180847,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 45.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 68.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40913965976,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Immutable DSB audit adjudication stopped before data checking due missing script import path; retain failure.",
+      "metadata_status": "retained",
+      "head_sha": "225ed43d0fde39695b3667a737f9a57e6193184f",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913965976",
+      "jobs": [
+        {
+          "id": 123589127982,
+          "name": "adjudicate",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 20.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 20.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12913714297,
+          "name": "dsb-native-adjudication-v5-40913965976",
+          "digest": "sha256:25ce9d56d37397fc6ba8d67c6bc320ac67531a06236042565b867de8ffc65429",
+          "expired": false,
+          "size_in_bytes": 181
+        }
+      ],
+      "stored_artifact_bytes": 181
+    },
+    {
+      "run_id": 40914666129,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Corrected immutable DSB acquisition-only adjudication, no forecasts or outcome metrics recomputed.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914666129",
+      "jobs": [
+        {
+          "id": 123591591098,
+          "name": "adjudicate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 25.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 25.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12913714910,
+          "name": "dsb-native-adjudication-v5-40914666129",
+          "digest": "sha256:bb944456c8cc67e0bfb8deb9798a57f15a85c64c942c8a9426ddf2306d7a1738",
+          "expired": false,
+          "size_in_bytes": 808823
+        }
+      ],
+      "stored_artifact_bytes": 808823
+    },
+    {
+      "run_id": 40914286531,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Adjudication CLI environment repair CI; no measurement.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914286531",
+      "jobs": [
+        {
+          "id": 123590257487,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 47.0
+        },
+        {
+          "id": 123590258154,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 69.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40917708803,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40917708803",
+      "jobs": [
+        {
+          "id": 123602270364,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 316.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 316.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12916303257,
+          "name": "toolchain-v4-deathstarbench-full-6-40917708803",
+          "digest": "sha256:7a364f5b3e6fe672b5e743d0e5f768a353489051ba4e5b6235bb8dde10d12ab7",
+          "expired": false,
+          "size_in_bytes": 4189640
+        }
+      ],
+      "stored_artifact_bytes": 4189640
+    },
+    {
+      "run_id": 40917723956,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40917723956",
+      "jobs": [
+        {
+          "id": 123602321327,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 31.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 31.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12916757330,
+          "name": "toolchain-v4-deathstarbench-absent-6-40917723956",
+          "digest": "sha256:9bcd2b75950068f285b424f8bd00abc3652a10fd5883a5da12862d74f8891e68",
+          "expired": false,
+          "size_in_bytes": 1089975
+        }
+      ],
+      "stored_artifact_bytes": 1089975
+    },
+    {
+      "run_id": 40917740919,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "metadata_status": "retained",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40917740919",
+      "jobs": [
+        {
+          "id": 123602381703,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 94.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 94.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12916368572,
+          "name": "toolchain-v4-deathstarbench-partial-6-40917740919",
+          "digest": "sha256:4b254c8e8ae64135b13c52820ac03dfc2adf7353fef2d37f3d71545c609a4503",
+          "expired": false,
+          "size_in_bytes": 2447639
+        }
+      ],
+      "stored_artifact_bytes": 2447639
+    },
+    {
+      "run_id": 40919785943,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "metadata_status": "retained",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919785943",
+      "jobs": [
+        {
+          "id": 123609568351,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 48.0
+        },
+        {
+          "id": 123609568972,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 67.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40920240694,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "metadata_status": "retained",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40920240694",
+      "jobs": [
+        {
+          "id": 123611189759,
+          "name": "adjudicate",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 23.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 23.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12918126146,
+          "name": "deepflow-clock-adjudication-v5-40920240694",
+          "digest": "sha256:35b982f02b29f94992ff0fc79dda67491c552738a1825679fe7f71554ccb8a29",
+          "expired": false,
+          "size_in_bytes": 204320
+        }
+      ],
+      "stored_artifact_bytes": 204320
+    },
+    {
+      "run_id": 40922561004,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed status publication CI; no method change.",
+      "metadata_status": "retained",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40922561004",
+      "jobs": [
+        {
+          "id": 123619419595,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 27.0
+        },
+        {
+          "id": 123619420056,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 36.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 63.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40927651775,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Pinned independent toolchain worker for current fixed Coroot OTel absent smoke; retained cost.",
+      "metadata_status": "retained",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40927651775",
+      "jobs": [
+        {
+          "id": 123637344754,
+          "name": "toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 29.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 29.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12919874165,
+          "name": "toolchain-v4-otel_demo-absent-6-40927651775",
+          "digest": "sha256:4d27cc781a872d4508c1ee0111f4069d6efee6c0f5eb8975fcac6aafe0a87f56",
+          "expired": false,
+          "size_in_bytes": 2583021
+        }
+      ],
+      "stored_artifact_bytes": 2583021
+    },
+    {
+      "run_id": 40928823255,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed source-faithful HTTP normalization and memory-only preprocessing CI; passed Linux/Docker.",
+      "metadata_status": "retained",
+      "head_sha": "3de01f8ddcbfc1668b5dd723099f34cd17e649ff",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40928823255",
+      "jobs": [
+        {
+          "id": 123641490677,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 18.0
+        },
+        {
+          "id": 123641491044,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 47.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 65.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40929241254,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Single saved immutable old/new preprocessing equivalence check; no graph/forecast/outcome refit.",
+      "metadata_status": "retained",
+      "head_sha": "0964eae6421f4fc36e5160919ac7666541ed7fb1",
+      "status": "completed",
+      "conclusion": "failure",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40929241254",
+      "jobs": [
+        {
+          "id": 123642943912,
+          "name": "validate",
+          "status": "completed",
+          "conclusion": "failure",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 19.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [
+        {
+          "id": 12922685243,
+          "name": "memory-streaming-validation-v5-40929241254",
+          "digest": "sha256:0972cde8a9aceecdb92416b1d923f614729a8167c3dc36e9544c716caeedab58",
+          "expired": false,
+          "size_in_bytes": 4752
+        }
+      ],
+      "stored_artifact_bytes": 4752
+    },
+    {
+      "run_id": 40929189766,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Validation harness integration CI; passed.",
+      "metadata_status": "retained",
+      "head_sha": "0964eae6421f4fc36e5160919ac7666541ed7fb1",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40929189766",
+      "jobs": [
+        {
+          "id": 123642757152,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 45.0
+        },
+        {
+          "id": 123642757745,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 19.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 64.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40929628640,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated persistent-control actual Docker and full Linux checks; passed.",
+      "metadata_status": "retained",
+      "head_sha": "0c40b5e12de711af477931d3512e63cceac6ec57",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40929628640",
+      "jobs": [
+        {
+          "id": 123644299053,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 38.0
+        },
+        {
+          "id": 123644299508,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 27.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 65.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    },
+    {
+      "run_id": 40930045089,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Exact native-provenance validation harness repair CI.",
+      "metadata_status": "retained",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "status": "completed",
+      "conclusion": "success",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930045089",
+      "jobs": [
+        {
+          "id": 123645747590,
+          "name": "checks",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 46.0
+        },
+        {
+          "id": 123645748133,
+          "name": "control-fixture-v5",
+          "status": "completed",
+          "conclusion": "success",
+          "elapsed_seconds": 22.0
+        }
+      ],
+      "completed_job_elapsed_seconds": 68.0,
+      "jobs_with_unknown_elapsed": 0,
+      "artifacts": [],
+      "stored_artifact_bytes": 0
+    }
+  ],
+  "known_completed_job_elapsed_seconds": 80264.0,
+  "runs_with_unknown_job_elapsed": 0,
+  "known_stored_artifact_bytes": 12748617272,
+  "runs_with_unknown_artifact_bytes": 0,
+  "human_agent_seconds": null,
+  "current_report_job_tail_seconds": null,
+  "scope": "only explicitly declared repositories/runs; omitted or inaccessible product work remains unknown",
+  "overlap_rule": "job seconds are compute use; overlapping jobs and parent waits are not campaign wall time",
+  "report_artifact_transfer": {
+    "compact_zip_downloads": 39,
+    "compact_zip_received_bytes": 192384306,
+    "full_zip_recovery_downloads": 15,
+    "full_zip_recovery_received_bytes": 402194831,
+    "total_received_bytes": 594579137,
+    "scope": "actual retained HTTP response bytes in this report job, including failed or rejected downloads; unavailable response bytes remain unknown"
+  }
+}

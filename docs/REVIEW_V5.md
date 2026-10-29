@@ -474,3 +474,34 @@ join or graph edge is inferred. A corrected fixed pilot still precedes main
 admission; absent genuine ancestry or named peer evidence can remain unknown.
 All sources and the direct baseline retain the same supplied semantic knowledge
 and complete preparation costs. This repair establishes no utility advantage.
+
+## First independently reviewed main cells
+
+Actual evidence review admitted OBI Petclinic/absent seeds 6/7/8 from run
+`40910013685` and Petclinic/partial seeds 6/7 from run `40914709370`. Each packet
+retains 34,800 primary attempts, 9,600 target outcomes, actual Bering and Sheaft
+execution, raw collector controls, tracing-mode verification, receiver closure
+and unchanged pre-target forecast hashes. Compact ZIP hashes were verified;
+selected full-artifact members were verified without claiming a local hash of
+each complete large ZIP.
+
+The owner-details result in partial seed 7 is `2099/2400`, against prediction
+`0.875`. This mismatch is retained, without exclusion or rerun based on outcome.
+The equally informed direct baseline predicts the same value. These five
+admissions establish usable packets for comparison, not superiority or a
+complete-cost advantage. Unknown human effort and unfinished execution remain
+explicit. The [intermediate snapshot](../results/iteration-5/snapshot-40930225342/SOURCE.md)
+copies the saved evaluations without recalculation; its transport eligibility
+flags remain distinct from this independent actual review.
+
+Coroot Petclinic/partial and OTel/absent also passed actual smoke review, bringing
+matching Coroot main-setting admission to six of nine. Their unavailable eBPF
+forecasts remain valid negative/unknown evidence, without an availability gate.
+
+The memory-only implementation at `f5ac530` passed actual saved-input validation
+`40930267298` after its Linux/Docker CI. Old and new projection JSONL, admission
+bytes and full-column database proofs matched exactly, while the source artifact
+remained unchanged. This is preprocessing equivalence on retained final-packet
+inputs, not a reproduction of the original training result. Both variants used
+the same measured peak RSS on that small packet; no full-scale memory bound or
+research advantage follows. Failed validation `40929241254` remains retained.

@@ -1,0 +1,10 @@
+{
+  "full_zip_hash_verified": false,
+  "source_zip_bytes": 638543351,
+  "members": {
+    "provenance/declarations.json": {
+      "bytes": 39727,
+      "sha256": "36abb375afefe2b6555260940170c4d7c9d1bf749d923569e43ba6a8a610ee18"
+    }
+  }
+}

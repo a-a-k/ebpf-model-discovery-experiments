@@ -3,15 +3,22 @@
 **Current work: iteration 5, matched main series and remaining collector qualification.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine OBI
-system/mode settings and four Coroot settings have passed actual smoke review;
-main groups are being staged. DeepFlow's clock adapter correction is under fresh
-qualification. No iteration-5 main result or contribution is claimed yet;
-New Relic access and license conditions remain unresolved.
+system/mode settings and six Coroot settings have passed actual smoke review;
+main groups are being staged. Five OBI Petclinic main cells have passed actual
+evidence review. DeepFlow's clock and HTTP-address corrections are under fresh
+qualification; its completed pilot is awaiting actual packet review.
+The 27 New Relic main cells remain access-blocked. No utility or complete-cost
+advantage is claimed.
 The [review boundary](docs/REVIEW_V5.md) and [qualification history](docs/ITERATION5_PROGRESS.md)
 distinguish product publication, technical smokes and empirical results.
-The [reviewed progress snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
-retains the first 13 smoke runs and their preparation history; it contains no
-main-series measurements (0/108 cells).
+The [current intermediate snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
+contains five main cells: three absent-tracing repeats and two partial-tracing
+repeats in Petclinic. These use actual eBPF graphs and Sheaft forecasts checked
+against external outcomes. One partial-tracing repeat retains an additional
+owner-details failure (`2099/2400` observed versus forecast `0.875`); the equally
+informed direct baseline gives the same forecast. The
+[earlier snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md) preserves
+the initial 13 smoke runs and zero-main status unchanged.
 The results below belong to completed iteration 4.
 
 **Completed experimental series (iteration 4).** All 27 planned campaigns completed
