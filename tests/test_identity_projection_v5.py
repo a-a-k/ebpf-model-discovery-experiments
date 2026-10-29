@@ -239,7 +239,7 @@ def _append_receiver_span(observations, *, request_id, trace, span, capture, nod
         stream.write(json.dumps(wrapper, separators=(",", ":")) + "\n")
 
 
-def test_parent_training_freezes_alias_and_final_append_uses_same_effective_rows(tmp_path):
+def test_parent_training_freezes_alias_and_final_append_uses_same_effective_rows(tmp_path, monkeypatch):
     root = tmp_path / "campaign"; observations = root / "observations"
     observations.mkdir(parents=True); (root / "native").mkdir()
     (observations / "b.jsonl").write_text("")
@@ -251,7 +251,13 @@ def test_parent_training_freezes_alias_and_final_append_uses_same_effective_rows
     journal = Journal(root / "attempt-journal.sqlite")
     campaign = SimpleNamespace(ctx=SimpleNamespace(out=root, journal=journal), store=store,
                                collector="coroot", plans=[])
-    training = refresh(campaign, "training")
+    # No synchronous nonce candidate exists here: response bodies need not be read.
+    def unexpected_journal_read(_journal):
+        raise AssertionError("journal read without an enclosure candidate")
+    with monkeypatch.context() as guard:
+        guard.setattr("ebpf_discovery.identity_projection_v5._journal_transports",
+                      unexpected_journal_read)
+        training = refresh(campaign, "training")
     assert training["supplied_logical_alias_admission"][
         "effective_store_projection"]["rows"] == 1
     assert store.candidates_v5("ebpf", "training-request")[0]["service"] == "frontend"

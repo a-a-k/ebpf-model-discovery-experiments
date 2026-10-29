@@ -165,36 +165,58 @@ def _verified_clock_relations(root: Path) -> list[dict]:
 
 
 def _journal_transports(journal) -> dict[str, dict]:
-    with journal.lock:
-        rows = list(journal.db.execute(
-            "SELECT seq,kind,wall_ns,monotonic_ns,data FROM events "
-            "WHERE kind IN ('step_started','step_finished','step_transport_unknown') ORDER BY seq"))
+    """Index a fixed journal prefix without retaining response bodies in memory."""
     by_transport = {}
-    for seq, kind, wall_ns, monotonic_ns, encoded in rows:
-        data = json.loads(encoded)
-        identity = data.get("transport_id")
-        if not identity:
-            continue
-        row = by_transport.setdefault(identity, {"started": [], "terminal": []})
-        target = "started" if kind == "step_started" else "terminal"
-        row[target].append({
-            "seq": seq, "kind": kind, "wall_ns": wall_ns,
-            "monotonic_ns": monotonic_ns, "data": data, "data_json": encoded,
-            "event_row_sha256": journal_event_sha256(
-                seq, kind, wall_ns, monotonic_ns, encoded),
-        })
+    with journal.lock:
+        maximum = journal.db.execute("SELECT COALESCE(MAX(seq),0) FROM events").fetchone()[0]
+        rows = journal.db.execute(
+            "SELECT seq,kind,wall_ns,monotonic_ns,data FROM events "
+            "WHERE seq <= ? AND kind IN "
+            "('step_started','step_finished','step_transport_unknown') ORDER BY seq", (maximum,))
+        for seq, kind, wall_ns, monotonic_ns, encoded in rows:
+            data = json.loads(encoded)
+            identity = data.get("transport_id")
+            if not identity:
+                continue
+            row = by_transport.setdefault(identity, {"started": [], "terminal": []})
+            target = "started" if kind == "step_started" else "terminal"
+            row[target].append({
+                "seq": seq, "kind": kind, "wall_ns": wall_ns,
+                "monotonic_ns": monotonic_ns, "request_id": data.get("request_id"),
+                "event_row_sha256": journal_event_sha256(
+                    seq, kind, wall_ns, monotonic_ns, encoded),
+            })
     result = {}
     for identity, row in by_transport.items():
         if len(row["started"]) != 1 or len(row["terminal"]) != 1:
             continue
         start, terminal = row["started"][0], row["terminal"][0]
-        request_id = start["data"].get("request_id")
-        if (terminal["kind"] != "step_finished" or terminal["data"].get("request_id") != request_id):
+        request_id = start["request_id"]
+        if (terminal["kind"] != "step_finished" or terminal["request_id"] != request_id):
             continue
         if request_id in result:
             result[request_id] = None
         else:
-            result[request_id] = {"transport_id": identity, "started": start, "terminal": terminal}
+            result[request_id] = {"transport_id": identity, "started": start, "terminal": terminal,
+                                  "snapshot_max_seq": maximum}
+    return result
+
+
+def _load_transport(journal, reference: dict) -> dict:
+    """Restore exact original evidence rows, rejecting changes since indexing."""
+    result = {"transport_id": reference["transport_id"]}
+    with journal.lock:
+        for role in ("started", "terminal"):
+            expected = reference[role]
+            row = journal.db.execute(
+                "SELECT seq,kind,wall_ns,monotonic_ns,data FROM events WHERE seq=? AND seq<=?",
+                (expected["seq"], reference["snapshot_max_seq"])).fetchone()
+            if row is None or journal_event_sha256(*row) != expected["event_row_sha256"]:
+                raise ValueError("runtime identity journal event changed after indexing")
+            seq, kind, wall_ns, monotonic_ns, encoded = row
+            result[role] = {"seq": seq, "kind": kind, "wall_ns": wall_ns,
+                            "monotonic_ns": monotonic_ns, "data": json.loads(encoded),
+                            "data_json": encoded, "event_row_sha256": expected["event_row_sha256"]}
     return result
 
 
@@ -208,7 +230,7 @@ def refresh(campaign, stage: str) -> dict:
             plan_by_request[step.get("request_id")] = {
                 "block_id": plan.get("block_id"), "method": str(step.get("method") or "").upper(),
                 "route": urlsplit(step.get("path") or "").path}
-    transports = _journal_transports(campaign.ctx.journal)
+    transports = None
     enclosure_rows, evidence_files = [], []
     for digest, encoded in campaign.store.db.execute("SELECT digest,data FROM spans ORDER BY digest"):
         row = json.loads(encoded)
@@ -216,11 +238,16 @@ def refresh(campaign, stage: str) -> dict:
         if not runtime or runtime.get("event_role") != "synchronous_server_entry":
             continue
         request_id = runtime.get("request_nonce")
-        plan, transport = plan_by_request.get(request_id), transports.get(request_id)
-        if not plan or not transport or not plan.get("block_id"):
+        plan = plan_by_request.get(request_id)
+        if not plan or not plan.get("block_id"):
             continue
         if (str(runtime.get("method") or "").upper() != plan["method"]
                 or urlsplit(runtime.get("route") or "").path != plan["route"]):
+            continue
+        if transports is None:
+            transports = _journal_transports(campaign.ctx.journal)
+        transport = transports.get(request_id)
+        if not transport:
             continue
         before_stage, after_stage = "before-" + plan["block_id"], "after-" + plan["block_id"]
         for sample_stage in (before_stage, after_stage):
@@ -240,7 +267,8 @@ def refresh(campaign, stage: str) -> dict:
         evidence = {
             "schema": "runtime-identity-enclosure-evidence-v5", "observation_digest": digest,
             "request_nonce": request_id, "method": plan["method"], "route": plan["route"],
-            "transport": transport, "runner_monotonic_sequence": sequence,
+            "transport": _load_transport(campaign.ctx.journal, transport),
+            "runner_monotonic_sequence": sequence,
             "before_capture": before_proof, "after_capture": after_proof,
             "raw_locator": raw_proof, "source_event_role": runtime["event_role"],
         }
