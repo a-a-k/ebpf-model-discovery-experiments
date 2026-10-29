@@ -354,24 +354,33 @@ class CollectorsV5:
                 server = entry["server_container"]
                 client = entry["client_container"]
                 probe = entry["probe_container"]
-                pull = self.ctx.node_exec(
-                    node, f"docker pull {shlex.quote(CONTROL_IMAGE)}", timeout=300
+                pull = _safe_node_exec(
+                    self.ctx, node, f"docker pull {shlex.quote(CONTROL_IMAGE)}",
+                    timeout=300, check=False
                 )
+                entry["image_pull"] = _result_evidence(pull)
                 (self.root / f"control-pull-{node}.log").write_text(
                     _stdout(pull) + _stderr(pull), encoding="utf-8"
                 )
-                image_inspect = self.ctx.node_exec(
-                    node, f"docker image inspect {shlex.quote(CONTROL_IMAGE)}", timeout=60
+                if _returncode(pull):
+                    raise RuntimeError(f"technical control image pull failed on {node}")
+                image_inspect = _safe_node_exec(
+                    self.ctx, node, f"docker image inspect {shlex.quote(CONTROL_IMAGE)}",
+                    timeout=60, check=False
                 )
+                entry["image_inspect"] = _result_evidence(image_inspect)
                 (self.root / f"control-image-{node}.json").write_text(
                     _stdout(image_inspect), encoding="utf-8"
                 )
-                self.ctx.node_exec(
-                    node, f"docker rm -f {probe} {client} {server} >/dev/null 2>&1 || true",
+                if _returncode(image_inspect):
+                    raise RuntimeError(f"technical control image inspect failed on {node}")
+                _safe_node_exec(
+                    self.ctx, node,
+                    f"docker rm -f {probe} {client} {server} >/dev/null 2>&1 || true",
                     timeout=30, check=False,
                 )
-                server_start = self.ctx.node_exec(
-                    node,
+                server_start = _safe_node_exec(
+                    self.ctx, node,
                     f"docker run -d --name {server} --network host --entrypoint /bin/sh "
                     f"{shlex.quote(CONTROL_IMAGE)} -ec "
                     + shlex.quote(_control_server_script(port)),
@@ -384,8 +393,9 @@ class CollectorsV5:
 
                 ready_deadline = time.monotonic() + CONTROL_READY_TIMEOUT_SECONDS
                 while time.monotonic() < ready_deadline:
-                    inspect = self.ctx.node_exec(
-                        node, f"docker inspect {server}", timeout=30, check=False
+                    inspect = _safe_node_exec(
+                        self.ctx, node, f"docker inspect {server}",
+                        timeout=30, check=False
                     )
                     attempt: dict[str, Any] = {
                         "attempt": len(entry["request_attempts"]) + 1,
@@ -394,15 +404,15 @@ class CollectorsV5:
                         "server_inspect_returncode": _returncode(inspect),
                     }
                     if attempt["server_running"]:
-                        config_check = self.ctx.node_exec(
-                            node,
+                        config_check = _safe_node_exec(
+                            self.ctx, node,
                             f"docker exec {server} haproxy -c -f /tmp/control-haproxy.cfg",
                             timeout=30, check=False,
                         )
                         attempt["config_check"] = _result_evidence(config_check)
                         if _returncode(config_check) == 0:
-                            request = self.ctx.node_exec(
-                                node,
+                            request = _safe_node_exec(
+                                self.ctx, node,
                                 f"docker run --rm --name {probe} --network host "
                                 f"--entrypoint /bin/sh {shlex.quote(CONTROL_IMAGE)} -ec "
                                 + shlex.quote(_control_request_script(port, marker, persistent=False)),
@@ -421,8 +431,8 @@ class CollectorsV5:
                 if not entry.get("server_ready"):
                     raise RuntimeError(f"technical control HTTP readiness failed on {node}")
 
-                client_start = self.ctx.node_exec(
-                    node,
+                client_start = _safe_node_exec(
+                    self.ctx, node,
                     f"docker run -d --name {client} --network host --entrypoint /bin/sh "
                     f"{shlex.quote(CONTROL_IMAGE)} -ec "
                     + shlex.quote(_control_request_script(port, marker, persistent=True)),
@@ -431,8 +441,9 @@ class CollectorsV5:
                 entry["client_start"] = _result_evidence(client_start)
                 if _returncode(client_start):
                     raise RuntimeError(f"technical control client failed to start on {node}")
-                client_inspect = self.ctx.node_exec(
-                    node, f"docker inspect {client}", timeout=30, check=False
+                client_inspect = _safe_node_exec(
+                    self.ctx, node, f"docker inspect {client}",
+                    timeout=30, check=False
                 )
                 entry["client_start_inspect"] = _result_evidence(client_inspect)
                 if not _inspect_running(client_inspect):

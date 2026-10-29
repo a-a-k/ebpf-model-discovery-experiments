@@ -355,7 +355,7 @@ def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
             if "docker exec study-ebpf-control-server-" in command:
                 return Result("Configuration file is valid\n")
             if "-probe" in command:
-                return Result("", "connection refused", 1)
+                raise RuntimeError("request transport failed")
             if command.startswith("docker logs"):
                 return Result("retained server log\n")
             if command.startswith("docker image inspect"):
@@ -377,8 +377,8 @@ def test_control_failure_retains_attempt_diagnostics_and_cleans_both_nodes(
     assert evidence["technical_failure"] == "technical control HTTP readiness failed on a"
     assert len(evidence["nodes"]["a"]["request_attempts"]) == 1
     attempt = evidence["nodes"]["a"]["request_attempts"][0]
-    assert attempt["request"]["returncode"] == 1
-    assert attempt["request"]["stderr"] == "connection refused"
+    assert attempt["request"]["returncode"] == 255
+    assert attempt["request"]["stderr"] == "RuntimeError: request transport failed"
     assert evidence["nodes"]["a"]["server_inspect"]["sha256"]
     assert evidence["nodes"]["a"]["server_logs"]["sha256"]
     cleanup = [command for _, command, _ in ctx.calls if command.startswith("docker rm -f")]
