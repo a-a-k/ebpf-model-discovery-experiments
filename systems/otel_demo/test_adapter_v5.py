@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from .adapter_v5 import Adapter
+from .adapter import Adapter as AdapterV4
 
 
 def _adapter(tmp_path: Path, mode: str = "absent") -> Adapter:
@@ -18,6 +19,73 @@ def _adapter(tmp_path: Path, mode: str = "absent") -> Adapter:
     adapter = Adapter(context)
     adapter.source.mkdir(parents=True)
     return adapter
+
+
+def test_full_empty_capture_is_unknown_without_changing_v4(tmp_path: Path) -> None:
+    traces = tmp_path / "traces.json"
+    traces.write_bytes(b"")
+    v5 = object.__new__(Adapter)
+    v5.mode = "full"
+
+    result = v5._verify_native_file(traces)
+
+    assert result["mode_compliant"] is None
+    assert result["native_coverage_status"] == "unknown_no_native_spans_observed"
+    assert result["mode_definition"] == "verified_resolved_sdk_configuration"
+    v5._validate_native_verification(result)
+
+    v4 = object.__new__(AdapterV4)
+    v4.mode = "full"
+    historical = v4._verify_native_file(traces)
+    assert historical["mode_compliant"] is False
+    with pytest.raises(RuntimeError, match="suppression check failed"):
+        v4._validate_native_verification(historical)
+
+
+def test_full_capture_without_product_catalog_is_coverage_unknown(tmp_path: Path) -> None:
+    traces = tmp_path / "traces.json"
+    traces.write_text(
+        '{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name",'
+        '"value":{"stringValue":"frontend"}}]},"scopeSpans":[{"spans":'
+        '[{"spanId":"one"}]}]}]}\n',
+        encoding="utf-8",
+    )
+    adapter = object.__new__(Adapter)
+    adapter.mode = "full"
+
+    result = adapter._verify_native_file(traces)
+
+    assert result["span_markers"] == 1
+    assert result["product_catalog_mentions"] == 0
+    assert result["mode_compliant"] is None
+    assert result["native_coverage_status"] == "unknown_product_catalog_unobserved"
+    adapter._validate_native_verification(result)
+
+
+def test_v5_native_audit_rejects_disabled_service_and_malformed_input(
+    tmp_path: Path,
+) -> None:
+    adapter = object.__new__(Adapter)
+    adapter.mode = "partial"
+    disabled = tmp_path / "disabled.json"
+    disabled.write_text(
+        '{"resourceSpans":[{"resource":{"attributes":[{"key":"service.name",'
+        '"value":{"stringValue":"product-catalog"}}]},"scopeSpans":[{"spans":'
+        '[{"spanId":"one"}]}]}]}\n',
+        encoding="utf-8",
+    )
+    disabled_result = adapter._verify_native_file(disabled)
+    assert disabled_result["mode_compliant"] is False
+    with pytest.raises(RuntimeError, match="suppression check failed"):
+        adapter._validate_native_verification(disabled_result)
+
+    adapter.mode = "full"
+    malformed = tmp_path / "malformed.json"
+    malformed.write_text('{"spanId":"damaged"\n', encoding="utf-8")
+    malformed_result = adapter._verify_native_file(malformed)
+    assert malformed_result["malformed_records"] == 1
+    with pytest.raises(RuntimeError, match="audit input is malformed"):
+        adapter._validate_native_verification(malformed_result)
 
 
 def test_checkout_disabled_path_uses_only_global_noop_tracer(tmp_path: Path) -> None:

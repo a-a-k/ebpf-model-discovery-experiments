@@ -840,8 +840,7 @@ class Adapter:
         (destination / "native-suppression-verification.json").write_text(
             json.dumps(verification, indent=2, sort_keys=True) + "\n", encoding="utf-8"
         )
-        if not verification["mode_compliant"]:
-            raise RuntimeError(f"native trace suppression check failed: {verification}")
+        self._validate_native_verification(verification)
 
     def close(self) -> None:
         diagnostics = Path(self.ctx.out) / "otel_demo-diagnostics"
@@ -1838,6 +1837,11 @@ SELECT json_build_object(
             "mode_compliant": compliant,
             "method": "streamed collector-file JSONL inspection after graceful collector termination",
         }
+
+    @staticmethod
+    def _validate_native_verification(verification: dict[str, Any]) -> None:
+        if not verification["mode_compliant"]:
+            raise RuntimeError(f"native trace suppression check failed: {verification}")
 
     def _suppression_description(self) -> dict[str, Any]:
         if self.mode == "absent":

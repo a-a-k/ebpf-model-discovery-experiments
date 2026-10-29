@@ -20,6 +20,26 @@ class Adapter(AdapterV4):
 
     EXPERIMENT_PROTOCOL = "iteration-5"
 
+    def _verify_native_file(self, path: Path) -> dict[str, Any]:
+        verification = super()._verify_native_file(path)
+        verification["mode_definition"] = "verified_resolved_sdk_configuration"
+        verification["native_coverage_status"] = "observed"
+        if self.mode == "full" and verification["mode_compliant"] is False:
+            verification["mode_compliant"] = None
+            verification["native_coverage_status"] = (
+                "unknown_no_native_spans_observed"
+                if verification["span_markers"] == 0
+                else "unknown_product_catalog_unobserved"
+            )
+        return verification
+
+    @staticmethod
+    def _validate_native_verification(verification: dict[str, Any]) -> None:
+        if verification.get("malformed_records", 0) > 0:
+            raise RuntimeError(f"native trace audit input is malformed: {verification}")
+        if verification.get("mode_compliant") is False:
+            raise RuntimeError(f"native trace suppression check failed: {verification}")
+
     def native_mode_audit_spec(self) -> dict[str, Any]:
         disabled = (
             ["all application components"]
