@@ -54,6 +54,19 @@ def _config(*, max_memory_mib: int, max_millicpus: int) -> dict[str, Any]:
     return {
         "global": {
             "communication": {"proactive_request_interval": "10s"},
+            # Pinned v7.2.3 agent/src/utils/guard.rs treats a zero trigger or
+            # recovery value as an explicit disabled circuit breaker.  The
+            # default 1.0/0.9 Load15 policy can otherwise pause collection on
+            # an ordinary two-vCPU guest solely because of ambient load.  The
+            # measured guest memory/CPU envelope and every other guard remain
+            # enabled and unchanged.
+            "circuit_breakers": {
+                "relative_sys_load": {
+                    "trigger_threshold": 0,
+                    "recovery_threshold": 0,
+                    "metric": "load15",
+                },
+            },
             "limits": {
                 # DeepFlow's pinned deser_u64_with_mega_unit expands MiB to bytes.
                 "max_memory": max_memory_mib,

@@ -564,3 +564,27 @@ The old snapshot is immutable. Per-seed figure code (`3bc6061`, layout correctio
 `99b5db0`) passed independent review and CI; actual figures still require visual
 and companion-data inspection before publication. No new forecasts, uncertainty
 estimates, averages or accuracy thresholds are introduced.
+
+## DeepFlow ambient-load circuit breaker
+
+DeepFlow OTel/absent smoke `40942447288` retained a technical acquisition
+failure: node B captured the exact eBPF HTTP control, while node A did not. The
+node-A agent log records `Load15` crossing the default relative threshold `1.0`,
+then `Running -> Disabled` with `melted_down=true` before the control; the state
+remained disabled throughout all 19 control captures. The closed node-A L7 file
+has no pending tail or codec failure, so this is not admitted as application or
+protocol-negative evidence. Its execution time and failed result remain costs.
+
+At pinned DeepFlow v7.2.3 commit
+`9a1219fa5cf1471ba2ec8742019661567d98002e`,
+`agent/src/utils/guard.rs::SystemLoadGuard::check` divides the selected system
+load by CPU count and sets `SystemLoadCircuitBreaker` at the configured trigger.
+The same function explicitly clears and returns when either trigger or recovery
+is zero; `agent/src/config/config.rs::RelativeSysLoad` supplies the default
+`1.0/0.9/Load15` values. Root and the independent reviewer gave
+original-criterion design GO to serialize exact zero trigger/recovery values for
+this one ambient-load breaker in every future DeepFlow arm. The measured guest
+memory/CPU envelope, all other guards, source codec, identity policy and exact
+two-guest positive control remain unchanged. This is not threshold tuning, an
+accuracy gate, or a claim of unlimited resources. Actual-code review, integrated
+CI and one fixed OTel/absent repeat are required before admitting that setting.

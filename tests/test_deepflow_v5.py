@@ -119,6 +119,30 @@ def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
     assert config["global"]["limits"]["max_memory"] << 20 == 2 * (1 << 30)
 
 
+def test_config_disables_only_pinned_relative_load_circuit_breaker() -> None:
+    config = _config(max_memory_mib=2048, max_millicpus=2000)
+    rendered = yaml.safe_load(yaml.safe_dump(config, sort_keys=True))
+
+    # Pinned DeepFlow v7.2.3 guard.rs returns after clearing the exception
+    # when either value is exactly 0.0.  Exercise the serialized field names
+    # and values that the real agent consumes rather than a Python-only flag.
+    assert rendered["global"]["circuit_breakers"] == {
+        "relative_sys_load": {
+            "trigger_threshold": 0,
+            "recovery_threshold": 0,
+            "metric": "load15",
+        }
+    }
+    assert rendered["global"]["limits"] == {
+        "max_memory": 2048,
+        "max_millicpus": 2000,
+    }
+    assert rendered["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
+    assert rendered["processors"]["request_log"]["tag_extraction"]["tracing_tag"] == {
+        "x_request_id": ["x-experiment-request-id"]
+    }
+
+
 def test_config_rejects_zero_resource_envelopes() -> None:
     with pytest.raises(ValueError, match="positive guest envelopes"):
         _config(max_memory_mib=0, max_millicpus=1000)
