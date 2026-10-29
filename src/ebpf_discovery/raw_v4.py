@@ -467,6 +467,7 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     exports, ordinal, total = [], 0, 0
+    deepflow_validator = None
     roles = supplied_server_roles or {}
     rows = list(store.db.execute("SELECT path,consumed FROM files ORDER BY path"))
     for raw_path, consumed in rows:
@@ -556,11 +557,19 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                     continue
                 document = json.loads(raw_line)
                 raw_ref = document.get("raw_ref")
+                derived_proof = None
                 if "payload" in document and not raw_ref:
-                    raise ValueError(
-                        f"receiver wrapper lacks original wire capture: {path}; "
-                        "decoded MessageToDict payload is not a lossless OTLP export"
-                    )
+                    if document.get("derived_otlp") is None:
+                        raise ValueError(
+                            f"receiver wrapper lacks original wire capture: {path}; "
+                            "decoded MessageToDict payload is not a lossless OTLP export"
+                        )
+                    from .deepflow_handoff_v5 import DeepFlowDerivedValidator
+                    if deepflow_validator is None:
+                        deepflow_validator = DeepFlowDerivedValidator(path.parent)
+                    elif deepflow_validator.root != path.parent.resolve():
+                        raise ValueError("DeepFlow derived wrappers span multiple observation roots")
+                    derived_proof = deepflow_validator.validate(document, path, raw_line)
                 if raw_ref:
                     original_path = Path(raw_ref)
                     if not original_path.is_absolute():
@@ -616,15 +625,28 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                 exported = _write_export(
                     out, ordinal, source, "application/json", body, path,
                     prefix_hash, count, found,
-                    [("all records in frozen direct OTLP JSONL document without normalized reconstruction"
-                      if identities is None else "filtered direct OTLP JSONL document without normalized reconstruction")],
+                    [(("all records in validated frozen DeepFlow-derived OTLP JSON document"
+                       if identities is None else
+                       "filtered records from validated frozen DeepFlow-derived OTLP JSON document")
+                      if derived_proof else
+                      ("all records in frozen direct OTLP JSONL document without normalized reconstruction"
+                       if identities is None else
+                       "filtered direct OTLP JSONL document without normalized reconstruction"))],
                     network_scope=network_scope, raw_prefix_bytes=consumed,
                     supplied_server_roles=supplied,
                 )
                 exported["raw_record_sha256"] = hashlib.sha256(raw_line).hexdigest()
+                if derived_proof:
+                    exported["source_representation"] = "derived_otlp_json"
+                    exported["original_agent_wire"] = False
+                    exported["derived_otlp_proof"] = derived_proof
+                    exported["raw_file_role"] = "indexed_derived_wrapper_prefix"
                 if transformations:
                     exported['runtime_identity_transformations'] = transformations
-                    exported['original_wire_unchanged'] = True
+                    if derived_proof:
+                        exported['validated_derived_wrapper_unchanged'] = True
+                    else:
+                        exported['original_wire_unchanged'] = True
                     exported['graph_edges_injected'] = False
                 exports.append(exported)
                 total += count

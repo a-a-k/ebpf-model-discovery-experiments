@@ -16,6 +16,8 @@ from typing import Any, Callable, Iterable
 
 DEEPFLOW_VERSION = "v7.2.3"
 DEEPFLOW_SOURCE_COMMIT = "9a1219fa5cf1471ba2ec8742019661567d98002e"
+DERIVED_OTLP_SCHEMA = "deepflow-derived-otlp-v5"
+CODEC_SOURCE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 SUPPORTED_PROTOCOLS = {
     "Http1", "Http2", "Grpc", "MySQL", "PostgreSQL", "Redis", "MongoDB", "Kafka"
 }
@@ -443,6 +445,18 @@ def _envelope(spans: list[dict[str, Any]], node: str) -> dict[str, Any]:
     return {
         "source": f"ebpf-deepflow:{node}",
         "id_encoding": "hex",
+        "derived_otlp": {
+            "schema_version": DERIVED_OTLP_SCHEMA,
+            "representation": "derived_otlp_json",
+            "source_format": "deepflow-v7.2.3-standalone-flat-jsonl",
+            "source_version": DEEPFLOW_VERSION,
+            "source_commit": DEEPFLOW_SOURCE_COMMIT,
+            "codec": "ebpf_discovery.deepflow_codec_v5",
+            "codec_source_sha256": CODEC_SOURCE_SHA256,
+            "accounting_ref": "deepflow-codec-accounting.jsonl",
+            "original_agent_wire": False,
+            "ids_invented": False,
+        },
         "payload": {"resourceSpans": [{
             "resource": {"attributes": [
                 _attr("deepflow.guest", node),
