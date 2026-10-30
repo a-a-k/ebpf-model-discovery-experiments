@@ -71,3 +71,36 @@ The audit records elapsed time and toolchain build costs; human preparation time
 remains unknown. No reduction in total effort is claimed. Actual output review is
 required before approval of the next common 27-cell qualification. A separate
 actual qualification review remains required before main81.
+
+## Actual saved-input verdict
+
+The first audit, Actions41142624898 at `6ee851c`, failed all eight exact
+comparisons because prototype28b added empty service metadata objects which Go's
+final model output omitted. Both failed-source diagnostic simulations succeeded,
+but this did not excuse the equivalence failure. Its derived artifact13020236160
+is retained:132239bytes, SHA256
+`2aba286995ea7547984c0c55a4004e6dcc27d103f813a0ab2733eafb235f59ee`.
+
+Both agents checked the exact pinned Go serialization and reviewed the narrow
+omission repair `320a76837ba72e5f162f488d260e909cfd3af0a1`. The repeated audit
+used precisely the same six original artifact IDs, source inputs and comparison
+exceptions, at audit head `97da3955f305d4eedf40c23bea038d2e2b526879`.
+Actions41143119808 succeeded. Its derived artifact13019456893 is132185bytes,
+SHA256 `e28c66fee9cbab6f2cfec4acb953c549d87d5861f07e76eeb105d94cb1e3cea9`.
+
+The main agent and independent skeptic each checked the actual API identity,
+whole derived ZIP digest and retained JSON. All eight original-Go/new-model
+pairs compare exactly after only the two separately proven publication fields;
+each pair has the same41accepted requests. The83original used-file SHA proofs
+remain intact. Both original failure copies pass actual pinned Bering validation
+and Sheaft, retaining existing edges, entity IDs and the first discovery's model
+provenance. The failed original captures still contain48operations, zero target
+or class-test operations and no completed pre-target freeze. These are diagnostic
+outputs; no new primary forecast or application outcome score was produced.
+
+Both agents give ACTUAL-OUTPUT ORIGINAL-feasibility GO to the repair and a new
+common27-cell qualification after exact common-head CI. This does not authorize
+main81 or establish a positive scientific result. The full study scope, external
+outcome criterion, explanation of distinct unknowns and complete cost accounting
+remain required. Both audit attempts, their builds/CI and prior failed captures
+remain in retained history; human preparation time is unknown.
