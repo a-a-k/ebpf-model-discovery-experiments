@@ -558,6 +558,9 @@ class Toolchain:
                       publication_mode=self.publication_mode,
                       source_profile=self.bering_source_profile())
 
+    def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder):
+        return self.discover(input_path, folder, overlay_path)
+
     def database_nodes(self, model, quality):
         reference = self.inventory.get('database', {})
         extra = (self.declaration.database_inventory(self.ctx.deployment_dir)
@@ -682,7 +685,8 @@ class Toolchain:
                         overlay['endpoints'].append({'id': endpoint, 'predicate_ref': name,
                             'semantics': {'predicate_mode': 'external_predicate', 'source': 'supplied_source_contract'}})
                     write_json(folder/'overlay.json', overlay)
-                    model, quality = self.discover(input_path, folder, folder/'overlay.json')
+                    model, quality = self.operation_model(
+                        input_path, folder, folder/'overlay.json', model, quality, shared)
                     faults = fault_inputs(controlled, selected_db)
                     write_json(folder/'faults.json', faults)
                     write_json(folder/'predicates.json', predicate_contract(model, binding, name))

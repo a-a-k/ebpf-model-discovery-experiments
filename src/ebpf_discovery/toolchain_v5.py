@@ -1,6 +1,7 @@
 """Collector-true graph-v5 toolchain selection over the v4 scientific pipeline."""
 from __future__ import annotations
 
+from copy import deepcopy
 import hashlib
 import json
 import re
@@ -17,6 +18,38 @@ PINS = {
     'Sheaft': '686a602f4e7b71f3612f1810885e29dd66c8733a',
 }
 _COLLECTOR = re.compile(r'[a-z0-9][a-z0-9._-]{0,63}')
+
+
+def attach_operation_metadata(model, overlay):
+    """The controller's restricted Bering overlay, applied to existing logical IDs."""
+    if set(overlay) - {'name', 'services', 'endpoints'}:
+        raise ValueError('operation metadata cannot change graph topology')
+    result = deepcopy(model)
+    services = {item['id']: item for item in result['services']}
+    endpoints = {item['id']: item for item in result['endpoints']}
+    for supplied in overlay.get('services') or []:
+        if (set(supplied) - {'id', 'replicas', 'failure_eligible', 'placements', 'attributes'}
+                or supplied['id'] not in services):
+            raise ValueError('operation metadata requires an existing service and supported fields')
+        service = services[supplied['id']]
+        if 'replicas' in supplied:
+            service['replicas'] = supplied['replicas']
+        for key in ('failure_eligible', 'placements'):
+            if key in supplied:
+                service.setdefault('metadata', {})[key] = deepcopy(supplied[key])
+        # Bering's procrustes attributes annotate snapshot records only. The
+        # original supplied overlay and attachment evidence retain them.
+    for supplied in overlay.get('endpoints') or []:
+        if (set(supplied) - {'id', 'predicate_ref', 'semantics'}
+                or supplied['id'] not in endpoints
+                or set(supplied.get('semantics') or {}) - {'predicate_mode', 'source'}):
+            raise ValueError('operation metadata requires an existing endpoint and supported fields')
+        endpoint = endpoints[supplied['id']]
+        if 'predicate_ref' in supplied:
+            endpoint['success_predicate_ref'] = supplied['predicate_ref']
+        if supplied.get('semantics'):
+            endpoint.setdefault('metadata', {}).setdefault('semantics', {}).update(deepcopy(supplied['semantics']))
+    return result
 
 
 def collector_provenance(root: Path, status: dict | None = None) -> dict:
@@ -134,6 +167,32 @@ class Toolchain(ToolchainV4):
                   'logical_services': sorted({row['logical_service'] for row in collisions}),
                   'variants_retained': True, 'binding_suppressed': True}]
                 if collisions else [])
+
+    def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder):
+        from .runtime import write_json
+        overlay = json.loads(overlay_path.read_text(encoding='utf-8'))
+        attached = attach_operation_metadata(model, overlay)
+        write_json(folder/'model.json', attached)
+        write_json(folder/'model.signal-quality.json', quality)
+        self.command('bering', ['validate', '--input', folder/'model.json'],
+                     folder, 'provided-metadata-validation')
+        files = {'observed_model': source_folder/'observed.json',
+                 'raw_bering_model': source_folder/'observed.bering-raw.json',
+                 'raw_bering_snapshot': source_folder/'observed.snapshot.json',
+                 'semantic_projection': source_folder/'observed.supplied-aliases.json',
+                 'provided_overlay': overlay_path, 'simulator_model': folder/'model.json'}
+        write_json(folder/'provided-metadata-attachment.json', {
+            'origin': 'provided_metadata_after_verified_semantic_view',
+            'files': {key: {'path': str(path),
+                            'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+                      for key, path in files.items()},
+            'supplied': overlay, 'new_nodes_edges_or_endpoints': False,
+            'graph_structure_and_observed_edge_fields_unchanged': True,
+            'entity_ids_unchanged': True,
+            'final_model_is_a_bering_emitted_snapshot': False,
+            'source_signal_quality_unchanged': True,
+            'same_information_all_sources_and_direct_baseline': True})
+        return attached, quality
 
     def bering_source_profile(self):
         return {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}

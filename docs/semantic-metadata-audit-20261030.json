@@ -1,0 +1,53 @@
+{
+  "purpose": "Eight original canonical native Go-overlay model pairs and two original unfinished Coroot failures; diagnostic Bering validation and Sheaft only, no replay, capture, refit, primary forecasts or application outcome scoring.",
+  "prototype_head": "320a76837ba72e5f162f488d260e909cfd3af0a1",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "seed": 6,
+      "run_id": 41132061981,
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+      "baseline": {
+        "run_id": 41115062402,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "full": {
+        "id": 13017675896,
+        "name": "campaign-v5-coroot-smoke-petclinic-full-6-41132061981",
+        "size_in_bytes": 31888479,
+        "digest": "sha256:989ce2870ae71ff3d11617bfcfec93881c61d722a1d031d3f292dd8ac5ea564d"
+      },
+      "compact": {
+        "id": 13017525906,
+        "name": "v5-summary-coroot-smoke-petclinic-full-6-41132061981",
+        "size_in_bytes": 181528,
+        "digest": "sha256:1d7cdbf0bb687c77dcf45e00a248549399dcf744ea28dffdb7177170decbe1ec"
+      },
+      "partial_full": {
+        "id": 13016449869,
+        "name": "campaign-v5-coroot-smoke-petclinic-partial-6-41132061981",
+        "size_in_bytes": 29202936,
+        "digest": "sha256:dbad665bb954dbaed6a061f84f32722504e2381962ecbe5ab862585b8589b782"
+      },
+      "partial_compact": {
+        "id": 13017039349,
+        "name": "v5-summary-coroot-smoke-petclinic-partial-6-41132061981",
+        "size_in_bytes": 199960,
+        "digest": "sha256:afdd7740aa5dd96c3c4f555dec3cdca152307038d9111cf8bb75393e0dd966a0"
+      },
+      "baseline_full": {
+        "id": 13007849738,
+        "name": "campaign-v5-coroot-smoke-petclinic-full-6-41115062402",
+        "size_in_bytes": 36645665,
+        "digest": "sha256:814ce88b73ed31743d6e3c25b4e403286581ae4c85cdf90a8e0619c925ac97ee"
+      },
+      "baseline_compact": {
+        "id": 13007679861,
+        "name": "v5-summary-coroot-smoke-petclinic-full-6-41115062402",
+        "size_in_bytes": 557305,
+        "digest": "sha256:bcf9d4d0d81829b05d1410d878e4a3ac7b5d0fad56553ee69f68d42fc2e2164b"
+      }
+    }
+  ]
+}
