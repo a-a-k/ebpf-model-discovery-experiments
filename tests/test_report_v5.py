@@ -126,6 +126,55 @@ def test_smoke_is_separate_and_main_evaluation_is_verbatim(tmp_path: Path) -> No
     assert selected["independently_admitted"] is False
 
 
+def test_scientific_details_survive_hash_bound_projection_and_render(tmp_path):
+    from ebpf_discovery.evaluate_v5 import scientific_summaries
+
+    folder, evaluation = summary(tmp_path / "inputs", 25, "main")
+    old_row = copy.deepcopy(evaluation["evaluations"][0])
+    evaluation.update(
+        manual_baselines={"list": {"available": True, "prediction": .875,
+            "basis": "same supplied semantics"}},
+        database={"db_down": {"list": {"counts": {"success": 0, "failure": 4}}},
+            "forecast_impact": [{"operation": "list", "healthy_state_11_prediction": 1,
+                                  "database_down_prediction": 0, "prognostic_impact": 1}]},
+        evidence={"graphs": {"ebpf": {"raw": {"list": {"available": True,
+            "services": 2, "edges": 1, "endpoints": 0,
+            "bering_outputs_present": {"observed": True}, "large_detail": "omit"}}}},
+            "async": {"attempts": [{"attempt_id": "a", "source": "ebpf", "phase": "normal",
+                "four_stage_causal_chain": "unknown", "proofs": ["not duplicated"]}]}},
+        classes={"class_test_metrics": [{"source": "ebpf", "total": 8, "known": 4,
+            "unknown": 4, "coverage": .5, "ari_labeled_known_subset": 4,
+            "equivalent_to_base_family_assignment": True}]},
+    )
+    evaluation["scientific_summaries"] = scientific_summaries(evaluation)
+    assert evaluation["evaluations"][0] == old_row
+    assert "large_detail" not in evaluation["scientific_summaries"]["graphs"]["ebpf"]["raw"]["list"]
+    assert "proofs" not in evaluation["scientific_summaries"]["causal_attempt_verdicts"][0]
+    write(folder / "evaluation-v5.json", evaluation)
+    manifest = json.loads((folder / "evaluation-manifest.json").read_text())
+    manifest["files_sha256"]["evaluation-v5.json"] = sha(folder / "evaluation-v5.json")
+    write(folder / "evaluation-manifest.json", manifest)
+    declarations = declared(tmp_path / "declared.json", [run(25, "main")])
+    result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
+    projection = result["attempts"][0]["evaluation_projection"]
+    assert projection["scientific_summaries"] == evaluation["scientific_summaries"]
+    aggregate_path = tmp_path / "report/evaluation-v5.json"
+    output = tmp_path / "report.md"
+    render(aggregate_path, output)
+    rendered = output.read_text()
+    for text in ("same supplied semantics", "0.875", "Independent database controls",
+                 "Frozen operation classification", "census of saved verdicts", "not retained"):
+        assert text in rendered
+    # Even a recomputed projection hash cannot replace its frozen source facts.
+    projection["scientific_summaries"]["manual_baselines"]["list"]["prediction"] = .99
+    unhashed = {key: value for key, value in projection.items() if key != "projection_sha256"}
+    projection["projection_sha256"] = hashlib.sha256(json.dumps(
+        unhashed, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+    write(aggregate_path, result)
+    with pytest.raises(ValueError, match="projection does not match source payload"):
+        render(aggregate_path, tmp_path / "tampered.md")
+
+
 def test_figures_copy_main_errors_and_preserve_unknowns_and_source_proofs(tmp_path):
     from ebpf_discovery.plot_v5 import display_value, saved_values
 

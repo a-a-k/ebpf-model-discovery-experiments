@@ -82,8 +82,60 @@ def _docker() -> tuple[list[dict], dict]:
             "compose": {name: labels.get(label) for name, label in COMPOSE_LABELS.items()},
             "cgroup_parent": (item.get("HostConfig") or {}).get("CgroupParent"),
             "init_cgroups": init_cgroups,
+            "network_settings": {key: (item.get("NetworkSettings") or {}).get(key)
+                                 for key in ("Networks", "Ports", "SandboxID", "SandboxKey")},
+            "host_network_config": {key: (item.get("HostConfig") or {}).get(key)
+                                    for key in ("NetworkMode", "PortBindings")},
         })
     return containers, proof
+
+
+def _network_identity(pid: int) -> dict:
+    try:
+        _, _, start_ticks = _stat(pid)
+        return {"host_pid": pid, "start_ticks": start_ticks,
+                "net_namespace": os.readlink(f"/proc/{pid}/ns/net")}
+    except (OSError, ValueError, IndexError) as exc:
+        return {"host_pid": pid, "error": repr(exc)}
+
+
+def _listeners(containers: list[dict]) -> list[dict]:
+    """Optional observed sockets, once per namespace; no service/peer remapping."""
+    snapshots, seen = [], set()
+    targets = [1] + [int((row.get("state") or {}).get("Pid") or 0) for row in containers]
+    for pid in targets:
+        if pid <= 0:
+            continue
+        before = _network_identity(pid)
+        namespace = before.get("net_namespace")
+        if namespace is None:
+            snapshots.append({"before": before, "ownership_stable": False,
+                              "optional_error": "target_network_identity_unavailable"})
+            continue
+        if namespace in seen:
+            continue
+        seen.add(namespace)
+        command = (["ss", "-H", "-lntup"] if pid == 1 else
+                   ["nsenter", "-t", str(pid), "-n", "ss", "-H", "-lntup"])
+        row = {"before": before, "argv": command, "started": _clock()}
+        try:
+            result = subprocess.run(command, text=True, errors="replace", capture_output=True, timeout=1)
+            row.update(returncode=result.returncode, stdout=result.stdout, stderr=result.stderr)
+            if result.returncode:
+                row["optional_error"] = "listener_command_failed"
+        except subprocess.TimeoutExpired as exc:
+            def output(value):
+                return value.decode("utf-8", errors="replace") if isinstance(value, bytes) else (value or "")
+            row.update(returncode=None, stdout=output(exc.stdout), stderr=output(exc.stderr),
+                       optional_error="listener_command_timeout")
+        except OSError as exc:
+            row.update(returncode=None, stdout="", stderr=str(exc),
+                       optional_error="listener_command_unavailable")
+        row["ended"] = _clock()
+        row["after"] = _network_identity(pid)
+        row["ownership_stable"] = row["before"] == row["after"]
+        snapshots.append(row)
+    return snapshots
 
 
 def _owner(pid: int, groups: list[dict], containers: list[dict]) -> dict | None:
@@ -134,17 +186,25 @@ def capture(node: str, stage: str) -> dict:
             except OSError as exc:
                 exe = None
                 exe_error = repr(exc)
+            try:
+                net_namespace = os.readlink(f"/proc/{pid}/ns/net")
+                net_namespace_error = None
+            except OSError as exc:
+                net_namespace = None
+                net_namespace_error = repr(exc)
             processes.append({
                 "host_pid": pid, "state": state, "comm": comm, "start_ticks": start_ticks,
                 "pid_namespace": os.readlink(f"/proc/{pid}/ns/pid"),
                 "cgroups": groups,
                 "exe": exe, "exe_error": exe_error,
+                "net_namespace": net_namespace, "net_namespace_error": net_namespace_error,
                 "owner": _owner(pid, groups, containers),
             })
         except (FileNotFoundError, ProcessLookupError):
             continue
         except (OSError, ValueError, IndexError) as exc:
             errors.append({"host_pid": pid, "error": repr(exc)})
+    listeners = _listeners(containers)
     ended = _clock()
     return {
         "schema": "runtime-identity-guest-sample-v5", "node": node, "stage": stage,
@@ -153,6 +213,8 @@ def capture(node: str, stage: str) -> dict:
         "clocks": {"started": started, "ended": ended},
         "containers": containers, "docker_proof": docker_proof,
         "processes": processes, "process_scan_errors": errors,
+        "listener_snapshots": listeners,
+        "network_evidence_scope": "optional actual network facts; no peer remapping or topology inference",
         "identity_scope": "observed guest host PIDs and actual Docker ownership only",
     }
 

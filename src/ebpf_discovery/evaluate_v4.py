@@ -476,6 +476,12 @@ def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
                     "error": _error(prediction, actual_bounds), "by_state": state_eval,
                     "latency": _latency(actual),
                     "graph_sha256": forecast.get("graph_sha256") if forecast else None,
+                    **({"unknown_obligations": forecast["unknown"]}
+                       if forecast and "unknown" in forecast else {}),
+                    **({key: forecast[key] for key in (
+                        "database_unknown_reason", "database_fault_unknown",
+                        "assumed_satisfied_database_requirements") if key in forecast}
+                       if forecast else {}),
                 })
     database = {}
     for phase in ("db_up", "db_down"):

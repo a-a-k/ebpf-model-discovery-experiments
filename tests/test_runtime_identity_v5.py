@@ -293,6 +293,37 @@ def test_shared_root_cgroup_is_not_container_ownership_evidence():
         11, [{"path": "/docker/" + "a" * 64}], [container])["ownership_proofs"]
 
 
+def test_optional_network_capture_deduplicates_and_keeps_timeout_and_pid_reuse(monkeypatch):
+    import subprocess
+    from types import SimpleNamespace
+
+    helper = runpy.run_path(str(Path(__file__).parents[1] / "scripts/runtime-identity-v5-guest.py"))
+    listeners = helper["_listeners"]
+    identities = {}
+    def identity(pid):
+        identities[pid] = identities.get(pid, 0) + 1
+        return {"host_pid": pid, "start_ticks": 99 if pid == 3 and identities[pid] > 1 else 10,
+                "net_namespace": "host" if pid in (1, 2) else "container"}
+    calls = []
+    def run(argv, **kwargs):
+        calls.append(argv)
+        assert kwargs["timeout"] == 1
+        if argv[0] == "nsenter":
+            raise subprocess.TimeoutExpired(argv, 1, output=b"partial", stderr=b"unfinished")
+        return SimpleNamespace(returncode=0, stdout="listener", stderr="")
+    monkeypatch.setitem(listeners.__globals__, "_network_identity", identity)
+    monkeypatch.setitem(listeners.__globals__, "_clock", lambda: {"monotonic_ns": 123})
+    monkeypatch.setattr(helper["subprocess"], "run", run)
+    rows = listeners([{"state": {"Pid": pid}} for pid in (2, 3)])
+    assert len(rows) == len(calls) == 2
+    assert rows[0]["ownership_stable"] is True
+    assert rows[1]["ownership_stable"] is False
+    assert rows[1]["optional_error"] == "listener_command_timeout"
+    assert rows[1]["stdout"] == "partial"
+    assert rows[1]["stderr"] == "unfinished"
+    assert rows[1]["returncode"] is None
+
+
 def test_real_deepflow_codec_otlp_round_trip_resolves_canonical_locator(tmp_path):
     raw = tmp_path / "l7_flow_log"
     row = {"signal_source": "EBPF", "tap_side": "ServerProcess",

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib
 import json
 from pathlib import Path
 import sys
@@ -24,7 +25,7 @@ def _fake_declaration(monkeypatch):
                         {"class_train": 1, "calibration": 4, "target": 2, "class_test": 1})
     monkeypatch.setattr(evaluator, "EXPECTED_TARGET_STATES",
                         {"11": 1, "10": 0, "01": 0, "00": 1})
-    systems = sys.modules.setdefault("systems", types.ModuleType("systems"))
+    systems = importlib.import_module("systems")
     fake = types.ModuleType("systems.fake")
     experiment = types.ModuleType("systems.fake.experiment_v4")
     experiment.CONTROLLED_SERVICE_ALIASES = ["controlled"]
@@ -41,7 +42,7 @@ def _fake_declaration(monkeypatch):
     }
     monkeypatch.setitem(sys.modules, "systems.fake", fake)
     monkeypatch.setitem(sys.modules, "systems.fake.experiment_v4", experiment)
-    setattr(systems, "fake", fake)
+    monkeypatch.setattr(systems, "fake", fake, raising=False)
 
 
 def _campaign(root: Path, *, seed=6, status="acquisition_complete", outcomes=(True, None)) -> Path:
@@ -124,6 +125,29 @@ def test_manual_baseline_does_not_change_with_external_outcomes(tmp_path: Path, 
     second = evaluate_campaign(_campaign(tmp_path / "two", outcomes=(False, None)))
     assert first["manual_baselines"] == second["manual_baselines"]
     assert first["manual_baselines"]["required"]["database"]["database_down_prediction"] == 0.0
+
+
+def test_frozen_unknown_obligations_are_copied_without_changing_evaluation(tmp_path, monkeypatch):
+    _fake_declaration(monkeypatch)
+    root = _campaign(tmp_path)
+    before = evaluate_campaign(root)
+    path = root / "toolchain/forecasts.json"
+    forecasts = json.loads(path.read_text())
+    saved = forecasts["ebpf"]["raw"]["required"]
+    saved["unknown"] = [{"stage": "binding", "reason": "observed_call_missing"}]
+    saved["database_fault_unknown"] = True
+    _write(path, forecasts)
+    freeze = json.loads((root / "freeze-integrity.json").read_text())
+    freeze["sha256_by_path"][str(path.relative_to(root))] = _hash(path)
+    _write(root / "freeze-integrity.json", freeze)
+    after = evaluate_campaign(root)
+    assert after["complete_for_evaluation"] == before["complete_for_evaluation"]
+    added = next(row for row in after["evaluations"] if row["operation"] == "required"
+                 and row["source"] == "ebpf" and row["variant"] == "raw")
+    assert added.pop("unknown_obligations") == saved["unknown"]
+    assert added.pop("database_fault_unknown") is True
+    assert after["evaluations"] == before["evaluations"]
+    assert all("unknown_obligations" not in row for row in before["evaluations"])
 
 
 def test_partial_or_integrity_failed_campaign_is_unknown_not_scored(tmp_path: Path, monkeypatch):

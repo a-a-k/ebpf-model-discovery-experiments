@@ -78,6 +78,56 @@ def acquisition_checks(root, status, declaration):
             "accuracy_threshold": None, "kernel_or_producer_loss_absent": None}
 
 
+def scientific_summaries(report):
+    """Copy bounded saved scientific fields for the report; do not rescore."""
+    evidence = report.get("evidence") or {}
+    graph_keys = ("available", "reason", "services", "edges", "endpoints",
+                  "bering_outputs_present", "snapshot_discovery_counts", "database_mapping",
+                  "database_fault_prognostic_impact")
+    alias_keys = ("system", "address", "port", "network_scope", "identity_kind", "nodes",
+                  "callers", "shared_by_at_least_two_callers")
+    graphs = {
+        source: {variant: {
+            operation: {**{key: row[key] for key in graph_keys if key in row},
+                **({"database_aliases": [{key: alias[key] for key in alias_keys if key in alias}
+                                         for alias in row["database_aliases"]]}
+                   if "database_aliases" in row else {}),
+                **({"incomplete_database_alias_count": len(row["incomplete_database_aliases"])}
+                   if "incomplete_database_aliases" in row else {})}
+            for operation, row in operations.items()}
+            for variant, operations in variants.items()}
+        for source, variants in (evidence.get("graphs") or {}).items()}
+    cross_keys = ("exact_parent_links", "invalid_identity_candidates",
+                  "placement_coverage", "header_verdicts", "interpretation")
+    cross_guest = {
+        source: {key: row[key] for key in cross_keys if key in row}
+        for source, row in (evidence.get("cross_guest") or {}).items()}
+    causal = evidence.get("async")
+    attempts = causal.get("attempts") if isinstance(causal, dict) else None
+    causal_rows = None if attempts is None else [
+        {key: row[key] for key in ("attempt_id", "source", "phase", "four_stage_causal_chain",
+                                   "trace_context_reasons", "markers", "unresolved_markers")
+         if key in row} for row in attempts]
+    return {
+        "manual_baselines": report.get("manual_baselines"),
+        "database": report.get("database"),
+        "graphs": graphs,
+        "classes": {name: {
+            "class_test_metrics": (report.get(name) or {}).get("class_test_metrics"),
+            "fit_updated_during_evaluation": (report.get(name) or {}).get("fit_updated_during_evaluation"),
+            "interpretation": (report.get(name) or {}).get("interpretation")}
+            for name in ("classes", "legacy_classes")},
+        "async": report.get("async"),
+        "cross_guest": cross_guest,
+        "causal_attempt_verdicts": causal_rows,
+        "causal_scope": ({key: causal[key] for key in
+                          ("linker_scope", "invalid_identity_observations", "scope",
+                           "external_verification_files_present") if key in causal}
+                         if isinstance(causal, dict) else None),
+        "interpretation": "Copied saved fields. Repeated source/variant rows do not create independent external attempts.",
+    }
+
+
 def evaluate_campaign(root):
     root = Path(root)
     status = legacy._read(root / "status.json", {})
@@ -108,6 +158,7 @@ def evaluate_campaign(root):
             item.update(prognostic_impact=None, comparison="unknown_technical_validation_failed")
     report["smoke_technical_pass"] = bool(smoke and report["complete_for_evaluation"])
     report["primary_series_result"] = bool(not smoke and report["complete_for_evaluation"])
+    report["scientific_summaries"] = scientific_summaries(report)
     return report
 
 

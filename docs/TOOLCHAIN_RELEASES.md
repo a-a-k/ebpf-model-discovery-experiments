@@ -1,11 +1,12 @@
 # Published tooling and integration evidence
 
-Verification updated on 2026-10-29. Product publication establishes available
+Verification updated on 2026-10-30. Product publication establishes available
 software, not the validity or accuracy of this experiment. The experiment builds
 its three tools from exact source commits and retains binary hashes per campaign.
 
 | Component | Published or merged revision | Release / integration evidence |
 |---|---|---|
+| Bering, clean matched series | v1.3.1, `66ca3af1fe581839e525fb9cc5600a1edd6ca8fb` | [Release and chart](https://github.com/MB3R-Lab/Bering/releases/tag/v1.3.1), [successful publication](https://github.com/MB3R-Lab/Bering/actions/runs/41089266010), [generic RPC semantic-convention alias fix](https://github.com/MB3R-Lab/Bering/pull/55) |
 | Bering, iteration 5 | v1.3.0, `70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a` | [Release and chart](https://github.com/MB3R-Lab/Bering/releases/tag/v1.3.0), [successful publication](https://github.com/MB3R-Lab/Bering/actions/runs/40879223434), [vendor-neutral eBPF input](https://github.com/MB3R-Lab/Bering/pull/54) |
 | Bering, later iteration-4 pin | v1.2.0, `6f806428509a640a6419058c2ad845ed44db7512` | [Release](https://github.com/MB3R-Lab/Bering/releases/tag/v1.2.0), [successful release workflow](https://github.com/MB3R-Lab/Bering/actions/runs/40796211973), [generic batch publication](https://github.com/MB3R-Lab/Bering/pull/53) |
 | Bering, original iteration-4 pin | v1.1.1, `dccd1bca39b6ee85a79e5e245bdd2e727f0da1a3` | [Release](https://github.com/MB3R-Lab/Bering/releases/tag/v1.1.1), [successful release workflow](https://github.com/MB3R-Lab/Bering/actions/runs/40638893415), [merged fix](https://github.com/MB3R-Lab/Bering/pull/52) |
@@ -31,7 +32,7 @@ current stack 1.5.0 names Bering 1.3.0. The reproduction
 package's existing `candidate` status is retained rather than reinterpreted as
 evidence of scientific adequacy.
 
-Iteration 5 uses `toolchain_v5.PINS`: Bering 1.3.0 and the merged generic
+The clean matched series uses `toolchain_v5.PINS`: Bering 1.3.1 and the merged generic
 Procrustes revision above, with the same Sheaft 1.3.2 revision. Every collector
 uses the same `ebpf-otlp` source kind, logical source ID and deployment domain.
 No vendor parameter, API, SDK or collector-specific fingerprint enters this
