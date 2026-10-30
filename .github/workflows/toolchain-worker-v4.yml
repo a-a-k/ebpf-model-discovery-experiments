@@ -74,24 +74,52 @@ jobs:
             > work/worker-input/artifact-api.json
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.run_id }}" \
             > work/worker-input/parent-run-api.json
+          gh api --paginate --slurp \
+            "repos/$GITHUB_REPOSITORY/actions/runs/${{ inputs.run_id }}/attempts/${{ inputs.parent_run_attempt }}/jobs?per_page=100" \
+            > work/worker-input/parent-jobs-api.json
+          cp work/worker-input/expected.json work/worker-input/artifact-api.json \
+            work/worker-input/parent-run-api.json work/worker-input/parent-jobs-api.json \
+            work/worker-artifact/infrastructure/
           python - <<'PY'
           import json, os, pathlib
           expected=json.loads(pathlib.Path('work/worker-input/expected.json').read_text())
           artifact=json.loads(pathlib.Path('work/worker-input/artifact-api.json').read_text())
           run=json.loads(pathlib.Path('work/worker-input/parent-run-api.json').read_text())
+          pages=json.loads(pathlib.Path('work/worker-input/parent-jobs-api.json').read_text())
+          jobs=[job for page in pages for job in page['jobs']]
+          cell_name=f"campaign ({expected['system']}, {expected['mode']}, {expected['seed']})"
+          matches=[job for job in jobs if job.get('name')==cell_name]
+          cell=matches[0] if len(matches)==1 else {}
           parent=artifact.get('workflow_run') or {}
-          if (expected.get('parent_repository') != os.environ['GITHUB_REPOSITORY']
-                  or run.get('id') != int(expected['run_id'])
-                  or run.get('head_sha') != expected['commit']
-                  or run.get('run_attempt') != int(expected['parent_run_attempt'])
-                  or run.get('status') != 'in_progress'
-                  or artifact.get('id') != int(expected['artifact_id'])
-                  or artifact.get('name') != expected['artifact_name']
-                  or artifact.get('digest') != expected['artifact_digest']
-                  or artifact.get('expired') is True
-                  or parent.get('id') != int(expected['run_id'])
-                  or parent.get('head_sha') != expected['commit']):
-              raise SystemExit('checkpoint Actions artifact metadata differs from dispatched identity')
+          checks={
+              'repository': expected.get('parent_repository')==os.environ['GITHUB_REPOSITORY'],
+              'run_id': run.get('id')==int(expected['run_id']),
+              'run_head': run.get('head_sha')==expected['commit'],
+              'run_attempt': run.get('run_attempt')==int(expected['parent_run_attempt']),
+              'run_not_terminal': run.get('status') in ('queued','in_progress'),
+              'cell_identity': expected.get('parent_cell_id')==
+                  f"{expected['system']}:{expected['mode']}:{expected['seed']}",
+              'unique_cell_job': len(matches)==1,
+              'cell_job_run': cell.get('run_id')==int(expected['run_id']),
+              'cell_job_attempt': cell.get('run_attempt')==int(expected['parent_run_attempt']),
+              'cell_job_in_progress': cell.get('status')=='in_progress',
+              'artifact_id': artifact.get('id')==int(expected['artifact_id']),
+              'artifact_name': artifact.get('name')==expected['artifact_name'],
+              'artifact_digest': artifact.get('digest')==expected['artifact_digest'],
+              'artifact_not_expired': artifact.get('expired') is not True,
+              'artifact_parent_run': parent.get('id')==int(expected['run_id']),
+              'artifact_parent_head': parent.get('head_sha')==expected['commit'],
+          }
+          proof={'schema_version':'worker-checkpoint-binding-v4',
+              'expected':expected,'checks':checks,'parent_status':run.get('status'),
+              'expected_cell_job_name':cell_name,'matching_jobs':matches,
+              'accepted':all(checks.values()),
+              'rule':'exact live parent cell and unchanged immutable checkpoint identity'}
+          pathlib.Path('work/worker-artifact/infrastructure/checkpoint-binding.json').write_text(
+              json.dumps(proof,indent=2,sort_keys=True)+'\n')
+          if not proof['accepted']:
+              raise SystemExit('checkpoint Actions binding failed: '+
+                  ', '.join(key for key,value in checks.items() if not value))
           expected.update(worker_workflow_sha=os.environ['GITHUB_SHA'],
                           worker_run_id=os.environ['GITHUB_RUN_ID'],
                           worker_run_attempt=os.environ['GITHUB_RUN_ATTEMPT'],
@@ -155,6 +183,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p work/worker-artifact/infrastructure
+          for name in expected.json artifact-api.json parent-run-api.json parent-jobs-api.json; do
+            test ! -f "work/worker-input/$name" || \
+              cp "work/worker-input/$name" "work/worker-artifact/infrastructure/$name"
+          done
           uname -a > work/worker-artifact/infrastructure/runner-final.txt
           free -b >> work/worker-artifact/infrastructure/runner-final.txt
           swapon --show --bytes >> work/worker-artifact/infrastructure/runner-final.txt
