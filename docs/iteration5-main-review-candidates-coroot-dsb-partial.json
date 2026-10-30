@@ -1,0 +1,60 @@
+{
+  "schema_version": "iteration5-main-review-candidates-v1",
+  "selection_rule": "All three declared Coroot DeathStarBench partial cells after terminal successful jobs and retained artifacts; not selected by outcomes, forecasts, errors or availability. Existing saved-evidence workflow only.",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41004281518,
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12963532500,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-partial-6-41004281518",
+      "compact_artifact_bytes": 2627497553,
+      "compact_artifact_digest": "sha256:f1219c33c5a01ef639bcd1189211aaa8873530d018557ee2467e3fecd4ef51e1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12964237295,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-partial-6-41004281518",
+      "full_artifact_bytes": 7419562597,
+      "full_artifact_digest": "sha256:770e6ff172a3888a9154163548bbf38891aadf1f3f03d368e60a8975dbc74301",
+      "full_scope": "retrieve_family_selected"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "run_id": 41004281518,
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12964072241,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-partial-7-41004281518",
+      "compact_artifact_bytes": 2599605387,
+      "compact_artifact_digest": "sha256:f300e379fd673bbcd1ec7f01be23af9b5314a446b015ea14e3bfd68711927da4",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12963664277,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-partial-7-41004281518",
+      "full_artifact_bytes": 7331874907,
+      "full_artifact_digest": "sha256:b0e32875ff4cd46dbec66e7cfc2725eb33da069b67af2c5e4915fa28ca649ba0",
+      "full_scope": "retrieve_family_selected"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "run_id": 41004281518,
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12963759737,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-partial-8-41004281518",
+      "compact_artifact_bytes": 2596477439,
+      "compact_artifact_digest": "sha256:69b0038cc7b0f084c9a8c18642a43b0f84ead2e06a48c56861930815166a2f6b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12964607038,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-partial-8-41004281518",
+      "full_artifact_bytes": 7322954411,
+      "full_artifact_digest": "sha256:cbdad9e968b55255249550006079a56664432cae581a918836f7f2213d7fc85c",
+      "full_scope": "retrieve_family_selected"
+    }
+  ]
+}

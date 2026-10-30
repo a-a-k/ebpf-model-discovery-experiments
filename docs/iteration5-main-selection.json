@@ -212,6 +212,60 @@
       "reason_code": "technical_preparation_or_closure_replacement",
       "reason": "Earlier attempt failed durable receiver closure despite completed operation counts; the exact-cell repeat completed after the reviewed closure repair. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
       "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        12956722482,
+        12960716789
+      ],
+      "selected_artifact_id": 12960716789,
+      "candidate_run_ids": [
+        41004296165,
+        41009954091
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "The original exact cell stopped at worker checkpoint binding before model construction and validation. The replacement follows the reviewed parent-job liveness repair, retaining the original failed data and all costs. The reporter must verify exactly one technically complete candidate; this declaration does not select forecasts, errors or positive outcomes.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        12956910340,
+        12960084037
+      ],
+      "selected_artifact_id": 12960084037,
+      "candidate_run_ids": [
+        41004296165,
+        41010834860
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "The original exact cell stopped at worker checkpoint binding before model construction and validation. The replacement follows the reviewed parent-job liveness repair, retaining the original failed data and all costs. The reporter must verify exactly one technically complete candidate; this declaration does not select forecasts, errors or positive outcomes.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12956573029,
+        12961715511
+      ],
+      "selected_artifact_id": 12961715511,
+      "candidate_run_ids": [
+        41004296165,
+        41011398324
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "The original exact cell stopped at worker checkpoint binding before model construction and validation. The replacement follows the reviewed parent-job liveness repair, retaining the original failed data and all costs. The reporter must verify exactly one technically complete candidate; this declaration does not select forecasts, errors or positive outcomes.",
+      "independent_review_claim": false
     }
   ]
 }
