@@ -1,0 +1,27 @@
+{
+  "schema_version": "iteration5-main-review-candidates-v1",
+  "selection_rule": "Completed exact OBI DSB full seed6 technical repeat following reviewed worker packaging repair. All earlier attempts retained; no outcome or forecast selection. Existing saved-evidence workflow only.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41005821961,
+      "job_id": 123900390387,
+      "job_conclusion": "success",
+      "head_sha": "8c6f1fac8ea73315e8ea98a9db0014319425d33e",
+      "compact_artifact_id": 12969760740,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-full-6-41005821961",
+      "compact_artifact_bytes": 2598276267,
+      "compact_artifact_digest": "sha256:743845edd59604a6e68bc32787304557dd528ef6ce5265e0c94ac1778a65383f",
+      "full_artifact_id": 12969188019,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-full-6-41005821961",
+      "full_artifact_bytes": 8152230668,
+      "full_artifact_digest": "sha256:057cddc59258b3ce86bfc695511d8f3e23a13a0d73e529a0ff12254be77066e0",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "expired": false
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "observed_utc": "2026-10-30T10:50:34.5337917Z",
+  "archive_run": 41036261914,
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41036261914",
+  "release_id": 428866934,
+  "published_at": "2026-10-30T09:50:43Z",
+  "target_commitish": "cf7b605c961a1632fdf738cbbaa4da782270a577",
+  "source_inventory": "work/archive-smoke-final-ten-20261030.json",
+  "source_run_ids": [40933892507, 40936796228, 40942437542, 40942447288, 40943318871, 40943915967, 40943924937, 40944249737, 40948057864, 41018310659],
+  "totals": {"source_runs": 10, "source_artifacts": 38, "source_artifact_bytes": 981460741, "source_jobs": 22, "available_job_logs": 22, "available_workflow_logs": 10, "release_assets": 72, "release_bytes": 984187497, "checksum_entries": 70},
+  "checks": {"all_source_artifact_release_api_size_digest_equal": true, "all_source_artifact_release_checksum_entries_equal": true, "all_provenance_artifact_indexes_equal_source_inventory": true, "release_asset_set_exact_for_artifacts_and_available_logs": true, "checksum_names_exact_for_nonmetadata_assets": true, "local_provenance_matches_release_api_digest": true, "local_checksum_manifest_matches_release_api_digest": true},
+  "unavailable_logs": [],
+  "mismatches": {"artifact_or_checksum": [], "provenance_index": [], "missing_release_assets": [], "extra_release_assets": [], "checksum_name_diff": []},
+  "local_metadata_files_only": ["release-metadata.json", "provenance.tar.gz", "SHA256SUMS.txt", "publication-verification.json"],
+  "local_source_archives_downloaded": false,
+  "local_logs_downloaded": false,
+  "evidence_scope": "Archive integrity only: original inventory identities/sizes/digests were compared to Release API metadata, release checksums and provenance indexes. No large release asset or log was downloaded; no study admission or empirical recomputation is implied."
+}

@@ -13,6 +13,10 @@ state each source, checked files and verification limits. These are valid
 experimental packets, including unknown and inaccurate forecasts, not 45
 positive findings. Later packets remain in progress. Technical smoke admission does
 not require an available or accurate forecast.
+The [original smoke-attempt archives](results/iteration-5/smoke-archives-20261030/SOURCE.md)
+preserve all 38 attempts for the 27 fixed settings, including technical failures
+and replacements. Original artifact identities match the published data releases;
+unavailable job logs are recorded explicitly.
 New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
 cells was an orchestration error; no credentials are needed and those cells do
 not belong in current coverage or failure totals. Historical snapshots preserve

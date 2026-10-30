@@ -1,0 +1,53 @@
+{
+  "observed_utc": "2026-10-30T09:48:36.7958996Z",
+  "archive_run": 41034987343,
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41034987343",
+  "release_id": 428857546,
+  "published_at": "2026-10-30T09:40:42Z",
+  "target_commitish": "632b6514d9179d4137ffd028135827ccfc954faa",
+  "source_inventory": "work/archive-smoke-next-ten-20261030.json",
+  "source_runs": [
+    {"run_id": 40896064246, "artifact_count": 2, "artifact_bytes": 23852900, "artifact_ids": [12907516425, 12907860762], "job_count": 2},
+    {"run_id": 40898769649, "artifact_count": 4, "artifact_bytes": 60134901, "artifact_ids": [12908528008, 12908871224, 12909436226, 12909541061], "job_count": 2},
+    {"run_id": 40898777011, "artifact_count": 2, "artifact_bytes": 28468614, "artifact_ids": [12907604591, 12908028942], "job_count": 2},
+    {"run_id": 40899601511, "artifact_count": 3, "artifact_bytes": 62405676, "artifact_ids": [12910065453, 12910541431, 12911020083], "job_count": 2},
+    {"run_id": 40902922833, "artifact_count": 3, "artifact_bytes": 57076943, "artifact_ids": [12910318208, 12910762488, 12911410794], "job_count": 2},
+    {"run_id": 40909264363, "artifact_count": 3, "artifact_bytes": 57543112, "artifact_ids": [12913771376, 12914820744, 12915105479], "job_count": 2},
+    {"run_id": 40909271694, "artifact_count": 9, "artifact_bytes": 246660014, "artifact_ids": [12912918709, 12913722491, 12914741681, 12915161149, 12915210909, 12915476064, 12915685223, 12916370886, 12916535612], "job_count": 4},
+    {"run_id": 40909279346, "artifact_count": 4, "artifact_bytes": 55172843, "artifact_ids": [12913043053, 12913303429, 12913642774, 12914900054], "job_count": 2},
+    {"run_id": 40909288192, "artifact_count": 4, "artifact_bytes": 62366607, "artifact_ids": [12913641797, 12914341783, 12914535843, 12915020206], "job_count": 2},
+    {"run_id": 40909294990, "artifact_count": 3, "artifact_bytes": 64788638, "artifact_ids": [12912744289, 12914631223, 12915185493], "job_count": 2}
+  ],
+  "totals": {
+    "source_runs": 10,
+    "source_artifacts": 37,
+    "source_artifact_bytes": 718470248,
+    "source_jobs": 22,
+    "available_job_logs": 22,
+    "available_workflow_logs": 10,
+    "release_assets": 71,
+    "release_bytes": 720974816,
+    "checksum_entries": 69
+  },
+  "checks": {
+    "all_source_artifact_release_api_size_digest_equal": true,
+    "all_source_artifact_release_checksum_entries_equal": true,
+    "all_provenance_artifact_indexes_equal_source_inventory": true,
+    "release_asset_set_exact_for_artifacts_and_available_logs": true,
+    "checksum_names_exact_for_nonmetadata_assets": true,
+    "local_provenance_matches_release_api_digest": true,
+    "local_checksum_manifest_matches_release_api_digest": true
+  },
+  "unavailable_logs": [],
+  "mismatches": {
+    "artifact_or_checksum": [],
+    "provenance_index": [],
+    "missing_release_assets": [],
+    "extra_release_assets": [],
+    "checksum_name_diff": []
+  },
+  "local_metadata_files_only": ["release-metadata.json", "provenance.tar.gz", "SHA256SUMS.txt", "publication-verification.json"],
+  "local_source_archives_downloaded": false,
+  "local_logs_downloaded": false,
+  "evidence_scope": "Archive integrity only: compares original source inventory identities/sizes/digests to Release API metadata, the release checksum manifest, and provenance indexes. Large release assets and logs were not downloaded or locally rehashed; no study admission or empirical recomputation is implied."
+}

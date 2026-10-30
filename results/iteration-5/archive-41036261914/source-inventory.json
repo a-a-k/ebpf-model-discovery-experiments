@@ -1,0 +1,453 @@
+{
+  "observed_at": "2026-10-30 09:49:32 UTC",
+  "scope": "Final ten original smoke attempts; source preservation only, failures included.",
+  "runs": [
+    {
+      "run_id": 40933892507,
+      "artifacts": [
+        {
+          "id": 12925925150,
+          "name": "campaign-v5-coroot-smoke-otel_demo-partial-6-40933892507",
+          "size_in_bytes": 41681794,
+          "digest": "sha256:6251cf7b436073f2b201dc38b33577cf1495a577403aef9e4d8c348cbc584b23",
+          "expired": false
+        },
+        {
+          "id": 12925187023,
+          "name": "v5-summary-coroot-smoke-otel_demo-partial-6-40933892507",
+          "size_in_bytes": 528302,
+          "digest": "sha256:a0f3787ba5086e3f8ee2024daaffcd0fac09d8cfafae3f607ebb818b689657ae",
+          "expired": false
+        },
+        {
+          "id": 12923534656,
+          "name": "training-v4-otel_demo-partial-6-40933892507",
+          "size_in_bytes": 26784753,
+          "digest": "sha256:73cd3f11bc6a4de3e4a8ced5e80031ea784a18d985d7586a7132533a851eeffb",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123659218989,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123659268648,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40936796228,
+      "artifacts": [
+        {
+          "id": 12926540663,
+          "name": "campaign-v5-deepflow-smoke-deathstarbench-absent-6-40936796228",
+          "size_in_bytes": 36350869,
+          "digest": "sha256:c3f9cb2971cc4116caaeaacfbcb9c5f3b85ca220878f86aaf0409a19af02ec91",
+          "expired": false
+        },
+        {
+          "id": 12925317981,
+          "name": "retention-v4-deathstarbench-absent-6-40936796228",
+          "size_in_bytes": 2949,
+          "digest": "sha256:bd8bc20c09f36e3103107670a13c1de62d14f9c5dc7447e58f7da08c2581897c",
+          "expired": false
+        },
+        {
+          "id": 12924404866,
+          "name": "v5-summary-deepflow-smoke-deathstarbench-absent-6-40936796228",
+          "size_in_bytes": 259507,
+          "digest": "sha256:042bd1267687889f4509949a7c5f15f7ac85576e5e71b9b0dfa727c6572130a0",
+          "expired": false
+        },
+        {
+          "id": 12923969985,
+          "name": "training-v4-deathstarbench-absent-6-40936796228",
+          "size_in_bytes": 26080687,
+          "digest": "sha256:efb51e5e3cdced6c8f2e7334aa39b50255216565a4129501564b2b772e4e649e",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123669365700,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123669419664,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40942437542,
+      "artifacts": [
+        {
+          "id": 12929960010,
+          "name": "campaign-v5-coroot-smoke-otel_demo-full-6-40942437542",
+          "size_in_bytes": 42798297,
+          "digest": "sha256:2fba8333bdc0b94c7e394d2971ecec31d5b9f17533c2c48482ac5afb9da5d603",
+          "expired": false
+        },
+        {
+          "id": 12928941627,
+          "name": "v5-summary-coroot-smoke-otel_demo-full-6-40942437542",
+          "size_in_bytes": 567710,
+          "digest": "sha256:4a408ee48cc52ac47134278b5246e510a7a2eaec033b1bf5efbbd84583685a19",
+          "expired": false
+        },
+        {
+          "id": 12927363806,
+          "name": "training-v4-otel_demo-full-6-40942437542",
+          "size_in_bytes": 26968338,
+          "digest": "sha256:55a3817410aaa212356ac33f3af59e71d308151d0469ed8a8fa99290782c27dc",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123689034527,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123689088841,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40942447288,
+      "artifacts": [
+        {
+          "id": 12929555891,
+          "name": "v5-summary-deepflow-smoke-otel_demo-partial-6-40942447288",
+          "size_in_bytes": 341293,
+          "digest": "sha256:0c15d6d0490d54d3130932b1d264cb5b0f8218346a0a9b39b5037b428c00e866",
+          "expired": false
+        },
+        {
+          "id": 12929535044,
+          "name": "v5-summary-deepflow-smoke-otel_demo-absent-6-40942447288",
+          "size_in_bytes": 110073,
+          "digest": "sha256:00c3d7d9faada13408bb917ea05d7ad7392a0d42ee3ec30387a136ef25112746",
+          "expired": false
+        },
+        {
+          "id": 12929530816,
+          "name": "campaign-v5-deepflow-smoke-otel_demo-partial-6-40942447288",
+          "size_in_bytes": 85977045,
+          "digest": "sha256:5328c16f3e27b3d117794b20136626b46b0a12157ac2bd85142a3b8dd1b519f6",
+          "expired": false
+        },
+        {
+          "id": 12928827818,
+          "name": "v5-summary-deepflow-smoke-otel_demo-full-6-40942447288",
+          "size_in_bytes": 355582,
+          "digest": "sha256:7f90b1ce5ef8d1841c103bcff82bdca85adf58148431d830c68da3c4f168a132",
+          "expired": false
+        },
+        {
+          "id": 12927989528,
+          "name": "campaign-v5-deepflow-smoke-otel_demo-full-6-40942447288",
+          "size_in_bytes": 106337974,
+          "digest": "sha256:d6be276af94d4d41888d82f40016f156a00145e8933e9a815c6bac0658c6703a",
+          "expired": false
+        },
+        {
+          "id": 12927643290,
+          "name": "training-v4-otel_demo-partial-6-40942447288",
+          "size_in_bytes": 34388446,
+          "digest": "sha256:0c3009620765184d01ba107ae4bb07be24ddfc91fb974778a7c57a51f39f5bf4",
+          "expired": false
+        },
+        {
+          "id": 12927583844,
+          "name": "campaign-v5-deepflow-smoke-otel_demo-absent-6-40942447288",
+          "size_in_bytes": 32019973,
+          "digest": "sha256:6b8908edb75c0c6efd6192e1bcf8c381c979b8abc958ed687739919317975404",
+          "expired": false
+        },
+        {
+          "id": 12927093753,
+          "name": "training-v4-otel_demo-full-6-40942447288",
+          "size_in_bytes": 33423066,
+          "digest": "sha256:6d3de1bdc3ba5074d606ccb4286a2593eb73b62070744282cdd3d31739ee3e3c",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123689065628,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123689101330,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123689101447,
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 123689101545,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40943318871,
+      "artifacts": [
+        {
+          "id": 12929400533,
+          "name": "retention-v4-deathstarbench-partial-6-40943318871",
+          "size_in_bytes": 2953,
+          "digest": "sha256:ab0988792c9f916e75f99bf3712757bdaccb38f3835ef5fc5c144a57fb055742",
+          "expired": false
+        },
+        {
+          "id": 12928222239,
+          "name": "training-v4-deathstarbench-partial-6-40943318871",
+          "size_in_bytes": 27386236,
+          "digest": "sha256:02c4b86be16b637c7ebd30b2ef7f0a601f3cd38862ac3bfa9ca0daeef3e5a824",
+          "expired": false
+        },
+        {
+          "id": 12927818968,
+          "name": "v5-summary-deepflow-smoke-deathstarbench-partial-6-40943318871",
+          "size_in_bytes": 284509,
+          "digest": "sha256:a954a94f650c0f26632579784fca616cd5757ea0870f8e76415aed4ca3257dae",
+          "expired": false
+        },
+        {
+          "id": 12927709077,
+          "name": "campaign-v5-deepflow-smoke-deathstarbench-partial-6-40943318871",
+          "size_in_bytes": 43363448,
+          "digest": "sha256:843aa5862ada493c92d13a85a9a8f163927e5dfaf9211f55441de6d48dd55280",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123692059854,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123692100834,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40943915967,
+      "artifacts": [
+        {
+          "id": 12930405622,
+          "name": "v5-summary-deepflow-smoke-petclinic-partial-6-40943915967",
+          "size_in_bytes": 316142,
+          "digest": "sha256:c8d024f81c2cf0dde118bb06b52e4007be45c71f79d11daa57197aecfeaef3cb",
+          "expired": false
+        },
+        {
+          "id": 12929856579,
+          "name": "campaign-v5-deepflow-smoke-petclinic-partial-6-40943915967",
+          "size_in_bytes": 49883825,
+          "digest": "sha256:06ebef0c1586eceb542e885091d36e528e5e9330052a56451c8dc4c5313f1a39",
+          "expired": false
+        },
+        {
+          "id": 12928782164,
+          "name": "training-v4-petclinic-partial-6-40943915967",
+          "size_in_bytes": 29076492,
+          "digest": "sha256:ab563f9500481e7710011ea479eb82f41b3d5dd5df37ad1dda6510914323b94f",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123694143189,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123694196637,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40943924937,
+      "artifacts": [
+        {
+          "id": 12929672202,
+          "name": "campaign-v5-deepflow-smoke-petclinic-full-6-40943924937",
+          "size_in_bytes": 50883582,
+          "digest": "sha256:f4d955e382822cee180c1c57c85e3a7f1b487a6e4fc0dd4e9802c7ab7c583bee",
+          "expired": false
+        },
+        {
+          "id": 12928948114,
+          "name": "v5-summary-deepflow-smoke-petclinic-full-6-40943924937",
+          "size_in_bytes": 328415,
+          "digest": "sha256:01b7b7528c9b1209a03c1a653fbbc031a6df0c1e0a69fa4b5a770b47308e4f7b",
+          "expired": false
+        },
+        {
+          "id": 12928712121,
+          "name": "training-v4-petclinic-full-6-40943924937",
+          "size_in_bytes": 29284086,
+          "digest": "sha256:1865995a7a024a6be1d131dcee0e49cfd615da25832395c1f74378a91312f8de",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123694176521,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123694225974,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40944249737,
+      "artifacts": [
+        {
+          "id": 12929002778,
+          "name": "retention-v4-deathstarbench-full-6-40944249737",
+          "size_in_bytes": 2957,
+          "digest": "sha256:bbc1740dc1fd108ba37950f01e42907066bd20486c71cb74db7fa22e29a147c8",
+          "expired": false
+        },
+        {
+          "id": 12928903033,
+          "name": "campaign-v5-deepflow-smoke-deathstarbench-full-6-40944249737",
+          "size_in_bytes": 46379181,
+          "digest": "sha256:cb7e3d3a1b5fb41d4d699780bcd53b8f33559b57beeb7aac13e5c6cbd3a8e40f",
+          "expired": false
+        },
+        {
+          "id": 12928901622,
+          "name": "training-v4-deathstarbench-full-6-40944249737",
+          "size_in_bytes": 27651120,
+          "digest": "sha256:f358fde64f9870c5b267f9578ce897716438066614bd0aa9664da059dadfc3a9",
+          "expired": false
+        },
+        {
+          "id": 12928474218,
+          "name": "v5-summary-deepflow-smoke-deathstarbench-full-6-40944249737",
+          "size_in_bytes": 289507,
+          "digest": "sha256:6090f60a738667c7c60a28e0943b631cd568544daa95d8f13397025b3d38a135",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123695297777,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123695340888,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40948057864,
+      "artifacts": [
+        {
+          "id": 12932630483,
+          "name": "campaign-v5-deepflow-smoke-otel_demo-absent-6-40948057864",
+          "size_in_bytes": 75497659,
+          "digest": "sha256:317a207e11a66719f177568a37d93133bdc1c728ef8a647d97c71df52691e77b",
+          "expired": false
+        },
+        {
+          "id": 12931813811,
+          "name": "v5-summary-deepflow-smoke-otel_demo-absent-6-40948057864",
+          "size_in_bytes": 293217,
+          "digest": "sha256:c4df6e2772556998a22b58f6d5b506ee400c3cbdb1b80d48e128c3df6571dfcb",
+          "expired": false
+        },
+        {
+          "id": 12931108362,
+          "name": "training-v4-otel_demo-absent-6-40948057864",
+          "size_in_bytes": 32893497,
+          "digest": "sha256:078e27dbba07a9c7af29fad8dc7e94ee0fa785a0f0b238dc5825927c6c2a24db",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123708546382,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123708590945,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 41018310659,
+      "artifacts": [
+        {
+          "id": 12960996023,
+          "name": "training-v4-petclinic-absent-6-41018310659",
+          "size_in_bytes": 28096412,
+          "digest": "sha256:e165a2d855393b0e4f89026f54464c583a824a6145efd73a717ec22fa66481f1",
+          "expired": false
+        },
+        {
+          "id": 12960912355,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-41018310659",
+          "size_in_bytes": 293506,
+          "digest": "sha256:0597f318eb9628aa7f94c4efe3d25e115afa0c12dc7d44d7e1b6211404d316e7",
+          "expired": false
+        },
+        {
+          "id": 12960583383,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-41018310659",
+          "size_in_bytes": 44277339,
+          "digest": "sha256:a22a4d5b3de0d6ebf69676baee718124e0a341569b5b6619faa7822b7de4e585",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123939579785,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123939602557,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "total_artifact_bytes": 981460741
+}

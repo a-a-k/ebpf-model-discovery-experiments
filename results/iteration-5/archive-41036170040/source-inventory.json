@@ -1,0 +1,446 @@
+{
+  "observed_at": "2026-10-30 09:48:48 UTC",
+  "scope": "Next ten original smoke attempts; archive preservation only, all technical failures included.",
+  "runs": [
+    {
+      "run_id": 40909303154,
+      "artifacts": [
+        {
+          "id": 12915031097,
+          "name": "v5-summary-obi-smoke-petclinic-full-6-40909303154",
+          "size_in_bytes": 269058,
+          "digest": "sha256:a7b3ec3beb9d9477a306b43383f5b594238b62e07dab9c0abd9429439d76ddbc",
+          "expired": false
+        },
+        {
+          "id": 12913644553,
+          "name": "campaign-v5-obi-smoke-petclinic-full-6-40909303154",
+          "size_in_bytes": 40246855,
+          "digest": "sha256:79d8f85db0521c0889be36fca1ec2124a67d5e0b710cf6b2be3e13f64374fbe9",
+          "expired": false
+        },
+        {
+          "id": 12912664548,
+          "name": "training-v4-petclinic-full-6-40909303154",
+          "size_in_bytes": 26034694,
+          "digest": "sha256:8663991f663c1080c8931130d433a0b8e758a9afd20dd432a7cb5b781a659f07",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572585499,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572639451,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40910393953,
+      "artifacts": [
+        {
+          "id": 12915510227,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40910393953",
+          "size_in_bytes": 280561,
+          "digest": "sha256:d9f63fd47a81e73d09153132f41002b764f189abc2c539dc334e31ea738e8746",
+          "expired": false
+        },
+        {
+          "id": 12915445515,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40910393953",
+          "size_in_bytes": 40795835,
+          "digest": "sha256:988cb584fba3a29a1967a7fb18cf7ea57f55769eaec38e4aed636ead81dd676c",
+          "expired": false
+        },
+        {
+          "id": 12913737480,
+          "name": "training-v4-petclinic-absent-6-40910393953",
+          "size_in_bytes": 27161654,
+          "digest": "sha256:740b5340576bfa51c04206c647232295b01f166131409b99fee196b6f7260106",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123576483454,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123576553435,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40916651613,
+      "artifacts": [
+        {
+          "id": 12918375033,
+          "name": "retention-v4-deathstarbench-full-6-40916651613",
+          "size_in_bytes": 2947,
+          "digest": "sha256:03db6ae3591bbccaa26ac5fe6b8a8a079b4462be58bd06f4cf08416cef54ac3d",
+          "expired": false
+        },
+        {
+          "id": 12917472672,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-full-6-40916651613",
+          "size_in_bytes": 37522162,
+          "digest": "sha256:7ae5939f65873e43cbbdde394379c08d1883072ee7a6db7286884915d9ed9fae",
+          "expired": false
+        },
+        {
+          "id": 12917186844,
+          "name": "retention-v4-deathstarbench-partial-6-40916651613",
+          "size_in_bytes": 2947,
+          "digest": "sha256:c86c522efb762bc50651267a14ebe8d12820d675fca8c6916d339d164b5fcfc0",
+          "expired": false
+        },
+        {
+          "id": 12916983473,
+          "name": "v5-summary-coroot-smoke-deathstarbench-full-6-40916651613",
+          "size_in_bytes": 431652,
+          "digest": "sha256:874b748e98de4257fae3ae4174f7b3fd0f09c1af8d6c26475f85aa6f75462ee5",
+          "expired": false
+        },
+        {
+          "id": 12916642863,
+          "name": "v5-summary-coroot-smoke-deathstarbench-absent-6-40916651613",
+          "size_in_bytes": 368252,
+          "digest": "sha256:8c6688ef356f4c76e2630f2285551cd53ad629ed2696dde9db559d4816796223",
+          "expired": false
+        },
+        {
+          "id": 12916313359,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-partial-6-40916651613",
+          "size_in_bytes": 35064320,
+          "digest": "sha256:e6f90ebf73db4603499bb018ac505b6e13c1d3bdbd83e544db32445ed3d9a290",
+          "expired": false
+        },
+        {
+          "id": 12916173375,
+          "name": "retention-v4-deathstarbench-absent-6-40916651613",
+          "size_in_bytes": 2959,
+          "digest": "sha256:504e30aa20809b0625256a23ff830b7497ce7952571b5479f0bdf7567254fcbd",
+          "expired": false
+        },
+        {
+          "id": 12916113468,
+          "name": "training-v4-deathstarbench-partial-6-40916651613",
+          "size_in_bytes": 25938607,
+          "digest": "sha256:b007a78ec5263dd9f09f120a676f371c059c0b1ad93cca2e6dd1cd02f505af87",
+          "expired": false
+        },
+        {
+          "id": 12916023033,
+          "name": "training-v4-deathstarbench-absent-6-40916651613",
+          "size_in_bytes": 25031257,
+          "digest": "sha256:c62f510c1412d2115f93b1cb3c29d9262d5ff8212904548355bd02a2dff2225c",
+          "expired": false
+        },
+        {
+          "id": 12915784254,
+          "name": "campaign-v5-coroot-smoke-deathstarbench-absent-6-40916651613",
+          "size_in_bytes": 30381830,
+          "digest": "sha256:b2d197995b0e6addcc67207fa5a98df804d6a6d66bc7ac0b2e38eacd45969f66",
+          "expired": false
+        },
+        {
+          "id": 12915733516,
+          "name": "training-v4-deathstarbench-full-6-40916651613",
+          "size_in_bytes": 26180428,
+          "digest": "sha256:0384986037685286e63f6da83f463e06141c1ff85f33ca2d3143835d460caeeb",
+          "expired": false
+        },
+        {
+          "id": 12915724898,
+          "name": "v5-summary-coroot-smoke-deathstarbench-partial-6-40916651613",
+          "size_in_bytes": 410926,
+          "digest": "sha256:93b82327b7b37e6ea74dccd1208838d7dba91ca51fec5165bf6822e5dda076b2",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123598557302,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123598607263,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123598607345,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123598607439,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40920573691,
+      "artifacts": [
+        {
+          "id": 12919590912,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40920573691",
+          "size_in_bytes": 44668161,
+          "digest": "sha256:b6646be1c74e76533a28631fe5c88a11f4942fa768e06becc8928752af77c9f9",
+          "expired": false
+        },
+        {
+          "id": 12918985925,
+          "name": "training-v4-petclinic-absent-6-40920573691",
+          "size_in_bytes": 28053428,
+          "digest": "sha256:25b2777955fb0692a7c518166286d5d6ad9c333dce98263b50c9b1d856c086fe",
+          "expired": false
+        },
+        {
+          "id": 12918178508,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40920573691",
+          "size_in_bytes": 290456,
+          "digest": "sha256:e2a3c8daed6041095a042115d7d9ba1008d42ed5b2c48577a78dbaf77d2f313b",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123612367739,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123612417198,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40921056157,
+      "artifacts": [
+        {
+          "id": 12920435257,
+          "name": "v5-summary-coroot-smoke-petclinic-partial-6-40921056157",
+          "size_in_bytes": 534031,
+          "digest": "sha256:6cae68b5ba03081bcec4d9b156a351c4f077621704116c1e6439deede72829b6",
+          "expired": false
+        },
+        {
+          "id": 12918928976,
+          "name": "campaign-v5-coroot-smoke-petclinic-partial-6-40921056157",
+          "size_in_bytes": 34265188,
+          "digest": "sha256:0d5189b449d96d2d6f9a2274e08f8f8d82fab47138aa7e5d7342ac9bb4083cf7",
+          "expired": false
+        },
+        {
+          "id": 12917999425,
+          "name": "training-v4-petclinic-partial-6-40921056157",
+          "size_in_bytes": 25658804,
+          "digest": "sha256:5ad7d9c789d43f1aa543accb62ffe07bdcad1f94a080a9673ab33ced982b8516",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123614070873,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123614121293,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40922905708,
+      "artifacts": [
+        {
+          "id": 12920375252,
+          "name": "campaign-v5-coroot-smoke-petclinic-full-6-40922905708",
+          "size_in_bytes": 24152584,
+          "digest": "sha256:ec8d53ea0075db77a3bc152261c08f2bef55eafb54233273516cf8494aa6eb56",
+          "expired": false
+        },
+        {
+          "id": 12919252994,
+          "name": "v5-summary-coroot-smoke-petclinic-full-6-40922905708",
+          "size_in_bytes": 90296,
+          "digest": "sha256:5b293661d41afaeb80b3e57acf8260f14f8633a7ae92334a670777cf895bd4b8",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123620638597,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123620691943,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40923928201,
+      "artifacts": [
+        {
+          "id": 12922255527,
+          "name": "v5-summary-coroot-smoke-otel_demo-absent-6-40923928201",
+          "size_in_bytes": 654113,
+          "digest": "sha256:f92609a08f32deedad5503712689dc4253b359f4344fcf25001faa0bb1f9480c",
+          "expired": false
+        },
+        {
+          "id": 12920991900,
+          "name": "training-v4-otel_demo-absent-6-40923928201",
+          "size_in_bytes": 25728798,
+          "digest": "sha256:b1b4bb91b9ec112a960170851f4e4fe85ced98fbb442e6cb76d0b1918820e678",
+          "expired": false
+        },
+        {
+          "id": 12920908046,
+          "name": "campaign-v5-coroot-smoke-otel_demo-absent-6-40923928201",
+          "size_in_bytes": 36882629,
+          "digest": "sha256:0d84ff3606631f016cf39c09a69355b2c8893d968bb888a1f2c27150b901d405",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123624273475,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123624318547,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40930786566,
+      "artifacts": [
+        {
+          "id": 12923916576,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40930786566",
+          "size_in_bytes": 45190775,
+          "digest": "sha256:231559700200e24ec7a02387f971ddcf9d2642c85daf2e5fb6a9a8ebd402495f",
+          "expired": false
+        },
+        {
+          "id": 12923482530,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40930786566",
+          "size_in_bytes": 292517,
+          "digest": "sha256:8de74b3c52c8ebfeb9167b409e81a3dfee42c6a4f210261f2d11f7436a190d34",
+          "expired": false
+        },
+        {
+          "id": 12922248185,
+          "name": "training-v4-petclinic-absent-6-40930786566",
+          "size_in_bytes": 28154876,
+          "digest": "sha256:d9c8508e424fb706705487b214746a59a5a1cca48f1cb70146d0a6e819871b13",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123648342826,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123648400667,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40930793452,
+      "artifacts": [
+        {
+          "id": 12923555440,
+          "name": "campaign-v5-coroot-smoke-petclinic-full-6-40930793452",
+          "size_in_bytes": 23769960,
+          "digest": "sha256:d8fc8e3746389789715855976983dbc70d39cd5a457e5a0f2f162c8ebd0b74ce",
+          "expired": false
+        },
+        {
+          "id": 12922117940,
+          "name": "v5-summary-coroot-smoke-petclinic-full-6-40930793452",
+          "size_in_bytes": 14510,
+          "digest": "sha256:22adcf62ba1fc3a5af799fc77f614359e2b67d979358520cac7c92b0e49b363a",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123648367512,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123648428445,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40933885726,
+      "artifacts": [
+        {
+          "id": 12925795283,
+          "name": "campaign-v5-coroot-smoke-petclinic-full-6-40933885726",
+          "size_in_bytes": 34259053,
+          "digest": "sha256:dbdc8f455fa07b0235880e9cf8897e8dc5a95bc007f7ad3b8937b198a7fa97e4",
+          "expired": false
+        },
+        {
+          "id": 12925016869,
+          "name": "v5-summary-coroot-smoke-petclinic-full-6-40933885726",
+          "size_in_bytes": 466343,
+          "digest": "sha256:1361884874e28929cf957db78c3c9c16951588d66c7ede95ed2c0964c26705d0",
+          "expired": false
+        },
+        {
+          "id": 12923603308,
+          "name": "training-v4-petclinic-full-6-40933885726",
+          "size_in_bytes": 25701562,
+          "digest": "sha256:bbdf9466e15ba2fc61db2aac1e871d490b276a4436240c83a553cb5b4eb911ff",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123659194304,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123659241725,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "total_artifact_bytes": 694955028
+}

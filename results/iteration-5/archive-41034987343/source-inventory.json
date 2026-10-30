@@ -1,0 +1,456 @@
+{
+  "observed_utc": "2026-10-30 09:39:08 UTC",
+  "source_runs": [
+    {
+      "run_id": 40896064246,
+      "artifact_bytes": 23852900,
+      "artifacts": [
+        {
+          "id": 12907860762,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40896064246",
+          "size": 23826385,
+          "digest": "sha256:e90182528b47452d593ebb70be040640e0c9816592a69adb2ad36fca562b8f6c",
+          "expired": false
+        },
+        {
+          "id": 12907516425,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40896064246",
+          "size": 26515,
+          "digest": "sha256:a90813f7becdf5c4c53104a0830fcef56235c06b5169283414af7f8b604aca0a",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123525383445,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123525437245,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40898769649,
+      "artifact_bytes": 60134901,
+      "artifacts": [
+        {
+          "id": 12909541061,
+          "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-40898769649",
+          "size": 34021155,
+          "digest": "sha256:1d4e1c9cb822749b5be7728721a0acf278ffa32ed9e82d00061cbf5f289968ac",
+          "expired": false
+        },
+        {
+          "id": 12909436226,
+          "name": "v5-summary-obi-smoke-deathstarbench-partial-6-40898769649",
+          "size": 86853,
+          "digest": "sha256:dcdff8fdc05b9f97ac84ab2f4a6b934e114d4cee7fb8be941eb76f1747153928",
+          "expired": false
+        },
+        {
+          "id": 12908871224,
+          "name": "training-v4-deathstarbench-partial-6-40898769649",
+          "size": 26023953,
+          "digest": "sha256:e490e44b58001e1bec751408cdab18b59220ce8438f552c6ac9e6f5cf550c3fb",
+          "expired": false
+        },
+        {
+          "id": 12908528008,
+          "name": "retention-v4-deathstarbench-partial-6-40898769649",
+          "size": 2940,
+          "digest": "sha256:a193dd078cb0b99211aa01ce016a96ee8be403bfc7ea74d86e3040a2579a37ad",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123535031052,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123535085159,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40898777011,
+      "artifact_bytes": 28468614,
+      "artifacts": [
+        {
+          "id": 12908028942,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40898777011",
+          "size": 28376195,
+          "digest": "sha256:d978116fea3e732e6b011edf9adba64aa5d19dc3d556405d10894b82f57895cc",
+          "expired": false
+        },
+        {
+          "id": 12907604591,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40898777011",
+          "size": 92419,
+          "digest": "sha256:604ae6942620c968f87ad887ccedb94e95414458f13a32dd7fca465a14c8393c",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123535061359,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123535116154,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40899601511,
+      "artifact_bytes": 62405676,
+      "artifacts": [
+        {
+          "id": 12911020083,
+          "name": "campaign-v5-obi-smoke-petclinic-absent-6-40899601511",
+          "size": 36671072,
+          "digest": "sha256:74d27d524ec29d9c2fa70336acc0f8400bfd7c8d058a6637c420eaad0c7b2863",
+          "expired": false
+        },
+        {
+          "id": 12910541431,
+          "name": "v5-summary-obi-smoke-petclinic-absent-6-40899601511",
+          "size": 117912,
+          "digest": "sha256:a179be88750184a925bd90b4d36346b1c778b49c3f8ab2972f9c6aa7a0e79996",
+          "expired": false
+        },
+        {
+          "id": 12910065453,
+          "name": "training-v4-petclinic-absent-6-40899601511",
+          "size": 25616692,
+          "digest": "sha256:2ec3b5e91fe53d86ef8ecf670287bdf78d11ab5bf69dc2abda04b59f25488904",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123537952353,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123538022599,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40902922833,
+      "artifact_bytes": 57076943,
+      "artifacts": [
+        {
+          "id": 12911410794,
+          "name": "v5-summary-deepflow-smoke-petclinic-absent-6-40902922833",
+          "size": 102968,
+          "digest": "sha256:14c125019b228d04901ce21dc44e01d7824da6742d76f21827a617a8f63ad46f",
+          "expired": false
+        },
+        {
+          "id": 12910762488,
+          "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-40902922833",
+          "size": 29715113,
+          "digest": "sha256:39f55c75f59cc5c6ac03a4a72b6da8ba77ddafbd0e36cf1692a59c6d82c228b6",
+          "expired": false
+        },
+        {
+          "id": 12910318208,
+          "name": "training-v4-petclinic-absent-6-40902922833",
+          "size": 27258862,
+          "digest": "sha256:6519ae3f8e3b1566de2fd0afd104d16f3281f9c6340fe7f17bd2d03dc326c0de",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123549819222,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123549868522,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40909264363,
+      "artifact_bytes": 57543112,
+      "artifacts": [
+        {
+          "id": 12915105479,
+          "name": "campaign-v5-coroot-smoke-petclinic-absent-6-40909264363",
+          "size": 31867475,
+          "digest": "sha256:d30990e0b0ecc061d18008096900da24bf37e72be4d5d3f0027795627fb7cf9c",
+          "expired": false
+        },
+        {
+          "id": 12914820744,
+          "name": "v5-summary-coroot-smoke-petclinic-absent-6-40909264363",
+          "size": 468825,
+          "digest": "sha256:7c7a78513bbe155f6cfc5af05950b71ea1023c6efb35f1d0ef6e3d6a5c772557",
+          "expired": false
+        },
+        {
+          "id": 12913771376,
+          "name": "training-v4-petclinic-absent-6-40909264363",
+          "size": 25206812,
+          "digest": "sha256:91ec72f9f072decaf9d1614dbab949314d157af71a9e5f0f7278511bd6083fe9",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572464552,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572527270,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40909271694,
+      "artifact_bytes": 246660014,
+      "artifacts": [
+        {
+          "id": 12916535612,
+          "name": "campaign-v5-obi-smoke-otel_demo-absent-6-40909271694",
+          "size": 56670595,
+          "digest": "sha256:493edbdf59f8f6a9b6a715464791333f23986deeaee379f9843e0f44ce6d1143",
+          "expired": false
+        },
+        {
+          "id": 12916370886,
+          "name": "v5-summary-obi-smoke-otel_demo-absent-6-40909271694",
+          "size": 286495,
+          "digest": "sha256:d58542e64adbc1684a9c15c38d2021f1d680e84ed792ea95fa403a6f5f3a9616",
+          "expired": false
+        },
+        {
+          "id": 12915685223,
+          "name": "campaign-v5-obi-smoke-otel_demo-full-6-40909271694",
+          "size": 56087284,
+          "digest": "sha256:40ccfa55a444162f51e55508765c177ecf7957444a26203a9467a1ec31dc6302",
+          "expired": false
+        },
+        {
+          "id": 12915476064,
+          "name": "v5-summary-obi-smoke-otel_demo-full-6-40909271694",
+          "size": 287521,
+          "digest": "sha256:8e4d007c750f81229a7bfd859c0074e6ba9a8793da4ed359df8c7383f05cc117",
+          "expired": false
+        },
+        {
+          "id": 12915210909,
+          "name": "v5-summary-obi-smoke-otel_demo-partial-6-40909271694",
+          "size": 269889,
+          "digest": "sha256:e321e8bfb351eb379871f62ecbb9cf28fd607de97b33283ce735073978a2a7bb",
+          "expired": false
+        },
+        {
+          "id": 12915161149,
+          "name": "campaign-v5-obi-smoke-otel_demo-partial-6-40909271694",
+          "size": 48085032,
+          "digest": "sha256:77fe4a735c8ccfc1f04da7f05e0fd86953ecf6e7b232ff7c5e21616950d3a41d",
+          "expired": false
+        },
+        {
+          "id": 12914741681,
+          "name": "training-v4-otel_demo-absent-6-40909271694",
+          "size": 27698109,
+          "digest": "sha256:8c9278528f2922dee8da9e3977be7ef50a48be66a6e73703eda878a95f4f0069",
+          "expired": false
+        },
+        {
+          "id": 12913722491,
+          "name": "training-v4-otel_demo-partial-6-40909271694",
+          "size": 28617849,
+          "digest": "sha256:fae9e009b1191e174eaeeabd9789a9e6818cd23da6b3604982f92d5ae80aa8b4",
+          "expired": false
+        },
+        {
+          "id": 12912918709,
+          "name": "training-v4-otel_demo-full-6-40909271694",
+          "size": 28657240,
+          "digest": "sha256:e7f48a9a875081031f0607a66d300f4c61ce4aa1ef3da532916bd22edac0991a",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572478870,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572542685,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572542815,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572542996,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40909279346,
+      "artifact_bytes": 55172843,
+      "artifacts": [
+        {
+          "id": 12914900054,
+          "name": "retention-v4-deathstarbench-absent-6-40909279346",
+          "size": 2950,
+          "digest": "sha256:c180ba815f3ec949c05de6aa0cff0c330cbd0253875c2e4d8d6162038698d13b",
+          "expired": false
+        },
+        {
+          "id": 12913642774,
+          "name": "campaign-v5-obi-smoke-deathstarbench-absent-6-40909279346",
+          "size": 29877697,
+          "digest": "sha256:5ebb00ea990594ee00ea5c2070bd4cf4d1f3e8b8c651d8483702cd1f44d70bdb",
+          "expired": false
+        },
+        {
+          "id": 12913303429,
+          "name": "v5-summary-obi-smoke-deathstarbench-absent-6-40909279346",
+          "size": 179864,
+          "digest": "sha256:ca320c3e9f195983aa4c1c50419cbfa381edf881857415af1b9f88b967c1b6fd",
+          "expired": false
+        },
+        {
+          "id": 12913043053,
+          "name": "training-v4-deathstarbench-absent-6-40909279346",
+          "size": 25112332,
+          "digest": "sha256:d67396eb16e9bd9746b6d9e1fd687bd9b7d3f9871645670f0283bb46d7be4a7a",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572504162,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572563107,
+          "status": "completed",
+          "conclusion": "failure"
+        }
+      ]
+    },
+    {
+      "run_id": 40909288192,
+      "artifact_bytes": 62366607,
+      "artifacts": [
+        {
+          "id": 12915020206,
+          "name": "retention-v4-deathstarbench-full-6-40909288192",
+          "size": 2957,
+          "digest": "sha256:4da119af06c4ad15dc7a78d94816cc408e2b5cc4cd01aa5b0503469a7d1fa21e",
+          "expired": false
+        },
+        {
+          "id": 12914535843,
+          "name": "v5-summary-obi-smoke-deathstarbench-full-6-40909288192",
+          "size": 207109,
+          "digest": "sha256:68118d4adc080078e66ce781572dcb8247d059e0be450d986c953208cc821e45",
+          "expired": false
+        },
+        {
+          "id": 12914341783,
+          "name": "campaign-v5-obi-smoke-deathstarbench-full-6-40909288192",
+          "size": 35927083,
+          "digest": "sha256:680fd0f94b45690e7b16e191bbc45ce33509e83b628b0dd828fd12193d11cd0b",
+          "expired": false
+        },
+        {
+          "id": 12913641797,
+          "name": "training-v4-deathstarbench-full-6-40909288192",
+          "size": 26229458,
+          "digest": "sha256:24ae47bcf8591936ddf43cdab045ec9ddfa457851cb24be8e2304c3de70c5ff3",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572533954,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572592259,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run_id": 40909294990,
+      "artifact_bytes": 64788638,
+      "artifacts": [
+        {
+          "id": 12915185493,
+          "name": "campaign-v5-obi-smoke-petclinic-partial-6-40909294990",
+          "size": 38657174,
+          "digest": "sha256:d8104ccee1a5920afc4219936cd1492bcb36e971988253075a3e043819fd77bd",
+          "expired": false
+        },
+        {
+          "id": 12914631223,
+          "name": "v5-summary-obi-smoke-petclinic-partial-6-40909294990",
+          "size": 255306,
+          "digest": "sha256:c5c661d83fa29296ab0ad46a509644302ebb7517989ebc136cee3f6a20963460",
+          "expired": false
+        },
+        {
+          "id": 12912744289,
+          "name": "training-v4-petclinic-partial-6-40909294990",
+          "size": 25876158,
+          "digest": "sha256:e1519652100718fc5356bd6991879c0fdc009322be9e01e4a5e5a8b59505f773",
+          "expired": false
+        }
+      ],
+      "jobs": [
+        {
+          "id": 123572556734,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 123572606867,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "artifact_bytes": 718470248,
+  "scope": "Next ten original smoke attempts, including failed and superseded evidence. No local artifact bodies."
+}

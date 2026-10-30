@@ -284,6 +284,27 @@
       "reason_code": "technical_preparation_or_closure_replacement",
       "reason": "Original attempt stopped during the reset between calibration blocks with frontend unhealthy, before a complete training checkpoint, forecast or target validation. The separately reviewed exact-cell repeat completed. Preserve the failed source and costs; reporter must verify exactly one technically complete candidate. No selection by forecast, error or positive outcome.",
       "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        12928354094,
+        12941975097,
+        12969760740
+      ],
+      "selected_artifact_id": 12969760740,
+      "candidate_run_ids": [
+        40913407822,
+        40932031732,
+        40947264867,
+        41005821961
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation/worker retention or were cancelled under recorded technical replacement. The exact repeat follows the independently reviewed worker packaging repair. All old evidence and costs remain; reporter must verify exactly one technically complete candidate, with no selection by forecast, error or positive outcome.",
+      "independent_review_claim": false
     }
   ]
 }

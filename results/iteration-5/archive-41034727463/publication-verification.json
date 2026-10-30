@@ -1,0 +1,55 @@
+{
+  "observed_utc": "2026-10-30T09:48:36.7958996Z",
+  "archive_run": 41034727463,
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41034727463",
+  "release_id": 428855582,
+  "published_at": "2026-10-30T09:38:32Z",
+  "target_commitish": "632b6514d9179d4137ffd028135827ccfc954faa",
+  "source_inventory": "work/archive-smoke-first-eight-20261030.json",
+  "source_runs": [
+    {"run_id": 40880849418, "artifact_count": 15, "artifact_bytes": 143508163, "artifact_ids": [12899539679, 12899729040, 12899734266, 12899759198, 12899759896, 12899824429, 12899834966, 12899978709, 12900113822, 12900143007, 12900367017, 12900696318, 12900786008, 12900865939, 12901275629], "job_count": 10},
+    {"run_id": 40884914635, "artifact_count": 3, "artifact_bytes": 24109002, "artifact_ids": [12900809507, 12901603339, 12902441322], "job_count": 2},
+    {"run_id": 40885990713, "artifact_count": 2, "artifact_bytes": 23794122, "artifact_ids": [12902598140, 12902762367], "job_count": 2},
+    {"run_id": 40890296710, "artifact_count": 3, "artifact_bytes": 24114514, "artifact_ids": [12902979882, 12903798377, 12905535158], "job_count": 2},
+    {"run_id": 40890303219, "artifact_count": 2, "artifact_bytes": 23933748, "artifact_ids": [12904339074, 12904504707], "job_count": 2},
+    {"run_id": 40890763831, "artifact_count": 2, "artifact_bytes": 24111204, "artifact_ids": [12905002563, 12905425997], "job_count": 2},
+    {"run_id": 40895622472, "artifact_count": 4, "artifact_bytes": 52664719, "artifact_ids": [12907067906, 12907756205, 12908010750, 12908155307], "job_count": 2},
+    {"run_id": 40895637294, "artifact_count": 3, "artifact_bytes": 56272082, "artifact_ids": [12907518474, 12907577027, 12907623166], "job_count": 2}
+  ],
+  "totals": {
+    "source_runs": 8,
+    "source_artifacts": 34,
+    "source_artifact_bytes": 372507554,
+    "source_jobs": 24,
+    "available_job_logs": 21,
+    "available_workflow_logs": 8,
+    "release_assets": 65,
+    "release_bytes": 373967919,
+    "checksum_entries": 63
+  },
+  "checks": {
+    "all_source_artifact_release_api_size_digest_equal": true,
+    "all_source_artifact_release_checksum_entries_equal": true,
+    "all_provenance_artifact_indexes_equal_source_inventory": true,
+    "release_asset_set_exact_for_artifacts_and_available_logs": true,
+    "checksum_names_exact_for_nonmetadata_assets": true,
+    "local_provenance_matches_release_api_digest": true,
+    "local_checksum_manifest_matches_release_api_digest": true
+  },
+  "unavailable_logs": [
+    {"run_id": 40880849418, "kind": "job", "job_id": 123471696616, "state": "unavailable", "http_status": 404, "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123471696616/logs"},
+    {"run_id": 40880849418, "kind": "job", "job_id": 123471696793, "state": "unavailable", "http_status": 404, "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123471696793/logs"},
+    {"run_id": 40880849418, "kind": "job", "job_id": 123471696833, "state": "unavailable", "http_status": 404, "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123471696833/logs"}
+  ],
+  "mismatches": {
+    "artifact_or_checksum": [],
+    "provenance_index": [],
+    "missing_release_assets": [],
+    "extra_release_assets": [],
+    "checksum_name_diff": []
+  },
+  "local_metadata_files_only": ["release-metadata.json", "provenance.tar.gz", "SHA256SUMS.txt", "publication-verification.json"],
+  "local_source_archives_downloaded": false,
+  "local_logs_downloaded": false,
+  "evidence_scope": "Archive integrity only: compares original source inventory identities/sizes/digests to Release API metadata, the release checksum manifest, and provenance indexes. Large release assets and logs were not downloaded or locally rehashed; no study admission or empirical recomputation is implied."
+}
