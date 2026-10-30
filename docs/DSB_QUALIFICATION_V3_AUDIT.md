@@ -89,3 +89,43 @@ pinned protocol support and identity/binding boundaries. No additional common
 adapter repair is justified by these facts. The other 18 qualification settings
 and their substantive unknowns still require review before main81 GO. The audit,
 CI, preparation and human-time limitations remain in the cost boundary above.
+
+## Later complete v3 metadata review and PetClinic technical failures
+
+On 2026-10-30 at23:14UTC the independent reviewer completed selected metadata
+inspection for all27 immutable6ef079a qualification cells:23 technical completions
+and four PetClinic technical failures (DeepFlow/Coroot, partial/full). Every
+available selected manifest SHA matched, source controls equal the hash-bound
+evaluation objects, and acquisition is valid in all27. The27 original guest proof
+pairs contain54 distinct boot UUIDs, the existing image metadata pin and shared
+physical runner hosts. Original VM image bytes are not independently rehashed.
+These checks alone do not explain unknown forecasts or authorize main81.
+
+DeepFlow partial full13018230593/compact13018030712 fails in
+`toolchain/combined/raw/list_owners`: the original raw graph names `visits-a`
+and `visits-b` (one replica each), while its already verified semantic view names
+`visits-service`, with no earlier metadata collision and an available binding.
+The literal supplied overlay targets `visits-service` with two placements, but
+the second Bering discovery sees the raw names and reports unknown service
+`visits-service`. This is an operation-metadata stage inconsistency.
+
+DeepFlow full full13018772779/compact13018792688 fails in the exact folder
+`toolchain/combined/network_scope/owner_details_with_visits`. Its pre-overlay
+logical projection also has no metadata collision. The second discovery applies
+two replicas/placements only to the native SDK `visits-service` node; raw
+`visits-a`/`visits-b` remain at one replica. The unchanged conservative projection
+then correctly detects differing metadata and refuses that alias group. A required
+opaque edge from `visits-a` to MySQL becomes unreachable from the SDK entry, and
+the actual saved Sheaft command fails. This is the same demonstrated compiler
+stage inconsistency as Coroot, rather than a DeepFlow parser limitation.
+
+All four original failures retain48 operations, zero target/class-test operations
+and no completed pre-target freeze. Original failure files were inspected through
+API-bound exact ZIP ranges with selected CRC/SHA verification; whole original ZIP
+hashing was not performed locally. The metadata repair's fixed eight-pair Go
+equivalence proof and two actual failed-case simulations cover Coroot. They do not
+claim that DeepFlow has already been resimulated. The next common qualification
+must exercise its actual repaired path. Main81 remains held for that review and
+the OBI OTel absent/partial catalog parent comparison; no unknown/accuracy
+threshold is added. All failed acquisition, diagnostic and preparation costs stay
+retained, with human preparation time unknown.
