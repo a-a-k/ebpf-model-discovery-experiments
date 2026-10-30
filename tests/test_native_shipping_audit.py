@@ -173,3 +173,35 @@ def test_saved_native_audit_reads_the_indexed_jsonl_prefix_and_exact_accepted_se
     assert result["original_otlp_inventory"]["spans"] == 2
     assert result["bering_accepted_sequence"]["source_manifest_sequence_equal"] is True
     assert original.read_bytes().endswith(b"later data outside indexed prefix")
+
+
+def test_ebpf_comparison_matches_exact_trace_and_original_wire_without_new_parents(tmp_path):
+    functions = helper()
+    message = request()
+    second = message.resource_spans[1].scope_spans[0].spans[0]
+    second.trace_id = bytes.fromhex("02" * 16)
+    second.span_id = message.resource_spans[0].scope_spans[0].spans[0].span_id
+    body = message.SerializeToString()
+    original = tmp_path / "observations/a.raw/capture/body.pb"
+    original.parent.mkdir(parents=True)
+    original.write_bytes(body)
+    folder = tmp_path / "toolchain/inputs/ebpf/raw"
+    folder.mkdir(parents=True)
+    exported = folder / "ebpf-000001.pb"
+    exported.write_bytes(body)
+    digest = hashlib.sha256(body).hexdigest()
+    manifest = folder / "observations.json"
+    manifest.write_text(json.dumps({"observations": 2, "selection_by_source": {"ebpf": "all_frozen_source_records"},
+        "exports": [{"path": exported.as_posix(), "source": "ebpf", "content_type": "application/x-protobuf",
+                     "sha256": digest, "raw_file": original.as_posix(), "raw_sha256": digest}]}))
+    frozen = {path.relative_to(tmp_path).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+              for path in (exported, manifest)}
+    wanted = {("01" * 16, "0000000000000001")}
+    facts = functions["ebpf_parent_matches"](tmp_path, frozen, wanted, lambda value: value)
+    assert facts["spans"] == 2
+    assert len(facts["matches"]) == 1
+    assert len(facts["matches"][0]["original_variants"]) == 1
+    assert facts["matches"][0]["input_span"]["service"] == "checkout"
+    original.write_bytes(b"changed receiver body")
+    with pytest.raises(ValueError, match="original receiver body changed"):
+        functions["ebpf_parent_matches"](tmp_path, frozen, wanted, lambda value: value)

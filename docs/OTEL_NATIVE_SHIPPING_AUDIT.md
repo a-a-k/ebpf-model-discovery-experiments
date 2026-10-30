@@ -25,3 +25,12 @@ diagnostic preparation cost, not a campaign failure. The corrected audit reads
 every complete original SDK file-export record, verifies the exact indexed prefix
 and each export's original record digest, and labels that source as direct JSONL.
 It makes no claim that those file exports are captured HTTP/protobuf wire.
+
+Run 41131445587 at ac02ad3 verified all 118 native source records and 1382 spans:
+the literal raw/input field multisets are equal and all input SHA values equal
+the original accepted Bering request sequence. Both shipping HTTP calls exist in
+the native source, but their server parent IDs are absent from the native prefix.
+Before the follow-up, both agents give ORIGINAL feasibility GO to search only
+those literal missing IDs in the same frozen eBPF input and original receiver
+bodies. An ID match does not itself prove who wrote a request header. No ancestry,
+model, forecasts, labels, traffic or outcome evaluation is changed.

@@ -249,6 +249,66 @@ def retained_toolchain(root):
     return unpack(root / "toolchain-package", root / "toolchain", kind="toolchain")
 
 
+def ebpf_parent_matches(root, frozen, wanted, relocate):
+    """Find literal missing native parent IDs in the same pretarget eBPF input."""
+    checked = {}
+    for name, expected in frozen.items():
+        if name.startswith("toolchain/inputs/ebpf/raw/"):
+            if sha(root / name) != expected:
+                raise ValueError("frozen eBPF comparison input changed")
+            checked[name] = expected
+    manifest = read(root / "toolchain/inputs/ebpf/raw/observations.json")
+    if manifest.get("selection_by_source") != {"ebpf": "all_frozen_source_records"}:
+        raise ValueError("eBPF comparison is not the complete frozen source")
+    groups = []
+    for proof in manifest.get("ordered_request_group_manifests") or []:
+        path = root / original_member(proof["path"])
+        if sha(path) != proof["sha256"] or path.stat().st_size != proof["bytes"]:
+            raise ValueError("eBPF comparison source group changed")
+        groups.append(read(path))
+    matches, spans, requests = [], 0, 0
+    for group in groups or [manifest]:
+        for entry, body in _ordered_manifest_requests(relocate(copy.deepcopy(group)), materialize=False):
+            try:
+                wire = body.read() if body is not None else Path(entry["path"]).read_bytes()
+            finally:
+                if body is not None:
+                    body.close()
+            if entry["source"] != "ebpf" or hashlib.sha256(wire).hexdigest() != entry["sha256"]:
+                raise ValueError("eBPF comparison request changed")
+            requests += 1
+            selected = []
+            for span in native_span_fields(wire, entry["content_type"], entry.get("content_encoding", "")):
+                spans += 1
+                fields = span["fields"]["span"]
+                if (fields["traceId"], fields["spanId"]) in wanted:
+                    selected.append(span)
+            if not selected:
+                continue
+            if entry.get("raw_file_role") or entry.get("raw_record_sha256"):
+                raise ValueError("fixed OBI identity comparison requires its original receiver body")
+            raw_name = original_member(entry["raw_file"])
+            raw = (root / raw_name).read_bytes()
+            if hashlib.sha256(raw).hexdigest() != entry["raw_sha256"]:
+                raise ValueError("matched eBPF original receiver body changed")
+            originals = list(native_span_fields(raw, entry["content_type"], entry.get("content_encoding", "")))
+            for span in selected:
+                fields = span["fields"]["span"]
+                original_matches = [row for row in originals
+                    if all(row["fields"]["span"][key] == fields[key] for key in ("traceId", "spanId"))]
+                if not original_matches:
+                    raise ValueError("matched eBPF input identity is absent from original body")
+                matches.append({"input_span": span, "original_variants": original_matches,
+                    "input_request_sha256": entry["sha256"], "request_order": entry.get("request_order"),
+                    "original_body": {"member": raw_name, "sha256": entry["raw_sha256"], "bytes": len(raw)}})
+    if spans != manifest["observations"]:
+        raise ValueError("eBPF comparison input span count differs")
+    return {"frozen_input_files": checked, "requests": requests, "spans": spans,
+            "wanted_native_parent_identities": [{"trace_id": trace, "span_id": sid} for trace, sid in sorted(wanted)],
+            "matches": matches,
+            "scope": "Literal same-trace span IDs present in frozen eBPF input and its original receiver bodies. Matching identifies existing spans; it does not establish who wrote a traceparent header or create ancestry."}
+
+
 def audit(root, compact, *, source_arm="ebpf"):
     if source_arm not in ("ebpf", "native"):
         raise ValueError("unsupported saved audit source arm")
@@ -420,6 +480,13 @@ def audit(root, compact, *, source_arm="ebpf"):
                 "source_manifest_sequence_equal": True, "command_sha256": sha(replay_path)},
             original_native_jsonl_record_claims_verified=sum(native_record_claims.values()),
             scope="Complete frozen native fit input and its original retained SDK source (direct OTLP JSONL or receiver bodies, explicitly labelled in proofs). Literal resource/scope/span fields and same-trace parent-ID variants are compared before inspecting the original graph. Direct file exports are not claimed to be captured HTTP/protobuf wire. No replay, new fit, scoring, admission or invented identity.")
+        wanted = {(row["fields"]["span"]["traceId"], row["fields"]["span"]["parentSpanId"])
+                  for row in result["native_shipping"]["original"]["checkout_shipping_variants"]
+                  if row["service"] == "shipping" and row["fields"]["span"].get("kind") in (2, "SPAN_KIND_SERVER")
+                  and row["fields"]["span"]["parentSpanId"].strip("0")
+                  and not row["actual_same_trace_parent_variants"]}
+        if wanted:
+            result["same_prefix_ebpf_parent_identity_comparison"] = ebpf_parent_matches(root, frozen, wanted, relocate)
     return result
 
 
