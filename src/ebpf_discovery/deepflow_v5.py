@@ -47,6 +47,10 @@ DEFAULT_LOCAL_LOG_FILE_SIZE_BYTES = 1000 << 20
 NATIVE_RECEIVER_PORT = 4319
 DEEPFLOW_EBPF_READY_MARKER = "ebpf collector started"
 MIB = 1 << 20
+ENABLED_PROTOCOLS = (
+    "HTTP", "HTTP2", "MySQL", "PostgreSQL", "Redis", "MongoDB", "Memcached",
+    "Kafka", "DNS", "TLS",
+)
 
 
 def _config(*, max_memory_mib: int, max_millicpus: int) -> dict[str, Any]:
@@ -95,6 +99,11 @@ def _config(*, max_memory_mib: int, max_millicpus: int) -> dict[str, Any]:
         },
         "processors": {
             "request_log": {
+                # Port prefilters do not enable a parser. Pinned defaults omit
+                # PostgreSQL, MongoDB and Memcached. HTTP2 also detects gRPC.
+                "application_protocol_inference": {
+                    "enabled_protocols": list(ENABLED_PROTOCOLS),
+                },
                 "tag_extraction": {
                     "tracing_tag": {
                         "x_request_id": ["x-experiment-request-id"],
@@ -966,6 +975,8 @@ class DeepFlowCollectorsV5(CollectorsV5):
     def _config_summary(self) -> dict[str, Any]:
         return {
             "mode": "standalone flat JSONL",
+            "requested_protocol_parsers": list(ENABLED_PROTOCOLS),
+            "grpc_parser": "HTTP2 content-type inference in pinned source",
             "max_data_file_size_mib": MAX_DATA_FILE_SIZE_MIB,
             "max_data_file_size_bytes": MAX_DATA_FILE_SIZE_BYTES,
             "max_local_log_file_size_mib": MAX_DATA_FILE_SIZE_MIB,

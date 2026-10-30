@@ -118,6 +118,9 @@ def test_config_uses_1tib_threshold_and_exact_experiment_header() -> None:
         "x-experiment-request-id"
     ]
     assert config["inputs"]["ebpf"]["profile"]["on_cpu"]["disabled"] is True
+    enabled = config["processors"]["request_log"]["application_protocol_inference"]["enabled_protocols"]
+    assert {"HTTP", "HTTP2", "PostgreSQL", "MongoDB", "Memcached", "Redis", "Kafka"} <= set(enabled)
+    assert "Grpc" not in enabled  # HTTP2 detects gRPC; this is not a parser switch.
     assert config["global"]["limits"] == {
         "max_memory": 2048,
         "max_millicpus": 2000,

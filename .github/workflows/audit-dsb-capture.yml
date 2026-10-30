@@ -1,0 +1,53 @@
+name: Audit complete saved DSB capture prefixes
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        collector: [obi, deepflow, coroot]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . opentelemetry-proto
+      - name: Retrieve fixed immutable source captures
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COLLECTOR: ${{ matrix.collector }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          root=pathlib.Path('work/dsb-audit-input'); root.mkdir(parents=True)
+          cells=json.loads(pathlib.Path('docs/dsb-capture-audit-20261030.json').read_text())['cells']
+          cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
+          (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
+          for role in ('full','compact'):
+              endpoint=f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{cell[role]['id']}"
+              with (root/(role+'-api.json')).open('wb') as stream:
+                  subprocess.run(['gh','api',endpoint],stdout=stream,check=True)
+              with (root/(role+'.zip')).open('wb') as stream:
+                  subprocess.run(['gh','api',endpoint+'/zip'],stdout=stream,check=True)
+          PY
+      - name: Inspect complete prefixes and retained rejection evidence
+        env:
+          PYTHONPATH: src:.
+        run: |
+          python scripts/audit-dsb-capture.py --source work/dsb-audit-input \
+            --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dsb-capture-audit-${{ matrix.collector }}-${{ github.run_id }}
+          path: |
+            work/dsb-audit-input/cell.json
+            work/dsb-audit-input/*-api.json
+            work/dsb-audit/facts.json
+          retention-days: 90
+          if-no-files-found: error

@@ -174,3 +174,55 @@ settings remain mode qualification for unchanged native-mode/acquisition/workloa
 paths. Nine final-head regressions are not represented as 27 fresh smokes or as
 any of the 81 main cells. A later model/binding change needs renewed review and
 affected-path qualification; it cannot be silently folded into this decision.
+
+## DeepFlow protocol coverage correction before main dispatch
+
+The retained effective logs from all three DSB mode smokes showed only the pinned
+defaults enabled: HTTP, HTTP2, MySQL, Redis, Kafka, DNS and TLS. PostgreSQL,
+MongoDB and Memcached port entries did not enable those parsers. The codec also
+omitted Memcached. These are configuration/conversion gaps; prior absence cannot
+be attributed to an inherent collector limit.
+
+Before implementation both agents give explicit ORIGINAL-feasibility GO for an
+explicit parser list covering the supported protocols used by these systems,
+retaining defaults, and conservative Memcached field conversion. The strongest
+baseline is the prior configuration/codec with the same pinned source and raw
+fixtures. The proposed mechanism removes an artificial capture/conversion limit;
+no forecast improvement or successful Thrift capture is presumed.
+
+Pinned source 9a1219fa5cf1471ba2ec8742019661567d98002e defines the configuration
+at agent/src/config/config.rs:2073 and RequestLog at 2390. HTTP2 detects gRPC in
+http.rs:2070; no separate Grpc switch is supplied. MemcachedInfo's serde fields
+in protocol_logs/sql/memcached.rs are retained without inventing IDs or lowercasing
+enum values. Its built-in parser handles ASCII text; enabling it does not prove
+support for the actual application dialect. The built-in L7Protocol enum has no
+Thrift parser; custom/Wasm extensions were not tested.
+
+All earlier measurements and costs remain. After code review and CI, all three
+DeepFlow system regressions must pass again with effective parser logs inspected
+on both guests. Unchanged OBI/Coroot paths retain their reviewed qualification.
+Every one of the 81 main cells uses the same final source and product pins.
+
+Actual-code independent review: explicit GO; 78 codec/lifecycle/handoff checks
+passed independently and locally. Actions full suite/control run 41095895658
+passed for immutable common source bf49d464816aa71b7c820a02778117d3e6a0ba9d,
+tag study-20261030. No main measurement is claimed from qualification.
+
+## Fixed saved DSB diagnosis
+
+All three original clean-controller absent/seed6 captures are fixed by full and
+compact artifact IDs, run/head, bytes and ZIP digests in
+dsb-capture-audit-20261030.json. The cloud-only audit reads every frozen ordered
+input request, verifies original bytes, retained protocol/service/operation/peer
+joint signatures and locators, actual saved Bering graph and frozen forecasts.
+DeepFlow rejected records are checked directly against every complete record in
+saved snapshots and their exact prefix/count/tail proofs, not just the existing
+accounting rows. Parser-list values and source-local identity uncertainty remain
+visible. No replay, fitting, outcome scoring or admission is performed.
+
+Independent actual-code GO was given after six synthetic checks passed both
+independently and locally. JSON hex and protobuf base64 IDs are decoded through
+the existing source-aware reader; parent-field counts do not establish ancestry.
+Conflicting resource identity remains ambiguous. This audit can locate losses
+in saved observations, but cannot prove that interception is impossible when a
+collector emitted no record. It is diagnostic evidence, not a main measurement.
