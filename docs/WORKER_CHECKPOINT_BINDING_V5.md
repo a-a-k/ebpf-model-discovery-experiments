@@ -38,5 +38,18 @@ attempt is admitted by this change; any replacement is a new technical attempt.
 
 Separate actual-code review returned explicit ORIGINAL-criterion GO. The reviewer
 independently ran all 17 inline-gate tests; the root's combined focused suite
-passed 46 tests with one skipped. Linux CI remains the publication check.
+passed 46 tests with one skipped. The published repair at
+`d2832476a0ed2ba234b2b4b57284042d369ec207` passed
+[Linux CI 41009524682](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41009524682).
+
+Workers 41009364058 (seed 6) and 41009307872 (seed 8) subsequently showed the
+same pre-download binding failure. Fresh metadata reconstruction matched their
+immutable fields and failed only the old queued-parent predicate. Their original
+API snapshots were not retained either. All three absent-mode cells finished as
+technical failures; the six other matrix cells were separate from these three
+failures in that observation. The exact
+seed-6 technical repeat is
+[41009954091](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41009954091).
+Seeds 7 and 8 are pending capacity for their technical repeats; no outcome was
+used to choose a replacement.
 

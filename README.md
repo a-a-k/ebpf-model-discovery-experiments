@@ -7,7 +7,11 @@ system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smo
 review; main groups are being staged. All nine OBI Petclinic main cells and three
 Coroot Petclinic/absent main cells have passed actual evidence review. OBI OTel
 Demo/absent seed 6 and all three DeathStarBench/absent repeats have also passed,
-bringing the reviewed total to 16. Later packets remain under independent review. Technical smoke admission does
+bringing the reviewed total to 16. Subsequent review of Coroot Petclinic/partial
+seed 6 brings the total to **17/81**; its 24 forecasts remain unavailable and
+no Sheaft execution is claimed. The [exact review record](results/iteration-5/main-reviews/coroot-petclinic-partial-6-40956228868.json)
+states the checked files and verification limits. Later packets remain under
+independent review. Technical smoke admission does
 not require an available or accurate forecast.
 New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
 cells was an orchestration error; no credentials are needed and those cells do
