@@ -1,0 +1,2450 @@
+{
+  "attempt_runs": [
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40880849418,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40884914635,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40885990713,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890296710,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890303219,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40890763831,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40895622472,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40895637294,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40896064246,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40898769649,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40898777011,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40899601511,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40902922833,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909264363,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909271694,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909279346,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909288192,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909294990,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40909303154,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40910013685,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40910021896,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40910393953,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40913407822,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40914709370,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40916651613,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40919005648,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40920573691,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40921056157,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40922905708,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40923928201,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40924968145,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40930786566,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40930793452,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40930805848,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40932031732,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40933885726,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40933892507,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40935194776,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40935203055,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40936796228,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40942429097,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40942437542,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40942447288,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40943318871,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40943915967,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40943924937,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40944249737,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40945578755,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40947264867,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40947274375,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40947287495,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40947299209,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40948057864,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40948072741,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40953661709,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40956228868,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40956239225,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40958365058,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40959052743,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40963548420,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40965631880,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40966250927,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40966258333,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40966847000,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40970095079,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40970638144,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 40971766251,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004270443,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004275773,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004281518,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "deathstarbench"
+        },
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004285932,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "petclinic"
+        },
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004291277,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 7,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "partial",
+          "seed": 8,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "otel_demo"
+        },
+        {
+          "mode": "full",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41004296165,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 6,
+          "system": "deathstarbench"
+        }
+      ],
+      "collector": "obi",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41005821961,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41009954091,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 7,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41010834860,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 8,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41011398324,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41018310659,
+      "stage": "smoke"
+    },
+    {
+      "cells": [
+        {
+          "mode": "absent",
+          "seed": 6,
+          "system": "petclinic"
+        }
+      ],
+      "collector": "deepflow",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41023324471,
+      "stage": "main"
+    },
+    {
+      "cells": [
+        {
+          "mode": "full",
+          "seed": 7,
+          "system": "otel_demo"
+        }
+      ],
+      "collector": "coroot",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "run_id": 41024050638,
+      "stage": "main"
+    }
+  ],
+  "blocked_main_cells": [],
+  "related_runs": [
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40900996676
+    },
+    {
+      "note": "Iteration 4 exact remote toolchain worker; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40899833610
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40898462595
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40895877074
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40895444290
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40894248440
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40890810980
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40889975595
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40885659304
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40883942639
+    },
+    {
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40878924384
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40879223434
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40877778287
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595689
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595701
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40876595722
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629052
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629030
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "run_id": 40874629029
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40876610601
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40876461856
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "run_id": 40874642494
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888915800
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888384949
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40886588360
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40886462764
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40885945200
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40883389521
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40881171793
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888154808
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888154744
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40888155130
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639089
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639081
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "run_id": 40886639078
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435266
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435331
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40888435462
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193858
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193681
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193928
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193770
+    },
+    {
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence.",
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "run_id": 40887193685
+    },
+    {
+      "note": "Integrated source-schema repair and report implementation CI; not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40902646348
+    },
+    {
+      "note": "Initial report stopped on compact journal omission; no source evaluation was changed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "run_id": 40902931486
+    },
+    {
+      "note": "Integrated exact journal recovery and report CI; not a main measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40905568198
+    },
+    {
+      "note": "Reviewed saved-evidence snapshot; no main measurements.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "run_id": 40905967491
+    },
+    {
+      "note": "Integrated alias/derived-handoff Linux and Docker CI.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40908572301
+    },
+    {
+      "note": "Synthetic DeepFlow actual-product handoff qualification; preserve terminal failure and actual ingestion evidence.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40909257494
+    },
+    {
+      "note": "Documentation/snapshot publication Linux and Docker CI.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40910461222
+    },
+    {
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40910330302
+    },
+    {
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40910404800
+    },
+    {
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40911232159
+    },
+    {
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40911388849
+    },
+    {
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40913108121
+    },
+    {
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40912701537
+    },
+    {
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40913421361
+    },
+    {
+      "note": "Immutable DSB audit adjudication stopped before data checking due missing script import path; retain failure.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40913965976
+    },
+    {
+      "note": "Corrected immutable DSB acquisition-only adjudication, no forecasts or outcome metrics recomputed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40914666129
+    },
+    {
+      "note": "Adjudication CLI environment repair CI; no measurement.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40914286531
+    },
+    {
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40917708803
+    },
+    {
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40917723956
+    },
+    {
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40917740919
+    },
+    {
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40919785943
+    },
+    {
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40920240694
+    },
+    {
+      "note": "Reviewed status publication CI; no method change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40922561004
+    },
+    {
+      "note": "Pinned independent toolchain worker for current fixed Coroot OTel absent smoke; retained cost.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40927651775
+    },
+    {
+      "note": "Reviewed source-faithful HTTP normalization and memory-only preprocessing CI; passed Linux/Docker.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40928823255
+    },
+    {
+      "note": "Single saved immutable old/new preprocessing equivalence check; no graph/forecast/outcome refit.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40929241254
+    },
+    {
+      "note": "Validation harness integration CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40929189766
+    },
+    {
+      "note": "Integrated persistent-control actual Docker and full Linux checks; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40929628640
+    },
+    {
+      "note": "Exact native-provenance validation harness repair CI.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40930045089
+    },
+    {
+      "note": "Intermediate saved-result report with current declared attempts; no refit.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "run_id": 40930225342
+    },
+    {
+      "note": "Fixed old/new preprocessing equivalence check passed; no change to saved empirical outcomes.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40930267298
+    },
+    {
+      "note": "Common never-started/partial-start lifecycle guard Linux/Docker CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40933001578
+    },
+    {
+      "note": "Publication CI for independently reviewed five-cell snapshot; no scientific code change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40936167947
+    },
+    {
+      "note": "Native-audit correction and report representation CI; preparation cost.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40939886539
+    },
+    {
+      "note": "Journal memory implementation checks.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40940370220
+    },
+    {
+      "note": "Fixed saved-report representation validation; exact head eaa9643.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40940389382
+    },
+    {
+      "note": "Journal validator and saved-error figures CI; successful.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40941788546
+    },
+    {
+      "note": "Future report-validation dependency fix CI; successful.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40941821118
+    },
+    {
+      "note": "One fixed saved-journal equivalence validation, exact main5cfdd7c.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40941966903
+    },
+    {
+      "note": "Documentation-only update CI after journal equivalence.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40942794914
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40944739751
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40944384775
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40944167469
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40944150118
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40943785392
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40943380030
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40942940044
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40937875714
+    },
+    {
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40935440166
+    },
+    {
+      "note": "DeepFlow ambient-load guard-off code and fixture CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40947355330
+    },
+    {
+      "note": "Cancellation provenance publication CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40949256533
+    },
+    {
+      "note": "Observation-limit evidence documentation CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40950772563
+    },
+    {
+      "note": "Nine-main and Coroot qualification documentation CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40951264845
+    },
+    {
+      "note": "Streaming DF checkpoint accounting implementation CI; passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40953234767
+    },
+    {
+      "note": "One fixed saved DF training-checkpoint equivalence validation; independent actual GO, exact485records/9files unchanged, no speed or memory advantage claim.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40953383041
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40956304402
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40952137039
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40951395756
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40945101309
+    },
+    {
+      "note": "Integrated reviewed receiver normal-close deadline removal and DF aggregate raw-retention alignment CI, exact8a985f99.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40958092919
+    },
+    {
+      "note": "Reviewed publication of all9DeepFlow qualified settings and retained closure failure history; docs-only CI passed.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40960428005
+    },
+    {
+      "note": "Reviewed bounded report compact transport implementation CI, exact4ebebfd; no new empirical calculation.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40961384259
+    },
+    {
+      "note": "First full-scale savedDSB7 transport validation: both reports built, comparator failed on schema-key typo; retain actual source/hash proof and complete cost, no success claim.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40961608465
+    },
+    {
+      "note": "Validator-only real-schema field correction plus real build/render comparison regression CI; failed40961608465 retained.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40962623909
+    },
+    {
+      "note": "Corrected same-source DSB7 transport validation passed independent actual review: exactsourcepayloads/tables/nonemptyselection/all23member proofs; previousfailed40961608465 retained.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "run_id": 40962839097
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40962996489
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40961433032
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40961018213
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40960091896
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40959937824
+    },
+    {
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40956797206
+    },
+    {
+      "note": "Reviewed documentation and technical-only replacement manifest publication CI; no scientific code change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40964033154
+    },
+    {
+      "note": "New immutable saved-report and first actualper-seed figures using reviewedstreamtransport; ownfinaljob tail remains outside initial snapshot, retained fornextcostrefresh.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "run_id": 40964268895
+    },
+    {
+      "note": "Intermediate report and saved-figure publication CI at7e6b637; no scientific code change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40969878243
+    },
+    {
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40969756336
+    },
+    {
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40969673932
+    },
+    {
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40966153584
+    },
+    {
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40964830630
+    },
+    {
+      "note": "Documentation and exact receiver-failure diagnosis publication checks at eb7342e; no scientific code change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 40971568397
+    },
+    {
+      "note": "User-authorized3collector scope correction and bounded evidence-audit publication CI atc5df32f; passed, no scientific method change.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41003958959
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40982183326
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40981974470
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40980528862
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40977092252
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40976806033
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40976716188
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40971982217
+    },
+    {
+      "note": "Retained exact toolchain worker preparation/execution cost; discovered in timestamped 2026-10-30T04:52:17Z API inventory. Scientific identity remains in worker provenance.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 40971161838
+    },
+    {
+      "note": "Linux CI of reviewed worker resource-lifecycle and packaging repair plus publication binding at8c6f1fac8ea73315e8ea98a9db0014319425d33e. Outcome must be read from Actions metadata.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41005336865
+    },
+    {
+      "note": "Single saved successful DSB worker package verification/repackage qualification at8c6f1fa; no traffic/refitting/scientific rescore. Actual output review required before failed main-cell repeat.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41005432674
+    },
+    {
+      "note": "Successful checks of actual saved-package qualification proof publication at74b7d53; documentation/provenance only.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41006270185
+    },
+    {
+      "note": "Complete declared study preparation/worker scope; timestamped API inventory work/iteration5-cost-inventory-20261030T052712Z.json. Outcome is read independently from Actions metadata.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41008128142
+    },
+    {
+      "note": "Reviewed exact-parent-cell liveness repair Linux CI d283247 success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41009524682
+    },
+    {
+      "note": "Reviewed bounded DeepFlow preparation integrated source5c05858 Linux CI success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41009591141
+    },
+    {
+      "note": "Single saved-checkpoint software equivalence qualification; no traffic or scientific promotion",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41009701655
+    },
+    {
+      "note": "Failed checkpoint-binding worker retained; exact parent-cell diagnosis pending",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41009364058
+    },
+    {
+      "note": "Failed checkpoint-binding worker retained; exact parent-cell diagnosis pending",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41009307872
+    },
+    {
+      "note": "Exact integrated saved-evidence review CI e1cd393 success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41010401526
+    },
+    {
+      "note": "Only three already-admitted family packets; selected evidence processing in Actions, no rescore or automatic admission. Pending16 retrieval held for independent actual-output GO.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41010563837
+    },
+    {
+      "note": "Historical OTel audit schema compatibility and qualification selector exact CI d4fbc68 success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41011552198
+    },
+    {
+      "note": "Only failed OTel-family saved qualification repeated. Original passed DSB/Coroot output lineage retained, reviewer confirmed unchanged acceptance for those families. Pending16 still held.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41011825649
+    },
+    {
+      "note": "First newly observed remote worker after exact-parent-cell liveness repair; source/provenance from actual worker metadata, no prior failure promoted",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41011723670
+    },
+    {
+      "note": "Saved16candidate packet review after actual THREE-family qualification GO. Source traffic/forecast/outcomes unchanged; this does not automatically admit a main result.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41012708130
+    },
+    {
+      "note": "Reviewed committed-manifest selector exact CI0f3b5d7 success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41013428481
+    },
+    {
+      "note": "Only three newly completed Coroot/Petclinic/full packets; existing saved-evidence qualification reused, source/outcomes unchanged, independent admission still required.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41013815571
+    },
+    {
+      "note": "Exact remote worker discovered in timestamped metadata inventory; preserve actual execution/failure costs and source provenance",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41013289569
+    },
+    {
+      "note": "Exact remote worker discovered in timestamped metadata inventory; preserve actual execution/failure costs and source provenance",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41012877435
+    },
+    {
+      "note": "Exact reviewed OTel rendered-mode parser correction CI aebda5f success; no main source/forecast change",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41014655142
+    },
+    {
+      "note": "Reviewed exact six affected saved-review retry manifest integrated CIe48dad6 success",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41016676228
+    },
+    {
+      "note": "Only six failed OTel rendered-mode SAVED checks repeated. Original source observations/graphs/forecasts/outcomes remain unchanged; failure cost and exact source lineage retained; independent main review still required.",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41016977256
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41016689338
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41015632063
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41015398284
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41015372952
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41015232980
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41015180769
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41014933903
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41014644661
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41014576497
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41014438271
+    },
+    {
+      "note": "Remote model worker included in timestamped metadata inventory; all actual costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41014206241
+    },
+    {
+      "note": "Actual remote model worker; metadata observed 2026-10-30T08:00:19.039301+00:00; preserve all costs/failures",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41017883993
+    },
+    {
+      "note": "Publication36 actual reviews/model examples; CI succeeded",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41021603142
+    },
+    {
+      "note": "Actual DeepFlow model/preparation publication CI, passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41024596316
+    },
+    {
+      "note": "Existing saved-evidence Actions review of nine newly completed Coroot cells; no new experiment or checker",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41025655518
+    },
+    {
+      "note": "CI for exact nine-cell immutable candidate metadata; passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41025654822
+    },
+    {
+      "note": "Actual remote model worker; metadata captured2026-10-30T08:39Z; all costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41025725804
+    },
+    {
+      "note": "Actual remote model worker; metadata captured2026-10-30T08:39Z; all costs and failures retained",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41024147543
+    },
+    {
+      "note": "Existing saved-review workflow for three completed Coroot DSB partial cells; no new traffic",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41028928830
+    },
+    {
+      "note": "CI for exact Coroot DSB partial metadata and reviewed duplicate selection; passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41028928019
+    },
+    {
+      "note": "CI for45 reviewed records and bounded runtime diagnosis; passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41030953701
+    },
+    {
+      "note": "Existing archive workflow preserves two original failed DeepFlow source runs and costs; exact source ZIP bytes match published Release API digests",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41031747845
+    },
+    {
+      "note": "Existing saved-review workflow for remaining two completed Coroot DSB full cells; no new traffic",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41033223355
+    },
+    {
+      "note": "CI for DSB full candidate metadata and failed-source archive provenance; passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41033222733
+    },
+    {
+      "note": "Existing saved-review workflow for completed Coroot OTel full seed6; no new traffic",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41033874875
+    },
+    {
+      "note": "CI for exact OTel full6 source metadata; passed",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41033874250
+    },
+    {
+      "note": "Existing archive workflow preserves first eight smoke attempts, including failures and superseded sources",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41034727463
+    },
+    {
+      "note": "Existing archive workflow preserves next ten smoke attempts, including failures and superseded sources",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41034987343
+    },
+    {
+      "note": "Exact remote toolchain worker; preserve complete costs",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "run_id": 41029901337
+    },
+    {
+      "note": "Existing archive workflow preserves third ten smoke attempts, including failures",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41036170040
+    },
+    {
+      "note": "CI for final Coroot OTel candidate metadata and exact technical selection",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41036190259
+    },
+    {
+      "note": "Existing saved-review workflow for completed Coroot OTel full7/8; no new traffic",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41036205012
+    },
+    {
+      "note": "Existing archive workflow preserves final ten smoke attempts including failures and repaired real-path DeepFlow smoke",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41036261914
+    },
+    {
+      "note": "Existing saved-review workflow for completed final OBI DSB full6; no new traffic",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41044007526
+    },
+    {
+      "note": "CI for archived smoke provenance and final OBI source metadata",
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "run_id": 41043997785
+    }
+  ],
+  "schema_version": "v5-report-declarations",
+  "scope_correction": {
+    "active_collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "authority": "explicit user instruction excluding New Relic",
+    "date": "2026-10-30",
+    "excluded_cells_are_not_blocked_or_failed": true,
+    "excluded_collectors": [
+      "newrelic"
+    ],
+    "main_cells": 81,
+    "previous_declarations_path": "results/iteration-5/scope-correction-20261030/previous-declarations.json",
+    "previous_declarations_sha256": "aa192612de08289a70c10109babc36d4c28fda61bc23e8a5215e7aa3655d29be",
+    "real_attempts_and_related_costs_preserved": true,
+    "smoke_settings": 27
+  },
+  "scope_notes": [
+    "Intermediate smoke and main-series snapshot; remaining cells and independent review status are explicitly incomplete.",
+    "Research Actions inventory begins at the first iteration-5 protocol commit on 2026-10-29 12:18 UTC. Product CI/release runs are explicitly declared. Earlier preparation, unrecorded human/agent effort, and reporting/publication tail remain unknown.",
+    "Elapsed parent waits may overlap worker compute; do not treat their sum as wall-clock elapsed time.",
+    "Only optional narrative attempt notes are omitted from workflow input to fit its payload limit. Exact run identities, roles, cells, source-selection policy and cost scope remain unchanged. Full narrative declaration SHA256 c41e034eb67dc5492d14065d8cc7032679335207a9c8f23ef17fe93f3e2ac3c5."
+  ]
+}

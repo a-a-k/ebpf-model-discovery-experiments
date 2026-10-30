@@ -1,0 +1,55 @@
+{
+  "schema": "release-archive-metadata-review-v1",
+  "archive_workflow": {
+    "run_id": 41048730378,
+    "conclusion": "success",
+    "head_sha": "2f9f158452fae73e8434813d0b87c29c72c5a103",
+    "release_tag": "data-41048730378",
+    "release_id": 428956369,
+    "release_published_at": "2026-10-30T11:32:08Z"
+  },
+  "original_report": {
+    "run_id": 41044061764,
+    "artifact_id": 12972574868,
+    "name": "report-v5-41044061764",
+    "bytes": 534512742,
+    "sha256": "deb8bd394b3f7db4ded43c5abcab361be4154605df3925e60d62d6a504359b19",
+    "release_asset_id": 691914806,
+    "release_asset_name": "41044061764-artifact-12972574868-report-v5-41044061764.zip",
+    "release_asset_bytes": 534512742,
+    "release_asset_digest": "sha256:deb8bd394b3f7db4ded43c5abcab361be4154605df3925e60d62d6a504359b19",
+    "permanent_download_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/data-41048730378/41044061764-artifact-12972574868-report-v5-41044061764.zip",
+    "full_asset_downloaded_locally": false,
+    "identity_matches_original_actions_artifact": true
+  },
+  "checksums": {
+    "release_sha256sums_lists_original_report": true,
+    "downloaded_sha256sums_sha256": "0c964aa78136bbf71f35cfc1a06ed74e9bd4f5bc4dd644dc480f3ff284e6b930",
+    "downloaded_provenance_tar_gz_sha256": "657ac6ce56f5adba67f635757b33f842209f3a68726b181e0c22486732f456cd",
+    "downloaded_release_api_json_sha256": "0092294e987383cad4624a742ce0d2f0240092e4c34089a7d9a4a06fda0134d0"
+  },
+  "logs": {
+    "missing_logs": [],
+    "job_log_status": "available",
+    "job_log_asset": "41044061764-job-124023655269.log",
+    "job_log_bytes": 120340,
+    "job_log_sha256": "ea9cb2d8ed6c1a915e969710f1abb17ecc65f15ebc05f5ba67be1583f5f98b52",
+    "workflow_logs_status": "available",
+    "workflow_logs_asset": "41044061764-workflow-logs.zip",
+    "workflow_logs_bytes": 49742,
+    "workflow_logs_sha256": "fc8acbc2d8c30ab5c0d53f41e70560f1a4cda7edadf798c7cd10c65d37009621"
+  },
+  "local_scope": {
+    "downloaded": [
+      "provenance.tar.gz",
+      "SHA256SUMS.txt",
+      "release-api.json"
+    ],
+    "not_downloaded": [
+      "full report ZIP",
+      "job log",
+      "workflow logs ZIP",
+      "115 evaluation payloads"
+    ]
+  }
+}

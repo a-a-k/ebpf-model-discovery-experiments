@@ -80,24 +80,20 @@ journal copies in the report job.
 The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
 Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.
-The [current intermediate snapshot](results/iteration-5/snapshot-40964268895/SOURCE.md)
-contains 14 technically selected main cells and
-[per-operation error figures](results/iteration-5/snapshot-40964268895/figures/figures-v5.md).
-The snapshot records 12 independently reviewed Petclinic cells at its preparation
-boundary. Subsequent review admitted OBI OTel Demo/absent seed 6; its three
-primary-request predictions are conditional on the declared nonintervened
-dependencies being fulfilled, and do not establish asynchronous order completion.
-Subsequent review also admitted the DeathStarBench candidate, with all forecasts
-unavailable; no Sheaft execution is claimed there. OBI Petclinic uses
-actual recovered graphs and Sheaft forecasts checked against external outcomes;
-Coroot Petclinic/absent retains unavailable forecasts. The partial and full
-OBI seed-7 packets retain an additional owner-details failure (`2099/2400`
-observed versus forecast `0.875`), visible in the exact tables even though the
-difference is smaller than a pixel on the full-range error plots. The equally
-informed direct baseline gives the same forecast. The
-[previous five-cell snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md)
-remains unchanged. The [earlier snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
-preserves the initial 13 smoke runs and zero-main status.
+The [current 54-cell report](results/iteration-5/snapshot-41044061764/SOURCE.md)
+contains all OBI and Coroot main cells, with [per-operation error figures and exact saved values](results/iteration-5/snapshot-41044061764/figures/figures-v5.md).
+Every selected cell also has a separate actual evidence review. DeepFlow is
+incomplete at this snapshot boundary. The full report, including referenced
+source-evaluation payloads, is preserved in a permanent data release; the selected
+repository copy contains the report, figures, aggregate and provenance.
+Costs include the recorded preparation, failures and workers, with active-job
+and later publication tails explicitly unknown. These are not complete-effort
+or collector-causality estimates.
+
+The [earlier 14-cell snapshot](results/iteration-5/snapshot-40964268895/SOURCE.md),
+[five-cell snapshot](results/iteration-5/snapshot-40930225342/SOURCE.md) and
+[initial zero-main snapshot](results/iteration-5/snapshot-40905967491/SOURCE.md)
+remain unchanged as historical evidence, including superseded scope declarations.
 The results below belong to completed iteration 4.
 
 **Completed experimental series (iteration 4).** All 27 planned campaigns completed

@@ -1,0 +1,143 @@
+{
+  "schema": "independent-saved-report-publication-review-v1",
+  "reviewed_at_utc": "2026-10-30T11:37:40.014387+00:00",
+  "verdict": "EXPLICIT ORIGINAL-criterion GO to publish this immutable saved 54-cell snapshot with its stated scope and cost limitations; no contribution-success or study-completion claim.",
+  "report": {
+    "run_id": 41044061764,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655",
+    "conclusion": "success",
+    "output_artifact_id": 12972574868,
+    "artifact_API_bytes": 534512742,
+    "artifact_API_digest": "sha256:deb8bd394b3f7db4ded43c5abcab361be4154605df3925e60d62d6a504359b19",
+    "whole_output_ZIP_locally_verified": false,
+    "per_evaluation_payloads_locally_downloaded_or_restored": false,
+    "source_workload_graph_forecast_or_outcomes_recomputed": false
+  },
+  "local_selected_integrity": {
+    "member_proof": {
+      "path": "work/report-41044061764/selected/download-provenance.json",
+      "bytes": 7866,
+      "sha256": "dfed83f660a7c0e89f161eeef85e0a76f01f85b999ec5ab0f95f9fc2df5af747"
+    },
+    "members_independently_SHA256_size_CRC32_checked": 29,
+    "selected_uncompressed_bytes": 9437801,
+    "exact_HTTP_range_received_bytes": 8127590,
+    "aggregate_compressed_bytes": 395771,
+    "aggregate_compressed_sha256": "f5ee2474b92020f863d04cc85795518cb56934ed04c0fed027c235a0e6b2023b",
+    "aggregate_restored_bytes": 4545459,
+    "aggregate_restored_sha256": "c79f40ffe6c738224fde40907e1a8eaece26b5c9b423cca41c6c4e4ff3eeee77",
+    "aggregate_packaging_bytes_and_hashes_match": true
+  },
+  "main_source_admission": {
+    "authoritative_external_ledger": {
+      "path": "work/iteration5-main-admission-review.json",
+      "bytes": 68966,
+      "sha256": "c6ef474f90892cf74709ae1798469e6c43a7d4dcb33f756935ac7b6f2427c4c3"
+    },
+    "selected_cells": 54,
+    "unique_cells": 54,
+    "collector_counts": {
+      "obi": 27,
+      "coroot": 27,
+      "deepflow": 0
+    },
+    "selected_run_cell_source_head_and_evaluation_hash_refs_match_54_ledger_records": true,
+    "source_compact_API_digest_equals_Actions_computed_digest_and_selected_evaluation_member_hash": true,
+    "per_evaluation_reference_equals_payload_manifest_entry": true,
+    "reporter_independent_admission_remains_false": true,
+    "meaning": "Reporter technical selection and the separately retained independent review ledger are distinct; admission is evidence review, not predictive or cost success."
+  },
+  "technical_selection_and_scope": {
+    "active_grid": 81,
+    "collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "New_Relic_excluded_not_blocked": true,
+    "selected_smoke_attempts_in_main_figures": 0,
+    "retained_attempts": 130,
+    "main_attempt_refs": 78,
+    "smoke_attempt_refs": 52,
+    "technical_replacement_rows_checked": 17,
+    "selection_sha256": "7bb6dbb5c10479c75a11aaf1b1afd2ce8b957df3456cf2d55d416371b97b0d1c",
+    "selection_matches_exact_report_head_git_blob": true,
+    "each_selection_retains_all_declared_candidate_runs_and_known_artifact_IDs_and_exactly_one_eligible_complete_candidate": true,
+    "selection_by_accuracy_or_forecast_availability": false,
+    "DF_pending_cells": 27,
+    "blocked_cells": [],
+    "unresolved_incomplete_duplicate": {
+      "cell": [
+        "deepflow",
+        "petclinic",
+        "absent",
+        6
+      ],
+      "candidate_artifact_ids": [
+        null,
+        null
+      ],
+      "selected_complete_cell": false,
+      "interpretation": "Retained incomplete-declaration ambiguity; no artifact or complete outcome was invented. It does not alter the 54 selected cells."
+    }
+  },
+  "tables_and_figures": {
+    "saved_main_forecast_table_rows_compared_to_aggregate": 1296,
+    "saved_figure_rows": 1080,
+    "all_figure_identity_prediction_interval_availability_reason_and_count_fields_present_in_aggregate_copy_exact": true,
+    "figure_Markdown_error_and_outcome_fields_equal_companion_JSON_for_all1080rows": true,
+    "manual_review_records_common_saved_fields_match_rows": 918,
+    "manual_review_records_with_matching_rows": 54,
+    "manual_review_record_exact_error_matches": 846,
+    "other_source_error_bodies_locally_rechecked": false,
+    "explicit_adverse_cases_checked": 11,
+    "local_figure_manifest_files_SHA256_and_size_checked": 20,
+    "local_PNGs_hashed": 18,
+    "SVG_PDF_counterparts_remote_only": 36,
+    "representative_PNGs_visually_inspected": [
+      "errors-coroot-otel_demo-full.png",
+      "errors-obi-petclinic-full.png",
+      "errors-coroot-deathstarbench-partial.png"
+    ],
+    "visual_findings": "Readable source/variant/seed labels, explicit unknown forecasts, retained adverse Coroot checkout errors, and no legend-axis overlap. U is unknown external-outcome count, not forecast availability. Tiny PC owner-details errors can be subpixel on the 0..100pp scale; exact companion values remain authoritative. Ranges are saved error ranges, not new confidence intervals.",
+    "empirical_errors_recomputed": false
+  },
+  "source_payload_proof_boundary": {
+    "manifest_entries": 115,
+    "manifest_SHA256": "4232e2f325c749c434970ebe63a1660891015e80a9cfd0bb47d4ecb402b128ed",
+    "all_payload_bodies_verified_locally": false,
+    "basis": "Existing reviewed Actions reporter and plotting consumers verify payload restore/projection bindings. This independent local review verifies the aggregate, source refs, retained review records, saved table/figure copies and selected-file integrity; it does not claim to reopen the 115 original evaluations. Full immutable archive remains the source for omitted payloads and source artifacts.",
+    "archive_retention": "Root reports exact full report retention by archive run41048730378; its release metadata receipt is separate from this selected-member review."
+  },
+  "costs_and_corrections": {
+    "declared_cost_runs": 268,
+    "run_ID_repository_pairs_match_declarations_exactly": true,
+    "saved_known_completed_job_seconds": 841536.0,
+    "saved_known_stored_artifact_bytes": 391786279954,
+    "complete_effort_measured": false,
+    "unknown_human_agent_effort": true,
+    "report_publication_archival_and_new_dispatch_tails_not_in_snapshot": true,
+    "report_time_first_DF_main": {
+      "run_id": 41023324471,
+      "status": "in_progress",
+      "completed_prepare_job_seconds": 3.0,
+      "active_campaign_job_elapsed_seconds": null,
+      "jobs_with_unknown_elapsed": 1
+    },
+    "clarification_1": "Top-level runs_with_unknown_job_elapsed=0 counts runs whose aggregate completed-job total is null. It does not mean every individual job or unfinished tail is measured; the active DF job is explicitly unknown in its row. Preserve immutable output and explain this in SOURCE.",
+    "clarification_2": "The report Status column copies the historical source-evaluation status, so some cancelled/failed attempts retain running. Cost/API rows represent report-time run metadata; neither is a fresh live inventory.",
+    "cost_comparison_limit": "This is a completed-job compute/storage snapshot, not final wall time or complete comparable cost. Parent waits overlap worker compute; source/preparation revisions, builds, smokes, failures, cancellations, retries, qualification, transfer, review and archival costs remain attributable. New18DF dispatch and later archive/report/publication costs require the retained tail inventory, not zero attribution."
+  },
+  "original_criterion": {
+    "intended_contribution": "Assess useful graph-driven simulation against independent external outcomes in the fixed81-cell study; real Bering/Sheaft use is established by prior per-cell reviews, not report flags.",
+    "strongest_baseline": "Equally informed direct contract/inventory arithmetic and simple source combinations retain the same supplied semantic knowledge; known equivalence is explicit.",
+    "causal_improvement_claim": "None from report generation, technical availability or independent admission.",
+    "success_limit": "No superiority, full-cost advantage, automatic business semantics, intrinsic native/collector limitation, async durable-checkout ancestry or Coroot runtime causation is established by these figures. All unknown and adverse values remain valid. The remaining27DF main cells and final study assessment are unfinished."
+  },
+  "detailed_static_comparison": {
+    "path": "work/report-41044061764/independent-static-comparison.json",
+    "bytes": 45508,
+    "sha256": "3808d649452085feff6fda774cb5b55060a8245dfd73d7be149b15665684b47f"
+  },
+  "admission_ledger_modified_by_publication_review": false
+}

@@ -1,0 +1,2307 @@
+{
+  "claim": "exact retained source evaluation bytes; no scientific recomputation",
+  "payload_count": 115,
+  "payloads": [
+    {
+      "artifact_id": 12899539679,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6967,
+      "gzip_sha256": "7ec0cd123b5d35cdd5a35f5bbaacc2f314148d1c9051ebc0424e8f3bc7035866",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12899539679.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 80216,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "d458434ac88d26f701bf35fdca4dd118b631e0b40b565f84057f0e054152fceb"
+    },
+    {
+      "artifact_id": 12899729040,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6964,
+      "gzip_sha256": "303537cdfbe31e09121073f9868dc48499b1c889ac11dc953db8fb841c76f144",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12899729040.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 80214,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "57c0a09b5ac343a7603dc8f44599e9d2f6a8914e39306a0da2d46f9e2adfb87d"
+    },
+    {
+      "artifact_id": 12899759896,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5291,
+      "gzip_sha256": "2c8c71e3c62fdf24ba693d77954f2d1142cac538fb787df6010b961230854b04",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12899759896.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 70949,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "9954507f1fb60c2b3b1af64a3b788ccb35e33fa2eceace5b1141324d4118a89d"
+    },
+    {
+      "artifact_id": 12899824429,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5298,
+      "gzip_sha256": "651baaec5ca5e7fccbf795b13010858c8e1dbfe773195deccd30b02c1df59288",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12899824429.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 70955,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "87d64aa94a8749b773a258dd7b2c336988f48072b47a1a668e0b704d82296376"
+    },
+    {
+      "artifact_id": 12900143007,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5300,
+      "gzip_sha256": "5ecf3de036006139e1a9812a60fa10089ad0171fd40cba97956b34cb1900f4a2",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12900143007.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 70955,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "d9c017564356ea3fc66cb0ff8b992c7c790941d49a0920a11fc870d4ff769d0e"
+    },
+    {
+      "artifact_id": 12900696318,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6976,
+      "gzip_sha256": "b3457518af4666c30f8f785774e0ec7fb3f842fd0cfc050bdf50161696114891",
+      "head_sha": "e42442da532a815f928fefbbe961144cc412aeef",
+      "path": "evaluation-payloads/12900696318.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40880849418,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 80230,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "995f5e7baf8db336d09a8cfd0c984a59c27a66268afe4623a74e793e67443880"
+    },
+    {
+      "artifact_id": 12902441322,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 11975,
+      "gzip_sha256": "53ff6332c783e83d23d33457f5be4f480d9a600701831b201bf4344c13a26ee8",
+      "head_sha": "b0c068aee35571565abfe6a8389599c71683d5df",
+      "path": "evaluation-payloads/12902441322.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40884914635,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114742,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "67a2e06894f51c295f9040e2865a62a6e25580b43f66d7e42f9fb8278046a1f0"
+    },
+    {
+      "artifact_id": 12902762367,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6466,
+      "gzip_sha256": "5573542ee7ec849e9c8671634e8e4319605212fae95055fd95d2c7dfc4eaeb5e",
+      "head_sha": "986dea703798315b0f33f5d0771ec3725fae76e2",
+      "path": "evaluation-payloads/12902762367.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40885990713,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 95529,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "f94ac1b9efda0e8600f216654be93ad6964be07a4453138c43356a96544d2dcf"
+    },
+    {
+      "artifact_id": 12903798377,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 12089,
+      "gzip_sha256": "06d9624bc1deb94f3691d3968997b6e20133164f1e92044ec5f38654842e6a5c",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "path": "evaluation-payloads/12903798377.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40890296710,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 116204,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "5d2f93674b252c5f9fb44987c89edb102d2ce72eeb946f8eaee8b34b7e07bec3"
+    },
+    {
+      "artifact_id": 12904504707,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6140,
+      "gzip_sha256": "c1eb2a6e494a80823677b4ad5393c2513c77f23c2ec1ab27396daadec92886ad",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "path": "evaluation-payloads/12904504707.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40890303219,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 94809,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "781a89447dbb744f1c12b8ec6fc341cd1f3b48baf3295f2dcfaaeaf9220de562"
+    },
+    {
+      "artifact_id": 12905425997,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 10194,
+      "gzip_sha256": "c4b9dbe295b9836f12b76fb783798544c659f60dc60e4fb664e59a335a011c7a",
+      "head_sha": "161eb1d606a444e59ec18d6084bbcd62a256fd86",
+      "path": "evaluation-payloads/12905425997.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40890763831,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 119792,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6c8a9c0a000ed4b9cf8bffd2710074e283bd470cd055f46d416559d7410f42ac"
+    },
+    {
+      "artifact_id": 12907516425,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6122,
+      "gzip_sha256": "c196a96b66b9f4c5060789106fd8a2e8fd496f13eaaac2668a28ec65f0d60a4b",
+      "head_sha": "8b725b8895f0704fdf84f6c1086937dd22dfe6f6",
+      "path": "evaluation-payloads/12907516425.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40896064246,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 94780,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "383a606ef547efe75123cf98f34885b62de2d5c625252e2337723286ab40ba8c"
+    },
+    {
+      "artifact_id": 12907518474,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 38084,
+      "gzip_sha256": "ab6bbe536043a370be6f55b71461f1f7391b4024aae5e8d63207a392d6d1d121",
+      "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+      "path": "evaluation-payloads/12907518474.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40895637294,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 809290,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c046aecd1cb24a67981f773863a4bd16906f9f4e303ea6c25ef47b0c38986bfe"
+    },
+    {
+      "artifact_id": 12907604591,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 14614,
+      "gzip_sha256": "19ef7742d22a88df6aa46f49afb75c57c2dbac6ffaaaf23a27c6f17f4ce52c58",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "path": "evaluation-payloads/12907604591.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40898777011,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 148348,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "7711171b507105ef74e8ee39d7c348fd0915791530c8654f3e47cb79f0b680ff"
+    },
+    {
+      "artifact_id": 12908010750,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 13972,
+      "gzip_sha256": "4e9107259169f6b64a727907ae0874e4ffe22367b9e20cb2775d5a6fd41833fb",
+      "head_sha": "a333cdd697b201c3168e4d8f9e5ede771f6d996a",
+      "path": "evaluation-payloads/12908010750.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40895622472,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 124456,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "17f90741e178adbdb387d310253086284daa19caaed4cbb17dc86a715634b771"
+    },
+    {
+      "artifact_id": 12909436226,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 29002,
+      "gzip_sha256": "434a53ba03ace1b343613fd4b23057d72ccc253f5ffcbb0312040d978420bfd0",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "path": "evaluation-payloads/12909436226.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40898769649,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 716225,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "082e249f069c686037c1043252f3d84d4e6da156cdd2e341b6e325a939cfa806"
+    },
+    {
+      "artifact_id": 12910541431,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 34313,
+      "gzip_sha256": "92d33707a1c267e8deb20a2bc730784c4b109a1e3b7de5ab5d9367d1edb43585",
+      "head_sha": "e24c9289afa5595ee17e6d33c697fc245bfde6ac",
+      "path": "evaluation-payloads/12910541431.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40899601511,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 827466,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "9ee3ca1c37be412f8c71ec5a6df4409dcaed560fceafe74b4a54652e20a30526"
+    },
+    {
+      "artifact_id": 12911410794,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 15446,
+      "gzip_sha256": "899e9432bedf8d48568ab47b22b557fcf12411d8ff6cdd901a4d5c3b3dc98ae4",
+      "head_sha": "b9ae3065d56981e992e762b14b17453d86376570",
+      "path": "evaluation-payloads/12911410794.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40902922833,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 151089,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "33f4d15bad385a5b9473e75f2f147adde8517115aabb9acc2f96cdcf3075ef81"
+    },
+    {
+      "artifact_id": 12913303429,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 24097,
+      "gzip_sha256": "316bbb57fceb6b8dc94eeb00047143129f4a5ffdcfb18bf3b3295bfa04e7500e",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12913303429.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909279346,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 498129,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "1d1fe82bdf9b6dbf228957884092c9b2643cdee338c2f005fbe9e08c076be07f"
+    },
+    {
+      "artifact_id": 12914535843,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 30715,
+      "gzip_sha256": "062d0463d5c49d3d348dcd3868f440fcf81697b116d93eb66d268df65ae58d3a",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12914535843.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909288192,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 787285,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "16a09be58c54320e00e93c34ef33481b6a5d8b39162bee23db9ef4258052d083"
+    },
+    {
+      "artifact_id": 12914631223,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 35824,
+      "gzip_sha256": "2d941b1ceb9516b990bf4f668578ee10a855249d1d2c033bd17e766a485a265e",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12914631223.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909294990,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 946118,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "bf54104d12386a01af3443c7d9ce81b754c5019f4bd2042d5b45646138909bbd"
+    },
+    {
+      "artifact_id": 12914820744,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 34985,
+      "gzip_sha256": "ef0719ff3325fbed329def4372d50d79d9ee4587e5ce14bcd5b3acf2c63326bc",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12914820744.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909264363,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 846936,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e4481739652fb9f561d55c702ea665271727e216d1838088f9a194bee7091509"
+    },
+    {
+      "artifact_id": 12915031097,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 38804,
+      "gzip_sha256": "b43a7ba78daabc176dad61b91a61a0984f6109c58efd86d70ab1045817d22fa2",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12915031097.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909303154,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1046011,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e2fb5e350aa2377c5c271dd766eb375f8f476929f16fccf873e0ce86b4199e33"
+    },
+    {
+      "artifact_id": 12915210909,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 54527,
+      "gzip_sha256": "607ddc7a3092e760e5af0af49acf7d8d91f87ced58784787849ae9941d6f51dc",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12915210909.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909271694,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1442934,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e6700eb8e84653aa07e08b5d2faff82239d1e70d5fb6d14a08558bd94e1562a1"
+    },
+    {
+      "artifact_id": 12915476064,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 58721,
+      "gzip_sha256": "21dbd5fd24bef46d16e66d18411ccbe5b261ba2bcb4b39d442c59eaff0b89391",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12915476064.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909271694,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1549190,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "077b1a8aa1b542be5a33a8e4acbfdef8188c1ec72e3bc2b3b1ab42ca1962f316"
+    },
+    {
+      "artifact_id": 12915510227,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 26858,
+      "gzip_sha256": "bd9f37a92017c1338e58a01fa829881f07decf7d4bca842fbf7504b7de96d7d5",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12915510227.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40910393953,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 487350,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a6d828604290336ce19ab8d06dd911d309def6b8b347a2379a85537070a35968"
+    },
+    {
+      "artifact_id": 12915724898,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 48918,
+      "gzip_sha256": "d589ae4c8f0b1007a48c20079eb5d734d800236a51f217f8bda5b040ea18333e",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12915724898.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40916651613,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1150176,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c57f417ca35da9467934902d658cd920a57e3356c176b37ab86e18b31ab579b1"
+    },
+    {
+      "artifact_id": 12916370886,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 55284,
+      "gzip_sha256": "d42c890ef494b21b8d712bde194fded68fa88164329c4b2b8f82e676281800d0",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12916370886.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40909271694,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1511044,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "60d1e9d926590d04223558d82f8f029e0cd65fd062262b64709e06a8bac361a3"
+    },
+    {
+      "artifact_id": 12916642863,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 45658,
+      "gzip_sha256": "5415d08c816baa469caad84f2eeb754e93174eeb2f45ef91d4acfeca906cda42",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12916642863.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40916651613,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 942101,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b0088a6e5865e9ff5b22311389d0281a24ffaacdc825e4a2f9dbab2f228fa80a"
+    },
+    {
+      "artifact_id": 12916983473,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 54477,
+      "gzip_sha256": "0ad093cd895b7362787f8c1fd755998ec571614d8b45cd70d1d765f8a9dd2365",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12916983473.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40916651613,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1276515,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "4a52a41f0ac4a63d3ad0b5fde0d2608cec3aa3b3c750268b87969b1000e4b3ab"
+    },
+    {
+      "artifact_id": 12917639119,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1381203,
+      "gzip_sha256": "94a38f4c9b4b395923b55466b5dafbb85517ac185f6e18644cfaa54ad758ffc2",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12917639119.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40910013685,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104639453,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "cc9a6c4e91cedbf068d8b4076f7918b090687f3784f67563b2e4a58787f7d58e"
+    },
+    {
+      "artifact_id": 12918178508,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 31477,
+      "gzip_sha256": "c3cf5fb8ae3a9b2c2ebe5e937c45c997c9336531396743f3e137ff1d8068351e",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "path": "evaluation-payloads/12918178508.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40920573691,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 674608,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b930f3fb1555975071ac1fd089cef16b7a0709617e552fb4802cf0dba45f1665"
+    },
+    {
+      "artifact_id": 12919252994,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 13149,
+      "gzip_sha256": "1083572608c6bd3e245e98252eb25936ebf5dcc69d609bc1ac59139f1968d738",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "path": "evaluation-payloads/12919252994.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40922905708,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 139899,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "9c1bcfe7138f6b530196955a590850d21ec07db7e36a077792fbde3b41874394"
+    },
+    {
+      "artifact_id": 12920055481,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1458644,
+      "gzip_sha256": "e00d5f7791893523ccfba7e69be357aadae3089df9e245e10293bab8cfc8b988",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12920055481.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40910013685,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 108290593,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "08265016f96c13af81b3b168efbe09f87c0b6fc5bf20951fdc25572d47dc7cfc"
+    },
+    {
+      "artifact_id": 12920435257,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 50376,
+      "gzip_sha256": "9103b158da547431c805d249df501757dd75868e7a9f548fd9a7899dae990118",
+      "head_sha": "a26740c66fd029f81ac00bff90b15f49801fc5a6",
+      "path": "evaluation-payloads/12920435257.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40921056157,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1094452,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e312ab69f01b156fab249b2b3b9cfe379843b58fc96fb0731c02c1ca7f79187f"
+    },
+    {
+      "artifact_id": 12921571169,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1291828,
+      "gzip_sha256": "01040e1258c998417f80f2e126ec01e518522114727fe03033988cbb51038588",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12921571169.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40914709370,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114337531,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "2c6706080822220612b68d7795e862350cebe2f32f016acec9342c17ba3f2e94"
+    },
+    {
+      "artifact_id": 12921655146,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1543086,
+      "gzip_sha256": "d618c4c9980448f048ad12c8da00b6b47697332bc59f16a2892db59f660777f4",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "path": "evaluation-payloads/12921655146.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40910013685,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104237428,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "5dc8a1ec606c3a7c6765196a385bb268cc5450ec4df439ae6978af885e2c0491"
+    },
+    {
+      "artifact_id": 12921916343,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1292650,
+      "gzip_sha256": "c3285fc2d5ed0ea1e95c486af876600c1dbecf198a6069116b14ed7fddb6bd05",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12921916343.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40914709370,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114349345,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "237009b2eb101152d55fa6961699c253cdae165cb12c3dc894f296585ebbc66b"
+    },
+    {
+      "artifact_id": 12922117940,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 8195,
+      "gzip_sha256": "6f3509b5802ace3a41ce931b256a53d485f0590f96ea84fc50dea942b5b10305",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12922117940.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40930793452,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104163,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e468db58ccd2830f4fc3238bb3c3426beb4c65127481a7fae70209cd999d6d98"
+    },
+    {
+      "artifact_id": 12922255527,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 47184,
+      "gzip_sha256": "6a2e27b29a01718933e7b9e2310fa646b8e9c29562d2f32c4c13062084f332d1",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "path": "evaluation-payloads/12922255527.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40923928201,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 914259,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "5af5a10ea3fd2114c6c5139bd2a4f3a71e46ac20ac055adf3b5acb95f215f654"
+    },
+    {
+      "artifact_id": 12923161927,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1297008,
+      "gzip_sha256": "12da305ff56b25aff9003a85fbb39a41615567f96c28cf9ef0e9d420b9ebdc38",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "path": "evaluation-payloads/12923161927.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40914709370,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114337061,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a5cb9e431678d88c2c8e711e069172ce63379af5127b63f2aa4a2236e511a616"
+    },
+    {
+      "artifact_id": 12923482530,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 32889,
+      "gzip_sha256": "0640ce5a0dfb942ed25b963f694f29594079783e31d7992b64469a426aa0b1fd",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12923482530.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40930786566,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 700810,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "dcb512aaf33f16f9415ca6b16cb64ca67cc37bc20f9e70bfc12b3cf00e28efa8"
+    },
+    {
+      "artifact_id": 12924404866,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 31938,
+      "gzip_sha256": "d5a951957cd62d7ffe57582ccd0b4e4e07916aa493e1f44cefa0f2fc760e00b6",
+      "head_sha": "f6cb591a9bd93bd9cf1e9e75ac5eb241dc1c312d",
+      "path": "evaluation-payloads/12924404866.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40936796228,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 608643,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b11e44c3e55ae95c3614cf8b51c770f94ab630ebaeda247603e1049a6cb3c1c4"
+    },
+    {
+      "artifact_id": 12925016869,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 49379,
+      "gzip_sha256": "8ade010980b60dc936eaba890a5bc0bae3fcd9c15061cf872bbc0a9a48cb279b",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "path": "evaluation-payloads/12925016869.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40933885726,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1253388,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "383912638db5c77bbcd95f8c02eadb76ac6c3ade8a1a53a800b2d3a46722beef"
+    },
+    {
+      "artifact_id": 12925187023,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 67893,
+      "gzip_sha256": "ba5391e874dce14dc0122880ddc3e3f47dfe8163857aac2a1ba46cac0c883cfb",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "path": "evaluation-payloads/12925187023.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40933892507,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1625131,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "566b10d002c8b75898e4784d2473d1d8b2d2cfdbdf2636015cc1e97ad1a783ce"
+    },
+    {
+      "artifact_id": 12926899227,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1320571,
+      "gzip_sha256": "d596e88108a26ff0236ef75c8e3d986b09939f3f56808f2b66fed4a6c7aea9df",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "path": "evaluation-payloads/12926899227.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40924968145,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114788907,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "873796575ff5d936b4fcd49e3f3e27921168a7e51c07c08fd3ff0752fc50ba90"
+    },
+    {
+      "artifact_id": 12927192823,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1321585,
+      "gzip_sha256": "b3c6b57ca46fc22eb5b32766ad9efa99b103be29a11099d4c19967e193a36548",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "path": "evaluation-payloads/12927192823.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40924968145,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114847660,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "d1ceffe36ff3697216ea6313988a03f4798b307d9c506315754adecb2621ebf9"
+    },
+    {
+      "artifact_id": 12927818968,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 38527,
+      "gzip_sha256": "4c2651c1110a76171db4fbe766015aeaba5e71244ac253a3b2b9e0d036f7fcae",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12927818968.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40943318871,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 876712,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "8b1ab6d854572929480409484c81c244a9875d7c23a0e273ee0d684ab454e249"
+    },
+    {
+      "artifact_id": 12928354094,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 13234,
+      "gzip_sha256": "e8a9ad3d4693c5ef2687b59543785efc89287e53e59b22f9fc70dba719ae9537",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12928354094.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40932031732,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 139331,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6be36a936d4fbbd615a091e9c4d7d8fcfb2f63ea2d6dd1657dd719857dffdad9"
+    },
+    {
+      "artifact_id": 12928474218,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 40323,
+      "gzip_sha256": "386c4bb40338668f65c4af1d7646aba9b15d95362c153684463d5c192beeb924",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12928474218.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40944249737,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 953852,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b4cde0bf66ada2a2e13a69bedf0c76b488d4183a46148cb77eaa4dd85f62507c"
+    },
+    {
+      "artifact_id": 12928586162,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1321194,
+      "gzip_sha256": "036734eed3d2cbac142642dea9dcdb44154c946f6adf2cbbd2fb6655cfe776d7",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "path": "evaluation-payloads/12928586162.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40924968145,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 114834068,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "bee0c42eba1d8282ea9dccf178d21a0474220d319b606546650feaa7f65c2c03"
+    },
+    {
+      "artifact_id": 12928827818,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 60056,
+      "gzip_sha256": "505629b1b345a732c7b13c1fc0a03113b50fed55a4f49cd4761882d5b78ff388",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12928827818.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942447288,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1462227,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a8c729431cbe6e865db5ebdcee8a9f11ae9ece334c37ee0b3999fc622356b92c"
+    },
+    {
+      "artifact_id": 12928941627,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 70161,
+      "gzip_sha256": "e491a319735f600aca8663a03bc8d4babc92d07c845671652592cd9588e41fdf",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12928941627.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942437542,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1752648,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "f38ecadc26eb3f8474920d190558684db67da1fa4fc1926655ee173afb172bb3"
+    },
+    {
+      "artifact_id": 12928948114,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 43562,
+      "gzip_sha256": "1a8400948eec40622fe69531e28bc6120998417426b75c44b74db8beb8ed9904",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12928948114.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40943924937,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1124931,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "ef06af25d4be16513d12dab4703c9bf16de406c667f46e704b1129113b24980a"
+    },
+    {
+      "artifact_id": 12929237964,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 13250,
+      "gzip_sha256": "43a13b54efb6b41bced0f2fee15d313eb9a7370248821df7484965a31e2bbc51",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "path": "evaluation-payloads/12929237964.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40935203055,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 139344,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "9cf70abdfab35ea01843725b4742e74fff9ce1d98c147c0b3a93e7025e7a5798"
+    },
+    {
+      "artifact_id": 12929342198,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 13253,
+      "gzip_sha256": "42df507be32dcc2b9d49294155162484e9e3de63d4b45136294d083c4af3bfbf",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "path": "evaluation-payloads/12929342198.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40935194776,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 139347,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "08f61c29703a2640175687c934bb78ffd35fd5f22608e12383459a24f647fdf0"
+    },
+    {
+      "artifact_id": 12929535044,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 16122,
+      "gzip_sha256": "66b784d6ae419eec376ecece68ea889041ce20165ce017c1778bf846d32e40e2",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12929535044.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942447288,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 155697,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c90b04a3035d7073f0e1fa75ce0ac1d50bfe59ce8af85dd289274b2194755588"
+    },
+    {
+      "artifact_id": 12929555891,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 55173,
+      "gzip_sha256": "8e2d7678fb533ac92adc9c430671c3b85bbfd74f511d0fae239fe00f77474454",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12929555891.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942447288,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 1314477,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "698fc36969cfa274d46e7196137a682609cca0fe3a22113cf607d1a74632d6d9"
+    },
+    {
+      "artifact_id": 12930405622,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 38967,
+      "gzip_sha256": "4b2bef8d8ee28499813bb6faf94f960f18b5e8d943806d3fa74f2bcc1a6559e9",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12930405622.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40943915967,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 963090,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "ac2bd5f312a7f5f4dd35f14da8d5606c4f3f129c671526a3ce7665467ed242b7"
+    },
+    {
+      "artifact_id": 12931813811,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 34312,
+      "gzip_sha256": "920cfb06fa55d1e7233af9f9931db8c2268a88ad2a02a205923684f0b103e65d",
+      "head_sha": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "path": "evaluation-payloads/12931813811.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40948057864,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 597917,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "8d1b23e4a6bb21f3f6e2db145440d769965f5d8a5cc02ff9ef387612ec7740da"
+    },
+    {
+      "artifact_id": 12932104383,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1099718,
+      "gzip_sha256": "5fc5ff4303be74ed99bc012d690ffc3f69467fbb0d153fe1d72dd7d89881bfde",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12932104383.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947299209,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 60391713,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e8ab34384d48f4fc0b92dfe35e21317bcbfd44b4e2d261a483ea8394ab654094"
+    },
+    {
+      "artifact_id": 12932964556,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 18322,
+      "gzip_sha256": "d34e9a47b19db1628339d6be60ac7a4d5312a632d31920bed81056be7ff7d593",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12932964556.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40930805848,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 181408,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b47d4fb1ded2b76477a6d8c20d8d1c036a212fe79d931dd940a5defe3503f72f"
+    },
+    {
+      "artifact_id": 12933112600,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 18231,
+      "gzip_sha256": "c6d82c3f6ebe8b5fe7e24f3bd6a04208453eaa8ffb3bc871b924821395c6119c",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12933112600.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40930805848,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 181271,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "ce157481d7b61acf377576bc00958e346021aad6d476f014e7523dc80efe1761"
+    },
+    {
+      "artifact_id": 12933131686,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1098435,
+      "gzip_sha256": "1da958a4a5628639c9513e476615ef615a54f5361f7dbca14a0a4e4ee18b9077",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12933131686.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947299209,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 60382137,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "efb526808439b6fadc3afc5e82cee469db843303133645840b9a1575b18508e0"
+    },
+    {
+      "artifact_id": 12933554459,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1105108,
+      "gzip_sha256": "e66ce1743681e256583a14d1f9e35de8f24c63d93cea8287c1da71f903389aa3",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12933554459.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942429097,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 74735705,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "559ed69bcab64b202ea9a93f0993276eb9d5c9ebf1c1c40e850a4bf6586ae958"
+    },
+    {
+      "artifact_id": 12934120822,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1098390,
+      "gzip_sha256": "80a873d9ff9ea7ae8cd1893c87b943b4fe4ff7b259102fc71d170e9c6eec0bf7",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12934120822.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947299209,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 60382202,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "0c997d521557729f569d31412a5203c57cfb98c02a3f60844c414d32a74d2194"
+    },
+    {
+      "artifact_id": 12936501478,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6163099,
+      "gzip_sha256": "3db5dcfba6daf06c26468880d197eff4c35f96aea14f27c925b8f028c659886c",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "path": "evaluation-payloads/12936501478.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40930805848,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 243369948,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c4a979414398b4283f2c8ee749dac2d4fecbb5f8958bb273955059739d6636b7"
+    },
+    {
+      "artifact_id": 12937171763,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1358170,
+      "gzip_sha256": "0b42c32c17a8659b54e0d1352c62af3fb604641e9c09e4d001c1d68eea0831e7",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12937171763.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942429097,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 77120358,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "dcc2ea484bd0746eb319bc7d116d78eeac1a7618015255150d0bc89533245ef2"
+    },
+    {
+      "artifact_id": 12937232960,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1650507,
+      "gzip_sha256": "be14feb4cf66eee9077a79018bda2ec6c9e3b59fa3f83d052d1d37850c98e72b",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "path": "evaluation-payloads/12937232960.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40956228868,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104924561,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "9852aa4c8d40853d9d522283d1e9811d75df33268e324be996e12e080b00ffb9"
+    },
+    {
+      "artifact_id": 12938360814,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1652209,
+      "gzip_sha256": "adeb0d3b26a6585df40fd22e0612cdfebade0588a352d3064f37bc6315a82018",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "path": "evaluation-payloads/12938360814.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40956228868,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104924420,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "55c548b1abda21f3b10bd2a65ba1ab0bb588f1219b3f57f4269368fa92052dff"
+    },
+    {
+      "artifact_id": 12938705608,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1649854,
+      "gzip_sha256": "7e8c10220f372da61fd9edcbbac8664c2d769f7066dfbefb8f141d7c32a2e8ed",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "path": "evaluation-payloads/12938705608.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40956228868,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 104914941,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "fac0ffb7b09054561197f14d9ea42111053e843bb81cb0ffb76d96225084c245"
+    },
+    {
+      "artifact_id": 12939228701,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 17165,
+      "gzip_sha256": "aaf6b55708510f561c503483e8b8480b9f58ff28e14fa6a4e858e2fe8ab83e92",
+      "head_sha": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "path": "evaluation-payloads/12939228701.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40948072741,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 168617,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "64ff17da153852d369940005331bbf732889abbffa7f0ee332ac793e681090f5"
+    },
+    {
+      "artifact_id": 12939304953,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1477813,
+      "gzip_sha256": "f31d8398384f67405adc8b8832c30a20757db9d38c2d32dc2385d66d46660e30",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "path": "evaluation-payloads/12939304953.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40942429097,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 78313279,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6bacbd208521b9187496ce6bd05a3b42be0d1645b39a45e8c40547c8d7476c67"
+    },
+    {
+      "artifact_id": 12939626858,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 17023,
+      "gzip_sha256": "180fb153e1cf8efd0324535ab6b5eb1b5db7518b74e54fb01eb061ff2a29d3dc",
+      "head_sha": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "path": "evaluation-payloads/12939626858.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40948072741,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 168413,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6f6ca617e9588a21376fca1f23eb5102f9c4232b03da971fb48c2392860ea2ab"
+    },
+    {
+      "artifact_id": 12941448669,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5930840,
+      "gzip_sha256": "568574ea5453500c9be2001b660f1d661e4c8344850ff6fc055312a92d276f1b",
+      "head_sha": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "path": "evaluation-payloads/12941448669.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40948072741,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 271104959,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "da48e3f228ef3621462be4fae949a3e8539e79333685f11a29f9fca2a680bb6a"
+    },
+    {
+      "artifact_id": 12941676590,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2389752,
+      "gzip_sha256": "5ea6580547294dcabaeea29cabcb0f46b056ce027e2e668442d8f42958e0edf9",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12941676590.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40945578755,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 165040090,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "ba7396121ad9b118dff078051db15573192492a9ee2765efd8728abfcc20f983"
+    },
+    {
+      "artifact_id": 12941975097,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 15784,
+      "gzip_sha256": "294ee1daa047bc63968fa377637f72a41014c8f38ec33150371ef0fd51564071",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12941975097.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947264867,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 151675,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "34f44a4db09ff7f3a21271a836874bdbfc1d17507231611bf6116d912d1295ab"
+    },
+    {
+      "artifact_id": 12943498463,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2487866,
+      "gzip_sha256": "a0d8891dd24b89e98ba095cab91157b367c5e3f5614ef9c29fd5bd4cc10fd7b5",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12943498463.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947274375,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 149051193,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "cc461e9721e25fe4be3056429cdeb44a7b7bbe3781a0632785f9f14b83f13cd9"
+    },
+    {
+      "artifact_id": 12944715103,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2467959,
+      "gzip_sha256": "304425080e985e128a3d54f0b38a58c1298e04bd9b97fd99aae6475aec765b07",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "path": "evaluation-payloads/12944715103.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40947287495,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 148879934,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "79d1a3540dfb5be94552e9682a41f791198e9009035081946ceefa58893666dc"
+    },
+    {
+      "artifact_id": 12945067476,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5886119,
+      "gzip_sha256": "886d6e2df870d99aa6189dd22997132d19b156eaafb890dd1a2bee2b0633c56d",
+      "head_sha": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "path": "evaluation-payloads/12945067476.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40959052743,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 245388936,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6019345be3394d4d6d7738379d9d5397d3f57896c1b140b5496e0e10bfd6b576"
+    },
+    {
+      "artifact_id": 12945349527,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2440363,
+      "gzip_sha256": "f193813c9172789a26a06d209e47630a8c1e2d1533534564d7579e95119a7b22",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "path": "evaluation-payloads/12945349527.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40956239225,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 148444040,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "0fdecaf13ac360bf7887dc0ece863a83521c2c7d8dccfafa9c29c3fbadb6df46"
+    },
+    {
+      "artifact_id": 12945932973,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5893259,
+      "gzip_sha256": "3678433e1e0f8a684838bfb7c736bb05078911f4ff298b79d4d2733fa7d969f9",
+      "head_sha": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "path": "evaluation-payloads/12945932973.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40958365058,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 234513487,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "4615131a8f98629d1abf5b94d947564675ad14e0bf84e37155098b2dd1b843d8"
+    },
+    {
+      "artifact_id": 12947519268,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2720223,
+      "gzip_sha256": "4437e7ac06c6ae6415000253ffea4095befafe6c9d295c4554f1e7f6bf7a5966",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "path": "evaluation-payloads/12947519268.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40953661709,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 168302404,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b568d9427840d2056d167f092c2282ead8b5e15e13246b910cab3ca0beafea3a"
+    },
+    {
+      "artifact_id": 12948320780,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2462212,
+      "gzip_sha256": "bc4c8620b207a0405ec691a0bd64ea650eff7f27c51005d8d2b1fa8023e83665",
+      "head_sha": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "path": "evaluation-payloads/12948320780.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40970095079,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 76552916,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "7d75b1172a3006c1d3dc187743b822c4fa0e22f0cf43990d461fe4038c192898"
+    },
+    {
+      "artifact_id": 12948423515,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6676401,
+      "gzip_sha256": "1e4cd7c81a442bed246bb6393e9b5658c7350b25ed7a1cf7d7d18865389f1df1",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "path": "evaluation-payloads/12948423515.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40966258333,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 292495776,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "38afe843a7934fc9e0ef0509abc6fdbec9253a233377b52aef505df011576808"
+    },
+    {
+      "artifact_id": 12949014963,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6537544,
+      "gzip_sha256": "487993a23e6f5273c53301af62c8aeda8576553a9cce8c1fcc81ee7d6efa5e86",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "path": "evaluation-payloads/12949014963.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40966847000,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 283449197,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "3c475f498e90c2b17a6386e0a1ef57e2c5a4f5cac11d09b97def64b8736dcef4"
+    },
+    {
+      "artifact_id": 12949771867,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6338023,
+      "gzip_sha256": "7a1d6dcfa3fddb450c1407ea7b590fda1daef0769796be1309643caedf1d9e3c",
+      "head_sha": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "path": "evaluation-payloads/12949771867.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40970638144,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 268699692,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "f82463ebb97ee06aef7f0df6dc5f235a5085a9cd1759861f24f2216de6bc7d03"
+    },
+    {
+      "artifact_id": 12950085255,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6597951,
+      "gzip_sha256": "4b11a4e5643b954a3aafdc4f0503bfab64fbaf71887c0a442190263d9ce76eab",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "path": "evaluation-payloads/12950085255.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40966250927,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 288586751,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "392bac8ddec650a92a9264e964d52faa7a190f8896cc18bbf9628ad71ac8c817"
+    },
+    {
+      "artifact_id": 12950256617,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6259815,
+      "gzip_sha256": "ee20b7d66692731ef240e56ca39cf4048c968cc55f9459894a5158bb6b0c2564",
+      "head_sha": "eb7342e79e6f622123c572e222cbf60608b099e0",
+      "path": "evaluation-payloads/12950256617.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 40971766251,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 264087034,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "203779077f14eb6b7bdd525a60d2202e55b3ebf2c2c569eaa77226787e413948"
+    },
+    {
+      "artifact_id": 12956573029,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 15768,
+      "gzip_sha256": "0572980a3458d55892a60b79d2955acca92ecbec426e7d4e4dfd70979bfa48e1",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12956573029.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 151516,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "d44c0ea281900cf5ffda3794a085968d0c3641c81562976875802e6acc51b952"
+    },
+    {
+      "artifact_id": 12956722482,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 15789,
+      "gzip_sha256": "789224113d8de825ecde8c759cf8ec9e96054266b51f9bd3399bcd5c9d984317",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12956722482.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 151516,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "5304d0b0b8110179c40736dbec070d2b1d456a55a08f5dea274d6276ef58b5ca"
+    },
+    {
+      "artifact_id": 12956910340,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 15765,
+      "gzip_sha256": "a365b481566a85b09708e8848fff42c187eb453c1cb0ba49cd06031275840656",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12956910340.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 151519,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "26a1c2b8ffe1b7aaad5928d999bf186aefde767fe48050551295ca2217c1418e"
+    },
+    {
+      "artifact_id": 12956969282,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1929664,
+      "gzip_sha256": "b43c7304230f1a908da5e6e20eefe07a56a04cb0597819f3e571f606985b3457",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12956969282.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004291277,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 123315937,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "7bab9ac2111efc1cf99d6576cd469a57c24840c245cab4d4108d933a11a7356e"
+    },
+    {
+      "artifact_id": 12957566725,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1937298,
+      "gzip_sha256": "738e89aa35cbc8ef38247f6561c9d01aa1b12febb0f1ed144b5bf06a6b55c394",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12957566725.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004291277,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 123315990,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "51c51c207560d028b0080433596b617eb3b1bff0aca9aadf2ec632a377f24859"
+    },
+    {
+      "artifact_id": 12957851099,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 1934277,
+      "gzip_sha256": "c6c5503c5df55e55e221a640b5c95ad06b251e3ce7303569e2c871a535ba9978",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12957851099.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004291277,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 123354334,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "00529fa8a5c86e1b91769ffcfd6ce7f5d74c4f2edc0d3a39dd25cd5f44bcb44d"
+    },
+    {
+      "artifact_id": 12960084037,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2820943,
+      "gzip_sha256": "5c97b437f141c0de3b24858f49afa871cfea10d3108c694301817e5fd2fb3c19",
+      "head_sha": "e1cd393b6927e47ebb40a77a7336148938d24b4d",
+      "path": "evaluation-payloads/12960084037.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41010834860,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 82100401,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e4e927a92c7f315ea096ee880356a9611aa1777243a46b8b2519b7b2fa58926b"
+    },
+    {
+      "artifact_id": 12960248168,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5085582,
+      "gzip_sha256": "597b706e57c51da46a6f7dee25542ab13160b8058e7eb70062e79dc19bb995b8",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12960248168.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 241081146,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c661108974790357c854f65cd4a670e0f80f5a963c218c9bf69394b94cbf64e0"
+    },
+    {
+      "artifact_id": 12960462523,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2381046,
+      "gzip_sha256": "a8bbfea75c4979ad68e4c08e6bc877ea4dbe556896048ad34d88774157c14a6c",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12960462523.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004275773,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 75601479,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "467d4a062e55332c1ffd75947dffa6c08cd1bcf7dc186074c4913693e7435e2f"
+    },
+    {
+      "artifact_id": 12960716789,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2828323,
+      "gzip_sha256": "c9dd3b7d616233ac5eaf92ca2afa08176945d9be30a9902baf2bde78cb7480fb",
+      "head_sha": "5c05858e8be2962fefc58657d9809d862f2b2540",
+      "path": "evaluation-payloads/12960716789.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41009954091,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 82203077,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "f407819784a1edef50c0ddf9ee097a937c810a9a07b6073056bc13e68c339371"
+    },
+    {
+      "artifact_id": 12960737453,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 6343106,
+      "gzip_sha256": "93e23803a270c5ec69c4102f35257be1ee48b363af0182565bb25ab041e91e0f",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12960737453.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 270090194,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "77f5f94a1c3febbd90dd98e2b8ba0a13234e037843c15d837fda4957a8f549f0"
+    },
+    {
+      "artifact_id": 12960798179,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3881930,
+      "gzip_sha256": "0535c26302121bbe7cea217b90bd4c0e45223fb6da2da8d3385dff5202eb2ea9",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12960798179.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 185124367,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b13d3e621fd12900bd8aa13ca6d3c28685ca0bb562032a1adf48828219c32f9b"
+    },
+    {
+      "artifact_id": 12960912355,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 33067,
+      "gzip_sha256": "fba8345695a4a26e1bd3427faa69f7b627125e1e7fbd143ad82b5736fef483aa",
+      "head_sha": "e48dad6cb37c28fee7e731dd8bbe355a924c454b",
+      "path": "evaluation-payloads/12960912355.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41018310659,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 701204,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "24fbe4426c3ab717a14dc3647cbaf9c04e33349f451d42a6b8da7023a7d048a6"
+    },
+    {
+      "artifact_id": 12961242802,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2498874,
+      "gzip_sha256": "38ea25bb0f9d762f2218098ca838ec6aaca7db9435f6a8efd4d8ac42a99aee73",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12961242802.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004270443,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 76972527,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "2a525b68f5dbe7d081dd80355048154ccc6884c70a0aa4dc61efd24547e85946"
+    },
+    {
+      "artifact_id": 12961715511,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2835023,
+      "gzip_sha256": "ca6734b073d529b95ec315d11c31df82be238bff8c3852f9c9303209168708d7",
+      "head_sha": "e1cd393b6927e47ebb40a77a7336148938d24b4d",
+      "path": "evaluation-payloads/12961715511.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41011398324,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 82222428,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "d0966fb5dedb10cb2541374c85ed05aadef60be8a66348124174e96b06f5c473"
+    },
+    {
+      "artifact_id": 12962352547,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 14912,
+      "gzip_sha256": "361b50bf41fe456cc54dd741d04f86dc38a065922551cbf04402b63ad247bd50",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12962352547.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 148530,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "11b549eab1f2cf004bcbca92b62ad1ee4c601b8de7613b1cb7579702e457b4bd"
+    },
+    {
+      "artifact_id": 12962981417,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3137450,
+      "gzip_sha256": "e9e9530512dc0f90ad736a7b78a4260efe49eacfc508ada715c076daf70bf361",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12962981417.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004285932,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 161112195,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "c5b10db955867cb816a4b87dd0539212e70c4b4a80d67bdbb08c86e3ba1bc509"
+    },
+    {
+      "artifact_id": 12963532500,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3325567,
+      "gzip_sha256": "3e8fa360e80ee88e60e54ee9b8963ebfdc7ecba6a49aed9cea077a1615d661fa",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12963532500.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004281518,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 146823637,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "07fc52a1e6e6f9247bbb896fc72b8bc6a06afad995ab2b33f75c243f8ef4ad0f"
+    },
+    {
+      "artifact_id": 12963759737,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3446362,
+      "gzip_sha256": "a4c4f8ed0807e71e9280d66530a60c91e0f3a3c4e4505e813bcb8a14bd44927e",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12963759737.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004281518,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 148234647,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "6f805d285b4652f590ec68c2be454bbfe49c2d0ea3fd21762dbb086402a11696"
+    },
+    {
+      "artifact_id": 12964072241,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3379714,
+      "gzip_sha256": "64446ae1e0e6512368bdc5329eeca1357a8d2e9ae09566dd610ef0d6093cbfc7",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12964072241.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004281518,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 147482131,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a7b66ba760e67269222f9c5def2fa8355523a66518e7247857af9d7feff1215a"
+    },
+    {
+      "artifact_id": 12965078253,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3625970,
+      "gzip_sha256": "0e279f7084acb8f121d7969365b9f8b39391d1eb8b7e5f43383a69d9343917e9",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12965078253.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004285932,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 166944399,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a700c96a5c56cd0463029ae4210eac338294f1cdc94d3af153123ddc07798ccf"
+    },
+    {
+      "artifact_id": 12965338107,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 3676443,
+      "gzip_sha256": "7c59333277b680981e13f1564261958d01f903ffe89a43fb9d960c2a4d0e58d2",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12965338107.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004285932,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 167494336,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "b6d8556458ba897b31035ae9623241f522e3a906bdd998b2acdcb6c08d830bf8"
+    },
+    {
+      "artifact_id": 12965722293,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 4074936,
+      "gzip_sha256": "9e1d361948952c853cc35a27c8b9f02b4a7be912a6357bf602229d2eb50fa3e9",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12965722293.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 198822865,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "a323e6d925f6b5d1aa20d4fff1586b2d83a64f88c15919476cd28da183c8ec6e"
+    },
+    {
+      "artifact_id": 12967044179,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 4236877,
+      "gzip_sha256": "a2d0a8378ec2316c24a336bcad4c312677181508670c3b409f0bf46be084b990",
+      "head_sha": "cadafe8962000f326d467b273683990372f29b30",
+      "path": "evaluation-payloads/12967044179.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41024050638,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 201749941,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e21c1e40927a6c4d0ddcb451074e675904b2c7f650502ec43b35edd3f558e027"
+    },
+    {
+      "artifact_id": 12968026204,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 5185766,
+      "gzip_sha256": "709963226c3ff1bdf9e4c3e46d2769cfd8c4245287950fd5897cc0b0583a93dd",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "path": "evaluation-payloads/12968026204.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41004296165,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 239190116,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "ead0e6977516f3e1d907d3d4045adfeaa713aaa2cba0b697c2d3a2cbd7da0b33"
+    },
+    {
+      "artifact_id": 12969760740,
+      "deterministic_gzip": {
+        "compresslevel": 9,
+        "filename": "",
+        "mtime": 0
+      },
+      "encoding": "gzip",
+      "exact_original_bytes": true,
+      "gzip_bytes": 2664276,
+      "gzip_sha256": "6e88155d43861efdb5975584190a76f5e8a216d742aec65d7e494c330fd2db5d",
+      "head_sha": "8c6f1fac8ea73315e8ea98a9db0014319425d33e",
+      "path": "evaluation-payloads/12969760740.evaluation-v5.json.gz",
+      "restore_verified": true,
+      "run_id": 41005821961,
+      "schema_version": "evaluation-v5-source-evaluation-reference-v1",
+      "source_bytes": 167847288,
+      "source_member": "evaluation-v5.json",
+      "source_sha256": "e9c6ec2f4085316b82bf6b05d3a49e4f6947e236c9612cfe142a327afb5262c8"
+    }
+  ],
+  "schema_version": "evaluation-v5-payload-manifest-v1"
+}

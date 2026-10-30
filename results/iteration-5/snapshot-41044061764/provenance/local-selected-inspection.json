@@ -1,0 +1,221 @@
+{
+  "artifact_id": 12972574868,
+  "api_zip_bytes": 534512742,
+  "api_zip_sha256": "sha256:deb8bd394b3f7db4ded43c5abcab361be4154605df3925e60d62d6a504359b19",
+  "whole_zip_hash_verified": false,
+  "selection": "explicit names.txt only",
+  "members": {
+    "costs-v5.json": {
+      "bytes": 435215,
+      "sha256": "b8d193936a9a2f469697f2763e9092b48225cb52c4c3989c134785717c78013c",
+      "zip_crc32": "d8e2f5bd"
+    },
+    "evaluation-payload-manifest.json": {
+      "bytes": 88528,
+      "sha256": "4232e2f325c749c434970ebe63a1660891015e80a9cfd0bb47d4ecb402b128ed",
+      "zip_crc32": "c1a66d11"
+    },
+    "evaluation-v5.json.gz": {
+      "bytes": 395771,
+      "sha256": "f5ee2474b92020f863d04cc85795518cb56934ed04c0fed027c235a0e6b2023b",
+      "zip_crc32": "5fc51d45"
+    },
+    "figures/errors-coroot-deathstarbench-absent.png": {
+      "bytes": 256372,
+      "sha256": "69d9d0d8566b99c3039abfec4083e9091118f4d2574515d628b48334b0148dc3",
+      "zip_crc32": "0e3072ee"
+    },
+    "figures/errors-coroot-deathstarbench-full.png": {
+      "bytes": 217749,
+      "sha256": "1bbc73703e7ba8b86de08e310e0363cd83ef7d03f0e2d4ec46962c176cd7399e",
+      "zip_crc32": "e167483b"
+    },
+    "figures/errors-coroot-deathstarbench-partial.png": {
+      "bytes": 243668,
+      "sha256": "dda18fc4e321a46d449979e40b8cbba813e7353ec6525dce640ac02fedfbf9ce",
+      "zip_crc32": "55b14ec6"
+    },
+    "figures/errors-coroot-otel_demo-absent.png": {
+      "bytes": 245111,
+      "sha256": "7120d342ca75177a6f7c972b198b22f2111e040e338e157b1c302432f61a2d21",
+      "zip_crc32": "68028598"
+    },
+    "figures/errors-coroot-otel_demo-full.png": {
+      "bytes": 220635,
+      "sha256": "3c8bc25425254e41b21a99bf03849cdb69440e2f9e0b509af823f72e10d3f74b",
+      "zip_crc32": "5c55a599"
+    },
+    "figures/errors-coroot-otel_demo-partial.png": {
+      "bytes": 244948,
+      "sha256": "c71a253627d77913d467bb0ad07a64cabef4e8f9022de11edb908973a8774d51",
+      "zip_crc32": "18ff7eb8"
+    },
+    "figures/errors-coroot-petclinic-absent.png": {
+      "bytes": 314711,
+      "sha256": "93237cde387d1e0eb065d8a079f08db1c9c47e77af2b4633fcd6bcb3f3b522c1",
+      "zip_crc32": "f23f261c"
+    },
+    "figures/errors-coroot-petclinic-full.png": {
+      "bytes": 307651,
+      "sha256": "7e5a2291f891e8787698dc6c855f5c90ef063d07f0e916632df42ef8a69c3a0d",
+      "zip_crc32": "bf898e2c"
+    },
+    "figures/errors-coroot-petclinic-partial.png": {
+      "bytes": 314921,
+      "sha256": "991a728457af92432b2c636dc554c721bc0c3a0c347e19ee84ed70abc3082576",
+      "zip_crc32": "0ccf7735"
+    },
+    "figures/errors-obi-deathstarbench-absent.png": {
+      "bytes": 255696,
+      "sha256": "fdbec136333b1352434f779e631f421272fb88d6f7fd1c3214896a21000d91dd",
+      "zip_crc32": "b29f1164"
+    },
+    "figures/errors-obi-deathstarbench-full.png": {
+      "bytes": 217001,
+      "sha256": "f61536ade1f39d39e52662c6f5dd0a07a2a833a71594227fe92e2ea67011f155",
+      "zip_crc32": "075ac344"
+    },
+    "figures/errors-obi-deathstarbench-partial.png": {
+      "bytes": 242833,
+      "sha256": "3666f372d7cb363b219d6c05924d9f1603391abb40337ebc9b24fc5836854783",
+      "zip_crc32": "65a052df"
+    },
+    "figures/errors-obi-otel_demo-absent.png": {
+      "bytes": 206408,
+      "sha256": "4491c845b7485e4ffa99346635859a9946a2df5a6e74383cb11588d6d8bedfb1",
+      "zip_crc32": "80f612f6"
+    },
+    "figures/errors-obi-otel_demo-full.png": {
+      "bytes": 210643,
+      "sha256": "d0688b8da205277a48f3e952e809300c1e533ed18a71cea819ef413f1046f298",
+      "zip_crc32": "1eb6aaa0"
+    },
+    "figures/errors-obi-otel_demo-partial.png": {
+      "bytes": 243901,
+      "sha256": "c7331e0a5fdbdac0da5907db7ec11ea262e52adca20dd51ceb61dd397e5072a4",
+      "zip_crc32": "ee831294"
+    },
+    "figures/errors-obi-petclinic-absent.png": {
+      "bytes": 263387,
+      "sha256": "013fa1fcb7c0a248c8980c91cdf61946f99d3f3faf09f616ebca3fae481c9a8e",
+      "zip_crc32": "b7bdac28"
+    },
+    "figures/errors-obi-petclinic-full.png": {
+      "bytes": 255673,
+      "sha256": "26a8976bb349150c7ad11f4bdb67be088480ca02e7666a6a46226b6f0a30d723",
+      "zip_crc32": "c46eb534"
+    },
+    "figures/errors-obi-petclinic-partial.png": {
+      "bytes": 263155,
+      "sha256": "1abde01688b6b174906488abf5a5aeb109696a9fb074deaf0b16da89ee898003",
+      "zip_crc32": "ca957c19"
+    },
+    "figures/figure-files-v5.json": {
+      "bytes": 8924,
+      "sha256": "46dbe46ba4d5eb1c9563f079bce3eddb8e665abe9d329ed3be36b217be16ebb5",
+      "zip_crc32": "9b12eadf"
+    },
+    "figures/figures-v5.md": {
+      "bytes": 215276,
+      "sha256": "64fa6bcee0f806bee1de82f0e10a6d97e2b02ea9d2b40791ba390a94ec0bbb07",
+      "zip_crc32": "f9949ff6"
+    },
+    "figures/saved-values-v5.json": {
+      "bytes": 2198055,
+      "sha256": "2cb21a54c92dc1323dabf5d249f837ff2fbe043e9cbc0e51f4085d357e105c38",
+      "zip_crc32": "441bc51e"
+    },
+    "provenance/aggregate-packaging.json": {
+      "bytes": 277,
+      "sha256": "323725e4a3adc913b42cc1b97548b37b483e01cedb8babc6e191b11384c6aff7",
+      "zip_crc32": "b4f3cf27"
+    },
+    "provenance/declarations.json": {
+      "bytes": 76124,
+      "sha256": "27add01f1be195742fcc98202baa4f0b6266d86b9643dd5903a3d51faf9fb7ed",
+      "zip_crc32": "053a77da"
+    },
+    "provenance/report-python-environment.txt": {
+      "bytes": 619,
+      "sha256": "1b664febcdd44552e0b41cbb573a71b1b2c831988afef7f7aca96901e83711e6",
+      "zip_crc32": "632b9d24"
+    },
+    "provenance/retrieval.json": {
+      "bytes": 1105334,
+      "sha256": "f2dc73fd9e32a5360b7412e0f687f2f217337c5053f3419ac60601ea10ba23a8",
+      "zip_crc32": "25175b1b"
+    },
+    "report-v5.md": {
+      "bytes": 389215,
+      "sha256": "086292e6b2a70d225c0187f1c4973b5fa0e18076616285aa4d880acaa1571c7a",
+      "zip_crc32": "38d65576"
+    }
+  },
+  "exact_http206_ranges": [
+    {
+      "artifact_id": 12972574868,
+      "start": 0,
+      "end": 1048575,
+      "bytes": 1048576,
+      "sha256": "25ab522541e454bc54098564624e6e51f5cce309f809aab1147e9fb741846e94",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 128974848,
+      "end": 130023423,
+      "bytes": 1048576,
+      "sha256": "4e6c75cde105574124c5ad9e7ade08d016bd290725cb66fe97a2c7e05de0b414",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 130023424,
+      "end": 131071999,
+      "bytes": 1048576,
+      "sha256": "ce1d756151535f4bb289f6bb1b62f127d1ee207669c7df2ea7c5d178bc7edfd6",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 131072000,
+      "end": 132120575,
+      "bytes": 1048576,
+      "sha256": "d0a523cd88178013e391fc624991bf7be1eab1420145cb2e53709e34d813a636",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 132120576,
+      "end": 133169151,
+      "bytes": 1048576,
+      "sha256": "c59678411258bbc192c7d7ddefe34487ce3b1b0875c0cf58a680480aa472d6f0",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 133169152,
+      "end": 134217727,
+      "bytes": 1048576,
+      "sha256": "d6848e694a45b9502fad12bf3afb3485a025c68fab2be1fe599fe79748f29502",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 134217728,
+      "end": 135266303,
+      "bytes": 1048576,
+      "sha256": "ce42934b54d037def47ff4058ea2fae28b6ad3b8459f298709d3f016ca52de07",
+      "http_status": 206
+    },
+    {
+      "artifact_id": 12972574868,
+      "start": 533725184,
+      "end": 534512741,
+      "bytes": 787558,
+      "sha256": "cab1983c0959118b4bcd996274309a30ed25b84590bc97540f904a42a4b06c66",
+      "http_status": 206
+    }
+  ],
+  "range_received_bytes": 8127590
+}
