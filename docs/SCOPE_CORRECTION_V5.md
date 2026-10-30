@@ -76,3 +76,10 @@ boundary; the exact live allocator remains unproved.
 This audit does not supply missing human preparation costs, admit the 17 pending
 candidates, or establish a utility or complete-effort advantage. Later runs and
 reviews require their own dated evidence.
+
+The [first-publication binding](../results/iteration-5/scope-correction-20261030/audit/publication-binding.json)
+ties the original review-time hashes to immutable Git blobs at `c5df32f`.
+Code, workflow and test bytes match exactly. Three documentation additions and
+one line-ending normalization are explicit and reconstruct the original hashes;
+the original manifest remains unchanged. This binding is specific to that first
+publication, not a claim about every subsequent revision.

@@ -1,0 +1,151 @@
+{
+  "schema": "scope-publication-binding-v1",
+  "publication_commit": "c5df32ffc3039136c184b7915337836c39db811f",
+  "audit_manifest_sha256": "22466b820aab290310e223d2d8f5edfcc77b3c38553e8fed99e9236449fce62c",
+  "review_time_UTC": "2026-10-30T04:33:03.139282+00:00",
+  "code_workflow_and_tests_identical": true,
+  "source_records": [
+    {
+      "path": "src/ebpf_discovery/campaign_v5.py",
+      "reviewed_checkout_sha256": "e7a65facd6f6c41a4f317254d0f34955eae069f2b934b898f16db136e3f3d139",
+      "published_git_blob_sha256": "e7a65facd6f6c41a4f317254d0f34955eae069f2b934b898f16db136e3f3d139",
+      "published_bytes": 10358,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "src/ebpf_discovery/campaign_process_v4.py",
+      "reviewed_checkout_sha256": "d8bca9106cda8a7f3349f58409100f05b21eedfddedbdfcc22f7730af3b98f74",
+      "published_git_blob_sha256": "d8bca9106cda8a7f3349f58409100f05b21eedfddedbdfcc22f7730af3b98f74",
+      "published_bytes": 18968,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "src/ebpf_discovery/collectors_v5.py",
+      "reviewed_checkout_sha256": "c6c0ce253ed013f7b45a347e60b0e6858f457ecab2ab9c14f13c85b1d569046f",
+      "published_git_blob_sha256": "c6c0ce253ed013f7b45a347e60b0e6858f457ecab2ab9c14f13c85b1d569046f",
+      "published_bytes": 73547,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "src/ebpf_discovery/report_v5.py",
+      "reviewed_checkout_sha256": "9aa3b24c33c4ec65c43e297fd8e675bd9d45d222ed7680ce06faf1a5bf89dce0",
+      "published_git_blob_sha256": "9aa3b24c33c4ec65c43e297fd8e675bd9d45d222ed7680ce06faf1a5bf89dce0",
+      "published_bytes": 49906,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": ".github/workflows/series-v5.yml",
+      "reviewed_checkout_sha256": "7dae6276ea61466e98c737dd7e56cb1031ae825e6a5935fe44424e6511529459",
+      "published_git_blob_sha256": "7dae6276ea61466e98c737dd7e56cb1031ae825e6a5935fe44424e6511529459",
+      "published_bytes": 21716,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "tests/test_report_v5.py",
+      "reviewed_checkout_sha256": "0ef114be12b55dba8ba04e503b72d4a0b3cc8e0a3943d2837abdd7a501a7112c",
+      "published_git_blob_sha256": "0ef114be12b55dba8ba04e503b72d4a0b3cc8e0a3943d2837abdd7a501a7112c",
+      "published_bytes": 31990,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "tests/test_collectors_v5.py",
+      "reviewed_checkout_sha256": "e9e2d2464171e45db4489f78968c558b60816cd99f279007fd491281b45a59a7",
+      "published_git_blob_sha256": "e9e2d2464171e45db4489f78968c558b60816cd99f279007fd491281b45a59a7",
+      "published_bytes": 40722,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "tests/test_campaign_process_v4.py",
+      "reviewed_checkout_sha256": "8dcb87a32fb0944db380630be698004cd1079b943cd6d0990f666660cb2d4100",
+      "published_git_blob_sha256": "8dcb87a32fb0944db380630be698004cd1079b943cd6d0990f666660cb2d4100",
+      "published_bytes": 12828,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "README.md",
+      "reviewed_checkout_sha256": "7b1ac723a41019c090f25ee24883259d635252be6b1121086e177cc1e82c3b31",
+      "published_git_blob_sha256": "7b1ac723a41019c090f25ee24883259d635252be6b1121086e177cc1e82c3b31",
+      "published_bytes": 58548,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "docs/GOALS.md",
+      "reviewed_checkout_sha256": "8b2e2f51520b7b3a3e9862c0f3e35036a4acacc0125acb26e2a3aea7ba79d9f4",
+      "published_git_blob_sha256": "e901ca8e679df35f795a40d8c8856e6a5b84c517549dc6484ff1ce67a58b5dc4",
+      "published_bytes": 7608,
+      "exact_identity": false,
+      "explanation": "Git normalized the reviewed Windows checkout line endings; text is unchanged.",
+      "reconstruct_reviewed_bytes": "replace LF with CRLF",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "docs/PROTOCOL_V5.md",
+      "reviewed_checkout_sha256": "36eb798adcbfbecee1eadee690057566cad48a6395fffd9ca8655852e1a28547",
+      "published_git_blob_sha256": "36eb798adcbfbecee1eadee690057566cad48a6395fffd9ca8655852e1a28547",
+      "published_bytes": 12875,
+      "exact_identity": true,
+      "explanation": "Exact byte identity.",
+      "reconstruct_reviewed_bytes": "identity",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "docs/SCOPE_CORRECTION_V5.md",
+      "reviewed_checkout_sha256": "b57eb31de169cb29241ec66fc18de571ea228f37a75380cdc279ea96522ebc32",
+      "published_git_blob_sha256": "85f26e5531cbb52cf2ee1854b8ccd6f9a482f7635308577c71ee16565f5102b8",
+      "published_bytes": 4835,
+      "exact_identity": false,
+      "explanation": "Publication adds the bounded audit table, storage and interpretation limits.",
+      "reconstruct_reviewed_bytes": "remove suffix beginning with newline + ## Bounded independent audit; retain one final LF",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "docs/REVIEW_V5.md",
+      "reviewed_checkout_sha256": "1721eb48682ddcd1a1a4a65894970e6cb2d598b85cc5a9080fcda2661987a5f4",
+      "published_git_blob_sha256": "f29df3d4ab5c962ea1089d9b36a8b75a6b710cd04037a01d1f771ec2c5f701a0",
+      "published_bytes": 46581,
+      "exact_identity": false,
+      "explanation": "Publication records the two later actual packet reviews and links the bounded audit.",
+      "reconstruct_reviewed_bytes": "remove suffix beginning with newline + The two remaining OBI DeathStarBench/absent packets; retain one final LF",
+      "reconstruction_sha256_matches": true
+    },
+    {
+      "path": "AGENTS.md",
+      "reviewed_checkout_sha256": "83d79e78da518db2cb8b76cfd80dfaa36cd7469c0b3671a19932e5e52b827d24",
+      "published_git_blob_sha256": "d46b3d96deb6baa3c5373b3e3f9eaf6def72921e8bf7772bd4fdc8aa6e0f0289",
+      "published_bytes": 2238,
+      "exact_identity": false,
+      "explanation": "Publication adds the requirement for fresh Actions status and reiterates the three-collector scope.",
+      "reconstruct_reviewed_bytes": "remove the exact fresh-status policy paragraph",
+      "reconstruction_sha256_matches": true,
+      "removed_paragraph_utf8": "Fetch current Actions job states before reporting live running/completed counts.\nTimestamp retained status inventories; do not present an earlier inventory as\nthe current execution state. Current authorized scope is the three-collector\n81-cell study in docs/GOALS.md; New Relic is excluded, not credential-blocked.\n\n"
+    }
+  ],
+  "scope": "First publication at the named commit only. Original audit hashes are not rewritten. Documentation additions and newline normalization are explicit; no empirical recalculation or new result admission."
+}
