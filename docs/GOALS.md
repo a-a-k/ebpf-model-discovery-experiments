@@ -29,8 +29,11 @@ complete costs. Missing human preparation costs are not zero.
 
 - DeathStarBench, OpenTelemetry Demo and Petclinic; all ten agreed operations.
 - Absent, partial and full native tracing; three repetitions. Iteration 4 completed
-  27 campaigns. Iteration 5 plans the same 27 cells for each of four collectors,
-  after fixed smoke tests and repair of operation-class fragmentation.
+  27 campaigns. Iteration 5 plans the same 27 cells for OBI, DeepFlow and Coroot:
+  81 main cells after 27 fixed smoke settings and repair of operation-class
+  fragmentation. New Relic is excluded by the user's explicit instruction;
+  it is not a blocked arm or a reason to request credentials. Earlier four-arm
+  goal/status descriptions are superseded by this correction.
 - Two Linux guests with separate kernels, replicas and calls across guests;
   the shared physical Actions runner remains an explicit limitation.
 - Fresh predictions saved before independent validation traffic. Report each

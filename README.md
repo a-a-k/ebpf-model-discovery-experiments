@@ -1,16 +1,20 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: iteration 5, matched main series and remaining collector qualification.**
+**Current work: iteration 5, three-collector main series and evidence audit.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
-plans matched OBI, DeepFlow, New Relic and Coroot campaigns. All nine
+plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
 review; main groups are being staged. All nine OBI Petclinic main cells and three
 Coroot Petclinic/absent main cells have passed actual evidence review. OBI OTel
-Demo/absent seed 6 has also passed, bringing the reviewed total to 13. DeathStarBench
-main packets remain under independent review. Technical smoke admission does
+Demo/absent seed 6 and all three DeathStarBench/absent repeats have also passed,
+bringing the reviewed total to 16. Later packets remain under independent review. Technical smoke admission does
 not require an available or accurate forecast.
-The 27 New Relic main cells remain access-blocked. No utility or complete-cost
-advantage is claimed.
+New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
+cells was an orchestration error; no credentials are needed and those cells do
+not belong in current coverage or failure totals. Historical snapshots preserve
+their original, superseded scope. A fresh cross-check of design, inputs, actual
+toolchain execution and published values is in progress; no utility or complete-cost
+advantage is claimed. See the [scope and status correction](docs/SCOPE_CORRECTION_V5.md).
 Original large DeathStarBench runs failed during training-prefix preparation;
 severe host memory pressure was observed, but the precise shutdown cause remains
 unproved. A [journal memory repair](docs/JOURNAL_MEMORY_V5.md) preserves exact
@@ -38,7 +42,8 @@ The snapshot records 12 independently reviewed Petclinic cells at its preparatio
 boundary. Subsequent review admitted OBI OTel Demo/absent seed 6; its three
 primary-request predictions are conditional on the declared nonintervened
 dependencies being fulfilled, and do not establish asynchronous order completion.
-The DeathStarBench candidate is still under review. OBI Petclinic uses
+Subsequent review also admitted the DeathStarBench candidate, with all forecasts
+unavailable; no Sheaft execution is claimed there. OBI Petclinic uses
 actual recovered graphs and Sheaft forecasts checked against external outcomes;
 Coroot Petclinic/absent retains unavailable forecasts. The partial and full
 OBI seed-7 packets retain an additional owner-details failure (`2099/2400`

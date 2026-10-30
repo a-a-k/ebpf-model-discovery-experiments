@@ -388,7 +388,7 @@ def main() -> None:
     start.add_argument("--out", type=Path, required=True)
     start.add_argument("--vms", type=Path, required=True)
     start.add_argument("--toolchain-execution", choices=("local", "worker"), default="local")
-    start.add_argument("--collector", choices=("obi", "deepflow", "newrelic", "coroot"))
+    start.add_argument("--collector", choices=("obi", "deepflow", "coroot"))
     start.add_argument("--smoke", action="store_true")
     wait = commands.add_parser("wait")
     _common(wait)

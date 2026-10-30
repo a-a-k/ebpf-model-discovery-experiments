@@ -20,6 +20,22 @@ IDENTITY = {"run_id": "17", "commit": "c" * 40,
             "system": "otel_demo", "mode": "full", "seed": 6}
 
 
+def test_process_cli_does_not_advertise_or_accept_excluded_collector(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["campaign-process", "start", "--help"])
+    with pytest.raises(SystemExit) as help_exit:
+        process_v4.main()
+    assert help_exit.value.code == 0
+    help_text = capsys.readouterr().out
+    assert "{obi,deepflow,coroot}" in help_text
+    assert "newrelic" not in help_text
+    monkeypatch.setattr(sys, "argv", ["campaign-process", "start", "--collector", "newrelic"])
+    with pytest.raises(SystemExit) as invalid_exit:
+        process_v4.main()
+    assert invalid_exit.value.code == 2
+    error = capsys.readouterr().err
+    assert "invalid choice" in error and "newrelic" in error
+
+
 def write(path: Path, value: dict) -> None:
     process_v4._atomic_json(path, value)
 

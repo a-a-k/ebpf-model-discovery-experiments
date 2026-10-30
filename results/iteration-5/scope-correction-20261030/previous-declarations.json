@@ -1,0 +1,2053 @@
+{
+  "schema_version": "v5-report-declarations",
+  "attempt_runs": [
+    {
+      "run_id": 40880849418,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40884914635,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40885990713,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40890296710,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40890303219,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40890763831,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40895622472,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40895637294,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40896064246,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40898769649,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40898777011,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40899601511,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned technical qualification; preserve failure, cancellation and incomplete attempts."
+    },
+    {
+      "run_id": 40902922833,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed source-schema repeat; preserve actual handoff technical failure."
+    },
+    {
+      "run_id": 40909264363,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40909271694,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40909279346,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40909288192,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40909294990,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40909303154,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40910013685,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40910021896,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed reviewed dispatch at 33d98e2; execution status and saved evidence must be fetched by Actions."
+    },
+    {
+      "run_id": 40910393953,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed live pilot after reviewed actual derived-handoff seam; failed software qualification is retained separately."
+    },
+    {
+      "run_id": 40913407822,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed three-seed main group admitted from actual full-mode smoke; exact source9ab77cb."
+    },
+    {
+      "run_id": 40914709370,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed three-seed main group admitted from actual partial-mode smoke; exact source5457d14."
+    },
+    {
+      "run_id": 40916651613,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Remaining fixed Coroot smokes admitted after exact scoped alias and capture review; scientific head5457d14."
+    },
+    {
+      "run_id": 40919005648,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes."
+    },
+    {
+      "run_id": 40920573691,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes."
+    },
+    {
+      "run_id": 40921056157,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed reviewed dispatch; retain original head, all acquisition status and unknown outcomes."
+    },
+    {
+      "run_id": 40922905708,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Remaining fixed Coroot smoke; docs-only sourcefb33958, scientific codea26740c."
+    },
+    {
+      "run_id": 40923928201,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Remaining fixed Coroot OTel absent smoke; stage by available hosted runner capacity."
+    },
+    {
+      "run_id": 40924968145,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "All three fixed seeds after independently reviewed full-mode smoke40909303154; sourcefb33958 docs-only equivalent."
+    },
+    {
+      "run_id": 40930786566,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed pilot after reviewed source-faithful HTTP destination correction and shared control; old packets retained."
+    },
+    {
+      "run_id": 40930793452,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed repeat after persistent control fixture repair; old control failure retained."
+    },
+    {
+      "run_id": 40930805848,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Three planned main seeds after matching smoke and streaming equivalence review; stage by runner headroom."
+    },
+    {
+      "run_id": 40932031732,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Single fixed repeat after shutdown143 and reviewed streaming-equivalence repair; original40913407822 seed6 retained with no artifact or scored outcome."
+    },
+    {
+      "run_id": 40933885726,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Same fixed Coroot smoke after external Maven502 and reviewed lifecycle honesty correction; no dependency or retry-policy change."
+    },
+    {
+      "run_id": 40933892507,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Remaining fixed Coroot smoke at950b35a after reviewed source no-op and prior same-system absent-mode qualification."
+    },
+    {
+      "run_id": 40935194776,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed repeat of old-head40910021896 shutdown143 without checkpoint/artifacts after reviewed streaming-equivalence repair; original cost and missing outcome retained."
+    },
+    {
+      "run_id": 40935203055,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "Fixed repeat of old-head40910021896 shutdown143 without checkpoint/artifacts after reviewed streaming-equivalence repair; original cost and missing outcome retained."
+    },
+    {
+      "run_id": 40936796228,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Planned smoke on exact source; failures, negatives and costs retained."
+    },
+    {
+      "run_id": 40942429097,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed planned settings at5cfdd7c after actual saved-journal equivalence GO; failed prior attempts and all costs retained."
+    },
+    {
+      "run_id": 40942437542,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed planned settings at5cfdd7c after actual saved-journal equivalence GO; failed prior attempts and all costs retained."
+    },
+    {
+      "run_id": 40942447288,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed planned settings at5cfdd7c after actual saved-journal equivalence GO; failed prior attempts and all costs retained."
+    },
+    {
+      "run_id": 40943318871,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed next DeepFlow setting smoke after corrected absent qualification and journal equivalence."
+    },
+    {
+      "run_id": 40943915967,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed next collector setting; corrected codec and journal repair, exact86b5deb."
+    },
+    {
+      "run_id": 40943924937,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Fixed next collector setting; corrected codec and journal repair, exact86b5deb."
+    },
+    {
+      "run_id": 40944249737,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Last not-yet-started fixed DeepFlow setting; exact86b5deb; no positive-result gate."
+    },
+    {
+      "run_id": 40945578755,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "Repeat original technical failure40913407822seed7 at reviewed86b5deb with journal memory repair; all prior costs retained."
+    },
+    {
+      "run_id": 40947264867,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Qualified matching fixed main execution at86b5deb; any superseded preparation cancellations and costs remain declared."
+    },
+    {
+      "run_id": 40947274375,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Qualified matching fixed main execution at86b5deb; any superseded preparation cancellations and costs remain declared."
+    },
+    {
+      "run_id": 40947287495,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "Qualified matching fixed main execution at86b5deb; any superseded preparation cancellations and costs remain declared."
+    },
+    {
+      "run_id": 40947299209,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Qualified matching fixed main execution at86b5deb; any superseded preparation cancellations and costs remain declared."
+    },
+    {
+      "run_id": 40948057864,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Exact6a616c6 afterCI; DeepFlow uses explicit ambient-load guard off, other collectors unchanged."
+    },
+    {
+      "run_id": 40948072741,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Exact6a616c6 afterCI; DeepFlow uses explicit ambient-load guard off, other collectors unchanged."
+    },
+    {
+      "run_id": 40953661709,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed repeat of original technical failure40913407822seed8; exact597811c with OBI no-locator path unchanged."
+    },
+    {
+      "run_id": 40956228868,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Matching smoke40921056157 actual GO; fixed main series on reviewed597811c."
+    },
+    {
+      "run_id": 40956239225,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Fixed repeat of failed40910021896seed8 on journal-repaired597811c; no outcome selection."
+    },
+    {
+      "run_id": 40958365058,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "Exact repeat of40930805848seed7 final receiver-close technical failure after reviewed no-deadline repair8a985f99 and CI40958092919; no outcome selection."
+    },
+    {
+      "run_id": 40959052743,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Exact repeat of40930805848seed8 final receiver-close technical failure after reviewed8a985f99/CI40958092919; all old costs/outcomes retained."
+    },
+    {
+      "run_id": 40963548420,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "First DF main after all9setting actualGOs, reviewed retention/no-deadline source8a and passed51c9697CI; actualtwo-guesttyped retention proof required before workload."
+    },
+    {
+      "run_id": 40965631880,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "Next fixed DF PCabs repeat after matching actual smokeGO and passed6ecd280CI; runtime typedretention proof enforced. Started after current report dispatch."
+    },
+    {
+      "run_id": 40966250927,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Previously qualified full setting, now started after sharedreceiverfix and passed6ecd280CI; later than currentreport boundary."
+    },
+    {
+      "run_id": 40966258333,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "Previously qualified full setting, now started after sharedreceiverfix and passed6ecd280CI; later than currentreport boundary."
+    },
+    {
+      "run_id": 40966847000,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Remaining fixed OBIOTelfullseed8 aftermatchingqualification/sharedreceiverrepair; passed6ecd280CI; aftercurrentsnapshot."
+    },
+    {
+      "run_id": 40970095079,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "coroot",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Next fixed main cell after matching smoke40916651613 actual GO and passed7e6b637 documentation-headCI40969878243; staged within17parent capacity."
+    },
+    {
+      "run_id": 40970638144,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Exact repeat of40948072741 partial8 after confirmed old30second receiver-close failure; already reviewed repair and passed7e6b637CI. Original failure and costs retained."
+    },
+    {
+      "run_id": 40971766251,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Exact repeat of independently diagnosed old30second receiver-close failure40948072741 partial6, existing repair qualified and eb7342e CI40971568397 passed; original failure/cost retained."
+    }
+  ],
+  "related_runs": [
+    {
+      "run_id": 40900996676,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40899833610,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40898462595,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40895877074,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40895444290,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40894248440,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40890810980,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40889975595,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40885659304,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40883942639,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40878924384,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Focused implementation checks; associated Actions preparation/worker cost, not a main measurement."
+    },
+    {
+      "run_id": 40879223434,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40877778287,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40876595689,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40876595701,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40876595722,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40874629052,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40874629030,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40874629029,
+      "repository": "MB3R-Lab/Bering",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40876610601,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40876461856,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40874642494,
+      "repository": "MB3R-Lab/Procrustes",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888915800,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888384949,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40886588360,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40886462764,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40885945200,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40883389521,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40881171793,
+      "repository": "MB3R-Lab/mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888154808,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888154744,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888155130,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40886639089,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40886639081,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40886639078,
+      "repository": "MB3R-Lab/Sheaft",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888435266,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888435331,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40888435462,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40887193858,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40887193681,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40887193928,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40887193770,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40887193685,
+      "repository": "MB3R-Lab/opentelemetry-demo-mb3r-stack",
+      "role": "product_ci",
+      "note": "Neutral eBPF interface release/integration preparation; publication or compatibility check, not experimental evidence."
+    },
+    {
+      "run_id": 40902646348,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated source-schema repair and report implementation CI; not a main measurement."
+    },
+    {
+      "run_id": 40902931486,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "Initial report stopped on compact journal omission; no source evaluation was changed."
+    },
+    {
+      "run_id": 40905568198,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated exact journal recovery and report CI; not a main measurement."
+    },
+    {
+      "run_id": 40905967491,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "Reviewed saved-evidence snapshot; no main measurements."
+    },
+    {
+      "run_id": 40908572301,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated alias/derived-handoff Linux and Docker CI."
+    },
+    {
+      "run_id": 40909257494,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Synthetic DeepFlow actual-product handoff qualification; preserve terminal failure and actual ingestion evidence."
+    },
+    {
+      "run_id": 40910461222,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Documentation/snapshot publication Linux and Docker CI."
+    },
+    {
+      "run_id": 40910330302,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap."
+    },
+    {
+      "run_id": 40910404800,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Actual pinned toolchain worker for a declared smoke parent; retain overlap."
+    },
+    {
+      "run_id": 40911232159,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations."
+    },
+    {
+      "run_id": 40911388849,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations."
+    },
+    {
+      "run_id": 40913108121,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations."
+    },
+    {
+      "run_id": 40912701537,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations."
+    },
+    {
+      "run_id": 40913421361,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Retained iteration-5 implementation/worker cost; empirical cells remain in their parent declarations."
+    },
+    {
+      "run_id": 40913965976,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Immutable DSB audit adjudication stopped before data checking due missing script import path; retain failure."
+    },
+    {
+      "run_id": 40914666129,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Corrected immutable DSB acquisition-only adjudication, no forecasts or outcome metrics recomputed."
+    },
+    {
+      "run_id": 40914286531,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Adjudication CLI environment repair CI; no measurement."
+    },
+    {
+      "run_id": 40917708803,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled."
+    },
+    {
+      "run_id": 40917723956,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled."
+    },
+    {
+      "run_id": 40917740919,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled."
+    },
+    {
+      "run_id": 40919785943,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled."
+    },
+    {
+      "run_id": 40920240694,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Declared worker or shared-clock implementation/validation cost; empirical outcomes not relabeled."
+    },
+    {
+      "run_id": 40922561004,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed status publication CI; no method change."
+    },
+    {
+      "run_id": 40927651775,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Pinned independent toolchain worker for current fixed Coroot OTel absent smoke; retained cost."
+    },
+    {
+      "run_id": 40928823255,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed source-faithful HTTP normalization and memory-only preprocessing CI; passed Linux/Docker."
+    },
+    {
+      "run_id": 40929241254,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Single saved immutable old/new preprocessing equivalence check; no graph/forecast/outcome refit."
+    },
+    {
+      "run_id": 40929189766,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Validation harness integration CI; passed."
+    },
+    {
+      "run_id": 40929628640,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated persistent-control actual Docker and full Linux checks; passed."
+    },
+    {
+      "run_id": 40930045089,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Exact native-provenance validation harness repair CI."
+    },
+    {
+      "run_id": 40930225342,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "Intermediate saved-result report with current declared attempts; no refit."
+    },
+    {
+      "run_id": 40930267298,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Fixed old/new preprocessing equivalence check passed; no change to saved empirical outcomes."
+    },
+    {
+      "run_id": 40933001578,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Common never-started/partial-start lifecycle guard Linux/Docker CI; passed."
+    },
+    {
+      "run_id": 40936167947,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Publication CI for independently reviewed five-cell snapshot; no scientific code change."
+    },
+    {
+      "run_id": 40939886539,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Native-audit correction and report representation CI; preparation cost."
+    },
+    {
+      "run_id": 40940370220,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Journal memory implementation checks."
+    },
+    {
+      "run_id": 40940389382,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Fixed saved-report representation validation; exact head eaa9643."
+    },
+    {
+      "run_id": 40941788546,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Journal validator and saved-error figures CI; successful."
+    },
+    {
+      "run_id": 40941821118,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Future report-validation dependency fix CI; successful."
+    },
+    {
+      "run_id": 40941966903,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "One fixed saved-journal equivalence validation, exact main5cfdd7c."
+    },
+    {
+      "run_id": 40942794914,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Documentation-only update CI after journal equivalence."
+    },
+    {
+      "run_id": 40944739751,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40944384775,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40944167469,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40944150118,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40943785392,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40943380030,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40942940044,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40937875714,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40935440166,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained Actions inventory: Iteration 4 exact remote toolchain worker; failures and waits included."
+    },
+    {
+      "run_id": 40947355330,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "DeepFlow ambient-load guard-off code and fixture CI; passed."
+    },
+    {
+      "run_id": 40949256533,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Cancellation provenance publication CI; passed."
+    },
+    {
+      "run_id": 40950772563,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Observation-limit evidence documentation CI; passed."
+    },
+    {
+      "run_id": 40951264845,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Nine-main and Coroot qualification documentation CI; passed."
+    },
+    {
+      "run_id": 40953234767,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Streaming DF checkpoint accounting implementation CI; passed."
+    },
+    {
+      "run_id": 40953383041,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "One fixed saved DF training-checkpoint equivalence validation; independent actual GO, exact485records/9files unchanged, no speed or memory advantage claim."
+    },
+    {
+      "run_id": 40956304402,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell."
+    },
+    {
+      "run_id": 40952137039,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell."
+    },
+    {
+      "run_id": 40951395756,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell."
+    },
+    {
+      "run_id": 40945101309,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; not a new empirical cell."
+    },
+    {
+      "run_id": 40958092919,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Integrated reviewed receiver normal-close deadline removal and DF aggregate raw-retention alignment CI, exact8a985f99."
+    },
+    {
+      "run_id": 40960428005,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed publication of all9DeepFlow qualified settings and retained closure failure history; docs-only CI passed."
+    },
+    {
+      "run_id": 40961384259,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed bounded report compact transport implementation CI, exact4ebebfd; no new empirical calculation."
+    },
+    {
+      "run_id": 40961608465,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "First full-scale savedDSB7 transport validation: both reports built, comparator failed on schema-key typo; retain actual source/hash proof and complete cost, no success claim."
+    },
+    {
+      "run_id": 40962623909,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Validator-only real-schema field correction plus real build/render comparison regression CI; failed40961608465 retained."
+    },
+    {
+      "run_id": 40962839097,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "evidence",
+      "note": "Corrected same-source DSB7 transport validation passed independent actual review: exactsourcepayloads/tables/nonemptyselection/all23member proofs; previousfailed40961608465 retained."
+    },
+    {
+      "run_id": 40962996489,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40961433032,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40961018213,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40960091896,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40959937824,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40956797206,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained iteration-5 Iteration 4 exact remote toolchain worker cost; no new empirical cell."
+    },
+    {
+      "run_id": 40964033154,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Reviewed documentation and technical-only replacement manifest publication CI; no scientific code change."
+    },
+    {
+      "run_id": 40964268895,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "report",
+      "note": "New immutable saved-report and first actualper-seed figures using reviewedstreamtransport; ownfinaljob tail remains outside initial snapshot, retained fornextcostrefresh."
+    },
+    {
+      "run_id": 40969878243,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Intermediate report and saved-figure publication CI at7e6b637; no scientific code change."
+    },
+    {
+      "run_id": 40969756336,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity."
+    },
+    {
+      "run_id": 40969673932,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity."
+    },
+    {
+      "run_id": 40966153584,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity."
+    },
+    {
+      "run_id": 40964830630,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "worker",
+      "note": "Retained shared exact toolchain-worker cost for iteration5; historical workflow name does not change campaign identity."
+    },
+    {
+      "run_id": 40971568397,
+      "repository": "a-a-k/ebpf-model-discovery-experiments",
+      "role": "preparation",
+      "note": "Documentation and exact receiver-failure diagnosis publication checks at eb7342e; no scientific code change."
+    }
+  ],
+  "blocked_main_cells": [
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    },
+    {
+      "collector": "newrelic",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "reason": "No authorized existing New Relic license key or verified local collector codec; no replacement or synthesized credentials."
+    }
+  ],
+  "scope_notes": [
+    "Intermediate smoke and main-series snapshot; remaining cells and independent review status are explicitly incomplete.",
+    "Research Actions inventory begins at the first iteration-5 protocol commit on 2026-10-29 12:18 UTC. Product CI/release runs are explicitly declared. Earlier preparation, unrecorded human/agent effort, and reporting/publication tail remain unknown.",
+    "Elapsed parent waits may overlap worker compute; do not treat their sum as wall-clock elapsed time."
+  ]
+}

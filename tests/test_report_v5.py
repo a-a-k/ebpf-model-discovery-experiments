@@ -116,7 +116,7 @@ def test_smoke_is_separate_and_main_evaluation_is_verbatim(tmp_path: Path) -> No
     _, main = summary(tmp_path / "inputs", 2, "main")
     declarations = declared(tmp_path / "declared.json", [run(1, "smoke"), run(2, "main")])
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
-    assert result["grid"]["declared_main_cells"] == 108
+    assert result["grid"]["declared_main_cells"] == 81
     assert result["grid"]["technically_complete_main_cells"] == 1
     assert restored(tmp_path / "report", attempts(result, "smoke")[0]) == smoke
     selected = {row["attempt_key"]: row for row in result["attempts"]}[
@@ -142,14 +142,14 @@ def test_figures_copy_main_errors_and_preserve_unknowns_and_source_proofs(tmp_pa
     manifest['files_sha256']['evaluation-v5.json'] = sha(folder / 'evaluation-v5.json')
     write(folder / 'evaluation-manifest.json', manifest)
     declarations = declared(tmp_path / 'declared.json', [run(1, 'smoke'), run(2, 'main')],
-                            blocked=[{'collector': 'newrelic', 'system': 'petclinic',
-                                      'mode': 'absent', 'seed': 6, 'reason': 'credential absent'}])
+                            blocked=[{'collector': 'coroot', 'system': 'petclinic',
+                                      'mode': 'absent', 'seed': 6, 'reason': 'synthetic infrastructure block'}])
     build([tmp_path / 'inputs'], declarations, tmp_path / 'report')
     aggregate = tmp_path / 'report/evaluation-v5.json'
     values = saved_values(aggregate)
     assert len(values['rows']) == 3
     assert {item['run_id'] for item in values['rows']} == {2}
-    assert values['grid']['declared_main_cells'] == 108
+    assert values['grid']['declared_main_cells'] == 81
     assert len(values['grid']['blocked_main_cells']) == 1
     assert values['independent_admission']['performed_by_reporter'] is False
     assert values['rows'][0]['saved']['error'] == row['error']
@@ -181,14 +181,41 @@ def test_figures_render_unknown_rows_without_collapsing_y_limits(tmp_path):
 def test_failed_no_artifact_and_blocked_are_retained_not_coverage(tmp_path: Path) -> None:
     summary(tmp_path / "inputs", 3, "main", complete=False)
     declarations = declared(tmp_path / "declared.json", [run(3, "main"), run(4, "main", "partial")],
-        [{"collector": "newrelic", "system": "petclinic", "mode": "absent",
-          "seed": 6, "reason": "license unavailable"}])
+        [{"collector": "coroot", "system": "petclinic", "mode": "absent",
+          "seed": 6, "reason": "synthetic infrastructure block"}])
     result = build([tmp_path / "inputs"], declarations, tmp_path / "report")
     assert result["grid"]["technically_complete_main_cells"] == 0
     assert {row["reason"] for row in attempts(result, "main")} == {
         "source_evaluation_technically_incomplete", "compact_artifact_not_retained"}
     assert result["grid"]["blocked_main_cells"] == [
-        ["newrelic", "petclinic", "absent", 6, "license unavailable"]]
+        ["coroot", "petclinic", "absent", 6, "synthetic infrastructure block"]]
+
+
+def test_excluded_collector_cannot_reenter_active_grid(tmp_path: Path) -> None:
+    excluded = {**run(1, "main"), "collector": "newrelic"}
+    declarations = declared(tmp_path / "attempt.json", [excluded])
+    with pytest.raises(ValueError):
+        build([], declarations, tmp_path / "attempt-report")
+    declarations = declared(tmp_path / "blocked.json", [], [
+        {"collector": "newrelic", "system": "petclinic", "mode": "absent",
+         "seed": 6, "reason": "obsolete access block"},
+    ])
+    with pytest.raises(ValueError):
+        build([], declarations, tmp_path / "blocked-report")
+
+
+def test_renderer_preserves_historical_stored_grid_count(tmp_path: Path) -> None:
+    declarations = declared(tmp_path / "declared.json", [])
+    result = build([], declarations, tmp_path / "report")
+    assert result["grid"]["declared_main_cells"] == 81
+    # A retained historical aggregate carries its own original grid boundary.
+    result["grid"]["declared_main_cells"] = 108
+    aggregate = tmp_path / "report/evaluation-v5.json"
+    write(aggregate, result)
+    output = tmp_path / "historical.md"
+    render(aggregate, output)
+    assert "108-cell main grid" in output.read_text()
+    assert "81-cell main grid" not in output.read_text()
 
 
 def test_hash_stage_and_source_pin_mismatches_are_rejected(tmp_path: Path) -> None:
@@ -485,7 +512,7 @@ def test_renderer_keeps_unknown_cost_and_actions_failure(tmp_path: Path) -> None
     out = tmp_path / "report.md"
     assert render(tmp_path / "report/evaluation-v5.json", out, costs)["attempts"] == 1
     text = out.read_text(encoding="utf-8")
-    assert "108" in text and "Self-reported complete" in text
+    assert "81-cell main grid" in text and "Self-reported complete" in text
     assert "99 | unknown | product_ci | completed | failure | 101 | checks" in text
     assert "Human/agent preparation effort: unknown" in text
     assert restored(tmp_path / "report", result["attempts"][0])["classes"] == {

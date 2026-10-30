@@ -55,12 +55,7 @@ def create_collectors_v5(ctx, collector: str, *, semantic: bool = True):
     if name == "deepflow":
         from .deepflow_v5 import DeepFlowCollectorsV5
         return DeepFlowCollectorsV5(ctx, semantic=semantic)
-    if name in {"newrelic", "new-relic"}:
-        raise CollectorUnavailable(
-            "newrelic",
-            "requires an authorized existing license key and a verified local OTLP codec",
-        )
-    raise CollectorUnavailable(name, "not one of the four fixed collector arms")
+    raise CollectorUnavailable(name, "not one of the three active collector arms")
 
 
 def make_collectors(ctx, collector: str, *, semantic: bool = True):

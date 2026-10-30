@@ -5,7 +5,7 @@ on:
       collector:
         description: One isolated collector per dispatch
         type: choice
-        options: [obi, deepflow, newrelic, coroot]
+        options: [obi, deepflow, coroot]
         default: obi
       stage:
         description: Smoke first; main requires a reviewed passing smoke for each selected mode

@@ -16,7 +16,7 @@ from .toolchain_v4 import digest
 from .toolchain_v5 import Toolchain
 
 
-COLLECTORS = ("obi", "deepflow", "newrelic", "coroot")
+COLLECTORS = ("obi", "deepflow", "coroot")
 
 
 def workload_counts(operation_count, smoke):

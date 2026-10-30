@@ -1,0 +1,2322 @@
+{
+  "schema": "iteration5-independent-trust-audit-v1",
+  "generated_UTC": "2026-10-30T04:17:49.053565+00:00",
+  "processing": "Copy existing reviewed records/provenance and inventory declarations only. No replay/refit/forecast/classification/outcome/metric recomputation.",
+  "current_scope": {
+    "authorized_by": "explicit user exclusion of New Relic relayed in current root task",
+    "collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "main_grid": 81,
+    "smoke_settings": 27,
+    "systems": [
+      "petclinic",
+      "deathstarbench",
+      "otel_demo"
+    ],
+    "modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "main_seeds": [
+      6,
+      7,
+      8
+    ],
+    "excluded_collectors": [
+      "newrelic"
+    ],
+    "newrelic_state": "excluded_by_user; not blocked, not pending a key, not a replacement slot",
+    "remaining81_measurements_changed": false
+  },
+  "original_criterion": {
+    "contribution": "same useful independent external result with less complete effort, or better useful result at comparable complete effort",
+    "method": "actual documented Procrustes preparation; genuine raw eBPF observations to actual Bering graph; actual Sheaft only when graph evidence supports it; frozen before target and compared to independent external outcomes",
+    "strongest_baseline": "same supplied semantics and deployment knowledge for manual/direct predicates and cheap combinations; replicaOR arithmetic and entry-family equivalences explicitly acknowledged",
+    "causal_improvement": "not demonstrated by current audit; technical admission and reporter flags are not success metrics",
+    "costs": "all preparation/build/smoke/failed/cancelled/retry/worker/wait/transfer/storage/CI/report/publication costs remain attributable; human effort and unfinished/unobserved tails remain unknown, never zero; job-seconds are not study wall time"
+  },
+  "correction_history": [
+    {
+      "issue": "New Relic exclusion was not reflected in active scope",
+      "correction": "active grid81/27 and three collectors only; remove current NR blocked/license-request paths; preserve old108 snapshots byte-exact as historical; no completed measurement selected by its outcome"
+    },
+    {
+      "issue": "a stale17-running statement was repeated without a fresh poll",
+      "correction": "no current global running count is asserted in this audit from old inventory files; root fresh timestamped API/job inventory must accompany operational status; completed status is separate from independent admission"
+    },
+    {
+      "issue": "technical selection/reporter flags could be conflated with scientific review",
+      "correction": "historical report selected14 technically at preparation with12 independent reviews then; all those14 subsequently reviewed, plus2 DSB absent cells now16; pending17 candidates remain explicitly unadmitted"
+    },
+    {
+      "issue": "The initial DF failure diagnosis narrowed the marker too far toward preflight",
+      "correction": "preflight_start covers static preflight plus prepare_inputs, both before shared_discovery_start. Source confirms full-resolution materialization and derived-accounting retention risks; the exact live allocator remains unresolved. Both failed mains stay technical/ineligible; no source-negative forecast is inferred."
+    }
+  ],
+  "historical_publication": {
+    "report_run": 40964268895,
+    "source_commit": "6ecd280207fbf850757c2c67e807054305f058ec",
+    "artifact_id": 12938546020,
+    "artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40964268895/artifacts/12938546020",
+    "api_artifact_bytes": 422662485,
+    "api_artifact_sha256": "sha256:61aaf7eb3890223241ddd882a77ae60fe3815c68bf754905458ed3acf5013cdb",
+    "local_whole_report_ZIP_hash_verified": false,
+    "local_scope": "623 selected publication members CRC/SHA;68 gzip payload restorations exact;324 figure values exact saved-source fields;20 figure files and6 PNGs checked;15 legacy recovery ZIP bodies not locally materialized",
+    "immutable_snapshot_path": "results/iteration-5/snapshot-40964268895",
+    "scope_at_preparation": 108,
+    "technical_selected_at_preparation": 14,
+    "independent_reviewed_at_preparation": 12,
+    "those14_now_independently_reviewed": 14,
+    "reporter_independent_flags_rewritten": false
+  },
+  "independently_reviewed_main_count": 16,
+  "independently_reviewed_main": [
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40910013685,
+      "source_commit": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685",
+      "compact_artifact": {
+        "id": 12920055481,
+        "name": "v5-summary-obi-main-petclinic-absent-6-40910013685",
+        "bytes": 37354410,
+        "api_sha256": "sha256:be9e31621a3b26dcb33a48bcf87f112323cc864ccf983e99467bfd3fc886d59a",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12920055481"
+      },
+      "full_artifact": {
+        "id": 12919317201,
+        "name": "campaign-v5-obi-main-petclinic-absent-6-40910013685",
+        "bytes": 1412339936,
+        "api_sha256": "sha256:8ee088e3e53e86e06c72bec7691636b56e2174388292b8ff99fbb10949a488d4",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12919317201"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-absent-6-40910013685.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18803,
+        "stored_sha256": "65a86798052828de2266788aff0a24b30386ae35d6d935c62d4869c790aedfa1",
+        "restored_bytes": 127856,
+        "restored_sha256": "386db7cfc9a8d47dc890e3fcaac61d2e3ddefc34cce46af7b1421571663adfd8",
+        "original_review_record_path": "work/main-independent-review/40910013685/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793294047436622220,
+      "first_target_ns": 1793294053349573992
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40910013685,
+      "source_commit": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685",
+      "compact_artifact": {
+        "id": 12917639119,
+        "name": "v5-summary-obi-main-petclinic-absent-7-40910013685",
+        "bytes": 37180891,
+        "api_sha256": "sha256:affffd6ff25c322c2e882d216c94e63a4a616dda1d1080c382326cf1f66baeb2",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12917639119"
+      },
+      "full_artifact": {
+        "id": 12918282707,
+        "name": "campaign-v5-obi-main-petclinic-absent-7-40910013685",
+        "bytes": 1407882354,
+        "api_sha256": "sha256:21becd9e616e533c94e54658e0cb533847d43d4de871d9855d53cb3a14157fd0",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12918282707"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-absent-7-40910013685.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18626,
+        "stored_sha256": "712264476de6bc0bc89eb019d1d05dd2d29c53bcc09e5678db24aecff1616cc7",
+        "restored_bytes": 127007,
+        "restored_sha256": "3df2b01b7e4a3d5915a57dde61d4f95385e20a287c6111489c37f75e6e73cd6d",
+        "original_review_record_path": "work/main-independent-review/40910013685/7/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793293782522890209,
+      "first_target_ns": 1793293783896345082
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40910013685,
+      "source_commit": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685",
+      "compact_artifact": {
+        "id": 12921655146,
+        "name": "v5-summary-obi-main-petclinic-absent-8-40910013685",
+        "bytes": 37618213,
+        "api_sha256": "sha256:e4ce8d1a477a0f499bb8c67414d43bccc4ac634ce4735e7403b9a17577d2d7fe",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12921655146"
+      },
+      "full_artifact": {
+        "id": 12921031741,
+        "name": "campaign-v5-obi-main-petclinic-absent-8-40910013685",
+        "bytes": 1422384165,
+        "api_sha256": "sha256:db777e637423fb224b5ea7581e9e90feed74b1dc0eff44ede41d5949a6166001",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910013685/artifacts/12921031741"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-absent-8-40910013685.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18936,
+        "stored_sha256": "bb6228b46d6771d486384aab865dbd6acf9a6bfc027b775ef034ea55f25647fd",
+        "restored_bytes": 129220,
+        "restored_sha256": "d525d6224975a4411edce48701fe2b7ff524f58a281042cc91c7973212786e4e",
+        "original_review_record_path": "work/main-independent-review/40910013685/8/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793295169874390541,
+      "first_target_ns": 1793295175890595069
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40914709370,
+      "source_commit": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370",
+      "compact_artifact": {
+        "id": 12921571169,
+        "name": "v5-summary-obi-main-petclinic-partial-6-40914709370",
+        "bytes": 36992920,
+        "api_sha256": "sha256:53b09b3e433809928a7ff378e154f74b8e1ca323954ade37d2431a5abfb46468",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12921571169"
+      },
+      "full_artifact": {
+        "id": 12920992250,
+        "name": "campaign-v5-obi-main-petclinic-partial-6-40914709370",
+        "bytes": 1740597910,
+        "api_sha256": "sha256:1e646840222979ebceea09e5a88ce0cc1493f79dde22a19e22d7970a8095ce6a",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12920992250"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-partial-6-40914709370.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18582,
+        "stored_sha256": "096ec6d39bfb742dd0f14e43abadd53308eac674c573c68ac49e55689dc71555",
+        "restored_bytes": 129096,
+        "restored_sha256": "2177b0604ae52fe3946505766735eb4209b63660161f683f92d42ad9eb059c4b",
+        "original_review_record_path": "work/main-independent-review/40914709370/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793295949539991640,
+      "first_target_ns": 1793295953569645881
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40914709370,
+      "source_commit": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370",
+      "compact_artifact": {
+        "id": 12921916343,
+        "name": "v5-summary-obi-main-petclinic-partial-7-40914709370",
+        "bytes": 37009268,
+        "api_sha256": "sha256:4363a9f4ae5e4eea9a469f98da740d9a56ef03fb0760693d4e7b702490f1c494",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12921916343"
+      },
+      "full_artifact": {
+        "id": 12921038049,
+        "name": "campaign-v5-obi-main-petclinic-partial-7-40914709370",
+        "bytes": 1737885988,
+        "api_sha256": "sha256:53c019c8ba5a1a4f2d01e5b832b2cdff5c303761f8001cca7eeaa345b52db635",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12921038049"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-partial-7-40914709370.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18704,
+        "stored_sha256": "1fccaa92d11983d414bfcf06e762264b564ab78bdc798b3db12691bc251108c7",
+        "restored_bytes": 129430,
+        "restored_sha256": "c14ba92ec65c99d3a95803036985a2e9a8155fd540a18a42244072f20d433ad3",
+        "original_review_record_path": "work/main-independent-review/40914709370/7/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793296279721479931,
+      "first_target_ns": 1793296283713130259
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40914709370,
+      "source_commit": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370",
+      "compact_artifact": {
+        "id": 12923161927,
+        "name": "v5-summary-obi-main-petclinic-partial-8-40914709370",
+        "bytes": 37033934,
+        "api_sha256": "sha256:a23db8336c5ff5fb475f2660630dcfc63269e3d892c7fe6908907217a3e2e246",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12923161927"
+      },
+      "full_artifact": {
+        "id": 12922514282,
+        "name": "campaign-v5-obi-main-petclinic-partial-8-40914709370",
+        "bytes": 1738580094,
+        "api_sha256": "sha256:e201f9209c0406a23bc42bf790b854db37c12e226fdaa737528b5ffeea7181d8",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40914709370/artifacts/12922514282"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-partial-8-40914709370.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 18898,
+        "stored_sha256": "18bf859da59a6efc5f5c2307d4919b8e166d07250a48e57b63b1947eb5488395",
+        "restored_bytes": 130356,
+        "restored_sha256": "2d7a13d4ff5247802708c6c77f7146cc97b838b0613966babe564bdf0ce81b3c",
+        "original_review_record_path": "work/main-independent-review/40914709370/8/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793297281349141316,
+      "first_target_ns": 1793297285593202662
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 6
+      },
+      "run_id": 40924968145,
+      "source_commit": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145",
+      "compact_artifact": {
+        "id": 12927192823,
+        "name": "v5-summary-obi-main-petclinic-full-6-40924968145",
+        "bytes": 37116979,
+        "api_sha256": "sha256:2691614979b7d3be7e86866b76d7fbbf668aa5e0f225ed5c9887ee2dc5cc7a09",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12927192823"
+      },
+      "full_artifact": {
+        "id": 12927257991,
+        "name": "campaign-v5-obi-main-petclinic-full-6-40924968145",
+        "bytes": 1805966545,
+        "api_sha256": "sha256:d3b0c9f3f598af8f4e0eb3a4e057aabc484ab4825faa5d460ed62159ee8785c6",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12927257991"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-full-6-40924968145.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 19909,
+        "stored_sha256": "39d21a1f73d67389227a2a5a6be83f55d26a8bd64c17b60da54e805a81c57757",
+        "restored_bytes": 137591,
+        "restored_sha256": "591a6bab0fe8ed701c9afb956f369400fa031f69ca9c0cdbf3cb7c274beb4e3d",
+        "original_review_record_path": "work/main-independent-review/40924968145/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793301152353412385,
+      "first_target_ns": 1793301156912262898
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 8
+      },
+      "run_id": 40924968145,
+      "source_commit": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145",
+      "compact_artifact": {
+        "id": 12926899227,
+        "name": "v5-summary-obi-main-petclinic-full-8-40924968145",
+        "bytes": 37100098,
+        "api_sha256": "sha256:0b0ba3545eb71a129325b1f8ca9a63baef04607eff91384d6c59f8cd4c022e05",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12926899227"
+      },
+      "full_artifact": {
+        "id": 12927543563,
+        "name": "campaign-v5-obi-main-petclinic-full-8-40924968145",
+        "bytes": 1800490529,
+        "api_sha256": "sha256:8d743cb8bb37a1b2e3cdd0fa9f633df414801154f3cb37bfec15df99ebe2e908",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12927543563"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-full-8-40924968145.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 19753,
+        "stored_sha256": "30e52a7b21b42989d768b1ee29cd21de879a0d5225e02cf51bc8934c512f2758",
+        "restored_bytes": 137167,
+        "restored_sha256": "de62449ae5f5a747b57dc10f9436af61d5c268f0f7da639dd7dc53affd191a83",
+        "original_review_record_path": "work/main-independent-review/40924968145/8/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793301518488214802,
+      "first_target_ns": 1793301522552567877
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 7
+      },
+      "run_id": 40924968145,
+      "source_commit": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145",
+      "compact_artifact": {
+        "id": 12928586162,
+        "name": "v5-summary-obi-main-petclinic-full-7-40924968145",
+        "bytes": 37139335,
+        "api_sha256": "sha256:c3ed13afd1040641d977e25fa3bc8ddcf4b934a448c1c12e4636d1adaf0f8ade",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12928586162"
+      },
+      "full_artifact": {
+        "id": 12928232708,
+        "name": "campaign-v5-obi-main-petclinic-full-7-40924968145",
+        "bytes": 1813655376,
+        "api_sha256": "sha256:20d44f28cd289695b626dd50328599f18d7d2a06b6988756b6c80858bbcca6ad",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40924968145/artifacts/12928232708"
+      },
+      "review_record": {
+        "path": "review-records/obi-petclinic-full-7-40924968145.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 19702,
+        "stored_sha256": "ecd952bfecb4f28e9e933de44f9dc68acb1202578fe1833b51c71b4e1ba9c123",
+        "restored_bytes": 136862,
+        "restored_sha256": "0d19f7b7bb24391126da0803855b7701e45e6119386d442f77709841967b62a9",
+        "original_review_record_path": "work/main-independent-review/40924968145/7/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793301824454268005,
+      "first_target_ns": 1793301828998697501
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40947299209,
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209",
+      "compact_artifact": {
+        "id": 12933131686,
+        "name": "v5-summary-coroot-main-petclinic-absent-6-40947299209",
+        "bytes": 36407769,
+        "api_sha256": "sha256:dd724f044682e8fc437466a379da331aa33a1af01df65e7ac9e7e3332c6beb22",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12933131686"
+      },
+      "full_artifact": {
+        "id": 12933990526,
+        "name": "campaign-v5-coroot-main-petclinic-absent-6-40947299209",
+        "bytes": 561237830,
+        "api_sha256": "sha256:342c1ee07dd4cb50f1129ca2b83b3f30c1ea1f34f2b332149e9ab87fcee80bb8",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12933990526"
+      },
+      "review_record": {
+        "path": "review-records/coroot-petclinic-absent-6-40947299209.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 297276,
+        "stored_sha256": "d8b8020911bb5ae5cf933768eff682c2e2131867b5d7d35b8e3c098336389941",
+        "restored_bytes": 33466895,
+        "restored_sha256": "ef4fab2a87e80f00204c3debf87af64f624bc5702f0d606477b3bba6874d4329",
+        "original_review_record_path": "work/main-independent-review/40947299209/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only, no local whole full ZIP claim",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793306837365637156,
+      "first_target_ns": 1793306838328664627
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40947299209,
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209",
+      "compact_artifact": {
+        "id": 12934120822,
+        "name": "v5-summary-coroot-main-petclinic-absent-7-40947299209",
+        "bytes": 36499001,
+        "api_sha256": "sha256:4bbe6a1b5b2e9864e0d4ed8614f741babe4b3c2e4cc9ed33ce0bd64e11854a9b",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12934120822"
+      },
+      "full_artifact": {
+        "id": 12933866622,
+        "name": "campaign-v5-coroot-main-petclinic-absent-7-40947299209",
+        "bytes": 562285771,
+        "api_sha256": "sha256:c63112065e93f41a01cff6c253aea1135fa47d24d003ef0a3f980cb4dcbf20a3",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12933866622"
+      },
+      "review_record": {
+        "path": "review-records/coroot-petclinic-absent-7-40947299209.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 297317,
+        "stored_sha256": "8e1bd70e06d5e67b9cd2afc24f8c0ac3f073cbcbde98b66d79e114b2560c22b0",
+        "restored_bytes": 33466632,
+        "restored_sha256": "3a20621d155d22fba5ce1f81c2ccc2cc76a8847fa2fab00ef1ea4c394b433a3c",
+        "original_review_record_path": "work/main-independent-review/40947299209/7/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only, no local whole full ZIP claim",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793307040607125106,
+      "first_target_ns": 1793307042416224242
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40947299209,
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209",
+      "compact_artifact": {
+        "id": 12932104383,
+        "name": "v5-summary-coroot-main-petclinic-absent-8-40947299209",
+        "bytes": 36493682,
+        "api_sha256": "sha256:0bbdac30d294653f19ec60243b432d2f02423a2eae77fade4dea68daf29967c3",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12932104383"
+      },
+      "full_artifact": {
+        "id": 12933064046,
+        "name": "campaign-v5-coroot-main-petclinic-absent-8-40947299209",
+        "bytes": 562428604,
+        "api_sha256": "sha256:8b08824c7826ca20fdd0ae0231043c272f844f9827bc4281013d7bd115817a07",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947299209/artifacts/12933064046"
+      },
+      "review_record": {
+        "path": "review-records/coroot-petclinic-absent-8-40947299209.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 297066,
+        "stored_sha256": "585da8c4797c7eec62ade80a2582d422ad71e9f18d4a6595b7c22d8dd1c5bee0",
+        "restored_bytes": 33466304,
+        "restored_sha256": "2253ded7e3f99947dd5e78b45a09ace2a7a127bf0643caec3e267f28f137d3a9",
+        "original_review_record_path": "work/main-independent-review/40947299209/8/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only, no local whole full ZIP claim",
+      "saved_counts": {
+        "all_records": 34904,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793307115334983009,
+      "first_target_ns": 1793307116151139238
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40930805848,
+      "source_commit": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848",
+      "compact_artifact": {
+        "id": 12936501478,
+        "name": "v5-summary-obi-main-otel_demo-absent-6-40930805848",
+        "bytes": 52069542,
+        "api_sha256": "sha256:80b90f0509671b34d9488ee348b942154a086d85917fd27067ca2f5da219d202",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/artifacts/12936501478"
+      },
+      "full_artifact": {
+        "id": 12936118371,
+        "name": "campaign-v5-obi-main-otel_demo-absent-6-40930805848",
+        "bytes": 4221669607,
+        "api_sha256": "sha256:6ac43b3023a80018cfaa53c45d80d0e56e7b19c5e9774944a383d9f172a1c205",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/artifacts/12936118371"
+      },
+      "review_record": {
+        "path": "review-records/obi-otel_demo-absent-6-40930805848.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 28626,
+        "stored_sha256": "fcdf507b6d4329e24c42471b4ace27c0a91be4e3c1cd861bfacf67859436fda7",
+        "restored_bytes": 187654,
+        "restored_sha256": "b1c0affcfc3fe8f9dfaad70ea70adbbacc044f5da35a2e8199d8290a6373f307",
+        "original_review_record_path": "work/main-independent-review/40930805848/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected HTTP206/memberCRC/SHA only; no whole source ZIP independently hashed locally",
+      "saved_counts": {
+        "all_records": 34951,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 19
+      },
+      "forecast_saved_ns": 1793307599937735697,
+      "first_target_ns": 1793307603667479070
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40942429097,
+      "source_commit": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097",
+      "compact_artifact": {
+        "id": 12933554459,
+        "name": "v5-summary-obi-main-deathstarbench-absent-7-40942429097",
+        "bytes": 2591423771,
+        "api_sha256": "sha256:d6003f14d541e8cc23948451142f9724c70f706318b761edbf1ff880b8fd768e",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12933554459"
+      },
+      "full_artifact": {
+        "id": 12933019490,
+        "name": "campaign-v5-obi-main-deathstarbench-absent-7-40942429097",
+        "bytes": 6111686489,
+        "api_sha256": "sha256:5a8655821fcb86ffb27bc1811d5994e9425898a339d8801ca771a54ce184585e",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12933019490"
+      },
+      "review_record": {
+        "path": "review-records/obi-deathstarbench-absent-7-40942429097.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 12832,
+        "stored_sha256": "fcf5369e54bca797baaeab2bd371de4d87deea833a447cd3709b2e858a2f1b5c",
+        "restored_bytes": 75881,
+        "restored_sha256": "eb58091551b046f4581be266cd64b057d9438f6bf7db6a8e23239de0115197bc",
+        "original_review_record_path": "work/main-independent-review/40942429097/7/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": true,
+      "evidence_scope": "Selected outerZIP member CRC/SHA only, whole6.1GB ZIP NOT locally hashed; nested toolchain163MB and handoff0.5MB whole SHA+gzipCRC/allmanifestfiles verified",
+      "saved_counts": {
+        "all_records": 34888,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793307188288219802,
+      "first_target_ns": 1793307188921935425
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40942429097,
+      "source_commit": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097",
+      "compact_artifact": {
+        "id": 12937171763,
+        "name": "v5-summary-obi-main-deathstarbench-absent-6-40942429097",
+        "bytes": 2596581852,
+        "api_sha256": "sha256:b57e0bcabb18c44800ee32ce9a23e736e9ee7f3b394b916669bb1031caed94d4",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12937171763"
+      },
+      "full_artifact": {
+        "id": 12938100241,
+        "name": "campaign-v5-obi-main-deathstarbench-absent-6-40942429097",
+        "bytes": 6135031999,
+        "api_sha256": "sha256:07f0c3eaa2d2dd4b593a6d5db9bd4b5f10e698317b1a974fbdc6959a30aa0a33",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12938100241"
+      },
+      "review_record": {
+        "path": "review-records/obi-deathstarbench-absent-6-40942429097.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 14997,
+        "stored_sha256": "8d27ab7254d603dc542d05ca642eedfa5140f844d708aa7f0a267b5623ecc4a4",
+        "restored_bytes": 154430,
+        "restored_sha256": "c996eac6d65680ca18052a44517506414ff41e71cdd4627a0bac2535f23c54d4",
+        "original_review_record_path": "work/main-independent-review/40942429097/6/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": false,
+      "evidence_scope": "Selected outer ZIP CRC/SHA only; nested toolchain/handoff complete SHA/file bytes/gzipCRC verified",
+      "saved_counts": {
+        "all_records": 34888,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793308962926685229,
+      "first_target_ns": 1793308963554842358
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40942429097,
+      "source_commit": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097",
+      "compact_artifact": {
+        "id": 12939304953,
+        "name": "v5-summary-obi-main-deathstarbench-absent-8-40942429097",
+        "bytes": 2594108765,
+        "api_sha256": "sha256:dbf2ad71131820cf1f500908b1cee9d7ce802f8d7b0fbc6b03343ddbf54e7b3e",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12939304953"
+      },
+      "full_artifact": {
+        "id": 12941115116,
+        "name": "campaign-v5-obi-main-deathstarbench-absent-8-40942429097",
+        "bytes": 6140574336,
+        "api_sha256": "sha256:f51eb4ead0e36ba1f6c3a6e1b1e623b24eb90f528255265c366ee21c6ac15e1e",
+        "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40942429097/artifacts/12941115116"
+      },
+      "review_record": {
+        "path": "review-records/obi-deathstarbench-absent-8-40942429097.json.gz",
+        "encoding": "gzip",
+        "stored_bytes": 15086,
+        "stored_sha256": "18883e12b959b81fe2bae116afda5fd27e8660495079b70fb5b0dbad5cd0ddd9",
+        "restored_bytes": 153131,
+        "restored_sha256": "755602db0252f225c2456957a4739b2c67d2d37d87fc2ab421ca1c5cd8a5d931",
+        "original_review_record_path": "work/main-independent-review/40942429097/8/independent-main-review.json",
+        "original_source_unchanged": true,
+        "restore_verification": "Streamed gzip to EOF, exact restored byte count and SHA256 equal both prior publication copy and unchanged original source"
+      },
+      "review_state": "independently_admitted_main_packet",
+      "positive_contribution": false,
+      "in_historical_report40964268895_selected14": false,
+      "evidence_scope": "Selected outer ZIP CRC/SHA only; nested toolchain/handoff complete SHA/file bytes/gzipCRC verified",
+      "saved_counts": {
+        "all_records": 34888,
+        "primary": 34800,
+        "target": 9600,
+        "expected_primary": 34800,
+        "primary_count_matches": true,
+        "target_state_counts": {
+          "11": 4800,
+          "10": 2400,
+          "01": 1200,
+          "00": 1200
+        },
+        "blocks": 16
+      },
+      "forecast_saved_ns": 1793311187423619891,
+      "first_target_ns": 1793311188542795597
+    }
+  ],
+  "completed_candidates_pending_independent_review": [
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7
+      },
+      "run_id": 40945578755,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40945578755",
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "compact_artifact_id": 12941676590,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40945578755/artifacts/12941676590",
+      "compact_api_bytes": 2594177217,
+      "compact_api_sha256": "sha256:8118b6628f07709fe6bbeb77385af709a8ae02a015919317a7c42451cec081d4",
+      "artifact_API_observation_path": "work/main-independent-review/40945578755/artifacts-api.json",
+      "artifact_API_observation_sha256": "62906676cd677537de0d729cfd6ff50aaf34fb17487c81bf163b8ca97eeb5220",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123699987025,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40945578755/job/123699987025",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40947274375,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947274375",
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "compact_artifact_id": 12943498463,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947274375/artifacts/12943498463",
+      "compact_api_bytes": 2622102612,
+      "compact_api_sha256": "sha256:6bb88172ed7a6f734e1aa67d0d1e0b3c27c0bfcce945228c24619f1d6ff2f371",
+      "artifact_API_observation_path": "work/main-independent-review/40947274375/artifacts-api.json",
+      "artifact_API_observation_sha256": "b0dd50d03c011a04d52913d48ef55c7df4e43e422166a254d4d76bb482078dcd",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123705877412,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947274375/job/123705877412",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40947287495,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947287495",
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "compact_artifact_id": 12944715103,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947287495/artifacts/12944715103",
+      "compact_api_bytes": 2597270632,
+      "compact_api_sha256": "sha256:501ffe5a5e6d8e1737c0a4d70d5d94b125090da8176874920f161cf60f064bf5",
+      "artifact_API_observation_path": "work/main-independent-review/40947287495/artifacts-api.json",
+      "artifact_API_observation_sha256": "bca7d23a4dc788d7b20daf0ad6a7bcdda688dac938d924208aa637647b6de376",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123705936551,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947287495/job/123705936551",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40948072741,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741",
+      "source_commit": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "compact_artifact_id": 12941448669,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/artifacts/12941448669",
+      "compact_api_bytes": 50940137,
+      "compact_api_sha256": "sha256:618ec325f7efdb29bdca5002176de5e54877316546701cb155c6c247d65b86cd",
+      "artifact_API_observation_path": "work/main-independent-review/40948072741/artifacts-api.json",
+      "artifact_API_observation_sha256": "2b9e6c77c8fbb1ce1f010278dc1890ddc9fa26ea6511cefd966598584c7ac560",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123708628680,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/job/123708628680",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 8
+      },
+      "run_id": 40953661709,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40953661709",
+      "source_commit": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "compact_artifact_id": 12947519268,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40953661709/artifacts/12947519268",
+      "compact_api_bytes": 2594715629,
+      "compact_api_sha256": "sha256:b8962b47b6ebc15ff71cf0ea2eecc50c87debb482a63c6dd6e5484f9e3f69ac5",
+      "artifact_API_observation_path": "work/main-independent-review/40953661709/artifacts-api.json",
+      "artifact_API_observation_sha256": "2971021e0aa6b6f20371da3be9d3cc401fe30c8d8ea13b33b1b1de60abad5227",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123728102633,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40953661709/job/123728102633",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40956228868,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868",
+      "source_commit": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "compact_artifact_id": 12937232960,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/artifacts/12937232960",
+      "compact_api_bytes": 38019307,
+      "compact_api_sha256": "sha256:0e107efd44a2308e3e164f0fd022a3e3814e274463c6b4eb10c895b7c08f539c",
+      "artifact_API_observation_path": "work/main-independent-review/40956228868/artifacts-api.json",
+      "artifact_API_observation_sha256": "9ce9a389996af61cbf31c75fe0024e5a43bcf7b7f898ba1ddbf848cab15de8aa",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123736977074,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/job/123736977074",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40956228868,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868",
+      "source_commit": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "compact_artifact_id": 12938360814,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/artifacts/12938360814",
+      "compact_api_bytes": 38037701,
+      "compact_api_sha256": "sha256:08dd77cdf0640ad971d1d296a4cf8ffd359843f676ce680a8acc811296e547b8",
+      "artifact_API_observation_path": "work/main-independent-review/40956228868/artifacts-api.json",
+      "artifact_API_observation_sha256": "9ce9a389996af61cbf31c75fe0024e5a43bcf7b7f898ba1ddbf848cab15de8aa",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123736977122,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/job/123736977122",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40956228868,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868",
+      "source_commit": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "compact_artifact_id": 12938705608,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/artifacts/12938705608",
+      "compact_api_bytes": 38032310,
+      "compact_api_sha256": "sha256:3ad4d1c2dee72b51476ce2f48a7a508d32a7e057a28b68654a58dde666c2c75b",
+      "artifact_API_observation_path": "work/main-independent-review/40956228868/artifacts-api.json",
+      "artifact_API_observation_sha256": "9ce9a389996af61cbf31c75fe0024e5a43bcf7b7f898ba1ddbf848cab15de8aa",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123736977002,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956228868/job/123736977002",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40956239225,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956239225",
+      "source_commit": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "compact_artifact_id": 12945349527,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956239225/artifacts/12945349527",
+      "compact_api_bytes": 2595816701,
+      "compact_api_sha256": "sha256:6861f714b77d64534607631ebb200e9892a0ecc6ab85c113c076c75fed15703c",
+      "artifact_API_observation_path": "work/main-independent-review/40956239225/artifacts-api.json",
+      "artifact_API_observation_sha256": "cd0e4eb293c832cc1eb63d5bf8d07781933bfc30f04831fcb82dafde215904db",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123737011218,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956239225/job/123737011218",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40958365058,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40958365058",
+      "source_commit": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "compact_artifact_id": 12945932973,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40958365058/artifacts/12945932973",
+      "compact_api_bytes": 51761851,
+      "compact_api_sha256": "sha256:a5e886a1cb17141b4e9d4b95476f0e8b71a6232ec042244728163de1ef0d9dbd",
+      "artifact_API_observation_path": "work/main-independent-review/40958365058/artifacts-api.json",
+      "artifact_API_observation_sha256": "c7505e86fa028fb9dcdf8d437f8285956063bd0c9079ddf9062f3409b9e7baa9",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123744394109,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40958365058/job/123744394109",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40959052743,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40959052743",
+      "source_commit": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "compact_artifact_id": 12945067476,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40959052743/artifacts/12945067476",
+      "compact_api_bytes": 51680036,
+      "compact_api_sha256": "sha256:3860e59da72b65f2cc2350404f75f4b7a1a5f4069af156a4404b5ac1b149ac89",
+      "artifact_API_observation_path": "work/main-independent-review/40959052743/artifacts-api.json",
+      "artifact_API_observation_sha256": "df9064ed3418875d380149acafd1c5ed3a70a15610bd7472a545e1e7e541cb84",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123746750141,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40959052743/job/123746750141",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 6
+      },
+      "run_id": 40966250927,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966250927",
+      "source_commit": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "compact_artifact_id": 12950085255,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966250927/artifacts/12950085255",
+      "compact_api_bytes": 52439294,
+      "compact_api_sha256": "sha256:78dd27ec5a376bf9c444c60ad3d3c9ed71bfc83186af1204de38fd8a47bbe2ca",
+      "artifact_API_observation_path": "work/main-independent-review/40966250927/artifacts-api.json",
+      "artifact_API_observation_sha256": "aabbb5e0cfb8bc0c2fb0247906a4249760d0c2f1330b3d1632dc9cf22166ad6e",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123771501116,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966250927/job/123771501116",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 7
+      },
+      "run_id": 40966258333,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966258333",
+      "source_commit": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "compact_artifact_id": 12948423515,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966258333/artifacts/12948423515",
+      "compact_api_bytes": 52661568,
+      "compact_api_sha256": "sha256:f03ad01c3d27a541c33c7154a64a80f645cf34553dcac1ab614699c0d175821a",
+      "artifact_API_observation_path": "work/main-independent-review/40966258333/artifacts-api.json",
+      "artifact_API_observation_sha256": "1ccec577e03bf0862d8f306b843da62985eb6848ac7dd3e60f10637ef96c8161",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123771475825,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966258333/job/123771475825",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 8
+      },
+      "run_id": 40966847000,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966847000",
+      "source_commit": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "compact_artifact_id": 12949014963,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966847000/artifacts/12949014963",
+      "compact_api_bytes": 51987418,
+      "compact_api_sha256": "sha256:25fbae841b53c614cfa2bc65020f5cc0aedbd2f4072879e23759d1ab3154acf4",
+      "artifact_API_observation_path": "work/main-independent-review/40966847000/artifacts-api.json",
+      "artifact_API_observation_sha256": "758a834c034a23d41da48a2ad9575e924fc482c60ff77f025060506313f497c5",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123773442164,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966847000/job/123773442164",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "coroot",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40970095079,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970095079",
+      "source_commit": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "compact_artifact_id": 12948320780,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970095079/artifacts/12948320780",
+      "compact_api_bytes": 2596480725,
+      "compact_api_sha256": "sha256:6ad5a1c121d2790aa0299e717316dbe1ec89f210cccf76bc1a878790805c3de2",
+      "artifact_API_observation_path": "work/main-independent-review/40970095079/artifacts-api.json",
+      "artifact_API_observation_sha256": "cb741ac6cd74ded0212ecafaf79cfdfca6ebf405160a70ab138ec803df2fd726",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123784431380,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970095079/job/123784431380",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40970638144,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970638144",
+      "source_commit": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "compact_artifact_id": 12949771867,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970638144/artifacts/12949771867",
+      "compact_api_bytes": 52102806,
+      "compact_api_sha256": "sha256:a0850bb5a0fb839e2ff3e3396f1318d117bcf6d026894cd9accf8dec4e67ebfd",
+      "artifact_API_observation_path": "work/main-independent-review/40970638144/artifacts-api.json",
+      "artifact_API_observation_sha256": "039a5301f0dad934d6dfa48fb1db154ddd9292dfd48adf5611babf6ecaa5c12a",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "acquisition_complete",
+      "status_source": "saved compact status",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123786251016,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40970638144/job/123786251016",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40971766251,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40971766251",
+      "source_commit": "eb7342e79e6f622123c572e222cbf60608b099e0",
+      "compact_artifact_id": 12950256617,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40971766251/artifacts/12950256617",
+      "compact_api_bytes": 51805911,
+      "compact_api_sha256": "sha256:6f486c61c9f6a3870d092a986ed26aafd7bf9c2424d8ee19061e357b2e6563c6",
+      "artifact_API_observation_path": "work/main-independent-review/40971766251/artifacts-api.json",
+      "artifact_API_observation_sha256": "4468ec46248e606f1f6681a56fde4dd931477174267055af82a60219bb7381d3",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "completed_candidate_pending_independent_packet_review",
+      "completeness_not_inferred_from_artifact_existence": true,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123790025834,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40971766251/job/123790025834",
+        "status": "completed",
+        "conclusion": "success",
+        "failed_steps": []
+      }
+    }
+  ],
+  "known_technical_failures_or_cancellations": [
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40930805848,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848",
+      "source_commit": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "compact_artifact_id": 12932964556,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/artifacts/12932964556",
+      "compact_api_bytes": 38465522,
+      "compact_api_sha256": "sha256:7d461751a107b1a4d10aa39b8d131fa4228ead6fc9e70573b70daeaf89a7b7fb",
+      "artifact_API_observation_path": "work/main-independent-review/40930805848/artifacts-api.json",
+      "artifact_API_observation_sha256": "8ec8737e9b3e36db0fe7387c5c5670d0ece7f34fa0c8159bdd5dfe9772cb7fc1",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "technical_failure",
+      "status_source": "saved compact status",
+      "state": "technical_failure",
+      "reason": "old30second receiver deadline forced kill; no durable closure",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123648459777,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/job/123648459777",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests",
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40930805848,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848",
+      "source_commit": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "compact_artifact_id": 12933112600,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/artifacts/12933112600",
+      "compact_api_bytes": 38083724,
+      "compact_api_sha256": "sha256:8377ddce7f3bf1840f0d7ad8240fb7766db1e1e236d7937c2772c214dfadb0be",
+      "artifact_API_observation_path": "work/main-independent-review/40930805848/artifacts-api.json",
+      "artifact_API_observation_sha256": "8ec8737e9b3e36db0fe7387c5c5670d0ece7f34fa0c8159bdd5dfe9772cb7fc1",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "technical_failure",
+      "status_source": "saved compact status",
+      "state": "technical_failure",
+      "reason": "old30second receiver deadline forced kill; no durable closure",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123648459623,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40930805848/job/123648459623",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests",
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 6
+      },
+      "run_id": 40932031732,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40932031732",
+      "source_commit": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "compact_artifact_id": 12928354094,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40932031732/artifacts/12928354094",
+      "compact_api_bytes": 1637053,
+      "compact_api_sha256": "sha256:8b192a70aaddecd6d46eb0e740b8680f2b4a53e006c73c0ac18f5558b60de2ca",
+      "artifact_API_observation_path": "work/main-independent-review/40932031732/artifacts-api.json",
+      "artifact_API_observation_sha256": "9ae3e3e282a5bbb848eaa5f3a843622109c0bcefd1d321e584cb9bb78acc042d",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "running",
+      "status_source": "saved compact status",
+      "state": "technical_cancelled_superseded_preparation",
+      "reason": "explicit version-based cancellation before freeze/target after equivalent replacement qualification; not duration/outcome selection",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123652731951,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40932031732/job/123652731951",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "failed_steps": [
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40935194776,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935194776",
+      "source_commit": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "compact_artifact_id": 12929342198,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935194776/artifacts/12929342198",
+      "compact_api_bytes": 1117265,
+      "compact_api_sha256": "sha256:4fe61c2356039b5e6a241bd0572e48b9744ab102f4f2828e00f38e15143918e4",
+      "artifact_API_observation_path": "work/main-independent-review/40935194776/artifacts-api.json",
+      "artifact_API_observation_sha256": "87ef05215cc25b61d26096086585ef70bab58c7a6f186a831d20cac0a032c03b",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "running",
+      "status_source": "saved compact status",
+      "state": "technical_cancelled_superseded_preparation",
+      "reason": "explicit version-based cancellation before freeze/target after equivalent replacement qualification; not duration/outcome selection",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123663817818,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935194776/job/123663817818",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "failed_steps": [
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40935203055,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935203055",
+      "source_commit": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "compact_artifact_id": 12929237964,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935203055/artifacts/12929237964",
+      "compact_api_bytes": 1117268,
+      "compact_api_sha256": "sha256:2ad88cf5c4d366951509cb6dce2c8a3004445e5f1d152b34f43b6e05a614ee3c",
+      "artifact_API_observation_path": "work/main-independent-review/40935203055/artifacts-api.json",
+      "artifact_API_observation_sha256": "3432a953aee49fa60d4ff036efec7cfd229cff97a0f11ea84fa17b76cf1db5c0",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "running",
+      "status_source": "saved compact status",
+      "state": "technical_cancelled_superseded_preparation",
+      "reason": "explicit version-based cancellation before freeze/target after equivalent replacement qualification; not duration/outcome selection",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123663843380,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40935203055/job/123663843380",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "failed_steps": [
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 6
+      },
+      "run_id": 40947264867,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947264867",
+      "source_commit": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "compact_artifact_id": 12941975097,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947264867/artifacts/12941975097",
+      "compact_api_bytes": 1733322369,
+      "compact_api_sha256": "sha256:c872c53055a0c2fa8168fd1ff2e0580e5db4c3245d057ce46027c7c197a70b97",
+      "artifact_API_observation_path": "work/main-independent-review/40947264867/artifacts-api.json",
+      "artifact_API_observation_sha256": "caf3cb0d6721fb44c09a620d443915692f0234f0f715752a25c593e5578cc1ec",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": null,
+      "status_source": "artifact declaration only; evaluation/method not independently audited",
+      "state": "technical_failure",
+      "reason": "worker lossless package verification failed; exact changed file/writer unknown",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123705881863,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40947264867/job/123705881863",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests",
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40948072741,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741",
+      "source_commit": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "compact_artifact_id": 12939228701,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/artifacts/12939228701",
+      "compact_api_bytes": 38373908,
+      "compact_api_sha256": "sha256:eadb1da2f740ac151fd1aab8200ff5b4f6dc217c3783432addc2432326a2e8d3",
+      "artifact_API_observation_path": "work/main-independent-review/40948072741/artifacts-api.json",
+      "artifact_API_observation_sha256": "2b9e6c77c8fbb1ce1f010278dc1890ddc9fa26ea6511cefd966598584c7ac560",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "technical_failure",
+      "status_source": "saved compact status",
+      "state": "technical_failure",
+      "reason": "old30second receiver deadline forced kill; no durable closure",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123708628357,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/job/123708628357",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests",
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40948072741,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741",
+      "source_commit": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "compact_artifact_id": 12939626858,
+      "compact_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/artifacts/12939626858",
+      "compact_api_bytes": 37967405,
+      "compact_api_sha256": "sha256:425d17a3a4095cc13c6ca521f2332b99b564a97647120b82c3b1041b2c87906d",
+      "artifact_API_observation_path": "work/main-independent-review/40948072741/artifacts-api.json",
+      "artifact_API_observation_sha256": "2b9e6c77c8fbb1ce1f010278dc1890ddc9fa26ea6511cefd966598584c7ac560",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "saved_status": "technical_failure",
+      "status_source": "saved compact status",
+      "state": "technical_failure",
+      "reason": "old30second receiver deadline forced kill; no durable closure",
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123708628420,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40948072741/job/123708628420",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests",
+          "Evaluate retained full campaign evidence"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "deepflow",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40963548420,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40963548420",
+      "source_commit": "51c9697ed71bfb98919936c95440e0a21ed6731b",
+      "state": "technical_interruption_training_only",
+      "reason": "runner communication lost; seed6 job log unavailable; specific low-level cause unresolved",
+      "training_artifact_id": 12940068074,
+      "training_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40963548420/artifacts/12940068074",
+      "training_api_sha256": "sha256:02524ce918c2ab95e2b8a6854c5f1888b0493ee3b924c63777db2591b9f95116",
+      "training_api_bytes": 1254329913,
+      "final_evaluation_artifact_available": false,
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123762196894,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40963548420/job/123762196894",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "deepflow",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40965631880,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40965631880",
+      "source_commit": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "state": "technical_interruption_training_only",
+      "reason": "shutdown143 after preflight_start under severe memory/swap pressure; exact allocator and kernel OOM cause not proved",
+      "training_artifact_id": 12941184407,
+      "training_artifact_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40965631880/artifacts/12941184407",
+      "training_api_sha256": "sha256:8de2dc25fecb8ada7c44107f426d69976a1174a7fc7519468cd41ee5df54dbf9",
+      "training_api_bytes": 1257490009,
+      "final_evaluation_artifact_available": false,
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123769331220,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40965631880/job/123769331220",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 8
+      },
+      "run_id": 40910021896,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123575210321,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896/job/123575210321",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 7
+      },
+      "run_id": 40910021896,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123575210440,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896/job/123575210440",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 6
+      },
+      "run_id": 40910021896,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123575210516,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40910021896/job/123575210516",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 8
+      },
+      "run_id": 40913407822,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123587179829,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822/job/123587179829",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 6
+      },
+      "run_id": 40913407822,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123587179847,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822/job/123587179847",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7
+      },
+      "run_id": 40913407822,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123587179972,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40913407822/job/123587179972",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 6
+      },
+      "run_id": 40919005648,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123606897153,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648/job/123606897153",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 7
+      },
+      "run_id": 40919005648,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123606897296,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648/job/123606897296",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    },
+    {
+      "cell": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 8
+      },
+      "run_id": 40919005648,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648",
+      "state": "historical_technical_failure_without_artifact",
+      "reason": "failed campaign job, retained API artifact list empty; no evaluation or outcome reconstructed",
+      "source_commit": "not retained in this bounded status inventory; public run record is authoritative",
+      "independently_admitted": false,
+      "scientific_result_claim": false,
+      "timestamped_status_proof": {
+        "inventory": "status-inventory.json",
+        "observed_between_UTC": [
+          "2026-10-30 04:13:44 UTC",
+          "2026-10-30 04:13:59 UTC"
+        ],
+        "job_id": 123606897356,
+        "job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40919005648/job/123606897356",
+        "status": "completed",
+        "conclusion": "failure",
+        "failed_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    }
+  ],
+  "diagnosis_copies": [
+    {
+      "path": "diagnoses/deepflow-main-40963548420-40965631880-failure-diagnosis.md",
+      "bytes": 3910,
+      "sha256": "c840a5d6352d8389b385ddbd2ca957702a64e7726152bfc008128cedac8c5ba9",
+      "source_path": "work/deepflow-main-40963548420-40965631880-failure-diagnosis.md",
+      "source_boundary_correction": "Original diagnosis retained byte-exact as history. Its preflight-only allocator window is superseded: preflight_start includes both static preflight and prepare_inputs before shared_discovery_start.",
+      "superseding_source_analysis": "diagnoses/deepflow-main-preflight-memory-source-diagnosis.md"
+    },
+    {
+      "path": "diagnoses/failure-diagnosis.md",
+      "bytes": 3935,
+      "sha256": "be21eb7f9f7bac4ffbdbf9aa1efbfeb59734babc9c3527da04aff56d5d657370",
+      "source_path": "work/main-independent-review/40947264867/6/failure-diagnosis.md"
+    },
+    {
+      "path": "diagnoses/obi-otel-partial-40948072741-seed6-diagnosis.md",
+      "bytes": 3826,
+      "sha256": "20e387b2542eb30df15639d84fe8d4319ba650eb18c8980053a1163692ddded4",
+      "source_path": "work/obi-otel-partial-40948072741-seed6-diagnosis.md"
+    },
+    {
+      "path": "diagnoses/obi-otel-partial-40948072741-seed8-diagnosis.md",
+      "bytes": 3787,
+      "sha256": "fc87e7009ca4922ecb02b43e82cda79709466b198f1a4407871895b9d23045b5",
+      "source_path": "work/obi-otel-partial-40948072741-seed8-diagnosis.md"
+    },
+    {
+      "path": "diagnoses/deepflow-main-preflight-memory-source-diagnosis.md",
+      "bytes": 7133,
+      "sha256": "b602ed5acc4bb4521e1d8a8072ece2d1a179948ef55da45948cc537bdc05dd38",
+      "source_path": "work\\deepflow-main-preflight-memory-source-diagnosis.md",
+      "scope": "source-supported allocator analysis/proposal only, not live heap proof or implementation GO"
+    }
+  ],
+  "attempt_cost_inventory_boundary": "This is an evidence/admission manifest, not a fresh exhaustive operational/cost inventory. Historical no-artifact failures and all other attempt costs remain in original declarations/report cost ledgers and root current inventory; absence from this bounded list does not mean absent or zero cost.",
+  "operational_status_boundary": "All30 declared runs/52 campaign attempt jobs in the retained04:13:44\u201304:13:59UTC observation were terminal. This bounded timestamped inventory excludes later dispatches; it is not a current/future global running count.33 success jobs comprise16 independently reviewed cells and17 pending candidates;16 failures+3 cancellations remain ineligible.",
+  "publication_value_boundary": "For the published14, source evaluations/figures are field-equal as separately audited;2 later DSB cells and17 candidates are not silently inserted into that immutable report. Known owner_details2099/2400 and DSB seed8compose2799/3200 remain exact.",
+  "method_limits": [
+    "native Petclinic coarse http.route precedence explains a pipeline binding mismatch; it does not establish native information inferiority",
+    "OTel primary checkout external HTTP outcome does not prove async Kafka ancestry or downstream business completion",
+    "manual DB/placement/route/alias assumptions are supplied to all methods/direct baseline and are not claimed as discovery",
+    "received bytes/closures are hashed and joined where admitted; zero kernel/producer/internal exporter loss is not proved",
+    "all unknown/unfavorable forecasts remain source results; technical failures are not recoded as unknown forecasts"
+  ],
+  "positive_contribution_claim": false,
+  "ready_for_publication": true,
+  "publication_hold": null,
+  "timestamped_status_inventory": {
+    "path": "status-inventory.json",
+    "bytes": 356865,
+    "sha256": "5dd970f3bc138142cd661eab34c249ce9001dc18982d2032296ef3719b0082d6",
+    "observed_between_UTC": [
+      "2026-10-30 04:13:44 UTC",
+      "2026-10-30 04:13:59 UTC"
+    ],
+    "scope": "All30 declared iteration5 main parent runs; live GitHub jobs and first-page artifact metadata. Status inventory is not scientific admission. No source evaluations rescored.",
+    "declared_parent_runs": 30,
+    "campaign_attempt_jobs": 52,
+    "terminal_job_counts": {
+      "success": 33,
+      "failure": 16,
+      "cancelled": 3
+    },
+    "API_errors": 0,
+    "source": "Root retained live GitHub API jobs/artifact observation, independently checked for internal counts/identity; no duplicate30-run poll",
+    "not_scientific_admission": true,
+    "not_a_live_or_future_running_count": true
+  },
+  "DF_failure_boundary_current": {
+    "seed6": "lost runner communication; no job log, cannot inherit seed7 mechanism",
+    "seed7": "shutdown143 under observed memory/swap pressure after preflight_start and before shared_discovery_start; window includes preflight+prepare_inputs; exact live allocator unproved",
+    "source_supported_risks": [
+      "StoreV5.service_projections simultaneously materializes SQL strings, decoded full resolutions and returned mapping",
+      "DeepFlowDerivedValidator._load_accounting bulk-reads and retains accounting rows; minimal bounded repair still under skeptic design review"
+    ],
+    "new_repair_implementation_GO": false
+  },
+  "scope_implementation_actual_review": {
+    "ORIGINAL_skeptic_GO": true,
+    "reviewed_UTC": "2026-10-30T04:33:03.139282+00:00",
+    "source_sha256_by_path": {
+      "src/ebpf_discovery/campaign_v5.py": "e7a65facd6f6c41a4f317254d0f34955eae069f2b934b898f16db136e3f3d139",
+      "src/ebpf_discovery/campaign_process_v4.py": "d8bca9106cda8a7f3349f58409100f05b21eedfddedbdfcc22f7730af3b98f74",
+      "src/ebpf_discovery/collectors_v5.py": "c6c0ce253ed013f7b45a347e60b0e6858f457ecab2ab9c14f13c85b1d569046f",
+      "src/ebpf_discovery/report_v5.py": "9aa3b24c33c4ec65c43e297fd8e675bd9d45d222ed7680ce06faf1a5bf89dce0",
+      ".github/workflows/series-v5.yml": "7dae6276ea61466e98c737dd7e56cb1031ae825e6a5935fe44424e6511529459",
+      "tests/test_report_v5.py": "0ef114be12b55dba8ba04e503b72d4a0b3cc8e0a3943d2837abdd7a501a7112c",
+      "tests/test_collectors_v5.py": "e9e2d2464171e45db4489f78968c558b60816cd99f279007fd491281b45a59a7",
+      "tests/test_campaign_process_v4.py": "8dcb87a32fb0944db380630be698004cd1079b943cd6d0990f666660cb2d4100",
+      "README.md": "7b1ac723a41019c090f25ee24883259d635252be6b1121086e177cc1e82c3b31",
+      "docs/GOALS.md": "8b2e2f51520b7b3a3e9862c0f3e35036a4acacc0125acb26e2a3aea7ba79d9f4",
+      "docs/PROTOCOL_V5.md": "36eb798adcbfbecee1eadee690057566cad48a6395fffd9ca8655852e1a28547",
+      "docs/SCOPE_CORRECTION_V5.md": "b57eb31de169cb29241ec66fc18de571ea228f37a75380cdc279ea96522ebc32",
+      "docs/REVIEW_V5.md": "1721eb48682ddcd1a1a4a65894970e6cb2d598b85cc5a9080fcda2661987a5f4",
+      "AGENTS.md": "83d79e78da518db2cb8b76cfd80dfaa36cd7469c0b3671a19932e5e52b827d24"
+    },
+    "previous_declarations_SHA256": "aa192612de08289a70c10109babc36d4c28fda61bc23e8a5215e7aa3655d29be",
+    "previous_declaration_attempts_unchanged": 67,
+    "previous_related_cost_records_unchanged": 122,
+    "only_removed_blocked_rows": 27,
+    "removed_collector": "newrelic",
+    "current_declaration_path": "work/iteration5-report-declarations.json",
+    "current_declaration_SHA256": "33ca0db701da1ed7f2b2fcac8504f11495149e1a937b4f6cfa47b87ad536d2aa",
+    "historical_snapshots_rewritten": false,
+    "scope": "content/code review only; root owns commit/CI/execution; no newly completed packet admitted"
+  },
+  "publication_ready_scope": "This bounded correction/evidence manifest and byte-exact review/diagnosis copies only. It is not a new empirical report, approval of pending17 candidates, live status assertion after04:13:59UTC, or positive contribution.",
+  "review_record_storage": {
+    "policy": "All16 publication record copies are deterministic gzip; original review records outside this packet unchanged",
+    "records": 16,
+    "stored_bytes": 1135113,
+    "restored_bytes": 102155512,
+    "redundant_raw_publication_copies_removed_only_after_restore_verification": true,
+    "gzip_mtime": 0,
+    "gzip_filename": "",
+    "gzip_compresslevel": 6
+  }
+}

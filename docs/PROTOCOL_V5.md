@@ -1,10 +1,14 @@
-# Iteration 5: four collectors and stable operation families
+# Iteration 5: three collectors and stable operation families
 
 Status: matched main series in progress; intermediate measurements and their
 review boundaries are linked from the README. No completed-study or positive
 utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
-main experiments. The user selected OBI, DeepFlow, New Relic eBPF Agent and Coroot.
+main experiments. The active collectors are OBI, DeepFlow and Coroot.
+The user explicitly confirmed New Relic's exclusion on 2026-10-30; retaining it
+as an access-blocked arm was an orchestration error. It is not an active,
+failed or blocked comparison arm. Historical snapshots retain their original
+declarations and are identified as superseded in scope.
 The [completed iteration 4](PROTOCOL_V4.md) remains historical evidence.
 
 ### Collector-neutral observation identity review
@@ -83,8 +87,8 @@ target and class-test traffic.
 
 ## Matched campaign matrix
 
-Four separate collector arms each run three systems, three native tracing modes
-and seeds 6/7/8: **108 fresh campaigns**. All ten original operations remain. OBI
+Three separate collector arms each run three systems, three native tracing modes
+and seeds 6/7/8: **81 fresh campaigns**. All ten original operations remain. OBI
 is freshly rerun on the common pipeline/tool pins; old v4 measurements cannot stand
 in for a matched new OBI arm. Collectors run separately to avoid mutual interference.
 
@@ -127,9 +131,6 @@ No expected topology, business outcome or native label is inserted into eBPF dat
 
 Coroot's outbound root spans may support structural dependencies without providing
 propagated parents or server entry spans. Those distinctions must remain visible.
-New Relic's local export, credential and license conditions remain unresolved;
-that arm must not be substituted or presented as measured while unavailable.
-No key is published, synthesized or passed into retained telemetry artifacts.
 
 Supplied logical-service aliases use exact guest-scoped container names and
 retained Compose deployment labels. The same frozen table is available to every
@@ -143,7 +144,7 @@ request headers, causal links, peers, graph edges or endpoints.
 
 Product changes are generic source capabilities only. Experimental
 code, names, data, routes, results and links remain outside Bering and other product
-repositories. All four arms must eventually use the same reviewed toolchain pins.
+repositories. All three arms use the same reviewed toolchain pins.
 
 The independent skeptic and orchestrator approved this vendor-neutral boundary
 for the original criterion before revision. Runtime identity inventory may attach
@@ -155,8 +156,8 @@ normalization costs are charged only to methods that actually need that work.
 
 ## Smoke tests before main experiments
 
-The fixed smoke grid is four collectors x three systems x three modes, seed 6:
-**36 settings**. Startup controls must establish real supported HTTP observation
+The fixed smoke grid is three collectors x three systems x three modes, seed 6:
+**27 settings**. Startup controls must establish real supported HTTP observation
 on each guest and actual eBPF source attribution. A running container, dispatcher
 message, packet record or nonempty file alone is insufficient.
 

@@ -1,12 +1,15 @@
 # Iteration 5 implementation and qualification record
 
-Status: implementation and technical qualification; no new empirical finding or
-main-series completion is claimed. The scientific design is in
+This is a chronological implementation/qualification record. Current scope is
+three collectors, 81 main cells and 27 smoke settings; earlier four-arm and
+New Relic access-block descriptions below are superseded by the user's exclusion.
+Current status and the [scope correction](SCOPE_CORRECTION_V5.md) are linked from
+the README. No main-series completion is claimed. The scientific design is in
 [PROTOCOL_V5.md](PROTOCOL_V5.md). Iteration 4 results remain unchanged.
 
 ## Product boundary and published toolchain
 
-All four fresh collector arms use the same vendor-neutral `ebpf-otlp` input.
+All three active collector arms use the same vendor-neutral `ebpf-otlp` input.
 The product API has no collector/vendor parameter. Agent configuration and
 vendor-specific codecs live in this experiment repository; collector identity is
 retained in the study manifests. Logical source IDs/domains isolate observations.

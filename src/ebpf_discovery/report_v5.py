@@ -18,7 +18,7 @@ import zlib
 from .compact_transport_v5 import PROOF_SCHEMA, verified_nonmaterialized_files
 
 
-COLLECTORS = ("obi", "deepflow", "newrelic", "coroot")
+COLLECTORS = ("obi", "deepflow", "coroot")
 SYSTEMS = ("deathstarbench", "otel_demo", "petclinic")
 MODES = ("absent", "partial", "full")
 SEEDS = (6, 7, 8)
@@ -46,7 +46,6 @@ SOURCE_PINS = {
         "source_commit": "89a858a0ee35c4eb938b86d56f23168fb0ac7573",
         "image": "ghcr.io/coroot/coroot-node-agent:1.37.0@sha256:f360c31c5e2fa75550c0029f3c02a0e54b83831bae59201b9fe76bab2fe564b4",
     },
-    "newrelic": None,
 }
 
 LEGACY_AGGREGATE_SCHEMA = "evaluation-v5-saved-aggregate"
@@ -265,8 +264,6 @@ def _validate_source(folder: Path, evaluation: dict, collector: str) -> dict[str
     if not isinstance(retained, dict):
         raise ValueError(f"saved v5 summary lacks collector provenance: {path}")
     expected = SOURCE_PINS[collector]
-    if expected is None:
-        raise ValueError("blocked New Relic cells cannot contain a completed collector evaluation")
     for key, wanted in expected.items():
         if retained.get(key) != wanted:
             raise ValueError(f"saved collector source pin mismatch: {path}: {key}")
@@ -820,7 +817,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines = [
         "# Iteration-5 saved-artifact report", "",
         "This report copies source-produced evaluations and technical records. It performs no refit, relinking, rescoring, thresholding, or accuracy-based selection.",
-        "Technical smoke status is separate from the 108-cell main grid and is not an independent admission or positive contribution claim.",
+        f"Technical smoke status is separate from the {(payload.get('grid') or {}).get('declared_main_cells', 'unknown')}-cell main grid and is not an independent admission or positive contribution claim.",
         "", "## Fixed grid and execution boundary", "",
     ]
     lines += _table(["Stored field", "Value"], [

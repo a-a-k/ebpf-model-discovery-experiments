@@ -1,8 +1,18 @@
 # Iteration 5 review and execution boundary
 
 Status: matching main cells have been admitted as documented below; the complete
-108-cell study and any contribution verdict remain pending. The independent reviewer is the
+81-cell study and any contribution verdict remain pending. The independent reviewer is the
 separate 6.1 Sol/xhigh agent requested by the user, not an external peer reviewer.
+
+**Scope correction, 2026-10-30:** the user explicitly excluded New Relic. The active
+comparison is OBI, DeepFlow and Coroot (81 main cells, 27 smoke settings). Earlier
+entries below that describe a four-collector/108-cell or New Relic access-blocked
+study are superseded scope history, not current authorization or coverage.
+Root and the independent skeptic gave original-criterion GO for removing that
+arm without changing any remaining measurement, semantic assumption, baseline,
+failure record or cost. Historical snapshots retain their exact bytes and stored
+grid counts. The [correction and fresh audit](SCOPE_CORRECTION_V5.md) separate
+status mistakes from the remaining scientific evidence checks.
 
 ## Original criterion and strongest baseline
 
@@ -706,3 +716,10 @@ checkout completion, a classification gain over the base entry method, or a
 utility/complete-cost advantage. The successful cell used the original
 30-second receiver-close implementation and does not demonstrate an effect of
 the later closure repair. The failed seeds and all costs remain retained.
+
+The two remaining OBI DeathStarBench/absent packets (seeds 6 and 8,
+`40942429097`) subsequently passed actual evidence review, bringing the reviewed
+total to 16. Their unavailable forecasts remain unavailable; the small adverse
+seed-8 compose-post outcome `2799/3200` is preserved. The current
+[bounded trust audit](SCOPE_CORRECTION_V5.md) publishes the exact review records
+and distinguishes 17 further successful-job candidates from admitted evidence.

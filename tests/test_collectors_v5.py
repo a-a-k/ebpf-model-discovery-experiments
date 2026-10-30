@@ -93,7 +93,8 @@ def test_factory_has_no_cross_arm_substitution(tmp_path: Path, name, kind) -> No
         with pytest.raises(CollectorUnavailable) as exc:
             create_collectors_v5(Context(tmp_path), blocked)
         assert exc.value.collector == blocked
-        assert "substitution" in exc.value.reason or "fixed collector" in exc.value.reason or "license" in exc.value.reason
+        assert "not one of the three active collector arms" in str(exc.value)
+        assert "license" not in str(exc.value)
 
 
 @pytest.mark.parametrize("collector_type", [OBICollectorsV5, CorootCollectorsV5])
