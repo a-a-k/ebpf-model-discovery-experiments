@@ -1,0 +1,33 @@
+{
+  "source_run": 40910013685,
+  "collector": "obi",
+  "system": "petclinic",
+  "mode": "absent",
+  "seed": 6,
+  "operation": "owner_details_with_visits",
+  "variant": "raw",
+  "transformation": "none; exact saved file bytes copied for publication",
+  "review_record": "../main-review-snapshot-20261030/obi-petclinic-absent-6-40910013685.json.gz",
+  "files": {
+    "bering-model.json": {
+      "original_selected_path": "work/main-independent-review/40910013685/6/selected/toolchain/discovery/ebpf/raw/observed.bering-raw.json",
+      "bytes": 21796,
+      "sha256": "474f708f740b07a6646943f628947d9e5302171fce33d20825c2288208f481cf"
+    },
+    "bering-command.json": {
+      "original_selected_path": "work/main-independent-review/40910013685/6/selected/toolchain/discovery/ebpf/raw/observed-runtime/replay-command.json",
+      "bytes": 35454,
+      "sha256": "c271ce19207a70d2be291424a15b2f2f2dbc0a6525df18f6ad5d081cc17a7879"
+    },
+    "sheaft-model.json": {
+      "original_selected_path": "work/main-independent-review/40910013685/6/selected/toolchain/ebpf/raw/owner_details_with_visits/model.json",
+      "bytes": 22355,
+      "sha256": "8fe1d39355f58c234590e0eb35ff7f1cbd4b1cd8f1d7700183e4a77ac93b5863"
+    },
+    "sheaft-command.json": {
+      "original_selected_path": "work/main-independent-review/40910013685/6/selected/toolchain/ebpf/raw/owner_details_with_visits/simulation.command.json",
+      "bytes": 1327,
+      "sha256": "4e4dadf8730e34220577451c52f99bf133e70469b2a2f5d34c9befe51ac1fb4c"
+    }
+  }
+}

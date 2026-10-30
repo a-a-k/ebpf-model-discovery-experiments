@@ -29,7 +29,21 @@ same pre-discovery failure boundary; neither source has a saved forecast or targ
 result. The qualification records raw outputs, narrow runtime-provenance
 differences and complete preparation measurements. It runs entirely in Actions.
 
-Actual qualification output review is pending. The 27 DeepFlow main cells
-(two technical repeats and 25 unstarted cells) remain pending that review.
-Passing software equivalence would authorize resuming the fixed series; it would
-not establish scientific utility, faster execution or lower complete cost.
+The full saved comparison completed successfully; actual-output review is pending
+as supplemental engineering evidence.
+After the user requested a return to the existing direct collection/model path,
+the root and separate skeptic rechecked the ORIGINAL 81-cell criterion. That
+two-layout equivalence check is not causally required to exercise the real path;
+its output, history and costs remain retained.
+
+The accepted minimal next step is exactly one existing DeepFlow Petclinic/absent
+smoke on the reviewed code:
+[41018310659](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41018310659).
+It uses the existing workflow and real collection, Bering and supported simulator
+path, with no new framework, metric or scientific cell. Direct inspection checks
+actual source controls, frozen accepted inputs, graph and simulator artifacts,
+and external outcomes. If technically valid, it authorizes only the first already
+planned failed-main repeat, followed by actual packet review. Unknown or negative
+forecasts remain valid observations; neither smoke nor technical completion proves
+utility or cost superiority. The original 27 DeepFlow main cells and all prior
+failure/qualification costs remain in scope.

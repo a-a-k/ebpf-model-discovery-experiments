@@ -1,0 +1,17 @@
+{
+  "started_ns": 1793293066725990055,
+  "ended_ns": 1793293085864663459,
+  "argv": [
+    "sheaft",
+    "run",
+    "--model",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/model.json",
+    "--analysis",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/analysis.json",
+    "--out-dir",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/simulation"
+  ],
+  "returncode": 0,
+  "stdout": "model written: /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/simulation/model.json\nreport written: /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/simulation/report.json\nsummary written: /home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/ebpf/raw/owner_details_with_visits/simulation/summary.md\ndecision: report\ncontract: io.mb3r.bering.model@1.3.0\npolicy mode: report\n",
+  "stderr": ""
+}

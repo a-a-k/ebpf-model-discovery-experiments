@@ -4,14 +4,13 @@
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
-review; main groups are being staged. All nine OBI Petclinic main cells and three
-Coroot Petclinic/absent main cells have passed actual evidence review. OBI OTel
-Demo/absent seed 6 and all three DeathStarBench/absent repeats have also passed,
-bringing the reviewed total to 16. Subsequent review of Coroot Petclinic/partial
-seed 6 brings the total to **17/81**; its 24 forecasts remain unavailable and
-no Sheaft execution is claimed. The [exact review record](results/iteration-5/main-reviews/coroot-petclinic-partial-6-40956228868.json)
-states the checked files and verification limits. Later packets remain under
-independent review. Technical smoke admission does
+review; main groups are being staged. The published review snapshot now contains
+**36/81 independently reviewed main cells**: 26 OBI and 10 Coroot, including all
+nine Petclinic cells for each of these collectors. The
+[explicit index and unchanged review records](results/iteration-5/main-review-snapshot-20261030/SOURCE.md)
+state each source, checked files and verification limits. These are valid
+experimental packets, including unknown and inaccurate forecasts, not 36
+positive findings. Later packets remain in progress. Technical smoke admission does
 not require an available or accurate forecast.
 New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
 cells was an orchestration error; no credentials are needed and those cells do
@@ -25,6 +24,26 @@ unproved. A [journal memory repair](docs/JOURNAL_MEMORY_V5.md) preserves exact
 evidence while avoiding retention of every response body. Independent saved-data
 equivalence validation passed and affected starts resumed; failed attempts and
 their costs remain.
+
+An existing main run records a collection -> Bering -> Sheaft path: its
+[actual eBPF-derived Bering graph and actual Sheaft input/command](results/iteration-5/petclinic-ebpf-model-40910013685-6/SOURCE.md)
+are published as exact saved files. The application SDK was disabled. Supplied
+deployment aliases, operation contracts and replica semantics remain explicit;
+they are not claimed as automatically discovered business knowledge.
+
+Current OTel results also include unfavorable measurements. In full-tracing
+seed 6, the combined-source checkout prediction is `0.875`, while the saved
+external result is `2563/3200`; the equally informed direct baseline also
+predicts `0.875`. Other full-tracing packets retain additional deviations.
+Partial-tracing OTel graphs exist but their required operation evidence does not
+support the saved forecasts. A missing forecast is therefore distinguished from
+a missing graph. These observations are preserved without result-driven reruns.
+
+Implementation now follows the existing collection, Bering and Sheaft path.
+Format-only review issues are inspected directly from retained files. The
+additional full DeepFlow storage-layout comparison remains engineering evidence;
+it does not block the existing real-path smoke described in
+[the preparation record](docs/DEEPFLOW_PREPARATION_V5.md).
 Normal [receiver closure](docs/RECEIVER_CLOSE_V5.md) now waits for the durable
 closure proof without an artificial experiment deadline; all exit, join, byte,
 and parent-hash gates remain unchanged, and earlier failures remain failures.

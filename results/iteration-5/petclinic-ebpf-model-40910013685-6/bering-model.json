@@ -1,0 +1,761 @@
+{
+  "edges": [
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners/6",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 3.005,
+          "p90": 4.543,
+          "p95": 5.533,
+          "p99": 10.01
+        }
+      },
+      "to": "customers-service"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 6.908,
+          "p90": 9.783,
+          "p95": 11.822,
+          "p99": 21.761
+        }
+      },
+      "to": "customers-service"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:6914b80c50e66a039e0afe6612624c5925667c35473cdbd5087c0c2d68eafeaf|sync|true|protocol=http|operation=GET|route=%2Fapi%2Fgateway%2Fowners%2F6|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/api/gateway/owners/6",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 8.277,
+          "p90": 8.277,
+          "p95": 8.277,
+          "p99": 8.277
+        }
+      },
+      "to": "peer:6914b80c50e66a039e0afe6612624c5925667c35473cdbd5087c0c2d68eafeaf"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:72e71b39f4c4d32cee18f5bc1f1bb454d2a5fadb0039eca56793b8b2ad8f6f08|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/vets",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 1.236,
+          "p90": 2.502,
+          "p95": 3.292,
+          "p99": 6.436
+        }
+      },
+      "to": "peer:72e71b39f4c4d32cee18f5bc1f1bb454d2a5fadb0039eca56793b8b2ad8f6f08"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 5.174,
+          "p90": 8.716,
+          "p95": 10.806,
+          "p99": 16.822
+        }
+      },
+      "to": "peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 6.797,
+          "p90": 11.998,
+          "p95": 13.94,
+          "p99": 19.812
+        }
+      },
+      "to": "peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:8bdd9cc495c6f904aa046b4d86225a3ec34ea5ed2a4946f82bb455ac33c1b6b4|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners/6",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 3.396,
+          "p90": 5.175,
+          "p95": 6.377,
+          "p99": 11.299
+        }
+      },
+      "to": "peer:8bdd9cc495c6f904aa046b4d86225a3ec34ea5ed2a4946f82bb455ac33c1b6b4"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|peer:8bdd9cc495c6f904aa046b4d86225a3ec34ea5ed2a4946f82bb455ac33c1b6b4|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 7.445,
+          "p90": 10.626,
+          "p95": 12.858,
+          "p99": 23.763
+        }
+      },
+      "to": "peer:8bdd9cc495c6f904aa046b4d86225a3ec34ea5ed2a4946f82bb455ac33c1b6b4"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|vets-service|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/vets",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 0.75,
+          "p90": 1.73,
+          "p95": 2.353,
+          "p99": 4.987
+        }
+      },
+      "to": "vets-service"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|visits-proxy|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 4.837,
+          "p90": 8.124,
+          "p95": 10.227,
+          "p99": 15.447
+        }
+      },
+      "to": "visits-proxy"
+    },
+    {
+      "blocking": true,
+      "from": "api-gateway",
+      "id": "api-gateway|visits-proxy|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=server",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 6.542,
+          "p90": 11.637,
+          "p95": 13.57,
+          "p99": 19.132
+        }
+      },
+      "to": "visits-proxy"
+    },
+    {
+      "blocking": true,
+      "from": "customers-service",
+      "id": "customers-service|database:00098ca6e328b01996857e349645e8f965250b031340146be9fb620c624b426b|sync|true|protocol=mysql|operation=SELECT|span_kind=client",
+      "identity": {
+        "operation": "SELECT",
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.372,
+          "p90": 0.372,
+          "p95": 0.372,
+          "p99": 0.372
+        }
+      },
+      "to": "database:00098ca6e328b01996857e349645e8f965250b031340146be9fb620c624b426b"
+    },
+    {
+      "blocking": true,
+      "from": "customers-service",
+      "id": "customers-service|database|sync|true|span_kind=server",
+      "identity": {
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 0.109,
+          "p90": 0.209,
+          "p95": 0.252,
+          "p99": 0.334
+        }
+      },
+      "to": "database"
+    },
+    {
+      "blocking": true,
+      "from": "vets-service",
+      "id": "vets-service|database|sync|true|span_kind=server",
+      "identity": {
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 0.139,
+          "p90": 1.621,
+          "p95": 2.333,
+          "p99": 2.333
+        }
+      },
+      "to": "database"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners/6",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 3.028,
+          "p90": 3.101,
+          "p95": 3.101,
+          "p99": 3.101
+        }
+      },
+      "to": "customers-service"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|customers-service|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 5.412,
+          "p90": 5.412,
+          "p95": 5.412,
+          "p99": 5.412
+        }
+      },
+      "to": "customers-service"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 4.64,
+          "p90": 7.883,
+          "p95": 9.991,
+          "p99": 15.269
+        }
+      },
+      "to": "peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 8.577,
+          "p90": 12.786,
+          "p95": 14.842,
+          "p99": 21.479
+        }
+      },
+      "to": "peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|visits-service|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=server",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 3.703,
+          "p90": 6.831,
+          "p95": 8.85,
+          "p99": 13.88
+        }
+      },
+      "to": "visits-service"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|visits-service|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=server",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 7.702,
+          "p90": 11.827,
+          "p95": 13.866,
+          "p99": 19.651
+        }
+      },
+      "to": "visits-service"
+    },
+    {
+      "blocking": true,
+      "from": "visits-service",
+      "id": "visits-service|database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a|sync|true|protocol=mysql|operation=INSERT|span_kind=client",
+      "identity": {
+        "operation": "INSERT",
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.677,
+          "p90": 0.842,
+          "p95": 0.961,
+          "p99": 2.114
+        }
+      },
+      "to": "database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a"
+    },
+    {
+      "blocking": true,
+      "from": "visits-service",
+      "id": "visits-service|database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a|sync|true|protocol=mysql|operation=SELECT|span_kind=client",
+      "identity": {
+        "operation": "SELECT",
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.791,
+          "p90": 1.076,
+          "p95": 1.307,
+          "p99": 2.469
+        }
+      },
+      "to": "database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a"
+    },
+    {
+      "blocking": true,
+      "from": "visits-service",
+      "id": "visits-service|database|sync|true|span_kind=server",
+      "identity": {
+        "span_kind": "server"
+      },
+      "kind": "sync",
+      "observed": {
+        "latency_ms": {
+          "p50": 0.202,
+          "p90": 0.285,
+          "p95": 0.318,
+          "p99": 0.423
+        }
+      },
+      "to": "database"
+    }
+  ],
+  "endpoints": [
+    {
+      "entry_service": "api-gateway",
+      "id": "api-gateway:GET /api/customer/owners",
+      "method": "GET",
+      "path": "/api/customer/owners",
+      "success_predicate_ref": "api-gateway:GET /api/customer/owners"
+    },
+    {
+      "entry_service": "api-gateway",
+      "id": "api-gateway:GET /api/gateway/owners/6",
+      "method": "GET",
+      "path": "/api/gateway/owners/6",
+      "success_predicate_ref": "api-gateway:GET /api/gateway/owners/6"
+    },
+    {
+      "entry_service": "api-gateway",
+      "id": "api-gateway:GET /api/vet/vets",
+      "method": "GET",
+      "path": "/api/vet/vets",
+      "success_predicate_ref": "api-gateway:GET /api/vet/vets"
+    },
+    {
+      "entry_service": "api-gateway",
+      "id": "api-gateway:POST /api/visit/owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/api/visit/owners/1/pets/1/visits",
+      "success_predicate_ref": "api-gateway:POST /api/visit/owners/1/pets/1/visits"
+    },
+    {
+      "entry_service": "customers-service",
+      "id": "customers-service:GET /owners",
+      "method": "GET",
+      "path": "/owners",
+      "success_predicate_ref": "customers-service:GET /owners"
+    },
+    {
+      "entry_service": "customers-service",
+      "id": "customers-service:GET /owners/6",
+      "method": "GET",
+      "path": "/owners/6",
+      "success_predicate_ref": "customers-service:GET /owners/6"
+    },
+    {
+      "entry_service": "study-ebpf-control-server-a",
+      "id": "study-ebpf-control-server-a:GET /collector-control-v5-obi-1793290916525250393",
+      "method": "GET",
+      "path": "/collector-control-v5-obi-1793290916525250393",
+      "success_predicate_ref": "study-ebpf-control-server-a:GET /collector-control-v5-obi-1793290916525250393"
+    },
+    {
+      "entry_service": "study-ebpf-control-server-b",
+      "id": "study-ebpf-control-server-b:GET /collector-control-v5-obi-1793290916525250393",
+      "method": "GET",
+      "path": "/collector-control-v5-obi-1793290916525250393",
+      "success_predicate_ref": "study-ebpf-control-server-b:GET /collector-control-v5-obi-1793290916525250393"
+    },
+    {
+      "entry_service": "vets-service",
+      "id": "vets-service:GET /vets",
+      "method": "GET",
+      "path": "/vets",
+      "success_predicate_ref": "vets-service:GET /vets"
+    },
+    {
+      "entry_service": "visits-proxy",
+      "id": "visits-proxy:GET /pets/visits",
+      "method": "GET",
+      "path": "/pets/visits",
+      "success_predicate_ref": "visits-proxy:GET /pets/visits"
+    },
+    {
+      "entry_service": "visits-proxy",
+      "id": "visits-proxy:POST /owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/owners/1/pets/1/visits",
+      "success_predicate_ref": "visits-proxy:POST /owners/1/pets/1/visits"
+    },
+    {
+      "entry_service": "visits-service",
+      "id": "visits-service:GET /pets/visits",
+      "method": "GET",
+      "path": "/pets/visits",
+      "success_predicate_ref": "visits-service:GET /pets/visits"
+    },
+    {
+      "entry_service": "visits-service",
+      "id": "visits-service:POST /owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/owners/1/pets/1/visits",
+      "success_predicate_ref": "visits-service:POST /owners/1/pets/1/visits"
+    }
+  ],
+  "metadata": {
+    "confidence": 0.9,
+    "discovered_at": "2026-10-29T16:54:37Z",
+    "schema": {
+      "digest": "sha256:2aa8a3550a25dc626ba6d2f5833569efca2f382b9e5c9c3405be93695d7d48ae",
+      "name": "io.mb3r.bering.model",
+      "uri": "https://mb3r-lab.github.io/Bering/schema/model/v1.3.0/model.schema.json",
+      "version": "1.3.0"
+    },
+    "source_ref": "bering://serve?listen=127.0.0.1%3A41217",
+    "source_type": "bering"
+  },
+  "services": [
+    {
+      "id": "api-gateway",
+      "name": "api-gateway",
+      "replicas": 1
+    },
+    {
+      "id": "customers-service",
+      "name": "customers-service",
+      "replicas": 1
+    },
+    {
+      "id": "database",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "observed_receiver_service",
+          "bering.node.kind": "database"
+        }
+      },
+      "name": "database",
+      "replicas": 1
+    },
+    {
+      "id": "database:00098ca6e328b01996857e349645e8f965250b031340146be9fb620c624b426b",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:742dedeea6fa1d3c3d299948cae40d0e95d8879e935829391482926ec29b5670",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "172.28.11.20",
+          "server.port": "3306"
+        }
+      },
+      "name": "database:00098ca6e328b01996857e349645e8f965250b031340146be9fb620c624b426b",
+      "replicas": 1
+    },
+    {
+      "id": "database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:f5c945115dfefee0b52f20b770c2f5aaaf75549e1157b63db2f0af3b49cab16d",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "192.168.76.11",
+          "server.port": "13306"
+        }
+      },
+      "name": "database:53b0dca732fe21ed6e8c4288fe51741de19469e12403a65ef8c80d5654d8498a",
+      "replicas": 1
+    },
+    {
+      "id": "peer:6914b80c50e66a039e0afe6612624c5925667c35473cdbd5087c0c2d68eafeaf",
+      "metadata": {
+        "labels": {
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "reported_service",
+          "bering.peer.service": "192.168.76.11"
+        }
+      },
+      "name": "192.168.76.11",
+      "replicas": 1
+    },
+    {
+      "id": "peer:72e71b39f4c4d32cee18f5bc1f1bb454d2a5fadb0039eca56793b8b2ad8f6f08",
+      "metadata": {
+        "labels": {
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "reported_service",
+          "bering.peer.service": "172.28.11.12"
+        }
+      },
+      "name": "172.28.11.12",
+      "replicas": 1
+    },
+    {
+      "id": "peer:8204155304a07e348dc4d035915e33ad26711e0024ba3f731340244780162c43",
+      "metadata": {
+        "labels": {
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "reported_service",
+          "bering.peer.service": "172.28.11.13"
+        }
+      },
+      "name": "172.28.11.13",
+      "replicas": 1
+    },
+    {
+      "id": "peer:8bdd9cc495c6f904aa046b4d86225a3ec34ea5ed2a4946f82bb455ac33c1b6b4",
+      "metadata": {
+        "labels": {
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "reported_service",
+          "bering.peer.service": "172.28.11.11"
+        }
+      },
+      "name": "172.28.11.11",
+      "replicas": 1
+    },
+    {
+      "id": "study-ebpf-control-server-a",
+      "name": "study-ebpf-control-server-a",
+      "replicas": 1
+    },
+    {
+      "id": "study-ebpf-control-server-b",
+      "name": "study-ebpf-control-server-b",
+      "replicas": 1
+    },
+    {
+      "id": "vets-service",
+      "name": "vets-service",
+      "replicas": 1
+    },
+    {
+      "id": "visits-proxy",
+      "name": "visits-proxy",
+      "replicas": 1
+    },
+    {
+      "id": "visits-service",
+      "name": "visits-service",
+      "replicas": 1
+    }
+  ]
+}

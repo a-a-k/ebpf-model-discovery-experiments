@@ -1,0 +1,1065 @@
+{
+  "argv": [
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain-build/bin/bering",
+    "serve",
+    "--config",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/serve.yaml"
+  ],
+  "started_ns": 1793292855370816672,
+  "input_observations": 335028,
+  "publication_mode": "on_shutdown",
+  "source_domain": "petclinic-deployment",
+  "source_profile": {
+    "source_id": "ebpf",
+    "input_type": "ebpf-otlp"
+  },
+  "clock_admission_filter": false,
+  "discovery_mode": "one offline batch; no historical reconciliation",
+  "child_resource_report": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/bering-resources.json",
+  "accepted_ingest_requests": [
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 0,
+      "content_bytes": 114708,
+      "content_sha256": "6e843074df1e10e701b609bd075b789f31dfe562abb7f26cddc60b3beafdad90"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 1,
+      "content_bytes": 113959,
+      "content_sha256": "e3692fb8c50de3ffbbbce315ea4ff345a70de9aaa026570995ce8bfc964606b9"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 2,
+      "content_bytes": 125527,
+      "content_sha256": "a16c19fbbf4acfc4c36bead76511964c7d4b71d5b5d37270961f5f1ceb03d7b6"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 3,
+      "content_bytes": 34674,
+      "content_sha256": "b2951b2aa362902edc6907f5a8b42d16e19be3303c6358defeb353dab2c70ad1"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 4,
+      "content_bytes": 29291,
+      "content_sha256": "bbc3e91f2ac3719f396f17b2b3af34a095ca88dd5dd47d987b6d9108918f1869"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 5,
+      "content_bytes": 6372,
+      "content_sha256": "79c0dc7ee9ec487e00f981468403f2e13527e549a33263886e4b5ffd394b8eba"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 6,
+      "content_bytes": 57981,
+      "content_sha256": "c4b2e0a3ba20273a163c891d36bd190468e6b540065537bcce6ac65a61a57d0e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 7,
+      "content_bytes": 5187884,
+      "content_sha256": "2300c1270e014118ba95e91de3a0bff8c673fdf12284f99ff5d5eec74eb0a851"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 8,
+      "content_bytes": 4993690,
+      "content_sha256": "6b63bd3422ca49c02e892df8a57437701cfa6baf481236a316f06c2728bd5b3d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 9,
+      "content_bytes": 217053,
+      "content_sha256": "3d69158eaee787eb306aec552ad6249618ecc4e1c058239498e1118f289e3a45"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 10,
+      "content_bytes": 2598482,
+      "content_sha256": "bbfb07b7df73407b70503b5607334d569740974f3f99497302fdabdd44fff0be"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 11,
+      "content_bytes": 5339786,
+      "content_sha256": "379a0afb7bd926c89dbb5515ce36e733dc8495c7013e21a6be8daefd34c960e9"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 12,
+      "content_bytes": 4746852,
+      "content_sha256": "37338cbaa1e3c8ccdebaafd566fa8285b38d1004aa50333d57e3e60bd6dc06d5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 13,
+      "content_bytes": 5305089,
+      "content_sha256": "8313e75b5c62f96c0c8faad618932d385a4e831df1f4eb1d25b2a6f10ef7877d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 14,
+      "content_bytes": 5208587,
+      "content_sha256": "2b8d3122c33f3a4b6cb6a0a254153ecab28184056e978070945d11d570eb3580"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 15,
+      "content_bytes": 5288680,
+      "content_sha256": "7815de524201092047ab4d4627d30c581947d862c24e7bb10ffa0d13fd314be3"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 16,
+      "content_bytes": 5338345,
+      "content_sha256": "7da8b617f27bf8c41381591e1021cbf25c5470bbd9d39e46085b00b20605c94b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 17,
+      "content_bytes": 5218966,
+      "content_sha256": "2217e73015cf1358082f05a354db35ede188e4e58ec8d92ded7de4d31847ebbc"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 18,
+      "content_bytes": 5375492,
+      "content_sha256": "b422d3c09593aa35c8b5aa09c785aa8773bb27cfdad0cb626271619b90af397b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 19,
+      "content_bytes": 5287091,
+      "content_sha256": "9b8b26dbf1792b7c40a78b68b0fd4494b9e7571e73d62d05076a583e07f8643d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 20,
+      "content_bytes": 5330072,
+      "content_sha256": "29ba437b5fbed891c919260a8f349534253635d39442d15d54145b67d677f151"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 21,
+      "content_bytes": 5359319,
+      "content_sha256": "f9a0a1716ea898cc7c4afcd189e9ccc3b6213ef9656599e575a81254edfbb710"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 22,
+      "content_bytes": 4855858,
+      "content_sha256": "74a6ebc126945d7e32cc0b3f52876134a9c7509942add438313993112749aade"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 23,
+      "content_bytes": 5312377,
+      "content_sha256": "fdc56375daebdc6d7aabe21158b80a09b056c7a68a2bb3182313eb65cb31b290"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 24,
+      "content_bytes": 5381888,
+      "content_sha256": "7921bceeae8ab74fed696382a9874559b9a682a739c319a09778590ac2fe731f"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 25,
+      "content_bytes": 5341843,
+      "content_sha256": "dedab7bf396d9397dc5390bdef5b2f2f704b13b8c8de4c1f581f598dbb367f87"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 26,
+      "content_bytes": 4959507,
+      "content_sha256": "5bfce212410e378f069ff0808092beeccb9753f93a06abd052dbaa9fbce749fb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 27,
+      "content_bytes": 5360051,
+      "content_sha256": "d694a70669d8f52be4f88af9adc031026148611cbf37ef200d44d3817def53f9"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 28,
+      "content_bytes": 5352232,
+      "content_sha256": "0ff100f5032665d4108bcb1a15620e8a79735f94763af046f6ce5a33378d3cd6"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 29,
+      "content_bytes": 5334302,
+      "content_sha256": "24ad71758df297a20526da29f4c6a274055ce23c512badb3371ced91a73f1b59"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 30,
+      "content_bytes": 5364508,
+      "content_sha256": "a5b20f2432ddeaf0b67916c8116975667020e9adbac4e17a70936ee5728f342b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 31,
+      "content_bytes": 355159,
+      "content_sha256": "cbd77369246848b11309a25476f44739a4934e9c21bc7cc89814e082e7b6f08a"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 32,
+      "content_bytes": 39422,
+      "content_sha256": "a211cc1610908f1049233af44d98c54c1699fff11722c5ca31b3b55fffd0e248"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 33,
+      "content_bytes": 57925,
+      "content_sha256": "c646346ddba7a7d18a9aab62f937682e7757a0b7bcd7aec2ad1b83f70abc2a30"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 34,
+      "content_bytes": 5336047,
+      "content_sha256": "a5aaf2961819da2bdbd39aa2a304f2a7b02e08c822f122f9f70784c2c0d641f1"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 35,
+      "content_bytes": 5153323,
+      "content_sha256": "2c56bb21651c5fe6c4f6b931ad2f3d8ffa3663db62a2a0af23815d5dbd7c1eab"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 36,
+      "content_bytes": 5204257,
+      "content_sha256": "46d94ed838083d43412c269254e2e5b3c75d71a8e8c084aeeafdcb56f91289a1"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 37,
+      "content_bytes": 5285470,
+      "content_sha256": "deb6f03d2336461bf91bd420d498643c388a0b8f242e5452ffa1e14994ec0e3b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 38,
+      "content_bytes": 5185924,
+      "content_sha256": "bbe0fccc0402418948af9126ffbd9b804dc6134ffa16ded61867adda9e95f7b3"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 39,
+      "content_bytes": 5125457,
+      "content_sha256": "c58bea8ce468c4af007f627379485da6a41daf4650f7a7ca60d7f2a92827c487"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 40,
+      "content_bytes": 5372186,
+      "content_sha256": "42820982e190039dc12a6d5c6c80116e156a0b87be75daf0934f445fc4e2fb39"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 41,
+      "content_bytes": 4757021,
+      "content_sha256": "fa0ad751fa12b5d01f84d536ecbe522e627271ea6a067a245d33ea61482cd6c0"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 42,
+      "content_bytes": 5162409,
+      "content_sha256": "5476743c9e7070eb2cccc1d3cae5ef4e1b50f83abcae93471e46c073bc2b949e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 43,
+      "content_bytes": 5337753,
+      "content_sha256": "d99d498cf7a94cdf2bb5c8c2ca21a3771cc704cedca08fea4f38ec2fcf0f31f4"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 44,
+      "content_bytes": 4840722,
+      "content_sha256": "fe7ec84d3fd8ad2ca7e8c8f641c7042a709340d407f4439f518ccaed143290bb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 45,
+      "content_bytes": 5374953,
+      "content_sha256": "d1cace03e451d857e4c41acbd1ad71fb787dd162944f6da46fc24e8cbbe0d81e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 46,
+      "content_bytes": 5128222,
+      "content_sha256": "4754c02d28192531b4f7a4a61e59181440214727f4dc0b8bb20487e7fefe2428"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 47,
+      "content_bytes": 5339325,
+      "content_sha256": "7c6833ad699747602ace3fd18e5474728b103381a2ec5efd142b5f76ddb97884"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 48,
+      "content_bytes": 4978748,
+      "content_sha256": "183dca59e62ead0f72e5507d8ab1b1807f443c6ffa571f0d5e7ab9185d16d2ac"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 49,
+      "content_bytes": 5279399,
+      "content_sha256": "142a45016f14e89148b8e220b7e9f5247b9784f4e842ed912b96e1bb35ac3fd4"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 50,
+      "content_bytes": 4929815,
+      "content_sha256": "a55ca1c0048afb80d7775b4663e9715a6c493c4ac0ef1a31c864757f2c63ea70"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 51,
+      "content_bytes": 5340525,
+      "content_sha256": "f7e01d37d58768a94a44b1f5be5e288dd5343204f91269a7da5dcd5f6d57620b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 52,
+      "content_bytes": 5097832,
+      "content_sha256": "62fef25ce9a04839be8fa41915a1cf410b86614fc5b1d162eb5122246a83e70f"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 53,
+      "content_bytes": 4368547,
+      "content_sha256": "22fc2ea108e942a8d9d847ed1537c97bdae1ac41744f1302d09d858dcc86d6b0"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 54,
+      "content_bytes": 69270,
+      "content_sha256": "731efd8aba2bc316ba3d65037680b623e5f6ff96a01e2fd51a6e1fadf59c80eb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 55,
+      "content_bytes": 1289478,
+      "content_sha256": "c454e0b00d864d1a369236ab55a02c1e7ee0f9fbd2f74b1e05ff67e1c9e69f31"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 56,
+      "content_bytes": 5210916,
+      "content_sha256": "2776f541d4cfe5f08362265f01541ce21313fca760526fddc81a9a11da8ced4d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 57,
+      "content_bytes": 5366527,
+      "content_sha256": "b96dcacff071497dc70fb2aac355d737c557510c2c1b760cc298cde65b47c50b"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 58,
+      "content_bytes": 4960931,
+      "content_sha256": "c41c4a039583d046f43103ae5f08147d7de823c1a17901d33b93bb3d9d67fa6e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 59,
+      "content_bytes": 5009940,
+      "content_sha256": "9c8640f639896e74ab7a225614a58b3e3c454b03136f792d252c9d8c78355008"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 60,
+      "content_bytes": 4836650,
+      "content_sha256": "4727afc336a141170a0faf5beca677ee505fdecd33a06eb18675daaea6163251"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 61,
+      "content_bytes": 5241427,
+      "content_sha256": "9b998024a55f7e5b7bf29aed4c090badfa9aa1c75ddfba02b408e5177d3ed827"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 62,
+      "content_bytes": 4844252,
+      "content_sha256": "c10c5dbb5fd18e5cad9149695973845c0fa064b73cf2984e0968aebeb02dcf89"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 63,
+      "content_bytes": 4988691,
+      "content_sha256": "edeac8676486217f9b135147ca19e639a6220d193063bd60cec24607e6297f91"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 64,
+      "content_bytes": 4962941,
+      "content_sha256": "2d5391c7eeededf45fcd9d2b1c631115c6c12fd7c872b65fffe06bd00b40d765"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 65,
+      "content_bytes": 5144234,
+      "content_sha256": "19f3468306af347f8c2743aff5e4eeceea570e4c2f6237807b664777c1415b57"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 66,
+      "content_bytes": 4702667,
+      "content_sha256": "bd21c3b8d7d087df4db279c7ccfb23ddb6328f8b2ed5f9d9a9e763a6f5240cfb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 67,
+      "content_bytes": 5304003,
+      "content_sha256": "5c2bb11a79b133d449dc4cd8d2da17eee2cacb21f5178e0551ad4faa965b11c8"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 68,
+      "content_bytes": 4936352,
+      "content_sha256": "d06a6b9f6fa0ce8a3eadceb50413780e92d485d679f7bb955f712d0800bc8880"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 69,
+      "content_bytes": 5263480,
+      "content_sha256": "51e91e0c0555a15406be5a07fbf34921e1be5e04944381daac2c92504dd37fad"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 70,
+      "content_bytes": 5303187,
+      "content_sha256": "369de28d24aca8d6a785faa2c88edbdb5b2cec6d2488bf5ff842e2e0dfc518bc"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 71,
+      "content_bytes": 5018768,
+      "content_sha256": "8516f5dd2556b4d40d908c1aa53ce212cf6411ce86be68c209f1c6dbd582e355"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 72,
+      "content_bytes": 4786449,
+      "content_sha256": "0f4f9b0ab80a20b3148d9e97507099965d9131e89514fe67d38c5362a6d87a65"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 73,
+      "content_bytes": 5365829,
+      "content_sha256": "0c6cc87a6602177f84c8cb77700e425989a490294ad2591088e1283d6de07ece"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 74,
+      "content_bytes": 4544506,
+      "content_sha256": "57380da66ba6fb31e3cf643afd2bbfedcbd1d7472aa649ff4a02f70a5288d7d6"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 75,
+      "content_bytes": 1353327,
+      "content_sha256": "3d147dc5524bb93cdfe2b3aa1f26050cd3246030a7fac46f570d7407926bd3a2"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 76,
+      "content_bytes": 65896,
+      "content_sha256": "438fc8f62c74aff9f2f7074ff4229be34bad10b07ad667cee43add411dbfd12e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 77,
+      "content_bytes": 111040,
+      "content_sha256": "62e780232e2b38f5ae1a40db041ade0ebaa07799846d050f2a589a70052e3390"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 78,
+      "content_bytes": 4871855,
+      "content_sha256": "915f8180727b7e5803957f55f16c2d54a7f8522c1400a375be921c3ce40b5ba0"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 79,
+      "content_bytes": 4299853,
+      "content_sha256": "95dc09eb267fbab94da36c93662e9ea857826816a318a2dc45fed18a611d04d0"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 80,
+      "content_bytes": 4595386,
+      "content_sha256": "470a7ef58df22032be7b1e36ab8ac78d548b9a823c12a90dacf5395bf6309ca3"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 81,
+      "content_bytes": 5054706,
+      "content_sha256": "8821df3c0befe1b1a4a4e6d0ebe26c18547f985bd46dc78944686269a8d7de84"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 82,
+      "content_bytes": 4712149,
+      "content_sha256": "fc83b243794b3e4d904e8d94ce99b5c5d69d2b7daef9b0cea22d43de28c9da35"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 83,
+      "content_bytes": 5089189,
+      "content_sha256": "147b9cec682f86c879b335e65b51982a58ce5674d42e6833c8153d860ced56f6"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 84,
+      "content_bytes": 4286354,
+      "content_sha256": "c1255aa87db1a76c34eb215cdf1479730f4c55246f605fa5a4f328cee3b62475"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 85,
+      "content_bytes": 4940867,
+      "content_sha256": "19b12ad89b8ff361e159b3667f8702250b5c33625df94d6d9abd81d830dc5c75"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 86,
+      "content_bytes": 4832572,
+      "content_sha256": "fbf90a40b6c6ef04e0b1ca2aa46190bf3b555a34f53a79dfa0e152620ee2d7f2"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 87,
+      "content_bytes": 4303204,
+      "content_sha256": "0652e1baa00aa12279c1dab09715bec988e904f87086b798c11906d585cf1ab2"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 88,
+      "content_bytes": 4420539,
+      "content_sha256": "f72ae6070ebbd5bed1db60f50a0006928c87c86a89b956b2650d268370779917"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 89,
+      "content_bytes": 5082760,
+      "content_sha256": "e4c71445225500d147f9918b045240637cd990f844a982b884bc5d2c2ac4491a"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 90,
+      "content_bytes": 4665996,
+      "content_sha256": "3d9621da5a9f791c332ba4a92da7c1d0ea556162cb97bb60771a62dd7273a7c2"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 91,
+      "content_bytes": 4657649,
+      "content_sha256": "3f9a57687aeb39b60667c5120359de0e2f82d7c90c291cf37b60fb8fd5e0a7ac"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 92,
+      "content_bytes": 4801840,
+      "content_sha256": "00c16596bae0a604c58d78abb94f11bb5190e471438c012f907980901e82d6b4"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 93,
+      "content_bytes": 4681137,
+      "content_sha256": "051f0f38a50ca29278272a278f2d9caaf86574f2ce7cde47ac8e3c138769f167"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 94,
+      "content_bytes": 4273223,
+      "content_sha256": "9f882a9e1196dffcb056f8d6d942274b4c26f79fdc8cc1a85a6a239815d920c9"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 95,
+      "content_bytes": 4238904,
+      "content_sha256": "ebb5b0ad7b4f7b3ed08db0b81f690cd9f8d395421d6ccb0b0180cf49b5160eb5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 96,
+      "content_bytes": 4626486,
+      "content_sha256": "7ab5c634ce5c4b88215e9e89c9a0837ac6c67cc61650f844aa7613f645c412a1"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 97,
+      "content_bytes": 2051735,
+      "content_sha256": "a619af84763205a62c758ff3d60d4ae3327ccaeb6750761f97b245096026642e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 98,
+      "content_bytes": 2874,
+      "content_sha256": "01dd9e97d8972370233c25db0ab68daf0451baef8e130826135e5be8e64500f3"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 99,
+      "content_bytes": 27172,
+      "content_sha256": "f1fe3807d14cf7cf16958d8051c6242150e481b932eebd09e24865dedcf1066e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 100,
+      "content_bytes": 10750,
+      "content_sha256": "126243be9eb2f6a152bb0b7c2a6fde3715056103ece5a32e3c0684993eed1891"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 101,
+      "content_bytes": 271852,
+      "content_sha256": "d4669521d21b527569268d73ed2b3239bd3b2141500c5fda7a538ec9475a6567"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 102,
+      "content_bytes": 212609,
+      "content_sha256": "f154df50af44ef3fffdfc79583b90e4cb0834cee1baea20407f7f5e6c2820984"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 103,
+      "content_bytes": 2874,
+      "content_sha256": "b1dba8096db03bbb37346caca2fb276701d93a1ab828231b3adb9a75e91aef0e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 104,
+      "content_bytes": 235722,
+      "content_sha256": "b9dd6bec734e945efb393de1514cc04db76b181aace47f754576af3679afa10c"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 105,
+      "content_bytes": 298668,
+      "content_sha256": "eae598a98cf7ade7c6eb03409dd27aed438d42695f264ac9d60860e5fceba4e5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 106,
+      "content_bytes": 249162,
+      "content_sha256": "6cf67fa956ebd26b1c6c89686e3e0c4ae1052eaedafcfaf886b185160cdee342"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 107,
+      "content_bytes": 288186,
+      "content_sha256": "ba8a71c14d51de7bc4941777a342583e62ed7d662857989af68984b5509b4798"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 108,
+      "content_bytes": 289482,
+      "content_sha256": "10f0130c8648a86da844f463cf733b07dbc34ecd24739912847f039aaf9fa00c"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 109,
+      "content_bytes": 235722,
+      "content_sha256": "fc8f5c83e943f3f56cebb421c8f1e7bf25a217f1722c2131b191968265b07138"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 110,
+      "content_bytes": 294300,
+      "content_sha256": "0875cfb6e23aa61338c8a020991e877c72d8dad3ba345a7f56ef1c0decd74c74"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 111,
+      "content_bytes": 240456,
+      "content_sha256": "b2ba4cc8e47db20bbc459186776fbf13960727369caf41cc29087e2e161dd0f5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 112,
+      "content_bytes": 241104,
+      "content_sha256": "919b95abe02e4dd010b22b81e25d6db962db2949f2bda8b9f268c9bb92a7a2c7"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 113,
+      "content_bytes": 265956,
+      "content_sha256": "159efdeff9dafa22ddbbf936aaba890ebc640f01a4585fb437b3fdf7c0324362"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 114,
+      "content_bytes": 296160,
+      "content_sha256": "9a38d6a63db448b2b177db8b6931a59c8efb05ae82887a8175ecebe787500e24"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 115,
+      "content_bytes": 293286,
+      "content_sha256": "4213714080bb605c4d263bb7aef3c9d9f03715253e0726234f906a030b118eb5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 116,
+      "content_bytes": 297456,
+      "content_sha256": "530d69eb706da1dcefeaf16af49beab7ebb7a11c14d0bec86de5b5e6935dcad8"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 117,
+      "content_bytes": 284946,
+      "content_sha256": "f5adaa4f0aabdb3fb78cfc6a59209e79495c324437cb8921c714ac826a66ee22"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 118,
+      "content_bytes": 295230,
+      "content_sha256": "4ffaab68ec1436be9312bee75db98cfc5631a2b166d89a49ffca63192eb9683c"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 119,
+      "content_bytes": 292920,
+      "content_sha256": "4053939e963f2c7bc0f91e611b1e421300affedc2409b5af8d6d53cc408f9060"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 120,
+      "content_bytes": 271224,
+      "content_sha256": "d82ed85f88ec081d7c5ae3fc4eb5093b100a2150ac6e7a771bf6bc0bd32a5215"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 121,
+      "content_bytes": 154518,
+      "content_sha256": "c8b72ed46b98c8ddc3eae838aadcd64c8f6d701f7e40ed0cef0c8101d288fa24"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 122,
+      "content_bytes": 2874,
+      "content_sha256": "4eaa955a95880a8b767ae1db0719716ccfef48b890f2d0ab93933191fdb324bb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 123,
+      "content_bytes": 505718,
+      "content_sha256": "38aa0851c82ea46260db3306407f21aefad725cd6bcdbd11c36cebd3132c3058"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 124,
+      "content_bytes": 497310,
+      "content_sha256": "f687dd970ca859222ac90e2f997d5bf82825eee6c2221971598f9a314b7f481e"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 125,
+      "content_bytes": 586572,
+      "content_sha256": "660ba87fec6d800b3d7a5a2b57f5458f22762f940fceed3a11d19e8f187850f6"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 126,
+      "content_bytes": 586274,
+      "content_sha256": "cd7fc9b0e182859b28d84e2a61724bccd9f8fa7572803722fc0a7225178ebd2d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 127,
+      "content_bytes": 531066,
+      "content_sha256": "ea0507e2ac97171f895dbd4cc6a128c87c53f9219a53a4aeb78ae5f39a07c754"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 128,
+      "content_bytes": 591588,
+      "content_sha256": "989fd1f0f3d8b06df28697b0f2d2fdde904eddd5cf4b4014e78ba62c4bc21333"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 129,
+      "content_bytes": 512412,
+      "content_sha256": "bce08f8f16b277e4664a1c5f2c91592f03c873561af082da6846c9cfb3cb16cb"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 130,
+      "content_bytes": 606774,
+      "content_sha256": "5c7b19db28aadc7e7c4c10a8bf9567c42a4d33b03a9deba0be706a89f4cf64c5"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 131,
+      "content_bytes": 583896,
+      "content_sha256": "fec0c45e4e8b2e2312c8adc709de003742bec2f48ec5ce8fa45c29fd67766a79"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 132,
+      "content_bytes": 575922,
+      "content_sha256": "a135a269848fefe7f3b2d9bd2cc0d83423e1b8f76c7748d09e318afb8c22d8f0"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 133,
+      "content_bytes": 581670,
+      "content_sha256": "63d9785a54fd1660af32c8eb8801370d29de5427bf9ddca82d78f5b7192ea19d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 134,
+      "content_bytes": 529938,
+      "content_sha256": "7045fc374f8e2b30f8a42b10fa5170d4137e4684f8ee7a53a5696a7f0f4f6dab"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 135,
+      "content_bytes": 456342,
+      "content_sha256": "23504772117b059f398b932db7e0c161eee43b2b6dbd24ba4a9d42f725390f94"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 136,
+      "content_bytes": 535968,
+      "content_sha256": "99e785c13d029ea8b4324fed97e291e41b18aa2ce81ad8e378bb3a90ff682b5d"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 137,
+      "content_bytes": 606042,
+      "content_sha256": "835173d57f0b33955a15e7aea36384b804ff79db5a0368375c022d70f48f684a"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 138,
+      "content_bytes": 620412,
+      "content_sha256": "02444ccde2c1535986ce43d3b25eedccb8e360078481f3b9006558261f97073a"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 139,
+      "content_bytes": 554226,
+      "content_sha256": "e202f19f3978c9f601bbb2bf8287f3f2c63da987e3e7e8773bef9746980d1dce"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 140,
+      "content_bytes": 143586,
+      "content_sha256": "e3740bb43fd5a9e977a68c8885c87262350b0015daa33eb9719d75455d905130"
+    },
+    {
+      "http_status": 200,
+      "endpoint": "/sources/ebpf/v1/traces",
+      "export_index": 141,
+      "content_bytes": 2874,
+      "content_sha256": "8eae7a8d50e43a13cd7a92e201eaba0ee240ddae735e3fcd9a1af075c3d9a462"
+    }
+  ],
+  "go_runtime_environment": {
+    "configured": false,
+    "requested_go_environment": {},
+    "inherited_go_environment": {
+      "GOMEMLIMIT": null,
+      "GOGC": null,
+      "GODEBUG": null
+    },
+    "effective_go_environment": {
+      "GOMEMLIMIT": null,
+      "GOGC": null,
+      "GODEBUG": null
+    }
+  },
+  "returncode": 0,
+  "ingest": {
+    "dropped_spans": 0,
+    "late_spans": 0,
+    "spans": 335028,
+    "traces": 43098
+  },
+  "status": "complete",
+  "child_resources": {
+    "child_peak_rss_kib": 5744316,
+    "child_system_seconds": 10.85185,
+    "child_user_seconds": 45.337163,
+    "command": [
+      "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain-build/bin/bering",
+      "serve",
+      "--config",
+      "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/serve.yaml"
+    ],
+    "ended_ns": 1793292953336949107,
+    "exit_status": 0,
+    "forwarded_signals": [
+      15
+    ],
+    "oom_score_adjustment": {
+      "actual": 1000,
+      "available": true,
+      "requested": 1000,
+      "scope": "direct child only; parent and VMs unchanged",
+      "target": "/proc/10306/oom_score_adj"
+    },
+    "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
+    "started_ns": 1793292855410585879,
+    "wall_seconds": 97.92669032999993,
+    "wrapper_exit_status": 0
+  },
+  "ended_ns": 1793292954162938611
+}

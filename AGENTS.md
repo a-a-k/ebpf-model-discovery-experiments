@@ -2,6 +2,12 @@
 
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 
+The user reiterated on 2026-10-30: reuse the existing collector -> Bering -> Sheaft
+path. Do not add generic validation frameworks, schema layers or further retry
+machinery. Handle format-only review gaps by direct preserved-file inspection
+under the existing criteria. Keep the fixed 81-cell scope, source/model/outcome
+integrity and complete costs; do not substitute a smaller demonstration.
+
 Keep heavy artifact validation and raw-journal processing in GitHub Actions too.
 Local review should retain compact metadata, necessary selected files and their
 hash-bound provenance. Do not download/unpack whole campaign archives or raw

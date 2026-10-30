@@ -5,12 +5,212 @@
       "collector": "obi",
       "system": "deathstarbench",
       "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        12937171763
+      ],
+      "selected_artifact_id": 12937171763,
+      "candidate_run_ids": [
+        40919005648,
+        40942429097
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
       "seed": 7,
-      "candidate_artifact_ids": [12933554459],
+      "candidate_artifact_ids": [
+        12933554459
+      ],
       "selected_artifact_id": 12933554459,
-      "candidate_run_ids": [40919005648, 40942429097],
-      "reason_code": "technical_no_artifact_original",
-      "reason": "The original run failed during training preparation and retained no artifact. The exact-cell repeat retained its complete evaluation. Selection uses technical completeness only; forecasts, errors and independent review status are not selection criteria.",
+      "candidate_run_ids": [
+        40919005648,
+        40942429097
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12939304953
+      ],
+      "selected_artifact_id": 12939304953,
+      "candidate_run_ids": [
+        40919005648,
+        40942429097
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        12941676590
+      ],
+      "selected_artifact_id": 12941676590,
+      "candidate_run_ids": [
+        40913407822,
+        40945578755
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12947519268
+      ],
+      "selected_artifact_id": 12947519268,
+      "candidate_run_ids": [
+        40913407822,
+        40953661709
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        12929342198,
+        12943498463
+      ],
+      "selected_artifact_id": 12943498463,
+      "candidate_run_ids": [
+        40910021896,
+        40935194776,
+        40947274375
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        12929237964,
+        12944715103
+      ],
+      "selected_artifact_id": 12944715103,
+      "candidate_run_ids": [
+        40910021896,
+        40935203055,
+        40947287495
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12945349527
+      ],
+      "selected_artifact_id": 12945349527,
+      "candidate_run_ids": [
+        40910021896,
+        40956239225
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempts failed technical preparation or were cancelled under the recorded technical-version replacement. The exact-cell replacement retained a completed evaluation. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        12932964556,
+        12945932973
+      ],
+      "selected_artifact_id": 12945932973,
+      "candidate_run_ids": [
+        40930805848,
+        40958365058
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempt failed durable receiver closure despite completed operation counts; the exact-cell repeat completed after the reviewed closure repair. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12933112600,
+        12945067476
+      ],
+      "selected_artifact_id": 12945067476,
+      "candidate_run_ids": [
+        40930805848,
+        40959052743
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempt failed durable receiver closure despite completed operation counts; the exact-cell repeat completed after the reviewed closure repair. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        12939228701,
+        12950256617
+      ],
+      "selected_artifact_id": 12950256617,
+      "candidate_run_ids": [
+        40948072741,
+        40971766251
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempt failed durable receiver closure despite completed operation counts; the exact-cell repeat completed after the reviewed closure repair. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        12939626858,
+        12949771867
+      ],
+      "selected_artifact_id": 12949771867,
+      "candidate_run_ids": [
+        40948072741,
+        40970638144
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Earlier attempt failed durable receiver closure despite completed operation counts; the exact-cell repeat completed after the reviewed closure repair. Selection requires the reporter to verify exactly one technically complete candidate; job success alone is not admission. No forecast, error, or positive-result selection.",
       "independent_review_claim": false
     }
   ]
