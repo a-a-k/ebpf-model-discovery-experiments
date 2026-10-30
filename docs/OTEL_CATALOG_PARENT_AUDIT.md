@@ -124,3 +124,31 @@ a join. Only the same partial source declaration is repeated; original fields,
 forecasts, models and capture source remain unchanged. Actual-code and actual
 output review are required before any paired graph-union diagnostic. No generic
 normalizer or signature framework is introduced; all added costs remain recorded.
+
+The fixed partial repeat, Actions41146378650 at
+`2e56eb333f1d383ed2747fb690fbbe427f6ef22f`, succeeded. Both agents independently
+verified artifact13021116736,997237bytes, SHA256
+`f9b8110bb2d0ed4bbe403621dca277855b49abf0de539ad5464357573d533039`.
+Both raw/input summaries contain172 catalog children and zero SDK variants of
+their exact CHILD IDs. The117 missing local parents still each match one SDK
+parent. Both preservation booleans remain true, and the complete field/identity
+count maps are exactly equal to the previous partial audit. This closes the
+relevant catalog joint-child collision gap without any join or model replay.
+
+Both agents give ACTUAL-OUTPUT ORIGINAL-feasibility GO to implementing a paired
+same-information cheap-combination baseline, subject to separate actual-code and
+saved-output review. The original three source arms and predictions remain
+retained. A common per-model forecast helper must use the same Store, exact entry
+evidence, supplied aliases/contracts and all ten operations for the additional
+baseline. The baseline retains all original graph and endpoint fields, importing
+only new actual SERVER-parent edge identities from a pinned joint ordinary-OTLP
+view, among existing canonical services and with the actual Go parent/child
+ambiguity guard. Existing edge statistics stay unchanged; alternative joint
+statistics remain in the joint artifact. No product API feature is authorized.
+
+This baseline must be explicitly declared for all three collectors and all main
+scenarios at a new common source head. Its actual models and Sheaft predictions
+must be frozen before target operations through the existing forecast/freeze
+phase. The diagnostic reanalysis of completed captures is not a primary forecast.
+All additional Bering/Sheaft passes, preparation, CI and failed attempts remain in
+costs; no cost superiority or algorithm novelty is claimed. Main81 is still held.
