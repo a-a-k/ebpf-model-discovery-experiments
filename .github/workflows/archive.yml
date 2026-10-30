@@ -15,29 +15,66 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Create a new draft evidence release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/archive
+          tag="data-${GITHUB_RUN_ID}"
+          cat > work/archive/notes.md <<'EOF'
+          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes source indexes, run/job metadata, log availability, SHA-256 checksums and verified publication records. Oversized assets are losslessly split; provenance records exact reassembly. Each uploaded asset is checked by remote state, size and SHA-256 before its working copy is removed. Publication does not certify empirical success. Data are from synthetic applications.
+          EOF
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/releases" \
+            -f "tag_name=$tag" -f "target_commitish=$GITHUB_SHA" -F draft=true \
+            -f "name=Retained experiment data $GITHUB_RUN_ID" -F body=@work/archive/notes.md \
+            > work/archive/release-created.json
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "release_id=$(jq -r .id work/archive/release-created.json)" >> "$GITHUB_OUTPUT"
       - name: Download original artifact archives and their provenance
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_IDS: ${{ inputs.run_ids }}
+          ARCHIVE_RELEASE_TAG: ${{ steps.release.outputs.tag }}
+          ARCHIVE_RELEASE_ID: ${{ steps.release.outputs.release_id }}
         run: |
           bash scripts/archive-runs.sh
-      - name: Publish retained synthetic experiment data
+      - name: Publish complete evidence provenance and release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          tag="data-${GITHUB_RUN_ID}"
-          cat > work/archive/notes.md <<'EOF'
-          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes artifact indexes, run and job metadata, check annotations, log availability, and SHA-256 checksums. Oversized assets are uploaded as lossless numbered parts; their manifests in provenance.tar.gz record the original hash, part hashes, and exact reassembly command. A failed run may have no artifact or log blob; absence is recorded explicitly. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
-          EOF
-          gh release create "$tag" --target "$GITHUB_SHA" --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
-          assets=(work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt)
-          for file in work/archive/*.zip; do
-            [[ -f "$file" ]] && assets+=("$file")
+          source scripts/github-read.sh
+          release_id='${{ steps.release.outputs.release_id }}'
+          for file in work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt; do
+            name="$(basename "$file")"
+            [[ "$name" =~ ^[a-zA-Z0-9._-]+$ ]]
+            digest="$(sha256sum "$file")"; digest="${digest%% *}"
+            size="$(stat -c%s "$file")"
+            gh api --method POST -H 'Content-Type: application/octet-stream' -H 'Accept: application/vnd.github+json' \
+              "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$release_id/assets?name=$name" \
+              --input "$file" > work/archive/final-upload-response.json
+            asset_id="$(jq -r .id work/archive/final-upload-response.json)"
+            [[ "$asset_id" =~ ^[1-9][0-9]*$ ]]
+            gh_api_to_file "work/archive/final-$name-api.json" \
+              "repos/${GITHUB_REPOSITORY}/releases/assets/$asset_id"
+            jq -e --arg name "$name" --arg digest "sha256:$digest" --argjson size "$size" --argjson id "$asset_id" \
+              '.id == $id and .name == $name and .state == "uploaded" and .size == $size and .digest == $digest' \
+              "work/archive/final-$name-api.json" >/dev/null
           done
-          for file in work/archive/*.log; do
-            [[ -f "$file" ]] && assets+=("$file")
-          done
-          for file in work/archive/*.part[0-9][0-9][0-9][0-9]; do
-            [[ -f "$file" ]] && assets+=("$file")
-          done
-          gh release upload "$tag" "${assets[@]}"
+          gh api --method PATCH "repos/${GITHUB_REPOSITORY}/releases/$release_id" -F draft=false \
+            > work/archive/release-published.json
+          jq -e --argjson id "$release_id" --arg tag '${{ steps.release.outputs.tag }}' --arg head "$GITHUB_SHA" \
+            '.id == $id and .tag_name == $tag and .target_commitish == $head and .draft == false' \
+            work/archive/release-published.json >/dev/null
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: archive-publication-proof-${{ github.run_id }}
+          path: |
+            work/archive/*.json
+            work/archive/published-assets.jsonl
+            work/archive/published-SHA256SUMS.txt
+            work/archive/SHA256SUMS.txt
+            work/archive/provenance.tar.gz
+          retention-days: 90
+          if-no-files-found: warn
