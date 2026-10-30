@@ -19,6 +19,10 @@ on:
           - deathstarbench
           - petclinic
         default: all
+      candidate_manifest:
+        description: Tracked docs JSON declaration; alternate manifests are pending-only
+        type: string
+        default: docs/iteration5-main-review-candidates.json
       pending17_after_qualification_go:
         description: Explicit confirmation that qualification output received independent GO
         type: boolean
@@ -33,20 +37,35 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
+      candidate_manifest: ${{ steps.matrix.outputs.candidate_manifest }}
+      candidate_manifest_sha256: ${{ steps.matrix.outputs.candidate_manifest_sha256 }}
+      candidate_manifest_git_blob: ${{ steps.matrix.outputs.candidate_manifest_git_blob }}
     steps:
       - uses: actions/checkout@v4
       - id: matrix
         env:
           PHASE: ${{ inputs.phase }}
           QUALIFICATION_SYSTEM: ${{ inputs.qualification_system }}
+          CANDIDATE_MANIFEST: ${{ inputs.candidate_manifest }}
           PENDING17_GO: ${{ inputs.pending17_after_qualification_go }}
         run: |
           python - <<'PY'
-          import json, os, pathlib
-          source=json.loads(pathlib.Path('docs/iteration5-main-review-candidates.json').read_text())
+          import hashlib, json, os, pathlib, subprocess
+          default_manifest='docs/iteration5-main-review-candidates.json'
+          manifest=os.environ['CANDIDATE_MANIFEST']
+          path=pathlib.PurePosixPath(manifest)
+          if (path.is_absolute() or path.as_posix()!=manifest or len(path.parts)!=2
+                  or path.parts[0]!='docs' or path.suffix!='.json' or '..' in path.parts):
+              raise SystemExit('candidate_manifest must be a normalized repo-relative docs/*.json path')
+          subprocess.run(['git','ls-files','--error-unmatch','--',manifest],
+                         check=True,stdout=subprocess.DEVNULL)
+          body=pathlib.Path(manifest).read_bytes()
+          source=json.loads(body)
           phase=os.environ['PHASE']
           qualification_system=os.environ['QUALIFICATION_SYSTEM']
           if phase=='qualification':
+              if manifest!=default_manifest:
+                  raise SystemExit('qualification requires the original candidate manifest')
               cells=source['qualification_cells']
               if qualification_system!='all':
                   cells=[row for row in cells if row['system']==qualification_system]
@@ -61,8 +80,25 @@ jobs:
                      if row['full_scope']!='reuse_existing_selected']
           else:
               raise SystemExit('unknown review phase')
+          required={'collector','system','mode','seed','run_id','head_sha',
+                    'compact_artifact_id','compact_artifact_name','compact_artifact_bytes',
+                    'compact_artifact_digest','compact_scope','full_scope'}
+          compact_scopes={'retrieve_selected_nonjournal','reuse_existing_verified_facts'}
+          full_scopes={'retrieve_family_selected','retrieve_input_supplement'}
+          if not cells:
+              raise SystemExit('candidate manifest selected no review cells')
+          for cell in cells:
+              if (not isinstance(cell,dict) or not required<=cell.keys()
+                      or cell['compact_scope'] not in compact_scopes
+                      or cell['full_scope'] not in full_scopes):
+                  raise SystemExit('candidate manifest has a malformed cell or invalid scope')
+          digest=hashlib.sha256(body).hexdigest()
+          git_blob=subprocess.check_output(['git','hash-object','--',manifest],text=True).strip()
           with open(os.environ['GITHUB_OUTPUT'],'a') as out:
               out.write('matrix='+json.dumps({'cell':cells},separators=(',',':'))+'\n')
+              out.write('candidate_manifest='+manifest+'\n')
+              out.write('candidate_manifest_sha256='+digest+'\n')
+              out.write('candidate_manifest_git_blob='+git_blob+'\n')
           PY
 
   review:
@@ -83,6 +119,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           CELL_JSON: ${{ toJson(matrix.cell) }}
+          CANDIDATE_MANIFEST: ${{ needs.declare.outputs.candidate_manifest }}
+          CANDIDATE_MANIFEST_SHA256: ${{ needs.declare.outputs.candidate_manifest_sha256 }}
+          CANDIDATE_MANIFEST_GIT_BLOB: ${{ needs.declare.outputs.candidate_manifest_git_blob }}
         run: |
           python - <<'PY'
           import json, os, pathlib, subprocess
@@ -120,6 +159,11 @@ jobs:
           pathlib.Path('work/review/resolved-api.json').write_text(json.dumps({
               'repository':os.environ['GITHUB_REPOSITORY'],'run_id':cell['run_id'],
               'head_sha':cell['head_sha'],'compact':c,'full':f},indent=2)+'\n')
+          pathlib.Path('work/review/candidate-manifest.json').write_text(json.dumps({
+              'path':os.environ['CANDIDATE_MANIFEST'],
+              'sha256':os.environ['CANDIDATE_MANIFEST_SHA256'],
+              'git_blob':os.environ['CANDIDATE_MANIFEST_GIT_BLOB'],
+              'workflow_head_sha':os.environ['GITHUB_SHA']},indent=2)+'\n')
           PY
       - name: Retrieve only missing selected evidence
         env:

@@ -4,8 +4,12 @@ import hashlib
 import importlib.util
 import gzip
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 import tarfile
+import textwrap
 
 import pytest
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
@@ -365,6 +369,83 @@ def test_fixed_declaration_has_exact_coverage_scopes() -> None:
                and len(x["full_artifact_digest"]) == 71 for x in qualification)
 
 
+def test_future_candidate_manifest_is_exact_three_fixed_coroot_pc_full_cells() -> None:
+    path = ROOT / "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    declaration = json.loads(path.read_text())
+    cells = declaration["cells"]
+    assert [(row["collector"], row["system"], row["mode"], row["seed"])
+            for row in cells] == [
+                ("coroot", "petclinic", "full", 6),
+                ("coroot", "petclinic", "full", 7),
+                ("coroot", "petclinic", "full", 8)]
+    assert {row["run_id"] for row in cells} == {41004291277}
+    assert {row["head_sha"] for row in cells} == {
+        "c5df32ffc3039136c184b7915337836c39db811f"}
+    assert all(row["compact_scope"] == "retrieve_selected_nonjournal"
+               and row["full_scope"] == "retrieve_family_selected"
+               and row["compact_artifact_digest"].startswith("sha256:")
+               and row["full_artifact_digest"].startswith("sha256:")
+               for row in cells)
+
+
+def _run_manifest_selector(tmp_path: Path, manifest: str, *, phase: str = "pending17",
+                           document: dict | None = None):
+    workflow = (ROOT / ".github/workflows/review-pending-main-evidence-v5.yml").read_text()
+    script = textwrap.dedent(
+        workflow.split("python - <<'PY'\n", 1)[1].split("\n          PY", 1)[0])
+    source = ROOT / "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    target = tmp_path / "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    target.parent.mkdir(parents=True)
+    target.write_bytes(source.read_bytes())
+    if document is not None:
+        target.write_text(json.dumps(document))
+    subprocess.run(["git", "init", "-q"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "docs"], cwd=tmp_path, check=True)
+    output = tmp_path / "github-output.txt"
+    environment = os.environ | {
+        "PHASE": phase, "QUALIFICATION_SYSTEM": "all",
+        "CANDIDATE_MANIFEST": manifest, "PENDING17_GO": "true",
+        "GITHUB_OUTPUT": str(output)}
+    result = subprocess.run(
+        [sys.executable, "-c", script], cwd=tmp_path, env=environment,
+        text=True, capture_output=True)
+    return result, output
+
+
+def test_pending_manifest_selector_binds_exact_tracked_manifest_and_three_cells(
+        tmp_path: Path) -> None:
+    name = "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    result, output = _run_manifest_selector(tmp_path, name)
+    assert result.returncode == 0, result.stderr
+    values = dict(line.split("=", 1) for line in output.read_text().splitlines())
+    assert len(json.loads(values["matrix"])["cell"]) == 3
+    assert values["candidate_manifest"] == name
+    assert len(values["candidate_manifest_sha256"]) == 64
+    assert len(values["candidate_manifest_git_blob"]) == 40
+
+
+@pytest.mark.parametrize(("manifest", "phase", "message"), [
+    ("docs/iteration5-main-review-candidates-coroot-petclinic-full.json",
+     "qualification", "qualification requires the original candidate manifest"),
+    ("../outside.json", "pending17",
+     "candidate_manifest must be a normalized repo-relative docs/*.json path"),
+])
+def test_candidate_manifest_scope_is_fail_closed(
+        tmp_path: Path, manifest: str, phase: str, message: str) -> None:
+    result, _ = _run_manifest_selector(tmp_path, manifest, phase=phase)
+    assert result.returncode != 0
+    assert message in result.stderr
+
+
+def test_candidate_manifest_invalid_scope_is_rejected(tmp_path: Path) -> None:
+    name = "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    document = json.loads((ROOT / name).read_text())
+    document["cells"][0]["full_scope"] = "unreviewed_whole_archive"
+    result, _ = _run_manifest_selector(tmp_path, name, document=document)
+    assert result.returncode != 0
+    assert "candidate manifest has a malformed cell or invalid scope" in result.stderr
+
+
 def test_selected_transport_identity_and_member_hash_fail_closed(tmp_path: Path) -> None:
     declaration, compact, full = fixture(tmp_path)
     proof = json.loads((full / "selected-transport-proof.json").read_text())
@@ -444,4 +525,9 @@ def test_workflow_and_checker_never_emit_admission_verdict() -> None:
     assert "qualification_system:" in workflow
     assert "if qualification_system!='all':" in workflow
     assert "qualification_system must be all for pending17" in workflow
+    assert "default: docs/iteration5-main-review-candidates.json" in workflow
+    assert "qualification requires the original candidate manifest" in workflow
+    assert "candidate_manifest must be a normalized repo-relative docs/*.json path" in workflow
+    assert "candidate manifest has a malformed cell or invalid scope" in workflow
+    assert "candidate-manifest.json" in workflow
     assert "pending17 requires explicit post-qualification independent GO" in workflow
