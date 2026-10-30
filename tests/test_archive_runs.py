@@ -28,36 +28,43 @@ class ArchiveRunsTests(unittest.TestCase):
         gh.write_text(textwrap.dedent('''\
             #!/usr/bin/env python3
             import hashlib, io, json, os, sys, zipfile
-            endpoint = sys.argv[2]
+            endpoint = next(arg for arg in sys.argv[2:]
+                            if arg.startswith(('repos/', 'https://uploads.github.com/')))
             scenario = os.environ.get("MOCK_SCENARIO", "metadata_only")
             artifact = b"PK\\x03\\x04synthetic-artifact-bytes"
             remote = os.path.join(os.environ['ARCHIVE_DIR'], 'mock-remote.json')
             assets = json.load(open(remote)) if os.path.exists(remote) else []
-            if sys.argv[1:3] == ['release', 'upload']:
-                if '--clobber' in sys.argv: raise AssertionError('overwrite forbidden')
+            if endpoint.startswith('https://uploads.github.com/'):
+                assert '/releases/55/assets?' in endpoint
+                assert '--method' in sys.argv and 'POST' in sys.argv
                 if scenario == 'incremental_upload_error': sys.exit(1)
-                path = sys.argv[4]
+                path = sys.argv[sys.argv.index('--input')+1]
+                from urllib.parse import urlparse, parse_qs
+                assert parse_qs(urlparse(endpoint).query)['name'] == [os.path.basename(path)]
                 data = open(path, 'rb').read()
-                assets.append({'id':len(assets)+1, 'name':os.path.basename(path),
+                assets.append({'id':len(assets)+101, 'name':os.path.basename(path),
                     'state':'uploaded', 'size':len(data),
                     'digest':'sha256:'+hashlib.sha256(data).hexdigest(),
                     'browser_download_url':'https://example.test/asset'})
+                assets[-1]['url']='https://api.github.com/repos/example/repo/releases/assets/'+str(assets[-1]['id'])
                 with open(remote, 'w') as output: json.dump(assets, output)
+                print(json.dumps(assets[-1]))
                 sys.exit(0)
             if '/releases/tags/' in endpoint:
+                print('gh: draft release is not available by tag (HTTP 404)', file=sys.stderr)
+                sys.exit(1)
+            if endpoint.endswith('/releases/55'):
                 print(json.dumps({'id':55, 'draft':scenario!='incremental_published',
                     'tag_name':'data-99', 'target_commitish':'a'*40}))
                 sys.exit(0)
-            if '/releases/55/assets?' in endpoint:
-                assert '--paginate' in sys.argv and '--slurp' in sys.argv
-                if assets:
-                    if scenario == 'incremental_null_digest': assets[-1]['digest'] = None
-                    if scenario == 'incremental_bad_digest': assets[-1]['digest'] = 'sha256:'+'0'*64
-                    if scenario == 'incremental_bad_size': assets[-1]['size'] += 1
-                    if scenario == 'incremental_not_uploaded': assets[-1]['state'] = 'new'
-                # The matching asset lives beyond the first 100 entries.
-                dummy=[{'name':f'other-{i}'} for i in range(100)]
-                print(json.dumps([dummy, assets])); sys.exit(0)
+            if '/releases/assets/' in endpoint:
+                asset_id=int(endpoint.rsplit('/',1)[-1])
+                asset=next(row for row in assets if row['id']==asset_id)
+                if scenario == 'incremental_null_digest': asset['digest'] = None
+                if scenario == 'incremental_bad_digest': asset['digest'] = 'sha256:'+'0'*64
+                if scenario == 'incremental_bad_size': asset['size'] += 1
+                if scenario == 'incremental_not_uploaded': asset['state'] = 'new'
+                print(json.dumps(asset)); sys.exit(0)
             if endpoint.endswith("/logs"):
                 if scenario == "ansi_logs" and "--allow-escape-sequences" not in sys.argv:
                     print("gh: the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway", file=sys.stderr)
@@ -138,7 +145,8 @@ class ArchiveRunsTests(unittest.TestCase):
                    GITHUB_REPOSITORY="example/repo", RUN_IDS="7",
                    ARCHIVE_DIR=str(self.archive), MOCK_SCENARIO=scenario)
         if incremental:
-            env.update(ARCHIVE_RELEASE_TAG='data-99', GITHUB_SHA='a'*40, GITHUB_RUN_ID='99')
+            env.update(ARCHIVE_RELEASE_TAG='data-99', ARCHIVE_RELEASE_ID='55',
+                       GITHUB_SHA='a'*40, GITHUB_RUN_ID='99')
         if max_asset_bytes is not None:
             env['ARCHIVE_MAX_ASSET_BYTES'] = str(max_asset_bytes)
             env['ARCHIVE_CHUNK_BYTES'] = str(chunk_bytes)

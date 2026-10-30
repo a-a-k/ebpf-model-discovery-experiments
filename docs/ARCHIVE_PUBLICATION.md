@@ -8,7 +8,7 @@ immutable study-20261030 are unchanged.
 With ARCHIVE_RELEASE_TAG set, archive-runs.sh uses a new draft release tied to
 the archiving run ID and exact source head. It verifies each original artifact
 against its API digest, applies the existing lossless chunker when necessary,
-uploads one retained file, and checks fully paginated remote asset metadata.
+uploads one retained file, and checks remote metadata by its returned asset ID.
 Remote state, size and SHA-256 must all match. The publication record and checksum
 are appended before that working file is removed. No source artifact is deleted.
 
@@ -26,8 +26,16 @@ approximately twice the largest original ZIP, plus metadata and runner overhead.
 
 Main and independent reviewer gave design and actual-code GO before execution.
 Focused synthetic cases cover standalone compatibility, cleanup before a second
-download, lookup beyond 100 assets, chunk hashes, upload/digest/size/state errors,
+download, direct asset-ID lookup, chunk hashes, upload/digest/size/state errors,
 bad original digests and refusal of an already published release. Bash syntax
 and Python compilation pass locally; all 13 shell cases skip on Windows.
 Linux CI and a real compact-artifact qualification are required before using
 this mode to publish the full main series. Publication is not scientific success.
+
+The first real qualification (41102985375) stopped before source download:
+GitHub returned404 for the new draft's tag lookup. Its empty draft and failed
+job remain evidence. The repair captures the structured release ID at creation
+and uses release/asset IDs for draft access, upload, verification and publication.
+The fake service now rejects draft-by-tag access. No source working copy was
+deleted in that failed qualification. Linux tests passed13 cases before this
+API correction; the corrected code needs renewed CI and real qualification.
