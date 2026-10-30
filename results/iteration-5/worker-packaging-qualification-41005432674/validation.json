@@ -1,0 +1,88 @@
+{
+  "comparison": {
+    "all_paths_bytes_modes_and_sha256_equal": true,
+    "current_package": {
+      "archive": "payload.tar.gz",
+      "archive_bytes": 169025174,
+      "archive_sha256": "e0f3e37f0ff368db62398c43afb4c9e98360ec29f5c89bdf1ffd9716c9f2dc1d",
+      "directories": 82,
+      "files": 3204,
+      "gzip_crc_verified": true,
+      "kind": "worker",
+      "manifest": "payload.manifest.jsonl",
+      "manifest_bytes": 836838,
+      "manifest_sha256": "d08cf3f8c00d3d6424ce8a8f958f834cb300cbc5bd12d1b834f05be6d3c40129",
+      "original_tree_verified": true,
+      "schema_version": "v4-lossless-artifact-transport",
+      "uncompressed_file_bytes": 1972080796
+    },
+    "current_unpack": {
+      "archive_sha256": "e0f3e37f0ff368db62398c43afb4c9e98360ec29f5c89bdf1ffd9716c9f2dc1d",
+      "directories": 82,
+      "elapsed_seconds": 7.587049643,
+      "files": 3204,
+      "kind": "worker",
+      "manifest_sha256": "d08cf3f8c00d3d6424ce8a8f958f834cb300cbc5bd12d1b834f05be6d3c40129",
+      "peak_rss_kib": 49848,
+      "schema_version": "v4-lossless-artifact-transport",
+      "system_cpu_seconds": 1.778788,
+      "uncompressed_file_bytes": 1972080796,
+      "user_cpu_seconds": 5.805218
+    },
+    "files": 3204,
+    "manifest_bytes": 836838,
+    "manifest_sha256": "d08cf3f8c00d3d6424ce8a8f958f834cb300cbc5bd12d1b834f05be6d3c40129",
+    "original_unpack": {
+      "archive_sha256": "ec83fe2a3deaffcade98708bf741be6a8c9454828b8a5ca13bc3b0be0163ff16",
+      "directories": 82,
+      "elapsed_seconds": 7.886765978,
+      "files": 3204,
+      "kind": "worker",
+      "manifest_sha256": "d08cf3f8c00d3d6424ce8a8f958f834cb300cbc5bd12d1b834f05be6d3c40129",
+      "peak_rss_kib": 41028,
+      "schema_version": "v4-lossless-artifact-transport",
+      "system_cpu_seconds": 1.975037,
+      "uncompressed_file_bytes": 1972080796,
+      "user_cpu_seconds": 5.910989
+    },
+    "output_manifest_sha256": "ae90db34e0093a9cc92f89849d1eeccab26818a4f7aea111a094af0afe6e6a6d",
+    "worker_provenance_sha256": "32590d27ad8cc025acb47bb8fc393f210ecc3bf1f4565a3692be072f77c75c7a",
+    "worker_status_sha256": "5bf7cc2c700325c258e819ff8c0749914a2f8dbde95ed008430be43c443909d0"
+  },
+  "current_implementation": {
+    "commit": "8c6f1fac8ea73315e8ea98a9db0014319425d33e",
+    "source_sha256": {
+      ".github/workflows/toolchain-worker-v4.yml": "819574d7d6d18367e018fcc07b431408ece20611c08d6afc5bdac9d3612a7a8d",
+      ".github/workflows/validate-worker-packaging-v4.yml": "8b55e761ebf73e2664925549b93095ca6e10c50d08ac3378d177547f21d0b1e9",
+      "src/ebpf_discovery/artifact_transport_v4.py": "a85a0d6c9d14a0fda8d87b8215b4e2424e6c471f7211bee4536c181b195144e3",
+      "src/ebpf_discovery/diagnostic_artifacts_v4.py": "fea948b140f96b6a35e758719fe00c997cd5228ca278fd3f8fbe3ec432661b02",
+      "src/ebpf_discovery/worker_process_group_v4.py": "a9113592ff9466f0e235872aa557b889cd14b8813c60df00d990fd2d74a5bcbf"
+    }
+  },
+  "disk_free_bytes_after": 91430219776,
+  "disk_free_bytes_before": 91262042112,
+  "downloaded_working_zip_removed_after_verification": true,
+  "elapsed_seconds": 37.71975532,
+  "ended_ns": 1793336111575757626,
+  "peak_rss_kib": 51256,
+  "schema_version": "validate-worker-packaging-v4",
+  "scope": "Saved immutable package/unpack/repackage equivalence only; does not identify the historical run 40947264867 writer or prove a performance gain",
+  "source": {
+    "artifact_id": 12932698721,
+    "artifact_name": "toolchain-v4-deathstarbench-absent-6-40956304402",
+    "artifact_zip": {
+      "bytes": 169854924,
+      "sha256": "7569fbc7ae98112666f573b528f4a8e5a0625a4690ce58ddf17292208a040aaf"
+    },
+    "parent_run_id": 40942429097,
+    "remote_original_retained": true,
+    "run_id": 40956304402,
+    "scientific_head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+    "workflow_head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07"
+  },
+  "started_ns": 1793336073856004209,
+  "status": "equivalent",
+  "system_cpu_seconds": 5.59739,
+  "user_cpu_seconds": 31.937523999999996,
+  "working_trees_removed": true
+}

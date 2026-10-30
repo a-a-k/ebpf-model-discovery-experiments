@@ -33,6 +33,31 @@ both are checked separately. Every restored path, byte count, mode and SHA-256,
 plus the complete package manifest, must match. Local focused checks passed 49
 tests with six POSIX-only tests skipped on Windows; Linux CI must cover those.
 
-At this record, the saved qualification has not run. The failed main cell may be
-repeated only after independent review of its actual qualification output.
-The historical failed attempt is never promoted to a valid result or removed.
+Repeating the failed main cell required independent review of actual qualification
+output. The historical failed attempt is never promoted to a valid result or
+removed.
+
+## Actual qualification and exact repeat
+
+Linux CI [41005336865](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41005336865)
+and the saved qualification
+[41005432674](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41005432674)
+passed at `8c6f1fac8ea73315e8ea98a9db0014319425d33e`. The qualification's
+54 focused Linux checks passed. Its [saved validation](../results/iteration-5/worker-packaging-qualification-41005432674/validation.json)
+records exact equality of 3,204 files containing 1,972,080,796 bytes and of the
+836,838-byte package manifests. The standalone verification/repackaging took
+37.72 seconds; this is a recorded preparation cost, not a comparative efficiency
+result. Full workflow/download costs are separately retained in Actions.
+
+The root and separate reviewer checked the actual proof ZIP, all five current
+source-file hashes against immutable Git blobs, both manifests and both original
+source identities. Both granted actual-output GO. Only the 339,507-byte proof
+archive was downloaded locally; the large saved source and unpacked trees were
+processed and removed in Actions. The [publication record](../results/iteration-5/worker-packaging-qualification-41005432674/publication.json)
+binds the retained manifest's compressed and restored bytes.
+
+The exact failed cell was then dispatched as
+[41005821961](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41005821961),
+on the same reviewed revision. Its outcome is pending and receives an independent
+review. This qualification neither identifies the earlier mutation nor admits
+any historical failed attempt.

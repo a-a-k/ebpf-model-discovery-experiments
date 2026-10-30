@@ -1,0 +1,10 @@
+{
+  "restored_bytes": 836838,
+  "restored_sha256": "d08cf3f8c00d3d6424ce8a8f958f834cb300cbc5bd12d1b834f05be6d3c40129",
+  "gzip_bytes": 175127,
+  "gzip_sha256": "f92809ad634da4d16840ea8266012373f4f2c72b40f7c9eafac53aa9d40f42eb",
+  "original_and_current_manifests_identical": true,
+  "manifest_proof_scope": "Exact saved qualification output from Actions, no local source-archive processing or empirical recalculation.",
+  "repeat_run_id": 41005821961,
+  "root_and_independent_reviewer_actual_GO": true
+}

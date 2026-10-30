@@ -1,0 +1,18 @@
+{
+  "run_id": 41005432674,
+  "head_sha": "8c6f1fac8ea73315e8ea98a9db0014319425d33e",
+  "status": "completed",
+  "conclusion": "success",
+  "created_at": "2026-10-30T04:54:06Z",
+  "updated_at": "2026-10-30T04:55:14Z",
+  "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41005432674",
+  "artifact": {
+    "id": 12955397351,
+    "name": "worker-packaging-validation-v4-41005432674",
+    "size_in_bytes": 339507,
+    "digest": "sha256:ac15676796a6328180dc16cb04060c80752a9eb648f3c8f49ee8645ba69477b2",
+    "expired": false
+  },
+  "whole_proof_zip_verified_locally": true,
+  "large_source_downloaded_locally": false
+}
