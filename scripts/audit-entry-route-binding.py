@@ -121,7 +121,9 @@ def audit_provided_roles(root, training, cell, out, started, verified):
         raise ValueError('saved inputs changed during read-only inspection')
     output = {'cell': cell, 'provided_table': table, 'aliases': admission['aliases'],
               'conflicts': admission['conflicts'], 'runtime_projection_counts': dict(counts),
-              'verified_receiver_segments': admission['unique_verified_segments'],
+              'verified_source_segments': admission['unique_verified_segments'],
+              'derived_source_occurrences': sum(proof.get('source_representation') == 'derived_otlp_json'
+                                                for proof in admission['occurrence_proofs']),
               'verified_occurrences': len(admission['occurrence_proofs']),
               'models': models, 'original_database_sha256': db_sha,
               'original_training_manifest_sha256': ready['manifest_sha256'],

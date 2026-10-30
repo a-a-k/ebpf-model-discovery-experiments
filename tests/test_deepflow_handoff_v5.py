@@ -18,6 +18,7 @@ import ebpf_discovery.deepflow_handoff_v5 as handoff
 from ebpf_discovery.raw_v4 import export_selection
 from ebpf_discovery.store_v5 import ProjectionResolver
 from ebpf_discovery.toolchain_v5 import Toolchain
+from ebpf_discovery.supplied_alias_v5 import _verified_segment
 
 
 class Store:
@@ -98,6 +99,29 @@ def test_full_deepflow_source_codec_to_common_otlp_handoff(tmp_path: Path) -> No
     assert descriptor["storage_shards_are_not_http_batches"] is True
 
 
+def test_alias_source_proof_uses_the_existing_deterministic_deepflow_validator(tmp_path):
+    wrapper, _, _ = _source(tmp_path)
+    digest = hashlib.sha256(wrapper.read_bytes()).hexdigest()
+    proof = _verified_segment(wrapper, 0, wrapper.stat().st_size, digest,
+                              'a', 'ebpf-deepflow', True)
+    assert proof['sources'] == ['ebpf-deepflow:a']
+    assert proof['source_representation'] == 'derived_otlp_json'
+    assert proof['derived_envelopes_reverified'] == 1
+    assert set(proof['ordinals']) == {0, 1}
+    with pytest.raises(ValueError, match='derived source/node mismatch'):
+        _verified_segment(wrapper, 0, wrapper.stat().st_size, digest,
+                          'b', 'ebpf-deepflow', True)
+
+
+def test_alias_source_proof_rejects_changed_derived_fields_even_with_valid_segment_hash(tmp_path):
+    wrapper, _, _ = _source(tmp_path)
+    document = json.loads(wrapper.read_text())
+    document['payload']['resourceSpans'][0]['scopeSpans'][0]['spans'][0]['name'] = 'invented'
+    wrapper.write_text(json.dumps(document) + '\n', encoding='utf-8')
+    digest = hashlib.sha256(wrapper.read_bytes()).hexdigest()
+    with pytest.raises(ValueError, match='envelope differs from deterministic codec'):
+        _verified_segment(wrapper, 0, wrapper.stat().st_size, digest,
+                          'a', 'ebpf-deepflow', True)
 def test_accounting_uses_byte_splitlines_and_preserves_literal_u2028(tmp_path: Path) -> None:
     wrapper, _, accounting = _source(tmp_path)
     accounting[0]["literal_separator"] = "left\u2028right"

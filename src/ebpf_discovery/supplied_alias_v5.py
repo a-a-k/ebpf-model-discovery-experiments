@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from contextlib import ExitStack
 import hashlib
 import json
 from pathlib import Path
@@ -19,8 +20,12 @@ def _sha(path: Path) -> str:
 
 
 def _verified_segment(path, start, end, expected, node, expected_source_prefix,
-                      same_trace_parents):
+                      same_trace_parents, *, deepflow_validators=None, cleanup=None):
     """Recheck identical receiver evidence without retaining all decoded spans."""
+    if deepflow_validators is None:
+        with ExitStack() as owned_cleanup:
+            return _verified_segment(path, start, end, expected, node, expected_source_prefix,
+                                     same_trace_parents, deepflow_validators={}, cleanup=owned_cleanup)
     if not (isinstance(start, int) and isinstance(end, int) and 0 <= start <= end):
         raise ValueError('supplied alias receiver provenance changed')
     digest = hashlib.sha256()
@@ -35,7 +40,7 @@ def _verified_segment(path, start, end, expected, node, expected_source_prefix,
             remaining -= len(chunk)
     if digest.hexdigest() != expected:
         raise ValueError('supplied alias receiver provenance changed')
-    wrapper_sources = set()
+    wrapper_sources, derived_envelopes = set(), 0
     with path.open('rb') as stream:
         stream.seek(start)
         remaining = end - start
@@ -51,6 +56,22 @@ def _verified_segment(path, start, end, expected, node, expected_source_prefix,
             except (UnicodeDecodeError, json.JSONDecodeError) as exc:
                 raise ValueError('supplied alias receiver segment is malformed') from exc
             wrapper_node, wrapper_source = wrapper.get('node'), wrapper.get('source')
+            if wrapper.get('derived_otlp'):
+                if (wrapper_source != 'ebpf-deepflow:' + node
+                        or expected_source_prefix not in (None, 'ebpf-deepflow')):
+                    raise ValueError('supplied alias derived source/node mismatch')
+                from .deepflow_handoff_v5 import DeepFlowDerivedValidator
+                root = path.parent.resolve()
+                if root not in deepflow_validators:
+                    validator = DeepFlowDerivedValidator(root)
+                    cleanup.callback(validator.close)
+                    deepflow_validators[root] = validator
+                # Reuse the export path's exact pinned codec/accounting/raw
+                # validation; a derived envelope has no OTLP receiver raw_ref.
+                deepflow_validators[root].validate(wrapper, path, line)
+                derived_envelopes += 1
+                wrapper_sources.add(wrapper_source)
+                continue
             if (wrapper_node != node or not isinstance(wrapper_source, str)
                     or wrapper_source != (expected_source_prefix + ':' + node
                         if expected_source_prefix else wrapper_source)
@@ -73,10 +94,14 @@ def _verified_segment(path, start, end, expected, node, expected_source_prefix,
             wrapper_sources.add(wrapper_source)
     from .store_v5 import _digest
     from .store_v3 import normalized_file
-    return {'node': node, 'sources': sorted(wrapper_sources),
+    result = {'node': node, 'sources': sorted(wrapper_sources),
             'ordinals': {index: _digest(record) for index, record in enumerate(
                 normalized_file(path, 'ebpf', start, end,
                                 same_trace_parents=same_trace_parents))}}
+    if derived_envelopes:
+        result.update(source_representation='derived_otlp_json',
+                      derived_envelopes_reverified=derived_envelopes)
+    return result
 
 
 def admission_core(value: dict) -> dict:
@@ -289,6 +314,12 @@ def alias_carrier(original: dict, runtime) -> str | None:
 
 def admit_observed(store, table: dict, *, expected_source_prefix: str | None = None) -> dict:
     """Admit aliases only when every retained occurrence has a matching guest row."""
+    with ExitStack() as cleanup:
+        return _admit_observed(store, table, expected_source_prefix=expected_source_prefix,
+                               cleanup=cleanup)
+
+
+def _admit_observed(store, table: dict, *, expected_source_prefix, cleanup) -> dict:
     if store is None or not hasattr(store, "db"):
         return {"schema": ADMISSION_SCHEMA, "origin": ORIGIN,
                 "aliases": {}, "conflicts": [], "receiver_segments_reverified": False,
@@ -311,6 +342,7 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
     observed_by_source: dict[str, set[str]] = {}
     carrier_sources: dict[str, set[str]] = {}
     segment_cache: dict[tuple, dict] = {}
+    deepflow_validators = {}
     occurrence_proofs = []
     for digest, encoded in store.db.execute("SELECT digest,data FROM spans ORDER BY digest"):
         row = json.loads(encoded)
@@ -373,7 +405,8 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
             if key not in segment_cache:
                 segment_cache[key] = _verified_segment(
                     path, start, end, expected, node, expected_source_prefix,
-                    getattr(store, 'same_trace_parents', False))
+                    getattr(store, 'same_trace_parents', False),
+                    deepflow_validators=deepflow_validators, cleanup=cleanup)
             verified = segment_cache[key]
             if verified["ordinals"].get(ordinal) != digest:
                 raise ValueError("supplied alias normalized ordinal/digest mismatch")
@@ -390,7 +423,10 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
                 "digest": digest, "path": proof_path, "from_byte": start,
                 "through_byte": end, "normalized_ordinal": ordinal,
                 "segment_sha256": expected, "wrapper_node": verified["node"],
-                "wrapper_sources": verified["sources"]})
+                "wrapper_sources": verified["sources"],
+                **({"source_representation": "derived_otlp_json",
+                    "derived_envelopes_reverified": verified["derived_envelopes_reverified"]}
+                   if verified.get("source_representation") == "derived_otlp_json" else {})})
         if nodes != {source_node}:
             valid = False
         entry = by_carrier.setdefault(carrier, {"nodes": set(), "valid": True, "digests": []})

@@ -51,3 +51,12 @@ both agents give ORIGINAL GO to reuse only resolved_enriched projected names
 whose service agrees with the verified Compose owner and receiver guest. One
 common carrier helper must serve admission, application and verification. Keep
 the original unnamed observations and digests intact; disagreement stays unknown.
+
+The repeated audit41130545414 reached DeepFlow's source verification for the first
+time and rejected its derived JSON as though it were a wire OTLP receiver wrapper.
+Before this format correction, both agents give ORIGINAL GO to reuse the existing
+DeepFlowDerivedValidator from the export path: exact pinned declaration,
+normalized accounting, snapshot ownership, raw byte/hash locators and deterministic
+codec-to-envelope equality. Retain the existing normalized ordinal/digest check.
+Wire receiver validation remains unchanged. The derived envelope is never called
+an original OTLP body, and no synthetic receiver references are added.
