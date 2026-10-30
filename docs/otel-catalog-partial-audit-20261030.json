@@ -1,0 +1,27 @@
+{
+  "scope": "Literal saved OBI catalog raw/input parent identities and actual source-domain derivation; no graph join, replay, fit or score.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13016551407,
+        "bytes": 50838124,
+        "digest": "sha256:f6af7f3011f20abb89d75087aa87a3827fa91b801fc0a7473631ece783192829",
+        "name": "campaign-v5-obi-smoke-otel_demo-partial-6-41132051267",
+        "run_id": 41132051267,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      },
+      "compact": {
+        "id": 13016791229,
+        "bytes": 284689,
+        "digest": "sha256:817afe0f8701394c3c4d8d802fb350a4c4fd291a6a4f658b3821877e22a25c0f",
+        "name": "v5-summary-obi-smoke-otel_demo-partial-6-41132051267",
+        "run_id": 41132051267,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      }
+    }
+  ]
+}

@@ -4,8 +4,12 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding, provided-service-roles, semantic-metadata]
+        options: [dsb-capture, entry-route-binding, provided-service-roles, semantic-metadata, catalog-parents]
         default: dsb-capture
+      declaration:
+        description: Optional tracked fixed artifact declaration
+        type: string
+        default: ''
       collector:
         description: The semantic-metadata audit has one fixed Coroot job
         type: choice
@@ -20,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        collector: ${{ fromJson(inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
+        collector: ${{ fromJson(inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.audit == 'catalog-parents' && '["obi"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -41,6 +45,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           COLLECTOR: ${{ matrix.collector }}
           AUDIT_KIND: ${{ inputs.audit }}
+          DECLARATION: ${{ inputs.declaration }}
         run: |
           python - <<'PY'
           import json, os, pathlib, subprocess
@@ -49,7 +54,15 @@ jobs:
           declaration=('docs/entry-route-binding-audit-20261030.json' if kind=='entry-route-binding'
                        else 'docs/provided-service-roles-audit-20261030.json' if kind=='provided-service-roles'
                        else 'docs/semantic-metadata-audit-20261030.json' if kind=='semantic-metadata'
+                       else 'docs/otel-catalog-partial-audit-20261030.json' if kind=='catalog-parents'
                        else 'docs/dsb-capture-audit-20261030.json')
+          declaration=os.environ['DECLARATION'] or declaration
+          path=pathlib.PurePosixPath(declaration)
+          if (path.is_absolute() or path.as_posix()!=declaration or len(path.parts)!=2
+                  or path.parts[0]!='docs' or path.suffix!='.json' or '..' in path.parts):
+              raise SystemExit('declaration must be a normalized tracked docs/*.json')
+          subprocess.run(['git','ls-files','--error-unmatch','--',declaration],check=True,
+                         stdout=subprocess.DEVNULL)
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
@@ -69,8 +82,8 @@ jobs:
       - name: Inspect complete prefixes and retained rejection evidence
         env:
           PYTHONPATH: src:.
-          AUDIT_SCRIPT: ${{ inputs.audit != 'dsb-capture' && 'audit-entry-route-binding.py' || 'audit-dsb-capture.py' }}
-          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || '' }}
+          AUDIT_SCRIPT: ${{ (inputs.audit == 'dsb-capture' || inputs.audit == 'catalog-parents') && 'audit-dsb-capture.py' || 'audit-entry-route-binding.py' }}
+          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || inputs.audit == 'catalog-parents' && '--catalog' || '' }}
         run: |
           python "scripts/$AUDIT_SCRIPT" --source work/dsb-audit-input \
             --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json $AUDIT_ROLE_FLAG
