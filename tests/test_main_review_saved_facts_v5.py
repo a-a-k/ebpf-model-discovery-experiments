@@ -743,3 +743,24 @@ def test_deepflow_closure_rejects_inconsistent_saved_sources(tmp_path: Path, pro
         write(tmp_path / "observations/deepflow-raw/node-a/003-final/snapshot.json", {})
     with pytest.raises(ValueError):
         REVIEW.deepflow_closure_facts(tmp_path, collector, drain)
+
+
+@pytest.mark.parametrize("controller,smoke,valid", [("clean-study", False, True),
+                                                   ("legacy", False, False),
+                                                   ("clean-study", True, False)])
+def test_fresh_compact_binds_actual_clean_main_status(
+        tmp_path: Path, controller: str, smoke: bool, valid: bool) -> None:
+    declaration, compact, _ = fixture(tmp_path)
+    declaration["head_sha"] = REVIEW.FRESH_HEAD
+    status = json.loads((compact / "status.json").read_text())
+    status.update(commit=REVIEW.FRESH_HEAD, controller=controller, smoke=smoke)
+    write(compact / "status.json", status)
+    manifest = json.loads((compact / "evaluation-manifest.json").read_text())
+    manifest["commit"] = REVIEW.FRESH_HEAD
+    manifest["files_sha256"]["status.json"] = digest(compact / "status.json")
+    write(compact / "evaluation-manifest.json", manifest)
+    if valid:
+        assert REVIEW.compact_facts(compact, declaration)[0]["identity"]["collector"] == "obi"
+    else:
+        with pytest.raises(ValueError, match="clean main controller"):
+            REVIEW.compact_facts(compact, declaration)

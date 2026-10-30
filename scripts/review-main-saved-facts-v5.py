@@ -444,6 +444,9 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
                 declaration["seed"], declaration["run_id"])
     if identity != expected or status.get("commit") != declaration["head_sha"]:
         raise ValueError(f"saved compact identity differs: {identity!r}")
+    if declaration["head_sha"] == FRESH_HEAD and (
+            status.get("controller") != "clean-study" or status.get("smoke") is not False):
+        raise ValueError("fresh saved status does not identify the clean main controller")
     if (manifest.get("commit") != declaration["head_sha"]
             or manifest.get("run_id") != str(declaration["run_id"])):
         raise ValueError("evaluation manifest source differs from declaration")
@@ -706,10 +709,11 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         admission_path = root / "runtime-identity-v5/supplied-service-alias-admission-training.json"
         table_sha = sha(table_path)
         admission = read(admission_path)
-        if (admission.get("conflicts") or admission.get("physical_identity_inferred")
+        if ((not fresh and admission.get("conflicts")) or admission.get("physical_identity_inferred")
                 or admission.get("same_table_all_sources_and_direct_baseline") is not True):
             raise ValueError("supplied logical alias admission exceeds its reviewed boundary")
         projected_models = []
+        retained_collisions = {}
         for alias_path in sorted(toolchain.glob(
                 "discovery/*/*/observed.supplied-aliases.json")):
             alias = read(alias_path)
@@ -718,13 +722,16 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             effective = read(directory / "observed.json")
             if (alias.get("raw_model_sha256") != sha(directory / "observed.bering-raw.json")
                     or alias.get("table_sha256") != table_sha
-                    or alias.get("metadata_collisions")
+                    or (not fresh and alias.get("metadata_collisions"))
                     or alias.get("graph_edges_injected")
                     or alias.get("physical_identity_inferred")
                     or alias.get("roles_or_endpoints_created")):
                 raise ValueError("saved alias proof exceeds exact logical renaming")
             projected = copy.deepcopy(raw)
             aliases = alias.get("effective_aliases") or {}
+            if any((admission.get("aliases") or {}).get(key) != value
+                   for key, value in aliases.items()):
+                raise ValueError("saved effective alias was not admitted from supplied inventory")
             by_id = {}
             for service in projected.get("services") or []:
                 old = service["id"]
@@ -744,10 +751,15 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             if projected != effective:
                 raise ValueError("saved semantic model is not exact alias-only projection")
             projected_models.append(alias_path.relative_to(toolchain).as_posix())
+            if fresh:
+                retained_collisions[alias_path.relative_to(toolchain).as_posix()] = alias.get("metadata_collisions") or []
         if not projected_models:
             raise ValueError("selected evidence contains no supplied-alias graph proof")
         alias_facts = {"table_sha256": table_sha, "admission_sha256": sha(admission_path),
                        "exact_alias_only_models": projected_models}
+        if fresh:
+            alias_facts.update(admission_conflicts=admission.get("conflicts") or [],
+                               metadata_collisions=retained_collisions)
 
     branch_facts = []
     forecasts_path = toolchain / "forecasts.json"
