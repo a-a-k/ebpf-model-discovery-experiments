@@ -150,10 +150,17 @@ def _terminate_group(process: subprocess.Popen | None, signum: int = signal.SIGT
 def _commands(config: dict) -> tuple[list[str], list[str]]:
     root = Path(__file__).resolve().parents[2]
     out = Path(config["out"])
+    runner = config.get("runner", "legacy")
+    if runner not in ("legacy", "study"):
+        raise ValueError("unknown campaign runner")
+    if runner == "study" and not config.get("collector"):
+        raise ValueError("the study runner requires an explicit collector")
+    module = ("ebpf_discovery.study" if runner == "study" else
+              "ebpf_discovery.campaign_v5" if config.get("collector") else
+              "ebpf_discovery.campaign_v4")
     campaign = [
         "/usr/bin/time", "-v", "-o", str(out / "infrastructure" / "campaign-time.txt"),
-        sys.executable, "-m", ("ebpf_discovery.campaign_v5" if config.get("collector")
-                               else "ebpf_discovery.campaign_v4"),
+        sys.executable, "-m", module,
         "--system", config["system"], "--mode", config["mode"],
         "--seed", str(config["seed"]), "--out", str(out),
         "--training-checkpoint", config["checkpoint"],
@@ -255,7 +262,8 @@ def _spawn(args) -> int:
               "out": str(Path(args.out).resolve()),
               "checkpoint": str(Path(args.checkpoint).resolve()),
               "vms": str(Path(args.vms).resolve()),
-              "toolchain_execution": args.toolchain_execution}
+               "toolchain_execution": args.toolchain_execution,
+               "runner": getattr(args, "runner", "legacy")}
     if getattr(args, "collector", None):
         config.update(collector=args.collector, smoke=bool(args.smoke))
     elif getattr(args, "smoke", False):
@@ -389,6 +397,7 @@ def main() -> None:
     start.add_argument("--vms", type=Path, required=True)
     start.add_argument("--toolchain-execution", choices=("local", "worker"), default="local")
     start.add_argument("--collector", choices=("obi", "deepflow", "coroot"))
+    start.add_argument("--runner", choices=("legacy", "study"), default="legacy")
     start.add_argument("--smoke", action="store_true")
     wait = commands.add_parser("wait")
     _common(wait)
