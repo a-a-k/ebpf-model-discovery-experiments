@@ -15,29 +15,55 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Create a new draft evidence release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/archive
+          tag="data-${GITHUB_RUN_ID}"
+          cat > work/archive/notes.md <<'EOF'
+          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes source indexes, run/job metadata, log availability, SHA-256 checksums and verified publication records. Oversized assets are losslessly split; provenance records exact reassembly. Each uploaded asset is checked by remote state, size and SHA-256 before its working copy is removed. Publication does not certify empirical success. Data are from synthetic applications.
+          EOF
+          gh release create "$tag" --target "$GITHUB_SHA" --draft \
+            --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
       - name: Download original artifact archives and their provenance
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_IDS: ${{ inputs.run_ids }}
+          ARCHIVE_RELEASE_TAG: ${{ steps.release.outputs.tag }}
         run: |
           bash scripts/archive-runs.sh
-      - name: Publish retained synthetic experiment data
+      - name: Publish complete evidence provenance and release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          tag="data-${GITHUB_RUN_ID}"
-          cat > work/archive/notes.md <<'EOF'
-          Original Actions artifacts for the eBPF model-discovery experiments, including requested failed or superseded attempts. The provenance archive includes artifact indexes, run and job metadata, check annotations, log availability, and SHA-256 checksums. Oversized assets are uploaded as lossless numbered parts; their manifests in provenance.tar.gz record the original hash, part hashes, and exact reassembly command. A failed run may have no artifact or log blob; absence is recorded explicitly. Publication does not certify any empirical success; interpretation follows the repository's run history and generated report. Data are from synthetic test applications.
-          EOF
-          gh release create "$tag" --target "$GITHUB_SHA" --title "Retained experiment data $GITHUB_RUN_ID" --notes-file work/archive/notes.md
-          assets=(work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt)
-          for file in work/archive/*.zip; do
-            [[ -f "$file" ]] && assets+=("$file")
+          tag='${{ steps.release.outputs.tag }}'
+          gh release upload "$tag" work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt
+          source scripts/github-read.sh
+          release_id="$(jq -r .id work/archive/release-before.json)"
+          gh_api_to_file work/archive/final-publication-assets.json \
+            "repos/${GITHUB_REPOSITORY}/releases/$release_id/assets?per_page=100" --paginate --slurp
+          for file in work/archive/provenance.tar.gz work/archive/SHA256SUMS.txt; do
+            name="$(basename "$file")"
+            digest="$(sha256sum "$file")"; digest="${digest%% *}"
+            size="$(stat -c%s "$file")"
+            jq -e --arg name "$name" --arg digest "sha256:$digest" --argjson size "$size" \
+              '[.[][] | select(.name == $name)] | length == 1 and .[0].state == "uploaded" and
+               .[0].size == $size and .[0].digest == $digest' \
+              work/archive/final-publication-assets.json >/dev/null
           done
-          for file in work/archive/*.log; do
-            [[ -f "$file" ]] && assets+=("$file")
-          done
-          for file in work/archive/*.part[0-9][0-9][0-9][0-9]; do
-            [[ -f "$file" ]] && assets+=("$file")
-          done
-          gh release upload "$tag" "${assets[@]}"
+          gh release edit "$tag" --draft=false
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: archive-publication-proof-${{ github.run_id }}
+          path: |
+            work/archive/*.json
+            work/archive/published-assets.jsonl
+            work/archive/published-SHA256SUMS.txt
+            work/archive/SHA256SUMS.txt
+            work/archive/provenance.tar.gz
+          retention-days: 90
+          if-no-files-found: warn
