@@ -47,3 +47,17 @@ publication proof, confirmed all three source ZIP digests against Actions, and
 verified ledger/checksum/provenance agreement. Explicit GO was given for the
 full-series archive after each source run becomes terminal. PR5 merged this
 engineering repair; the scientific source remains immutable bf49d46.
+
+After the route-binding regression was found, the bf49 parent series was
+technically stopped. Publication41113544016 retained all then-available artifacts
+from parents41099986985/41099992213/41099997831 and workers41108415418/41111105552.
+The public data-41113544016 release has45 assets,17,728,580,180 bytes. The root
+review matched all43 payload ledger records and two metadata assets to current
+remote IDs, names, states, sizes and SHA256; checksum and provenance hashes agree.
+Only the244KB publication proof was downloaded locally. This batch covers the
+available packets, not unrecovered cancellation-tail data. Completed OBI worker
+41112538790 is retained separately and remains due in the next archive batch.
+
+Cancelled queued jobs can have nonzero API started/completed intervals even with
+runner_id=0. The report retains those timestamps as recorded job elapsed; these
+values do not establish CPU consumption or billed runner usage.

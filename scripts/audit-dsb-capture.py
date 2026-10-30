@@ -8,6 +8,7 @@ import gzip
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
+import shutil
 import stat
 import time
 import zipfile
@@ -267,6 +268,31 @@ def audit(root, compact):
         "scope": "Complete frozen eBPF fit input; DeepFlow rejected accounting spans the full capture and is labeled by capture stage. Parent counts describe fields, not confirmed ancestry. No missing record establishes interception impossibility."}
 
 
+def copy_saved_bindings(root, out):
+    """Copy original frozen JSON for interpretation; no binding is recomputed."""
+    frozen = read(root / "freeze-integrity.json")["sha256_by_path"]
+    paths = {root / "toolchain/static-inputs.json",
+             root / "runtime-identity-v5/supplied-service-aliases-training.json",
+             root / "runtime-identity-v5/supplied-service-alias-admission-training.json"}
+    for leaf in ("observed.json", "observed.signal-quality.json",
+                 "observed.bering-raw.json", "observed.supplied-aliases.json"):
+        paths.update(root.glob("toolchain/discovery/*/*/" + leaf))
+    for leaf in ("entry-evidence.json", "binding.json"):
+        paths.update(root.glob("toolchain/*/*/*/" + leaf))
+    copied = {}
+    for path in sorted(paths):
+        name = path.relative_to(root).as_posix()
+        if not path.is_file() or frozen.get(name) != sha(path):
+            raise ValueError("saved interpretation file is not frozen: " + name)
+        target = out / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(path, target)
+        if sha(target) != frozen[name]:
+            raise ValueError("saved interpretation copy differs: " + name)
+        copied[name] = {"sha256": frozen[name], "bytes": target.stat().st_size}
+    return copied
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
@@ -279,6 +305,8 @@ def main():
         extract(args.source / (role + ".zip"), read(args.source / (role + "-api.json")),
                 cell[role], args.source / role)
     facts = audit(args.source / "full", args.source / "compact")
+    facts["copied_original_binding_files"] = copy_saved_bindings(
+        args.source / "full", args.out.parent / "selected")
     facts.update(cell=cell, elapsed_seconds=time.monotonic() - started,
                  claim="Saved-evidence diagnosis; no new scientific fit, forecast, outcome score or admission.")
     args.out.parent.mkdir(parents=True, exist_ok=True)

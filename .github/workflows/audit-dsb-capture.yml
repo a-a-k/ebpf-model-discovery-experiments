@@ -6,6 +6,10 @@ on:
         type: choice
         options: [dsb-capture, entry-route-binding]
         default: dsb-capture
+      dsb_declaration:
+        description: Tracked fixed DSB artifact declaration; original diagnosis is the default
+        type: string
+        default: docs/dsb-capture-audit-20261030.json
 permissions:
   contents: read
   actions: read
@@ -27,13 +31,20 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           COLLECTOR: ${{ matrix.collector }}
           AUDIT_KIND: ${{ inputs.audit }}
+          DSB_DECLARATION: ${{ inputs.dsb_declaration }}
         run: |
           python - <<'PY'
           import json, os, pathlib, subprocess
           root=pathlib.Path('work/dsb-audit-input'); root.mkdir(parents=True)
           kind=os.environ['AUDIT_KIND']
           declaration=('docs/entry-route-binding-audit-20261030.json' if kind=='entry-route-binding'
-                       else 'docs/dsb-capture-audit-20261030.json')
+                       else os.environ['DSB_DECLARATION'])
+          path=pathlib.PurePosixPath(declaration)
+          if (path.is_absolute() or path.as_posix()!=declaration or len(path.parts)!=2
+                  or path.parts[0]!='docs' or path.suffix!='.json' or '..' in path.parts):
+              raise SystemExit('declaration must be a normalized tracked docs/*.json')
+          subprocess.run(['git','ls-files','--error-unmatch','--',declaration],check=True,
+                         stdout=subprocess.DEVNULL)
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
@@ -62,5 +73,6 @@ jobs:
             work/dsb-audit-input/cell.json
             work/dsb-audit-input/*-api.json
             work/dsb-audit/facts.json
+            work/dsb-audit/selected/
           retention-days: 90
           if-no-files-found: error

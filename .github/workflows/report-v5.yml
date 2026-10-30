@@ -103,7 +103,7 @@ jobs:
               'runs_with_unknown_artifact_bytes':sum(row.get('stored_artifact_bytes') is None for row in rows),
               'human_agent_seconds':None,'current_report_job_tail_seconds':None,
               'scope':'only explicitly declared repositories/runs; omitted or inaccessible product work remains unknown',
-              'overlap_rule':'job seconds are compute use; overlapping jobs and parent waits are not campaign wall time'}
+              'overlap_rule':'recorded API job elapsed may include waiting, including cancelled jobs with no assigned runner; overlapping job elapsed is not campaign wall time, CPU consumption or billed runner usage'}
           pathlib.Path('results/iteration-5/costs-v5.json').write_text(json.dumps(ledger,indent=2)+'\n')
           PY
       - name: Download declared compact summaries with retained retrieval outcomes
