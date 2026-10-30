@@ -101,6 +101,13 @@ def audit(source, cell, out):
             if sha(root / name) != expected:
                 raise ValueError('frozen native scientific input differs: ' + name)
             verified[name] = expected
+    required = {f'toolchain/discovery/native/{variant}/observed.json'
+                for variant in ('raw', 'network_scope')}
+    required.update(f'toolchain/native/{variant}/{operation}/{name}.json'
+                    for variant in ('raw', 'network_scope') for operation in CONTRACTS
+                    for name in ('entry-evidence', 'binding', 'forecast'))
+    if not required <= verified.keys():
+        raise ValueError('used model/root/binding/forecast is absent from pre-target freeze')
     original_api = read(source / 'old-binding-api.json')
     original = base64.b64decode(original_api['content'])
     if (hashlib.sha1(b'blob ' + str(len(original)).encode() + b'\0' + original).hexdigest() != original_api['sha']
@@ -136,6 +143,7 @@ def audit(source, cell, out):
               'pairs': pairs, 'traffic_replay_refit_simulation_or_scoring': False,
               'new_pre_target_forecasts_claimed': False,
               'elapsed_seconds': time.monotonic() - started,
+              'cost_boundary': 'pure saved-binding inspection only; Actions downloads/CI and early stops retained separately',
               'human_preparation_seconds': None}
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(result, indent=2) + '\n')
