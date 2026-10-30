@@ -1,7 +1,7 @@
 """Endpoint rebinding from common graph-v5 observation locators."""
 from __future__ import annotations
 
-from .binding_v4 import _path
+from .binding_v4 import _PATH_ATTRIBUTES, _path
 from .selection_v4 import method_path
 
 
@@ -20,9 +20,18 @@ def endpoint_alias_evidence(store, roots, step, entry_service, endpoints):
         observed = method_path(row)
         if (str(observed[0] or '').upper(), observed[1]) != expected:
             continue
+        aliases = []
+        for attribute in _PATH_ATTRIBUTES:
+            value = row.get('attributes', {}).get(attribute)
+            path = _path(value)
+            if path:
+                aliases.append({'attribute': attribute, 'value': str(value), 'path': path})
+        observed_paths = {item['path'] for item in aliases}
         matched = sorted({endpoint['id'] for endpoint in endpoints
             if endpoint.get('entry_service') == entry_service
-            and (str(endpoint.get('method') or '').upper(), _path(endpoint.get('path'))) == expected})
+            and str(endpoint.get('method') or '').upper() == expected[0]
+            and (_path(endpoint.get('path')) == expected[1]
+                 or _path(endpoint.get('path')) in observed_paths)})
         if not matched:
             continue
         endpoint_ids.update(matched)
@@ -30,6 +39,7 @@ def endpoint_alias_evidence(store, roots, step, entry_service, endpoints):
             'basis': 'common_v5_observation_locator_entry_endpoint',
             'expected_step': {'method': expected[0], 'path': expected[1]},
             'entry_service': entry_service, 'endpoint_ids': matched,
+            'observed_aliases': aliases,
             'observation_digest': digest,
             'observation_provenance': row.get('_observation_provenance', []),
             'genuine_ancestry_identity': root.get('genuine_ancestry_identity', False),
