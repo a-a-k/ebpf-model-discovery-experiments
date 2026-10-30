@@ -12,6 +12,11 @@ on:
         type: choice
         options: [smoke, main]
         default: smoke
+      runner:
+        description: Explicit campaign controller; study uses no historical Campaign inheritance
+        type: choice
+        options: [legacy, study]
+        default: legacy
       system:
         description: Select planned cells for reviewed staging or a technical rerun
         type: choice
@@ -80,6 +85,7 @@ jobs:
           status = {'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
                     'seed': ${{ matrix.seed }}, 'protocol_version': 'graph-v5',
                     'collector': '${{ inputs.collector }}', 'smoke': '${{ inputs.stage }}' == 'smoke',
+                    'controller': '${{ inputs.runner }}',
                     'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
                     'started_ns': time.time_ns(), 'status': 'technical_preparation_pending',
                     'technical_stage': 'before_toolchain_setup_or_guest_boot'}
@@ -125,7 +131,8 @@ jobs:
           python -m ebpf_discovery.campaign_process_v4 start \
             --state-dir work/campaign-process --out work/campaign \
             --checkpoint work/training-checkpoint --vms work/vms \
-            --toolchain-execution "$TOOLCHAIN_EXECUTION" --collector "$SELECTED_COLLECTOR" "${smoke_args[@]}" \
+            --toolchain-execution "$TOOLCHAIN_EXECUTION" --runner '${{ inputs.runner }}' \
+            --collector "$SELECTED_COLLECTOR" "${smoke_args[@]}" \
             --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}'
           python -m ebpf_discovery.campaign_process_v4 wait \
             --state-dir work/campaign-process --checkpoint work/training-checkpoint \
