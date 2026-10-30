@@ -1,0 +1,66 @@
+{
+  "purpose": "Paired saved native binding inspection; fixed all three partial seed6 qualification captures; no replay/refit/simulation/scoring.",
+  "old_binding_head": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+  "cells": [
+    {
+      "collector": "obi",
+      "run_id": 41093696113,
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "head_sha": "fcef724e3226ed0c41af461d07b34249fb94d235",
+      "full": {
+        "id": 12995209765,
+        "name": "campaign-v5-obi-smoke-petclinic-partial-6-41093696113",
+        "size_in_bytes": 41853402,
+        "digest": "sha256:f6e689df4c7168146e664c50265b66d13d3dcc02df8eb094c94c5d566808ce9d"
+      },
+      "compact": {
+        "id": 12996692385,
+        "name": "v5-summary-obi-smoke-petclinic-partial-6-41093696113",
+        "size_in_bytes": 270652,
+        "digest": "sha256:e13c4391edc334b2ea77ae2c9f82c7606c96674734057f4c823af6ec30745291"
+      }
+    },
+    {
+      "collector": "deepflow",
+      "run_id": 41096134555,
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+      "full": {
+        "id": 12997855685,
+        "name": "campaign-v5-deepflow-smoke-petclinic-partial-6-41096134555",
+        "size_in_bytes": 49124386,
+        "digest": "sha256:20b663fbd125f1ac67b43c7d89a6b7f3ab15a1dcee4d257e017e87cfb307c5e1"
+      },
+      "compact": {
+        "id": 12997312000,
+        "name": "v5-summary-deepflow-smoke-petclinic-partial-6-41096134555",
+        "size_in_bytes": 320454,
+        "digest": "sha256:f7a0d8170b97941602f745d098aae3871f0528334a932c97aadc6b8f987d6023"
+      }
+    },
+    {
+      "collector": "coroot",
+      "run_id": 41093731467,
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "head_sha": "fcef724e3226ed0c41af461d07b34249fb94d235",
+      "full": {
+        "id": 12996691015,
+        "name": "campaign-v5-coroot-smoke-petclinic-partial-6-41093731467",
+        "size_in_bytes": 34717520,
+        "digest": "sha256:9cdbf5255604a142e2a36a03451ec691e440c4615227fbebf46de470ebd86358"
+      },
+      "compact": {
+        "id": 12997230086,
+        "name": "v5-summary-coroot-smoke-petclinic-partial-6-41093731467",
+        "size_in_bytes": 449282,
+        "digest": "sha256:5cf2aa803fb52656f90ea20d4ac2cf0ce8fceb4108a376aca65b319ff02f3d5b"
+      }
+    }
+  ]
+}
