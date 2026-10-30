@@ -496,38 +496,57 @@ class Toolchain:
                     'binding_reasons': {key: value for piece in pieces for key, value in piece['binding_reasons'].items()},
                     'selection': 'union of source-local exact entry proofs; no cross-source causal join',
                     'includes_descendants': False, 'outcomes_used': False, 'clock_gate': False}
-            service_projections = (self.store.service_projections()
+            service_projections = (self.store.service_projections(
+                self.root/'inputs'/'runtime-identity-values.jsonl')
                 if hasattr(self.store, 'service_projections') else None)
-            for variant in ('raw', 'network_scope'):
-                for source in ('ebpf', 'native'):
-                    folder = self.root/'inputs'/source/variant
-                    folder.mkdir(parents=True, exist_ok=True)
-                    manifest = export_selection(self.store, {source: None}, folder/'exports',
-                        self.system+'-routed-network' if variant == 'network_scope' else None,
-                        supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
-                        native_jaeger_envelope=self.native_jaeger_envelope,
-                        service_projections=service_projections)
-                    manifest.update(graph_input='all source-separated frozen training-prefix observations',
-                        exported_wire_bytes=sum(Path(export['path']).stat().st_size for export in manifest['exports']),
-                        causal_execution_inferred=False,
-                        ambient_preparation_and_oracle_traffic='retained if present in frozen source prefixes',
-                        supplied_role_policy='union of exact declared entry roots across all operations')
-                    path = folder/'observations.json'
+            try:
+                for variant in ('raw', 'network_scope'):
+                    for source in ('ebpf', 'native'):
+                        folder = self.root/'inputs'/source/variant
+                        folder.mkdir(parents=True, exist_ok=True)
+                        manifest = export_selection(self.store, {source: None}, folder/'exports',
+                            self.system+'-routed-network' if variant == 'network_scope' else None,
+                            supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
+                            native_jaeger_envelope=self.native_jaeger_envelope,
+                            service_projections=service_projections)
+                        manifest.update(graph_input='all source-separated frozen training-prefix observations',
+                            exported_wire_bytes=(sum(Path(export['path']).stat().st_size
+                                                     for export in manifest['exports'])
+                                + sum(stream['wire_bytes']
+                                      for stream in manifest.get('stream_exports', []))),
+                            causal_execution_inferred=False,
+                            ambient_preparation_and_oracle_traffic='retained if present in frozen source prefixes',
+                            supplied_role_policy='union of exact declared entry roots across all operations')
+                        path = folder/'observations.json'
+                        write_json(path, manifest)
+                        self.input_manifests[source, variant] = (path, manifest)
+                    pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
+                    streamed = any(piece.get('stream_exports') for _, piece in pieces)
+                    manifest = {'exports': ([] if streamed else
+                                             [export for _, piece in pieces
+                                              for export in piece['exports']]),
+                        'stream_exports': [],
+                        'observations': sum(piece['observations'] for _, piece in pieces),
+                        'exported_wire_bytes': sum(piece['exported_wire_bytes'] for _, piece in pieces),
+                        'additional_exported_wire_bytes': 0,
+                        'native_jaeger_envelope': self.native_jaeger_envelope,
+                        'graph_input': 'union of unchanged source-global exports; no cross-source causal join',
+                        'source_manifests': [{'path': str(path), 'sha256': digest(path)} for path, _ in pieces],
+                        'causal_execution_inferred': False}
+                    if streamed:
+                        # Preserve the historical combined replay order (all eBPF
+                        # requests, then all native requests) without copying every
+                        # large streamed request row into this manifest.
+                        manifest['ordered_request_group_manifests'] = [
+                            {'path': str(path.resolve()), 'bytes': path.stat().st_size,
+                             'sha256': digest(path)} for path, _ in pieces]
+                    path = self.root/'inputs'/'combined'/variant/'observations.json'
+                    path.parent.mkdir(parents=True, exist_ok=True)
                     write_json(path, manifest)
-                    self.input_manifests[source, variant] = (path, manifest)
-                pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
-                manifest = {'exports': [export for _, piece in pieces for export in piece['exports']],
-                    'observations': sum(piece['observations'] for _, piece in pieces),
-                    'exported_wire_bytes': sum(piece['exported_wire_bytes'] for _, piece in pieces),
-                    'additional_exported_wire_bytes': 0,
-                    'native_jaeger_envelope': self.native_jaeger_envelope,
-                    'graph_input': 'union of unchanged source-global exports; no cross-source causal join',
-                    'source_manifests': [{'path': str(path), 'sha256': digest(path)} for path, _ in pieces],
-                    'causal_execution_inferred': False}
-                path = self.root/'inputs'/'combined'/variant/'observations.json'
-                path.parent.mkdir(parents=True, exist_ok=True)
-                write_json(path, manifest)
-                self.input_manifests['combined', variant] = (path, manifest)
+                    self.input_manifests['combined', variant] = (path, manifest)
+            finally:
+                if hasattr(service_projections, 'close'):
+                    service_projections.close()
         finally:
             write_json(self.root/'input-preparation-cost.json', {'started_ns': started,
                 'ended_ns': time.time_ns(), 'completed': len(self.input_manifests) == 6,

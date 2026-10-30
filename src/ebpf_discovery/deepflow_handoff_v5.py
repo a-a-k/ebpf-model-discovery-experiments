@@ -4,6 +4,9 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
+import sqlite3
+from tempfile import NamedTemporaryFile
+import time
 from typing import Any
 
 from . import deepflow_codec_v5 as codec_module
@@ -104,31 +107,122 @@ class DeepFlowDerivedValidator:
         codec_path = Path(codec_module.__file__).resolve()
         if _sha(codec_path) != codec_module.CODEC_SOURCE_SHA256:
             raise ValueError("DeepFlow codec source changed after import")
-        self._accounting: dict[tuple[Any, ...], list[dict[str, Any]]] | None = None
+        self._accounting: sqlite3.Connection | None = None
+        self._accounting_index_path: Path | None = None
+        self._accounting_source: Path | None = None
         self._accounting_proof: dict[str, Any] | None = None
         self._raw_proofs: dict[str, dict[str, Any]] = {}
         self._snapshot_cache: dict[Path, tuple[dict[str, Any], dict[str, Any]]] = {}
 
-    def _load_accounting(self, reference: str) -> dict[tuple[Any, ...], list[dict[str, Any]]]:
+    @staticmethod
+    def _byte_lines(stream):
+        """Yield byte offsets exactly like bytes.splitlines(): CR, LF and CRLF only.
+
+        UTF-8 U+2028 is data, not a bytes.splitlines boundary.
+        """
+        offset = 0
+        pending = bytearray()
+        pending_start = 0
+        pending_cr = False
+        while chunk := stream.read(1024 * 1024):
+            for value in chunk:
+                if pending_cr:
+                    yield pending_start, bytes(pending)
+                    pending.clear()
+                    pending_cr = False
+                    if value == 10:  # CRLF is one boundary.
+                        pending_start = offset + 1
+                        offset += 1
+                        continue
+                    pending_start = offset
+                if value == 13:
+                    pending_cr = True
+                elif value == 10:
+                    yield pending_start, bytes(pending)
+                    pending.clear(); pending_start = offset + 1
+                else:
+                    pending.append(value)
+                offset += 1
+        if pending_cr:
+            yield pending_start, bytes(pending)
+            pending.clear()
+        if pending:
+            yield pending_start, bytes(pending)
+
+    def _load_accounting(self, reference: str) -> sqlite3.Connection:
         if reference != "deepflow-codec-accounting.jsonl":
             raise ValueError("unsupported DeepFlow codec accounting reference")
         if self._accounting is not None:
             return self._accounting
         path = _inside(self.root, reference)
-        raw = path.read_bytes()
-        index: dict[tuple[Any, ...], list[dict[str, Any]]] = {}
-        for line in raw.splitlines():
-            if not line.strip():
-                continue
-            row = json.loads(line)
-            locator = {name: row.get(name) for name in _LOCATOR_FIELDS}
-            index.setdefault(_key(locator), []).append(row)
+        started_ns = time.time_ns()
+        temporary = NamedTemporaryFile(prefix='deepflow-accounting-', suffix='.sqlite',
+                                      dir=self.root, delete=False)
+        self._accounting_index_path = Path(temporary.name); temporary.close()
+        index = sqlite3.connect(self._accounting_index_path)
+        index.execute('''CREATE TABLE rows (
+          source_file TEXT, retained_file TEXT, offset_value, length_value,
+          raw_sha256 TEXT, ordinal INTEGER NOT NULL, byte_offset INTEGER NOT NULL,
+          byte_length INTEGER NOT NULL, row_sha256 TEXT NOT NULL, status TEXT,
+          PRIMARY KEY(ordinal))''')
+        index.execute('CREATE INDEX rows_locator ON rows('
+                      'source_file,retained_file,offset_value,length_value,raw_sha256,ordinal)')
+        rows = 0
+        try:
+            indexed_digest = hashlib.sha256()
+            class DigestingReader:
+                def __init__(self, stream):
+                    self.stream = stream
+                def read(self, size=-1):
+                    chunk = self.stream.read(size)
+                    indexed_digest.update(chunk)
+                    return chunk
+            with path.open('rb') as stream:
+                for byte_offset, line in self._byte_lines(DigestingReader(stream)):
+                    if not line.strip():
+                        continue
+                    row = json.loads(line)
+                    locator = {name: row.get(name) for name in _LOCATOR_FIELDS}
+                    index.execute('INSERT INTO rows VALUES (?,?,?,?,?,?,?,?,?,?)',
+                        (*_key(locator), rows, byte_offset, len(line),
+                         hashlib.sha256(line).hexdigest(), row.get('status')))
+                    rows += 1
+            index.commit()
+        except BaseException:
+            index.close(); self._accounting_index_path.unlink(missing_ok=True)
+            self._accounting_index_path = None
+            raise
+        accounting_sha = indexed_digest.hexdigest()
+        with path.open('rb') as stream:
+            if hashlib.file_digest(stream, 'sha256').hexdigest() != accounting_sha:
+                index.close(); self._accounting_index_path.unlink(missing_ok=True)
+                self._accounting_index_path = None
+                raise ValueError('DeepFlow codec accounting changed while indexing')
         self._accounting = index
+        self._accounting_source = path
         self._accounting_proof = {
-            "path": reference, "bytes": len(raw),
-            "sha256": hashlib.sha256(raw).hexdigest(),
+            "path": reference, "bytes": path.stat().st_size,
+            "sha256": accounting_sha, "rows": rows,
+            "index": "transient exact byte locator; not a scientific input",
+            "index_preparation_cost": {"started_ns": started_ns,
+                "ended_ns": time.time_ns(),
+                "transient_index_bytes": self._accounting_index_path.stat().st_size},
         }
         return index
+
+    def _accounting_rows(self, accounting, locator):
+        matches = accounting.execute(
+            'SELECT byte_offset,byte_length,row_sha256 FROM rows WHERE '
+            'source_file=? AND retained_file=? AND offset_value=? AND length_value=? '
+            'AND raw_sha256=? ORDER BY ordinal', _key(locator)).fetchall()
+        output = []
+        with self._accounting_source.open('rb') as stream:
+            for offset, length, expected in matches:
+                stream.seek(offset); raw = stream.read(length)
+                if len(raw) != length or hashlib.sha256(raw).hexdigest() != expected:
+                    raise ValueError('DeepFlow codec accounting row changed after indexing')
+                output.append(json.loads(raw))
+        return output
 
     def _raw_proof(self, locator: dict[str, Any], node: str) -> tuple[Path, dict[str, Any]]:
         retained = locator["retained_file"]
@@ -198,7 +292,7 @@ class DeepFlowDerivedValidator:
             locator = _locator(span)
             if not locator["source_file"].startswith(f"{node}/"):
                 raise ValueError("DeepFlow raw source locator differs from declared guest")
-            matches = [row for row in accounting.get(_key(locator), [])
+            matches = [row for row in self._accounting_rows(accounting, locator)
                        if row.get("status") == "normalized"]
             if len(matches) != 1:
                 raise ValueError("DeepFlow raw locator lacks unique normalized codec accounting")
@@ -245,3 +339,24 @@ class DeepFlowDerivedValidator:
             "codec_accounting": dict(self._accounting_proof or {}),
             "raw_dependencies": [dependencies[key] for key in sorted(dependencies)],
         }
+
+    def close(self):
+        if self._accounting is not None:
+            # Recheck the complete source after all row seeks; the transient index
+            # cannot hide a concurrent or accidental source change.
+            with self._accounting_source.open('rb') as stream:
+                actual = hashlib.file_digest(stream, 'sha256').hexdigest()
+            if actual != self._accounting_proof['sha256']:
+                raise ValueError('DeepFlow codec accounting changed after indexing')
+            self._accounting.close(); self._accounting = None
+        if self._accounting_index_path is not None:
+            self._accounting_index_path.unlink(missing_ok=True)
+            self._accounting_index_path = None
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            # Explicit close reports integrity failures. Finalization is cleanup
+            # only and must not replace the active export exception.
+            pass

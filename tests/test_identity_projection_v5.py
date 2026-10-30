@@ -16,6 +16,7 @@ from ebpf_discovery.raw_v4 import export_selection
 from ebpf_discovery.selection_v4 import bind_entry as bind_entry_v4
 from ebpf_discovery.selection_v5 import bind_entry as bind_entry_v5
 from ebpf_discovery.store_v5 import ObservationStoreV5
+from ebpf_discovery.store_v5 import ProjectionResolver
 from ebpf_discovery.toolchain_v5 import Toolchain
 from ebpf_discovery.remote_toolchain_v4 import _readonly_store
 from ebpf_discovery.transport_v4 import Journal
@@ -140,6 +141,7 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
                "length": raw.stat().st_size, "sha256": _sha(raw)}
     resolution = {"status": "resolved", "service_identity": {"compose_service": "database"},
                   "process_identity": {"node": "a"}, "record_locator": locator,
+                  "duplicate_order_probe": {"value": 1},
                   "clock_evidence": evidence,
                   "bracket": {"kind": "source_event_clock",
                               "before_stage": "before-block-1", "after_stage": "after-block-1",
@@ -150,11 +152,13 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
                                       "bytes": inventory_path.stat().st_size}}
     store = ObservationStoreV5(root / "observation-index.sqlite", same_trace_parents=True)
     store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
-        "digest", "training", "resolved_enriched", "unknown", "database", "{}",
+        "z-first-insertion", "training", "resolved_enriched", "unknown", "database", "{}",
         json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
+    later_resolution = json.loads(json.dumps(resolution))
+    later_resolution["duplicate_order_probe"]["value"] = True
     store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
-        "second-digest", "training", "resolved_enriched", "unknown", "database", "{}",
-        json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
+        "a-second-insertion", "training", "resolved_enriched", "unknown", "database", "{}",
+        json.dumps(later_resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
     store.db.commit()
     inventory_decodes = 0
     original_loads = json.loads
@@ -165,7 +169,13 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
             inventory_decodes += 1
         return original_loads(value, *args, **kwargs)
     monkeypatch.setattr("ebpf_discovery.store_v5.json.loads", tracked_loads)
-    assert next(iter(store.service_projections().values()))["service"] == "database"
+    diagnostic = root / "runtime-identity-v5" / "projection-training.jsonl"
+    diagnostic.write_text('{"service":"deliberately-divergent-diagnostic"}\n')
+    resolver = store.service_projections(root / "toolchain" / "runtime-identity-values.jsonl")
+    assert next(iter(resolver.values()))["service"] == "database"
+    assert next(iter(resolver.values()))["resolution"]["duplicate_order_probe"]["value"] is True
+    assert diagnostic.read_text() == '{"service":"deliberately-divergent-diagnostic"}\n'
+    resolver.close()
     assert inventory_decodes == 1
     assert not (root / "attempt-journal.sqlite").exists()
     config.write_text("changed: true\n")
@@ -417,12 +427,50 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypat
     store.db.execute("DELETE FROM runtime_identity_projection WHERE digest='second-digest'")
     store.db.commit()
 
+    encoded_resolution = store.db.execute(
+        "SELECT resolution FROM runtime_identity_projection").fetchone()[0]
+    enclosure_dependency = (root / json.loads(encoded_resolution)["clock_evidence"]["locator"]).resolve()
+    def changed_after_proof(path):
+        retained = original_read_bytes(path)
+        return retained + (b" " if path.resolve() == enclosure_dependency else b"")
+    monkeypatch.setattr(Path, "read_bytes", changed_after_proof)
+    with pytest.raises(ValueError, match="enclosure evidence changed"):
+        store.service_projections()
+    monkeypatch.setattr(Path, "read_bytes", tracked_read_bytes)
+
     journal.db.execute("UPDATE events SET wall_ns=999 WHERE kind='step_finished'")
     journal.db.commit()
     with pytest.raises(ValueError, match="journal event changed"):
         store.service_projections()
     journal.db.execute("UPDATE events SET wall_ns=2 WHERE kind='step_finished'")
     journal.db.commit()
+    assert len(store.service_projections()) == 1
+
+    terminal = journal.db.execute(
+        "SELECT seq,kind,wall_ns,monotonic_ns,data FROM events WHERE kind='step_finished'").fetchone()
+    journal.db.execute("DELETE FROM events WHERE seq=?", (terminal[0],)); journal.db.commit()
+    with pytest.raises(ValueError, match="journal event changed"):
+        store.service_projections()
+    journal.db.execute("INSERT INTO events(seq,kind,wall_ns,monotonic_ns,data) VALUES (?,?,?,?,?)",
+                       terminal); journal.db.commit()
+
+    encoded_resolution = store.db.execute(
+        "SELECT resolution FROM runtime_identity_projection").fetchone()[0]
+    retained_resolution = json.loads(encoded_resolution)
+    enclosure_path = root / retained_resolution["clock_evidence"]["locator"]
+    enclosure_body = original_read_bytes(enclosure_path)
+    enclosure = json.loads(enclosure_body)
+    del enclosure["transport"]["terminal"]["event_row_sha256"]
+    enclosure_path.write_text(json.dumps(enclosure), encoding="utf-8")
+    retained_resolution["clock_evidence"]["sha256"] = _sha(enclosure_path)
+    retained_resolution["clock_evidence"]["bytes"] = enclosure_path.stat().st_size
+    store.db.execute("UPDATE runtime_identity_projection SET resolution=?",
+                     (json.dumps(retained_resolution),)); store.db.commit()
+    with pytest.raises(ValueError, match="journal event changed"):
+        store.service_projections()
+    enclosure_path.write_bytes(enclosure_body)
+    store.db.execute("UPDATE runtime_identity_projection SET resolution=?", (encoded_resolution,))
+    store.db.commit()
     assert len(store.service_projections()) == 1
 
     # Target-stage evidence cannot rewrite the already frozen training projection.
@@ -476,3 +524,25 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypat
     assert root_v5 is None and reason_v5 == "conflicting_matching_entry_evidence"
     assert root_v4 is None and reason_v4 == "conflicting_entry_attributes"
     journal.close(); store.close()
+def test_projection_resolver_preserves_identical_duplicate_and_conflict_semantics(tmp_path):
+    resolver = ProjectionResolver(tmp_path, tmp_path / "values.jsonl")
+    key = ("a/raw", "deepflow-raw/a/raw", 1, 2, "a" * 64)
+    value = {"service": "database", "resolution": {"status": "resolved"}}
+    resolver.add(key, value)
+    resolver.add(key, json.loads(json.dumps(value)))
+    assert len(resolver) == 1 and resolver.get(key) == value
+    with pytest.raises(ValueError, match="conflicting runtime identity projection"):
+        resolver.add(key, {**value, "service": "frontend"})
+    resolver.finalize()
+    retained = [json.loads(line) for line in (tmp_path / "values.jsonl").read_text().splitlines()]
+    assert retained == [{"sha256": resolver.value_reference(value)["sha256"], "value": value}]
+    resolver.close()
+    # Python dict assignment replaces a later value even when JSON-distinct
+    # scalar types compare equal; preserve that historical edge case exactly.
+    resolver = ProjectionResolver(tmp_path, tmp_path / "equal-values.jsonl")
+    resolver.add(key, {"service": "database", "resolution": {"flag": 1}})
+    resolver.add(key, {"service": "database", "resolution": {"flag": True}})
+    assert resolver.get(key)["resolution"]["flag"] is True
+    resolver.finalize()
+    assert len((tmp_path / "equal-values.jsonl").read_text().splitlines()) == 1
+    resolver.close()

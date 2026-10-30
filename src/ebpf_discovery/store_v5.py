@@ -3,8 +3,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 import sqlite3
+from tempfile import NamedTemporaryFile
+import time
 
 from .store_v3 import ObservationStore, normalized_file
 from .runtime_identity_v5 import _locator, resolve
@@ -14,6 +17,140 @@ def _digest(row: dict) -> str:
     evidence = {key: value for key, value in row.items() if key != 'raw_file'}
     encoded = json.dumps(evidence, sort_keys=True, separators=(',', ':'), allow_nan=False)
     return hashlib.sha256(encoded.encode()).hexdigest()
+
+
+class ProjectionResolver:
+    """Disk-backed exact locator lookup after an obligatory full validation pass."""
+
+    def __init__(self, directory: Path, value_store: Path | None):
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        temporary = NamedTemporaryFile(prefix='runtime-projections-', suffix='.sqlite',
+                                      dir=directory, delete=False)
+        self.path = Path(temporary.name)
+        temporary.close()
+        self.db = sqlite3.connect(self.path)
+        self.db.executescript('''
+          CREATE TABLE values_by_sha (sha256 TEXT PRIMARY KEY, encoded TEXT NOT NULL);
+          CREATE TABLE locator_values (
+            source_file TEXT NOT NULL, retained_file TEXT NOT NULL,
+            offset INTEGER NOT NULL, length INTEGER NOT NULL, raw_sha256 TEXT NOT NULL,
+            value_sha256 TEXT NOT NULL,
+            PRIMARY KEY(source_file,retained_file,offset,length,raw_sha256));
+          CREATE INDEX locator_values_lookup ON locator_values(
+            source_file,retained_file,offset,length,raw_sha256);
+        ''')
+        self.value_store = Path(value_store) if value_store is not None else None
+        self.value_store_proof = None
+        self.count = 0
+        self.closed = False
+        self.started_ns = time.time_ns()
+
+    @staticmethod
+    def _encoded(value):
+        return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+
+    def add(self, key, value):
+        encoded = self._encoded(value)
+        value_sha = hashlib.sha256(encoded.encode()).hexdigest()
+        existing = self.db.execute(
+            'SELECT v.encoded FROM locator_values l JOIN values_by_sha v '
+            'ON v.sha256=l.value_sha256 WHERE source_file=? AND retained_file=? '
+            'AND offset=? AND length=? AND raw_sha256=?', tuple(key)).fetchall()
+        # Historical dict assignment accepts repeated keys only when complete
+        # Python values compare equal. Preserve that, including numeric equality.
+        if existing and json.loads(existing[0][0]) != value:
+            raise ValueError('conflicting runtime identity projection for one raw locator')
+        self.db.execute('INSERT OR IGNORE INTO values_by_sha VALUES (?,?)',
+                        (value_sha, encoded))
+        if existing:
+            # Match the historical dict assignment exactly: an equal later value
+            # replaces the earlier object, including JSON-distinct Python-equal
+            # values such as 1 and true.
+            self.db.execute('UPDATE locator_values SET value_sha256=? WHERE '
+                'source_file=? AND retained_file=? AND offset=? AND length=? AND raw_sha256=?',
+                (value_sha, *key))
+        else:
+            self.db.execute('INSERT INTO locator_values VALUES (?,?,?,?,?,?)',
+                            (*key, value_sha))
+            self.count += 1
+
+    def finalize(self):
+        self.db.commit()
+        if self.value_store is None:
+            return
+        self.value_store.parent.mkdir(parents=True, exist_ok=True)
+        pending = self.value_store.with_name('.' + self.value_store.name + '.pending')
+        digest = hashlib.sha256(); rows = 0; total = 0
+        try:
+            with pending.open('wb') as stream:
+                for value_sha, encoded in self.db.execute(
+                        'SELECT DISTINCT v.sha256,v.encoded FROM locator_values l '
+                        'JOIN values_by_sha v ON v.sha256=l.value_sha256 ORDER BY v.sha256'):
+                    line = json.dumps({'sha256': value_sha, 'value': json.loads(encoded)},
+                                      sort_keys=True, separators=(',', ':')).encode() + b'\n'
+                    stream.write(line); digest.update(line); total += len(line); rows += 1
+            os.replace(pending, self.value_store)
+        except BaseException:
+            pending.unlink(missing_ok=True)
+            raise
+        self.value_store_proof = {'path': str(self.value_store.resolve()),
+                                  'bytes': total, 'sha256': digest.hexdigest(),
+                                  'values': rows,
+                                  'authority': 'runtime_identity_projection SQL complete returned value',
+                                  'preparation_cost': {
+                                      'started_ns': self.started_ns,
+                                      'ended_ns': time.time_ns(),
+                                      'validated_locator_values': self.count,
+                                      'transient_index_bytes': self.path.stat().st_size}}
+
+    def get(self, key, default=None):
+        rows = self.db.execute(
+            'SELECT v.encoded FROM locator_values l JOIN values_by_sha v '
+            'ON v.sha256=l.value_sha256 WHERE source_file=? AND retained_file=? '
+            'AND offset=? AND length=? AND raw_sha256=?', tuple(key)).fetchall()
+        if not rows:
+            return default
+        values = [json.loads(row[0]) for row in rows]
+        if any(value != values[0] for value in values[1:]):
+            raise ValueError('conflicting runtime identity projection for one raw locator')
+        return values[0]
+
+    def values(self):
+        """Compatibility iterator without materializing the historical mapping."""
+        for (encoded,) in self.db.execute(
+                'SELECT v.encoded FROM locator_values l JOIN values_by_sha v '
+                'ON v.sha256=l.value_sha256 ORDER BY l.source_file,l.retained_file,'
+                'l.offset,l.length,l.raw_sha256'):
+            yield json.loads(encoded)
+
+    def __len__(self):
+        return self.count
+
+    def value_reference(self, value):
+        encoded = self._encoded(value)
+        value_sha = hashlib.sha256(encoded.encode()).hexdigest()
+        actual = self.db.execute('SELECT encoded FROM values_by_sha WHERE sha256=?',
+                                 (value_sha,)).fetchone()
+        if actual is None or json.loads(actual[0]) != value:
+            raise ValueError('runtime identity transformation lacks authoritative value')
+        return {'sha256': value_sha}
+
+    def __bool__(self):
+        return bool(self.count)
+
+    def close(self):
+        if self.closed:
+            return
+        self.closed = True
+        self.db.close()
+        self.path.unlink(missing_ok=True)
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            pass
 
 
 class ObservationStoreV5(ObservationStore):
@@ -315,55 +452,58 @@ class ObservationStoreV5(ObservationStore):
                 record['existing_projection_retained'] = True
             yield record
 
-    def service_projections(self):
+    def service_projections(self, value_store=None):
         from .identity_projection_v5 import (_verified_clock_relations,
                                               journal_event_sha256)
         from .runtime_identity_v5 import _evidence_key
-        result = {}
         root = self.path.parent
-        rows = list(self.db.execute(
-                "SELECT resolution,inventory_path,inventory_sha256 FROM runtime_identity_projection "
-                "WHERE status='resolved_enriched'"))
-        verified_files = {}
+        result = ProjectionResolver(root/'toolchain', value_store)
+        verified_files = set()
         parsed_inventories = {}
 
-        def verified(path, expected_sha, expected_bytes, description):
+        def verified(path, expected_sha, expected_bytes, description, *, body=False):
             try:
                 expected_bytes = int(expected_bytes)
             except (TypeError, ValueError) as exc:
                 raise ValueError(f'{description} lacks expected byte size') from exc
             key = (str(path.resolve()), expected_sha, expected_bytes)
+            if body:
+                retained = path.read_bytes()
+                if (len(retained) != expected_bytes
+                        or hashlib.sha256(retained).hexdigest() != expected_sha):
+                    raise ValueError(f'{description} changed before export')
+                verified_files.add(key)
+                return retained
             if key not in verified_files:
                 if (not path.is_file() or path.stat().st_size != expected_bytes):
                     raise ValueError(f'{description} changed before export')
-                body = path.read_bytes()
-                if hashlib.sha256(body).hexdigest() != expected_sha:
+                with path.open('rb') as stream:
+                    actual = hashlib.file_digest(stream, 'sha256').hexdigest()
+                if actual != expected_sha:
                     raise ValueError(f'{description} changed before export')
-                verified_files[key] = body
-            return verified_files[key]
+                verified_files.add(key)
+            return None
 
-        decoded_rows = [(json.loads(resolution), inventory_path, inventory_sha)
-                        for resolution, inventory_path, inventory_sha in rows]
-        needs_journal = any((row.get('bracket') or {}).get('kind') != 'source_event_clock'
-                            for row, _, _ in decoded_rows)
         journal_path = root / 'attempt-journal.sqlite'
-        if needs_journal and not journal_path.is_file():
-            raise ValueError('runtime identity journal dependency unavailable before export')
-        journal = sqlite3.connect(journal_path) if needs_journal else None
+        journal = sqlite3.connect(journal_path) if journal_path.is_file() else None
         if journal is not None:
             journal.execute('BEGIN')
         journal_events = {}
         try:
             verified_relations = None
-            for row, inventory_path, inventory_sha in decoded_rows:
+            rows = self.db.execute(
+                "SELECT resolution,inventory_path,inventory_sha256 "
+                "FROM runtime_identity_projection WHERE status='resolved_enriched'")
+            for resolution, inventory_path, inventory_sha in rows:
+                row = json.loads(resolution)
                 path = root / inventory_path
                 inventory_proof = row.get('inventory_proof') or {}
-                inventory_body = verified(
-                    path, inventory_sha, inventory_proof.get('bytes'),
-                    'runtime identity inventory dependency')
                 inventory_key = (str(path.resolve()), inventory_sha,
                                  int(inventory_proof.get('bytes')))
                 if inventory_key not in parsed_inventories:
+                    inventory_body = verified(
+                        path, inventory_sha, inventory_proof.get('bytes'),
+                        'runtime identity inventory dependency', body=True)
                     parsed_inventories[inventory_key] = json.loads(inventory_body)
                 retained_inventory = parsed_inventories[inventory_key]
                 evidence = row.get('clock_evidence') or {}
@@ -385,20 +525,23 @@ class ObservationStoreV5(ObservationStore):
                     if any(not isinstance(proof, dict) for proof in lifecycle_proofs):
                         raise ValueError('runtime identity clock bracket proof is unavailable')
                 else:
+                    if journal is None:
+                        raise ValueError('runtime identity journal dependency unavailable before export')
                     evidence_path = root / str(evidence.get('locator', ''))
                     enclosure = json.loads(verified(
                         evidence_path, evidence.get('sha256'), evidence.get('bytes'),
-                        'runtime identity enclosure evidence'))
+                        'runtime identity enclosure evidence', body=True))
                     for label in ('started', 'terminal'):
                         event = (enclosure.get('transport') or {}).get(label) or {}
                         sequence = event.get('seq')
                         if sequence not in journal_events:
-                            journal_events[sequence] = journal.execute(
+                            actual = journal.execute(
                                 'SELECT seq,kind,wall_ns,monotonic_ns,data FROM events WHERE seq=?',
                                 (sequence,)).fetchone()
-                        actual = journal_events[sequence]
-                        if (actual is None or journal_event_sha256(*actual)
-                                != event.get('event_row_sha256')):
+                            if actual is None:
+                                raise ValueError('runtime identity journal event changed before export')
+                            journal_events[sequence] = journal_event_sha256(*actual)
+                        if journal_events[sequence] != event.get('event_row_sha256'):
                             raise ValueError('runtime identity journal event changed before export')
                     lifecycle_proofs = [(enclosure.get(label) or {})
                                         for label in ('before_capture', 'after_capture')]
@@ -438,9 +581,11 @@ class ObservationStoreV5(ObservationStore):
                 value = {'service': row['service_identity']['compose_service'],
                          'resolution': row, 'inventory_path': inventory_path,
                          'inventory_sha256': inventory_sha}
-                if key in result and result[key] != value:
-                    raise ValueError('conflicting runtime identity projection for one raw locator')
-                result[key] = value
+                result.add(key, value)
+            result.finalize()
+        except BaseException:
+            result.close()
+            raise
         finally:
             if journal is not None:
                 journal.close()

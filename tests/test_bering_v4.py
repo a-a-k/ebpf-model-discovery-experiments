@@ -8,7 +8,114 @@ import pytest
 import requests
 import yaml
 
-from ebpf_discovery.bering_v4 import child_go_environment, replay
+from ebpf_discovery.bering_v4 import (_ordered_manifest_requests, _verified_stream_requests,
+                                      child_go_environment, replay)
+from ebpf_discovery.raw_v4 import _DeepFlowRequestArchive
+from ebpf_discovery.store_v5 import ProjectionResolver
+
+
+def _stream_manifest(tmp_path, shard_bytes):
+    tmp_path.mkdir(parents=True, exist_ok=True)
+    resolver = ProjectionResolver(tmp_path, tmp_path/'runtime-values.jsonl')
+    key = ('a/raw', 'deepflow-raw/a/raw', 0, 3, 'a' * 64)
+    value = {'service': 'database', 'resolution': {'status': 'resolved'}}
+    resolver.add(key, value); resolver.finalize()
+    archive = _DeepFlowRequestArchive(tmp_path, 'ebpf', resolver)
+    archive.MAX_SHARD_BYTES = shard_bytes
+    bodies = [b'{"resourceSpans":[{"n":1}]}\n', b'{"resourceSpans":[{"n":2}]}\n']
+    for ordinal, body in enumerate(bodies, 1):
+        archive.append(body, {'source': 'ebpf', 'content_type': 'application/json',
+            'content_encoding': '', 'observations': 1, 'request_order': ordinal}, [value])
+    descriptor = archive.finish(); resolver.close()
+    return {'exports': [], 'stream_exports': [descriptor], 'observations': 2}, bodies
+
+
+def test_storage_shard_boundaries_do_not_change_http_bodies_or_order(tmp_path):
+    one, bodies = _stream_manifest(tmp_path/'one', 1024)
+    two, _ = _stream_manifest(tmp_path/'two', len(bodies[0]))
+    assert len(one['stream_exports'][0]['shards']) == 1
+    assert len(two['stream_exports'][0]['shards']) == 2
+    assert [body for _, body in _verified_stream_requests(one)] == bodies
+    assert [body for _, body in _verified_stream_requests(two)] == bodies
+
+
+def test_mixed_ordinary_and_derived_requests_keep_original_order(tmp_path):
+    stream_manifest, bodies = _stream_manifest(tmp_path/'stream', 1024)
+    descriptor = stream_manifest['stream_exports'][0]
+    # Retain only the first streamed request and pair it with an ordinary request
+    # that was originally second. This exercises storage-form interleaving.
+    rows = Path(descriptor['request_index']['path']).read_bytes().splitlines()
+    Path(descriptor['request_index']['path']).write_bytes(rows[0] + b'\n')
+    descriptor['request_index']['bytes'] = len(rows[0]) + 1
+    descriptor['request_index']['sha256'] = hashlib.sha256(rows[0] + b'\n').hexdigest()
+    descriptor['requests'] = descriptor['observations'] = 1
+    descriptor['runtime_identity_transformations'] = 1
+    ordinary = tmp_path/'ordinary.json'; ordinary.write_bytes(b'ordinary')
+    manifest = {'exports': [{'source': 'native', 'path': str(ordinary),
+        'content_type': 'application/json', 'content_encoding': '', 'observations': 1,
+        'sha256': hashlib.sha256(b'ordinary').hexdigest(), 'request_order': 2}],
+        'stream_exports': [descriptor], 'observations': 2}
+    ordered = list(_ordered_manifest_requests(manifest, materialize=True))
+    assert [body if body is not None else Path(row['path']).read_bytes()
+            for row, body in ordered] == [bodies[0], b'ordinary']
+
+
+def test_combined_ordered_groups_keep_ebpf_before_native(tmp_path):
+    ebpf, bodies = _stream_manifest(tmp_path/'ebpf', 1024)
+    native_body = b'native-wire'
+    native_path = tmp_path/'native.pb'; native_path.write_bytes(native_body)
+    native = {'exports': [{'source': 'native', 'path': str(native_path),
+        'content_type': 'application/x-protobuf', 'content_encoding': '',
+        'observations': 1, 'sha256': hashlib.sha256(native_body).hexdigest(),
+        'request_order': 1}], 'stream_exports': [], 'observations': 1}
+    proofs = []
+    for name, value in [('ebpf-manifest.json', ebpf), ('native-manifest.json', native)]:
+        path = tmp_path/name; path.write_text(json.dumps(value))
+        proofs.append({'path': str(path), 'bytes': path.stat().st_size,
+                       'sha256': hashlib.sha256(path.read_bytes()).hexdigest()})
+    combined = {'exports': [], 'stream_exports': [], 'observations': 3,
+                'ordered_request_group_manifests': proofs}
+    (tmp_path/'harness').mkdir()
+    _, graph, process = harness(tmp_path/'harness', ingest_count=3)
+    response = Mock(status_code=200); sent = []
+    def post(url, **kwargs):
+        data = kwargs['data']; sent.append(data if isinstance(data, bytes) else data.read())
+        return response
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
+            patch('ebpf_discovery.bering_v4.requests.post', side_effect=post):
+        output, _ = replay(tmp_path/'bering', combined, tmp_path/'combined-run',
+                           'same-deployment', source_profile={
+                               'source_id': 'ebpf', 'input_type': 'ebpf-otlp'})
+    assert output == graph
+    assert sent == [*bodies, native_body]
+    command = json.loads((tmp_path/'combined-run/model-runtime/replay-command.json').read_text())
+    sequence = [json.loads(line) for line in Path(
+        command['accepted_request_sequence']['path']).read_text().splitlines()]
+    assert [row['storage_form'] for row in sequence] == [
+        'stream_archive_slice', 'stream_archive_slice', 'ordinary_export']
+
+
+def test_streamed_replay_posts_each_original_request_and_retains_acceptance(tmp_path):
+    manifest, bodies = _stream_manifest(tmp_path/'inputs', 1024)
+    _, graph, process = harness(tmp_path)
+    response = Mock(status_code=200)
+    sent = []
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
+            patch('ebpf_discovery.bering_v4.requests.post',
+                  side_effect=lambda url, **kwargs: sent.append(
+                      (url, kwargs['data'].read())) or response):
+        output, _ = replay(tmp_path/'bering', manifest, tmp_path/'run', 'same-deployment',
+                           source_profile={'source_id': 'ebpf', 'input_type': 'ebpf-otlp'})
+    assert output == graph
+    assert [body for _, body in sent] == bodies
+    assert all(url.endswith('/sources/ebpf/v1/traces') for url, _ in sent)
+    record = json.loads((tmp_path/'run/model-runtime/replay-command.json').read_text())
+    assert record['accepted_ingest_requests'] == []
+    accepted = record['accepted_stream_requests']
+    assert accepted['requests'] == 2
+    assert Path(accepted['path']).read_bytes().count(b'\n') == 2
 
 
 def harness(tmp_path, *, ingest_count=2, dropped=0):
@@ -45,7 +152,8 @@ def harness(tmp_path, *, ingest_count=2, dropped=0):
             selected = self.config['sources'][0]
             connector = 'obi' if selected['type'] == 'ebpf-obi' else 'ebpf-otlp'
             payload = {'model': graph, 'ingest': {'spans': ingest_count, 'dropped_spans': dropped},
-                       'sources': [{'type': 'ebpf', 'connector': connector, 'observations': 1},
+                       'sources': [{'type': 'ebpf', 'connector': connector,
+                                    'observations': max(0, ingest_count - 1)},
                                    {'type': 'traces', 'connector': 'otlp', 'observations': 1}]}
             Path(sink['latest_path']).write_text(json.dumps(payload))
             Path(sink['signal_quality_path']).write_text('{}')

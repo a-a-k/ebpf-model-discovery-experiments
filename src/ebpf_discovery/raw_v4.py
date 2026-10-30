@@ -7,6 +7,7 @@ import gzip
 import hashlib
 import json
 import os
+import time
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.parse import urlsplit
@@ -419,12 +420,16 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
                   supplied_server_roles: list[dict] | None = None,
                   index_file: Path | None = None,
                   index_prefix_sha256: str | None = None,
-                  prepared_path: Path | None = None) -> dict:
+                  prepared_path: Path | None = None, retain_body: bool = True) -> dict:
     suffix = ".pb" if "protobuf" in content_type else ".json"
     if content_encoding == "gzip":
         suffix += ".gz"
     path = (out / f"{source}-{ordinal:06d}{suffix}").resolve()
-    if prepared_path is None:
+    if not retain_body:
+        if prepared_path is not None:
+            raise ValueError("non-retained export cannot use a prepared path")
+        exported_sha256 = hashlib.sha256(body).hexdigest()
+    elif prepared_path is None:
         _atomic_write(path, body)
         exported_sha256 = hashlib.sha256(body).hexdigest()
     else:
@@ -438,6 +443,7 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
         "sha256": exported_sha256, "raw_file": str(raw_file.resolve()),
         "raw_sha256": raw_sha256,
         "codec_steps": codec_steps,
+        "request_order": ordinal,
     }
     if selected_ids is None:
         result["selection"] = "all_frozen_source_records"
@@ -456,6 +462,108 @@ def _write_export(out: Path, ordinal: int, source: str, content_type: str, body:
     return result
 
 
+class _DeepFlowRequestArchive:
+    """Bound storage while retaining every original HTTP request boundary."""
+
+    MAX_SHARD_BYTES = 64 * 1024 * 1024
+
+    def __init__(self, out: Path, source: str, projections):
+        self.out = Path(out); self.source = source; self.projections = projections
+        self.index_path = self.out / f'{source}-request-index.jsonl'
+        self.index_pending = self.index_path.with_name('.' + self.index_path.name + '.pending')
+        self.index = self.index_pending.open('wb')
+        self.index_digest = hashlib.sha256(); self.index_bytes = 0
+        self.shards = []; self.shard = None; self.shard_pending = None
+        self.shard_digest = None; self.shard_bytes = 0
+        self.requests = self.observations = self.transformations = 0
+        self.supplied_role_keys = set()
+        self.wire_bytes = self.max_request_bytes = 0
+        self.closed = False
+        self.started_ns = time.time_ns()
+
+    def _open_shard(self):
+        ordinal = len(self.shards) + 1
+        final = self.out / f'{self.source}-requests-{ordinal:06d}.bin'
+        pending = final.with_name('.' + final.name + '.pending')
+        self.shard = pending.open('wb'); self.shard_pending = pending
+        self.shard_final = final; self.shard_digest = hashlib.sha256(); self.shard_bytes = 0
+
+    def _close_shard(self):
+        if self.shard is None:
+            return
+        self.shard.close(); os.replace(self.shard_pending, self.shard_final)
+        self.shards.append({'path': str(self.shard_final.resolve()),
+                            'bytes': self.shard_bytes,
+                            'sha256': self.shard_digest.hexdigest()})
+        self.shard = self.shard_pending = self.shard_digest = None
+
+    def append(self, body: bytes, entry: dict, transformations: list):
+        if self.shard is None:
+            self._open_shard()
+        if self.shard_bytes and self.shard_bytes + len(body) > self.MAX_SHARD_BYTES:
+            self._close_shard(); self._open_shard()
+        offset = self.shard_bytes
+        self.shard.write(body); self.shard_digest.update(body); self.shard_bytes += len(body)
+        refs = ([self.projections.value_reference(value) for value in transformations]
+                if transformations and self.projections is not None else [])
+        record = {**entry, 'shard': len(self.shards), 'offset': offset,
+                  'length': len(body), 'sha256': hashlib.sha256(body).hexdigest(),
+                  'runtime_identity_transformation_refs': refs}
+        line = json.dumps(record, sort_keys=True, separators=(',', ':')).encode() + b'\n'
+        self.index.write(line); self.index_digest.update(line); self.index_bytes += len(line)
+        self.requests += 1; self.observations += int(entry['observations'])
+        self.transformations += len(refs)
+        self.supplied_role_keys.update(
+            (role['source'], role['trace_id'], role['span_id'])
+            for role in entry.get('supplied_server_roles', []))
+        self.wire_bytes += len(body); self.max_request_bytes = max(self.max_request_bytes, len(body))
+
+    def finish(self):
+        if self.transformations and not getattr(self.projections, 'value_store_proof', None):
+            raise ValueError('streamed runtime identity transformations require exact value store')
+        self._close_shard(); self.index.close(); os.replace(self.index_pending, self.index_path)
+        self.closed = True
+        ended_ns = time.time_ns()
+        return {'schema_version': 'deepflow-request-archive-v5', 'source': self.source,
+                'request_index': {'path': str(self.index_path.resolve()),
+                                  'bytes': self.index_bytes,
+                                  'sha256': self.index_digest.hexdigest()},
+                'shards': self.shards, 'requests': self.requests,
+                'observations': self.observations, 'wire_bytes': self.wire_bytes,
+                'runtime_identity_transformations': self.transformations,
+                'max_request_bytes': self.max_request_bytes,
+                'http_request_boundaries_preserved': True,
+                'storage_shards_are_not_http_batches': True,
+                'archive_preparation_cost': {
+                    'started_ns': self.started_ns, 'ended_ns': ended_ns,
+                    'request_index_bytes': self.index_bytes,
+                    'storage_shard_bytes': sum(item['bytes'] for item in self.shards),
+                    'storage_shards': len(self.shards)},
+                'runtime_identity_values': dict(
+                    getattr(self.projections, 'value_store_proof', None) or {})}
+
+    def abort(self):
+        try:
+            if self.shard is not None:
+                self.shard.close()
+            self.index.close()
+        except Exception:
+            pass
+        for path in [self.shard_pending, self.index_pending]:
+            if path is not None:
+                Path(path).unlink(missing_ok=True)
+        for proof in self.shards:
+            Path(proof['path']).unlink(missing_ok=True)
+
+    def discard(self):
+        self.abort()
+        self.index_path.unlink(missing_ok=True)
+
+    def __del__(self):
+        if not self.closed:
+            self.abort()
+
+
 def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], out: Path,
                      network_scope: str | None = None,
                      supplied_server_roles: dict | None = None,
@@ -466,8 +574,9 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
         raise ValueError("unsupported native Jaeger envelope granularity")
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    exports, ordinal, total = [], 0, 0
+    exports, stream_exports, ordinal, total = [], [], 0, 0
     deepflow_validator = None
+    deepflow_archive = None
     roles = supplied_server_roles or {}
     rows = list(store.db.execute("SELECT path,consumed FROM files ORDER BY path"))
     for raw_path, consumed in rows:
@@ -634,13 +743,26 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                        "filtered direct OTLP JSONL document without normalized reconstruction"))],
                     network_scope=network_scope, raw_prefix_bytes=consumed,
                     supplied_server_roles=supplied,
+                    retain_body=not bool(derived_proof),
                 )
                 exported["raw_record_sha256"] = hashlib.sha256(raw_line).hexdigest()
                 if derived_proof:
-                    exported["source_representation"] = "derived_otlp_json"
-                    exported["original_agent_wire"] = False
-                    exported["derived_otlp_proof"] = derived_proof
-                    exported["raw_file_role"] = "indexed_derived_wrapper_prefix"
+                    # Do not keep every (potentially very large) request body and
+                    # its proof dictionary live together. Storage is bounded while
+                    # every old request body remains independently indexed.
+                    if deepflow_archive is None:
+                        deepflow_archive = _DeepFlowRequestArchive(out, source, service_projections)
+                    entry = {key: value for key, value in exported.items() if key != 'path'}
+                    entry.update(source_representation='derived_otlp_json',
+                                 original_agent_wire=False,
+                                 derived_otlp_proof=derived_proof,
+                                 raw_file_role='indexed_derived_wrapper_prefix')
+                    if transformations:
+                        entry['validated_derived_wrapper_unchanged'] = True
+                        entry['graph_edges_injected'] = False
+                    deepflow_archive.append(body, entry, transformations)
+                    total += count
+                    continue
                 if transformations:
                     exported['runtime_identity_transformations'] = transformations
                     if derived_proof:
@@ -650,14 +772,26 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                     exported['graph_edges_injected'] = False
                 exports.append(exported)
                 total += count
+    if deepflow_archive is not None:
+        stream_exports.append(deepflow_archive.finish())
+    try:
+        if deepflow_validator is not None:
+            deepflow_validator.close()
+    except BaseException:
+        if deepflow_archive is not None:
+            deepflow_archive.discard()
+        raise
     if roles:
         applied = {(role["source"], role["trace_id"], role["span_id"])
                    for item in exports for role in item.get("supplied_server_roles", [])}
+        if deepflow_archive is not None:
+            applied.update(deepflow_archive.supplied_role_keys)
         if applied != set(roles):
             raise ValueError(f"supplied server roles not applied to exact selected source identities: {sorted(set(roles)-applied)}")
-    result = {"exports": exports, "observations": total,
-              "runtime_identity_projected_observations": sum(
-                  len(item.get('runtime_identity_transformations', [])) for item in exports),
+    projected = sum(len(item.get('runtime_identity_transformations', [])) for item in exports)
+    projected += sum(item['runtime_identity_transformations'] for item in stream_exports)
+    result = {"exports": exports, "stream_exports": stream_exports, "observations": total,
+              "runtime_identity_projected_observations": projected,
               "runtime_identity_projection_policy": (
                   "actual hash-verified Compose identity on copied exports only; originals retained; no edges"
                   if service_projections else
