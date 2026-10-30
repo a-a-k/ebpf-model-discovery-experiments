@@ -4,7 +4,7 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding, otlp-attribute-keys]
+        options: [dsb-capture, entry-route-binding, otlp-attribute-keys, native-shipping]
         default: dsb-capture
       declaration:
         description: Optional tracked fixed artifact declaration; otherwise use the selected audit's original source
@@ -44,7 +44,8 @@ jobs:
           kind=os.environ['AUDIT_KIND']
           defaults={'dsb-capture':'docs/dsb-capture-audit-20261030.json',
                     'entry-route-binding':'docs/entry-route-binding-audit-20261030.json',
-                    'otlp-attribute-keys':'docs/otel-attribute-key-audit-20261030.json'}
+                    'otlp-attribute-keys':'docs/otel-attribute-key-audit-20261030.json',
+                    'native-shipping':'docs/otel-native-shipping-audit-20261030.json'}
           declaration=os.environ['DECLARATION'] or defaults[kind]
           path=pathlib.PurePosixPath(declaration)
           if (path.is_absolute() or path.as_posix()!=declaration or len(path.parts)!=2
