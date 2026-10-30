@@ -312,6 +312,12 @@ def test_otel_partial_rendered_sdk_settings_reject_unexpected_enabled_service_tr
             "product-catalog-b": "true"}, "partial")
 
 
+def test_otel_rendered_sdk_settings_require_both_controlled_replicas() -> None:
+    with pytest.raises(ValueError, match="lacks a controlled product-catalog replica"):
+        REVIEW.validate_otel_demo_sdk_settings({
+            "frontend": None, "product-catalog-a": None}, "full")
+
+
 def test_native_preflight_retains_deployment_only_argv_contract(tmp_path: Path) -> None:
     declaration, compact, full = fixture(tmp_path)
     result = REVIEW.review(declaration, compact, full, tmp_path / "out")

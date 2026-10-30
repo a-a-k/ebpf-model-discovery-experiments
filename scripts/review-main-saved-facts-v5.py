@@ -330,16 +330,19 @@ def validate_otel_demo_sdk_settings(settings: dict[str, str | None], mode: str) 
                if value not in (None, "true", "false")}
     if invalid:
         raise ValueError("rendered OTel SDK configuration has invalid disable values")
-    enabled_by_default = {service for service, value in settings.items() if value == "true"}
+    controlled_replicas = {"product-catalog-a", "product-catalog-b"}
+    if not controlled_replicas <= settings.keys():
+        raise ValueError("rendered OTel deployment lacks a controlled product-catalog replica")
+    disabled_services = {service for service, value in settings.items() if value == "true"}
     if mode == "absent":
         expected = set(settings) - {"otel-collector", "product-catalog"}
     elif mode == "partial":
-        expected = {"product-catalog-a", "product-catalog-b"}
+        expected = controlled_replicas
     elif mode == "full":
         expected = set()
     else:
         raise ValueError("unknown rendered OTel tracing mode")
-    if enabled_by_default != expected:
+    if disabled_services != expected:
         raise ValueError("rendered SDK configuration differs from declared mode")
     return sorted(value for value in settings.values() if value is not None)
 
@@ -700,9 +703,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     environment = service.get("environment") or {}
                     value = (str(environment["OTEL_SDK_DISABLED"]).lower()
                              if "OTEL_SDK_DISABLED" in environment else None)
-                    if name in otel_sdk_settings and otel_sdk_settings[name] != value:
-                        raise ValueError("rendered service has conflicting SDK settings")
-                    otel_sdk_settings[name] = value
+                    if declaration["system"] == "otel_demo":
+                        if name in otel_sdk_settings and otel_sdk_settings[name] != value:
+                            raise ValueError("rendered service has conflicting SDK settings")
+                        otel_sdk_settings[name] = value
                     if "OTEL_SDK_DISABLED" in environment:
                         sdk_flags.append(value)
     if declaration["system"] == "deathstarbench":
