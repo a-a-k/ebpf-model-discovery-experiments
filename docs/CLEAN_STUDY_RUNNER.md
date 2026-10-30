@@ -86,3 +86,30 @@ Main agent focused checks: 61 passed, three existing platform skips.
 Independent skeptic checks: 52 passed, three existing platform skips.
 Both agents give ORIGINAL-feasibility GO for push/CI and real qualification.
 Main execution is gated on actual qualification, not these unit checks.
+
+## Generic RPC semantic-convention compatibility decision
+
+Before implementation both main agent and independent skeptic give renewed
+ORIGINAL-feasibility GO for accepting the observed rpc.system.name alias alongside
+rpc.system in generic Bering discovery. The same saved input with Bering 1.3.0
+is the strongest direct engineering baseline. Conflicting alias values must stay
+untyped/unknown; no method, peer, parent or edge is invented. Fully qualified
+observed rpc.method values remain unchanged. The capability applies to all arms.
+
+Pinned OBI emits rpc.system.name; pinned Bering reads rpc.system only in client
+RPC fallback, dependency protocol and eBPF gRPC endpoint inference. A selected
+actual original protobuf export and its frozen Bering input both contain the new
+field and preserve the same RPC observations. This proves a real input-format
+mismatch, not the complete cause of every missing required call. Full saved-input
+comparison and real-path qualification precede attribution and new main series.
+This repair is product-generic; no study code, fixtures or results enter Bering.
+Preparation, prior failures, comparison and qualification remain study costs.
+
+The fixed full-input comparison script/workflow received independent actual-code
+GO. It verifies the whole immutable archive and each original/frozen export,
+scans all 292 frozen exports, and runs both exact binaries on the same ordered
+input with the existing replay and swap setup. It reports actual graph/method
+coverage differences without running Sheaft or rescoring application outcomes.
+Selected original/frozen protobuf evidence is recorded in
+rpc-semconv-selected-evidence-20261030.json; it includes real required RPC calls,
+not just startup health checks. Complete-prefix results are still pending.

@@ -1,0 +1,264 @@
+{
+  "schema": "selected-rpc-semantic-convention-diagnosis",
+  "source": {
+    "repository": "a-a-k/ebpf-model-discovery-experiments",
+    "run_id": 40971766251,
+    "head_sha": "eb7342e79e6f622123c572e222cbf60608b099e0",
+    "artifact_id": 12950018152,
+    "artifact_size": 3327735973,
+    "artifact_api_sha256": "c85a186a8b25b864f76fdaf2a1e6d0de4ab82498fa9a855448d67f56505f07fa"
+  },
+  "scope": "Two selected matching protobuf members from the frozen training prefix. Counts apply only to this export; no whole-prefix absence, graph-accuracy or whole-ZIP verification claim.",
+  "observation": "Required RPC method fields and rpc.system.name=grpc occur in original collector output and exact Bering input. Bering v1.3.0 reads only rpc.system in its RPC-specific paths.",
+  "bering_pin": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
+  "members": [
+    {
+      "file": "toolchain/inputs/ebpf/raw/exports/ebpf-000147.pb",
+      "sha256": "cb5edd6b3959f14cc589bfafb8bc8886e264e2aa22f942de1e4c72c13bd82862",
+      "counts_in_this_export_only": {
+        "spans": 4096,
+        "rpc.system.name": 1256,
+        "rpc.method": 1256
+      },
+      "rpc_methods": {
+        "flagd.evaluation.v2.Service/ResolveFloat": 28,
+        "oteldemo.CartService/EmptyCart": 39,
+        "oteldemo.CheckoutService/PlaceOrder": 82,
+        "oteldemo.ProductCatalogService/GetProduct": 485,
+        "oteldemo.PaymentService/Charge": 29,
+        "opentelemetry.proto.collector.logs.v1.LogsService/Export": 21,
+        "_OTHER": 170,
+        "oteldemo.CurrencyService/Convert": 38,
+        "opentelemetry.proto.collector.trace.v1.TraceService/Export": 85,
+        "oteldemo.CartService/AddItem": 128,
+        "oteldemo.CartService/GetCart": 144,
+        "grpc.health.v1.Health/Check": 7
+      },
+      "examples": [
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "e5a701bd8dbc3201667a3d4cbf17b4b0",
+          "span_id": "c7a6edf37d13f7df",
+          "parent_span_id": "08f87ff217f80895",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 2,
+          "name": "oteldemo.CheckoutService/PlaceOrder",
+          "trace_id": "23e03e6fae80db100a400904d9e85108",
+          "span_id": "ce7307c915032482",
+          "parent_span_id": "9926fbd6422e0401",
+          "attributes": {
+            "rpc.method": "oteldemo.CheckoutService/PlaceOrder",
+            "rpc.system.name": "grpc",
+            "server.port": 5050,
+            "server.address": "checkout",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.ProductCatalogService/GetProduct",
+          "trace_id": "e00dc2d8a05edf5482564fa7ef15d758",
+          "span_id": "a922bb89c340e601",
+          "parent_span_id": "04499eb1e5e766fc",
+          "attributes": {
+            "rpc.method": "oteldemo.ProductCatalogService/GetProduct",
+            "rpc.system.name": "grpc",
+            "server.port": 3550,
+            "server.address": "172.28.11.20",
+            "service.peer.name": "172.28.11.20",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "a48786adbe810a1290e62405ebe5bc6d",
+          "span_id": "4aa038a3315be8eb",
+          "parent_span_id": "bc22f9fd58c139c5",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "26800115c87fa01d8bb17c97a66aed57",
+          "span_id": "7086440101ae1cc8",
+          "parent_span_id": "5ef3f17d55cfc2ba",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.PaymentService/Charge",
+          "trace_id": "9513acf70a685445623ded29dcfecb1d",
+          "span_id": "2c5232b10903f928",
+          "parent_span_id": "a865ee10f7a8b74e",
+          "attributes": {
+            "rpc.method": "oteldemo.PaymentService/Charge",
+            "rpc.system.name": "grpc",
+            "server.port": 50051,
+            "server.address": "172.28.11.48",
+            "service.peer.name": "172.28.11.48",
+            "rpc.response.status_code": "OK"
+          }
+        }
+      ]
+    },
+    {
+      "file": "observations/a.raw/1793316910774538964-019ad24c4a2c4603b49336807f949c0d/body.pb",
+      "sha256": "96fdcf5f864593d2844958a3617dec2fe639eec8048cabea60f50ebe486b8f54",
+      "counts_in_this_export_only": {
+        "spans": 4096,
+        "rpc.system.name": 1256,
+        "rpc.method": 1256
+      },
+      "rpc_methods": {
+        "flagd.evaluation.v2.Service/ResolveFloat": 28,
+        "oteldemo.CartService/EmptyCart": 39,
+        "oteldemo.CheckoutService/PlaceOrder": 82,
+        "oteldemo.ProductCatalogService/GetProduct": 485,
+        "oteldemo.PaymentService/Charge": 29,
+        "opentelemetry.proto.collector.logs.v1.LogsService/Export": 21,
+        "_OTHER": 170,
+        "oteldemo.CurrencyService/Convert": 38,
+        "opentelemetry.proto.collector.trace.v1.TraceService/Export": 85,
+        "oteldemo.CartService/AddItem": 128,
+        "oteldemo.CartService/GetCart": 144,
+        "grpc.health.v1.Health/Check": 7
+      },
+      "examples": [
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "e5a701bd8dbc3201667a3d4cbf17b4b0",
+          "span_id": "c7a6edf37d13f7df",
+          "parent_span_id": "08f87ff217f80895",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 2,
+          "name": "oteldemo.CheckoutService/PlaceOrder",
+          "trace_id": "23e03e6fae80db100a400904d9e85108",
+          "span_id": "ce7307c915032482",
+          "parent_span_id": "9926fbd6422e0401",
+          "attributes": {
+            "rpc.method": "oteldemo.CheckoutService/PlaceOrder",
+            "rpc.system.name": "grpc",
+            "server.port": 5050,
+            "server.address": "checkout",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.ProductCatalogService/GetProduct",
+          "trace_id": "e00dc2d8a05edf5482564fa7ef15d758",
+          "span_id": "a922bb89c340e601",
+          "parent_span_id": "04499eb1e5e766fc",
+          "attributes": {
+            "rpc.method": "oteldemo.ProductCatalogService/GetProduct",
+            "rpc.system.name": "grpc",
+            "server.port": 3550,
+            "server.address": "172.28.11.20",
+            "service.peer.name": "172.28.11.20",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "a48786adbe810a1290e62405ebe5bc6d",
+          "span_id": "4aa038a3315be8eb",
+          "parent_span_id": "bc22f9fd58c139c5",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.CartService/EmptyCart",
+          "trace_id": "26800115c87fa01d8bb17c97a66aed57",
+          "span_id": "7086440101ae1cc8",
+          "parent_span_id": "5ef3f17d55cfc2ba",
+          "attributes": {
+            "rpc.method": "oteldemo.CartService/EmptyCart",
+            "rpc.system.name": "grpc",
+            "server.port": 7070,
+            "server.address": "172.28.11.41",
+            "service.peer.name": "172.28.11.41",
+            "rpc.response.status_code": "OK"
+          }
+        },
+        {
+          "service": "checkout",
+          "kind": 3,
+          "name": "oteldemo.PaymentService/Charge",
+          "trace_id": "9513acf70a685445623ded29dcfecb1d",
+          "span_id": "2c5232b10903f928",
+          "parent_span_id": "a865ee10f7a8b74e",
+          "attributes": {
+            "rpc.method": "oteldemo.PaymentService/Charge",
+            "rpc.system.name": "grpc",
+            "server.port": 50051,
+            "server.address": "172.28.11.48",
+            "service.peer.name": "172.28.11.48",
+            "rpc.response.status_code": "OK"
+          }
+        }
+      ]
+    }
+  ],
+  "actual_graph": {
+    "sha256": "b75912c21abed3c724a286c268e1dc30e4bc24ba55a56fdb63f35f00ae4de450",
+    "services": 41,
+    "edges": 168,
+    "endpoints": 18,
+    "inspection": "No outgoing frontend edge and no required checkout gRPC edges; HTTP shipping/email and database edges remain."
+  },
+  "interpretation": "Input-format incompatibility confirmed. Full-input old/new graph and binding comparison remains required before attributing all missing forecasts or claiming a repair."
+}
