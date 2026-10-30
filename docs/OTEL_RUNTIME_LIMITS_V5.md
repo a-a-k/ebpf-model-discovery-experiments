@@ -1,0 +1,57 @@
+# Preliminary diagnosis of adverse OTel checkout outcomes
+
+The completed Coroot/OTel partial-tracing main runs retain checkout successes of
+2686/3200, 2072/3200 and 518/3200. All corresponding model forecasts are
+unavailable. These outcomes remain in the comparison; their unfavorable values
+are not grounds for a replacement run. The unchanged review records are in
+[the nine-cell publication](../results/iteration-5/main-review-41025655518/SOURCE.md).
+
+For seed 8, the retained frontend log contains cart and shipping dependency errors:
+DNS/connect timeouts, closed or reset connections, shipping HTTP 408/400 responses
+and `ECONNRESET`. Errors also occur in a state-11 target block whose two controlled
+product replicas passed the pre-load TCP censuses. Thus the prescribed failure
+of the controlled product replicas alone does
+not explain every unsuccessful checkout. Resource samples show elevated guest
+load and checkout CPU/memory pressure. Saturation or connection instability is a
+plausible mechanism, but the exact root cause and any contribution from the
+collector are not established. The selected kernel log does not establish an
+OOM, and final healthy containers do not prove that no earlier transient restart
+occurred.
+
+The concentration of latencies around 15 seconds is **not an experiment deadline**.
+At the actual campaign source `c5df32ffc3039136c184b7915337836c39db811f`, the v5
+adapter resolves operations to the uncapped v4 implementation, which rejects a
+supplied operation deadline and calls the transport with `timeout=None`. The
+transport waits for the response body. The legacy capped adapter method is not
+the method used by this campaign. The source of the observed latency concentration
+within the application/proxy stack remains unresolved. Completed evaluated
+failures are not automatically all HTTP-negative responses: payload and
+postcondition checks can also reject an HTTP 200 response.
+
+This runtime diagnosis is separate from graph coverage. A graph without the
+required entry/dependency evidence does not yield a supported forecast in this
+pipeline; that does not cause an application request to fail. Likewise, runtime
+errors do not establish a fundamental limitation of eBPF or Coroot. The seed-8
+logs support these narrow observations; an identical error mechanism for seeds
+6/7 has not been confirmed from their logs.
+
+## Preserved sources and verification limits
+
+Source run: [41004296165](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41004296165).
+Campaign artifact `12961026796` contains 1,356,339,755 bytes, API ZIP SHA-256
+`fe39cf4ee30f9e4180f69a996965ed35ac252cd71991d04f5c603ce2728d8c8a`.
+Only selected members were inspected locally; no complete ZIP, complete event
+history or independent raw terminal-response journal inspection is claimed here.
+
+| Selected member | SHA-256 |
+|---|---|
+| `native/final/application-logs/a-frontend.log` | `26804484bc27217bf677fedce610ba1f9310435d9b6455192ba5b797a7538775` |
+| `native/final/application-logs/a-shipping.log` | `b626228fe2341e56f9e22cb59dfbcf5375572078dbff17b06d65e75679997cc1` |
+| `blocks.json` | `c0e4b2faad60387ceb5523345b5de60cbc4eaf1d4f877f7ff91361066fac105e` |
+| `infrastructure/resources/guest-a-samples.txt` | `06f6639536716258f824ed6503f567ac6a7730ddf7c35185b1616189bab74cc4` |
+| `infrastructure/resources/kernel-latest.txt` | `bdbd8f2844d035d53adfec7b2030c17a526a00eb45ed47f37d8adc38a8c6d2da` |
+
+The operation and transport implementation is retained at the exact source:
+[v5 adapter bridge](https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/c5df32ffc3039136c184b7915337836c39db811f/systems/otel_demo/experiment_v5.py),
+[uncapped operations](https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/c5df32ffc3039136c184b7915337836c39db811f/systems/otel_demo/experiment_v4.py),
+[uncapped transport](https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/c5df32ffc3039136c184b7915337836c39db811f/src/ebpf_discovery/transport_v4.py).

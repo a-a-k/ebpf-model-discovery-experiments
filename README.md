@@ -5,11 +5,12 @@ The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation an
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
 review; main groups are being staged. The published review snapshot now contains
-**36/81 independently reviewed main cells**: 26 OBI and 10 Coroot, including all
+**45/81 independently reviewed main cells**: 26 OBI and 19 Coroot, including all
 nine Petclinic cells for each of these collectors. The
-[explicit index and unchanged review records](results/iteration-5/main-review-snapshot-20261030/SOURCE.md)
+[first 36 records](results/iteration-5/main-review-snapshot-20261030/SOURCE.md) and
+[nine additional records](results/iteration-5/main-review-41025655518/SOURCE.md)
 state each source, checked files and verification limits. These are valid
-experimental packets, including unknown and inaccurate forecasts, not 36
+experimental packets, including unknown and inaccurate forecasts, not 45
 positive findings. Later packets remain in progress. Technical smoke admission does
 not require an available or accurate forecast.
 New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
@@ -38,6 +39,12 @@ predicts `0.875`. Other full-tracing packets retain additional deviations.
 Partial-tracing OTel graphs exist but their required operation evidence does not
 support the saved forecasts. A missing forecast is therefore distinguished from
 a missing graph. These observations are preserved without result-driven reruns.
+The newly reviewed Coroot OTel partial-tracing main runs retain checkout successes
+of `2686/3200`, `2072/3200` and `518/3200`; their forecasts are unavailable.
+These completed adverse measurements remain part of the comparison. Application
+runtime errors and graph-coverage limitations are assessed separately; the
+[preliminary diagnosis](docs/OTEL_RUNTIME_LIMITS_V5.md) records actual dependency
+errors and unresolved causes without attributing them to the collector.
 
 Implementation now follows the existing collection, Bering and Sheaft path.
 Format-only review issues are inspected directly from retained files. The
