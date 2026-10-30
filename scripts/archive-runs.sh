@@ -11,6 +11,55 @@ chunk_bytes="${ARCHIVE_CHUNK_BYTES:-1073741824}"
 (( max_asset_bytes > 1 && max_asset_bytes <= 2147483648 &&
    chunk_bytes > 0 && chunk_bytes < max_asset_bytes )) || exit 2
 mkdir -p "$archive_dir"
+release_tag="${ARCHIVE_RELEASE_TAG:-}"
+release_id="${ARCHIVE_RELEASE_ID:-}"
+if [[ ( -n "$release_tag" && -z "$release_id" ) || ( -z "$release_tag" && -n "$release_id" ) ]]; then
+  echo 'Incremental publication requires both release tag and ID' >&2; exit 2
+fi
+if [[ -n "$release_tag" ]]; then
+  : "${GITHUB_SHA:?}" "${GITHUB_RUN_ID:?}"
+  [[ "$release_tag" == "data-${GITHUB_RUN_ID}" ]] || exit 2
+  release_id="${ARCHIVE_RELEASE_ID:?}"
+  [[ "$release_id" =~ ^[1-9][0-9]*$ ]] || exit 2
+  gh_api_to_file "$archive_dir/release-before.json" \
+    "repos/${GITHUB_REPOSITORY}/releases/$release_id"
+  jq -e --arg tag "$release_tag" --arg head "$GITHUB_SHA" \
+    '.draft == true and .tag_name == $tag and .target_commitish == $head' \
+    "$archive_dir/release-before.json" >/dev/null
+  [[ "$(jq -r .id "$archive_dir/release-before.json")" == "$release_id" ]] || exit 2
+fi
+
+publish_verified_working_copy() {
+  local original="$1" file name digest size proof asset_id
+  [[ -n "$release_tag" ]] || return 0
+  shopt -s nullglob
+  local files=("$original")
+  [[ -f "$original" ]] || files=("$original".part[0-9][0-9][0-9][0-9])
+  for file in "${files[@]}"; do
+    name="$(basename "$file")"
+    [[ "$name" =~ ^[a-zA-Z0-9._-]+$ ]] || exit 2 # URL-unreserved generated names only.
+    digest="$(sha256sum "$file")"; digest="${digest%% *}"
+    size="$(stat -c%s "$file")"
+    gh api --method POST -H 'Content-Type: application/octet-stream' -H 'Accept: application/vnd.github+json' \
+      "https://uploads.github.com/repos/${GITHUB_REPOSITORY}/releases/$release_id/assets?name=$name" \
+      --input "$file" > "$archive_dir/published-upload-response.json"
+    asset_id="$(jq -r .id "$archive_dir/published-upload-response.json")"
+    [[ "$asset_id" =~ ^[1-9][0-9]*$ ]] || exit 2
+    proof="$archive_dir/published-asset-response.json"
+    gh_api_to_file "$proof" \
+      "repos/${GITHUB_REPOSITORY}/releases/assets/$asset_id"
+    jq -e --arg name "$name" --arg digest "sha256:$digest" --argjson size "$size" --argjson id "$asset_id" \
+      '.id == $id and .name == $name and .state == "uploaded" and .size == $size and .digest == $digest' \
+      "$proof" >/dev/null
+    jq -c --arg tag "$release_tag" --arg digest "$digest" --argjson release_id "$release_id" \
+      '{release_id:$release_id, release_tag:$tag, asset_id:.id, filename:.name, bytes:.size,
+        local_sha256:$digest, remote_digest:.digest, state:.state, asset_api_url:.url,
+        observed_draft_download_url:.browser_download_url}' \
+      "$proof" >> "$archive_dir/published-assets.jsonl"
+    printf '%s  %s\n' "$digest" "$name" >> "$archive_dir/published-SHA256SUMS.txt"
+    rm -f -- "$file"
+  done
+}
 
 # GitHub release assets must be strictly under 2 GiB. Split only the retained
 # local download; the source Actions artifact and its API digest stay intact.
@@ -141,6 +190,7 @@ if bad is not None:
   fi
   maybe_chunk_asset "$workflow_logs" workflow_log null \
     "$archive_dir/$run_id-workflow-logs-status.json"
+  publish_verified_working_copy "$workflow_logs"
   # Whole-run ZIP presence does not prove that every job's log is inside it.
   for job_id in "${job_ids[@]}"; do
     gh_api_optional_log_to_file "$archive_dir/$run_id-job-$job_id.log" \
@@ -148,6 +198,7 @@ if bad is not None:
       "repos/${GITHUB_REPOSITORY}/actions/jobs/$job_id/logs"
     maybe_chunk_asset "$archive_dir/$run_id-job-$job_id.log" job_log null \
       "$archive_dir/$run_id-job-$job_id-logs-status.json"
+    publish_verified_working_copy "$archive_dir/$run_id-job-$job_id.log"
   done
 
   while IFS=$'\t' read -r artifact_id artifact_name artifact_digest; do
@@ -165,6 +216,7 @@ if bad is not None:
       }
     fi
     maybe_chunk_asset "$destination" artifact "$artifact_digest"
+    publish_verified_working_copy "$destination"
   done < <(jq -r '.artifacts[] | [.id, .name, (.digest // "null")] | @tsv' \
     "$archive_dir/$run_id-artifact-index.json")
 done
@@ -172,6 +224,9 @@ done
 (
   cd "$archive_dir"
   : > SHA256SUMS.txt
+  if [[ -f published-SHA256SUMS.txt ]]; then
+    cat published-SHA256SUMS.txt >> SHA256SUMS.txt
+  fi
   shopt -s nullglob
   for file in *.zip *.log *.part[0-9][0-9][0-9][0-9] *.chunks.json; do
     sha256sum "$file" >> SHA256SUMS.txt
@@ -179,6 +234,7 @@ done
   provenance=(./*-artifact-index.json ./*-run.json ./*-jobs-pages.json
               ./*-check-run.json ./*-annotations.json ./*-logs-status.json
               ./*.chunks.json
+              ./published-* ./release-*.json
               SHA256SUMS.txt)
   tar -czf provenance.tar.gz "${provenance[@]}"
 )

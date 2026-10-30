@@ -28,9 +28,43 @@ class ArchiveRunsTests(unittest.TestCase):
         gh.write_text(textwrap.dedent('''\
             #!/usr/bin/env python3
             import hashlib, io, json, os, sys, zipfile
-            endpoint = sys.argv[2]
+            endpoint = next(arg for arg in sys.argv[2:]
+                            if arg.startswith(('repos/', 'https://uploads.github.com/')))
             scenario = os.environ.get("MOCK_SCENARIO", "metadata_only")
             artifact = b"PK\\x03\\x04synthetic-artifact-bytes"
+            remote = os.path.join(os.environ['ARCHIVE_DIR'], 'mock-remote.json')
+            assets = json.load(open(remote)) if os.path.exists(remote) else []
+            if endpoint.startswith('https://uploads.github.com/'):
+                assert '/releases/55/assets?' in endpoint
+                assert '--method' in sys.argv and 'POST' in sys.argv
+                if scenario == 'incremental_upload_error': sys.exit(1)
+                path = sys.argv[sys.argv.index('--input')+1]
+                from urllib.parse import urlparse, parse_qs
+                assert parse_qs(urlparse(endpoint).query)['name'] == [os.path.basename(path)]
+                data = open(path, 'rb').read()
+                assets.append({'id':len(assets)+101, 'name':os.path.basename(path),
+                    'state':'uploaded', 'size':len(data),
+                    'digest':'sha256:'+hashlib.sha256(data).hexdigest(),
+                    'browser_download_url':'https://example.test/asset'})
+                assets[-1]['url']='https://api.github.com/repos/example/repo/releases/assets/'+str(assets[-1]['id'])
+                with open(remote, 'w') as output: json.dump(assets, output)
+                print(json.dumps(assets[-1]))
+                sys.exit(0)
+            if '/releases/tags/' in endpoint:
+                print('gh: draft release is not available by tag (HTTP 404)', file=sys.stderr)
+                sys.exit(1)
+            if endpoint.endswith('/releases/55'):
+                print(json.dumps({'id':55, 'draft':scenario!='incremental_published',
+                    'tag_name':'data-99', 'target_commitish':'a'*40}))
+                sys.exit(0)
+            if '/releases/assets/' in endpoint:
+                asset_id=int(endpoint.rsplit('/',1)[-1])
+                asset=next(row for row in assets if row['id']==asset_id)
+                if scenario == 'incremental_null_digest': asset['digest'] = None
+                if scenario == 'incremental_bad_digest': asset['digest'] = 'sha256:'+'0'*64
+                if scenario == 'incremental_bad_size': asset['size'] += 1
+                if scenario == 'incremental_not_uploaded': asset['state'] = 'new'
+                print(json.dumps(asset)); sys.exit(0)
             if endpoint.endswith("/logs"):
                 if scenario == "ansi_logs" and "--allow-escape-sequences" not in sys.argv:
                     print("gh: the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway", file=sys.stderr)
@@ -64,7 +98,11 @@ class ArchiveRunsTests(unittest.TestCase):
                     sys.exit(0)
                 print("gh: HTTP 404 The specified blob does not exist.", file=sys.stderr)
                 sys.exit(1)
-            if endpoint.endswith("/artifacts/42/zip"):
+            if endpoint.endswith(("/artifacts/42/zip", "/artifacts/43/zip")):
+                if endpoint.endswith('/artifacts/43/zip'):
+                    import glob
+                    remaining=glob.glob(os.path.join(os.environ['ARCHIVE_DIR'],'7-artifact-42-capture.zip*'))
+                    assert all(x.endswith('.chunks.json') for x in remaining), 'previous working copy retained'
                 if scenario == "artifact_missing":
                     print("gh: HTTP 404 Artifact not found", file=sys.stderr)
                     sys.exit(1)
@@ -73,10 +111,13 @@ class ArchiveRunsTests(unittest.TestCase):
             if endpoint.endswith("/artifacts?per_page=100"):
                 digest = hashlib.sha256(artifact).hexdigest()
                 if scenario == "bad_digest": digest = "0" * 64
+                if scenario == 'incremental_bad_source': digest = '0'*64
                 artifacts = ([] if scenario in ("metadata_only", "live", "auth_failure", "server_failure",
                                               "network_failure", "gone_logs", "workflow_only",
                                               "workflow_corrupt", "ansi_logs")
                              else [{"id":42,"name":"capture","digest":"sha256:"+digest}])
+                if scenario == 'incremental_two':
+                    artifacts.append({'id':43,'name':'capture2','digest':'sha256:'+digest})
                 value = {"total_count":len(artifacts), "artifacts":artifacts}
             elif endpoint.endswith("/jobs?filter=all&per_page=100"):
                 value = [{"total_count":1,"jobs":[{"id":11,"name":"campaign",
@@ -99,10 +140,13 @@ class ArchiveRunsTests(unittest.TestCase):
         sleep.chmod(0o755)
         self.archive = self.home / "archive"
 
-    def run_archive(self, scenario, *, max_asset_bytes=None, chunk_bytes=None):
+    def run_archive(self, scenario, *, max_asset_bytes=None, chunk_bytes=None, incremental=False):
         env = dict(os.environ, PATH=f"{self.bin}:{os.environ['PATH']}",
                    GITHUB_REPOSITORY="example/repo", RUN_IDS="7",
                    ARCHIVE_DIR=str(self.archive), MOCK_SCENARIO=scenario)
+        if incremental:
+            env.update(ARCHIVE_RELEASE_TAG='data-99', ARCHIVE_RELEASE_ID='55',
+                       GITHUB_SHA='a'*40, GITHUB_RUN_ID='99')
         if max_asset_bytes is not None:
             env['ARCHIVE_MAX_ASSET_BYTES'] = str(max_asset_bytes)
             env['ARCHIVE_CHUNK_BYTES'] = str(chunk_bytes)
@@ -189,8 +233,46 @@ class ArchiveRunsTests(unittest.TestCase):
         subprocess.run(["bash", "-c", manifest["verification_command"]],
                        cwd=self.archive, check=True, capture_output=True)
         self.assertEqual((self.archive / original).read_bytes(), ARTIFACT)
-        self.assertIn("*.part[0-9][0-9][0-9][0-9]",
-                      (ROOT / ".github/workflows/archive.yml").read_text())
+
+    def test_incremental_deletes_only_after_remote_hash_and_preserves_checksums(self):
+        completed = self.run_archive('incremental_two', incremental=True)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(list(self.archive.glob('*.zip')), [])
+        rows = [json.loads(line) for line in (self.archive/'published-assets.jsonl').read_text().splitlines()]
+        self.assertEqual(len(rows), 2)
+        self.assertEqual({row['local_sha256'] for row in rows}, {hashlib.sha256(ARTIFACT).hexdigest()})
+        sums=(self.archive/'SHA256SUMS.txt').read_text()
+        self.assertIn('7-artifact-42-capture.zip', sums)
+        self.assertIn('7-artifact-43-capture2.zip', sums)
+        with tarfile.open(self.archive/'provenance.tar.gz') as bundle:
+            self.assertIn('./published-assets.jsonl', bundle.getnames())
+
+    def test_incremental_parts_remain_reassemblable_in_verified_remote_assets(self):
+        completed = self.run_archive('incremental_two', incremental=True, max_asset_bytes=16, chunk_bytes=8)
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        self.assertEqual(list(self.archive.glob('*.part[0-9][0-9][0-9][0-9]')), [])
+        manifest=json.loads((self.archive/'7-artifact-42-capture.zip.chunks.json').read_text())
+        rows=[json.loads(line) for line in (self.archive/'published-assets.jsonl').read_text().splitlines()]
+        by_name={row['filename']:row for row in rows}
+        for part in manifest['parts']:
+            self.assertEqual(by_name[part['filename']]['local_sha256'], part['sha256'])
+            self.assertIn(part['filename'], (self.archive/'SHA256SUMS.txt').read_text())
+
+    def test_incremental_remote_failures_keep_unverified_working_copy(self):
+        for scenario in ('incremental_upload_error','incremental_null_digest','incremental_bad_digest',
+                         'incremental_bad_size','incremental_not_uploaded','incremental_bad_source'):
+            with self.subTest(scenario=scenario):
+                self.archive = self.home / scenario
+                completed=self.run_archive(scenario, incremental=True)
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertTrue((self.archive/'7-artifact-42-capture.zip').exists())
+                self.assertFalse((self.archive/'provenance.tar.gz').exists())
+
+    def test_incremental_rejects_a_published_release_before_reading_sources(self):
+        completed=self.run_archive('incremental_published', incremental=True)
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertFalse((self.archive/'mock-remote.json').exists())
+        self.assertFalse((self.archive/'7-run.json').exists())
 
     def test_live_run_and_missing_artifact_fail_closed(self):
         live = self.run_archive("live")

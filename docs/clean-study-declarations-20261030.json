@@ -809,6 +809,36 @@
       "run_id": 41097094955,
       "role": "implementation_ci",
       "note": "Saved DSB audit pull-request checks."
+    },
+    {
+      "run_id": 41101717663,
+      "role": "implementation_ci",
+      "note": "Initial incremental archive Linux tests; full suite passed."
+    },
+    {
+      "run_id": 41101725093,
+      "role": "implementation_ci",
+      "note": "Initial incremental archive pull-request checks."
+    },
+    {
+      "run_id": 41102985375,
+      "role": "failed_evidence_publication",
+      "note": "Real qualification exposed draft-by-tag404 before source download; empty draft retained."
+    },
+    {
+      "run_id": 41104872805,
+      "role": "implementation_ci",
+      "note": "Release-ID repair full Linux suite and Docker control; passed exact74b3bde."
+    },
+    {
+      "run_id": 41104883471,
+      "role": "implementation_ci",
+      "note": "Release-ID repair pull-request checks; passed exact74b3bde."
+    },
+    {
+      "run_id": 41105413963,
+      "role": "evidence_publication_qualification",
+      "note": "Corrected compact archive; all9 remote assets and source hashes independently verified."
     }
   ],
   "blocked_main_cells": [],
