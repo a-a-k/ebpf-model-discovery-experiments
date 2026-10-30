@@ -9,6 +9,8 @@ on:
         options:
           - qualification
           - pending17
+          - fresh-qualification
+          - fresh-series
         default: qualification
       qualification_system:
         description: Qualification-only family selector; pending17 requires all
@@ -25,6 +27,10 @@ on:
         default: docs/iteration5-main-review-candidates.json
       pending17_after_qualification_go:
         description: Explicit confirmation that qualification output received independent GO
+        type: boolean
+        default: false
+      fresh_series_after_qualification_go:
+        description: Fresh 81-cell review requires independent actual-output qualification GO
         type: boolean
         default: false
 
@@ -48,6 +54,7 @@ jobs:
           QUALIFICATION_SYSTEM: ${{ inputs.qualification_system }}
           CANDIDATE_MANIFEST: ${{ inputs.candidate_manifest }}
           PENDING17_GO: ${{ inputs.pending17_after_qualification_go }}
+          FRESH_GO: ${{ inputs.fresh_series_after_qualification_go }}
         run: |
           python - <<'PY'
           import hashlib, json, os, pathlib, subprocess
@@ -78,6 +85,35 @@ jobs:
                   raise SystemExit('pending17 requires explicit post-qualification independent GO')
               cells=[row for row in source['cells']
                      if row['full_scope']!='reuse_existing_selected']
+          elif phase in ('fresh-qualification','fresh-series'):
+              if qualification_system!='all' or manifest==default_manifest:
+                  raise SystemExit('fresh review requires its own manifest and all families')
+              cells=source['cells']
+              original=[('deepflow','deathstarbench','absent',6),
+                        ('coroot','otel_demo','full',6),('obi','petclinic','partial',6)]
+              keys=[(r['collector'],r['system'],r['mode'],r['seed']) for r in cells]
+              if len(set(keys))!=len(keys):
+                  raise SystemExit('fresh review contains duplicate cells')
+              if phase=='fresh-qualification':
+                  cells=[r for r in cells if (r['collector'],r['system'],r['mode'],r['seed']) in original]
+                  if len(cells)!=3:
+                      raise SystemExit('fresh qualification requires the three fixed main cells')
+              else:
+                  if os.environ.get('FRESH_GO','').lower()!='true':
+                      raise SystemExit('fresh series requires independent actual-output qualification GO')
+                  expected={(c,s,m,n) for c in ('obi','deepflow','coroot')
+                            for s in ('deathstarbench','otel_demo','petclinic')
+                            for m in ('absent','partial','full') for n in (6,7,8)}
+                  if set(keys)!=expected:
+                      raise SystemExit('fresh series must review all 81 cells')
+              for cell in cells:
+                  if (cell.get('head_sha')!='bf49d464816aa71b7c820a02778117d3e6a0ba9d'
+                          or cell.get('stage')!='main' or cell.get('runner')!='study'
+                          or cell.get('compact_scope')!='retrieve_selected_nonjournal'
+                          or cell.get('full_scope')!='retrieve_family_selected'
+                          or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
+                                  'full_artifact_digest'}<=cell.keys()):
+                      raise SystemExit('fresh review requires exact main source and both full/compact packets')
           else:
               raise SystemExit('unknown review phase')
           required={'collector','system','mode','seed','run_id','head_sha',

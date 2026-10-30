@@ -559,3 +559,187 @@ def test_workflow_and_checker_never_emit_admission_verdict() -> None:
     assert "candidate manifest has a malformed cell or invalid scope" in workflow
     assert "candidate-manifest.json" in workflow
     assert "pending17 requires explicit post-qualification independent GO" in workflow
+
+
+def indexed_fixture(root: Path):
+    freeze = {"sha256_by_path": {}}
+
+    def reference(name, value):
+        path = root / name
+        write(path, value)
+        freeze["sha256_by_path"]["toolchain/" + name] = digest(path)
+        return {"path": "/saved/toolchain/" + name, "bytes": path.stat().st_size,
+                "sha256": digest(path)}
+
+    def request(order, code, source="ebpf"):
+        return {"request_order": order, "sha256": str(code) * 64, "source": source,
+                "observations": 1, "content_type": "application/json"}
+
+    ordinary = {**request(2, 2), "path": "/saved/toolchain/inputs/ordinary.json"}
+    native = {**request(1, 4, "native"), "path": "/saved/toolchain/inputs/native.json"}
+    for row in (ordinary, native):
+        freeze["sha256_by_path"]["toolchain/" + REVIEW.toolchain_relative(row["path"])] = row["sha256"]
+    rows = [{**request(order, code), "shard": 0, "offset": index * 10, "length": 10}
+            for index, (order, code) in enumerate(((1, 1), (3, 3)))]
+    index = reference("inputs/ebpf/raw/exports/ebpf-request-index.jsonl",
+                      ("\n".join(json.dumps(row) for row in rows) + "\n").encode())
+    shard = {"path": "/saved/toolchain/inputs/shard.bin", "bytes": 20, "sha256": "a" * 64}
+    freeze["sha256_by_path"]["toolchain/inputs/shard.bin"] = shard["sha256"]
+    ebpf = {"observations": 3, "exports": [ordinary], "stream_exports": [{
+        "schema_version": "deepflow-request-archive-v5", "source": "ebpf",
+        "requests": 2, "observations": 2, "wire_bytes": 20,
+        "request_index": index, "shards": [shard]}]}
+    groups = [reference("inputs/ebpf/raw/observations.json", ebpf),
+              reference("inputs/native/raw/observations.json", {"observations": 1, "exports": [native]})]
+    manifest = {"observations": 4, "ordered_request_group_manifests": groups}
+    accepted = [{"http_status": 200, "export_index": index, "content_bytes": 10,
+                 "content_sha256": str(index + 1) * 64,
+                 "endpoint": "/v1/traces" if index == 3 else "/sources/ebpf/v1/traces",
+                 "storage_form": "stream_archive_slice" if index in (0, 2) else "ordinary_export"}
+                for index in range(4)]
+    sequence = reference("discovery/combined/raw/observed-runtime/accepted-request-sequence.jsonl",
+                         ("\n".join(json.dumps(row) for row in accepted) + "\n").encode())
+    sequence.update(requests=4, same_order_as_original_request_ordinals_and_source_groups=True)
+    plain = lambda row: {key: value for key, value in row.items() if key != "storage_form"}
+    stream_proof = reference("discovery/combined/raw/observed-runtime/accepted-stream-requests.jsonl",
+                             ("\n".join(json.dumps(plain(accepted[i])) for i in (0, 2)) + "\n").encode())
+    stream_proof.update(requests=2, same_http_body_order_as_request_index=True)
+    replay = {"accepted_request_sequence": sequence, "accepted_stream_requests": stream_proof,
+              "accepted_ingest_requests": [plain(accepted[i]) for i in (1, 3)]}
+    return manifest, replay, freeze
+
+
+def test_stream_and_ordinary_requests_preserve_group_order_and_ordinal_reset(tmp_path: Path) -> None:
+    manifest, replay, freeze = indexed_fixture(tmp_path)
+    facts = REVIEW.accepted_sequence_facts(tmp_path, manifest, replay, freeze)
+    assert (facts["accepted_inputs"], facts["ordinary_requests"], facts["streamed_requests"]) == (4, 2, 2)
+    assert facts["unselected_wire_payloads_independently_rehashed"] is False
+    manifest["ordered_request_group_manifests"].reverse()
+    with pytest.raises(ValueError, match="differs from saved source order"):
+        REVIEW.accepted_sequence_facts(tmp_path, manifest, replay, freeze)
+
+
+def test_stream_metadata_must_be_frozen_even_when_downloaded_hash_matches(tmp_path: Path) -> None:
+    manifest, replay, freeze = indexed_fixture(tmp_path)
+    freeze["sha256_by_path"]["toolchain/inputs/ebpf/raw/exports/ebpf-request-index.jsonl"] = "0" * 64
+    with pytest.raises(ValueError, match="metadata is not frozen"):
+        REVIEW.accepted_sequence_facts(tmp_path, manifest, replay, freeze)
+
+
+def test_acceptance_subsets_cannot_omit_stream_requests(tmp_path: Path) -> None:
+    manifest, replay, freeze = indexed_fixture(tmp_path)
+    replay["accepted_ingest_requests"].pop()
+    with pytest.raises(ValueError, match="ordinary acceptance subset"):
+        REVIEW.accepted_sequence_facts(tmp_path, manifest, replay, freeze)
+
+
+@pytest.mark.parametrize("signal,marker,valid", [("EBPF", "control-123", True),
+                                               ("Packet", "control-123", False),
+                                               ("EBPF", "other", False)])
+def test_deepflow_control_uses_exact_raw_record_origin_and_marker(
+        tmp_path: Path, signal: str, marker: str, valid: bool) -> None:
+    body = json.dumps({"signal_source": signal, "l7_protocol": "Http1",
+                       "tap_side": "ServerProcess", "request_resource": "/" + marker}).encode()
+    name = "deepflow-raw/node-a/001-positive-control/l7_flow_log"
+    path = tmp_path / "observations" / name
+    write(path, b"preceding\n" + body + b"\nfollowing\n")
+    write(path.parent / "snapshot.json", {"node": "a", "files": [{
+        "snapshot_name": "l7_flow_log", "copied_bytes": path.stat().st_size,
+        "copied_sha256": digest(path)}]})
+    claim = {"raw_file": "/saved/observations/" + name, "raw_offset": 10,
+             "raw_length": len(body), "raw_sha256": hashlib.sha256(body).hexdigest(),
+             "proven": True, "protocol": "Http1", "tap_side": "ServerProcess"}
+    if valid:
+        facts = REVIEW.deepflow_control_facts(tmp_path, {"marker": "control-123"}, "a", claim)
+        assert facts["raw_offset"] == 10
+    else:
+        with pytest.raises(ValueError, match="raw eBPF HTTP origin and marker"):
+            REVIEW.deepflow_control_facts(tmp_path, {"marker": "control-123"}, "a", claim)
+
+
+def test_fresh_selector_keeps_index_and_acceptance_metadata_without_wire_shards() -> None:
+    for name in ("inputs/ebpf/raw/exports/ebpf-request-index.jsonl",
+                 "discovery/combined/raw/observed-runtime/accepted-request-sequence.jsonl",
+                 "discovery/combined/raw/observed-runtime/accepted-stream-requests.jsonl"):
+        assert SELECT.wanted_member("toolchain/" + name, "full")
+        assert REVIEW._package_selected(name, "toolchain")
+    assert not SELECT.wanted_member("toolchain/inputs/ebpf/raw/exports/ebpf-requests-000001.bin", "full")
+
+
+def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(tmp_path: Path) -> None:
+    name = "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    cells = []
+    for collector, system, mode, run_id in (("deepflow", "deathstarbench", "absent", 1),
+                                           ("coroot", "otel_demo", "full", 2),
+                                           ("obi", "petclinic", "partial", 3)):
+        row = json.loads((ROOT / name).read_text())["cells"][0]
+        row.update(collector=collector, system=system, mode=mode, seed=6, run_id=run_id,
+                   head_sha=REVIEW.FRESH_HEAD, stage="main", runner="study")
+        cells.append(row)
+    result, output = _run_manifest_selector(tmp_path, name, phase="fresh-qualification",
+                                            document={"cells": cells})
+    assert result.returncode == 0, result.stderr
+    values = dict(line.split("=", 1) for line in output.read_text().splitlines())
+    assert len(json.loads(values["matrix"])["cell"]) == 3
+
+
+def closure_fixture(root: Path):
+    claims, capture, termination, prefixes = [], {}, {}, {}
+    observations = root / "observations"
+    for node in ("a", "b"):
+        for stage, final in (("002-training", False), ("003-final", True)):
+            row = {"snapshot_name": "l7_flow_log", "source_name": "l7_flow_log",
+                   "copied_bytes": 100, "copied_sha256": "a" * 64,
+                   "source_changed_during_snapshot": False, "pending_tail_bytes_at_read": 0}
+            snapshot = {"node": node, "stage": stage, "files": [row],
+                        "technical_valid": True, "producer_closed": final,
+                        "closed_checkpoint": final, "codec_technical_failure_records": 0}
+            name = f"deepflow-raw/node-{node}/{stage}/snapshot.json"
+            write(observations / name, snapshot)
+            claims.extend([{"path": name, "bytes": (observations / name).stat().st_size,
+                            "sha256": digest(observations / name)},
+                           {"path": name.replace("snapshot.json", "l7_flow_log"),
+                            "bytes": 100, "sha256": "a" * 64}])
+            if final:
+                capture[node] = snapshot
+        prefixes[f"{node}/l7_flow_log"] = {"unchanged": True, "bytes": 100,
+                                            "training_sha256": "a" * 64,
+                                            "final_prefix_sha256": "a" * 64}
+        raw = {}
+        for label in ("stop", "inspect", "events"):
+            name = f"final-{node}-{label}.txt"
+            write(observations / name, b"retained termination source")
+            raw[label] = {"path": name, "sha256": digest(observations / name)}
+        termination[node] = {"technical_valid": True, "running": False,
+                             "exit_code": 0, "oom_killed": False, "sigkill_events": 0,
+                             "raw_evidence": raw}
+    retention = {"files": claims, "file_count": len(claims),
+                 "raw_bytes": sum(row["bytes"] for row in claims), "zero_internal_loss_proven": False}
+    path = observations / "deepflow-retention-manifest.json"
+    write(path, retention)
+    collector = {"retained_file_hashes": {path.name: {
+        "bytes": path.stat().st_size, "sha256": digest(path)}}}
+    drain = {"final_raw_capture": {"final": True, "technical_valid": True, "nodes": capture},
+             "termination": termination, "training_prefix_unchanged_in_final": prefixes}
+    return collector, drain
+
+
+def test_deepflow_closure_verifies_saved_hash_chain_without_claiming_all_raw_bytes(tmp_path: Path) -> None:
+    collector, drain = closure_fixture(tmp_path)
+    facts = REVIEW.deepflow_closure_facts(tmp_path, collector, drain)
+    assert facts["snapshot_hash_chains_verified"] == 4
+    assert facts["all_raw_payload_bytes_independently_rehashed"] is False
+    assert facts["zero_kernel_producer_or_flush_loss_proven"] is False
+
+
+@pytest.mark.parametrize("problem", ["prefix", "termination", "snapshot"])
+def test_deepflow_closure_rejects_inconsistent_saved_sources(tmp_path: Path, problem: str) -> None:
+    collector, drain = closure_fixture(tmp_path)
+    if problem == "prefix":
+        drain["training_prefix_unchanged_in_final"]["a/l7_flow_log"]["final_prefix_sha256"] = "b" * 64
+    elif problem == "termination":
+        drain["termination"]["b"]["oom_killed"] = True
+    else:
+        write(tmp_path / "observations/deepflow-raw/node-a/003-final/snapshot.json", {})
+    with pytest.raises(ValueError):
+        REVIEW.deepflow_closure_facts(tmp_path, collector, drain)

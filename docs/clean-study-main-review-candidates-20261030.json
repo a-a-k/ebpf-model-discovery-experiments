@@ -1,0 +1,840 @@
+{
+  "schema_version": "main-review-candidates-v5",
+  "purpose": "All 81 fresh matched main cells; saved facts only, no replay/refit/rescore/admission.",
+  "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+  "planned_cells": [
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41099986985,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41099992213,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41099997831,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+    }
+  ],
+  "qualification_keys": [
+    [
+      "deepflow",
+      "deathstarbench",
+      "absent",
+      6
+    ],
+    [
+      "coroot",
+      "otel_demo",
+      "full",
+      6
+    ],
+    [
+      "obi",
+      "petclinic",
+      "partial",
+      6
+    ]
+  ],
+  "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
+  "pending_artifact_cells": 81,
+  "cells": []
+}

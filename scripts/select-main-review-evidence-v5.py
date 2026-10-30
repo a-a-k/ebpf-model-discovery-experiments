@@ -46,6 +46,7 @@ FULL_FIXED = {
     "runtime-identity-v5/supplied-alias-scope-final.json",
     "observations/collector.json", "observations/technical-positive-control.json",
     "observations/drain-evidence.json", "observations/receiver-closed-a.json",
+    "observations/deepflow-retention-manifest.json",
     "observations/receiver-closed-b.json", "observations/receiver-closed-native.json",
     "infrastructure/training-checkpoint/manifest.json",
     "infrastructure/training-checkpoint/ready.json",
@@ -86,11 +87,18 @@ def wanted_member(name: str, scope: str) -> bool:
         raise ValueError(f"unknown evidence scope: {scope}")
     if name in FULL_FIXED or name in INPUT_SUPPLEMENT:
         return True
+    if name.startswith("observations/deepflow-raw/") and name.endswith("/snapshot.json"):
+        return True
+    if name.startswith("observations/final-") and name.endswith(("-stop.txt", "-inspect.txt", "-events.txt")):
+        return True
+    if name.startswith("toolchain/inputs/") and name.endswith("-request-index.jsonl"):
+        return True
     parts = name.split("/")
     if name.startswith("toolchain/discovery/"):
         return name.endswith(("observed.json", "observed.snapshot.json",
                               "observed.supplied-aliases.json", "observed.bering-raw.json",
-                              "observations.json", "replay-command.json", "bering.log"))
+                              "observations.json", "replay-command.json", "bering.log",
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
     if name.startswith("toolchain/procrustes/") and "/0/" in name:
         return parts[-1] in ("preflight.command.json", "report.json")
     if (len(parts) == 5 and parts[0] == "toolchain"
@@ -262,10 +270,22 @@ def select(metadata: dict, expected: dict, scope: str, out: Path) -> dict:
                     raise ValueError("full evidence lacks technical-positive-control.json")
                 control = json.loads(control_path.read_text(encoding="utf-8"))
                 for claim in (control.get("proofs") or {}).values():
-                    name = "observations/" + claim["raw_ref"]
+                    deepflow = control.get("collector") == "deepflow"
+                    if deepflow:
+                        name = "observations/" + claim["raw_file"].split("/observations/", 1)[1]
+                    else:
+                        name = "observations/" + claim["raw_ref"]
+                    if not _safe(name):
+                        raise ValueError("unsafe raw selected-agent control reference")
                     if name not in proof["files"]:
                         fetch(name)
-                    if proof["files"][name]["sha256"] != claim["raw_sha256"]:
+                    if deepflow:
+                        with (out / name).open("rb") as source:
+                            source.seek(claim["raw_offset"])
+                            body = source.read(claim["raw_length"])
+                        if len(body) != claim["raw_length"] or hashlib.sha256(body).hexdigest() != claim["raw_sha256"]:
+                            raise ValueError("raw selected-agent control slice differs")
+                    elif proof["files"][name]["sha256"] != claim["raw_sha256"]:
                         raise ValueError("raw selected-agent control hash differs")
     except BaseException as exc:
         failure = {"phase": "selected_member_transport",

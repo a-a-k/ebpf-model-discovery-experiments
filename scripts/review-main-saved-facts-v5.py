@@ -5,6 +5,8 @@ import argparse
 import copy
 import gzip
 import hashlib
+import heapq
+import itertools
 import json
 from pathlib import Path, PurePosixPath
 import tarfile
@@ -18,8 +20,15 @@ PINS = {
     "bering": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
     "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a",
 }
+FRESH_HEAD = "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
 
 COLLECTOR_PINS = {
+    "deepflow": {
+        "source_version": "v7.2.3",
+        "source_commit": "9a1219fa5cf1471ba2ec8742019661567d98002e",
+        "image": "deepflowce/deepflow-agent:v7.2.3@sha256:5f72c0996fdb5008fdb8fd0524f427a895fc54c61690b26ba2cae648929ea95a",
+    },
     "obi": {
         "source_version": "v0.15.2",
         "image": "otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38bfb0e7091f26e813c08d649f35dca253e",
@@ -59,10 +68,13 @@ def _package_selected(name: str, kind: str) -> bool:
         return True
     if name.startswith("inputs/") and name.endswith("/observations.json"):
         return True
+    if name.startswith("inputs/") and name.endswith("-request-index.jsonl"):
+        return True
     if name.startswith("discovery/"):
         return name.endswith(("observed.json", "observed.bering-raw.json",
                               "observed.supplied-aliases.json", "observed.snapshot.json",
-                              "replay-command.json", "observations.json"))
+                              "replay-command.json", "observations.json",
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
     if name.startswith("procrustes/") and "/0/" in name:
         return name.endswith(("preflight.command.json", "report.json"))
     parts = name.split("/")
@@ -70,6 +82,244 @@ def _package_selected(name: str, kind: str) -> bool:
             and parts[1] in ("raw", "network_scope")
             and parts[-1] in ("binding.json", "forecast.json",
                               "simulation.command.json", "model.json"))
+
+
+def toolchain_relative(path: str) -> str:
+    name = path.split("/toolchain/", 1)[1] if "/toolchain/" in path else path
+    if not _safe(name):
+        raise ValueError("unsafe saved toolchain reference")
+    return name
+
+
+def verified_reference(root: Path, claim: dict, freeze: dict | None) -> Path:
+    name = toolchain_relative(claim["path"])
+    path = root / name
+    if (not path.is_file() or path.stat().st_size != claim["bytes"]
+            or sha(path) != claim["sha256"]):
+        raise ValueError("saved request metadata reference differs")
+    if freeze is not None and freeze["sha256_by_path"].get("toolchain/" + name) != claim["sha256"]:
+        raise ValueError("saved request metadata is not frozen")
+    return path
+
+
+def indexed_requests(root: Path, manifest: dict, freeze: dict | None):
+    groups = manifest.get("ordered_request_group_manifests") or []
+    if groups:
+        loaded = [read(verified_reference(root, claim, freeze)) for claim in groups]
+        if (any(group.get("ordered_request_group_manifests") for group in loaded)
+                or sum(group["observations"] for group in loaded) != manifest["observations"]):
+            raise ValueError("saved source-group boundaries differ")
+    else:
+        loaded = [manifest]
+    for group in loaded:
+        ordinary = [(row, "ordinary_export") for row in group.get("exports") or []]
+        streams = group.get("stream_exports") or []
+
+        def rows(descriptor):
+            if descriptor.get("schema_version") != "deepflow-request-archive-v5":
+                raise ValueError("unknown saved request index")
+            path = verified_reference(root, descriptor["request_index"], freeze)
+            count = observations = wire_bytes = 0
+            with path.open(encoding="utf-8") as stream:
+                for line in stream:
+                    row = json.loads(line)
+                    if (row.get("source") != descriptor.get("source")
+                            or row.get("content_type") != "application/json"
+                            or row.get("content_encoding") not in (None, "")):
+                        raise ValueError("indexed request framing differs")
+                    shard = row.get("shard")
+                    shards = descriptor.get("shards") or []
+                    if (type(shard) is not int or not 0 <= shard < len(shards)
+                            or type(row.get("offset")) is not int or row["offset"] < 0
+                            or type(row.get("length")) is not int or row["length"] <= 0
+                            or row["offset"] + row["length"] > shards[shard]["bytes"]):
+                        raise ValueError("indexed request slice escapes its saved shard")
+                    shard_name = toolchain_relative(shards[shard]["path"])
+                    if freeze is not None and freeze["sha256_by_path"].get(
+                            "toolchain/" + shard_name) != shards[shard]["sha256"]:
+                        raise ValueError("indexed request shard is not frozen")
+                    count += 1; observations += row["observations"]; wire_bytes += row["length"]
+                    yield row, "stream_archive_slice"
+            if (count != descriptor.get("requests") or observations != descriptor.get("observations")
+                    or wire_bytes != descriptor.get("wire_bytes")):
+                raise ValueError("saved request index totals differ")
+
+        ordered = (heapq.merge(iter(ordinary), *(rows(item) for item in streams),
+                               key=lambda pair: pair[0].get("request_order", -1))
+                   if streams else iter(ordinary))
+        group_observations = 0
+        for ordinal, (row, form) in enumerate(ordered, 1):
+            if streams and row.get("request_order") != ordinal:
+                raise ValueError("saved request order differs within a source group")
+            if form == "ordinary_export" and freeze is not None:
+                name = toolchain_relative(row["path"])
+                if freeze["sha256_by_path"].get("toolchain/" + name) != row["sha256"]:
+                    raise ValueError("ordinary request is not frozen")
+            group_observations += row["observations"]
+            yield row, form
+        if group_observations != group.get("observations"):
+            raise ValueError("saved source-group observation total differs")
+
+
+def accepted_sequence_facts(root: Path, manifest: dict, replay: dict,
+                            freeze: dict | None) -> dict:
+    sequence = replay.get("accepted_request_sequence")
+    if not sequence or sequence.get("same_order_as_original_request_ordinals_and_source_groups") is not True:
+        raise ValueError("saved ordered acceptance sequence is missing")
+    path = verified_reference(root, sequence, freeze)
+    ordinary, streamed = [], []
+    with path.open(encoding="utf-8") as stream:
+        accepted = (json.loads(line) for line in stream)
+        for ordinal, (expected, actual) in enumerate(itertools.zip_longest(
+                indexed_requests(root, manifest, freeze), accepted)):
+            if expected is None or actual is None:
+                raise ValueError("accepted request sequence length differs")
+            row, form = expected
+            endpoint = "/sources/ebpf/v1/traces" if row["source"] == "ebpf" else "/v1/traces"
+            if (actual.get("export_index") != ordinal or actual.get("http_status") != 200
+                    or actual.get("content_sha256") != row["sha256"]
+                    or actual.get("endpoint") != endpoint or actual.get("storage_form") != form
+                    or (form == "stream_archive_slice" and actual.get("content_bytes") != row["length"])):
+                raise ValueError("accepted request sequence differs from saved source order")
+            item = {key: value for key, value in actual.items() if key != "storage_form"}
+            (ordinary if form == "ordinary_export" else streamed).append(item)
+    if ordinary != (replay.get("accepted_ingest_requests") or []):
+        raise ValueError("ordinary acceptance subset differs")
+    if len(ordinary) + len(streamed) != sequence.get("requests"):
+        raise ValueError("accepted sequence total differs")
+    if streamed:
+        proof = replay.get("accepted_stream_requests") or {}
+        stream_path = verified_reference(root, proof, freeze)
+        with stream_path.open(encoding="utf-8") as stream:
+            if ([json.loads(line) for line in stream] != streamed
+                    or proof.get("requests") != len(streamed)
+                    or proof.get("same_http_body_order_as_request_index") is not True):
+                raise ValueError("stream acceptance subset differs")
+    elif replay.get("accepted_stream_requests"):
+        raise ValueError("unexpected stream acceptance claim")
+    return {"accepted_inputs": sequence["requests"], "ordinary_requests": len(ordinary),
+            "streamed_requests": len(streamed), "sequence_sha256": sequence["sha256"],
+            "unselected_wire_payloads_independently_rehashed": False}
+
+
+def deepflow_control_facts(root: Path, control: dict, node: str, claim: dict) -> dict:
+    from ebpf_discovery.deepflow_codec_v5 import _parse
+
+    name = claim["raw_file"].split("/observations/", 1)[1]
+    if not _safe(name) or not name.startswith(f"deepflow-raw/node-{node}/"):
+        raise ValueError("DeepFlow control locator has a different node")
+    path = root / "observations" / name
+    offset, length = claim["raw_offset"], claim["raw_length"]
+    if (claim.get("proven") is not True or type(offset) is not int or offset < 0
+            or type(length) is not int or length <= 0 or offset + length > path.stat().st_size):
+        raise ValueError("DeepFlow control locator is incomplete")
+    with path.open("rb") as stream:
+        stream.seek(offset)
+        body = stream.read(length)
+    if hashlib.sha256(body).hexdigest() != claim["raw_sha256"]:
+        raise ValueError("DeepFlow control record hash differs")
+    record, conflicts, error = _parse(body)
+    if (error or conflicts or record.get("signal_source") != "EBPF"
+            or record.get("l7_protocol") not in ("Http1", "Http2")
+            or record.get("l7_protocol") != claim.get("protocol")
+            or not control.get("marker") or control["marker"] not in str(record.get("request_resource", ""))
+            or record.get("tap_side") not in ("ClientProcess", "ServerProcess")
+            or record.get("tap_side") != claim.get("tap_side")):
+        raise ValueError("DeepFlow control lacks raw eBPF HTTP origin and marker")
+    snapshot = read(path.parent / "snapshot.json")
+    rows = [row for row in snapshot["files"] if row["snapshot_name"] == path.name]
+    if (snapshot.get("node") != node or len(rows) != 1
+            or rows[0]["copied_bytes"] != path.stat().st_size
+            or rows[0]["copied_sha256"] != sha(path)):
+        raise ValueError("DeepFlow control file differs from retained snapshot")
+    return {"node": node, "raw_sha256": claim["raw_sha256"], "raw_member": name,
+            "raw_offset": offset, "raw_length": length,
+            "matches": [{key: record.get(key) for key in (
+                "signal_source", "l7_protocol", "tap_side", "request_resource")}]}
+
+
+def deepflow_closure_facts(root: Path, collector: dict, drain: dict) -> dict:
+    observations = root / "observations"
+    retention = read(observations / "deepflow-retention-manifest.json")
+    retention_claim = (collector.get("retained_file_hashes") or {}).get("deepflow-retention-manifest.json")
+    if (not retention_claim or retention_claim["sha256"] != sha(observations / "deepflow-retention-manifest.json")
+            or retention_claim["bytes"] != (observations / "deepflow-retention-manifest.json").stat().st_size):
+        raise ValueError("DeepFlow retention manifest is not bound to closed collector")
+    claims = retention.get("files") or []
+    by_name = {row["path"]: row for row in claims}
+    if (len(by_name) != len(claims) or retention.get("file_count") != len(claims)
+            or retention.get("raw_bytes") != sum(row["bytes"] for row in claims)
+            or retention.get("zero_internal_loss_proven") is not False
+            or any(retention.get("known_write_failures", {}).get(node, {}).get(key)
+                   for node in ("a", "b") for key in ("container_log", "retained_standalone_logs"))):
+        raise ValueError("DeepFlow retention manifest has conflicting claims")
+    for path in observations.rglob("*"):
+        if not path.is_file():
+            continue
+        name = path.relative_to(observations).as_posix()
+        claim = (collector.get("retained_file_hashes") or {}).get(name) or by_name.get(name)
+        if claim is not None and (path.stat().st_size != claim["bytes"] or sha(path) != claim["sha256"]):
+            raise ValueError("DeepFlow selected metadata differs from closure hash chain")
+    capture = drain.get("final_raw_capture") or {}
+    if (capture.get("final") is not True or capture.get("technical_valid") is not True
+            or set(capture.get("nodes") or {}) != {"a", "b"}
+            or set(drain.get("termination") or {}) != {"a", "b"}):
+        raise ValueError("DeepFlow final standalone capture is incomplete")
+    snapshots = []
+    for path in sorted((observations / "deepflow-raw").glob("node-*/*/snapshot.json")):
+        relative = path.relative_to(observations).as_posix()
+        if relative not in by_name:
+            raise ValueError("DeepFlow snapshot is missing from retention manifest")
+        snapshot = read(path)
+        for row in snapshot.get("files") or []:
+            if not _safe(row["snapshot_name"]) or "/" in row["snapshot_name"]:
+                raise ValueError("unsafe DeepFlow saved snapshot member")
+            member = (path.parent / row["snapshot_name"]).relative_to(observations).as_posix()
+            claim = by_name.get(member) or {}
+            if claim.get("bytes") != row["copied_bytes"] or claim.get("sha256") != row["copied_sha256"]:
+                raise ValueError("DeepFlow snapshot/retention file claims differ")
+        snapshots.append(snapshot)
+    prefixes = drain.get("training_prefix_unchanged_in_final") or {}
+    if not prefixes or {key.split("/", 1)[0] for key in prefixes} != {"a", "b"}:
+        raise ValueError("DeepFlow lacks both saved training prefixes")
+    for key, prefix in prefixes.items():
+        node, name = key.split("/", 1)
+        if (prefix.get("unchanged") is not True
+                or prefix.get("training_sha256") != prefix.get("final_prefix_sha256")
+                or not any(snapshot.get("node") == node and not snapshot.get("producer_closed")
+                           and any(row.get("source_name") == name
+                                   and row.get("copied_bytes") == prefix.get("bytes")
+                                   and row.get("copied_sha256") == prefix.get("training_sha256")
+                                   for row in snapshot.get("files") or []) for snapshot in snapshots)):
+            raise ValueError("DeepFlow saved training/final prefix claims differ")
+    for node, final in capture["nodes"].items():
+        path = observations / "deepflow-raw" / f"node-{node}" / final["stage"] / "snapshot.json"
+        if (read(path) != final or final.get("technical_valid") is not True
+                or final.get("producer_closed") is not True or final.get("closed_checkpoint") is not True
+                or final.get("rotation_observed") or final.get("standalone_file_log_write_failures")
+                or final.get("codec_technical_failure_records") != 0
+                or any(row.get("source_changed_during_snapshot")
+                       or (row["source_name"].startswith("l7_flow_log") and row.get("pending_tail_bytes_at_read"))
+                       for row in final.get("files") or [])):
+            raise ValueError("DeepFlow final snapshot is not closed and stable")
+        for key, prefix in prefixes.items():
+            if key.startswith(node + "/") and not any(
+                    row["source_name"] == key.split("/", 1)[1] and row["copied_bytes"] >= prefix["bytes"]
+                    for row in final["files"]):
+                raise ValueError("DeepFlow final file is shorter than its saved prefix")
+        termination = drain["termination"][node]
+        if (termination.get("technical_valid") is not True or termination.get("running") is not False
+                or termination.get("exit_code") != 0 or termination.get("oom_killed") is not False
+                or termination.get("sigkill_events") != 0 or termination.get("technical_invalid_reasons")):
+            raise ValueError("DeepFlow producer termination is incomplete")
+        for label in ("stop", "inspect", "events"):
+            claim = termination["raw_evidence"][label]
+            if not _safe(claim["path"]) or sha(observations / claim["path"]) != claim["sha256"]:
+                raise ValueError("DeepFlow saved termination source differs")
+    return {"nodes": ["a", "b"], "snapshot_hash_chains_verified": len(snapshots),
+            "training_prefix_claims_verified": len(prefixes),
+            "all_raw_payload_bytes_independently_rehashed": False,
+            "zero_kernel_producer_or_flush_loss_proven": False}
 
 
 def verify_package(package: Path, selected: Path, *, kind: str,
@@ -235,6 +485,8 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
         "manual_baselines_copied_not_recomputed": evaluation.get("manual_baselines"),
         "cost_copied_not_recomputed": evaluation.get("cost"),
     }
+    if "scientific_summaries" in evaluation:
+        facts["scientific_summaries_copied_not_recomputed"] = evaluation["scientific_summaries"]
     return facts, evaluation, read(root / "freeze-integrity.json")
 
 
@@ -373,7 +625,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 raise ValueError(f"selected full evidence differs from pre-target freeze: {name}")
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
-    if pins != PINS:
+    fresh = declaration["head_sha"] == FRESH_HEAD
+    expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
+    if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")
     graphs = []
     for replay_path in sorted(toolchain.glob("discovery/*/*/observed-runtime/replay-command.json")):
@@ -398,10 +652,12 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 or replay.get("clock_admission_filter") is not False
                 or ingest.get("spans") != observations.get("observations")
                 or ingest.get("dropped_spans") != 0 or ingest.get("late_spans") != 0
-                or len(accepted) != len(exports)
+                or (not fresh and len(accepted) != len(exports))
                 or snapshot.get("model") != source_model):
             raise ValueError("Bering source/input/ingest/model binding differs")
-        for export, request in zip(exports, accepted, strict=True):
+        sequence_facts = (accepted_sequence_facts(toolchain, observations, replay, freeze)
+                          if fresh else {})
+        for export, request in ([] if fresh else zip(exports, accepted, strict=True)):
             if export.get("sha256") != request.get("content_sha256") or request.get("http_status") != 200:
                 raise ValueError("Bering accepted request differs from saved input")
             relative_export = "toolchain/" + export["path"].split("/toolchain/", 1)[1]
@@ -410,11 +666,23 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         graphs.append({"source": source, "variant": variant,
                        "source_domain": replay.get("source_domain"),
                        "source_profile": replay.get("source_profile"),
-                       "ingest": ingest, "accepted_inputs": len(accepted),
+                       "ingest": ingest, "accepted_inputs": len(accepted), **sequence_facts,
                        "observed_model_sha256": sha(observed_path),
                        "snapshot_sha256": sha(snapshot_path)})
     if not graphs:
         raise ValueError("selected evidence contains no actual Bering execution")
+    if fresh:
+        expected_graphs = set()
+        for source in ("ebpf", "native", "combined"):
+            for variant in ("raw", "network_scope"):
+                path = toolchain / "inputs" / source / variant / "observations.json"
+                if (freeze is not None and freeze["sha256_by_path"].get(
+                        "toolchain/" + path.relative_to(toolchain).as_posix()) != sha(path)):
+                    raise ValueError("source/variant input manifest is not frozen")
+                if read(path).get("observations", 0) > 0:
+                    expected_graphs.add((source, variant))
+        if {(row["source"], row["variant"]) for row in graphs} != expected_graphs:
+            raise ValueError("fresh evidence lacks a nonempty source/variant Bering execution")
 
     preflights = []
     for command_path in sorted(toolchain.glob("procrustes/*/*/0/preflight.command.json")):
@@ -433,7 +701,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         raise ValueError("selected evidence contains no actual Procrustes preflight")
 
     alias_facts = None
-    if declaration["collector"] == "coroot":
+    if fresh or declaration["collector"] == "coroot":
         table_path = root / "runtime-identity-v5/supplied-service-aliases-training.json"
         admission_path = root / "runtime-identity-v5/supplied-service-alias-admission-training.json"
         table_sha = sha(table_path)
@@ -454,7 +722,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     or alias.get("graph_edges_injected")
                     or alias.get("physical_identity_inferred")
                     or alias.get("roles_or_endpoints_created")):
-                raise ValueError("saved Coroot alias proof exceeds exact logical renaming")
+                raise ValueError("saved alias proof exceeds exact logical renaming")
             projected = copy.deepcopy(raw)
             aliases = alias.get("effective_aliases") or {}
             by_id = {}
@@ -464,7 +732,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 if service.get("name") == old:
                     service["name"] = service["id"]
                 if service["id"] in by_id and by_id[service["id"]] != service:
-                    raise ValueError("saved Coroot alias collision has differing metadata")
+                    raise ValueError("saved alias collision has differing metadata")
                 by_id[service["id"]] = service
             projected["services"] = [by_id[key] for key in sorted(by_id)]
             for edge in projected.get("edges") or []:
@@ -474,10 +742,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 endpoint["entry_service"] = aliases.get(
                     endpoint.get("entry_service"), endpoint.get("entry_service"))
             if projected != effective:
-                raise ValueError("saved Coroot semantic model is not exact alias-only projection")
+                raise ValueError("saved semantic model is not exact alias-only projection")
             projected_models.append(alias_path.relative_to(toolchain).as_posix())
         if not projected_models:
-            raise ValueError("Coroot evidence contains no supplied-alias graph proof")
+            raise ValueError("selected evidence contains no supplied-alias graph proof")
         alias_facts = {"table_sha256": table_sha, "admission_sha256": sha(admission_path),
                        "exact_alias_only_models": projected_models}
 
@@ -568,7 +836,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             or any(collector.get(key) != value for key, value in expected_collector.items())):
         raise ValueError("collector manifest differs from the pinned closed acquisition")
     closures = {}
-    for node in ("a", "b", "native"):
+    for node in (("native",) if declaration["collector"] == "deepflow" else ("a", "b", "native")):
         closure = read(root / f"observations/receiver-closed-{node}.json")
         if (closure.get("node") != node or closure.get("saved_bytes_valid") is not True
                 or closure.get("in_flight_handlers_joined") is not True
@@ -589,6 +857,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         raise ValueError("technical control lacks exact two-node origin/cleanup proof")
     controls = []
     for node, claim in (control.get("proofs") or {}).items():
+        if declaration["collector"] == "deepflow":
+            controls.append(deepflow_control_facts(root, control, node, claim))
+            continue
         body = root / "observations" / claim["raw_ref"]
         if not body.is_file() or sha(body) != claim["raw_sha256"]:
             raise ValueError("selected-agent raw control body differs")
@@ -625,6 +896,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         if not matched:
             raise ValueError("raw control lacks the selected collector origin")
         controls.append({"node": node, "raw_sha256": claim["raw_sha256"], "matches": matched})
+    standalone = (deepflow_closure_facts(root, collector, drain)
+                  if declaration["collector"] == "deepflow" else None)
     worker_facts = None
     remote_root = root / "infrastructure/remote-toolchain-v4"
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
@@ -734,6 +1007,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "selected_transport": proof, "typed_packages": packages,
         "source_pins": pins, "saved_mode_evidence_sha256": mode_files,
         "collector_manifest": collector, "receiver_closure_facts": closures,
+        "standalone_file_closure_facts": standalone,
         "rendered_sdk_disabled_values": sorted(sdk_flags),
         "native_mode_facts": native_facts,
         "supplied_logical_alias_facts": alias_facts,

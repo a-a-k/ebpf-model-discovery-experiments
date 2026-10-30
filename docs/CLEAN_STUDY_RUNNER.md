@@ -249,3 +249,20 @@ retain the same supplied semantics, workload, fault states, rates and resources.
 No cost superiority or positive result is presumed. The same final source and
 product pins apply to every collector; all systems/modes/seeds and ten operations
 remain mandatory. This GO authorizes execution, not a success declaration.
+
+## Fresh saved-evidence review compatibility
+
+Before editing the existing selector/reviewer, both agents give explicit
+ORIGINAL-feasibility GO for format compatibility with the fixed bf49d464 main
+series. The contribution is independently inspectable evidence for the original
+feasibility question. The baseline is direct inspection of the same preserved
+files, with the same supplied semantics. No new inference, replay, fitting,
+scoring or scientific admission is introduced. Historical source pins remain
+unchanged; only the exact fresh source selects Bering 1.3.1.
+
+DeepFlow requires exact located JSON control records and standalone file closure
+facts, rather than nonexistent OTLP eBPF receiver closures. Its indexed requests
+must match the saved accepted sequence in original source-group order; storage
+shards are not HTTP batches. Selected metadata hashes do not claim that unselected
+wire payloads were rehashed. Actions transport/verification and failed attempts
+are retained as additional costs; human preparation remains unmeasured.
