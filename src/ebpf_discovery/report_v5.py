@@ -85,7 +85,8 @@ def _evaluation_projection(evaluation: dict[str, Any]) -> dict[str, Any]:
     row_keys = (
         "operation", "source", "variant", "available", "prediction",
         "point_prediction", "forecast_interval", "actual_target_success_counts",
-        "actual_counts", "reason",
+        "actual_counts", "reason", "unknown_obligations", "database_unknown_reason",
+        "database_fault_unknown", "assumed_satisfied_database_requirements",
     )
     for row in evaluation.get("evaluations") or []:
         rows.append({key: row[key] for key in row_keys if key in row})
@@ -107,6 +108,8 @@ def _evaluation_projection(evaluation: dict[str, Any]) -> dict[str, Any]:
             },
         },
     }
+    if "scientific_summaries" in evaluation:
+        projection["scientific_summaries"] = evaluation["scientific_summaries"]
     encoded = json.dumps(
         projection, sort_keys=True, separators=(",", ":"), ensure_ascii=False,
     ).encode("utf-8")
@@ -782,6 +785,112 @@ def _validate_payload_manifest(payload: dict[str, Any], aggregate_path: Path) ->
         del evaluation
 
 
+def _scientific_tables(attempts, schema):
+    """Render source-produced summaries without reopening or rescoring raw data."""
+    identity_headers = ["Run", "Collector", "System", "Mode", "Seed", "Complete"]
+    failures, availability, graphs, baselines, db_counts, db_impact = [], [], [], [], [], []
+    classes, persistence, cross_guest, causal_rows, causal_scope, db_identity = [], [], [], [], [], []
+    for item in attempts:
+        evaluation = (item.get("evaluation_projection") if schema == REFERENCED_AGGREGATE_SCHEMA
+                      else item.get("evaluation")) or {}
+        identity = [item.get(key) for key in ("run_id", "collector", "system", "mode", "seed")]
+        identity.append(item.get("technical_complete_self_reported"))
+        summary = evaluation.get("scientific_summaries")
+        availability.append(identity + [summary is not None,
+                            "source-produced summary" if summary is not None else
+                            "not retained in this historical source evaluation"])
+        for row in evaluation.get("evaluations") or []:
+            if row.get("available") is not True:
+                failures.append(identity + [row.get("operation"), row.get("source"),
+                    row.get("variant"), row.get("reason"),
+                    row["unknown_obligations"] if "unknown_obligations" in row else
+                    "not retained in this source evaluation"])
+        if summary is None:
+            continue
+        for source, variants in (summary.get("graphs") or {}).items():
+            for variant, operations in variants.items():
+                for operation, graph in operations.items():
+                    graphs.append(identity + [operation, source, variant, graph.get("available"),
+                        graph.get("services"), graph.get("edges"), graph.get("endpoints"),
+                        graph.get("bering_outputs_present"), graph.get("reason")])
+                    db_identity.append(identity + [operation, source, variant,
+                        graph.get("database_mapping"), graph.get("database_aliases"),
+                        graph.get("incomplete_database_alias_count")])
+        for operation, baseline in (summary.get("manual_baselines") or {}).items():
+            baselines.append(identity + [operation, baseline.get("available"),
+                baseline.get("prediction"), baseline.get("by_state"),
+                baseline.get("primary_conditional_assumption"), baseline.get("database"),
+                baseline.get("basis")])
+        database = summary.get("database") or {}
+        for phase in ("db_up", "db_down"):
+            for operation, entry in (database.get(phase) or {}).items():
+                db_counts.append(identity + [phase, operation, entry.get("counts")])
+        for row in database.get("forecast_impact") or []:
+            db_impact.append(identity + [row.get("operation"), row.get("source"), row.get("variant"),
+                row.get("healthy_state_11_prediction"), row.get("database_down_prediction"),
+                row.get("prognostic_impact"), row.get("comparison")])
+        for classifier, result in (summary.get("classes") or {}).items():
+            for row in result.get("class_test_metrics") or []:
+                classes.append(identity + [classifier, row.get("source"), row.get("variant"),
+                    row.get("total"), row.get("known"), row.get("unknown"), row.get("coverage"),
+                    row.get("ari_labeled_known_subset"), row.get("ari_on_known_subset"),
+                    row.get("pattern_statuses"), row.get("equivalent_to_base_family_assignment")])
+        for phase, row in (summary.get("async") or {}).items():
+            persistence.append(identity + [phase, row.get("available"), row.get("records"),
+                row.get("states"), row.get("paused_absence_is_failure"), row.get("reason")])
+        for source, row in (summary.get("cross_guest") or {}).items():
+            cross_guest.append(identity + [source, row.get("exact_parent_links"),
+                row.get("invalid_identity_candidates"), row.get("placement_coverage"),
+                row.get("header_verdicts"), row.get("interpretation")])
+        verdicts = summary.get("causal_attempt_verdicts")
+        causal_scope.append(identity + [summary.get("causal_scope")])
+        if verdicts is None:
+            causal_rows.append(identity + [None, None, None, None,
+                                          "causal attempt verdicts not retained"])
+        else:
+            census = {}
+            for row in verdicts:
+                key = (row.get("source"), row.get("phase"), row.get("four_stage_causal_chain"))
+                census[key] = census.get(key, 0) + 1
+            for (source, phase, verdict), count in census.items():
+                causal_rows.append(identity + [source, phase, verdict, count,
+                                               "census of saved verdicts; no relinking"])
+    lines = ["", "## Additional saved scientific results", "",
+             "Missing historical fields remain not retained. Graph presence, operation binding, "
+             "simulation, independent outcomes and causal association are separate evidence.",
+             "Repeated source/variant rows share external attempts and do not increase sample size."]
+    tables = [
+        ("Scientific detail availability", ["Details retained", "Scope"], availability),
+        ("Stored unavailable obligations", ["Operation", "Source", "Variant", "Stored reason",
+            "Frozen binding obligations"], failures),
+        ("Actual saved Bering graph presence", ["Operation", "Source", "Variant", "Graph available",
+            "Services", "Edges", "Endpoints", "Bering files present", "Reason"], graphs),
+        ("Same-information direct baselines", ["Operation", "Available", "Prediction", "By state",
+            "Conditional assumption", "Database baseline", "Basis"], baselines),
+        ("Independent database controls", ["Phase", "Operation", "Stored outcome counts"], db_counts),
+        ("Observed database identity and shared participation", ["Operation", "Source", "Variant",
+            "Saved mapping checks", "Logical endpoints and callers", "Incomplete aliases"], db_identity),
+        ("Saved database forecast impact", ["Operation", "Source", "Variant", "Healthy state 11",
+            "DB-down prediction", "Impact", "Comparison"], db_impact),
+        ("Frozen operation classification", ["Classifier", "Source", "Variant", "Total", "Known",
+            "Unknown", "Coverage", "ARI labeled-known denominator", "ARI on known subset",
+            "Pattern statuses", "Equivalent to base family"], classes),
+        ("Independent asynchronous persistence", ["Phase", "Available", "Records", "States",
+            "Paused absence treated as failure", "Reason"], persistence),
+        ("Source-local cross-guest evidence", ["Source", "Exact parent links", "Invalid IDs",
+            "Placement coverage", "Header verdicts", "Interpretation"], cross_guest),
+        ("Saved asynchronous association verdicts", ["Source", "Phase", "Stored verdict",
+            "Count", "Scope"], causal_rows),
+        ("Asynchronous association scope", ["Saved scope and invalid identity count"], causal_scope),
+    ]
+    for title, headers, rows in tables:
+        lines += ["", "### " + title, ""] + _table(identity_headers + headers, rows)
+    lines += ["", "Binding obligations identify an unavailable transition, not a proven collector "
+              "root cause. Direct-baseline equivalence does not invalidate feasibility. DB impact "
+              "compares healthy state 11 with DB-down. Async association does not establish SQL durability.", ""]
+    return lines
+
+
 def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> dict[str, Any]:
     payload = _read(aggregate_path)
     schema = payload.get("schema_version") if isinstance(payload, dict) else None
@@ -883,6 +992,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         "Variant", "Available", "Stored forecast", "Stored interval", "Actual true",
         "Actual false", "Actual unknown", "Stored reason",
     ], forecast_rows)
+    lines += _scientific_tables(main_attempts, schema)
     lines += ["", "## Saved campaign and Actions costs", ""]
     lines += _table(["Ledger field", "Stored value"], [
         [key, costs.get(key)] for key in (

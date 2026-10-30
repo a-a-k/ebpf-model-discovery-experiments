@@ -13,7 +13,7 @@ from .toolchain_v4 import Toolchain as ToolchainV4
 PROTOCOL_VERSION = 'graph-v5'
 PINS = {
     'Procrustes': '9648ae3fe9ef24725e665d008c79d0681ce40f85',
-    'Bering': '70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a',
+    'Bering': '66ca3af1fe581839e525fb9cc5600a1edd6ca8fb',
     'Sheaft': '686a602f4e7b71f3612f1810885e29dd66c8733a',
 }
 _COLLECTOR = re.compile(r'[a-z0-9][a-z0-9._-]{0,63}')

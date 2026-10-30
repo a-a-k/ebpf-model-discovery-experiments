@@ -105,6 +105,12 @@ comparison and real-path qualification precede attribution and new main series.
 This repair is product-generic; no study code, fixtures or results enter Bering.
 Preparation, prior failures, comparison and qualification remain study costs.
 
+The fresh matched series pins Bering commit
+66ca3af1fe581839e525fb9cc5600a1edd6ca8fb (v1.3.1), the reviewed generic RPC fix,
+for every collector and source arm. Historical runs retain their recorded tool
+pins and source commits. Product PR55, exact-head CI/smoke/release dry run and
+merge CI passed before this pin change.
+
 The fixed full-input comparison script/workflow received independent actual-code
 GO. It verifies the whole immutable archive and each original/frozen export,
 scans all 292 frozen exports, and runs both exact binaries on the same ordered
@@ -112,4 +118,59 @@ input with the existing replay and swap setup. It reports actual graph/method
 coverage differences without running Sheaft or rescoring application outcomes.
 Selected original/frozen protobuf evidence is recorded in
 rpc-semconv-selected-evidence-20261030.json; it includes real required RPC calls,
-not just startup health checks. Complete-prefix results are still pending.
+not just startup health checks. The full comparison passed in
+[run 41089200845](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41089200845):
+all 292 frozen exports, 952702 spans and 312680 RPC observations were retained;
+both binaries accepted the same input without dropped or late spans. Old Bering
+had zero gRPC edges/endpoints; the corrected binary produced 40 gRPC edges and
+13 gRPC endpoints while preserving every old service, edge and endpoint.
+Required method edges are now represented, but several targets are IP peer
+placeholders, not resolved application services. This is a separate unresolved
+binding transition. In particular, 172.28.11.20 is the catalog router; identifying
+that router does not supply an observed router-to-backend edge. No peer remapping
+is justified by the historical inventory, which omitted actual network settings.
+
+## Reporting closure decision before implementation
+
+Both agents give ORIGINAL-feasibility GO to expose existing saved evidence:
+copy frozen forecast unknown obligations, same-information baselines, DB control
+counts and forecast impact, graph-versus-forecast presence, class metrics,
+cross-guest and async summaries. Predictions, external outcomes and gates remain
+unchanged. Binding obligations describe the failing transition; collector root
+causes require the separately preserved diagnosis.
+
+New source evaluations carry an optional compact scientific_summaries field.
+Only its presence extends the referenced projection. Historical evaluations and
+projections without these fields remain exact and missing details are explicitly
+not retained, never an empty no-problems result. Full original payload references
+remain the authority. No historical source evaluation is rewritten.
+
+## Additional observed network facts
+
+Both agents give pre-implementation ORIGINAL-feasibility GO for additive capture
+of actual Docker network addresses/ports/configuration, process network namespace,
+and one read-only listener snapshot per distinct actual namespace, including the
+host. Docker inspect alone is the strongest simple baseline: configured ownership
+does not establish listener/process ownership. Before/after PID start identity and
+namespace, command argv/output/return code and clock interval are retained.
+Command timeout, unavailable binaries, decoding problems and process races remain
+optional diagnostic errors; they do not alter prior process rows or admission.
+Capture cost includes these commands. No address is mapped to a service and no
+node, edge, parent, forecast or outcome is added by this diagnostic capture.
+The same facts are available to all collectors, source arms and direct baseline.
+
+Focused local verification after these changes: 89 passed. This includes frozen
+unknown copying without numeric changes, source-bound report projection tamper
+rejection, historical report compatibility, namespace deduplication, partial
+timeout output and PID reuse. Full suite and real qualification run in Actions.
+
+Independent actual-code review: GO, 77 focused checks passed. The reviewer also
+compared historical projection output with the previous implementation: exact
+equality. Both agents approve nine final-head real regressions: for each of the
+three collectors, OTel partial seed 6, DSB absent seed 6 and Petclinic partial
+seed 6. These cover every collector/system integration, local/remote execution,
+RPC repair and optional network capture. The prior 27 clean-controller smoke
+settings remain mode qualification for unchanged native-mode/acquisition/workload
+paths. Nine final-head regressions are not represented as 27 fresh smokes or as
+any of the 81 main cells. A later model/binding change needs renewed review and
+affected-path qualification; it cannot be silently folded into this decision.
