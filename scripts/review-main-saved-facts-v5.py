@@ -21,12 +21,13 @@ PINS = {
     "bering": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
     "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a",
 }
-FRESH_HEAD = "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+FRESH_HEAD = "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c"
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
-               "a43404ec02c77e9414878632ec6248835cf7a260", FRESH_HEAD}
+               "a43404ec02c77e9414878632ec6248835cf7a260",
+               "6ef079a7a7eac91e464a87a97881a56bc4449e5c", FRESH_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
-# Filled with the new immutable common capture head after saved-input review.
-METADATA_ATTACHMENT_HEADS = set()
+METADATA_ATTACHMENT_HEADS = {FRESH_HEAD}
+GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c", FRESH_HEAD}
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
@@ -740,7 +741,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
     fresh = declaration["head_sha"] in FRESH_HEADS
-    guest_facts = guest_platform_facts(root) if declaration["head_sha"] == FRESH_HEAD else None
+    guest_facts = guest_platform_facts(root) if declaration["head_sha"] in GUEST_PROOF_HEADS else None
     expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
     if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")

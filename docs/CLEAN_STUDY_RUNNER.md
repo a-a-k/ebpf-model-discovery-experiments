@@ -320,9 +320,10 @@ checks six exact locator/hash/freeze links, preserves the first publication's
 provenance, and checks unchanged signal-quality bytes and the actual successful
 pinned Bering validation command. It performs no replay, fit or scoring. Genuine
 unknown branches do not require a successful attachment. Historical profiles
-retain their existing boundaries. The new check remains inactive until the next
-immutable common capture head is recorded explicitly; actual code and output
-review are required before the complete main evidence review.
+retain their existing boundaries. The new check is mandatory for immutable
+capture head `f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c`, together with its tool
+pins, guest proofs and exact workflow declaration. Actual code and output review
+remain required before the complete main evidence review.
 
 The first saved metadata comparison, audit41142624898, correctly failed all
 eight pairs because the prototype materialized empty service metadata that Go's
@@ -331,3 +332,19 @@ and simulated, but that alone did not pass equivalence. Both agents checked
 pinned model.go:361–370/412–420 and gave GO to allocating metadata only when
 writing actual metadata fields. The reader follows this output rule; no new
 comparison exception or general normalization is admitted.
+
+PR8 merged as f60cbfe, tree-identical to reviewed45f4aab; common-head checks
+41143473196/41143478078 and merge check41143629291 passed. Both agents actually
+reviewed audit41143119808: all eight original Go model pairs match, apart from
+the two individually proven publication fields, and both original failure copies
+validate and simulate without changing observed edges or IDs. The original
+pre-target failures remain failures. Immutable study-20261030-v4 qualification
+runs41143808524/41143812257/41143815710 cover all27 system/mode settings. Main81
+remains held for their actual review and the saved OTel catalog ancestry audit.
+
+Cost declarations now use the report's existing role vocabulary, preserving each
+original descriptive role and all run IDs. Earlier free-form role values were
+invalid for the existing report parser. No report schema is extended. Additional
+CI, workers, diagnostics and the failed HTTP504 archive attempt41142560426 are
+included; a new archive attempt41143725458 retains the original sources and the
+failed archive's proof. A partial draft release is not a complete archive.

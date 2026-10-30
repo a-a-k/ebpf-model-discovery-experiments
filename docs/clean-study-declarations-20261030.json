@@ -1,8 +1,8 @@
 {
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
-  "experiment_head": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-  "main_dispatch_status": "Not dispatched. Common corrected source6ef frozen/tagged after independent code and actual saved-input GO. New qualification27 started21:34UTC; actual result review required before main81.",
+  "experiment_head": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c",
+  "main_dispatch_status": "HELD until actual common27 and OTel saved catalog ancestry review; no main81 dispatched",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -961,7 +961,7 @@
           "seed": 6
         }
       ],
-      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
+      "note": "V3 source6ef all27 actual reviewed: OBI9complete; DeepFlow and Coroot each7complete2Petclinic pre-target technical failures. No main result inferred; all costs retained."
     },
     {
       "run_id": 41132056183,
@@ -1014,7 +1014,7 @@
           "seed": 6
         }
       ],
-      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
+      "note": "V3 source6ef all27 actual reviewed: OBI9complete; DeepFlow and Coroot each7complete2Petclinic pre-target technical failures. No main result inferred; all costs retained."
     },
     {
       "run_id": 41132061981,
@@ -1067,363 +1067,765 @@
           "seed": 6
         }
       ],
-      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
+      "note": "V3 source6ef all27 actual reviewed: OBI9complete; DeepFlow and Coroot each7complete2Petclinic pre-target technical failures. No main result inferred; all costs retained."
+    },
+    {
+      "run_id": 41143808524,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "V4 common immutable f60 source after exact paired operation metadata proof; fresh qualification only, not main evidence.",
+      "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c"
+    },
+    {
+      "run_id": 41143812257,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "V4 common immutable f60 source after exact paired operation metadata proof; fresh qualification only, not main evidence.",
+      "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c"
+    },
+    {
+      "run_id": 41143815710,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "V4 common immutable f60 source after exact paired operation metadata proof; fresh qualification only, not main evidence.",
+      "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c"
     }
   ],
   "related_runs": [
     {
       "run_id": 41089200845,
-      "role": "immutable_input_diagnosis",
-      "note": "Identical complete OTel input through old and repaired generic Bering."
+      "role": "evidence",
+      "note": "Original descriptive role immutable_input_diagnosis. Identical complete OTel input through old and repaired generic Bering."
     },
     {
       "run_id": 41093438645,
-      "role": "implementation_ci",
-      "note": "Final-head full suite and pinned Docker positive control."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Final-head full suite and pinned Docker positive control."
     },
     {
       "run_id": 41087194139,
       "role": "product_ci",
-      "repository": "MB3R-Lab/Bering"
+      "repository": "MB3R-Lab/Bering",
+      "note": "{\"repository\": \"MB3R-Lab/Bering\"}"
     },
     {
       "run_id": 41087194128,
-      "role": "product_smoke",
-      "repository": "MB3R-Lab/Bering"
+      "role": "product_ci",
+      "repository": "MB3R-Lab/Bering",
+      "note": "Original descriptive role product_smoke. {\"repository\": \"MB3R-Lab/Bering\"}"
     },
     {
       "run_id": 41087194173,
-      "role": "product_release_dry_run",
-      "repository": "MB3R-Lab/Bering"
+      "role": "product_ci",
+      "repository": "MB3R-Lab/Bering",
+      "note": "Original descriptive role product_release_dry_run. {\"repository\": \"MB3R-Lab/Bering\"}"
     },
     {
       "run_id": 41088760057,
-      "role": "product_merge_ci",
-      "repository": "MB3R-Lab/Bering"
+      "role": "product_ci",
+      "repository": "MB3R-Lab/Bering",
+      "note": "Original descriptive role product_merge_ci. {\"repository\": \"MB3R-Lab/Bering\"}"
     },
     {
       "run_id": 41089266010,
-      "role": "product_publication",
-      "repository": "MB3R-Lab/Bering"
+      "role": "product_ci",
+      "repository": "MB3R-Lab/Bering",
+      "note": "Original descriptive role product_publication. {\"repository\": \"MB3R-Lab/Bering\"}"
     },
     {
       "run_id": 41095895658,
-      "role": "implementation_ci",
-      "note": "Full suite/control for final common capture source bf49d46."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Full suite/control for final common capture source bf49d46."
     },
     {
       "run_id": 41097340456,
-      "role": "saved_capture_diagnosis",
-      "note": "Complete fixed DSB input/rejection audit for all three collectors."
+      "role": "evidence",
+      "note": "Original descriptive role saved_capture_diagnosis. Complete fixed DSB input/rejection audit for all three collectors."
     },
     {
       "run_id": 41099812795,
-      "role": "evidence_publication",
-      "note": "Permanent archive of all original and intermediate qualifications and fixed diagnoses; publication tail pending."
+      "role": "archive",
+      "note": "Original descriptive role evidence_publication. Permanent archive of all original and intermediate qualifications and fixed diagnoses; publication tail pending."
     },
     {
       "run_id": 41097083987,
-      "role": "implementation_ci",
-      "note": "Saved DSB audit full suite and Docker control."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Saved DSB audit full suite and Docker control."
     },
     {
       "run_id": 41097094955,
-      "role": "implementation_ci",
-      "note": "Saved DSB audit pull-request checks."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Saved DSB audit pull-request checks."
     },
     {
       "run_id": 41101717663,
-      "role": "implementation_ci",
-      "note": "Initial incremental archive Linux tests; full suite passed."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Initial incremental archive Linux tests; full suite passed."
     },
     {
       "run_id": 41101725093,
-      "role": "implementation_ci",
-      "note": "Initial incremental archive pull-request checks."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Initial incremental archive pull-request checks."
     },
     {
       "run_id": 41102985375,
-      "role": "failed_evidence_publication",
-      "note": "Real qualification exposed draft-by-tag404 before source download; empty draft retained."
+      "role": "archive",
+      "note": "Original descriptive role failed_evidence_publication. Real qualification exposed draft-by-tag404 before source download; empty draft retained."
     },
     {
       "run_id": 41104872805,
-      "role": "implementation_ci",
-      "note": "Release-ID repair full Linux suite and Docker control; passed exact74b3bde."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Release-ID repair full Linux suite and Docker control; passed exact74b3bde."
     },
     {
       "run_id": 41104883471,
-      "role": "implementation_ci",
-      "note": "Release-ID repair pull-request checks; passed exact74b3bde."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Release-ID repair pull-request checks; passed exact74b3bde."
     },
     {
       "run_id": 41105413963,
-      "role": "evidence_publication_qualification",
-      "note": "Corrected compact archive; all9 remote assets and source hashes independently verified."
+      "role": "archive",
+      "note": "Original descriptive role evidence_publication_qualification. Corrected compact archive; all9 remote assets and source hashes independently verified."
     },
     {
       "run_id": 41107474525,
-      "role": "implementation_ci",
-      "note": "Report and archive records before route repair."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Report and archive records before route repair."
     },
     {
       "run_id": 41107485707,
-      "role": "implementation_ci",
-      "note": "Report and archive records before route repair."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Report and archive records before route repair."
     },
     {
       "run_id": 41110467009,
-      "role": "implementation_ci",
-      "note": "Fresh saved-evidence format compatibility."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Fresh saved-evidence format compatibility."
     },
     {
       "run_id": 41110475461,
-      "role": "implementation_ci",
-      "note": "Fresh saved-evidence format compatibility."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Fresh saved-evidence format compatibility."
     },
     {
       "run_id": 41110737854,
-      "role": "implementation_ci",
-      "note": "Preserve empty inputs and ambiguous aliases in independent review."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Preserve empty inputs and ambiguous aliases in independent review."
     },
     {
       "run_id": 41110748087,
-      "role": "implementation_ci",
-      "note": "Preserve empty inputs and ambiguous aliases in independent review."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Preserve empty inputs and ambiguous aliases in independent review."
     },
     {
       "run_id": 41108415418,
-      "role": "technical_stop_worker",
-      "note": "Original Coroot DSB absent7 worker, completed; parent source superseded as a whole."
+      "role": "worker",
+      "note": "Original descriptive role technical_stop_worker. Original Coroot DSB absent7 worker, completed; parent source superseded as a whole."
     },
     {
       "run_id": 41111105552,
-      "role": "technical_stop_worker",
-      "note": "Original DeepFlow DSB absent7 worker, cancelled after common source replacement; unfinished evidence/cost explicit."
+      "role": "worker",
+      "note": "Original descriptive role technical_stop_worker. Original DeepFlow DSB absent7 worker, cancelled after common source replacement; unfinished evidence/cost explicit."
     },
     {
       "run_id": 41112538790,
-      "role": "technical_stop_worker",
-      "note": "Original OBI DSB absent8 worker, completed during normal parent cancellation tail."
+      "role": "worker",
+      "note": "Original descriptive role technical_stop_worker. Original OBI DSB absent8 worker, completed during normal parent cancellation tail."
     },
     {
       "run_id": 41113446658,
-      "role": "implementation_ci",
-      "note": "Initial same-observation route alias repair."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Initial same-observation route alias repair."
     },
     {
       "run_id": 41113741926,
-      "role": "implementation_ci",
-      "note": "Exact a8f7eaca Linux checks and technical-control fixture, passed."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Exact a8f7eaca Linux checks and technical-control fixture, passed."
     },
     {
       "run_id": 41113823393,
-      "role": "implementation_ci",
-      "note": "Exact a8f7eaca PR checks and technical-control fixture, passed."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Exact a8f7eaca PR checks and technical-control fixture, passed."
     },
     {
       "run_id": 41113996544,
-      "role": "failed_saved_binding_audit",
-      "note": "Original fixed three-capture audit: two succeeded; Coroot full-artifact retrieval HTTP503 before inspection. All original evidence retained."
+      "role": "evidence",
+      "note": "Original descriptive role failed_saved_binding_audit. Original fixed three-capture audit: two succeeded; Coroot full-artifact retrieval HTTP503 before inspection. All original evidence retained."
     },
     {
       "run_id": 41114279637,
-      "role": "saved_binding_audit",
-      "note": "Same immutable paired binding audit passed all three; no new capture/refit/simulation/scoring."
+      "role": "evidence",
+      "note": "Original descriptive role saved_binding_audit. Same immutable paired binding audit passed all three; no new capture/refit/simulation/scoring."
     },
     {
       "run_id": 41113544016,
-      "role": "evidence_publication",
-      "note": "Incremental retention of technically stopped parent source captures and available worker evidence."
+      "role": "archive",
+      "note": "Original descriptive role evidence_publication. Incremental retention of technically stopped parent source captures and available worker evidence."
     },
     {
       "run_id": 41114694256,
-      "role": "implementation_ci",
-      "note": "Merged a43404ec tree equals reviewed a8f7eaca, passed."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Merged a43404ec tree equals reviewed a8f7eaca, passed."
     },
     {
       "run_id": 41114755102,
-      "role": "implementation_ci",
-      "note": "Immutable study-20261030-v2 tag checks, passed."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Immutable study-20261030-v2 tag checks, passed."
     },
     {
       "run_id": 41118941392,
-      "role": "implementation_ci",
-      "note": "Saved DSB proof/reader compatibility."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Saved DSB proof/reader compatibility."
     },
     {
       "run_id": 41118955937,
-      "role": "implementation_ci",
-      "note": "Saved DSB proof/reader PR checks."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. Saved DSB proof/reader PR checks."
     },
     {
       "run_id": 41119247647,
-      "role": "saved_dsb_partial_audit",
-      "note": "All3 original partial prefixes and frozen bindings checked; no rerun."
+      "role": "evidence",
+      "note": "Original descriptive role saved_dsb_partial_audit. All3 original partial prefixes and frozen bindings checked; no rerun."
     },
     {
       "run_id": 41123851832,
-      "role": "implementation_ci",
-      "note": "OTLP wire diagnostic source."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. OTLP wire diagnostic source."
     },
     {
       "run_id": 41123859492,
-      "role": "implementation_ci",
-      "note": "OTLP wire diagnostic PR checks."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. OTLP wire diagnostic PR checks."
     },
     {
       "run_id": 41124381843,
-      "role": "saved_otlp_wire_audit",
-      "note": "Original OBI absent unnamedKeyValue proved from PB/JSON; literaldefault only."
+      "role": "evidence",
+      "note": "Original descriptive role saved_otlp_wire_audit. Original OBI absent unnamedKeyValue proved from PB/JSON; literaldefault only."
     },
     {
       "run_id": 41129382005,
-      "role": "evidence_publication",
-      "note": "Published151assets2214906734bytes; all149payloadledger IDs/state/size/SHA +2metadata independentlychecked. Includes tailworker and all27a434qualification attempts."
+      "role": "archive",
+      "note": "Original descriptive role evidence_publication. Published151assets2214906734bytes; all149payloadledger IDs/state/size/SHA +2metadata independentlychecked. Includes tailworker and all27a434qualification attempts."
     },
     {
       "run_id": 41131467878,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41131463192,
-      "role": "saved_source_semantics_audit",
-      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41131461732,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130631403,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130544265,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130545414,
-      "role": "saved_source_semantics_audit",
-      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130182817,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 8a472a9876a7e784fd6172db0f5a3250ba687a8a; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 8a472a9876a7e784fd6172db0f5a3250ba687a8a; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130033030,
-      "role": "saved_source_semantics_audit",
-      "note": "fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130026417,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; push; observed conclusion failure. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; push; observed conclusion failure. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41129499712,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics 6bf142e164fd10d8f372b02915cb5d7e020ec182; push; observed conclusion failure. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics 6bf142e164fd10d8f372b02915cb5d7e020ec182; push; observed conclusion failure. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41127894815,
-      "role": "implementation_ci",
-      "note": "fix/observation-semantics a161f6d316436f5c5b4d442fdc543913c8d2acf6; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. fix/observation-semantics a161f6d316436f5c5b4d442fdc543913c8d2acf6; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41131445587,
-      "role": "saved_source_semantics_audit",
-      "note": "audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41131425468,
-      "role": "implementation_ci",
-      "note": "audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130921210,
-      "role": "saved_source_semantics_audit",
-      "note": "audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41130878319,
-      "role": "implementation_ci",
-      "note": "audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; push; observed conclusion success. All failures retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; push; observed conclusion success. All failures retained; no completed main cell inferred."
     },
     {
       "run_id": 41132585175,
-      "role": "implementation_ci",
-      "note": "audit/otel-native-shipping 988f643cdb4bc4eb6fea86bb3d876f61881df8d5; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. audit/otel-native-shipping 988f643cdb4bc4eb6fea86bb3d876f61881df8d5; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132172369,
-      "role": "saved_source_semantics_audit",
-      "note": "audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; workflow_dispatch; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "evidence",
+      "note": "Original descriptive role saved_source_semantics_audit. audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; workflow_dispatch; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132158401,
-      "role": "implementation_ci",
-      "note": "audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132676443,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132669520,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132461801,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132454316,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41132036522,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results 996d9f16cd1a26ca367d0261a9c6a0290f560217; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results 996d9f16cd1a26ca367d0261a9c6a0290f560217; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41116445038,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41116435826,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41100255693,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41100247102,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; push; observed conclusion success. All attempts retained; no completed main cell inferred."
     },
     {
       "run_id": 41097016011,
-      "role": "implementation_ci",
-      "note": "analysis/clean-study-results bf49d464816aa71b7c820a02778117d3e6a0ba9d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+      "role": "preparation",
+      "note": "Original descriptive role implementation_ci. analysis/clean-study-results bf49d464816aa71b7c820a02778117d3e6a0ba9d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41143725458,
+      "role": "archive",
+      "note": "Archive original measurement artifacts; main f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c; workflow_dispatch. Include all costs; current state in_progress/ is not an empirical verdict."
+    },
+    {
+      "run_id": 41143654347,
+      "role": "preparation",
+      "note": "Focused implementation checks; study-20261030-v4 f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143629291,
+      "role": "preparation",
+      "note": "Focused implementation checks; main f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143478078,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 45f4aabd35364747f6d4eb0a91a2969e1aedbd56; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143473196,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 45f4aabd35364747f6d4eb0a91a2969e1aedbd56; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143466516,
+      "role": "preparation",
+      "note": "Focused implementation checks; audit/semantic-metadata 45f4aabd35364747f6d4eb0a91a2969e1aedbd56; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143217946,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 77aa80110a3cdc5a8e30c917716f14179a14cf68; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143213387,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 77aa80110a3cdc5a8e30c917716f14179a14cf68; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143119808,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; audit/semantic-metadata 97da3955f305d4eedf40c23bea038d2e2b526879; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143117970,
+      "role": "preparation",
+      "note": "Focused implementation checks; audit/semantic-metadata 97da3955f305d4eedf40c23bea038d2e2b526879; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143117751,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 320a76837ba72e5f162f488d260e909cfd3af0a1; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41143107804,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 320a76837ba72e5f162f488d260e909cfd3af0a1; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41142624898,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; audit/semantic-metadata 6ee851cda1f6547a339f7e612077c8573e44e01c; workflow_dispatch. Include all costs; current state completed/failure is not an empirical verdict."
+    },
+    {
+      "run_id": 41142622595,
+      "role": "preparation",
+      "note": "Focused implementation checks; audit/semantic-metadata 6ee851cda1f6547a339f7e612077c8573e44e01c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41142560426,
+      "role": "archive",
+      "note": "Archive original measurement artifacts; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/failure is not an empirical verdict."
+    },
+    {
+      "run_id": 41141485929,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 28b7fb3feea335218d9146c2d71ac7f9eb2a723c; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41140705986,
+      "role": "preparation",
+      "note": "Focused implementation checks; fix/semantic-overlay 28b7fb3feea335218d9146c2d71ac7f9eb2a723c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136583907,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136465620,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 77d67856b27f288284dcb648819b5b132a525b49; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136458465,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 77d67856b27f288284dcb648819b5b132a525b49; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136179944,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136080945,
+      "role": "preparation",
+      "note": "Focused implementation checks; audit/qualification-v3 22e614e42962d1ed6f3831b4849cb65685457c08; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136016643,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 74fec789e44f079fc708253321dad876c0afe37d; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136009643,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 74fec789e44f079fc708253321dad876c0afe37d; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41136003809,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results 1ecb35e96525420d1c077436e44699838cd75f69; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41135828623,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41135799676,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41135540056,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41135207162,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41135200526,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41134990222,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41134862898,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41134278057,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; audit/qualification-v3 8eeaae4112d7a9567fac3007973bc33a587258ba; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41134275587,
+      "role": "preparation",
+      "note": "Focused implementation checks; audit/qualification-v3 8eeaae4112d7a9567fac3007973bc33a587258ba; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41133174477,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results ffcac011ad3bd984591e4b96a8cf311dec887d00; pull_request. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41133167947,
+      "role": "preparation",
+      "note": "Focused implementation checks; analysis/clean-study-results ffcac011ad3bd984591e4b96a8cf311dec887d00; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41133021440,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132941865,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132926555,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132883069,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132875450,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132859470,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132849405,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132756442,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132744918,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; workflow_dispatch. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41132029001,
+      "role": "preparation",
+      "note": "Focused implementation checks; study-20261030-v3 6ef079a7a7eac91e464a87a97881a56bc4449e5c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41131943522,
+      "role": "preparation",
+      "note": "Focused implementation checks; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; push. Include all costs; current state completed/success is not an empirical verdict."
     }
   ],
   "blocked_main_cells": [],
-  "experiment_ref": "study-20261030-v3",
+  "experiment_ref": "study-20261030-v4",
   "superseded_main_runs": [
     {
       "run_id": 41099986985,
@@ -1442,9 +1844,8 @@
     }
   ],
   "pending_common_correction": {
-    "pull_request": 7,
-    "branch": "fix/observation-semantics",
-    "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-    "status": "PR7merged;treeidenticaltoreviewed9c643ba;commonqualification27running;main81notdispatched."
+    "pull_request": 8,
+    "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c",
+    "status": "PR8 merged; paired audit41143119808 actual-output GO; freshcommon27 running, main81 held"
   }
 }
