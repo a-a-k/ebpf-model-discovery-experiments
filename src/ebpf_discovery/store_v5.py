@@ -244,28 +244,33 @@ class ObservationStoreV5(ObservationStore):
             "LEFT JOIN runtime_identity_projection p ON p.digest=s.digest "
             "LEFT JOIN supplied_logical_alias_projection a ON a.digest=s.digest " + where, params)]
 
-    def apply_supplied_logical_aliases(self, admission, *, scoped_digest_aliases=None):
+    def apply_supplied_logical_aliases(self, admission, *, scoped_digest_aliases=None,
+                                     scoped_digest_compose_services=None):
         """Create an immutable effective logical-role view; original rows remain unchanged."""
-        from .supplied_alias_v5 import admission_sha256
+        from .supplied_alias_v5 import admission_sha256, alias_carrier
         aliases = admission.get('aliases') or {}
         scoped = (admission.get('scoped_digest_aliases') or {}
                   if scoped_digest_aliases is None else scoped_digest_aliases)
+        compose_services = (admission.get('scoped_digest_compose_services') or {}
+                            if scoped_digest_compose_services is None
+                            else scoped_digest_compose_services)
         admission_sha = admission_sha256(admission)
         applied = 0
         for digest, encoded in self.db.execute('SELECT digest,data FROM spans ORDER BY digest'):
             original = json.loads(encoded)
             raw = original.get('service')
-            logical = aliases.get(raw)
-            if not logical or logical == raw or scoped.get(digest) != logical:
-                continue
             runtime = self.db.execute(
                 'SELECT status,projected_data,resolution FROM runtime_identity_projection '
                 'WHERE digest=?', (digest,)).fetchone()
+            carrier = alias_carrier(original, runtime)
+            logical = aliases.get(carrier)
+            if not logical or logical == raw or scoped.get(digest) != logical:
+                continue
             projected = dict(original)
             reconciled_runtime_conflict = False
             if runtime and runtime[0] == 'label_conflict':
                 resolution = json.loads(runtime[2])
-                if resolution.get('observed_runtime_compose_service') != logical:
+                if resolution.get('observed_runtime_compose_service') != compose_services.get(digest, logical):
                     continue
                 reconciled_runtime_conflict = True
             elif runtime and runtime[1]:
@@ -297,10 +302,11 @@ class ObservationStoreV5(ObservationStore):
 
     def verify_supplied_logical_aliases(self, admission):
         """Verify the frozen effective rows without mutating a worker checkpoint."""
-        from .supplied_alias_v5 import admission_sha256
+        from .supplied_alias_v5 import admission_sha256, alias_carrier
         expected_sha = admission_sha256(admission)
         aliases = admission.get('aliases') or {}
         scoped = admission.get('scoped_digest_aliases') or {}
+        compose_services = admission.get('scoped_digest_compose_services') or {}
         actual = {digest: (raw, logical, projected, origin, sha)
                   for digest, raw, logical, projected, origin, sha in self.db.execute(
                       'SELECT digest,original_service,logical_service,projected_data,origin,'
@@ -308,14 +314,16 @@ class ObservationStoreV5(ObservationStore):
         expected_digests = set()
         for digest, encoded in self.db.execute('SELECT digest,data FROM spans ORDER BY digest'):
             original = json.loads(encoded)
-            raw, logical = original.get('service'), aliases.get(original.get('service'))
+            raw = original.get('service')
+            runtime = self.db.execute(
+                'SELECT status,projected_data,resolution FROM runtime_identity_projection WHERE digest=?',
+                (digest,)).fetchone()
+            logical = aliases.get(alias_carrier(original, runtime))
             if not logical or logical == raw or scoped.get(digest) != logical:
                 continue
-            runtime = self.db.execute(
-                'SELECT status,resolution FROM runtime_identity_projection WHERE digest=?',
-                (digest,)).fetchone()
             if (runtime and runtime[0] == 'label_conflict'
-                    and json.loads(runtime[1]).get('observed_runtime_compose_service') != logical):
+                    and json.loads(runtime[2]).get('observed_runtime_compose_service')
+                    != compose_services.get(digest, logical)):
                 continue
             expected_digests.add(digest)
             row = actual.get(digest)
@@ -423,6 +431,7 @@ class ObservationStoreV5(ObservationStore):
                         'admissible_service_identity': None,
                     }
                     result = {**result, 'status': 'unknown', 'service_identity': None,
+                              'observed_runtime_service_identity': result['service_identity'],
                               'unknown_reasons': ['existing_source_label_conflicts_with_runtime_identity'],
                               'observed_runtime_compose_service': observed,
                               'original_source_service': original_service}

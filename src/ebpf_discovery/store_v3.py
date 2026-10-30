@@ -14,7 +14,8 @@ def attribute_conflicts(items, *, jaeger_tags=False):
     """Preserve distinct repeated raw values before a dict can hide them."""
     values = {}
     for item in items:
-        values.setdefault(item['key'], set()).add(json.dumps(item.get('value'), sort_keys=True))
+        key = item['key'] if jaeger_tags else item.get('key', '')
+        values.setdefault(key, set()).add(json.dumps(item.get('value'), sort_keys=True))
     return [{'key': key, 'raw_values': [json.loads(v) for v in sorted(variants)]}
             for key, variants in values.items() if len(variants) > 1]
 
@@ -65,8 +66,8 @@ def normalized_file(path, source, offset, limit, *, same_trace_parents=False):
         for document in ijson.items(limited, prefix, multiple_values=not is_jaeger, use_float=True):
             if is_jaeger:
                 records = jaeger({'data': [document]}, same_trace_parents=same_trace_parents)
-                conflicts = (attribute_conflicts(span.get('tags', []))+
-                    attribute_conflicts(document.get('processes', {}).get(span.get('processID'), {}).get('tags', []))
+                conflicts = (attribute_conflicts(span.get('tags', []), jaeger_tags=True)+
+                    attribute_conflicts(document.get('processes', {}).get(span.get('processID'), {}).get('tags', []), jaeger_tags=True)
                     for span in document.get('spans', []))
             else:
                 payload = document.get('payload', document)

@@ -86,14 +86,20 @@ def _resolution(row, inventory):
     return {'status': 'resolved', 'service_identity': {'compose_service': 'app'}}
 
 
-def test_projection_matches_pre_streaming_mixed_row_bytes_and_preserves_training(
+def test_projection_matches_original_bytes_with_retained_conflict_owner_and_preserves_training(
         tmp_path, monkeypatch):
     monkeypatch.setattr('ebpf_discovery.store_v5.resolve', _resolution)
     store = _store(tmp_path, ['unknown', 'app', 'other', 'native'])
     out = tmp_path / 'projection.jsonl'
     summary = store.apply_runtime_identity({}, out, inventory_proof=PROOF, stage='training')
     expected = Path(__file__).with_name('fixtures') / 'projection-v5-pre-streaming.jsonl'
-    assert out.read_text() == expected.read_text()
+    original_rows = [json.loads(line) for line in expected.read_text().splitlines()]
+    # The sole format addition preserves the actual owner that the old conflict
+    # record discarded. All other original fields and serialized bytes stay equal.
+    for row in original_rows:
+        if row['status'] == 'label_conflict':
+            row['resolution']['observed_runtime_service_identity'] = {'compose_service': 'app'}
+    assert out.read_text() == ''.join(json.dumps(row, sort_keys=True) + '\n' for row in original_rows)
     assert summary['counts'] == dict(resolved_enriched=1, resolved_existing=1,
                                      label_conflict=1, unknown=1)
     assert summary['rows'] == 4

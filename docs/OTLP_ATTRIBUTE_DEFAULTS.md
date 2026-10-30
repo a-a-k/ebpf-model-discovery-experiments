@@ -21,3 +21,23 @@ Counts cover all listed complete records; only displayed witnesses are bounded.
 Missing streams and parsing errors remain explicit. Repair requires actual-wire
 evidence and a separate skeptic GO. All preparation, failed attempts and early
 stops remain in the cost history; human preparation is unmeasured.
+
+## Actual wire verdict before repair
+
+Audit41124381843 passed. Both agents inspected its derived facts; the independent
+reviewer verified the19572-byte ZIP against API SHA256 cdc6fad37fe7338ae8d79fcb6a3eebd73b864c82e4d78d07d6ed478c941faa1f.
+The direct span attribute in a/record16 is {value:{stringValue:POST}}.
+Original protobuf key getter and descriptor default are both the empty string;
+ListFields contains only value. Its full JSON projection exactly equals the
+retained payload. The original raw body SHA is
+1a465334aa90b6b6d66296f6f6e4cb97d18836bded1184a4a788a1f8788ece2a.
+
+Before implementation, main and skeptic give explicit ORIGINAL-feasibility GO
+to read an omitted OTLP key as its literal protobuf default ''. This is the
+same operation as reading KeyValue.key from these bytes. Preserve POST under
+that unnamed key; it supplies no HTTP method attribute. Retain raw bytes, IDs,
+all spans and conflicting empty-key values. Apply the same rule to OTLP conflict
+and nested-value decoding; malformed Jaeger tags retain their previous strict
+behavior. This removes a parser failure without repairing the emitter's missing
+name or guaranteeing any graph/forecast availability. Actual code and saved-input
+behavior require separate review before the next common qualification/main.

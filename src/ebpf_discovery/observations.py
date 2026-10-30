@@ -19,7 +19,9 @@ def value(item):
 
 
 def attributes(items):
-    return {v['key']: value(v.get('value')) for v in items}
+    # Proto3's string default is omitted by MessageToDict. Keep an unnamed
+    # attribute unnamed; its value cannot supply a semantic attribute name.
+    return {v.get('key', ''): value(v.get('value')) for v in items}
 
 
 def identifier(raw, encoding='hex'):
