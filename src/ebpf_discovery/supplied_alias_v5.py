@@ -272,6 +272,21 @@ def load(path: Path, root: Path) -> dict:
     return value
 
 
+def alias_carrier(original: dict, runtime) -> str | None:
+    """Reuse only an already verified enrichment; never infer a missing name."""
+    carrier = original.get("service")
+    if (carrier not in (None, "", "unknown") or not runtime
+            or runtime[0] != "resolved_enriched" or not runtime[1]):
+        return carrier
+    projected, resolution = json.loads(runtime[1]), json.loads(runtime[2])
+    identity = resolution.get("service_identity") or {}
+    if (identity.get("compose_service")
+            and projected.get("service") == identity["compose_service"]
+            and (resolution.get("process_identity") or {}).get("node") == original.get("node")):
+        return identity["compose_service"]
+    return carrier
+
+
 def admit_observed(store, table: dict, *, expected_source_prefix: str | None = None) -> dict:
     """Admit aliases only when every retained occurrence has a matching guest row."""
     if store is None or not hasattr(store, "db"):
@@ -301,6 +316,12 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
         row = json.loads(encoded)
         carrier = row.get("service")
         source = row.get("source")
+        runtime = None
+        if source == "ebpf" and carrier in (None, "", "unknown"):
+            runtime = store.db.execute(
+                "SELECT status,projected_data,resolution FROM runtime_identity_projection WHERE digest=?",
+                (digest,)).fetchone()
+            carrier = alias_carrier(row, runtime)
         if isinstance(carrier, str) and carrier:
             observed_by_source.setdefault(source, set()).add(carrier)
             carrier_sources.setdefault(carrier, set()).add(source)
@@ -321,10 +342,11 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
         # A Compose service name alone is not a container identity. Require the
         # existing PID/cgroup/guest ownership proof for that new carrier form.
         if not matching and any(member.get("declaration") for member in members):
-            runtime = store.db.execute(
-                "SELECT status,resolution FROM runtime_identity_projection WHERE digest=?",
-                (digest,)).fetchone()
-            resolution = json.loads(runtime[1]) if runtime else {}
+            if runtime is None:
+                runtime = store.db.execute(
+                    "SELECT status,projected_data,resolution FROM runtime_identity_projection WHERE digest=?",
+                    (digest,)).fetchone()
+            resolution = json.loads(runtime[2]) if runtime else {}
             identity = (resolution.get("service_identity")
                         or resolution.get("observed_runtime_service_identity") or {})
             if runtime and runtime[0] in ("resolved_existing", "resolved_enriched", "label_conflict"):

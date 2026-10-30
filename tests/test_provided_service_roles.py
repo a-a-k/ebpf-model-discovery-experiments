@@ -31,7 +31,8 @@ def supplied(root, *, duplicate_instance=False):
     return load(table_path, root), table_path
 
 
-def observations(root, *, wrong_owner=False, forged_carrier=False):
+def observations(root, *, wrong_owner=False, forged_carrier=False,
+                 enriched=False, enrichment_error=None):
     folder = root / 'observations'; folder.mkdir()
     native = root / 'native'; native.mkdir()
     for node in ('a', 'b'):
@@ -45,7 +46,8 @@ def observations(root, *, wrong_owner=False, forged_carrier=False):
         body.with_name('metadata.json').write_text(json.dumps(metadata), encoding='utf-8')
         wrapper = {**metadata, 'raw_metadata_ref': body.with_name('metadata.json').relative_to(folder).as_posix(),
                    'id_encoding': 'hex', 'payload': {'resourceSpans': [{
-            'resource': {'attributes': [{'key': 'service.name', 'value': {'stringValue': 'visits-' + node}},
+            'resource': {'attributes': [{'key': 'service.name', 'value': {
+                'stringValue': 'unknown' if enriched else 'visits-' + node}},
                                         {'key': 'container.id', 'value': {'stringValue': node * 64}}]},
             'scopeSpans': [{'spans': [{'traceId': node * 32, 'spanId': node * 16,
                 'name': 'GET', 'kind': 'SPAN_KIND_SERVER', 'startTimeUnixNano': '1',
@@ -57,10 +59,16 @@ def observations(root, *, wrong_owner=False, forged_carrier=False):
         node = json.loads(data)['node']
         identity = {'compose_project': 'other' if wrong_owner else 'pc-' + node,
                     'compose_service': 'visits-' + node, 'container_name': 'pc-' + node + '-visits-1'}
-        resolution = {'status': 'resolved', 'service_identity': identity}
+        resolution = {'status': 'resolved', 'service_identity': identity,
+                      'process_identity': {'node': ('b' if node == 'a' else 'a')
+                                           if enrichment_error == 'guest' else node}}
+        projected = {**json.loads(data), 'service': 'wrong' if enrichment_error == 'service' else 'visits-' + node}
         store.db.execute('INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)',
-                         (digest, 'training', 'resolved_existing', 'visits-' + node,
-                          None, None, json.dumps(resolution), 'inventory', 'hash'))
+                         (digest, 'training', 'unknown' if enrichment_error == 'status'
+                          else 'resolved_enriched' if enriched else 'resolved_existing',
+                          json.loads(data)['service'], None,
+                          json.dumps(projected) if enriched else None,
+                          json.dumps(resolution), 'inventory', 'hash'))
         if forged_carrier:
             store.db.execute('UPDATE spans SET data=? WHERE digest=?',
                              (json.dumps({**json.loads(data), 'node': 'b' if node == 'a' else 'a'}), digest))
@@ -138,3 +146,31 @@ def test_original_admission_hash_is_unchanged_without_the_new_field():
     assert 'scoped_digest_compose_services' not in admission_core(old)
     assert admission_sha256(old) == expected
     assert admission_sha256({**old, 'scoped_digest_compose_services': {}}) != expected
+
+
+def test_verified_runtime_enrichment_is_the_same_carrier_in_admit_apply_and_verify(tmp_path):
+    table, _ = supplied(tmp_path)
+    store = observations(tmp_path, enriched=True)
+    original = store.db.execute('SELECT digest,data FROM spans ORDER BY digest').fetchall()
+    admission = admit_observed(store, table, expected_source_prefix='ebpf-deepflow')
+    assert admission['aliases'] == {'visits-a': 'visits-service', 'visits-b': 'visits-service'}
+    assert store.apply_supplied_logical_aliases(admission)['rows'] == 2
+    assert store.verify_supplied_logical_aliases(admission)['rows'] == 2
+    projections = store.db.execute(
+        'SELECT original_service,logical_service,projected_data FROM supplied_logical_alias_projection').fetchall()
+    assert all(raw == 'unknown' and logical == 'visits-service' for raw, logical, _ in projections)
+    assert all(json.loads(encoded)['_supplied_logical_alias']['raw_service'] == 'unknown'
+               for _, _, encoded in projections)
+    assert store.db.execute('SELECT digest,data FROM spans ORDER BY digest').fetchall() == original
+    store.close()
+
+
+@pytest.mark.parametrize('case', ['service', 'status', 'guest', 'project'])
+def test_unproved_runtime_enrichment_cannot_supply_an_alias_carrier(tmp_path, case):
+    table, _ = supplied(tmp_path)
+    store = observations(tmp_path, enriched=True, enrichment_error=case, wrong_owner=case == 'project')
+    admission = admit_observed(store, table, expected_source_prefix='ebpf-deepflow')
+    assert admission['aliases'] == {}
+    assert store.apply_supplied_logical_aliases(admission)['rows'] == 0
+    assert store.verify_supplied_logical_aliases(admission)['rows'] == 0
+    store.close()

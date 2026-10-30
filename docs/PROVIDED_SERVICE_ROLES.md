@@ -42,3 +42,12 @@ Inspect new alias admission and exact semantic renaming
 on those same inputs, preserving original forecasts. Missing ownership fields in
 old label-conflict resolutions stay unknown; no container ownership is guessed.
 This audit produces no new forecasts, scoring or independent repetitions.
+
+Actual audit41130033030 passed all three fixed source checks. Coroot's exact
+Docker-name carriers reconcile; DeepFlow has no admitted original named carrier.
+Its existing runtime step enriches unnamed observations with verified Compose
+ownership, which the alias step had ignored. Before this integration correction,
+both agents give ORIGINAL GO to reuse only resolved_enriched projected names
+whose service agrees with the verified Compose owner and receiver guest. One
+common carrier helper must serve admission, application and verification. Keep
+the original unnamed observations and digests intact; disagreement stays unknown.
