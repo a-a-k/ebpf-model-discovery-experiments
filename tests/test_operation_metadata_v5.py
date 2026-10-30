@@ -90,3 +90,22 @@ def test_legacy_overlay_path_retains_its_original_discovery_call():
     tool = SimpleNamespace(discover=lambda *args: calls.append(args) or ('model', 'quality'))
     assert LegacyToolchain.operation_model(tool, 'input', 'folder', 'overlay', {}, {}, 'source') == ('model', 'quality')
     assert calls == [('input', 'folder', 'overlay')]
+
+
+def test_replica_and_snapshot_attribute_only_overlay_preserves_go_output_metadata_omission():
+    original = {'services': [{'id': 'gateway', 'replicas': 1},
+                             {'id': 'customers', 'replicas': 1, 'metadata': {'labels': {'provided': 'kept'}}}],
+                'edges': [], 'endpoints': [{'id': 'owners', 'entry_service': 'gateway',
+                                           'success_predicate_ref': 'old'}]}
+    before = deepcopy(original)
+    supplied = {'services': [{'id': 'gateway', 'replicas': 1,
+                              'attributes': {'procrustes.workload': 'compose/ComposeService/gateway'}},
+                             {'id': 'customers', 'replicas': 2}],
+                'endpoints': [{'id': 'owners', 'predicate_ref': 'list_owners'}]}
+    result = attach_operation_metadata(original, supplied)
+    assert 'metadata' not in result['services'][0]
+    assert result['services'][1] == {'id': 'customers', 'replicas': 2,
+                                    'metadata': {'labels': {'provided': 'kept'}}}
+    assert result['endpoints'][0] == {'id': 'owners', 'entry_service': 'gateway',
+                                      'success_predicate_ref': 'list_owners'}
+    assert original == before
