@@ -1,0 +1,27 @@
+{
+  "scope": "Fixed failed a434 OBI OTel absent qualification; inspect original wire attribute-key semantics without span normalization, fitting, traffic or admission.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "full": {
+        "id": 13007103128,
+        "bytes": 26259789,
+        "digest": "sha256:c3d833973cba4bffefbdd6b0c747a97765b3e26d3846cba1386e13aaa7c94457",
+        "name": "campaign-v5-obi-smoke-otel_demo-absent-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "compact": {
+        "id": 13008075935,
+        "bytes": 86352,
+        "digest": "sha256:b00423dadd5c009dbaf130638c05d36251c31b6d9ab34d4c66396e93cbda4646",
+        "name": "v5-summary-obi-smoke-otel_demo-absent-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      }
+    }
+  ]
+}

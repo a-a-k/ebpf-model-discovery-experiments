@@ -4,7 +4,7 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding]
+        options: [dsb-capture, entry-route-binding, provided-service-roles]
         default: dsb-capture
 permissions:
   contents: read
@@ -33,11 +33,12 @@ jobs:
           root=pathlib.Path('work/dsb-audit-input'); root.mkdir(parents=True)
           kind=os.environ['AUDIT_KIND']
           declaration=('docs/entry-route-binding-audit-20261030.json' if kind=='entry-route-binding'
+                       else 'docs/provided-service-roles-audit-20261030.json' if kind=='provided-service-roles'
                        else 'docs/dsb-capture-audit-20261030.json')
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
-          for role in ('full','compact'):
+          for role in (('full','compact','training') if kind=='provided-service-roles' else ('full','compact')):
               endpoint=f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{cell[role]['id']}"
               with (root/(role+'-api.json')).open('wb') as stream:
                   subprocess.run(['gh','api',endpoint],stdout=stream,check=True)
@@ -50,14 +51,15 @@ jobs:
       - name: Inspect complete prefixes and retained rejection evidence
         env:
           PYTHONPATH: src:.
-          AUDIT_SCRIPT: ${{ inputs.audit == 'entry-route-binding' && 'audit-entry-route-binding.py' || 'audit-dsb-capture.py' }}
+          AUDIT_SCRIPT: ${{ inputs.audit != 'dsb-capture' && 'audit-entry-route-binding.py' || 'audit-dsb-capture.py' }}
+          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || '' }}
         run: |
           python "scripts/$AUDIT_SCRIPT" --source work/dsb-audit-input \
-            --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json
+            --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json $AUDIT_ROLE_FLAG
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ${{ inputs.audit == 'entry-route-binding' && 'entry-route-binding-audit' || 'dsb-capture-audit' }}-${{ matrix.collector }}-${{ github.run_id }}
+          name: ${{ inputs.audit }}-audit-${{ matrix.collector }}-${{ github.run_id }}
           path: |
             work/dsb-audit-input/cell.json
             work/dsb-audit-input/*-api.json

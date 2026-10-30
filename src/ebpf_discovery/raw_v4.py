@@ -154,7 +154,7 @@ def _supply_server_role(span, key, source, roles, *, protobuf=False):
 
 def _json_value(value):
     if 'kvlistValue' in value:
-        return {item['key']: _json_value(item.get('value', {}))
+        return {item.get('key', ''): _json_value(item.get('value', {}))
                 for item in value['kvlistValue'].get('values', [])}
     if 'arrayValue' in value:
         return [_json_value(item) for item in value['arrayValue'].get('values', [])]
