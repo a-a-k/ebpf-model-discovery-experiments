@@ -1,0 +1,28 @@
+{
+  "scope": "Fixed OBI full seed6 native pretarget prefix; no capture/replay/fitting/scoring/new admission.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "source_arm": "native",
+      "full": {
+        "id": 13008608219,
+        "bytes": 65884024,
+        "digest": "sha256:7e17f570e547d30de1a78c3624746a099daeda1a1b3ffbae9c87a9cae718d517",
+        "name": "campaign-v5-obi-smoke-otel_demo-full-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "compact": {
+        "id": 13007889008,
+        "bytes": 301618,
+        "digest": "sha256:f4fd6b874e42a0f588e022979a5d7653392b1677d52690f9df87fc5b67ea6cbd",
+        "name": "v5-summary-obi-smoke-otel_demo-full-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      }
+    }
+  ]
+}
