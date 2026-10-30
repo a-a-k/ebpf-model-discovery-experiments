@@ -19,7 +19,7 @@ DEEPFLOW_SOURCE_COMMIT = "9a1219fa5cf1471ba2ec8742019661567d98002e"
 DERIVED_OTLP_SCHEMA = "deepflow-derived-otlp-v5"
 CODEC_SOURCE_SHA256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
 SUPPORTED_PROTOCOLS = {
-    "Http1", "Http2", "Grpc", "MySQL", "PostgreSQL", "Redis", "MongoDB", "Kafka"
+    "Http1", "Http2", "Grpc", "MySQL", "PostgreSQL", "Redis", "MongoDB", "Memcached", "Kafka"
 }
 MAX_OTLP_UNIX_NANO = (1 << 64) - 1
 # Pinned v7.2.3 eBPF socket timestamps are kernel monotonic nanoseconds plus
@@ -328,6 +328,16 @@ def _protocol_attributes(record: dict[str, Any], attributes: dict[str, Any]) -> 
         for field in ("op_code", "request_id", "response_id", "req_len", "resp_len"):
             _add_if(attributes, "deepflow.mongodb." + field, record.get(field))
         return "mongodb", warnings
+    if protocol == "Memcached":
+        attributes["db.system.name"] = "memcached"
+        _add_if(attributes, "db.operation.name", _string(record, "request_type"))
+        _add_if(attributes, "db.query.text", _string(record, "request_resource"))
+        # Pinned MemcachedInfo serde fields; response_status may be a typed
+        # RawValue object. Preserve the actual values without case conversion.
+        for field in ("request_type", "request_resource", "response_status", "response_result",
+                      "response_exception", "captured_request_byte", "captured_response_byte"):
+            _add_if(attributes, "deepflow.memcached." + field, record.get(field))
+        return "memcached", warnings
     if protocol == "Kafka":
         attributes["messaging.system"] = "kafka"
         _add_if(attributes, "messaging.operation.name", request_type)

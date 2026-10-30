@@ -174,3 +174,31 @@ settings remain mode qualification for unchanged native-mode/acquisition/workloa
 paths. Nine final-head regressions are not represented as 27 fresh smokes or as
 any of the 81 main cells. A later model/binding change needs renewed review and
 affected-path qualification; it cannot be silently folded into this decision.
+
+## DeepFlow protocol coverage correction before main dispatch
+
+The retained effective logs from all three DSB mode smokes showed only the pinned
+defaults enabled: HTTP, HTTP2, MySQL, Redis, Kafka, DNS and TLS. PostgreSQL,
+MongoDB and Memcached port entries did not enable those parsers. The codec also
+omitted Memcached. These are configuration/conversion gaps; prior absence cannot
+be attributed to an inherent collector limit.
+
+Before implementation both agents give explicit ORIGINAL-feasibility GO for an
+explicit parser list covering the supported protocols used by these systems,
+retaining defaults, and conservative Memcached field conversion. The strongest
+baseline is the prior configuration/codec with the same pinned source and raw
+fixtures. The proposed mechanism removes an artificial capture/conversion limit;
+no forecast improvement or successful Thrift capture is presumed.
+
+Pinned source 9a1219fa5cf1471ba2ec8742019661567d98002e defines the configuration
+at agent/src/config/config.rs:2073 and RequestLog at 2390. HTTP2 detects gRPC in
+http.rs:2070; no separate Grpc switch is supplied. MemcachedInfo's serde fields
+in protocol_logs/sql/memcached.rs are retained without inventing IDs or lowercasing
+enum values. Its built-in parser handles ASCII text; enabling it does not prove
+support for the actual application dialect. The built-in L7Protocol enum has no
+Thrift parser; custom/Wasm extensions were not tested.
+
+All earlier measurements and costs remain. After code review and CI, all three
+DeepFlow system regressions must pass again with effective parser logs inspected
+on both guests. Unchanged OBI/Coroot paths retain their reviewed qualification.
+Every one of the 81 main cells uses the same final source and product pins.
