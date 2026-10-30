@@ -226,3 +226,26 @@ the existing source-aware reader; parent-field counts do not establish ancestry.
 Conflicting resource identity remains ambiguous. This audit can locate losses
 in saved observations, but cannot prove that interception is impossible when a
 collector emitted no record. It is diagnostic evidence, not a main measurement.
+
+## Full matched main execution decision
+
+Before dispatch, the main agent and independent skeptic both give explicit
+ORIGINAL-feasibility GO for all 81 main cells at immutable study-20261030,
+commit bf49d464816aa71b7c820a02778117d3e6a0ba9d. All 27 original clean-controller
+smoke settings passed. The additional nine final-controller regressions passed;
+the three DeepFlow paths were then repeated for the corrected parser/codec.
+All costs and intermediate unknown/adverse results remain retained.
+
+The reviewer independently checked compact hashes, pre-target forecast hashes,
+integrity, completeness, acquisition, raw-origin positive controls and cleanup,
+actual completed Bering replays and zero toolchain failures for all nine final
+integration paths. The actual enabled parsers were checked on both guests in
+every corrected DeepFlow case. OBI/Coroot carry forward from fcef724 because
+the bf49d46 capture change affects DeepFlow only.
+
+Hypothesis remains feasibility with absent/incomplete native tracing. Native,
+eBPF, combined and the equally informed direct contract/inventory calculation
+retain the same supplied semantics, workload, fault states, rates and resources.
+No cost superiority or positive result is presumed. The same final source and
+product pins apply to every collector; all systems/modes/seeds and ten operations
+remain mandatory. This GO authorizes execution, not a success declaration.

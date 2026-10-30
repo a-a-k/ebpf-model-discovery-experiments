@@ -1,6 +1,20 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: iteration 5, three-collector main series and evidence audit.**
+**Current work: a fresh matched series with an explicit experiment controller.**
+The question is eBPF feasibility with absent/incomplete tracing. The user selected
+a new runner reusing verified deployment and collection components. Common source
+`study-20261030` pins Bering 1.3.1 and corrected DeepFlow parser configuration for
+all 81 new main cells. The 27 original clean-controller smoke settings passed;
+additional final-source regressions passed independent review. The full fresh
+series is running: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099992213),
+and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099997831).
+The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
+RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
+The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
+independent review and qualification decisions. Fresh main results are pending execution and independent evidence review.
+
+**Historical iteration 5 series and audit snapshots.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke

@@ -1,0 +1,310 @@
+{
+  "artifact_api_zip_sha256": "sha256:6b95509bc75a46229511854d3e67f222aab471953c85ac99f17d5bd4a2c4bc9c",
+  "artifact_id": 12996038385,
+  "observed_router_samples": [
+    {
+      "boot_id": "f01ed2ff-19b1-409b-93db-00ab16b34252",
+      "capture_clocks": {
+        "ended": {
+          "boottime_ns": 517363680035,
+          "monotonic_ns": 517363679875,
+          "realtime_unix_ns": 1793379698417381381
+        },
+        "started": {
+          "boottime_ns": 515931625321,
+          "monotonic_ns": 515931624580,
+          "realtime_unix_ns": 1793379696985325526
+        }
+      },
+      "container": {
+        "cgroup_parent": "",
+        "compose": {
+          "config_hash": "139989cd1dfedd12da171e0cdb142a2528315e408d4ee9d3f9d25afcaca7b4ec",
+          "container_number": "1",
+          "oneoff": "False",
+          "project": "ebpf-otel-demo",
+          "service": "product-catalog"
+        },
+        "config_image": "ghcr.io/open-telemetry/demo:3.0.0-frontend-proxy",
+        "host_network_config": {
+          "NetworkMode": "ebpf-otel-demo_default",
+          "PortBindings": {
+            "3550/tcp": [
+              {
+                "HostIp": "",
+                "HostPort": "13551"
+              }
+            ]
+          }
+        },
+        "id": "40fdb03c22d92cfeba10491571e677940527c388666e8b9d9917b062c6dee7ae",
+        "image": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+        "init_cgroups": [
+          {
+            "controllers": "",
+            "hierarchy": "0",
+            "path": "/system.slice/docker-40fdb03c22d92cfeba10491571e677940527c388666e8b9d9917b062c6dee7ae.scope"
+          }
+        ],
+        "name": "product-catalog-router",
+        "network_settings": {
+          "Networks": {
+            "ebpf-otel-demo_default": {
+              "Aliases": [
+                "product-catalog-router",
+                "product-catalog"
+              ],
+              "DNSNames": [
+                "product-catalog-router",
+                "product-catalog",
+                "40fdb03c22d9"
+              ],
+              "DriverOpts": null,
+              "EndpointID": "9be22f21642ed4825938e0d0e7d850d2895052c09e0628b7c6c04e88d08fca08",
+              "Gateway": "172.28.11.1",
+              "GlobalIPv6Address": "",
+              "GlobalIPv6PrefixLen": 0,
+              "GwPriority": 0,
+              "IPAMConfig": {
+                "IPv4Address": "172.28.11.20",
+                "IPv6Address": ""
+              },
+              "IPAddress": "172.28.11.20",
+              "IPPrefixLen": 24,
+              "IPv6Gateway": "",
+              "Links": null,
+              "MacAddress": "f6:61:d9:c3:7a:5c",
+              "NetworkID": "b71dd229f2f38eb80267dbc545c656a0bb7a60a4cc791e76bf82d5b896b10d0b"
+            }
+          },
+          "Ports": {
+            "10000/tcp": null,
+            "3550/tcp": [
+              {
+                "HostIp": "0.0.0.0",
+                "HostPort": "13551"
+              },
+              {
+                "HostIp": "::",
+                "HostPort": "13551"
+              }
+            ]
+          },
+          "SandboxID": "05d3a707722e314f56fa3506d91c893ed8bc73565c040c93878c8e2f99b0d1c0",
+          "SandboxKey": "/var/run/docker/netns/05d3a707722e"
+        },
+        "state": {
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "Pid": 12434,
+          "Running": true,
+          "StartedAt": "2026-10-30T16:59:33.386635614Z",
+          "Status": "running"
+        }
+      },
+      "listener_snapshot": {
+        "after": {
+          "host_pid": 12434,
+          "net_namespace": "net:[4026532449]",
+          "start_ticks": 39251
+        },
+        "argv": [
+          "nsenter",
+          "-t",
+          "12434",
+          "-n",
+          "ss",
+          "-H",
+          "-lntup"
+        ],
+        "before": {
+          "host_pid": 12434,
+          "net_namespace": "net:[4026532449]",
+          "start_ticks": 39251
+        },
+        "ended": {
+          "boottime_ns": 517279256436,
+          "monotonic_ns": 517279256146,
+          "realtime_unix_ns": 1793379698332957362
+        },
+        "ownership_stable": true,
+        "returncode": 0,
+        "started": {
+          "boottime_ns": 517235924575,
+          "monotonic_ns": 517235924425,
+          "realtime_unix_ns": 1793379698289626001
+        },
+        "stderr": "",
+        "stdout": "udp UNCONN 0      0      127.0.0.11:55664 0.0.0.0:* users:((\"dockerd\",pid=2106,fd=89))\ntcp LISTEN 0      4096   127.0.0.11:42411 0.0.0.0:* users:((\"dockerd\",pid=2106,fd=91))\ntcp LISTEN 0      4096      0.0.0.0:3550  0.0.0.0:* users:((\"envoy\",pid=12434,fd=26)) \ntcp LISTEN 0      4096      0.0.0.0:3550  0.0.0.0:* users:((\"envoy\",pid=12434,fd=25)) \ntcp LISTEN 0      4096      0.0.0.0:10001 0.0.0.0:* users:((\"envoy\",pid=12434,fd=22)) \n"
+      },
+      "member": "runtime-identity-v5/sample-after-class_train-00-a.json",
+      "node": "a",
+      "stage": "after-class_train-00"
+    },
+    {
+      "boot_id": "f01ed2ff-19b1-409b-93db-00ab16b34252",
+      "capture_clocks": {
+        "ended": {
+          "boottime_ns": 511292639798,
+          "monotonic_ns": 511292639638,
+          "realtime_unix_ns": 1793379692346341144
+        },
+        "started": {
+          "boottime_ns": 510226149520,
+          "monotonic_ns": 510226149230,
+          "realtime_unix_ns": 1793379691279850175
+        }
+      },
+      "container": {
+        "cgroup_parent": "",
+        "compose": {
+          "config_hash": "139989cd1dfedd12da171e0cdb142a2528315e408d4ee9d3f9d25afcaca7b4ec",
+          "container_number": "1",
+          "oneoff": "False",
+          "project": "ebpf-otel-demo",
+          "service": "product-catalog"
+        },
+        "config_image": "ghcr.io/open-telemetry/demo:3.0.0-frontend-proxy",
+        "host_network_config": {
+          "NetworkMode": "ebpf-otel-demo_default",
+          "PortBindings": {
+            "3550/tcp": [
+              {
+                "HostIp": "",
+                "HostPort": "13551"
+              }
+            ]
+          }
+        },
+        "id": "40fdb03c22d92cfeba10491571e677940527c388666e8b9d9917b062c6dee7ae",
+        "image": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+        "init_cgroups": [
+          {
+            "controllers": "",
+            "hierarchy": "0",
+            "path": "/system.slice/docker-40fdb03c22d92cfeba10491571e677940527c388666e8b9d9917b062c6dee7ae.scope"
+          }
+        ],
+        "name": "product-catalog-router",
+        "network_settings": {
+          "Networks": {
+            "ebpf-otel-demo_default": {
+              "Aliases": [
+                "product-catalog-router",
+                "product-catalog"
+              ],
+              "DNSNames": [
+                "product-catalog-router",
+                "product-catalog",
+                "40fdb03c22d9"
+              ],
+              "DriverOpts": null,
+              "EndpointID": "9be22f21642ed4825938e0d0e7d850d2895052c09e0628b7c6c04e88d08fca08",
+              "Gateway": "172.28.11.1",
+              "GlobalIPv6Address": "",
+              "GlobalIPv6PrefixLen": 0,
+              "GwPriority": 0,
+              "IPAMConfig": {
+                "IPv4Address": "172.28.11.20",
+                "IPv6Address": ""
+              },
+              "IPAddress": "172.28.11.20",
+              "IPPrefixLen": 24,
+              "IPv6Gateway": "",
+              "Links": null,
+              "MacAddress": "f6:61:d9:c3:7a:5c",
+              "NetworkID": "b71dd229f2f38eb80267dbc545c656a0bb7a60a4cc791e76bf82d5b896b10d0b"
+            }
+          },
+          "Ports": {
+            "10000/tcp": null,
+            "3550/tcp": [
+              {
+                "HostIp": "0.0.0.0",
+                "HostPort": "13551"
+              },
+              {
+                "HostIp": "::",
+                "HostPort": "13551"
+              }
+            ]
+          },
+          "SandboxID": "05d3a707722e314f56fa3506d91c893ed8bc73565c040c93878c8e2f99b0d1c0",
+          "SandboxKey": "/var/run/docker/netns/05d3a707722e"
+        },
+        "state": {
+          "ExitCode": 0,
+          "FinishedAt": "0001-01-01T00:00:00Z",
+          "Pid": 12434,
+          "Running": true,
+          "StartedAt": "2026-10-30T16:59:33.386635614Z",
+          "Status": "running"
+        }
+      },
+      "listener_snapshot": {
+        "after": {
+          "host_pid": 12434,
+          "net_namespace": "net:[4026532449]",
+          "start_ticks": 39251
+        },
+        "argv": [
+          "nsenter",
+          "-t",
+          "12434",
+          "-n",
+          "ss",
+          "-H",
+          "-lntup"
+        ],
+        "before": {
+          "host_pid": 12434,
+          "net_namespace": "net:[4026532449]",
+          "start_ticks": 39251
+        },
+        "ended": {
+          "boottime_ns": 511219970180,
+          "monotonic_ns": 511219969820,
+          "realtime_unix_ns": 1793379692273671076
+        },
+        "ownership_stable": true,
+        "returncode": 0,
+        "started": {
+          "boottime_ns": 511184593046,
+          "monotonic_ns": 511184592886,
+          "realtime_unix_ns": 1793379692238294392
+        },
+        "stderr": "",
+        "stdout": "udp UNCONN 0      0      127.0.0.11:55664 0.0.0.0:* users:((\"dockerd\",pid=2106,fd=89))\ntcp LISTEN 0      4096   127.0.0.11:42411 0.0.0.0:* users:((\"dockerd\",pid=2106,fd=91))\ntcp LISTEN 0      4096      0.0.0.0:3550  0.0.0.0:* users:((\"envoy\",pid=12434,fd=26)) \ntcp LISTEN 0      4096      0.0.0.0:3550  0.0.0.0:* users:((\"envoy\",pid=12434,fd=25)) \ntcp LISTEN 0      4096      0.0.0.0:10001 0.0.0.0:* users:((\"envoy\",pid=12434,fd=22)) \n"
+      },
+      "member": "runtime-identity-v5/sample-before-class_train-00-a.json",
+      "node": "a",
+      "stage": "before-class_train-00"
+    }
+  ],
+  "scope": "Selected actual proxy ownership facts only; no backend remap or inferred proxy-to-backend edge.",
+  "selected_member_proofs": {
+    "runtime-identity-v5/sample-after-class_train-00-a.json": {
+      "bytes": 191106,
+      "sha256": "7b79c9745f59d1effa25f7145c080f16bafab8928f8728d050bd14a9501d97c3",
+      "zip_crc32": "cf45ab3a"
+    },
+    "runtime-identity-v5/sample-after-class_train-00-b.json": {
+      "bytes": 63919,
+      "sha256": "e86ec20a5fca966167c1cb2eee8d1fcd6539f79e2201c1e0cbf92048fabb3e7f",
+      "zip_crc32": "4971484e"
+    },
+    "runtime-identity-v5/sample-before-class_train-00-a.json": {
+      "bytes": 189794,
+      "sha256": "169479f1102b9696d9ba282b0309f7e91ca0ce02f21885f44e6d1b18b5a2f1c1",
+      "zip_crc32": "a19e1b57"
+    },
+    "runtime-identity-v5/sample-before-class_train-00-b.json": {
+      "bytes": 63902,
+      "sha256": "99fd0e2ffa3959b0c37a4a04955f6141ea59a504ac6b58d8946425048250697c",
+      "zip_crc32": "1ff6658b"
+    }
+  },
+  "source_head": "fcef724e3226ed0c41af461d07b34249fb94d235",
+  "source_run": 41093684285,
+  "whole_zip_hash_verified": false
+}
