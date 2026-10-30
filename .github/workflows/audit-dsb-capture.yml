@@ -4,8 +4,13 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding, provided-service-roles]
+        options: [dsb-capture, entry-route-binding, provided-service-roles, semantic-metadata]
         default: dsb-capture
+      collector:
+        description: The semantic-metadata audit has one fixed Coroot job
+        type: choice
+        options: [all, obi, deepflow, coroot]
+        default: all
 permissions:
   contents: read
   actions: read
@@ -15,13 +20,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        collector: [obi, deepflow, coroot]
+        collector: ${{ fromJson(inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -e . opentelemetry-proto
+      - name: Build the unchanged source-pinned diagnostic binaries
+        if: inputs.audit == 'semantic-metadata'
+        env:
+          PYTHONPATH: src:.
+        run: |
+          mkdir -p work/dsb-audit
+          /usr/bin/time -v -o work/dsb-audit/toolchain-setup-time.txt \
+            bash scripts/setup-toolchain-v4.sh work/dsb-audit-build v5
+          echo "PBS_BIN=$(realpath work/dsb-audit-build/bin)" >> "$GITHUB_ENV"
       - name: Retrieve fixed immutable source captures
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,11 +48,15 @@ jobs:
           kind=os.environ['AUDIT_KIND']
           declaration=('docs/entry-route-binding-audit-20261030.json' if kind=='entry-route-binding'
                        else 'docs/provided-service-roles-audit-20261030.json' if kind=='provided-service-roles'
+                       else 'docs/semantic-metadata-audit-20261030.json' if kind=='semantic-metadata'
                        else 'docs/dsb-capture-audit-20261030.json')
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
-          for role in (('full','compact','training') if kind=='provided-service-roles' else ('full','compact')):
+          roles=(('full','compact','baseline_full','baseline_compact','partial_full','partial_compact')
+                 if kind=='semantic-metadata' else ('full','compact','training')
+                 if kind=='provided-service-roles' else ('full','compact'))
+          for role in roles:
               endpoint=f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{cell[role]['id']}"
               with (root/(role+'-api.json')).open('wb') as stream:
                   subprocess.run(['gh','api',endpoint],stdout=stream,check=True)
@@ -52,7 +70,7 @@ jobs:
         env:
           PYTHONPATH: src:.
           AUDIT_SCRIPT: ${{ inputs.audit != 'dsb-capture' && 'audit-entry-route-binding.py' || 'audit-dsb-capture.py' }}
-          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || '' }}
+          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || '' }}
         run: |
           python "scripts/$AUDIT_SCRIPT" --source work/dsb-audit-input \
             --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json $AUDIT_ROLE_FLAG
@@ -64,5 +82,9 @@ jobs:
             work/dsb-audit-input/cell.json
             work/dsb-audit-input/*-api.json
             work/dsb-audit/facts.json
+            work/dsb-audit/semantic-metadata/
+            work/dsb-audit/toolchain-setup-time.txt
+            work/dsb-audit-build/toolchain-build.json
+            work/dsb-audit-build/logs/
           retention-days: 90
           if-no-files-found: error
