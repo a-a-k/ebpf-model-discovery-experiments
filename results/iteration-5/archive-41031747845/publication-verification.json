@@ -1,0 +1,81 @@
+{
+  "observed_utc": "2026-10-30T09:20:58.810214+00:00",
+  "archive_run": 41031747845,
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41031747845",
+  "source_runs": [
+    40963548420,
+    40965631880
+  ],
+  "original_zip_release_api_size_sha_equal": true,
+  "original_artifacts": [
+    12940068074,
+    12941184407
+  ],
+  "release_checksum_entries_checked": [
+    "40963548420-artifact-12940068074-training-v4-petclinic-absent-6-40963548420.zip",
+    "40963548420-workflow-logs.zip",
+    "40965631880-artifact-12941184407-training-v4-petclinic-absent-7-40965631880.zip",
+    "40965631880-workflow-logs.zip",
+    "40963548420-job-123762165761.log",
+    "40965631880-job-123769289108.log",
+    "40965631880-job-123769331220.log"
+  ],
+  "local_metadata_files_only": [
+    "release-metadata.json",
+    "provenance.tar.gz",
+    "SHA256SUMS.txt"
+  ],
+  "local_original_zip_downloaded": false,
+  "local_source_zip_sha_verified": false,
+  "evidence_scope": "Actions verified source ZIP bytes against original API; root compared final Release API digests/sizes and checksum manifest; only metadata bytes rehashed locally",
+  "retained_log_status_records": [
+    {
+      "name": "./40963548420-job-123762165761-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123762165761/logs",
+        "state": "available",
+        "file": "40963548420-job-123762165761.log"
+      }
+    },
+    {
+      "name": "./40963548420-job-123762196894-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123762196894/logs",
+        "state": "unavailable",
+        "http_status": 404
+      }
+    },
+    {
+      "name": "./40963548420-workflow-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40963548420/logs",
+        "state": "available",
+        "file": "40963548420-workflow-logs.zip"
+      }
+    },
+    {
+      "name": "./40965631880-job-123769289108-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123769289108/logs",
+        "state": "available",
+        "file": "40965631880-job-123769289108.log"
+      }
+    },
+    {
+      "name": "./40965631880-job-123769331220-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123769331220/logs",
+        "state": "available",
+        "file": "40965631880-job-123769331220.log"
+      }
+    },
+    {
+      "name": "./40965631880-workflow-logs-status.json",
+      "value": {
+        "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40965631880/logs",
+        "state": "available",
+        "file": "40965631880-workflow-logs.zip"
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schema_version": "iteration5-main-review-candidates-v1",
+  "selection_rule": "Both newly completed remaining Coroot DSB full cells; terminal jobs and preserved artifacts, never selected by forecast availability, accuracy or outcome.",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41004285932,
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12965338107,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-full-6-41004285932",
+      "compact_artifact_bytes": 2606462278,
+      "compact_artifact_digest": "sha256:3b0cdf0c9e843b27a7aa2bc3e4a022d1c57c4daac57596a51f7fd37e0aecaf41",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12965293560,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-6-41004285932",
+      "full_artifact_bytes": 7743550986,
+      "full_artifact_digest": "sha256:a1a89962119dc91d3d92ba0c846b488165c50a9813bbb3220e616ed2d7830aed",
+      "full_scope": "retrieve_family_selected"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "run_id": 41004285932,
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12965078253,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-full-7-41004285932",
+      "compact_artifact_bytes": 2601387507,
+      "compact_artifact_digest": "sha256:75932d75d0c9c250f54d7f7b5615490db3e3ed77d69a24cab35d4c743fcf3f87",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12965054250,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-7-41004285932",
+      "full_artifact_bytes": 7724907730,
+      "full_artifact_digest": "sha256:1a12a62c128368d380683e27d57bf487a6c1fda51a65ca84c9267de7e1f2afd8",
+      "full_scope": "retrieve_family_selected"
+    }
+  ]
+}
