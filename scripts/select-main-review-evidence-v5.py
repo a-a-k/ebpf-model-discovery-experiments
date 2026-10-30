@@ -38,6 +38,8 @@ INPUT_SUPPLEMENT = {
     },
 }
 FULL_FIXED = {
+    "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",
+    "infrastructure/a/check.txt", "infrastructure/b/check.txt",
     "forecast-saved.json", "toolchain/forecasts.json", "toolchain/static-inputs.json",
     "toolchain/execution-summary.json", "toolchain-build/toolchain-build.json",
     "toolchain/classes/classes-family-model.json", "toolchain/classes/classes-model.json",

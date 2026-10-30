@@ -30,6 +30,37 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+@pytest.mark.parametrize("changed", [None, "same_boot", "wrong_image", "check_mismatch", "invalid_boot"])
+def test_fresh_guest_facts_require_actual_distinct_boot_proofs_without_claiming_hosts(tmp_path, changed):
+    boots = {"a": "11111111-1111-4111-8111-111111111111",
+             "b": "22222222-2222-4222-8222-222222222222"}
+    if changed == "same_boot":
+        boots["b"] = boots["a"]
+    if changed == "invalid_boot":
+        boots["b"] = "not-a-kernel-boot-uuid"
+    nodes = {node: "6.8.0-147-generic\n" + boot + "\n26.0\n" for node, boot in boots.items()}
+    for node, text in nodes.items():
+        write(tmp_path / "infrastructure" / node / "check.txt",
+              (text + "changed" if changed == "check_mismatch" and node == "b" else text).encode())
+    write(tmp_path / "infrastructure/infrastructure.json", {
+        "status": "ready", "nodes": nodes, "guest_memory_mib": 6144, "shared_physical_host": True})
+    write(tmp_path / "infrastructure/image-provenance.json", {
+        "sha256": "wrong" if changed == "wrong_image" else REVIEW.FRESH_GUEST_IMAGE_SHA256})
+    if changed:
+        with pytest.raises(ValueError):
+            REVIEW.guest_platform_facts(tmp_path)
+    else:
+        facts = REVIEW.guest_platform_facts(tmp_path)
+        assert facts["boot_ids"] == boots
+        assert facts["guest_memory_mib"] == 6144
+        assert facts["shared_runner_host"] is True
+        assert facts["separate_physical_hosts_claimed"] is False
+        assert facts["guest_image_bytes_independently_rehashed_by_this_review"] is False
+    for name in ("infrastructure/infrastructure.json", "infrastructure/image-provenance.json",
+                 "infrastructure/a/check.txt", "infrastructure/b/check.txt"):
+        assert SELECT.wanted_member(name, "full")
+
+
 def write(path: Path, value) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     if isinstance(value, (dict, list)):

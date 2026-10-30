@@ -10,6 +10,7 @@ import itertools
 import json
 from pathlib import Path, PurePosixPath
 import tarfile
+import uuid
 import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
@@ -24,6 +25,7 @@ FRESH_HEAD = "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260", FRESH_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
+FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
     "deepflow": {
@@ -604,6 +606,28 @@ def validate_otel_demo_sdk_settings(settings: dict[str, str | None], mode: str) 
     return sorted(value for value in settings.values() if value is not None)
 
 
+def guest_platform_facts(root: Path) -> dict:
+    """Read the existing boot proof; two kernels share the same runner host."""
+    infrastructure = read(root / "infrastructure/infrastructure.json")
+    image = read(root / "infrastructure/image-provenance.json")
+    kernels, boots = {}, {}
+    for node in ("a", "b"):
+        original = (root / "infrastructure" / node / "check.txt").read_bytes().decode("utf-8")
+        lines = original.splitlines()
+        if infrastructure.get("nodes", {}).get(node) != original or len(lines) < 2 or not lines[0]:
+            raise ValueError("guest kernel check differs from retained infrastructure proof")
+        kernels[node], boots[node] = lines[0], str(uuid.UUID(lines[1]))
+    if (infrastructure.get("status") != "ready" or boots["a"] == boots["b"]
+            or image.get("sha256") != FRESH_GUEST_IMAGE_SHA256
+            or infrastructure.get("shared_physical_host") is not True):
+        raise ValueError("guest boot/image premise differs from the fixed two-guest setup")
+    return {"kernel_releases": kernels, "boot_ids": boots, "independent_guest_boots": True,
+            "shared_runner_host": True, "separate_physical_hosts_claimed": False,
+            "guest_memory_mib": infrastructure.get("guest_memory_mib"),
+            "recorded_image_provenance": image,
+            "guest_image_bytes_independently_rehashed_by_this_review": False}
+
+
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
                evaluation: dict | None, package_out: Path) -> dict:
     proof = _selected_proof(root, declaration)
@@ -631,6 +655,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
     fresh = declaration["head_sha"] in FRESH_HEADS
+    guest_facts = guest_platform_facts(root) if declaration["head_sha"] == FRESH_HEAD else None
     expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
     if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")
@@ -1024,6 +1049,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "standalone_file_closure_facts": standalone,
         "rendered_sdk_disabled_values": sorted(sdk_flags),
         "native_mode_facts": native_facts,
+        "guest_platform_facts": guest_facts,
         "supplied_logical_alias_facts": alias_facts,
         "worker_import_facts": worker_facts,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
