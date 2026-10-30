@@ -30,6 +30,107 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+def metadata_fixture(tmp_path):
+    toolchain = tmp_path / "toolchain"
+    branch = toolchain / "combined/raw/details"
+    shared = toolchain / "discovery/combined/raw"
+    observed = {"metadata": {"source_ref": "actual-first", "discovered_at": "first-time"},
+                "services": [{"id": "gateway", "replicas": 1}, {"id": "visits", "replicas": 1}],
+                "edges": [{"id": "opaque-docker-visits-db", "from": "gateway", "to": "visits", "observations": 7}],
+                "endpoints": [{"id": "details", "entry_service": "gateway",
+                               "metadata": {"semantics": {"observed": "retained"}}},
+                              {"id": "scalar-only", "entry_service": "gateway"}]}
+    overlay = {"services": [{"id": "visits", "replicas": 2, "failure_eligible": True,
+                             "placements": [{"replicas": 1, "labels": {"guest": node}} for node in ("a", "b")],
+                             "attributes": {"provided": "snapshot-only"}},
+                            {"id": "gateway", "replicas": 1, "attributes": {"annotation": "snapshot-only"}}],
+               "endpoints": [{"id": "details", "predicate_ref": "details",
+                              "semantics": {"predicate_mode": "external_predicate", "source": "supplied_source_contract"}},
+                             {"id": "scalar-only", "predicate_ref": "scalar-only"}]}
+    attached = json.loads(json.dumps(observed))
+    attached["services"][1].update(replicas=2, metadata={
+        "failure_eligible": True, "placements": overlay["services"][0]["placements"]})
+    attached["endpoints"][0]["success_predicate_ref"] = "details"
+    attached["endpoints"][0]["metadata"]["semantics"].update(overlay["endpoints"][0]["semantics"])
+    attached["endpoints"][1]["success_predicate_ref"] = "scalar-only"
+    sources = {"observed_model": (shared / "observed.json", observed),
+               "raw_bering_model": (shared / "observed.bering-raw.json", observed),
+               "raw_bering_snapshot": (shared / "observed.snapshot.json", {"model": observed}),
+               "semantic_projection": (shared / "observed.supplied-aliases.json", {}),
+               "provided_overlay": (branch / "overlay.json", overlay),
+               "simulator_model": (branch / "model.json", attached)}
+    for path, value in sources.values():
+        write(path, value)
+    proof = {"origin": "provided_metadata_after_verified_semantic_view",
+             "files": {key: {"path": "/saved/toolchain/" + path.relative_to(toolchain).as_posix(),
+                             "sha256": digest(path)} for key, (path, _) in sources.items()},
+             "supplied": overlay, "new_nodes_edges_or_endpoints": False,
+             "graph_structure_and_observed_edge_fields_unchanged": True, "entity_ids_unchanged": True,
+             "final_model_is_a_bering_emitted_snapshot": False, "source_signal_quality_unchanged": True,
+             "same_information_all_sources_and_direct_baseline": True}
+    write(branch / "provided-metadata-attachment.json", proof)
+    write(branch / "provided-metadata-validation.command.json", {
+        "argv": ["bering", "validate", "--input", "/saved/toolchain/combined/raw/details/model.json"], "returncode": 0})
+    for path in (shared / "observed.signal-quality.json", branch / "model.signal-quality.json"):
+        write(path, {"observed_quality": "unchanged"})
+    freeze = {"sha256_by_path": {"toolchain/" + path.relative_to(toolchain).as_posix(): digest(path)
+                                 for path in toolchain.rglob("*") if path.is_file()}}
+    return toolchain, branch, freeze
+
+
+def test_operation_metadata_review_reconstructs_all_fields_and_preserves_first_provenance(tmp_path):
+    toolchain, branch, freeze = metadata_fixture(tmp_path)
+    facts = REVIEW.operation_metadata_facts(toolchain, branch, freeze)
+    assert facts["all_model_fields_exact"]
+    assert facts["source_signal_quality_bytes_unchanged"]
+    assert facts["final_model_is_a_bering_emitted_snapshot"] is False
+    for name in ("overlay.json", "model.signal-quality.json", "provided-metadata-attachment.json",
+                 "provided-metadata-validation.command.json"):
+        assert SELECT.wanted_member("toolchain/combined/raw/details/" + name, "full")
+        assert REVIEW._package_selected("combined/raw/details/" + name, "toolchain")
+    assert SELECT.wanted_member("toolchain/discovery/combined/raw/observed.signal-quality.json", "full")
+    assert REVIEW._package_selected("discovery/combined/raw/observed.signal-quality.json", "toolchain")
+
+
+@pytest.mark.parametrize("changed", ["edge", "first-provenance", "unknown-entity", "quality", "command", "locator", "unfrozen", "publication-claim"])
+def test_operation_metadata_review_rejects_even_rehashed_unexplained_changes(tmp_path, changed):
+    toolchain, branch, freeze = metadata_fixture(tmp_path)
+    proof_path = branch / "provided-metadata-attachment.json"
+    proof = REVIEW.read(proof_path)
+    if changed in ("edge", "first-provenance"):
+        path = branch / "model.json"
+        value = REVIEW.read(path)
+        if changed == "edge":
+            value["edges"][0]["observations"] += 1
+        else:
+            value["metadata"]["source_ref"] = "invented-second"
+        write(path, value)
+        proof["files"]["simulator_model"]["sha256"] = digest(path)
+    elif changed == "unknown-entity":
+        overlay = REVIEW.read(branch / "overlay.json")
+        overlay["services"][0]["id"] = "not-observed"
+        write(branch / "overlay.json", overlay)
+        proof["supplied"] = overlay
+        proof["files"]["provided_overlay"]["sha256"] = digest(branch / "overlay.json")
+    elif changed == "quality":
+        write(branch / "model.signal-quality.json", {"observed_quality": "invented"})
+    elif changed == "command":
+        write(branch / "provided-metadata-validation.command.json", {
+            "argv": ["bering", "validate", "--input", "/saved/toolchain/combined/raw/other/model.json"], "returncode": 0})
+    elif changed == "locator":
+        proof["files"]["simulator_model"]["path"] = "/saved/toolchain/combined/raw/other/model.json"
+    elif changed == "publication-claim":
+        proof["final_model_is_a_bering_emitted_snapshot"] = True
+    write(proof_path, proof)
+    if changed != "unfrozen":
+        freeze["sha256_by_path"].update({"toolchain/" + path.relative_to(toolchain).as_posix(): digest(path)
+                                        for path in toolchain.rglob("*") if path.is_file()})
+    else:
+        del freeze["sha256_by_path"]["toolchain/combined/raw/details/overlay.json"]
+    with pytest.raises(ValueError):
+        REVIEW.operation_metadata_facts(toolchain, branch, freeze)
+
+
 @pytest.mark.parametrize("changed", [None, "same_boot", "wrong_image", "check_mismatch", "invalid_boot"])
 def test_fresh_guest_facts_require_actual_distinct_boot_proofs_without_claiming_hosts(tmp_path, changed):
     boots = {"a": "11111111-1111-4111-8111-111111111111",

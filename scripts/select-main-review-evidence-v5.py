@@ -99,6 +99,7 @@ def wanted_member(name: str, scope: str) -> bool:
     if name.startswith("toolchain/discovery/"):
         return name.endswith(("observed.json", "observed.snapshot.json",
                               "observed.supplied-aliases.json", "observed.bering-raw.json",
+                              "observed.signal-quality.json",
                               "observations.json", "replay-command.json", "bering.log",
                               "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
     if name.startswith("toolchain/procrustes/") and "/0/" in name:
@@ -107,7 +108,9 @@ def wanted_member(name: str, scope: str) -> bool:
             and parts[1] in ("ebpf", "native", "combined")
             and parts[2] in ("raw", "network_scope")):
         return parts[-1] in ("binding.json", "forecast.json",
-                             "simulation.command.json", "model.json")
+                             "simulation.command.json", "model.json", "overlay.json",
+                             "model.signal-quality.json", "provided-metadata-attachment.json",
+                             "provided-metadata-validation.command.json")
     return False
 
 

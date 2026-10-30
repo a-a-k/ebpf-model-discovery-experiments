@@ -25,6 +25,8 @@ FRESH_HEAD = "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260", FRESH_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
+# Filled with the new immutable common capture head after saved-input review.
+METADATA_ATTACHMENT_HEADS = set()
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
@@ -77,6 +79,7 @@ def _package_selected(name: str, kind: str) -> bool:
     if name.startswith("discovery/"):
         return name.endswith(("observed.json", "observed.bering-raw.json",
                               "observed.supplied-aliases.json", "observed.snapshot.json",
+                              "observed.signal-quality.json",
                               "replay-command.json", "observations.json",
                               "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
     if name.startswith("procrustes/") and "/0/" in name:
@@ -85,7 +88,89 @@ def _package_selected(name: str, kind: str) -> bool:
     return (len(parts) == 4 and parts[0] in ("ebpf", "native", "combined")
             and parts[1] in ("raw", "network_scope")
             and parts[-1] in ("binding.json", "forecast.json",
-                              "simulation.command.json", "model.json"))
+                              "simulation.command.json", "model.json", "overlay.json",
+                              "model.signal-quality.json", "provided-metadata-attachment.json",
+                              "provided-metadata-validation.command.json"))
+
+
+def operation_metadata_facts(toolchain: Path, branch: Path, freeze: dict) -> dict:
+    """Independently inspect the literal metadata-only derivation, without tools."""
+    source, variant, _ = branch.relative_to(toolchain).parts
+    shared = toolchain / "discovery" / source / variant
+    proof_path = branch / "provided-metadata-attachment.json"
+    proof = read(proof_path)
+    flags = {"origin": "provided_metadata_after_verified_semantic_view",
+             "new_nodes_edges_or_endpoints": False,
+             "graph_structure_and_observed_edge_fields_unchanged": True,
+             "entity_ids_unchanged": True,
+             "final_model_is_a_bering_emitted_snapshot": False,
+             "source_signal_quality_unchanged": True,
+             "same_information_all_sources_and_direct_baseline": True}
+    if any(proof.get(key) != value for key, value in flags.items()):
+        raise ValueError("operation metadata proof has a different derivation boundary")
+    expected = {"observed_model": shared / "observed.json",
+                "raw_bering_model": shared / "observed.bering-raw.json",
+                "raw_bering_snapshot": shared / "observed.snapshot.json",
+                "semantic_projection": shared / "observed.supplied-aliases.json",
+                "provided_overlay": branch / "overlay.json",
+                "simulator_model": branch / "model.json"}
+    if set(proof["files"]) != set(expected):
+        raise ValueError("operation metadata proof has different source locators")
+    for key, path in expected.items():
+        claim = proof["files"][key]
+        if (toolchain_relative(claim["path"]) != path.relative_to(toolchain).as_posix()
+                or sha(path) != claim["sha256"]):
+            raise ValueError("operation metadata source locator or hash differs")
+    command_path = branch / "provided-metadata-validation.command.json"
+    quality_path = branch / "model.signal-quality.json"
+    source_quality = shared / "observed.signal-quality.json"
+    paths = [*expected.values(), proof_path, command_path, quality_path, source_quality]
+    for path in paths:
+        name = "toolchain/" + path.relative_to(toolchain).as_posix()
+        if freeze["sha256_by_path"].get(name) != sha(path):
+            raise ValueError("operation metadata evidence is not frozen")
+    if quality_path.read_bytes() != source_quality.read_bytes():
+        raise ValueError("operation metadata changed the source signal quality")
+    command = read(command_path)
+    argv = command["argv"]
+    if (command["returncode"] != 0 or len(argv) != 4
+            or argv[:3] != ["bering", "validate", "--input"]
+            or toolchain_relative(argv[3]) != expected["simulator_model"].relative_to(toolchain).as_posix()):
+        raise ValueError("operation metadata lacks its successful exact Bering validation")
+    original = read(expected["observed_model"])
+    overlay = read(expected["provided_overlay"])
+    if overlay != proof["supplied"] or set(overlay) - {"name", "services", "endpoints"}:
+        raise ValueError("operation overlay differs or attempts a graph edit")
+    derived = copy.deepcopy(original)
+    for field, allowed in (("services", {"id", "replicas", "failure_eligible", "placements", "attributes"}),
+                           ("endpoints", {"id", "predicate_ref", "semantics"})):
+        by_id = {row["id"]: row for row in derived[field]}
+        for supplied in overlay.get(field) or []:
+            if set(supplied) - allowed or supplied["id"] not in by_id:
+                raise ValueError("operation overlay requires an existing entity and supported fields")
+            entity = by_id[supplied["id"]]
+            if field == "services":
+                if "replicas" in supplied:
+                    entity["replicas"] = supplied["replicas"]
+                for key in ("failure_eligible", "placements"):
+                    if key in supplied:
+                        entity.setdefault("metadata", {})[key] = copy.deepcopy(supplied[key])
+                # Pinned Go keeps attributes in snapshot annotations, not model metadata.
+            else:
+                if "predicate_ref" in supplied:
+                    entity["success_predicate_ref"] = supplied["predicate_ref"]
+                semantics = supplied.get("semantics") or {}
+                if set(semantics) - {"predicate_mode", "source"}:
+                    raise ValueError("operation overlay adds unsupported endpoint semantics")
+                if semantics:
+                    entity.setdefault("metadata", {}).setdefault("semantics", {}).update(semantics)
+    if derived != read(expected["simulator_model"]):
+        raise ValueError("operation model is not the exact observed graph plus supplied metadata")
+    return {"proof_sha256": sha(proof_path), "all_model_fields_exact": True,
+            "source_signal_quality_bytes_unchanged": True,
+            "final_model_is_a_bering_emitted_snapshot": False,
+            "verified_frozen_paths": sorted({"toolchain/" + path.relative_to(toolchain).as_posix()
+                                             for path in paths})}
 
 
 def toolchain_relative(path: str) -> str:
@@ -846,6 +931,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         model_endpoints = {item["id"] for item in model.get("endpoints") or []}
                         if not model_edges.issubset(graph_edges) or not model_endpoints.issubset(graph_endpoints):
                             raise ValueError("Sheaft model contains unobserved graph identities")
+                    metadata_facts = (operation_metadata_facts(toolchain, branch, freeze)
+                                      if saved_row.get("available")
+                                      and declaration["head_sha"] in METADATA_ATTACHMENT_HEADS else None)
                     branch_facts.append({
                         "source": source, "variant": variant, "operation": operation,
                         "available_copied": saved_row.get("available"),
@@ -854,6 +942,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "saved_command_present": command is not None,
                         "saved_command_returncode": command.get("returncode") if command else None,
                         "saved_model_present": model_path.is_file(),
+                        "provided_metadata_attachment": metadata_facts,
                         "observed_edge_ids_retained": (
                             sorted(model_edges) if saved_row.get("available") else None),
                         "observed_endpoint_ids_retained": (

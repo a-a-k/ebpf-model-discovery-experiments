@@ -302,3 +302,32 @@ contract-to-observation-to-graph-to-binding explanation across all ten operation
 and source arms. Technical pass alone does not excuse an adapter regression.
 Availability and accuracy remain observations, not admission thresholds. The
 original absent/incomplete-tracing feasibility criterion and full81 scope remain.
+
+## Saved operation metadata review, before the next common capture head
+
+Both the main agent and independent skeptic give ORIGINAL-feasibility design GO
+to extending the existing saved reader with exact metadata derivation checks.
+The criterion remains graph discovery and simulation with absent/incomplete
+tracing; the strongest simple baseline is the actual observed graph with the
+same supplied operation, replica and placement knowledge. The mechanism fixes
+application of known metadata after logical naming; it supplies no graph edges
+or independent evidence of scientific success. Preparation, failed attempts,
+Actions builds and evidence processing remain in costs; human time is unknown.
+
+The reader independently reconstructs the restricted metadata operation from the
+frozen observed model and literal overlay, compares the complete final JSON,
+checks six exact locator/hash/freeze links, preserves the first publication's
+provenance, and checks unchanged signal-quality bytes and the actual successful
+pinned Bering validation command. It performs no replay, fit or scoring. Genuine
+unknown branches do not require a successful attachment. Historical profiles
+retain their existing boundaries. The new check remains inactive until the next
+immutable common capture head is recorded explicitly; actual code and output
+review are required before the complete main evidence review.
+
+The first saved metadata comparison, audit41142624898, correctly failed all
+eight pairs because the prototype materialized empty service metadata that Go's
+final output normalization omits. Both original failure diagnostics validated
+and simulated, but that alone did not pass equivalence. Both agents checked
+pinned model.go:361–370/412–420 and gave GO to allocating metadata only when
+writing actual metadata fields. The reader follows this output rule; no new
+comparison exception or general normalization is admitted.
