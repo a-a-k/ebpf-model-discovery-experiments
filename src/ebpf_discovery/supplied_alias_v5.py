@@ -83,10 +83,12 @@ def admission_core(value: dict) -> dict:
     """Canonical admission fields; lifecycle summaries cannot change row identity."""
     keys = ("schema", "origin", "aliases", "conflicts", "occurrence_proofs",
             "scoped_digest_aliases", "verified_scoped_digest_roles",
-            "scoped_digest_compose_services",
             "unique_verified_segments", "receiver_segments_reverified",
             "same_table_all_sources_and_direct_baseline", "physical_identity_inferred")
-    return {key: deepcopy(value.get(key)) for key in keys}
+    result = {key: deepcopy(value.get(key)) for key in keys}
+    if "scoped_digest_compose_services" in value:
+        result["scoped_digest_compose_services"] = deepcopy(value["scoped_digest_compose_services"])
+    return result
 
 
 def admission_sha256(value: dict) -> str:

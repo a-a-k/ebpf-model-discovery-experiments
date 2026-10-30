@@ -1,0 +1,83 @@
+{
+  "purpose": "Fixed source-backed SDK role reconciliation proof only; no replay/refit/simulation/scoring.",
+  "cells": [
+    {
+      "collector": "obi",
+      "run_id": 41115050998,
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260",
+      "full": {
+        "id": 13009401329,
+        "name": "campaign-v5-obi-smoke-petclinic-partial-6-41115050998",
+        "size_in_bytes": 42182133,
+        "digest": "sha256:a3d844fe2fbe44b191a6b38ce063ad4f70b9066a23e8b9c6fd559f3bf8870478"
+      },
+      "compact": {
+        "id": 13008698560,
+        "name": "v5-summary-obi-smoke-petclinic-partial-6-41115050998",
+        "size_in_bytes": 276931,
+        "digest": "sha256:c0f2c1b2021f76c4cc0b69e313c336cb1fbb161371f81142e169132d566e418f"
+      },
+      "training": {
+        "id": 13008810872,
+        "name": "training-v4-petclinic-partial-6-41115050998",
+        "size_in_bytes": 26487367,
+        "digest": "sha256:5a7553f0f2f2993d43d2ffc3414b8a38367fe516b4909420ac07084cbd540de0"
+      }
+    },
+    {
+      "collector": "deepflow",
+      "run_id": 41115056375,
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260",
+      "full": {
+        "id": 13008308750,
+        "name": "campaign-v5-deepflow-smoke-petclinic-partial-6-41115056375",
+        "size_in_bytes": 48521190,
+        "digest": "sha256:384167ab12d712794fc3da6bf44dadc104d62d0ef2bfdaa39aaacb67d3d499c0"
+      },
+      "compact": {
+        "id": 13008353561,
+        "name": "v5-summary-deepflow-smoke-petclinic-partial-6-41115056375",
+        "size_in_bytes": 320729,
+        "digest": "sha256:205013fd867c9a983c6cf9b217e887f216df7743cae0c625a7dc03bd80690d62"
+      },
+      "training": {
+        "id": 13007618569,
+        "name": "training-v4-petclinic-partial-6-41115056375",
+        "size_in_bytes": 28973669,
+        "digest": "sha256:4716d5c7c92cd862b35ed21e015db904e831514a62389fe6cdead4599f6dd484"
+      }
+    },
+    {
+      "collector": "coroot",
+      "run_id": 41115062402,
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260",
+      "full": {
+        "id": 13007849738,
+        "name": "campaign-v5-coroot-smoke-petclinic-full-6-41115062402",
+        "size_in_bytes": 36645665,
+        "digest": "sha256:814ce88b73ed31743d6e3c25b4e403286581ae4c85cdf90a8e0619c925ac97ee"
+      },
+      "compact": {
+        "id": 13007679861,
+        "name": "v5-summary-coroot-smoke-petclinic-full-6-41115062402",
+        "size_in_bytes": 557305,
+        "digest": "sha256:bcf9d4d0d81829b05d1410d878e4a3ac7b5d0fad56553ee69f68d42fc2e2164b"
+      },
+      "training": {
+        "id": 13009500867,
+        "name": "training-v4-petclinic-full-6-41115062402",
+        "size_in_bytes": 26051752,
+        "digest": "sha256:6a271b0c6dcca9c841159277c5549835a304322b55541e1f20366eacb0a9073b"
+      }
+    }
+  ]
+}

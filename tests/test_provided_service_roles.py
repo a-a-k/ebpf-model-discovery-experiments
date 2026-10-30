@@ -7,7 +7,7 @@ import yaml
 
 from ebpf_discovery.store_v5 import ObservationStoreV5
 from ebpf_discovery.supplied_alias_v5 import (
-    admit_observed, build, deployment_roles, load, semantic_view, write_training)
+    admission_core, admission_sha256, admit_observed, load, semantic_view, write_training)
 
 
 def supplied(root, *, duplicate_instance=False):
@@ -129,3 +129,12 @@ def test_runtime_label_conflict_uses_compose_owner_not_sdk_target(tmp_path):
     assert store.apply_supplied_logical_aliases(admission)['rows'] == 2
     assert store.verify_supplied_logical_aliases(admission)['rows'] == 2
     store.close()
+
+
+def test_original_admission_hash_is_unchanged_without_the_new_field():
+    old = {'schema': 'old', 'aliases': {'container': 'role'}}
+    # Obtained with admission_core from original a434 source, before this repair.
+    expected = 'ce3f475d2db0bdd4c51181c683f75c9ca43dfec6d0bfb0bfc3328f0a846cfa81'
+    assert 'scoped_digest_compose_services' not in admission_core(old)
+    assert admission_sha256(old) == expected
+    assert admission_sha256({**old, 'scoped_digest_compose_services': {}}) != expected

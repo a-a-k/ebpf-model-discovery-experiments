@@ -32,3 +32,13 @@ will determine usefulness in the subsequent common qualification and main81.
 
 All preparation, failed qualifications, cancelled series and early stopping stay
 in the experiment cost history. Human preparation time remains unmeasured.
+
+Before execution, both agents give ORIGINAL GO for a read-only saved-input audit
+of the fixed OBI/DeepFlow partial and Coroot full a434 PC captures. Verify original
+artifact identities, frozen models and receiver occurrences; open the original
+training-prefix SQLite in read-only mode, from the separately identity/hash-bound
+original training artifact; the final live index is not used for admission.
+Inspect new alias admission and exact semantic renaming
+on those same inputs, preserving original forecasts. Missing ownership fields in
+old label-conflict resolutions stay unknown; no container ownership is guessed.
+This audit produces no new forecasts, scoring or independent repetitions.
