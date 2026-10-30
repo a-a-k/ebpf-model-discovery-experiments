@@ -2,6 +2,7 @@ import hashlib
 import json
 from pathlib import Path
 import runpy
+import pytest
 
 from google.protobuf.json_format import MessageToDict
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
@@ -101,3 +102,74 @@ def test_packed_toolchain_layout_uses_the_existing_unpacker(tmp_path):
     functions["retained_toolchain"].__globals__["unpack"] = existing_unpack
     assert functions["retained_toolchain"](tmp_path) == {"original_package_proof": True}
     assert calls == [(tmp_path / "toolchain-package", tmp_path / "toolchain", "toolchain")]
+
+
+def test_original_jsonl_prefix_records_keep_offsets_hashes_and_declared_encoding():
+    functions = helper()
+    first = json.dumps({"payload": {"resourceSpans": []}, "id_encoding": "base64"}).encode() + b"\n"
+    second = b'{"resourceSpans":[]}\n'
+    records = list(functions["original_jsonl_records"](first + second))
+    assert records[0] == ({"resourceSpans": []}, "base64", {
+        "offset": 0, "length": len(first), "raw_record_sha256": hashlib.sha256(first).hexdigest()})
+    assert records[1][1:] == ("hex", {"offset": len(first), "length": len(second),
+                                       "raw_record_sha256": hashlib.sha256(second).hexdigest()})
+    with pytest.raises(ValueError, match="incomplete JSONL record"):
+        list(functions["original_jsonl_records"](first + second.rstrip(b"\n")))
+
+
+def test_saved_native_audit_reads_the_indexed_jsonl_prefix_and_exact_accepted_sequence(tmp_path):
+    functions = helper()
+    root, compact = tmp_path / "capture", tmp_path / "compact"
+    def write(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value) + "\n")
+    def sha(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    payload = MessageToDict(request())
+    for resource in payload["resourceSpans"]:
+        span = resource["scopeSpans"][0]["spans"][0]
+        import base64
+        for field in ("traceId", "spanId", "parentSpanId"):
+            if field in span:
+                span[field] = base64.b64decode(span[field]).hex()
+    lines = [(json.dumps({"resourceSpans": [resource]}) + "\n").encode() for resource in payload["resourceSpans"]]
+    original = root / "native/training/native-node-a.jsonl"
+    original.parent.mkdir(parents=True)
+    original.write_bytes(b"".join(lines) + b"later data outside indexed prefix")
+    prefix = b"".join(lines)
+    folder = root / "toolchain/inputs/native/raw"
+    exports = []
+    for index, line in enumerate(lines):
+        path = folder / f"native-{index + 1:06d}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(line)
+        exports.append({"path": path.as_posix(), "source": "native", "content_type": "application/json",
+            "sha256": sha(path), "raw_file": original.as_posix(), "raw_prefix_bytes": len(prefix),
+            "raw_sha256": hashlib.sha256(prefix).hexdigest(), "raw_record_sha256": hashlib.sha256(line).hexdigest()})
+    write(folder / "observations.json", {"observations": 2,
+        "selection_by_source": {"native": "all_frozen_source_records"}, "exports": exports})
+    graph = root / "toolchain/discovery/native/raw/observed.json"
+    write(graph, {"services": [], "edges": [], "endpoints": []})
+    runtime = graph.parent / "observed-runtime"
+    sequence = runtime / "accepted-request-sequence.jsonl"
+    sequence.parent.mkdir()
+    sequence.write_text("".join(json.dumps({"http_status": 200, "endpoint": "/v1/traces", "content_sha256": row["sha256"]}) + "\n" for row in exports))
+    write(runtime / "replay-command.json", {"status": "complete", "input_observations": 2,
+        "ingest": {"spans": 2, "dropped_spans": 0}, "accepted_request_sequence": {
+            "path": sequence.as_posix(), "sha256": sha(sequence), "bytes": sequence.stat().st_size, "requests": 2}})
+    write(root / "toolchain/forecasts.json", {"unchanged": True})
+    frozen = {path.relative_to(root).as_posix(): sha(path) for path in (root / "toolchain").rglob("*") if path.is_file()}
+    write(root / "freeze-integrity.json", {"all_unchanged": True, "sha256_by_path": frozen})
+    for name, value in (("evaluation-v5.json", {"evidence": {"graphs": []}}), ("status.json", {}),
+                        ("evidence-v4.json", {}), ("observations/collector.json", {})):
+        write(compact / name, value)
+    for name in ("freeze-integrity.json", "toolchain/forecasts.json"):
+        write(compact / name, json.loads((root / name).read_text()))
+    write(compact / "evaluation-manifest.json", {"files_sha256": {name: sha(compact / name) for name in (
+        "evaluation-v5.json", "status.json", "evidence-v4.json", "freeze-integrity.json", "toolchain/forecasts.json")}})
+    result = functions["audit"](root, compact, source_arm="native")
+    assert result["native_raw_input_span_fields_equal"] is True
+    assert result["frozen_requests"] == result["original_native_jsonl_record_claims_verified"] == 2
+    assert result["original_otlp_inventory"]["spans"] == 2
+    assert result["bering_accepted_sequence"]["source_manifest_sequence_equal"] is True
+    assert original.read_bytes().endswith(b"later data outside indexed prefix")

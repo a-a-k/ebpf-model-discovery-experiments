@@ -167,12 +167,14 @@ def extract(archive_path, metadata, expected, destination):
         archive.extractall(destination)
 
 
-def native_span_fields(wire, content_type, encoding=""):
+def native_span_fields(wire, content_type, encoding="", *, json_id_encoding="hex"):
     """Independent literal wire projection; do not use the experiment normalizer."""
     if encoding == "gzip":
         wire = gzip.decompress(wire)
     if "json" in content_type:
-        payload, id_encoding = json.loads(wire), "hex"
+        if json_id_encoding not in ("hex", "base64"):
+            raise ValueError("unknown original JSON identifier encoding")
+        payload, id_encoding = json.loads(wire), json_id_encoding
     else:
         message = ExportTraceServiceRequest()
         message.ParseFromString(wire)
@@ -223,6 +225,20 @@ def shipping_summary(rows):
             "ambiguous_same_trace_span_identities": sum(len(value) > 1 for value in by_identity.values()),
             "checkout_shipping_variants": selected,
             "ancestry_scope": "Literal same-trace parent-span-ID matches, including all conflicting variants; no invented ancestry."}
+
+
+def original_jsonl_records(raw):
+    """Read the actual direct-SDK JSONL prefix, without treating it as one export."""
+    offset = 0
+    for line in raw.splitlines(keepends=True):
+        if not line.endswith(b"\n"):
+            raise ValueError("indexed native source has an incomplete JSONL record")
+        if line.strip():
+            document = json.loads(line)
+            yield document.get("payload", document), document.get("id_encoding", "hex"), {
+                "offset": offset, "length": len(line),
+                "raw_record_sha256": hashlib.sha256(line).hexdigest()}
+        offset += len(line)
 
 
 def retained_toolchain(root):
@@ -282,11 +298,12 @@ def audit(root, compact, *, source_arm="ebpf"):
     raw_proofs = {}
     native_counts = {"input": Counter(), "original": Counter()}
     native_rows = {"input": {}, "original": {}}
+    native_record_claims, native_record_sources = Counter(), Counter()
     accepted_sha_sequence = []
-    def native_fields(wire, entry, locator, role):
+    def native_fields(wire, entry, locator, role, *, json_id_encoding="hex"):
         if source_arm != "native":
             return
-        for span in native_span_fields(wire, entry["content_type"], entry.get("content_encoding", "")):
+        for span in native_span_fields(wire, entry["content_type"], entry.get("content_encoding", ""), json_id_encoding=json_id_encoding):
             encoded = json.dumps(span["fields"], sort_keys=True, separators=(",", ":"))
             digest = hashlib.sha256(encoded.encode()).hexdigest()
             native_counts[role][digest] += 1
@@ -313,16 +330,35 @@ def audit(root, compact, *, source_arm="ebpf"):
                 locator={k: entry[k] for k in ("path", "request_order", "sha256", "offset", "length", "shard") if k in entry}))
             requests += 1
             raw_name = original_member(entry["raw_file"])
-            prefix = entry.get("raw_prefix_bytes") if entry.get("raw_file_role") else None
+            direct_native_jsonl = source_arm == "native" and "raw_record_sha256" in entry
+            prefix = entry.get("raw_prefix_bytes") if entry.get("raw_file_role") or direct_native_jsonl else None
             key = (raw_name, prefix, entry["raw_sha256"])
+            if direct_native_jsonl:
+                if type(prefix) is not int or prefix < 0:
+                    raise ValueError("direct native source lacks an indexed byte prefix")
+                native_record_claims[(key, entry["raw_record_sha256"])] += 1
             if key not in raw_proofs:
                 with (root / raw_name).open("rb") as stream:
                     raw = stream.read() if prefix is None else stream.read(prefix)
+                if prefix is not None and len(raw) != prefix:
+                    raise ValueError("original indexed source prefix is shorter than declared")
                 if hashlib.sha256(raw).hexdigest() != entry["raw_sha256"]:
                     raise ValueError("original source bytes differ")
                 raw_proofs[key] = {"member": raw_name, "prefix_bytes": prefix,
                                    "sha256": entry["raw_sha256"]}
-                if not entry.get("raw_file_role"):
+                if direct_native_jsonl:
+                    raw_proofs[key]["representation"] = "original_direct_sdk_otlp_jsonl"
+                    for payload, id_encoding, record in original_jsonl_records(raw):
+                        body = json.dumps(payload).encode()
+                        fields = list(native_span_fields(body, "application/json", json_id_encoding=id_encoding))
+                        if fields:
+                            native_record_sources[(key, record["raw_record_sha256"])] += 1
+                        native_fields(body, {"content_type": "application/json"},
+                            {**raw_proofs[key], **record}, "original", json_id_encoding=id_encoding)
+                        originals.update(inventory(body, "application/json",
+                            joints=original_joints, witnesses=original_witnesses,
+                            locator={**raw_proofs[key], **record}))
+                elif not entry.get("raw_file_role"):
                     native_fields(raw, entry, raw_proofs[key], "original")
                     originals.update(inventory(raw, entry["content_type"], entry.get("content_encoding", ""),
                         joints=original_joints, witnesses=original_witnesses, locator=raw_proofs[key]))
@@ -358,6 +394,8 @@ def audit(root, compact, *, source_arm="ebpf"):
         "frozen_forecasts": read(compact / "toolchain/forecasts.json"),
         "scope": "Complete frozen eBPF fit input; DeepFlow rejected accounting spans the full capture and is labeled by capture stage. Parent counts describe fields, not confirmed ancestry. No missing record establishes interception impossibility."}
     if source_arm == "native":
+        if native_record_claims != native_record_sources:
+            raise ValueError("native input does not match all original nonempty indexed JSONL records")
         replay_path = root / "toolchain/discovery/native/raw/observed-runtime/replay-command.json"
         replay_name = replay_path.relative_to(root).as_posix()
         if sha(replay_path) != frozen[replay_name]:
@@ -380,7 +418,8 @@ def audit(root, compact, *, source_arm="ebpf"):
             native_shipping={role: shipping_summary(rows) for role, rows in native_rows.items()},
             bering_accepted_sequence={"requests": len(accepted), "sha256": sequence["sha256"],
                 "source_manifest_sequence_equal": True, "command_sha256": sha(replay_path)},
-            scope="Complete frozen native fit input and its original raw OTLP bodies. Literal resource/scope/span fields and same-trace parent-ID variants are compared before inspecting the original graph. No replay, new fit, scoring, admission or invented identity.")
+            original_native_jsonl_record_claims_verified=sum(native_record_claims.values()),
+            scope="Complete frozen native fit input and its original retained SDK source (direct OTLP JSONL or receiver bodies, explicitly labelled in proofs). Literal resource/scope/span fields and same-trace parent-ID variants are compared before inspecting the original graph. Direct file exports are not claimed to be captured HTTP/protobuf wire. No replay, new fit, scoring, admission or invented identity.")
     return result
 
 

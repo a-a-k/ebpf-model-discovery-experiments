@@ -18,3 +18,10 @@ matches, and inspect the original Bering graph and unchanged forecasts. No new
 traffic, fitting, simulation, rescoring or admission occurs. All preparation,
 failed audit attempts and early stopping remain in Actions history; human review
 effort is unmeasured. Raw journals stay in Actions and the original archive.
+
+The first diagnostic run 41130921210 at be67d64 failed because the helper treated
+an original direct native OTLP JSONL prefix as one HTTP JSON body. This failure is
+diagnostic preparation cost, not a campaign failure. The corrected audit reads
+every complete original SDK file-export record, verifies the exact indexed prefix
+and each export's original record digest, and labels that source as direct JSONL.
+It makes no claim that those file exports are captured HTTP/protobuf wire.
