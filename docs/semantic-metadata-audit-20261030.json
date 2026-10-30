@@ -1,6 +1,6 @@
 {
   "purpose": "Eight original canonical native Go-overlay model pairs and two original unfinished Coroot failures; diagnostic Bering validation and Sheaft only, no replay, capture, refit, primary forecasts or application outcome scoring.",
-  "prototype_head": "28b7fb3feea335218d9146c2d71ac7f9eb2a723c",
+  "prototype_head": "320a76837ba72e5f162f488d260e909cfd3af0a1",
   "cells": [
     {
       "collector": "coroot",
