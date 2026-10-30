@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "a43404ec02c77e9414878632ec6248835cf7a260",
-  "main_dispatch_status": "Original bf49 series technically stopped at 2026-10-30 19:05 UTC for demonstrated same-root route-binding regression; full replacement81 requires actual qualification27 GO.",
+  "main_dispatch_status": "Not dispatched. a434 qualification reviewed all27:26technicalsuccess+1confirmedOBIOTelparserfailure; PC provided-role fusion defect. Common parser/identity correction PR7 actualcode/savedproof review pending; next27qualification before main81.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1086,6 +1086,116 @@
       "run_id": 41114755102,
       "role": "implementation_ci",
       "note": "Immutable study-20261030-v2 tag checks, passed."
+    },
+    {
+      "run_id": 41118941392,
+      "role": "implementation_ci",
+      "note": "Saved DSB proof/reader compatibility."
+    },
+    {
+      "run_id": 41118955937,
+      "role": "implementation_ci",
+      "note": "Saved DSB proof/reader PR checks."
+    },
+    {
+      "run_id": 41119247647,
+      "role": "saved_dsb_partial_audit",
+      "note": "All3 original partial prefixes and frozen bindings checked; no rerun."
+    },
+    {
+      "run_id": 41123851832,
+      "role": "implementation_ci",
+      "note": "OTLP wire diagnostic source."
+    },
+    {
+      "run_id": 41123859492,
+      "role": "implementation_ci",
+      "note": "OTLP wire diagnostic PR checks."
+    },
+    {
+      "run_id": 41124381843,
+      "role": "saved_otlp_wire_audit",
+      "note": "Original OBI absent unnamedKeyValue proved from PB/JSON; literaldefault only."
+    },
+    {
+      "run_id": 41129382005,
+      "role": "evidence_publication",
+      "note": "Published151assets2214906734bytes; all149payloadledger IDs/state/size/SHA +2metadata independentlychecked. Includes tailworker and all27a434qualification attempts."
+    },
+    {
+      "run_id": 41131467878,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41131463192,
+      "role": "saved_source_semantics_audit",
+      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41131461732,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130631403,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; pull_request; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130544265,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130545414,
+      "role": "saved_source_semantics_audit",
+      "note": "fix/observation-semantics 5be77e0d69acfb0ea6d3f6c8cea56b2aee648a63; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130182817,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 8a472a9876a7e784fd6172db0f5a3250ba687a8a; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130033030,
+      "role": "saved_source_semantics_audit",
+      "note": "fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130026417,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics bdfadf4c4fca01b1e1e9014639b3e922cf3ed3ce; push; observed conclusion failure. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41129499712,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics 6bf142e164fd10d8f372b02915cb5d7e020ec182; push; observed conclusion failure. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41127894815,
+      "role": "implementation_ci",
+      "note": "fix/observation-semantics a161f6d316436f5c5b4d442fdc543913c8d2acf6; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41131445587,
+      "role": "saved_source_semantics_audit",
+      "note": "audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; workflow_dispatch; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41131425468,
+      "role": "implementation_ci",
+      "note": "audit/otel-native-shipping ac02ad39d81698bacc2995b25ba797cfb5ad280b; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130921210,
+      "role": "saved_source_semantics_audit",
+      "note": "audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; workflow_dispatch; observed conclusion failure. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41130878319,
+      "role": "implementation_ci",
+      "note": "audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; push; observed conclusion success. All failures retained; no completed main cell inferred."
     }
   ],
   "blocked_main_cells": [],
@@ -1106,5 +1216,11 @@
       "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
       "reason": "Common adapter regression artificially disadvantaged native baseline; entire source version replaced before further queued cells, independent of accuracy. Available captures and actual early-stop costs retained."
     }
-  ]
+  ],
+  "pending_common_correction": {
+    "pull_request": 7,
+    "branch": "fix/observation-semantics",
+    "head_sha": "9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6",
+    "status": "Not yet merged or capture-qualified; all81 remain held."
+  }
 }
