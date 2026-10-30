@@ -155,10 +155,12 @@ def fixture(tmp_path: Path, *, available: bool = True):
             "raw_ref": f"{node}.raw/body.pb", "raw_sha256": digest(body)}
     write(full / "observations/technical-positive-control.json", control)
     write(full / "deployment/otel_demo/runtime-resolved-node-a.yaml", {
-        "services": {"enabled": {"environment": {"OTEL_SDK_DISABLED": "false"}},
-                     "disabled": {"environment": {"OTEL_SDK_DISABLED": "true"}}}})
+        "services": {"frontend": {"environment": {}},
+                     "product-catalog-a": {
+                         "environment": {"OTEL_SDK_DISABLED": "true"}}}})
     write(full / "deployment/otel_demo/runtime-resolved-node-b.yaml", {
-        "services": {"disabled": {"environment": {"OTEL_SDK_DISABLED": "true"}}}})
+        "services": {"product-catalog-b": {
+            "environment": {"OTEL_SDK_DISABLED": "true"}}}})
     for stage in ("training", "final"):
         write(full / f"native/{stage}/native-metadata.json", {
             "mode": "partial", "actual_census": {"malformed_records": 0, "spans": 1},
@@ -288,6 +290,26 @@ def test_older_otel_absent_suppression_audit_shape_is_verified(tmp_path: Path) -
         {"acquisition": {"native_observations_by_service": {}}})
     assert facts["training"]["schema"] == "native-suppression-verification"
     assert facts["final"]["saved_audit"]["trace_file_bytes"] == 0
+
+
+def test_otel_rendered_sdk_settings_follow_pinned_adapter_omission_convention() -> None:
+    partial = {"frontend": None, "product-catalog": None,
+               "product-catalog-a": "true", "product-catalog-b": "true"}
+    assert REVIEW.validate_otel_demo_sdk_settings(partial, "partial") == ["true", "true"]
+    full = {service: None for service in partial}
+    assert REVIEW.validate_otel_demo_sdk_settings(full, "full") == []
+    absent = {"frontend": "true", "product-catalog-a": "true",
+              "product-catalog-b": "true", "otel-collector": None,
+              "product-catalog": None}
+    assert REVIEW.validate_otel_demo_sdk_settings(absent, "absent") == [
+        "true", "true", "true"]
+
+
+def test_otel_partial_rendered_sdk_settings_reject_unexpected_enabled_service_true() -> None:
+    with pytest.raises(ValueError, match="differs from declared mode"):
+        REVIEW.validate_otel_demo_sdk_settings({
+            "frontend": "true", "product-catalog-a": "true",
+            "product-catalog-b": "true"}, "partial")
 
 
 def test_native_preflight_retains_deployment_only_argv_contract(tmp_path: Path) -> None:

@@ -325,6 +325,25 @@ def native_mode_facts(root: Path, declaration: dict,
     return facts
 
 
+def validate_otel_demo_sdk_settings(settings: dict[str, str | None], mode: str) -> list[str]:
+    invalid = {service: value for service, value in settings.items()
+               if value not in (None, "true", "false")}
+    if invalid:
+        raise ValueError("rendered OTel SDK configuration has invalid disable values")
+    enabled_by_default = {service for service, value in settings.items() if value == "true"}
+    if mode == "absent":
+        expected = set(settings) - {"otel-collector", "product-catalog"}
+    elif mode == "partial":
+        expected = {"product-catalog-a", "product-catalog-b"}
+    elif mode == "full":
+        expected = set()
+    else:
+        raise ValueError("unknown rendered OTel tracing mode")
+    if enabled_by_default != expected:
+        raise ValueError("rendered SDK configuration differs from declared mode")
+    return sorted(value for value in settings.values() if value is not None)
+
+
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
                evaluation: dict | None, package_out: Path) -> dict:
     proof = _selected_proof(root, declaration)
@@ -664,6 +683,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         package.pop("_file_claims", None)
     mode_files = {}
     sdk_flags = []
+    otel_sdk_settings = {}
     for pattern in (
         "deployment/otel_demo/runtime-resolved-node-*.yaml",
         "deployment/petclinic/node-*/compose.yml",
@@ -676,10 +696,15 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             mode_files[path.relative_to(root).as_posix()] = sha(path)
             if path.suffix in (".yaml", ".yml"):
                 document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-                for service in (document.get("services") or {}).values():
+                for name, service in (document.get("services") or {}).items():
                     environment = service.get("environment") or {}
+                    value = (str(environment["OTEL_SDK_DISABLED"]).lower()
+                             if "OTEL_SDK_DISABLED" in environment else None)
+                    if name in otel_sdk_settings and otel_sdk_settings[name] != value:
+                        raise ValueError("rendered service has conflicting SDK settings")
+                    otel_sdk_settings[name] = value
                     if "OTEL_SDK_DISABLED" in environment:
-                        sdk_flags.append(str(environment["OTEL_SDK_DISABLED"]).lower())
+                        sdk_flags.append(value)
     if declaration["system"] == "deathstarbench":
         tracing = read(root / "deployment/deathstarbench/tracing-mode.json")
         if tracing.get("mode") != declaration["mode"]:
@@ -689,6 +714,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     "controlled_replica_sdks_disabled", "frontend_sdk_disabled",
                     "ordinary_service_sdks_disabled", "export_is_not_merely_blocked")):
             raise ValueError("DSB absent configuration does not disable native tracing")
+    elif declaration["system"] == "otel_demo":
+        sdk_flags = validate_otel_demo_sdk_settings(
+            otel_sdk_settings, declaration["mode"])
     else:
         if not sdk_flags:
             raise ValueError("rendered deployment lacks explicit OTEL_SDK_DISABLED values")
