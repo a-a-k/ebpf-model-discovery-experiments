@@ -29,6 +29,24 @@ to snapshot provenance, not model metadata; preserve them in the supplied overla
 and attachment proof. This is the same metadata operation, not an algorithmic or
 cost improvement. Same frozen canonical SDK inputs must receive an Actions
 comparison with the old engine; any difference needs an explicit explanation.
+The equivalence is for this controller's canonical, nonempty produced values;
+this helper does not implement the general Go overlay API for arbitrary inputs.
+
+The first fixed saved-input proof, Actions41142624898 at audit source6ee851c,
+rejected all eight canonical native comparisons because the helper materialized
+empty service metadata objects that the actual Go output omitted. Both original
+Coroot failure diagnostics reached successful pinned Bering validation and Sheaft,
+but this did not override the failed equivalence check. The complete attempt and
+its costs remain retained; no primary result was recomputed.
+
+Before correcting the helper, both agents independently checked exact Bering pin
+66ca3af, internal/model/model.go:361–370 and412–420: output normalization drops
+zero service/endpoint metadata. Both give ORIGINAL-feasibility GO to allocate
+metadata only when actually writing a provided metadata field. Replica/attribute
+only service overlays and predicate-reference-only endpoint overlays preserve the
+already canonical omission. Existing metadata stays intact; no general model
+normalization or additional comparison exception is introduced. The same fixed
+Actions proof must be repeated and actually reviewed before qualification.
 
 Do not create or remove nodes, edges or endpoints, change their IDs or observation
 fields, rewrite wire records, infer parents, weaken genuine pre-attachment

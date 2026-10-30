@@ -34,10 +34,9 @@ def attach_operation_metadata(model, overlay):
         service = services[supplied['id']]
         if 'replicas' in supplied:
             service['replicas'] = supplied['replicas']
-        metadata = service.setdefault('metadata', {})
         for key in ('failure_eligible', 'placements'):
             if key in supplied:
-                metadata[key] = deepcopy(supplied[key])
+                service.setdefault('metadata', {})[key] = deepcopy(supplied[key])
         # Bering's procrustes attributes annotate snapshot records only. The
         # original supplied overlay and attachment evidence retain them.
     for supplied in overlay.get('endpoints') or []:
@@ -48,9 +47,8 @@ def attach_operation_metadata(model, overlay):
         endpoint = endpoints[supplied['id']]
         if 'predicate_ref' in supplied:
             endpoint['success_predicate_ref'] = supplied['predicate_ref']
-        metadata = endpoint.setdefault('metadata', {})
         if supplied.get('semantics'):
-            metadata.setdefault('semantics', {}).update(deepcopy(supplied['semantics']))
+            endpoint.setdefault('metadata', {}).setdefault('semantics', {}).update(deepcopy(supplied['semantics']))
     return result
 
 
