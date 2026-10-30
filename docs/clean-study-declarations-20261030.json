@@ -1,0 +1,367 @@
+{
+  "schema_version": "v5-report-declarations",
+  "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
+  "experiment_head": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+  "main_dispatch_status": "pending actual technical qualification review",
+  "attempt_runs": [
+    {
+      "run_id": 41085491102,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Original 27 clean-controller technical settings, source 4ce30465c46bc92b1437e49661119c934963cb5c; Bering 1.3.0. Carry-forward applies only to passing unchanged paths."
+    },
+    {
+      "run_id": 41085548082,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Original 27 clean-controller technical settings, source 4ce30465c46bc92b1437e49661119c934963cb5c; Bering 1.3.0. Carry-forward applies only to passing unchanged paths."
+    },
+    {
+      "run_id": 41085557375,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Original 27 clean-controller technical settings, source 4ce30465c46bc92b1437e49661119c934963cb5c; Bering 1.3.0. Carry-forward applies only to passing unchanged paths."
+    },
+    {
+      "run_id": 41093684285,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093690386,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093696113,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093701846,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093707770,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093713236,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093720093,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093726189,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41093731467,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Additional final-head regression at fcef724e3226ed0c41af461d07b34249fb94d235, Bering 1.3.1; not a main measurement."
+    },
+    {
+      "run_id": 41096122531,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Corrected explicit parser configuration and Memcached codec, immutable study-20261030 head bf49d46. Not a main measurement."
+    },
+    {
+      "run_id": 41096128562,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Corrected explicit parser configuration and Memcached codec, immutable study-20261030 head bf49d46. Not a main measurement."
+    },
+    {
+      "run_id": 41096134555,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Corrected explicit parser configuration and Memcached codec, immutable study-20261030 head bf49d46. Not a main measurement."
+    }
+  ],
+  "related_runs": [
+    {
+      "run_id": 41089200845,
+      "role": "immutable_input_diagnosis",
+      "note": "Identical complete OTel input through old and repaired generic Bering."
+    },
+    {
+      "run_id": 41093438645,
+      "role": "implementation_ci",
+      "note": "Final-head full suite and pinned Docker positive control."
+    },
+    {
+      "run_id": 41087194139,
+      "role": "product_ci",
+      "repository": "MB3R-Lab/Bering"
+    },
+    {
+      "run_id": 41087194128,
+      "role": "product_smoke",
+      "repository": "MB3R-Lab/Bering"
+    },
+    {
+      "run_id": 41087194173,
+      "role": "product_release_dry_run",
+      "repository": "MB3R-Lab/Bering"
+    },
+    {
+      "run_id": 41088760057,
+      "role": "product_merge_ci",
+      "repository": "MB3R-Lab/Bering"
+    },
+    {
+      "run_id": 41089266010,
+      "role": "product_publication",
+      "repository": "MB3R-Lab/Bering"
+    },
+    {
+      "run_id": 41095895658,
+      "role": "implementation_ci",
+      "note": "Full suite/control for final common capture source bf49d46."
+    }
+  ],
+  "blocked_main_cells": [],
+  "experiment_ref": "study-20261030"
+}

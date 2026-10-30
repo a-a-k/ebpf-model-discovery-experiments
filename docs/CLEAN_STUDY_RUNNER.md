@@ -202,3 +202,27 @@ All earlier measurements and costs remain. After code review and CI, all three
 DeepFlow system regressions must pass again with effective parser logs inspected
 on both guests. Unchanged OBI/Coroot paths retain their reviewed qualification.
 Every one of the 81 main cells uses the same final source and product pins.
+
+Actual-code independent review: explicit GO; 78 codec/lifecycle/handoff checks
+passed independently and locally. Actions full suite/control run 41095895658
+passed for immutable common source bf49d464816aa71b7c820a02778117d3e6a0ba9d,
+tag study-20261030. No main measurement is claimed from qualification.
+
+## Fixed saved DSB diagnosis
+
+All three original clean-controller absent/seed6 captures are fixed by full and
+compact artifact IDs, run/head, bytes and ZIP digests in
+dsb-capture-audit-20261030.json. The cloud-only audit reads every frozen ordered
+input request, verifies original bytes, retained protocol/service/operation/peer
+joint signatures and locators, actual saved Bering graph and frozen forecasts.
+DeepFlow rejected records are checked directly against every complete record in
+saved snapshots and their exact prefix/count/tail proofs, not just the existing
+accounting rows. Parser-list values and source-local identity uncertainty remain
+visible. No replay, fitting, outcome scoring or admission is performed.
+
+Independent actual-code GO was given after six synthetic checks passed both
+independently and locally. JSON hex and protobuf base64 IDs are decoded through
+the existing source-aware reader; parent-field counts do not establish ancestry.
+Conflicting resource identity remains ambiguous. This audit can locate losses
+in saved observations, but cannot prove that interception is impossible when a
+collector emitted no record. It is diagnostic evidence, not a main measurement.
