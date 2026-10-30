@@ -1,7 +1,7 @@
 {
   "schema_version": "main-review-candidates-v5",
   "purpose": "All 81 fresh matched main cells; saved facts only, no replay/refit/rescore/admission.",
-  "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260",
+  "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
   "planned_cells": [
     {
       "system": "deathstarbench",
@@ -11,7 +11,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -21,7 +21,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -31,7 +31,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -41,7 +41,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -51,7 +51,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -61,7 +61,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -71,7 +71,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -81,7 +81,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -91,7 +91,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -101,7 +101,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -111,7 +111,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -121,7 +121,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -131,7 +131,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -141,7 +141,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -151,7 +151,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -161,7 +161,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -171,7 +171,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -181,7 +181,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -191,7 +191,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -201,7 +201,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -211,7 +211,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -221,7 +221,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -231,7 +231,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -241,7 +241,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -251,7 +251,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -261,7 +261,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -271,7 +271,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -281,7 +281,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -291,7 +291,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -301,7 +301,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -311,7 +311,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -321,7 +321,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -331,7 +331,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -341,7 +341,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -351,7 +351,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -361,7 +361,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -371,7 +371,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -381,7 +381,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -391,7 +391,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -401,7 +401,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -411,7 +411,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -421,7 +421,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -431,7 +431,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -441,7 +441,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -451,7 +451,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -461,7 +461,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -471,7 +471,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -481,7 +481,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -491,7 +491,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -501,7 +501,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -511,7 +511,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -521,7 +521,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -531,7 +531,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -541,7 +541,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -551,7 +551,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -561,7 +561,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -571,7 +571,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -581,7 +581,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -591,7 +591,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -601,7 +601,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -611,7 +611,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -621,7 +621,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "deathstarbench",
@@ -631,7 +631,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -641,7 +641,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -651,7 +651,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -661,7 +661,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -671,7 +671,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -681,7 +681,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -691,7 +691,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -701,7 +701,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -711,7 +711,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "otel_demo",
@@ -721,7 +721,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -731,7 +731,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -741,7 +741,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -751,7 +751,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -761,7 +761,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -771,7 +771,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -781,7 +781,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -791,7 +791,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -801,7 +801,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     },
     {
       "system": "petclinic",
@@ -811,7 +811,7 @@
       "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
     }
   ],
   "qualification_keys": [
@@ -847,5 +847,6 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "New full81 pending actual qualification27 GO and dispatch; no main result admitted."
+  "status": "New full81 pending actual qualification27 GO and dispatch; no main result admitted.",
+  "source_qualification": "docs/clean-study-requalification-v3-20261030.json; actual review pending before any main dispatch"
 }

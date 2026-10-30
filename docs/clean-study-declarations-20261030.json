@@ -1,8 +1,8 @@
 {
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
-  "experiment_head": "a43404ec02c77e9414878632ec6248835cf7a260",
-  "main_dispatch_status": "Not dispatched. a434 qualification reviewed all27:26technicalsuccess+1confirmedOBIOTelparserfailure; PC provided-role fusion defect. Common parser/identity correction PR7 actualcode/savedproof review pending; next27qualification before main81.",
+  "experiment_head": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+  "main_dispatch_status": "Not dispatched. Common corrected source6ef frozen/tagged after independent code and actual saved-input GO. New qualification27 started21:34UTC; actual result review required before main81.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -909,6 +909,165 @@
         }
       ],
       "note": "Fixed full nine-setting requalification after independently verified common same-root route binding repair; unavailable/adverse forecasts are not technical failures."
+    },
+    {
+      "run_id": 41132051267,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
+    },
+    {
+      "run_id": 41132056183,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
+    },
+    {
+      "run_id": 41132061981,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Common fresh27 requalification at6ef079a immutable study-20261030-v3 after parser/provided-role source proof; actual outcomes pending; no main cell inferred."
     }
   ],
   "related_runs": [
@@ -1199,7 +1358,7 @@
     }
   ],
   "blocked_main_cells": [],
-  "experiment_ref": "study-20261030-v2",
+  "experiment_ref": "study-20261030-v3",
   "superseded_main_runs": [
     {
       "run_id": 41099986985,
@@ -1220,7 +1379,7 @@
   "pending_common_correction": {
     "pull_request": 7,
     "branch": "fix/observation-semantics",
-    "head_sha": "9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6",
-    "status": "Not yet merged or capture-qualified; all81 remain held."
+    "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+    "status": "PR7merged;treeidenticaltoreviewed9c643ba;commonqualification27running;main81notdispatched."
   }
 }

@@ -107,7 +107,7 @@ jobs:
                   if set(keys)!=expected:
                       raise SystemExit('fresh series must review all 81 cells')
               for cell in cells:
-                  if (cell.get('head_sha')!='a43404ec02c77e9414878632ec6248835cf7a260'
+                  if (cell.get('head_sha')!='6ef079a7a7eac91e464a87a97881a56bc4449e5c'
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!='retrieve_family_selected'

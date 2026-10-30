@@ -48,10 +48,16 @@
     "seed": 6,
     "cells": 27,
     "unchanged_workload_and_controls": true,
-    "runs": {}
+    "runs": {
+      "obi": 41132051267,
+      "deepflow": 41132056183,
+      "coroot": 41132061981
+    },
+    "dispatched_at_utc": "2026-10-30T21:34:27Z"
   },
   "review_rule": "Inspect actual failures and each distinct primary unknown from contract through source/input graph and binding. Real unsupported source/protocol/identity paths remain valid adverse results; no numeric accuracy or availability admission threshold.",
   "cost_boundary": "Retain all preparation, failed diagnostics and qualifications, cancelled series and early stopping. Actions elapsed is not CPU/billed usage; human preparation time remains unmeasured.",
   "remaining_main": "All81 fresh main cells still required at one common final immutable source after actual qualification review.",
-  "native_shipping_caution": "1382 original SDK spans in118 closed records equal the full frozen Bering input. Native shipping SERVER parents are absent from the native prefix despite typed calls being present; possible collector context interaction is under a separate saved-ID check, not presumed SDK or normalizer loss."
+  "native_shipping_caution": "1382 original SDK spans in118 closed records equal the full frozen Bering input. Native shipping SERVER parents are absent from the native prefix despite typed calls being present; possible collector context interaction is under a separate saved-ID check, not presumed SDK or normalizer loss.",
+  "native_baseline_scope": "SDK-only input while the selected collector co-runs. Full means all SDKs enabled, not guaranteed complete ancestry; this is not an agent-free tracing baseline. Partial/absent declarations and external checks remain identical across collectors."
 }
