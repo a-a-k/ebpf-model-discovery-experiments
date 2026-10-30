@@ -29,8 +29,10 @@ same pre-discovery failure boundary; neither source has a saved forecast or targ
 result. The qualification records raw outputs, narrow runtime-provenance
 differences and complete preparation measurements. It runs entirely in Actions.
 
-The full saved comparison completed successfully; actual-output review is pending
-as supplemental engineering evidence.
+The full saved comparison completed successfully and passed separate actual-output
+review as supplemental engineering evidence. Both Bering runs accepted the same
+1,700 requests and 434,731 spans. Their graphs agree except for the documented
+fresh provenance fields. This does not establish a scientific or cost advantage.
 After the user requested a return to the existing direct collection/model path,
 the root and separate skeptic rechecked the ORIGINAL 81-cell criterion. That
 two-layout equivalence check is not causally required to exercise the real path;
@@ -47,3 +49,14 @@ planned failed-main repeat, followed by actual packet review. Unknown or negativ
 forecasts remain valid observations; neither smoke nor technical completion proves
 utility or cost superiority. The original 27 DeepFlow main cells and all prior
 failure/qualification costs remain in scope.
+
+The actual smoke passed that review: both guests supplied the retained eBPF
+controls, the frozen request sequence was accepted, and Bering produced a graph
+with 17 services, 14 edges and 13 endpoints. All 24 source/operation forecast
+variants remain unavailable; Sheaft did not run. The
+[unchanged graph, command and review receipts](../results/iteration-5/deepflow-preparation-20261030/SOURCE.md)
+separate successful graph construction from unavailable forecasts. The first
+planned Petclinic/absent seed-6 main replacement was dispatched as
+[41023324471](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41023324471).
+Its actual main results require their own review; no main cell is admitted by
+the smoke or saved-input qualification.

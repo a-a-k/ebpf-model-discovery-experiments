@@ -1,0 +1,199 @@
+{
+  "schema_version": "independent-real-path-smoke-review-v1",
+  "reviewed_at_utc": "2026-10-30T07:54:43.058601+00:00",
+  "run": {
+    "run_id": 41018310659,
+    "job_id": 123939602557,
+    "head_sha": "e48dad6cb37c28fee7e731dd8bbe355a924c454b",
+    "system": "petclinic",
+    "mode": "absent",
+    "seed": 6,
+    "collector": "deepflow",
+    "status": "smoke_complete",
+    "observed_operations": 144,
+    "elapsed_seconds": 795.417866547
+  },
+  "artifacts": {
+    "training": {
+      "id": 12960996023,
+      "name": "training-v4-petclinic-absent-6-41018310659",
+      "api_zip_bytes": 28096412,
+      "api_digest": "sha256:e165a2d855393b0e4f89026f54464c583a824a6145efd73a717ec22fa66481f1"
+    },
+    "compact": {
+      "id": 12960912355,
+      "name": "v5-summary-deepflow-smoke-petclinic-absent-6-41018310659",
+      "api_zip_bytes": 293506,
+      "api_digest": "sha256:0597f318eb9628aa7f94c4efe3d25e115afa0c12dc7d44d7e1b6211404d316e7",
+      "local_root": "compact",
+      "manifest_claims": 9
+    },
+    "campaign": {
+      "id": 12960583383,
+      "name": "campaign-v5-deepflow-smoke-petclinic-absent-6-41018310659",
+      "api_zip_bytes": 44277339,
+      "api_digest": "sha256:a22a4d5b3de0d6ebf69676baee718124e0a341569b5b6619faa7822b7de4e585",
+      "whole_zip_downloaded": false,
+      "whole_zip_hash_verified_locally": false,
+      "selected_root": "campaign-selected",
+      "selected_member_count": 41,
+      "selected_uncompressed_bytes": 9370127,
+      "selected_member_proof": "campaign-selected/partial-inspection.json",
+      "requested_missing": []
+    }
+  },
+  "verdict": "ORIGINAL-criterion technical smoke GO; permit only the first already planned DeepFlow Petclinic absent seed-6 failed-main repeat, followed by actual main review",
+  "authorization_boundary": "The existing original 81-cell external-outcome comparison remains unchanged. This is execution qualification, not a substitute demonstration or contribution success.",
+  "local_proof_scope": {
+    "compact_manifest_sha256_checks": 9,
+    "selected_campaign_members": 41,
+    "selected_bytes": 9370127,
+    "selected_proof_sha256": "c2e8a2c0226c76ce083e530ea34bbea26942f415da7613cf8890f507bdc70f54",
+    "whole_training_campaign_zip_locally_verified": false,
+    "request_storage_body_shards_locally_materialized": false,
+    "note": "Actual accepted request hashes, lengths and order were matched against frozen request indexes. HTTP slice verification/derived-envelope reconstruction was executed by the previously reviewed code on Actions; this review did not download or rerun entire storage shards."
+  },
+  "raw_controls_independently_checked": [
+    {
+      "node": "a",
+      "offset": 721013,
+      "length": 1234,
+      "sha256": "d164753690d60ad0cda01be8214fc7acd4e98153f5719cdd661541c6c263cf7c",
+      "raw_file_sha256": "45f08df2c0960bddf25b420f4545a61dc65ba97fcfb7688b478b421bc9ab00b6",
+      "origin": "EBPF/Http1/ServerProcess"
+    },
+    {
+      "node": "b",
+      "offset": 258969,
+      "length": 1237,
+      "sha256": "9c0e9a7176b90c046300c791e89be8bdeb787daeb5dda483fb2c548d48ba3647",
+      "raw_file_sha256": "3fa8d876a486a6963b2cfc03aaaea1fc8d6da7d8f20e92c75e578c2d6639de25",
+      "origin": "EBPF/Http1/ServerProcess"
+    }
+  ],
+  "emitted_and_effective_config": {
+    "source_version": "v7.2.3",
+    "source_commit": "9a1219fa5cf1471ba2ec8742019661567d98002e",
+    "image": "deepflowce/deepflow-agent:v7.2.3@sha256:5f72c0996fdb5008fdb8fd0524f427a895fc54c61690b26ba2cae648929ea95a",
+    "both_exact_yaml_hashes_match": true,
+    "typed_cap_update_both_guests_before_workload": true,
+    "effective_bytes": 1099511627776,
+    "effective_proof_sha256": "62774bdcf496f6054b87eaa10e5c8cac6bfbb004ac6569061fcbb6c5adbe7d27",
+    "load_guard_activation_in_final_logs": false
+  },
+  "actual_bering": [
+    {
+      "variant": "raw",
+      "accepted_exact_request_hashes_lengths_order": true,
+      "accepted_requests": 8,
+      "ingest": {
+        "dropped_spans": 0,
+        "late_spans": 0,
+        "spans": 1625,
+        "traces": 0
+      },
+      "graph": {
+        "services": 17,
+        "edges": 14,
+        "endpoints": 13
+      },
+      "graph_sha256": "41b72f54dd9f3f0fae71438f888c22fd33c0dfab2a4ffe68779c6d1089ed39c9",
+      "actual_snapshot_model_equal": true
+    },
+    {
+      "variant": "network_scope",
+      "accepted_exact_request_hashes_lengths_order": true,
+      "accepted_requests": 8,
+      "ingest": {
+        "dropped_spans": 0,
+        "late_spans": 0,
+        "spans": 1625,
+        "traces": 0
+      },
+      "graph": {
+        "services": 14,
+        "edges": 12,
+        "endpoints": 13
+      },
+      "graph_sha256": "6dda0bf37128104ce50e59f7f8094ec3342eb1c16b1acb7b2a8450ba55877593",
+      "actual_snapshot_model_equal": true
+    }
+  ],
+  "source_identity_projection": {
+    "training_rows": 1625,
+    "resolved_enriched": 859,
+    "unknown": 766,
+    "raw_unchanged_and_no_edge_injection_recorded": true,
+    "relation_scope": "pinned standalone same-guest realtime source/config with microsecond quantization and possible unobserved clock-step limitation, no arbitrary tolerance/age bound"
+  },
+  "procrustes_and_sheaft": {
+    "operations": [
+      "create_visit",
+      "list_owners",
+      "list_vets",
+      "owner_details_with_visits"
+    ],
+    "procrustes_preflight_returncodes": {
+      "create_visit": 0,
+      "list_owners": 0,
+      "list_vets": 0,
+      "owner_details_with_visits": 0
+    },
+    "procrustes_goal_status": "BLOCKED",
+    "procrustes_command_profile": "procrustes analyze --collection-source ebpf-otlp --source-domain petclinic-deployment",
+    "sheaft_executed": false,
+    "sheaft_reason": "required_graph_evidence_unavailable",
+    "interpretation": "The saved graph is real and retained, but operation obligations remain unavailable; no Sheaft input or command was manufactured and the unfavorable unknown forecasts remain authoritative."
+  },
+  "freeze": {
+    "all_unchanged": true,
+    "hashes": 275,
+    "saved_ns": 1793344621720963350,
+    "first_target_seq": 281,
+    "first_target_wall_ns": 1793344621721567502,
+    "lead_ns": 604152
+  },
+  "closure": {
+    "technical_complete": true,
+    "source_exit0_no_oom_restart_or_kill": true,
+    "retained_training_prefixes_unchanged": true,
+    "producer_kernel_internal_flush_loss": "unproven; retained explicitly, not claimed zero"
+  },
+  "saved_outcomes": {
+    "create_visit": "7/8 successful",
+    "list_owners": "8/8 successful",
+    "list_vets": "8/8 successful",
+    "owner_details_with_visits": "7/8 successful",
+    "forecast_count": 24,
+    "available_forecasts": 0,
+    "unavailable_native_no_source": 8,
+    "unavailable_required_graph": 16,
+    "primary_series_result": false,
+    "smoke_technical_pass": true,
+    "proof": "compact/evaluation-v5.json"
+  },
+  "strongest_baseline": "same supplied source contract, operation aliases/roles and two-slot inventory; direct controlled predicate receives the same semantic information; nonintervened-fulfilled assumptions remain explicit",
+  "costs": {
+    "campaign_elapsed_seconds": 795.417866547,
+    "toolchain_clone_seconds": 4.293440949,
+    "toolchain_build_seconds": 18.641024222,
+    "shared_input_preparation_seconds": 12.746150901,
+    "bering_replay_command_seconds": 2.331793351,
+    "toolchain_command_count": 12,
+    "bering_replay_command_count": 4,
+    "manual_preparation": {
+      "measured": false,
+      "reason": "human preparation time was not instrumented; no full-cost advantage claimed"
+    }
+  },
+  "cost_limits": "All old failures, engineering qualification/build/CI/preparation, this additional smoke, repeat, transfer/storage/review and unfinished costs remain attributable. No full-cost advantage or historical memory-cause claim.",
+  "main_admission_increment": 0,
+  "current_actual_main_review_count": 36,
+  "scientific_success_claim": false,
+  "limitations": [
+    "All24 forecasts are unavailable; no actual Sheaft input/command exists and none is inferred. This is honest missing graph evidence, not a positive forecast requirement or a claimed intrinsic collector limitation.",
+    "Real Bering output has useful HTTP anonymous-peer/client and MySQL hint evidence but does not supply missing exact service causality automatically.",
+    "This smoke does not establish full-main scalability, accuracy, superiority, cheaper equivalent results, durable async outcome evidence or success of the original empirical contribution.",
+    "No forecast, graph, model, evaluation or outcome was recomputed locally. No new scientific eligibility threshold or helper framework was introduced."
+  ]
+}

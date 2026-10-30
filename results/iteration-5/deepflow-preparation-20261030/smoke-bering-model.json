@@ -1,0 +1,645 @@
+{
+  "edges": [
+    {
+      "blocking": true,
+      "from": "customers",
+      "id": "customers|database:96582ab2d0e1c33d4b76f333d2cffb7e1be5a177f450ec80b4aa1fae5ccce689|sync|true|protocol=mysql|span_kind=client",
+      "identity": {
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.209,
+          "p90": 1.535,
+          "p95": 2.108,
+          "p99": 3.582
+        }
+      },
+      "to": "database:96582ab2d0e1c33d4b76f333d2cffb7e1be5a177f450ec80b4aa1fae5ccce689"
+    },
+    {
+      "blocking": true,
+      "from": "gateway",
+      "id": "gateway|peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f|sync|true|protocol=http|operation=GET|route=%2Fowners%2F6|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners/6",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 9.949,
+          "p90": 14.547,
+          "p95": 17.876,
+          "p99": 17.876
+        }
+      },
+      "to": "peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f"
+    },
+    {
+      "blocking": true,
+      "from": "gateway",
+      "id": "gateway|peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f|sync|true|protocol=http|operation=GET|route=%2Fowners|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/owners",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 26.071,
+          "p90": 85.353,
+          "p95": 103.281,
+          "p99": 103.281
+        }
+      },
+      "to": "peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f"
+    },
+    {
+      "blocking": true,
+      "from": "gateway",
+      "id": "gateway|peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 12.479,
+          "p90": 23.334,
+          "p95": 453.727,
+          "p99": 453.727
+        }
+      },
+      "to": "peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5"
+    },
+    {
+      "blocking": true,
+      "from": "gateway",
+      "id": "gateway|peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 15.077,
+          "p90": 152.621,
+          "p95": 156.388,
+          "p99": 156.388
+        }
+      },
+      "to": "peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5"
+    },
+    {
+      "blocking": true,
+      "from": "gateway",
+      "id": "gateway|peer:fb35d78f6efe696a932384e586efab71ec475ea0f679fff3ef9b9d19f021b6e3|sync|true|protocol=http|operation=GET|route=%2Fvets|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/vets",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 4.207,
+          "p90": 10.303,
+          "p95": 12.898,
+          "p99": 12.898
+        }
+      },
+      "to": "peer:fb35d78f6efe696a932384e586efab71ec475ea0f679fff3ef9b9d19f021b6e3"
+    },
+    {
+      "blocking": true,
+      "from": "visits-a",
+      "id": "visits-a|database:2e48e898cd01c89fc1a8a93452d70eff517eb617de432629317c53f980bdd811|sync|true|protocol=mysql|span_kind=client",
+      "identity": {
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.414,
+          "p90": 1.472,
+          "p95": 2.1,
+          "p99": 2.1
+        }
+      },
+      "to": "database:2e48e898cd01c89fc1a8a93452d70eff517eb617de432629317c53f980bdd811"
+    },
+    {
+      "blocking": true,
+      "from": "visits-a",
+      "id": "visits-a|database:6229dda27f95fcca41f8d8ecb0f3db22692898909a0cd8b83d485252e2b220e7|sync|true|protocol=mysql|span_kind=client",
+      "identity": {
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.412,
+          "p90": 1.689,
+          "p95": 2.29,
+          "p99": 2.29
+        }
+      },
+      "to": "database:6229dda27f95fcca41f8d8ecb0f3db22692898909a0cd8b83d485252e2b220e7"
+    },
+    {
+      "blocking": true,
+      "from": "visits-b",
+      "id": "visits-b|database:4c0d781f939ed905c08c00c262abda8874bd7eaf2a78525205751b5e9e33ef30|sync|true|protocol=mysql|span_kind=client",
+      "identity": {
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.852,
+          "p90": 4.225,
+          "p95": 5.561,
+          "p99": 5.561
+        }
+      },
+      "to": "database:4c0d781f939ed905c08c00c262abda8874bd7eaf2a78525205751b5e9e33ef30"
+    },
+    {
+      "blocking": true,
+      "from": "visits-b",
+      "id": "visits-b|database:6e9be8cccd7eb41c5b76040fea2bae582fcfa64e516736599d56f955d6ed0952|sync|true|protocol=mysql|span_kind=client",
+      "identity": {
+        "protocol": "mysql",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 0.756,
+          "p90": 2.264,
+          "p95": 2.894,
+          "p99": 2.894
+        }
+      },
+      "to": "database:6e9be8cccd7eb41c5b76040fea2bae582fcfa64e516736599d56f955d6ed0952"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 11.535,
+          "p90": 21.52,
+          "p95": 21.52,
+          "p99": 21.52
+        }
+      },
+      "to": "peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 19.285,
+          "p90": 151.809,
+          "p95": 151.809,
+          "p99": 151.809
+        }
+      },
+      "to": "peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18|sync|true|protocol=http|operation=GET|route=%2Fpets%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "GET",
+        "protocol": "http",
+        "route": "/pets/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 13.549,
+          "p90": 451.017,
+          "p95": 451.017,
+          "p99": 451.017
+        }
+      },
+      "to": "peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18"
+    },
+    {
+      "blocking": true,
+      "from": "visits-proxy",
+      "id": "visits-proxy|peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18|sync|true|protocol=http|operation=POST|route=%2Fowners%2F1%2Fpets%2F1%2Fvisits|span_kind=client",
+      "identity": {
+        "operation": "POST",
+        "protocol": "http",
+        "route": "/owners/1/pets/1/visits",
+        "span_kind": "client"
+      },
+      "kind": "sync",
+      "metadata": {
+        "labels": {
+          "bering.relation.kind": "client_dependency"
+        }
+      },
+      "observed": {
+        "latency_ms": {
+          "p50": 27.63,
+          "p90": 152.611,
+          "p95": 152.611,
+          "p99": 152.611
+        }
+      },
+      "to": "peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18"
+    }
+  ],
+  "endpoints": [
+    {
+      "entry_service": "customers",
+      "id": "customers:GET /owners",
+      "method": "GET",
+      "path": "/owners",
+      "success_predicate_ref": "customers:GET /owners"
+    },
+    {
+      "entry_service": "customers",
+      "id": "customers:GET /owners/6",
+      "method": "GET",
+      "path": "/owners/6",
+      "success_predicate_ref": "customers:GET /owners/6"
+    },
+    {
+      "entry_service": "gateway",
+      "id": "gateway:GET /api/customer/owners",
+      "method": "GET",
+      "path": "/api/customer/owners",
+      "success_predicate_ref": "gateway:GET /api/customer/owners"
+    },
+    {
+      "entry_service": "gateway",
+      "id": "gateway:GET /api/gateway/owners/6",
+      "method": "GET",
+      "path": "/api/gateway/owners/6",
+      "success_predicate_ref": "gateway:GET /api/gateway/owners/6"
+    },
+    {
+      "entry_service": "gateway",
+      "id": "gateway:GET /api/vet/vets",
+      "method": "GET",
+      "path": "/api/vet/vets",
+      "success_predicate_ref": "gateway:GET /api/vet/vets"
+    },
+    {
+      "entry_service": "gateway",
+      "id": "gateway:POST /api/visit/owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/api/visit/owners/1/pets/1/visits",
+      "success_predicate_ref": "gateway:POST /api/visit/owners/1/pets/1/visits"
+    },
+    {
+      "entry_service": "vets",
+      "id": "vets:GET /vets",
+      "method": "GET",
+      "path": "/vets",
+      "success_predicate_ref": "vets:GET /vets"
+    },
+    {
+      "entry_service": "visits-a",
+      "id": "visits-a:GET /pets/visits",
+      "method": "GET",
+      "path": "/pets/visits",
+      "success_predicate_ref": "visits-a:GET /pets/visits"
+    },
+    {
+      "entry_service": "visits-a",
+      "id": "visits-a:POST /owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/owners/1/pets/1/visits",
+      "success_predicate_ref": "visits-a:POST /owners/1/pets/1/visits"
+    },
+    {
+      "entry_service": "visits-b",
+      "id": "visits-b:GET /pets/visits",
+      "method": "GET",
+      "path": "/pets/visits",
+      "success_predicate_ref": "visits-b:GET /pets/visits"
+    },
+    {
+      "entry_service": "visits-b",
+      "id": "visits-b:POST /owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/owners/1/pets/1/visits",
+      "success_predicate_ref": "visits-b:POST /owners/1/pets/1/visits"
+    },
+    {
+      "entry_service": "visits-proxy",
+      "id": "visits-proxy:GET /pets/visits",
+      "method": "GET",
+      "path": "/pets/visits",
+      "success_predicate_ref": "visits-proxy:GET /pets/visits"
+    },
+    {
+      "entry_service": "visits-proxy",
+      "id": "visits-proxy:POST /owners/1/pets/1/visits",
+      "method": "POST",
+      "path": "/owners/1/pets/1/visits",
+      "success_predicate_ref": "visits-proxy:POST /owners/1/pets/1/visits"
+    }
+  ],
+  "metadata": {
+    "confidence": 0.7,
+    "discovered_at": "2026-10-30T07:16:59Z",
+    "schema": {
+      "digest": "sha256:2aa8a3550a25dc626ba6d2f5833569efca2f382b9e5c9c3405be93695d7d48ae",
+      "name": "io.mb3r.bering.model",
+      "uri": "https://mb3r-lab.github.io/Bering/schema/model/v1.3.0/model.schema.json",
+      "version": "1.3.0"
+    },
+    "source_ref": "bering://serve?listen=127.0.0.1%3A58415",
+    "source_type": "bering"
+  },
+  "services": [
+    {
+      "id": "customers",
+      "name": "customers",
+      "replicas": 1
+    },
+    {
+      "id": "database",
+      "name": "database",
+      "replicas": 1
+    },
+    {
+      "id": "database:2e48e898cd01c89fc1a8a93452d70eff517eb617de432629317c53f980bdd811",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:92a8cb688f1606f4e0dc8279c327e88420d63143109480f26b8a7e477b2ca581",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "172.28.11.20",
+          "server.port": "3306"
+        }
+      },
+      "name": "database:2e48e898cd01c89fc1a8a93452d70eff517eb617de432629317c53f980bdd811",
+      "replicas": 1
+    },
+    {
+      "id": "database:4c0d781f939ed905c08c00c262abda8874bd7eaf2a78525205751b5e9e33ef30",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:e451c1b95cf6ca47e3b70f879fe974906205b1aa5ccc5ec7e8f55f6bcf2d4204",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "192.168.76.11",
+          "server.port": "13306"
+        }
+      },
+      "name": "database:4c0d781f939ed905c08c00c262abda8874bd7eaf2a78525205751b5e9e33ef30",
+      "replicas": 1
+    },
+    {
+      "id": "database:6229dda27f95fcca41f8d8ecb0f3db22692898909a0cd8b83d485252e2b220e7",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:2c491510a5557a024a0f16b1cb30720200c0692cdffbd9129595ea0fb7f4ce74",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "172.28.11.20",
+          "server.port": "3306"
+        }
+      },
+      "name": "database:6229dda27f95fcca41f8d8ecb0f3db22692898909a0cd8b83d485252e2b220e7",
+      "replicas": 1
+    },
+    {
+      "id": "database:6e9be8cccd7eb41c5b76040fea2bae582fcfa64e516736599d56f955d6ed0952",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:c6bff5af54fbd09dc9cbb1e030379946ea97400e0e28bd959a5c8d964b811934",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "192.168.76.11",
+          "server.port": "13306"
+        }
+      },
+      "name": "database:6e9be8cccd7eb41c5b76040fea2bae582fcfa64e516736599d56f955d6ed0952",
+      "replicas": 1
+    },
+    {
+      "id": "database:96582ab2d0e1c33d4b76f333d2cffb7e1be5a177f450ec80b4aa1fae5ccce689",
+      "metadata": {
+        "labels": {
+          "bering.database.identity": "unresolved_alias",
+          "bering.network.scope": "caller:scope:a6fa00aa4a8d175caf0f19d577c3d3aa313a3f39f6d2da71844936a3d35d4fe1",
+          "bering.node.kind": "database",
+          "db.system.name": "mysql",
+          "server.address": "172.28.11.20",
+          "server.port": "3306"
+        }
+      },
+      "name": "database:96582ab2d0e1c33d4b76f333d2cffb7e1be5a177f450ec80b4aa1fae5ccce689",
+      "replicas": 1
+    },
+    {
+      "id": "gateway",
+      "name": "gateway",
+      "replicas": 1
+    },
+    {
+      "id": "peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f",
+      "metadata": {
+        "labels": {
+          "bering.network.scope": "caller:scope:8e4a153b3a974d3d30ae36ea463a01da0b9100bc70b60f7eac467a6aacc76d15",
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "unresolved_alias",
+          "server.address": "172.28.11.11",
+          "server.port": "8080"
+        }
+      },
+      "name": "peer:00329624b9c1a56554453c1eb7c4a701d12ee723416de0075bd08718bf5e1a7f",
+      "replicas": 1
+    },
+    {
+      "id": "peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba",
+      "metadata": {
+        "labels": {
+          "bering.network.scope": "caller:scope:e049a07b4acc15cdbe411d7758c031bebceaad4d73a328531cc84c8044bbba49",
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "unresolved_alias",
+          "server.address": "172.28.11.14",
+          "server.port": "8080"
+        }
+      },
+      "name": "peer:ba0093af7b0102ef688b0873ec4e1a84e427533db90e2aacc4490a70c2835dba",
+      "replicas": 1
+    },
+    {
+      "id": "peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5",
+      "metadata": {
+        "labels": {
+          "bering.network.scope": "caller:scope:8e4a153b3a974d3d30ae36ea463a01da0b9100bc70b60f7eac467a6aacc76d15",
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "unresolved_alias",
+          "server.address": "172.28.11.13",
+          "server.port": "8080"
+        }
+      },
+      "name": "peer:f251ccfd8900534f2dc602537a5f8509649c746c74f808b3366973dd6313b2d5",
+      "replicas": 1
+    },
+    {
+      "id": "peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18",
+      "metadata": {
+        "labels": {
+          "bering.network.scope": "caller:scope:e049a07b4acc15cdbe411d7758c031bebceaad4d73a328531cc84c8044bbba49",
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "unresolved_alias",
+          "server.address": "192.168.76.12",
+          "server.port": "18081"
+        }
+      },
+      "name": "peer:f2da56848441e860fcc744b2f2634d318ff0581bf49be093d8d9ff102a926b18",
+      "replicas": 1
+    },
+    {
+      "id": "peer:fb35d78f6efe696a932384e586efab71ec475ea0f679fff3ef9b9d19f021b6e3",
+      "metadata": {
+        "labels": {
+          "bering.network.scope": "caller:scope:8e4a153b3a974d3d30ae36ea463a01da0b9100bc70b60f7eac467a6aacc76d15",
+          "bering.node.kind": "peer",
+          "bering.peer.identity": "unresolved_alias",
+          "server.address": "172.28.11.12",
+          "server.port": "8080"
+        }
+      },
+      "name": "peer:fb35d78f6efe696a932384e586efab71ec475ea0f679fff3ef9b9d19f021b6e3",
+      "replicas": 1
+    },
+    {
+      "id": "vets",
+      "name": "vets",
+      "replicas": 1
+    },
+    {
+      "id": "visits-a",
+      "name": "visits-a",
+      "replicas": 1
+    },
+    {
+      "id": "visits-b",
+      "name": "visits-b",
+      "replicas": 1
+    },
+    {
+      "id": "visits-proxy",
+      "name": "visits-proxy",
+      "replicas": 1
+    }
+  ]
+}

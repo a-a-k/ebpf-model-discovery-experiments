@@ -1,0 +1,33 @@
+{
+  "schema_version": "independent-review-scope-text-erratum-v1",
+  "created_at_utc": "2026-10-30T08:01:02.183160+00:00",
+  "scope": "Two review-record wording corrections only; preserve original review bytes/hash and historical publication",
+  "corrections": [
+    {
+      "record": "work/main-independent-review/40956239225/8/independent-main-review.json",
+      "unchanged_record_sha256": "9f86a838ac4da799ea66bc392d73d6bd8dc4f05f403e86efbcfa2e00e3a8b4de",
+      "run_id": 40956239225,
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "field": "verification_scope",
+      "original_text": "Eight small output facts/API/proofs CRC+SHA checked; source-specific tiny semantic member SHA checked against selected/typed frozen proofs. Full-only OTel output combined with historical whole-verified original compact, retained non-journal claims rehashed, complete worker hash-map matches local frozen map. No whole campaign/worker/output archive, raw journal or large bindings locally.",
+      "correction": "The Full-only OTel/historical compact/worker-map clause is an inapplicable copied sentence and should not be used as proof for this DSB record. This cell was reviewed using its own saved source compact/full selected transport facts and tiny source-specific semantic files identified by its source_artifact_identities, facts_sha256 and representative evidence. No local whole DSB campaign, worker, output archive or raw-journal verification is asserted. All source-specific identities, native-mode audit policy, controls, closure, graph/command/freeze evidence, saved outcomes and qualification/admission verdict remain unchanged.",
+      "scientific_values_or_admission_changed": false
+    },
+    {
+      "record": "work/main-independent-review/40970095079/6/independent-main-review.json",
+      "unchanged_record_sha256": "ec011ec0b90462731790f8283a826f11faf385a00bbbccdab4e4ad5ad79ca2e0",
+      "run_id": 40970095079,
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "field": "verification_scope",
+      "original_text": "Eight small output facts/API/proofs CRC+SHA checked; source-specific tiny semantic member SHA checked against selected/typed frozen proofs. Full-only OTel output combined with historical whole-verified original compact, retained non-journal claims rehashed, complete worker hash-map matches local frozen map. No whole campaign/worker/output archive, raw journal or large bindings locally.",
+      "correction": "The Full-only OTel/historical compact/worker-map clause is an inapplicable copied sentence and should not be used as proof for this DSB record. This cell was reviewed using its own saved source compact/full selected transport facts and tiny source-specific semantic files identified by its source_artifact_identities, facts_sha256 and representative evidence. No local whole DSB campaign, worker, output archive or raw-journal verification is asserted. All source-specific identities, native-mode audit policy, controls, closure, graph/command/freeze evidence, saved outcomes and qualification/admission verdict remain unchanged.",
+      "scientific_values_or_admission_changed": false
+    }
+  ]
+}

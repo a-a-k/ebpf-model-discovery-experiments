@@ -32,3 +32,8 @@ the existing Actions-generated numerical report or claim that all currently
 running campaigns have completed. All preparation, failed attempts, worker jobs,
 reviews and publication costs remain attributable; human effort and unfinished
 tails remain unknown.
+
+An [additive wording erratum](review-scope-text-erratum.json) identifies an
+incorrectly copied OTel scope clause in two DeathStarBench review records. It
+states their actual source-specific verification scope. The original record
+bytes, hashes, measurements and admission decisions remain unchanged.

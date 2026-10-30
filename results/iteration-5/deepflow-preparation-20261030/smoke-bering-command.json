@@ -1,0 +1,84 @@
+{
+  "argv": [
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain-build/bin/bering",
+    "serve",
+    "--config",
+    "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/serve.yaml"
+  ],
+  "started_ns": 1793344619274414035,
+  "input_observations": 1625,
+  "publication_mode": "on_shutdown",
+  "source_domain": "petclinic-deployment",
+  "source_profile": {
+    "source_id": "ebpf",
+    "input_type": "ebpf-otlp"
+  },
+  "clock_admission_filter": false,
+  "discovery_mode": "one offline batch; no historical reconciliation",
+  "child_resource_report": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/bering-resources.json",
+  "accepted_ingest_requests": [],
+  "go_runtime_environment": {
+    "configured": false,
+    "requested_go_environment": {},
+    "inherited_go_environment": {
+      "GOMEMLIMIT": null,
+      "GOGC": null,
+      "GODEBUG": null
+    },
+    "effective_go_environment": {
+      "GOMEMLIMIT": null,
+      "GOGC": null,
+      "GODEBUG": null
+    }
+  },
+  "accepted_stream_requests": {
+    "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/accepted-stream-requests.jsonl",
+    "requests": 8,
+    "bytes": 1454,
+    "sha256": "8bc12623ec6171d90469a1a044e0f74b7a8040611969b3917adad7521fd77816",
+    "same_http_body_order_as_request_index": true
+  },
+  "accepted_request_sequence": {
+    "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/accepted-request-sequence.jsonl",
+    "requests": 8,
+    "bytes": 1758,
+    "sha256": "cf1e029a933662b5c72d7a6b8a730c13a27d6fb1349cdee48e696f47605b082b",
+    "same_order_as_original_request_ordinals_and_source_groups": true
+  },
+  "returncode": 0,
+  "ingest": {
+    "dropped_spans": 0,
+    "late_spans": 0,
+    "spans": 1625,
+    "traces": 0
+  },
+  "status": "complete",
+  "child_resources": {
+    "child_peak_rss_kib": 73464,
+    "child_system_seconds": 0.058845999999999996,
+    "child_user_seconds": 0.499177,
+    "command": [
+      "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain-build/bin/bering",
+      "serve",
+      "--config",
+      "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign/toolchain/discovery/ebpf/raw/observed-runtime/serve.yaml"
+    ],
+    "ended_ns": 1793344619848714684,
+    "exit_status": 0,
+    "forwarded_signals": [
+      15
+    ],
+    "oom_score_adjustment": {
+      "actual": 1000,
+      "available": true,
+      "requested": 1000,
+      "scope": "direct child only; parent and VMs unchanged",
+      "target": "/proc/7558/oom_score_adj"
+    },
+    "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
+    "started_ns": 1793344619305785081,
+    "wall_seconds": 0.5429297040000165,
+    "wrapper_exit_status": 0
+  },
+  "ended_ns": 1793344619857217371
+}

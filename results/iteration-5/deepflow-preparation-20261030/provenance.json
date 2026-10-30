@@ -1,0 +1,41 @@
+{
+  "source_files": [
+    {
+      "file": "real-smoke-review.json",
+      "source_path": "work/deepflow-existing-path-smoke-41018310659/independent-real-path-review.json",
+      "bytes": 8795,
+      "sha256": "f7fb734d11d854ac4b3fe1a97b17d52e4a5a3917caf0d21f334d9ae3a539fbfe",
+      "publication": "exact unchanged saved bytes"
+    },
+    {
+      "file": "saved-qualification-review.json",
+      "source_path": "work/deepflow-scaled-qualification-41009701655/independent-actual-output-review.json",
+      "bytes": 12053,
+      "sha256": "4bb8e6d4550e803d961fcb1f2d915dff327cf7b7e67107a548c2fdff94db49de",
+      "publication": "exact unchanged saved bytes"
+    },
+    {
+      "file": "smoke-bering-model.json",
+      "source_path": "work/deepflow-existing-path-smoke-41018310659/campaign-selected/toolchain/discovery/ebpf/raw/observed.json",
+      "bytes": 19948,
+      "sha256": "41b72f54dd9f3f0fae71438f888c22fd33c0dfab2a4ffe68779c6d1089ed39c9",
+      "publication": "exact unchanged saved bytes"
+    },
+    {
+      "file": "smoke-bering-command.json",
+      "source_path": "work/deepflow-existing-path-smoke-41018310659/campaign-selected/toolchain/discovery/ebpf/raw/observed-runtime/replay-command.json",
+      "bytes": 3228,
+      "sha256": "161a4145173d17f06222714a387a15236fd8073b1601423feb2a60fc4f90e874",
+      "publication": "exact unchanged saved bytes"
+    },
+    {
+      "file": "smoke-accepted-requests.jsonl",
+      "source_path": "work/deepflow-existing-path-smoke-41018310659/campaign-selected/toolchain/discovery/ebpf/raw/observed-runtime/accepted-request-sequence.jsonl",
+      "bytes": 1758,
+      "sha256": "cf1e029a933662b5c72d7a6b8a730c13a27d6fb1349cdee48e696f47605b082b",
+      "publication": "exact unchanged saved bytes"
+    }
+  ],
+  "whole_source_archives_verified_locally": false,
+  "verification_scope": "Selected-member proofs and independent record limits remain explicit in the unchanged review receipts"
+}

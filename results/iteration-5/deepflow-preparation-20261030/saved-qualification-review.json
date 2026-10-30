@@ -1,0 +1,308 @@
+{
+  "schema_version": "independent-supplemental-engineering-review-v1",
+  "reviewed_at_utc": "2026-10-30T07:47:39.902025+00:00",
+  "qualification_run": {
+    "run_id": 41009701655,
+    "head_sha": "5c05858e8be2962fefc58657d9809d862f2b2540",
+    "job_id": 123912561097,
+    "job_name": "validate",
+    "conclusion": "success",
+    "reviewed_implementation_commit": "2efe34708a1475df35f61cfeb82c99f6766e77cd",
+    "preceding_exact_head_ci_run_id": 41009591141,
+    "preceding_exact_head_ci_conclusion": "success"
+  },
+  "artifact_identity": {
+    "artifact_id": 12960724186,
+    "name": "deepflow-scaled-export-validation-v5-41009701655",
+    "api_zip_bytes": 62730373,
+    "api_digest": "sha256:6a0e34ae133e277ce3714cfbc282e5f976644abe0a083ffcadfe1f85ed925f5e",
+    "expired": false,
+    "expires_at": "2027-01-28T05:40:07Z",
+    "local_whole_zip_downloaded": false,
+    "local_whole_zip_hash_verified": false,
+    "selected_member_proof": "selected/partial-inspection.json",
+    "zip_directory": "zip-members.json",
+    "requested_members": "requested-members.txt",
+    "requested_missing": "selected/requested-missing.json"
+  },
+  "verdict": "GO for supplemental engineering qualification; no main-cell or scientific-success admission",
+  "selected_members_independently_rehashed": [
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model-runtime/accepted-request-sequence.jsonl",
+      "bytes": 377987,
+      "sha256": "7009ad919c542f70a1f5e7b9b7bd1a9775d6806e7aeb7d4d0e367875b282433e",
+      "crc32": "cdc14d54"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model-runtime/replay-command.json",
+      "bytes": 3260,
+      "sha256": "53898b9d0cc97f053d2a243ff9d578446e817c1f224ec51c2c30f46c31321a64",
+      "crc32": "bf251d0a"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model-runtime/serve.yaml",
+      "bytes": 1046,
+      "sha256": "41e5967326e99df3a25c57a4cd5f570a4c355279134f4e4975a146ea4b5eae70",
+      "crc32": "82798ea6"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model.json",
+      "bytes": 19911,
+      "sha256": "c4bde8bb9f8c224c1c3244368ce7b279ff265d7f9441db786a9b824dc9b0a358",
+      "crc32": "61fa7c7b"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model-runtime/accepted-request-sequence.jsonl",
+      "bytes": 377987,
+      "sha256": "7009ad919c542f70a1f5e7b9b7bd1a9775d6806e7aeb7d4d0e367875b282433e",
+      "crc32": "cdc14d54"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model-runtime/replay-command.json",
+      "bytes": 3261,
+      "sha256": "dee802c8cee7d91af34f89770589660ce58db28fefb6a9a38a8b4edbf9030542",
+      "crc32": "46d62f5f"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model-runtime/serve.yaml",
+      "bytes": 1046,
+      "sha256": "46d40db8ecd2f4a05ae4a5f494db10f85f9c9cf7bd1f8f737adb66bd2beb1b2c",
+      "crc32": "6f746063"
+    },
+    {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model.json",
+      "bytes": 19911,
+      "sha256": "196e945618cd07620f6162dc1887ede99e73049a2fc438de834a61729de473ad",
+      "crc32": "fe81c38a"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/artifact-api.json",
+      "bytes": 750,
+      "sha256": "5c2c1a308c6c0841218a7916b25258b91c4fb1fb70f92bd6cf2dd78d25cacd33",
+      "crc32": "e6a5016e"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/builds.tsv",
+      "bytes": 1398,
+      "sha256": "4654e0d86784f20bb3fb5c093d2782c9df70c7a3502cbb371bf59d5726a5c96f",
+      "crc32": "d943713e"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/download-resource.txt",
+      "bytes": 852,
+      "sha256": "a34864b3a13cabcfe45dd93e99b4ea1582e385e5161d02ebd444bd1bb5194aff",
+      "crc32": "7f2f16cb"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/focused-tests.log",
+      "bytes": 99,
+      "sha256": "191c22a42722d9156ed48582a0f618c02487d77a0ffbf43aa9aa83b9abd1a2a4",
+      "crc32": "f2fda953"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/pins.tsv",
+      "bytes": 312,
+      "sha256": "5c37138da76b1f54bc18ab2fa861159f5d8d3a0d0ef962fd024fa076aa436936",
+      "crc32": "09a3dccb"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/python-environment.txt",
+      "bytes": 557,
+      "sha256": "a51481089b1be29101fa587bc08e74d58f790d9517d02d87677a4ae80299751e",
+      "crc32": "4c90cb51"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/qualification-resource.txt",
+      "bytes": 1080,
+      "sha256": "273c6bdd24dc962e63ec4adda738c3e10fc9306c528e9eaf5798ff9574e945ff",
+      "crc32": "73095a2a"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/run-api.json",
+      "bytes": 13776,
+      "sha256": "c08a94ea804b94cd2ce3722162f17e0cec7256b5c6cb3d91375270f44401dde0",
+      "crc32": "08ddb071"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/runner.txt",
+      "bytes": 128,
+      "sha256": "a64b6d81308dc728b286592ae78f6594e185e6db8c474be3c8886f7694f38bb7",
+      "crc32": "79cf2331"
+    },
+    {
+      "path": "deepflow-scaled-export-environment/toolchain-build.json",
+      "bytes": 2606,
+      "sha256": "7bd117c097d1c57e9bd71a6923e9a90f4212c29384e78a595b3c21effd96e9f4",
+      "crc32": "7c344480"
+    }
+  ],
+  "layout_checks": [
+    {
+      "layout": 0,
+      "ingest": {
+        "dropped_spans": 0,
+        "late_spans": 0,
+        "spans": 434731,
+        "traces": 0
+      },
+      "accepted_requests": 1700,
+      "sequence_sha256": "7009ad919c542f70a1f5e7b9b7bd1a9775d6806e7aeb7d4d0e367875b282433e",
+      "returncode": 0,
+      "graph_counts": {
+        "services": 17,
+        "edges": 14,
+        "endpoints": 13
+      },
+      "resources": {
+        "child_peak_rss_kib": 9075588,
+        "child_system_seconds": 11.042496,
+        "child_user_seconds": 257.11615,
+        "command": [
+          "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/toolchain-build/bin/bering",
+          "serve",
+          "--config",
+          "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/deepflow-scaled-export-validation/bering-layout-0/model-runtime/serve.yaml"
+        ],
+        "ended_ns": 1793345365268010416,
+        "exit_status": 0,
+        "forwarded_signals": [
+          15
+        ],
+        "oom_score_adjustment": {
+          "actual": 1000,
+          "available": true,
+          "requested": 1000,
+          "scope": "direct child only; parent and VMs unchanged",
+          "target": "/proc/7226/oom_score_adj"
+        },
+        "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
+        "started_ns": 1793345103867329368,
+        "wall_seconds": 261.4008366190001,
+        "wrapper_exit_status": 0
+      }
+    },
+    {
+      "layout": 1,
+      "ingest": {
+        "dropped_spans": 0,
+        "late_spans": 0,
+        "spans": 434731,
+        "traces": 0
+      },
+      "accepted_requests": 1700,
+      "sequence_sha256": "7009ad919c542f70a1f5e7b9b7bd1a9775d6806e7aeb7d4d0e367875b282433e",
+      "returncode": 0,
+      "graph_counts": {
+        "services": 17,
+        "edges": 14,
+        "endpoints": 13
+      },
+      "resources": {
+        "child_peak_rss_kib": 9409744,
+        "child_system_seconds": 10.005812,
+        "child_user_seconds": 254.756912,
+        "command": [
+          "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/toolchain-build/bin/bering",
+          "serve",
+          "--config",
+          "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/deepflow-scaled-export-validation/bering-layout-1/model-runtime/serve.yaml"
+        ],
+        "ended_ns": 1793345620663101859,
+        "exit_status": 0,
+        "forwarded_signals": [
+          15
+        ],
+        "oom_score_adjustment": {
+          "actual": 1000,
+          "available": true,
+          "requested": 1000,
+          "scope": "direct child only; parent and VMs unchanged",
+          "target": "/proc/7260/oom_score_adj"
+        },
+        "scope": "one direct child of isolated Linux wrapper; peak RSS from RUSAGE_CHILDREN",
+        "started_ns": 1793345370365364680,
+        "wall_seconds": 250.2977369579994,
+        "wrapper_exit_status": 0
+      }
+    }
+  ],
+  "identical_request_sequence_bytes": true,
+  "raw_models_equal_except_exact_documented_fresh_provenance": [
+    {
+      "path": "/metadata/discovered_at",
+      "layout_0": "2026-10-30T07:28:34Z",
+      "layout_1": "2026-10-30T07:32:55Z"
+    },
+    {
+      "path": "/metadata/source_ref",
+      "layout_0": "bering://serve?listen=127.0.0.1%3A33155",
+      "layout_1": "bering://serve?listen=127.0.0.1%3A45597"
+    }
+  ],
+  "original_checkpoint_and_old_oracle_accounting_transform_checks": "reported passed by the previously reviewed exact-head Actions qualifier; source/ready/index proofs are retained remotely; not independently rerun locally",
+  "large_remote_only_proof_limits": {
+    "qualification_and_normalized_volatility_evidence": {
+      "path": "deepflow-scaled-export-validation/qualification.json",
+      "bytes": 114494186,
+      "compressed_bytes": 14221680,
+      "crc32": "47b3a3f4"
+    },
+    "layout_0_snapshot": {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model.snapshot.json",
+      "bytes": 38367317,
+      "compressed_bytes": 4620014,
+      "crc32": "f3552e62"
+    },
+    "layout_0_quality": {
+      "path": "deepflow-scaled-export-validation/bering-layout-0/model.signal-quality.json",
+      "bytes": 23776304,
+      "compressed_bytes": 2236826,
+      "crc32": "3d21a2f7"
+    },
+    "layout_1_snapshot": {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model.snapshot.json",
+      "bytes": 38367317,
+      "compressed_bytes": 4618288,
+      "crc32": "32008861"
+    },
+    "layout_1_quality": {
+      "path": "deepflow-scaled-export-validation/bering-layout-1/model.signal-quality.json",
+      "bytes": 23776304,
+      "compressed_bytes": 2236543,
+      "crc32": "96a5e37a"
+    }
+  },
+  "whole_output_zip_locally_verified": false,
+  "costs": {
+    "source_download": {
+      "wall": "2:21.76",
+      "user_seconds": 1.05,
+      "system_seconds": 2.66,
+      "max_rss_kib": 43964,
+      "exit_status": 0,
+      "proof": "selected/deepflow-scaled-export-environment/download-resource.txt"
+    },
+    "qualification": {
+      "wall": "1:50:15",
+      "user_seconds": 6213.94,
+      "system_seconds": 347.14,
+      "max_rss_kib": 9409744,
+      "major_page_faults": 63296,
+      "minor_page_faults": 5926144,
+      "swaps": 0,
+      "exit_status": 0,
+      "proof": "selected/deepflow-scaled-export-environment/qualification-resource.txt"
+    },
+    "focused_tests": {
+      "result": "51 passed in 1.19s",
+      "proof": "selected/deepflow-scaled-export-environment/focused-tests.log"
+    }
+  },
+  "original_criterion_limits": [
+    "No independent useful external outcome was generated here; this is not original empirical contribution success.",
+    "No memory/speed advantage or historical heap causality is established.",
+    "Snapshot/quality normalized-volatility proof was not independently downloaded/revalidated locally. The two small raw Bering models were independently compared and differ only in discovered_at and serve listener source_ref.",
+    "No Procrustes, Sheaft, workload, outcome, forecast, or main-cell admission is inferred; the separate approved real-path smoke/main gate remains.",
+    "The strongest direct baseline receives the same semantics; all historical failure, preparation, build, qualification, transfer and review costs remain attributable."
+  ]
+}
