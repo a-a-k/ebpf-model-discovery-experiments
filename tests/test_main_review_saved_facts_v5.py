@@ -265,9 +265,25 @@ def test_dsb_native_manifest_uses_application_audit_trace_policy(tmp_path: Path)
             "audit_self_trace_provenance": {
                 "excluded_service_exact_match": "jaeger-all-in-one",
                 "raw_responses_retained": True}})
-    facts = REVIEW.native_mode_facts(tmp_path, declaration)
+    facts = REVIEW.native_mode_facts(tmp_path, declaration, {
+        "acquisition": {"native_observations_by_service": {"jaeger-all-in-one": 1}}})
     assert facts["training"]["application_trace_count"] == 0
     assert facts["final"]["audit_self_trace_count"] == 1
+
+
+def test_older_otel_absent_suppression_audit_shape_is_verified(tmp_path: Path) -> None:
+    declaration = {"system": "otel_demo", "mode": "absent"}
+    audit = {"mode": "absent", "mode_compliant": True,
+             "malformed_records": 0, "exporter_records": 0,
+             "span_markers": 0, "trace_file_bytes": 0,
+             "trace_file_sha256": hashlib.sha256(b"").hexdigest()}
+    for stage in ("training", "final"):
+        write(tmp_path / f"native/{stage}/native-suppression-verification.json", audit)
+    facts = REVIEW.native_mode_facts(
+        tmp_path, declaration,
+        {"acquisition": {"native_observations_by_service": {}}})
+    assert facts["training"]["schema"] == "native-suppression-verification"
+    assert facts["final"]["saved_audit"]["trace_file_bytes"] == 0
 
 
 def test_native_preflight_retains_deployment_only_argv_contract(tmp_path: Path) -> None:
@@ -425,4 +441,7 @@ def test_workflow_and_checker_never_emit_admission_verdict() -> None:
     assert "0.875" not in checker
     assert "scientific_GO" not in workflow
     assert "default: qualification" in workflow
+    assert "qualification_system:" in workflow
+    assert "if qualification_system!='all':" in workflow
+    assert "qualification_system must be all for pending17" in workflow
     assert "pending17 requires explicit post-qualification independent GO" in workflow

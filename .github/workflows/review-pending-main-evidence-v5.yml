@@ -10,6 +10,15 @@ on:
           - qualification
           - pending17
         default: qualification
+      qualification_system:
+        description: Qualification-only family selector; pending17 requires all
+        type: choice
+        options:
+          - all
+          - otel_demo
+          - deathstarbench
+          - petclinic
+        default: all
       pending17_after_qualification_go:
         description: Explicit confirmation that qualification output received independent GO
         type: boolean
@@ -29,15 +38,23 @@ jobs:
       - id: matrix
         env:
           PHASE: ${{ inputs.phase }}
+          QUALIFICATION_SYSTEM: ${{ inputs.qualification_system }}
           PENDING17_GO: ${{ inputs.pending17_after_qualification_go }}
         run: |
           python - <<'PY'
           import json, os, pathlib
           source=json.loads(pathlib.Path('docs/iteration5-main-review-candidates.json').read_text())
           phase=os.environ['PHASE']
+          qualification_system=os.environ['QUALIFICATION_SYSTEM']
           if phase=='qualification':
               cells=source['qualification_cells']
+              if qualification_system!='all':
+                  cells=[row for row in cells if row['system']==qualification_system]
+                  if len(cells)!=1:
+                      raise SystemExit('qualification selector did not resolve exactly one declared cell')
           elif phase=='pending17':
+              if qualification_system!='all':
+                  raise SystemExit('qualification_system must be all for pending17')
               if os.environ['PENDING17_GO'].lower()!='true':
                   raise SystemExit('pending17 requires explicit post-qualification independent GO')
               cells=[row for row in source['cells']

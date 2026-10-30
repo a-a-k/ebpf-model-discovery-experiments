@@ -265,7 +265,8 @@ def _selected_proof(root: Path, declaration: dict) -> dict:
     return proof
 
 
-def native_mode_facts(root: Path, declaration: dict) -> dict:
+def native_mode_facts(root: Path, declaration: dict,
+                      evaluation: dict | None = None) -> dict:
     facts = {}
     for stage in ("training", "final"):
         if declaration["system"] == "deathstarbench":
@@ -289,17 +290,38 @@ def native_mode_facts(root: Path, declaration: dict) -> dict:
                 "audit_self_trace_provenance": provenance}
         else:
             metadata_path = root / f"native/{stage}/native-metadata.json"
-            metadata = read(metadata_path)
-            census = metadata.get("actual_census") or {}
-            compliance = metadata.get("mode_compliance") or {}
-            if (metadata.get("mode") != declaration["mode"]
-                    or census.get("malformed_records") != 0
-                    or compliance.get("compliant") is False
-                    or (declaration["mode"] == "absent" and census.get("spans") != 0)):
-                raise ValueError(f"native {stage} census contradicts rendered tracing mode")
+            if metadata_path.is_file():
+                metadata = read(metadata_path)
+                census = metadata.get("actual_census") or {}
+                compliance = metadata.get("mode_compliance") or {}
+                if (metadata.get("mode") != declaration["mode"]
+                        or census.get("malformed_records") != 0
+                        or compliance.get("compliant") is False
+                        or (declaration["mode"] == "absent" and census.get("spans") != 0)):
+                    raise ValueError(f"native {stage} census contradicts rendered tracing mode")
+                facts[stage] = {
+                    "schema": "native-metadata", "metadata_sha256": sha(metadata_path),
+                    "actual_census": census, "mode_compliance": compliance}
+                continue
+            suppression_path = root / f"native/{stage}/native-suppression-verification.json"
+            suppression = read(suppression_path)
+            absent_nonzero = declaration["mode"] == "absent" and any(
+                suppression.get(key) != 0 for key in (
+                    "exporter_records", "span_markers", "trace_file_bytes"))
+            if (suppression.get("mode") != declaration["mode"]
+                    or suppression.get("malformed_records") != 0
+                    or suppression.get("mode_compliant") is False
+                    or absent_nonzero):
+                raise ValueError(
+                    f"native {stage} suppression audit contradicts rendered tracing mode")
             facts[stage] = {
-                "metadata_sha256": sha(metadata_path), "actual_census": census,
-                "mode_compliance": compliance}
+                "schema": "native-suppression-verification",
+                "suppression_sha256": sha(suppression_path),
+                "saved_audit": suppression}
+    if (declaration["system"] != "deathstarbench"
+            and declaration["mode"] == "absent" and evaluation is not None
+            and (evaluation.get("acquisition") or {}).get("native_observations_by_service")):
+        raise ValueError("absent mode compact records native observations")
     return facts
 
 
@@ -675,7 +697,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 or (expected == "partial" and set(sdk_flags) != {"true", "false"})
                 or (expected == "full" and set(sdk_flags) != {"false"})):
             raise ValueError("rendered SDK configuration differs from declared mode")
-    native_facts = native_mode_facts(root, declaration)
+    native_facts = native_mode_facts(root, declaration, evaluation)
     return {
         "selected_transport": proof, "typed_packages": packages,
         "source_pins": pins, "saved_mode_evidence_sha256": mode_files,
