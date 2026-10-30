@@ -266,6 +266,24 @@
       "reason_code": "technical_preparation_or_closure_replacement",
       "reason": "The original exact cell stopped at worker checkpoint binding before model construction and validation. The replacement follows the reviewed parent-job liveness repair, retaining the original failed data and all costs. The reporter must verify exactly one technically complete candidate; this declaration does not select forecasts, errors or positive outcomes.",
       "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        12962352547,
+        12967044179
+      ],
+      "selected_artifact_id": 12967044179,
+      "candidate_run_ids": [
+        41004296165,
+        41024050638
+      ],
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Original attempt stopped during the reset between calibration blocks with frontend unhealthy, before a complete training checkpoint, forecast or target validation. The separately reviewed exact-cell repeat completed. Preserve the failed source and costs; reporter must verify exactly one technically complete candidate. No selection by forecast, error or positive outcome.",
+      "independent_review_claim": false
     }
   ]
 }

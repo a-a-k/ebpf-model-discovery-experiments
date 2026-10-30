@@ -1,0 +1,50 @@
+{
+  "schema_version": "iteration5-main-review-candidates-v1",
+  "selection_rule": "Completed Coroot OTel full seeds7/8, including the explicitly reviewed technical repeat of seed7. Original failed seed7 evidence is preserved; no selection by forecast or outcome. Existing saved-evidence workflow only.",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "run_id": 41004296165,
+      "job_id": 123895582453,
+      "job_conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12968026204,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-full-8-41004296165",
+      "compact_artifact_bytes": 48573794,
+      "compact_artifact_digest": "sha256:445f192cd7eac28d0f8be425e5cc73e81340fddeafb84e9246226a3c9fd7e138",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12967521878,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-full-8-41004296165",
+      "full_artifact_bytes": 1751520914,
+      "full_artifact_digest": "sha256:71522b839d0cf25e66612a19cbe5f862b90cd11be8d1754a49aabf37fe256515",
+      "full_scope": "retrieve_family_selected",
+      "expired": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "run_id": 41024050638,
+      "job_id": 123957878724,
+      "job_conclusion": "success",
+      "head_sha": "cadafe8962000f326d467b273683990372f29b30",
+      "compact_artifact_id": 12967044179,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-full-7-41024050638",
+      "compact_artifact_bytes": 45367768,
+      "compact_artifact_digest": "sha256:24306c99b6a8984faff0972dba66aa955c1ed7486d9d2183217bd630b20381b9",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12968161566,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-full-7-41024050638",
+      "full_artifact_bytes": 1418319641,
+      "full_artifact_digest": "sha256:a5129f5d1cdf590aaf5644f4dbb1f6d59f45caaa2900abfd2a7138de9f2d9c97",
+      "full_scope": "retrieve_family_selected",
+      "expired": false,
+      "technical_selection_replaces_failed_run_id": 41004296165,
+      "technical_selection_replaces_failed_compact_artifact_id": 12962352547
+    }
+  ]
+}
