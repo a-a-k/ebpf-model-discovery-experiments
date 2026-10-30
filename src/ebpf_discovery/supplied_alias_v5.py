@@ -83,6 +83,7 @@ def admission_core(value: dict) -> dict:
     """Canonical admission fields; lifecycle summaries cannot change row identity."""
     keys = ("schema", "origin", "aliases", "conflicts", "occurrence_proofs",
             "scoped_digest_aliases", "verified_scoped_digest_roles",
+            "scoped_digest_compose_services",
             "unique_verified_segments", "receiver_segments_reverified",
             "same_table_all_sources_and_direct_baseline", "physical_identity_inferred")
     return {key: deepcopy(value.get(key)) for key in keys}
@@ -117,7 +118,40 @@ def load_admission(path: Path, root: Path, table: dict) -> dict:
     return value
 
 
-def build(inventory: dict, *, inventory_proof: dict) -> dict:
+def deployment_roles(root: Path) -> list[dict]:
+    """Read provided SDK roles, without deriving calls or resolving network peers."""
+    import yaml
+    roles = []
+    for path in sorted((root / "deployment").glob("*/node-*/compose.yml")):
+        node = path.parent.name.removeprefix("node-")
+        document = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        project = document.get("name")
+        if node not in ("a", "b") or not isinstance(project, str):
+            continue
+        for service, declaration in (document.get("services") or {}).items():
+            env = declaration.get("environment") or {}
+            if not isinstance(env, dict):
+                continue
+            logical, attributes = env.get("OTEL_SERVICE_NAME"), env.get("OTEL_RESOURCE_ATTRIBUTES")
+            if not isinstance(logical, str) or not isinstance(attributes, str):
+                continue
+            instances = [item.partition("=")[2] for item in attributes.split(",")
+                         if item.partition("=")[0] == "service.instance.id"]
+            if (not logical or "${" in logical or len(instances) != 1
+                    or not instances[0] or "${" in instances[0]):
+                continue
+            pointer = "/services/" + service.replace("~", "~0").replace("/", "~1") + "/environment"
+            roles.append({"node": node, "compose_project": project, "compose_service": service,
+                          "logical_service": logical, "instance_id": instances[0],
+                          "declaration": {"path": path.relative_to(root).as_posix(),
+                              "sha256": _sha(path), "bytes": path.stat().st_size,
+                              "service_name_pointer": pointer + "/OTEL_SERVICE_NAME",
+                              "instance_pointer": pointer + "/OTEL_RESOURCE_ATTRIBUTES"}})
+    return roles
+
+
+def build(inventory: dict, *, inventory_proof: dict,
+          provided_roles: list[dict] | None = None) -> dict:
     """Build exact guest/name aliases from retained Compose labels."""
     started = time.monotonic_ns()
     observed: dict[tuple[str, str], set[tuple[str, str]]] = {}
@@ -136,6 +170,10 @@ def build(inventory: dict, *, inventory_proof: dict) -> dict:
             observed.setdefault(key, set()).add((project, service))
             occurrences[key] = occurrences.get(key, 0) + 1
     rows, conflicts = [], []
+    declarations = {}
+    for role in provided_roles or []:
+        key = (role["node"], role["compose_project"], role["compose_service"])
+        declarations.setdefault(key, []).append(role)
     for (node, name), roles in sorted(observed.items()):
         if len(roles) != 1:
             conflicts.append({"node": node, "container_name": name,
@@ -143,16 +181,34 @@ def build(inventory: dict, *, inventory_proof: dict) -> dict:
                               "reason": "scoped_name_maps_to_multiple_logical_roles"})
             continue
         project, service = next(iter(roles))
-        rows.append({"node": node, "container_name": name,
+        row = {"node": node, "container_name": name,
                      "carriers": [name, "/docker/" + name],
                      "compose_project": project, "compose_service": service,
-                     "inventory_occurrences": occurrences[node, name], "origin": ORIGIN})
+                     "logical_service": service,
+                     "inventory_occurrences": occurrences[node, name], "origin": ORIGIN}
+        declared = declarations.get((node, project, service), [])
+        if len(declared) == 1:
+            row.update({key: deepcopy(declared[0][key])
+                        for key in ("logical_service", "instance_id", "declaration")})
+            row["carriers"] = sorted(set([*row["carriers"], service]))
+        elif declared:
+            conflicts.append({"node": node, "compose_project": project, "compose_service": service,
+                              "reason": "multiple_provided_sdk_role_declarations"})
+        rows.append(row)
+    logical_groups = {}
+    for row in rows:
+        if row.get("declaration"):
+            logical_groups.setdefault(row["logical_service"], []).append(deepcopy(row))
+    # A declaration labels a physical slot. Repeated SDK/runtime observations
+    # are not extra replicas; duplicate supplied instance IDs do not prove slots.
+    logical_groups = {role: members for role, members in logical_groups.items()
+                      if len({row["instance_id"] for row in members}) == len(members)}
     # A post-Bering semantic view has no guest field. Only carriers whose scoped
     # rows agree globally are admissible there; guest collisions stay unknown.
     global_roles: dict[str, set[str]] = {}
     for row in rows:
         for carrier in row["carriers"]:
-            global_roles.setdefault(carrier, set()).add(row["compose_service"])
+            global_roles.setdefault(carrier, set()).add(row["logical_service"])
     global_aliases = {carrier: next(iter(roles)) for carrier, roles in sorted(global_roles.items())
                       if len(roles) == 1}
     global_conflicts = [{"carrier": carrier, "logical_services": sorted(roles),
@@ -161,12 +217,13 @@ def build(inventory: dict, *, inventory_proof: dict) -> dict:
     return {"schema": SCHEMA, "stage": "training", "origin": ORIGIN,
             "claim_scope": "supplied logical service role only; no physical identity or causality",
             "inventory": dict(inventory_proof), "rows": rows, "conflicts": conflicts,
+            "provided_logical_groups": logical_groups,
             "global_aliases": global_aliases, "global_conflicts": global_conflicts,
             "same_table_all_sources_and_direct_baseline": True,
-            "manual_baseline_information": "identical exact carrier-to-Compose.service rows",
+            "manual_baseline_information": "identical exact carrier-to-provided-logical-role rows",
             "direct_baseline": {
                 "mapping_source": "rows",
-                "application": "exact supplied carrier-to-Compose.service lookup",
+                "application": "exact supplied carrier-to-provided-logical-role lookup",
                 "same_information": True,
                 "manual_preparation_seconds": None,
             },
@@ -178,7 +235,7 @@ def write_training(inventory: dict, inventory_path: Path, out: Path) -> dict:
     proof_path = inventory_path.relative_to(out.parent.parent).as_posix()
     proof = {"path": proof_path, "sha256": _sha(inventory_path),
              "bytes": inventory_path.stat().st_size}
-    value = build(inventory, inventory_proof=proof)
+    value = build(inventory, inventory_proof=proof, provided_roles=deployment_roles(out.parent.parent))
     out.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"path": out.as_posix(), "sha256": _sha(out), "bytes": out.stat().st_size,
             "rows": len(value["rows"]), "conflicts": len(value["conflicts"]),
@@ -197,6 +254,12 @@ def load(path: Path, root: Path) -> dict:
     if (not inventory_path.is_file() or inventory_path.stat().st_size != proof.get("bytes")
             or _sha(inventory_path) != proof.get("sha256")):
         raise ValueError("supplied logical alias inventory dependency changed")
+    for proof in {row["declaration"]["path"]: row["declaration"]
+                  for row in value.get("rows") or [] if row.get("declaration")}.values():
+        declaration_path = root / proof["path"]
+        if (not declaration_path.is_file() or declaration_path.stat().st_size != proof["bytes"]
+                or _sha(declaration_path) != proof["sha256"]):
+            raise ValueError("supplied logical alias deployment dependency changed")
     if value.get("same_table_all_sources_and_direct_baseline") is not True:
         raise ValueError("supplied logical aliases are not declared common to all comparators")
     baseline = value.get("direct_baseline") or {}
@@ -217,11 +280,17 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
                 "reason": "observation_store_unavailable",
                 "same_table_all_sources_and_direct_baseline": True,
                 "physical_identity_inferred": False}
-    scoped = {(row["node"], carrier): row["compose_service"]
-              for row in table.get("rows") or [] for carrier in row.get("carriers") or []}
+    scoped_rows = {}
+    for member in table.get("rows") or []:
+        for carrier in member.get("carriers") or []:
+            scoped_rows.setdefault((member["node"], carrier), []).append(member)
+    scoped = {key: next(iter(roles)) if len(roles) == 1 else None
+              for key, members in scoped_rows.items()
+              for roles in [{member.get("logical_service", member["compose_service"])
+                             for member in members}]}
     scoped_carriers = {carrier for _, carrier in scoped}
     by_carrier: dict[str, dict] = {}
-    scoped_digest_candidates: dict[str, tuple[str, str]] = {}
+    scoped_digest_candidates: dict[str, tuple[str, str, str]] = {}
     observed_by_source: dict[str, set[str]] = {}
     carrier_sources: dict[str, set[str]] = {}
     segment_cache: dict[tuple, dict] = {}
@@ -243,7 +312,25 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
         source_node = row.get("node")
         container_carrier = (row.get("resource") or {}).get("container.id")
         nodes, valid = set(), bool(occurrences) and source_node in ("a", "b")
-        if container_carrier not in (None, "", carrier):
+        members = scoped_rows.get((source_node, carrier), [])
+        matching = [member for member in members
+                    if carrier in (member["container_name"], "/docker/" + member["container_name"])
+                    and container_carrier in (None, "", carrier)]
+        # A Compose service name alone is not a container identity. Require the
+        # existing PID/cgroup/guest ownership proof for that new carrier form.
+        if not matching and any(member.get("declaration") for member in members):
+            runtime = store.db.execute(
+                "SELECT status,resolution FROM runtime_identity_projection WHERE digest=?",
+                (digest,)).fetchone()
+            resolution = json.loads(runtime[1]) if runtime else {}
+            identity = (resolution.get("service_identity")
+                        or resolution.get("observed_runtime_service_identity") or {})
+            if runtime and runtime[0] in ("resolved_existing", "resolved_enriched", "label_conflict"):
+                matching = [member for member in members if member.get("declaration")
+                            and carrier == member["compose_service"]
+                            and all(identity.get(key) == member[key] for key in
+                                    ("compose_project", "compose_service", "container_name"))]
+        if len(matching) != 1:
             valid = False
         for raw_file, start, end, ordinal, expected in occurrences:
             path = Path(raw_file)
@@ -288,7 +375,8 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
         entry["digests"].append(digest)
         roles = {scoped.get((node, carrier)) for node in nodes}
         if valid and nodes and None not in roles and len(roles) == 1:
-            scoped_digest_candidates[digest] = (carrier, next(iter(roles)))
+            scoped_digest_candidates[digest] = (
+                carrier, next(iter(roles)), matching[0]["compose_service"])
     candidates, conflicts = {}, []
     for carrier, evidence in sorted(by_carrier.items()):
         roles = {scoped.get((node, carrier)) for node in evidence["nodes"]}
@@ -316,21 +404,29 @@ def admit_observed(store, table: dict, *, expected_source_prefix: str | None = N
             conflicts.append({"carrier": carrier, "logical_service": logical,
                               "sources": target_conflict_sources,
                               "reason": "logical_target_already_observed_as_service"})
-        elif len(colliders) != 1:
+        elif len(colliders) != 1 and not (
+                table.get("provided_logical_groups", {}).get(logical)
+                and all(any(other in member["carriers"]
+                            for member in table["provided_logical_groups"][logical])
+                        for other in colliders)):
             conflicts.append({"carrier": carrier, "logical_service": logical,
                               "colliding_carriers": colliders,
                               "reason": "multiple_observed_carriers_share_logical_target"})
         else:
             admitted[carrier] = logical
     scoped_digest_aliases = {
-        digest: logical for digest, (carrier, logical) in sorted(scoped_digest_candidates.items())
+        digest: logical for digest, (carrier, logical, compose) in sorted(scoped_digest_candidates.items())
+        if admitted.get(carrier) == logical}
+    scoped_digest_compose_services = {
+        digest: compose for digest, (carrier, logical, compose) in sorted(scoped_digest_candidates.items())
         if admitted.get(carrier) == logical}
     verified_scoped_digest_roles = {
-        digest: {"carrier": carrier, "logical_service": logical}
-        for digest, (carrier, logical) in sorted(scoped_digest_candidates.items())}
+        digest: {"carrier": carrier, "logical_service": logical, "compose_service": compose}
+        for digest, (carrier, logical, compose) in sorted(scoped_digest_candidates.items())}
     return {"schema": ADMISSION_SCHEMA, "origin": ORIGIN,
             "aliases": admitted, "conflicts": conflicts,
             "scoped_digest_aliases": scoped_digest_aliases,
+            "scoped_digest_compose_services": scoped_digest_compose_services,
             "verified_scoped_digest_roles": verified_scoped_digest_roles,
             "occurrence_proofs": occurrence_proofs,
             "unique_verified_segments": len(segment_cache),

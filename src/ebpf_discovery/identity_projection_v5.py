@@ -333,17 +333,22 @@ def refresh(campaign, stage: str) -> dict:
             for digest, role in scoped["verified_scoped_digest_roles"].items()
             if alias_admission.get("aliases", {}).get(role["carrier"])
             == role["logical_service"]}
+        final_compose_services = {
+            digest: scoped["verified_scoped_digest_roles"][digest]["compose_service"]
+            for digest in final_digest_aliases}
         scope_path = root / "runtime-identity-v5" / f"supplied-alias-scope-{stage}.json"
         _write(scope_path, {
             "schema": "supplied-logical-alias-scope-revalidation-v5", "stage": stage,
             "frozen_admission_sha256": admission_sha256(alias_admission),
             "new_mappings_admitted": False,
             "scoped_digest_aliases": final_digest_aliases,
+            "scoped_digest_compose_services": final_compose_services,
             "verified_scoped_digest_roles": scoped["verified_scoped_digest_roles"],
             "occurrence_proofs": scoped["occurrence_proofs"],
             "conflicts": scoped["conflicts"]})
         effective_alias_projection = campaign.store.apply_supplied_logical_aliases(
-            alias_admission, scoped_digest_aliases=final_digest_aliases)
+            alias_admission, scoped_digest_aliases=final_digest_aliases,
+            scoped_digest_compose_services=final_compose_services)
         effective_alias_projection["scope_revalidation"] = {
             "path": scope_path.relative_to(root).as_posix(),
             "sha256": _sha(scope_path), "bytes": scope_path.stat().st_size}
