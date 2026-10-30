@@ -5,10 +5,20 @@ The question is eBPF feasibility with absent/incomplete tracing. The user select
 a new runner reusing verified deployment and collection components. Common source
 `study-20261030` pins Bering 1.3.1 and corrected DeepFlow parser configuration for
 all 81 new main cells. The 27 original clean-controller smoke settings passed;
-additional final-source regressions passed independent review. The full fresh
-series is running: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
+additional final-source regressions passed independent review. The first fresh
+series was technically stopped at 2026-10-30 19:05 UTC: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
 [DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099992213),
 and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099997831).
+An exact saved-input audit found that v5 lost v4's same-observation HTTP route
+alias binding, artificially disadvantaging native inputs. [PR6](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/6)
+repairs that adapter without changing graphs or supplied semantics. All three
+collectors require the complete new 81-cell matrix at one repaired source after
+paired evidence review and qualification. Superseded data and costs remain.
+Replacement source `study-20261030-v2` is immutable `a43404e`, with the same
+Bering 1.3.1 and collector pins. Its complete 27-setting qualification is running:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115050998),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115056375),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115062402).
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
 RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
 The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,

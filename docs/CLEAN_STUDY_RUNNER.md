@@ -266,3 +266,39 @@ must match the saved accepted sequence in original source-group order; storage
 shards are not HTTP batches. Selected metadata hashes do not claim that unselected
 wire payloads were rehashed. Actions transport/verification and failed attempts
 are retained as additional costs; human preparation remains unmeasured.
+
+## Route-binding technical stop and common replacement
+
+The main agent launched bf49 before resolving the native baseline's unknowns.
+Saved Petclinic partial/seed6 evidence then demonstrated a regression: each
+owners/vets entry has seven exact SERVER roots and resolved required channels,
+but v5 had lost v4's binding of a concrete URL to a framework route in that same
+observation. Both agents gave ORIGINAL-feasibility GO to restore only this rule
+and replace all 81 primary cells at one common source, with all costs retained.
+Normal cancellation was requested at 2026-10-30 19:05 UTC for all three parent
+runs. Their immutable source and every available packet remain; this is a
+technical version replacement independent of accuracy.
+
+PR6 restores the existing same-root alias baseline through v5 observation
+digests, preserving roots without genuine ancestry. Graphs, IDs, contracts,
+roles, workload and outcomes are unchanged. CI41113741926/41113823393 passed.
+Actual audit41114279637 passed on a8f7eaca after an original HTTP503 retrieval
+failure in41113996544. The reviewer independently verified all three compact
+ZIPs, original artifact identities, 106/106/104 frozen-file maps and all24 paired
+binding comparisons. These variants are repeated views of the same requests.
+Raw same-root attributes support owners/vets/visits aliases; details binding is
+unchanged. Missing visits channels and original forecasts remain. No simulation,
+rescoring or post-target forecast replacement was performed.
+
+Explicit actual-output GO covers merge and repeat qualification27. Merge
+a43404ec02c77e9414878632ec6248835cf7a260 has the same tree as reviewed a8f7eaca;
+mergeCI41114694256 and tagCI41114755102 passed. Immutable study-20261030-v2 uses
+the same Bering66, Sheaft686a and collector pins. Fixed nine system/mode settings
+per collector were dispatched in41115050998 (OBI),41115056375 (DeepFlow) and
+41115062402 (Coroot), all with runner=study and seed6.
+
+Before a new main GO, every distinct primary unknown must have a concrete
+contract-to-observation-to-graph-to-binding explanation across all ten operations
+and source arms. Technical pass alone does not excuse an adapter regression.
+Availability and accuracy remain observations, not admission thresholds. The
+original absent/incomplete-tracing feasibility criterion and full81 scope remain.

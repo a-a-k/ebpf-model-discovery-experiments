@@ -1,817 +1,817 @@
 {
   "schema_version": "main-review-candidates-v5",
   "purpose": "All 81 fresh matched main cells; saved facts only, no replay/refit/rescore/admission.",
-  "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+  "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260",
   "planned_cells": [
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41099986985,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41099992213,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "absent",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "partial",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 6,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 7,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 8,
       "collector": "coroot",
-      "run_id": 41099997831,
+      "run_id": null,
       "stage": "main",
       "runner": "study",
-      "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+      "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
     }
   ],
   "qualification_keys": [
@@ -836,5 +836,16 @@
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
   "pending_artifact_cells": 81,
-  "cells": []
+  "cells": [],
+  "superseded_planned_source": {
+    "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+    "plan_git_commit": "29eddf44d1a784a0df955ee96d14ec319fbb9820",
+    "run_ids": [
+      41099986985,
+      41099992213,
+      41099997831
+    ],
+    "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
+  },
+  "status": "New full81 pending actual qualification27 GO and dispatch; no main result admitted."
 }

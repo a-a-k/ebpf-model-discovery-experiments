@@ -56,9 +56,19 @@ traffic; total span counts are not application coverage denominators.
 For OBI and Coroot, the missing RPC information was not lost by the frozen-input
 exporter. That differs from the proven OTel semantic-convention defect.
 Absence from a retained export does not prove interception is impossible; the
-relative roles of parser support, process/hook selection and other capture
-limitations are not completely isolated. Pinned DeepFlow's built-in parser enum
-does not include Thrift; custom/plugin extensions were not tested.
+relative roles of process/hook selection and other capture limitations are not
+completely isolated. A subsequent exact-source audit confirmed a shared parser
+boundary. DSB constructs TSocket/TFramedTransport/TBinaryProtocol in
+[ThriftClient.h](https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/ThriftClient.h#L63).
+None of the three pinned built-in paths decodes this Apache Thrift format:
+
+- [OBI kernel dispatch and userspace fallback](https://github.com/open-telemetry/opentelemetry-ebpf-instrumentation/blob/b28e4e7fe0a01f1961b7c4747a13b8ff486d6fec/pkg/ebpf/common/tcp_detect_transform.go#L62).
+- [Coroot protocol enum and detection chain](https://github.com/coroot/coroot-node-agent/blob/89a858a0ee35c4eb938b86d56f23168fb0ac7573/ebpftracer/ebpf/l7/l7.c#L1).
+- [DeepFlow registered built-in families](https://github.com/deepflowio/deepflow/blob/9a1219fa5cf1471ba2ec8742019661567d98002e/agent/src/common/l7_protocol_log.rs#L149).
+
+This explains a limit of obtaining RPC semantics through the tested default
+paths. It does not establish absence of TCP interception, make Thrift the sole
+cause of every unknown, or rule out custom/plugin extensions, which were not tested.
 
 The DeepFlow audit independently read all complete raw snapshot records and
 matched them to saved accounting: 7434 stage-local records,4323 unique source
@@ -85,6 +95,22 @@ is not justified. This naming issue also does not supply missing application
 edges. Incomplete DB aliases likewise do not imply absent DB activity; primary
 replica-only predictions explicitly retain fixed-healthy DB assumptions where
 the caller is reachable.
+
+## Petclinic native route binding regression
+
+In the final partial/seed6 qualification, native list_owners and list_vets each
+have seven unique SERVER roots. Required application/DB channels resolve, but
+the only primary unknown is entry_endpoint_missing_or_ambiguous. The same root
+contains url.path=/api/customer/owners and http.route=customers; Bering retains
+GET /customers. V4 used aliases from that exact observation. V5 accidentally
+required its endpoint path to equal the external URL, dropping the alias rule.
+
+This is a demonstrated adapter defect, not evidence that native tracing lacks
+the operation. PR6 restores only same-observation aliases for every source and
+collector while retaining v5 roots without ancestry IDs. Other missing visits
+calls remain unknown. The bf49 primary series was stopped before further queued
+cells, and all 81 must use one repaired source after paired proof and qualification.
+The original source, available captures, negative/unknown records and costs remain.
 
 ## Interpretation boundary
 

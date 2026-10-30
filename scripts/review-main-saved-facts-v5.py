@@ -20,7 +20,8 @@ PINS = {
     "bering": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
     "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a",
 }
-FRESH_HEAD = "bf49d464816aa71b7c820a02778117d3e6a0ba9d"
+FRESH_HEAD = "a43404ec02c77e9414878632ec6248835cf7a260"
+FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d", FRESH_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
 
 COLLECTOR_PINS = {
@@ -444,7 +445,7 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
                 declaration["seed"], declaration["run_id"])
     if identity != expected or status.get("commit") != declaration["head_sha"]:
         raise ValueError(f"saved compact identity differs: {identity!r}")
-    if declaration["head_sha"] == FRESH_HEAD and (
+    if declaration["head_sha"] in FRESH_HEADS and (
             status.get("controller") != "clean-study" or status.get("smoke") is not False):
         raise ValueError("fresh saved status does not identify the clean main controller")
     if (manifest.get("commit") != declaration["head_sha"]
@@ -628,7 +629,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 raise ValueError(f"selected full evidence differs from pre-target freeze: {name}")
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
-    fresh = declaration["head_sha"] == FRESH_HEAD
+    fresh = declaration["head_sha"] in FRESH_HEADS
     expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
     if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")
