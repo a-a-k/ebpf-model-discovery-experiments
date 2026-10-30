@@ -1,0 +1,13 @@
+{
+  "observed_utc": "2026-10-30T11:08:54.8406215Z",
+  "archive_run": 41044720043,
+  "source_runs": [40971766251],
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41044720043",
+  "release_id": 428929433,
+  "target_commitish": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655",
+  "source_artifact_ids": [12950256617, 12950018152, 12944533475],
+  "delivery": {"unchunked_artifacts": 2, "chunked_artifacts": [{"artifact_id": 12950018152, "parts": 4, "chunk_manifest_sha256": "61c8281aa42fd75d0cdbde9e3e768b9088afd911f84fee3371ab9706a1c6c080", "manifest_checksum_entry_equal": true, "source_api_identity_equal": true, "each_published_part_size_digest_equal": true, "original_reassembly_verified_in_actions_only": true}]},
+  "checks": {"all_source_inventory_indexes_equal": true, "all_unchunked_size_digest_checksum_equal": true, "all_chunk_manifests_hash_bound_inside_provenance": true, "all_chunk_source_identities_equal": true, "all_published_part_sizes_digests_equal_manifests": true, "release_asset_set_exact": true, "checksum_entry_set_exact_including_internal_chunk_manifests": true, "metadata_file_hashes_equal_release_api": true},
+  "unavailable_logs": [], "mismatches": [], "local_original_zip_or_parts_downloaded": false, "local_original_reassembly_performed": false,
+  "scope": "Static source inventory/provenance/Release identity checks only; source bytes and lossless reassembly were verified by unchanged Actions archive workflow, not repeated locally; no empirical admission claim."
+}

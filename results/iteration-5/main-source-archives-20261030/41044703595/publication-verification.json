@@ -1,0 +1,16 @@
+{
+  "observed_utc": "2026-10-30T11:08:54.1421828Z",
+  "archive_run": 41044703595,
+  "source_runs": [40910021896, 40913407822, 40919005648, 40924968145, 41011398324],
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41044703595",
+  "release_id": 428932422,
+  "target_commitish": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655",
+  "source_artifact_ids": [12928586162, 12928232708, 12927543563, 12927257991, 12927192823, 12926899227, 12923351657, 12922567529, 12921859014, 12961715511, 12961646180, 12960120448],
+  "delivery": {"unchunked_artifacts": 12, "chunked_artifacts": []},
+  "checks": {"all_source_inventory_indexes_equal": true, "all_unchunked_size_digest_checksum_equal": true, "all_chunk_manifests_hash_bound_inside_provenance": true, "all_chunk_source_identities_equal": true, "all_published_part_sizes_digests_equal_manifests": true, "release_asset_set_exact": true, "checksum_entry_set_exact_including_internal_chunk_manifests": true, "metadata_file_hashes_equal_release_api": true},
+  "unavailable_logs": [{"run_id": 40910021896, "job_id": 123575210321, "http_status": 404}, {"run_id": 40913407822, "job_id": 123587179829, "http_status": 404}],
+  "mismatches": [],
+  "local_original_zip_or_parts_downloaded": false,
+  "local_original_reassembly_performed": false,
+  "scope": "Static source inventory/provenance/Release identity checks only; source bytes and lossless reassembly were verified by unchanged Actions archive workflow, not repeated locally; no empirical admission claim."
+}

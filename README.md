@@ -5,18 +5,22 @@ The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation an
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
 review; main groups are being staged. The published review snapshot now contains
-**45/81 independently reviewed main cells**: 26 OBI and 19 Coroot, including all
-nine Petclinic cells for each of these collectors. The
+**54/81 independently reviewed main cells**: all 27 OBI and all 27 Coroot cells.
+These are independent AI-agent checks, not external human peer review. The
 [first 36 records](results/iteration-5/main-review-snapshot-20261030/SOURCE.md) and
 [nine additional records](results/iteration-5/main-review-41025655518/SOURCE.md)
-state each source, checked files and verification limits. These are valid
-experimental packets, including unknown and inaccurate forecasts, not 45
-positive findings. Later packets remain in progress. Technical smoke admission does
+are extended by the [final nine OBI/Coroot records](results/iteration-5/main-review-completion-20261030/SOURCE.md).
+They state each source, checked files and verification limits. These are valid
+experimental packets, including unknown and inaccurate forecasts, not 54
+positive findings. The DeepFlow main series remains incomplete. Technical smoke admission does
 not require an available or accurate forecast.
 The [original smoke-attempt archives](results/iteration-5/smoke-archives-20261030/SOURCE.md)
 preserve all 38 attempts for the 27 fixed settings, including technical failures
 and replacements. Original artifact identities match the published data releases;
 unavailable job logs are recorded explicitly.
+The [initial main-source archival batch](results/iteration-5/main-source-archives-20261030/SOURCE.md)
+preserves another 19 original runs, including failed and superseded attempts;
+it does not claim archival completion for the full study.
 New Relic is excluded by the user's instruction. Retaining it as 27 access-blocked
 cells was an orchestration error; no credentials are needed and those cells do
 not belong in current coverage or failure totals. Historical snapshots preserve
@@ -36,7 +40,7 @@ are published as exact saved files. The application SDK was disabled. Supplied
 deployment aliases, operation contracts and replica semantics remain explicit;
 they are not claimed as automatically discovered business knowledge.
 
-Current OTel results also include unfavorable measurements. In full-tracing
+Current OBI OTel results also include unfavorable measurements. In full-tracing
 seed 6, the combined-source checkout prediction is `0.875`, while the saved
 external result is `2563/3200`; the equally informed direct baseline also
 predicts `0.875`. Other full-tracing packets retain additional deviations.
@@ -49,6 +53,13 @@ These completed adverse measurements remain part of the comparison. Application
 runtime errors and graph-coverage limitations are assessed separately; the
 [preliminary diagnosis](docs/OTEL_RUNTIME_LIMITS_V5.md) records actual dependency
 errors and unresolved causes without attributing them to the collector.
+Coroot OTel full-tracing seeds 6 and 8 also retain inaccurate native/combined
+predictions of `0.875`: their checkout outcomes are `276/3200` and `1427/3200`.
+Full-tracing seed 7 retains unavailable forecasts and `189/3200` successful
+checkout outcomes. The exact [review records](results/iteration-5/main-review-completion-20261030/SOURCE.md)
+preserve source-specific graph availability, supplied alias transformations and
+actual simulator inputs. These results do not establish the cause of the runtime
+failures or a collector-specific causal effect.
 
 Implementation now follows the existing collection, Bering and Sheaft path.
 Format-only review issues are inspected directly from retained files. The

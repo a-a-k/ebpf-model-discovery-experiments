@@ -1,0 +1,20 @@
+{
+  "observed_utc": "2026-10-30T11:11:59.4709592Z",
+  "dispatch_source": "work/archive-main-modest-batches-dispatch-20261030.json",
+  "inventory_source": "work/archive-main-terminal-inventory-20261030.json",
+  "scope": "Archive integrity only. Release API metadata, SHA256SUMS and provenance tar members were inspected; no source ZIP, released part or log body was downloaded, and no empirical claim was evaluated.",
+  "totals": {"archive_batches": 8, "source_runs": 19, "source_artifacts": 84, "chunked_source_artifacts": 3, "released_chunk_parts": 12, "unavailable_job_logs": 2},
+  "checks": {"all_archive_runs_terminal_success": true, "all_release_source_artifact_identities_match_frozen_inventory": true, "all_unchunked_release_asset_sizes_digests_and_checksums_match": true, "all_chunk_manifests_are_internal_provenance_members_with_matching_checksum_entries": true, "all_chunk_manifests_match_original_source_size_digest_and_identity": true, "all_published_part_sizes_and_release_api_digests_match_chunk_manifests": true, "all_release_asset_sets_exact": true, "all_metadata_file_hashes_match_release_api": true, "local_parts_or_originals_downloaded": false, "local_reassembly_performed": false},
+  "unavailable_logs": [{"run_id": 40910021896, "job_id": 123575210321, "http_status": 404}, {"run_id": 40913407822, "job_id": 123587179829, "http_status": 404}],
+  "batches": [
+    {"batch": 1, "archive_run": 41044703595, "source_runs": [40910021896, 40913407822, 40919005648, 40924968145, 41011398324], "source_artifacts": 12, "chunked": 0, "proof": "work/archive-review-41044703595/publication-verification.json", "proof_sha256": "5c391c0cc4c69869faa6237f59580516b09ce5bcec9b0f463a69873bcfbdcb81"},
+    {"batch": 2, "archive_run": 41044707631, "source_runs": [40914709370, 41009954091], "source_artifacts": 12, "chunked": 0, "proof": "work/archive-review-41044707631/publication-verification.json", "proof_sha256": "e909ef9285bdf5b005f9aa737715dc18a05d5798edc017136212148d6333ff09"},
+    {"batch": 3, "archive_run": 41044711442, "source_runs": [40910013685, 40947299209], "source_artifacts": 18, "chunked": 0, "proof": "work/archive-review-41044711442/publication-verification.json", "proof_sha256": "22ea970e52207c36e4a45a9d3dafc9e65605ca2d389400022e667a2cf249497e"},
+    {"batch": 4, "archive_run": 41044716243, "source_runs": [40970638144], "source_artifacts": 3, "chunked": 1, "proof": "work/archive-review-41044716243/publication-verification.json", "proof_sha256": "1a6a2ef40da764749513263cdd897a035ec2f705e22d052da04595ec4bf3b3a0"},
+    {"batch": 5, "archive_run": 41044720043, "source_runs": [40971766251], "source_artifacts": 3, "chunked": 1, "proof": "work/archive-review-41044720043/publication-verification.json", "proof_sha256": "472400c368e535fa13a47fd5d258e5d17b05cdfb805094cfe081fe63d604286f"},
+    {"batch": 6, "archive_run": 41044724448, "source_runs": [40966847000], "source_artifacts": 3, "chunked": 1, "proof": "work/archive-review-41044724448/publication-verification.json", "proof_sha256": "3c7778893c388d5a8c2c28497f406ac66142994266961040583074cb3cfa11d1"},
+    {"batch": 7, "archive_run": 41044728499, "source_runs": [40956228868, 41004291277], "source_artifacts": 18, "chunked": 0, "proof": "work/archive-review-41044728499/publication-verification.json", "proof_sha256": "7a19b6fe58efed7e117430fe4e9866f6dc69b5c2b6df617827b303527df0f82c"},
+    {"batch": 8, "archive_run": 41044732432, "source_runs": [40932031732, 40935194776, 40935203055, 41010834860, 41024050638], "source_artifacts": 15, "chunked": 0, "proof": "work/archive-review-41044732432/publication-verification.json", "proof_sha256": "3d159172785eea5eeea2b38a98be580dbe00edba6d24d8f72930c07db54d71d8"}
+  ],
+  "remaining": []
+}

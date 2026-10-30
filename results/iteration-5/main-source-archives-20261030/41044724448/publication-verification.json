@@ -1,0 +1,50 @@
+{
+  "observed_utc": "2026-10-30T11:04:04.283344+00:00",
+  "archive_run": 41044724448,
+  "source_runs": [
+    40966847000
+  ],
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41044724448",
+  "source_artifacts": [
+    {
+      "artifact_id": 12949901009,
+      "delivery": "lossless_parts",
+      "parts": 4,
+      "source_api_identity_equal_manifest": true,
+      "each_published_part_size_digest_equal_manifest": true,
+      "original_reassembly_verified_in_actions_only": true
+    },
+    {
+      "artifact_id": 12949014963,
+      "delivery": "unchunked",
+      "source_api_size_digest_equal": true
+    },
+    {
+      "artifact_id": 12942153783,
+      "delivery": "unchunked",
+      "source_api_size_digest_equal": true
+    }
+  ],
+  "checksums_equal_release_api_or_hashed_chunk_manifest": true,
+  "metadata_file_hashes_equal_release_api": true,
+  "log_statuses": [
+    {
+      "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123773409069/logs",
+      "state": "available",
+      "file": "40966847000-job-123773409069.log"
+    },
+    {
+      "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/123773442164/logs",
+      "state": "available",
+      "file": "40966847000-job-123773442164.log"
+    },
+    {
+      "endpoint": "repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40966847000/logs",
+      "state": "available",
+      "file": "40966847000-workflow-logs.zip"
+    }
+  ],
+  "local_original_zip_or_parts_downloaded": false,
+  "local_original_reassembly_performed": false,
+  "scope": "Static original API/provenance/Release identity checks. Source bytes and lossless chunk reassembly were verified by the unchanged Actions archive workflow, not repeated locally. No empirical admission claim."
+}

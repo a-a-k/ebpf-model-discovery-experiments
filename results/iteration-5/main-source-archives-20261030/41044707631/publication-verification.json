@@ -1,0 +1,13 @@
+{
+  "observed_utc": "2026-10-30T11:10:50.1891098Z",
+  "archive_run": 41044707631,
+  "source_runs": [40914709370, 41009954091],
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41044707631",
+  "release_id": 428932738,
+  "target_commitish": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655",
+  "source_artifact_ids": [12923161927, 12922514282, 12921916343, 12921571169, 12921038049, 12920992250, 12919405058, 12918331828, 12916799000, 12960716789, 12960592911, 12958579803],
+  "delivery": {"unchunked_artifacts": 12, "chunked_artifacts": []},
+  "checks": {"all_source_inventory_indexes_equal": true, "all_unchunked_size_digest_checksum_equal": true, "all_chunk_manifests_hash_bound_inside_provenance": true, "all_chunk_source_identities_equal": true, "all_published_part_sizes_digests_equal_manifests": true, "release_asset_set_exact": true, "checksum_entry_set_exact_including_internal_chunk_manifests": true, "metadata_file_hashes_equal_release_api": true},
+  "unavailable_logs": [], "mismatches": [], "local_original_zip_or_parts_downloaded": false, "local_original_reassembly_performed": false,
+  "scope": "Static source inventory/provenance/Release identity checks only; source bytes and lossless reassembly were verified by unchanged Actions archive workflow, not repeated locally; no empirical admission claim."
+}

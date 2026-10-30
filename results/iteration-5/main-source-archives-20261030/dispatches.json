@@ -1,0 +1,101 @@
+[
+  {
+    "batch": 1,
+    "run_ids": [
+      40910021896,
+      40913407822,
+      40919005648,
+      40924968145,
+      41011398324
+    ],
+    "estimated_peak_upper_bytes": 8544718330,
+    "dispatched_at": "2026-10-30T10:58:57.236466+00:00",
+    "return_code": 0,
+    "archive_run": 41044703595,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 2,
+    "run_ids": [
+      40914709370,
+      41009954091
+    ],
+    "estimated_peak_upper_bytes": 8249623332,
+    "dispatched_at": "2026-10-30T10:58:59.275563+00:00",
+    "return_code": 0,
+    "archive_run": 41044707631,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 3,
+    "run_ids": [
+      40910013685,
+      40947299209
+    ],
+    "estimated_peak_upper_bytes": 8007367914,
+    "dispatched_at": "2026-10-30T10:59:01.253926+00:00",
+    "return_code": 0,
+    "archive_run": 41044711442,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 4,
+    "run_ids": [
+      40970638144
+    ],
+    "estimated_peak_upper_bytes": 8405750808,
+    "dispatched_at": "2026-10-30T10:59:03.508890+00:00",
+    "return_code": 0,
+    "archive_run": 41044716243,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 5,
+    "run_ids": [
+      40971766251
+    ],
+    "estimated_peak_upper_bytes": 8060048733,
+    "dispatched_at": "2026-10-30T10:59:05.610302+00:00",
+    "return_code": 0,
+    "archive_run": 41044720043,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 6,
+    "run_ids": [
+      40966847000
+    ],
+    "estimated_peak_upper_bytes": 7823543517,
+    "dispatched_at": "2026-10-30T10:59:08.009003+00:00",
+    "return_code": 0,
+    "archive_run": 41044724448,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 7,
+    "run_ids": [
+      40956228868,
+      41004291277
+    ],
+    "estimated_peak_upper_bytes": 8230930307,
+    "dispatched_at": "2026-10-30T10:59:10.018144+00:00",
+    "return_code": 0,
+    "archive_run": 41044728499,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  },
+  {
+    "batch": 8,
+    "run_ids": [
+      40932031732,
+      40935194776,
+      40935203055,
+      41010834860,
+      41024050638
+    ],
+    "estimated_peak_upper_bytes": 8268685697,
+    "dispatched_at": "2026-10-30T10:59:12.306099+00:00",
+    "return_code": 0,
+    "archive_run": 41044732432,
+    "head_sha": "c7defbcb470adc2b3af3a54879fe1d1be9a7c655"
+  }
+]

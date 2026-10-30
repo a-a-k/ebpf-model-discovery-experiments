@@ -1,0 +1,2313 @@
+{
+  "observed_utc": "2026-10-30T10:50:34.5337917Z",
+  "source_declarations": "work/iteration5-report-declarations.json",
+  "scope": "Metadata-only archive planning for declared stage=main attempt runs. Terminal status and artifact size/digest come from GitHub REST API; no artifact bodies were downloaded and no empirical values were recomputed.",
+  "declared_main_attempt_runs": 42,
+  "terminal_runs": 41,
+  "nonterminal_run_ids": [
+    41023324471
+  ],
+  "archive_script_model": {
+    "source": "scripts/archive-runs.sh",
+    "max_release_asset_bytes": 2147483648,
+    "chunk_bytes": 1073741824,
+    "behavior": "Each artifact is downloaded, retained, and assets >=2 GiB are split while the original still exists; the original is removed after verified parts are written.",
+    "per_parent_peak_upper_formula": "sum(source artifact sizes) + largest individual artifact size when that artifact is >=2 GiB",
+    "caveat": "Upper estimate excludes logs, provenance, checkout and runner-reserved space; it is planning metadata, not measured disk use."
+  },
+  "totals": {
+    "terminal_artifact_count": 218,
+    "terminal_artifact_bytes": 349779875222
+  },
+  "single_parent_risk_policy": {
+    "likely_too_large_when_peak_upper_exceeds_bytes": 12884901888,
+    "run_ids": [
+      40930805848,
+      40942429097,
+      40945578755,
+      40947264867,
+      40947274375,
+      40947287495,
+      40948072741,
+      40953661709,
+      40956239225,
+      40970095079,
+      41004270443,
+      41004275773,
+      41004281518,
+      41004285932,
+      41004296165,
+      41005821961
+    ],
+    "reason": "Likely exceeds practical standard-runner free disk after accounting for an in-flight split copy; do not dispatch unchanged archival workflow for these parents, even alone."
+  },
+  "recommendation": {
+    "no_dispatch_performed": true,
+    "packable_batch_peak_cap_bytes": 8589934592,
+    "modest_batches": [
+      {
+        "batch": 1,
+        "run_ids": [
+          40910021896,
+          40913407822,
+          40919005648,
+          40924968145,
+          41011398324
+        ],
+        "source_artifact_bytes": 8544718330,
+        "estimated_peak_upper_bytes": 8544718330
+      },
+      {
+        "batch": 2,
+        "run_ids": [
+          40914709370,
+          41009954091
+        ],
+        "source_artifact_bytes": 8249623332,
+        "estimated_peak_upper_bytes": 8249623332
+      },
+      {
+        "batch": 3,
+        "run_ids": [
+          40910013685,
+          40947299209
+        ],
+        "source_artifact_bytes": 8007367914,
+        "estimated_peak_upper_bytes": 8007367914
+      },
+      {
+        "batch": 4,
+        "run_ids": [
+          40970638144
+        ],
+        "source_artifact_bytes": 4934115736,
+        "estimated_peak_upper_bytes": 8405750808
+      },
+      {
+        "batch": 5,
+        "run_ids": [
+          40971766251
+        ],
+        "source_artifact_bytes": 4732312760,
+        "estimated_peak_upper_bytes": 8060048733
+      },
+      {
+        "batch": 6,
+        "run_ids": [
+          40966847000
+        ],
+        "source_artifact_bytes": 4475602543,
+        "estimated_peak_upper_bytes": 7823543517
+      },
+      {
+        "batch": 7,
+        "run_ids": [
+          40956228868,
+          41004291277
+        ],
+        "source_artifact_bytes": 8230930307,
+        "estimated_peak_upper_bytes": 8230930307
+      },
+      {
+        "batch": 8,
+        "run_ids": [
+          40932031732,
+          40935194776,
+          40935203055,
+          41010834860,
+          41024050638
+        ],
+        "source_artifact_bytes": 8268685697,
+        "estimated_peak_upper_bytes": 8268685697
+      },
+      {
+        "batch": 9,
+        "run_ids": [
+          40963548420,
+          40965631880
+        ],
+        "source_artifact_bytes": 2511819922,
+        "estimated_peak_upper_bytes": 2511819922
+      }
+    ],
+    "standalone_caution_runs": [
+      {
+        "run_id": 40958365058,
+        "artifact_bytes": 5246032332,
+        "estimated_peak_upper_bytes": 9433967055
+      },
+      {
+        "run_id": 40959052743,
+        "artifact_bytes": 5271980662,
+        "estimated_peak_upper_bytes": 9483737500
+      },
+      {
+        "run_id": 40966250927,
+        "artifact_bytes": 5499744950,
+        "estimated_peak_upper_bytes": 9564741026
+      },
+      {
+        "run_id": 40966258333,
+        "artifact_bytes": 5196026032,
+        "estimated_peak_upper_bytes": 9047426659
+      }
+    ],
+    "blocked_unchanged_workflow_runs": [
+      {
+        "run_id": 40930805848,
+        "artifact_bytes": 14607685107,
+        "largest_artifact_bytes": 4221669607,
+        "estimated_peak_upper_bytes": 18829354714
+      },
+      {
+        "run_id": 40942429097,
+        "artifact_bytes": 32557578656,
+        "largest_artifact_bytes": 6140574336,
+        "estimated_peak_upper_bytes": 38698152992
+      },
+      {
+        "run_id": 40945578755,
+        "artifact_bytes": 13475850651,
+        "largest_artifact_bytes": 8113338556,
+        "estimated_peak_upper_bytes": 21589189207
+      },
+      {
+        "run_id": 40947264867,
+        "artifact_bytes": 9144200989,
+        "largest_artifact_bytes": 4627884270,
+        "estimated_peak_upper_bytes": 13772085259
+      },
+      {
+        "run_id": 40947274375,
+        "artifact_bytes": 13086904115,
+        "largest_artifact_bytes": 7779787512,
+        "estimated_peak_upper_bytes": 20866691627
+      },
+      {
+        "run_id": 40947287495,
+        "artifact_bytes": 12960366886,
+        "largest_artifact_bytes": 7703311078,
+        "estimated_peak_upper_bytes": 20663677964
+      },
+      {
+        "run_id": 40948072741,
+        "artifact_bytes": 13039771752,
+        "largest_artifact_bytes": 3503564349,
+        "estimated_peak_upper_bytes": 16543336101
+      },
+      {
+        "run_id": 40953661709,
+        "artifact_bytes": 13520510552,
+        "largest_artifact_bytes": 8147458337,
+        "estimated_peak_upper_bytes": 21667968889
+      },
+      {
+        "run_id": 40956239225,
+        "artifact_bytes": 12960374511,
+        "largest_artifact_bytes": 7700931568,
+        "estimated_peak_upper_bytes": 20661306079
+      },
+      {
+        "run_id": 40970095079,
+        "artifact_bytes": 10383740858,
+        "largest_artifact_bytes": 5798689872,
+        "estimated_peak_upper_bytes": 16182430730
+      },
+      {
+        "run_id": 41004270443,
+        "artifact_bytes": 10384032706,
+        "largest_artifact_bytes": 5799849503,
+        "estimated_peak_upper_bytes": 16183882209
+      },
+      {
+        "run_id": 41004275773,
+        "artifact_bytes": 10479118558,
+        "largest_artifact_bytes": 5855629154,
+        "estimated_peak_upper_bytes": 16334747712
+      },
+      {
+        "run_id": 41004281518,
+        "artifact_bytes": 37479113480,
+        "largest_artifact_bytes": 7419562597,
+        "estimated_peak_upper_bytes": 44898676077
+      },
+      {
+        "run_id": 41004285932,
+        "artifact_bytes": 38853543404,
+        "largest_artifact_bytes": 7743550986,
+        "estimated_peak_upper_bytes": 46597094390
+      },
+      {
+        "run_id": 41004296165,
+        "artifact_bytes": 14150433523,
+        "largest_artifact_bytes": 2077198001,
+        "estimated_peak_upper_bytes": 14150433523
+      },
+      {
+        "run_id": 41005821961,
+        "artifact_bytes": 13527688957,
+        "largest_artifact_bytes": 8152230668,
+        "estimated_peak_upper_bytes": 21679919625
+      }
+    ]
+  },
+  "runs": [
+    {
+      "run_id": 40910013685,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "updated_at": "2026-10-29T18:02:27Z",
+      "artifact_count": 9,
+      "artifact_bytes": 5411813079,
+      "largest_artifact_bytes": 1422384165,
+      "archive_peak_upper_bytes": 5411813079,
+      "artifacts": [
+        {
+          "id": 12921655146,
+          "name": "v5-summary-obi-main-petclinic-absent-8-40910013685",
+          "size": 37618213,
+          "digest": "sha256:e4ce8d1a477a0f499bb8c67414d43bccc4ac634ce4735e7403b9a17577d2d7fe",
+          "expired": false
+        },
+        {
+          "id": 12921031741,
+          "name": "campaign-v5-obi-main-petclinic-absent-8-40910013685",
+          "size": 1422384165,
+          "digest": "sha256:db777e637423fb224b5ea7581e9e90feed74b1dc0eff44ede41d5949a6166001",
+          "expired": false
+        },
+        {
+          "id": 12920055481,
+          "name": "v5-summary-obi-main-petclinic-absent-6-40910013685",
+          "size": 37354410,
+          "digest": "sha256:be9e31621a3b26dcb33a48bcf87f112323cc864ccf983e99467bfd3fc886d59a",
+          "expired": false
+        },
+        {
+          "id": 12919317201,
+          "name": "campaign-v5-obi-main-petclinic-absent-6-40910013685",
+          "size": 1412339936,
+          "digest": "sha256:8ee088e3e53e86e06c72bec7691636b56e2174388292b8ff99fbb10949a488d4",
+          "expired": false
+        },
+        {
+          "id": 12918282707,
+          "name": "campaign-v5-obi-main-petclinic-absent-7-40910013685",
+          "size": 1407882354,
+          "digest": "sha256:21becd9e616e533c94e54658e0cb533847d43d4de871d9855d53cb3a14157fd0",
+          "expired": false
+        },
+        {
+          "id": 12917639119,
+          "name": "v5-summary-obi-main-petclinic-absent-7-40910013685",
+          "size": 37180891,
+          "digest": "sha256:affffd6ff25c322c2e882d216c94e63a4a616dda1d1080c382326cf1f66baeb2",
+          "expired": false
+        },
+        {
+          "id": 12916082820,
+          "name": "training-v4-petclinic-absent-8-40910013685",
+          "size": 353643858,
+          "digest": "sha256:d209a665503f960091f10dfef830bfd42d73d6a6cd754c498eb6285182c1ca5d",
+          "expired": false
+        },
+        {
+          "id": 12915687154,
+          "name": "training-v4-petclinic-absent-6-40910013685",
+          "size": 351793380,
+          "digest": "sha256:f4501310bc52665b2c55950491971c7717a28af2653eb242d39fb5db47681552",
+          "expired": false
+        },
+        {
+          "id": 12915183292,
+          "name": "training-v4-petclinic-absent-7-40910013685",
+          "size": 351615872,
+          "digest": "sha256:736fe7dc37562d38dccaeed5f3305c6a85dbb8eb9a89e7972ec52a7d2573c929",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40910021896,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "33d98e2ba522af1b740ec4465dc6ba6e7b3e0530",
+      "updated_at": "2026-10-29T19:01:17Z",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "largest_artifact_bytes": 0,
+      "archive_peak_upper_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 40913407822,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "9ab77cb22fc84de73b790c853378d050d2e8c1f3",
+      "updated_at": "2026-10-29T19:16:41Z",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "largest_artifact_bytes": 0,
+      "archive_peak_upper_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 40914709370,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "updated_at": "2026-10-29T18:36:40Z",
+      "artifact_count": 9,
+      "artifact_bytes": 6778407672,
+      "largest_artifact_bytes": 1740597910,
+      "archive_peak_upper_bytes": 6778407672,
+      "artifacts": [
+        {
+          "id": 12923161927,
+          "name": "v5-summary-obi-main-petclinic-partial-8-40914709370",
+          "size": 37033934,
+          "digest": "sha256:a23db8336c5ff5fb475f2660630dcfc63269e3d892c7fe6908907217a3e2e246",
+          "expired": false
+        },
+        {
+          "id": 12922514282,
+          "name": "campaign-v5-obi-main-petclinic-partial-8-40914709370",
+          "size": 1738580094,
+          "digest": "sha256:e201f9209c0406a23bc42bf790b854db37c12e226fdaa737528b5ffeea7181d8",
+          "expired": false
+        },
+        {
+          "id": 12921916343,
+          "name": "v5-summary-obi-main-petclinic-partial-7-40914709370",
+          "size": 37009268,
+          "digest": "sha256:4363a9f4ae5e4eea9a469f98da740d9a56ef03fb0760693d4e7b702490f1c494",
+          "expired": false
+        },
+        {
+          "id": 12921571169,
+          "name": "v5-summary-obi-main-petclinic-partial-6-40914709370",
+          "size": 36992920,
+          "digest": "sha256:53b09b3e433809928a7ff378e154f74b8e1ca323954ade37d2431a5abfb46468",
+          "expired": false
+        },
+        {
+          "id": 12921038049,
+          "name": "campaign-v5-obi-main-petclinic-partial-7-40914709370",
+          "size": 1737885988,
+          "digest": "sha256:53c019c8ba5a1a4f2d01e5b832b2cdff5c303761f8001cca7eeaa345b52db635",
+          "expired": false
+        },
+        {
+          "id": 12920992250,
+          "name": "campaign-v5-obi-main-petclinic-partial-6-40914709370",
+          "size": 1740597910,
+          "digest": "sha256:1e646840222979ebceea09e5a88ce0cc1493f79dde22a19e22d7970a8095ce6a",
+          "expired": false
+        },
+        {
+          "id": 12919405058,
+          "name": "training-v4-petclinic-partial-8-40914709370",
+          "size": 483918171,
+          "digest": "sha256:3afa49222da92cbfc91834cffa583b3f9fca57c22eb9358e37d9f9fe4d1cd2b2",
+          "expired": false
+        },
+        {
+          "id": 12918331828,
+          "name": "training-v4-petclinic-partial-7-40914709370",
+          "size": 483024258,
+          "digest": "sha256:7349cee4dc6bb7cb1aa3ca81ff8b8b6a727636479e8f38b434870a4e24da26df",
+          "expired": false
+        },
+        {
+          "id": 12916799000,
+          "name": "training-v4-petclinic-partial-6-40914709370",
+          "size": 483365129,
+          "digest": "sha256:a27579e5086c10b3fa060cd322923b037f21b0463d220db5b89d30761f8c49d1",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40919005648,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "5457d14ddd20307ec92c0af9767d49e0538158b2",
+      "updated_at": "2026-10-29T19:07:01Z",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "largest_artifact_bytes": 0,
+      "archive_peak_upper_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 40924968145,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "fb339581d28a2ae9e5e8f23c90c604cccb15bcfa",
+      "updated_at": "2026-10-29T19:54:06Z",
+      "artifact_count": 9,
+      "artifact_bytes": 7072493230,
+      "largest_artifact_bytes": 1813655376,
+      "archive_peak_upper_bytes": 7072493230,
+      "artifacts": [
+        {
+          "id": 12928586162,
+          "name": "v5-summary-obi-main-petclinic-full-7-40924968145",
+          "size": 37139335,
+          "digest": "sha256:c3ed13afd1040641d977e25fa3bc8ddcf4b934a448c1c12e4636d1adaf0f8ade",
+          "expired": false
+        },
+        {
+          "id": 12928232708,
+          "name": "campaign-v5-obi-main-petclinic-full-7-40924968145",
+          "size": 1813655376,
+          "digest": "sha256:20d44f28cd289695b626dd50328599f18d7d2a06b6988756b6c80858bbcca6ad",
+          "expired": false
+        },
+        {
+          "id": 12927543563,
+          "name": "campaign-v5-obi-main-petclinic-full-8-40924968145",
+          "size": 1800490529,
+          "digest": "sha256:8d743cb8bb37a1b2e3cdd0fa9f633df414801154f3cb37bfec15df99ebe2e908",
+          "expired": false
+        },
+        {
+          "id": 12927257991,
+          "name": "campaign-v5-obi-main-petclinic-full-6-40924968145",
+          "size": 1805966545,
+          "digest": "sha256:d3b0c9f3f598af8f4e0eb3a4e057aabc484ab4825faa5d460ed62159ee8785c6",
+          "expired": false
+        },
+        {
+          "id": 12927192823,
+          "name": "v5-summary-obi-main-petclinic-full-6-40924968145",
+          "size": 37116979,
+          "digest": "sha256:2691614979b7d3be7e86866b76d7fbbf668aa5e0f225ed5c9887ee2dc5cc7a09",
+          "expired": false
+        },
+        {
+          "id": 12926899227,
+          "name": "v5-summary-obi-main-petclinic-full-8-40924968145",
+          "size": 37100098,
+          "digest": "sha256:0b0ba3545eb71a129325b1f8ca9a63baef04607eff91384d6c59f8cd4c022e05",
+          "expired": false
+        },
+        {
+          "id": 12923351657,
+          "name": "training-v4-petclinic-full-7-40924968145",
+          "size": 513812512,
+          "digest": "sha256:924be6faf09d3c84a5a5db9d28e6c984cc4042a6e89a165bc22962ad6f6d352b",
+          "expired": false
+        },
+        {
+          "id": 12922567529,
+          "name": "training-v4-petclinic-full-8-40924968145",
+          "size": 513675292,
+          "digest": "sha256:60abe0d78be7476e856aa86889b32402a04709607aecdf545ee4557c422f69b4",
+          "expired": false
+        },
+        {
+          "id": 12921859014,
+          "name": "training-v4-petclinic-full-6-40924968145",
+          "size": 513536564,
+          "digest": "sha256:a87e3172b52d7f014f34f2158d21b683a4a4de0674c255d15be379d510a60f35",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40930805848,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "updated_at": "2026-10-29T22:01:55Z",
+      "artifact_count": 9,
+      "artifact_bytes": 14607685107,
+      "largest_artifact_bytes": 4221669607,
+      "archive_peak_upper_bytes": 18829354714,
+      "artifacts": [
+        {
+          "id": 12936501478,
+          "name": "v5-summary-obi-main-otel_demo-absent-6-40930805848",
+          "size": 52069542,
+          "digest": "sha256:80b90f0509671b34d9488ee348b942154a086d85917fd27067ca2f5da219d202",
+          "expired": false
+        },
+        {
+          "id": 12936118371,
+          "name": "campaign-v5-obi-main-otel_demo-absent-6-40930805848",
+          "size": 4221669607,
+          "digest": "sha256:6ac43b3023a80018cfaa53c45d80d0e56e7b19c5e9774944a383d9f172a1c205",
+          "expired": false
+        },
+        {
+          "id": 12934116302,
+          "name": "campaign-v5-obi-main-otel_demo-absent-7-40930805848",
+          "size": 3603977945,
+          "digest": "sha256:5c9328c71ef567d79a04dca219985a597f9bf2ce19f66992b295c64f405b1c3e",
+          "expired": false
+        },
+        {
+          "id": 12933941373,
+          "name": "campaign-v5-obi-main-otel_demo-absent-8-40930805848",
+          "size": 3623993102,
+          "digest": "sha256:6711e0d70a35354d77e7ec31a07e09ba85b68ce4fbdee411394fbdbdfc1c7290",
+          "expired": false
+        },
+        {
+          "id": 12933112600,
+          "name": "v5-summary-obi-main-otel_demo-absent-8-40930805848",
+          "size": 38083724,
+          "digest": "sha256:8377ddce7f3bf1840f0d7ad8240fb7766db1e1e236d7937c2772c214dfadb0be",
+          "expired": false
+        },
+        {
+          "id": 12932964556,
+          "name": "v5-summary-obi-main-otel_demo-absent-7-40930805848",
+          "size": 38465522,
+          "digest": "sha256:7d461751a107b1a4d10aa39b8d131fa4228ead6fc9e70573b70daeaf89a7b7fb",
+          "expired": false
+        },
+        {
+          "id": 12927970957,
+          "name": "training-v4-otel_demo-absent-6-40930805848",
+          "size": 1012173963,
+          "digest": "sha256:72647cfddb861add9ddb91306861f653b22d54b2029115ac201d4a9361786977",
+          "expired": false
+        },
+        {
+          "id": 12927487879,
+          "name": "training-v4-otel_demo-absent-8-40930805848",
+          "size": 1010327426,
+          "digest": "sha256:27c2f77987de819e9f089e955cf2ca2ee86670a5a016195c12274ebe4ec0aa6c",
+          "expired": false
+        },
+        {
+          "id": 12926728638,
+          "name": "training-v4-otel_demo-absent-7-40930805848",
+          "size": 1006924276,
+          "digest": "sha256:08935a1d27044da0d0e54a94ad8fb4758b36f0007fc947325488712d3b182620",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40932031732,
+      "collector": "obi",
+      "conclusion": "cancelled",
+      "head_sha": "f5ac530ec4a13cecd6178fffcdd886628f47af04",
+      "updated_at": "2026-10-29T20:12:34Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1960676932,
+      "largest_artifact_bytes": 1959038712,
+      "archive_peak_upper_bytes": 1960676932,
+      "artifacts": [
+        {
+          "id": 12929887000,
+          "name": "campaign-v5-obi-main-deathstarbench-full-6-40932031732",
+          "size": 1959038712,
+          "digest": "sha256:056f544aa3a74c5ca72cd22aa3c8f2d93597df62f87df3a76dc764226e36d4e5",
+          "expired": false
+        },
+        {
+          "id": 12928354094,
+          "name": "v5-summary-obi-main-deathstarbench-full-6-40932031732",
+          "size": 1637053,
+          "digest": "sha256:8b192a70aaddecd6d46eb0e740b8680f2b4a53e006c73c0ac18f5558b60de2ca",
+          "expired": false
+        },
+        {
+          "id": 12928349188,
+          "name": "retention-v4-deathstarbench-full-6-40932031732",
+          "size": 1167,
+          "digest": "sha256:7b1bb3ab36ef45562e3d010376279df79bab3d3114484d09af81923a3dbd40d4",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40935194776,
+      "collector": "obi",
+      "conclusion": "cancelled",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "updated_at": "2026-10-29T20:12:43Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1444813976,
+      "largest_artifact_bytes": 1443695544,
+      "archive_peak_upper_bytes": 1444813976,
+      "artifacts": [
+        {
+          "id": 12929856544,
+          "name": "campaign-v5-obi-main-deathstarbench-partial-6-40935194776",
+          "size": 1443695544,
+          "digest": "sha256:d14c24b621b694aaae4a73d12d00b64260c63ac6e34e66e805c3c5ab34684fa1",
+          "expired": false
+        },
+        {
+          "id": 12929342198,
+          "name": "v5-summary-obi-main-deathstarbench-partial-6-40935194776",
+          "size": 1117265,
+          "digest": "sha256:4fe61c2356039b5e6a241bd0572e48b9744ab102f4f2828e00f38e15143918e4",
+          "expired": false
+        },
+        {
+          "id": 12927969841,
+          "name": "retention-v4-deathstarbench-partial-6-40935194776",
+          "size": 1167,
+          "digest": "sha256:0ebc518792eb7e050f458eae5b13df5105f9bd6ab60db4abc3faf89d2d06ecab",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40935203055,
+      "collector": "obi",
+      "conclusion": "cancelled",
+      "head_sha": "950b35ab74898bb9aae6242ee34d95212bf2d17d",
+      "updated_at": "2026-10-29T20:12:40Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1322872057,
+      "largest_artifact_bytes": 1321753622,
+      "archive_peak_upper_bytes": 1322872057,
+      "artifacts": [
+        {
+          "id": 12930515046,
+          "name": "retention-v4-deathstarbench-partial-7-40935203055",
+          "size": 1167,
+          "digest": "sha256:966cc8a5fd6d6c2258cecfd3001f46c4733a66612007f42f7f3e1030b12b2c22",
+          "expired": false
+        },
+        {
+          "id": 12929237964,
+          "name": "v5-summary-obi-main-deathstarbench-partial-7-40935203055",
+          "size": 1117268,
+          "digest": "sha256:2ad88cf5c4d366951509cb6dce2c8a3004445e5f1d152b34f43b6e05a614ee3c",
+          "expired": false
+        },
+        {
+          "id": 12929048798,
+          "name": "campaign-v5-obi-main-deathstarbench-partial-7-40935203055",
+          "size": 1321753622,
+          "digest": "sha256:965bd224c81144ec6fc12948109c51b7f211e2798f712466e3dfc3f4bbe5d9e0",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40942429097,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "5cfdd7cbb60daec95d447109a18f82219ea29e8f",
+      "updated_at": "2026-10-29T23:12:25Z",
+      "artifact_count": 12,
+      "artifact_bytes": 32557578656,
+      "largest_artifact_bytes": 6140574336,
+      "archive_peak_upper_bytes": 38698152992,
+      "artifacts": [
+        {
+          "id": 12941115116,
+          "name": "campaign-v5-obi-main-deathstarbench-absent-8-40942429097",
+          "size": 6140574336,
+          "digest": "sha256:f51eb4ead0e36ba1f6c3a6e1b1e623b24eb90f528255265c366ee21c6ac15e1e",
+          "expired": false
+        },
+        {
+          "id": 12939304953,
+          "name": "v5-summary-obi-main-deathstarbench-absent-8-40942429097",
+          "size": 2594108765,
+          "digest": "sha256:dbf2ad71131820cf1f500908b1cee9d7ce802f8d7b0fbc6b03343ddbf54e7b3e",
+          "expired": false
+        },
+        {
+          "id": 12938969709,
+          "name": "retention-v4-deathstarbench-absent-8-40942429097",
+          "size": 2960,
+          "digest": "sha256:5d60391cb2193db0bc6218251895e8e6be775378c34994ac11b5f02a5b0e1438",
+          "expired": false
+        },
+        {
+          "id": 12938100241,
+          "name": "campaign-v5-obi-main-deathstarbench-absent-6-40942429097",
+          "size": 6135031999,
+          "digest": "sha256:07f0c3eaa2d2dd4b593a6d5db9bd4b5f10e698317b1a974fbdc6959a30aa0a33",
+          "expired": false
+        },
+        {
+          "id": 12937171763,
+          "name": "v5-summary-obi-main-deathstarbench-absent-6-40942429097",
+          "size": 2596581852,
+          "digest": "sha256:b57e0bcabb18c44800ee32ce9a23e736e9ee7f3b394b916669bb1031caed94d4",
+          "expired": false
+        },
+        {
+          "id": 12937121924,
+          "name": "retention-v4-deathstarbench-absent-6-40942429097",
+          "size": 2965,
+          "digest": "sha256:0e977ae69248df93e35c6e12e9981865b95815b1188cceba0b9f5791525c57fd",
+          "expired": false
+        },
+        {
+          "id": 12935172681,
+          "name": "training-v4-deathstarbench-absent-8-40942429097",
+          "size": 2134016649,
+          "digest": "sha256:2793d614a4cba4fbf319313e383b074060abefca4c33e283b00c36004938dcd7",
+          "expired": false
+        },
+        {
+          "id": 12934796275,
+          "name": "retention-v4-deathstarbench-absent-7-40942429097",
+          "size": 2964,
+          "digest": "sha256:9daf0dc97488eefbf996f3338a52be9c8ce957b3a8502ddc7c3edda3905a3e8a",
+          "expired": false
+        },
+        {
+          "id": 12933554459,
+          "name": "v5-summary-obi-main-deathstarbench-absent-7-40942429097",
+          "size": 2591423771,
+          "digest": "sha256:d6003f14d541e8cc23948451142f9724c70f706318b761edbf1ff880b8fd768e",
+          "expired": false
+        },
+        {
+          "id": 12933019490,
+          "name": "campaign-v5-obi-main-deathstarbench-absent-7-40942429097",
+          "size": 6111686489,
+          "digest": "sha256:5a8655821fcb86ffb27bc1811d5994e9425898a339d8801ca771a54ce184585e",
+          "expired": false
+        },
+        {
+          "id": 12932808729,
+          "name": "training-v4-deathstarbench-absent-6-40942429097",
+          "size": 2130590844,
+          "digest": "sha256:4890fd862a8418549abeb9341c0e11334f7c672440eaa90daba40e1740976274",
+          "expired": false
+        },
+        {
+          "id": 12931423076,
+          "name": "training-v4-deathstarbench-absent-7-40942429097",
+          "size": 2123555062,
+          "digest": "sha256:b1c2f70482bf9c23e0dce9628b25e8bd0d8a8f4da982f8f54d09fbcdbfcb1d53",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40945578755,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "updated_at": "2026-10-29T23:41:19Z",
+      "artifact_count": 4,
+      "artifact_bytes": 13475850651,
+      "largest_artifact_bytes": 8113338556,
+      "archive_peak_upper_bytes": 21589189207,
+      "artifacts": [
+        {
+          "id": 12942290746,
+          "name": "campaign-v5-obi-main-deathstarbench-full-7-40945578755",
+          "size": 8113338556,
+          "digest": "sha256:0228b6db20b8c86a91e14a72329f7da6e856d3a46e296a6703c0574532e2591b",
+          "expired": false
+        },
+        {
+          "id": 12941676590,
+          "name": "v5-summary-obi-main-deathstarbench-full-7-40945578755",
+          "size": 2594177217,
+          "digest": "sha256:8118b6628f07709fe6bbeb77385af709a8ae02a015919317a7c42451cec081d4",
+          "expired": false
+        },
+        {
+          "id": 12941582863,
+          "name": "retention-v4-deathstarbench-full-7-40945578755",
+          "size": 2973,
+          "digest": "sha256:1d06217ab99546ba7bf6e98b9c516df6b1db4a0fe6e79941b461affaec7c0290",
+          "expired": false
+        },
+        {
+          "id": 12933412698,
+          "name": "training-v4-deathstarbench-full-7-40945578755",
+          "size": 2768331905,
+          "digest": "sha256:1f58ee5eccc6513441a29146cfb38e6df80ddfb357ed4c2f61c97a635c5cd704",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40947264867,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "updated_at": "2026-10-29T23:29:36Z",
+      "artifact_count": 4,
+      "artifact_bytes": 9144200989,
+      "largest_artifact_bytes": 4627884270,
+      "archive_peak_upper_bytes": 13772085259,
+      "artifacts": [
+        {
+          "id": 12941975097,
+          "name": "v5-summary-obi-main-deathstarbench-full-6-40947264867",
+          "size": 1733322369,
+          "digest": "sha256:c872c53055a0c2fa8168fd1ff2e0580e5db4c3245d057ce46027c7c197a70b97",
+          "expired": false
+        },
+        {
+          "id": 12941800367,
+          "name": "retention-v4-deathstarbench-full-6-40947264867",
+          "size": 2112,
+          "digest": "sha256:47dce337e6ea7bce4db8159a17ba6e9fe2f984400773afc7853d9621db81d336",
+          "expired": false
+        },
+        {
+          "id": 12941426430,
+          "name": "campaign-v5-obi-main-deathstarbench-full-6-40947264867",
+          "size": 4627884270,
+          "digest": "sha256:c39b31280dd49172bb4ddb79f10747e6cfb88938b951a2ce44a06b10ff2a1574",
+          "expired": false
+        },
+        {
+          "id": 12936497476,
+          "name": "training-v4-deathstarbench-full-6-40947264867",
+          "size": 2782992238,
+          "digest": "sha256:2200a8f78855d22e7373d1132d0f5cf4056de932dad71f8e1b6e9f5035eca724",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40947274375,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "updated_at": "2026-10-30T00:39:46Z",
+      "artifact_count": 4,
+      "artifact_bytes": 13086904115,
+      "largest_artifact_bytes": 7779787512,
+      "archive_peak_upper_bytes": 20866691627,
+      "artifacts": [
+        {
+          "id": 12944423886,
+          "name": "campaign-v5-obi-main-deathstarbench-partial-6-40947274375",
+          "size": 7779787512,
+          "digest": "sha256:1bb06dde2b934f7c1d01905f2a8889fffd6178f842e93e5df43e22d5b1046de3",
+          "expired": false
+        },
+        {
+          "id": 12944012613,
+          "name": "retention-v4-deathstarbench-partial-6-40947274375",
+          "size": 2965,
+          "digest": "sha256:ca48b75d83a7155c2fc1feb54333fb304d832d878afad00d3aea7bf8f10fd06c",
+          "expired": false
+        },
+        {
+          "id": 12943498463,
+          "name": "v5-summary-obi-main-deathstarbench-partial-6-40947274375",
+          "size": 2622102612,
+          "digest": "sha256:6bb88172ed7a6f734e1aa67d0d1e0b3c27c0bfcce945228c24619f1d6ff2f371",
+          "expired": false
+        },
+        {
+          "id": 12937701677,
+          "name": "training-v4-deathstarbench-partial-6-40947274375",
+          "size": 2685011026,
+          "digest": "sha256:772fb4256f7900284092b720d89a9c411a49e63dd880f6d9c0c2d0a8282f6b89",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40947287495,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "updated_at": "2026-10-30T00:32:16Z",
+      "artifact_count": 4,
+      "artifact_bytes": 12960366886,
+      "largest_artifact_bytes": 7703311078,
+      "archive_peak_upper_bytes": 20663677964,
+      "artifacts": [
+        {
+          "id": 12944715103,
+          "name": "v5-summary-obi-main-deathstarbench-partial-7-40947287495",
+          "size": 2597270632,
+          "digest": "sha256:501ffe5a5e6d8e1737c0a4d70d5d94b125090da8176874920f161cf60f064bf5",
+          "expired": false
+        },
+        {
+          "id": 12944102644,
+          "name": "campaign-v5-obi-main-deathstarbench-partial-7-40947287495",
+          "size": 7703311078,
+          "digest": "sha256:b121d20f94a0bdc6ae03886b94158fba03c39238b6ec97c4c9022ea1bef1e197",
+          "expired": false
+        },
+        {
+          "id": 12943943278,
+          "name": "retention-v4-deathstarbench-partial-7-40947287495",
+          "size": 2969,
+          "digest": "sha256:213c104d5edcdd17699daed640c35846c08746bf39ae93a4039c17a897df17b4",
+          "expired": false
+        },
+        {
+          "id": 12936438805,
+          "name": "training-v4-deathstarbench-partial-7-40947287495",
+          "size": 2659782207,
+          "digest": "sha256:27e16126aabfb45fe9469d152c6f51714b9e83ebe55c37107a10a1a3d2d9366b",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40947299209,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "86b5deb19f7ba239c6f0ff40e8b098fd7e6e7e44",
+      "updated_at": "2026-10-29T21:14:11Z",
+      "artifact_count": 9,
+      "artifact_bytes": 2595554835,
+      "largest_artifact_bytes": 562428604,
+      "archive_peak_upper_bytes": 2595554835,
+      "artifacts": [
+        {
+          "id": 12934120822,
+          "name": "v5-summary-coroot-main-petclinic-absent-7-40947299209",
+          "size": 36499001,
+          "digest": "sha256:4bbe6a1b5b2e9864e0d4ed8614f741babe4b3c2e4cc9ed33ce0bd64e11854a9b",
+          "expired": false
+        },
+        {
+          "id": 12933990526,
+          "name": "campaign-v5-coroot-main-petclinic-absent-6-40947299209",
+          "size": 561237830,
+          "digest": "sha256:342c1ee07dd4cb50f1129ca2b83b3f30c1ea1f34f2b332149e9ab87fcee80bb8",
+          "expired": false
+        },
+        {
+          "id": 12933866622,
+          "name": "campaign-v5-coroot-main-petclinic-absent-7-40947299209",
+          "size": 562285771,
+          "digest": "sha256:c63112065e93f41a01cff6c253aea1135fa47d24d003ef0a3f980cb4dcbf20a3",
+          "expired": false
+        },
+        {
+          "id": 12933131686,
+          "name": "v5-summary-coroot-main-petclinic-absent-6-40947299209",
+          "size": 36407769,
+          "digest": "sha256:dd724f044682e8fc437466a379da331aa33a1af01df65e7ac9e7e3332c6beb22",
+          "expired": false
+        },
+        {
+          "id": 12933064046,
+          "name": "campaign-v5-coroot-main-petclinic-absent-8-40947299209",
+          "size": 562428604,
+          "digest": "sha256:8b08824c7826ca20fdd0ae0231043c272f844f9827bc4281013d7bd115817a07",
+          "expired": false
+        },
+        {
+          "id": 12932580183,
+          "name": "training-v4-petclinic-absent-6-40947299209",
+          "size": 266565167,
+          "digest": "sha256:dca46ce0ce72eac45e1dd7dfe5d76933cda4bb9ff845cfb68e03e28a061af5e9",
+          "expired": false
+        },
+        {
+          "id": 12932226219,
+          "name": "training-v4-petclinic-absent-7-40947299209",
+          "size": 266769923,
+          "digest": "sha256:e6214569cac6320eb7f90cc945d36d1ea5b958c0d338e318878fc683cf261aef",
+          "expired": false
+        },
+        {
+          "id": 12932104383,
+          "name": "v5-summary-coroot-main-petclinic-absent-8-40947299209",
+          "size": 36493682,
+          "digest": "sha256:0bbdac30d294653f19ec60243b432d2f02423a2eae77fade4dea68daf29967c3",
+          "expired": false
+        },
+        {
+          "id": 12931388644,
+          "name": "training-v4-petclinic-absent-8-40947299209",
+          "size": 266867088,
+          "digest": "sha256:bfa8b3600f05c62eadfed9a81bb3839fb76de629e3655a237a06f89130d70594",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40948072741,
+      "collector": "obi",
+      "conclusion": "failure",
+      "head_sha": "6a616c685c10a7e17a80b1dda452d9da9e02a693",
+      "updated_at": "2026-10-29T23:41:32Z",
+      "artifact_count": 9,
+      "artifact_bytes": 13039771752,
+      "largest_artifact_bytes": 3503564349,
+      "archive_peak_upper_bytes": 16543336101,
+      "artifacts": [
+        {
+          "id": 12942715192,
+          "name": "campaign-v5-obi-main-otel_demo-partial-7-40948072741",
+          "size": 3503564349,
+          "digest": "sha256:0bd5e07747ff3aee63a9406c2bd8e2efb5390a76ee4946f3eac207183f69c2d1",
+          "expired": false
+        },
+        {
+          "id": 12941448669,
+          "name": "v5-summary-obi-main-otel_demo-partial-7-40948072741",
+          "size": 50940137,
+          "digest": "sha256:618ec325f7efdb29bdca5002176de5e54877316546701cb155c6c247d65b86cd",
+          "expired": false
+        },
+        {
+          "id": 12940365274,
+          "name": "campaign-v5-obi-main-otel_demo-partial-8-40948072741",
+          "size": 2598019382,
+          "digest": "sha256:2e608fc92d64a1416bb55cd2cb43117cb6f1e4b26dceb143c2ca9ad8dce35ead",
+          "expired": false
+        },
+        {
+          "id": 12939767196,
+          "name": "campaign-v5-obi-main-otel_demo-partial-6-40948072741",
+          "size": 2558853644,
+          "digest": "sha256:fe04b44e0b202aba4ef752680d0f2666c6cc7bfa125f2df2afc956fdf1eb5c03",
+          "expired": false
+        },
+        {
+          "id": 12939626858,
+          "name": "v5-summary-obi-main-otel_demo-partial-8-40948072741",
+          "size": 37967405,
+          "digest": "sha256:425d17a3a4095cc13c6ca521f2332b99b564a97647120b82c3b1041b2c87906d",
+          "expired": false
+        },
+        {
+          "id": 12939228701,
+          "name": "v5-summary-obi-main-otel_demo-partial-6-40948072741",
+          "size": 38373908,
+          "digest": "sha256:eadb1da2f740ac151fd1aab8200ff5b4f6dc217c3783432addc2432326a2e8d3",
+          "expired": false
+        },
+        {
+          "id": 12935126749,
+          "name": "training-v4-otel_demo-partial-6-40948072741",
+          "size": 1403086478,
+          "digest": "sha256:d259d41b23758766055dfd8c88ef54373ece3bd6bbb07c7626c2630e79c6d6d1",
+          "expired": false
+        },
+        {
+          "id": 12934777193,
+          "name": "training-v4-otel_demo-partial-8-40948072741",
+          "size": 1420393072,
+          "digest": "sha256:84f425acfc55c56fa6052f8eca6cd7b58bea7ef837bc00deab1b6311e9031d7d",
+          "expired": false
+        },
+        {
+          "id": 12932874737,
+          "name": "training-v4-otel_demo-partial-7-40948072741",
+          "size": 1428573377,
+          "digest": "sha256:42962466116a112e7e576546253266dfac612c958098c72cf94484d464cc51c6",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40953661709,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "updated_at": "2026-10-30T02:05:28Z",
+      "artifact_count": 4,
+      "artifact_bytes": 13520510552,
+      "largest_artifact_bytes": 8147458337,
+      "archive_peak_upper_bytes": 21667968889,
+      "artifacts": [
+        {
+          "id": 12948537129,
+          "name": "campaign-v5-obi-main-deathstarbench-full-8-40953661709",
+          "size": 8147458337,
+          "digest": "sha256:94fcf3b5968de3dac7ad72b30d3954646684c6a4d0c841600e4f1719b120d0b2",
+          "expired": false
+        },
+        {
+          "id": 12948247283,
+          "name": "retention-v4-deathstarbench-full-8-40953661709",
+          "size": 2973,
+          "digest": "sha256:1888a967f7dfd811852d943fdd6db1ab80b3be20b24b3f9423b95381041ba880",
+          "expired": false
+        },
+        {
+          "id": 12947519268,
+          "name": "v5-summary-obi-main-deathstarbench-full-8-40953661709",
+          "size": 2594715629,
+          "digest": "sha256:b8962b47b6ebc15ff71cf0ea2eecc50c87debb482a63c6dd6e5484f9e3f69ac5",
+          "expired": false
+        },
+        {
+          "id": 12939529027,
+          "name": "training-v4-deathstarbench-full-8-40953661709",
+          "size": 2778333613,
+          "digest": "sha256:497398184df702561e4012683b2e373cec275004e7ac4fad789d0c235c1b2469",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40956228868,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "updated_at": "2026-10-29T22:29:08Z",
+      "artifact_count": 9,
+      "artifact_bytes": 3980234096,
+      "largest_artifact_bytes": 889428748,
+      "archive_peak_upper_bytes": 3980234096,
+      "artifacts": [
+        {
+          "id": 12938705608,
+          "name": "v5-summary-coroot-main-petclinic-partial-8-40956228868",
+          "size": 38032310,
+          "digest": "sha256:3ad4d1c2dee72b51476ce2f48a7a508d32a7e057a28b68654a58dde666c2c75b",
+          "expired": false
+        },
+        {
+          "id": 12938360814,
+          "name": "v5-summary-coroot-main-petclinic-partial-7-40956228868",
+          "size": 38037701,
+          "digest": "sha256:08dd77cdf0640ad971d1d296a4cf8ffd359843f676ce680a8acc811296e547b8",
+          "expired": false
+        },
+        {
+          "id": 12938112835,
+          "name": "campaign-v5-coroot-main-petclinic-partial-8-40956228868",
+          "size": 889428748,
+          "digest": "sha256:7566b9b1d4203f1dcf1aa737e05dfd73b2a41782fafc7b40a21fe6f36bcaef77",
+          "expired": false
+        },
+        {
+          "id": 12937232960,
+          "name": "v5-summary-coroot-main-petclinic-partial-6-40956228868",
+          "size": 38019307,
+          "digest": "sha256:0e107efd44a2308e3e164f0fd022a3e3814e274463c6b4eb10c895b7c08f539c",
+          "expired": false
+        },
+        {
+          "id": 12936810101,
+          "name": "training-v4-petclinic-partial-6-40956228868",
+          "size": 399568127,
+          "digest": "sha256:242a524a341b1451c61b0568e52d5fcde1c738c2ff69176b7f4a101d9150eba8",
+          "expired": false
+        },
+        {
+          "id": 12936778728,
+          "name": "campaign-v5-coroot-main-petclinic-partial-6-40956228868",
+          "size": 889238249,
+          "digest": "sha256:9cd2ba5e59762eae6a745a372c288d78730c7777054d88c7a3b81c963f0a6d5b",
+          "expired": false
+        },
+        {
+          "id": 12936746045,
+          "name": "training-v4-petclinic-partial-8-40956228868",
+          "size": 399751792,
+          "digest": "sha256:9155d50889bfb4cdea61ba20dc0b8d1898e4c7154ac09e3e7434ce5cf9ae83ab",
+          "expired": false
+        },
+        {
+          "id": 12936689151,
+          "name": "campaign-v5-coroot-main-petclinic-partial-7-40956228868",
+          "size": 888647288,
+          "digest": "sha256:78681678012baddd0aa0bfe7723dab0add784ae3dfd138db591b184f3072bc72",
+          "expired": false
+        },
+        {
+          "id": 12935722773,
+          "name": "training-v4-petclinic-partial-7-40956228868",
+          "size": 399510574,
+          "digest": "sha256:ac1ef6e291d04a64d6990d77b246997d99f52cb815baf5ccb784e879f476d46f",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40956239225,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "597811ce6fad4466fd7f7511f4a5dc3bdc503a07",
+      "updated_at": "2026-10-30T01:21:12Z",
+      "artifact_count": 4,
+      "artifact_bytes": 12960374511,
+      "largest_artifact_bytes": 7700931568,
+      "archive_peak_upper_bytes": 20661306079,
+      "artifacts": [
+        {
+          "id": 12946951180,
+          "name": "campaign-v5-obi-main-deathstarbench-partial-8-40956239225",
+          "size": 7700931568,
+          "digest": "sha256:c17757515fba3b3cfdcc660a78875058b505f2d3c6d59bae3d23e6a0bb04ae1f",
+          "expired": false
+        },
+        {
+          "id": 12945409342,
+          "name": "retention-v4-deathstarbench-partial-8-40956239225",
+          "size": 2968,
+          "digest": "sha256:31d91f23cc371242510f0cdfd8443669e6daf9e79964fc5a1bd88a4bf31e7874",
+          "expired": false
+        },
+        {
+          "id": 12945349527,
+          "name": "v5-summary-obi-main-deathstarbench-partial-8-40956239225",
+          "size": 2595816701,
+          "digest": "sha256:6861f714b77d64534607631ebb200e9892a0ecc6ab85c113c076c75fed15703c",
+          "expired": false
+        },
+        {
+          "id": 12940027981,
+          "name": "training-v4-deathstarbench-partial-8-40956239225",
+          "size": 2663623274,
+          "digest": "sha256:eee9938ae4ef62cee19a6dbbb3dae8277bbcff336b8956f3e0dfdceaf3fbe547",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40958365058,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "updated_at": "2026-10-30T01:19:45Z",
+      "artifact_count": 3,
+      "artifact_bytes": 5246032332,
+      "largest_artifact_bytes": 4187934723,
+      "archive_peak_upper_bytes": 9433967055,
+      "artifacts": [
+        {
+          "id": 12946855866,
+          "name": "campaign-v5-obi-main-otel_demo-absent-7-40958365058",
+          "size": 4187934723,
+          "digest": "sha256:33e3f6d7047a477fdb105683a70a8134975c008751761f4caa8acd65dd829dbf",
+          "expired": false
+        },
+        {
+          "id": 12945932973,
+          "name": "v5-summary-obi-main-otel_demo-absent-7-40958365058",
+          "size": 51761851,
+          "digest": "sha256:a5e886a1cb17141b4e9d4b95476f0e8b71a6232ec042244728163de1ef0d9dbd",
+          "expired": false
+        },
+        {
+          "id": 12937459981,
+          "name": "training-v4-otel_demo-absent-7-40958365058",
+          "size": 1006335758,
+          "digest": "sha256:5280de5ba495c80f095443c9352cce0c578b73b0f134e136d435a3ae518219e1",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40959052743,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "8a985f99bfd2ecd4ebe13274e100c86feaae0560",
+      "updated_at": "2026-10-30T00:53:37Z",
+      "artifact_count": 3,
+      "artifact_bytes": 5271980662,
+      "largest_artifact_bytes": 4211756838,
+      "archive_peak_upper_bytes": 9483737500,
+      "artifacts": [
+        {
+          "id": 12946150034,
+          "name": "campaign-v5-obi-main-otel_demo-absent-8-40959052743",
+          "size": 4211756838,
+          "digest": "sha256:1cc0c3749c254a1deb1feaba9fa599640a69be7ab7e5f41ef22e7a34fa393371",
+          "expired": false
+        },
+        {
+          "id": 12945067476,
+          "name": "v5-summary-obi-main-otel_demo-absent-8-40959052743",
+          "size": 51680036,
+          "digest": "sha256:3860e59da72b65f2cc2350404f75f4b7a1a5f4069af156a4404b5ac1b149ac89",
+          "expired": false
+        },
+        {
+          "id": 12938109989,
+          "name": "training-v4-otel_demo-absent-8-40959052743",
+          "size": 1008543788,
+          "digest": "sha256:076e32e2cb0b578aa014a0ae3c13eb176492702f70b9e689a50b3f51f747522e",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40963548420,
+      "collector": "deepflow",
+      "conclusion": "failure",
+      "head_sha": "51c9697ed71bfb98919936c95440e0a21ed6731b",
+      "updated_at": "2026-10-30T01:07:04Z",
+      "artifact_count": 1,
+      "artifact_bytes": 1254329913,
+      "largest_artifact_bytes": 1254329913,
+      "archive_peak_upper_bytes": 1254329913,
+      "artifacts": [
+        {
+          "id": 12940068074,
+          "name": "training-v4-petclinic-absent-6-40963548420",
+          "size": 1254329913,
+          "digest": "sha256:02524ce918c2ab95e2b8a6854c5f1888b0493ee3b924c63777db2591b9f95116",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40965631880,
+      "collector": "deepflow",
+      "conclusion": "failure",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "updated_at": "2026-10-30T01:09:41Z",
+      "artifact_count": 1,
+      "artifact_bytes": 1257490009,
+      "largest_artifact_bytes": 1257490009,
+      "archive_peak_upper_bytes": 1257490009,
+      "artifacts": [
+        {
+          "id": 12941184407,
+          "name": "training-v4-petclinic-absent-7-40965631880",
+          "size": 1257490009,
+          "digest": "sha256:8de2dc25fecb8ada7c44107f426d69976a1174a7fc7519468cd41ee5df54dbf9",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40966250927,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "updated_at": "2026-10-30T02:36:20Z",
+      "artifact_count": 3,
+      "artifact_bytes": 5499744950,
+      "largest_artifact_bytes": 4064996076,
+      "archive_peak_upper_bytes": 9564741026,
+      "artifacts": [
+        {
+          "id": 12950085255,
+          "name": "v5-summary-obi-main-otel_demo-full-6-40966250927",
+          "size": 52439294,
+          "digest": "sha256:78dd27ec5a376bf9c444c60ad3d3c9ed71bfc83186af1204de38fd8a47bbe2ca",
+          "expired": false
+        },
+        {
+          "id": 12949009780,
+          "name": "campaign-v5-obi-main-otel_demo-full-6-40966250927",
+          "size": 4064996076,
+          "digest": "sha256:dbbb1437a9a78d806b499e9317043248953a7e5e6da68233e1127a65241510c8",
+          "expired": false
+        },
+        {
+          "id": 12941339620,
+          "name": "training-v4-otel_demo-full-6-40966250927",
+          "size": 1382309580,
+          "digest": "sha256:03ae7f61e7e08cfb35eabe8ad96602270bb1261f5f25f6307711a86136368569",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40966258333,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "updated_at": "2026-10-30T02:21:39Z",
+      "artifact_count": 3,
+      "artifact_bytes": 5196026032,
+      "largest_artifact_bytes": 3851400627,
+      "archive_peak_upper_bytes": 9047426659,
+      "artifacts": [
+        {
+          "id": 12949317141,
+          "name": "campaign-v5-obi-main-otel_demo-full-7-40966258333",
+          "size": 3851400627,
+          "digest": "sha256:fc032bbaa6202510321fce24893af76b2be06dba530d5a091cb813c55817df47",
+          "expired": false
+        },
+        {
+          "id": 12948423515,
+          "name": "v5-summary-obi-main-otel_demo-full-7-40966258333",
+          "size": 52661568,
+          "digest": "sha256:f03ad01c3d27a541c33c7154a64a80f645cf34553dcac1ab614699c0d175821a",
+          "expired": false
+        },
+        {
+          "id": 12941404310,
+          "name": "training-v4-otel_demo-full-7-40966258333",
+          "size": 1291963837,
+          "digest": "sha256:1af3c2c97ee64a0c975f4cf7037453f5e9c0cb2345ed2827a705ff9b1ebb7acc",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40966847000,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "6ecd280207fbf850757c2c67e807054305f058ec",
+      "updated_at": "2026-10-30T02:33:57Z",
+      "artifact_count": 3,
+      "artifact_bytes": 4475602543,
+      "largest_artifact_bytes": 3347940974,
+      "archive_peak_upper_bytes": 7823543517,
+      "artifacts": [
+        {
+          "id": 12949901009,
+          "name": "campaign-v5-obi-main-otel_demo-full-8-40966847000",
+          "size": 3347940974,
+          "digest": "sha256:536fd85c23c19379b501cd66fd2f6f82d3132b30dcc9818bc5995635301a09eb",
+          "expired": false
+        },
+        {
+          "id": 12949014963,
+          "name": "v5-summary-obi-main-otel_demo-full-8-40966847000",
+          "size": 51987418,
+          "digest": "sha256:25fbae841b53c614cfa2bc65020f5cc0aedbd2f4072879e23759d1ab3154acf4",
+          "expired": false
+        },
+        {
+          "id": 12942153783,
+          "name": "training-v4-otel_demo-full-8-40966847000",
+          "size": 1075674151,
+          "digest": "sha256:efe8dea90f7a8a1c11e01ff3378f5a655eb7f84fa7b9b854b2da844d83fdd260",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40970095079,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "updated_at": "2026-10-30T01:57:07Z",
+      "artifact_count": 4,
+      "artifact_bytes": 10383740858,
+      "largest_artifact_bytes": 5798689872,
+      "archive_peak_upper_bytes": 16182430730,
+      "artifacts": [
+        {
+          "id": 12948436255,
+          "name": "campaign-v5-coroot-main-deathstarbench-absent-6-40970095079",
+          "size": 5798689872,
+          "digest": "sha256:b7b95c0a0dbf93d4c94aa6d9c6e177e279a35ccf8ad32d7ce9134ae6c982097a",
+          "expired": false
+        },
+        {
+          "id": 12948320780,
+          "name": "v5-summary-coroot-main-deathstarbench-absent-6-40970095079",
+          "size": 2596480725,
+          "digest": "sha256:6ad5a1c121d2790aa0299e717316dbe1ec89f210cccf76bc1a878790805c3de2",
+          "expired": false
+        },
+        {
+          "id": 12947309948,
+          "name": "retention-v4-deathstarbench-absent-6-40970095079",
+          "size": 2973,
+          "digest": "sha256:a856d5b8e1ffda8bab3173a0e255574b61f57ed6ff12bf68f41d4e8729fdd5ac",
+          "expired": false
+        },
+        {
+          "id": 12945216861,
+          "name": "training-v4-deathstarbench-absent-6-40970095079",
+          "size": 1988567288,
+          "digest": "sha256:750171f67fe7a3b3cac1f23a21abd94ccd4bd4f8f91aedaa3742920fd78eae70",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40970638144,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "7e6b6370410f2ba2010e4ab65e1e24c736805b82",
+      "updated_at": "2026-10-30T02:37:06Z",
+      "artifact_count": 3,
+      "artifact_bytes": 4934115736,
+      "largest_artifact_bytes": 3471635072,
+      "archive_peak_upper_bytes": 8405750808,
+      "artifacts": [
+        {
+          "id": 12950191024,
+          "name": "campaign-v5-obi-main-otel_demo-partial-8-40970638144",
+          "size": 3471635072,
+          "digest": "sha256:a1a106dcf060e2fec22a2927298210fb4386d0f69994e92155e7a64b4ce8e69e",
+          "expired": false
+        },
+        {
+          "id": 12949771867,
+          "name": "v5-summary-obi-main-otel_demo-partial-8-40970638144",
+          "size": 52102806,
+          "digest": "sha256:a0850bb5a0fb839e2ff3e3396f1318d117bcf6d026894cd9accf8dec4e67ebfd",
+          "expired": false
+        },
+        {
+          "id": 12944166832,
+          "name": "training-v4-otel_demo-partial-8-40970638144",
+          "size": 1410377858,
+          "digest": "sha256:056d89d3f95b1754b2b3e77a6545d7445dbf6ecd73358bae20b9f593c11cf22f",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 40971766251,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "eb7342e79e6f622123c572e222cbf60608b099e0",
+      "updated_at": "2026-10-30T02:45:40Z",
+      "artifact_count": 3,
+      "artifact_bytes": 4732312760,
+      "largest_artifact_bytes": 3327735973,
+      "archive_peak_upper_bytes": 8060048733,
+      "artifacts": [
+        {
+          "id": 12950256617,
+          "name": "v5-summary-obi-main-otel_demo-partial-6-40971766251",
+          "size": 51805911,
+          "digest": "sha256:6f486c61c9f6a3870d092a986ed26aafd7bf9c2424d8ee19061e357b2e6563c6",
+          "expired": false
+        },
+        {
+          "id": 12950018152,
+          "name": "campaign-v5-obi-main-otel_demo-partial-6-40971766251",
+          "size": 3327735973,
+          "digest": "sha256:c85a186a8b25b864f76fdaf2a1e6d0de4ab82498fa9a855448d67f56505f07fa",
+          "expired": false
+        },
+        {
+          "id": 12944533475,
+          "name": "training-v4-otel_demo-partial-6-40971766251",
+          "size": 1352770876,
+          "digest": "sha256:1552dc3e9c27791d9114bcb0cb1f81d6578642c5271115a8f2149727d46fe1fa",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004270443,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T07:41:16Z",
+      "artifact_count": 4,
+      "artifact_bytes": 10384032706,
+      "largest_artifact_bytes": 5799849503,
+      "archive_peak_upper_bytes": 16183882209,
+      "artifacts": [
+        {
+          "id": 12961956414,
+          "name": "campaign-v5-coroot-main-deathstarbench-absent-7-41004270443",
+          "size": 5799849503,
+          "digest": "sha256:0e3e68b3fd37a2faa45cfcda450f70b8500d62d7895c929be433f671f5616cbf",
+          "expired": false
+        },
+        {
+          "id": 12961267687,
+          "name": "retention-v4-deathstarbench-absent-7-41004270443",
+          "size": 2965,
+          "digest": "sha256:1e9d5a5b18f00f47817e1305197048381dc50a8cb98f58d80b166ca22b5c001e",
+          "expired": false
+        },
+        {
+          "id": 12961242802,
+          "name": "v5-summary-coroot-main-deathstarbench-absent-7-41004270443",
+          "size": 2595861902,
+          "digest": "sha256:b6f59b223b48e64703273f5ff9d37e5677088848995863baf25ae7c94d90c5a1",
+          "expired": false
+        },
+        {
+          "id": 12959495089,
+          "name": "training-v4-deathstarbench-absent-7-41004270443",
+          "size": 1988318336,
+          "digest": "sha256:6530e7b1e70b39b9ad9372f5ea156bef88317184cc0ce169889796956f6d0311",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004275773,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T07:16:57Z",
+      "artifact_count": 4,
+      "artifact_bytes": 10479118558,
+      "largest_artifact_bytes": 5855629154,
+      "archive_peak_upper_bytes": 16334747712,
+      "artifacts": [
+        {
+          "id": 12961305236,
+          "name": "campaign-v5-coroot-main-deathstarbench-absent-8-41004275773",
+          "size": 5855629154,
+          "digest": "sha256:aae53b249f0e50bbd553ba5a99e6ff36db09853e79842b1372fe032553bf0e5b",
+          "expired": false
+        },
+        {
+          "id": 12961060254,
+          "name": "retention-v4-deathstarbench-absent-8-41004275773",
+          "size": 2971,
+          "digest": "sha256:c03599a176fe5294a99de59499ede487e6c09ae83d949e525ad7138f6beac7db",
+          "expired": false
+        },
+        {
+          "id": 12960462523,
+          "name": "v5-summary-coroot-main-deathstarbench-absent-8-41004275773",
+          "size": 2613195714,
+          "digest": "sha256:17ae66166bc21c4aaaec973d0a377df3cf789dff353708e3a25f2724ea7157a2",
+          "expired": false
+        },
+        {
+          "id": 12957842874,
+          "name": "training-v4-deathstarbench-absent-8-41004275773",
+          "size": 2010290719,
+          "digest": "sha256:5a39e1d0691b2797dda1f6beea612a4d5bdf7d2e3181529ddb9a355f919c0381",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004281518,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T08:40:48Z",
+      "artifact_count": 12,
+      "artifact_bytes": 37479113480,
+      "largest_artifact_bytes": 7419562597,
+      "archive_peak_upper_bytes": 44898676077,
+      "artifacts": [
+        {
+          "id": 12964607038,
+          "name": "campaign-v5-coroot-main-deathstarbench-partial-8-41004281518",
+          "size": 7322954411,
+          "digest": "sha256:cbdad9e968b55255249550006079a56664432cae581a918836f7f2213d7fc85c",
+          "expired": false
+        },
+        {
+          "id": 12964401550,
+          "name": "retention-v4-deathstarbench-partial-7-41004281518",
+          "size": 2971,
+          "digest": "sha256:932a33d84a43f87e040667350c0f2b5592abc4bfb86030ddcfb93fa397851375",
+          "expired": false
+        },
+        {
+          "id": 12964307273,
+          "name": "retention-v4-deathstarbench-partial-8-41004281518",
+          "size": 2970,
+          "digest": "sha256:f9209b4da14b33bb7ff8e69eda09ca82a401994b810d42b4383648ae5d5c17f2",
+          "expired": false
+        },
+        {
+          "id": 12964237295,
+          "name": "campaign-v5-coroot-main-deathstarbench-partial-6-41004281518",
+          "size": 7419562597,
+          "digest": "sha256:770e6ff172a3888a9154163548bbf38891aadf1f3f03d368e60a8975dbc74301",
+          "expired": false
+        },
+        {
+          "id": 12964072241,
+          "name": "v5-summary-coroot-main-deathstarbench-partial-7-41004281518",
+          "size": 2599605387,
+          "digest": "sha256:f300e379fd673bbcd1ec7f01be23af9b5314a446b015ea14e3bfd68711927da4",
+          "expired": false
+        },
+        {
+          "id": 12963759737,
+          "name": "v5-summary-coroot-main-deathstarbench-partial-8-41004281518",
+          "size": 2596477439,
+          "digest": "sha256:69b0038cc7b0f084c9a8c18642a43b0f84ead2e06a48c56861930815166a2f6b",
+          "expired": false
+        },
+        {
+          "id": 12963664277,
+          "name": "campaign-v5-coroot-main-deathstarbench-partial-7-41004281518",
+          "size": 7331874907,
+          "digest": "sha256:b0e32875ff4cd46dbec66e7cfc2725eb33da069b67af2c5e4915fa28ca649ba0",
+          "expired": false
+        },
+        {
+          "id": 12963532500,
+          "name": "v5-summary-coroot-main-deathstarbench-partial-6-41004281518",
+          "size": 2627497553,
+          "digest": "sha256:f1219c33c5a01ef639bcd1189211aaa8873530d018557ee2467e3fecd4ef51e1",
+          "expired": false
+        },
+        {
+          "id": 12963273690,
+          "name": "retention-v4-deathstarbench-partial-6-41004281518",
+          "size": 2975,
+          "digest": "sha256:d041066d75553d4150a9704c3803ff33d69924e12bac79dd205dd0d6503f5ef0",
+          "expired": false
+        },
+        {
+          "id": 12959485207,
+          "name": "training-v4-deathstarbench-partial-6-41004281518",
+          "size": 2550182947,
+          "digest": "sha256:b2311c10646bed6e0c6707cf7614147f0b57d01fd611f193cb5b6c1376bd7589",
+          "expired": false
+        },
+        {
+          "id": 12959330713,
+          "name": "training-v4-deathstarbench-partial-7-41004281518",
+          "size": 2516815482,
+          "digest": "sha256:7bac4afcb27ccbd09a868897691443a71482684d36d34ae73f189a050a5dc351",
+          "expired": false
+        },
+        {
+          "id": 12958649465,
+          "name": "training-v4-deathstarbench-partial-8-41004281518",
+          "size": 2514133841,
+          "digest": "sha256:2222b10447273f2e7264d91216f965d800948d26ac899f6f8149816acbf1e527",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004285932,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T09:12:59Z",
+      "artifact_count": 12,
+      "artifact_bytes": 38853543404,
+      "largest_artifact_bytes": 7743550986,
+      "archive_peak_upper_bytes": 46597094390,
+      "artifacts": [
+        {
+          "id": 12965587479,
+          "name": "retention-v4-deathstarbench-full-6-41004285932",
+          "size": 2971,
+          "digest": "sha256:d7bd2a20cf33cb7aa3e73d0a8a469dcd4877816dd43631dc23523b58f7965f0a",
+          "expired": false
+        },
+        {
+          "id": 12965503232,
+          "name": "retention-v4-deathstarbench-full-7-41004285932",
+          "size": 2971,
+          "digest": "sha256:adcf0819de74654bb259b89f187c09ce281820e1c0c40bbf163b6eea992edbaf",
+          "expired": false
+        },
+        {
+          "id": 12965338107,
+          "name": "v5-summary-coroot-main-deathstarbench-full-6-41004285932",
+          "size": 2606462278,
+          "digest": "sha256:3b0cdf0c9e843b27a7aa2bc3e4a022d1c57c4daac57596a51f7fd37e0aecaf41",
+          "expired": false
+        },
+        {
+          "id": 12965293560,
+          "name": "campaign-v5-coroot-main-deathstarbench-full-6-41004285932",
+          "size": 7743550986,
+          "digest": "sha256:a1a89962119dc91d3d92ba0c846b488165c50a9813bbb3220e616ed2d7830aed",
+          "expired": false
+        },
+        {
+          "id": 12965078253,
+          "name": "v5-summary-coroot-main-deathstarbench-full-7-41004285932",
+          "size": 2601387507,
+          "digest": "sha256:75932d75d0c9c250f54d7f7b5615490db3e3ed77d69a24cab35d4c743fcf3f87",
+          "expired": false
+        },
+        {
+          "id": 12965054250,
+          "name": "campaign-v5-coroot-main-deathstarbench-full-7-41004285932",
+          "size": 7724907730,
+          "digest": "sha256:1a12a62c128368d380683e27d57bf487a6c1fda51a65ca84c9267de7e1f2afd8",
+          "expired": false
+        },
+        {
+          "id": 12962981417,
+          "name": "v5-summary-coroot-main-deathstarbench-full-8-41004285932",
+          "size": 2596138973,
+          "digest": "sha256:eb59cb960f1d42580ca4558d19bbb1ec9af36044e9c8720076b36e67f2632980",
+          "expired": false
+        },
+        {
+          "id": 12962834328,
+          "name": "campaign-v5-coroot-main-deathstarbench-full-8-41004285932",
+          "size": 7673894047,
+          "digest": "sha256:3317989210cf72c5f0a791d7ed7e1545275da7cd9270fbee417f70b4395c9deb",
+          "expired": false
+        },
+        {
+          "id": 12962019314,
+          "name": "retention-v4-deathstarbench-full-8-41004285932",
+          "size": 2977,
+          "digest": "sha256:e974adbc8c39e9fa200145e796d772cdf6391302efbdef61c5466bdaab237e6f",
+          "expired": false
+        },
+        {
+          "id": 12959690209,
+          "name": "training-v4-deathstarbench-full-7-41004285932",
+          "size": 2636725070,
+          "digest": "sha256:b778534a56d99c994d3be4854f2eff8753341a12abfb6d1bd24bf29ebd2029f7",
+          "expired": false
+        },
+        {
+          "id": 12958597897,
+          "name": "training-v4-deathstarbench-full-6-41004285932",
+          "size": 2642510819,
+          "digest": "sha256:d15fadbcdefa385da1c59a78ee38d1a0ed74f3c3812294ba9afad5fa0241cde9",
+          "expired": false
+        },
+        {
+          "id": 12958160538,
+          "name": "training-v4-deathstarbench-full-8-41004285932",
+          "size": 2627957075,
+          "digest": "sha256:8e12a8e878a13362d4c3e00eb63d9b82473d42e3b18d0020abac8bb8b795ad6e",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004291277,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T05:59:30Z",
+      "artifact_count": 9,
+      "artifact_bytes": 4250696211,
+      "largest_artifact_bytes": 951146622,
+      "archive_peak_upper_bytes": 4250696211,
+      "artifacts": [
+        {
+          "id": 12958120971,
+          "name": "campaign-v5-coroot-main-petclinic-full-8-41004291277",
+          "size": 951146622,
+          "digest": "sha256:04087d7c6215a7ac126e88dee8fb196db2740b24f813d8dfafef086116155a5c",
+          "expired": false
+        },
+        {
+          "id": 12957851099,
+          "name": "v5-summary-coroot-main-petclinic-full-6-41004291277",
+          "size": 38790046,
+          "digest": "sha256:b56c66ec22e0957960153ba892fe99cf3e457214bc8216eef604f1a6687477af",
+          "expired": false
+        },
+        {
+          "id": 12957566725,
+          "name": "v5-summary-coroot-main-petclinic-full-8-41004291277",
+          "size": 38820013,
+          "digest": "sha256:b4261e55746cb231e0f38231910d676646eb203ab337a4618724748259582f92",
+          "expired": false
+        },
+        {
+          "id": 12957387822,
+          "name": "campaign-v5-coroot-main-petclinic-full-6-41004291277",
+          "size": 949214133,
+          "digest": "sha256:4e0ee1448b421af5f3f2ec2859e511db49fbf6d46febe471faa07dc5431cd1ac",
+          "expired": false
+        },
+        {
+          "id": 12957357312,
+          "name": "campaign-v5-coroot-main-petclinic-full-7-41004291277",
+          "size": 946858310,
+          "digest": "sha256:e7bc64e55e31ebf84d8015c0a9c3e25d8d1d9a09f4da7cbe31d065e4606bfdce",
+          "expired": false
+        },
+        {
+          "id": 12956969282,
+          "name": "v5-summary-coroot-main-petclinic-full-7-41004291277",
+          "size": 38745815,
+          "digest": "sha256:29436cce92bc40bdc15541a3ac8f7e734a22eaab01f79641c99e7044671b1c27",
+          "expired": false
+        },
+        {
+          "id": 12956491923,
+          "name": "training-v4-petclinic-full-8-41004291277",
+          "size": 429133927,
+          "digest": "sha256:5c04e5603f6e4bf2745e9c4e2e126b988ba15d5dc235c0563de514f0046b5eae",
+          "expired": false
+        },
+        {
+          "id": 12956440755,
+          "name": "training-v4-petclinic-full-7-41004291277",
+          "size": 428913559,
+          "digest": "sha256:5589c0428d6df9307d611316a2c1d74049122470d8ff42550a5e6c23895257d1",
+          "expired": false
+        },
+        {
+          "id": 12956053163,
+          "name": "training-v4-petclinic-full-6-41004291277",
+          "size": 429073786,
+          "digest": "sha256:76d30b3852e3f1835b6dba7ab46bedbd02a686665982d9ffa85bfedf87321e8c",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41004296165,
+      "collector": "coroot",
+      "conclusion": "failure",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "updated_at": "2026-10-30T09:41:53Z",
+      "artifact_count": 26,
+      "artifact_bytes": 14150433523,
+      "largest_artifact_bytes": 2077198001,
+      "archive_peak_upper_bytes": 14150433523,
+      "artifacts": [
+        {
+          "id": 12968026204,
+          "name": "v5-summary-coroot-main-otel_demo-full-8-41004296165",
+          "size": 48573794,
+          "digest": "sha256:445f192cd7eac28d0f8be425e5cc73e81340fddeafb84e9246226a3c9fd7e138",
+          "expired": false
+        },
+        {
+          "id": 12967521878,
+          "name": "campaign-v5-coroot-main-otel_demo-full-8-41004296165",
+          "size": 1751520914,
+          "digest": "sha256:71522b839d0cf25e66612a19cbe5f862b90cd11be8d1754a49aabf37fe256515",
+          "expired": false
+        },
+        {
+          "id": 12965892502,
+          "name": "campaign-v5-coroot-main-otel_demo-full-6-41004296165",
+          "size": 1336112463,
+          "digest": "sha256:28c192a57a86af3cd50b49ba49002dee527d3ee64ae1650112ff1262b95de4f8",
+          "expired": false
+        },
+        {
+          "id": 12965722293,
+          "name": "v5-summary-coroot-main-otel_demo-full-6-41004296165",
+          "size": 42169529,
+          "digest": "sha256:24267a3fed9533cc994bbb45327e283f33a326ea5959b21218a47b0f6b1e0bcb",
+          "expired": false
+        },
+        {
+          "id": 12963720371,
+          "name": "training-v4-otel_demo-full-8-41004296165",
+          "size": 643654302,
+          "digest": "sha256:15b384a9c37479b272b5309f2421abef48215b9851282805987cfffe86b7acb0",
+          "expired": false
+        },
+        {
+          "id": 12962996882,
+          "name": "training-v4-otel_demo-full-6-41004296165",
+          "size": 484005425,
+          "digest": "sha256:7084fc9f4bbf45aef48d0efcdac264a47c66f714eca1dd26a73e3126f28ca18c",
+          "expired": false
+        },
+        {
+          "id": 12962666631,
+          "name": "campaign-v5-coroot-main-otel_demo-full-7-41004296165",
+          "size": 98623006,
+          "digest": "sha256:efd3f9be6f431910cb77b6ba084515696e15479c0552ead1e50e54633314c781",
+          "expired": false
+        },
+        {
+          "id": 12962352547,
+          "name": "v5-summary-coroot-main-otel_demo-full-7-41004296165",
+          "size": 18062868,
+          "digest": "sha256:a37a3f08a134be71f3a00fcc8c12d441e9c359b98c0348dbe5549250e6f125c7",
+          "expired": false
+        },
+        {
+          "id": 12961107525,
+          "name": "campaign-v5-coroot-main-otel_demo-partial-6-41004296165",
+          "size": 2077198001,
+          "digest": "sha256:4b01a9f1ff9b0d044b6f465a414a03c1cb5a517f5f7e0cd44879d4f6e189173d",
+          "expired": false
+        },
+        {
+          "id": 12961026796,
+          "name": "campaign-v5-coroot-main-otel_demo-partial-8-41004296165",
+          "size": 1356339755,
+          "digest": "sha256:fe39cf4ee30f9e4180f69a996965ed35ac252cd71991d04f5c603ce2728d8c8a",
+          "expired": false
+        },
+        {
+          "id": 12960798179,
+          "name": "v5-summary-coroot-main-otel_demo-partial-8-41004296165",
+          "size": 44817493,
+          "digest": "sha256:755c2379e01b651d9fcfa2808578f10f72f138294ca8ac376f525744aa77db75",
+          "expired": false
+        },
+        {
+          "id": 12960737453,
+          "name": "v5-summary-coroot-main-otel_demo-partial-6-41004296165",
+          "size": 52834739,
+          "digest": "sha256:610ec1c2967c174665fa84b6804fc36f9f8a4896be075ba6c20a8b7e92e70b5c",
+          "expired": false
+        },
+        {
+          "id": 12960339631,
+          "name": "campaign-v5-coroot-main-otel_demo-partial-7-41004296165",
+          "size": 1348708015,
+          "digest": "sha256:e3dfa8085fcae7d47e4724f9744ef6e8a6c826c3774277962bb8dca6a244b149",
+          "expired": false
+        },
+        {
+          "id": 12960248168,
+          "name": "v5-summary-coroot-main-otel_demo-partial-7-41004296165",
+          "size": 45978742,
+          "digest": "sha256:fae846152b30069025b0e56aae3d993338f1ca27cc9ccf8173533b7cb27f8e5a",
+          "expired": false
+        },
+        {
+          "id": 12959240015,
+          "name": "training-v4-otel_demo-partial-7-41004296165",
+          "size": 497712969,
+          "digest": "sha256:d5c1ab389d075acd6d2c7bc4ac2bbfa7a4f2004190a07a81d989a715654d0a45",
+          "expired": false
+        },
+        {
+          "id": 12958802228,
+          "name": "training-v4-otel_demo-partial-8-41004296165",
+          "size": 578561063,
+          "digest": "sha256:76cf41323716d66f04d44d5bdbf0718da4ed5e353b1295861229e27f3b73d251",
+          "expired": false
+        },
+        {
+          "id": 12957719681,
+          "name": "training-v4-otel_demo-partial-6-41004296165",
+          "size": 924178057,
+          "digest": "sha256:041d923219e015dc91cc89bdc4e7086479e484ba4e2eaf049d197eed0e2ecf36",
+          "expired": false
+        },
+        {
+          "id": 12956971490,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-8-41004296165",
+          "size": 477618370,
+          "digest": "sha256:ba67fd77109bf5f9e075b0fca53d8a9ac4492cfb13a544d1f742e59c72b9ce28",
+          "expired": false
+        },
+        {
+          "id": 12956910340,
+          "name": "v5-summary-coroot-main-otel_demo-absent-7-41004296165",
+          "size": 26154606,
+          "digest": "sha256:69ce47c81209b207923701378e1785b3d3e9197e15419b8461a1363126b2d266",
+          "expired": false
+        },
+        {
+          "id": 12956825677,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-7-41004296165",
+          "size": 471675747,
+          "digest": "sha256:4f9ad7e334bf1269974664f0886c8146dd7947f3236fc06c02cfc24dd7face86",
+          "expired": false
+        },
+        {
+          "id": 12956822391,
+          "name": "training-v4-otel_demo-absent-6-41004296165",
+          "size": 433475641,
+          "digest": "sha256:b2d4e07304376695938c930cabc67a9bc52a33d9e52e2cfa4c4fd23c3c874188",
+          "expired": false
+        },
+        {
+          "id": 12956802603,
+          "name": "training-v4-otel_demo-absent-8-41004296165",
+          "size": 433574128,
+          "digest": "sha256:1a53f43d8169af0a2e82e58f4781feebdf61d92bc89561d4a5e8dbdf64f95a08",
+          "expired": false
+        },
+        {
+          "id": 12956763583,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-6-41004296165",
+          "size": 477467479,
+          "digest": "sha256:2577544f5bc58ac73e543ca969f95ae469e37ee2612334bd340ce58f213ec7e8",
+          "expired": false
+        },
+        {
+          "id": 12956722482,
+          "name": "v5-summary-coroot-main-otel_demo-absent-6-41004296165",
+          "size": 26416623,
+          "digest": "sha256:b344fcd66363eb84bd0a7ccb9b2c280a916f03a06a5dd92407a2f000e6b37128",
+          "expired": false
+        },
+        {
+          "id": 12956573029,
+          "name": "v5-summary-coroot-main-otel_demo-absent-8-41004296165",
+          "size": 26401403,
+          "digest": "sha256:3f142bd7f099e5f086d1cd4b5f5fc88cd6a73ea9e6a349b82f3287e042d4c7ce",
+          "expired": false
+        },
+        {
+          "id": 12955878814,
+          "name": "training-v4-otel_demo-absent-7-41004296165",
+          "size": 428598391,
+          "digest": "sha256:e9ba3cb34eaf6177e05a5563b09f7786015c42069ef186113204a02b5738260b",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41005821961,
+      "collector": "obi",
+      "conclusion": "success",
+      "head_sha": "8c6f1fac8ea73315e8ea98a9db0014319425d33e",
+      "updated_at": "2026-10-30T10:21:40Z",
+      "artifact_count": 4,
+      "artifact_bytes": 13527688957,
+      "largest_artifact_bytes": 8152230668,
+      "archive_peak_upper_bytes": 21679919625,
+      "artifacts": [
+        {
+          "id": 12969760740,
+          "name": "v5-summary-obi-main-deathstarbench-full-6-41005821961",
+          "size": 2598276267,
+          "digest": "sha256:743845edd59604a6e68bc32787304557dd528ef6ce5265e0c94ac1778a65383f",
+          "expired": false
+        },
+        {
+          "id": 12969357377,
+          "name": "retention-v4-deathstarbench-full-6-41005821961",
+          "size": 2966,
+          "digest": "sha256:b8b88c103a8909bc8b6634913c351c15aca8ad671ad5d9e7e22c2852413b46ff",
+          "expired": false
+        },
+        {
+          "id": 12969188019,
+          "name": "campaign-v5-obi-main-deathstarbench-full-6-41005821961",
+          "size": 8152230668,
+          "digest": "sha256:057cddc59258b3ce86bfc695511d8f3e23a13a0d73e529a0ff12254be77066e0",
+          "expired": false
+        },
+        {
+          "id": 12959684639,
+          "name": "training-v4-deathstarbench-full-6-41005821961",
+          "size": 2777179056,
+          "digest": "sha256:5efc801906b9c05d0609b36cb291823f5e3cd78d0c58ac2ca894dc0d13655885",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41009954091,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "5c05858e8be2962fefc58657d9809d862f2b2540",
+      "updated_at": "2026-10-30T07:13:21Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1471215660,
+      "largest_artifact_bytes": 993888095,
+      "archive_peak_upper_bytes": 1471215660,
+      "artifacts": [
+        {
+          "id": 12960716789,
+          "name": "v5-summary-coroot-main-otel_demo-absent-6-41009954091",
+          "size": 44457565,
+          "digest": "sha256:3b76a302dd9f363b68e70cac2f54aa243730d02e50458ee674de76f93f821d40",
+          "expired": false
+        },
+        {
+          "id": 12960592911,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-6-41009954091",
+          "size": 993888095,
+          "digest": "sha256:4a3c2446df61fd44095515217d5f1661e3ea0d6527b85432b8560947836aeea5",
+          "expired": false
+        },
+        {
+          "id": 12958579803,
+          "name": "training-v4-otel_demo-absent-6-41009954091",
+          "size": 432870000,
+          "digest": "sha256:9ac8e06dc47ee42939b053ff71887ea57c5d1d9f3382c6444937d1e32d8cbdf6",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41010834860,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "e1cd393b6927e47ebb40a77a7336148938d24b4d",
+      "updated_at": "2026-10-30T07:11:35Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1463690035,
+      "largest_artifact_bytes": 988634298,
+      "archive_peak_upper_bytes": 1463690035,
+      "artifacts": [
+        {
+          "id": 12960084037,
+          "name": "v5-summary-coroot-main-otel_demo-absent-7-41010834860",
+          "size": 44331816,
+          "digest": "sha256:e76272488bb712cba0cd727ff7b69efea1132c5d63c4c3a2ae2e39d1e363bcfd",
+          "expired": false
+        },
+        {
+          "id": 12959699801,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-7-41010834860",
+          "size": 988634298,
+          "digest": "sha256:6cbe3b87128aff7e951732de5be961b3d12db690137cceab3ae0a0a2361da7c2",
+          "expired": false
+        },
+        {
+          "id": 12959082956,
+          "name": "training-v4-otel_demo-absent-7-41010834860",
+          "size": 430723921,
+          "digest": "sha256:72e6aa439991222f550bca90d425d9e1275cd64e7ee999d4633bd8ab353f0ef3",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41011398324,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "e1cd393b6927e47ebb40a77a7336148938d24b4d",
+      "updated_at": "2026-10-30T07:29:06Z",
+      "artifact_count": 3,
+      "artifact_bytes": 1472225100,
+      "largest_artifact_bytes": 994852290,
+      "archive_peak_upper_bytes": 1472225100,
+      "artifacts": [
+        {
+          "id": 12961715511,
+          "name": "v5-summary-coroot-main-otel_demo-absent-8-41011398324",
+          "size": 44442778,
+          "digest": "sha256:b65774715dde172cc49ac79a03d3bec812706fcafc9b1ac2dd73f19a576a620d",
+          "expired": false
+        },
+        {
+          "id": 12961646180,
+          "name": "campaign-v5-coroot-main-otel_demo-absent-8-41011398324",
+          "size": 994852290,
+          "digest": "sha256:8aa2d0cf264fefd9512613a4d7a48a150086460c39ba028579d9336af26f383f",
+          "expired": false
+        },
+        {
+          "id": 12960120448,
+          "name": "training-v4-otel_demo-absent-8-41011398324",
+          "size": 432930032,
+          "digest": "sha256:b2d633ffc30c8dfdff426f40d50fe6d1a701727eb08973f6a0dfbcac71058c6b",
+          "expired": false
+        }
+      ]
+    },
+    {
+      "run_id": 41024050638,
+      "collector": "coroot",
+      "conclusion": "success",
+      "head_sha": "cadafe8962000f326d467b273683990372f29b30",
+      "updated_at": "2026-10-30T09:43:40Z",
+      "artifact_count": 3,
+      "artifact_bytes": 2076632697,
+      "largest_artifact_bytes": 1418319641,
+      "archive_peak_upper_bytes": 2076632697,
+      "artifacts": [
+        {
+          "id": 12968161566,
+          "name": "campaign-v5-coroot-main-otel_demo-full-7-41024050638",
+          "size": 1418319641,
+          "digest": "sha256:a5129f5d1cdf590aaf5644f4dbb1f6d59f45caaa2900abfd2a7138de9f2d9c97",
+          "expired": false
+        },
+        {
+          "id": 12967044179,
+          "name": "v5-summary-coroot-main-otel_demo-full-7-41024050638",
+          "size": 45367768,
+          "digest": "sha256:24306c99b6a8984faff0972dba66aa955c1ed7486d9d2183217bd630b20381b9",
+          "expired": false
+        },
+        {
+          "id": 12964579458,
+          "name": "training-v4-otel_demo-full-7-41024050638",
+          "size": 612945288,
+          "digest": "sha256:8e8e5d9f307ab4db61ad702fd5a6b8fe2e0fe2298d09d15bb29b392787d7b819",
+          "expired": false
+        }
+      ]
+    }
+  ]
+}
+
