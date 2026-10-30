@@ -65,6 +65,22 @@ def test_invalid_zero_parent_and_conflicting_service_do_not_become_unique_identi
     assert child['actual_same_domain_same_trace_parent_variants'] == []
 
 
+def test_sdk_child_identity_lookup_retains_all_conflicting_variants_without_joining():
+    functions = helper()
+    child = rows(request())
+    sdk = rows(request('sdk-other-service', sid=2, parent=8))
+    changed = deepcopy(next(iter(sdk.values())))
+    changed['fields']['span']['kind'] = 'SPAN_KIND_CLIENT'
+    sdk['another-sdk-child-variant'] = changed
+    summary = functions['catalog_summary'](child, 'ebpf-domain', sdk)
+    selected = summary['catalog_get_product_server_variants'][0]
+    assert len(selected['same_ids_in_native_frozen_input_as_child']) == 2
+    assert {row['fields']['span']['kind'] for row in selected['same_ids_in_native_frozen_input_as_child']} == {
+        'SPAN_KIND_SERVER', 'SPAN_KIND_CLIENT'}
+    assert selected['actual_same_domain_same_trace_parent_variants'] == []
+    assert selected['same_ids_in_native_frozen_input_other_domain'] == []
+
+
 @pytest.mark.parametrize('changed', [None, 'sequence-bytes', 'sequence-order', 'ingest-count'])
 def test_catalog_evidence_uses_complete_actual_sequence_and_literal_native_counterparts(tmp_path, changed):
     functions = helper()

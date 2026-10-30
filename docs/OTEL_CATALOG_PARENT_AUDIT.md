@@ -114,3 +114,13 @@ novel contribution; a second Bering pass and all preparation/failures must be
 included in costs. No such union, product feature, capture change, new prediction
 or primary outcome score has been implemented or approved by these outputs.
 Main81 remains held.
+
+Before a fixed partial-prefix repeat, both agents give ORIGINAL-feasibility design
+GO to one additional SDK CHILD-ID lookup in the same existing catalog summary.
+The complete SDK index is already in memory. Both original/input summaries will
+retain every SDK variant with the catalog child's exact trace/span ID, including
+conflicting service/kind/attribute variants, without choosing a match or creating
+a join. Only the same partial source declaration is repeated; original fields,
+forecasts, models and capture source remain unchanged. Actual-code and actual
+output review are required before any paired graph-union diagnostic. No generic
+normalizer or signature framework is introduced; all added costs remain recorded.

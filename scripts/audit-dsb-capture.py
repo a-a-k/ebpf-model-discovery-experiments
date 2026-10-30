@@ -235,6 +235,8 @@ def catalog_summary(rows, source_domain, native_rows):
             "usable_parent_identity": valid,
             "actual_same_domain_same_trace_parent_variants": local.get(key, []) if valid else [],
             "same_ids_in_native_frozen_input_other_domain": sdk.get(key, []) if valid else [],
+            "same_ids_in_native_frozen_input_as_child": sdk.get((span["traceId"], span["spanId"]), [])
+                if usable(span["traceId"], 32) and usable(span["spanId"], 16) else [],
             "native_input_domain": "", "native_raw_prefix_rescanned": False})
     return {"catalog_get_product_server_variants": selected,
             "literal_same_identity_with_multiple_field_variants": sum(len(v) > 1 for v in local.values()),
