@@ -723,3 +723,38 @@ total to 16. Their unavailable forecasts remain unavailable; the small adverse
 seed-8 compose-post outcome `2799/3200` is preserved. The current
 [bounded trust audit](SCOPE_CORRECTION_V5.md) publishes the exact review records
 and distinguishes 17 further successful-job candidates from admitted evidence.
+
+## Minimal saved-evidence review reuse decision
+
+Before implementation, the root agent and independent skeptic explicitly gave
+ORIGINAL-criterion design GO for a thin refactor of the existing family-specific
+saved-field/hash reviews for the 17 candidates. The scientific criterion and
+strongest baseline remain the prior manual checks over the same selected saved
+bytes and supplied semantics; independent admission remains external. The only
+proposed causal benefit is moving repetitive missing-byte verification to
+Actions, not improving discovery, prediction, accuracy, or utility.
+
+The implementation must reuse nine existing compact proof sets, retrieve only
+the accepted selected non-journal members for eight unavailable compacts, add
+the fourteen missing Coroot Petclinic input/static members, and process only the
+missing family-specific full evidence in Actions. It must not introduce a
+universal whole-archive/journal gate, traffic, replay, refitting, rescoring, new
+metrics, or outcome-dependent work selection. Availability, forecast values and
+external outcomes are copied observations rather than gates; actual available
+branches bind their saved Sheaft command/model, while unavailable branches keep
+their saved reason and any attempted command truthfully.
+
+Comparable costs include original preparation/failures, saved cell and worker
+costs, Actions transfer/verification time and bytes, storage, and unknown human
+effort. Automated output is evidence/facts only and cannot say `GO`, admitted,
+successful, or contributed. Exact-code review, CI and a bounded saved-facts
+comparison must precede use; no candidate is admitted merely by this workflow.
+
+The workflow therefore defaults to three exact, independently reviewed family
+qualification cells (OBI OTel/absent seed 6, OBI DeathStarBench/absent seed 6,
+and Coroot Petclinic/absent seed 6), with both compact and full artifact API
+identities pinned. The 17-candidate phase requires an explicit post-
+qualification independent-review confirmation; it is not the implicit/default
+qualification run. Typed package working bodies are called verified before
+removal only when the corresponding toolchain or handoff domain proof exists in
+the saved-facts output.

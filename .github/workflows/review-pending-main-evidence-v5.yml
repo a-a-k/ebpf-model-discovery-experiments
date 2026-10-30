@@ -1,0 +1,182 @@
+name: Review pending main saved evidence v5
+
+on:
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Run reviewed-family qualification first; pending17 requires its actual-output GO
+        type: choice
+        options:
+          - qualification
+          - pending17
+        default: qualification
+      pending17_after_qualification_go:
+        description: Explicit confirmation that qualification output received independent GO
+        type: boolean
+        default: false
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  declare:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: matrix
+        env:
+          PHASE: ${{ inputs.phase }}
+          PENDING17_GO: ${{ inputs.pending17_after_qualification_go }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          source=json.loads(pathlib.Path('docs/iteration5-main-review-candidates.json').read_text())
+          phase=os.environ['PHASE']
+          if phase=='qualification':
+              cells=source['qualification_cells']
+          elif phase=='pending17':
+              if os.environ['PENDING17_GO'].lower()!='true':
+                  raise SystemExit('pending17 requires explicit post-qualification independent GO')
+              cells=[row for row in source['cells']
+                     if row['full_scope']!='reuse_existing_selected']
+          else:
+              raise SystemExit('unknown review phase')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as out:
+              out.write('matrix='+json.dumps({'cell':cells},separators=(',',':'))+'\n')
+          PY
+
+  review:
+    needs: declare
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix: ${{ fromJson(needs.declare.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install evidence-transport dependency
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Resolve exact declared artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CELL_JSON: ${{ toJson(matrix.cell) }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          cell=json.loads(os.environ['CELL_JSON'])
+          raw=subprocess.check_output(['gh','api','--paginate','--slurp',
+              f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{cell['run_id']}/artifacts"])
+          pages=json.loads(raw); artifacts=[row for page in pages for row in page['artifacts']]
+          compact=[row for row in artifacts if row['name']==cell['compact_artifact_name']]
+          full_name=cell['compact_artifact_name'].replace('v5-summary-','campaign-v5-',1)
+          full=[row for row in artifacts if row['name']==full_name]
+          if len(compact)!=1 or len(full)!=1:
+              raise SystemExit(f"ambiguous/missing declared artifacts: compact={len(compact)} full={len(full)}")
+          c=compact[0]
+          expected_compact={
+              'id':cell['compact_artifact_id'],'name':cell['compact_artifact_name'],
+              'size_in_bytes':cell['compact_artifact_bytes'],'digest':cell['compact_artifact_digest'],
+              'run_id':cell['run_id'],'head_sha':cell['head_sha']}
+          if {k:c.get(k) for k in ('id','name','size_in_bytes','digest')} != {
+                  k:expected_compact[k] for k in ('id','name','size_in_bytes','digest')}:
+              raise SystemExit('compact API identity differs from fixed declaration')
+          f=full[0]
+          expected_full={k:f[k] for k in ('id','name','size_in_bytes','digest')}
+          if 'full_artifact_id' in cell:
+              declared_full={
+                  'id':cell['full_artifact_id'],'name':cell['full_artifact_name'],
+                  'size_in_bytes':cell['full_artifact_bytes'],
+                  'digest':cell['full_artifact_digest']}
+              if expected_full != declared_full:
+                  raise SystemExit('full API identity differs from fixed qualification declaration')
+          expected_full.update(run_id=cell['run_id'],head_sha=cell['head_sha'])
+          pathlib.Path('work/review').mkdir(parents=True)
+          pathlib.Path('work/review/declaration.json').write_text(json.dumps(cell,indent=2)+'\n')
+          pathlib.Path('work/review/expected-compact.json').write_text(json.dumps(expected_compact,indent=2)+'\n')
+          pathlib.Path('work/review/expected-full.json').write_text(json.dumps(expected_full,indent=2)+'\n')
+          pathlib.Path('work/review/resolved-api.json').write_text(json.dumps({
+              'repository':os.environ['GITHUB_REPOSITORY'],'run_id':cell['run_id'],
+              'head_sha':cell['head_sha'],'compact':c,'full':f},indent=2)+'\n')
+          PY
+      - name: Retrieve only missing selected evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMPACT_SCOPE: ${{ matrix.cell.compact_scope }}
+          FULL_SCOPE: ${{ matrix.cell.full_scope }}
+        run: |
+          if [ "$COMPACT_SCOPE" = "retrieve_selected_nonjournal" ]; then
+            python scripts/select-main-review-evidence-v5.py \
+              --artifact '${{ matrix.cell.compact_artifact_id }}' \
+              --expected work/review/expected-compact.json --scope compact \
+              --out work/review/compact
+          fi
+          FULL_ID=$(python -c "import json;print(json.load(open('work/review/expected-full.json'))['id'])")
+          if [ "$FULL_SCOPE" = "retrieve_input_supplement" ]; then
+            python scripts/select-main-review-evidence-v5.py \
+              --artifact "$FULL_ID" --expected work/review/expected-full.json \
+              --scope input-supplement --out work/review/full
+          else
+            python scripts/select-main-review-evidence-v5.py \
+              --artifact "$FULL_ID" --expected work/review/expected-full.json \
+              --scope full --out work/review/full
+          fi
+      - name: Verify saved facts where the family packet is present
+        if: matrix.cell.full_scope == 'retrieve_family_selected'
+        env:
+          COMPACT_SCOPE: ${{ matrix.cell.compact_scope }}
+        run: |
+          if [ "$COMPACT_SCOPE" = "retrieve_selected_nonjournal" ]; then
+            python scripts/review-main-saved-facts-v5.py \
+              --declaration work/review/declaration.json --compact work/review/compact \
+              --full work/review/full --out work/review/facts
+          else
+            python scripts/review-main-saved-facts-v5.py \
+              --declaration work/review/declaration.json \
+              --full work/review/full --out work/review/facts
+          fi
+      - name: Remove verified typed-package working bodies
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib
+          facts_path=pathlib.Path('work/review/facts/saved-evidence-facts.json')
+          package_domains={}
+          if facts_path.is_file():
+              facts=json.loads(facts_path.read_text())
+              claims=((facts.get('full_facts') or {}).get('typed_packages') or {})
+              package_domains={domain for domain,value in claims.items()
+                  if value.get('all_files_verified',0)>0
+                  and value.get('archive_sha256') and value.get('manifest_sha256')}
+          removed=[]
+          for domain,name in (
+                  ('toolchain','work/review/full/toolchain-package/payload.tar.gz'),
+                  ('handoff','work/review/full/infrastructure/handoff-package/payload.tar.gz')):
+              path=pathlib.Path(name)
+              if path.is_file():
+                  with path.open('rb') as stream:
+                      digest=hashlib.file_digest(stream,'sha256').hexdigest()
+                  removed.append({'path':name,'bytes':path.stat().st_size,
+                      'sha256':digest,
+                      'disposition':(
+                          'verified_working_copy_removed_before_upload'
+                          if domain in package_domains
+                          else 'unverified_or_incomplete_working_copy_removed_before_upload'),
+                      'source_artifact_remains_retained':True})
+                  path.unlink()
+          pathlib.Path('work/review/working-copy-disposition.json').write_text(
+              json.dumps(removed,indent=2)+'\n')
+          PY
+      - name: Upload bounded evidence facts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: main-review-evidence-${{ matrix.cell.collector }}-${{ matrix.cell.system }}-${{ matrix.cell.mode }}-${{ matrix.cell.seed }}-${{ matrix.cell.run_id }}
+          path: work/review
+          if-no-files-found: error
+          retention-days: 90
