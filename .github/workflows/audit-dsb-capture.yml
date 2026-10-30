@@ -4,7 +4,7 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding, otlp-attribute-keys, provided-service-roles, native-shipping]
+        options: [dsb-capture, entry-route-binding, otlp-attribute-keys, provided-service-roles, native-shipping, semantic-metadata]
         default: dsb-capture
       declaration:
         description: Optional tracked fixed artifact declaration; otherwise use the selected audit's original source
@@ -24,13 +24,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        collector: ${{ fromJson(inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
+        collector: ${{ fromJson(inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -e . opentelemetry-proto
+      - name: Build the unchanged source-pinned diagnostic binaries
+        if: inputs.audit == 'semantic-metadata'
+        env:
+          PYTHONPATH: src:.
+        run: |
+          mkdir -p work/dsb-audit
+          /usr/bin/time -v -o work/dsb-audit/toolchain-setup-time.txt \
+            bash scripts/setup-toolchain-v4.sh work/dsb-audit-build v5
+          echo "PBS_BIN=$(realpath work/dsb-audit-build/bin)" >> "$GITHUB_ENV"
       - name: Retrieve fixed immutable source captures
         env:
           GH_TOKEN: ${{ github.token }}
@@ -46,7 +55,8 @@ jobs:
                     'entry-route-binding':'docs/entry-route-binding-audit-20261030.json',
                     'provided-service-roles':'docs/provided-service-roles-audit-20261030.json',
                     'otlp-attribute-keys':'docs/otel-attribute-key-audit-20261030.json',
-                    'native-shipping':'docs/otel-native-shipping-audit-20261030.json'}
+                    'native-shipping':'docs/otel-native-shipping-audit-20261030.json',
+                    'semantic-metadata':'docs/semantic-metadata-audit-20261030.json'}
           declaration=os.environ['DECLARATION'] or defaults[kind]
           path=pathlib.PurePosixPath(declaration)
           if (path.is_absolute() or path.as_posix()!=declaration or len(path.parts)!=2
@@ -57,7 +67,10 @@ jobs:
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
-          for role in (('full','compact','training') if kind=='provided-service-roles' else ('full','compact')):
+          roles=(('full','compact','baseline_full','baseline_compact','partial_full','partial_compact')
+                 if kind=='semantic-metadata' else ('full','compact','training')
+                 if kind=='provided-service-roles' else ('full','compact'))
+          for role in roles:
               endpoint=f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{cell[role]['id']}"
               with (root/(role+'-api.json')).open('wb') as stream:
                   subprocess.run(['gh','api',endpoint],stdout=stream,check=True)
@@ -70,8 +83,8 @@ jobs:
       - name: Inspect complete prefixes and retained rejection evidence
         env:
           PYTHONPATH: src:.
-          AUDIT_SCRIPT: ${{ (inputs.audit == 'entry-route-binding' || inputs.audit == 'provided-service-roles') && 'audit-entry-route-binding.py' || inputs.audit == 'otlp-attribute-keys' && 'audit-otlp-attribute-keys.py' || 'audit-dsb-capture.py' }}
-          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || '' }}
+          AUDIT_SCRIPT: ${{ (inputs.audit == 'entry-route-binding' || inputs.audit == 'provided-service-roles' || inputs.audit == 'semantic-metadata') && 'audit-entry-route-binding.py' || inputs.audit == 'otlp-attribute-keys' && 'audit-otlp-attribute-keys.py' || 'audit-dsb-capture.py' }}
+          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || '' }}
         run: |
           python "scripts/$AUDIT_SCRIPT" --source work/dsb-audit-input \
             --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json $AUDIT_ROLE_FLAG
@@ -84,5 +97,9 @@ jobs:
             work/dsb-audit-input/*-api.json
             work/dsb-audit/facts.json
             work/dsb-audit/selected/
+            work/dsb-audit/semantic-metadata/
+            work/dsb-audit/toolchain-setup-time.txt
+            work/dsb-audit-build/toolchain-build.json
+            work/dsb-audit-build/logs/
           retention-days: 90
           if-no-files-found: error
