@@ -1,0 +1,27 @@
+{
+  "schema_version": "iteration5-main-review-candidates-v1",
+  "selection_rule": "The completed original Coroot OTel full seed6 cell; other full cells still active, no selection by outcome, forecast or accuracy. Existing saved-evidence workflow only.",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41004296165,
+      "job_id": 123895582491,
+      "job_conclusion": "success",
+      "head_sha": "c5df32ffc3039136c184b7915337836c39db811f",
+      "compact_artifact_id": 12965722293,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-full-6-41004296165",
+      "compact_artifact_bytes": 42169529,
+      "compact_artifact_digest": "sha256:24267a3fed9533cc994bbb45327e283f33a326ea5959b21218a47b0f6b1e0bcb",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_artifact_id": 12965892502,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-full-6-41004296165",
+      "full_artifact_bytes": 1336112463,
+      "full_artifact_digest": "sha256:28c192a57a86af3cd50b49ba49002dee527d3ee64ae1650112ff1262b95de4f8",
+      "full_scope": "retrieve_family_selected",
+      "expired": false
+    }
+  ]
+}
