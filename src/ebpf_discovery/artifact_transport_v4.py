@@ -110,6 +110,13 @@ def package(source: Path, destination: Path, *, kind: str) -> dict:
                 shutil.copy2(intermediate / "packaging.json", destination / "packaging.json")
             except OSError as retention_error:
                 status["packaging_proof_copy_error"] = repr(retention_error)
+        mismatch = intermediate / diagnostic_artifacts_v4.MISMATCH
+        if mismatch.is_file():
+            try:
+                shutil.copy2(mismatch, destination / mismatch.name)
+                status["content_mismatch_evidence"] = mismatch.name
+            except OSError as retention_error:
+                status["content_mismatch_copy_error"] = repr(retention_error)
         shutil.rmtree(intermediate, ignore_errors=True)
         for name in (ARCHIVE, MANIFEST, MARKER):
             try:

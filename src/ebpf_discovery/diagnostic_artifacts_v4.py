@@ -15,6 +15,9 @@ import time
 from .runtime import write_json
 
 
+MISMATCH = 'packaging-mismatch.json'
+
+
 def _sha(path):
     with Path(path).open('rb') as stream:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
@@ -93,6 +96,54 @@ def _tree_line(row):
                        sort_keys=True) + '\n').encode()
 
 
+def _source_observation(path, digest=None, hash_error=None):
+    result = {}
+    if hash_error is not None:
+        result.update(hash_available=False, hash_error=repr(hash_error))
+    else:
+        try:
+            if digest is None:
+                digest = _sha(path)
+            result.update(hash_available=True, sha256=digest)
+        except OSError as error:
+            result.update(hash_available=False, hash_error=repr(error))
+    try:
+        status = path.stat()
+        result.update(stat_available=True, bytes=status.st_size,
+                      mode=stat.S_IMODE(status.st_mode), device=status.st_dev,
+                      inode=status.st_ino, mtime_ns=status.st_mtime_ns,
+                      ctime_ns=status.st_ctime_ns)
+    except OSError as error:
+        result.update(stat_available=False, stat_error=repr(error))
+    return result
+
+
+def _content_mismatch(package_dir, row, member, archive_sha, phase, source_observation):
+    evidence = {
+        'schema_version': 'v4-packaging-content-mismatch',
+        'path': row['path'],
+        'phase': phase,
+        'manifest': {'bytes': row['bytes'], 'sha256': row['sha256']},
+        'archive': {'bytes': member.size, 'sha256': archive_sha},
+        'current_source': source_observation,
+        'source_root_disclosed': False,
+        'strict_package_rejected': True,
+    }
+    retention_error = None
+    try:
+        write_json(Path(package_dir) / MISMATCH, evidence)
+    except OSError as error:
+        retention_error = repr(error)
+    return evidence, retention_error
+
+
+def _attach_mismatch(error, evidence, retention_error):
+    error.packaging_mismatch = evidence
+    if retention_error is not None:
+        error.packaging_mismatch_retention_error = retention_error
+    return error
+
+
 def _verify_archive(source, archive_path, manifest_path):
     expected_tree = hashlib.sha256()
     with manifest_path.open(encoding='utf-8') as manifest, gzip.open(archive_path, 'rb') as wire:
@@ -110,8 +161,30 @@ def _verify_archive(source, archive_path, manifest_path):
                 if member.isfile():
                     payload = archive.extractfile(member)
                     actual = hashlib.file_digest(payload, 'sha256').hexdigest()
-                    if actual != row['sha256'] or _sha(source / row['path']) != actual:
-                        raise ValueError('archive bytes differ from original output')
+                    source_path = source / row['path']
+                    if actual != row['sha256']:
+                        evidence, retention_error = _content_mismatch(
+                            archive_path.parent, row, member, actual,
+                            'archive_differs_from_manifest', _source_observation(source_path))
+                        raise _attach_mismatch(
+                            ValueError('archive bytes differ from original output'),
+                            evidence, retention_error)
+                    try:
+                        current = _sha(source_path)
+                    except OSError as error:
+                        evidence, retention_error = _content_mismatch(
+                            archive_path.parent, row, member, actual,
+                            'current_source_rehash_unavailable',
+                            _source_observation(source_path, hash_error=error))
+                        raise _attach_mismatch(error, evidence, retention_error)
+                    if current != actual:
+                        evidence, retention_error = _content_mismatch(
+                            archive_path.parent, row, member, actual,
+                            'current_source_differs_from_archive',
+                            _source_observation(source_path, current))
+                        raise _attach_mismatch(
+                            ValueError('archive bytes differ from original output'),
+                            evidence, retention_error)
                 archive.members.clear()  # Streaming verification must not retain every TarInfo.
             if manifest.readline():
                 raise ValueError('archive omitted a manifested member')
@@ -162,6 +235,15 @@ def package(source, destination):
         return record
     except BaseException as error:
         record.update(status='packaging_failed', error=repr(error))
+        mismatch = getattr(error, 'packaging_mismatch', None)
+        if mismatch is not None:
+            record['content_mismatch'] = mismatch
+        retention_error = getattr(error, 'packaging_mismatch_retention_error', None)
+        if retention_error is not None:
+            record.update(mismatch_file=None, mismatch_file_retained=False,
+                          mismatch_file_write_error=retention_error)
+        elif mismatch is not None:
+            record.update(mismatch_file=MISMATCH, mismatch_file_retained=True)
         raise
     finally:
         record.update(ended_ns=time.time_ns(), elapsed_seconds=time.monotonic() - started,

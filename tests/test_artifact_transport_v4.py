@@ -106,6 +106,44 @@ def test_status_write_failure_after_good_package_is_fatal(tmp_path, monkeypatch)
         transport.package(source, tmp_path / "package", kind="worker")
 
 
+def test_concurrent_source_mutation_retains_exact_mismatch_after_cleanup(tmp_path, monkeypatch):
+    source = tmp_path / "source"
+    source.mkdir()
+    retained = source / "nested-output.bin"
+    original, changed = b"original bytes", b"changed- bytes"
+    retained.write_bytes(original)
+    package = tmp_path / "package"
+    verify = transport.diagnostic_artifacts_v4._verify_archive
+
+    def mutate_before_verify(root, archive, manifest):
+        retained.write_bytes(changed)
+        return verify(root, archive, manifest)
+
+    monkeypatch.setattr(transport.diagnostic_artifacts_v4,
+                        "_verify_archive", mutate_before_verify)
+    with pytest.raises(ValueError, match="archive bytes differ from original output"):
+        transport.package(source, package, kind="worker")
+    mismatch = json.loads((package / "packaging-mismatch.json").read_text())
+    assert mismatch["path"] == "nested-output.bin"
+    assert mismatch["phase"] == "current_source_differs_from_archive"
+    assert mismatch["manifest"] == {
+        "bytes": len(original), "sha256": hashlib.sha256(original).hexdigest()}
+    assert mismatch["archive"] == mismatch["manifest"]
+    assert mismatch["current_source"]["hash_available"] is True
+    assert mismatch["current_source"]["stat_available"] is True
+    assert mismatch["current_source"]["bytes"] == len(changed)
+    assert mismatch["current_source"]["sha256"] == hashlib.sha256(changed).hexdigest()
+    assert mismatch["strict_package_rejected"] is True
+    status = json.loads((package / "package-status.json").read_text())
+    packaging = json.loads((package / "packaging.json").read_text())
+    assert status["status"] == "packaging_failed"
+    assert status["content_mismatch_evidence"] == "packaging-mismatch.json"
+    assert packaging["content_mismatch"] == mismatch
+    assert not (package / "transport.json").exists()
+    assert not (package / "payload.tar.gz").exists()
+    assert not (package / "payload.manifest.jsonl").exists()
+
+
 def test_internal_manifest_duplicate_rejected_even_with_resealed_outer_hash(tmp_path):
     source = tmp_path / "source"
     source.mkdir()

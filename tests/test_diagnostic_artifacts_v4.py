@@ -112,3 +112,55 @@ def test_failed_final_status_write_does_not_hide_primary_error(tmp_path, monkeyp
     assert 'primary verification failure' in console
     assert 'DIAGNOSTIC_PACKAGING_STATUS_WRITE_ERROR' in console
     assert (source / 'retained.bin').read_bytes() == b'unchanged'
+
+
+def test_mismatch_sidecar_write_failure_does_not_mask_primary_or_lose_details(
+        tmp_path, monkeypatch):
+    source = tmp_path / 'diagnostic'
+    source.mkdir()
+    retained = source / 'retained.bin'
+    retained.write_bytes(b'first-version')
+    verify = artifacts._verify_archive
+    def mutate(root, archive, manifest):
+        retained.write_bytes(b'other-version')
+        verify(root, archive, manifest)
+    monkeypatch.setattr(artifacts, '_verify_archive', mutate)
+    write = artifacts.write_json
+    def fail_only_sidecar(path, value):
+        if Path(path).name == artifacts.MISMATCH:
+            raise OSError(28, 'mismatch sidecar disk full')
+        write(path, value)
+    monkeypatch.setattr(artifacts, 'write_json', fail_only_sidecar)
+    destination = tmp_path / 'packaged'
+    with pytest.raises(ValueError, match='archive bytes differ from original output'):
+        artifacts.package(source, destination)
+    record = json.loads((destination / 'packaging.json').read_text())
+    assert record['status'] == 'packaging_failed'
+    assert record['content_mismatch']['path'] == 'retained.bin'
+    assert record['content_mismatch']['phase'] == 'current_source_differs_from_archive'
+    assert 'mismatch sidecar disk full' in record['mismatch_file_write_error']
+    assert record['mismatch_file'] is None and record['mismatch_file_retained'] is False
+    assert not (destination / artifacts.MISMATCH).exists()
+
+
+def test_source_rehash_unavailable_is_explicit_and_preserves_os_error(tmp_path, monkeypatch):
+    source = tmp_path / 'diagnostic'
+    source.mkdir()
+    retained = source / 'removed.bin'
+    retained.write_bytes(b'removed-before-verification')
+    verify = artifacts._verify_archive
+    def remove_before_verify(root, archive, manifest):
+        retained.unlink()
+        verify(root, archive, manifest)
+    monkeypatch.setattr(artifacts, '_verify_archive', remove_before_verify)
+    destination = tmp_path / 'packaged'
+    with pytest.raises(FileNotFoundError):
+        artifacts.package(source, destination)
+    record = json.loads((destination / 'packaging.json').read_text())
+    mismatch = record['content_mismatch']
+    assert mismatch['path'] == 'removed.bin'
+    assert mismatch['phase'] == 'current_source_rehash_unavailable'
+    assert mismatch['current_source']['hash_available'] is False
+    assert mismatch['current_source']['stat_available'] is False
+    assert 'FileNotFoundError' in mismatch['current_source']['hash_error']
+    assert 'FileNotFoundError' in mismatch['current_source']['stat_error']

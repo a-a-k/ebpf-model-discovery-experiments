@@ -25,6 +25,31 @@ jobs:
   toolchain:
     runs-on: ubuntu-24.04
     steps:
+      - name: Retain lifecycle helper from the exact workflow revision
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/worker-lifecycle-helper"
+          gh api "repos/$GITHUB_REPOSITORY/contents/src/ebpf_discovery/worker_process_group_v4.py?ref=$GITHUB_SHA" \
+            > "$RUNNER_TEMP/worker-lifecycle-helper/source-api.json"
+          python - <<'PY'
+          import base64,hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'worker-lifecycle-helper'
+          metadata=json.loads((root/'source-api.json').read_text())
+          if (metadata.get('type')!='file'
+                  or metadata.get('path')!='src/ebpf_discovery/worker_process_group_v4.py'):
+              raise SystemExit('workflow lifecycle helper source identity mismatch')
+          source=base64.b64decode(''.join(metadata['content'].split()),validate=True)
+          if len(source)!=metadata.get('size'):
+              raise SystemExit('workflow lifecycle helper source size mismatch')
+          (root/'worker_process_group_v4.py').write_bytes(source)
+          proof={'schema_version':'worker-lifecycle-helper-source-v4',
+              'workflow_sha':os.environ['GITHUB_SHA'],'repository':os.environ['GITHUB_REPOSITORY'],
+              'path':metadata['path'],'git_blob_sha':metadata.get('sha'),'bytes':len(source),
+              'sha256':hashlib.sha256(source).hexdigest(),'api_url':metadata.get('url')}
+          (root/'source-proof.json').write_text(json.dumps(proof,indent=2,sort_keys=True)+'\n')
+          PY
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.commit }}
@@ -40,6 +65,10 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p work/worker-artifact/infrastructure work/worker-input
+          cp "$RUNNER_TEMP/worker-lifecycle-helper/worker_process_group_v4.py" \
+            work/worker-artifact/infrastructure/resource-sampler-helper.py
+          cp "$RUNNER_TEMP/worker-lifecycle-helper/source-proof.json" \
+            work/worker-artifact/infrastructure/resource-sampler-helper-source.json
           printf '%s' "$INPUTS_JSON" > work/worker-input/expected.json
           gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/${{ inputs.artifact_id }}" \
             > work/worker-input/artifact-api.json
@@ -84,8 +113,11 @@ jobs:
           PYTHONPATH: src
         run: |
           set +e
-          bash scripts/capture-v4-resources.sh \
-            work/worker-artifact/infrastructure/resources 15 work/no-guests &
+          python work/worker-artifact/infrastructure/resource-sampler-helper.py \
+            --evidence work/worker-artifact/infrastructure/resource-sampler-lifecycle.json \
+            --label worker-resource-sampler -- \
+            bash scripts/capture-v4-resources.sh \
+              work/worker-artifact/infrastructure/resources 15 work/no-guests &
           sampler=$!
           printf '%s\n' "$sampler" > work/worker-artifact/infrastructure/resource-sampler.pid
           (
@@ -111,8 +143,12 @@ jobs:
           kill -TERM "$gc_heartbeat" 2>/dev/null || true
           wait "$gc_heartbeat" 2>/dev/null || true
           kill -TERM "$sampler" 2>/dev/null || true
-          wait "$sampler" 2>/dev/null || true
-          exit "$code"
+          wait "$sampler"
+          sampler_code=$?
+          if [[ "$code" != 0 ]]; then
+            exit "$code"
+          fi
+          exit "$sampler_code"
       - name: Retain worker environment and resource evidence
         if: always()
         env:
@@ -131,8 +167,33 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
             > work/worker-artifact/infrastructure/workflow-jobs.json \
             2>work/worker-artifact/infrastructure/workflow-jobs.err || true
+      - name: Verify resource writer quiescence before packaging
+        id: lifecycle_gate
+        if: always()
+        env:
+          SYSTEM: ${{ inputs.system }}
+        run: |
+          set +e
+          infra=work/worker-artifact/infrastructure
+          python "$infra/resource-sampler-helper.py" --verify-lifecycle \
+            --evidence "$infra/resource-sampler-lifecycle.json" \
+            --source-proof "$infra/resource-sampler-helper-source.json" \
+            --helper "$infra/resource-sampler-helper.py" \
+            --workflow-sha "$GITHUB_SHA" \
+            --gate "$infra/resource-sampler-package-gate.json"
+          gate_code=$?
+          if [[ "$gate_code" != 0 && "$SYSTEM" == deathstarbench ]]; then
+            mkdir -p work/worker-package/failure-proof
+            for name in resource-sampler-lifecycle.json resource-sampler-helper-source.json \
+                        resource-sampler-helper.py resource-sampler-package-gate.json; do
+              test ! -f "$infra/$name" || cp "$infra/$name" work/worker-package/failure-proof/
+            done
+            test ! -f work/worker-artifact/worker-status.json || \
+              cp work/worker-artifact/worker-status.json work/worker-package/failure-proof/
+          fi
+          exit "$gate_code"
       - name: Package the complete DSB worker output losslessly
-        if: always() && inputs.system == 'deathstarbench'
+        if: always() && inputs.system == 'deathstarbench' && steps.lifecycle_gate.outcome == 'success'
         env:
           PYTHONPATH: src
         run: |

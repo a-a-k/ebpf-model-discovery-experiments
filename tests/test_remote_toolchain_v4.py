@@ -515,6 +515,25 @@ def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path)
         store.close()
 
 
+def test_worker_joins_owned_resource_writer_before_environment_and_packaging():
+    workflow = (Path(__file__).resolve().parents[1] /
+                '.github/workflows/toolchain-worker-v4.yml').read_text(encoding='utf-8')
+    supervisor = 'python work/worker-artifact/infrastructure/resource-sampler-helper.py'
+    lifecycle = 'resource-sampler-lifecycle.json'
+    stop = 'kill -TERM "$sampler"'
+    joined = 'wait "$sampler"'
+    retention = '- name: Retain worker environment and resource evidence'
+    packaging = '- name: Package the complete DSB worker output losslessly'
+    assert workflow.index(supervisor) < workflow.index(stop) < workflow.index(joined)
+    assert workflow.index(joined) < workflow.index(retention) < workflow.index(packaging)
+    assert lifecycle in workflow
+    assert 'exit "$sampler_code"' in workflow
+    assert 'worker_process_group_v4.py?ref=$GITHUB_SHA' in workflow
+    assert "steps.lifecycle_gate.outcome == 'success'" in workflow
+    assert '--verify-lifecycle' in workflow
+    assert 'work/worker-package/failure-proof' in workflow
+
+
 @pytest.mark.parametrize('tool_failure', [False, True])
 @pytest.mark.parametrize('system_name', ['otel_demo', 'deathstarbench'])
 def test_worker_scopes_gc_to_unchanged_toolchain_and_retains_failure_evidence(

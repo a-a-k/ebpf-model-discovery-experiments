@@ -1,0 +1,57 @@
+name: Validate saved DSB worker packaging equivalence
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest
+      - name: Run focused checks
+        run: |
+          python -m pytest --import-mode=importlib \
+            tests/test_diagnostic_artifacts_v4.py \
+            tests/test_artifact_transport_v4.py \
+            tests/test_worker_process_group_v4.py \
+            tests/test_remote_toolchain_v4.py -q | tee focused-tests.log
+          python -m py_compile scripts/validate-worker-packaging-v4.py
+      - name: Fetch exact saved successful DSB worker package
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/worker-packaging-validation-input
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/40956304402 \
+            > work/worker-packaging-validation-input/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12932698721 \
+            > work/worker-packaging-validation-input/artifact-api.json
+          /usr/bin/time -v -o work/worker-packaging-validation-input/download-time.txt \
+            gh api -H 'Accept: application/vnd.github+json' \
+            repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/12932698721/zip \
+            > work/worker-packaging-validation-input/worker-package.zip
+      - name: Verify saved package and current repackage equivalence
+        env:
+          PYTHONPATH: src:.
+        run: |
+          python scripts/validate-worker-packaging-v4.py \
+            --archive work/worker-packaging-validation-input/worker-package.zip \
+            --artifact-metadata work/worker-packaging-validation-input/artifact-api.json \
+            --run-metadata work/worker-packaging-validation-input/run-api.json \
+            --out work/worker-packaging-validation
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: worker-packaging-validation-v4-${{ github.run_id }}
+          path: |
+            work/worker-packaging-validation/
+            work/worker-packaging-validation-input/run-api.json
+            work/worker-packaging-validation-input/artifact-api.json
+            work/worker-packaging-validation-input/download-time.txt
+            focused-tests.log
+          retention-days: 90
+          if-no-files-found: error
