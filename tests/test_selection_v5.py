@@ -84,6 +84,32 @@ def test_distinct_matches_are_ambiguous_even_with_same_header_method_and_route(t
         store.close()
 
 
+def test_same_observation_route_alias_binds_without_trace_ids(tmp_path):
+    span = _span(path='/api/customer/owners')
+    span['attributes'].append(_attribute('http.route', 'customers'))
+    other = _span(request='other', path='/api/customer/owners')
+    other['attributes'].append(_attribute('http.route', 'vets'))
+    store = _store(tmp_path, [span, other])
+    step = {'request_id': 'opaque', 'method': 'GET', 'path': '/api/customer/owners'}
+    contract = {'entry_services': ['entry'], 'steps': [step], 'required_calls': []}
+    try:
+        _, selected = select_planned(store, [{'http_steps': [step]}], contract, 'ebpf')
+        endpoints = [dict(id='route', entry_service='entry', method='GET', path='/customers'),
+                     dict(id='other-method', entry_service='entry', method='POST', path='/customers'),
+                     dict(id='other-service', entry_service='other', method='GET', path='/customers'),
+                     dict(id='unobserved', entry_service='entry', method='GET', path='/vets')]
+        before = json.dumps(endpoints, sort_keys=True)
+        proof = endpoint_alias_evidence(store, selected['roots'], step, 'entry', endpoints)
+        assert proof['endpoint_ids'] == ['route']
+        assert proof['evidence'][0]['observed_aliases'][0]['attribute'] == 'http.route'
+        assert proof['evidence'][0]['genuine_ancestry_identity'] is False
+        assert json.dumps(endpoints, sort_keys=True) == before
+        # /vets is present in the store, but only in another request.
+        assert 'unobserved' not in proof['endpoint_ids']
+    finally:
+        store.close()
+
+
 def test_matching_conflicted_entry_prevents_unique_selection(tmp_path):
     conflicted = _span(name='conflicted')
     conflicted['attributes'].extend([
