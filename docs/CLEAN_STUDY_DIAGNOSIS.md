@@ -31,6 +31,33 @@ Docker/listener rows are retained in
 Identifying the proxy does not supply an
 observed proxy-to-backend edge. No automatic backend remap was performed.
 
+The a434 qualification exposed a separate real parser failure: OBI OTel absent
+stopped after 36 operations on `KeyError('key')`. The
+[saved-wire audit](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41124381843)
+found one original protobuf attribute whose key is the empty default and whose
+value is `POST`. Its JSON projection correctly omits the default key; the
+normalizer incorrectly required it. PR7 preserves the literal unnamed attribute,
+including conflicting values, without assigning it an HTTP method name.
+
+The full OBI native shipping limitation was isolated on the original training
+prefix. All 1382 native SDK spans in 118 JSONL records equal the frozen Bering
+input, and its accepted request SHA sequence matches. Typed checkout CLIENT and
+shipping SERVER spans exist for both POST operations. All 20 shipping SERVER
+parent identities missing from native input occur as real OBI checkout CLIENT
+spans in the same frozen eBPF prefix (31 requests, 3932 spans), with original
+receiver-body proofs. This is cross-emitter ancestry, not normalization loss or
+missing HTTP types. The
+[source-backed audit](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132172369)
+and [interpretation](OTEL_NATIVE_SHIPPING_AUDIT.md) retain exact identities and
+verification limits. Identity matches do not establish who wrote a request header.
+
+Native-only input here means SDK observations while the collector co-runs. It is
+not an agent-free SDK baseline. Full mode enables every SDK; it does not guarantee
+complete SDK-only ancestry. The full OBI combined gain must not be described as
+evidence of a natural SDK coverage gap or superiority over agent-free tracing.
+Absent/partial declarations and external outcome checks remain matched across
+the three collectors.
+
 Application errors and inaccurate conditional predictions are a third question.
 They are retained separately from graph availability in the
 [historical runtime diagnosis](OTEL_RUNTIME_LIMITS_V5.md). Neither the semantic
@@ -96,6 +123,19 @@ edges. Incomplete DB aliases likewise do not imply absent DB activity; primary
 replica-only predictions explicitly retain fixed-healthy DB assumptions where
 the caller is reachable.
 
+The later a434 partial-prefix
+[audit](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41119247647)
+again preserved the original fields and frozen bindings. DeepFlow's 193 gRPC
+observations are local exporter traffic (189 named Jaeger collector calls and
+four methodless fragments), not recovered Thrift application calls. MongoDB and
+Redis observations are present. Coroot still has client-side evidence without
+ingress endpoints. In the qualification, full native/combined inputs support all
+three operations; partial inputs support the home timeline while the intentionally
+uninstrumented user-timeline paths remain required unknowns. For the affected
+combined entries, the alternative eBPF representation is unsupported, not a
+contradictory state prediction. These facts isolate the operation-path limitation
+from an exporter-only protocol count or an absent-process claim.
+
 ## Petclinic native route binding regression
 
 In the final partial/seed6 qualification, native list_owners and list_vets each
@@ -111,6 +151,32 @@ collector while retaining v5 roots without ancestry IDs. Other missing visits
 calls remain unknown. The bf49 primary series was stopped before further queued
 cells, and all 81 must use one repaired source after paired proof and qualification.
 The original source, available captures, negative/unknown records and costs remain.
+
+## Petclinic supplied-role reconciliation
+
+The next qualification found a second, distinct adapter defect. DeepFlow and
+Coroot combined graphs retain native calls but include both SDK role names and
+Compose/container names. Exact binding therefore marks supported roles ambiguous.
+Examples are `api-gateway`/`gateway` and `visits-service`/`visits-a`/`visits-b`.
+The original rendered Compose already provides SDK names and distinct instance
+IDs. PR7 uses those declarations through the existing frozen alias mechanism,
+with the same table supplied to all source arms and the direct baseline.
+
+DeepFlow's original observations can be unnamed: the existing verified runtime
+step supplies their Compose carrier. Admission, selection and verification now
+use that same already-proved carrier. Its derived JSON is checked by the existing
+deterministic codec/accounting/snapshot/raw validator, rather than treated as a
+wire OTLP receiver envelope. Exact Docker-name evidence remains valid for Coroot.
+
+[The fixed saved-input audit](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41131463192)
+uses original closed training checkpoints, not final indexes containing targets.
+It admits five DeepFlow aliases from 491 derived occurrences and six Coroot aliases
+from 699 wire occurrences; OBI already uses the canonical names. All 18 source/
+variant model views retain every edge field under exact supplied name projection,
+without metadata collisions or new calls/endpoints. Native models and original
+forecasts remain unchanged. Distinct visits placements are preserved; duplicate
+SDK/runtime observations do not add replicas. This is a naming correction, not
+an available/accurate-forecast result. Fresh common qualification is still required.
 
 ## Interpretation boundary
 

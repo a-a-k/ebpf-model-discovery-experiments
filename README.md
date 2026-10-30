@@ -2,10 +2,10 @@
 
 **Current work: a fresh matched series with an explicit experiment controller.**
 The question is eBPF feasibility with absent/incomplete tracing. The user selected
-a new runner reusing verified deployment and collection components. Common source
-`study-20261030` pins Bering 1.3.1 and corrected DeepFlow parser configuration for
-all 81 new main cells. The 27 original clean-controller smoke settings passed;
-additional final-source regressions passed independent review. The first fresh
+a new runner reusing verified deployment and collection components. The common
+source pins Bering 1.3.1 and corrected DeepFlow parser configuration.
+The 27 original clean-controller smoke settings passed;
+additional source regressions passed independent review. The first fresh
 series was technically stopped at 2026-10-30 19:05 UTC: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
 [DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099992213),
 and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099997831).
@@ -14,11 +14,21 @@ alias binding, artificially disadvantaging native inputs. [PR6](https://github.c
 repairs that adapter without changing graphs or supplied semantics. All three
 collectors require the complete new 81-cell matrix at one repaired source after
 paired evidence review and qualification. Superseded data and costs remain.
-Replacement source `study-20261030-v2` is immutable `a43404e`, with the same
-Bering 1.3.1 and collector pins. Its complete 27-setting qualification is running:
-[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115050998),
-[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115056375),
-[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41115062402).
+The a434 replacement qualification completed with 26 technical successes and one
+OBI OTel parser failure. It also exposed SDK/Compose role ambiguity in Petclinic
+fusion. [PR7](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/7)
+repairs those common paths using the literal protobuf default and existing
+verified runtime/deployment identities. Independent code and fixed saved-input
+review passed; this does not certify prediction availability or accuracy.
+Current immutable source `study-20261030-v3` is `6ef079a`, with unchanged tool and
+collector pins. Its fresh common 27-setting qualification is running:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132051267),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132056183),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132061981).
+The [pre-execution decision](docs/clean-study-requalification-v3-20261030.json)
+records the original criterion, simple baselines, both agents' verdicts and costs.
+Main81 has not started. The previous attempts and diagnostics are preserved in
+[the verified permanent archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41129382005).
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
 RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
 The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,

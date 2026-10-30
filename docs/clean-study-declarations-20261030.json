@@ -1355,6 +1355,71 @@
       "run_id": 41130878319,
       "role": "implementation_ci",
       "note": "audit/otel-native-shipping be67d64dd1cc8c0a45a3c748b91668da2ab741ae; push; observed conclusion success. All failures retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132585175,
+      "role": "implementation_ci",
+      "note": "audit/otel-native-shipping 988f643cdb4bc4eb6fea86bb3d876f61881df8d5; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132172369,
+      "role": "saved_source_semantics_audit",
+      "note": "audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; workflow_dispatch; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132158401,
+      "role": "implementation_ci",
+      "note": "audit/otel-native-shipping 69000a75308240fabb670dba1b73bf6c12afbf16; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132676443,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132669520,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results 95ce8a3a1f0e96b57e77e636efd64ce9c9e60da6; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132461801,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132454316,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results 57bd5af4b210de60c637f436287ebff33ef91b21; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41132036522,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results 996d9f16cd1a26ca367d0261a9c6a0290f560217; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41116445038,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41116435826,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results bd9aa8ed66d67482275cf4db2b44e22026f4268d; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41100255693,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41100247102,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results f0ad716643250f1d22f55c147ca9e4c07f0ca30c; push; observed conclusion success. All attempts retained; no completed main cell inferred."
+    },
+    {
+      "run_id": 41097016011,
+      "role": "implementation_ci",
+      "note": "analysis/clean-study-results bf49d464816aa71b7c820a02778117d3e6a0ba9d; pull_request; observed conclusion success. All attempts retained; no completed main cell inferred."
     }
   ],
   "blocked_main_cells": [],
