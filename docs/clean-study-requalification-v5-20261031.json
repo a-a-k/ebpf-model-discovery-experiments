@@ -248,7 +248,22 @@
     "replacement_created_utc": "2026-10-31T05:35:46Z",
     "replacement_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "replacement_status": "ActualAPI05:36UTC prepareSUCCESS, campaignactive Install experiment package",
-    "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json"
+    "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json",
+    "actual_operational_recovery": {
+      "replacement_parent": 41173230022,
+      "replacement_worker": 41180285753,
+      "checkpoint": 13033944638,
+      "science": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "workflow": "8a9b17bcbe223c76afac0f2cc2f4939523bf94a1",
+      "execute_completed_success_utc": "2026-10-31T07:26:56Z",
+      "both_root_and_skeptic_exact_input_chain_checked": true,
+      "worker_completed_success": true,
+      "parent_final_validation_and_independent_main_admission_pending": true,
+      "root_proof": "work/root-worker-41180285753-completed-log-review.json",
+      "skeptic_proof": "work/skeptic-main-v5-observer/replacement-worker-41180285753-actual-output-review.json",
+      "small_plan_consistency_proof": "work/skeptic-main-v5-observer/existing-worker-canonical-plan-digests-review.json",
+      "plan_check_boundary": "All3collectors successful canonicaltrainingplan digests equal per absentseed6/7/8; OBIpartial6/7 also sameperseed. No planbody/journal/typedpayload read locally; no availability/accuracy gate."
+    }
   },
   "main_runtime_metadata_snapshot": {
     "observed_utc": "2026-10-31T06:33:33Z",

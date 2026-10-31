@@ -2983,6 +2983,31 @@
       "run_id": 41176576192,
       "role": "preparation",
       "note": "PR CI for read-only evidence-review scheduling9acc7ef: maxparallel3to12, unchanged reader/science/input/checks. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41177364349,
+      "role": "preparation",
+      "note": "CI for7448b01 binding first5 main packets and priorcosts; completedSUCCESS. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41177366800,
+      "role": "preparation",
+      "note": "PR CI for7448b01 binding first5 main packets and priorcosts; completedSUCCESS. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41180285753,
+      "role": "worker",
+      "note": "Successful actual worker for exact same-science OBIabs6 technicalreplacement parent41173230022/checkpoint13033944638. Workflow8a9 cleanup reclaimed18,006,118,400B/57.31s; Execute07:23:56to07:26:56UTC. Alloriginalscientificchecks unchanged; parentvalidation pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41180344415,
+      "role": "worker",
+      "note": "OBI DSBpartial6 worker forparent41164821492/checkpoint13034243311, science0c98/workflow8a9. CompletedSUCCESS; Execute07:25:32to07:54:27UTC. Actualinput/output scientific review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41180499502,
+      "role": "worker",
+      "note": "OBI DSBpartial7 worker forparent41164821492/checkpoint13034507696, science0c98/workflow8a9. CompletedSUCCESS; Execute07:27:56to07:47:50UTC. Actualinput/output scientific review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
     }
   ],
   "blocked_main_cells": [],

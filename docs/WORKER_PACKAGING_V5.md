@@ -88,3 +88,26 @@ scientific checks and target protocol remain unchanged. Workflow source and
 scientific source already have separate verified identities. Actual-code review
 and CI precede publication. Preparation, failed attempts, transfer, waiting and
 technical-repeat costs remain measured; human effort is unknown.
+
+The exact failed checkpoint's ZIP central directory declares11,177,703,644
+uncompressed bytes in1,145 files, compared with its2,128,349,349-byte ZIP. The
+attempt journal accounts for9,437,753,344 bytes and the observation index for
+993,099,776 bytes. The worker also allocates8GiB swap and retains its input ZIP.
+This size inspection read142,045 bytes of range metadata and no member bodies.
+
+The common preparation was published as PR10/merge8a9b17b after both independent
+actual-code ORIGINAL GO verdicts and successful CI41173047078/41173077025.
+Completed DeepFlow workers41173320126/41173372853 retain science0c98 and pass
+checkpoint restoration, validation, toolchain execution and packaging. The first
+reclaimed18,006,036,480 bytes in43.72seconds. Its runner had91,437,875,200 free
+bytes before preparation and109,443,911,680 afterwards; these records distinguish
+reclaimed capacity from differences between hosted runners.
+
+The separately declared fresh OBI/DSB/absent/seed6 repeat41173230022 uses the same
+science source0c98 and plan. Its worker41180285753 restored checkpoint13033944638
+and completed successfully: Execute07:23:56to07:26:56UTC on2026-10-31. Its canonical
+training-plan digest62e25d7f matches the original failed case and the successful
+DeepFlow/Coroot seed6 inputs. Both reviewers checked the exact input/manifest
+chain and completed logs; the original extraction failure point is passed.
+Parent target trials, the complete final packet and independent scientific
+admission remain separate required steps. No worker payload was unpacked locally.
