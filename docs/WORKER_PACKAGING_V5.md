@@ -61,3 +61,30 @@ The exact failed cell was then dispatched as
 on the same reviewed revision. Its outcome is pending and receives an independent
 review. This qualification neither identifies the earlier mutation nor admits
 any historical failed attempt.
+
+## Full-size worker disk preparation, 2026-10-31
+
+Worker [41171880804](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41171880804)
+failed with `OSError: [Errno 28] No space left on device` while extracting the
+unchanged training checkpoint, before model construction. Its exact inputs bind
+OBI parent41164821492, DeathStarBench/absent/seed6, checkpoint13031068777 and
+scientific source0c98bf4520e863ab021b60d00517ee2aa49ab38e. The parent retained
+only training and calibration blocks; its missing output-manifest error is the
+downstream symptom. This requires a technical repeat, not an unknown forecast.
+
+Before implementation, the root and separate skeptic explicitly granted
+ORIGINAL-feasibility design GO. The original question remains eBPF graph-driven
+simulation with absent/incomplete tracing, with the same information, direct
+contract/inventory baseline and ordinary-OTLP combination. No cost superiority
+is required. The preparation baseline is the existing workflow and exact same
+immutable checkpoint; the causal change is available extraction disk space.
+
+One common worker preparation step removes only unused hosted-image Android,
+.NET and GHC directories before checkpoint download, recording fixed-path
+presence, disk free bytes, elapsed time and workflow SHA. Workers still check out
+the requested scientific commit and restore the same hash-verified prebuilt Go
+binaries. Ubuntu, CPU, RAM, 8GiB additional swap, inputs, counts, commands,
+scientific checks and target protocol remain unchanged. Workflow source and
+scientific source already have separate verified identities. Actual-code review
+and CI precede publication. Preparation, failed attempts, transfer, waiting and
+technical-repeat costs remain measured; human effort is unknown.
