@@ -1,0 +1,267 @@
+{
+  "observed_utc": "2026-10-31T21:08:13.522563+00:00",
+  "root_original_verdict": "Uniform fixed3 actual-output ORIGINAL technical/integrity qualification GO. Same32 actualpositiveprimary model/input/Sheaftreport chains,28unknownprimary and all saved external outcomes retained; not full81 admission/success or superiority.",
+  "rows": [
+    {
+      "case": "DSB",
+      "derived_artifact_id": 13056979224,
+      "facts_sha256": "502a93e72ae80e3318335e3d2f1f8365e69ff1516834c72760177839b78364ba",
+      "primary_rows": 18,
+      "available_primary": 0,
+      "unknown_primary": 18,
+      "actual_report_bindings_independently_matched_to_old_frozen_literals": [],
+      "all_saved_external_evaluations_exactly_unchanged": true
+    },
+    {
+      "case": "OTel",
+      "derived_artifact_id": 13057102749,
+      "facts_sha256": "b53b8b766d18235bfe80944033f07fa62dc3a4b3bd6907e711a242a8698827ac",
+      "primary_rows": 18,
+      "available_primary": 12,
+      "unknown_primary": 6,
+      "actual_report_bindings_independently_matched_to_old_frozen_literals": [
+        {
+          "source": "native",
+          "view": "raw",
+          "operation": "browse_product",
+          "actual_report_sha256": "2ae1fdd75fa6e404c9cfaa9ac0f78552beee07fff2fea3013ef2b505a30e7414",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "raw",
+          "operation": "add_to_cart",
+          "actual_report_sha256": "cdc0a9a65217526dd682415bbf5e9d7827fcadd96c10a1afeb291724ead47d2d",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "raw",
+          "operation": "checkout",
+          "actual_report_sha256": "2389099cfb25785631f9dc81107e5647b3c54042e72fab2e833e26589f8eff5d",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "network_scope",
+          "operation": "browse_product",
+          "actual_report_sha256": "53f3e02c3115d2a5703374881a883f52f230039ce7c79183129778e23f9d0b10",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "network_scope",
+          "operation": "add_to_cart",
+          "actual_report_sha256": "f54d436edeca077ed644bb2db0e1b8ab537dd52e91cc5b658a099b3f91fd9f39",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "network_scope",
+          "operation": "checkout",
+          "actual_report_sha256": "7fa1f302327971857f181a21741400301f3d702c2e382516e93654009ab0ed48",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "browse_product",
+          "actual_report_sha256": "36b89a0310c2abf9c1c52f343f162ac88144b0d4e00e52148c32075cf981338f",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "add_to_cart",
+          "actual_report_sha256": "7e43f97734f352a143104aca44530cec8611e0359716637898b78ef115e15f2f",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "checkout",
+          "actual_report_sha256": "1971ec6ccca0aedb7821b17c369f255bc63138a581a87a2fc66e8164ee3275fe",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "browse_product",
+          "actual_report_sha256": "dca534b702b48c35da69b0a11159cd07318040ccadb5fec4bc506a75d547d3c3",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "add_to_cart",
+          "actual_report_sha256": "9e0515a0c041409c9a242ddfcbe2aed1fd4cca2b51b4fc755c95f42eede2c93f",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "checkout",
+          "actual_report_sha256": "70ccaf4c5b7d4c1c491c984489312802290fccb1006ebffe369f4ce855622535",
+          "numeric_DB_bound": false
+        }
+      ],
+      "all_saved_external_evaluations_exactly_unchanged": true
+    },
+    {
+      "case": "PC",
+      "derived_artifact_id": 13057616651,
+      "facts_sha256": "d65711362c7c555bcc71c1dac52958ae5c4f50f25b349c559ec608e3e5c2a7a2",
+      "primary_rows": 24,
+      "available_primary": 20,
+      "unknown_primary": 4,
+      "actual_report_bindings_independently_matched_to_old_frozen_literals": [
+        {
+          "source": "ebpf",
+          "view": "raw",
+          "operation": "list_owners",
+          "actual_report_sha256": "ed6446b600db774f32df7b841326c1a6cbc597348c553ea9bb55aa482fa35b23",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "ebpf",
+          "view": "raw",
+          "operation": "owner_details_with_visits",
+          "actual_report_sha256": "97bc08d2635452433824e11f8ff42ddca509bc61061e75c0323454536976b5cd",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "ebpf",
+          "view": "raw",
+          "operation": "create_visit",
+          "actual_report_sha256": "96ac93e18c44c8df13eda59c79835921258b2c698564bbfd1b22c9f0cbce4ab6",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "ebpf",
+          "view": "raw",
+          "operation": "list_vets",
+          "actual_report_sha256": "47c041fdd7dc0cc6daa90c3358fbf4c35888a84fa4327ef72238ab18fbeb7694",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "ebpf",
+          "view": "network_scope",
+          "operation": "list_owners",
+          "actual_report_sha256": "00d96e31eb8ebf666d46d851ae883091e14cc88275263302158a622c334e3e96",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "ebpf",
+          "view": "network_scope",
+          "operation": "owner_details_with_visits",
+          "actual_report_sha256": "d90d761ea1f0668ff3928f037eda041363f9b630a4b434c7ea731510cffad4d8",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "ebpf",
+          "view": "network_scope",
+          "operation": "create_visit",
+          "actual_report_sha256": "8fe863fc4d53f6de118b74919f1d8d06219840de0aa4cb7c47597045f19913de",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "ebpf",
+          "view": "network_scope",
+          "operation": "list_vets",
+          "actual_report_sha256": "f35207c341e8d9b17b0dadfe1b5b3944a1c06fb13133da1777ba7ab02c729977",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "raw",
+          "operation": "list_owners",
+          "actual_report_sha256": "7e41bcc5d3ec20a23c79112dfbad3ea849486fcf61059edf45b6e22e2b176782",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "raw",
+          "operation": "list_vets",
+          "actual_report_sha256": "163b1a0fe4039d977bf95f05ee092e68a893e7f1ecc6ea1c7cc328c88e86fa2a",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "native",
+          "view": "network_scope",
+          "operation": "list_owners",
+          "actual_report_sha256": "e65eb5bb87754bc010bb19dca3aa2ff02908e3b68bdd5a416fa496f046c92a17",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "native",
+          "view": "network_scope",
+          "operation": "list_vets",
+          "actual_report_sha256": "a3c8d3042423083b40d483daaade4a742cbabcfc7a4c0fbe6914d0d621abb68d",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "list_owners",
+          "actual_report_sha256": "805c2e20cd969c012b1ad2a81602c829588cc328fd411dfedbd1280c330f5c1e",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "owner_details_with_visits",
+          "actual_report_sha256": "2121d18082ba9d6b97cbecf337df494bb028e84376cb00d42b1a8d8a257e0d71",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "create_visit",
+          "actual_report_sha256": "53830d936dd258a180a46768686f2a8249a401d2c17eab8abd9dc89ccc29c5f6",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "raw",
+          "operation": "list_vets",
+          "actual_report_sha256": "41efae0d24742665386b18dbd1b86eb32974a699bc6767690e68d31ac79d507c",
+          "numeric_DB_bound": false
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "list_owners",
+          "actual_report_sha256": "0a7d174b18044546d9130eb8955a12c87a4641a540082268eeddeb14ceaadcc1",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "owner_details_with_visits",
+          "actual_report_sha256": "99aba173ff2150407aa3a90936cd8f9f2bea8d7e84022331803590a520c95d7a",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "create_visit",
+          "actual_report_sha256": "ec8244f60e0ca6f03920c3209310b5fc65d8b1c50fc4b7d29141e6c8e7cbf4cb",
+          "numeric_DB_bound": true
+        },
+        {
+          "source": "combined",
+          "view": "network_scope",
+          "operation": "list_vets",
+          "actual_report_sha256": "1b321f897018440a4c823a98c66dfbf6c78f9cedb9bfc8549e73f8a63534c9a7",
+          "numeric_DB_bound": false
+        }
+      ],
+      "all_saved_external_evaluations_exactly_unchanged": true
+    }
+  ],
+  "source": "e6dff1de1b7326ff68b0379982c3259ee56f9d94",
+  "run_id": 41240585632,
+  "local_scope": "Only exactfacts/5smallprovenance, previously verified small frozen literal reports/forecasts/overlays. No raw journal/SQLite/large plans/census/wire/typedpayload or refit/replay/simulation/scoring.",
+  "observer_correction": "candidate-manifest.json is a bound descriptor; compare its sha256/git_blob/workflow_head_sha fields to committedGit manifest identity, not the descriptor file hash to manifest hash. No source/data/schema defect or retransfer required.",
+  "original_question": "Feasibility under absent/partial SDK traces using actual eBPF-to-Bering-to-Sheaft and independent external outcomes; same provided semantics and direct equivalent baseline; all costs including repeat checks retained, human effort unknown."
+}

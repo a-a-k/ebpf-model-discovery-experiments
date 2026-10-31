@@ -1,0 +1,97 @@
+{
+  "observed_utc": "2026-10-31T21:22:11.426011+00:00",
+  "source_case": "coroot/otel_demo/full/6",
+  "source_full_artifact": 13053234263,
+  "source_digest": "sha256:3eb1312814fa65875541f679e51abea1f9c990ce4fc81994565c4eb347dfc341",
+  "verdict": "Accept actualuncontrolledcheckoutrestarts+frontendRPCconnectionerrors+knownfrontenddefaulttimerexposure; REJECTOOM/collector/allfailurescausalattribution; notstudy-success ordataadmissiongate",
+  "selected25members_CRC_SHA_reverified": {
+    "native/final/application-logs/a-frontend.log": "e7394ccf5a39877d3e3c7fc896d176c76732ef93bb21ace272e51e32b862fd46",
+    "native/final/application-logs/a-shipping.log": "56297f05106cb2962da2dbbed8befa4d62aa1a2094111474cc9c8cf2743232c0",
+    "native/final/application-logs/a-frontend-proxy.log": "52c9ab2cfe8f21c8f67aa762235200289a04ee13d3169db968d0da4b8af3482a",
+    "native/final/application-logs/a-product-catalog-router.log": "3eb4f64b3a05cd9d1475480fb23dd8581ac714c7e2b34f1238a5e7e35761e443",
+    "native/final/compose-ps-a.jsonl": "075fecfa0c419b3c550a6d9d8a9d3b0cb54f5d9fe13e1e9753a6b3f858df1222",
+    "native/training/compose-ps-a.jsonl": "e3872bd009d57b0a108670c59bcf4f1c26b9e21a427b99788dfa7f52aab4d062",
+    "deployment/otel_demo/runtime-resolved-node-a.yaml": "72afefc92e1e27225b5102c0937e2266d853cb34103ade32606e78afea901180",
+    "deployment/otel_demo/runtime-resolved-node-b.yaml": "367074219fc3e9ed69b3d0c39bb0182364ff8f949680920016028cc481c587ab",
+    "blocks.json": "8cc3a314a524c6e74d9ec245964a2b6641ccc1898a642f66748111a949dc39f6",
+    "runtime-identity-v5/capture-before-target-05.json": "0cd12ceb0ef58a5f1a8ac558115b81d65afb33a1ce712297cbc27ab7c250f57b",
+    "runtime-identity-v5/capture-after-target-05.json": "c7423d3806d5c72b37c3a0f567024cac5f99d30366f5bb18778d367d4090fab7",
+    "runtime-identity-v5/capture-before-target-06.json": "0ea9dfe73597c354b3a81198158069ae532e19566467f7094dc5119c23ca13ae",
+    "runtime-identity-v5/capture-after-target-06.json": "0212fbfa58e7ec9f3ab10cabc8d3d5c1f74ded88e898c3eafb994306a211773a",
+    "runtime-identity-v5/capture-before-target-07.json": "113ea16a3847c8185a5415c53e64ffb0621dd5547c1e07b2aa5f79ffbaf3800b",
+    "runtime-identity-v5/capture-after-target-07.json": "81028cb06374a5fe45158896267d8a509260f2b0a1695aa94610b8f979fb13e8",
+    "runtime-identity-v5/capture-before-target-08.json": "0a36f02d50f60462fa8837ce5be8919f8511468e2b3dd15161f289f8b35bfe21",
+    "runtime-identity-v5/capture-after-target-08.json": "10afbcb03165fcffbe97a2ca95fd95b404492a2dd97377536b6a199e9d2c58a1",
+    "runtime-identity-v5/capture-before-target-09.json": "8f2d0b7c9ebeb681572db13ee49a71d7ac283721c6ccd9c65103382624a56875",
+    "runtime-identity-v5/capture-after-target-09.json": "a93aa1442d0365c9064c08684d409f3687c994993e26d012318d4757c80d514c",
+    "runtime-identity-v5/capture-before-target-10.json": "7d4ab594ae3ac9a5442a8bafdd2e6e58c54626b4fa5b1d447adcb0d6b51343e6",
+    "runtime-identity-v5/capture-after-target-10.json": "205ddc7f23a1c4417028743ee546274ec6c1a2bdf20adba0abae290b5e98e5de",
+    "runtime-identity-v5/capture-before-target-11.json": "38c7c793b7e21c9baa82677df4c24b68dfab5b5fce091dc81303e29d0dbcad03",
+    "runtime-identity-v5/capture-after-target-11.json": "27a60614068ffddff26efe861e1f437d5e196aa470b045b7dd4ec5712ae88b52",
+    "runtime-identity-v5/capture-before-target-12.json": "9a20f7f77bc1c33d2f6a0df5eec71c905cc4e030a141b159ae2789cc498987a5",
+    "runtime-identity-v5/capture-after-target-12.json": "0c1cbf65816273c07e29ff7c72d0a471be21c4fc51525330981d1d7f15e3f7e7"
+  },
+  "target_interval_observed_checkout_restarts": [
+    {
+      "block": "target-06",
+      "container_id": "2c36897e179adc1779214bee8b0203386df733e8dde665915a503e639862e436",
+      "before_state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T17:29:48.946484903Z",
+        "Pid": 91131,
+        "Running": true,
+        "StartedAt": "2026-10-31T17:29:48.988603108Z",
+        "Status": "running"
+      },
+      "after_state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T18:14:21.911660113Z",
+        "Pid": 275273,
+        "Running": true,
+        "StartedAt": "2026-10-31T18:14:21.948586476Z",
+        "Status": "running"
+      }
+    },
+    {
+      "block": "target-11",
+      "container_id": "2c36897e179adc1779214bee8b0203386df733e8dde665915a503e639862e436",
+      "before_state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T18:14:21.911660113Z",
+        "Pid": 275273,
+        "Running": true,
+        "StartedAt": "2026-10-31T18:14:21.948586476Z",
+        "Status": "running"
+      },
+      "after_state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T18:23:18.920415503Z",
+        "Pid": 317030,
+        "Running": true,
+        "StartedAt": "2026-10-31T18:23:18.947739938Z",
+        "Status": "running"
+      }
+    }
+  ],
+  "actual_checkout_address_port": "172.28.11.42:5050 (actualDockerNetworkSettings +frontenderror)",
+  "frontend_literal_error_witnesses": [
+    {
+      "file": "native/final/application-logs/a-frontend.log",
+      "line": 18913,
+      "timestamp": "2026-10-31T18:14:21.924481848Z",
+      "error": "gRPC14UNAVAILABLEreadECONNRESET"
+    },
+    {
+      "file": "native/final/application-logs/a-frontend.log",
+      "line": 54430,
+      "timestamp": "2026-10-31T18:23:19.496510699Z",
+      "error": "gRPC14UNAVAILABLEconnectECONNREFUSED172.28.11.42:5050"
+    }
+  ],
+  "controller_source_boundary": "ActualV5MRO usesbaseadapter.set_replicas catalogA/Bstart/stoponly; nocheckoutrestartintervention. Runtimecapturesread-only.",
+  "uncontrolled_service_policy": "PrimarySheaftsource sets nonintervenednodeprobability1; observedunmodeledcheckoutrestarts violatefixed-fulfilledassumption. Adverse .875prediction/.25external MUSTremain, no posthoccoverageexclusion/rescore.",
+  "OOM_limit": "State.OOMKilled/RestartCountnotretained; currentRunningTrue/ExitCode0notpastcauseproof. Checkoutfinal/traininglogsCDsize0. GuestkerneloldAunavailable; memory20MiBconfigexposurealoneNOTOOMdiagnosis.",
+  "source_image_timer_link": "ActualmainfrontendproxyDockerImage1c53bfb5... matchespreviouslyhashverifiedOCIindexroot atGit8ed; no currentcomposecommand/entrypoint/mountoverrides; copiedimagecatchalltemplateomittimeout. Documented15sexposureconsistentwithp50~15042ms, actualbinaryversion/perrequestmechanism/allfailurecausalityunknown.",
+  "error_count_boundary": "Regexlinecountsnotrequestcounts:ECONNRESET2148duplicatedlines+outside-targetpossible; proxy2timeoutmatchesstartupheaders/extensionsNOTrequesttimerlogs. Shipping/frontend/routerPIDstableacrosssnapshotsdoesnotprovenoglobalOOM.",
+  "transport_and_cost_boundary": "ReusedROOT25selectedfilesall<=4MiB,10,275,570networkrangebytesROOT; no newHTTPbodytransport/no whole1271MBZIP/journals/traces/census/plans/SQLite read. PreserveallRCA/prep/observer/sourcecosts,humanunknown."
+}
