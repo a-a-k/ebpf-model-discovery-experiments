@@ -809,7 +809,7 @@ def verify_worker_output_claims(manifest_claims: dict, provenance_claims: dict,
             "whole_worker_tree_verified": False}
 
 
-def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
+def compact_facts(root: Path, declaration: dict, *, smoke_qualification=False) -> tuple[dict, dict, dict]:
     manifest = read(root / "evaluation-manifest.json")
     status = read(root / "status.json")
     evaluation = read(root / "evaluation-v5.json")
@@ -817,10 +817,15 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
                 status.get("seed"), int(status.get("run_id")))
     expected = (declaration["collector"], declaration["system"], declaration["mode"],
                 declaration["seed"], declaration["run_id"])
+    if smoke_qualification and (
+            declaration['head_sha'] not in CONTEXT_BASELINE_HEADS
+            or declaration.get('stage') != 'smoke' or declaration.get('runner') != 'study'
+            or declaration.get('seed') != 6 or status.get('smoke') is not True):
+        raise ValueError('qualification reader requires the fixed final-source smoke identity')
     if identity != expected or status.get("commit") != declaration["head_sha"]:
         raise ValueError(f"saved compact identity differs: {identity!r}")
     if declaration["head_sha"] in FRESH_HEADS and (
-            status.get("controller") != "clean-study" or status.get("smoke") is not False):
+            status.get("controller") != "clean-study" or status.get("smoke") is not smoke_qualification):
         raise ValueError("fresh saved status does not identify the clean main controller")
     if (manifest.get("commit") != declaration["head_sha"]
             or manifest.get("run_id") != str(declaration["run_id"])):
@@ -839,7 +844,15 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
         verified.append(name)
     counts = evaluation.get("counts") or {}
     expected_blocks = 19 if declaration["system"] == "otel_demo" else 16
-    if (counts.get("primary") != 34800 or counts.get("target") != 9600
+    expected_primary, expected_target = 34800, 9600
+    if smoke_qualification:
+        from ebpf_discovery.evaluate_v5 import expected_counts
+        _, workload, phases, _ = expected_counts(declaration['system'], True)
+        expected_primary, expected_target = sum(phases.values()), phases['target']
+        if (status.get('workload_counts') != workload or evaluation.get('primary_series_result') is not False
+                or evaluation.get('smoke_technical_pass') is not True):
+            raise ValueError('qualification workload or non-main result boundary differs')
+    if (counts.get("primary") != expected_primary or counts.get("target") != expected_target
             or counts.get("blocks") != expected_blocks):
         raise ValueError("fixed workload count identity differs")
     if not (evaluation.get("integrity", {}).get("valid")
@@ -1425,13 +1438,15 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     }
 
 
-def review(declaration: dict, compact: Path | None, full: Path | None, out: Path) -> dict:
+def review(declaration: dict, compact: Path | None, full: Path | None, out: Path, *, smoke_qualification=False) -> dict:
+    if smoke_qualification and (compact is None or full is None):
+        raise ValueError('qualification requires both selected full and compact evidence')
     if out.exists():
         raise ValueError("review output already exists")
     out.mkdir(parents=True)
     compact_result = evaluation = freeze = None
     if compact is not None:
-        compact_result, evaluation, freeze = compact_facts(compact, declaration)
+        compact_result, evaluation, freeze = compact_facts(compact, declaration, smoke_qualification=smoke_qualification)
     full_result = None
     if full is not None:
         full_result = full_facts(full, declaration, freeze, evaluation, out / "selected-packages")
@@ -1439,6 +1454,7 @@ def review(declaration: dict, compact: Path | None, full: Path | None, out: Path
             raise ValueError("saved forecast does not precede first target block")
     result = {
         "schema_version": "main-saved-evidence-facts-v5",
+        "review_scope": 'qualification_only_not_main' if smoke_qualification else 'saved_main_evidence',
         "declaration": declaration,
         "compact_facts": compact_result,
         "full_facts": full_result,
@@ -1468,9 +1484,10 @@ def main() -> None:
     parser.add_argument("--compact", type=Path)
     parser.add_argument("--full", type=Path)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument('--smoke-qualification', action='store_true')
     args = parser.parse_args()
     declaration = read(args.declaration)
-    result = review(declaration, args.compact, args.full, args.out)
+    result = review(declaration, args.compact, args.full, args.out, smoke_qualification=args.smoke_qualification)
     print(json.dumps({"cell": [declaration[key] for key in
                                ("collector", "system", "mode", "seed")],
                       "domains": {"compact": result["compact_facts"] is not None,

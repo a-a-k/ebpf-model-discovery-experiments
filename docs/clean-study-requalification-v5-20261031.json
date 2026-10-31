@@ -56,7 +56,12 @@
     "original_three_arms_unchanged": true,
     "same_paired_policy_all_cells": true,
     "unchanged_workload_and_controls": true,
-    "runs": {}
+    "runs": {
+      "obi": 41154436408,
+      "deepflow": 41154440327,
+      "coroot": 41154444012
+    },
+    "dispatched_at_utc": "2026-10-31T01:15:18Z"
   },
   "review_rule": "Check real acquisition, actual model/command/source/freeze/outcome bindings and every concrete unknown. Unsupported/adverse results remain; no numeric availability, accuracy or response-time threshold.",
   "cost_boundary": "Include both Bering passes, any added Sheaft executions, all preparation/CI/audits/failures/early stopping/worker and archival/report costs. Reuse is not independent execution. Human effort unmeasured, not zero. Actions elapsed is not CPU/billed consumption.",

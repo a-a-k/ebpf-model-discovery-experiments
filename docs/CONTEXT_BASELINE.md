@@ -120,3 +120,12 @@ unavailable; supplied conditional DB assumptions are not recovered dependencies.
 The diagnostic itself records1041.78 seconds, excluding earlier downloads, CI and
 preparation, which remain separately charged. Human preparation remains unknown.
 Main81 requires actual-output review of that final qualification first.
+
+Before implementing the qualification-only saved-reader mode, both agents give
+ORIGINAL-feasibility GO to reusing the existing selector and full_facts checks in
+Actions. Restrict the explicit mode to source0c98bf4, stage smoke, study runner,
+seed6 and all27 fixed settings, with both exact full/compact artifact identities.
+The existing main34800/9600/SmokeFalse boundary remains unchanged. Qualification
+uses its already declared54/24 counts (DSB/OTel) or72/32 (Petclinic), not main
+admission. No replay, refit, scoring, new schema or generic validation framework
+is introduced. Preserve concrete unknowns, all failed checks and complete costs.

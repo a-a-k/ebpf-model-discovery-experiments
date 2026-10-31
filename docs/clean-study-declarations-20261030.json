@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "HELD until actual-output review of final common-source qualification27 at0c98bf4. No finalsource main81 dispatched.",
+  "main_dispatch_status": "Finalsource qualification27 running at0c98bf4; main81 held until independent actual-output review.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1230,6 +1230,165 @@
       ],
       "note": "V4 common immutable f60 source after exact paired operation metadata proof; fresh qualification only, not main evidence.",
       "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c"
+    },
+    {
+      "run_id": 41154436408,
+      "collector": "obi",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Final common paired-context qualification at0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5 after both exact-source ORIGINAL-feasibility GO; same workload, original3arms plus declared paired baseline. Include all costs independent of outcome."
+    },
+    {
+      "run_id": 41154440327,
+      "collector": "deepflow",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Final common paired-context qualification at0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5 after both exact-source ORIGINAL-feasibility GO; same workload, original3arms plus declared paired baseline. Include all costs independent of outcome."
+    },
+    {
+      "run_id": 41154444012,
+      "collector": "coroot",
+      "stage": "smoke",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Final common paired-context qualification at0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5 after both exact-source ORIGINAL-feasibility GO; same workload, original3arms plus declared paired baseline. Include all costs independent of outcome."
     }
   ],
   "related_runs": [

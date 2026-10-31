@@ -1,0 +1,280 @@
+{
+  "schema_version": "main-review-candidates-v5",
+  "purpose": "Qualification-only saved-facts review of all27 exact final common-source settings; not a main-series result or independent admission.",
+  "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "planned_cells": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154436408,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154440327,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "run_id": 41154444012,
+      "stage": "smoke",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    }
+  ],
+  "cells": [],
+  "independently_admitted_cells": [],
+  "status": "Capture qualification running; exact artifact identities to be filled from Actions metadata when published. No missing/failed/unknown setting may be omitted."
+}

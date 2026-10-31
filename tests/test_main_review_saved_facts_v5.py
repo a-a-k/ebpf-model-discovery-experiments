@@ -852,7 +852,8 @@ def _run_manifest_selector(tmp_path: Path, manifest: str, *, phase: str = "pendi
     script = textwrap.dedent(
         workflow.split("python - <<'PY'\n", 1)[1].split("\n          PY", 1)[0])
     source = ROOT / "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
-    target = tmp_path / "docs/iteration5-main-review-candidates-coroot-petclinic-full.json"
+    target = tmp_path / ('docs/clean-study-smoke-review-candidates-20261031.json' if phase == 'common-smoke'
+                         else 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json')
     target.parent.mkdir(parents=True)
     target.write_bytes(source.read_bytes())
     if document is not None:
@@ -1111,6 +1112,62 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
     assert result.returncode == 0, result.stderr
     values = dict(line.split("=", 1) for line in output.read_text().splitlines())
     assert len(json.loads(values["matrix"])["cell"]) == 3
+
+
+@pytest.mark.parametrize('system', ['deathstarbench', 'otel_demo', 'petclinic'])
+def test_explicit_smoke_review_keeps_main_workload_boundary(tmp_path, system):
+    declaration, compact, _ = fixture(tmp_path)
+    declaration.update(system=system, head_sha=REVIEW.FRESH_HEAD, stage='smoke', runner='study')
+    from ebpf_discovery.evaluate_v5 import expected_counts
+    _, workload, phases, _ = expected_counts(system, True)
+    status = REVIEW.read(compact/'status.json')
+    status.update(system=system, commit=REVIEW.FRESH_HEAD, smoke=True, controller='clean-study', workload_counts=workload)
+    write(compact/'status.json', status)
+    evaluation = REVIEW.read(compact/'evaluation-v5.json')
+    evaluation.update(primary_series_result=False, smoke_technical_pass=True)
+    evaluation['counts'].update(primary=sum(phases.values()), target=phases['target'],
+                                blocks=19 if system == 'otel_demo' else 16)
+    write(compact/'evaluation-v5.json', evaluation)
+    manifest = REVIEW.read(compact/'evaluation-manifest.json')
+    manifest.update(commit=REVIEW.FRESH_HEAD)
+    for name in ('status.json', 'evaluation-v5.json'):
+        manifest['files_sha256'][name] = digest(compact/name)
+    write(compact/'evaluation-manifest.json', manifest)
+    facts, _, _ = REVIEW.compact_facts(compact, declaration, smoke_qualification=True)
+    assert facts['counts']['primary'] == (72 if system == 'petclinic' else 54)
+    with pytest.raises(ValueError):  # The default main reader still rejects this same packet.
+        REVIEW.compact_facts(compact, declaration)
+    for key, value in (('head_sha', 'f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c'),
+                       ('stage', 'main'), ('runner', 'legacy'), ('seed', 7)):
+        with pytest.raises(ValueError):
+            REVIEW.compact_facts(compact, {**declaration, key: value}, smoke_qualification=True)
+    evaluation['counts']['target'] += 1
+    write(compact/'evaluation-v5.json', evaluation)
+    manifest['files_sha256']['evaluation-v5.json'] = digest(compact/'evaluation-v5.json')
+    write(compact/'evaluation-manifest.json', manifest)
+    with pytest.raises(ValueError, match='fixed workload'):
+        REVIEW.compact_facts(compact, declaration, smoke_qualification=True)
+
+
+@pytest.mark.parametrize('changed', [None, 'missing', 'seed', 'source', 'stage'])
+def test_common_smoke_workflow_requires_all27_exact_fixed_cells(tmp_path, changed):
+    template = json.loads((ROOT/'docs/iteration5-main-review-candidates-coroot-petclinic-full.json').read_text())['cells'][0]
+    cells = [{**template, 'collector': c, 'system': s, 'mode': m, 'seed': 6,
+              'head_sha': REVIEW.FRESH_HEAD, 'stage': 'smoke', 'runner': 'study'}
+             for c in ('obi', 'deepflow', 'coroot')
+             for s in ('deathstarbench', 'otel_demo', 'petclinic') for m in ('absent', 'partial', 'full')]
+    if changed == 'missing':
+        cells.pop()
+    elif changed:
+        key, value = {'seed': ('seed', 7), 'source': ('head_sha', 'f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c'),
+                      'stage': ('stage', 'main')}[changed]
+        cells[0][key] = value
+    result, output = _run_manifest_selector(tmp_path, 'docs/clean-study-smoke-review-candidates-20261031.json',
+                                            phase='common-smoke', document={'cells': cells})
+    assert (result.returncode == 0) == (changed is None), result.stderr
+    if changed is None:
+        values = dict(line.split('=', 1) for line in output.read_text().splitlines())
+        assert len(json.loads(values['matrix'])['cell']) == 27
 
 
 def closure_fixture(root: Path):
