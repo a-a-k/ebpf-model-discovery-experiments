@@ -178,8 +178,15 @@ The new DeepFlow partial6 attempt `41209663599` subsequently failed at14:25:27UT
 before any training or targets, with the same Docker port37020 bind error.
 Parent disk preparation passed; this failure is not ENOSPC. Its full
 `13045713018`, compact `13045643140` and retention `13045283661` are retained.
-The recurring port conflict requires owner/configuration diagnosis before a
-further replacement; the other two isolated replacements continue.
+Small retained deployment files exclude a duplicate publisher; the historical
+socket owner was not retained and remains unknown. Both reviewers approved the
+preventive preparation at `13c017bf` before one fresh partial6 replacement
+[41211541665](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41211541665),
+dispatched14:44:43UTC after pre-execution commit `bb20b60`. The unchanged published
+port37020 is reserved against automatic allocation while preserving existing
+reservations. The actual preparation/readback step passed14:47:42UTC; capture and
+scientific admission remain pending. This does not prove the historical cause or
+guarantee recovery. The other two isolated replacements continue.
 
 The second failed case's full artifact is `13038151640`, summary is `13037762162`,
 and retention artifact is `13037737273`; retention is not the compact summary.

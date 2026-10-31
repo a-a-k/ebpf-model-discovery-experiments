@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct paginated gh API 2026-10-31T14:24:54.104884+00:00: 20 exact planned complete full/compact MAIN pairs. All81 cells fixed; five technical replacements predeclared before dispatch, honest actual source0c98 or reviewed operationalN as applicable. No independent full saved-facts MAIN admission yet. OriginalDFpartial6/7/8 verifiedparent ENOSPC and all three exactN replacements dispatchedindividually14:20-14:22UTC; originalOBIfull7 replacement nowcompleteSUCCESS. Completion is technical only; adverse/unknown preserved. Npartial6 replacement then failed beforetraining on Docker port37020; retained13045643140/13045713018/13045283661, no admission. Port-owner diagnosis pending; otherNcases continue.",
+  "main_dispatch_status": "Direct paginated API 2026-10-31T14:50:25.836119+00:00: 22 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures. OriginalDFpartial6/7/8 parentENOSPC predeclaredreplacements: N7/8running; N6failedDockerport37020 beforetraining, exactM6 replacement41211541665 running. OriginalOBIfull7 andabs6 repeats completeSUCCESS. No negative/unknown outcome triggers a repeat.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1883,6 +1883,19 @@
         }
       ],
       "note": "Exact predeclared technical replacement for original41164824120/job124430030947 after directly verified parent Actions runner ENOSPC, before final retention. Actual capture sourcefbbda015cefc4f11ee73f32be6ed661c70375f18; transparent operational revision of qualified0c98 with exact2126 unchanged Gitentries/three reviewed blobs. Both ORIGINAL GO and docs/clean-study-parent-preparation-preexecution-20261031.json committed before dispatch. No forecast/accuracy selection. All original failed/worker/prefix and fresh costs retained; actualN source identity and strict independent saved-facts proof required. Final original campaign packet not recovered."
+    },
+    {
+      "run_id": 41211541665,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "ONE exactpredeclared technical replacement for failedN41209663599/port37020 bind beforetraining; actualM13c017bf72a86a6853f93a5b8f503de199bf7865/tagcapture-20261031-parent-disk-port-v2. Both explicit ORIGINAL GO, exact2126entry/3blob equivalence and all4CI verified, preexecbb20b60 committedBEFORE14:44:43UTCdispatch. Preventiveguestreservation merges37020 preservingexistingranges; ports/appconfigs/scientificcode/counts/methods/outcome rules unchanged. Historicalownerunproved, no guaranteedfix or accuracyselection. AllfailedN/originalENOSPC/prefix/worker/prep/freshcosts retained, actualsourceidentityandallstrictchecksrequiredadmission."
     }
   ],
   "related_runs": [
@@ -3200,6 +3213,76 @@
       "run_id": 41207684126,
       "role": "preparation",
       "note": "Actual Actions run after13:11UTC; Focused implementation checks; source 8113daa676eb5383678877507e7a24f8304ff90d. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211613709,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source79f3a2120009f1bc3c785ef9e162bea4f20164ff; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211609125,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source79f3a2120009f1bc3c785ef9e162bea4f20164ff; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211545635,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourcebb20b603c8da9695d051f3cd8e941ef4cc24ebfa; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211540029,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourcebb20b603c8da9695d051f3cd8e941ef4cc24ebfa; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211301132,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source13c017bf72a86a6853f93a5b8f503de199bf7865; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211280697,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source13c017bf72a86a6853f93a5b8f503de199bf7865; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211094953,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourceb2af79f1c5249312a0c23ca69147aafec0f9a5e9; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41211088198,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourceb2af79f1c5249312a0c23ca69147aafec0f9a5e9; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210894544,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at sourcefbbda015cefc4f11ee73f32be6ed661c70375f18; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210882858,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source21dfcd983b07a9d0e5f56d864000564f2b0aa9c5; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210877997,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source21dfcd983b07a9d0e5f56d864000564f2b0aa9c5; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210763730,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source77cf0d359134ebbe7ddb58792eb25b1ad6ecc48e; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210758612,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source77cf0d359134ebbe7ddb58792eb25b1ad6ecc48e; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41210636765,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourcef61c8ea1b0c4e43c5d363588b711743fe8eb6187; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
     }
   ],
   "blocked_main_cells": [],
@@ -3226,5 +3309,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T14:24:54.104884+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T14:51:39.668535+00:00"
 }

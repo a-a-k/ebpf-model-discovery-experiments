@@ -14,6 +14,12 @@ operational changes and both original-criterion approvals were recorded
 and [before the third](clean-study-parent-partial7-preexecution-20261031.json).
 Actual revision identities remain visible and reporting verifies full Git-tree
 equivalence outside the three explicitly reviewed workflow/documentation blobs.
+The first partial6 replacement failed before training on a recurring Docker
+port37020 conflict. Its one further replacement uses `13c017bf` and the
+[separately predeclared guest preparation](clean-study-guest-port-preexecution-20261031.json):
+merge37020 into existing automatic-port reservations, retaining application ports
+and every scientific source blob. The historical socket owner remains unknown;
+this preventive change is not evidence of an established cause or successful repair.
 No completed-study or positive utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The active collectors are OBI, DeepFlow and Coroot.

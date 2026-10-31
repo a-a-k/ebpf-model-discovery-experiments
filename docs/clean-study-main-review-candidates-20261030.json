@@ -308,10 +308,10 @@
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41209663599,
+      "run_id": 41211541665,
       "stage": "main",
       "runner": "study",
-      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+      "head_sha": "13c017bf72a86a6853f93a5b8f503de199bf7865"
     },
     {
       "system": "deathstarbench",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 61,
+  "pending_artifact_cells": 59,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1236,6 +1236,46 @@
       "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-6-41164826834",
       "full_artifact_bytes": 7674160253,
       "full_artifact_digest": "sha256:50087b000787e2035fb87ee80299d645381654c09f4e0f592a704cb10346406d"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13046016626,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-full-7-41164826834",
+      "compact_artifact_bytes": 2600133350,
+      "compact_artifact_digest": "sha256:8eb241fd204180bfed91f8051db144d0cf4959eb07b6048043b12f14ecfe0368",
+      "full_artifact_id": 13045009909,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-7-41164826834",
+      "full_artifact_bytes": 7670320133,
+      "full_artifact_digest": "sha256:71da1560d05a5b36a512fe8dc3914b17a1a439816726a3e46ea90aa936115d20"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13046041626,
+      "compact_artifact_name": "v5-summary-coroot-main-deathstarbench-full-8-41164826834",
+      "compact_artifact_bytes": 2600263172,
+      "compact_artifact_digest": "sha256:b4fdffe63c36c9c0e419406ab42fd78386729fe3014ec1e6b3a4244a40180e4f",
+      "full_artifact_id": 13045848193,
+      "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-8-41164826834",
+      "full_artifact_bytes": 7681404690,
+      "full_artifact_digest": "sha256:c9dc0495ea8c31f34e06b4dbf78c1b9db26d8e88e800735c38ca33670526b3ec"
     }
   ],
   "superseded_planned_source": {
@@ -1248,7 +1288,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated gh API 2026-10-31T14:24:54.104884+00:00: 20 exact planned complete full/compact MAIN pairs. All81 cells fixed; five technical replacements predeclared before dispatch, honest actual source0c98 or reviewed operationalN as applicable. No independent full saved-facts MAIN admission yet. Subsequent14:25:27UTC seed6 replacement failed early on port37020, not admitted; no complete capture added.",
+  "status": "Direct paginated API 2026-10-31T14:50:25.836119+00:00: 22 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -1327,6 +1367,22 @@
       "pre_execution_record": "docs/clean-study-parent-preparation-preexecution-20261031.json",
       "original_final_campaign_packet_recovered": false,
       "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41209663599,
+      "original_job_id": 124561828717,
+      "original_compact_artifact_id": 13045643140,
+      "original_full_artifact_id": 13045713018,
+      "replacement_run_id": 41211541665,
+      "actual_capture_commit": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "recurring_Docker_published_port37020_bind_failure_before_training; preventive_guest_reservation_with_exact_same_ports_configs_science",
+      "pre_execution_record": "docs/clean-study-guest-port-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true
     }
   ]
 }
