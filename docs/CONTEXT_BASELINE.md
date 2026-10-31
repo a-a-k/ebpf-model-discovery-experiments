@@ -211,3 +211,13 @@ binding summaries are explicit inspection limits; they do not waive existing
 source checks or themselves establish unsupported/disagree. The existing three
 fixed main-family qualification cases will check full-size real outputs before
 all81 review. No additional capture, rerun or repeated27-case check is needed.
+
+Before implementation, both agents give ORIGINAL-feasibility design GO to change
+only saved-review job scheduling from max-parallel3 to12. The baseline is the
+same reader at3: every immutable packet, semantic input, per-job Ubuntu runner,
+strict check, fail-fast:false and all81 cells remain identical. The three fixed
+qualification cells still create only three jobs. Capture, fitting, simulation,
+scoring and science source0c98 remain unchanged. The expected effect is shorter
+queueing for evidence review; no CPU or monetary saving is claimed. All actual
+preparation, transfer, review and technical-failure costs remain in the inventory.
+Read failures remain technical review failures, not scientific negative outcomes.

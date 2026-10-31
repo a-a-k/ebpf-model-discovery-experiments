@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 12
       matrix: ${{ fromJson(needs.declare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
