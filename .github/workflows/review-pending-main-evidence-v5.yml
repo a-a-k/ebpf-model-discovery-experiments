@@ -252,6 +252,7 @@ jobs:
       - name: Verify saved facts where the family packet is present
         if: matrix.cell.full_scope == 'retrieve_family_selected'
         env:
+          PYTHONPATH: ${{ github.workspace }}
           COMPACT_SCOPE: ${{ matrix.cell.compact_scope }}
           REVIEW_PHASE: ${{ inputs.phase }}
         run: |

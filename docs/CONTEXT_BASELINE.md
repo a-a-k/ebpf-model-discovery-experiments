@@ -160,3 +160,12 @@ artifact pairs. The tracked common-smoke manifest resolves their exact API
 identities against the original three run IDs and common source0c98bf4. The
 next existing Actions saved-facts check must inspect all 27; metadata completion
 and green traffic jobs alone do not authorize main81.
+
+The first full qualification verification41162303053 failed before full_facts:
+direct script execution omitted the repository root from Python's import path,
+so expected_counts could not import systems. Earlier tests supplied that path
+and missed the workflow launch difference. Both agents give ORIGINAL-feasibility
+design GO to setting PYTHONPATH to github.workspace in that existing verification
+step. The technical reader run was stopped; its available evidence and costs
+remain retained. Recheck the identical fixed27 captures after this launch-only
+correction. No capture, count, model, forecast, source or criterion changes.
