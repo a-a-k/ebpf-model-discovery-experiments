@@ -9,6 +9,7 @@ import pstats
 import resource
 import signal
 import subprocess
+import sys
 import time
 
 from ebpf_discovery.remote_toolchain_v4 import (
@@ -30,7 +31,14 @@ expected = {
     'plans_sha256': 'fa6e700f5553873cfc9c24ce4509e6ab45acbac2739abd83e9c8e236d9b03070',
     'training_index_proof_sha256': '8a7fcacb6207a9a58066e0754438cf3fd316112b675044b684e7ba008b663877',
 }
-subprocess.run(['git', 'diff', '--exit-code', expected['commit'], 'HEAD', '--', 'src', 'systems'], check=True)
+changed = subprocess.check_output([
+    'git', 'diff', '--name-only', expected['commit'], 'HEAD', '--', 'src', 'systems'], text=True).splitlines()
+report_consumer = 'src/ebpf_discovery/report_v5.py'
+assert changed == [report_consumer]
+assert subprocess.check_output(['git', 'rev-parse', 'HEAD:' + report_consumer], text=True).strip() == 'f83502ac44c1dcfd7a7314cda99a2a7bd5248e8c'
+subprocess.run(['git', 'diff', '--exit-code', expected['commit'], 'HEAD', '--',
+                'src', 'systems', ':(exclude)' + report_consumer], check=True)
+assert 'ebpf_discovery.report_v5' not in sys.modules
 head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
 _safe_extract(Path('work/training-prefix.zip'), campaign)
 manifest, before = _validate_checkpoint(campaign, expected)
@@ -41,7 +49,9 @@ assert collector['collector'] == 'deepflow'
 plans = json.loads((campaign/'plans.json').read_text())
 assert _json_sha(plans) == expected['plans_sha256']
 status = {'diagnostic_source': head, 'input_identity': expected,
-          'source_core_identical_to_original': True, 'new_traffic_or_tools_or_scoring': False,
+          'preparation_runtime_sources_identical_to_original': True,
+          'only_source_difference': {'path': report_consumer, 'blob': 'f83502ac44c1dcfd7a7314cda99a2a7bd5248e8c', 'role': 'reporting-only consumer, not imported by this diagnostic'},
+          'new_traffic_or_tools_or_scoring': False,
           'status': 'preparation_not_started', 'profile_overhead_is_not_a_speed_benchmark': True,
           'diagnostic_only_budget_seconds': 4*60*60,
           'profile_started': False,
@@ -95,6 +105,7 @@ finally:
         if failure is None:
             failure = error
     try:
+        assert 'ebpf_discovery.report_v5' not in sys.modules
         after_manifest, after = _validate_checkpoint(campaign, expected, allow_toolchain=True)
         assert after_manifest == manifest and after['files'] == before['files']
         status['full_checkpoint_unchanged'] = True

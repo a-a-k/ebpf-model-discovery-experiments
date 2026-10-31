@@ -131,7 +131,14 @@ Batch41227578403 published at18:13:34UTC. The
 [retention proof](../results/iteration-5/archive-41227578403.json) records both
 reviews, exact counts and locally rehashed provenance/checksum identities.
 Original ZIPs were rehashed by archival Actions; only the two small metadata
-assets and remote asset metadata were read locally. The separate large archive
-`41228221300` of terminal OBI carrier `41164821492` and full7 replacement
-`41189048917` is still running. Its publication and verification remain due,
-together with active main parents/workers and subsequent review/report tails.
+assets and remote asset metadata were read locally.
+
+Batch41228221300 published at20:25:55UTC. Its
+[retention proof](../results/iteration-5/archive-41228221300.json) binds all57
+original artifacts (127126855391 bytes) from terminal OBI carrier41164821492
+and full7 replacement41189048917, all172 remote assets and27 internal chunk
+manifests. Both reviewers verified every published payload record, checksum and
+the57 actual disk-preflight records. Original ZIPs and reassembled chunks were
+hashed in archival Actions; local review read two small metadata assets and
+remote asset metadata. Active main parents/workers and subsequent reader,
+diagnostic, report and publication tails still require terminal-run batches.
