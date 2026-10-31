@@ -28,6 +28,7 @@ FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
 METADATA_ATTACHMENT_HEADS = {FRESH_HEAD}
 GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c", FRESH_HEAD}
+CONTEXT_BASELINE_HEADS = set()  # Activate only the final independently reviewed common head.
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
@@ -77,6 +78,15 @@ def _package_selected(name: str, kind: str) -> bool:
         return True
     if name.startswith("inputs/") and name.endswith("-request-index.jsonl"):
         return True
+    if name.startswith("context-baseline/"):
+        return name.split('/')[-1] in {
+            'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
+            'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
+            'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
+            'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
+            'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
+            'model.json', 'model.signal-quality.json', 'simulation.command.json',
+            'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("discovery/"):
         return name.endswith(("observed.json", "observed.bering-raw.json",
                               "observed.supplied-aliases.json", "observed.snapshot.json",
@@ -96,7 +106,14 @@ def _package_selected(name: str, kind: str) -> bool:
 
 def operation_metadata_facts(toolchain: Path, branch: Path, freeze: dict) -> dict:
     """Independently inspect the literal metadata-only derivation, without tools."""
-    source, variant, _ = branch.relative_to(toolchain).parts
+    parts = branch.relative_to(toolchain).parts
+    baseline = parts[0] == 'context-baseline'
+    if baseline:
+        if len(parts) != 4 or parts[2] != 'operations':
+            raise ValueError('unexpected paired operation layout')
+        source, variant = 'combined', parts[1]
+    else:
+        source, variant, _ = parts
     shared = toolchain / "discovery" / source / variant
     proof_path = branch / "provided-metadata-attachment.json"
     proof = read(proof_path)
@@ -115,6 +132,18 @@ def operation_metadata_facts(toolchain: Path, branch: Path, freeze: dict) -> dic
                 "semantic_projection": shared / "observed.supplied-aliases.json",
                 "provided_overlay": branch / "overlay.json",
                 "simulator_model": branch / "model.json"}
+    if baseline:
+        union = toolchain/'context-baseline'/variant
+        expected['observed_model'] = union/'union-model.json'
+        expected['observation_derivation'] = union/'union-proof.json'
+        if (proof.get('observed_graph_origin') != 'paired_context_edge_union'
+                or proof.get('source_signal_quality_scope') != 'base entities and database aliases; added edge evidence is in the actual joint quality'):
+            raise ValueError('paired metadata misstates its graph or quality origin')
+        for key, path in (('model', expected['observed_model']), ('proof', expected['observation_derivation'])):
+            claim = proof['observation_derivation'][key]
+            if (toolchain_relative(claim['path']) != path.relative_to(toolchain).as_posix()
+                    or claim['sha256'] != sha(path)):
+                raise ValueError('paired metadata derivation locator or hash differs')
     if set(proof["files"]) != set(expected):
         raise ValueError("operation metadata proof has different source locators")
     for key, path in expected.items():
@@ -252,7 +281,7 @@ def indexed_requests(root: Path, manifest: dict, freeze: dict | None):
 
 
 def accepted_sequence_facts(root: Path, manifest: dict, replay: dict,
-                            freeze: dict | None) -> dict:
+                            freeze: dict | None, *, joint_otlp=False) -> dict:
     sequence = replay.get("accepted_request_sequence")
     if not sequence or sequence.get("same_order_as_original_request_ordinals_and_source_groups") is not True:
         raise ValueError("saved ordered acceptance sequence is missing")
@@ -265,11 +294,12 @@ def accepted_sequence_facts(root: Path, manifest: dict, replay: dict,
             if expected is None or actual is None:
                 raise ValueError("accepted request sequence length differs")
             row, form = expected
-            endpoint = "/sources/ebpf/v1/traces" if row["source"] == "ebpf" else "/v1/traces"
+            endpoint = ("/sources/ebpf/v1/traces" if row["source"] == "ebpf" and not joint_otlp else "/v1/traces")
             if (actual.get("export_index") != ordinal or actual.get("http_status") != 200
                     or actual.get("content_sha256") != row["sha256"]
                     or actual.get("endpoint") != endpoint or actual.get("storage_form") != form
-                    or (form == "stream_archive_slice" and actual.get("content_bytes") != row["length"])):
+                    or (form == "stream_archive_slice" and actual.get("content_bytes") != row["length"])
+                    or (joint_otlp and actual.get('original_source') != row['source'])):
                 raise ValueError("accepted request sequence differs from saved source order")
             item = {key: value for key, value in actual.items() if key != "storage_form"}
             (ordinary if form == "ordinary_export" else streamed).append(item)
@@ -290,6 +320,240 @@ def accepted_sequence_facts(root: Path, manifest: dict, replay: dict,
     return {"accepted_inputs": sequence["requests"], "ordinary_requests": len(ordinary),
             "streamed_requests": len(streamed), "sequence_sha256": sequence["sha256"],
             "unselected_wire_payloads_independently_rehashed": False}
+
+
+def alias_only_model(raw: dict, aliases: dict) -> dict:
+    projected = copy.deepcopy(raw)
+    by_id = {}
+    for service in projected.get('services') or []:
+        old = service['id']
+        service['id'] = aliases.get(old, old)
+        if service.get('name') == old:
+            service['name'] = service['id']
+        if service['id'] in by_id and by_id[service['id']] != service:
+            raise ValueError('saved alias collision has differing metadata')
+        by_id[service['id']] = service
+    projected['services'] = [by_id[key] for key in sorted(by_id)]
+    for edge in projected.get('edges') or []:
+        for key in ('from', 'to'):
+            edge[key] = aliases.get(edge.get(key), edge.get(key))
+    for endpoint in projected.get('endpoints') or []:
+        endpoint['entry_service'] = aliases.get(endpoint.get('entry_service'), endpoint.get('entry_service'))
+    return projected
+
+
+def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
+                           original: dict, evaluation: dict | None) -> dict:
+    """Inspect the fixed paired files; never replay, fit, or rescore outcomes."""
+    baseline = toolchain/'context-baseline'
+    frozen = freeze['sha256_by_path']
+
+    def bound(path):
+        name = ('toolchain/' + path.relative_to(toolchain).as_posix()
+                if path.is_relative_to(toolchain) else path.relative_to(root).as_posix())
+        if frozen.get(name) != sha(path):
+            raise ValueError('paired evidence is not frozen: ' + name)
+        return sha(path)
+
+    def claim_at(claim, path):
+        suffix = ('toolchain/' + path.relative_to(toolchain).as_posix()
+                  if path.is_relative_to(toolchain) else path.relative_to(root).as_posix())
+        saved_path = claim['path']
+        if (not (saved_path == suffix or saved_path.endswith('/' + suffix))
+                or claim['sha256'] != bound(path)):
+            raise ValueError('paired evidence locator or hash differs: ' + suffix)
+
+    predictions = read(baseline/'forecasts.json')
+    manifest = read(baseline/'manifest.json')
+    for path in (baseline/'forecasts.json', baseline/'manifest.json'):
+        bound(path)
+    if (manifest.get('policy_id') != 'observed_server_edge_union_v1'
+            or manifest.get('same_policy_all_collectors_and_scenarios') is not True
+            or manifest.get('requires_capture_freeze_before_targets') is not True
+            or manifest.get('post_target_diagnostic_is_not_a_primary_forecast') is not True
+            or set(predictions) != {'raw', 'network_scope'}
+            or set(manifest['variants']) != set(predictions)):
+        raise ValueError('paired policy or variant coverage differs')
+    evaluation_list = (evaluation or {}).get('evaluations') or []
+    rows = {(row['source'], row['variant'], row['operation']): row for row in evaluation_list}
+    expected_keys = {('context-baseline', variant, op)
+                     for variant, ops in predictions.items() for op in ops}
+    if evaluation is not None and (len(rows) != len(evaluation_list) or
+            {key for key in rows if key[0] == 'context-baseline'} != expected_keys):
+        raise ValueError('paired evaluation coverage differs')
+    facts = {}
+    for variant, operations in predictions.items():
+        out = baseline/variant
+        shared = toolchain/'discovery/combined'/variant
+        provenance_path = out/'provenance.json'
+        bound(provenance_path)
+        provenance = read(provenance_path)
+        if provenance != manifest['variants'][variant] or set(operations) != set(original['combined'][variant]):
+            raise ValueError('paired provenance or operation coverage differs')
+        inputs = toolchain/'inputs/combined'/variant/'observations.json'
+        claim_at(provenance['input_manifest'], inputs)
+        claim_at(provenance['original_forecasts'], toolchain/'forecasts.json')
+        counts = {source: read(toolchain/'inputs'/source/variant/'observations.json')['observations']
+                  for source in ('ebpf', 'native')}
+        for source in counts:
+            bound(toolchain/'inputs'/source/variant/'observations.json')
+        if counts != provenance['source_observations']:
+            raise ValueError('paired source counts differ')
+        status = provenance['status']
+        reuse = status in ('reuse_single_source_equivalence', 'reuse_unchanged_union')
+        if not all(counts.values()):
+            if (status != 'reuse_single_source_equivalence'
+                    or provenance.get('extra_bering_or_sheaft_executed') is not False
+                    or (out/'joint').exists() or (out/'operations').exists()):
+                raise ValueError('single-source equivalence claims extra execution')
+            union_facts = None
+        else:
+            joint = out/'joint'
+            union_path = out/'union-proof.json'
+            bound(union_path)
+            union = read(union_path)
+            paths = {
+                'base_model': shared/'observed.json', 'base_raw_model': shared/'observed.bering-raw.json',
+                'base_snapshot': shared/'observed.snapshot.json', 'base_quality': shared/'observed.signal-quality.json',
+                'base_alias_projection': shared/'observed.supplied-aliases.json',
+                'joint_raw_model': joint/'observed.json', 'joint_snapshot': joint/'observed.snapshot.json',
+                'joint_quality': joint/'observed.signal-quality.json', 'joint_model': joint/'canonical.json',
+                'joint_canonical_quality': joint/'canonical.signal-quality.json',
+                'joint_alias_projection': joint/'supplied-aliases.json',
+                'joint_replay': joint/'observed-runtime/replay-command.json',
+                'joint_config': joint/'observed-runtime/serve.yaml',
+                'joint_accepted_sequence': joint/'observed-runtime/accepted-request-sequence.jsonl',
+                'union_model': out/'union-model.json', 'input_manifest': inputs,
+                'static_inputs': toolchain/'static-inputs.json',
+                'alias_table': root/'runtime-identity-v5/supplied-service-aliases-training.json',
+                'alias_admission': root/'runtime-identity-v5/supplied-service-alias-admission-training.json'}
+            if (set(union['files']) != set(paths) or union['configured_tool_pins'] != {
+                    'Procrustes': PINS['procrustes'], 'Bering': FRESH_BERING, 'Sheaft': PINS['sheaft']}):
+                raise ValueError('paired union source list or product pins differ')
+            for key, path in paths.items():
+                claim_at(union['files'][key], path)
+            for key, path in (('model', paths['union_model']), ('proof', union_path)):
+                claim_at(provenance['union'][key], path)
+            replay = read(paths['joint_replay'])
+            config = yaml.safe_load(paths['joint_config'].read_text(encoding='utf-8'))
+            argv = replay.get('argv') or []
+            runtime, sink = config.get('runtime') or {}, config.get('sink') or {}
+            if (len(argv) != 4 or PurePosixPath(argv[0]).name != 'bering'
+                    or argv[1:3] != ['serve', '--config']
+                    or toolchain_relative(argv[3]) != paths['joint_config'].relative_to(toolchain).as_posix()
+                    or config.get('overlays') != []
+                    or runtime.get('publication_mode') != 'on_shutdown'
+                    or runtime.get('reconciliation') != {'enabled': False}
+                    or runtime.get('max_in_memory_spans') != sum(counts.values()) + 1
+                    or toolchain_relative(sink.get('latest_path', '')) != paths['joint_snapshot'].relative_to(toolchain).as_posix()
+                    or toolchain_relative(sink.get('signal_quality_path', '')) != paths['joint_quality'].relative_to(toolchain).as_posix()):
+                raise ValueError('paired Bering command does not use its exact saved batch configuration')
+            ingest = replay.get('ingest') or {}
+            if (replay.get('returncode') != 0 or replay.get('status') != 'complete'
+                    or replay.get('request_routing') != 'ordinary_otlp_joint_view'
+                    or replay.get('source_profile') != {'input_type': 'otlp', 'trace_context_domain': ''}
+                    or replay.get('original_source_profile') != {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}
+                    or replay.get('source_domain') != '' or replay.get('clock_admission_filter') is not False
+                    or replay.get('original_export_roles_retained') is not True
+                    or ingest.get('spans') != sum(counts.values())
+                    or ingest.get('dropped_spans') != 0 or ingest.get('late_spans') != 0
+                    or read(paths['joint_snapshot'])['model'] != read(paths['joint_raw_model'])):
+                raise ValueError('paired actual Bering view differs')
+            sequence = accepted_sequence_facts(toolchain, read(inputs), replay, freeze, joint_otlp=True)
+            base_replay = read(shared/'observed-runtime/replay-command.json')
+            base_sequence = verified_reference(toolchain, base_replay['accepted_request_sequence'], freeze)
+            with base_sequence.open(encoding='utf-8') as left, paths['joint_accepted_sequence'].open(encoding='utf-8') as right:
+                for base_row, joint_row in itertools.zip_longest(left, right):
+                    if base_row is None or joint_row is None:
+                        raise ValueError('paired request count differs from original combined')
+                    a, b = json.loads(base_row), json.loads(joint_row)
+                    if any(a.get(key) != b.get(key) for key in
+                           ('export_index', 'content_sha256', 'content_bytes', 'storage_form')):
+                        raise ValueError('paired request bytes or order differ')
+            alias = read(paths['joint_alias_projection'])
+            admitted = read(paths['alias_admission']).get('aliases') or {}
+            if (alias.get('table_sha256') != sha(paths['alias_table'])
+                    or alias.get('raw_model_sha256') != sha(paths['joint_raw_model'])
+                    or alias.get('raw_quality_sha256') != sha(paths['joint_quality'])
+                    or any(admitted.get(key) != value for key, value in (alias.get('effective_aliases') or {}).items())
+                    or alias.get('graph_edges_injected') or alias.get('physical_identity_inferred')
+                    or alias.get('roles_or_endpoints_created')
+                    or alias_only_model(read(paths['joint_raw_model']), alias.get('effective_aliases') or {}) != read(paths['joint_model'])):
+                raise ValueError('paired joint projection exceeds the supplied alias boundary')
+            base = read(paths['base_model'])
+            expected = copy.deepcopy(base)
+            services = {row['id'] for row in base['services']}
+            edges = {row['id']: row for row in base['edges']}
+            added, conflicts, skipped = [], [], []
+            for edge in read(paths['joint_model'])['edges']:
+                if edge['id'] in edges:
+                    if any(edges[edge['id']].get(key) != edge.get(key) for key in ('from', 'to', 'kind', 'blocking', 'identity')):
+                        conflicts.append(edge['id'])
+                elif (edge.get('identity') or {}).get('span_kind') != 'server':
+                    skipped.append({'id': edge['id'], 'reason': 'not_an_actual_server_child_edge'})
+                elif edge['from'] not in services or edge['to'] not in services:
+                    skipped.append({'id': edge['id'], 'reason': 'endpoint_service_not_in_original_view'})
+                else:
+                    expected['edges'].append(copy.deepcopy(edge))
+                    added.append(edge['id'])
+            if (expected != read(paths['union_model']) or added != union['added_edge_ids']
+                    or conflicts != union['semantic_identity_conflicts'] or skipped != union['skipped_joint_edges']
+                    or union['joint_alias_metadata_collisions'] != alias['metadata_collisions']
+                    or union.get('union_is_a_bering_emitted_snapshot') is not False
+                    or union.get('contract_inferred_edges') is not False
+                    or union.get('physical_identity_inferred') is not False):
+                raise ValueError('paired graph is not the exact base plus eligible actual SERVER edges')
+            expected_status = ('unknown_view_alignment' if conflicts or alias['metadata_collisions'] else
+                               'forecast_from_observed_context_union' if added else 'reuse_unchanged_union')
+            if status != expected_status or provenance.get('extra_bering_executed') is not True:
+                raise ValueError('paired provenance status differs from actual views')
+            if status != 'forecast_from_observed_context_union' and (
+                    provenance.get('extra_sheaft_executed') is not False or (out/'operations').exists()):
+                raise ValueError('paired reused or conflicting view claims extra simulation')
+            union_facts = {'added_edge_ids': added, 'semantic_identity_conflicts': conflicts,
+                           'joint_alias_metadata_collisions': alias['metadata_collisions'],
+                           'exact_base_and_all_added_fields': True, 'accepted_sequence': sequence}
+        if reuse and operations != original['combined'][variant]:
+            raise ValueError('paired reused forecast differs, including unknown rows')
+        branches = []
+        for operation, forecast in operations.items():
+            row = rows.get(('context-baseline', variant, operation))
+            if evaluation is not None:
+                primary = rows[('combined', variant, operation)]
+                if (any(row.get('forecast_interval' if key == 'interval' else key) != forecast.get(key)
+                        for key in ('available', 'reason', 'prediction', 'interval'))
+                        or any(row.get(key) != primary.get(key) for key in (
+                            'actual_counts', 'actual_target_success_counts', 'observed_empirical_bounds',
+                            'nominal_wilson_envelope', 'latency'))
+                        or row.get('unknown_obligations') != forecast.get('unknown')
+                        or any(row.get(key) != forecast.get(key) for key in (
+                            'database_unknown_reason', 'database_fault_unknown', 'assumed_satisfied_database_requirements'))
+                        or {state: {key: value for key, value in saved.items() if key not in ('prediction', 'error')}
+                            for state, saved in row.get('by_state', {}).items()} !=
+                           {state: {key: value for key, value in saved.items() if key not in ('prediction', 'error')}
+                            for state, saved in primary.get('by_state', {}).items()}):
+                    raise ValueError('paired evaluation differs from frozen forecasts or shared external outcomes')
+            if status == 'unknown_view_alignment' and (forecast.get('available') is not False
+                    or forecast.get('prediction') is not None
+                    or forecast.get('reason') != 'context_view_identity_or_alias_conflict'):
+                raise ValueError('paired conflict was not retained as unknown')
+            metadata = None
+            if forecast.get('available') and not reuse:
+                branch = out/'operations'/operation
+                command = read(branch/'simulation.command.json')
+                argv = command.get('argv') or []
+                if (command.get('returncode') != 0 or forecast.get('simulator') != 'Sheaft'
+                        or forecast.get('graph_sha256') != bound(branch/'model.json')
+                        or argv[:3] != ['sheaft', 'run', '--model']
+                        or toolchain_relative(argv[3]) != branch.relative_to(toolchain).as_posix() + '/model.json'):
+                    raise ValueError('paired available forecast lacks its actual successful Sheaft model')
+                bound(branch/'simulation.command.json')
+                metadata = operation_metadata_facts(toolchain, branch, freeze)
+            branches.append({'operation': operation, 'available_copied': forecast.get('available'),
+                             'reason_copied': forecast.get('reason'), 'provided_metadata_attachment': metadata})
+        facts[variant] = {'status': status, 'union': union_facts, 'branches': branches}
+    return {'policy_id': manifest['policy_id'], 'variants': facts,
+            'external_outcomes_recomputed': False, 'original_forecasts_overwritten': False}
 
 
 def deepflow_control_facts(root: Path, control: dict, node: str, claim: dict) -> dict:
@@ -840,27 +1104,11 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     or alias.get("physical_identity_inferred")
                     or alias.get("roles_or_endpoints_created")):
                 raise ValueError("saved alias proof exceeds exact logical renaming")
-            projected = copy.deepcopy(raw)
             aliases = alias.get("effective_aliases") or {}
             if any((admission.get("aliases") or {}).get(key) != value
                    for key, value in aliases.items()):
                 raise ValueError("saved effective alias was not admitted from supplied inventory")
-            by_id = {}
-            for service in projected.get("services") or []:
-                old = service["id"]
-                service["id"] = aliases.get(old, old)
-                if service.get("name") == old:
-                    service["name"] = service["id"]
-                if service["id"] in by_id and by_id[service["id"]] != service:
-                    raise ValueError("saved alias collision has differing metadata")
-                by_id[service["id"]] = service
-            projected["services"] = [by_id[key] for key in sorted(by_id)]
-            for edge in projected.get("edges") or []:
-                for key in ("from", "to"):
-                    edge[key] = aliases.get(edge.get(key), edge.get(key))
-            for endpoint in projected.get("endpoints") or []:
-                endpoint["entry_service"] = aliases.get(
-                    endpoint.get("entry_service"), endpoint.get("entry_service"))
+            projected = alias_only_model(raw, aliases)
             if projected != effective:
                 raise ValueError("saved semantic model is not exact alias-only projection")
             projected_models.append(alias_path.relative_to(toolchain).as_posix())
@@ -875,6 +1123,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                                metadata_collisions=retained_collisions)
 
     branch_facts = []
+    context_facts = None
+    paired = declaration['head_sha'] in CONTEXT_BASELINE_HEADS
     forecasts_path = toolchain / "forecasts.json"
     forecasts = read(forecasts_path) if forecasts_path.is_file() else None
     if forecasts is not None:
@@ -888,7 +1138,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             for source, variants in forecasts.items()
             for variant, operations in variants.items()
             for operation in operations}
-        if evaluation is not None and forecast_keys != set(evaluation_rows):
+        expected_evaluation_keys = forecast_keys | ({
+            ('context-baseline', variant, operation)
+            for variant, operations in forecasts['combined'].items() for operation in operations} if paired else set())
+        if evaluation is not None and expected_evaluation_keys != set(evaluation_rows):
             raise ValueError("saved forecast and evaluation branch-key coverage differs")
         for source, variants in forecasts.items():
             for variant, operations in variants.items():
@@ -949,6 +1202,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "observed_endpoint_ids_retained": (
                             sorted(model_endpoints) if saved_row.get("available") else None),
                     })
+        if paired:
+            context_facts = context_baseline_facts(root, toolchain, freeze, forecasts, evaluation)
     else:
         raise ValueError("selected evidence lacks saved forecasts")
 
@@ -1141,6 +1396,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "native_mode_facts": native_facts,
         "guest_platform_facts": guest_facts,
         "supplied_logical_alias_facts": alias_facts,
+        "paired_context_baseline_facts": context_facts,
         "worker_import_facts": worker_facts,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
         "actual_procrustes": preflights, "saved_branch_facts": branch_facts,

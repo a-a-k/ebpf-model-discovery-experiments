@@ -92,6 +92,34 @@ def test_operation_metadata_review_reconstructs_all_fields_and_preserves_first_p
     assert REVIEW._package_selected("discovery/combined/raw/observed.signal-quality.json", "toolchain")
 
 
+def test_paired_metadata_uses_seven_real_links_and_keeps_original_quality_scope(tmp_path):
+    toolchain, original_branch, freeze = metadata_fixture(tmp_path)
+    out = toolchain/'context-baseline/raw'
+    branch = out/'operations/details'
+    for name in ('overlay.json', 'model.json', 'model.signal-quality.json'):
+        write(branch/name, (original_branch/name).read_bytes())
+    write(out/'union-model.json', REVIEW.read(toolchain/'discovery/combined/raw/observed.json'))
+    write(out/'union-proof.json', {'fixture_union_derivation': True})
+    proof = REVIEW.read(original_branch/'provided-metadata-attachment.json')
+    for key, path in (('observed_model', out/'union-model.json'),
+                      ('observation_derivation', out/'union-proof.json'),
+                      ('provided_overlay', branch/'overlay.json'), ('simulator_model', branch/'model.json')):
+        proof['files'][key] = {'path': '/saved/toolchain/' + path.relative_to(toolchain).as_posix(), 'sha256': digest(path)}
+    proof.update(observed_graph_origin='paired_context_edge_union',
+                 source_signal_quality_scope='base entities and database aliases; added edge evidence is in the actual joint quality',
+                 observation_derivation={key: proof['files'][name] for key, name in
+                                         (('model', 'observed_model'), ('proof', 'observation_derivation'))})
+    write(branch/'provided-metadata-attachment.json', proof)
+    write(branch/'provided-metadata-validation.command.json', {
+        'returncode': 0, 'argv': ['bering', 'validate', '--input',
+                                 '/saved/toolchain/context-baseline/raw/operations/details/model.json']})
+    freeze['sha256_by_path'].update({'toolchain/' + path.relative_to(toolchain).as_posix(): digest(path)
+                                     for path in out.rglob('*') if path.is_file()})
+    facts = REVIEW.operation_metadata_facts(toolchain, branch, freeze)
+    assert facts['all_model_fields_exact']
+    assert 'toolchain/context-baseline/raw/union-proof.json' in facts['verified_frozen_paths']
+
+
 @pytest.mark.parametrize("changed", ["edge", "first-provenance", "unknown-entity", "quality", "command", "locator", "unfrozen", "publication-claim"])
 def test_operation_metadata_review_rejects_even_rehashed_unexplained_changes(tmp_path, changed):
     toolchain, branch, freeze = metadata_fixture(tmp_path)
@@ -172,6 +200,248 @@ def write(path: Path, value) -> None:
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def paired_fixture(tmp_path, *, joint=True, added=True, conflict=False):
+    root, toolchain = tmp_path, tmp_path/'toolchain'
+    baseline = toolchain/'context-baseline'
+    original = {'combined': {}}
+    predictions, variants, evaluations = {}, {}, []
+    base = {'services': [{'id': 'front'}, {'id': 'catalog'}], 'endpoints': [],
+            'metadata': {'source_ref': 'actual-strict-view'},
+            'edges': [{'id': 'existing', 'from': 'front', 'to': 'catalog',
+                       'identity': {'span_kind': 'client'}, 'observations': 9}]}
+    extra = {'id': 'actual-server', 'from': 'front', 'to': 'catalog',
+             'identity': {'span_kind': 'server'}, 'observations': 3}
+    def ref(path):
+        return {'path': '/saved/' + path.relative_to(root).as_posix(), 'sha256': digest(path)}
+    for name, value in (
+            ('supplied-service-aliases-training.json', {}),
+            ('supplied-service-alias-admission-training.json', {'aliases': {}})):
+        write(root/'runtime-identity-v5'/name, value)
+    write(toolchain/'static-inputs.json', {})
+    for variant in ('raw', 'network_scope'):
+        counts = {'ebpf': 1, 'native': int(joint)}
+        for source, count in counts.items():
+            write(toolchain/'inputs'/source/variant/'observations.json', {'observations': count})
+        inputs = toolchain/'inputs/combined'/variant/'observations.json'
+        exports = [{'source': source, 'path': '/saved/toolchain/inputs/' + source + '/' + variant + '/body.pb',
+                    'sha256': ('a' if source == 'ebpf' else 'b') * 64,
+                    'observations': 1} for source, count in counts.items() if count]
+        write(inputs, {'observations': sum(counts.values()), 'exports': exports})
+        original['combined'][variant] = {'browse': {'available': False, 'prediction': None,
+                                                   'unknown': [{'reason': 'required_call_missing', 'callee': 'catalog'}],
+                                                   'interval': [0, 1], 'reason': 'saved_primary_unknown'}}
+        predictions[variant] = json.loads(json.dumps(original['combined'][variant]))
+        variants[variant] = {'input_manifest': ref(inputs), 'source_observations': counts,
+                             'status': 'reuse_single_source_equivalence', 'extra_bering_or_sheaft_executed': False}
+        for source in ('combined', 'context-baseline'):
+            evaluations.append({'source': source, 'variant': variant, 'operation': 'browse',
+                                **{key: value for key, value in predictions[variant]['browse'].items() if key != 'interval'},
+                                'unknown_obligations': predictions[variant]['browse']['unknown'],
+                                'by_state': {'11': {'counts': {'success': 2, 'failure': 0}, 'bounds': [1, 1]},
+                                             '00': {'counts': {'success': 0, 'failure': 1}, 'bounds': [0, 0]}},
+                                'forecast_interval': [0, 1], 'actual_counts': {'success': 2, 'failure': 1}})
+    write(toolchain/'forecasts.json', original)
+    for variant in variants:
+        out, shared = baseline/variant, toolchain/'discovery/combined'/variant
+        provenance = variants[variant]
+        provenance['original_forecasts'] = ref(toolchain/'forecasts.json')
+        if joint:
+            folder = out/'joint'
+            joint_model = json.loads(json.dumps(base))
+            joint_model['edges'][0]['observations'] = 55  # Alternate statistics must not overwrite the base.
+            if conflict:
+                joint_model['edges'][0]['blocking'] = True
+            if added:
+                joint_model['edges'].append(extra)
+            merged = json.loads(json.dumps(base))
+            if added:
+                merged['edges'].append(extra)
+            for path, value in ((shared/'observed.json', base), (shared/'observed.bering-raw.json', base),
+                                (shared/'observed.snapshot.json', {'model': base}),
+                                (shared/'observed.signal-quality.json', {}), (shared/'observed.supplied-aliases.json', {}),
+                                (folder/'observed.json', joint_model), (folder/'canonical.json', REVIEW.alias_only_model(joint_model, {})),
+                                (folder/'observed.snapshot.json', {'model': joint_model}),
+                                (folder/'observed.signal-quality.json', {}), (folder/'canonical.signal-quality.json', {}),
+                                (out/'union-model.json', merged)):
+                write(path, value)
+            alias = {'table_sha256': digest(root/'runtime-identity-v5/supplied-service-aliases-training.json'),
+                     'raw_model_sha256': digest(folder/'observed.json'),
+                     'raw_quality_sha256': digest(folder/'observed.signal-quality.json'),
+                     'metadata_collisions': [], 'effective_aliases': {}}
+            write(folder/'supplied-aliases.json', alias)
+            manifest = REVIEW.read(toolchain/'inputs/combined'/variant/'observations.json')
+            sequence = [{'export_index': index, 'content_sha256': row['sha256'], 'content_bytes': 42,
+                         'http_status': 200, 'endpoint': '/v1/traces', 'storage_form': 'ordinary_export',
+                         'original_source': row['source']} for index, row in enumerate(manifest['exports'])]
+            for directory, paired in ((folder, True), (shared, False)):
+                rows = json.loads(json.dumps(sequence))
+                if not paired:
+                    for row in rows:
+                        source = row.pop('original_source')
+                        row['endpoint'] = '/sources/ebpf/v1/traces' if source == 'ebpf' else '/v1/traces'
+                sequence_path = directory/'observed-runtime/accepted-request-sequence.jsonl'
+                write(sequence_path, ''.join(json.dumps(row) + '\n' for row in rows).encode())
+                replay = {'accepted_request_sequence': {**ref(sequence_path), 'bytes': sequence_path.stat().st_size,
+                          'requests': len(rows), 'same_order_as_original_request_ordinals_and_source_groups': True},
+                          'accepted_ingest_requests': [{key: value for key, value in row.items() if key != 'storage_form'} for row in rows]}
+                if paired:
+                    replay.update(returncode=0, status='complete', request_routing='ordinary_otlp_joint_view',
+                                  argv=['/saved/bin/bering', 'serve', '--config', '/saved/toolchain/context-baseline/' + variant + '/joint/observed-runtime/serve.yaml'],
+                                  source_profile={'input_type': 'otlp', 'trace_context_domain': ''},
+                                  original_source_profile={'source_id': 'ebpf', 'input_type': 'ebpf-otlp'},
+                                  source_domain='', clock_admission_filter=False, original_export_roles_retained=True,
+                                  ingest={'spans': 2, 'dropped_spans': 0, 'late_spans': 0})
+                    write(directory/'observed-runtime/serve.yaml', {
+                        'runtime': {'publication_mode': 'on_shutdown', 'max_in_memory_spans': 3,
+                                    'reconciliation': {'enabled': False}}, 'overlays': [],
+                        'sink': {'latest_path': '/saved/toolchain/context-baseline/' + variant + '/joint/observed.snapshot.json',
+                                 'signal_quality_path': '/saved/toolchain/context-baseline/' + variant + '/joint/observed.signal-quality.json'}})
+                write(directory/'observed-runtime/replay-command.json', replay)
+            files = {'base_model': shared/'observed.json', 'base_raw_model': shared/'observed.bering-raw.json',
+                     'base_snapshot': shared/'observed.snapshot.json', 'base_quality': shared/'observed.signal-quality.json',
+                     'base_alias_projection': shared/'observed.supplied-aliases.json',
+                     'joint_raw_model': folder/'observed.json', 'joint_snapshot': folder/'observed.snapshot.json',
+                     'joint_quality': folder/'observed.signal-quality.json', 'joint_model': folder/'canonical.json',
+                     'joint_canonical_quality': folder/'canonical.signal-quality.json',
+                     'joint_alias_projection': folder/'supplied-aliases.json',
+                     'joint_replay': folder/'observed-runtime/replay-command.json',
+                     'joint_config': folder/'observed-runtime/serve.yaml',
+                     'joint_accepted_sequence': folder/'observed-runtime/accepted-request-sequence.jsonl',
+                     'union_model': out/'union-model.json',
+                     'input_manifest': toolchain/'inputs/combined'/variant/'observations.json',
+                     'static_inputs': toolchain/'static-inputs.json',
+                     'alias_table': root/'runtime-identity-v5/supplied-service-aliases-training.json',
+                     'alias_admission': root/'runtime-identity-v5/supplied-service-alias-admission-training.json'}
+            proof = {'files': {key: ref(path) for key, path in files.items()},
+                     'configured_tool_pins': {'Procrustes': REVIEW.PINS['procrustes'], 'Bering': REVIEW.FRESH_BERING,
+                                              'Sheaft': REVIEW.PINS['sheaft']},
+                     'added_edge_ids': ['actual-server'] if added else [],
+                     'semantic_identity_conflicts': ['existing'] if conflict else [],
+                     'skipped_joint_edges': [], 'joint_alias_metadata_collisions': [],
+                     'union_is_a_bering_emitted_snapshot': False, 'contract_inferred_edges': False,
+                     'physical_identity_inferred': False}
+            write(out/'union-proof.json', proof)
+            status = ('unknown_view_alignment' if conflict else
+                      'forecast_from_observed_context_union' if added else 'reuse_unchanged_union')
+            provenance.pop('extra_bering_or_sheaft_executed')
+            provenance.update(status=status, extra_bering_executed=True,
+                              union={'model': ref(out/'union-model.json'), 'proof': ref(out/'union-proof.json')})
+            if status != 'forecast_from_observed_context_union':
+                provenance['extra_sheaft_executed'] = False
+            if conflict:
+                predictions[variant]['browse']['reason'] = 'context_view_identity_or_alias_conflict'
+                for row in evaluations:
+                    if row['source'] == 'context-baseline' and row['variant'] == variant:
+                        row['reason'] = 'context_view_identity_or_alias_conflict'
+        write(out/'provenance.json', provenance)
+    write(baseline/'forecasts.json', predictions)
+    write(baseline/'manifest.json', {'policy_id': 'observed_server_edge_union_v1', 'variants': variants,
+          'same_policy_all_collectors_and_scenarios': True, 'requires_capture_freeze_before_targets': True,
+          'post_target_diagnostic_is_not_a_primary_forecast': True})
+    freeze = {'sha256_by_path': {path.relative_to(root).as_posix(): digest(path)
+                                for path in root.rglob('*') if path.is_file()}}
+    for variant in variants:
+        for row in REVIEW.read(toolchain/'inputs/combined'/variant/'observations.json')['exports']:
+            freeze['sha256_by_path']['toolchain/' + REVIEW.toolchain_relative(row['path'])] = row['sha256']
+    return root, toolchain, freeze, original, {'evaluations': evaluations}
+
+
+@pytest.mark.parametrize('joint,added,conflict', [(False, False, False), (True, False, False),
+                                                (True, True, False), (True, True, True)])
+def test_paired_saved_facts_cover_reuse_actual_union_and_unknown_conflict(tmp_path, joint, added, conflict):
+    args = paired_fixture(tmp_path, joint=joint, added=added, conflict=conflict)
+    facts = REVIEW.context_baseline_facts(*args)
+    assert facts['external_outcomes_recomputed'] is False
+    assert facts['variants']['raw']['union'] is None if not joint else facts['variants']['raw']['union']['exact_base_and_all_added_fields']
+    for name in ('union-proof.json', 'joint/observed-runtime/accepted-request-sequence.jsonl',
+                 'operations/browse/provided-metadata-attachment.json'):
+        assert SELECT.wanted_member('toolchain/context-baseline/raw/' + name, 'full')
+        assert REVIEW._package_selected('context-baseline/raw/' + name, 'toolchain')
+    assert not SELECT.wanted_member('toolchain/context-baseline/raw/joint/attempt-journal.jsonl', 'full')
+
+
+@pytest.mark.parametrize('changed', ['base-statistic', 'extra-client', 'request-role', 'locator',
+                                     'unfrozen', 'external-outcomes', 'unknown-reuse', 'unknown-details',
+                                     'state-outcomes', 'config', 'config-command'])
+def test_paired_saved_facts_reject_independently_rehashed_changes(tmp_path, changed):
+    args = paired_fixture(tmp_path, added=changed != 'unknown-reuse')
+    root, toolchain, freeze, original, evaluation = args
+    baseline = toolchain/'context-baseline'
+    if changed in ('base-statistic', 'extra-client'):
+        path = baseline/'raw/union-model.json'
+        model = REVIEW.read(path)
+        if changed == 'base-statistic':
+            model['edges'][0]['observations'] += 1
+        else:
+            model['edges'].append({'id': 'invented-client', 'from': 'front', 'to': 'catalog'})
+        write(path, model)
+    elif changed == 'request-role':
+        path = baseline/'raw/joint/observed-runtime/accepted-request-sequence.jsonl'
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        rows[0]['original_source'] = 'native'
+        write(path, ''.join(json.dumps(row) + '\n' for row in rows).encode())
+    elif changed == 'locator':
+        path = baseline/'raw/union-proof.json'
+        proof = REVIEW.read(path)
+        proof['files']['base_model']['path'] = '/saved/toolchain/discovery/native/raw/observed.json'
+        write(toolchain/'discovery/native/raw/observed.json', REVIEW.read(toolchain/'discovery/combined/raw/observed.json'))
+        write(path, proof)
+    elif changed == 'external-outcomes':
+        evaluation['evaluations'][1]['actual_counts']['success'] += 1
+    elif changed == 'unknown-details':
+        evaluation['evaluations'][1]['unknown_obligations'] = [{'reason': 'silently_removed_callee'}]
+    elif changed == 'state-outcomes':
+        evaluation['evaluations'][1]['by_state']['11']['counts']['success'] += 1
+    elif changed == 'config':
+        path = baseline/'raw/joint/observed-runtime/serve.yaml'
+        config = REVIEW.read(path)
+        config['runtime']['publication_mode'] = 'windowed'
+        write(path, config)
+    elif changed == 'config-command':
+        path = baseline/'raw/joint/observed-runtime/replay-command.json'
+        command = REVIEW.read(path)
+        command['argv'][3] = '/saved/toolchain/other/serve.yaml'
+        write(path, command)
+    elif changed == 'unknown-reuse':
+        path = baseline/'forecasts.json'
+        forecasts = REVIEW.read(path)
+        forecasts['raw']['browse']['reason'] = 'relabelled_unknown'
+        write(path, forecasts)
+        evaluation['evaluations'][1]['reason'] = 'relabelled_unknown'
+    if changed != 'unfrozen':
+        # Rebind the saved hash chain as a changed producer could. The reader
+        # must reject the substantive inconsistency, not merely a stale digest.
+        for variant in ('raw', 'network_scope'):
+            out = baseline/variant
+            replay_path = out/'joint/observed-runtime/replay-command.json'
+            replay = REVIEW.read(replay_path)
+            sequence_path = replay_path.parent/'accepted-request-sequence.jsonl'
+            sequence = [json.loads(line) for line in sequence_path.read_text().splitlines()]
+            replay['accepted_request_sequence'].update(sha256=digest(sequence_path), bytes=sequence_path.stat().st_size)
+            replay['accepted_ingest_requests'] = [{key: value for key, value in row.items() if key != 'storage_form'} for row in sequence]
+            write(replay_path, replay)
+            proof_path = out/'union-proof.json'
+            proof = REVIEW.read(proof_path)
+            for claim in proof['files'].values():
+                claim['sha256'] = digest(root/claim['path'].split('/saved/', 1)[1])
+            write(proof_path, proof)
+            provenance_path = out/'provenance.json'
+            provenance = REVIEW.read(provenance_path)
+            provenance['union']['proof']['sha256'] = digest(proof_path)
+            provenance['union']['model']['sha256'] = digest(out/'union-model.json')
+            write(provenance_path, provenance)
+            manifest_path = baseline/'manifest.json'
+            manifest = REVIEW.read(manifest_path)
+            manifest['variants'][variant] = provenance
+            write(manifest_path, manifest)
+        freeze['sha256_by_path'].update({path.relative_to(root).as_posix(): digest(path)
+                                        for path in root.rglob('*') if path.is_file()})
+    else:
+        del freeze['sha256_by_path']['toolchain/context-baseline/manifest.json']
+    with pytest.raises(ValueError):
+        REVIEW.context_baseline_facts(*args)
 
 
 def fixture(tmp_path: Path, *, available: bool = True):

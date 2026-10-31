@@ -63,3 +63,17 @@ equal the original combined forecast exactly and reference its original model;
 no copied model or execution is invented. Original three-method rows and external
 attempt counts remain unchanged. Historical evaluations without this policy keep
 their original behavior. Repeated method rows are not independent external trials.
+
+The saved-facts reader keeps the original three-method coverage check and checks
+the paired method separately. Its fixed-file review binds every union input to
+the pre-target freeze, checks the actual joint serve configuration and complete
+accepted request sequence, reconstructs the supplied alias projection and entire
+union independently, and inspects the seven-link operation metadata derivation.
+Reuse requires complete forecast equality, including unavailable rows. Paired
+evaluations must retain the frozen unknown/DB reasons and the same aggregate and
+per-state external outcomes as combined. This reader does not rescore outcomes.
+Accepted sidecars bind body hashes, byte counts, order and storage form. HTTP
+Content-Type and Content-Encoding come from the same frozen manifest and reviewed
+replay implementation; actual transmitted header bytes were not separately
+captured. The paired source profile stays inactive until the final common commit
+has passed independent review.

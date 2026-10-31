@@ -96,6 +96,15 @@ def wanted_member(name: str, scope: str) -> bool:
     if name.startswith("toolchain/inputs/") and name.endswith("-request-index.jsonl"):
         return True
     parts = name.split("/")
+    if name.startswith('toolchain/context-baseline/'):
+        return parts[-1] in {
+            'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
+            'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
+            'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
+            'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
+            'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
+            'model.json', 'model.signal-quality.json', 'simulation.command.json',
+            'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("toolchain/discovery/"):
         return name.endswith(("observed.json", "observed.snapshot.json",
                               "observed.supplied-aliases.json", "observed.bering-raw.json",
