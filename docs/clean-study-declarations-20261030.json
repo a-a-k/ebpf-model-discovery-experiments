@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Original81 matchedscience0c98 cells active; API05:31:51UTC1complete success/1pretargettechnicalfailure(OBI DSBabs6). Commonworker diskprepPR10 merged; exactsame-source failedcell replacement41173230022active. Independentmain admission pending.",
+  "main_dispatch_status": "Direct gh API06:33:33UTC:5 original finalsource main jobs completed success(OBIabs7/8;Corootabs6/7/8), one pretargettechnicalfailureOBIabs6; same-science replacement41173230022 active. Allthree parent grids continue onscience0c98. Fixed3 and all81 independent main saved-facts review pending.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2948,6 +2948,41 @@
       "run_id": 41173077025,
       "role": "preparation",
       "note": "PR CI for common workflow-only unusedhostSDK diskpreparation134dcbb; successful. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41173191817,
+      "role": "preparation",
+      "note": "Main-branch CI for workflow-only worker disk preparation merge8a9; science0c98 unchanged. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41173322766,
+      "role": "preparation",
+      "note": "CI for analysis mergefc22288, technical repeat declaration and common disk preparation. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41173327457,
+      "role": "preparation",
+      "note": "PR CI for analysis mergefc22288, technical repeat declaration and common disk preparation. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41173320126,
+      "role": "worker",
+      "note": "Observed first worker using operational workflow8a9; unusedSDK cleanup and checkpointdownload succeeded; actualfull-output/scientificidentity review pending. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41173372853,
+      "role": "worker",
+      "note": "Observed second worker using operational workflow8a9; unusedSDK cleanup and checkpointdownload succeeded; actualfull-output/scientificidentity review pending. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41176572819,
+      "role": "preparation",
+      "note": "CI for read-only evidence-review scheduling9acc7ef: maxparallel3to12, unchanged reader/science/input/checks. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
+    },
+    {
+      "run_id": 41176576192,
+      "role": "preparation",
+      "note": "PR CI for read-only evidence-review scheduling9acc7ef: maxparallel3to12, unchanged reader/science/input/checks. Preserve complete measured elapsed, transfer, preparation and technical-failure costs. No CPU/monetary saving claimed; human effort unmeasured."
     }
   ],
   "blocked_main_cells": [],

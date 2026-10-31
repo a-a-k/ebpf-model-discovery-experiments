@@ -221,3 +221,9 @@ scoring and science source0c98 remain unchanged. The expected effect is shorter
 queueing for evidence review; no CPU or monetary saving is claimed. All actual
 preparation, transfer, review and technical-failure costs remain in the inventory.
 Read failures remain technical review failures, not scientific negative outcomes.
+
+Both agents inspected actual scheduling commit9acc7ef and give ACTUAL-CODE
+ORIGINAL-feasibility GO. Its only executable difference is max-parallel3to12;
+the existing reader and all scientific checks are unchanged. YAML and diff checks
+passed, as did exact-source CI41176572819 and41176576192. Actual fixed-family
+qualification and full81 review remain required before scientific conclusions.

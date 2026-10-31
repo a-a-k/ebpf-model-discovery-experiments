@@ -249,5 +249,35 @@
     "replacement_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "replacement_status": "ActualAPI05:36UTC prepareSUCCESS, campaignactive Install experiment package",
     "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json"
+  },
+  "main_runtime_metadata_snapshot": {
+    "observed_utc": "2026-10-31T06:33:33Z",
+    "completed_main_capture_jobs": 5,
+    "independently_admitted_main_cells": 0,
+    "known_technical_failed_cell": {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "original_run": 41164821492,
+      "replacement_run": 41173230022
+    },
+    "small_metadata_reviews": [
+      "work/main81-compact-13031540651/root-small-metadata-review.json",
+      "work/main81-compact-13031719441/root-small-metadata-review.json"
+    ],
+    "same_seed8_obi_coroot_final_plans_file_sha256_claim": "dde79c12c0328cb56141cb14e0bbff31014e237dee0c940970b6b97001bcb8e4",
+    "local_inspection_limits": "Only selected small metadata/forecasts/block declarations. Largeplans/census/evaluations/journals remain inActions. DeepFlowtrainingmanifest exceededlocal4MiB/member inspection choice; no scientific exclusion or neweligibilitygate.",
+    "live_api_boundary": "Use direct gh API for mutable status/inventories; connector returned stale phase. Immutable saved-artifact identity remains checked by exact IDs/digests."
+  },
+  "saved_review_scheduling": {
+    "reviewed_source": "9acc7ef2c0b7127e1429ae9bc0bdddd184111aaa",
+    "max_parallel": 12,
+    "both_original_design_and_actual_code_GO": true,
+    "CI_success": [
+      41176572819,
+      41176576192
+    ],
+    "boundary": "Scheduling only. Sameper-jobUbuntu, fixed3qualification/all81series, failfastfalse, immutabledata/source/strictchecks. No capture/fit/sim/rescore/math/admission change. Include all actual preparation and review costs."
   }
 }
