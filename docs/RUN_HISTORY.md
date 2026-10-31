@@ -160,3 +160,22 @@ the previous qualification cannot alone authorize the fresh acquisition. Both
 qualifications and all read-only replay/audit costs remain preparation costs.
 
 The first scheduled acquisition, [Petclinic, absent, seed 0](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035), is retained as a **superseded protocol pilot**. Before its accuracy was inspected, review approved a fixed warmup and drain guard for every block to reduce stale-connection effects after replica changes. All 27 scored campaigns use `fixed-warmup-v2`; this earlier run is rerun by protocol version, regardless of accuracy. Its costs and data remain part of the history.
+
+## Fresh matched v5 technical replacements, 2026-10-31
+
+The active study has 81 unique cells at scientific source `0c98bf4`, immutable
+tag `study-20261031-v5`. The older 27-cell protocols above remain historical.
+Technical replacement does not add a scientific repetition or change the
+information, semantic contracts, prediction methods or outcome rules.
+
+| Failed case | Proven technical cause | Exact replacement and boundary |
+|---|---|---|
+| OBI / DSB / absent / seed 6, parent `41164821492`, worker `41171880804` | Worker checkpoint extraction raised `OSError: [Errno 28] No space left on device` before graph construction, forecasts or targets | [41173230022](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41173230022) completed successfully. Common worker preparation removes unused hosted SDK directories before download; measured reclaimed capacity is about 16.77 GiB. Scientific source and inputs remain unchanged; [details](WORKER_PACKAGING_V5.md). |
+| OBI / DSB / full / seed 7, parent `41164821492`, job `124430026324` | During deployment, Docker could not bind guest port `0.0.0.0:37020/tcp` for `dsb-user-timeline-mongodb`: address already in use. No workload or toolchain had run; the occupying process is unproved | One [same-source repeat 41189048917](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41189048917) was dispatched at 09:31:38 UTC after both explicit original-criterion GO verdicts and a pre-execution record at 09:31:35 UTC. Fresh guests use the same port and code. Recovery is pending; recurrence requires diagnosis of the actual owner. |
+
+The second failed case's full artifact is `13038151640`, summary is `13037762162`,
+and retention artifact is `13037737273`; retention is not the compact summary.
+All failed-attempt, preparation, repeat, worker, waiting, transfer and publication
+costs remain in the declarations. Human preparation is unmeasured. Unknown or
+unfavorable completed application outcomes are retained without accuracy-based
+reruns. Full independent saved-facts review remains required for the fresh matrix.

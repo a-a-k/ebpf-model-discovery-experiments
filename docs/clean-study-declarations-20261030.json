@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct gh API08:50:23UTC:9 unique completedSUCCESS main cells, all DSB absent3collectors x3seeds including exact OBI6 replacement41173230022. Historical pretargetdiskfailure41171880804 retained separately. Nine DSBpartial parent cells continue; no newfailedsteps. Fixed3 and all81 independent saved-facts review pending.",
+  "main_dispatch_status": "Direct API09:24:44UTC:11 unique completedSUCCESS main cells. Original OBI parent now has two known pretargettechnical failures: absent6 worker disk exhaustion (exactreplacement41173230022 alreadySUCCESS), full7 Docker host port37020 conflict (exactreplacement41189048917 dispatched09:31:38UTC, same science/port). Allother originalgrid cells continue; no model/outcome selection. Full independent saved-facts review remains pending.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1831,6 +1831,19 @@
         }
       ],
       "note": "Predeclared technicalreplacement for41164821492/OBI/DSBabs6 afterworker41171880804 exhausted disk beforemodel/forecast/targets. Same immutable scientific source0c98/tagstudy-20261031-v5; commonworker workflow8a9 freesunusedhostSDKdisk. Bothoriginaldesign+actualcodeGO, bothCI success before05:35:46UTCdispatch. No accuracy/outcome selection; originalfailedattempt retained."
+    },
+    {
+      "run_id": 41189048917,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "One predeclared exact same-source technical replacement after parent41164821492/job124430026324 failed during Docker deployment: MongoDB host port37020 alreadyinuse, BEFORE workload/toolchain. Both explicit ORIGINAL-feasibility GO before09:31:38UTC dispatch; preexecution record09:31:35.307450UTC. Same immutable source0c98/tagstudy-20261031-v5, freshguests, unchanged port/scenario/semantics/counts/methods/baselines. No accuracy/outcome selection. Previous failedfull13038151640/summary13037762162/retention13037737273 and allcosts retained. Occupant unproved; recurrence needsowner diagnosis, not blind further retry."
     }
   ],
   "related_runs": [
@@ -3038,6 +3051,16 @@
       "run_id": 41182714899,
       "role": "preparation",
       "note": "PR CI for59a0a8b successful exact-case recovery and measured-disk documentation, completedSUCCESS. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41186478851,
+      "role": "preparation",
+      "note": "CI for adbede2 metadata binding of nine completed main cells and successful exact-case disk recovery, completedSUCCESS. Keep full measured costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41186475128,
+      "role": "preparation",
+      "note": "PR CI for adbede2 metadata binding of nine completed main cells and successful exact-case disk recovery, completedSUCCESS. Keep full measured costs; human effort is unmeasured."
     }
   ],
   "blocked_main_cells": [],
@@ -3064,5 +3087,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T08:51:45.611686+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T09:35:10.276307+00:00"
 }

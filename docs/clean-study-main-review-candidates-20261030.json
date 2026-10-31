@@ -78,7 +78,7 @@
       "mode": "full",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41189048917,
       "stage": "main",
       "runner": "study",
       "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 72,
+  "pending_artifact_cells": 70,
   "cells": [
     {
       "system": "deathstarbench",
@@ -896,6 +896,46 @@
       "full_artifact_name": "campaign-v5-obi-main-deathstarbench-absent-8-41164821492",
       "full_artifact_bytes": 6106417711,
       "full_artifact_digest": "sha256:cde162c946d0861c93b4deff99ac975fcaae4ffad207d57669ea93f34ced6062"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13037133622,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-partial-6-41164821492",
+      "compact_artifact_bytes": 2594898116,
+      "compact_artifact_digest": "sha256:88754af88ef24694844e4fc8a9f860b1fd5ba4096c90b421907148674830ad4f",
+      "full_artifact_id": 13037827841,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-partial-6-41164821492",
+      "full_artifact_bytes": 7657727877,
+      "full_artifact_digest": "sha256:b68e79a070c306d3739a777cf64651c8318af1352aebad7590b1cb36fd88679c"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13038126178,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-partial-7-41164821492",
+      "compact_artifact_bytes": 2597957836,
+      "compact_artifact_digest": "sha256:f93ecc960119f53f71b4f2355a4b449517756a90c0283f315aa7141724c04fd6",
+      "full_artifact_id": 13037084564,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-partial-7-41164821492",
+      "full_artifact_bytes": 7653803720,
+      "full_artifact_digest": "sha256:22a8472f24d0deb0194470845eea040c514a92a58b4e3f1f8c3314e42aaffc42"
     },
     {
       "system": "deathstarbench",
@@ -1028,7 +1068,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct gh API 2026-10-31T08:51:09.372688+00:00: nine completed main full/compact pairs, all collectors and seeds for DSB absent. Exact OBI6 technical repeat completed successfully. All81 planned identities remain fixed; no independent full saved-facts admission yet.",
+  "status": "Direct gh API 2026-10-31T09:25:08.455876+00:00: 11 completed main full/compact pairs, comprising all DSB absent cells and OBI partial seeds6/7. Exact OBI6 technical repeat completed successfully. All81 planned identities remain fixed; no independent full saved-facts admission yet. A second pre-load technical replacement was declared for OBI DSB full7: Docker port37020 bind conflict, exact same-source retry41189048917; no score-based selection.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -1044,6 +1084,23 @@
       "reason": "technical_disk_exhaustion_during_checkpoint_extraction_beforeforecastandtargets",
       "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json",
       "original_costs_and_failed_evidence_retained": true
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "original_run_id": 41164821492,
+      "original_job_id": 124430026324,
+      "original_compact_artifact_id": 13037762162,
+      "original_full_artifact_id": 13038151640,
+      "original_retention_artifact_id": 13037737273,
+      "replacement_run_id": 41189048917,
+      "same_scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "technical_docker_host_port37020_already_in_use_duringdeployment_beforeworkload_toolchain_or_targets",
+      "pre_execution_record": "work/dsb-full7-port-bind-technical-repeat-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true,
+      "no_port_or_source_change": true
     }
   ]
 }
