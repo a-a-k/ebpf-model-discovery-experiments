@@ -136,7 +136,8 @@ jobs:
                   if (cell.get('head_sha') not in {
                           '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
                           'fbbda015cefc4f11ee73f32be6ed661c70375f18',
-                          '13c017bf72a86a6853f93a5b8f503de199bf7865'}
+                          '13c017bf72a86a6853f93a5b8f503de199bf7865',
+                          '1d646f907d0241f25445fcfb4d07d4e0ba89d88b'}
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!='retrieve_family_selected'

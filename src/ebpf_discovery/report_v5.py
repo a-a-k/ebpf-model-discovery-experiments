@@ -67,6 +67,11 @@ PREPARATION_ONLY_SOURCE_REVISIONS = {
             ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
             "docs/WORKER_PACKAGING_V5.md": "10edeef57398fc03c7f7405e55b24f157ec67cf3",
         },
+        "1d646f907d0241f25445fcfb4d07d4e0ba89d88b": {
+            ".github/workflows/series-v5.yml": "5546ce9214eead4e07dae0e8ed50828153f6e6e4",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "c270e8e4a2fb48f6d17c4dc0a334b99743d50f94",
+        },
     },
 }
 
