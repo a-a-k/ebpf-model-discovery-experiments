@@ -1,0 +1,262 @@
+{
+  "observed_utc": "2026-10-31T23:03:07.682596+00:00",
+  "case": "OBI/OTel/full/6/S",
+  "source_parent": 41227096018,
+  "source_artifact": 13059948757,
+  "source_API_ZIP_digest": "sha256:40812113c2b34254842280e2086bdbcab56e3d78c034727a5002b854d5569a6d",
+  "verdict": "Concrete guest MEMCG OOM kills MAIN PostgreSQL process of full-CID astronomy-db and containerrestart during target-05/state10, before scheduled DB fault phase; not per-request/all failures/collector attribution or posthoc primary rescore",
+  "new_HTTP_bytes_for_independent_review": 0,
+  "full_cgroup": "1392e2409a69e3b969d525cb3f4696e01b7d483f567edf682097e89d78f3769e",
+  "DockerPS_unique_prefix": "1392e2409a69",
+  "provided_name": "astronomy-db",
+  "provided_image": "postgres:18.4",
+  "rendered_memory_limit_bytes": 83886080,
+  "kernel_memory_usage_limit_kB": 81920,
+  "full_container_ID_runtime_witness_pending": false,
+  "target_05": {
+    "id": "target-05",
+    "phase": "target",
+    "state": "10",
+    "started_ns": 1793480816901429812,
+    "load_started_ns": 1793480844176119772,
+    "ended_ns": 1793480911280935049,
+    "attempts": 1200,
+    "completed_requests": 1200
+  },
+  "target_OOM_kill_literals": [
+    {
+      "line": 2989,
+      "literal": "2026-10-31T21:07:46,801567+00:00 Memory cgroup out of memory: Killed process 76474 (postgres) total-vm:227344kB, anon-rss:2304kB, file-rss:13696kB, shmem-rss:15616kB, UID:999 pgtables:168kB oom_score_adj:0"
+    },
+    {
+      "line": 3149,
+      "literal": "2026-10-31T21:08:11,761177+00:00 Memory cgroup out of memory: Killed process 760427 (postgres) total-vm:227344kB, anon-rss:2176kB, file-rss:13568kB, shmem-rss:15616kB, UID:999 pgtables:168kB oom_score_adj:0"
+    },
+    {
+      "line": 3295,
+      "literal": "2026-10-31T21:08:11,858326+00:00 Memory cgroup out of memory: Killed process 760587 (postgres) total-vm:229832kB, anon-rss:3508kB, file-rss:11928kB, shmem-rss:5120kB, UID:999 pgtables:172kB oom_score_adj:0"
+    },
+    {
+      "line": 3440,
+      "literal": "2026-10-31T21:08:12,007314+00:00 Memory cgroup out of memory: Killed process 762099 (postgres) total-vm:229572kB, anon-rss:3252kB, file-rss:11800kB, shmem-rss:3840kB, UID:999 pgtables:164kB oom_score_adj:0"
+    }
+  ],
+  "db_down_phase_started_ns": 1793481697977796153,
+  "precision_correction": "State10 belongs to target-05; target-10 is state01 later21:15:02-21:16:32",
+  "limits": [
+    "No checkout/shipping OOM established by this record",
+    "A Corootfull6 remains OOM-unproven",
+    "No per-request failed outcome attribution",
+    "No actual whole-database availability duration inferred from backend kills alone",
+    "No posthoc primary exclusion, rescore or favorable rerun",
+    "Retained kernel buffer is finite; absence of other OOM entries is not proof they never occurred"
+  ],
+  "costs": "Root selected27files1560322B; independentlocalCRC/SHA+literalinspection only, zero duplicate HTTP. No raw attemptjournal/trace/SQLite/plans/evaluation/wholeZIP. Original adverse rows/costs retained; human unknown.",
+  "selected27_CRC_SHA_reverified": {
+    "infrastructure\\a\\guest-kernel-final.err": {
+      "bytes": 82,
+      "sha256": "81f93fa08f0c1e69963df9e27b8662f70986cbdc4553f055b4c756d88e9d4b22",
+      "zip_crc32": "67090201"
+    },
+    "infrastructure\\a\\guest-kernel-final.returncode": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "zip_crc32": "7e4acd12"
+    },
+    "infrastructure\\a\\guest-kernel-final.txt": {
+      "bytes": 334093,
+      "sha256": "572a107f4ad3639f7013117be14925e67fd75e9b003144689447e7070bd89230",
+      "zip_crc32": "6014c152"
+    },
+    "infrastructure\\a\\serial-copy.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\a\\serial-copy.returncode": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "zip_crc32": "7e4acd12"
+    },
+    "infrastructure\\a\\serial-stat.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\a\\serial-stat.txt": {
+      "bytes": 387,
+      "sha256": "68154a73cc3fd61e4ee7c662925212b09d0f7c9032b9689ab3060c13948488e8",
+      "zip_crc32": "0db3dfad"
+    },
+    "infrastructure\\a\\serial-test.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\a\\serial.log": {
+      "bytes": 94684,
+      "sha256": "4958fd74fa25bcfcc67c851493d48e4b3931fe1bc25f00e9d2ed0bf3711c1042",
+      "zip_crc32": "546ff65f"
+    },
+    "infrastructure\\b\\guest-kernel-final.err": {
+      "bytes": 82,
+      "sha256": "caeed55946a143549db0ad5fd072f2c25c8d33c85444e71b79502e39df0cbc74",
+      "zip_crc32": "5f328972"
+    },
+    "infrastructure\\b\\guest-kernel-final.returncode": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "zip_crc32": "7e4acd12"
+    },
+    "infrastructure\\b\\guest-kernel-final.txt": {
+      "bytes": 70502,
+      "sha256": "fc4e8edee75a075cf3817b93cdb0d15f232899dcd8bd674941b534bbb84312eb",
+      "zip_crc32": "27c39d6a"
+    },
+    "infrastructure\\b\\serial-copy.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\b\\serial-copy.returncode": {
+      "bytes": 2,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "zip_crc32": "7e4acd12"
+    },
+    "infrastructure\\b\\serial-stat.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\b\\serial-stat.txt": {
+      "bytes": 387,
+      "sha256": "7a5223f8e7fcf1f42881f2f235d5ab2bec09ba3dede93f35e12d569add459f7c",
+      "zip_crc32": "f6d1a31b"
+    },
+    "infrastructure\\b\\serial-test.err": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "infrastructure\\b\\serial.log": {
+      "bytes": 88595,
+      "sha256": "d8af57ad98e3932cb4e799de3ff571829cbb83f58b873af113362290dce002a0",
+      "zip_crc32": "b24bbd6b"
+    },
+    "context\\blocks.json": {
+      "bytes": 29885,
+      "sha256": "132689889d63c6e1c0c2a0af974eea4d3908d70702662aace778085a2927a574",
+      "zip_crc32": "815bb5d0"
+    },
+    "context\\deployment\\otel_demo\\runtime-resolved-node-a.yaml": {
+      "bytes": 26046,
+      "sha256": "72afefc92e1e27225b5102c0937e2266d853cb34103ade32606e78afea901180",
+      "zip_crc32": "ef220983"
+    },
+    "context\\native\\final\\compose-ps-a.jsonl": {
+      "bytes": 25590,
+      "sha256": "e24cbce1c7df55a979e3fa0b4efeee8b18a8edd51396dad1f5ada667049e3d83",
+      "zip_crc32": "de5145a8"
+    },
+    "context\\native\\training\\compose-ps-a.jsonl": {
+      "bytes": 25491,
+      "sha256": "0e5eca4988d49689c454b77eed8c970d9db46e1132e8b83b47d6d2fb528ce3bc",
+      "zip_crc32": "f7e3ccda"
+    },
+    "target05-context/native/final/application-logs/a-astronomy-db.log": {
+      "bytes": 288420,
+      "sha256": "0cf0caa75012a62d1ae39382772bc84104c6d1e36f71789642d8c577e1e4e8b4",
+      "zip_crc32": "876ae071"
+    },
+    "target05-context/native/final/application-logs/a-product-catalog-a.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "target05-context/native/final/application-logs/b-product-catalog-b.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "zip_crc32": "00000000"
+    },
+    "target05-context/runtime-identity-v5/capture-after-target-05.json": {
+      "bytes": 290705,
+      "sha256": "9f9dbfa8ab09c4d936eaeeaade81e54b076bba72c72530f30e625098f54751ca",
+      "zip_crc32": "21ca7a7f"
+    },
+    "target05-context/runtime-identity-v5/capture-before-target-05.json": {
+      "bytes": 285365,
+      "sha256": "a5557b72cefbf814848c233d5df18fbfab78992b947c52fbb76cc36130047a67",
+      "zip_crc32": "e1ba6415"
+    }
+  },
+  "full_runtime_cgroup_and_main_PID_binding": {
+    "before": {
+      "boot_id": "6f3fbb6a-c813-4f17-84fc-10ac9cbc8ab2",
+      "id": "1392e2409a69e3b969d525cb3f4696e01b7d483f567edf682097e89d78f3769e",
+      "name": "astronomy-db",
+      "image": "sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636",
+      "config_image": "postgres:18.4",
+      "init_cgroups": [
+        {
+          "controllers": "",
+          "hierarchy": "0",
+          "path": "/system.slice/docker-1392e2409a69e3b969d525cb3f4696e01b7d483f567edf682097e89d78f3769e.scope"
+        }
+      ],
+      "state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T18:20:45.910547286Z",
+        "Pid": 76474,
+        "Running": true,
+        "StartedAt": "2026-10-31T18:20:45.99715127Z",
+        "Status": "running"
+      }
+    },
+    "after": {
+      "boot_id": "6f3fbb6a-c813-4f17-84fc-10ac9cbc8ab2",
+      "id": "1392e2409a69e3b969d525cb3f4696e01b7d483f567edf682097e89d78f3769e",
+      "name": "astronomy-db",
+      "image": "sha256:a02db8cac496f15b094798a38254f14d6e00741f709360e5e00bb6668ea31636",
+      "config_image": "postgres:18.4",
+      "init_cgroups": [
+        {
+          "controllers": "",
+          "hierarchy": "0",
+          "path": "/system.slice/docker-1392e2409a69e3b969d525cb3f4696e01b7d483f567edf682097e89d78f3769e.scope"
+        }
+      ],
+      "state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-10-31T21:08:12.485473419Z",
+        "Pid": 762338,
+        "Running": true,
+        "StartedAt": "2026-10-31T21:08:12.519429234Z",
+        "Status": "running"
+      }
+    }
+  },
+  "main_postmaster_OOM_and_container_restart_proven": true,
+  "updated_utc": "2026-10-31T23:10:16.249211+00:00",
+  "database_log_witnesses": [
+    {
+      "line": 2518,
+      "time_utc": "2026-10-31T21:08:11.758645710Z",
+      "literal": "FATAL: terminating connection due to unexpected postmaster exit"
+    },
+    {
+      "line": 2528,
+      "time_utc": "2026-10-31T21:08:13.110386461Z",
+      "literal": "FATAL: the database system is starting up"
+    },
+    {
+      "line": 2534,
+      "time_utc": "2026-10-31T21:08:13.354528769Z",
+      "literal": "database system was not properly shut down; automatic recovery in progress"
+    },
+    {
+      "line": 2540,
+      "time_utc": "2026-10-31T21:08:13.391520320Z",
+      "literal": "database system is ready to accept connections"
+    }
+  ]
+}

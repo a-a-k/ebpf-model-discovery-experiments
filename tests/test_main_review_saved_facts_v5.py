@@ -956,7 +956,7 @@ def test_future_candidate_manifest_is_exact_three_fixed_coroot_pc_full_cells() -
 
 
 def _run_manifest_selector(tmp_path: Path, manifest: str, *, phase: str = "pending17",
-                           document: dict | None = None):
+                           document: dict | None = None, fresh_go: bool = True):
     workflow = (ROOT / ".github/workflows/review-pending-main-evidence-v5.yml").read_text()
     script = textwrap.dedent(
         workflow.split("python - <<'PY'\n", 1)[1].split("\n          PY", 1)[0])
@@ -973,6 +973,7 @@ def _run_manifest_selector(tmp_path: Path, manifest: str, *, phase: str = "pendi
     environment = os.environ | {
         "PHASE": phase, "QUALIFICATION_SYSTEM": "all",
         "CANDIDATE_MANIFEST": manifest, "PENDING17_GO": "true",
+        "FRESH_GO": str(fresh_go).lower(),
         "GITHUB_OUTPUT": str(output)}
     result = subprocess.run(
         [sys.executable, "-c", script], cwd=tmp_path, env=environment,
@@ -1221,6 +1222,35 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
     assert result.returncode == 0, result.stderr
     values = dict(line.split("=", 1) for line in output.read_text().splitlines())
     assert len(json.loads(values["matrix"])["cell"]) == 3
+
+
+@pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])
+def test_fresh_batch_is_scheduling_only_and_keeps_final81_boundary(tmp_path, change):
+    name = 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
+    template = json.loads((ROOT/name).read_text())['cells'][0]
+    planned = [{**template, 'collector': collector, 'system': system, 'mode': mode,
+                'seed': seed, 'run_id': 1, 'head_sha': REVIEW.FRESH_HEAD,
+                'stage': 'main', 'runner': 'study'}
+               for collector in ('obi', 'deepflow', 'coroot')
+               for system in ('deathstarbench', 'otel_demo', 'petclinic')
+               for mode in ('absent', 'partial', 'full') for seed in (6, 7, 8)]
+    cells = [dict(planned[0]), dict(planned[-1])]
+    if change == 'missing_plan_cell':
+        planned.pop(2)
+    elif change == 'different_packet':
+        cells[0]['run_id'] = 2
+    result, output = _run_manifest_selector(
+        tmp_path, name, phase='fresh-series' if change == 'final_series' else 'fresh-batch',
+        document={'cells': cells, 'planned_cells': planned}, fresh_go=change != 'no_GO')
+    if change == 'none':
+        assert result.returncode == 0, result.stderr
+        values = dict(line.split('=', 1) for line in output.read_text().splitlines())
+        assert len(json.loads(values['matrix'])['cell']) == 2
+    else:
+        assert result.returncode != 0
+        assert any(text in result.stderr for text in (
+            'complete fixed 81-cell plan', 'frozen planned identity',
+            'actual-output qualification GO', 'fresh series must review all 81 cells'))
 
 
 @pytest.mark.parametrize('system', ['deathstarbench', 'otel_demo', 'petclinic'])

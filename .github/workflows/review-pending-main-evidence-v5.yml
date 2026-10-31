@@ -11,6 +11,7 @@ on:
           - pending17
           - fresh-qualification
           - fresh-series
+          - fresh-batch
           - common-smoke
         default: qualification
       qualification_system:
@@ -111,7 +112,7 @@ jobs:
                           or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
                                   'full_artifact_digest'}<=cell.keys()):
                       raise SystemExit('common smoke requires exact source and full/compact packets')
-          elif phase in ('fresh-qualification','fresh-series'):
+          elif phase in ('fresh-qualification','fresh-series','fresh-batch'):
               if qualification_system!='all' or manifest==default_manifest:
                   raise SystemExit('fresh review requires its own manifest and all families')
               cells=source['cells']
@@ -130,8 +131,19 @@ jobs:
                   expected={(c,s,m,n) for c in ('obi','deepflow','coroot')
                             for s in ('deathstarbench','otel_demo','petclinic')
                             for m in ('absent','partial','full') for n in (6,7,8)}
-                  if set(keys)!=expected:
+                  if phase=='fresh-series' and set(keys)!=expected:
                       raise SystemExit('fresh series must review all 81 cells')
+                  if phase=='fresh-batch':
+                      planned=source['planned_cells']
+                      identity=('collector','system','mode','seed','run_id','head_sha','stage','runner')
+                      planned_keys=[(r['collector'],r['system'],r['mode'],r['seed']) for r in planned]
+                      if len(planned)!=81 or set(planned_keys)!=expected:
+                          raise SystemExit('fresh batch must retain the complete fixed 81-cell plan')
+                      planned_by_key={key:row for key,row in zip(planned_keys,planned)}
+                      if (not set(keys)<=expected or any(
+                              tuple(row[k] for k in identity)!=tuple(planned_by_key[key][k] for k in identity)
+                              for key,row in zip(keys,cells))):
+                          raise SystemExit('fresh batch packet differs from its frozen planned identity')
               for cell in cells:
                   if (cell.get('head_sha') not in {
                           '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
@@ -172,7 +184,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
-      max-parallel: 12
+      max-parallel: ${{ inputs.phase == 'fresh-batch' && 4 || 12 }}
       matrix: ${{ fromJson(needs.declare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4

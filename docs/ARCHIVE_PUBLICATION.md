@@ -142,3 +142,14 @@ the57 actual disk-preflight records. Original ZIPs and reassembled chunks were
 hashed in archival Actions; local review read two small metadata assets and
 remote asset metadata. Active main parents/workers and subsequent reader,
 diagnostic, report and publication tails still require terminal-run batches.
+
+Batch 41244411821 published at 23:05:21 UTC on 2026-10-31. Its
+[retention record](../results/iteration-5/archive-41244411821.json) binds the exact
+126 terminal source runs and all 217 original artifacts (59151849142 bytes).
+Both reviewers matched all 607 payload ledger entries to the 609 published
+assets, all 611 checksum entries, four internal chunk manifests and every actual
+disk preflight. Original ZIP and chunk reassembly hashes were checked in Actions;
+local review rehashed only the two small metadata assets and inspected remote
+asset metadata. This includes the failed second profiling diagnostic, not the
+later active captures or new unprofiled comparison. Publication is retention,
+not scientific admission. Active main/report/review/publication tails remain.
