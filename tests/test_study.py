@@ -171,3 +171,34 @@ def test_invalid_cell_is_rejected_before_constructing_components(rig):
     with pytest.raises(ValueError, match="fixed study"):
         study.Study("petclinic", "absent", 99, rig.out, collector="obi")
     assert rig.created == []
+
+
+@pytest.mark.parametrize('tamper', [False, True])
+def test_nested_paired_baseline_is_frozen_before_target_and_later_changes_fail(rig, monkeypatch, tamper):
+    original_forecast = study.Toolchain.forecast
+    names = ('toolchain/context-baseline/forecasts.json',
+             'toolchain/context-baseline/raw/union-proof.json')
+    def paired_forecast(self, plans):
+        result = original_forecast(self, plans)
+        for name in names:
+            path = self.ctx.out/name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text('{}\n', encoding='utf-8')
+        return result
+    monkeypatch.setattr(study.Toolchain, 'forecast', paired_forecast)
+    campaign = study.Study('petclinic', 'partial', 6, rig.out, collector='obi', smoke=True)
+    original_operation = campaign.adapter.operation
+    def operation(name, index, namespace):
+        if namespace.startswith('target-'):
+            saved = json.loads((rig.out/'forecast-saved.json').read_text())
+            assert set(names) <= {Path(key).as_posix() for key in saved['sha256_by_path']}
+            if tamper:
+                (rig.out/names[0]).write_text('{"changed":true}\n', encoding='utf-8')
+        return original_operation(name, index, namespace)
+    monkeypatch.setattr(campaign.adapter, 'operation', operation)
+    if tamper:
+        with pytest.raises(RuntimeError, match='Frozen discovery or prediction changed'):
+            campaign.run()
+    else:
+        campaign.run()
+        assert json.loads((rig.out/'freeze-integrity.json').read_text())['all_unchanged']

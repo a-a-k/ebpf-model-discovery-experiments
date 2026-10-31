@@ -306,7 +306,7 @@ def _retain_ingest_error(response, export, run_dir, endpoint, export_index):
 
 
 def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
-           publication_mode='on_shutdown', source_profile=None):
+           publication_mode='on_shutdown', source_profile=None, joint_otlp=False):
     """One offline discovery batch, with all graph construction inside Bering.
 
     New runs publish only on shutdown, without a clock window. Explicit windowed
@@ -370,6 +370,11 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
               'clock_admission_filter': False,
               'discovery_mode': 'one offline batch; no historical reconciliation',
               'child_resource_report': str(resource_path), 'accepted_ingest_requests': []}
+    if joint_otlp:
+        record.update(request_routing='ordinary_otlp_joint_view',
+                      original_source_profile=profile, declared_ebpf_collection_domain=domain,
+                      source_profile={'input_type': 'otlp', 'trace_context_domain': ''},
+                      source_domain='', original_export_roles_retained=True)
     child_env, go_environment = _child_process_environment()
     record['go_runtime_environment'] = go_environment
     process = None
@@ -402,7 +407,8 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
             with (accepted_stream_path.open('wb') as accepted_stream,
                   accepted_sequence_path.open('wb') as accepted_sequence):
               for export_index, (export, streamed_body) in enumerate(request_iterator):
-                endpoint = f'/sources/{source_id}/v1/traces' if export['source'] == 'ebpf' else '/v1/traces'
+                endpoint = (f'/sources/{source_id}/v1/traces'
+                            if export['source'] == 'ebpf' and not joint_otlp else '/v1/traces')
                 path = Path(export['path']) if streamed_body is None else None
                 content_length = (path.stat().st_size if path is not None
                                   else int(export['length']))
@@ -437,6 +443,8 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
                     'content_bytes': content_length,
                     'content_sha256': export['sha256'],
                 }
+                if joint_otlp:
+                    accepted['original_source'] = export['source']
                 if streamed_body is None:
                     record['accepted_ingest_requests'].append(accepted)
                 else:
@@ -475,7 +483,7 @@ def replay(binary, manifest, folder, domain, overlay=None, prefix='model', *,
             raise RuntimeError(f'Incomplete or split Bering replay batch: {ingest}, publications={len(published)}')
         if sum(s.get('observations', 0) for s in snapshot['sources']) != count:
             raise RuntimeError('Bering source accounting differs from replayed raw inputs')
-        if (any(e['source'] == 'ebpf' for e in exports)
+        if not joint_otlp and (any(e['source'] == 'ebpf' for e in exports)
                 or any(e['source'] == 'ebpf' for e in stream_exports)) and not any(
                 s['type'] == 'ebpf' and s['connector'] == expected_connector
                 for s in snapshot['sources']):

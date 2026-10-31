@@ -97,7 +97,7 @@ def _latency(records: list[dict]) -> dict:
             "outcome_rule": "descriptive_not_deadline"}
 
 
-def _integrity(root: Path, frozen: dict, forecasts: dict) -> dict:
+def _integrity(root: Path, frozen: dict, forecasts: dict, *, paired_context_baseline=False) -> dict:
     problems = []
     if not frozen or frozen.get("all_unchanged") is not True:
         problems.append("freeze_integrity_missing_or_false")
@@ -105,12 +105,31 @@ def _integrity(root: Path, frozen: dict, forecasts: dict) -> dict:
         path = root / relative
         if not path.is_file() or _digest(path) != expected:
             problems.append(f"frozen_hash_mismatch:{relative}")
-    for source in SOURCES:
+    sources = (*SOURCES, 'context-baseline') if paired_context_baseline else SOURCES
+    if paired_context_baseline:
+        for name in ('forecasts.json', 'manifest.json', 'raw/provenance.json', 'network_scope/provenance.json'):
+            relative = 'toolchain/context-baseline/' + name
+            path = root/relative
+            if not path.is_file() or frozen.get('sha256_by_path', {}).get(relative) != _digest(path):
+                problems.append('paired_context_baseline_not_frozen:' + relative)
+        for variant in VARIANTS:
+            if set(forecasts.get('context-baseline', {}).get(variant, {})) != set(forecasts.get('combined', {}).get(variant, {})):
+                problems.append('paired_context_operation_coverage_differs:' + variant)
+    for source in sources:
         for variant in VARIANTS:
             for operation, forecast in forecasts.get(source, {}).get(variant, {}).items():
                 if not forecast.get("available"):
                     continue
-                model = root / "toolchain" / source / variant / operation / "model.json"
+                if source == 'context-baseline':
+                    provenance = _read(root/'toolchain/context-baseline'/variant/'provenance.json', {})
+                    if provenance.get('status') in ('reuse_single_source_equivalence', 'reuse_unchanged_union'):
+                        model = root/'toolchain/combined'/variant/operation/'model.json'
+                        if forecast != forecasts.get('combined', {}).get(variant, {}).get(operation):
+                            problems.append(f'paired_reused_forecast_differs:{variant}:{operation}')
+                    else:
+                        model = root/'toolchain/context-baseline'/variant/'operations'/operation/'model.json'
+                else:
+                    model = root / "toolchain" / source / variant / operation / "model.json"
                 if not model.is_file() or forecast.get("graph_sha256") != _digest(model):
                     problems.append(f"forecast_graph_hash_mismatch:{source}:{variant}:{operation}")
                 if forecast.get("simulator") != "Sheaft":
@@ -412,7 +431,7 @@ def _cost(root: Path, status: dict) -> dict:
 
 
 def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
-                      completed_status="acquisition_complete") -> dict:
+                      completed_status="acquisition_complete", paired_context_baseline=False) -> dict:
     root = Path(root)
     status = _read(root/"status.json", {})
     records = _read(root/"external.json", [])
@@ -420,6 +439,10 @@ def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
     plans = _read(root/"plans.json", [])
     census = _read(root/"census.json", [])
     forecasts = _read(root/"toolchain"/"forecasts.json", {})
+    sources = SOURCES
+    if paired_context_baseline:
+        forecasts = {**forecasts, 'context-baseline': _read(root/'toolchain/context-baseline/forecasts.json', {})}
+        sources = (*SOURCES, 'context-baseline')
     frozen = _read(root/"freeze-integrity.json", {})
     declared_operations = set()
     if status.get("system"):
@@ -430,7 +453,7 @@ def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
                         | declared_operations)
     primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
     target = [row for row in records if row.get("phase") == "target"]
-    integrity = _integrity(root, frozen, forecasts)
+    integrity = _integrity(root, frozen, forecasts, paired_context_baseline=paired_context_baseline)
     completeness = _completeness(records, plans, census, expected_phases=expected_phases,
                                  expected_states=expected_states)
     expected_primary = sum(completeness["expected_phase_counts"].values())
@@ -445,7 +468,7 @@ def evaluate_campaign(root: Path, *, expected_phases=None, expected_states=None,
         for state in ("11", "10", "01", "00"):
             state_counts = _counts([row for row in actual if row.get("state") == state])
             per_state[state] = {"counts": state_counts, "bounds": _bounds(state_counts)}
-        for source in SOURCES:
+        for source in sources:
             for variant in VARIANTS:
                 forecast = forecasts.get(source, {}).get(variant, {}).get(operation)
                 forecast_valid = _valid_forecast(forecast)

@@ -1,6 +1,7 @@
 # Iteration 5: three collectors and stable operation families
 
-Status: matched main series in progress; intermediate measurements and their
+Status: replacement matched main series held for qualification and the paired
+context baseline in [CONTEXT_BASELINE.md](CONTEXT_BASELINE.md); measurements and their
 review boundaries are linked from the README. No completed-study or positive
 utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
@@ -10,6 +11,11 @@ as an access-blocked arm was an orchestration error. It is not an active,
 failed or blocked comparison arm. Historical snapshots retain their original
 declarations and are identified as superseded in scope.
 The [completed iteration 4](PROTOCOL_V4.md) remains historical evidence.
+
+The paired context baseline preserves the three original source arms. Its
+additional actual Bering edge view and Sheaft forecasts must be frozen before
+target traffic, under one common policy for all collectors and all81 cells.
+Original stopped/failed versions and all preparation costs remain retained.
 
 ### Collector-neutral observation identity review
 

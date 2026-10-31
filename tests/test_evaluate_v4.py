@@ -7,6 +7,8 @@ from pathlib import Path
 import sys
 import types
 
+import pytest
+
 import ebpf_discovery.evaluate_v4 as evaluator
 from ebpf_discovery.evaluate_v4 import _cost, aggregate, evaluate_campaign, main
 
@@ -117,6 +119,54 @@ def test_unknown_outcomes_produce_bounds_error_range_and_no_accuracy_gate(tmp_pa
             return set().union(*(keys(item) for item in value), set())
         return set()
     assert all("threshold" not in key.lower() for key in keys(report))
+
+
+def _paired_reuse(root, *, freeze=True, change_prediction=False):
+    forecasts = json.loads((root/'toolchain/forecasts.json').read_text())['combined']
+    if change_prediction:
+        forecasts['raw']['required'].update(prediction=1.0, interval=[1.0, 1.0])
+    paths = [root/'toolchain/context-baseline/forecasts.json',
+             root/'toolchain/context-baseline/manifest.json']
+    _write(paths[0], forecasts)
+    _write(paths[1], {'requires_capture_freeze_before_targets': True})
+    for variant in ('raw', 'network_scope'):
+        path = root/'toolchain/context-baseline'/variant/'provenance.json'
+        _write(path, {'status': 'reuse_unchanged_union'})
+        paths.append(path)
+    if freeze:
+        frozen = json.loads((root/'freeze-integrity.json').read_text())
+        frozen['sha256_by_path'].update({p.relative_to(root).as_posix(): _hash(p) for p in paths})
+        _write(root/'freeze-integrity.json', frozen)
+
+
+def test_paired_context_forecasts_share_external_outcomes_and_leave_original_rows_unchanged(tmp_path, monkeypatch):
+    _fake_declaration(monkeypatch)
+    root = _campaign(tmp_path)
+    before = evaluate_campaign(root)
+    original_bytes = (root/'toolchain/forecasts.json').read_bytes()
+    _paired_reuse(root)
+    after = evaluate_campaign(root, paired_context_baseline=True)
+    assert after['integrity']['valid'] and after['complete_for_evaluation']
+    assert [row for row in after['evaluations'] if row['source'] != 'context-baseline'] == before['evaluations']
+    for paired in [row for row in after['evaluations'] if row['source'] == 'context-baseline']:
+        original = next(row for row in before['evaluations'] if row['source'] == 'combined'
+                        and row['variant'] == paired['variant'] and row['operation'] == paired['operation'])
+        assert {**paired, 'source': 'combined'} == original
+    assert after['counts'] == before['counts']
+    assert (root/'toolchain/forecasts.json').read_bytes() == original_bytes
+
+
+@pytest.mark.parametrize('unfrozen,changed_prediction', [(True, False), (False, True)])
+def test_paired_forecast_cannot_be_added_after_freeze_or_relabel_a_different_prediction(tmp_path, monkeypatch, unfrozen, changed_prediction):
+    _fake_declaration(monkeypatch)
+    root = _campaign(tmp_path)
+    _paired_reuse(root, freeze=not unfrozen, change_prediction=changed_prediction)
+    report = evaluate_campaign(root, paired_context_baseline=True)
+    assert not report['integrity']['valid']
+    assert not report['complete_for_evaluation']
+    assert not any(row['available'] for row in report['evaluations'])
+    prefix = 'paired_context_baseline_not_frozen:' if unfrozen else 'paired_reused_forecast_differs:'
+    assert any(problem.startswith(prefix) for problem in report['integrity']['problems'])
 
 
 def test_manual_baseline_does_not_change_with_external_outcomes(tmp_path: Path, monkeypatch):
