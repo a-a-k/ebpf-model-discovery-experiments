@@ -1,6 +1,6 @@
 {
   "recorded_before_cancellation_utc": "2026-10-31T17:50:32.819167+00:00",
-  "status": "EXECUTED: old OBIcarrier terminal; first8queued plus3 authorized technicalrepeats running as11isolated S jobs; allcomplete retained; global20actualcapturejobs verified",
+  "status": "All14OBIbacklog casesdispatchedonce asS singlecasejobs within20cap; alloldcomplete/adverse/unknown preserved. Currentall81capture continues; notfullstudycompletion.",
   "approval": {
     "channel": "current Codex dialog request_user_input_async",
     "question_item_id": "[\"request_user_input_async\",\"call_44dbcfdb2d8a4601a88c51db4c5e2594\",0]",
@@ -1082,7 +1082,7 @@
       "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
     }
   ],
-  "last_updated_utc": "2026-10-31T18:01:03.760876+00:00",
+  "last_updated_utc": "2026-10-31T19:15:39.325771+00:00",
   "tail3_independent_original_GO": "work/skeptic-main-v5-observer/obi-stopped-tails-20261031/independent-original-tail3-go.json",
   "tail3_dispatched": [
     {
@@ -1164,27 +1164,28 @@
     "technically_successful_jobs": 31,
     "new_technical_issues": []
   },
-  "remaining_OBI_queue": [
+  "remaining_OBI_queue": [],
+  "last3_Petclinic_full_dispatched": [
     {
-      "system": "petclinic",
-      "mode": "full",
+      "run_id": 41232316943,
       "seed": 6,
-      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
-      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+      "requested_at_utc": "2026-10-31T19:02:46.862455+00:00",
+      "source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "old_queued_job": 124430028565
     },
     {
-      "system": "petclinic",
-      "mode": "full",
+      "run_id": 41233220186,
       "seed": 7,
-      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
-      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+      "requested_at_utc": "2026-10-31T19:13:49.219160+00:00",
+      "source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "old_queued_job": 124430028564
     },
     {
-      "system": "petclinic",
-      "mode": "full",
+      "run_id": 41233223018,
       "seed": 8,
-      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
-      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+      "requested_at_utc": "2026-10-31T19:13:51.744053+00:00",
+      "source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "old_queued_job": 124430028552
     }
   ]
 }

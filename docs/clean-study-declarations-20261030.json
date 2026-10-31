@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct19:09:07UTC:36technicallysuccessful MAIN jobs with exactfull/compactpairs; allfixed3savedreaderqualification packetsnowavailable (DFDSBabs6A/CorootOTelFull6A/OBIPCpartial6S), bothORIGINALexecutionGO forunchangedstrictActionsreader. Noindependentactual-outputMAINadmissionyet. OriginalDFDSBfull6 job124430030929 failed19:01:04 parentENOSPC before6h; exactsame-scienceS replacement predeclared, noPOSTyet. OBIPCfull6 S41232316943 launchedonceafterfreeslot, PCfull7/8remaining. Preserveallcompleted/adverse/unknown andoldcosts; all81/10ops/4methods unchanged.",
+  "main_dispatch_status": "Direct19:09:07UTC36exactsuccessfulMAINfull/compactpairs, alloriginalfixed3readerpackets ready. ExactfailedDFDSBfull6ENOSPC replacedonce atqualifiedS41233204064 aftercommittedpreexec10fb850/ORIGINALGO; PCfull6/7/8 S41232316943/41233220186/41233223018 dispatched onactualfreeslots, completingapprovedOBI14handoff. Allothercurrentcasesuntouched, global20reserved. Fixed3strictActionsreaderpredeclared, actual-outputadmissionstillpending; all81/10ops/fourmethods retained.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2052,6 +2052,45 @@
         }
       ],
       "note": "Last3ofapproved14OBIhandoff: oldqueuedjob124430028565 hadnoassignedrunner/steps; exactsinglecase actualsource1d646f907d0241f25445fcfb4d07d4e0ba89d88b, samequalifiedscientificfiles. Fixedcounts/fourmethods/tenops and all81 retained; old/newcosts preserved, nooutcomeinspection."
+    },
+    {
+      "run_id": 41233204064,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Exacttechnicalrepeat oforiginalparent124430030929ENOSPC, predeclared10fb850beforePOST underbothORIGINALGO. ActualsourceSsame2126scientificentries, approvedSDKcleanup/Mportreservation/passiveguestlogs. Prefix13048740971+worker41217056185/failed5h37m/allothercostsretained; finalparentfull/compactnotrecovered. Nooutcomeinspection, othercasesuntouched, cap20."
+    },
+    {
+      "run_id": 41233220186,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "Last3ofapproved14OBIhandoff: oldqueuedjob124430028564 hadnoassignedrunner/steps; exactsinglecase actualsource1d646f907d0241f25445fcfb4d07d4e0ba89d88b, samequalifiedscientificfiles. Fixedcounts/fourmethods/tenops and all81 retained; old/newcosts preserved, nooutcomeinspection."
+    },
+    {
+      "run_id": 41233223018,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Last3ofapproved14OBIhandoff: oldqueuedjob124430028552 hadnoassignedrunner/steps; exactsinglecase actualsource1d646f907d0241f25445fcfb4d07d4e0ba89d88b, samequalifiedscientificfiles. Fixedcounts/fourmethods/tenops and all81 retained; old/newcosts preserved, nooutcomeinspection."
     }
   ],
   "related_runs": [

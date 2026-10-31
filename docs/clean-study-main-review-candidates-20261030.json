@@ -258,20 +258,20 @@
       "mode": "full",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41233220186,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41233223018,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "deathstarbench",
@@ -338,10 +338,10 @@
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41233204064,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "deathstarbench",
@@ -1663,6 +1663,25 @@
       "reason": "recurring_Docker_published_port37020_bind_failure_before_training; preventive_guest_reservation_with_exact_same_ports_configs_science",
       "pre_execution_record": "docs/clean-study-guest-port-preexecution-20261031.json",
       "original_costs_and_failed_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430030929,
+      "original_compact_artifact_id": null,
+      "original_full_artifact_id": null,
+      "retained_original_training_artifact_id": 13048740971,
+      "retained_successful_worker_run_id": 41217056185,
+      "replacement_run_id": 41233204064,
+      "actual_capture_commit": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "actual_original_parent_ENOSPC19:01:04_before6h/no_finalfullcompact; qualifiedsame-scienceS addsreviewedparentdiskpreparation",
+      "pre_execution_record": "docs/clean-study-parent-full6-preexecution-20261031.json",
+      "original_costs_and_available_failed_evidence_retained": true,
+      "final_parent_data_not_recovered": true
     }
   ]
 }
