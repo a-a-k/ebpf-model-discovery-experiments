@@ -61,3 +61,20 @@ available packets, not unrecovered cancellation-tail data. Completed OBI worker
 Cancelled queued jobs can have nonzero API started/completed intervals even with
 runner_id=0. The report retains those timestamps as recorded job elapsed; these
 values do not establish CPU consumption or billed runner usage.
+
+Subsequent preserved batches include failed preparation and early stopping:
+
+| Archive run / public data tag | Original artifacts | Remote assets | Remote bytes | Verification |
+|---|---:|---:|---:|---|
+| [41129382005](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41129382005) | 100 | 151 | 2,214,906,734 | All149 payload ledger records and two metadata assets agree with remote IDs, states, sizes and SHA256. |
+| [41143725458](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41143725458) | 124 | 306 | 2,263,705,192 | All304 payload ledger records and two metadata assets agree. Includes failed archive41142560426 evidence; that earlier HTTP504 draft is not described as complete. |
+| [41152387177](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41152387177) | 114 | 272 | 2,194,445,670 | All270 payload ledger records and two metadata assets agree. Covers52 terminal runs, including all f60 qualification parents/workers and the completed catalog/metadata audits and preparation CI. |
+
+The last batch's locally rehashed metadata assets are provenance.tar.gz
+(130952 bytes, SHA256 `33b3d7d110fd189ac1a98a367e199dbc923140cc1d7407fbf71bdf20852388c3`)
+and SHA256SUMS.txt (32785 bytes, SHA256
+`c3b8aad78e459945aaa19153f2df5f950ee2e8275f13800b0ded0d25e7b2a418`).
+Original ZIPs were verified by archival Actions; the local review checked API
+digests, lossless-part manifests and every published payload record, without
+downloading original campaign archives or journals. Active paired diagnostic
+41152205197 and later preparation runs require a subsequent terminal-run batch.

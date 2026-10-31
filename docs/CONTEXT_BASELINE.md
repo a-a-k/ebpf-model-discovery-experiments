@@ -77,3 +77,13 @@ Content-Type and Content-Encoding come from the same frozen manifest and reviewe
 replay implementation; actual transmitted header bytes were not separately
 captured. The paired source profile stays inactive until the final common commit
 has passed independent review.
+
+Before execution, the main agent and separate skeptic both give implementation
+GO to the saved-facts reader at422a4b94c31e644024d7f653b4e033c24588fc87.
+The skeptic independently read its actual code and passed all75 focused reader
+tests. The root passed101 focused reader/context/evaluation tests. Exact Sheaft
+argv binds its model, analysis and output directory; model/analysis hashes and
+referenced predicate/fault files must match the freeze. These are evidence
+checks under the original feasibility criterion, not new scientific thresholds.
+The final source profile remains inactive. This GO does not admit a capture,
+authorize main81 before qualification, or establish research success.

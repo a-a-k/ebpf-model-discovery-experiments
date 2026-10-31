@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c",
-  "main_dispatch_status": "HELD until actual common27 and OTel saved catalog ancestry review; no main81 dispatched",
+  "main_dispatch_status": "HELD for actual paired saved-prefix output review and one final common-source qualification27; f60 qualification27 complete; no main81 dispatched",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1822,6 +1822,211 @@
       "run_id": 41131943522,
       "role": "preparation",
       "note": "Focused implementation checks; main 6ef079a7a7eac91e464a87a97881a56bc4449e5c; push. Include all costs; current state completed/success is not an empirical verdict."
+    },
+    {
+      "run_id": 41152204167,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 31322e1a467128daaa5bb76ff8fdca50adf9ab34. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41150790656,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a9f8ac811a086aa88c2cbe64057bbb3cb3ddc328. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41150785906,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a9f8ac811a086aa88c2cbe64057bbb3cb3ddc328. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41150334556,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 2fdf35f7a965157e57ea8013b075cb4deeb61f1b. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41150280099,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 2fdf35f7a965157e57ea8013b075cb4deeb61f1b. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41147403702,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 1cc3995a8624170fc36a42264976c7a269a6f560. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41147083835,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41147011810,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146817618,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146780944,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146712989,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146588228,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146484852,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146378650,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; source 2e56eb333f1d383ed2747fb690fbbe427f6ef22f. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146377575,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 2e56eb333f1d383ed2747fb690fbbe427f6ef22f. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146268084,
+      "role": "preparation",
+      "note": "Focused implementation checks; source b4879127114c8bb1fa5fbc6fe42f5bd4e1331d39. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41146256410,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145967324,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145190491,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; source 5e013adecd3d17d569b3ad3c3a6559f15a2d6bab. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145186233,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; source 5e013adecd3d17d569b3ad3c3a6559f15a2d6bab. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145184414,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 5e013adecd3d17d569b3ad3c3a6559f15a2d6bab. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145170337,
+      "role": "preparation",
+      "note": "Focused implementation checks; source b8ead28f2598efe132ac054a49171301bc63e47f. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145163929,
+      "role": "preparation",
+      "note": "Focused implementation checks; source b8ead28f2598efe132ac054a49171301bc63e47f. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41145116877,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 64275100643fbf2f48dae1f24413fe27f6799ff9. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144599052,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144568096,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144545147,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144519306,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144515947,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144495781,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144489616,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144419588,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144398914,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144352473,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 0e1d2e27bc10347fc7b30a05cfcb9bea9c590e28. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41144347397,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 0e1d2e27bc10347fc7b30a05cfcb9bea9c590e28. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41153498551,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 422a4b94c31e644024d7f653b4e033c24588fc87. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41153492835,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 422a4b94c31e644024d7f653b4e033c24588fc87. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41153331460,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 7461f9cea2860da269434e47366d54bf880998a6. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41153326878,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 7461f9cea2860da269434e47366d54bf880998a6. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41152387177,
+      "role": "archive",
+      "note": "Archive original measurement artifacts; source f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41152205197,
+      "role": "evidence",
+      "note": "Audit fixed saved capture facts; source 31322e1a467128daaa5bb76ff8fdca50adf9ab34. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
     }
   ],
   "blocked_main_cells": [],
@@ -1844,8 +2049,8 @@
     }
   ],
   "pending_common_correction": {
-    "pull_request": 8,
-    "head_sha": "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c",
-    "status": "PR8 merged; paired audit41143119808 actual-output GO; freshcommon27 running, main81 held"
+    "pull_request": 9,
+    "head_sha": "a9f8ac811a086aa88c2cbe64057bbb3cb3ddc328",
+    "status": "Paired context baseline core/code GO; saved diagnostic41152205197 pending actual-output review. Original3arms retained. Final common-source qualification27 and main81 remain pending."
   }
 }
