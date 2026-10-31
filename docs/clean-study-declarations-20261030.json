@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct paginated API 2026-10-31T14:50:25.836119+00:00: 22 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures. OriginalDFpartial6/7/8 parentENOSPC predeclaredreplacements: N7/8running; N6failedDockerport37020 beforetraining, exactM6 replacement41211541665 running. OriginalOBIfull7 andabs6 repeats completeSUCCESS. No negative/unknown outcome triggers a repeat.",
+  "main_dispatch_status": "Direct paginated API 2026-10-31T16:12:07.061434+00:00: 25 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures. Current12casejobs unchanged; 31assignedrunner capacity lowerbound independently measured. Stagedglobal20case-slot plan protects exact9currentoriginaljobs untilnaturalcompletion, keepsN7/N8/M6, no carriercancel/newstudyfanout executed. FullMAINindependentadmission pending.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -3283,6 +3283,111 @@
       "run_id": 41210636765,
       "role": "preparation",
       "note": "Actual Focused implementation checks at sourcef61c8ea1b0c4e43c5d363588b711743fe8eb6187; preserve observed Actions status, failure/success, all job/wait/transfer/artifact costs. No imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41218026980,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41217056185,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41215918555,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215915884,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215913103,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215910479,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215907884,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215905337,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215902725,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215900225,
+      "role": "preparation",
+      "note": "Oneof8finite operationalcapacity probes/16shortCIjobs; allSUCCESSbefore120sbudget, actualassigned31lowerbound, no study capture/source/target changes or automaticreshard approval. Includes CI and possibleworkerwait costs; notscientificsuccess or fullrequalification."
+    },
+    {
+      "run_id": 41215054499,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41214120461,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41213911408,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41213426049,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourcefa391d2884f7af43f17a0b24c3cdc446c2110734; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41213422393,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at sourcefa391d2884f7af43f17a0b24c3cdc446c2110734; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41213332770,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41213193564,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41212190133,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source79d64a893fe03054f3ede5f3f76c612be283723b; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41212185308,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source79d64a893fe03054f3ede5f3f76c612be283723b; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41212151242,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source2c7ce277423b0988d4fb8d492c2b8e12c5fb78e8; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41212146151,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at source2c7ce277423b0988d4fb8d492c2b8e12c5fb78e8; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
     }
   ],
   "blocked_main_cells": [],
@@ -3309,5 +3414,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T14:51:39.668535+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T16:06:36.627037+00:00"
 }

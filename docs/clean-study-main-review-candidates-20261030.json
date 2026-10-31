@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 59,
+  "pending_artifact_cells": 56,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1276,6 +1276,66 @@
       "full_artifact_name": "campaign-v5-coroot-main-deathstarbench-full-8-41164826834",
       "full_artifact_bytes": 7681404690,
       "full_artifact_digest": "sha256:c9dc0495ea8c31f34e06b4dbf78c1b9db26d8e88e800735c38ca33670526b3ec"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13047725578,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-absent-6-41164826834",
+      "compact_artifact_bytes": 44886680,
+      "compact_artifact_digest": "sha256:481da6e5c0935448685cd79164c5f500ce192074afc837b4045fdd488f606976",
+      "full_artifact_id": 13047291661,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-absent-6-41164826834",
+      "full_artifact_bytes": 1014507521,
+      "full_artifact_digest": "sha256:be8b333f0442ebd1d4b30d8dfff02b0aef2b729d00fb952bc2806695d24bad46"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13048841139,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-absent-7-41164826834",
+      "compact_artifact_bytes": 44134100,
+      "compact_artifact_digest": "sha256:17319c2b251983f3207722bdfd32964721fa0030e590d4ce08ebec5486c5b30e",
+      "full_artifact_id": 13048521364,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-absent-7-41164826834",
+      "full_artifact_bytes": 1020984441,
+      "full_artifact_digest": "sha256:3e70310ba846de526f134deca0a6b2020cfde00718eda7592a3964063a64c40f"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13048312811,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-absent-8-41164826834",
+      "compact_artifact_bytes": 44392585,
+      "compact_artifact_digest": "sha256:f94b913ed8f1060dc0cfa42ff8ff9c5a2e186a737dcbd20f4f61192da87e37d1",
+      "full_artifact_id": 13049145031,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-absent-8-41164826834",
+      "full_artifact_bytes": 1030067651,
+      "full_artifact_digest": "sha256:b9b845f1ab1a1c90ea8b6fda0cefe3e0bd44d076d71383104280ae5aeef18519"
     }
   ],
   "superseded_planned_source": {
@@ -1288,7 +1348,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-10-31T14:50:25.836119+00:00: 22 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-10-31T16:12:07.061434+00:00: 25 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {

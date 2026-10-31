@@ -46,9 +46,17 @@ records both explicit ORIGINAL-feasibility verdicts before the fresh full81 seri
 [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164821492),
 [DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
 [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
-Allthree use immutable `study-20261031-v5`, allthree applications/tracing modes,
-seeds6/7/8 and allten operations. The series is running; no final main result or
+The three original dispatches use immutable `study-20261031-v5`, all three
+applications/tracing modes, seeds6/7/8 and all ten operations. The series is running; no final main result or
 scientific success is claimed. Unknown and adverse outcomes remain in scope.
+Technical replacements additionally use actual revisions `fbbda015` (parent disk
+preparation) and `13c017bf` (preventive guest port preparation). Experiment code,
+dependencies and fixtures remain identical to qualified `0c98bf4`; reporting
+verifies the exact operational differences and retains actual source identities.
+The [disk-recovery decision](docs/clean-study-parent-preparation-preexecution-20261031.json)
+and [port-preparation decision](docs/clean-study-guest-port-preexecution-20261031.json)
+precede those captures. Current exact planned identities and completed packets
+are recorded in the [main candidate inventory](docs/clean-study-main-review-candidates-20261030.json).
 Earlier attempts, diagnostics and preparation costs are preserved in
 [verified permanent archives](docs/ARCHIVE_PUBLICATION.md).
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
