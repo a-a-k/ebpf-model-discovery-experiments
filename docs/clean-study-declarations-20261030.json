@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Both root and independent skeptic give explicit ORIGINAL MAIN81 GO after actual all27 qualification review41162715350. Dispatch full81 at immutable0c98/tagv5; record actual run IDs after dispatch. No main results yet.",
+  "main_dispatch_status": "All81 matched finalsource main cells dispatched at0c98 after both actual27 ORIGINAL GO; runs OBI41164821492, DeepFlow41164824120, Coroot41164826834. No completed/admitted main results yet.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1389,6 +1389,435 @@
         }
       ],
       "note": "Final common paired-context qualification at0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5 after both exact-source ORIGINAL-feasibility GO; same workload, original3arms plus declared paired baseline. Include all costs independent of outcome."
+    },
+    {
+      "run_id": 41164821492,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Final matched main81, immutable study-20261031-v5/source0c98bf4520e863ab021b60d00517ee2aa49ab38e, explicit study runner. Both ORIGINAL GO after actual27 review41162715350 recorded at625a50c before dispatch. Same four arms/directbaseline/all10operations; preserve unknown, adverse, failure and fullcost evidence."
+    },
+    {
+      "run_id": 41164824120,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Final matched main81, immutable study-20261031-v5/source0c98bf4520e863ab021b60d00517ee2aa49ab38e, explicit study runner. Both ORIGINAL GO after actual27 review41162715350 recorded at625a50c before dispatch. Same four arms/directbaseline/all10operations; preserve unknown, adverse, failure and fullcost evidence."
+    },
+    {
+      "run_id": 41164826834,
+      "collector": "coroot",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        },
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Final matched main81, immutable study-20261031-v5/source0c98bf4520e863ab021b60d00517ee2aa49ab38e, explicit study runner. Both ORIGINAL GO after actual27 review41162715350 recorded at625a50c before dispatch. Same four arms/directbaseline/all10operations; preserve unknown, adverse, failure and fullcost evidence."
     }
   ],
   "related_runs": [

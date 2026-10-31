@@ -39,8 +39,16 @@ internal source-domain separation prevented these cross-emitter links. The
 an intrinsic inability to observe the calls. A separately declared
 [ordinary-OTLP edge-union baseline](docs/CONTEXT_BASELINE.md) preserves all original
 source arms and evaluates the strongest simple combination of the same data.
-It requires actual saved-output review and a final common-source qualification
-before the matched81 main cells. Main81 at that final source has not started.
+All27 final common-source qualification cases at `0c98bf4` completed and passed
+both agents' actual saved-model, binding, simulator and pre-target evidence review.
+The [pre-execution record](docs/clean-study-requalification-v5-20261031.json)
+records both explicit ORIGINAL-feasibility verdicts before the fresh full81 series:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164821492),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
+Allthree use immutable `study-20261031-v5`, allthree applications/tracing modes,
+seeds6/7/8 and allten operations. The series is running; no final main result or
+scientific success is claimed. Unknown and adverse outcomes remain in scope.
 Earlier attempts, diagnostics and preparation costs are preserved in
 [verified permanent archives](docs/ARCHIVE_PUBLICATION.md).
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel

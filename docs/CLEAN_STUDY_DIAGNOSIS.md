@@ -210,3 +210,55 @@ source-domain association boundary and remaining identity/proxy limits. None of
 those observations justifies an intrinsic ranking
 of the three collectors or a general negative verdict about eBPF. The fresh
 81-cell common-source matrix and independent artifact review remain required.
+
+## Final common-source qualification before main81
+
+All27 fixed settings at0c98bf4 completed, and both agents independently reviewed
+the actual savedfacts and literal graph/binding packets before main dispatch.
+Saved-facts run41162715350 inspects the same pre-target models, commands, supplied
+metadata, source pins, controls and external trials; it does not replay or rescore.
+These are technical qualification measurements, not substituted main outcomes.
+
+OBI OTel partial retains the original three methods as unknown. Ordinary-OTLP
+context pairing imports14 actual SERVER edges per variant while preserving every
+base service, endpoint, edge field and order. Raw48/188/32 services/edges/endpoints
+becomes48/202/32; scoped46/188/32 becomes46/202/32. Real Sheaft predictions for
+allthree operations are .875, each compared to7 successes/1failure in the same
+eight external attempts, and frozen before targets. Methods/variants reuse those
+trials. This is a simple combination of observed ancestry, not invented topology,
+novel arithmetic or proof of recovered DB dependencies. OBI full adds12 actual
+SERVER edges; Petclinic full addsone. Allother paired variants reuse their exact
+combined forecast when there is a single source or no additional eligible edge.
+
+DSB partial compose/user-timeline cases have no supported entry candidate. Both
+nginx-thrift and nginx-web-server candidate vectors are null, so the generic
+unsupported_or_disagree text does not establish disagreement. Home timeline has
+a supported SDK entry; fullSDK restores the required application RPC paths. The
+three eBPF built-in Thrift/parser limits remain specific to the tested pins.
+DeepFlow's additional Jaeger PostSpans gRPC records are exporter infrastructure,
+not recovered application RPC calls.
+
+DeepFlow OTel captures GetProduct as gRPC CLIENT calls to opaque peers. Coroot
+preserves the GetProduct path in HTTP CLIENT observations; its eBPF graphs have
+zero entry endpoints. These are observed calls with incomplete operation ancestry
+and identity, not evidence that allRPC observation is absent. Partial SDK traces
+still lack the controlled catalog paths; fullSDK restores forecasts. Coroot
+Petclinic likewise lacks entry endpoints and required logical calls despite
+observed services and DB traffic. A provided-entry alternative was not tested.
+
+OBI Petclinic absent supports allfour primary operations. Its raw DB aliases are
+not globally attributable to the shared MySQL intervention. The prespecified
+network-scope variant retains two logical database nodes and six address/port
+witnesses, allowing DB-down predictions for the three uncached operations; the
+corresponding controls fail, while vets remains successful under its explicitly
+conditional cache assumption. Do not generalize raw DB unknowns to the scoped
+variant. Secondary unknown reasons can change across variants even when primary
+availability is unchanged.
+
+The equally informed direct contract/inventory baseline remains the strong simple
+comparison. SDK-only observations were captured with the collector co-running,
+so fullmode is not an agent-free SDK counterfactual. Unadmitted aliases remain
+rejection records; they are distinct from conflicting joint graph metadata.
+The complete matched81 series uses the same0c98 source after both explicit
+ORIGINAL-feasibility GO verdicts. All failures, early stops, preparation and
+publication costs remain; human effort is unmeasured.

@@ -65,7 +65,7 @@
   },
   "review_rule": "Check real acquisition, actual model/command/source/freeze/outcome bindings and every concrete unknown. Unsupported/adverse results remain; no numeric availability, accuracy or response-time threshold.",
   "cost_boundary": "Include both Bering passes, any added Sheaft executions, all preparation/CI/audits/failures/early stopping/worker and archival/report costs. Reuse is not independent execution. Human effort unmeasured, not zero. Actions elapsed is not CPU/billed consumption.",
-  "remaining_main": "All81 finalsource main cells remain required after actual qualification review, with all ten operations and seeds6/7/8; no smaller demonstration.",
+  "remaining_main": "All81 finalsource main cells dispatched after both originalGO; completion and independent actualmain review/report remain required.",
   "actual_qualification_review": {
     "review_run": 41162715350,
     "review_source": "6ffa685fa158ff6074d461d0c3be5fd29c42cbb7",
@@ -144,8 +144,37 @@
       "ref": "study-20261031-v5",
       "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
     },
-    "dispatched": false,
+    "dispatched": true,
     "skeptic_saved_verdict_sha256": "8f4a67971effea5e94556b687c63f0937279a7bb67f7dfe61329920ba30d662d",
-    "both_original_go_before_dispatch": true
+    "both_original_go_before_dispatch": true,
+    "runs": {
+      "obi": 41164821492,
+      "deepflow": 41164824120,
+      "coroot": 41164826834
+    },
+    "dispatch_requests": [
+      {
+        "collector": "obi",
+        "requested_at_utc": "2026-10-31T03:32:35.299909+00:00",
+        "run_id": 41164821492,
+        "created_at_utc": "2026-10-31T03:32:37Z",
+        "observed_status": "queued"
+      },
+      {
+        "collector": "deepflow",
+        "requested_at_utc": "2026-10-31T03:32:37.449886+00:00",
+        "run_id": 41164824120,
+        "created_at_utc": "2026-10-31T03:32:39Z",
+        "observed_status": "queued"
+      },
+      {
+        "collector": "coroot",
+        "requested_at_utc": "2026-10-31T03:32:39.524357+00:00",
+        "run_id": 41164826834,
+        "created_at_utc": "2026-10-31T03:32:41Z",
+        "observed_status": "queued"
+      }
+    ],
+    "pre_execution_GO_record_commit": "625a50c304eb008f0b9352d9616815785aae85eb"
   }
 }
