@@ -1,6 +1,6 @@
 {
   "recorded_utc": "2026-10-31T18:12:41.219406+00:00",
-  "status": "Botharchive workflows dispatched; completion/publication/fullremoteledgerverification stillpending. Not MAINadmission/scientificcompletion.",
+  "status": "Small57batchpublished+root/skepticallremoteledgerverification complete; largeexact2batch stillactive. NotMAINadmission/scientificcompletion.",
   "small_batch": {
     "run_id": 41227578403,
     "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41227578403",
@@ -69,7 +69,13 @@
     "recorded_before_dispatch_utc": "2026-10-31T18:04:03.158672+00:00",
     "both_original_GO": true,
     "local_preexecution_sha256": "36d8099a50efea7b28d587a3ef7c8124fe2fd7614bd927046068f63d91af3444",
-    "scope": "Terminal57preparation/probe/worker/failedN6/previousarchiveproof; allsource jobs terminal. Currentstudyworkers/parents excluded."
+    "scope": "Terminal57preparation/probe/worker/failedN6/previousarchiveproof; allsource jobs terminal. Currentstudyworkers/parents excluded.",
+    "status": "CompletedSUCCESS; publishedandindependentlyverifiedbyrootandskeptic",
+    "published_release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41227578403",
+    "published_at": "2026-10-31T18:13:34Z",
+    "remote_assets_verified": 176,
+    "all_payloads_verified": 174,
+    "public_retention_proof": "results/iteration-5/archive-41227578403.json"
   },
   "large_batch": {
     "run_id": 41228221300,

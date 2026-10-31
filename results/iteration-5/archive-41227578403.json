@@ -1,0 +1,27 @@
+{
+  "observed_utc": "2026-10-31T18:16:07.408359+00:00",
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41227578403",
+  "published_at": "2026-10-31T18:13:34Z",
+  "source_runs": 57,
+  "original_artifacts": 13,
+  "remote_assets": 176,
+  "remote_bytes": 4306188097,
+  "all_payload_ledger_records_verified": 174,
+  "all_payload_ID_name_state_size_SHA_checksum_agree": true,
+  "internal_manifest_hashes_verified": [],
+  "small_metadata_hashes_verified": {
+    "provenance.tar.gz": {
+      "sha256": "c6147a3d33f527662627fcd5cd7b70a1f44b09cb8cb580ac6d7d0b0c3d6b3381",
+      "bytes": 100919
+    },
+    "SHA256SUMS.txt": {
+      "sha256": "29b3b3cb4b3ce4cb3ddc31e05c5d2af2195b1f1356b6d02d4514a74c3fceac6c",
+      "bytes": 17720
+    }
+  },
+  "full_original_ZIPs_downloaded_locally": false,
+  "boundary": "Actionsrehashedoriginals; rootlocallyreadonlytwo~119KBreleaseprovenance/checksumassets andremoteAPI metadata, noZIP/journal/SQLite/model/outcomerecomputation.",
+  "root_verdict": "ACTUAL-OUTPUT ORIGINAL-retention GO: allsourceIDs/original13/APIidentities,174payloads and176remoteassets verified; no scientificMAINadmissionclaim",
+  "independent_skeptic_verdict": "ACTUAL-OUTPUT ORIGINAL-retention GO independentlyconfirmed sourceIDs, all174payload ledger/checksums,176asset identities andtwo smallmetadatahashes",
+  "independent_review_local": "work/skeptic-main-v5-observer/archive-41227578403/independent-retention-publication-review.json"
+}

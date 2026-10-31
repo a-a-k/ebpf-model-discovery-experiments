@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct17:58:55API:20actualcapturejobs+7modelworkers;31technicallysuccessful exactfull/compactpairs as18:00:10API, nofullindependentMAINadmissionyet. Userapproved firstOBIconversion complete: oldcarrierterminal, first8queued+3provenpreforecastincomplete repeats dispatched as11isolatedS singlecasejobs. Other2carriers/N7/N8/M6untouched; remainingOBIPCfull6/7/8 rolloveronlyas20cap frees. ActualsourceS scienceidenticalqualifiedanchor; nooutcome-basedselection. All81/10ops/fourmethods retained.",
+  "main_dispatch_status": "Direct17:58:55API:20actualcapturejobs+7modelworkers;31technicallysuccessful exactfull/compactpairs as18:00:10API, nofullindependentMAINadmissionyet. Userapproved firstOBIconversion complete: oldcarrierterminal, first8queued+3provenpreforecastincomplete repeats dispatched as11isolatedS singlecasejobs. Other2carriers/N7/N8/M6untouched; remainingOBIPCfull6/7/8 rolloveronlyas20cap frees. ActualsourceS scienceidenticalqualifiedanchor; nooutcome-basedselection. All81/10ops/fourmethods retained. Latestdirectsnapshot2026-10-31T18:18:28UTC:31successfuljobs/20activecases/5modelworkers, nonewtechnicalissues. Smallarchive41227578403 published+root/skepticall174payload/176assetchecks complete; large41228221300active. FullMAINadmission remains0.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -3671,6 +3671,26 @@
       "run_id": 41228221300,
       "role": "archive",
       "note": "Permanentunalteredoriginalarchive ofterminalOBIcarrier41164821492 andfull7replacement41189048917; all57ZIPs/127126855391B verified/uploaded inActions, sourcefailures/stops/prefixes/workerdata/costs retained. Exact1or2copy+64MiBdiskheadroom checked beforeeachoriginal; no scientificadmissionclaim or localrawdownload."
+    },
+    {
+      "run_id": 41228280143,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source79e74ea317e22f7f7f32d8e166ddd8d333bfeae6; retain actual sourceinput/status/jobAPIinterval/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41228275655,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source79e74ea317e22f7f7f32d8e166ddd8d333bfeae6; retain actual sourceinput/status/jobAPIinterval/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41227869738,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source22576a157ab5b1cbae6727175a350570b1db0f55; retain actual sourceinput/status/jobAPIinterval/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41227864982,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source22576a157ab5b1cbae6727175a350570b1db0f55; retain actual sourceinput/status/jobAPIinterval/failure/success/artifactcosts, human effort unmetered."
     }
   ],
   "blocked_main_cells": [],
@@ -3697,5 +3717,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T18:07:41.355528+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T18:18:20.997496+00:00"
 }
