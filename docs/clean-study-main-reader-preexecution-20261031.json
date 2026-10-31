@@ -3,7 +3,7 @@
   "status": "READY exactfixed3 Actionsfresh-qualification; no readerPOSTyet",
   "phase": "fresh-qualification",
   "candidate_manifest": "docs/clean-study-main-review-candidates-20261030.json",
-  "candidate_file_sha256": "f17617d422ff1db31d8c3889f2bf528d6f2cee8b540269ae8ec47e112b49c9a4",
+  "candidate_file_sha256": "f9abd7fb3d5afd45ff2dd3f986165b23a3e383816fe31081e13ea7a7b4c32e7b",
   "candidate_git_blob": "189387d04399da8ed1dc1162e7718c18c276b2b5",
   "fixed_original3": [
     {
@@ -81,5 +81,7 @@
     41228929442
   ],
   "capacity": "Only3fixedreaderjobs aftermetadataCI settles; retain20capture cap/workerheadroom; existingbigarchiveonejob. Noall81reviewbeforeactual-outputGO.",
-  "costs": "Retainallsource/failedstopped/preparation/selection/transfer/reader/CI/archival andownclosingtailmetadata, humanunknown"
+  "costs": "Retainallsource/failedstopped/preparation/selection/transfer/reader/CI/archival andownclosingtailmetadata, humanunknown",
+  "candidate_worktree_sha256": "f17617d422ff1db31d8c3889f2bf528d6f2cee8b540269ae8ec47e112b49c9a4",
+  "candidate_hash_basis": "ExactcommittedGitblobbytes(canonicalLF). RawWindowsworktreeCRLF hash recordedseparately; allartifact/sourceidentitiesunchanged."
 }
