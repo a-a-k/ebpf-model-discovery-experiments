@@ -170,7 +170,11 @@ def test_paired_metadata_uses_seven_real_links_and_exact_analysis(tmp_path, chan
         'sheaft', 'run', '--model', base_path + 'model.json', '--analysis', base_path + 'analysis.json',
         '--out-dir', base_path + 'simulation']})
     forecast = {'simulator': 'Sheaft', 'graph_sha256': digest(branch/'model.json'),
-                'analysis_sha256': digest(branch/'analysis.json')}
+                'analysis_sha256': digest(branch/'analysis.json'), 'by_state': {'11': 1, '00': 0}}
+    write(branch/'simulation/report.json', {
+        'input_artifact': {'digest': 'sha256:' + digest(branch/'model.json'), 'path': base_path + 'model.json'},
+        'profiles': [{'name': 'state-' + state, 'simulation': {'endpoint_availability': {'details': value, 'scalar-only': value}}}
+                     for state, value in forecast['by_state'].items()]})
     if changed == 'analysis-hash':
         write(branch/'analysis.json', {'different_analysis': True})
     elif changed == 'command-analysis':
@@ -193,6 +197,46 @@ def test_paired_metadata_uses_seven_real_links_and_exact_analysis(tmp_path, chan
     facts = REVIEW.paired_simulation_facts(toolchain, branch, forecast, freeze)
     assert facts['all_model_fields_exact']
     assert 'toolchain/context-baseline/raw/union-proof.json' in facts['verified_frozen_paths']
+
+
+@pytest.mark.parametrize('changed', [None, 'model-reference', 'one-endpoint-state', 'database-state', 'unfrozen-report'])
+def test_primary_saved_report_binds_actual_model_and_every_operation_endpoint(tmp_path, changed):
+    toolchain, branch, freeze = metadata_fixture(tmp_path)
+    base = '/saved/toolchain/combined/raw/details/'
+    write(branch/'analysis.json', {'predicate_contract': base + 'predicates.json'})
+    write(branch/'predicates.json', {'provided_operation': 'details'})
+    write(branch/'simulation.command.json', {'returncode': 0, 'argv': [
+        'sheaft', 'run', '--model', base + 'model.json', '--analysis', base + 'analysis.json',
+        '--out-dir', base + 'simulation']})
+    forecast = {'simulator': 'Sheaft', 'graph_sha256': digest(branch/'model.json'),
+                'analysis_sha256': digest(branch/'analysis.json'), 'by_state': {'11': 1, '00': 0},
+                'database_down_prediction': 0}
+    report = {'input_artifact': {'digest': 'sha256:' + digest(branch/'model.json'), 'path': base + 'model.json'},
+              'profiles': {'state-' + state: {'simulation': {'endpoint_availability': {'details': value, 'scalar-only': value}}}
+                           for state, value in forecast['by_state'].items()}}
+    report['profiles']['db-down'] = {'simulation': {'endpoint_availability': {'details': 0, 'scalar-only': 0}}}
+    if changed == 'model-reference':
+        report['input_artifact']['path'] = base + 'another-model.json'
+    elif changed == 'one-endpoint-state':
+        report['profiles']['state-00']['simulation']['endpoint_availability']['scalar-only'] = 1
+    elif changed == 'database-state':
+        report['profiles']['db-down']['simulation']['endpoint_availability']['scalar-only'] = 1
+    write(branch/'simulation/report.json', report)
+    freeze['sha256_by_path'] = {'toolchain/' + p.relative_to(toolchain).as_posix(): digest(p)
+                               for p in toolchain.rglob('*') if p.is_file()}
+    if changed == 'unfrozen-report':
+        freeze['sha256_by_path'].pop('toolchain/combined/raw/details/simulation/report.json')
+    if changed:
+        with pytest.raises(ValueError):
+            REVIEW.paired_simulation_facts(toolchain, branch, forecast, freeze)
+    else:
+        facts = REVIEW.paired_simulation_facts(toolchain, branch, forecast, freeze)
+        assert facts['saved_simulation_report']['model_digest_and_all_operation_endpoint_state_values_match']
+    for name in ('analysis.json', 'predicates.json', 'faults.json', 'simulation/report.json'):
+        assert SELECT.wanted_member('toolchain/combined/raw/details/' + name, 'full')
+        assert REVIEW._package_selected('combined/raw/details/' + name, 'toolchain')
+        assert SELECT.wanted_member('toolchain/context-baseline/raw/operations/details/' + name, 'full')
+        assert REVIEW._package_selected('context-baseline/raw/operations/details/' + name, 'toolchain')
 
 
 @pytest.mark.parametrize("changed", ["edge", "first-provenance", "unknown-entity", "quality", "command", "locator", "unfrozen", "publication-claim"])

@@ -2091,6 +2091,19 @@
         }
       ],
       "note": "Last3ofapproved14OBIhandoff: oldqueuedjob124430028552 hadnoassignedrunner/steps; exactsinglecase actualsource1d646f907d0241f25445fcfb4d07d4e0ba89d88b, samequalifiedscientificfiles. Fixedcounts/fourmethods/tenops and all81 retained; old/newcosts preserved, nooutcomeinspection."
+    },
+    {
+      "run_id": 41239167446,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "ExactS fresh-host repeat after41227092801 worker41233978178 hostedrunnerlostcommunication before forecast/targets. Allold/newfailedprefix/worker/preparation/transfer/CI/archivecosts retained, no healthycancellation/accuracyselection; sameall81/counts/tools/semantics."
     }
   ],
   "related_runs": [
@@ -3748,6 +3761,10 @@
       "run_id": 41233747858,
       "role": "evidence",
       "note": "Originalfixed3MAINstrictsaved-evidence fresh-qualification (DFDSBabs6A/CorootOTelFull6A/OBIPCpartial6S), allinput/freeze/actualBering/Sheaft/externaloutcome checks inActions; bothORIGINALexecutionGO beforeoncePOST. No traffic/refit/rescore, unknown/adversevalid; retainallreader/selection/transfer/CI/failure/ownclosingtailcosts. Actual-outputGO requiredbeforeall81reader."
+    },
+    {
+      "run_id": 41239354199,
+      "note": "Actions-only saved DSBfull7 worker timing inspection; no traffic/replay/refit/simulation/rescore; exact13053549827 archive verify+unpack, six tiny metadata. Full diagnostic cost retained."
     }
   ],
   "blocked_main_cells": [],

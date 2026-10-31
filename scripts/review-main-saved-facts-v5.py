@@ -84,6 +84,8 @@ def _package_selected(name: str, kind: str) -> bool:
     if name.startswith("inputs/") and name.endswith("-request-index.jsonl"):
         return True
     if name.startswith("context-baseline/"):
+        if name.endswith('/simulation/report.json'):
+            return True
         return name.split('/')[-1] in {
             'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
             'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
@@ -101,9 +103,14 @@ def _package_selected(name: str, kind: str) -> bool:
     if name.startswith("procrustes/") and "/0/" in name:
         return name.endswith(("preflight.command.json", "report.json"))
     parts = name.split("/")
+    if (len(parts) == 5 and parts[0] in ('ebpf', 'native', 'combined')
+            and parts[1] in ('raw', 'network_scope')
+            and parts[3:] == ['simulation', 'report.json']):
+        return True
     return (len(parts) == 4 and parts[0] in ("ebpf", "native", "combined")
             and parts[1] in ("raw", "network_scope")
             and parts[-1] in ("binding.json", "forecast.json",
+                              "analysis.json", "predicates.json", "faults.json",
                               "simulation.command.json", "model.json", "overlay.json",
                               "model.signal-quality.json", "provided-metadata-attachment.json",
                               "provided-metadata-validation.command.json"))
@@ -358,7 +365,7 @@ def paired_simulation_facts(toolchain: Path, branch: Path, forecast: dict, freez
                [relative + '/' + name for name in ('model.json', 'analysis.json', 'simulation')]):
         raise ValueError('paired available forecast lacks its exact successful Sheaft command')
     analysis = read(branch/'analysis.json')
-    files = ['simulation.command.json', 'model.json', 'analysis.json']
+    files = ['simulation.command.json', 'model.json', 'analysis.json', 'simulation/report.json']
     for key, name in (('predicate_contract', 'predicates.json'), ('fault_contract', 'faults.json')):
         if key in analysis:
             if toolchain_relative(analysis[key]) != relative + '/' + name:
@@ -371,7 +378,32 @@ def paired_simulation_facts(toolchain: Path, branch: Path, forecast: dict, freez
     if (forecast.get('graph_sha256') != sha(branch/'model.json')
             or forecast.get('analysis_sha256') != sha(branch/'analysis.json')):
         raise ValueError('paired forecast model or analysis hash differs')
-    return operation_metadata_facts(toolchain, branch, freeze)
+    report = read(branch/'simulation/report.json')
+    if (report.get('input_artifact', {}).get('digest') != 'sha256:' + sha(branch/'model.json')
+            or toolchain_relative(report.get('input_artifact', {}).get('path', '')) != relative + '/model.json'):
+        raise ValueError('saved Sheaft report references another model')
+    profiles = report.get('profiles') or {}
+    if isinstance(profiles, list):
+        profiles = {profile['name']: profile for profile in profiles}
+    endpoints = [endpoint['id'] for endpoint in read(branch/'overlay.json')['endpoints']]
+    if not endpoints or not forecast.get('by_state'):
+        raise ValueError('saved available forecast lacks operation endpoints or state values')
+    for state, value in forecast['by_state'].items():
+        values = profiles.get('state-' + state, {}).get('simulation', {}).get('endpoint_availability', {})
+        if any(values.get(endpoint) != value for endpoint in endpoints):
+            raise ValueError('saved Sheaft report and frozen forecast state values differ')
+    database_prediction = forecast.get('database_down_prediction')
+    if database_prediction is not None:
+        values = profiles.get('db-down', {}).get('simulation', {}).get('endpoint_availability', {})
+        if any(values.get(endpoint) != database_prediction for endpoint in endpoints):
+            raise ValueError('saved Sheaft report and frozen database prediction differ')
+    facts = operation_metadata_facts(toolchain, branch, freeze)
+    facts['saved_simulation_report'] = {
+        'path': 'toolchain/' + relative + '/simulation/report.json',
+        'sha256': sha(branch/'simulation/report.json'),
+        'model_digest_and_all_operation_endpoint_state_values_match': True,
+        'database_down_prediction_bound_if_present': database_prediction is not None}
+    return facts
 
 
 def saved_binding_summary(toolchain: Path, branch: Path, freeze: dict | None) -> dict:
@@ -1262,9 +1294,11 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         model_endpoints = {item["id"] for item in model.get("endpoints") or []}
                         if not model_edges.issubset(graph_edges) or not model_endpoints.issubset(graph_endpoints):
                             raise ValueError("Sheaft model contains unobserved graph identities")
-                    metadata_facts = (operation_metadata_facts(toolchain, branch, freeze)
-                                      if saved_row.get("available")
-                                      and declaration["head_sha"] in METADATA_ATTACHMENT_HEADS else None)
+                    metadata_facts = None
+                    if saved_row.get('available') and declaration['head_sha'] in METADATA_ATTACHMENT_HEADS:
+                        metadata_facts = (paired_simulation_facts(toolchain, branch, saved_row, freeze)
+                            if declaration['head_sha'] in CONTEXT_BASELINE_HEADS
+                            else operation_metadata_facts(toolchain, branch, freeze))
                     branch_facts.append({
                         "source": source, "variant": variant, "operation": operation,
                         "available_copied": saved_row.get("available"),

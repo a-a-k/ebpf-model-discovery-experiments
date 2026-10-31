@@ -105,6 +105,8 @@ def wanted_member(name: str, scope: str) -> bool:
         return True
     parts = name.split("/")
     if name.startswith('toolchain/context-baseline/'):
+        if name.endswith('/simulation/report.json'):
+            return True
         return parts[-1] in {
             'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
             'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
@@ -125,9 +127,15 @@ def wanted_member(name: str, scope: str) -> bool:
             and parts[1] in ("ebpf", "native", "combined")
             and parts[2] in ("raw", "network_scope")):
         return parts[-1] in ("binding.json", "forecast.json",
+                             "analysis.json", "predicates.json", "faults.json",
                              "simulation.command.json", "model.json", "overlay.json",
                              "model.signal-quality.json", "provided-metadata-attachment.json",
                              "provided-metadata-validation.command.json")
+    if (len(parts) == 6 and parts[0] == 'toolchain'
+            and parts[1] in ('ebpf', 'native', 'combined')
+            and parts[2] in ('raw', 'network_scope')
+            and parts[4:] == ['simulation', 'report.json']):
+        return True
     return False
 
 
