@@ -3626,6 +3626,46 @@
       "run_id": 41218620856,
       "role": "preparation",
       "note": "Actual Focused implementation checks at workflow source2e0d83f75221b5d7ce7da86ec6e5f6ed940f7756; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41227578403,
+      "role": "archive",
+      "note": "Permanent original archives and terminaljob/check/annotation/log metadata of57latepreparation/modelworker/probe/failedN6 runs; allcostsretained, no scientificadmission. All13originalZIPsrehash inActions; localonlytinyreleaseprovenance."
+    },
+    {
+      "run_id": 41227323826,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow sourcee67a743891e2568dd3cd809a225b2cab742174fe; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41227317278,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow sourcee67a743891e2568dd3cd809a225b2cab742174fe; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41227035276,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source327e0801657a809202662287520b68e3f54dee9a; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41227031438,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source327e0801657a809202662287520b68e3f54dee9a; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41226608327,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41226484077,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source8163258d86648e51b483402a4c57e143488ace8f; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
+    },
+    {
+      "run_id": 41226480187,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source8163258d86648e51b483402a4c57e143488ace8f; actualscientificinput source remains separatelyretained. Include alljobintervals/failures/stops/transfer/artifact costs; humanunknown."
     }
   ],
   "blocked_main_cells": [],
@@ -3652,5 +3692,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T17:48:57.847041+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T18:07:41.355528+00:00"
 }

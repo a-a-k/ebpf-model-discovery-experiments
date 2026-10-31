@@ -1,0 +1,24 @@
+{
+  "recorded_before_implementation_utc": "2026-10-31T18:06:18.276099+00:00",
+  "scope": "Only archivalpredownload disk measurement/necessary-headroomguard inexistingarchive-runs.sh, notappcapture/model/admission/scientifichypothesis change",
+  "original_criterion": "Fixed81/threecollectors/tenoperations/actualBering->Sheaft->externaloutcomes underabsent/partialtracing unchanged",
+  "strongest_simple_baseline": "Existingstreaming archive holds onlyoneoriginal+itschunks, notentire113.7GB. ReuseoriginalZIP/hash/CRC/chunk/reassembly/uploadcode unchanged. Measuringcurrentfreebeforelarge original download isminimalnecessaryinfrastructurecheck.",
+  "causal_source": "Failbeforetransfer whenactualavailablebytes belowmeasuredworkingcopyrequirement; preserveactualheadroom/APIid/size/peak andfailurecosts. Doesnotguaranteelaterfreecannotfall.",
+  "complete_costs": "Retainallold/currentarchive/preparation/CI/guard/failure/transferjobintervals and artifactbytes; humanunknown. Noarchivalcostadvantageorscientificpositiveclaim.",
+  "root_verdict": "Explicit ORIGINAL-feasibility operational-designGO: eachoriginalAPI size predictsSunchunked or2Schunked +explicit64MiBfilesystem/metadatareserve, actualfreeimmediatelybeforedownload, JSONproof inexistingprovenance andalwaysupload; insufficientstopwithoutdeletion/retry/cleanup expansion.",
+  "skeptic_verdict": "Explicit ORIGINAL-feasibility operational-designGO receivedexisting /root/ebpf_audit_skeptic beforecode; actualdiff+focusedpositive/negativefixtures requiredbeforelargeexecution.",
+  "unchanged": "AllsourceartifactAPI/hash/ZIPCRC/split/reassembly/publication invariants; allstudy/current57archive41227578403 unaffected; no new acquisitiongate/repetition/framework.",
+  "actual_code_review_status": "RootactualdiffGO; independentactualdiff+CI pending beforelargearchive",
+  "code_paths": [
+    "scripts/archive-runs.sh",
+    "tests/test_archive_runs.py"
+  ],
+  "root_actual_diff_verdict": "OriginalZIP/hash/CRC/split/reassembly/upload untouched; oneexistingAPI metadatafield(size) added, onlymeasuredpredownloadfree/necessaryone-or-two-copybytes+64MiBoperationalreserve proof/guard andexistingtar inclusion. No sourcecapture/admission/scoring changes.",
+  "verification": {
+    "Bash_n": "PASS GitBash",
+    "PythonAST": "PASS guard and existingtests",
+    "portable_inline_fixtures": "3PASS:unchunked1copy/chunked2copy/insufficientstops beforedownload",
+    "Linuxmock_suite": "Existing ArchiveRunsTests plus one meaningfulnegativecase andupdatedrealisticAPI size fields; runsinActions only"
+  },
+  "modest_archive_unchanged_live_run": 41227578403
+}
