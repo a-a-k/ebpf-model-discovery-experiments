@@ -87,3 +87,36 @@ referenced predicate/fault files must match the freeze. These are evidence
 checks under the original feasibility criterion, not new scientific thresholds.
 The final source profile remains inactive. This GO does not admit a capture,
 authorize main81 before qualification, or establish research success.
+
+## Actual saved-prefix decision before final common-source qualification
+
+The fixed diagnostic [41152205197](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41152205197)
+at audit source31322e1a467128daaa5bb76ff8fdca50adf9ab34 completed. Both agents
+independently checked derived artifact13023164449 (1276798 bytes, SHA256
+`30cb522e6813e0fd580965d572a6707e858e950fb0b36a8599904383bf63a066`)
+and selected original models/acceptance sidecars against their pre-target hashes.
+All108 original mixed requests (24 eBPF,84 SDK;4794 spans) retain body hashes,
+byte counts, order and emitter roles; joint Bering ingest has zero dropped/late
+spans. The complete original graph records remain exact in both variants. Each
+adds14 actual SERVER edges: raw50 services/207 edges/32 endpoints becomes221
+edges; network_scope48/206/32 becomes220 edges. Extra joint endpoints and services
+are not imported. Semantic and supplied-alias conflict lists are empty.
+
+All six operation views pass actual pinned Bering validation and Sheaft. Their
+literal simulator models are the union plus the same provided metadata; actual
+model/analysis hashes, commands and reports agree with the diagnostic forecasts
+(.875, with state11/10/01=1 and00=0). Original combined forecasts remain unknown
+and unchanged. All163 closed-checkpoint files and583 original frozen toolchain
+files remain unchanged in Actions. The diagnostic never uses the final database,
+new application traffic or external outcome rescoring. These saved predictions
+are post-target diagnostics, not primary results.
+
+Both agents give ACTUAL-OUTPUT ORIGINAL-feasibility GO to merging the reviewed
+implementation and running the final common-source qualification27. The result
+supports the proposed source-domain mechanism and the simple observed-edge union;
+it does not establish fresh predictive accuracy, algorithm novelty or a cost
+advantage. All required DB channels remain unobserved and DB-fault prediction
+unavailable; supplied conditional DB assumptions are not recovered dependencies.
+The diagnostic itself records1041.78 seconds, excluding earlier downloads, CI and
+preparation, which remain separately charged. Human preparation remains unknown.
+Main81 requires actual-output review of that final qualification first.
