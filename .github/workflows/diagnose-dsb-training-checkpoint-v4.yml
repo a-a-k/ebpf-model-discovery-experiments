@@ -2,6 +2,10 @@ name: Iteration 4 immutable DSB checkpoint GC diagnostic
 on:
   workflow_dispatch:
     inputs:
+      profile_full7_preparation:
+        description: Profile unchanged input preparation on the fixed saved full7 prefix
+        type: boolean
+        default: false
       saved_full7_timing:
         description: Read existing full7 worker timings only; no tool rerun
         type: boolean
@@ -11,7 +15,7 @@ permissions:
   actions: read
 jobs:
   diagnose:
-    if: ${{ !inputs.saved_full7_timing }}
+    if: ${{ !inputs.saved_full7_timing && !inputs.profile_full7_preparation }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -176,7 +180,7 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
   saved-full7-timing:
-    if: ${{ inputs.saved_full7_timing }}
+    if: ${{ inputs.saved_full7_timing && !inputs.profile_full7_preparation }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -257,5 +261,51 @@ jobs:
         with:
           name: fixed-dsb-full7-worker-timing-${{ github.run_id }}
           path: work/timing-review/
+          retention-days: 90
+          if-no-files-found: error
+  preparation-profile:
+    if: ${{ inputs.profile_full7_preparation }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the unchanged preparation dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Retain and free the same unused hosted-image SDK directories
+        run: |
+          mkdir -p work/preparation-profile
+          df -B1 . > work/preparation-profile/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/preparation-profile/disk-after-sdk-cleanup.txt
+      - name: Bind and download the one immutable training prefix
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/preparation-profile
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13047984145 > work/preparation-profile/artifact-api.json
+          python - <<'PY'
+          import json,pathlib
+          a=json.loads(pathlib.Path('work/preparation-profile/artifact-api.json').read_text())
+          assert a['id']==13047984145 and a['size_in_bytes']==3356747245 and not a['expired']
+          assert a['name']=='training-v4-deathstarbench-full-7-41164824120'
+          assert a['digest']=='sha256:a36d286a30830b93e2958f22da6f6e5ad735ad4f32bfe1dcc6b5a0a2abe1ddac'
+          assert a['workflow_run']['id']==41164824120
+          assert a['workflow_run']['head_sha']=='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
+          PY
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13047984145/zip > work/training-prefix.zip
+          printf '%s  %s\n' a36d286a30830b93e2958f22da6f6e5ad735ad4f32bfe1dcc6b5a0a2abe1ddac work/training-prefix.zip | sha256sum --check
+      - name: Allocate the same measured worker swap
+        run: bash scripts/setup-v4-swap.sh work/preparation-profile/swap
+      - name: Profile full unchanged preparation without running model tools
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
+        run: python scripts/profile-fixed-dsb-preparation-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-dsb-full7-preparation-profile-${{ github.run_id }}
+          path: work/preparation-profile/
           retention-days: 90
           if-no-files-found: error

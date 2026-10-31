@@ -1,6 +1,6 @@
 {
   "recorded_utc": "2026-10-31T18:12:41.219406+00:00",
-  "status": "Small57batchpublished+root/skepticallremoteledgerverification complete; largeexact2batch stillactive. NotMAINadmission/scientificcompletion.",
+  "status": "Both small57batch and largeexact2batch published and independently verified. MAIN scientific admission remains separate.",
   "small_batch": {
     "run_id": 41227578403,
     "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41227578403",
@@ -100,5 +100,19 @@
   },
   "local_review_boundary": "Onlymetadata/tinyselectedtechnicalfiles locally. WholeoriginalZIPs, journals, SQLite andheavyvalidation remainActions-only; finalroot/skepticchecksmallprovenancehashes andallremoteID/name/state/size/SHA/checksum/chunkoffsetledgers.",
   "scientific_preservation": "All81/10operations/threecollectors/fourmethods/fullcounts unchanged, no newcaptures/refit/rescore inarchives, no completed/adverse/unknowncaseexclusion; allstops/failures/workers/preparation/transfer/archivalcosts retained.",
-  "current_capacity": "Capturecap20; onlytwoarchives total, model/CIheadroom preserved under31verifiedassignedrunnerlowerbound."
+  "current_capacity": "Capturecap20; onlytwoarchives total, model/CIheadroom preserved under31verifiedassignedrunnerlowerbound.",
+  "updated_utc": "2026-10-31T20:47:43.527917+00:00",
+  "large_batch_actual_publication": {
+    "run_id": 41228221300,
+    "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41228221300",
+    "published_utc": "2026-10-31T20:25:55Z",
+    "original_artifacts": 57,
+    "original_bytes": 127126855391,
+    "remote_assets": 172,
+    "payload_ledger_entries_verified": 170,
+    "internal_chunk_manifests_verified": 27,
+    "all57_disk_guards_verified": true,
+    "root_skeptic_actual_output_GO": true,
+    "public_proof": "results/iteration-5/archive-41228221300.json"
+  }
 }

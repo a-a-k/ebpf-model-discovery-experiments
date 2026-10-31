@@ -3765,6 +3765,10 @@
     {
       "run_id": 41239354199,
       "note": "Actions-only saved DSBfull7 worker timing inspection; no traffic/replay/refit/simulation/rescore; exact13053549827 archive verify+unpack, six tiny metadata. Full diagnostic cost retained."
+    },
+    {
+      "run_id": 41240585632,
+      "note": "Repeat saved-dataONLY qualification sameoriginalfixed3 packets; uniformactualfrozenSheaftanalysis/predicate/fault/report bindingsinclnumericDB0. No traffic/refit/replay/rescore/newmetric/accuracyselection. Allcheck/transfer/CI/archivalcostsretained."
     }
   ],
   "blocked_main_cells": [],

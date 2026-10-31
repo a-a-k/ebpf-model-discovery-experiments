@@ -1,0 +1,54 @@
+{
+  "recorded_utc": "2026-10-31T20:47:43.527917+00:00",
+  "status": "Root and skeptic actual-output ORIGINAL read-only timing qualification GO; phase localized, internal-function cause not yet established.",
+  "run_id": 41239354199,
+  "artifact_id": 13057046328,
+  "source": "494e5ac2df0ea9936f62312522db2a466ce6b4bf",
+  "original_worker": 41219370499,
+  "original_parent": 41164824120,
+  "case": "deepflow/deathstarbench/full/7",
+  "original_scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "input_preparation_seconds": 6473.154799267,
+  "worker_wall_seconds_from_time_v": 9309,
+  "time_boundary": "Input preparation is contained in worker wall; do not add nested durations. Bering serve/replay uses sidecars, so command log sum is not total Bering runtime.",
+  "peak_RSS_KiB": 12536452,
+  "scope": {
+    "source_worker": 41219370499,
+    "source_artifact": 13053549827,
+    "source_scientific_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "parent_cell": "deathstarbench:full:7",
+    "parent_run": 41164824120,
+    "new_application_traffic": false,
+    "tool_reexecution": false,
+    "new_fitting_simulation_or_scoring": false,
+    "selected": {
+      "worker-status.json": {
+        "bytes": 1897,
+        "sha256": "63c8c01f84f3322e6c36c1f3c295fdba61da468bee4adb049b5e4557f8191836"
+      },
+      "worker-commands.jsonl": {
+        "bytes": 31506,
+        "sha256": "4edc3af53aae584f1ad42a60c3fca4d6ac0440683e14e40fa47e6af044b53617"
+      },
+      "infrastructure/toolchain-time.txt": {
+        "bytes": 970,
+        "sha256": "70d5325312abf952bd746856ac2e1f80e9c79d2b5f1a6e1863cc96ed57e3c9cc"
+      },
+      "bering-go-environment.json": {
+        "bytes": 381,
+        "sha256": "1ea99c979783495d999c9580789d2c84bf9b5792c0ada3766ff4fa33df7a729b"
+      },
+      "toolchain/input-preparation-cost.json": {
+        "bytes": 205,
+        "sha256": "d24796b39f34d49f22b155d742564ed2b493d2ae12ba4897f9f18d00a848d2b6"
+      },
+      "toolchain/execution-summary.json": {
+        "bytes": 10046,
+        "sha256": "48ecc18555149d3ae98200ab383cb6889b668800c7f1bdf4bb0f81673540e5f4"
+      }
+    }
+  },
+  "source_prefix_unchanged": true,
+  "new_tools_or_application_traffic": false,
+  "hypothesis_limit": "Memoization benefit not established. Source has per-digest enclosures and often unique raw locators; full-prefix function profiling comes before code optimization."
+}
