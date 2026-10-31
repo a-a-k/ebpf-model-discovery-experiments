@@ -147,3 +147,27 @@ moved, and no automatic retry or wait-until-free loop is added. A new honest
 operational revision, exact source-equivalence proof, CI and both actual-code
 GO verdicts must precede the one fresh failed-case replacement. Failed attempts
 and all preparation/repeat costs remain retained.
+
+## Guest diagnostic retention
+
+The complete ZIP directory of historical OTel full artifact `12961026796`
+(12351 entries) contains no guest serial or console file. The newer failed N
+artifact `13045713018` also contains guest check files but no serial file.
+A source statement attempting `cp` therefore does not establish successful
+retention. The error was suppressed; file permissions are a possibility, not
+an established historical cause. The resource sampler's `kernel-latest.txt`
+describes the Actions host, so it cannot rule out a guest cgroup OOM.
+
+Future capture retention explicitly reads each owned VM serial file with
+`sudo stat` and `sudo cat`, keeping bytes, stderr and read status separately.
+It also passively reads each guest kernel log before stopping guests. These
+diagnostics run after application cleanup and after the scientific workload;
+they do not alter an application, graph, forecast or outcome. Missing files and
+SSH/read errors remain recorded diagnostic unknowns rather than new admission
+criteria. The short SSH command timeout limits optional evidence retrieval,
+not application responses or an experiment phase. No kernel log is cleared.
+
+This preserves future evidence; it neither recovers missing historical logs
+nor proves a historical OOM or the effect of the earlier port reservation.
+Completed cells are not repeated for these additional diagnostics. Exact
+operational source equivalence and actual revision identities remain required.
