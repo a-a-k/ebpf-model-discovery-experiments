@@ -8,7 +8,7 @@
       "mode": "absent",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41173230022,
       "stage": "main",
       "runner": "study",
       "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
@@ -836,7 +836,28 @@
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
   "pending_artifact_cells": 81,
-  "cells": [],
+  "cells": [
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13031540651,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-absent-8-41164821492",
+      "compact_artifact_bytes": 2589084007,
+      "compact_artifact_digest": "sha256:d60d879e50740a6812617d231f8da4f410f8b4643d848a9108e23d41b456cfb9",
+      "full_artifact_id": 13031398277,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-absent-8-41164821492",
+      "full_artifact_bytes": 6106417711,
+      "full_artifact_digest": "sha256:cde162c946d0861c93b4deff99ac975fcaae4ffad207d57669ea93f34ced6062"
+    }
+  ],
   "superseded_planned_source": {
     "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
     "plan_git_commit": "29eddf44d1a784a0df955ee96d14ec319fbb9820",
@@ -848,5 +869,21 @@
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
   "status": "All81 fixed mainrun identities predeclared before results. Await exact full/compact artifacts; no savedmain fact checks or independent admission yet.",
-  "source_qualification": "docs/clean-study-declarations-20261030.json"
+  "source_qualification": "docs/clean-study-declarations-20261030.json",
+  "technical_replacements": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41164821492,
+      "original_worker_id": 41171880804,
+      "original_compact_artifact_id": 13031955460,
+      "replacement_run_id": 41173230022,
+      "same_scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "technical_disk_exhaustion_during_checkpoint_extraction_beforeforecastandtargets",
+      "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true
+    }
+  ]
 }

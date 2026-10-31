@@ -214,5 +214,40 @@
     "worker_output_artifact_observed": 13030412198,
     "worker_conclusion": "success",
     "worker_output_boundary": "Typed worker payload remains opaque locally. Actual model/ingest/unknowns and parent-import/forecast/target binding require the existing Actions main saved-facts review. No cross-host UTC inference."
+  },
+  "worker_disk_technical_recovery": {
+    "failed_worker": 41171880804,
+    "parent": 41164821492,
+    "cell": {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6
+    },
+    "checkpoint_artifact": 13031068777,
+    "failed_compact_artifact": 13031955460,
+    "failed_metadata_transport": "work/main81-compact-13031955460/root-small-metadata-transport.json",
+    "primary_cause": "OSError28NoSpaceLeftOnDevice _safe_extract beforemodelconstruction",
+    "parent_symptom": "Missingoutputmanifest inStudy.freeze, only5training/calibrationblocks, notargets",
+    "worktree": ".worktrees/worker-disk-preparation",
+    "branch": "fix/worker-disk-preparation",
+    "head": "134dcbbe0a17ce09f5b7354e36ad94bb2f510812",
+    "pr": 10,
+    "both_original_design_GO_beforeimplementation": true,
+    "actual_code_GO": "Both explicit ORIGINAL actual-code GO134dcbbe0a17ce09f5b7354e36ad94bb2f510812 beforepublication/technicalrepeat",
+    "tests": "29existingremote tests pass/1POSIXskip;YAML+2PythonAST+order+gitdiff pass",
+    "ci": [
+      41173047078,
+      41173077025
+    ],
+    "ci_state": "bothcompletedSUCCESS",
+    "plan": "Oneinlineworkflowstep removesonly3unusedhostSDKdirs beforecheckpointdownload, recordsdisk/time/workflow; identicalscienceinput0c98/restoredhashverifiedbinaries/8GiBswap. AfteractualcodeGO+CImergePR10thenexistingseries-v5 tagstudy-20261031-v5 collectorobi/stagemain/runnerstudy/systemdeathstarbench/modeabsent/seed6. No newframework orfull81restart. Existingworkersdispatchmainworkflow separatelyfrominputssciencecommit.",
+    "merge": "8a9b17bcbe223c76afac0f2cc2f4939523bf94a1",
+    "merged_utc": "2026-10-31T05:35:10Z",
+    "replacement_run": 41173230022,
+    "replacement_created_utc": "2026-10-31T05:35:46Z",
+    "replacement_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "replacement_status": "ActualAPI05:36UTC prepareSUCCESS, campaignactive Install experiment package",
+    "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json"
   }
 }

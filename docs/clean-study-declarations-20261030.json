@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "All81 matched finalsource main cells dispatched at0c98 after both actual27 ORIGINAL GO; runs OBI41164821492, DeepFlow41164824120, Coroot41164826834. No completed/admitted main results yet.",
+  "main_dispatch_status": "Original81 matchedscience0c98 cells active; API05:31:51UTC1complete success/1pretargettechnicalfailure(OBI DSBabs6). Commonworker diskprepPR10 merged; exactsame-source failedcell replacement41173230022active. Independentmain admission pending.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1818,6 +1818,19 @@
         }
       ],
       "note": "Final matched main81, immutable study-20261031-v5/source0c98bf4520e863ab021b60d00517ee2aa49ab38e, explicit study runner. Both ORIGINAL GO after actual27 review41162715350 recorded at625a50c before dispatch. Same four arms/directbaseline/all10operations; preserve unknown, adverse, failure and fullcost evidence."
+    },
+    {
+      "run_id": 41173230022,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Predeclared technicalreplacement for41164821492/OBI/DSBabs6 afterworker41171880804 exhausted disk beforemodel/forecast/targets. Same immutable scientific source0c98/tagstudy-20261031-v5; commonworker workflow8a9 freesunusedhostSDKdisk. Bothoriginaldesign+actualcodeGO, bothCI success before05:35:46UTCdispatch. No accuracy/outcome selection; originalfailedattempt retained."
     }
   ],
   "related_runs": [
@@ -2885,6 +2898,56 @@
       "run_id": 41169312957,
       "role": "worker",
       "note": "First observed final-main source0c98 worker, DSBabsentseed8, completedsuccess. Typedworkeroutput13030412198 retained; parentimport/forecast/fullcellproof independently checked later. Retain input2GB transfer, verification, toolchain, packaging and elapsed costs; not CPU/billed usage."
+    },
+    {
+      "run_id": 41170554515,
+      "role": "preparation",
+      "note": "CI for first full-size main training metadata documentation c42b296. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41170557468,
+      "role": "preparation",
+      "note": "PR CI for first full-size main training metadata documentation c42b296. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41171353705,
+      "role": "worker",
+      "note": "Coroot main DSB absent8 worker, source0c98; output success. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41171807821,
+      "role": "worker",
+      "note": "OBI main DSB absent7 worker, source0c98; output success. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41171880804,
+      "role": "worker",
+      "note": "OBI main DSB absent6 failedworker, ENOSPC during unchangedcheckpoint extraction beforemodel/forecast/targets. Technicalrepeat required; originalcost retained. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41171948110,
+      "role": "worker",
+      "note": "Coroot main DSB absent6 worker, source0c98; output success. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41172290277,
+      "role": "worker",
+      "note": "Coroot main DSB absent7 worker, source0c98; output success. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41172944423,
+      "role": "worker",
+      "note": "Observed main worker at0c98, created05:31:39UTC; mapping/terminal output pending. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41173047078,
+      "role": "preparation",
+      "note": "CI for common workflow-only unusedhostSDK diskpreparation134dcbb; successful. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41173077025,
+      "role": "preparation",
+      "note": "PR CI for common workflow-only unusedhostSDK diskpreparation134dcbb; successful. Include complete recorded elapsed, transfer, cleanup/preparation and waiting costs; human effort unmeasured."
     }
   ],
   "blocked_main_cells": [],
