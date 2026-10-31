@@ -1,0 +1,96 @@
+{
+  "recorded_before_dispatch_utc": "2026-10-31T14:15:44.752199+00:00",
+  "original_criterion": "Feasibility of actual eBPF observations to Bering graph to actual Sheaft to independent application outcomes with absent/incomplete native tracing. Same3collectors/81unique cells/all10operations/4methods/equal-information direct baseline. No original cost-superiority hypothesis.",
+  "supersedes_source_boundary_only": "Earlier whole-repository0c98-only main pre-execution record remains historical. From this decision, exact reviewed operational revision N is accepted as the SAME scientific implementation alongside0c98. No other source, count, method, semantic or outcome rule changes.",
+  "qualified_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "immutable_ref": "capture-20261031-parent-disk-v1",
+  "reviewed_producer_commit": "8113daa676eb5383678877507e7a24f8304ff90d",
+  "merge_tree_identical_to_reviewed_producer": true,
+  "merge_tree": "de3083b41c6b398afc4cfd98dab6358ca535e4bf",
+  "all_remaining_git_entries_identical": 2126,
+  "remainder_manifest_sha256": "065bd4ba10af44f9dca5f1534f94195e670fcb8054c2a8ba60ba07e86f9e3c3b",
+  "exact_approved_operational_paths": {
+    ".github/workflows/series-v5.yml": {
+      "base": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "ce93538832937e296a01911f2f3b3e851bd3ceb2"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "8eed6cc872652a8c13125a980a9fa5eedee2311d"
+      }
+    },
+    ".github/workflows/toolchain-worker-v4.yml": {
+      "base": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "0d33edba77685911fd49b4e963d7e655dfe17ae2"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "4b833fed808c6701426d758bb3b9feb84e81cfa1"
+      }
+    },
+    "docs/WORKER_PACKAGING_V5.md": {
+      "base": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "6d162d4b0cd3e02a1bc1c1118d2997aee4fb7a77"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "blob": "48c220fcb158379a3cf6216da939eafe4a153a0b"
+      }
+    }
+  },
+  "workflow_proof": "RemovingtheoneSDKcleanupstep makesENTIREseriesworkflowbyte-identical0c98; existingworkerworkflowunchangedfromapproved8a9. No GITHUB_SHAoverride: actualN isvisibleinAPI, checkpoint, status, worker and report.",
+  "producer_CI_success": [
+    41207684126,
+    41207756182,
+    41208020320,
+    41208762187
+  ],
+  "root_verdict": "Explicit ORIGINAL-feasibility EXECUTION GO for theseTWO exacttechnicalreplacements only after actualproducerreview, CI, exactmerge/sourceequivalence; no outcome selection or researchsuccess claim.",
+  "skeptic_verdict": "Explicit FINAL-N ORIGINAL-feasibility EXECUTION GO received beforedispatch forDF/DSB/partial6and8only; exactfinaltree/tag/CI independentlyverified; no blindseed7 rerun. Reader/report implementationmayfinishduringcapture butfullstrictchecksrequiredBEFOREadmission.",
+  "skeptic_evidence": "work/skeptic-main-v5-observer/parent-disk-final-fbbda015-original-execution-go.json",
+  "both_explicit_original_go_before_dispatch": true,
+  "admission_policy": "IndependentreaderNprofilemustapplyallfresh/context/guest/metadata/input/model/freeze/outcomechecksunchanged. ReportpermitsONLYpredeclared{0c98,N}afterexactapprovedGitblobsandallotherGitentries/modescompare. Olderbf49/f60 remainexcluded; actualsourcecommitsvisible. Samecelltwoeligibleattemptambiguitystillrejectsselection. No score/refit/normalization.",
+  "cases": [
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "stage": "main",
+      "runner": "study",
+      "original_parent": 41164824120,
+      "original_job": 124430030952,
+      "technical_failure": "parent_runner_ENOSPC_before_retention",
+      "recorded_failed_elapsed": "5h29",
+      "retained_prefix_artifact_id": 13039879002,
+      "fresh_complete_case_required": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "stage": "main",
+      "runner": "study",
+      "original_parent": 41164824120,
+      "original_job": 124430030947,
+      "technical_failure": "parent_runner_ENOSPC_before_retention",
+      "recorded_failed_elapsed": "4h49",
+      "retained_prefix_artifact_id": 13038473393,
+      "fresh_complete_case_required": true
+    }
+  ],
+  "do_not_rerun": "Seed7isstillliveatthelastdirectAPIcheck; itisnotincluded. Existingotherparentrunscontinue. Do notresumeoldprefixonfreshguests orclaimlostfinaltargetlogsretained.",
+  "complete_costs": "Retain failed5h29+4h49 parents, successfulworker/prefixevidence, all preparationCI/review/cleanup/freshcase/transfer/wait/publication costs. CPU/RAM/swap/ports/guestimages/scientificcodeunchanged. Hostheadroomandactualhardwarevarianceexplicit; human effort unmeasured.",
+  "research_success_claimed": false
+}
