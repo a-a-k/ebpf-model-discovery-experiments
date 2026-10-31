@@ -138,30 +138,30 @@
       "mode": "partial",
       "seed": 7,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41227089066,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41227092801,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41227096018,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "otel_demo",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 51,
+  "pending_artifact_cells": 50,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1436,6 +1436,26 @@
       "full_artifact_name": "campaign-v5-coroot-main-otel_demo-partial-7-41164826834",
       "full_artifact_bytes": 1511963528,
       "full_artifact_digest": "sha256:8ebcbf51e388bb1f6ce4ff06d3f72edff416d3d7329dc8b536982f6ecd94a33b"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13052315110,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-partial-8-41164826834",
+      "compact_artifact_bytes": 45103491,
+      "compact_artifact_digest": "sha256:a064c9a9f0e8dbb83e51cb02143ce17a5750adf4bc4c3ff23731678c16141994",
+      "full_artifact_id": 13051694931,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-partial-8-41164826834",
+      "full_artifact_bytes": 1418519141,
+      "full_artifact_digest": "sha256:c4c838340ceade1fea7577cd6e3170fcac621d8d57bb4a9965a3047296753d9a"
     }
   ],
   "superseded_planned_source": {
@@ -1448,7 +1468,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-10-31T17:49:59.520024+00:00: 30 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-10-31T18:00:10.959890+00:00: 31 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {

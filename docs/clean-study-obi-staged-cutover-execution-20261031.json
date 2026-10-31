@@ -1,6 +1,6 @@
 {
   "recorded_before_cancellation_utc": "2026-10-31T17:50:32.819167+00:00",
-  "status": "Normal carrier cancellation complete; first8 exactsinglecaseS jobs independently assigned; three authorized repeats pending technicalclosure confirmation",
+  "status": "EXECUTED: old OBIcarrier terminal; first8queued plus3 authorized technicalrepeats running as11isolated S jobs; allcomplete retained; global20actualcapturejobs verified",
   "approval": {
     "channel": "current Codex dialog request_user_input_async",
     "question_item_id": "[\"request_user_input_async\",\"call_44dbcfdb2d8a4601a88c51db4c5e2594\",0]",
@@ -975,8 +975,8 @@
       }
     ]
   },
-  "global_case_slots_reserved": 17,
-  "tail3_slots_reserved": 3,
+  "global_case_slots_reserved": 20,
+  "tail3_slots_reserved": 0,
   "tail3_root_proof": [
     {
       "artifact_id": 13051253889,
@@ -1082,5 +1082,109 @@
       "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
     }
   ],
-  "last_updated_utc": "2026-10-31T17:57:34.805879+00:00"
+  "last_updated_utc": "2026-10-31T18:01:03.760876+00:00",
+  "tail3_independent_original_GO": "work/skeptic-main-v5-observer/obi-stopped-tails-20261031/independent-original-tail3-go.json",
+  "tail3_dispatched": [
+    {
+      "run_id": 41227089066,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:58:22.699938+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41227092801,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:58:25.594210+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41227096018,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:58:28.110200+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    }
+  ],
+  "tail3_exact_jobs": {
+    "observed_utc": "2026-10-31T17:58:45.873501+00:00",
+    "exact_singlecase_jobs": [
+      {
+        "run_id": 41227089066,
+        "job_id": 124613416731,
+        "status": "in_progress",
+        "runner_id": 1000029929,
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41227092801,
+        "job_id": 124613423639,
+        "status": "in_progress",
+        "runner_id": 1000029931,
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41227096018,
+        "job_id": 124613438868,
+        "status": "in_progress",
+        "runner_id": 1000029932,
+        "active_steps": [
+          "Install experiment package"
+        ]
+      }
+    ]
+  },
+  "live_observation": {
+    "observed_utc": "2026-10-31T17:58:55.410206+00:00",
+    "actual_capture_jobs": 20,
+    "active_model_workers": 7,
+    "technically_successful_jobs": 31,
+    "new_technical_issues": []
+  },
+  "remaining_OBI_queue": [
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    }
+  ]
 }

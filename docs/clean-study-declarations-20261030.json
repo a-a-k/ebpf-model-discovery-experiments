@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "As recorded2026-10-31T17:57:34.805879+00:00:30API-success full/compactpairs retained, nofullMAINadmissionyet. Userapproved firstOBIcarrier conversion executed after alloldjobs terminal. EightS singlecasejobs dispatched+exactcase/sourceverified; threeauthorizedOTelrepeats reserved after technicalincompleteclosure; currentcase-slot reservations17of20. Other2oldcarriers/N7/N8/M6untouched; sourceS scientific2126entries identicalanchor, exact3reviewed operationalblobs only.",
+  "main_dispatch_status": "Direct17:58:55API:20actualcapturejobs+7modelworkers;31technicallysuccessful exactfull/compactpairs as18:00:10API, nofullindependentMAINadmissionyet. Userapproved firstOBIconversion complete: oldcarrierterminal, first8queued+3provenpreforecastincomplete repeats dispatched as11isolatedS singlecasejobs. Other2carriers/N7/N8/M6untouched; remainingOBIPCfull6/7/8 rolloveronlyas20cap frees. ActualsourceS scienceidenticalqualifiedanchor; nooutcome-basedselection. All81/10ops/fourmethods retained.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2000,6 +2000,45 @@
         }
       ],
       "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430028560 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41227089066,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "Exact userapproved OBI queue conversion technical repeat of cancelledAcquire job124430027446. BothindependentfullCD/status/blocks+APIreviews prove noforecast/model/targetchain; no outcomesselection. Actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b,2126scientificentries unchangedanchor; alloldpartialdata/costsretained; global20casecap."
+    },
+    {
+      "run_id": 41227092801,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Exact userapproved OBI queue conversion technical repeat of cancelledAcquire job124430027456. BothindependentfullCD/status/blocks+APIreviews prove noforecast/model/targetchain; no outcomesselection. Actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b,2126scientificentries unchangedanchor; alloldpartialdata/costsretained; global20casecap."
+    },
+    {
+      "run_id": 41227096018,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Exact userapproved OBI queue conversion technical repeat of cancelledAcquire job124430027426. BothindependentfullCD/status/blocks+APIreviews prove noforecast/model/targetchain; no outcomesselection. Actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b,2126scientificentries unchangedanchor; alloldpartialdata/costsretained; global20casecap."
     }
   ],
   "related_runs": [

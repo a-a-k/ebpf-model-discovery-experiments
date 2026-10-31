@@ -1108,7 +1108,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             ])
     lines += _table([
         "Run", "Repository", "Role", "Run status", "Run conclusion", "Job", "Job name", "Job status",
-        "Job conclusion", "Stored elapsed s", "Artifacts",
+        "Job conclusion", "API interval s", "Artifacts",
     ], job_rows)
     lines += [
         "", "Human/agent preparation effort: " + _value(costs.get("human_agent_seconds")),
