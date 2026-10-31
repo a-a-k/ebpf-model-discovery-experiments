@@ -1,9 +1,12 @@
 # Iteration 5: three collectors and stable operation families
 
-Status: replacement matched main series held for qualification and the paired
-context baseline in [CONTEXT_BASELINE.md](CONTEXT_BASELINE.md); measurements and their
-review boundaries are linked from the README. No completed-study or positive
-utility claim is made. Authorized on 2026-10-29: repair operation-class
+Status: all 27 final common-source qualification settings at `0c98bf4` passed
+independent saved-evidence review. The fixed 81-cell main series is running at
+immutable `study-20261031-v5`, including the paired context baseline in
+[CONTEXT_BASELINE.md](CONTEXT_BASELINE.md). Its pre-execution decisions and actual
+qualification evidence are recorded in
+[the common-source review](clean-study-requalification-v5-20261031.json).
+No completed-study or positive utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The active collectors are OBI, DeepFlow and Coroot.
 The user explicitly confirmed New Relic's exclusion on 2026-10-30; retaining it
@@ -50,8 +53,10 @@ complement incomplete native tracing in this executable chain:
 Collector choice may change observed protocol, identity and association coverage,
 and consequently the availability or error of externally checked forecasts.
 Fixing a diagnostic classifier alone does not establish that contribution.
-The original useful-outcome/complete-effort criterion remains in force. No positive
-result, accuracy threshold or superiority over equivalent arithmetic is required.
+The original criterion is feasibility with absent or incomplete native tracing,
+judged against independent application outcomes. Complete costs are reported;
+cost superiority was not the hypothesis. No positive result, accuracy threshold
+or superiority over equivalent arithmetic is required.
 
 Comparisons retain the equally informed direct contract/inventory predicate,
 native/eBPF/combined sources, the base entry classifier and the former exact
@@ -111,6 +116,13 @@ DB controls retain 20 up and 20 down attempts. OTel retains 20 normal, 20 paused
 and 20 recovered checkouts, including post-resume verification of the same paused
 orders. Preparation, additional HTTP steps and independent verification are charged.
 No experimental response deadline or accuracy cutoff is introduced.
+
+Names such as `class_train`, `calibration` and `fit` identify the pre-validation
+traffic and frozen-signature preparation phases. The classification code stores
+observed route/step signatures and positive call-set patterns. Bering constructs
+the graph and Sheaft simulates that graph; no statistical outcome-prediction model
+is trained from application success/failure labels. External labels enter the
+separate evaluation only.
 
 Iteration-5 OTel absent mode removes the v4 disabled branches' non-recording SDK
 providers and context propagators as well as native export. Enabled tracing paths

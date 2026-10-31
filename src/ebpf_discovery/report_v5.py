@@ -53,6 +53,44 @@ REFERENCED_AGGREGATE_SCHEMA = "evaluation-v5-saved-aggregate-referenced-v1"
 EVALUATION_REFERENCE_SCHEMA = "evaluation-v5-source-evaluation-reference-v1"
 PAYLOAD_MANIFEST_SCHEMA = "evaluation-v5-payload-manifest-v1"
 
+# Explicitly reviewed storage preparation; every other Git entry must match.
+# These are actual source revisions, never rewritten provenance identities.
+PREPARATION_ONLY_SOURCE_REVISIONS = {
+    "0c98bf4520e863ab021b60d00517ee2aa49ab38e": {
+        "fbbda015cefc4f11ee73f32be6ed661c70375f18": {
+            ".github/workflows/series-v5.yml": "8eed6cc872652a8c13125a980a9fa5eedee2311d",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "48c220fcb158379a3cf6216da939eafe4a153a0b",
+        },
+    },
+}
+
+
+def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
+    approved = PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision)
+    if not approved or anchor_tree.get('truncated') is not False or revision_tree.get('truncated') is not False:
+        raise ValueError('unreviewed preparation source or incomplete Git tree')
+
+    def entries(tree):
+        rows = {r['path']: {k: r[k] for k in ('mode', 'type', 'sha')}
+                for r in tree['tree'] if r['type'] != 'tree'}
+        if len(rows) != sum(r['type'] != 'tree' for r in tree['tree']):
+            raise ValueError('duplicate Git tree entry')
+        return rows
+
+    original, prepared = entries(anchor_tree), entries(revision_tree)
+    if ({k: v for k, v in original.items() if k not in approved}
+            != {k: v for k, v in prepared.items() if k not in approved}):
+        raise ValueError('preparation revision changes scientific source or file modes')
+    for path, blob in approved.items():
+        if (path not in original or prepared.get(path)
+                != {'mode': '100644', 'type': 'blob', 'sha': blob}):
+            raise ValueError('preparation revision differs from reviewed workflow blobs')
+    return {'anchor': anchor, 'revision': revision,
+            'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+            'approved_operational_blobs': approved,
+            'identical_remaining_entries': len(original) - len(approved)}
+
 
 def _read(path: Path, default: Any = None) -> Any:
     if not path.is_file():
@@ -596,9 +634,10 @@ def build(
             ),
         })
     common_head = declarations.get('experiment_head')
+    compatible_heads = {common_head, *PREPARATION_ONLY_SOURCE_REVISIONS.get(common_head, {})}
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
-        if common_head and item['stage'] == 'main' and observed_head != common_head:
+        if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,
@@ -946,8 +985,14 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         [key, value] for key, value in (payload.get("grid") or {}).items()
     ])
     if (payload.get('declarations') or {}).get('experiment_head'):
+        prepared = PREPARATION_ONLY_SOURCE_REVISIONS.get(payload['declarations']['experiment_head'], {})
+        boundary = ('Historical main rows remain visible; source commits outside the reviewed set do not contribute to this grid.'
+                    if prepared else 'Historical main rows remain visible; other source commits do not contribute to this grid.')
         lines += ['', 'Declared common source commit: `' + payload['declarations']['experiment_head'] +
-                  '`. Historical main rows remain visible; other source commits do not contribute to this grid.']
+                  '`. ' + boundary]
+        if prepared:
+            lines += ['The reviewed parent-storage revision(s) `' + '`, `'.join(prepared) +
+                      '` also use this scientific implementation. The reporting workflow verifies their exact approved operational blobs and all unchanged Git entries; actual source commits remain visible in every row. See `provenance/source-equivalence.json`.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:

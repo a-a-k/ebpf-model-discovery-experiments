@@ -10,7 +10,10 @@ from ebpf_discovery.artifact_recovery_v5 import recover_declared_files, retain_u
 from ebpf_discovery.compact_transport_v5 import (
     extract_verified_compact, remove_verified_working_copy,
 )
-from ebpf_discovery.report_v5 import build, render, resolve_evaluation_reference
+from ebpf_discovery.report_v5 import (
+    build, render, resolve_evaluation_reference,
+    PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts,
+)
 
 
 OBI_IMAGE = (
@@ -600,6 +603,72 @@ def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
     write(declarations, value)
     with pytest.raises(ValueError, match='full lowercase 40-character commit'):
         build([], declarations, tmp_path/'report')
+
+
+def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    prepared = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor]))
+    _, old = summary(tmp_path/'inputs', 31, 'main', head_sha='b' * 40)
+    _, current = summary(tmp_path/'inputs', 32, 'main', head_sha=prepared)
+    declarations = declared(tmp_path/'declared.json', [run(31, 'main'), run(32, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = anchor
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [310, 320], 'candidate_run_ids': [31, 32],
+        'selected_artifact_id': 320, 'reason_code': 'technical_parent_storage_repair'}]})
+    report = tmp_path/'report'
+    result = build([tmp_path/'inputs'], declarations, report, selection_path=selection)
+    first, second = attempts(result, 'main')
+    assert first['eligible_main_coverage'] is False and second['eligible_main_coverage'] is True
+    assert second['manifest']['commit'] == prepared
+    assert restored(report, first) == old and restored(report, second) == current
+
+
+def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    prepared = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor]))
+    summary(tmp_path/'inputs', 33, 'main', head_sha=anchor)
+    summary(tmp_path/'inputs', 34, 'main', head_sha=prepared)
+    declarations = declared(tmp_path/'declared.json', [run(33, 'main'), run(34, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = anchor
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [330, 340], 'candidate_run_ids': [33, 34],
+        'selected_artifact_id': 340, 'reason_code': 'technical_parent_storage_repair'}]})
+    with pytest.raises(ValueError, match='technical-only replacement'):
+        build([tmp_path/'inputs'], declarations, tmp_path/'report', selection_path=selection)
+
+
+@pytest.mark.parametrize('mutation', ['none', 'science_blob', 'science_mode', 'added_file',
+                                     'deleted_file', 'workflow_blob', 'truncated', 'unknown_head'])
+def test_preparation_equivalence_checks_exact_git_entries(mutation):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    revision, approved = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor].items()))
+    original = {'sha': '1' * 40, 'truncated': False, 'tree': [
+        {'path': 'src/study.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40},
+        *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': 'b' * 40} for p in approved]]}
+    prepared = copy.deepcopy(original); prepared['sha'] = '2' * 40
+    for entry in prepared['tree'][1:]:
+        entry['sha'] = approved[entry['path']]
+    if mutation == 'science_blob': prepared['tree'][0]['sha'] = 'c' * 40
+    if mutation == 'science_mode': prepared['tree'][0]['mode'] = '100755'
+    if mutation == 'added_file': prepared['tree'].append(
+        {'path': 'systems/new.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40})
+    if mutation == 'deleted_file': prepared['tree'].pop(0)
+    if mutation == 'workflow_blob': prepared['tree'][1]['sha'] = 'c' * 40
+    if mutation == 'truncated': prepared['truncated'] = True
+    if mutation == 'unknown_head': revision = 'd' * 40
+    if mutation == 'none':
+        facts = _preparation_equivalence_facts(anchor, revision, original, prepared)
+        assert facts['identical_remaining_entries'] == 1
+        assert facts['anchor'] == anchor and facts['revision'] == revision
+    else:
+        with pytest.raises(ValueError):
+            _preparation_equivalence_facts(anchor, revision, original, prepared)
 
 
 def test_selection_cannot_be_applied_to_a_single_attempt(tmp_path: Path) -> None:
