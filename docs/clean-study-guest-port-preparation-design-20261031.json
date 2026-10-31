@@ -1,0 +1,15 @@
+{
+  "recorded_before_implementation_utc": "2026-10-31T14:35:48.107375+00:00",
+  "original_criterion": "Feasibility of actual eBPF observations through Bering and Sheaft against independent application outcomes without complete native tracing; fixed81cells,3collectors,10operations,4methods and equal-information direct baseline. No cost-superiority hypothesis.",
+  "concrete_problem": "Second observed Docker bind failure on guest published MongoDB37020, most recently N DeepFlowDSBpartial6 run41209663599/job124561828717 before training. Resolved compose has exactly one publisher; original socket owner was not retained.",
+  "strong_simple_baseline": "Unmodified N preparation plus same fixed published37020. Moving ports/configs would disturb more application inputs; blind repeated captures do not diagnose recurring infrastructure failure.",
+  "minimal_proposal": "Only existing series workflow and documentation. For futureDSB guests of everycollector, afterBoot and allip_forward changes, merge37020 into existing ip_local_reserved_ports and verifyreadback, preserving all existing ranges. BeforeAcquire retain actualkernelrange/reserved/allTCP37020/proc/Dockerpublisher snapshot. A failed-only snapshot afterAcquire is explicitly POST-CLEANUP; no owner-preservation guarantee. No kill, wait-until-free, new capture framework, port change or automatic retry.",
+  "causal_scope": "Preventive exclusion of37020 from kernel automatic ephemeral allocation; explicit published bind unchanged. Ephemeral occupancy is a source-supported possibility, NOT established owner/cause of historical failures. Reservation does not free an existing socket and does not guarantee recovery.",
+  "primary_reference": "https://kernel.org/doc/html/latest/networking/ip-sysctl.html",
+  "source_boundary": "New honest actualM preserves all program/dependency/fixture blobs and modes exactly0c98; only exactreviewed operationalworkflow/docs blobs differ. FinalM/tag/CI/tree proofs and superseding source declaration required BEFORE new capture. ActualSHA remains visible in status/worker/report, no GITHUB_SHA override.",
+  "execution_scope": "Only actualfailed DeepFlowDSBpartial6 is eligible for fresh replacement after actual-code/CI GO; existingNpartial7/8 continue, no duplicate or adverse-outcome repeats.",
+  "costs": "Retain originalENOSPC attempts, failedN deployment, qualification/preparation/CI/waiting/transfer/freshcapture and publication costs; human effort unmetered. No efficiency/cost-superiority assertion.",
+  "root_verdict": "Explicit ORIGINAL-feasibility DESIGN GO for this preventive operational remedy, not empirical feasibility/success or past-owner attribution.",
+  "skeptic_verdict": "Explicit separate ORIGINAL-feasibility DESIGN GO received before implementation, including workflow-only snapshot clarification. Merge/readback mandatory, afterip_forward/beforeAcquire order; post-cleanup absence not evidence of absence at bind. Actual-code and CI review required before new capture.",
+  "both_original_design_go_before_implementation": true
+}
