@@ -604,6 +604,143 @@ class Toolchain:
             'source_files': extra.get('source_files', []),
         }
 
+    def forecast_operation(self, source, variant, name, contract, input_path, manifest,
+                           shared, observed_model, observed_quality, folder, *,
+                           observation_derivation=None):
+        """One unchanged binding/metadata/Sheaft path for each supplied graph view."""
+        folder.mkdir(parents=True, exist_ok=True)
+        unavailable = {'prediction': None, 'interval': [0, 1], 'by_state': {}, 'available': False}
+        write_json(folder/'input-reference.json', {'path': os.path.relpath(input_path, folder),
+            'sha256': digest(input_path), 'shared': True, 'observations': manifest['observations']})
+        write_json(folder/'entry-evidence.json', self.entry_evidence[source, name])
+        if not manifest['observations']:
+            answer = dict(unavailable, reason='no_frozen_source_observations')
+            write_json(folder/'forecast.json', answer)
+            return answer
+        model, quality = observed_model, observed_quality
+        if observation_derivation is None:
+            reference = {'folder': os.path.relpath(shared, folder),
+                'files': {filename: digest(shared/filename) for filename in
+                          ('observed.json', 'observed.signal-quality.json', 'observed.snapshot.json')},
+                'basis': 'same actual Bering graph reused across operations; discovery cost counted once'}
+        else:
+            reference = {'basis': 'same observed context union reused across operations',
+                         'derivation': observation_derivation}
+        write_json(folder/'observed-reference.json', reference)
+        proxy_names = sorted({name for key in ('proxy', 'proxy_discovery')
+            for field in ('name', 'container')
+            for name in aliases(self.inventory.get(key, {}).get(field))})
+        def proof_builder(entry):
+            return {index: self.endpoint_entry_evidence(
+                self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
+                for index, step in enumerate(contract['steps'])}
+        selected_db, mapping = self.database_nodes(model, quality)
+        write_json(folder/'database-mapping.json', mapping)
+        controlled = unique_service(model, self.declaration.CONTROLLED_SERVICE_ALIASES)
+        binding = resolve_entry_representations(model, quality, contract, proxy_names,
+            proof_builder=proof_builder, identity_groups=self.entry_identity_groups,
+            database_fault_group=mapping, controlled=controlled)
+        binding = self.apply_binding_uncertainties(binding, model, quality)
+        # A missing controlled node is acceptable only for operations
+        # whose declared requirements do not include that service.
+        needs_controlled = any(set(aliases(c.get(role))) & set(self.declaration.CONTROLLED_SERVICE_ALIASES)
+                               for c in contract['required_calls'] for role in ('caller', 'callee'))
+        if needs_controlled and not controlled:
+            binding['unknown'].append({'reason': 'controlled_service_missing_or_ambiguous'})
+            binding['available'] = False
+        write_json(folder/'binding.json', binding)
+        if not binding['available']:
+            answer = dict(unavailable, reason='required_graph_evidence_unavailable',
+                          unknown=binding['unknown'])
+            write_json(folder/'forecast.json', answer)
+            return answer
+        static_services, static_evidence = self.static_overlay(model, source, name)
+        write_json(folder/'procrustes-attachment.json', static_evidence)
+        overlay = {'name': 'supplied-operation-and-placement-contract',
+                   'services': [s for s in static_services if s['id'] not in {*selected_db, controlled}],
+                   'endpoints': []}
+        if controlled:
+            placements = self.inventory.get('replicas', [])
+            if len(placements) != 2 or {p.get('node') for p in placements} != {'a', 'b'}:
+                raise RuntimeError('Controlled placement inventory does not describe one replica per guest')
+            overlay['services'].append({'id': controlled, 'replicas': 2, 'failure_eligible': True,
+                'placements': [{'replicas': 1, 'labels': {'controlled_replica': p['node'], 'guest': p['node']}}
+                               for p in sorted(placements, key=lambda p: p['node'])]})
+        for endpoint in binding['endpoints']:
+            overlay['endpoints'].append({'id': endpoint, 'predicate_ref': name,
+                'semantics': {'predicate_mode': 'external_predicate', 'source': 'supplied_source_contract'}})
+        write_json(folder/'overlay.json', overlay)
+        if observation_derivation is None:
+            model, quality = self.operation_model(
+                input_path, folder, folder/'overlay.json', model, quality, shared)
+        else:
+            model, quality = self.operation_model(
+                input_path, folder, folder/'overlay.json', model, quality, shared,
+                observation_derivation=observation_derivation)
+        faults = fault_inputs(controlled, selected_db)
+        write_json(folder/'faults.json', faults)
+        write_json(folder/'predicates.json', predicate_contract(model, binding, name))
+        analysis = {'schema_version': '1.3', 'seed': self.ctx.seed, 'trials': 100000,
+            'predicate_contract': str(folder/'predicates.json'),
+            'reliability': {'node_live_probability': 1, 'edge_live_probability': 1},
+            'profiles': [{'name': 'state-'+state, 'sampling_mode': 'independent_replica',
+                          **({'fault_profile': 'state-'+state} if 'state-'+state in faults['profiles'] else {})}
+                         for state in STATE_WEIGHTS], 'gate': {'mode': 'report', 'default_action': 'report'}}
+        if faults['profiles']:
+            analysis['fault_contract'] = str(folder/'faults.json')
+        if selected_db:
+            analysis['profiles'].append({'name': 'db-down', 'sampling_mode': 'independent_replica',
+                                         'fault_profile': 'db-down'})
+        write_json(folder/'analysis.json', analysis)
+        print(json.dumps({'toolchain_event': 'simulation_start', 'source': source,
+            'variant': variant, 'operation': name}), flush=True)
+        self.command('sheaft', ['run', '--model', folder/'model.json', '--analysis', folder/'analysis.json',
+                                '--out-dir', folder/'simulation'], folder, 'simulation')
+        report = json.loads((folder/'simulation'/'report.json').read_text())
+        profiles = report['profiles']
+        if isinstance(profiles, list):
+            profiles = {p['name']: p for p in profiles}
+        values = {}
+        for profile_name, profile in profiles.items():
+            avail = profile['simulation']['endpoint_availability']
+            outcomes = [avail[e] for e in binding['endpoints']]
+            # Every endpoint uses the same union of mandatory calls.
+            if len(set(outcomes)) != 1:
+                raise RuntimeError('Composite predicates disagree despite identical obligations')
+            values[profile_name] = outcomes[0]
+        by_state = {state: values['state-'+state] for state in STATE_WEIGHTS}
+        exact = {state: exact_graph_outcome(model, binding,
+                 [controlled] if controlled and state == '00' else []) for state in STATE_WEIGHTS}
+        if by_state != exact:
+            raise RuntimeError(f'Sheaft disagrees with exact deterministic graph law: {by_state} != {exact}')
+        exact_database_down = exact_graph_outcome(model, binding, selected_db) if selected_db else None
+        if selected_db and values['db-down'] != exact_database_down:
+            raise RuntimeError('Sheaft database selector disagrees with the exact graph intervention')
+        prediction = sum(STATE_WEIGHTS[s]*v for s, v in by_state.items())
+        answer = {'available': True, 'prediction': prediction, 'interval': [prediction, prediction],
+                  'by_state': by_state, 'exact_by_state': exact,
+                  'exact_weighted_prediction': sum(STATE_WEIGHTS[s]*v for s, v in exact.items()),
+                  'database_down_prediction': values.get('db-down'),
+                  'exact_database_down_given_contract': exact_database_down,
+                  'database_conditional': bool(contract.get('conditional_db')),
+                  'assumed_satisfied_database_requirements': binding['assumed_satisfied_database_requirements'],
+                  'all_required_database_channels_observed': binding['all_required_database_channels_observed'],
+                  'database_fault_prediction_available': binding['database_fault_prediction_available'],
+                  'database_fault_fixed_other_requirements': binding['database_fault_fixed_other_requirements'],
+                  'state_weights': STATE_WEIGHTS, 'simulator': 'Sheaft',
+                  'graph_sha256': digest(folder/'model.json'),
+                  'analysis_sha256': digest(folder/'analysis.json'),
+                  'structural_adequacy_is_tested': True}
+        if contract.get('conditional_db'):
+            answer['database_down_prediction'] = None
+            answer['database_unknown_reason'] = 'declared_conditional_database_requirement'
+        if not binding['database_fault_prediction_available']:
+            answer['database_down_prediction'] = None
+            answer['database_unknown_reason'] = 'required_selected_database_channel_or_fault_mapping_unknown'
+            answer['database_fault_unknown'] = binding['database_fault_unknown']
+        write_json(folder/'forecast.json', answer)
+        return answer
+
     def forecast(self, plans):
         print(json.dumps({'toolchain_event': 'preflight_start', 'system': self.system}), flush=True)
         self.preflight()
@@ -616,6 +753,7 @@ class Toolchain:
                 input_path, manifest = self.input_manifests[source, variant]
                 shared = self.root/'discovery'/source/variant
                 shared.mkdir(parents=True, exist_ok=True)
+                observed_model = observed_quality = None
                 if manifest['observations']:
                     print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
                         'variant': variant, 'observations': manifest['observations'],
@@ -625,131 +763,9 @@ class Toolchain:
                         'variant': variant, 'services': len(observed_model['services']),
                         'edges': len(observed_model['edges']), 'endpoints': len(observed_model['endpoints'])}), flush=True)
                 for name, contract in self.declaration.CONTRACTS.items():
-                    folder = self.root/source/variant/name
-                    folder.mkdir(parents=True, exist_ok=True)
-                    unavailable = {'prediction': None, 'interval': [0, 1], 'by_state': {}, 'available': False}
-                    write_json(folder/'input-reference.json', {'path': os.path.relpath(input_path, folder),
-                        'sha256': digest(input_path), 'shared': True, 'observations': manifest['observations']})
-                    write_json(folder/'entry-evidence.json', self.entry_evidence[source, name])
-                    if not manifest['observations']:
-                        answer = dict(unavailable, reason='no_frozen_source_observations')
-                        write_json(folder/'forecast.json', answer)
-                        results[source][variant][name] = answer
-                        continue
-                    model, quality = observed_model, observed_quality
-                    write_json(folder/'observed-reference.json', {'folder': os.path.relpath(shared, folder),
-                        'files': {filename: digest(shared/filename) for filename in
-                                  ('observed.json', 'observed.signal-quality.json', 'observed.snapshot.json')},
-                        'basis': 'same actual Bering graph reused across operations; discovery cost counted once'})
-                    proxy_names = sorted({name for key in ('proxy', 'proxy_discovery')
-                        for field in ('name', 'container')
-                        for name in aliases(self.inventory.get(key, {}).get(field))})
-                    def proof_builder(entry):
-                        return {index: self.endpoint_entry_evidence(
-                            self.entry_evidence[source, name]['roots'], step, entry, model['endpoints'])
-                            for index, step in enumerate(contract['steps'])}
-                    selected_db, mapping = self.database_nodes(model, quality)
-                    write_json(folder/'database-mapping.json', mapping)
-                    controlled = unique_service(model, self.declaration.CONTROLLED_SERVICE_ALIASES)
-                    binding = resolve_entry_representations(model, quality, contract, proxy_names,
-                        proof_builder=proof_builder, identity_groups=self.entry_identity_groups,
-                        database_fault_group=mapping, controlled=controlled)
-                    binding = self.apply_binding_uncertainties(binding, model, quality)
-                    # A missing controlled node is acceptable only for operations
-                    # whose declared requirements do not include that service.
-                    needs_controlled = any(set(aliases(c.get(role))) & set(self.declaration.CONTROLLED_SERVICE_ALIASES)
-                                           for c in contract['required_calls'] for role in ('caller', 'callee'))
-                    if needs_controlled and not controlled:
-                        binding['unknown'].append({'reason': 'controlled_service_missing_or_ambiguous'})
-                        binding['available'] = False
-                    write_json(folder/'binding.json', binding)
-                    if not binding['available']:
-                        answer = dict(unavailable, reason='required_graph_evidence_unavailable',
-                                      unknown=binding['unknown'])
-                        write_json(folder/'forecast.json', answer)
-                        results[source][variant][name] = answer
-                        continue
-                    static_services, static_evidence = self.static_overlay(model, source, name)
-                    write_json(folder/'procrustes-attachment.json', static_evidence)
-                    overlay = {'name': 'supplied-operation-and-placement-contract',
-                               'services': [s for s in static_services if s['id'] not in {*selected_db, controlled}],
-                               'endpoints': []}
-                    if controlled:
-                        placements = self.inventory.get('replicas', [])
-                        if len(placements) != 2 or {p.get('node') for p in placements} != {'a', 'b'}:
-                            raise RuntimeError('Controlled placement inventory does not describe one replica per guest')
-                        overlay['services'].append({'id': controlled, 'replicas': 2, 'failure_eligible': True,
-                            'placements': [{'replicas': 1, 'labels': {'controlled_replica': p['node'], 'guest': p['node']}}
-                                           for p in sorted(placements, key=lambda p: p['node'])]})
-                    for endpoint in binding['endpoints']:
-                        overlay['endpoints'].append({'id': endpoint, 'predicate_ref': name,
-                            'semantics': {'predicate_mode': 'external_predicate', 'source': 'supplied_source_contract'}})
-                    write_json(folder/'overlay.json', overlay)
-                    model, quality = self.operation_model(
-                        input_path, folder, folder/'overlay.json', model, quality, shared)
-                    faults = fault_inputs(controlled, selected_db)
-                    write_json(folder/'faults.json', faults)
-                    write_json(folder/'predicates.json', predicate_contract(model, binding, name))
-                    analysis = {'schema_version': '1.3', 'seed': self.ctx.seed, 'trials': 100000,
-                        'predicate_contract': str(folder/'predicates.json'),
-                        'reliability': {'node_live_probability': 1, 'edge_live_probability': 1},
-                        'profiles': [{'name': 'state-'+state, 'sampling_mode': 'independent_replica',
-                                      **({'fault_profile': 'state-'+state} if 'state-'+state in faults['profiles'] else {})}
-                                     for state in STATE_WEIGHTS], 'gate': {'mode': 'report', 'default_action': 'report'}}
-                    if faults['profiles']:
-                        analysis['fault_contract'] = str(folder/'faults.json')
-                    if selected_db:
-                        analysis['profiles'].append({'name': 'db-down', 'sampling_mode': 'independent_replica',
-                                                     'fault_profile': 'db-down'})
-                    write_json(folder/'analysis.json', analysis)
-                    print(json.dumps({'toolchain_event': 'simulation_start', 'source': source,
-                        'variant': variant, 'operation': name}), flush=True)
-                    self.command('sheaft', ['run', '--model', folder/'model.json', '--analysis', folder/'analysis.json',
-                                            '--out-dir', folder/'simulation'], folder, 'simulation')
-                    report = json.loads((folder/'simulation'/'report.json').read_text())
-                    profiles = report['profiles']
-                    if isinstance(profiles, list):
-                        profiles = {p['name']: p for p in profiles}
-                    values = {}
-                    for profile_name, profile in profiles.items():
-                        avail = profile['simulation']['endpoint_availability']
-                        outcomes = [avail[e] for e in binding['endpoints']]
-                        # Every endpoint uses the same union of mandatory calls.
-                        if len(set(outcomes)) != 1:
-                            raise RuntimeError('Composite predicates disagree despite identical obligations')
-                        values[profile_name] = outcomes[0]
-                    by_state = {state: values['state-'+state] for state in STATE_WEIGHTS}
-                    exact = {state: exact_graph_outcome(model, binding,
-                             [controlled] if controlled and state == '00' else []) for state in STATE_WEIGHTS}
-                    if by_state != exact:
-                        raise RuntimeError(f'Sheaft disagrees with exact deterministic graph law: {by_state} != {exact}')
-                    exact_database_down = exact_graph_outcome(model, binding, selected_db) if selected_db else None
-                    if selected_db and values['db-down'] != exact_database_down:
-                        raise RuntimeError('Sheaft database selector disagrees with the exact graph intervention')
-                    prediction = sum(STATE_WEIGHTS[s]*v for s, v in by_state.items())
-                    answer = {'available': True, 'prediction': prediction, 'interval': [prediction, prediction],
-                              'by_state': by_state, 'exact_by_state': exact,
-                              'exact_weighted_prediction': sum(STATE_WEIGHTS[s]*v for s, v in exact.items()),
-                              'database_down_prediction': values.get('db-down'),
-                              'exact_database_down_given_contract': exact_database_down,
-                              'database_conditional': bool(contract.get('conditional_db')),
-                              'assumed_satisfied_database_requirements': binding['assumed_satisfied_database_requirements'],
-                              'all_required_database_channels_observed': binding['all_required_database_channels_observed'],
-                              'database_fault_prediction_available': binding['database_fault_prediction_available'],
-                              'database_fault_fixed_other_requirements': binding['database_fault_fixed_other_requirements'],
-                              'state_weights': STATE_WEIGHTS, 'simulator': 'Sheaft',
-                              'graph_sha256': digest(folder/'model.json'),
-                              'analysis_sha256': digest(folder/'analysis.json'),
-                              'structural_adequacy_is_tested': True}
-                    if contract.get('conditional_db'):
-                        answer['database_down_prediction'] = None
-                        answer['database_unknown_reason'] = 'declared_conditional_database_requirement'
-                    if not binding['database_fault_prediction_available']:
-                        answer['database_down_prediction'] = None
-                        answer['database_unknown_reason'] = 'required_selected_database_channel_or_fault_mapping_unknown'
-                        answer['database_fault_unknown'] = binding['database_fault_unknown']
-                    write_json(folder/'forecast.json', answer)
-                    results[source][variant][name] = answer
+                    results[source][variant][name] = self.forecast_operation(
+                        source, variant, name, contract, input_path, manifest, shared,
+                        observed_model, observed_quality, self.root/source/variant/name)
         write_json(self.root/'forecasts.json', results)
         execution = []
         for source, variants in results.items():

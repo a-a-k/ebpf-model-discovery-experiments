@@ -330,3 +330,30 @@ def test_failed_ingest_retains_full_binary_response_and_never_retries(tmp_path, 
     assert [Path(e['path']).read_bytes() for e in manifest['exports']] == original_wires
     console = capsys.readouterr().out
     assert 'BERING_INGEST_FAILURE' in console and len(console) < len(body)
+
+
+def test_joint_view_transport_preserves_each_body_order_encoding_and_original_emitter_role(tmp_path):
+    manifest, _, process = harness(tmp_path)
+    before = json.loads(json.dumps(manifest))
+    expected = [Path(row['path']).read_bytes() for row in manifest['exports']]
+    response = Mock(status_code=200)
+    sent = []
+    def post(url, *, data, headers, timeout):
+        sent.append((url, data.read(), dict(headers)))
+        return response
+    with patch('ebpf_discovery.bering_v4.subprocess.Popen', process), \
+            patch('ebpf_discovery.bering_v4.requests.get', return_value=response), \
+            patch('ebpf_discovery.bering_v4.requests.post', side_effect=post):
+        replay(tmp_path/'bering', manifest, tmp_path, 'same-deployment',
+               source_profile={'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}, joint_otlp=True)
+    assert all(url.endswith('/v1/traces') and '/sources/' not in url for url, _, _ in sent)
+    assert [body for _, body, _ in sent] == expected
+    assert sent[0][2]['Content-Encoding'] == 'gzip'
+    assert manifest == before
+    command = json.loads((tmp_path/'model-runtime/replay-command.json').read_text())
+    assert command['request_routing'] == 'ordinary_otlp_joint_view'
+    assert command['source_domain'] == ''
+    assert command['source_profile'] == {'input_type': 'otlp', 'trace_context_domain': ''}
+    sequence = [json.loads(line) for line in (tmp_path/'model-runtime/accepted-request-sequence.jsonl').read_text().splitlines()]
+    assert [row['original_source'] for row in sequence] == ['ebpf', 'native']
+    assert [row['content_sha256'] for row in sequence] == [row['sha256'] for row in manifest['exports']]
