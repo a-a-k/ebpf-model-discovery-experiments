@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct paginated API 2026-10-31T16:12:07.061434+00:00: 25 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures. Current12casejobs unchanged; 31assignedrunner capacity lowerbound independently measured. Stagedglobal20case-slot plan protects exact9currentoriginaljobs untilnaturalcompletion, keepsN7/N8/M6, no carriercancel/newstudyfanout executed. FullMAINindependentadmission pending.",
+  "main_dispatch_status": "Direct paginated API 2026-10-31T17:49:59.520024+00:00: 30 technically successful exact MAIN full/compact pairs; no independent full saved-evidence admission yet. First OBI staged conversion user-approved in dialog; exact three new OTel tails may be stopped/repeated, completed13OBI preserved; cancellation not yet issued at this record. Other2carriers/N7/N8/M6 remain. All81cells/10operations/fourmethods and realBering/Sheaft criterion unchanged. Qualifiedscientific anchor0c98 with exact reviewed operationalN/M/S sources only; sourceS not yet dispatched.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -3388,6 +3388,101 @@
       "run_id": 41212146151,
       "role": "preparation",
       "note": "Actual Focused implementation checks at source2c7ce277423b0988d4fb8d492c2b8e12c5fb78e8; retain actualstatus/jobelapsed/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41225791949,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow sourcec445f5e59a02aad67af428639005e3634a013aba; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41225787164,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow sourcec445f5e59a02aad67af428639005e3634a013aba; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41225303306,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source4204848b8c7a0e76fc23e8794e5d4814fe833d2a; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41225299630,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source4204848b8c7a0e76fc23e8794e5d4814fe833d2a; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41225096589,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41225073301,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41223013486,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222839306,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source11044c286e21e60cb6ce4a2c3a726cce2948364c; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222833621,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source11044c286e21e60cb6ce4a2c3a726cce2948364c; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222669713,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source3057918e207006e5f5b76567031dcb917117abfa; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222665848,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source3057918e207006e5f5b76567031dcb917117abfa; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222484542,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41222118325,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41221643671,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41221463491,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41220928469,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41219370499,
+      "role": "worker",
+      "note": "Actual Iteration 4 exact remote toolchain worker at workflow source13c017bf72a86a6853f93a5b8f503de199bf7865; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41218624864,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source2e0d83f75221b5d7ce7da86ec6e5f6ed940f7756; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
+    },
+    {
+      "run_id": 41218620856,
+      "role": "preparation",
+      "note": "Actual Focused implementation checks at workflow source2e0d83f75221b5d7ce7da86ec6e5f6ed940f7756; retain actual source input, status, elapsed job time, failed/stopped/success and artifact costs; human effort unmetered."
     }
   ],
   "blocked_main_cells": [],
@@ -3414,5 +3509,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T16:06:36.627037+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T17:48:57.847041+00:00"
 }

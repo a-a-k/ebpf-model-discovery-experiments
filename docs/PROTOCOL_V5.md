@@ -20,6 +20,18 @@ port37020 conflict. Its one further replacement uses `13c017bf` and the
 merge37020 into existing automatic-port reservations, retaining application ports
 and every scientific source blob. The historical socket owner remains unknown;
 this preventive change is not evidence of an established cause or successful repair.
+Future captures may use reviewed revision `1d646f90`
+(`capture-20261031-guest-logs-v3`), which also preserves guest serial output and
+non-clearing guest kernel diagnostics after application cleanup. All scientific
+source files remain identical to the qualified anchor. The exact operational
+Git blobs, source verification, consumer checks and both original-criterion
+approvals are recorded in the
+[pre-execution decision](clean-study-obi-staged-cutover-preexecution-20261031.json).
+This does not establish the cause of historical OTel failures or authorize
+repeating completed captures. The first OBI queue conversion is prepared and
+has the user's explicit approval to stop and repeat exactly three newly
+started OBI cases; its actual execution is recorded in the
+[cutover record](clean-study-obi-staged-cutover-execution-20261031.json).
 No completed-study or positive utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The active collectors are OBI, DeepFlow and Coroot.
