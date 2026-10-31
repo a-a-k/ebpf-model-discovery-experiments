@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Finalsource qualification27 running at0c98bf4; main81 held until independent actual-output review.",
+  "main_dispatch_status": "Both root and independent skeptic give explicit ORIGINAL MAIN81 GO after actual all27 qualification review41162715350. Dispatch full81 at immutable0c98/tagv5; record actual run IDs after dispatch. No main results yet.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2311,6 +2311,111 @@
       "run_id": 41153632945,
       "role": "preparation",
       "note": "Focused implementation checks; source a843df6708ecd4da7c7394fd9413f6f2fc60b6df. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41162733906,
+      "role": "archive",
+      "note": "Archive original measurement artifacts; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162715350,
+      "role": "evidence",
+      "note": "Review pending main saved evidence v5; source 6ffa685fa158ff6074d461d0c3be5fd29c42cbb7. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162583262,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 6ffa685fa158ff6074d461d0c3be5fd29c42cbb7. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162579337,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 6ffa685fa158ff6074d461d0c3be5fd29c42cbb7. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162374422,
+      "role": "archive",
+      "note": "Archive original measurement artifacts; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162303053,
+      "role": "evidence",
+      "note": "Review pending main saved evidence v5; source c78418177ed77b69a518719750137f03575c40f3. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162202590,
+      "role": "preparation",
+      "note": "Focused implementation checks; source c78418177ed77b69a518719750137f03575c40f3. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41162198523,
+      "role": "preparation",
+      "note": "Focused implementation checks; source c78418177ed77b69a518719750137f03575c40f3. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41157606268,
+      "role": "preparation",
+      "note": "Focused implementation checks; source b4a895c7bd5ce829869827ef54e84bfc83be20c4. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41157601753,
+      "role": "preparation",
+      "note": "Focused implementation checks; source b4a895c7bd5ce829869827ef54e84bfc83be20c4. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41157568479,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41157373208,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 3c9003f4776435362fbb3976752bfb151666e176. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41157370490,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 3c9003f4776435362fbb3976752bfb151666e176. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156966500,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156910998,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156732329,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156710931,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156663273,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156530114,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156517252,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41156503168,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -2335,6 +2440,7 @@
   "pending_common_correction": {
     "pull_request": 9,
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-    "status": "Merged after code and independently verified actual paired diagnostic41152205197; finalsourcequalification27 next. Original81scope unchanged, main81 held."
-  }
+    "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
+  },
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T03:17:47.457841+00:00"
 }

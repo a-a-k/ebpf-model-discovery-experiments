@@ -169,3 +169,22 @@ design GO to setting PYTHONPATH to github.workspace in that existing verificatio
 step. The technical reader run was stopped; its available evidence and costs
 remain retained. Recheck the identical fixed27 captures after this launch-only
 correction. No capture, count, model, forecast, source or criterion changes.
+
+Both agents completed actual-output review of all27 final0c98 qualification
+cases from saved-facts run41162715350 at reader6ffa685. Each independently read
+all27 literal graph/binding packets against the pre-target hashes; the root
+matched369 selected graph/model/binding JSON files to its own Actions source
+claims. The skeptic also compared every facts packet to independent original
+compact and guest proofs:54 distinct guest boot IDs. Original available branches
+retain actual model/analysis/Sheaft execution and exact provided metadata.
+Unknowns, alias-admission rejections and unequal secondary DB-unknown reasons
+remain evidence. They are not forced to positive or identical values.
+
+Before main execution, both give explicit ORIGINAL-feasibility GO for the full81
+cells at immutable0c98/tagstudy-20261031-v5: allthree collectors/apps/modes,
+seeds6/7/8,allten operations, originalthree arms and the same paired policy plus
+equally informed direct baseline. This is permission to measure the original
+criterion, not scientific success, novelty, cost superiority or universal
+collector attribution. All preparation, diagnostics, failures, early stopping,
+workers, review and publication costs remain; human effort stays unmeasured.
+The complete pre-execution record is clean-study-requalification-v5-20261031.json.
