@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct API09:24:44UTC:11 unique completedSUCCESS main cells. Original OBI parent now has two known pretargettechnical failures: absent6 worker disk exhaustion (exactreplacement41173230022 alreadySUCCESS), full7 Docker host port37020 conflict (exactreplacement41189048917 dispatched09:31:38UTC, same science/port). Allother originalgrid cells continue; no model/outcome selection. Full independent saved-facts review remains pending.",
+  "main_dispatch_status": "Direct paginated gh API 2026-10-31T14:24:54.104884+00:00: 20 exact planned complete full/compact MAIN pairs. All81 cells fixed; five technical replacements predeclared before dispatch, honest actual source0c98 or reviewed operationalN as applicable. No independent full saved-facts MAIN admission yet. OriginalDFpartial6/7/8 verifiedparent ENOSPC and all three exactN replacements dispatchedindividually14:20-14:22UTC; originalOBIfull7 replacement nowcompleteSUCCESS. Completion is technical only; adverse/unknown preserved. Npartial6 replacement then failed beforetraining on Docker port37020; retained13045643140/13045713018/13045283661, no admission. Port-owner diagnosis pending; otherNcases continue.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1844,6 +1844,45 @@
         }
       ],
       "note": "One predeclared exact same-source technical replacement after parent41164821492/job124430026324 failed during Docker deployment: MongoDB host port37020 alreadyinuse, BEFORE workload/toolchain. Both explicit ORIGINAL-feasibility GO before09:31:38UTC dispatch; preexecution record09:31:35.307450UTC. Same immutable source0c98/tagstudy-20261031-v5, freshguests, unchanged port/scenario/semantics/counts/methods/baselines. No accuracy/outcome selection. Previous failedfull13038151640/summary13037762162/retention13037737273 and allcosts retained. Occupant unproved; recurrence needsowner diagnosis, not blind further retry."
+    },
+    {
+      "run_id": 41209663599,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Exact predeclared technical replacement for original41164824120/job124430030952 after directly verified parent Actions runner ENOSPC, before final retention. Actual capture sourcefbbda015cefc4f11ee73f32be6ed661c70375f18; transparent operational revision of qualified0c98 with exact2126 unchanged Gitentries/three reviewed blobs. Both ORIGINAL GO and docs/clean-study-parent-preparation-preexecution-20261031.json committed before dispatch. No forecast/accuracy selection. All original failed/worker/prefix and fresh costs retained; actualN source identity and strict independent saved-facts proof required. Final original campaign packet not recovered."
+    },
+    {
+      "run_id": 41209827036,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "Exact predeclared technical replacement for original41164824120/job124430030942 after directly verified parent Actions runner ENOSPC, before final retention. Actual capture sourcefbbda015cefc4f11ee73f32be6ed661c70375f18; transparent operational revision of qualified0c98 with exact2126 unchanged Gitentries/three reviewed blobs. Both ORIGINAL GO and docs/clean-study-parent-partial7-preexecution-20261031.json committed before dispatch. No forecast/accuracy selection. All original failed/worker/prefix and fresh costs retained; actualN source identity and strict independent saved-facts proof required. Final original campaign packet not recovered."
+    },
+    {
+      "run_id": 41209667348,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Exact predeclared technical replacement for original41164824120/job124430030947 after directly verified parent Actions runner ENOSPC, before final retention. Actual capture sourcefbbda015cefc4f11ee73f32be6ed661c70375f18; transparent operational revision of qualified0c98 with exact2126 unchanged Gitentries/three reviewed blobs. Both ORIGINAL GO and docs/clean-study-parent-preparation-preexecution-20261031.json committed before dispatch. No forecast/accuracy selection. All original failed/worker/prefix and fresh costs retained; actualN source identity and strict independent saved-facts proof required. Final original campaign packet not recovered."
     }
   ],
   "related_runs": [
@@ -3061,6 +3100,106 @@
       "run_id": 41186475128,
       "role": "preparation",
       "note": "PR CI for adbede2 metadata binding of nine completed main cells and successful exact-case disk recovery, completedSUCCESS. Keep full measured costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41200633335,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41200330283,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41198752131,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41198517040,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41197143721,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41196858256,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41196742848,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41194814201,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41194357552,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41191313390,
+      "role": "worker",
+      "note": "Direct Actions metadata: main toolchain worker on operational workflow 8a9b17bcbe223c76afac0f2cc2f4939523bf94a1, completed/success. Scientific source/input/model details remain subject to the existing saved-facts review. Retain all execution, preparation, transfer and waiting costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41189488100,
+      "role": "preparation",
+      "note": "CI for8ed2b31 actual OTel image configuration proof and exact full7 technicalrepeat declaration, completedSUCCESS. Retain full measured preparation costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41189484127,
+      "role": "preparation",
+      "note": "PR CI for8ed2b31 actual OTel image configuration proof and exact full7 technicalrepeat declaration, completedSUCCESS. Retain full measured preparation costs; human effort is unmeasured."
+    },
+    {
+      "run_id": 41204936218,
+      "role": "archive",
+      "note": "Existing permanent-publication workflow for47terminalruns/31originalartifacts/22,914,551,306APIbytes, source8ed2b31, dispatched13:18:04UTC while captures continue. Only terminal worker/completedabs6replacement/preparation/publicationtails; active originalparents/full7repeat excluded. Publication and remote-ledger verification pending; no scientific result or capture-speed claim."
+    },
+    {
+      "run_id": 41209952987,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source a07529404d1588f6881f35518c7346fdc0699b8a. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41209825596,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source 29882cfbf13f7e892a02d028e21852f307eb4a35. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41209315228,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source e2dec2594f40efabc8164b8997c19f591d5c3443. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41208762187,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source fbbda015cefc4f11ee73f32be6ed661c70375f18. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41208020320,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source fbbda015cefc4f11ee73f32be6ed661c70375f18. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41207756182,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source 8113daa676eb5383678877507e7a24f8304ff90d. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
+    },
+    {
+      "run_id": 41207684126,
+      "role": "preparation",
+      "note": "Actual Actions run after13:11UTC; Focused implementation checks; source 8113daa676eb5383678877507e7a24f8304ff90d. Retain actual status, failure/success and elapsed/artifact costs; no imputed human time or cost-superiority claim."
     }
   ],
   "blocked_main_cells": [],
@@ -3087,5 +3226,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T09:35:10.276307+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T14:24:54.104884+00:00"
 }

@@ -71,6 +71,7 @@ Subsequent preserved batches include failed preparation and early stopping:
 | [41152387177](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41152387177) | 114 | 272 | 2,194,445,670 | All270 payload ledger records and two metadata assets agree. Covers52 terminal runs, including all f60 qualification parents/workers and the completed catalog/metadata audits and preparation CI. |
 | [41162733906](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41162733906) | 119 | 290 | 2,233,096,346 | All288 payload ledger records and two metadata assets agree. Covers53 terminal runs, including all final0c98 qualification parents/workers, diagnostic41152205197, canceled first saved-reader41162303053 and failed archive41162374422. |
 | [41165335207](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41165335207) | 28 | 73 | 46,363,207 | All71 payload ledger records and two metadata assets agree. Covers27 qualification saved-facts packets in reader41162715350, preceding archive's own proof/logs and four pre-execution/main-declaration CI runs. |
+| [41204936218](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41204936218) | 31 | 154 | 22,924,555,553 | All152 published payload ledger records and two metadata assets agree in ID, state, size and SHA256. Covers47 terminal runs, including26 DSB workers, the completed OBI/DSB/absent6 replacement and prior publication/preparation tails. |
 
 The41152387177 batch's locally rehashed metadata assets are provenance.tar.gz
 (130952 bytes, SHA256 `33b3d7d110fd189ac1a98a367e199dbc923140cc1d7407fbf71bdf20852388c3`)
@@ -102,3 +103,17 @@ and SHA256SUMS.txt (8754 bytes, SHA256
 All28 original artifact identities and71 published payload ID/state/size/digest
 records match the current release API. The active final81 main series, its
 workers, final report/reviews and this publication's own tail remain due.
+
+Batch41204936218 published at13:51:59UTC. Local review rehashed only
+provenance.tar.gz (84472 bytes, SHA256
+`0ae5d9ae01444b04f5d5388a8451cd536023188303a4d0d55909b0e05798ca2d`)
+and SHA256SUMS.txt (17394 bytes, SHA256
+`22270aa1eb3c3c0d093aa1edd5591bfc7ddc22c44c2183c8d6b855d2e3c388e6`).
+All152 published payload records match both remote asset metadata and checksums;
+the two additional checksum entries identify small chunk manifests inside the
+provenance archive and their hashes also match. Original ZIPs were verified by
+archival Actions. The three original main parents were still active at dispatch
+and were excluded, as was the then-active full7 replacement. Their subsequent
+outputs, the new parent-disk replacements and later review/report/publication
+tails require future terminal-run batches. Publication does not establish
+scientific admission or utility.

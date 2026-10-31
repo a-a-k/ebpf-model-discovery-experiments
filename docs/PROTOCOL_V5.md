@@ -6,6 +6,14 @@ immutable `study-20261031-v5`, including the paired context baseline in
 [CONTEXT_BASELINE.md](CONTEXT_BASELINE.md). Its pre-execution decisions and actual
 qualification evidence are recorded in
 [the common-source review](clean-study-requalification-v5-20261031.json).
+Three technically interrupted DeepFlow/DSB/partial cases are repeated at actual
+revision `fbbda015` (`capture-20261031-parent-disk-v1`), which adds parent disk
+preparation. The scientific source is byte-identical to `0c98bf4`; the exact
+operational changes and both original-criterion approvals were recorded
+[before the first two replacements](clean-study-parent-preparation-preexecution-20261031.json)
+and [before the third](clean-study-parent-partial7-preexecution-20261031.json).
+Actual revision identities remain visible and reporting verifies full Git-tree
+equivalence outside the three explicitly reviewed workflow/documentation blobs.
 No completed-study or positive utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The active collectors are OBI, DeepFlow and Coroot.
