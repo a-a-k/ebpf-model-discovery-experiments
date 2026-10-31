@@ -1,6 +1,6 @@
 {
   "recorded_before_cancellation_utc": "2026-10-31T17:50:32.819167+00:00",
-  "status": "USER_APPROVED; carrier cancellation not yet issued",
+  "status": "Normal carrier cancellation complete; first8 exactsinglecaseS jobs independently assigned; three authorized repeats pending technicalclosure confirmation",
   "approval": {
     "channel": "current Codex dialog request_user_input_async",
     "question_item_id": "[\"request_user_input_async\",\"call_44dbcfdb2d8a4601a88c51db4c5e2594\",0]",
@@ -797,5 +797,290 @@
     "root_verdict": "Explicit ORIGINAL-feasibility first-OBI scope GO contingentonlyonoperationalclosure and informeduserapproval, not weaker task or positive-result selection."
   },
   "closure_requirements": "Normalcancel once; awaitalloldjobs terminal. Preserveanycomplete/possiblyeligibletail withoutduplicate; countremainingother2carriersas6+N7/N8/M6as3. First8queuedS, reserve3tailslots pending technicalincompleteproof. No cancellation of othercarrier/worker.",
-  "tail_jobelapsed_minutes_at_action": 117.14095835
+  "tail_jobelapsed_minutes_at_action": 117.14095835,
+  "normal_cancel_accepted_utc": "2026-10-31T17:50:48.207177+00:00",
+  "all_old_OBI_jobs_terminal_observed_utc": "2026-10-31T17:53:15.073614+00:00",
+  "first8_dispatched": [
+    {
+      "run_id": 41226692036,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:53:15.073641+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226695588,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:17.854730+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226698796,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:20.313819+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226702306,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:53:22.721868+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226705392,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:25.439774+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226708635,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:27.907751+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226712664,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:30.981102+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226716530,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:34.055378+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    }
+  ],
+  "first8_exact_jobs": {
+    "observed_utc": "2026-10-31T17:54:01.109691+00:00",
+    "exact_singlecase_jobs": [
+      {
+        "run_id": 41226692036,
+        "job_id": 124612237136,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226695588,
+        "job_id": 124612241296,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226698796,
+        "job_id": 124612251246,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226702306,
+        "job_id": 124612261985,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226705392,
+        "job_id": 124612272836,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226708635,
+        "job_id": 124612318554,
+        "status": "in_progress",
+        "active_steps": [
+          "Install experiment package"
+        ]
+      },
+      {
+        "run_id": 41226712664,
+        "job_id": 124612299454,
+        "status": "in_progress",
+        "active_steps": [
+          "Install experiment package"
+        ]
+      },
+      {
+        "run_id": 41226716530,
+        "job_id": 124612306149,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      }
+    ]
+  },
+  "global_case_slots_reserved": 17,
+  "tail3_slots_reserved": 3,
+  "tail3_root_proof": [
+    {
+      "artifact_id": 13051253889,
+      "name": "campaign-v5-obi-main-otel_demo-partial-7-41164821492",
+      "digest": "sha256:5752cb6525b7c6ad062789e39b0c695e51c0f770cc49c484b2a0ba5d401d0441",
+      "full_CD_member_count": 914,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 501,
+          "sha256": "854534628b5609b5239519d9436ade943ac10dfd027dc020627b786e0f9597cd",
+          "CRC32": "11824805"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 7905,
+        "sha256": "7c19140578551b988c366498cfbf226461938bd5f677cf336a64dd6075e3753e",
+        "CRC32": "8ad68d77",
+        "transport_verified_bytes": 109320,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    },
+    {
+      "artifact_id": 13051098971,
+      "name": "campaign-v5-obi-main-otel_demo-partial-8-41164821492",
+      "digest": "sha256:4a89e2fbe088b31537fe698286ec1b940e9d9ec9a88819849709932b06c882e7",
+      "full_CD_member_count": 1004,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 501,
+          "sha256": "e02e6b1917184c42106aab190ab164756f735d1b332dc100e74a639a2a27444c",
+          "CRC32": "86310c5e"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 7906,
+        "sha256": "02fa7ebc9b65cc930fe1cec64decb99198bbee61c6f77996338d3070e8ecbd95",
+        "CRC32": "9f84bf42",
+        "transport_verified_bytes": 120827,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    },
+    {
+      "artifact_id": 13051039157,
+      "name": "campaign-v5-obi-main-otel_demo-full-6-41164821492",
+      "digest": "sha256:5710cbe0a1b2217f6b991da24b8599d6aeea1508aa24f67027733ee9873bee03",
+      "full_CD_member_count": 594,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 498,
+          "sha256": "3c6dc7d4c4298538d38195f0848e262efacb1e935ed3618589fd7f4a9d0ab7b7",
+          "CRC32": "fdb136c1"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 4738,
+        "sha256": "32867d8457e8ba5b5fd84ef61e635e592fb90e9324087fe0b23082e20643a99d",
+        "CRC32": "258522f8",
+        "transport_verified_bytes": 70244,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    }
+  ],
+  "last_updated_utc": "2026-10-31T17:57:34.805879+00:00"
 }

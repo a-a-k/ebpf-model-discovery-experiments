@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct paginated API 2026-10-31T17:49:59.520024+00:00: 30 technically successful exact MAIN full/compact pairs; no independent full saved-evidence admission yet. First OBI staged conversion user-approved in dialog; exact three new OTel tails may be stopped/repeated, completed13OBI preserved; cancellation not yet issued at this record. Other2carriers/N7/N8/M6 remain. All81cells/10operations/fourmethods and realBering/Sheaft criterion unchanged. Qualifiedscientific anchor0c98 with exact reviewed operationalN/M/S sources only; sourceS not yet dispatched.",
+  "main_dispatch_status": "As recorded2026-10-31T17:57:34.805879+00:00:30API-success full/compactpairs retained, nofullMAINadmissionyet. Userapproved firstOBIcarrier conversion executed after alloldjobs terminal. EightS singlecasejobs dispatched+exactcase/sourceverified; threeauthorizedOTelrepeats reserved after technicalincompleteclosure; currentcase-slot reservations17of20. Other2oldcarriers/N7/N8/M6untouched; sourceS scientific2126entries identicalanchor, exact3reviewed operationalblobs only.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -1896,6 +1896,110 @@
         }
       ],
       "note": "ONE exactpredeclared technical replacement for failedN41209663599/port37020 bind beforetraining; actualM13c017bf72a86a6853f93a5b8f503de199bf7865/tagcapture-20261031-parent-disk-port-v2. Both explicit ORIGINAL GO, exact2126entry/3blob equivalence and all4CI verified, preexecbb20b60 committedBEFORE14:44:43UTCdispatch. Preventiveguestreservation merges37020 preservingexistingranges; ports/appconfigs/scientificcode/counts/methods/outcome rules unchanged. Historicalownerunproved, no guaranteedfix or accuracyselection. AllfailedN/originalENOSPC/prefix/worker/prep/freshcosts retained, actualsourceidentityandallstrictchecksrequiredadmission."
+    },
+    {
+      "run_id": 41226692036,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027588 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226695588,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027457 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226698796,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027476 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226702306,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027529 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226705392,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027553 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226708635,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027503 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226712664,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430027619 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
+    },
+    {
+      "run_id": 41226716530,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "User-approved boundedsinglecasequeue conversion at actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b; oldqueued job124430028560 never assigned a runner. Samequalifiedscientificfiles; all81/10operations/fourmethods unchanged. Retain oldcarrier/preparation/worker/attempt costs; no outputselection."
     }
   ],
   "related_runs": [
