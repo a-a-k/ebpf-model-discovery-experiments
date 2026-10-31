@@ -147,3 +147,16 @@ separately. Existing duplicate-selection rules still reject two eligible attempt
 at the same source. Reports without a declared common source retain their prior
 behavior. This is an outcome-independent cohort correction before main outcomes,
 not an accuracy-based selection or a scientific success claim.
+
+Both agents independently reviewed the actual report correction at
+`b4a895c7bd5ce829869827ef54e84bfc83be20c4` and passed all 32 focused report
+tests. Both give actual-code ORIGINAL-feasibility GO. A missing or empty source
+is also excluded from common-source coverage. More accurate historical outcomes
+remain visible and do not override the declared source. CI41157601753 and
+41157606268 passed. This does not admit captures or establish scientific success.
+
+All 27 fixed qualification runs have now published their full and compact
+artifact pairs. The tracked common-smoke manifest resolves their exact API
+identities against the original three run IDs and common source0c98bf4. The
+next existing Actions saved-facts check must inspect all 27; metadata completion
+and green traffic jobs alone do not authorize main81.
