@@ -53,6 +53,6 @@ unchanged downstream code and observational inputs; tools are not rerun offline.
 
 Offline equivalence is not completion of a timed-out parent. One fresh worst-case
 full7 capture must close end to end and pass the existing strict evidence review
-before the other five timeout/failed-acquisition replacements are dispatched.
+before replacements for the remaining technically incomplete cells are dispatched.
 Shorter preparation changes application idle time; retain that operational timing
 and do not use mixed operational revisions to rank intrinsic collector speed.

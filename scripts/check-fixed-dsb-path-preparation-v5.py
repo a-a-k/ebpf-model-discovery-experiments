@@ -73,6 +73,8 @@ def strip_clock_pair(left, right, old_window, new_window, clocks, scope):
 
 
 def compare_index(old_path, new_path, windows, clocks):
+    if old_path.stat().st_size != new_path.stat().st_size:
+        raise ValueError('request index bytes changed')
     digest = hashlib.sha256()
     count = 0
     with old_path.open(encoding='utf-8') as old, new_path.open(encoding='utf-8') as new:

@@ -64,8 +64,17 @@ def test_index_accepts_only_proven_clocks_and_preserves_duplicates(tmp_path):
     assert comparison.compare_index(old, new, ((10, 20), (30, 40)), clocks)['rows'] == 3
     assert sum(clocks.values()) == 3
     write_rows(new, right[1:])
-    with pytest.raises(ValueError, match='count|content'):
+    with pytest.raises(ValueError, match='count|content|bytes'):
         comparison.compare_index(old, new, ((10, 20), (30, 40)), Counter())
+
+
+def test_index_bytes_stay_exact_even_with_same_semantic_rows(tmp_path):
+    old, new = tmp_path/'old.jsonl', tmp_path/'new.jsonl'
+    write_rows(old, [row(1)])
+    write_rows(new, [row(1)])
+    new.write_text(new.read_text().replace(': ', ':  '), encoding='utf-8')
+    with pytest.raises(ValueError, match='index bytes changed'):
+        comparison.compare_index(old, new, ((10, 20), (10, 20)), Counter())
 
 
 def test_reference_requires_completed_child_proof_and_physical_hash(tmp_path):
