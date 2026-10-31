@@ -121,10 +121,13 @@ def test_unknown_outcomes_produce_bounds_error_range_and_no_accuracy_gate(tmp_pa
     assert all("threshold" not in key.lower() for key in keys(report))
 
 
-def _paired_reuse(root, *, freeze=True, change_prediction=False):
+def _paired_reuse(root, *, freeze=True, change_prediction=False, change_availability=False):
     forecasts = json.loads((root/'toolchain/forecasts.json').read_text())['combined']
     if change_prediction:
         forecasts['raw']['required'].update(prediction=1.0, interval=[1.0, 1.0])
+    if change_availability:
+        forecasts['raw']['required'].update(available=False, prediction=None,
+                                             interval=[0, 1], by_state={}, reason='different_unknown')
     paths = [root/'toolchain/context-baseline/forecasts.json',
              root/'toolchain/context-baseline/manifest.json']
     _write(paths[0], forecasts)
@@ -156,11 +159,13 @@ def test_paired_context_forecasts_share_external_outcomes_and_leave_original_row
     assert (root/'toolchain/forecasts.json').read_bytes() == original_bytes
 
 
-@pytest.mark.parametrize('unfrozen,changed_prediction', [(True, False), (False, True)])
-def test_paired_forecast_cannot_be_added_after_freeze_or_relabel_a_different_prediction(tmp_path, monkeypatch, unfrozen, changed_prediction):
+@pytest.mark.parametrize('unfrozen,changed_prediction,changed_availability',
+                         [(True, False, False), (False, True, False), (False, False, True)])
+def test_paired_forecast_cannot_be_added_after_freeze_or_relabel_a_different_prediction(tmp_path, monkeypatch, unfrozen, changed_prediction, changed_availability):
     _fake_declaration(monkeypatch)
     root = _campaign(tmp_path)
-    _paired_reuse(root, freeze=not unfrozen, change_prediction=changed_prediction)
+    _paired_reuse(root, freeze=not unfrozen, change_prediction=changed_prediction,
+                  change_availability=changed_availability)
     report = evaluate_campaign(root, paired_context_baseline=True)
     assert not report['integrity']['valid']
     assert not report['complete_for_evaluation']
