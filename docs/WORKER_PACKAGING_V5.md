@@ -117,3 +117,33 @@ the independent reader applies identical checks and the report requires the exac
 Git equivalence proof. Counts, scenarios, all four methods, contracts, guest CPU,
 memory, swap, ports and outcome rules remain unchanged. Only the failed cell is
 replaced; failed, preparation and repeat costs remain included.
+
+## Preventive reservation for the fixed DSB published port
+
+The fresh DeepFlow partial6 attempt `41209663599` passed parent disk preparation,
+then failed before training because Docker could not bind guest MongoDB port
+`37020`. This repeats the earlier OBI full7 deployment error. The retained
+resolved compose has one publisher for37020, and Docker lists that container as
+Created. No all-socket/owner snapshot was retained, so the original owner and
+the underlying reason remain unknown. Parent cleanup reclaimed18,006,040,576
+bytes in96.36 seconds; this particular failure is not ENOSPC.
+
+Port37020 lies in the kernel's documented default automatic port range.
+[Linux documentation](https://kernel.org/doc/html/latest/networking/ip-sysctl.html)
+describes `ip_local_reserved_ports` as excluding ports from automatic allocation
+while allowing explicit binds. Ephemeral occupancy is a possible mechanism,
+not an established historical cause. The common DSB preparation therefore merges
+only37020 into each guest's existing reservation list after boot and all
+`ip_forward` changes, before collector/application startup. It verifies readback
+and preservation of all existing ranges, without changing application ports,
+configuration, program code, workload or target rules. An existing socket is
+not released by this reservation and recovery is not guaranteed.
+
+Small pre-deployment records retain actual range/reservations, all TCP states
+for37020, proc TCP tables and Docker publishers on both guests. A failure-only
+snapshot is explicitly after campaign/application cleanup; absence there does
+not establish absence at the failed bind. No process is killed, no port is
+moved, and no automatic retry or wait-until-free loop is added. A new honest
+operational revision, exact source-equivalence proof, CI and both actual-code
+GO verdicts must precede the one fresh failed-case replacement. Failed attempts
+and all preparation/repeat costs remain retained.

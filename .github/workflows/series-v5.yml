@@ -144,6 +144,41 @@ jobs:
         run: bash scripts/setup-v4-swap.sh work/campaign/infrastructure
       - name: Boot two independent guests
         run: bash scripts/vms.sh start work/vms
+      - name: Reserve the fixed DSB published port before application deployment
+        if: ${{ matrix.system == 'deathstarbench' }}
+        run: |
+          ssh_args=(-i work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10)
+          for node in a b; do
+            case "$node" in a) address=192.168.76.11 ;; b) address=192.168.76.12 ;; esac
+            ssh "${ssh_args[@]}" "ubuntu@$address" sudo python3 - <<'PY' > "work/campaign/infrastructure/guest-$node-port-preparation.json"
+          import json, pathlib, subprocess, time
+          root=pathlib.Path('/proc/sys/net/ipv4')
+          before=(root/'ip_local_reserved_ports').read_text().strip()
+          def ranges(value):
+              return [tuple(map(int,part.split('-'))) if '-' in part else (int(part),int(part))
+                      for part in value.split(',') if part]
+          requested=before if any(a<=37020<=b for a,b in ranges(before)) else ','.join(filter(None,[before,'37020']))
+          changed=subprocess.run(['sysctl','-w','net.ipv4.ip_local_reserved_ports='+requested],
+                                 capture_output=True,text=True,check=True)
+          after=(root/'ip_local_reserved_ports').read_text().strip()
+          if (not any(a<=37020<=b for a,b in ranges(after)) or
+                  not all(any(a<=x and y<=b for a,b in ranges(after)) for x,y in ranges(before))):
+              raise SystemExit('published port reservation readback lost requested or existing ranges')
+          commands={}
+          for name,argv in [('all_tcp_37020',['ss','-antpe','sport','=',':37020']),
+                            ('docker_publishers',['docker','ps','-a','--no-trunc','--format','{{json .}}'])]:
+              result=subprocess.run(argv,capture_output=True,text=True)
+              commands[name]={'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr}
+          print(json.dumps({'observed_ns':time.time_ns(),'phase':'after_guest_boot_before_application_deployment',
+              'ip_forward':(root/'ip_forward').read_text().strip(),
+              'ip_local_port_range':(root/'ip_local_port_range').read_text().strip(),
+              'reserved_before':before,'reserved_requested':requested,'reserved_after':after,
+              'sysctl_stdout':changed.stdout,'sysctl_stderr':changed.stderr,
+              'proc_net_tcp':pathlib.Path('/proc/net/tcp').read_text(),
+              'proc_net_tcp6':pathlib.Path('/proc/net/tcp6').read_text(),'commands':commands,
+              'scope':'Preventive automatic-port exclusion only; explicit bind unchanged. Does not free existing sockets or prove the historical port owner.'},indent=2))
+          PY
+          done
       - name: Acquire and close the training prefix on the live guests
         id: training
         env:
@@ -170,6 +205,30 @@ jobs:
           ready = json.loads(pathlib.Path('work/training-checkpoint/ready.json').read_text())
           print('manifest_sha256='+ready['manifest_sha256'])
           PY
+      - name: Retain DSB port state after a failed acquisition and application cleanup
+        if: ${{ failure() && steps.training.outcome == 'failure' && matrix.system == 'deathstarbench' }}
+        run: |
+          ssh_args=(-i work/vms/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=10)
+          for node in a b; do
+            case "$node" in a) address=192.168.76.11 ;; b) address=192.168.76.12 ;; esac
+            if ssh "${ssh_args[@]}" "ubuntu@$address" sudo python3 - <<'PY' > "work/campaign/infrastructure/guest-$node-port-after-failure.json" 2> "work/campaign/infrastructure/guest-$node-port-after-failure.err"
+          import json, pathlib, subprocess, time
+          root=pathlib.Path('/proc/sys/net/ipv4'); commands={}
+          for name,argv in [('all_tcp_37020',['ss','-antpe','sport','=',':37020']),
+                            ('docker_publishers',['docker','ps','-a','--no-trunc','--format','{{json .}}'])]:
+              result=subprocess.run(argv,capture_output=True,text=True)
+              commands[name]={'returncode':result.returncode,'stdout':result.stdout,'stderr':result.stderr}
+          print(json.dumps({'observed_ns':time.time_ns(),'phase':'after_failed_acquisition_and_application_cleanup',
+              'ip_local_port_range':(root/'ip_local_port_range').read_text().strip(),
+              'reserved_ports':(root/'ip_local_reserved_ports').read_text().strip(),
+              'proc_net_tcp':pathlib.Path('/proc/net/tcp').read_text(),
+              'proc_net_tcp6':pathlib.Path('/proc/net/tcp6').read_text(),'commands':commands,
+              'scope':'Application cleanup may already have removed sockets. Absence here does not prove absence at the failed bind.'},indent=2))
+          PY
+            then echo 0 > "work/campaign/infrastructure/guest-$node-port-after-failure.returncode"
+            else echo "$?" > "work/campaign/infrastructure/guest-$node-port-after-failure.returncode"
+            fi
+          done
       - name: Persist the closed training checkpoint before discovery
         id: training_checkpoint
         if: always() && steps.training.outcome == 'success'
