@@ -1,0 +1,90 @@
+name: Inspect fixed saved DSB full7 worker phase timings
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read the fixed successful worker API metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/timing-review
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41219370499 > work/timing-review/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13053549827 > work/timing-review/artifact-api.json
+          python - <<'PY'
+          import json,pathlib
+          root=pathlib.Path('work/timing-review')
+          run=json.loads((root/'run-api.json').read_text())
+          artifact=json.loads((root/'artifact-api.json').read_text())
+          assert run['id']==41219370499 and run['conclusion']=='success'
+          assert run['head_sha']=='13c017bf72a86a6853f93a5b8f503de199bf7865'
+          assert artifact['id']==13053549827 and not artifact['expired']
+          assert artifact['name']=='toolchain-v4-deathstarbench-full-7-41219370499'
+          assert artifact['size_in_bytes']==1074613934
+          assert artifact['digest']=='sha256:8120d163a0c995ce20e562ac48d2c76070a425de106938749b9706d983761202'
+          assert artifact['workflow_run']['id']==run['id']
+          assert artifact['workflow_run']['head_sha']==run['head_sha']
+          PY
+      - name: Download and hash the one immutable saved output
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13053549827/zip > work/worker.zip
+          printf '%s  %s\n' 8120d163a0c995ce20e562ac48d2c76070a425de106938749b9706d983761202 work/worker.zip | sha256sum --check
+      - name: Verify existing lossless package and copy only saved timing metadata
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,shutil,zipfile
+          from ebpf_discovery.artifact_transport_v4 import unpack
+          output=pathlib.Path('work/timing-review')
+          package=pathlib.Path('work/saved-package')
+          with zipfile.ZipFile('work/worker.zip') as archive:
+              names=archive.namelist()
+              assert len(names)==5 and set(names)=={'package-status.json','packaging.json','payload.manifest.jsonl','payload.tar.gz','transport.json'}
+              archive.extractall(package)
+          tree=pathlib.Path('work/saved-worker')
+          proof=unpack(package,tree,kind='worker')
+          (output/'unpack-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+          status=json.loads((tree/'worker-status.json').read_text())
+          identity=status['identity']
+          assert status['status']=='complete'
+          assert identity['commit']=='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
+          assert identity['run_id']=='41164824120'
+          assert identity['system']=='deathstarbench' and identity['mode']=='full' and identity['seed']=='7'
+          assert identity['parent_cell_id']=='deathstarbench:full:7'
+          names=['worker-status.json','worker-commands.jsonl',
+              'infrastructure/toolchain-time.txt','bering-go-environment.json',
+              'toolchain/input-preparation-cost.json','toolchain/execution-summary.json']
+          selected={}
+          for name in names:
+              source=tree/name
+              assert source.is_file(),name
+              assert source.stat().st_size<=4*1024*1024,name
+              target=output/'selected'/name
+              target.parent.mkdir(parents=True,exist_ok=True)
+              shutil.copyfile(source,target)
+              selected[name]={'bytes':source.stat().st_size,'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
+          (output/'literal-review-scope.json').write_text(json.dumps({
+              'source_worker':41219370499,'source_artifact':13053549827,
+              'source_scientific_head':'0c98bf4520e863ab021b60d00517ee2aa49ab38e',
+              'parent_cell':'deathstarbench:full:7','parent_run':41164824120,
+              'new_application_traffic':False,'tool_reexecution':False,
+              'new_fitting_simulation_or_scoring':False,'selected':selected},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-dsb-full7-worker-timing-${{ github.run_id }}
+          path: work/timing-review/
+          retention-days: 90
+          if-no-files-found: error
