@@ -166,10 +166,11 @@ def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path
         temporary.unlink(missing_ok=True)
 
 
-def _readonly_store(path: Path, store_type=ObservationStore) -> ObservationStore:
+def _readonly_store(path: Path, store_type=ObservationStore, *, immutable_prefix=False) -> ObservationStore:
     store = store_type.__new__(store_type)
     store.same_trace_parents = True
     store.path = Path(path)
+    store._immutable_path_prefix = immutable_prefix
     store.db = sqlite3.connect(f"file:{store.path.resolve().as_posix()}?mode=ro&immutable=1", uri=True)
     store.db.execute("PRAGMA cache_size=-65536")
     store.db.execute("PRAGMA temp_store=FILE")
@@ -318,7 +319,8 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
         if collector_provenance is not None:
             from .store_v5 import ObservationStoreV5
             store_type = ObservationStoreV5
-        store = _readonly_store(campaign_root / "observation-index.sqlite", store_type)
+        store = _readonly_store(campaign_root / "observation-index.sqlite", store_type,
+                                immutable_prefix=True)
         try:
             with child_go_environment(WORKER_BERING_GO_ENV) as go_environment:
                 # This setting affects every Bering branch, not the Python

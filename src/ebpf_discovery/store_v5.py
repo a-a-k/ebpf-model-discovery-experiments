@@ -1,6 +1,7 @@
 """Graph-v5 observation index with lossless duplicate provenance."""
 from __future__ import annotations
 
+from collections import OrderedDict
 import hashlib
 import json
 import os
@@ -469,13 +470,41 @@ class ObservationStoreV5(ObservationStore):
         result = ProjectionResolver(root/'toolchain', value_store)
         verified_files = set()
         parsed_inventories = {}
+        immutable = getattr(self, '_immutable_path_prefix', False)
+        canonical_root = root.resolve() if immutable else None
+        resolved_paths = OrderedDict()
+        resolution_cost = {'enabled_for_validated_immutable_prefix': immutable,
+                           'max_entries': 1024, 'hits': 0, 'misses': 0}
+
+        def resolved(path):
+            if not immutable:
+                return path.resolve(), None
+            try:
+                stamps = (path.lstat(), path.parent.stat())
+            except OSError:
+                # Keep the original missing/inaccessible-file error path below.
+                return path.resolve(), None
+            signature = tuple((s.st_dev, s.st_ino, s.st_mode, s.st_size,
+                               s.st_mtime_ns, s.st_ctime_ns) for s in stamps)
+            key = (str(path), signature)
+            if key in resolved_paths:
+                resolution_cost['hits'] += 1
+                resolved_paths.move_to_end(key)
+                return resolved_paths[key], signature
+            resolution_cost['misses'] += 1
+            value = path.resolve()
+            resolved_paths[key] = value
+            if len(resolved_paths) > 1024:
+                resolved_paths.popitem(last=False)
+            return value, signature
 
         def verified(path, expected_sha, expected_bytes, description, *, body=False):
             try:
                 expected_bytes = int(expected_bytes)
             except (TypeError, ValueError) as exc:
                 raise ValueError(f'{description} lacks expected byte size') from exc
-            key = (str(path.resolve()), expected_sha, expected_bytes)
+            canonical, signature = resolved(path)
+            key = (str(canonical), expected_sha, expected_bytes, signature)
             if body:
                 retained = path.read_bytes()
                 if (len(retained) != expected_bytes
@@ -507,8 +536,9 @@ class ObservationStoreV5(ObservationStore):
                 row = json.loads(resolution)
                 path = root / inventory_path
                 inventory_proof = row.get('inventory_proof') or {}
-                inventory_key = (str(path.resolve()), inventory_sha,
-                                 int(inventory_proof.get('bytes')))
+                inventory_path_resolved, signature = resolved(path)
+                inventory_key = (str(inventory_path_resolved), inventory_sha,
+                                 int(inventory_proof.get('bytes')), signature)
                 if inventory_key not in parsed_inventories:
                     inventory_body = verified(
                         path, inventory_sha, inventory_proof.get('bytes'),
@@ -566,8 +596,8 @@ class ObservationStoreV5(ObservationStore):
                 if canonical is None:
                     raise ValueError('resolved runtime identity lacks canonical raw locator')
                 if bracket.get('kind') == 'source_event_clock':
-                    raw_path = (root / 'observations' / canonical['retained_file']).resolve()
-                    if not raw_path.is_relative_to(root.resolve()):
+                    raw_path, _ = resolved(root / 'observations' / canonical['retained_file'])
+                    if not raw_path.is_relative_to(canonical_root if immutable else root.resolve()):
                         raise ValueError('runtime identity raw locator leaves campaign root')
                     raw_offset, raw_length, raw_sha = (canonical['offset'], canonical['length'],
                                                        canonical['sha256'])
@@ -596,6 +626,9 @@ class ObservationStoreV5(ObservationStore):
             result.close()
             raise
         finally:
+            if immutable:
+                self.path_resolution_cost = {**resolution_cost, 'retained_entries': len(resolved_paths),
+                    'scope': 'one validated immutable-prefix call; path identities only, all original reads and hashes retained'}
             if journal is not None:
                 journal.close()
         return result
