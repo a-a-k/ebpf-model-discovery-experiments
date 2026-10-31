@@ -1,0 +1,25 @@
+{
+  "recorded_before_dispatch_utc": "2026-10-31T14:22:04.145730+00:00",
+  "superseding_preexecution": "docs/clean-study-parent-preparation-preexecution-20261031.json",
+  "qualified_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "immutable_ref": "capture-20261031-parent-disk-v1",
+  "scope": {
+    "collector": "deepflow",
+    "stage": "main",
+    "runner": "study",
+    "system": "deathstarbench",
+    "mode": "partial",
+    "seed": 7
+  },
+  "original_parent": 41164824120,
+  "original_failed_job": 124430030942,
+  "original_started_at": "2026-10-31T08:28:33Z",
+  "original_completed_at": "2026-10-31T14:17:44Z",
+  "verified_failure": "Parent Actions runner ENOSPC writing own _diag Worker log; continuation interrupted and final retention/evaluation pending. Not a model outcome. Final campaign packet not recovered.",
+  "root_evidence": "work/root-failed-job-124430030942-parent-disk-proof.json",
+  "skeptic_verdict": "Explicit ORIGINAL-feasibility technical-replacement GO received before dispatch after independent check-run annotation review; exact fresh seed7 on already reviewed N, new preexecution required. No retrospective expansion of prior two-case record.",
+  "root_verdict": "Explicit ORIGINAL-feasibility technical-replacement GO after direct independent API verification of new actual failure. Same reviewed operational N, scientific bytes identical0c98; all original81 cells/10operations/four methods/equal-information direct baseline unchanged.",
+  "both_original_go_before_dispatch": true,
+  "selection_and_costs": "Only technically interrupted case replaced; no forecast/accuracy selection. Original failed attempt, elapsed5h49, prefix/worker and fresh full costs retained; unknown human effort explicit. All strict saved-facts checks before admission; actualN preserved. Disk remedy effectiveness remains unproved until actual restored captures complete."
+}
