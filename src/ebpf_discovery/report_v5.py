@@ -598,9 +598,9 @@ def build(
     common_head = declarations.get('experiment_head')
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
-        if common_head and item['stage'] == 'main' and observed_head and observed_head != common_head:
+        if common_head and item['stage'] == 'main' and observed_head != common_head:
             item['common_source_coverage_exclusion'] = {
-                'rule': 'outside_predeclared_common_source',
+                'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,
                 'previous_eligible_main_coverage': item['eligible_main_coverage'],
                 'previous_reason': item.get('reason')}

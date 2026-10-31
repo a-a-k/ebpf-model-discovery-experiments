@@ -576,6 +576,23 @@ def test_common_source_does_not_allow_picking_between_two_complete_same_head_att
         build([tmp_path/'inputs'], declarations, tmp_path/'report', selection_path=selection)
 
 
+@pytest.mark.parametrize('observed_head', [None, ''])
+def test_complete_unknown_source_cannot_count_in_explicit_common_source_grid(tmp_path, observed_head):
+    _, original = summary(tmp_path/'inputs', 25, 'main', head_sha=observed_head)
+    declarations = declared(tmp_path/'declared.json', [run(25, 'main')])
+    legacy = build([tmp_path/'inputs'], declarations, tmp_path/'legacy')
+    assert legacy['grid']['technically_complete_main_cells'] == 1
+    value = json.loads(declarations.read_text()); value['experiment_head'] = 'b' * 40
+    write(declarations, value)
+    result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+    assert result['grid']['technically_complete_main_cells'] == 0
+    item = attempts(result, 'main')[0]
+    assert item['eligible_main_coverage'] is False and item['technical_complete_self_reported'] is True
+    assert item['common_source_coverage_exclusion']['rule'] == 'source_commit_unavailable'
+    assert item['common_source_coverage_exclusion']['previous_eligible_main_coverage'] is True
+    assert restored(tmp_path/'report', item) == original
+
+
 @pytest.mark.parametrize('head', [None, '', 'b' * 7, 'g' * 40])
 def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
     declarations = declared(tmp_path/'declared.json', [])
