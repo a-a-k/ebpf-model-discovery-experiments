@@ -115,3 +115,32 @@ target trials and publication of full artifact `13036282971` and summary artifac
 this supplies all three collectors and all three seeds for that first setting.
 Independent full saved-facts review remains required before scientific admission.
 No worker payload was unpacked locally.
+
+## Parent runner disk preparation
+
+DeepFlow DSB partial/seed8, parent `41164824120`, job `124430030947`,
+failed on 2026-10-31 after 4h49. The GitHub check annotation records
+`System.IO.IOException: No space left on device` while the runner wrote its own
+diagnostic log. The campaign wait step was still active; retention and evaluation
+never ran. Only the previously uploaded closed prefix and successful worker output
+remain. The failed job log is unavailable. This is an infrastructure failure,
+not an unfavorable completed forecast.
+
+The existing worker cleanup did not cover the parent. The parent workflow now
+removes the same three unused hosted SDK directories before toolchain setup,
+swap allocation and guest boot. It records free bytes, path presence, elapsed
+time and its actual workflow SHA. A completed comparable DeepFlow absent/seed6
+parent ended with `/dev/root` 97% full and 4.6 GiB available. Previously measured
+worker reclamation of about 16.77 GiB makes this a reasonable minimal remedy;
+actual parent recovery still requires a successful replacement.
+
+The repair keeps the normal commit identity throughout capture, worker and report.
+It does not override `GITHUB_SHA`. Before a replacement is launched, both reviewers
+must verify the exact operational workflow diff against qualified `0c98bf4` and
+byte-identical blobs and file modes for every other scientific source, dependency
+and fixture. The new actual source SHA remains visible. The superseding execution
+record explicitly declares the two revisions as the same scientific implementation;
+the independent reader applies identical checks and the report requires the exact
+Git equivalence proof. Counts, scenarios, all four methods, contracts, guest CPU,
+memory, swap, ports and outcome rules remain unchanged. Only the failed cell is
+replaced; failed, preparation and repeat costs remain included.

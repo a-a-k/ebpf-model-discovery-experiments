@@ -107,6 +107,33 @@ jobs:
             'interrupted_or_evicted_result': 'technical unknown; retain partial evidence and do not score',
           }, indent=2)+'\n')
           PY
+      - name: Free unused hosted SDK disk before capture
+        run: |
+          mkdir -p work/campaign/infrastructure
+          python - <<'PY'
+          import json, os, pathlib, shutil, time
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc']
+          proof={'workflow_sha':os.environ['GITHUB_SHA'],'started_ns':time.time_ns(),
+              'free_bytes_before':shutil.disk_usage('.').free,
+              'unused_paths_present_before':{p:pathlib.Path(p).exists() for p in paths},
+              'scope':'unused hosted-image SDK directories only; scientific implementation unchanged'}
+          pathlib.Path('work/campaign/infrastructure/parent-disk-preparation.json').write_text(
+              json.dumps(proof,indent=2)+'\n')
+          PY
+          df -B1 . > work/campaign/infrastructure/parent-disk-before.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/campaign/infrastructure/parent-disk-after.txt
+          python - <<'PY'
+          import json, pathlib, shutil, time
+          path=pathlib.Path('work/campaign/infrastructure/parent-disk-preparation.json')
+          proof=json.loads(path.read_text()); ended=time.time_ns()
+          proof.update(ended_ns=ended,elapsed_seconds=(ended-proof['started_ns'])/1e9,
+              free_bytes_after=shutil.disk_usage('.').free,
+              unused_paths_present_after={p:pathlib.Path(p).exists()
+                  for p in proof['unused_paths_present_before']})
+          path.write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps(proof))
+          PY
       - name: Build exact source-pinned toolchain
         run: |
           chmod +x scripts/setup-toolchain-v4.sh
