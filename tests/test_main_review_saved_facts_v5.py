@@ -1149,21 +1149,26 @@ def test_explicit_smoke_review_keeps_main_workload_boundary(tmp_path, system):
         REVIEW.compact_facts(compact, declaration, smoke_qualification=True)
 
 
-@pytest.mark.parametrize('changed', [None, 'missing', 'seed', 'source', 'stage'])
+@pytest.mark.parametrize('changed', [None, 'missing', 'seed', 'source', 'stage', 'run', 'planned-missing'])
 def test_common_smoke_workflow_requires_all27_exact_fixed_cells(tmp_path, changed):
     template = json.loads((ROOT/'docs/iteration5-main-review-candidates-coroot-petclinic-full.json').read_text())['cells'][0]
     cells = [{**template, 'collector': c, 'system': s, 'mode': m, 'seed': 6,
               'head_sha': REVIEW.FRESH_HEAD, 'stage': 'smoke', 'runner': 'study'}
              for c in ('obi', 'deepflow', 'coroot')
              for s in ('deathstarbench', 'otel_demo', 'petclinic') for m in ('absent', 'partial', 'full')]
+    planned = json.loads(json.dumps(cells))
     if changed == 'missing':
         cells.pop()
+    elif changed == 'planned-missing':
+        planned.pop()
+    elif changed == 'run':
+        cells[0]['run_id'] += 1
     elif changed:
         key, value = {'seed': ('seed', 7), 'source': ('head_sha', 'f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c'),
                       'stage': ('stage', 'main')}[changed]
         cells[0][key] = value
     result, output = _run_manifest_selector(tmp_path, 'docs/clean-study-smoke-review-candidates-20261031.json',
-                                            phase='common-smoke', document={'cells': cells})
+                                            phase='common-smoke', document={'cells': cells, 'planned_cells': planned})
     assert (result.returncode == 0) == (changed is None), result.stderr
     if changed is None:
         values = dict(line.split('=', 1) for line in output.read_text().splitlines())

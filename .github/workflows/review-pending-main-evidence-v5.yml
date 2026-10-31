@@ -97,6 +97,12 @@ jobs:
               keys=[(r['collector'],r['system'],r['mode'],r['seed']) for r in cells]
               if len(keys)!=27 or set(keys)!=expected:
                   raise SystemExit('common smoke must review all 27 fixed settings')
+              planned=source['planned_cells']
+              identity=('collector','system','mode','seed','run_id','head_sha','stage','runner')
+              if (len(planned)!=27 or
+                      {tuple(r[k] for k in identity) for r in planned} !=
+                      {tuple(r[k] for k in identity) for r in cells}):
+                  raise SystemExit('common smoke differs from the predeclared qualification run identities')
               for cell in cells:
                   if (cell.get('head_sha')!='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
                           or cell.get('stage')!='smoke' or cell.get('runner')!='study'
