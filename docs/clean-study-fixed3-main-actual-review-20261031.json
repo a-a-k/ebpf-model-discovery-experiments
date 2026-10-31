@@ -1,0 +1,37 @@
+{
+  "recorded_utc": "2026-10-31T20:29:19.992302+00:00",
+  "reader_run": 41233747858,
+  "reader_source": "cd490cffe0ce022e4c3e1356be3a728c903507c8",
+  "status": "Both ORIGINAL actual-output technical/integrity qualification GO for fixed3 MAIN cells; not all81 completion or comparative superiority.",
+  "criterion": "eBPF observations to actual Bering graph and actual Sheaft with independent application outcome under absent/partial SDK traces. Same supplied semantic/inventory/fault knowledge for all methods and direct AND/OR baseline. Costs include failed/stopped/preparation/early stopping; human effort remains unknown.",
+  "actual_primary_positive_command_input_report_chains": 32,
+  "actual_primary_DSB_unknown_branches": 18,
+  "context_DSB_unknown_branches": 6,
+  "root_literal_record_sha256": "093abfcec7e55f7742f282fbe4d764aedd0c291b9ffe350d435a49cc834d0497",
+  "root_literal_record": "work/root-fixed3-main-review-41233747858/root-actual-output-original-qualification-go.json",
+  "skeptic_literal_records": [
+    "independent-PC-all20-primary-chain-review.json",
+    "coroot-all-primary/independent-literal-primary-chain-review.json"
+  ],
+  "derived_artifacts": [
+    {
+      "id": 13055051610,
+      "saved_facts_sha256": "480e4f5c7794dfefa5b1158e02baa61a5bd1020b1afdbcba53e5d9561d3c42c4"
+    },
+    {
+      "id": 13054393655,
+      "saved_facts_sha256": "2315a2643961ab5cbc50f8ea4631c2cd1368e6d5bc5f3c494fe1df26d3a4ada2"
+    },
+    {
+      "id": 13054143710,
+      "saved_facts_sha256": "30725285a793669db00fdba0b8594db2c11c740e83ac2d89cda3b8d0d7d0be3e"
+    }
+  ],
+  "findings": {
+    "PC_partial": "eBPF/combined four operations available; native two. Stored primary forecasts match external outcomes in this cell.",
+    "OTel_full": "native/combined/context checkout prediction .875, independent external success .25; unfavorable result retained. eBPF alone unavailable.",
+    "DSB_absent": "Missing observed required Thrift RPC paths and unresolved canonical controlled group; nonempty DB/transport observations do not establish operation model."
+  },
+  "reader_selection_gap": "Primary reader originally retained commands/models but omitted analysis/predicate/fault/report files. All32 actual primary chains were verified by direct preserved small literal files under existing criteria. Extend existing selector/helper uniformly before all81 review; no recapture/replay/rescore/new integrity framework.",
+  "costs": "All failed/stopped/preparation/model/transfer/reader/CI/archival attempts retained. Direct supplied-semantic baseline is equivalent where applicable; no cost advantage claim. Human effort unknown."
+}

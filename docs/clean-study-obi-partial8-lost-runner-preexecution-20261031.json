@@ -1,0 +1,51 @@
+{
+  "recorded_before_dispatch_utc": "2026-10-31T20:29:19.992302+00:00",
+  "status": "READY one exact infrastructure-loss repeat; no POST yet",
+  "case": {
+    "collector": "obi",
+    "system": "otel_demo",
+    "mode": "partial",
+    "seed": 8
+  },
+  "old_parent": 41227092801,
+  "old_job": 124613423639,
+  "failed_worker": 41233978178,
+  "known_failure": "Actual hosted-runner-lost-communication annotation. CPU/memory/network listed by template are possible causes, not established diagnoses. Parent missing expected worker artifact is a consequence.",
+  "incomplete_evidence": "Original full13056706071 literal status/dispatch/blocks: five training blocks only, worker41233978178 failure; no frozen forecast or target observations. Complete adverse cases are untouched.",
+  "original_full_artifact": {
+    "id": 13056706071,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA1NjcwNjA3MQ==",
+    "name": "campaign-v5-obi-main-otel_demo-partial-8-41227092801",
+    "size_in_bytes": 1491079611,
+    "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13056706071",
+    "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13056706071/zip",
+    "expired": false,
+    "digest": "sha256:83b8090d3d13616a239fb1f2b42d021d16c56218a6f6198d2a34e166d0f71dcd",
+    "created_at": "2026-10-31T20:24:10Z",
+    "updated_at": "2026-10-31T20:24:10Z",
+    "expires_at": "2027-01-29T17:58:28Z",
+    "workflow_run": {
+      "id": 41227092801,
+      "repository_id": 1434356471,
+      "head_repository_id": 1434356471,
+      "head_branch": "capture-20261031-guest-logs-v3",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    }
+  },
+  "ref": "capture-20261031-guest-logs-v3",
+  "source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+  "source_equivalence_proof": "work/root-finalS-source-equivalence-20261031.json",
+  "source_CI_success": [
+    41222833621,
+    41222839306,
+    41225073301,
+    41225096589
+  ],
+  "root_original_GO": "Explicit ORIGINAL exactcase fresh-host repeat GO. Same original feasibility criterion, all81/10operations/counts/tools/semantics and direct baseline. One repeat of technical failure only; no healthy cancellation or favorable-outcome selection.",
+  "skeptic_original_GO": "Explicit ORIGINAL exactcase S OBI/OTel/partial/8 execution GO after terminal/incomplete evidence, next free actualslot under20; no claimed OOM cure or guarantee. If same abrupt cause repeats, diagnose rather than endless blind repetition.",
+  "strongest_simple_baseline": "Restart same exact method on fresh hosted runner after loss of previous runner; do not change experiment or infer a resource cause.",
+  "causal_repair_scope": "Replace unavailable failed runner, no scientific implementation change.",
+  "capacity": "Fresh direct API before POST; reserve3 per nonterminal original carrier,1 per nonterminal singlecase including prepare; <=20. All other current jobs untouched.",
+  "costs": "Retain original/new prefix/worker/failure/transfer/preparation/CI/archive and retry runner costs; human effort unknown.",
+  "user_authorization": "Existing explicit instruction to restart technical failures. No new permission to cancel healthy jobs."
+}

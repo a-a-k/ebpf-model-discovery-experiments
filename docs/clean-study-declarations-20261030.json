@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct19:09:07UTC36exactsuccessfulMAINfull/compactpairs, alloriginalfixed3readerpackets ready. ExactfailedDFDSBfull6ENOSPC replacedonce atqualifiedS41233204064 aftercommittedpreexec10fb850/ORIGINALGO; PCfull6/7/8 S41232316943/41233220186/41233223018 dispatched onactualfreeslots, completingapprovedOBI14handoff. Allothercurrentcasesuntouched, global20reserved. Fixed3strictActionsreaderpredeclared, actual-outputadmissionstillpending; all81/10ops/fourmethods retained.",
+  "main_dispatch_status": "Fixed3 MAIN actual-output ORIGINAL technical/integrity qualification GO after direct32primarychains; full81 unfinished. Four actualDF6h stops under diagnosis; one OBIpartial8 S hostedrunnerloss exactcase repeat predeclared. All14approvedOBIhandoff dispatched; no other healthycases cancelled. Unknown/adverse outcomes valid, no cost-superiority hypothesis.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -3743,6 +3743,11 @@
       "run_id": 41227864982,
       "role": "preparation",
       "note": "Actual Focused implementation checks at workflow source22576a157ab5b1cbae6727175a350570b1db0f55; retain actual sourceinput/status/jobAPIinterval/failure/success/artifactcosts, human effort unmetered."
+    },
+    {
+      "run_id": 41233747858,
+      "role": "evidence",
+      "note": "Originalfixed3MAINstrictsaved-evidence fresh-qualification (DFDSBabs6A/CorootOTelFull6A/OBIPCpartial6S), allinput/freeze/actualBering/Sheaft/externaloutcome checks inActions; bothORIGINALexecutionGO beforeoncePOST. No traffic/refit/rescore, unknown/adversevalid; retainallreader/selection/transfer/CI/failure/ownclosingtailcosts. Actual-outputGO requiredbeforeall81reader."
     }
   ],
   "blocked_main_cells": [],
