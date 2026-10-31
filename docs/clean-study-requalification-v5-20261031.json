@@ -1,0 +1,64 @@
+{
+  "decision_at_utc": "2026-10-31T01:14:06.570173+00:00",
+  "criterion": "Feasibility of eBPF observations as input to actual Bering graph discovery and useful Sheaft simulation with absent/incomplete native tracing, judged against independent application outcomes; no original cost superiority hypothesis.",
+  "strongest_simple_baselines": [
+    "SDK-only input from the same collector-co-running capture and same supplied contracts/inventory; full means enabled SDKs, not guaranteed complete ancestry.",
+    "Equal-information direct contract/inventory predicate (including exact A OR B arithmetic); no novelty or superiority over equivalent arithmetic.",
+    "Paired ordinary-OTLP Bering view plus a direct union of additional actual SERVER edges, retaining all original graph records/endpoints and identical supplied knowledge."
+  ],
+  "causal_source": "Bering source-domain separation hid actual SDK-parent/eBPF-child links. The ordinary OTLP pass uses the identical frozen bytes/order/roles and unchanged actual Go ambiguity guard. Import only absent actual SERVER edges among existing base services; retain conflicts as unknown.",
+  "source": {
+    "commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "ref": "study-20261031-v5",
+    "tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+    "reviewed_parent": "22600e3affe9a5cf66439ecf956ee9bf09b4e7e9",
+    "tree_identical_to_reviewed_source": true
+  },
+  "evidence": {
+    "paired_saved_audit": 41152205197,
+    "artifact_id": 13023164449,
+    "artifact_sha256": "30cb522e6813e0fd580965d572a6707e858e950fb0b36a8599904383bf63a066",
+    "requests_per_variant": 108,
+    "added_actual_server_edges_per_variant": 14,
+    "real_validation_and_simulation_pairs": 6,
+    "all_base_graph_records_preserved": true,
+    "original_forecasts_unchanged": true,
+    "post_target_diagnostic_is_primary_result": false,
+    "db_recovery_claim": false,
+    "final_source_ci_runs": [
+      41154236105,
+      41154255399
+    ]
+  },
+  "main_agent_verdict": "Explicit ORIGINAL GO to finalcommon qualification27 only, after actual code, frozen source and actual paired-output review; no main81 or positive research verdict.",
+  "skeptic_verdict": "EXACT-SOURCE ORIGINAL-feasibility GO for0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5, independently verified equal reviewed tree, unchanged src/workflows and both exact merge/tag CI successes; qualification27 only, not main81 or empirical success.",
+  "qualification": {
+    "workflow": "series-v5.yml",
+    "runner": "study",
+    "stage": "smoke",
+    "collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "systems": [
+      "deathstarbench",
+      "otel_demo",
+      "petclinic"
+    ],
+    "modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "seed": 6,
+    "cells": 27,
+    "original_three_arms_unchanged": true,
+    "same_paired_policy_all_cells": true,
+    "unchanged_workload_and_controls": true,
+    "runs": {}
+  },
+  "review_rule": "Check real acquisition, actual model/command/source/freeze/outcome bindings and every concrete unknown. Unsupported/adverse results remain; no numeric availability, accuracy or response-time threshold.",
+  "cost_boundary": "Include both Bering passes, any added Sheaft executions, all preparation/CI/audits/failures/early stopping/worker and archival/report costs. Reuse is not independent execution. Human effort unmeasured, not zero. Actions elapsed is not CPU/billed consumption.",
+  "remaining_main": "All81 finalsource main cells remain required after actual qualification review, with all ten operations and seeds6/7/8; no smaller demonstration."
+}
