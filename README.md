@@ -20,15 +20,29 @@ fusion. [PR7](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/7)
 repairs those common paths using the literal protobuf default and existing
 verified runtime/deployment identities. Independent code and fixed saved-input
 review passed; this does not certify prediction availability or accuracy.
-Current immutable source `study-20261030-v3` is `6ef079a`, with unchanged tool and
-collector pins. Its fresh common 27-setting qualification is running:
-[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132051267),
-[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132056183),
-[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41132061981).
+Qualification at `6ef079a` exposed four pre-target Petclinic failures: operation
+metadata was applied in raw Docker IDs after binding a canonical SDK-role graph.
+[PR8](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/8) attaches only
+provided metadata to the already bound graph and preserves its actual discovery
+provenance. All27 settings at immutable `study-20261030-v4` (`f60cbfe`) completed
+and passed independent evidence review:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143808524),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143812257),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143815710).
+Unknown or inaccurate forecasts remain valid empirical results.
 The [pre-execution decision](docs/clean-study-requalification-v3-20261030.json)
 records the original criterion, simple baselines, both agents' verdicts and costs.
-Main81 has not started. The previous attempts and diagnostics are preserved in
-[the verified permanent archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41129382005).
+The OBI OTel partial-prefix audit found117 real SERVER children with unique SDK
+parents but no local eBPF parent. Literal fields survived ingestion; Bering's
+internal source-domain separation prevented these cross-emitter links. The
+[catalog diagnosis](docs/OTEL_CATALOG_PARENT_AUDIT.md) therefore does not support
+an intrinsic inability to observe the calls. A separately declared
+[ordinary-OTLP edge-union baseline](docs/CONTEXT_BASELINE.md) preserves all original
+source arms and evaluates the strongest simple combination of the same data.
+It requires actual saved-output review and a final common-source qualification
+before the matched81 main cells. Main81 at that final source has not started.
+Earlier attempts, diagnostics and preparation costs are preserved in
+[verified permanent archives](docs/ARCHIVE_PUBLICATION.md).
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
 RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
 The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
@@ -195,10 +209,10 @@ observed application behavior:
 
 [Procrustes] supplies static preparation and confirmed deployment facts, [Bering]
 discovers the runtime graph, and [Sheaft] evaluates declared failure profiles on that
-graph. The desired contribution is the same useful external result with less
-instrumentation effort, or a better useful result at comparable complete cost. A
-graph that merely looks plausible, a high internal quality score, or an outcome-rate
-predictor stored beside a graph does not satisfy that criterion.
+graph. The original contribution criterion is feasibility with absent or
+incomplete native tracing, assessed against independent application outcomes.
+Cost superiority was not the original hypothesis. A plausible graph or an
+internal quality flag alone does not establish this end-to-end result.
 
 The strongest simple baseline receives the same operation contracts, controlled
 replica inventory and state mixture as the graph arm. For a required two-replica
@@ -215,7 +229,8 @@ Manual semantic declarations are charged to both methods. Human/agent preparatio
 time was not instrumented and remains explicitly unmeasured; no full-cost advantage
 will be claimed from runtime measurements alone.
 
-The executable protocol is [PROTOCOL_V4.md](docs/PROTOCOL_V4.md). It supersedes old
+The active executable protocol is [PROTOCOL_V5.md](docs/PROTOCOL_V5.md);
+[iteration4](docs/PROTOCOL_V4.md) remains historical. They supersede old
 two/ten-second admission rules, timestamp-containment gates and arbitrary accuracy
 thresholds. An unfavorable result remains an empirical result; it does not authorize
 a weaker post-hoc claim.
