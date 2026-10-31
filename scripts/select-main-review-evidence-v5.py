@@ -103,7 +103,7 @@ def wanted_member(name: str, scope: str) -> bool:
             'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
             'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
             'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
-            'model.json', 'model.signal-quality.json', 'simulation.command.json',
+            'model.json', 'model.signal-quality.json', 'analysis.json', 'predicates.json', 'faults.json', 'simulation.command.json',
             'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("toolchain/discovery/"):
         return name.endswith(("observed.json", "observed.snapshot.json",

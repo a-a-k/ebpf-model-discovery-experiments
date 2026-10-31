@@ -85,7 +85,7 @@ def _package_selected(name: str, kind: str) -> bool:
             'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
             'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
             'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
-            'model.json', 'model.signal-quality.json', 'simulation.command.json',
+            'model.json', 'model.signal-quality.json', 'analysis.json', 'predicates.json', 'faults.json', 'simulation.command.json',
             'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("discovery/"):
         return name.endswith(("observed.json", "observed.bering-raw.json",
@@ -342,6 +342,33 @@ def alias_only_model(raw: dict, aliases: dict) -> dict:
     return projected
 
 
+def paired_simulation_facts(toolchain: Path, branch: Path, forecast: dict, freeze: dict) -> dict:
+    command = read(branch/'simulation.command.json')
+    argv = command.get('argv') or []
+    relative = branch.relative_to(toolchain).as_posix()
+    if (command.get('returncode') != 0 or forecast.get('simulator') != 'Sheaft'
+            or len(argv) != 8 or argv[:3] != ['sheaft', 'run', '--model']
+            or argv[4] != '--analysis' or argv[6] != '--out-dir'
+            or [toolchain_relative(argv[index]) for index in (3, 5, 7)] !=
+               [relative + '/' + name for name in ('model.json', 'analysis.json', 'simulation')]):
+        raise ValueError('paired available forecast lacks its exact successful Sheaft command')
+    analysis = read(branch/'analysis.json')
+    files = ['simulation.command.json', 'model.json', 'analysis.json']
+    for key, name in (('predicate_contract', 'predicates.json'), ('fault_contract', 'faults.json')):
+        if key in analysis:
+            if toolchain_relative(analysis[key]) != relative + '/' + name:
+                raise ValueError('paired analysis references another operation contract')
+            files.append(name)
+    for name in files:
+        path = branch/name
+        if freeze['sha256_by_path'].get('toolchain/' + relative + '/' + name) != sha(path):
+            raise ValueError('paired simulation input is not frozen')
+    if (forecast.get('graph_sha256') != sha(branch/'model.json')
+            or forecast.get('analysis_sha256') != sha(branch/'analysis.json')):
+        raise ValueError('paired forecast model or analysis hash differs')
+    return operation_metadata_facts(toolchain, branch, freeze)
+
+
 def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
                            original: dict, evaluation: dict | None) -> dict:
     """Inspect the fixed paired files; never replay, fit, or rescore outcomes."""
@@ -540,15 +567,7 @@ def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
             metadata = None
             if forecast.get('available') and not reuse:
                 branch = out/'operations'/operation
-                command = read(branch/'simulation.command.json')
-                argv = command.get('argv') or []
-                if (command.get('returncode') != 0 or forecast.get('simulator') != 'Sheaft'
-                        or forecast.get('graph_sha256') != bound(branch/'model.json')
-                        or argv[:3] != ['sheaft', 'run', '--model']
-                        or toolchain_relative(argv[3]) != branch.relative_to(toolchain).as_posix() + '/model.json'):
-                    raise ValueError('paired available forecast lacks its actual successful Sheaft model')
-                bound(branch/'simulation.command.json')
-                metadata = operation_metadata_facts(toolchain, branch, freeze)
+                metadata = paired_simulation_facts(toolchain, branch, forecast, freeze)
             branches.append({'operation': operation, 'available_copied': forecast.get('available'),
                              'reason_copied': forecast.get('reason'), 'provided_metadata_attachment': metadata})
         facts[variant] = {'status': status, 'union': union_facts, 'branches': branches}

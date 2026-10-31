@@ -92,7 +92,8 @@ def test_operation_metadata_review_reconstructs_all_fields_and_preserves_first_p
     assert REVIEW._package_selected("discovery/combined/raw/observed.signal-quality.json", "toolchain")
 
 
-def test_paired_metadata_uses_seven_real_links_and_keeps_original_quality_scope(tmp_path):
+@pytest.mark.parametrize('changed', [None, 'analysis-hash', 'command-analysis', 'predicate-reference', 'unfrozen-faults'])
+def test_paired_metadata_uses_seven_real_links_and_exact_analysis(tmp_path, changed):
     toolchain, original_branch, freeze = metadata_fixture(tmp_path)
     out = toolchain/'context-baseline/raw'
     branch = out/'operations/details'
@@ -113,9 +114,36 @@ def test_paired_metadata_uses_seven_real_links_and_keeps_original_quality_scope(
     write(branch/'provided-metadata-validation.command.json', {
         'returncode': 0, 'argv': ['bering', 'validate', '--input',
                                  '/saved/toolchain/context-baseline/raw/operations/details/model.json']})
+    base_path = '/saved/toolchain/context-baseline/raw/operations/details/'
+    write(branch/'analysis.json', {'predicate_contract': base_path + 'predicates.json',
+                                  'fault_contract': base_path + 'faults.json'})
+    write(branch/'predicates.json', {'supplied_predicate_fixture': True})
+    write(branch/'faults.json', {'supplied_fault_fixture': True})
+    write(branch/'simulation.command.json', {'returncode': 0, 'argv': [
+        'sheaft', 'run', '--model', base_path + 'model.json', '--analysis', base_path + 'analysis.json',
+        '--out-dir', base_path + 'simulation']})
+    forecast = {'simulator': 'Sheaft', 'graph_sha256': digest(branch/'model.json'),
+                'analysis_sha256': digest(branch/'analysis.json')}
+    if changed == 'analysis-hash':
+        write(branch/'analysis.json', {'different_analysis': True})
+    elif changed == 'command-analysis':
+        command = REVIEW.read(branch/'simulation.command.json')
+        command['argv'][5] = base_path + 'other-analysis.json'
+        write(branch/'simulation.command.json', command)
+    elif changed == 'predicate-reference':
+        analysis = REVIEW.read(branch/'analysis.json')
+        analysis['predicate_contract'] = base_path + 'other-predicates.json'
+        write(branch/'analysis.json', analysis)
+        forecast['analysis_sha256'] = digest(branch/'analysis.json')
     freeze['sha256_by_path'].update({'toolchain/' + path.relative_to(toolchain).as_posix(): digest(path)
                                      for path in out.rglob('*') if path.is_file()})
-    facts = REVIEW.operation_metadata_facts(toolchain, branch, freeze)
+    if changed == 'unfrozen-faults':
+        del freeze['sha256_by_path']['toolchain/context-baseline/raw/operations/details/faults.json']
+    if changed:
+        with pytest.raises(ValueError):
+            REVIEW.paired_simulation_facts(toolchain, branch, forecast, freeze)
+        return
+    facts = REVIEW.paired_simulation_facts(toolchain, branch, forecast, freeze)
     assert facts['all_model_fields_exact']
     assert 'toolchain/context-baseline/raw/union-proof.json' in facts['verified_frozen_paths']
 
