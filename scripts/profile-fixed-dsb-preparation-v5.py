@@ -53,7 +53,7 @@ status = {'diagnostic_source': head, 'input_identity': expected,
           'only_source_difference': {'path': report_consumer, 'blob': 'f83502ac44c1dcfd7a7314cda99a2a7bd5248e8c', 'role': 'reporting-only consumer, not imported by this diagnostic'},
           'new_traffic_or_tools_or_scoring': False,
           'status': 'preparation_not_started', 'profile_overhead_is_not_a_speed_benchmark': True,
-          'diagnostic_only_budget_seconds': 4*60*60,
+          'diagnostic_only_budget_seconds': 30*60,
           'profile_started': False,
           'budget_is_not_an_experiment_deadline_or_eligibility_gate': True}
 (out/'status.json').write_text(json.dumps(status, indent=2)+'\n')
@@ -74,7 +74,7 @@ try:
         def diagnostic_budget_stop(signum, frame):
             raise TimeoutError('Fixed offline profiling budget reached; retain partial diagnostic')
         previous_handler = signal.signal(signal.SIGALRM, diagnostic_budget_stop)
-        signal.alarm(4*60*60)
+        signal.alarm(30*60)
         try:
             profiler.runcall(toolchain.prepare_inputs, plans)
             preparation_completed = True
