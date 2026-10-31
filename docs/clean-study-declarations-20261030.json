@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct gh API06:33:33UTC:5 original finalsource main jobs completed success(OBIabs7/8;Corootabs6/7/8), one pretargettechnicalfailureOBIabs6; same-science replacement41173230022 active. Allthree parent grids continue onscience0c98. Fixed3 and all81 independent main saved-facts review pending.",
+  "main_dispatch_status": "Direct gh API08:50:23UTC:9 unique completedSUCCESS main cells, all DSB absent3collectors x3seeds including exact OBI6 replacement41173230022. Historical pretargetdiskfailure41171880804 retained separately. Nine DSBpartial parent cells continue; no newfailedsteps. Fixed3 and all81 independent saved-facts review pending.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -3008,6 +3008,36 @@
       "run_id": 41180499502,
       "role": "worker",
       "note": "OBI DSBpartial7 worker forparent41164821492/checkpoint13034507696, science0c98/workflow8a9. CompletedSUCCESS; Execute07:27:56to07:47:50UTC. Actualinput/output scientific review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41183848822,
+      "role": "worker",
+      "note": "Direct Actions metadata: next partial-wave worker on operational workflow8a9, completedSUCCESS; exact scientific inputs and full saved-facts review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41184145066,
+      "role": "worker",
+      "note": "Direct Actions metadata: next partial-wave worker on operational workflow8a9, completedSUCCESS; exact scientific inputs and full saved-facts review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41184589438,
+      "role": "worker",
+      "note": "Direct Actions metadata: next partial-wave worker on operational workflow8a9, completedSUCCESS; exact scientific inputs and full saved-facts review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41184827203,
+      "role": "worker",
+      "note": "Direct Actions metadata: next partial-wave worker on operational workflow8a9, Execute active08:50UTC; exact scientific inputs and full saved-facts review pending. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41182717905,
+      "role": "preparation",
+      "note": "CI for59a0a8b successful exact-case recovery and measured-disk documentation, completedSUCCESS. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
+    },
+    {
+      "run_id": 41182714899,
+      "role": "preparation",
+      "note": "PR CI for59a0a8b successful exact-case recovery and measured-disk documentation, completedSUCCESS. Keep complete measured preparation/cleanup/transfer/wait/execution costs; human effort unmeasured."
     }
   ],
   "blocked_main_cells": [],
@@ -3034,5 +3064,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-10-31T03:17:47.457841+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-10-31T08:51:45.611686+00:00"
 }
