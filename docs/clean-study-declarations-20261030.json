@@ -2870,6 +2870,21 @@
       "run_id": 41165335207,
       "role": "archive",
       "note": "Permanent publication of actual27 reader and preceding archive/CI tail; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
+    },
+    {
+      "run_id": 41168225488,
+      "role": "preparation",
+      "note": "CI for additive source-backed saved-binding presentation only, source6ea29670c1b2d078bef1a417bf279628ed03485a. Existing experiment0c98/captures/predictions unchanged. Retain full actual elapsed/transfer/preparation costs; not CPU or billed usage."
+    },
+    {
+      "run_id": 41168228388,
+      "role": "preparation",
+      "note": "CI for additive source-backed saved-binding presentation only, source6ea29670c1b2d078bef1a417bf279628ed03485a. Existing experiment0c98/captures/predictions unchanged. Retain full actual elapsed/transfer/preparation costs; not CPU or billed usage."
+    },
+    {
+      "run_id": 41169312957,
+      "role": "worker",
+      "note": "First observed final-main source0c98 worker, DSBabsentseed8, completedsuccess. Typedworkeroutput13030412198 retained; parentimport/forecast/fullcellproof independently checked later. Retain input2GB transfer, verification, toolchain, packaging and elapsed costs; not CPU/billed usage."
     }
   ],
   "blocked_main_cells": [],

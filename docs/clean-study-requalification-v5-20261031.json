@@ -176,5 +176,43 @@
       }
     ],
     "pre_execution_GO_record_commit": "625a50c304eb008f0b9352d9616815785aae85eb"
+  },
+  "main_progress_observation": {
+    "observed_utc": "2026-10-31T04:56:11.948178+00:00",
+    "completed_or_independently_admitted_main_cells": 0,
+    "first_closed_training_snapshot": {
+      "artifact_id": 13029624829,
+      "artifact_name": "training-v4-deathstarbench-absent-8-41164821492",
+      "artifact_api_bytes": 2125415653,
+      "artifact_api_digest": "sha256:3e28c4ec2cae80a8b9425109b2ff931e1da16b42d85007c0dd03b6d1a16d2138",
+      "parent_run_id": 41164821492,
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "actual_collector": "obi",
+      "actual_controller": "clean-study",
+      "actual_smoke": false,
+      "actual_toolchain_execution": "worker",
+      "workload_counts_copied": {
+        "class_train": 600,
+        "calibration": 6000,
+        "target": 1200,
+        "class_test": 600,
+        "database": 20,
+        "async": 20
+      },
+      "source_commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "closed_manifest_sha256": "8d8344449495aa128ba00efc877eb206c9b87b8c0e142978cd286f06746080e9",
+      "ready_manifest_hash_matches": true,
+      "selected_status_and_collector_hashes_match_manifest": true,
+      "collector_lifecycle_copied": "started",
+      "collector_closed_checkpoint_copied": false,
+      "application_coverage_proven_copied": false,
+      "interpretation": "The training snapshot is closed while the original collector remains live; this is not a final capture closure, forecast, target outcome or completedmain admission. Only selected small metadata read locally; no whole ZIP, SQLite, wire or journal read."
+    },
+    "worker_run_observed": 41169312957,
+    "worker_output_artifact_observed": 13030412198,
+    "worker_conclusion": "success",
+    "worker_output_boundary": "Typed worker payload remains opaque locally. Actual model/ingest/unknowns and parent-import/forecast/target binding require the existing Actions main saved-facts review. No cross-host UTC inference."
   }
 }

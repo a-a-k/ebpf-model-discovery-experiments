@@ -200,3 +200,14 @@ This adds no schema framework, capture, fitting, scoring, prediction or admissio
 gate. Missing bindings remain missing; transport size bounds are not scientific
 criteria. The experiment stays immutable0c98; inspect actual code and run the
 existing focused reader checks before using the additive output in Actions.
+
+Both agents independently inspected actual implementation6ea2967 and passed all
+91 focused reader tests. Both also checked three real frozen DSB partial bindings:
+literal unknowns, candidate availability/state vectors and DB values copy exactly,
+while witness arrays stay out of the derived output. Both give ACTUAL-CODE
+ORIGINAL-feasibility GO for this presentation in the original main81 review.
+Exact-source CI41168225488 and41168228388 passed. Missing, unparsable or unclaimed
+binding summaries are explicit inspection limits; they do not waive existing
+source checks or themselves establish unsupported/disagree. The existing three
+fixed main-family qualification cases will check full-size real outputs before
+all81 review. No additional capture, rerun or repeated27-case check is needed.
