@@ -70,6 +70,7 @@ Subsequent preserved batches include failed preparation and early stopping:
 | [41143725458](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41143725458) | 124 | 306 | 2,263,705,192 | All304 payload ledger records and two metadata assets agree. Includes failed archive41142560426 evidence; that earlier HTTP504 draft is not described as complete. |
 | [41152387177](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41152387177) | 114 | 272 | 2,194,445,670 | All270 payload ledger records and two metadata assets agree. Covers52 terminal runs, including all f60 qualification parents/workers and the completed catalog/metadata audits and preparation CI. |
 | [41162733906](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41162733906) | 119 | 290 | 2,233,096,346 | All288 payload ledger records and two metadata assets agree. Covers53 terminal runs, including all final0c98 qualification parents/workers, diagnostic41152205197, canceled first saved-reader41162303053 and failed archive41162374422. |
+| [41165335207](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41165335207) | 28 | 73 | 46,363,207 | All71 payload ledger records and two metadata assets agree. Covers27 qualification saved-facts packets in reader41162715350, preceding archive's own proof/logs and four pre-execution/main-declaration CI runs. |
 
 The41152387177 batch's locally rehashed metadata assets are provenance.tar.gz
 (130952 bytes, SHA256 `33b3d7d110fd189ac1a98a367e199dbc923140cc1d7407fbf71bdf20852388c3`)
@@ -92,3 +93,12 @@ After the endpoint returned valid metadata, the new release retained the same
 49 terminal runs and four failure/CI tails. No existing release was overwritten.
 Active saved-reader41162715350 and this publication's own tail require the next
 terminal-run batch. Archive completeness does not establish research success.
+
+Batch41165335207 closes that saved-reader and declaration tail. Only its two
+small metadata assets were rehashed locally: provenance.tar.gz (33400 bytes,
+SHA256 `4a55e986a6b50e3a75c8b1237a1a00479388c02c2119c89ba0dee98c01cef779`)
+and SHA256SUMS.txt (8754 bytes, SHA256
+`fe692bda5d742414478e2ebcf30e6fa241ffd2bd2218be4301d88c7c5a3c45bb`).
+All28 original artifact identities and71 published payload ID/state/size/digest
+records match the current release API. The active final81 main series, its
+workers, final report/reviews and this publication's own tail remain due.

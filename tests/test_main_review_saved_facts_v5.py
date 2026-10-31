@@ -30,6 +30,53 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+@pytest.mark.parametrize('supported', [False, True])
+def test_binding_summary_preserves_literal_candidates_without_witness_arrays(tmp_path, supported):
+    toolchain = tmp_path/'toolchain'
+    branch = toolchain/'combined/raw/browse'
+    unknown = [{'reason': 'required_call_missing_or_ambiguous',
+                'obligation': {'caller': ['front'], 'callee': ['catalog']}}]
+    vectors = [{'11': 1, '10': 1, '01': 1, '00': 0},
+               {'11': 1, '10': 1, '01': 1, '00': 1}] if supported else [None, None]
+    binding = {'available': False, 'unknown': unknown,
+               'endpoint_bindings': ['DO_NOT_COPY_WITNESSES' * 1000],
+               'database_fault_prediction_available': False,
+               'entry_identity_resolution': {
+                   'selected_observed_entry': None,
+                   'all_supported_state_vectors_agree': not supported,
+                   'known_database_predictions_agree': False,
+                   'supplied_identity_group': {'proof': 'DO_NOT_COPY_WITNESSES'},
+                   'candidates': [{'entry': name, 'binding': {
+                       'available': supported, 'unknown': [] if supported else unknown,
+                       'endpoint_bindings': ['DO_NOT_COPY_WITNESSES']},
+                       'exact_state_vector': vector, 'exact_database_down': db}
+                       for name, vector, db in zip(('thrift', 'web'), vectors, (None, 0))]}}
+    write(branch/'binding.json', binding)
+    key = 'toolchain/combined/raw/browse/binding.json'
+    facts = REVIEW.saved_binding_summary(toolchain, branch, {'sha256_by_path': {key: digest(branch/'binding.json')}})
+    assert facts['path'] == key and facts['frozen_hash_matches'] is True
+    assert facts['sha256'] == digest(branch/'binding.json')
+    assert facts['fields_copied']['unknown'] == unknown
+    entry = facts['entry_identity_resolution_copied']
+    assert entry['all_supported_state_vectors_agree'] is not supported
+    assert [candidate['exact_state_vector'] for candidate in entry['candidates']] == vectors
+    assert [candidate['exact_database_down'] for candidate in entry['candidates']] == [None, 0]
+    assert all(candidate['available'] is supported for candidate in entry['candidates'])
+    assert 'DO_NOT_COPY_WITNESSES' not in json.dumps(facts)
+
+
+def test_binding_summary_missing_or_unclaimed_file_does_not_add_admission_gate(tmp_path):
+    toolchain, branch = tmp_path/'toolchain', tmp_path/'toolchain/ebpf/raw/browse'
+    assert REVIEW.saved_binding_summary(toolchain, branch, None)['present'] is False
+    write(branch/'binding.json', {'available': False, 'unknown': []})
+    assert REVIEW.saved_binding_summary(toolchain, branch, None)['frozen_hash_matches'] is None
+    facts = REVIEW.saved_binding_summary(toolchain, branch, {
+        'sha256_by_path': {'toolchain/ebpf/raw/browse/binding.json': 'f'*64}})
+    assert facts['frozen_hash_matches'] is False
+    write(branch/'binding.json', b'not valid JSON')
+    assert REVIEW.saved_binding_summary(toolchain, branch, None)['projection_error_type'] == 'JSONDecodeError'
+
+
 def metadata_fixture(tmp_path):
     toolchain = tmp_path / "toolchain"
     branch = toolchain / "combined/raw/details"
@@ -390,6 +437,23 @@ def test_paired_saved_facts_cover_reuse_actual_union_and_unknown_conflict(tmp_pa
     assert not SELECT.wanted_member('toolchain/context-baseline/raw/joint/attempt-journal.jsonl', 'full')
 
 
+@pytest.mark.parametrize('joint,added', [(False, False), (True, False), (True, True)])
+def test_paired_binding_summary_points_to_literal_binding_or_exact_combined_reuse(tmp_path, joint, added):
+    args = paired_fixture(tmp_path, joint=joint, added=added)
+    root, toolchain, freeze, original, evaluation = args
+    for variant in ('raw', 'network_scope'):
+        branch = (toolchain/'context-baseline'/variant/'operations/browse' if added
+                  else toolchain/'combined'/variant/'browse')
+        write(branch/'binding.json', {'available': False, 'unknown': [{'reason': 'saved_reason'}]})
+        freeze['sha256_by_path']['toolchain/'+(branch/'binding.json').relative_to(toolchain).as_posix()] = digest(branch/'binding.json')
+    facts = REVIEW.context_baseline_facts(*args)
+    summary = facts['variants']['raw']['branches'][0]['binding_summary']
+    assert summary['path'] == ('toolchain/context-baseline/raw/operations/browse/binding.json' if added
+                               else 'toolchain/combined/raw/browse/binding.json')
+    assert summary['frozen_hash_matches'] is True
+    assert summary['fields_copied']['unknown'] == [{'reason': 'saved_reason'}]
+
+
 @pytest.mark.parametrize('changed', ['base-statistic', 'extra-client', 'request-role', 'locator',
                                      'unfrozen', 'external-outcomes', 'unknown-reuse', 'unknown-details',
                                      'state-outcomes', 'config', 'config-command'])
@@ -650,6 +714,7 @@ def test_saved_availability_is_observed_not_a_fixed_gate(tmp_path: Path, availab
     result = REVIEW.review(declaration, compact, full, tmp_path / "out")
     branch = result["full_facts"]["saved_branch_facts"][0]
     assert branch["available_copied"] is available
+    assert branch['binding_summary'] == {'path': 'toolchain/ebpf/raw/browse/binding.json', 'present': False}
     assert result["availability_outcome_or_accuracy_used_as_gate"] is False
     assert result["independent_admission_performed"] is False
     assert result["compact_facts"]["evaluations_copied_not_recomputed"][0]["actual_counts"]["success"] == 17

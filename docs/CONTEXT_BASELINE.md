@@ -188,3 +188,15 @@ criterion, not scientific success, novelty, cost superiority or universal
 collector attribution. All preparation, diagnostics, failures, early stopping,
 workers, review and publication costs remain; human effort stays unmeasured.
 The complete pre-execution record is clean-study-requalification-v5-20261031.json.
+
+Before extending the existing saved-facts presentation, both agents give
+ORIGINAL-feasibility design GO to a fixed-field projection of already saved
+binding.json. Large main bindings contain endpoint witnesses that should stay
+in Actions. Copy the binding locator/hash/frozen-hash claim, original unknown
+obligations and entry candidates' literal availability/state vectors/DB values;
+omit witness/provenance arrays. Include primary and paired branches. Exact paired
+reuse points to the original combined binding, not an invented paired execution.
+This adds no schema framework, capture, fitting, scoring, prediction or admission
+gate. Missing bindings remain missing; transport size bounds are not scientific
+criteria. The experiment stays immutable0c98; inspect actual code and run the
+existing focused reader checks before using the additive output in Actions.

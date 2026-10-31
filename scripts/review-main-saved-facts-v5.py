@@ -371,6 +371,44 @@ def paired_simulation_facts(toolchain: Path, branch: Path, forecast: dict, freez
     return operation_metadata_facts(toolchain, branch, freeze)
 
 
+def saved_binding_summary(toolchain: Path, branch: Path, freeze: dict | None) -> dict:
+    """Copy bounded saved fields, without witnesses, inference or new gates."""
+    path = branch / 'binding.json'
+    relative = 'toolchain/' + path.relative_to(toolchain).as_posix()
+    result = {'path': relative, 'present': path.is_file()}
+    if not path.is_file():
+        return result
+    digest = sha(path)
+    frozen = ((freeze or {}).get('sha256_by_path') or {}).get(relative)
+    result.update(sha256=digest, pre_target_freeze_sha256=frozen,
+                  frozen_hash_matches=(digest == frozen) if frozen is not None else None)
+    try:
+        binding = read(path)
+        result['fields_copied'] = {key: binding[key] for key in (
+            'entry_service', 'available', 'unknown', 'primary_scope',
+            'all_required_database_channels_observed', 'database_fault_prediction_available',
+            'database_fault_unknown', 'assumed_satisfied_database_requirements',
+            'database_fault_fixed_other_requirements') if key in binding}
+        entry = binding.get('entry_identity_resolution')
+        if entry is not None:
+            result['entry_identity_resolution_copied'] = {
+                key: entry[key] for key in (
+                    'selection_rule', 'selected_observed_entry', 'all_supported_state_vectors_agree',
+                    'known_database_predictions_agree', 'graph_modified',
+                    'entry_failure_modeled', 'semantic_basis') if key in entry}
+            result['entry_identity_resolution_copied']['candidates'] = [{
+                'entry': candidate.get('entry'),
+                'available': candidate.get('binding', {}).get('available'),
+                'exact_state_vector': candidate.get('exact_state_vector'),
+                'exact_database_down': candidate.get('exact_database_down'),
+                'unknown': candidate.get('binding', {}).get('unknown'),
+            } for candidate in entry.get('candidates', [])]
+    except (ValueError, TypeError, AttributeError, OSError) as error:
+        # A presentation failure is evidence, never a new scientific gate.
+        result['projection_error_type'] = type(error).__name__
+    return result
+
+
 def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
                            original: dict, evaluation: dict | None) -> dict:
     """Inspect the fixed paired files; never replay, fit, or rescore outcomes."""
@@ -570,8 +608,10 @@ def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
             if forecast.get('available') and not reuse:
                 branch = out/'operations'/operation
                 metadata = paired_simulation_facts(toolchain, branch, forecast, freeze)
+            binding_branch = toolchain/'combined'/variant/operation if reuse else out/'operations'/operation
             branches.append({'operation': operation, 'available_copied': forecast.get('available'),
-                             'reason_copied': forecast.get('reason'), 'provided_metadata_attachment': metadata})
+                             'reason_copied': forecast.get('reason'), 'provided_metadata_attachment': metadata,
+                             'binding_summary': saved_binding_summary(toolchain, binding_branch, freeze)})
         facts[variant] = {'status': status, 'union': union_facts, 'branches': branches}
     return {'policy_id': manifest['policy_id'], 'variants': facts,
             'external_outcomes_recomputed': False, 'original_forecasts_overwritten': False}
@@ -1231,6 +1271,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "saved_command_returncode": command.get("returncode") if command else None,
                         "saved_model_present": model_path.is_file(),
                         "provided_metadata_attachment": metadata_facts,
+                        "binding_summary": saved_binding_summary(toolchain, branch, freeze),
                         "observed_edge_ids_retained": (
                             sorted(model_edges) if saved_row.get("available") else None),
                         "observed_endpoint_ids_retained": (

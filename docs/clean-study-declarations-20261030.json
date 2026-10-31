@@ -2845,6 +2845,31 @@
       "run_id": 41156503168,
       "role": "worker",
       "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain preparation, transport, failures, canceled checks and active tails independently of outcomes. API job elapsed is not CPU or billed usage; active tails and human effort stay unknown."
+    },
+    {
+      "run_id": 41164810339,
+      "role": "preparation",
+      "note": "Pre-execution actualGO documentation CI; source 625a50c304eb008f0b9352d9616815785aae85eb. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
+    },
+    {
+      "run_id": 41164814230,
+      "role": "preparation",
+      "note": "Pre-execution actualGO documentation CI; source 625a50c304eb008f0b9352d9616815785aae85eb. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
+    },
+    {
+      "run_id": 41164951560,
+      "role": "preparation",
+      "note": "Main run identity/declaration documentation CI; source 239a72d2be0ca830fabcaea43e2cdf9f73e1cc83. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
+    },
+    {
+      "run_id": 41164956788,
+      "role": "preparation",
+      "note": "Main run identity/declaration documentation CI; source 239a72d2be0ca830fabcaea43e2cdf9f73e1cc83. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
+    },
+    {
+      "run_id": 41165335207,
+      "role": "archive",
+      "note": "Permanent publication of actual27 reader and preceding archive/CI tail; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Keep actual complete elapsed/storage/transfer costs; not CPU/billed usage, human effort unmeasured."
     }
   ],
   "blocked_main_cells": [],
