@@ -58,6 +58,34 @@ jobs:
           python-version: '3.12'
       - name: Install exact experiment implementation
         run: python -m pip install -e . opentelemetry-proto
+      - name: Free unused hosted-image SDK disk before checkpoint download
+        run: |
+          set -euo pipefail
+          mkdir -p work/worker-artifact/infrastructure
+          python - <<'PY'
+          import json, os, pathlib, shutil, time
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc']
+          proof={'workflow_sha':os.environ['GITHUB_SHA'],'started_ns':time.time_ns(),
+              'free_bytes_before':shutil.disk_usage('.').free,
+              'unused_paths_present_before':{p:pathlib.Path(p).exists() for p in paths},
+              'scope':'unused hosted-image SDK directories only; scientific inputs unchanged'}
+          pathlib.Path('work/worker-artifact/infrastructure/disk-preparation.json').write_text(
+              json.dumps(proof,indent=2)+'\n')
+          PY
+          df -B1 . > work/worker-artifact/infrastructure/disk-before.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/worker-artifact/infrastructure/disk-after.txt
+          python - <<'PY'
+          import json, pathlib, shutil, time
+          path=pathlib.Path('work/worker-artifact/infrastructure/disk-preparation.json')
+          proof=json.loads(path.read_text()); ended=time.time_ns()
+          proof.update(ended_ns=ended,elapsed_seconds=(ended-proof['started_ns'])/1e9,
+              free_bytes_after=shutil.disk_usage('.').free,
+              unused_paths_present_after={p:pathlib.Path(p).exists()
+                  for p in proof['unused_paths_present_before']})
+          path.write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps(proof))
+          PY
       - name: Bind and download the immutable parent checkpoint
         env:
           GH_TOKEN: ${{ github.token }}
