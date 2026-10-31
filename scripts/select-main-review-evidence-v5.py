@@ -40,6 +40,10 @@ INPUT_SUPPLEMENT = {
 FULL_FIXED = {
     "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",
     "infrastructure/a/check.txt", "infrastructure/b/check.txt",
+    "infrastructure/parent-disk-preparation.json",
+    "infrastructure/parent-disk-before.txt", "infrastructure/parent-disk-after.txt",
+    "infrastructure/guest-a-port-preparation.json", "infrastructure/guest-b-port-preparation.json",
+    "infrastructure/runner-final.txt",
     "forecast-saved.json", "toolchain/forecasts.json", "toolchain/static-inputs.json",
     "toolchain/execution-summary.json", "toolchain-build/toolchain-build.json",
     "toolchain/classes/classes-family-model.json", "toolchain/classes/classes-model.json",
