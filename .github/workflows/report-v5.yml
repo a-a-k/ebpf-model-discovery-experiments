@@ -26,16 +26,42 @@ jobs:
       - name: Prepare fixed output and retain declarations
         env:
           DECLARATIONS: ${{ inputs.declarations }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           rm -rf results/iteration-5 work/v5-inputs
           mkdir -p results/iteration-5/provenance work/v5-inputs
           python - <<'PY'
-          import json, os, pathlib
-          from ebpf_discovery.report_v5 import _declarations
+          import json, os, pathlib, subprocess
+          from ebpf_discovery.report_v5 import (
+              _declarations, PREPARATION_ONLY_SOURCE_REVISIONS,
+              _preparation_equivalence_facts,
+          )
           value=json.loads(os.environ['DECLARATIONS'])
           path=pathlib.Path('results/iteration-5/provenance/declarations.json')
           path.write_text(json.dumps(value,indent=2,sort_keys=True)+'\n')
           _declarations(path)
+          anchor=value.get('experiment_head')
+          approved=PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {})
+          proofs=[]
+          if approved:
+              destination=path.parent/'source-equivalence'
+              destination.mkdir()
+              def tree(commit):
+                  base=f"repos/{os.environ['GITHUB_REPOSITORY']}/git"
+                  info=json.loads(subprocess.check_output(['gh','api',base+'/commits/'+commit]))
+                  if info.get('sha')!=commit:
+                      raise SystemExit('source equivalence commit identity mismatch')
+                  data=json.loads(subprocess.check_output([
+                      'gh','api',base+'/trees/'+info['tree']['sha']+'?recursive=1']))
+                  if data.get('sha')!=info['tree']['sha']:
+                      raise SystemExit('source equivalence tree identity mismatch')
+                  (destination/(commit+'-commit.json')).write_text(json.dumps(info,indent=2)+'\n')
+                  (destination/(commit+'-tree.json')).write_text(json.dumps(data,indent=2)+'\n')
+                  return data
+              original=tree(anchor)
+              for revision in approved:
+                  proofs.append(_preparation_equivalence_facts(anchor,revision,original,tree(revision)))
+          (path.parent/'source-equivalence.json').write_text(json.dumps(proofs,indent=2)+'\n')
           PY
       - name: Retain Actions metadata and complete declared cost scope
         env:
@@ -103,7 +129,7 @@ jobs:
               'runs_with_unknown_artifact_bytes':sum(row.get('stored_artifact_bytes') is None for row in rows),
               'human_agent_seconds':None,'current_report_job_tail_seconds':None,
               'scope':'only explicitly declared repositories/runs; omitted or inaccessible product work remains unknown',
-              'overlap_rule':'job seconds are compute use; overlapping jobs and parent waits are not campaign wall time'}
+              'overlap_rule':'recorded API job elapsed may include waiting, including cancelled jobs with no assigned runner; overlapping job elapsed is not campaign wall time, CPU consumption or billed runner usage'}
           pathlib.Path('results/iteration-5/costs-v5.json').write_text(json.dumps(ledger,indent=2)+'\n')
           PY
       - name: Download declared compact summaries with retained retrieval outcomes

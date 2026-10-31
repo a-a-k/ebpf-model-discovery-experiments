@@ -1,0 +1,28 @@
+{
+  "observed_after_dispatch_utc": "2026-10-31T14:22:04.146478+00:00",
+  "preexecution_commit": "e2dec2594f40efabc8164b8997c19f591d5c3443",
+  "preexecution_record": "docs/clean-study-parent-preparation-preexecution-20261031.json",
+  "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "cases": [
+    {
+      "seed": 6,
+      "run_id": 41209663599,
+      "created_at": "2026-10-31T14:20:21Z",
+      "job_id": 124561828717,
+      "job_name": "campaign (deathstarbench, partial, 6)",
+      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+      "head_branch": "capture-20261031-parent-disk-v1",
+      "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209663599"
+    },
+    {
+      "seed": 8,
+      "run_id": 41209667348,
+      "created_at": "2026-10-31T14:20:24Z",
+      "job_id": 124561830839,
+      "job_name": "campaign (deathstarbench, partial, 8)",
+      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+      "head_branch": "capture-20261031-parent-disk-v1",
+      "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209667348"
+    }
+  ]
+}

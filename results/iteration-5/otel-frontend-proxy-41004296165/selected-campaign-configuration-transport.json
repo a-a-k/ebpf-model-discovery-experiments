@@ -1,0 +1,29 @@
+{
+  "observed_utc": "2026-10-31T09:11:53.192546+00:00",
+  "artifact_id": 12961026796,
+  "whole_archive_sha256_verified": false,
+  "method": "Existing exact HTTP206 Content-Range RemoteZip plus selected ZIP CRC/SHA256; configuration only",
+  "selected": {
+    "deployment/otel_demo/deployment-manifest.json": {
+      "bytes": 5661,
+      "sha256": "a540ea102df2795d734b42e556c77789c95f1b342f8f14bfd1ed38eb70e7a578"
+    },
+    "deployment/otel_demo/envoy-product-router.yaml": {
+      "bytes": 1694,
+      "sha256": "4ad09bc8ffbede27e33c2cd9370751fe217f62c9963760c34d04d6a809488ec5"
+    },
+    "deployment/otel_demo/runtime-resolved-node-a.yaml": {
+      "bytes": 26087,
+      "sha256": "1f59822504a7c6c3fef9eb04ad3041436ca166c11ffd628a5c22e6fe400ca4dd"
+    },
+    "deployment/otel_demo/resolved-images-a.txt": {
+      "bytes": 4254,
+      "sha256": "64548bf5149d20bf598fdb3ae55ff562a19e826501422ca21e33f9cc4f206542"
+    }
+  },
+  "complete": true,
+  "verified_range_bytes": 1680537,
+  "attempted_range_bytes": 1680537,
+  "range_failures": [],
+  "elapsed_seconds": 27.078513500047848
+}

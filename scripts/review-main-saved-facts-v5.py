@@ -5,9 +5,12 @@ import argparse
 import copy
 import gzip
 import hashlib
+import heapq
+import itertools
 import json
 from pathlib import Path, PurePosixPath
 import tarfile
+import uuid
 import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
@@ -18,8 +21,27 @@ PINS = {
     "bering": "70d4145d3e26f11d8b3fb5be8917c50c1c6d8c2a",
     "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a",
 }
+FRESH_HEAD = "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+PREPARED_PARENT_HEAD = "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+PREPARED_PORT_HEAD = "13c017bf72a86a6853f93a5b8f503de199bf7865"
+PREPARED_GUEST_LOG_HEAD = "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+               "a43404ec02c77e9414878632ec6248835cf7a260",
+               "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD}
+FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
+METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD}
+GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD}
+CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD}
+FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
+    "deepflow": {
+        "source_version": "v7.2.3",
+        "source_commit": "9a1219fa5cf1471ba2ec8742019661567d98002e",
+        "image": "deepflowce/deepflow-agent:v7.2.3@sha256:5f72c0996fdb5008fdb8fd0524f427a895fc54c61690b26ba2cae648929ea95a",
+    },
     "obi": {
         "source_version": "v0.15.2",
         "image": "otel/ebpf-instrument:v0.15.2@sha256:101b5c773ac84545cac007ce3dbaf38bfb0e7091f26e813c08d649f35dca253e",
@@ -59,17 +81,663 @@ def _package_selected(name: str, kind: str) -> bool:
         return True
     if name.startswith("inputs/") and name.endswith("/observations.json"):
         return True
+    if name.startswith("inputs/") and name.endswith("-request-index.jsonl"):
+        return True
+    if name.startswith("context-baseline/"):
+        return name.split('/')[-1] in {
+            'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
+            'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
+            'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
+            'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
+            'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
+            'model.json', 'model.signal-quality.json', 'analysis.json', 'predicates.json', 'faults.json', 'simulation.command.json',
+            'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("discovery/"):
         return name.endswith(("observed.json", "observed.bering-raw.json",
                               "observed.supplied-aliases.json", "observed.snapshot.json",
-                              "replay-command.json", "observations.json"))
+                              "observed.signal-quality.json",
+                              "replay-command.json", "observations.json",
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
     if name.startswith("procrustes/") and "/0/" in name:
         return name.endswith(("preflight.command.json", "report.json"))
     parts = name.split("/")
     return (len(parts) == 4 and parts[0] in ("ebpf", "native", "combined")
             and parts[1] in ("raw", "network_scope")
             and parts[-1] in ("binding.json", "forecast.json",
-                              "simulation.command.json", "model.json"))
+                              "simulation.command.json", "model.json", "overlay.json",
+                              "model.signal-quality.json", "provided-metadata-attachment.json",
+                              "provided-metadata-validation.command.json"))
+
+
+def operation_metadata_facts(toolchain: Path, branch: Path, freeze: dict) -> dict:
+    """Independently inspect the literal metadata-only derivation, without tools."""
+    parts = branch.relative_to(toolchain).parts
+    baseline = parts[0] == 'context-baseline'
+    if baseline:
+        if len(parts) != 4 or parts[2] != 'operations':
+            raise ValueError('unexpected paired operation layout')
+        source, variant = 'combined', parts[1]
+    else:
+        source, variant, _ = parts
+    shared = toolchain / "discovery" / source / variant
+    proof_path = branch / "provided-metadata-attachment.json"
+    proof = read(proof_path)
+    flags = {"origin": "provided_metadata_after_verified_semantic_view",
+             "new_nodes_edges_or_endpoints": False,
+             "graph_structure_and_observed_edge_fields_unchanged": True,
+             "entity_ids_unchanged": True,
+             "final_model_is_a_bering_emitted_snapshot": False,
+             "source_signal_quality_unchanged": True,
+             "same_information_all_sources_and_direct_baseline": True}
+    if any(proof.get(key) != value for key, value in flags.items()):
+        raise ValueError("operation metadata proof has a different derivation boundary")
+    expected = {"observed_model": shared / "observed.json",
+                "raw_bering_model": shared / "observed.bering-raw.json",
+                "raw_bering_snapshot": shared / "observed.snapshot.json",
+                "semantic_projection": shared / "observed.supplied-aliases.json",
+                "provided_overlay": branch / "overlay.json",
+                "simulator_model": branch / "model.json"}
+    if baseline:
+        union = toolchain/'context-baseline'/variant
+        expected['observed_model'] = union/'union-model.json'
+        expected['observation_derivation'] = union/'union-proof.json'
+        if (proof.get('observed_graph_origin') != 'paired_context_edge_union'
+                or proof.get('source_signal_quality_scope') != 'base entities and database aliases; added edge evidence is in the actual joint quality'):
+            raise ValueError('paired metadata misstates its graph or quality origin')
+        for key, path in (('model', expected['observed_model']), ('proof', expected['observation_derivation'])):
+            claim = proof['observation_derivation'][key]
+            if (toolchain_relative(claim['path']) != path.relative_to(toolchain).as_posix()
+                    or claim['sha256'] != sha(path)):
+                raise ValueError('paired metadata derivation locator or hash differs')
+    if set(proof["files"]) != set(expected):
+        raise ValueError("operation metadata proof has different source locators")
+    for key, path in expected.items():
+        claim = proof["files"][key]
+        if (toolchain_relative(claim["path"]) != path.relative_to(toolchain).as_posix()
+                or sha(path) != claim["sha256"]):
+            raise ValueError("operation metadata source locator or hash differs")
+    command_path = branch / "provided-metadata-validation.command.json"
+    quality_path = branch / "model.signal-quality.json"
+    source_quality = shared / "observed.signal-quality.json"
+    paths = [*expected.values(), proof_path, command_path, quality_path, source_quality]
+    for path in paths:
+        name = "toolchain/" + path.relative_to(toolchain).as_posix()
+        if freeze["sha256_by_path"].get(name) != sha(path):
+            raise ValueError("operation metadata evidence is not frozen")
+    if quality_path.read_bytes() != source_quality.read_bytes():
+        raise ValueError("operation metadata changed the source signal quality")
+    command = read(command_path)
+    argv = command["argv"]
+    if (command["returncode"] != 0 or len(argv) != 4
+            or argv[:3] != ["bering", "validate", "--input"]
+            or toolchain_relative(argv[3]) != expected["simulator_model"].relative_to(toolchain).as_posix()):
+        raise ValueError("operation metadata lacks its successful exact Bering validation")
+    original = read(expected["observed_model"])
+    overlay = read(expected["provided_overlay"])
+    if overlay != proof["supplied"] or set(overlay) - {"name", "services", "endpoints"}:
+        raise ValueError("operation overlay differs or attempts a graph edit")
+    derived = copy.deepcopy(original)
+    for field, allowed in (("services", {"id", "replicas", "failure_eligible", "placements", "attributes"}),
+                           ("endpoints", {"id", "predicate_ref", "semantics"})):
+        by_id = {row["id"]: row for row in derived[field]}
+        for supplied in overlay.get(field) or []:
+            if set(supplied) - allowed or supplied["id"] not in by_id:
+                raise ValueError("operation overlay requires an existing entity and supported fields")
+            entity = by_id[supplied["id"]]
+            if field == "services":
+                if "replicas" in supplied:
+                    entity["replicas"] = supplied["replicas"]
+                for key in ("failure_eligible", "placements"):
+                    if key in supplied:
+                        entity.setdefault("metadata", {})[key] = copy.deepcopy(supplied[key])
+                # Pinned Go keeps attributes in snapshot annotations, not model metadata.
+            else:
+                if "predicate_ref" in supplied:
+                    entity["success_predicate_ref"] = supplied["predicate_ref"]
+                semantics = supplied.get("semantics") or {}
+                if set(semantics) - {"predicate_mode", "source"}:
+                    raise ValueError("operation overlay adds unsupported endpoint semantics")
+                if semantics:
+                    entity.setdefault("metadata", {}).setdefault("semantics", {}).update(semantics)
+    if derived != read(expected["simulator_model"]):
+        raise ValueError("operation model is not the exact observed graph plus supplied metadata")
+    return {"proof_sha256": sha(proof_path), "all_model_fields_exact": True,
+            "source_signal_quality_bytes_unchanged": True,
+            "final_model_is_a_bering_emitted_snapshot": False,
+            "verified_frozen_paths": sorted({"toolchain/" + path.relative_to(toolchain).as_posix()
+                                             for path in paths})}
+
+
+def toolchain_relative(path: str) -> str:
+    name = path.split("/toolchain/", 1)[1] if "/toolchain/" in path else path
+    if not _safe(name):
+        raise ValueError("unsafe saved toolchain reference")
+    return name
+
+
+def verified_reference(root: Path, claim: dict, freeze: dict | None) -> Path:
+    name = toolchain_relative(claim["path"])
+    path = root / name
+    if (not path.is_file() or path.stat().st_size != claim["bytes"]
+            or sha(path) != claim["sha256"]):
+        raise ValueError("saved request metadata reference differs")
+    if freeze is not None and freeze["sha256_by_path"].get("toolchain/" + name) != claim["sha256"]:
+        raise ValueError("saved request metadata is not frozen")
+    return path
+
+
+def indexed_requests(root: Path, manifest: dict, freeze: dict | None):
+    groups = manifest.get("ordered_request_group_manifests") or []
+    if groups:
+        loaded = [read(verified_reference(root, claim, freeze)) for claim in groups]
+        if (any(group.get("ordered_request_group_manifests") for group in loaded)
+                or sum(group["observations"] for group in loaded) != manifest["observations"]):
+            raise ValueError("saved source-group boundaries differ")
+    else:
+        loaded = [manifest]
+    for group in loaded:
+        ordinary = [(row, "ordinary_export") for row in group.get("exports") or []]
+        streams = group.get("stream_exports") or []
+
+        def rows(descriptor):
+            if descriptor.get("schema_version") != "deepflow-request-archive-v5":
+                raise ValueError("unknown saved request index")
+            path = verified_reference(root, descriptor["request_index"], freeze)
+            count = observations = wire_bytes = 0
+            with path.open(encoding="utf-8") as stream:
+                for line in stream:
+                    row = json.loads(line)
+                    if (row.get("source") != descriptor.get("source")
+                            or row.get("content_type") != "application/json"
+                            or row.get("content_encoding") not in (None, "")):
+                        raise ValueError("indexed request framing differs")
+                    shard = row.get("shard")
+                    shards = descriptor.get("shards") or []
+                    if (type(shard) is not int or not 0 <= shard < len(shards)
+                            or type(row.get("offset")) is not int or row["offset"] < 0
+                            or type(row.get("length")) is not int or row["length"] <= 0
+                            or row["offset"] + row["length"] > shards[shard]["bytes"]):
+                        raise ValueError("indexed request slice escapes its saved shard")
+                    shard_name = toolchain_relative(shards[shard]["path"])
+                    if freeze is not None and freeze["sha256_by_path"].get(
+                            "toolchain/" + shard_name) != shards[shard]["sha256"]:
+                        raise ValueError("indexed request shard is not frozen")
+                    count += 1; observations += row["observations"]; wire_bytes += row["length"]
+                    yield row, "stream_archive_slice"
+            if (count != descriptor.get("requests") or observations != descriptor.get("observations")
+                    or wire_bytes != descriptor.get("wire_bytes")):
+                raise ValueError("saved request index totals differ")
+
+        ordered = (heapq.merge(iter(ordinary), *(rows(item) for item in streams),
+                               key=lambda pair: pair[0].get("request_order", -1))
+                   if streams else iter(ordinary))
+        group_observations = 0
+        for ordinal, (row, form) in enumerate(ordered, 1):
+            if streams and row.get("request_order") != ordinal:
+                raise ValueError("saved request order differs within a source group")
+            if form == "ordinary_export" and freeze is not None:
+                name = toolchain_relative(row["path"])
+                if freeze["sha256_by_path"].get("toolchain/" + name) != row["sha256"]:
+                    raise ValueError("ordinary request is not frozen")
+            group_observations += row["observations"]
+            yield row, form
+        if group_observations != group.get("observations"):
+            raise ValueError("saved source-group observation total differs")
+
+
+def accepted_sequence_facts(root: Path, manifest: dict, replay: dict,
+                            freeze: dict | None, *, joint_otlp=False) -> dict:
+    sequence = replay.get("accepted_request_sequence")
+    if not sequence or sequence.get("same_order_as_original_request_ordinals_and_source_groups") is not True:
+        raise ValueError("saved ordered acceptance sequence is missing")
+    path = verified_reference(root, sequence, freeze)
+    ordinary, streamed = [], []
+    with path.open(encoding="utf-8") as stream:
+        accepted = (json.loads(line) for line in stream)
+        for ordinal, (expected, actual) in enumerate(itertools.zip_longest(
+                indexed_requests(root, manifest, freeze), accepted)):
+            if expected is None or actual is None:
+                raise ValueError("accepted request sequence length differs")
+            row, form = expected
+            endpoint = ("/sources/ebpf/v1/traces" if row["source"] == "ebpf" and not joint_otlp else "/v1/traces")
+            if (actual.get("export_index") != ordinal or actual.get("http_status") != 200
+                    or actual.get("content_sha256") != row["sha256"]
+                    or actual.get("endpoint") != endpoint or actual.get("storage_form") != form
+                    or (form == "stream_archive_slice" and actual.get("content_bytes") != row["length"])
+                    or (joint_otlp and actual.get('original_source') != row['source'])):
+                raise ValueError("accepted request sequence differs from saved source order")
+            item = {key: value for key, value in actual.items() if key != "storage_form"}
+            (ordinary if form == "ordinary_export" else streamed).append(item)
+    if ordinary != (replay.get("accepted_ingest_requests") or []):
+        raise ValueError("ordinary acceptance subset differs")
+    if len(ordinary) + len(streamed) != sequence.get("requests"):
+        raise ValueError("accepted sequence total differs")
+    if streamed:
+        proof = replay.get("accepted_stream_requests") or {}
+        stream_path = verified_reference(root, proof, freeze)
+        with stream_path.open(encoding="utf-8") as stream:
+            if ([json.loads(line) for line in stream] != streamed
+                    or proof.get("requests") != len(streamed)
+                    or proof.get("same_http_body_order_as_request_index") is not True):
+                raise ValueError("stream acceptance subset differs")
+    elif replay.get("accepted_stream_requests"):
+        raise ValueError("unexpected stream acceptance claim")
+    return {"accepted_inputs": sequence["requests"], "ordinary_requests": len(ordinary),
+            "streamed_requests": len(streamed), "sequence_sha256": sequence["sha256"],
+            "unselected_wire_payloads_independently_rehashed": False}
+
+
+def alias_only_model(raw: dict, aliases: dict) -> dict:
+    projected = copy.deepcopy(raw)
+    by_id = {}
+    for service in projected.get('services') or []:
+        old = service['id']
+        service['id'] = aliases.get(old, old)
+        if service.get('name') == old:
+            service['name'] = service['id']
+        if service['id'] in by_id and by_id[service['id']] != service:
+            raise ValueError('saved alias collision has differing metadata')
+        by_id[service['id']] = service
+    projected['services'] = [by_id[key] for key in sorted(by_id)]
+    for edge in projected.get('edges') or []:
+        for key in ('from', 'to'):
+            edge[key] = aliases.get(edge.get(key), edge.get(key))
+    for endpoint in projected.get('endpoints') or []:
+        endpoint['entry_service'] = aliases.get(endpoint.get('entry_service'), endpoint.get('entry_service'))
+    return projected
+
+
+def paired_simulation_facts(toolchain: Path, branch: Path, forecast: dict, freeze: dict) -> dict:
+    command = read(branch/'simulation.command.json')
+    argv = command.get('argv') or []
+    relative = branch.relative_to(toolchain).as_posix()
+    if (command.get('returncode') != 0 or forecast.get('simulator') != 'Sheaft'
+            or len(argv) != 8 or argv[:3] != ['sheaft', 'run', '--model']
+            or argv[4] != '--analysis' or argv[6] != '--out-dir'
+            or [toolchain_relative(argv[index]) for index in (3, 5, 7)] !=
+               [relative + '/' + name for name in ('model.json', 'analysis.json', 'simulation')]):
+        raise ValueError('paired available forecast lacks its exact successful Sheaft command')
+    analysis = read(branch/'analysis.json')
+    files = ['simulation.command.json', 'model.json', 'analysis.json']
+    for key, name in (('predicate_contract', 'predicates.json'), ('fault_contract', 'faults.json')):
+        if key in analysis:
+            if toolchain_relative(analysis[key]) != relative + '/' + name:
+                raise ValueError('paired analysis references another operation contract')
+            files.append(name)
+    for name in files:
+        path = branch/name
+        if freeze['sha256_by_path'].get('toolchain/' + relative + '/' + name) != sha(path):
+            raise ValueError('paired simulation input is not frozen')
+    if (forecast.get('graph_sha256') != sha(branch/'model.json')
+            or forecast.get('analysis_sha256') != sha(branch/'analysis.json')):
+        raise ValueError('paired forecast model or analysis hash differs')
+    return operation_metadata_facts(toolchain, branch, freeze)
+
+
+def saved_binding_summary(toolchain: Path, branch: Path, freeze: dict | None) -> dict:
+    """Copy bounded saved fields, without witnesses, inference or new gates."""
+    path = branch / 'binding.json'
+    relative = 'toolchain/' + path.relative_to(toolchain).as_posix()
+    result = {'path': relative, 'present': path.is_file()}
+    if not path.is_file():
+        return result
+    digest = sha(path)
+    frozen = ((freeze or {}).get('sha256_by_path') or {}).get(relative)
+    result.update(sha256=digest, pre_target_freeze_sha256=frozen,
+                  frozen_hash_matches=(digest == frozen) if frozen is not None else None)
+    try:
+        binding = read(path)
+        result['fields_copied'] = {key: binding[key] for key in (
+            'entry_service', 'available', 'unknown', 'primary_scope',
+            'all_required_database_channels_observed', 'database_fault_prediction_available',
+            'database_fault_unknown', 'assumed_satisfied_database_requirements',
+            'database_fault_fixed_other_requirements') if key in binding}
+        entry = binding.get('entry_identity_resolution')
+        if entry is not None:
+            result['entry_identity_resolution_copied'] = {
+                key: entry[key] for key in (
+                    'selection_rule', 'selected_observed_entry', 'all_supported_state_vectors_agree',
+                    'known_database_predictions_agree', 'graph_modified',
+                    'entry_failure_modeled', 'semantic_basis') if key in entry}
+            result['entry_identity_resolution_copied']['candidates'] = [{
+                'entry': candidate.get('entry'),
+                'available': candidate.get('binding', {}).get('available'),
+                'exact_state_vector': candidate.get('exact_state_vector'),
+                'exact_database_down': candidate.get('exact_database_down'),
+                'unknown': candidate.get('binding', {}).get('unknown'),
+            } for candidate in entry.get('candidates', [])]
+    except (ValueError, TypeError, AttributeError, OSError) as error:
+        # A presentation failure is evidence, never a new scientific gate.
+        result['projection_error_type'] = type(error).__name__
+    return result
+
+
+def context_baseline_facts(root: Path, toolchain: Path, freeze: dict,
+                           original: dict, evaluation: dict | None) -> dict:
+    """Inspect the fixed paired files; never replay, fit, or rescore outcomes."""
+    baseline = toolchain/'context-baseline'
+    frozen = freeze['sha256_by_path']
+
+    def bound(path):
+        name = ('toolchain/' + path.relative_to(toolchain).as_posix()
+                if path.is_relative_to(toolchain) else path.relative_to(root).as_posix())
+        if frozen.get(name) != sha(path):
+            raise ValueError('paired evidence is not frozen: ' + name)
+        return sha(path)
+
+    def claim_at(claim, path):
+        suffix = ('toolchain/' + path.relative_to(toolchain).as_posix()
+                  if path.is_relative_to(toolchain) else path.relative_to(root).as_posix())
+        saved_path = claim['path']
+        if (not (saved_path == suffix or saved_path.endswith('/' + suffix))
+                or claim['sha256'] != bound(path)):
+            raise ValueError('paired evidence locator or hash differs: ' + suffix)
+
+    predictions = read(baseline/'forecasts.json')
+    manifest = read(baseline/'manifest.json')
+    for path in (baseline/'forecasts.json', baseline/'manifest.json'):
+        bound(path)
+    if (manifest.get('policy_id') != 'observed_server_edge_union_v1'
+            or manifest.get('same_policy_all_collectors_and_scenarios') is not True
+            or manifest.get('requires_capture_freeze_before_targets') is not True
+            or manifest.get('post_target_diagnostic_is_not_a_primary_forecast') is not True
+            or set(predictions) != {'raw', 'network_scope'}
+            or set(manifest['variants']) != set(predictions)):
+        raise ValueError('paired policy or variant coverage differs')
+    evaluation_list = (evaluation or {}).get('evaluations') or []
+    rows = {(row['source'], row['variant'], row['operation']): row for row in evaluation_list}
+    expected_keys = {('context-baseline', variant, op)
+                     for variant, ops in predictions.items() for op in ops}
+    if evaluation is not None and (len(rows) != len(evaluation_list) or
+            {key for key in rows if key[0] == 'context-baseline'} != expected_keys):
+        raise ValueError('paired evaluation coverage differs')
+    facts = {}
+    for variant, operations in predictions.items():
+        out = baseline/variant
+        shared = toolchain/'discovery/combined'/variant
+        provenance_path = out/'provenance.json'
+        bound(provenance_path)
+        provenance = read(provenance_path)
+        if provenance != manifest['variants'][variant] or set(operations) != set(original['combined'][variant]):
+            raise ValueError('paired provenance or operation coverage differs')
+        inputs = toolchain/'inputs/combined'/variant/'observations.json'
+        claim_at(provenance['input_manifest'], inputs)
+        claim_at(provenance['original_forecasts'], toolchain/'forecasts.json')
+        counts = {source: read(toolchain/'inputs'/source/variant/'observations.json')['observations']
+                  for source in ('ebpf', 'native')}
+        for source in counts:
+            bound(toolchain/'inputs'/source/variant/'observations.json')
+        if counts != provenance['source_observations']:
+            raise ValueError('paired source counts differ')
+        status = provenance['status']
+        reuse = status in ('reuse_single_source_equivalence', 'reuse_unchanged_union')
+        if not all(counts.values()):
+            if (status != 'reuse_single_source_equivalence'
+                    or provenance.get('extra_bering_or_sheaft_executed') is not False
+                    or (out/'joint').exists() or (out/'operations').exists()):
+                raise ValueError('single-source equivalence claims extra execution')
+            union_facts = None
+        else:
+            joint = out/'joint'
+            union_path = out/'union-proof.json'
+            bound(union_path)
+            union = read(union_path)
+            paths = {
+                'base_model': shared/'observed.json', 'base_raw_model': shared/'observed.bering-raw.json',
+                'base_snapshot': shared/'observed.snapshot.json', 'base_quality': shared/'observed.signal-quality.json',
+                'base_alias_projection': shared/'observed.supplied-aliases.json',
+                'joint_raw_model': joint/'observed.json', 'joint_snapshot': joint/'observed.snapshot.json',
+                'joint_quality': joint/'observed.signal-quality.json', 'joint_model': joint/'canonical.json',
+                'joint_canonical_quality': joint/'canonical.signal-quality.json',
+                'joint_alias_projection': joint/'supplied-aliases.json',
+                'joint_replay': joint/'observed-runtime/replay-command.json',
+                'joint_config': joint/'observed-runtime/serve.yaml',
+                'joint_accepted_sequence': joint/'observed-runtime/accepted-request-sequence.jsonl',
+                'union_model': out/'union-model.json', 'input_manifest': inputs,
+                'static_inputs': toolchain/'static-inputs.json',
+                'alias_table': root/'runtime-identity-v5/supplied-service-aliases-training.json',
+                'alias_admission': root/'runtime-identity-v5/supplied-service-alias-admission-training.json'}
+            if (set(union['files']) != set(paths) or union['configured_tool_pins'] != {
+                    'Procrustes': PINS['procrustes'], 'Bering': FRESH_BERING, 'Sheaft': PINS['sheaft']}):
+                raise ValueError('paired union source list or product pins differ')
+            for key, path in paths.items():
+                claim_at(union['files'][key], path)
+            for key, path in (('model', paths['union_model']), ('proof', union_path)):
+                claim_at(provenance['union'][key], path)
+            replay = read(paths['joint_replay'])
+            config = yaml.safe_load(paths['joint_config'].read_text(encoding='utf-8'))
+            argv = replay.get('argv') or []
+            runtime, sink = config.get('runtime') or {}, config.get('sink') or {}
+            if (len(argv) != 4 or PurePosixPath(argv[0]).name != 'bering'
+                    or argv[1:3] != ['serve', '--config']
+                    or toolchain_relative(argv[3]) != paths['joint_config'].relative_to(toolchain).as_posix()
+                    or config.get('overlays') != []
+                    or runtime.get('publication_mode') != 'on_shutdown'
+                    or runtime.get('reconciliation') != {'enabled': False}
+                    or runtime.get('max_in_memory_spans') != sum(counts.values()) + 1
+                    or toolchain_relative(sink.get('latest_path', '')) != paths['joint_snapshot'].relative_to(toolchain).as_posix()
+                    or toolchain_relative(sink.get('signal_quality_path', '')) != paths['joint_quality'].relative_to(toolchain).as_posix()):
+                raise ValueError('paired Bering command does not use its exact saved batch configuration')
+            ingest = replay.get('ingest') or {}
+            if (replay.get('returncode') != 0 or replay.get('status') != 'complete'
+                    or replay.get('request_routing') != 'ordinary_otlp_joint_view'
+                    or replay.get('source_profile') != {'input_type': 'otlp', 'trace_context_domain': ''}
+                    or replay.get('original_source_profile') != {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}
+                    or replay.get('source_domain') != '' or replay.get('clock_admission_filter') is not False
+                    or replay.get('original_export_roles_retained') is not True
+                    or ingest.get('spans') != sum(counts.values())
+                    or ingest.get('dropped_spans') != 0 or ingest.get('late_spans') != 0
+                    or read(paths['joint_snapshot'])['model'] != read(paths['joint_raw_model'])):
+                raise ValueError('paired actual Bering view differs')
+            sequence = accepted_sequence_facts(toolchain, read(inputs), replay, freeze, joint_otlp=True)
+            base_replay = read(shared/'observed-runtime/replay-command.json')
+            base_sequence = verified_reference(toolchain, base_replay['accepted_request_sequence'], freeze)
+            with base_sequence.open(encoding='utf-8') as left, paths['joint_accepted_sequence'].open(encoding='utf-8') as right:
+                for base_row, joint_row in itertools.zip_longest(left, right):
+                    if base_row is None or joint_row is None:
+                        raise ValueError('paired request count differs from original combined')
+                    a, b = json.loads(base_row), json.loads(joint_row)
+                    if any(a.get(key) != b.get(key) for key in
+                           ('export_index', 'content_sha256', 'content_bytes', 'storage_form')):
+                        raise ValueError('paired request bytes or order differ')
+            alias = read(paths['joint_alias_projection'])
+            admitted = read(paths['alias_admission']).get('aliases') or {}
+            if (alias.get('table_sha256') != sha(paths['alias_table'])
+                    or alias.get('raw_model_sha256') != sha(paths['joint_raw_model'])
+                    or alias.get('raw_quality_sha256') != sha(paths['joint_quality'])
+                    or any(admitted.get(key) != value for key, value in (alias.get('effective_aliases') or {}).items())
+                    or alias.get('graph_edges_injected') or alias.get('physical_identity_inferred')
+                    or alias.get('roles_or_endpoints_created')
+                    or alias_only_model(read(paths['joint_raw_model']), alias.get('effective_aliases') or {}) != read(paths['joint_model'])):
+                raise ValueError('paired joint projection exceeds the supplied alias boundary')
+            base = read(paths['base_model'])
+            expected = copy.deepcopy(base)
+            services = {row['id'] for row in base['services']}
+            edges = {row['id']: row for row in base['edges']}
+            added, conflicts, skipped = [], [], []
+            for edge in read(paths['joint_model'])['edges']:
+                if edge['id'] in edges:
+                    if any(edges[edge['id']].get(key) != edge.get(key) for key in ('from', 'to', 'kind', 'blocking', 'identity')):
+                        conflicts.append(edge['id'])
+                elif (edge.get('identity') or {}).get('span_kind') != 'server':
+                    skipped.append({'id': edge['id'], 'reason': 'not_an_actual_server_child_edge'})
+                elif edge['from'] not in services or edge['to'] not in services:
+                    skipped.append({'id': edge['id'], 'reason': 'endpoint_service_not_in_original_view'})
+                else:
+                    expected['edges'].append(copy.deepcopy(edge))
+                    added.append(edge['id'])
+            if (expected != read(paths['union_model']) or added != union['added_edge_ids']
+                    or conflicts != union['semantic_identity_conflicts'] or skipped != union['skipped_joint_edges']
+                    or union['joint_alias_metadata_collisions'] != alias['metadata_collisions']
+                    or union.get('union_is_a_bering_emitted_snapshot') is not False
+                    or union.get('contract_inferred_edges') is not False
+                    or union.get('physical_identity_inferred') is not False):
+                raise ValueError('paired graph is not the exact base plus eligible actual SERVER edges')
+            expected_status = ('unknown_view_alignment' if conflicts or alias['metadata_collisions'] else
+                               'forecast_from_observed_context_union' if added else 'reuse_unchanged_union')
+            if status != expected_status or provenance.get('extra_bering_executed') is not True:
+                raise ValueError('paired provenance status differs from actual views')
+            if status != 'forecast_from_observed_context_union' and (
+                    provenance.get('extra_sheaft_executed') is not False or (out/'operations').exists()):
+                raise ValueError('paired reused or conflicting view claims extra simulation')
+            union_facts = {'added_edge_ids': added, 'semantic_identity_conflicts': conflicts,
+                           'joint_alias_metadata_collisions': alias['metadata_collisions'],
+                           'exact_base_and_all_added_fields': True, 'accepted_sequence': sequence}
+        if reuse and operations != original['combined'][variant]:
+            raise ValueError('paired reused forecast differs, including unknown rows')
+        branches = []
+        for operation, forecast in operations.items():
+            row = rows.get(('context-baseline', variant, operation))
+            if evaluation is not None:
+                primary = rows[('combined', variant, operation)]
+                if (any(row.get('forecast_interval' if key == 'interval' else key) != forecast.get(key)
+                        for key in ('available', 'reason', 'prediction', 'interval'))
+                        or any(row.get(key) != primary.get(key) for key in (
+                            'actual_counts', 'actual_target_success_counts', 'observed_empirical_bounds',
+                            'nominal_wilson_envelope', 'latency'))
+                        or row.get('unknown_obligations') != forecast.get('unknown')
+                        or any(row.get(key) != forecast.get(key) for key in (
+                            'database_unknown_reason', 'database_fault_unknown', 'assumed_satisfied_database_requirements'))
+                        or {state: {key: value for key, value in saved.items() if key not in ('prediction', 'error')}
+                            for state, saved in row.get('by_state', {}).items()} !=
+                           {state: {key: value for key, value in saved.items() if key not in ('prediction', 'error')}
+                            for state, saved in primary.get('by_state', {}).items()}):
+                    raise ValueError('paired evaluation differs from frozen forecasts or shared external outcomes')
+            if status == 'unknown_view_alignment' and (forecast.get('available') is not False
+                    or forecast.get('prediction') is not None
+                    or forecast.get('reason') != 'context_view_identity_or_alias_conflict'):
+                raise ValueError('paired conflict was not retained as unknown')
+            metadata = None
+            if forecast.get('available') and not reuse:
+                branch = out/'operations'/operation
+                metadata = paired_simulation_facts(toolchain, branch, forecast, freeze)
+            binding_branch = toolchain/'combined'/variant/operation if reuse else out/'operations'/operation
+            branches.append({'operation': operation, 'available_copied': forecast.get('available'),
+                             'reason_copied': forecast.get('reason'), 'provided_metadata_attachment': metadata,
+                             'binding_summary': saved_binding_summary(toolchain, binding_branch, freeze)})
+        facts[variant] = {'status': status, 'union': union_facts, 'branches': branches}
+    return {'policy_id': manifest['policy_id'], 'variants': facts,
+            'external_outcomes_recomputed': False, 'original_forecasts_overwritten': False}
+
+
+def deepflow_control_facts(root: Path, control: dict, node: str, claim: dict) -> dict:
+    from ebpf_discovery.deepflow_codec_v5 import _parse
+
+    name = claim["raw_file"].split("/observations/", 1)[1]
+    if not _safe(name) or not name.startswith(f"deepflow-raw/node-{node}/"):
+        raise ValueError("DeepFlow control locator has a different node")
+    path = root / "observations" / name
+    offset, length = claim["raw_offset"], claim["raw_length"]
+    if (claim.get("proven") is not True or type(offset) is not int or offset < 0
+            or type(length) is not int or length <= 0 or offset + length > path.stat().st_size):
+        raise ValueError("DeepFlow control locator is incomplete")
+    with path.open("rb") as stream:
+        stream.seek(offset)
+        body = stream.read(length)
+    if hashlib.sha256(body).hexdigest() != claim["raw_sha256"]:
+        raise ValueError("DeepFlow control record hash differs")
+    record, conflicts, error = _parse(body)
+    if (error or conflicts or record.get("signal_source") != "EBPF"
+            or record.get("l7_protocol") not in ("Http1", "Http2")
+            or record.get("l7_protocol") != claim.get("protocol")
+            or not control.get("marker") or control["marker"] not in str(record.get("request_resource", ""))
+            or record.get("tap_side") not in ("ClientProcess", "ServerProcess")
+            or record.get("tap_side") != claim.get("tap_side")):
+        raise ValueError("DeepFlow control lacks raw eBPF HTTP origin and marker")
+    snapshot = read(path.parent / "snapshot.json")
+    rows = [row for row in snapshot["files"] if row["snapshot_name"] == path.name]
+    if (snapshot.get("node") != node or len(rows) != 1
+            or rows[0]["copied_bytes"] != path.stat().st_size
+            or rows[0]["copied_sha256"] != sha(path)):
+        raise ValueError("DeepFlow control file differs from retained snapshot")
+    return {"node": node, "raw_sha256": claim["raw_sha256"], "raw_member": name,
+            "raw_offset": offset, "raw_length": length,
+            "matches": [{key: record.get(key) for key in (
+                "signal_source", "l7_protocol", "tap_side", "request_resource")}]}
+
+
+def deepflow_closure_facts(root: Path, collector: dict, drain: dict) -> dict:
+    observations = root / "observations"
+    retention = read(observations / "deepflow-retention-manifest.json")
+    retention_claim = (collector.get("retained_file_hashes") or {}).get("deepflow-retention-manifest.json")
+    if (not retention_claim or retention_claim["sha256"] != sha(observations / "deepflow-retention-manifest.json")
+            or retention_claim["bytes"] != (observations / "deepflow-retention-manifest.json").stat().st_size):
+        raise ValueError("DeepFlow retention manifest is not bound to closed collector")
+    claims = retention.get("files") or []
+    by_name = {row["path"]: row for row in claims}
+    if (len(by_name) != len(claims) or retention.get("file_count") != len(claims)
+            or retention.get("raw_bytes") != sum(row["bytes"] for row in claims)
+            or retention.get("zero_internal_loss_proven") is not False
+            or any(retention.get("known_write_failures", {}).get(node, {}).get(key)
+                   for node in ("a", "b") for key in ("container_log", "retained_standalone_logs"))):
+        raise ValueError("DeepFlow retention manifest has conflicting claims")
+    for path in observations.rglob("*"):
+        if not path.is_file():
+            continue
+        name = path.relative_to(observations).as_posix()
+        claim = (collector.get("retained_file_hashes") or {}).get(name) or by_name.get(name)
+        if claim is not None and (path.stat().st_size != claim["bytes"] or sha(path) != claim["sha256"]):
+            raise ValueError("DeepFlow selected metadata differs from closure hash chain")
+    capture = drain.get("final_raw_capture") or {}
+    if (capture.get("final") is not True or capture.get("technical_valid") is not True
+            or set(capture.get("nodes") or {}) != {"a", "b"}
+            or set(drain.get("termination") or {}) != {"a", "b"}):
+        raise ValueError("DeepFlow final standalone capture is incomplete")
+    snapshots = []
+    for path in sorted((observations / "deepflow-raw").glob("node-*/*/snapshot.json")):
+        relative = path.relative_to(observations).as_posix()
+        if relative not in by_name:
+            raise ValueError("DeepFlow snapshot is missing from retention manifest")
+        snapshot = read(path)
+        for row in snapshot.get("files") or []:
+            if not _safe(row["snapshot_name"]) or "/" in row["snapshot_name"]:
+                raise ValueError("unsafe DeepFlow saved snapshot member")
+            member = (path.parent / row["snapshot_name"]).relative_to(observations).as_posix()
+            claim = by_name.get(member) or {}
+            if claim.get("bytes") != row["copied_bytes"] or claim.get("sha256") != row["copied_sha256"]:
+                raise ValueError("DeepFlow snapshot/retention file claims differ")
+        snapshots.append(snapshot)
+    prefixes = drain.get("training_prefix_unchanged_in_final") or {}
+    if not prefixes or {key.split("/", 1)[0] for key in prefixes} != {"a", "b"}:
+        raise ValueError("DeepFlow lacks both saved training prefixes")
+    for key, prefix in prefixes.items():
+        node, name = key.split("/", 1)
+        if (prefix.get("unchanged") is not True
+                or prefix.get("training_sha256") != prefix.get("final_prefix_sha256")
+                or not any(snapshot.get("node") == node and not snapshot.get("producer_closed")
+                           and any(row.get("source_name") == name
+                                   and row.get("copied_bytes") == prefix.get("bytes")
+                                   and row.get("copied_sha256") == prefix.get("training_sha256")
+                                   for row in snapshot.get("files") or []) for snapshot in snapshots)):
+            raise ValueError("DeepFlow saved training/final prefix claims differ")
+    for node, final in capture["nodes"].items():
+        path = observations / "deepflow-raw" / f"node-{node}" / final["stage"] / "snapshot.json"
+        if (read(path) != final or final.get("technical_valid") is not True
+                or final.get("producer_closed") is not True or final.get("closed_checkpoint") is not True
+                or final.get("rotation_observed") or final.get("standalone_file_log_write_failures")
+                or final.get("codec_technical_failure_records") != 0
+                or any(row.get("source_changed_during_snapshot")
+                       or (row["source_name"].startswith("l7_flow_log") and row.get("pending_tail_bytes_at_read"))
+                       for row in final.get("files") or [])):
+            raise ValueError("DeepFlow final snapshot is not closed and stable")
+        for key, prefix in prefixes.items():
+            if key.startswith(node + "/") and not any(
+                    row["source_name"] == key.split("/", 1)[1] and row["copied_bytes"] >= prefix["bytes"]
+                    for row in final["files"]):
+                raise ValueError("DeepFlow final file is shorter than its saved prefix")
+        termination = drain["termination"][node]
+        if (termination.get("technical_valid") is not True or termination.get("running") is not False
+                or termination.get("exit_code") != 0 or termination.get("oom_killed") is not False
+                or termination.get("sigkill_events") != 0 or termination.get("technical_invalid_reasons")):
+            raise ValueError("DeepFlow producer termination is incomplete")
+        for label in ("stop", "inspect", "events"):
+            claim = termination["raw_evidence"][label]
+            if not _safe(claim["path"]) or sha(observations / claim["path"]) != claim["sha256"]:
+                raise ValueError("DeepFlow saved termination source differs")
+    return {"nodes": ["a", "b"], "snapshot_hash_chains_verified": len(snapshots),
+            "training_prefix_claims_verified": len(prefixes),
+            "all_raw_payload_bytes_independently_rehashed": False,
+            "zero_kernel_producer_or_flush_loss_proven": False}
 
 
 def verify_package(package: Path, selected: Path, *, kind: str,
@@ -184,7 +852,7 @@ def verify_worker_output_claims(manifest_claims: dict, provenance_claims: dict,
             "whole_worker_tree_verified": False}
 
 
-def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
+def compact_facts(root: Path, declaration: dict, *, smoke_qualification=False) -> tuple[dict, dict, dict]:
     manifest = read(root / "evaluation-manifest.json")
     status = read(root / "status.json")
     evaluation = read(root / "evaluation-v5.json")
@@ -192,8 +860,16 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
                 status.get("seed"), int(status.get("run_id")))
     expected = (declaration["collector"], declaration["system"], declaration["mode"],
                 declaration["seed"], declaration["run_id"])
+    if smoke_qualification and (
+            declaration['head_sha'] not in CONTEXT_BASELINE_HEADS
+            or declaration.get('stage') != 'smoke' or declaration.get('runner') != 'study'
+            or declaration.get('seed') != 6 or status.get('smoke') is not True):
+        raise ValueError('qualification reader requires the fixed final-source smoke identity')
     if identity != expected or status.get("commit") != declaration["head_sha"]:
         raise ValueError(f"saved compact identity differs: {identity!r}")
+    if declaration["head_sha"] in FRESH_HEADS and (
+            status.get("controller") != "clean-study" or status.get("smoke") is not smoke_qualification):
+        raise ValueError("fresh saved status does not identify the clean main controller")
     if (manifest.get("commit") != declaration["head_sha"]
             or manifest.get("run_id") != str(declaration["run_id"])):
         raise ValueError("evaluation manifest source differs from declaration")
@@ -211,7 +887,15 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
         verified.append(name)
     counts = evaluation.get("counts") or {}
     expected_blocks = 19 if declaration["system"] == "otel_demo" else 16
-    if (counts.get("primary") != 34800 or counts.get("target") != 9600
+    expected_primary, expected_target = 34800, 9600
+    if smoke_qualification:
+        from ebpf_discovery.evaluate_v5 import expected_counts
+        _, workload, phases, _ = expected_counts(declaration['system'], True)
+        expected_primary, expected_target = sum(phases.values()), phases['target']
+        if (status.get('workload_counts') != workload or evaluation.get('primary_series_result') is not False
+                or evaluation.get('smoke_technical_pass') is not True):
+            raise ValueError('qualification workload or non-main result boundary differs')
+    if (counts.get("primary") != expected_primary or counts.get("target") != expected_target
             or counts.get("blocks") != expected_blocks):
         raise ValueError("fixed workload count identity differs")
     if not (evaluation.get("integrity", {}).get("valid")
@@ -235,6 +919,8 @@ def compact_facts(root: Path, declaration: dict) -> tuple[dict, dict, dict]:
         "manual_baselines_copied_not_recomputed": evaluation.get("manual_baselines"),
         "cost_copied_not_recomputed": evaluation.get("cost"),
     }
+    if "scientific_summaries" in evaluation:
+        facts["scientific_summaries_copied_not_recomputed"] = evaluation["scientific_summaries"]
     return facts, evaluation, read(root / "freeze-integrity.json")
 
 
@@ -347,6 +1033,28 @@ def validate_otel_demo_sdk_settings(settings: dict[str, str | None], mode: str) 
     return sorted(value for value in settings.values() if value is not None)
 
 
+def guest_platform_facts(root: Path) -> dict:
+    """Read the existing boot proof; two kernels share the same runner host."""
+    infrastructure = read(root / "infrastructure/infrastructure.json")
+    image = read(root / "infrastructure/image-provenance.json")
+    kernels, boots = {}, {}
+    for node in ("a", "b"):
+        original = (root / "infrastructure" / node / "check.txt").read_bytes().decode("utf-8")
+        lines = original.splitlines()
+        if infrastructure.get("nodes", {}).get(node) != original or len(lines) < 2 or not lines[0]:
+            raise ValueError("guest kernel check differs from retained infrastructure proof")
+        kernels[node], boots[node] = lines[0], str(uuid.UUID(lines[1]))
+    if (infrastructure.get("status") != "ready" or boots["a"] == boots["b"]
+            or image.get("sha256") != FRESH_GUEST_IMAGE_SHA256
+            or infrastructure.get("shared_physical_host") is not True):
+        raise ValueError("guest boot/image premise differs from the fixed two-guest setup")
+    return {"kernel_releases": kernels, "boot_ids": boots, "independent_guest_boots": True,
+            "shared_runner_host": True, "separate_physical_hosts_claimed": False,
+            "guest_memory_mib": infrastructure.get("guest_memory_mib"),
+            "recorded_image_provenance": image,
+            "guest_image_bytes_independently_rehashed_by_this_review": False}
+
+
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
                evaluation: dict | None, package_out: Path) -> dict:
     proof = _selected_proof(root, declaration)
@@ -373,7 +1081,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 raise ValueError(f"selected full evidence differs from pre-target freeze: {name}")
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
-    if pins != PINS:
+    fresh = declaration["head_sha"] in FRESH_HEADS
+    guest_facts = guest_platform_facts(root) if declaration["head_sha"] in GUEST_PROOF_HEADS else None
+    expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
+    if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")
     graphs = []
     for replay_path in sorted(toolchain.glob("discovery/*/*/observed-runtime/replay-command.json")):
@@ -398,10 +1109,12 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 or replay.get("clock_admission_filter") is not False
                 or ingest.get("spans") != observations.get("observations")
                 or ingest.get("dropped_spans") != 0 or ingest.get("late_spans") != 0
-                or len(accepted) != len(exports)
+                or (not fresh and len(accepted) != len(exports))
                 or snapshot.get("model") != source_model):
             raise ValueError("Bering source/input/ingest/model binding differs")
-        for export, request in zip(exports, accepted, strict=True):
+        sequence_facts = (accepted_sequence_facts(toolchain, observations, replay, freeze)
+                          if fresh else {})
+        for export, request in ([] if fresh else zip(exports, accepted, strict=True)):
             if export.get("sha256") != request.get("content_sha256") or request.get("http_status") != 200:
                 raise ValueError("Bering accepted request differs from saved input")
             relative_export = "toolchain/" + export["path"].split("/toolchain/", 1)[1]
@@ -410,11 +1123,23 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         graphs.append({"source": source, "variant": variant,
                        "source_domain": replay.get("source_domain"),
                        "source_profile": replay.get("source_profile"),
-                       "ingest": ingest, "accepted_inputs": len(accepted),
+                       "ingest": ingest, "accepted_inputs": len(accepted), **sequence_facts,
                        "observed_model_sha256": sha(observed_path),
                        "snapshot_sha256": sha(snapshot_path)})
     if not graphs:
         raise ValueError("selected evidence contains no actual Bering execution")
+    if fresh:
+        expected_graphs = set()
+        for source in ("ebpf", "native", "combined"):
+            for variant in ("raw", "network_scope"):
+                path = toolchain / "inputs" / source / variant / "observations.json"
+                if (freeze is not None and freeze["sha256_by_path"].get(
+                        "toolchain/" + path.relative_to(toolchain).as_posix()) != sha(path)):
+                    raise ValueError("source/variant input manifest is not frozen")
+                if read(path).get("observations", 0) > 0:
+                    expected_graphs.add((source, variant))
+        if {(row["source"], row["variant"]) for row in graphs} != expected_graphs:
+            raise ValueError("fresh evidence lacks a nonempty source/variant Bering execution")
 
     preflights = []
     for command_path in sorted(toolchain.glob("procrustes/*/*/0/preflight.command.json")):
@@ -433,15 +1158,16 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         raise ValueError("selected evidence contains no actual Procrustes preflight")
 
     alias_facts = None
-    if declaration["collector"] == "coroot":
+    if fresh or declaration["collector"] == "coroot":
         table_path = root / "runtime-identity-v5/supplied-service-aliases-training.json"
         admission_path = root / "runtime-identity-v5/supplied-service-alias-admission-training.json"
         table_sha = sha(table_path)
         admission = read(admission_path)
-        if (admission.get("conflicts") or admission.get("physical_identity_inferred")
+        if ((not fresh and admission.get("conflicts")) or admission.get("physical_identity_inferred")
                 or admission.get("same_table_all_sources_and_direct_baseline") is not True):
             raise ValueError("supplied logical alias admission exceeds its reviewed boundary")
         projected_models = []
+        retained_collisions = {}
         for alias_path in sorted(toolchain.glob(
                 "discovery/*/*/observed.supplied-aliases.json")):
             alias = read(alias_path)
@@ -450,38 +1176,32 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             effective = read(directory / "observed.json")
             if (alias.get("raw_model_sha256") != sha(directory / "observed.bering-raw.json")
                     or alias.get("table_sha256") != table_sha
-                    or alias.get("metadata_collisions")
+                    or (not fresh and alias.get("metadata_collisions"))
                     or alias.get("graph_edges_injected")
                     or alias.get("physical_identity_inferred")
                     or alias.get("roles_or_endpoints_created")):
-                raise ValueError("saved Coroot alias proof exceeds exact logical renaming")
-            projected = copy.deepcopy(raw)
+                raise ValueError("saved alias proof exceeds exact logical renaming")
             aliases = alias.get("effective_aliases") or {}
-            by_id = {}
-            for service in projected.get("services") or []:
-                old = service["id"]
-                service["id"] = aliases.get(old, old)
-                if service.get("name") == old:
-                    service["name"] = service["id"]
-                if service["id"] in by_id and by_id[service["id"]] != service:
-                    raise ValueError("saved Coroot alias collision has differing metadata")
-                by_id[service["id"]] = service
-            projected["services"] = [by_id[key] for key in sorted(by_id)]
-            for edge in projected.get("edges") or []:
-                for key in ("from", "to"):
-                    edge[key] = aliases.get(edge.get(key), edge.get(key))
-            for endpoint in projected.get("endpoints") or []:
-                endpoint["entry_service"] = aliases.get(
-                    endpoint.get("entry_service"), endpoint.get("entry_service"))
+            if any((admission.get("aliases") or {}).get(key) != value
+                   for key, value in aliases.items()):
+                raise ValueError("saved effective alias was not admitted from supplied inventory")
+            projected = alias_only_model(raw, aliases)
             if projected != effective:
-                raise ValueError("saved Coroot semantic model is not exact alias-only projection")
+                raise ValueError("saved semantic model is not exact alias-only projection")
             projected_models.append(alias_path.relative_to(toolchain).as_posix())
+            if fresh:
+                retained_collisions[alias_path.relative_to(toolchain).as_posix()] = alias.get("metadata_collisions") or []
         if not projected_models:
-            raise ValueError("Coroot evidence contains no supplied-alias graph proof")
+            raise ValueError("selected evidence contains no supplied-alias graph proof")
         alias_facts = {"table_sha256": table_sha, "admission_sha256": sha(admission_path),
                        "exact_alias_only_models": projected_models}
+        if fresh:
+            alias_facts.update(admission_conflicts=admission.get("conflicts") or [],
+                               metadata_collisions=retained_collisions)
 
     branch_facts = []
+    context_facts = None
+    paired = declaration['head_sha'] in CONTEXT_BASELINE_HEADS
     forecasts_path = toolchain / "forecasts.json"
     forecasts = read(forecasts_path) if forecasts_path.is_file() else None
     if forecasts is not None:
@@ -495,7 +1215,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             for source, variants in forecasts.items()
             for variant, operations in variants.items()
             for operation in operations}
-        if evaluation is not None and forecast_keys != set(evaluation_rows):
+        expected_evaluation_keys = forecast_keys | ({
+            ('context-baseline', variant, operation)
+            for variant, operations in forecasts['combined'].items() for operation in operations} if paired else set())
+        if evaluation is not None and expected_evaluation_keys != set(evaluation_rows):
             raise ValueError("saved forecast and evaluation branch-key coverage differs")
         for source, variants in forecasts.items():
             for variant, operations in variants.items():
@@ -539,6 +1262,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         model_endpoints = {item["id"] for item in model.get("endpoints") or []}
                         if not model_edges.issubset(graph_edges) or not model_endpoints.issubset(graph_endpoints):
                             raise ValueError("Sheaft model contains unobserved graph identities")
+                    metadata_facts = (operation_metadata_facts(toolchain, branch, freeze)
+                                      if saved_row.get("available")
+                                      and declaration["head_sha"] in METADATA_ATTACHMENT_HEADS else None)
                     branch_facts.append({
                         "source": source, "variant": variant, "operation": operation,
                         "available_copied": saved_row.get("available"),
@@ -547,11 +1273,15 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "saved_command_present": command is not None,
                         "saved_command_returncode": command.get("returncode") if command else None,
                         "saved_model_present": model_path.is_file(),
+                        "provided_metadata_attachment": metadata_facts,
+                        "binding_summary": saved_binding_summary(toolchain, branch, freeze),
                         "observed_edge_ids_retained": (
                             sorted(model_edges) if saved_row.get("available") else None),
                         "observed_endpoint_ids_retained": (
                             sorted(model_endpoints) if saved_row.get("available") else None),
                     })
+        if paired:
+            context_facts = context_baseline_facts(root, toolchain, freeze, forecasts, evaluation)
     else:
         raise ValueError("selected evidence lacks saved forecasts")
 
@@ -568,7 +1298,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
             or any(collector.get(key) != value for key, value in expected_collector.items())):
         raise ValueError("collector manifest differs from the pinned closed acquisition")
     closures = {}
-    for node in ("a", "b", "native"):
+    for node in (("native",) if declaration["collector"] == "deepflow" else ("a", "b", "native")):
         closure = read(root / f"observations/receiver-closed-{node}.json")
         if (closure.get("node") != node or closure.get("saved_bytes_valid") is not True
                 or closure.get("in_flight_handlers_joined") is not True
@@ -589,6 +1319,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         raise ValueError("technical control lacks exact two-node origin/cleanup proof")
     controls = []
     for node, claim in (control.get("proofs") or {}).items():
+        if declaration["collector"] == "deepflow":
+            controls.append(deepflow_control_facts(root, control, node, claim))
+            continue
         body = root / "observations" / claim["raw_ref"]
         if not body.is_file() or sha(body) != claim["raw_sha256"]:
             raise ValueError("selected-agent raw control body differs")
@@ -625,6 +1358,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         if not matched:
             raise ValueError("raw control lacks the selected collector origin")
         controls.append({"node": node, "raw_sha256": claim["raw_sha256"], "matches": matched})
+    standalone = (deepflow_closure_facts(root, collector, drain)
+                  if declaration["collector"] == "deepflow" else None)
     worker_facts = None
     remote_root = root / "infrastructure/remote-toolchain-v4"
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
@@ -734,9 +1469,12 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "selected_transport": proof, "typed_packages": packages,
         "source_pins": pins, "saved_mode_evidence_sha256": mode_files,
         "collector_manifest": collector, "receiver_closure_facts": closures,
+        "standalone_file_closure_facts": standalone,
         "rendered_sdk_disabled_values": sorted(sdk_flags),
         "native_mode_facts": native_facts,
+        "guest_platform_facts": guest_facts,
         "supplied_logical_alias_facts": alias_facts,
+        "paired_context_baseline_facts": context_facts,
         "worker_import_facts": worker_facts,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
         "actual_procrustes": preflights, "saved_branch_facts": branch_facts,
@@ -744,13 +1482,15 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     }
 
 
-def review(declaration: dict, compact: Path | None, full: Path | None, out: Path) -> dict:
+def review(declaration: dict, compact: Path | None, full: Path | None, out: Path, *, smoke_qualification=False) -> dict:
+    if smoke_qualification and (compact is None or full is None):
+        raise ValueError('qualification requires both selected full and compact evidence')
     if out.exists():
         raise ValueError("review output already exists")
     out.mkdir(parents=True)
     compact_result = evaluation = freeze = None
     if compact is not None:
-        compact_result, evaluation, freeze = compact_facts(compact, declaration)
+        compact_result, evaluation, freeze = compact_facts(compact, declaration, smoke_qualification=smoke_qualification)
     full_result = None
     if full is not None:
         full_result = full_facts(full, declaration, freeze, evaluation, out / "selected-packages")
@@ -758,6 +1498,7 @@ def review(declaration: dict, compact: Path | None, full: Path | None, out: Path
             raise ValueError("saved forecast does not precede first target block")
     result = {
         "schema_version": "main-saved-evidence-facts-v5",
+        "review_scope": 'qualification_only_not_main' if smoke_qualification else 'saved_main_evidence',
         "declaration": declaration,
         "compact_facts": compact_result,
         "full_facts": full_result,
@@ -787,9 +1528,10 @@ def main() -> None:
     parser.add_argument("--compact", type=Path)
     parser.add_argument("--full", type=Path)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument('--smoke-qualification', action='store_true')
     args = parser.parse_args()
     declaration = read(args.declaration)
-    result = review(declaration, args.compact, args.full, args.out)
+    result = review(declaration, args.compact, args.full, args.out, smoke_qualification=args.smoke_qualification)
     print(json.dumps({"cell": [declaration[key] for key in
                                ("collector", "system", "mode", "seed")],
                       "domains": {"compact": result["compact_facts"] is not None,

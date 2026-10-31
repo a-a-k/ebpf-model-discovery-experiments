@@ -1,9 +1,38 @@
 # Iteration 5: three collectors and stable operation families
 
-Status: replacement matched main series held for qualification and the paired
-context baseline in [CONTEXT_BASELINE.md](CONTEXT_BASELINE.md); measurements and their
-review boundaries are linked from the README. No completed-study or positive
-utility claim is made. Authorized on 2026-10-29: repair operation-class
+Status: all 27 final common-source qualification settings at `0c98bf4` passed
+independent saved-evidence review. The fixed 81-cell main series is running at
+immutable `study-20261031-v5`, including the paired context baseline in
+[CONTEXT_BASELINE.md](CONTEXT_BASELINE.md). Its pre-execution decisions and actual
+qualification evidence are recorded in
+[the common-source review](clean-study-requalification-v5-20261031.json).
+Three technically interrupted DeepFlow/DSB/partial cases are repeated at actual
+revision `fbbda015` (`capture-20261031-parent-disk-v1`), which adds parent disk
+preparation. The scientific source is byte-identical to `0c98bf4`; the exact
+operational changes and both original-criterion approvals were recorded
+[before the first two replacements](clean-study-parent-preparation-preexecution-20261031.json)
+and [before the third](clean-study-parent-partial7-preexecution-20261031.json).
+Actual revision identities remain visible and reporting verifies full Git-tree
+equivalence outside the three explicitly reviewed workflow/documentation blobs.
+The first partial6 replacement failed before training on a recurring Docker
+port37020 conflict. Its one further replacement uses `13c017bf` and the
+[separately predeclared guest preparation](clean-study-guest-port-preexecution-20261031.json):
+merge37020 into existing automatic-port reservations, retaining application ports
+and every scientific source blob. The historical socket owner remains unknown;
+this preventive change is not evidence of an established cause or successful repair.
+Future captures may use reviewed revision `1d646f90`
+(`capture-20261031-guest-logs-v3`), which also preserves guest serial output and
+non-clearing guest kernel diagnostics after application cleanup. All scientific
+source files remain identical to the qualified anchor. The exact operational
+Git blobs, source verification, consumer checks and both original-criterion
+approvals are recorded in the
+[pre-execution decision](clean-study-obi-staged-cutover-preexecution-20261031.json).
+This does not establish the cause of historical OTel failures or authorize
+repeating completed captures. The first OBI queue conversion is prepared and
+has the user's explicit approval to stop and repeat exactly three newly
+started OBI cases; its actual execution is recorded in the
+[cutover record](clean-study-obi-staged-cutover-execution-20261031.json).
+No completed-study or positive utility claim is made. Authorized on 2026-10-29: repair operation-class
 fragmentation, compare different eBPF collectors, and run smoke tests before the
 main experiments. The active collectors are OBI, DeepFlow and Coroot.
 The user explicitly confirmed New Relic's exclusion on 2026-10-30; retaining it
@@ -50,8 +79,10 @@ complement incomplete native tracing in this executable chain:
 Collector choice may change observed protocol, identity and association coverage,
 and consequently the availability or error of externally checked forecasts.
 Fixing a diagnostic classifier alone does not establish that contribution.
-The original useful-outcome/complete-effort criterion remains in force. No positive
-result, accuracy threshold or superiority over equivalent arithmetic is required.
+The original criterion is feasibility with absent or incomplete native tracing,
+judged against independent application outcomes. Complete costs are reported;
+cost superiority was not the hypothesis. No positive result, accuracy threshold
+or superiority over equivalent arithmetic is required.
 
 Comparisons retain the equally informed direct contract/inventory predicate,
 native/eBPF/combined sources, the base entry classifier and the former exact
@@ -111,6 +142,13 @@ DB controls retain 20 up and 20 down attempts. OTel retains 20 normal, 20 paused
 and 20 recovered checkouts, including post-resume verification of the same paused
 orders. Preparation, additional HTTP steps and independent verification are charged.
 No experimental response deadline or accuracy cutoff is introduced.
+
+Names such as `class_train`, `calibration` and `fit` identify the pre-validation
+traffic and frozen-signature preparation phases. The classification code stores
+observed route/step signatures and positive call-set patterns. Bering constructs
+the graph and Sheaft simulates that graph; no statistical outcome-prediction model
+is trained from application success/failure labels. External labels enter the
+separate evaluation only.
 
 Iteration-5 OTel absent mode removes the v4 disabled branches' non-recording SDK
 providers and context propagators as well as native export. Enabled tracing paths

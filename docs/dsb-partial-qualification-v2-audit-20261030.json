@@ -1,0 +1,71 @@
+{
+  "scope": "Fixed three fresh DSB partial seed6 qualification captures. Same existing audit plus original frozen model/entry/binding JSON copies; no new traffic, refit, binding computation, outcome scoring or admission. Native files are copied with hashes; complete raw-prefix audit remains eBPF-only.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13004549858,
+        "bytes": 36905216,
+        "digest": "sha256:66af705f5255091915b805b595e403a81600a699540c34c61b54db8dd65089af",
+        "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "compact": {
+        "id": 13004549840,
+        "bytes": 203808,
+        "digest": "sha256:051a308872b1f290741b1314fed3cb7267560e391c7864987896f7458124ba0d",
+        "name": "v5-summary-obi-smoke-deathstarbench-partial-6-41115050998",
+        "run_id": 41115050998,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      }
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13006507046,
+        "bytes": 49845696,
+        "digest": "sha256:994a76c2c0bec52d5eb488161a5c6a4551f11f11af991cf8829a0fae5153912a",
+        "name": "campaign-v5-deepflow-smoke-deathstarbench-partial-6-41115056375",
+        "run_id": 41115056375,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "compact": {
+        "id": 13006541327,
+        "bytes": 316221,
+        "digest": "sha256:320834a4a45db496a256760b7b94e7a283f2f0b9dc53559c839f9a86ef094334",
+        "name": "v5-summary-deepflow-smoke-deathstarbench-partial-6-41115056375",
+        "run_id": 41115056375,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      }
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13005753154,
+        "bytes": 37611971,
+        "digest": "sha256:dce5595656c9d4e7378920687da3bbadbb4e22bd71318f52b774b5cee0568fd8",
+        "name": "campaign-v5-coroot-smoke-deathstarbench-partial-6-41115062402",
+        "run_id": 41115062402,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      },
+      "compact": {
+        "id": 13005693198,
+        "bytes": 411299,
+        "digest": "sha256:8c23ea1d7df062bbb2234c2c26a2d387bba78d400535cefc07a81316d56b1785",
+        "name": "v5-summary-coroot-smoke-deathstarbench-partial-6-41115062402",
+        "run_id": 41115062402,
+        "head_sha": "a43404ec02c77e9414878632ec6248835cf7a260"
+      }
+    }
+  ]
+}

@@ -9,6 +9,9 @@ on:
         options:
           - qualification
           - pending17
+          - fresh-qualification
+          - fresh-series
+          - common-smoke
         default: qualification
       qualification_system:
         description: Qualification-only family selector; pending17 requires all
@@ -25,6 +28,10 @@ on:
         default: docs/iteration5-main-review-candidates.json
       pending17_after_qualification_go:
         description: Explicit confirmation that qualification output received independent GO
+        type: boolean
+        default: false
+      fresh_series_after_qualification_go:
+        description: Fresh 81-cell review requires independent actual-output qualification GO
         type: boolean
         default: false
 
@@ -48,6 +55,7 @@ jobs:
           QUALIFICATION_SYSTEM: ${{ inputs.qualification_system }}
           CANDIDATE_MANIFEST: ${{ inputs.candidate_manifest }}
           PENDING17_GO: ${{ inputs.pending17_after_qualification_go }}
+          FRESH_GO: ${{ inputs.fresh_series_after_qualification_go }}
         run: |
           python - <<'PY'
           import hashlib, json, os, pathlib, subprocess
@@ -78,6 +86,64 @@ jobs:
                   raise SystemExit('pending17 requires explicit post-qualification independent GO')
               cells=[row for row in source['cells']
                      if row['full_scope']!='reuse_existing_selected']
+          elif phase=='common-smoke':
+              if (qualification_system!='all' or
+                      manifest!='docs/clean-study-smoke-review-candidates-20261031.json'):
+                  raise SystemExit('common smoke requires its fixed manifest and all families')
+              cells=source['cells']
+              expected={(c,s,m,6) for c in ('obi','deepflow','coroot')
+                        for s in ('deathstarbench','otel_demo','petclinic')
+                        for m in ('absent','partial','full')}
+              keys=[(r['collector'],r['system'],r['mode'],r['seed']) for r in cells]
+              if len(keys)!=27 or set(keys)!=expected:
+                  raise SystemExit('common smoke must review all 27 fixed settings')
+              planned=source['planned_cells']
+              identity=('collector','system','mode','seed','run_id','head_sha','stage','runner')
+              if (len(planned)!=27 or
+                      {tuple(r[k] for k in identity) for r in planned} !=
+                      {tuple(r[k] for k in identity) for r in cells}):
+                  raise SystemExit('common smoke differs from the predeclared qualification run identities')
+              for cell in cells:
+                  if (cell.get('head_sha')!='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
+                          or cell.get('stage')!='smoke' or cell.get('runner')!='study'
+                          or cell.get('compact_scope')!='retrieve_selected_nonjournal'
+                          or cell.get('full_scope')!='retrieve_family_selected'
+                          or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
+                                  'full_artifact_digest'}<=cell.keys()):
+                      raise SystemExit('common smoke requires exact source and full/compact packets')
+          elif phase in ('fresh-qualification','fresh-series'):
+              if qualification_system!='all' or manifest==default_manifest:
+                  raise SystemExit('fresh review requires its own manifest and all families')
+              cells=source['cells']
+              original=[('deepflow','deathstarbench','absent',6),
+                        ('coroot','otel_demo','full',6),('obi','petclinic','partial',6)]
+              keys=[(r['collector'],r['system'],r['mode'],r['seed']) for r in cells]
+              if len(set(keys))!=len(keys):
+                  raise SystemExit('fresh review contains duplicate cells')
+              if phase=='fresh-qualification':
+                  cells=[r for r in cells if (r['collector'],r['system'],r['mode'],r['seed']) in original]
+                  if len(cells)!=3:
+                      raise SystemExit('fresh qualification requires the three fixed main cells')
+              else:
+                  if os.environ.get('FRESH_GO','').lower()!='true':
+                      raise SystemExit('fresh series requires independent actual-output qualification GO')
+                  expected={(c,s,m,n) for c in ('obi','deepflow','coroot')
+                            for s in ('deathstarbench','otel_demo','petclinic')
+                            for m in ('absent','partial','full') for n in (6,7,8)}
+                  if set(keys)!=expected:
+                      raise SystemExit('fresh series must review all 81 cells')
+              for cell in cells:
+                  if (cell.get('head_sha') not in {
+                          '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
+                          'fbbda015cefc4f11ee73f32be6ed661c70375f18',
+                          '13c017bf72a86a6853f93a5b8f503de199bf7865',
+                          '1d646f907d0241f25445fcfb4d07d4e0ba89d88b'}
+                          or cell.get('stage')!='main' or cell.get('runner')!='study'
+                          or cell.get('compact_scope')!='retrieve_selected_nonjournal'
+                          or cell.get('full_scope')!='retrieve_family_selected'
+                          or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
+                                  'full_artifact_digest'}<=cell.keys()):
+                      raise SystemExit('fresh review requires exact main source and both full/compact packets')
           else:
               raise SystemExit('unknown review phase')
           required={'collector','system','mode','seed','run_id','head_sha',
@@ -106,7 +172,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 12
       matrix: ${{ fromJson(needs.declare.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
@@ -190,16 +256,20 @@ jobs:
       - name: Verify saved facts where the family packet is present
         if: matrix.cell.full_scope == 'retrieve_family_selected'
         env:
+          PYTHONPATH: ${{ github.workspace }}
           COMPACT_SCOPE: ${{ matrix.cell.compact_scope }}
+          REVIEW_PHASE: ${{ inputs.phase }}
         run: |
+          review_args=()
+          if [ "$REVIEW_PHASE" = "common-smoke" ]; then review_args+=(--smoke-qualification); fi
           if [ "$COMPACT_SCOPE" = "retrieve_selected_nonjournal" ]; then
             python scripts/review-main-saved-facts-v5.py \
               --declaration work/review/declaration.json --compact work/review/compact \
-              --full work/review/full --out work/review/facts
+              --full work/review/full --out work/review/facts "${review_args[@]}"
           else
             python scripts/review-main-saved-facts-v5.py \
               --declaration work/review/declaration.json \
-              --full work/review/full --out work/review/facts
+              --full work/review/full --out work/review/facts "${review_args[@]}"
           fi
       - name: Remove verified typed-package working bodies
         if: always()
@@ -237,7 +307,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: main-review-evidence-${{ matrix.cell.collector }}-${{ matrix.cell.system }}-${{ matrix.cell.mode }}-${{ matrix.cell.seed }}-${{ matrix.cell.run_id }}
+          name: ${{ inputs.phase == 'common-smoke' && 'common-smoke-review' || 'main-review-evidence' }}-${{ matrix.cell.collector }}-${{ matrix.cell.system }}-${{ matrix.cell.mode }}-${{ matrix.cell.seed }}-${{ matrix.cell.run_id }}
           path: work/review
           if-no-files-found: error
           retention-days: 90

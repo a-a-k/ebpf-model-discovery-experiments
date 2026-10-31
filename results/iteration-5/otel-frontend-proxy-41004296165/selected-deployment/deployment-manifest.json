@@ -1,0 +1,167 @@
+{
+  "commit": "8c47d47c9ac27710d2b2a153bcd53e483bffe66d",
+  "compose_layers": [
+    "compose.yaml",
+    "compose.full.yaml"
+  ],
+  "demo_version": "3.0.0",
+  "mode": "partial",
+  "native_disable_patch": {
+    "dependency_download_commands": {
+      "checkout": "RUN set -eu; \\\n    for attempt in 1 2 3; do \\\n        if go mod download; then exit 0; fi; \\\n        if [ \"$attempt\" -eq 3 ]; then exit 1; fi; \\\n        sleep $((attempt * 5)); \\\n    done",
+      "product-catalog": "RUN set -eu; \\\n    for attempt in 1 2 3; do \\\n        if go mod download; then exit 0; fi; \\\n        if [ \"$attempt\" -eq 3 ]; then exit 1; fi; \\\n        sleep $((attempt * 5)); \\\n    done"
+    },
+    "experiment_protocol": "iteration-5",
+    "path": "native-disable-v5.patch",
+    "services": [
+      "checkout",
+      "currency",
+      "email",
+      "frontend",
+      "product-catalog-a",
+      "product-catalog-b",
+      "shipping"
+    ],
+    "sha256": "3860f97d820b8a485b580013bc642fc97f6a554ab1d879bf2ef85cfa81cc6158",
+    "trace_context_policy": "disabled application paths install no SDK trace provider or propagator; collector-provided or incoming context is outside this source guarantee"
+  },
+  "native_request_id_capture": {
+    "configuration": "@opentelemetry/instrumentation-http headersToSpanAttributes.server.requestHeaders",
+    "entry_service": "frontend",
+    "header": "x-experiment-request-id",
+    "pinned_instrumentation_http": "0.221.0",
+    "status": "source-configured on native-enabled frontend entry spans"
+  },
+  "native_suppression": {
+    "collector_filter": "none; the file exporter retains the unfiltered native OTLP stream for suppression audit",
+    "excluded": "native traces from both product-catalog replicas",
+    "experiment_protocol": "iteration-5",
+    "mode": "partial",
+    "mode_semantics": "v5 tracing mode: disabled components install no application trace exporter, SDK trace provider, or trace-context propagator",
+    "native_component_guards": "absent mode removes Envoy tracing, sets nginx otel_trace off, and leaves flagd without a collector URI; pinned flagd autoexport then retains its NoopTracerProvider",
+    "propagation": "disabled components neither extract nor inject application SDK trace context; enabled components retain their pinned propagation",
+    "raw_mode_audit": {
+      "classification": {
+        "audit_input_missing_or_corrupt": "technical_invalid",
+        "disabled_component_span": "technical_mode_violation",
+        "healthy_ebpf_capture_without_application_span": "observed_unsupported_or_unknown"
+      },
+      "context_scope": "no claim that the process carries no trace-context object: an incoming carrier or the selected eBPF collector may provide one",
+      "disabled_trace_components": [
+        "product-catalog-a",
+        "product-catalog-b"
+      ],
+      "disabled_trace_policy": {
+        "application_sdk_trace_providers": 0,
+        "application_trace_exports": 0,
+        "application_trace_propagators": 0
+      },
+      "experiment_protocol": "iteration-5",
+      "mode": "partial",
+      "raw_checks": [
+        "unfiltered native OTLP trace stream retained with hash",
+        "service census contains no disabled component",
+        "recorded source patch contains no disabled-path SDK provider or propagator",
+        "resolved environment and mounted helper instrumentation match the mode"
+      ],
+      "schema": "otel-demo-native-mode-audit-v5"
+    },
+    "sdk_settings": "OTEL_SDK_DISABLED=true on disabled standard SDKs",
+    "source_guards": "checkout, currency, shipping, and product-catalog leave the global no-op trace provider/propagator untouched when disabled; enabled paths retain the pinned upstream provider/exporter setup"
+  },
+  "placement": {
+    "accounting": {
+      "ip": "172.28.11.33",
+      "node": "a"
+    },
+    "ad": {
+      "ip": "172.28.11.40",
+      "node": "a"
+    },
+    "astronomy-db": {
+      "ip": "172.28.11.31",
+      "node": "a"
+    },
+    "cart": {
+      "ip": "172.28.11.41",
+      "node": "a"
+    },
+    "checkout": {
+      "ip": "172.28.11.42",
+      "node": "a"
+    },
+    "currency": {
+      "ip": "172.28.11.43",
+      "node": "a"
+    },
+    "email": {
+      "ip": "172.28.11.44",
+      "node": "a"
+    },
+    "flagd": {
+      "ip": "172.28.11.45",
+      "node": "a"
+    },
+    "frontend": {
+      "ip": "172.28.11.46",
+      "node": "a"
+    },
+    "frontend-proxy": {
+      "ip": "172.28.11.10",
+      "node": "a",
+      "transport_host": "192.168.76.11",
+      "transport_port": 18080
+    },
+    "image-provider": {
+      "ip": "172.28.11.47",
+      "node": "a"
+    },
+    "kafka": {
+      "ip": "172.28.11.32",
+      "node": "a"
+    },
+    "otel-collector": {
+      "ip": "172.28.11.30",
+      "node": "a"
+    },
+    "payment": {
+      "ip": "172.28.11.48",
+      "node": "a"
+    },
+    "product-catalog": {
+      "ip": "172.28.11.20",
+      "node": "a",
+      "transport_host": "192.168.76.11",
+      "transport_port": 13551
+    },
+    "product-catalog-a": {
+      "ip": "172.28.11.21",
+      "node": "a",
+      "transport_host": "192.168.76.11",
+      "transport_port": 13550
+    },
+    "product-catalog-b": {
+      "ip": "172.28.12.21",
+      "node": "b",
+      "transport_host": "192.168.76.12",
+      "transport_port": 13550
+    },
+    "quote": {
+      "ip": "172.28.11.49",
+      "node": "a"
+    },
+    "recommendation": {
+      "ip": "172.28.11.50",
+      "node": "a"
+    },
+    "shipping": {
+      "ip": "172.28.11.51",
+      "node": "a"
+    },
+    "valkey-cart": {
+      "ip": "172.28.11.52",
+      "node": "a"
+    }
+  },
+  "upstream": "https://github.com/open-telemetry/opentelemetry-demo.git"
+}

@@ -1,0 +1,71 @@
+{
+  "scope": "Fixed three v3 DSB partial6 captures; unchanged existing audit and original frozen JSON copies, no new traffic/replay/fitting/scoring/admission. Complete raw-prefix audit remains eBPF-only.",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13013383996,
+        "bytes": 36910305,
+        "digest": "sha256:943ff9403c0aba46cb98aa3f140470b418af19a94dfc7d27586c20eb6b569de8",
+        "name": "campaign-v5-obi-smoke-deathstarbench-partial-6-41132051267",
+        "run_id": 41132051267,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      },
+      "compact": {
+        "id": 13014311540,
+        "bytes": 204988,
+        "digest": "sha256:0fb73b4ec95030afe28f5c9442072e0d68d5b31a658d9cc4f80af47de3467723",
+        "name": "v5-summary-obi-smoke-deathstarbench-partial-6-41132051267",
+        "run_id": 41132051267,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      }
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13013529807,
+        "bytes": 50231029,
+        "digest": "sha256:f59bf163596e71033ed44e08d4645d1ce475552c9ea90216e9f35e3c6a2bf2f6",
+        "name": "campaign-v5-deepflow-smoke-deathstarbench-partial-6-41132056183",
+        "run_id": 41132056183,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      },
+      "compact": {
+        "id": 13014816118,
+        "bytes": 317296,
+        "digest": "sha256:8606a039b1ad50f705c9188e9438b3fe59f5d5871af158fe460fc0660ca40cea",
+        "name": "v5-summary-deepflow-smoke-deathstarbench-partial-6-41132056183",
+        "run_id": 41132056183,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      }
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "full": {
+        "id": 13013478787,
+        "bytes": 37761666,
+        "digest": "sha256:f9bd57759b4e4dcab04b2364a4aab0d20431a477e00d76cc5fe7e460137832a5",
+        "name": "campaign-v5-coroot-smoke-deathstarbench-partial-6-41132061981",
+        "run_id": 41132061981,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      },
+      "compact": {
+        "id": 13015210772,
+        "bytes": 414716,
+        "digest": "sha256:2fef1e2a717c3b643a07b8dc1eaf825eb1c455c9c5b9bbd7e5159043097cd3ef",
+        "name": "v5-summary-coroot-smoke-deathstarbench-partial-6-41132061981",
+        "run_id": 41132061981,
+        "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c"
+      }
+    }
+  ]
+}

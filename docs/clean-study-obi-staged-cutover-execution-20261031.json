@@ -1,0 +1,1190 @@
+{
+  "recorded_before_cancellation_utc": "2026-10-31T17:50:32.819167+00:00",
+  "status": "EXECUTED: old OBIcarrier terminal; first8queued plus3 authorized technicalrepeats running as11isolated S jobs; allcomplete retained; global20actualcapturejobs verified",
+  "approval": {
+    "channel": "current Codex dialog request_user_input_async",
+    "question_item_id": "[\"request_user_input_async\",\"call_44dbcfdb2d8a4601a88c51db4c5e2594\",0]",
+    "answer": "\u041f\u0435\u0440\u0435\u043a\u043b\u044e\u0447\u0438\u0442\u044c OBI \u0438 \u043f\u0435\u0440\u0435\u0437\u0430\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u044d\u0442\u0438 \u0442\u0440\u0438",
+    "scope": "ONLY carrier41164821492; exactlyOTelpartial7/8/full6 cancellation/replacement, currentother9 untouched; allcomplete retained; global20case cap"
+  },
+  "preexecution_committed": "c445f5e59a02aad67af428639005e3634a013aba",
+  "both_original_scope_GO": "work/skeptic-main-v5-observer/retention-finalS-and-first-OBI-original-scope-go.json",
+  "scope_manifest_sha256": "0696aee17569bd89695fc1275b804bc5b5c1a924cb44e0821df0cebaf7206ece",
+  "fresh_API_observed_utc": "2026-10-31T17:49:59.520024+00:00",
+  "complete_pairs_kept": 30,
+  "OBI_complete_pairs_kept": [
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41173230022,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13036736462,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-absent-6-41173230022",
+      "compact_artifact_bytes": 2591859672,
+      "compact_artifact_digest": "sha256:f2118ecbee8afe5e0a3678881746227a05e4a79fa54ce7be108eed7a82c54838",
+      "full_artifact_id": 13036282971,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-absent-6-41173230022",
+      "full_artifact_bytes": 6124222444,
+      "full_artifact_digest": "sha256:970a13e573b85e86c0194c444eb5a006f49dfb10d7cf9c28514687d4612d99f8"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13033775073,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-absent-7-41164821492",
+      "compact_artifact_bytes": 2590793997,
+      "compact_artifact_digest": "sha256:30cbcd8b2c04c809c22b5eb6d50011b305de9fec1fd15657be5ca2e212c57205",
+      "full_artifact_id": 13032812595,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-absent-7-41164821492",
+      "full_artifact_bytes": 6123942064,
+      "full_artifact_digest": "sha256:fddcc91fc32975b2ed72a175d33750081ec197351135774b71e5dc0a10df7a82"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13031540651,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-absent-8-41164821492",
+      "compact_artifact_bytes": 2589084007,
+      "compact_artifact_digest": "sha256:d60d879e50740a6812617d231f8da4f410f8b4643d848a9108e23d41b456cfb9",
+      "full_artifact_id": 13031398277,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-absent-8-41164821492",
+      "full_artifact_bytes": 6106417711,
+      "full_artifact_digest": "sha256:cde162c946d0861c93b4deff99ac975fcaae4ffad207d57669ea93f34ced6062"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13037133622,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-partial-6-41164821492",
+      "compact_artifact_bytes": 2594898116,
+      "compact_artifact_digest": "sha256:88754af88ef24694844e4fc8a9f860b1fd5ba4096c90b421907148674830ad4f",
+      "full_artifact_id": 13037827841,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-partial-6-41164821492",
+      "full_artifact_bytes": 7657727877,
+      "full_artifact_digest": "sha256:b68e79a070c306d3739a777cf64651c8318af1352aebad7590b1cb36fd88679c"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13038126178,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-partial-7-41164821492",
+      "compact_artifact_bytes": 2597957836,
+      "compact_artifact_digest": "sha256:f93ecc960119f53f71b4f2355a4b449517756a90c0283f315aa7141724c04fd6",
+      "full_artifact_id": 13037084564,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-partial-7-41164821492",
+      "full_artifact_bytes": 7653803720,
+      "full_artifact_digest": "sha256:22a8472f24d0deb0194470845eea040c514a92a58b4e3f1f8c3314e42aaffc42"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13039786797,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-partial-8-41164821492",
+      "compact_artifact_bytes": 2595829085,
+      "compact_artifact_digest": "sha256:57a319e9a27e86db2f971c6063212ec43bde820cf00b295a8a93a416d459ee4f",
+      "full_artifact_id": 13039297954,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-partial-8-41164821492",
+      "full_artifact_bytes": 7659468825,
+      "full_artifact_digest": "sha256:00e0197c5ca8e6b5fdac82ed2ff721b335645b156f2ebf3a5389563463b4b832"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13043389060,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-full-6-41164821492",
+      "compact_artifact_bytes": 2597544377,
+      "compact_artifact_digest": "sha256:1f0a4aae8069ca67e22761f3f36bed1bb84b5551f78ece469704d034a6118bec",
+      "full_artifact_id": 13044549611,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-full-6-41164821492",
+      "full_artifact_bytes": 7999766347,
+      "full_artifact_digest": "sha256:55448f2a78cff4017fe329c1ff4f752e3342491344d892b2c23bcd3e819204f4"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41189048917,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13043752982,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-full-7-41189048917",
+      "compact_artifact_bytes": 2608538248,
+      "compact_artifact_digest": "sha256:24d3ef59a8be4b0eaa9860e7aceef3b344d9c5bdf172be55ac5515339cb521a6",
+      "full_artifact_id": 13043399462,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-full-7-41189048917",
+      "full_artifact_bytes": 8033541791,
+      "full_artifact_digest": "sha256:0fae86e3405354c668ccb15b31bf3d66c152beb69aa1ae56c9c31b2f85e791cb"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13044144045,
+      "compact_artifact_name": "v5-summary-obi-main-deathstarbench-full-8-41164821492",
+      "compact_artifact_bytes": 2596946493,
+      "compact_artifact_digest": "sha256:8244bbd4ece25c1bb90ee92184ed2739aa4765dffe0af1c9f88dd29930238d3c",
+      "full_artifact_id": 13044660946,
+      "full_artifact_name": "campaign-v5-obi-main-deathstarbench-full-8-41164821492",
+      "full_artifact_bytes": 8002830978,
+      "full_artifact_digest": "sha256:c2c04e50a06b3def4784f3c79b41820e4bdb23a4a7fe0d443b6b83e967679620"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13044637241,
+      "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-6-41164821492",
+      "compact_artifact_bytes": 50719208,
+      "compact_artifact_digest": "sha256:6b4c03adc491335283e4ff5b2d145a7c29ad34733f897f8614b9d7a6715b10e2",
+      "full_artifact_id": 13044996436,
+      "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-6-41164821492",
+      "full_artifact_bytes": 2689804502,
+      "full_artifact_digest": "sha256:7afb3e8a49fb48c0824fe2f60d3777ebec2b378fd8163fcfa4040c9f07c984e7"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13050697068,
+      "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-7-41164821492",
+      "compact_artifact_bytes": 51120445,
+      "compact_artifact_digest": "sha256:847b091a09bcf9c6b38c0aecf495710aee517286ab587848946a1832da6e9a25",
+      "full_artifact_id": 13050687442,
+      "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-7-41164821492",
+      "full_artifact_bytes": 2677225693,
+      "full_artifact_digest": "sha256:02f461fb36ac5903d1571211b2393dba237b3c16664ed52ec054061e43a8d238"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13051270662,
+      "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-8-41164821492",
+      "compact_artifact_bytes": 51827429,
+      "compact_artifact_digest": "sha256:5c504c819a2f7e0f0057cad243471648b5e5a9cc576972893a2928f2fb78c85e",
+      "full_artifact_id": 13051810565,
+      "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-8-41164821492",
+      "full_artifact_bytes": 2691377621,
+      "full_artifact_digest": "sha256:4b00a3a7092dec1b411de771811afc8b88f9624dfe13d828da5c4bf9ff55304c"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13050298135,
+      "compact_artifact_name": "v5-summary-obi-main-otel_demo-partial-6-41164821492",
+      "compact_artifact_bytes": 50189504,
+      "compact_artifact_digest": "sha256:6b4216f55d850eee4149b12288e205710338a1f64dfd0747c4a9c6f42aa093a7",
+      "full_artifact_id": 13050826560,
+      "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-6-41164821492",
+      "full_artifact_bytes": 3589815084,
+      "full_artifact_digest": "sha256:ab25a87253cfbda022dcace1ec02baf5b5aea099a0c5223d4a1aa76e9cfc2f5c"
+    }
+  ],
+  "carrier_to_cancel": 41164821492,
+  "protected_three_success": [
+    124430026307,
+    124430026314,
+    124430026384
+  ],
+  "tails": [
+    {
+      "job_id": 124430027426,
+      "name": "campaign (otel_demo, full, 6)",
+      "started_at": "2026-10-31T17:24:48Z",
+      "elapsed_minutes": 25.74698611666667,
+      "phase": "Acquire; noclosedprefix/forecast/targetyet fromactualstepmetadata"
+    },
+    {
+      "job_id": 124430027446,
+      "name": "campaign (otel_demo, partial, 7)",
+      "started_at": "2026-10-31T17:04:08Z",
+      "elapsed_minutes": 46.41365278333333,
+      "phase": "Acquire; noclosedprefix/forecast/targetyet fromactualstepmetadata"
+    },
+    {
+      "job_id": 124430027456,
+      "name": "campaign (otel_demo, partial, 8)",
+      "started_at": "2026-10-31T17:05:34Z",
+      "elapsed_minutes": 44.98031945,
+      "phase": "Acquire; noclosedprefix/forecast/targetyet fromactualstepmetadata"
+    }
+  ],
+  "scope": {
+    "observed_before_any_cancel_utc": "2026-10-31T17:37:41.886223+00:00",
+    "status": "FIRST OBI concrete cutover; awaiting informed user approval, final source/scope GO and committed preexecution before action.",
+    "carrier_to_cancel": 41164821492,
+    "protected3_success": [
+      124430026307,
+      124430026314,
+      124430026384
+    ],
+    "complete_pairs_all_collectors": 29,
+    "OBI_complete_pairs_kept": 13,
+    "remaining_OBI_cells": [
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      }
+    ],
+    "new_started_backlog_tails": [
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027446,
+        "old_job_status": "in_progress",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3",
+        "started_at": "2026-10-31T17:04:08Z",
+        "elapsed_job_seconds": 2013.886223,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027456,
+        "old_job_status": "in_progress",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3",
+        "started_at": "2026-10-31T17:05:34Z",
+        "elapsed_job_seconds": 1927.886223,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027426,
+        "old_job_status": "in_progress",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3",
+        "started_at": "2026-10-31T17:24:48Z",
+        "elapsed_job_seconds": 773.886223,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    ],
+    "new_tail_elapsed_sum_minutes": 78.59431115000001,
+    "queued_OBI": [
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027588,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027457,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027476,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027529,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027553,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027503,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027619,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430028560,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430028565,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430028564,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "full",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430028552,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      }
+    ],
+    "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+    "future_ref": "capture-20261031-guest-logs-v3",
+    "first_wave_queued8": [
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027588,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027457,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027476,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027529,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027553,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027503,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430027619,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      },
+      {
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430028560,
+        "old_job_status": "queued",
+        "new_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "new_ref": "capture-20261031-guest-logs-v3"
+      }
+    ],
+    "reserved_tail3_case_slots": 3,
+    "global_slot_accounting": "Other2originalcarriers=6case slots +N7/N8/M6=3. Up to11singlecaseSdispatches(includingpendingprepares) =>20case slots, leaves11inverified31pool. Initially8genuinelyqueuedS +3protectedstandalones+6oldslots=17; threecancelled-tailidentitiesonlyaftertechnicalclosure proof.",
+    "samecell_policy": "All14 originalOBIbacklog must be terminal after normal carriercancel BEFORE new samecells; preserveevery newlycomplete validtail andholdpendingstrictadmission ratherthanduplicate. SourceS onlyafterexact3blob/fullscientificbyteequivalence and allstrictreaderprofiles; no source exclusion/accuracyselection.",
+    "research_scope": "All81/10operations/4methods/fixedcounts/suppliedsemantics/actualBering/Sheaft/externaloutcomes unchanged. Derivedbaseline notBeringdiscoverypublication.",
+    "not_touched": "Allcompleted29, allotherprotectedjobs inDeepFlow/Coroot, N7/N8/M6standalones; no blindworker cancellation.",
+    "costs": "Retainnew3partialtail elapsed/data/worker costs, unavailabletail data explicit, freshcapture/fullproof/report/archive costs. Jobelapsed is not CPU/billedtime.",
+    "root_verdict": "Explicit ORIGINAL-feasibility first-OBI scope GO contingentonlyonoperationalclosure and informeduserapproval, not weaker task or positive-result selection."
+  },
+  "closure_requirements": "Normalcancel once; awaitalloldjobs terminal. Preserveanycomplete/possiblyeligibletail withoutduplicate; countremainingother2carriersas6+N7/N8/M6as3. First8queuedS, reserve3tailslots pending technicalincompleteproof. No cancellation of othercarrier/worker.",
+  "tail_jobelapsed_minutes_at_action": 117.14095835,
+  "normal_cancel_accepted_utc": "2026-10-31T17:50:48.207177+00:00",
+  "all_old_OBI_jobs_terminal_observed_utc": "2026-10-31T17:53:15.073614+00:00",
+  "first8_dispatched": [
+    {
+      "run_id": 41226692036,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:53:15.073641+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226695588,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:17.854730+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226698796,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:20.313819+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226702306,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:53:22.721868+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226705392,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:25.439774+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226708635,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "absent",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:27.907751+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226712664,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:53:30.981102+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41226716530,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:53:34.055378+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    }
+  ],
+  "first8_exact_jobs": {
+    "observed_utc": "2026-10-31T17:54:01.109691+00:00",
+    "exact_singlecase_jobs": [
+      {
+        "run_id": 41226692036,
+        "job_id": 124612237136,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226695588,
+        "job_id": 124612241296,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226698796,
+        "job_id": 124612251246,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226702306,
+        "job_id": 124612261985,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226705392,
+        "job_id": 124612272836,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41226708635,
+        "job_id": 124612318554,
+        "status": "in_progress",
+        "active_steps": [
+          "Install experiment package"
+        ]
+      },
+      {
+        "run_id": 41226712664,
+        "job_id": 124612299454,
+        "status": "in_progress",
+        "active_steps": [
+          "Install experiment package"
+        ]
+      },
+      {
+        "run_id": 41226716530,
+        "job_id": 124612306149,
+        "status": "in_progress",
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      }
+    ]
+  },
+  "global_case_slots_reserved": 20,
+  "tail3_slots_reserved": 0,
+  "tail3_root_proof": [
+    {
+      "artifact_id": 13051253889,
+      "name": "campaign-v5-obi-main-otel_demo-partial-7-41164821492",
+      "digest": "sha256:5752cb6525b7c6ad062789e39b0c695e51c0f770cc49c484b2a0ba5d401d0441",
+      "full_CD_member_count": 914,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 501,
+          "sha256": "854534628b5609b5239519d9436ade943ac10dfd027dc020627b786e0f9597cd",
+          "CRC32": "11824805"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 7905,
+        "sha256": "7c19140578551b988c366498cfbf226461938bd5f677cf336a64dd6075e3753e",
+        "CRC32": "8ad68d77",
+        "transport_verified_bytes": 109320,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    },
+    {
+      "artifact_id": 13051098971,
+      "name": "campaign-v5-obi-main-otel_demo-partial-8-41164821492",
+      "digest": "sha256:4a89e2fbe088b31537fe698286ec1b940e9d9ec9a88819849709932b06c882e7",
+      "full_CD_member_count": 1004,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 501,
+          "sha256": "e02e6b1917184c42106aab190ab164756f735d1b332dc100e74a639a2a27444c",
+          "CRC32": "86310c5e"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 7906,
+        "sha256": "02fa7ebc9b65cc930fe1cec64decb99198bbee61c6f77996338d3070e8ecbd95",
+        "CRC32": "9f84bf42",
+        "transport_verified_bytes": 120827,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    },
+    {
+      "artifact_id": 13051039157,
+      "name": "campaign-v5-obi-main-otel_demo-full-6-41164821492",
+      "digest": "sha256:5710cbe0a1b2217f6b991da24b8599d6aeea1508aa24f67027733ee9873bee03",
+      "full_CD_member_count": 594,
+      "selected_technical_status": {
+        "status.json": {
+          "bytes": 498,
+          "sha256": "3c6dc7d4c4298538d38195f0848e262efacb1e935ed3618589fd7f4a9d0ab7b7",
+          "CRC32": "fdb136c1"
+        }
+      },
+      "absent_from_full_CD": [
+        "forecast-saved.json",
+        "freeze-integrity.json",
+        "toolchain/",
+        "infrastructure/training-checkpoint/ready.json",
+        "infrastructure/remote-toolchain-v4/dispatch.json"
+      ],
+      "blocks_proof": {
+        "bytes": 4738,
+        "sha256": "32867d8457e8ba5b5fd84ef61e635e592fb90e9324087fe0b23082e20643a99d",
+        "CRC32": "258522f8",
+        "transport_verified_bytes": 70244,
+        "range_failures": []
+      },
+      "recorded_block_phases": [
+        "class_train",
+        "calibration",
+        "calibration"
+      ],
+      "conclusion": "ActualAcquirecancelled/ContinueSKIPPED, no frozenforecast/model/validationtarget; technicallyincomplete, no outcome-basedselection"
+    }
+  ],
+  "last_updated_utc": "2026-10-31T18:01:03.760876+00:00",
+  "tail3_independent_original_GO": "work/skeptic-main-v5-observer/obi-stopped-tails-20261031/independent-original-tail3-go.json",
+  "tail3_dispatched": [
+    {
+      "run_id": 41227089066,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": "7"
+      },
+      "requested_at_utc": "2026-10-31T17:58:22.699938+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41227092801,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": "8"
+      },
+      "requested_at_utc": "2026-10-31T17:58:25.594210+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "run_id": 41227096018,
+      "inputs": {
+        "collector": "obi",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": "6"
+      },
+      "requested_at_utc": "2026-10-31T17:58:28.110200+00:00",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    }
+  ],
+  "tail3_exact_jobs": {
+    "observed_utc": "2026-10-31T17:58:45.873501+00:00",
+    "exact_singlecase_jobs": [
+      {
+        "run_id": 41227089066,
+        "job_id": 124613416731,
+        "status": "in_progress",
+        "runner_id": 1000029929,
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41227092801,
+        "job_id": 124613423639,
+        "status": "in_progress",
+        "runner_id": 1000029931,
+        "active_steps": [
+          "Free unused hosted SDK disk before capture"
+        ]
+      },
+      {
+        "run_id": 41227096018,
+        "job_id": 124613438868,
+        "status": "in_progress",
+        "runner_id": 1000029932,
+        "active_steps": [
+          "Install experiment package"
+        ]
+      }
+    ]
+  },
+  "live_observation": {
+    "observed_utc": "2026-10-31T17:58:55.410206+00:00",
+    "actual_capture_jobs": 20,
+    "active_model_workers": 7,
+    "technically_successful_jobs": 31,
+    "new_technical_issues": []
+  },
+  "remaining_OBI_queue": [
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "future_source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "dispatch_policy": "Use nextfreecase slots, no morethan20includingoldcarriers3each/standalonependingprepare1each; originalqueuedjobalreadycancelled before anyrunner/steps"
+    }
+  ]
+}

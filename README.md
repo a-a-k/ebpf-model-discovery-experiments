@@ -1,6 +1,70 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: iteration 5, three-collector main series and evidence audit.**
+**Current work: a fresh matched series with an explicit experiment controller.**
+The question is eBPF feasibility with absent/incomplete tracing. The user selected
+a new runner reusing verified deployment and collection components. The common
+source pins Bering 1.3.1 and corrected DeepFlow parser configuration.
+The 27 original clean-controller smoke settings passed;
+additional source regressions passed independent review. The first fresh
+series was technically stopped at 2026-10-30 19:05 UTC: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099992213),
+and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099997831).
+An exact saved-input audit found that v5 lost v4's same-observation HTTP route
+alias binding, artificially disadvantaging native inputs. [PR6](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/6)
+repairs that adapter without changing graphs or supplied semantics. All three
+collectors require the complete new 81-cell matrix at one repaired source after
+paired evidence review and qualification. Superseded data and costs remain.
+The a434 replacement qualification completed with 26 technical successes and one
+OBI OTel parser failure. It also exposed SDK/Compose role ambiguity in Petclinic
+fusion. [PR7](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/7)
+repairs those common paths using the literal protobuf default and existing
+verified runtime/deployment identities. Independent code and fixed saved-input
+review passed; this does not certify prediction availability or accuracy.
+Qualification at `6ef079a` exposed four pre-target Petclinic failures: operation
+metadata was applied in raw Docker IDs after binding a canonical SDK-role graph.
+[PR8](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/8) attaches only
+provided metadata to the already bound graph and preserves its actual discovery
+provenance. All27 settings at immutable `study-20261030-v4` (`f60cbfe`) completed
+and passed independent evidence review:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143808524),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143812257),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143815710).
+Unknown or inaccurate forecasts remain valid empirical results.
+The [pre-execution decision](docs/clean-study-requalification-v3-20261030.json)
+records the original criterion, simple baselines, both agents' verdicts and costs.
+The OBI OTel partial-prefix audit found117 real SERVER children with unique SDK
+parents but no local eBPF parent. Literal fields survived ingestion; Bering's
+internal source-domain separation prevented these cross-emitter links. The
+[catalog diagnosis](docs/OTEL_CATALOG_PARENT_AUDIT.md) therefore does not support
+an intrinsic inability to observe the calls. A separately declared
+[ordinary-OTLP edge-union baseline](docs/CONTEXT_BASELINE.md) preserves all original
+source arms and evaluates the strongest simple combination of the same data.
+All27 final common-source qualification cases at `0c98bf4` completed and passed
+both agents' actual saved-model, binding, simulator and pre-target evidence review.
+The [pre-execution record](docs/clean-study-requalification-v5-20261031.json)
+records both explicit ORIGINAL-feasibility verdicts before the fresh full81 series:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164821492),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
+The three original dispatches use immutable `study-20261031-v5`, all three
+applications/tracing modes, seeds6/7/8 and all ten operations. The series is running; no final main result or
+scientific success is claimed. Unknown and adverse outcomes remain in scope.
+Technical replacements additionally use actual revisions `fbbda015` (parent disk
+preparation) and `13c017bf` (preventive guest port preparation). Experiment code,
+dependencies and fixtures remain identical to qualified `0c98bf4`; reporting
+verifies the exact operational differences and retains actual source identities.
+The [disk-recovery decision](docs/clean-study-parent-preparation-preexecution-20261031.json)
+and [port-preparation decision](docs/clean-study-guest-port-preexecution-20261031.json)
+precede those captures. Current exact planned identities and completed packets
+are recorded in the [main candidate inventory](docs/clean-study-main-review-candidates-20261030.json).
+Earlier attempts, diagnostics and preparation costs are preserved in
+[verified permanent archives](docs/ARCHIVE_PUBLICATION.md).
+The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
+RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
+The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
+independent review and qualification decisions. Fresh main results are pending execution and independent evidence review.
+
+**Historical iteration 5 series and audit snapshots.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
@@ -161,10 +225,10 @@ observed application behavior:
 
 [Procrustes] supplies static preparation and confirmed deployment facts, [Bering]
 discovers the runtime graph, and [Sheaft] evaluates declared failure profiles on that
-graph. The desired contribution is the same useful external result with less
-instrumentation effort, or a better useful result at comparable complete cost. A
-graph that merely looks plausible, a high internal quality score, or an outcome-rate
-predictor stored beside a graph does not satisfy that criterion.
+graph. The original contribution criterion is feasibility with absent or
+incomplete native tracing, assessed against independent application outcomes.
+Cost superiority was not the original hypothesis. A plausible graph or an
+internal quality flag alone does not establish this end-to-end result.
 
 The strongest simple baseline receives the same operation contracts, controlled
 replica inventory and state mixture as the graph arm. For a required two-replica
@@ -181,7 +245,8 @@ Manual semantic declarations are charged to both methods. Human/agent preparatio
 time was not instrumented and remains explicitly unmeasured; no full-cost advantage
 will be claimed from runtime measurements alone.
 
-The executable protocol is [PROTOCOL_V4.md](docs/PROTOCOL_V4.md). It supersedes old
+The active executable protocol is [PROTOCOL_V5.md](docs/PROTOCOL_V5.md);
+[iteration4](docs/PROTOCOL_V4.md) remains historical. They supersede old
 two/ten-second admission rules, timestamp-containment gates and arbitrary accuracy
 thresholds. An unfavorable result remains an empirical result; it does not authorize
 a weaker post-hoc claim.

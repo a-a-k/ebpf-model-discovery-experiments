@@ -1,0 +1,27 @@
+{
+  "anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "revision": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+  "anchor_tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+  "revision_tree": "9b3d86a161fb85c68e5e8791170a52998836fda0",
+  "approved_operational_blobs": {
+    ".github/workflows/series-v5.yml": "e650edfcf90656bf06ed55fc5d824ba0c06c2381",
+    ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+    "docs/WORKER_PACKAGING_V5.md": "10edeef57398fc03c7f7405e55b24f157ec67cf3"
+  },
+  "identical_remaining_entries": 2126,
+  "observed_utc": "2026-10-31T14:48:22.087007+00:00",
+  "consumer_commit": "79f3a2120009f1bc3c785ef9e162bea4f20164ff",
+  "recorded_utc": "2026-10-31T14:51:39.668535+00:00",
+  "consumer_CI_success": [
+    41211609125,
+    41211613709
+  ],
+  "focused_tests": {
+    "passed": 143,
+    "elapsed_seconds": 11.26,
+    "scope": "actual report and saved-facts reader tests; both registered N/M Git-proof/identity/negative-selection fixtures"
+  },
+  "root_verdict": "Explicit ORIGINAL-feasibility actual-code consumerGO; exactM scientific equivalence and all source/data/freeze/outcome checks unchanged.",
+  "skeptic_verdict": "Explicit actual-code ORIGINALconsumerGO for79f3a21: all4strictprofiles, freshonlyMallowlist, exact3blobs, API/sourceidentityunchanged, samecell2eligible rejection preserved; readactual4filecommit.",
+  "remaining": "Independent fixed3 saved-facts qualification, all81review/report/outcome assessment still pending. ConsumerGO and actual port-preparation step success do not admit main results or prove historical cause."
+}

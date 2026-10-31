@@ -89,6 +89,33 @@ scientific source already have separate verified identities. Actual-code review
 and CI precede publication. Preparation, failed attempts, transfer, waiting and
 technical-repeat costs remain measured; human effort is unknown.
 
+The failed checkpoint's ZIP central directory declares 11,177,703,644
+uncompressed bytes in 1,145 files, compared with its 2,128,349,349-byte ZIP. The
+attempt journal accounts for 9,437,753,344 bytes and the observation index for
+993,099,776 bytes. The worker also allocates 8 GiB swap and retains its input ZIP.
+This size inspection read 142,045 bytes of range metadata and no member bodies.
+
+The common preparation was published as PR10/merge 8a9b17b after both independent
+actual-code ORIGINAL GO verdicts and successful CI 41173047078/41173077025.
+Completed DeepFlow workers 41173320126/41173372853 retain science source 0c98 and pass
+checkpoint restoration, validation, toolchain execution and packaging. The first
+reclaimed 18,006,036,480 bytes in 43.72 seconds. Its runner had 91,437,875,200 free
+bytes before preparation and 109,443,911,680 afterwards; these records distinguish
+reclaimed capacity from differences between hosted runners.
+
+The separately declared fresh OBI/DSB/absent/seed6 repeat 41173230022 uses the same
+science source 0c98 and plan. Its worker 41180285753 restored checkpoint 13033944638
+and completed successfully: Execute ran from 07:23:56 to 07:26:56 UTC on 2026-10-31.
+Its canonical training-plan digest 62e25d7f matches the original failed case and the
+successful DeepFlow/Coroot seed6 inputs. Both reviewers checked the exact input/manifest
+chain and completed logs; the original extraction failure point is passed.
+The repeat's parent campaign subsequently completed successfully, including
+target trials and publication of full artifact `13036282971` and summary artifact
+`13036736462`. Together with the eight other completed DSB absent-mode cases,
+this supplies all three collectors and all three seeds for that first setting.
+Independent full saved-facts review remains required before scientific admission.
+No worker payload was unpacked locally.
+
 ## Parent runner disk preparation
 
 DeepFlow DSB partial/seed8, parent `41164824120`, job `124430030947`,

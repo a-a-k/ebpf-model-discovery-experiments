@@ -1,0 +1,298 @@
+{
+  "decision_at_utc": "2026-10-31T01:14:06.570173+00:00",
+  "criterion": "Feasibility of eBPF observations as input to actual Bering graph discovery and useful Sheaft simulation with absent/incomplete native tracing, judged against independent application outcomes; no original cost superiority hypothesis.",
+  "strongest_simple_baselines": [
+    "SDK-only input from the same collector-co-running capture and same supplied contracts/inventory; full means enabled SDKs, not guaranteed complete ancestry.",
+    "Equal-information direct contract/inventory predicate (including exact A OR B arithmetic); no novelty or superiority over equivalent arithmetic.",
+    "Paired ordinary-OTLP Bering view plus a direct union of additional actual SERVER edges, retaining all original graph records/endpoints and identical supplied knowledge."
+  ],
+  "causal_source": "Bering source-domain separation hid actual SDK-parent/eBPF-child links. The ordinary OTLP pass uses the identical frozen bytes/order/roles and unchanged actual Go ambiguity guard. Import only absent actual SERVER edges among existing base services; retain conflicts as unknown.",
+  "source": {
+    "commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "ref": "study-20261031-v5",
+    "tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+    "reviewed_parent": "22600e3affe9a5cf66439ecf956ee9bf09b4e7e9",
+    "tree_identical_to_reviewed_source": true
+  },
+  "evidence": {
+    "paired_saved_audit": 41152205197,
+    "artifact_id": 13023164449,
+    "artifact_sha256": "30cb522e6813e0fd580965d572a6707e858e950fb0b36a8599904383bf63a066",
+    "requests_per_variant": 108,
+    "added_actual_server_edges_per_variant": 14,
+    "real_validation_and_simulation_pairs": 6,
+    "all_base_graph_records_preserved": true,
+    "original_forecasts_unchanged": true,
+    "post_target_diagnostic_is_primary_result": false,
+    "db_recovery_claim": false,
+    "final_source_ci_runs": [
+      41154236105,
+      41154255399
+    ]
+  },
+  "main_agent_verdict": "Explicit ORIGINAL GO to finalcommon qualification27 only, after actual code, frozen source and actual paired-output review; no main81 or positive research verdict.",
+  "skeptic_verdict": "EXACT-SOURCE ORIGINAL-feasibility GO for0c98bf4520e863ab021b60d00517ee2aa49ab38e/study-20261031-v5, independently verified equal reviewed tree, unchanged src/workflows and both exact merge/tag CI successes; qualification27 only, not main81 or empirical success.",
+  "qualification": {
+    "workflow": "series-v5.yml",
+    "runner": "study",
+    "stage": "smoke",
+    "collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "systems": [
+      "deathstarbench",
+      "otel_demo",
+      "petclinic"
+    ],
+    "modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "seed": 6,
+    "cells": 27,
+    "original_three_arms_unchanged": true,
+    "same_paired_policy_all_cells": true,
+    "unchanged_workload_and_controls": true,
+    "runs": {
+      "obi": 41154436408,
+      "deepflow": 41154440327,
+      "coroot": 41154444012
+    },
+    "dispatched_at_utc": "2026-10-31T01:15:18Z"
+  },
+  "review_rule": "Check real acquisition, actual model/command/source/freeze/outcome bindings and every concrete unknown. Unsupported/adverse results remain; no numeric availability, accuracy or response-time threshold.",
+  "cost_boundary": "Include both Bering passes, any added Sheaft executions, all preparation/CI/audits/failures/early stopping/worker and archival/report costs. Reuse is not independent execution. Human effort unmeasured, not zero. Actions elapsed is not CPU/billed consumption.",
+  "remaining_main": "All81 finalsource main cells dispatched after both originalGO; completion and independent actualmain review/report remain required.",
+  "actual_qualification_review": {
+    "review_run": 41162715350,
+    "review_source": "6ffa685fa158ff6074d461d0c3be5fd29c42cbb7",
+    "capture_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "all_27_saved_facts_checks_completed": true,
+    "root_actual_full_facts_cases": 27,
+    "root_literal_cases": 27,
+    "root_literal_model_binding_JSON_files": 369,
+    "root_all27_proof_sha256": "8984a5449273060a1184b0ab24d140c7e7ae6fd701a7c1948ed9592da4dc424e",
+    "root_literal_proof_sha256": "24908646c03355deee7a56c25207538fb39e9d3138aa36e5d59ad2a162cd7e19",
+    "representative_literal_joint_union_proof": "OBI OTel partial bothbasegraphs preserved, +14 realSERVERedges pervariant, restrictedmetadata actualSheaft model and saved .875=7of8externaltargets; sourcebyte/role/order unchanged, beforetargets.",
+    "same_external_trials_all_methods_and_variants": true,
+    "native_only_scope": "SDK-only observations with collector co-running; not agent-free",
+    "alias_rejections": "Unadmitted carriers retained, not forced toempty; distinct from actual joint metadata collisions. No unsafe alias invention.",
+    "first_reader_failure": {
+      "run": 41162303053,
+      "reason": "Workflow import path omitted repo systems namespace; failed beforefull_facts, technically stopped; existing27captures unchanged.",
+      "launch_only_correction": "6ffa685fa158ff6074d461d0c3be5fd29c42cbb7",
+      "both_design_and_actual_code_original_go": true,
+      "exact_ci_passed": [
+        41162579337,
+        41162583262
+      ]
+    },
+    "permanent_capture_archive": 41162733906,
+    "source_archive_root_verified_original_artifacts": 119,
+    "source_archive_root_verified_payload_ledger_records": 288,
+    "qualification_is_main_result": false,
+    "skeptic_actual_full_facts_cases": 27,
+    "skeptic_literal_cases": 27,
+    "distinct_guest_boots": 54,
+    "interpretation_limits": [
+      "The same external trials are reused across methods/variants; do not multiply N.",
+      "RAW/network_scope secondary DB-unknown reasons can change; primary availability was unchanged in this qualification. Do not claim allunknowns identical.",
+      "Unknown and inaccurate forecasts remain valid measurements. Coroot/DeepFlow missing required entry/RPC paths does not imply absence of observation or general eBPF impossibility."
+    ]
+  },
+  "main_execution_decision": {
+    "recorded_utc": "2026-10-31T03:32:22.921778+00:00",
+    "criterion": "Feasibility of eBPF observations as input to actual Bering graph discovery and useful Sheaft simulation with absent/incomplete native tracing, judged against independent application outcomes; no original cost superiority hypothesis.",
+    "strongest_simple_baselines": [
+      "SDK-only input from the same collector-co-running capture and same supplied contracts/inventory; full means enabled SDKs, not guaranteed complete ancestry.",
+      "Equal-information direct contract/inventory predicate (including exact A OR B arithmetic); no novelty or superiority over equivalent arithmetic.",
+      "Paired ordinary-OTLP Bering view plus a direct union of additional actual SERVER edges, retaining all original graph records/endpoints and identical supplied knowledge."
+    ],
+    "mechanism": "Bering source-domain separation hid actual SDK-parent/eBPF-child links. The ordinary OTLP pass uses the identical frozen bytes/order/roles and unchanged actual Go ambiguity guard. Import only absent actual SERVER edges among existing base services; retain conflicts as unknown.",
+    "same_information_and_supplied_semantics": true,
+    "root_verdict": "Explicit ORIGINAL-feasibility GO to the ORIGINAL fullmatched81 main cells at immutable0c98/tagv5, after independent inspection of all27 actual savedfacts and27 literalcasepackets. Alltenoperations/seeds6,7,8; original3arms +same cheapcontextbaseline; unknown/adverse outcomes retained. Not scientificsuccess/algorithmnovelty/effortadvantage.",
+    "skeptic_verdict": "Explicit ORIGINAL-FEASIBILITY GO for the ORIGINAL fullmatchedMAIN81 at immutable0c98/tagv5, after independent27fullfacts vs original27compact/guest and27literalgraph/binding/freeze review,54distinctguestboots. All3collectors/apps/modes,seeds6/7/8,all10ops,same4arms+equaldirectbaseline. No knowncommonadapterdefect remains. No availability/accuracy/effortgate; allunknowns/adverse/failed/earlystoppedattempts retained. This authorizes original-criterion measurement, not scientificsuccess/novelty/costadvantage.",
+    "cost_boundary": "Include both Bering passes, any added Sheaft executions, all preparation/CI/audits/failures/early stopping/worker and archival/report costs. Reuse is not independent execution. Human effort unmeasured, not zero. Actions elapsed is not CPU/billed consumption.",
+    "scope": {
+      "cells": 81,
+      "collectors": [
+        "obi",
+        "deepflow",
+        "coroot"
+      ],
+      "systems": [
+        "deathstarbench",
+        "otel_demo",
+        "petclinic"
+      ],
+      "modes": [
+        "absent",
+        "partial",
+        "full"
+      ],
+      "seeds": [
+        6,
+        7,
+        8
+      ],
+      "operations": 10,
+      "runner": "study",
+      "stage": "main",
+      "ref": "study-20261031-v5",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    "dispatched": true,
+    "skeptic_saved_verdict_sha256": "8f4a67971effea5e94556b687c63f0937279a7bb67f7dfe61329920ba30d662d",
+    "both_original_go_before_dispatch": true,
+    "runs": {
+      "obi": 41164821492,
+      "deepflow": 41164824120,
+      "coroot": 41164826834
+    },
+    "dispatch_requests": [
+      {
+        "collector": "obi",
+        "requested_at_utc": "2026-10-31T03:32:35.299909+00:00",
+        "run_id": 41164821492,
+        "created_at_utc": "2026-10-31T03:32:37Z",
+        "observed_status": "queued"
+      },
+      {
+        "collector": "deepflow",
+        "requested_at_utc": "2026-10-31T03:32:37.449886+00:00",
+        "run_id": 41164824120,
+        "created_at_utc": "2026-10-31T03:32:39Z",
+        "observed_status": "queued"
+      },
+      {
+        "collector": "coroot",
+        "requested_at_utc": "2026-10-31T03:32:39.524357+00:00",
+        "run_id": 41164826834,
+        "created_at_utc": "2026-10-31T03:32:41Z",
+        "observed_status": "queued"
+      }
+    ],
+    "pre_execution_GO_record_commit": "625a50c304eb008f0b9352d9616815785aae85eb"
+  },
+  "main_progress_observation": {
+    "observed_utc": "2026-10-31T04:56:11.948178+00:00",
+    "completed_or_independently_admitted_main_cells": 0,
+    "first_closed_training_snapshot": {
+      "artifact_id": 13029624829,
+      "artifact_name": "training-v4-deathstarbench-absent-8-41164821492",
+      "artifact_api_bytes": 2125415653,
+      "artifact_api_digest": "sha256:3e28c4ec2cae80a8b9425109b2ff931e1da16b42d85007c0dd03b6d1a16d2138",
+      "parent_run_id": 41164821492,
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "actual_collector": "obi",
+      "actual_controller": "clean-study",
+      "actual_smoke": false,
+      "actual_toolchain_execution": "worker",
+      "workload_counts_copied": {
+        "class_train": 600,
+        "calibration": 6000,
+        "target": 1200,
+        "class_test": 600,
+        "database": 20,
+        "async": 20
+      },
+      "source_commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "closed_manifest_sha256": "8d8344449495aa128ba00efc877eb206c9b87b8c0e142978cd286f06746080e9",
+      "ready_manifest_hash_matches": true,
+      "selected_status_and_collector_hashes_match_manifest": true,
+      "collector_lifecycle_copied": "started",
+      "collector_closed_checkpoint_copied": false,
+      "application_coverage_proven_copied": false,
+      "interpretation": "The training snapshot is closed while the original collector remains live; this is not a final capture closure, forecast, target outcome or completedmain admission. Only selected small metadata read locally; no whole ZIP, SQLite, wire or journal read."
+    },
+    "worker_run_observed": 41169312957,
+    "worker_output_artifact_observed": 13030412198,
+    "worker_conclusion": "success",
+    "worker_output_boundary": "Typed worker payload remains opaque locally. Actual model/ingest/unknowns and parent-import/forecast/target binding require the existing Actions main saved-facts review. No cross-host UTC inference."
+  },
+  "worker_disk_technical_recovery": {
+    "failed_worker": 41171880804,
+    "parent": 41164821492,
+    "cell": {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6
+    },
+    "checkpoint_artifact": 13031068777,
+    "failed_compact_artifact": 13031955460,
+    "failed_metadata_transport": "work/main81-compact-13031955460/root-small-metadata-transport.json",
+    "primary_cause": "OSError28NoSpaceLeftOnDevice _safe_extract beforemodelconstruction",
+    "parent_symptom": "Missingoutputmanifest inStudy.freeze, only5training/calibrationblocks, notargets",
+    "worktree": ".worktrees/worker-disk-preparation",
+    "branch": "fix/worker-disk-preparation",
+    "head": "134dcbbe0a17ce09f5b7354e36ad94bb2f510812",
+    "pr": 10,
+    "both_original_design_GO_beforeimplementation": true,
+    "actual_code_GO": "Both explicit ORIGINAL actual-code GO134dcbbe0a17ce09f5b7354e36ad94bb2f510812 beforepublication/technicalrepeat",
+    "tests": "29existingremote tests pass/1POSIXskip;YAML+2PythonAST+order+gitdiff pass",
+    "ci": [
+      41173047078,
+      41173077025
+    ],
+    "ci_state": "bothcompletedSUCCESS",
+    "plan": "Oneinlineworkflowstep removesonly3unusedhostSDKdirs beforecheckpointdownload, recordsdisk/time/workflow; identicalscienceinput0c98/restoredhashverifiedbinaries/8GiBswap. AfteractualcodeGO+CImergePR10thenexistingseries-v5 tagstudy-20261031-v5 collectorobi/stagemain/runnerstudy/systemdeathstarbench/modeabsent/seed6. No newframework orfull81restart. Existingworkersdispatchmainworkflow separatelyfrominputssciencecommit.",
+    "merge": "8a9b17bcbe223c76afac0f2cc2f4939523bf94a1",
+    "merged_utc": "2026-10-31T05:35:10Z",
+    "replacement_run": 41173230022,
+    "replacement_created_utc": "2026-10-31T05:35:46Z",
+    "replacement_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "replacement_status": "ActualAPI05:36UTC prepareSUCCESS, campaignactive Install experiment package",
+    "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json",
+    "actual_operational_recovery": {
+      "replacement_parent": 41173230022,
+      "replacement_worker": 41180285753,
+      "checkpoint": 13033944638,
+      "science": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "workflow": "8a9b17bcbe223c76afac0f2cc2f4939523bf94a1",
+      "execute_completed_success_utc": "2026-10-31T07:26:56Z",
+      "both_root_and_skeptic_exact_input_chain_checked": true,
+      "worker_completed_success": true,
+      "parent_final_validation_and_independent_main_admission_pending": true,
+      "root_proof": "work/root-worker-41180285753-completed-log-review.json",
+      "skeptic_proof": "work/skeptic-main-v5-observer/replacement-worker-41180285753-actual-output-review.json",
+      "small_plan_consistency_proof": "work/skeptic-main-v5-observer/existing-worker-canonical-plan-digests-review.json",
+      "plan_check_boundary": "All3collectors successful canonicaltrainingplan digests equal per absentseed6/7/8; OBIpartial6/7 also sameperseed. No planbody/journal/typedpayload read locally; no availability/accuracy gate."
+    }
+  },
+  "main_runtime_metadata_snapshot": {
+    "observed_utc": "2026-10-31T06:33:33Z",
+    "completed_main_capture_jobs": 5,
+    "independently_admitted_main_cells": 0,
+    "known_technical_failed_cell": {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "original_run": 41164821492,
+      "replacement_run": 41173230022
+    },
+    "small_metadata_reviews": [
+      "work/main81-compact-13031540651/root-small-metadata-review.json",
+      "work/main81-compact-13031719441/root-small-metadata-review.json"
+    ],
+    "same_seed8_obi_coroot_final_plans_file_sha256_claim": "dde79c12c0328cb56141cb14e0bbff31014e237dee0c940970b6b97001bcb8e4",
+    "local_inspection_limits": "Only selected small metadata/forecasts/block declarations. Largeplans/census/evaluations/journals remain inActions. DeepFlowtrainingmanifest exceededlocal4MiB/member inspection choice; no scientific exclusion or neweligibilitygate.",
+    "live_api_boundary": "Use direct gh API for mutable status/inventories; connector returned stale phase. Immutable saved-artifact identity remains checked by exact IDs/digests."
+  },
+  "saved_review_scheduling": {
+    "reviewed_source": "9acc7ef2c0b7127e1429ae9bc0bdddd184111aaa",
+    "max_parallel": 12,
+    "both_original_design_and_actual_code_GO": true,
+    "CI_success": [
+      41176572819,
+      41176576192
+    ],
+    "boundary": "Scheduling only. Sameper-jobUbuntu, fixed3qualification/all81series, failfastfalse, immutabledata/source/strictchecks. No capture/fit/sim/rescore/math/admission change. Include all actual preparation and review costs."
+  }
+}

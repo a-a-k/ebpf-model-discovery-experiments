@@ -1,0 +1,12 @@
+{
+  "observed_utc": "2026-10-31T14:23:32.543974+00:00",
+  "preexecution_commit": "29882cf",
+  "preexecution_record": "docs/clean-study-parent-partial7-preexecution-20261031.json",
+  "run_id": 41209827036,
+  "created_at": "2026-10-31T14:22:22Z",
+  "job_id": 124562364930,
+  "job_name": "campaign (deathstarbench, partial, 7)",
+  "actual_head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "actual_head_branch": "capture-20261031-parent-disk-v1",
+  "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209827036"
+}

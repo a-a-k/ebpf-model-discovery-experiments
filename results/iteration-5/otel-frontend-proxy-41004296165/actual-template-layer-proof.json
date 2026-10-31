@@ -1,0 +1,34 @@
+{
+  "observed_utc": "2026-10-31T09:19:34.774968+00:00",
+  "scope": "Exactly one manifest/history-mapped static template COPY layer; no base/binary/other layers, no image pull, traffic, capture or scoring.",
+  "history_nonempty_index": 11,
+  "history_entry": {
+    "created": "2026-07-23T14:09:16.785384005Z",
+    "created_by": "COPY ./src/frontend-proxy/envoy.tmpl.yaml envoy.tmpl.yaml # buildkit",
+    "comment": "buildkit.dockerfile.v0"
+  },
+  "manifest_layer": {
+    "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+    "digest": "sha256:a6325444f4db7c601d3a50bbaeb1541622b004d84f8bb2c8e5a4c68507d9e8f2",
+    "size": 2445
+  },
+  "rootfs_diff_id": "sha256:38706959d55990d050140b37d5f30309dab95291b857b0d8c11450e10b387352",
+  "received_compressed_bytes": 2445,
+  "compressed_sha256": "a6325444f4db7c601d3a50bbaeb1541622b004d84f8bb2c8e5a4c68507d9e8f2",
+  "uncompressed_tar_bytes": 16896,
+  "uncompressed_tar_sha256": "38706959d55990d050140b37d5f30309dab95291b857b0d8c11450e10b387352",
+  "selected_member": "home/envoy/envoy.tmpl.yaml",
+  "selected_member_bytes": 13931,
+  "selected_member_sha256": "e39bb0479ad16086db393df37bded2f4aa72ff4ad98fc75b2d320f58c26908c0",
+  "frontend_route": {
+    "match": {
+      "prefix": "/"
+    },
+    "route": {
+      "cluster": "frontend"
+    }
+  },
+  "manager_timeout_fields": {},
+  "same_bytes_as_pinned8c47_template": false,
+  "complete": true
+}

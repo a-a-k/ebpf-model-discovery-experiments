@@ -53,6 +53,54 @@ REFERENCED_AGGREGATE_SCHEMA = "evaluation-v5-saved-aggregate-referenced-v1"
 EVALUATION_REFERENCE_SCHEMA = "evaluation-v5-source-evaluation-reference-v1"
 PAYLOAD_MANIFEST_SCHEMA = "evaluation-v5-payload-manifest-v1"
 
+# Explicitly reviewed storage preparation; every other Git entry must match.
+# These are actual source revisions, never rewritten provenance identities.
+PREPARATION_ONLY_SOURCE_REVISIONS = {
+    "0c98bf4520e863ab021b60d00517ee2aa49ab38e": {
+        "fbbda015cefc4f11ee73f32be6ed661c70375f18": {
+            ".github/workflows/series-v5.yml": "8eed6cc872652a8c13125a980a9fa5eedee2311d",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "48c220fcb158379a3cf6216da939eafe4a153a0b",
+        },
+        "13c017bf72a86a6853f93a5b8f503de199bf7865": {
+            ".github/workflows/series-v5.yml": "e650edfcf90656bf06ed55fc5d824ba0c06c2381",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "10edeef57398fc03c7f7405e55b24f157ec67cf3",
+        },
+        "1d646f907d0241f25445fcfb4d07d4e0ba89d88b": {
+            ".github/workflows/series-v5.yml": "5546ce9214eead4e07dae0e8ed50828153f6e6e4",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "c270e8e4a2fb48f6d17c4dc0a334b99743d50f94",
+        },
+    },
+}
+
+
+def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
+    approved = PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision)
+    if not approved or anchor_tree.get('truncated') is not False or revision_tree.get('truncated') is not False:
+        raise ValueError('unreviewed preparation source or incomplete Git tree')
+
+    def entries(tree):
+        rows = {r['path']: {k: r[k] for k in ('mode', 'type', 'sha')}
+                for r in tree['tree'] if r['type'] != 'tree'}
+        if len(rows) != sum(r['type'] != 'tree' for r in tree['tree']):
+            raise ValueError('duplicate Git tree entry')
+        return rows
+
+    original, prepared = entries(anchor_tree), entries(revision_tree)
+    if ({k: v for k, v in original.items() if k not in approved}
+            != {k: v for k, v in prepared.items() if k not in approved}):
+        raise ValueError('preparation revision changes scientific source or file modes')
+    for path, blob in approved.items():
+        if (path not in original or prepared.get(path)
+                != {'mode': '100644', 'type': 'blob', 'sha': blob}):
+            raise ValueError('preparation revision differs from reviewed workflow blobs')
+    return {'anchor': anchor, 'revision': revision,
+            'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+            'approved_operational_blobs': approved,
+            'identical_remaining_entries': len(original) - len(approved)}
+
 
 def _read(path: Path, default: Any = None) -> Any:
     if not path.is_file():
@@ -207,6 +255,10 @@ def _declarations(path: Path) -> tuple[dict[str, Any], dict[tuple[int, tuple], d
     value = _read(path)
     if not isinstance(value, dict) or value.get("schema_version") != "v5-report-declarations":
         raise ValueError("v5 report declarations have the wrong schema")
+    if 'experiment_head' in value and (not isinstance(value['experiment_head'], str)
+            or len(value['experiment_head']) != 40
+            or any(ch not in '0123456789abcdef' for ch in value['experiment_head'])):
+        raise ValueError('declared experiment_head must be a full lowercase 40-character commit SHA')
     attempts: dict[tuple[int, tuple], dict] = {}
     run_ids: set[int] = set()
     for run in value.get("attempt_runs") or []:
@@ -591,7 +643,17 @@ def build(
                 "status", "compact_artifact_not_retained"
             ),
         })
+    common_head = declarations.get('experiment_head')
+    compatible_heads = {common_head, *PREPARATION_ONLY_SOURCE_REVISIONS.get(common_head, {})}
     for item in attempts:
+        observed_head = (item.get('manifest') or {}).get('commit')
+        if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
+            item['common_source_coverage_exclusion'] = {
+                'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
+                'expected_head': common_head, 'observed_head': observed_head,
+                'previous_eligible_main_coverage': item['eligible_main_coverage'],
+                'previous_reason': item.get('reason')}
+            item['eligible_main_coverage'] = False
         item["attempt_key"] = ":".join(str(value) for value in (
             item["run_id"], item["collector"], item["stage"], item["system"],
             item["mode"], item["seed"],
@@ -932,6 +994,15 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += _table(["Stored field", "Value"], [
         [key, value] for key, value in (payload.get("grid") or {}).items()
     ])
+    if (payload.get('declarations') or {}).get('experiment_head'):
+        prepared = PREPARATION_ONLY_SOURCE_REVISIONS.get(payload['declarations']['experiment_head'], {})
+        boundary = ('Historical main rows remain visible; source commits outside the reviewed set do not contribute to this grid.'
+                    if prepared else 'Historical main rows remain visible; other source commits do not contribute to this grid.')
+        lines += ['', 'Declared common source commit: `' + payload['declarations']['experiment_head'] +
+                  '`. ' + boundary]
+        if prepared:
+            lines += ['The reviewed runner/guest preparation revision(s) `' + '`, `'.join(prepared) +
+                      '` also use this scientific implementation. The reporting workflow verifies their exact approved operational blobs and all unchanged Git entries; actual source commits remain visible in every row. See `provenance/source-equivalence.json`.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:
@@ -949,6 +1020,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             status.get("status"), artifact.get("artifact_id"), artifact.get("digest"),
             artifact.get("full_artifact_id"), artifact.get("full_artifact_digest"),
             item.get("reason"),
+            (item.get('manifest') or {}).get('commit'), item.get('common_source_coverage_exclusion'),
         ])
     lines += _table([
         "Run", "Repository", "Collector", "Stage", "System", "Mode", "Seed",
@@ -956,6 +1028,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         "Full source artifact available", "Coverage eligible", "Independently admitted",
         "Status", "Summary artifact", "Summary digest",
         "Full artifact", "Full digest", "Missing/incomplete reason",
+        'Source commit', 'Common-source coverage exclusion',
     ], attempt_rows)
     lines += ["", "## Technical smoke qualification records", ""]
     smoke_rows = []
@@ -982,13 +1055,14 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             forecast_rows.append([
                 item.get("run_id"), item.get("collector"), item.get("system"), item.get("mode"),
                 item.get("seed"), item.get("technical_complete_self_reported"),
+                (item.get('manifest') or {}).get('commit'), item.get('eligible_main_coverage'),
                 row.get("operation"), row.get("source"), row.get("variant"), row.get("available"),
                 row.get("prediction", row.get("point_prediction")), row.get("forecast_interval"),
                 counts.get("true", counts.get("success")), counts.get("false", counts.get("failure")),
                 counts.get("none", counts.get("unknown")), row.get("reason"),
             ])
     lines += _table([
-        "Run", "Collector", "System", "Mode", "Seed", "Complete", "Operation", "Source",
+        "Run", "Collector", "System", "Mode", "Seed", "Complete", 'Source commit', 'Coverage eligible', "Operation", "Source",
         "Variant", "Available", "Stored forecast", "Stored interval", "Actual true",
         "Actual false", "Actual unknown", "Stored reason",
     ], forecast_rows)
@@ -1034,7 +1108,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             ])
     lines += _table([
         "Run", "Repository", "Role", "Run status", "Run conclusion", "Job", "Job name", "Job status",
-        "Job conclusion", "Stored elapsed s", "Artifacts",
+        "Job conclusion", "API interval s", "Artifacts",
     ], job_rows)
     lines += [
         "", "Human/agent preparation effort: " + _value(costs.get("human_agent_seconds")),

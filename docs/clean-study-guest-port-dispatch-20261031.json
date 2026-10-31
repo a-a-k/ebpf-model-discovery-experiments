@@ -1,0 +1,13 @@
+{
+  "observed_utc": "2026-10-31T14:46:25.649702+00:00",
+  "preexecution_commit": "bb20b60",
+  "preexecution_record": "docs/clean-study-guest-port-preexecution-20261031.json",
+  "run_id": 41211541665,
+  "created_at": "2026-10-31T14:44:43Z",
+  "actual_head_sha": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+  "actual_head_branch": "capture-20261031-parent-disk-port-v2",
+  "job_id": 124567436995,
+  "job_name": "campaign (deathstarbench, partial, 6)",
+  "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41211541665",
+  "identity_checked_before_outcome_inspection": true
+}
