@@ -4,10 +4,10 @@ on:
     inputs:
       audit:
         type: choice
-        options: [dsb-capture, entry-route-binding, provided-service-roles, semantic-metadata]
+        options: [dsb-capture, entry-route-binding, provided-service-roles, semantic-metadata, context-baseline]
         default: dsb-capture
       collector:
-        description: The semantic-metadata audit has one fixed Coroot job
+        description: Semantic-metadata has one fixed Coroot job; context-baseline has one fixed OBI job
         type: choice
         options: [all, obi, deepflow, coroot]
         default: all
@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        collector: ${{ fromJson(inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
+        collector: ${{ fromJson(inputs.audit == 'context-baseline' && '["obi"]' || inputs.audit == 'semantic-metadata' && '["coroot"]' || inputs.collector == 'obi' && '["obi"]' || inputs.collector == 'deepflow' && '["deepflow"]' || inputs.collector == 'coroot' && '["coroot"]' || '["obi","deepflow","coroot"]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -49,13 +49,14 @@ jobs:
           declaration=('docs/entry-route-binding-audit-20261030.json' if kind=='entry-route-binding'
                        else 'docs/provided-service-roles-audit-20261030.json' if kind=='provided-service-roles'
                        else 'docs/semantic-metadata-audit-20261030.json' if kind=='semantic-metadata'
+                       else 'docs/context-baseline-saved-audit-20261031.json' if kind=='context-baseline'
                        else 'docs/dsb-capture-audit-20261030.json')
           cells=json.loads(pathlib.Path(declaration).read_text())['cells']
           cell=next(row for row in cells if row['collector']==os.environ['COLLECTOR'])
           (root/'cell.json').write_text(json.dumps(cell,indent=2)+'\n')
           roles=(('full','compact','baseline_full','baseline_compact','partial_full','partial_compact')
                  if kind=='semantic-metadata' else ('full','compact','training')
-                 if kind=='provided-service-roles' else ('full','compact'))
+                 if kind in ('provided-service-roles','context-baseline') else ('full','compact'))
           for role in roles:
               endpoint=f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/artifacts/{cell[role]['id']}"
               with (root/(role+'-api.json')).open('wb') as stream:
@@ -70,7 +71,7 @@ jobs:
         env:
           PYTHONPATH: src:.
           AUDIT_SCRIPT: ${{ inputs.audit != 'dsb-capture' && 'audit-entry-route-binding.py' || 'audit-dsb-capture.py' }}
-          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || '' }}
+          AUDIT_ROLE_FLAG: ${{ inputs.audit == 'provided-service-roles' && '--provided-roles' || inputs.audit == 'semantic-metadata' && '--semantic-metadata' || inputs.audit == 'context-baseline' && '--context-baseline' || '' }}
         run: |
           python "scripts/$AUDIT_SCRIPT" --source work/dsb-audit-input \
             --cell work/dsb-audit-input/cell.json --out work/dsb-audit/facts.json $AUDIT_ROLE_FLAG
@@ -83,6 +84,7 @@ jobs:
             work/dsb-audit-input/*-api.json
             work/dsb-audit/facts.json
             work/dsb-audit/semantic-metadata/
+            work/dsb-audit/context-baseline/
             work/dsb-audit/toolchain-setup-time.txt
             work/dsb-audit-build/toolchain-build.json
             work/dsb-audit-build/logs/

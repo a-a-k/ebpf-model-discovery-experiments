@@ -1,0 +1,34 @@
+{
+  "purpose": "Diagnostic paired baseline from immutable closed training checkpoint; no new traffic, primary forecast or external scoring",
+  "prototype_head": "2fdf35f7a965157e57ea8013b075cb4deeb61f1b",
+  "cells": [
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "run_id": 41132051267,
+      "head_sha": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+      "original_root": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/campaign",
+      "training_manifest_sha256": "e686af3c2fa8755d02699e6ed9846390af196a4af6cb8555ab1bef419264d5d5",
+      "full": {
+        "id": 13016551407,
+        "name": "campaign-v5-obi-smoke-otel_demo-partial-6-41132051267",
+        "size_in_bytes": 50838124,
+        "digest": "sha256:f6af7f3011f20abb89d75087aa87a3827fa91b801fc0a7473631ece783192829"
+      },
+      "compact": {
+        "id": 13016791229,
+        "name": "v5-summary-obi-smoke-otel_demo-partial-6-41132051267",
+        "size_in_bytes": 284689,
+        "digest": "sha256:817afe0f8701394c3c4d8d802fb350a4c4fd291a6a4f658b3821877e22a25c0f"
+      },
+      "training": {
+        "id": 13014976833,
+        "name": "training-v4-otel_demo-partial-6-41132051267",
+        "size_in_bytes": 29007655,
+        "digest": "sha256:d3cdecb5050741f9c30f2ab589465cf4ce883c13045f11507dbf62a414c4b6dd"
+      }
+    }
+  ]
+}

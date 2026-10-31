@@ -1,7 +1,7 @@
 """Inspect fixed saved bindings, supplied roles, or operation metadata.
 
-Only the explicit semantic-metadata mode runs diagnostic validation/simulation;
-it never creates a primary forecast or scores application outcomes.
+The explicit semantic-metadata and context-baseline modes run diagnostic tools;
+neither creates a primary forecast or scores application outcomes.
 """
 from __future__ import annotations
 
@@ -11,7 +11,9 @@ import copy
 from datetime import datetime
 import hashlib
 import json
+import os
 from pathlib import Path, PurePosixPath
+import shutil
 import stat
 import sqlite3
 import subprocess
@@ -341,6 +343,277 @@ def member(path):
     raise ValueError('unrecognized original capture locator')
 
 
+def context_training_root(cell, workspace):
+    """Restore only at the actual checkpoint locator root, inside this workspace."""
+    expected = Path(workspace).resolve() / 'work/campaign'
+    if Path(cell['original_root']).resolve() != expected:
+        raise ValueError('closed training root is not this workspace/work/campaign')
+    if expected.exists() and any(expected.iterdir()):
+        raise ValueError('closed training restore destination is not empty')
+    return expected
+
+
+def context_input_sequence(manifest):
+    """Verify complete retained HTTP bodies in original group/request order."""
+    from ebpf_discovery.bering_v4 import _ordered_manifest_requests, _request_manifests
+    sequence = []
+    for group in _request_manifests(manifest):
+        for export, body in _ordered_manifest_requests(group, materialize=False):
+            if body is None:
+                path = Path(export['path'])
+                length, digest = path.stat().st_size, sha(path)
+            else:
+                digest_value, length = hashlib.sha256(), 0
+                try:
+                    while chunk := body.read(1024 * 1024):
+                        digest_value.update(chunk)
+                        length += len(chunk)
+                finally:
+                    body.close()
+                digest = digest_value.hexdigest()
+                if length != export['length']:
+                    raise ValueError('streamed diagnostic input length differs')
+            if digest != export['sha256'] or export['source'] not in ('native', 'ebpf'):
+                raise ValueError('diagnostic input bytes or original emitter role differs')
+            sequence.append({'source': export['source'], 'bytes': length, 'sha256': digest,
+                             'content_type': export['content_type'],
+                             'content_encoding': export.get('content_encoding') or ''})
+    return sequence
+
+
+def context_accepted_sequence(root, runtime, expected, *, joint):
+    command = read(root / runtime / 'replay-command.json')
+    proof = command['accepted_request_sequence']
+    path = root / runtime / 'accepted-request-sequence.jsonl'
+    if (command.get('status') != 'complete' or command.get('returncode') != 0
+            or Path(proof['path']) != path or sha(path) != proof['sha256']
+            or path.stat().st_size != proof['bytes']):
+        raise ValueError('actual diagnostic accepted sequence identity differs')
+    body = path.read_bytes()
+    rows = [json.loads(line) for line in body.splitlines()]
+    if not body.endswith(b'\n') or len(rows) != proof['requests'] or len(rows) != len(expected):
+        raise ValueError('actual diagnostic accepted sequence count differs')
+    for i, (row, wire) in enumerate(zip(rows, expected)):
+        endpoint = '/v1/traces' if joint or wire['source'] == 'native' else '/sources/ebpf/v1/traces'
+        if (row['http_status'] != 200 or row['export_index'] != i or row['endpoint'] != endpoint
+                or row['content_bytes'] != wire['bytes'] or row['content_sha256'] != wire['sha256']
+                or (joint and row.get('original_source') != wire['source'])):
+            raise ValueError('actual diagnostic ingest changed request bytes/order/role')
+    return {'path': str(path), 'sha256': sha(path), 'requests': len(rows),
+            'bytes': len(body), 'same_original_wire_order_and_roles': True}
+
+
+def audit_context_baseline(source, cell, out):
+    """New paired diagnostic only; original closed training and forecasts stay intact."""
+    from collections import defaultdict
+    import importlib
+    from ebpf_discovery.bering_v4 import child_go_environment
+    from ebpf_discovery.remote_toolchain_v4 import (
+        _safe_extract, _validate_checkpoint, _verify_binaries, _make_binaries_executable,
+        _readonly_store, _index_table_proof, WORKER_BERING_GO_ENV)
+    from ebpf_discovery.runtime import Context, write_json
+    from ebpf_discovery.store_v5 import ObservationStoreV5
+    from ebpf_discovery.toolchain_v5 import Toolchain, PINS
+    if os.environ.get('GITHUB_ACTIONS') != 'true':
+        raise RuntimeError('saved paired diagnostic execution is Actions only')
+    started = time.monotonic()
+    source, out = source.resolve(), out.resolve()
+    destination = out.parent / 'context-baseline'
+    destination.mkdir(parents=True, exist_ok=False)
+    original, artifacts = source / 'frozen-toolchain', {}
+    original.mkdir(exist_ok=False)
+    for role in ('full', 'compact', 'training'):
+        metadata, expected = read(source / (role + '-api.json')), cell[role]
+        archive_path = source / (role + '.zip')
+        if ({key: metadata[key] for key in expected} != expected
+                or metadata['workflow_run']['id'] != cell['run_id']
+                or metadata['workflow_run']['head_sha'] != cell['head_sha']
+                or metadata.get('expired') is not False
+                or archive_path.stat().st_size != expected['size_in_bytes']
+                or sha(archive_path) != expected['digest'].removeprefix('sha256:')):
+            raise ValueError('original paired audit artifact differs: ' + role)
+        artifacts[role] = metadata
+    with (zipfile.ZipFile(source / 'full.zip') as full,
+          zipfile.ZipFile(source / 'compact.zip') as compact):
+        manifest = json.loads(compact.read('evaluation-manifest.json'))
+        if manifest['commit'] != cell['head_sha'] or manifest['run_id'] != str(cell['run_id']):
+            raise ValueError('original paired compact identity differs')
+        for name in ('freeze-integrity.json', 'toolchain/forecasts.json'):
+            body = compact.read(name)
+            if (hashlib.sha256(body).hexdigest() != manifest['files_sha256'][name]
+                    or body != full.read(name)):
+                raise ValueError('original paired full/compact freeze or forecasts differs')
+        freeze = json.loads(compact.read('freeze-integrity.json'))
+        if not freeze['all_unchanged']:
+            raise ValueError('original paired source freeze was not intact')
+        names = full.namelist()
+        if len(names) != len(set(names)):
+            raise ValueError('duplicate original paired full member')
+        frozen = {name: digest for name, digest in freeze['sha256_by_path'].items()
+                  if name.startswith('toolchain/')}
+        if not frozen or any(name.startswith('toolchain/context-baseline/') for name in frozen):
+            raise ValueError('diagnostic source already contains paired output or lacks original toolchain')
+        for name, digest in frozen.items():
+            item = full.getinfo(name)
+            relative = PurePosixPath(name)
+            if ('..' in relative.parts or relative.is_absolute() or '\\' in name
+                    or item.is_dir() or stat.S_ISLNK(item.external_attr >> 16)):
+                raise ValueError('unsafe frozen paired toolchain member')
+            target = original / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with full.open(item) as stream, target.open('wb') as output:
+                shutil.copyfileobj(stream, output)
+            if sha(target) != digest:
+                raise ValueError('original frozen paired toolchain digest differs: ' + name)
+    training = source / 'closed-training'
+    _safe_extract(source / 'training.zip', training)
+    expected = {'run_id': str(cell['run_id']), 'commit': cell['head_sha'],
+                'system': cell['system'], 'mode': cell['mode'], 'seed': cell['seed'],
+                'manifest_sha256': cell['training_manifest_sha256']}
+    checkpoint, input_proof = _validate_checkpoint(training, expected)
+    restore = context_training_root(cell, os.environ['GITHUB_WORKSPACE'])
+    for row in checkpoint['indexed_sources']:
+        if Path(row['original_path']) != restore / row['relative_path']:
+            raise ValueError('training source locator is outside the exact restored prefix')
+    _safe_extract(source / 'training.zip', restore)
+    _validate_checkpoint(restore, expected)
+    if sha(training / 'toolchain-build/toolchain-build.json') != checkpoint['toolchain']['manifest_sha256']:
+        raise ValueError('closed training binary manifest differs')
+    binaries = _verify_binaries(restore, checkpoint, pins=PINS)
+    for proof in checkpoint['toolchain']['binaries']:
+        actual = binaries[proof['name']]
+        if actual['bytes'] != proof['bytes'] or actual['sha256'] != proof['sha256']:
+            raise ValueError('closed training declared binary differs')
+    _make_binaries_executable(binaries)
+    shutil.copytree(original / 'toolchain', restore / 'toolchain')
+    static = read(restore / 'toolchain/static-inputs.json')
+    declaration = importlib.import_module('systems.' + cell['system'] + '.experiment_v4')
+    if (static['tool_pins'] != PINS or static['deployment'] != read(restore / 'deployment.json')
+            or static['contracts'] != json.loads(json.dumps(declaration.CONTRACTS))):
+        raise ValueError('paired diagnostic would use different supplied semantics or tool pins')
+    # These original frozen alias dependencies must be the CLOSED training copies.
+    for name in ('supplied-service-aliases-training.json', 'supplied-service-alias-admission-training.json'):
+        relative = 'runtime-identity-v5/' + name
+        if (freeze['sha256_by_path'].get(relative) != sha(training / relative)
+                or (restore / relative).read_bytes() != (training / relative).read_bytes()):
+            raise ValueError('full freeze alias dependency differs from closed training')
+    before_index = _index_table_proof(restore / 'observation-index.sqlite')
+    before_forecasts = (restore / 'toolchain/forecasts.json').read_bytes()
+    ctx = Context(restore, cell['mode'], cell['seed'])
+    ctx.command_log = destination / 'diagnostic-commands.jsonl'
+    previous_bin = os.environ.get('PBS_BIN')
+    os.environ['PBS_BIN'] = str(restore / 'toolchain-build/bin')
+    store = _readonly_store(restore / 'observation-index.sqlite', ObservationStoreV5)
+    sequences = {}
+    try:
+        toolchain = Toolchain(ctx, cell['system'], store, declaration, collector=cell['collector'])
+        toolchain.entry_identity_groups = static['supplied_entry_identity_groups']
+        toolchain.entry_evidence, toolchain.input_manifests = {}, {}
+        toolchain.preflight_reports = defaultdict(list)
+        for origin in ('native', 'ebpf'):
+            for name, contract in declaration.CONTRACTS.items():
+                for step in range(len(contract['steps'])):
+                    path = restore / f'toolchain/procrustes/{origin}/{name}/{step}/report.json'
+                    if path.relative_to(restore).as_posix() not in frozen:
+                        raise ValueError('saved preflight report is not pre-target frozen')
+                    toolchain.preflight_reports[origin, name].append(path)
+        for emitter in ('native', 'ebpf', 'combined'):
+            for name in declaration.CONTRACTS:
+                entry = [read(restore / f'toolchain/{emitter}/{v}/{name}/entry-evidence.json')
+                         for v in ('raw', 'network_scope')]
+                if entry[0] != entry[1]:
+                    raise ValueError('original variant entry evidence differs')
+                toolchain.entry_evidence[emitter, name] = entry[0]
+            for variant in ('raw', 'network_scope'):
+                path = restore / f'toolchain/inputs/{emitter}/{variant}/observations.json'
+                toolchain.input_manifests[emitter, variant] = (path, read(path))
+                if emitter == 'combined':
+                    sequence = context_input_sequence(read(path))
+                    accepted = context_accepted_sequence(restore,
+                        f'toolchain/discovery/combined/{variant}/observed-runtime', sequence, joint=False)
+                    sequences[variant] = {'wire': sequence, 'original_accepted': accepted}
+        with child_go_environment(WORKER_BERING_GO_ENV) as go_environment:
+            write_json(destination / 'bering-go-environment.json', go_environment)
+            toolchain.forecast_context_baseline(json.loads(before_forecasts))
+    finally:
+        store.close()
+        if previous_bin is None:
+            os.environ.pop('PBS_BIN', None)
+        else:
+            os.environ['PBS_BIN'] = previous_bin
+        # Preserve actual partial commands/models even when a diagnostic tool fails.
+        paired_output = restore / 'toolchain/context-baseline'
+        if paired_output.exists():
+            shutil.copytree(paired_output, destination / 'paired')
+    for variant, evidence in sequences.items():
+        evidence['joint_accepted'] = context_accepted_sequence(restore,
+            f'toolchain/context-baseline/{variant}/joint/observed-runtime', evidence['wire'], joint=True)
+        base = read(restore / f'toolchain/discovery/combined/{variant}/observed.json')
+        union = read(restore / f'toolchain/context-baseline/{variant}/union-model.json')
+        joint = read(restore / f'toolchain/context-baseline/{variant}/joint/canonical.json')
+        proof = read(restore / f'toolchain/context-baseline/{variant}/union-proof.json')
+        original_edges = {edge['id']: edge for edge in base['edges']}
+        services = {service['id'] for service in base['services']}
+        added = [edge for edge in joint['edges'] if edge['id'] not in original_edges
+                 and (edge.get('identity') or {}).get('span_kind') == 'server'
+                 and {edge['from'], edge['to']} <= services]
+        if (set(union) != set(base) or any(union[k] != base[k] for k in base if k != 'edges')
+                or union['edges'] != base['edges'] + added
+                or [edge['id'] for edge in added] != proof['added_edge_ids']):
+            raise ValueError('paired union changed base records or imported an unobserved edge')
+        evidence.update(added_edge_ids=proof['added_edge_ids'],
+                        semantic_identity_conflicts=proof['semantic_identity_conflicts'],
+                        joint_alias_metadata_collisions=proof['joint_alias_metadata_collisions'],
+                        complete_original_model_records_preserved=True)
+    paired = restore / 'toolchain/context-baseline'
+    diagnostic_forecasts = read(paired / 'forecasts.json')
+    executions = []
+    for variant, forecasts in diagnostic_forecasts.items():
+        provenance = read(paired / variant / 'provenance.json')
+        if set(forecasts) != set(declaration.CONTRACTS):
+            raise ValueError('diagnostic operation coverage changed')
+        reused = provenance['status'] in ('reuse_single_source_equivalence', 'reuse_unchanged_union')
+        if reused and forecasts != json.loads(before_forecasts)['combined'][variant]:
+            raise ValueError('diagnostic reused forecast differs from original combined')
+        for operation, forecast in forecasts.items():
+            if not forecast['available'] or reused:
+                continue
+            folder = paired / variant / 'operations' / operation
+            validate, simulation = (read(folder / (name + '.command.json'))
+                                    for name in ('provided-metadata-validation', 'simulation'))
+            if (forecast['simulator'] != 'Sheaft' or forecast['graph_sha256'] != sha(folder / 'model.json')
+                    or forecast['analysis_sha256'] != sha(folder / 'analysis.json')
+                    or validate['returncode'] != 0 or simulation['returncode'] != 0
+                    or validate['argv'] != ['bering', 'validate', '--input', str(folder / 'model.json')]
+                    or simulation['argv'] != ['sheaft', 'run', '--model', str(folder / 'model.json'),
+                       '--analysis', str(folder / 'analysis.json'), '--out-dir', str(folder / 'simulation')]
+                    or not (folder / 'simulation/report.json').is_file()):
+                raise ValueError('available diagnostic forecast lacks its actual pinned model execution')
+            executions.append({'variant': variant, 'operation': operation,
+                               'model_sha256': forecast['graph_sha256'],
+                               'validation_command_sha256': sha(folder / 'provided-metadata-validation.command.json'),
+                               'simulation_command_sha256': sha(folder / 'simulation.command.json'),
+                               'simulation_report_sha256': sha(folder / 'simulation/report.json')})
+    after_checkpoint, after = _validate_checkpoint(restore, expected, allow_toolchain=True)
+    _validate_checkpoint(training, expected)
+    if (after_checkpoint != checkpoint or after != input_proof
+            or _index_table_proof(restore / 'observation-index.sqlite') != before_index
+            or (restore / 'toolchain/forecasts.json').read_bytes() != before_forecasts
+            or any(sha(restore / name) != digest or sha(original / name) != digest
+                   for name, digest in frozen.items())):
+        raise ValueError('original closed prefix or scientific file changed during paired diagnostic')
+    write_json(out, {'cell': cell, 'artifact_api': artifacts, 'training_input_proof': input_proof,
+        'training_index_table_proof': before_index, 'checkpoint_binary_proofs': binaries,
+        'original_frozen_toolchain_sha256_verified_before_and_after': frozen,
+        'original_forecasts_sha256': hashlib.sha256(before_forecasts).hexdigest(),
+        'paired_forecasts': diagnostic_forecasts, 'sequences': sequences, 'actual_executions': executions,
+        'path_relocations': [], 'restored_exact_original_root': str(restore),
+        'final_full_database_extracted_or_used': False, 'closed_training_only': True,
+        'new_application_traffic_or_external_outcome_scoring': False,
+        'new_pre_target_primary_forecast_claimed': False, 'diagnostic_discovery_and_simulation_only': True,
+        'elapsed_seconds': time.monotonic() - started, 'human_preparation_seconds': None})
+
+
 class SavedRoots:
     def __init__(self, root, roots):
         self.rows = {}
@@ -540,10 +813,13 @@ if __name__ == '__main__':
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--provided-roles', action='store_true')
     parser.add_argument('--semantic-metadata', action='store_true')
+    parser.add_argument('--context-baseline', action='store_true')
     args = parser.parse_args()
-    if args.semantic_metadata:
-        if args.provided_roles:
-            parser.error('choose only one saved audit mode')
+    if sum((args.semantic_metadata, args.provided_roles, args.context_baseline)) > 1:
+        parser.error('choose only one saved audit mode')
+    if args.context_baseline:
+        audit_context_baseline(args.source, read(args.cell), args.out)
+    elif args.semantic_metadata:
         audit_semantic_metadata(args.source, read(args.cell), args.out)
     else:
         audit(args.source, read(args.cell), args.out, provided_roles=args.provided_roles)
