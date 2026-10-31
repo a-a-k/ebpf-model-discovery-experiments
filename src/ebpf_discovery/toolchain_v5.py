@@ -52,6 +52,35 @@ def attach_operation_metadata(model, overlay):
     return result
 
 
+def context_edge_union(original, joint):
+    """Preserve the strict view; copy only additional observed SERVER edges."""
+    result = deepcopy(original)
+    services = {item['id'] for item in original['services']}
+    existing = {item['id']: item for item in original['edges']}
+    added, conflicts, skipped = [], [], []
+    semantic = ('from', 'to', 'kind', 'blocking', 'identity')
+    for edge in joint['edges']:
+        previous = existing.get(edge['id'])
+        if previous is not None:
+            if any(previous.get(key) != edge.get(key) for key in semantic):
+                conflicts.append(edge['id'])
+            continue  # Descriptive statistics stay in their two original views.
+        if (edge.get('identity') or {}).get('span_kind') != 'server':
+            skipped.append({'id': edge['id'], 'reason': 'not_an_actual_server_child_edge'})
+        elif edge['from'] not in services or edge['to'] not in services:
+            skipped.append({'id': edge['id'], 'reason': 'endpoint_service_not_in_original_view'})
+        else:
+            result['edges'].append(deepcopy(edge))
+            added.append(edge['id'])
+    return result, {'added_edge_ids': added, 'semantic_identity_conflicts': conflicts,
+                    'skipped_joint_edges': skipped,
+                    'original_services_endpoints_and_metadata_unchanged': True,
+                    'all_existing_edge_fields_unchanged': True,
+                    'new_edges_copied_from_actual_joint_bering_view': True,
+                    'contract_inferred_edges': False, 'physical_identity_inferred': False,
+                    'union_is_a_bering_emitted_snapshot': False}
+
+
 def collector_provenance(root: Path, status: dict | None = None) -> dict:
     """Validate the declared collector against retained runtime provenance."""
     root = Path(root)
@@ -120,6 +149,7 @@ class Toolchain(ToolchainV4):
     def collector_static_input(self):
         return {**self.collector_provenance,
                 'study_provenance_only': True,
+                'paired_context_baseline': 'observed_server_edge_union_v1',
                 'product_profile_contains_collector_identity': False,
                 'logical_source_id': 'ebpf',
                 'logical_source_domain': self.system+'-deployment',
@@ -168,7 +198,8 @@ class Toolchain(ToolchainV4):
                   'variants_retained': True, 'binding_suppressed': True}]
                 if collisions else [])
 
-    def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder):
+    def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder, *,
+                        observation_derivation=None):
         from .runtime import write_json
         overlay = json.loads(overlay_path.read_text(encoding='utf-8'))
         attached = attach_operation_metadata(model, overlay)
@@ -181,7 +212,10 @@ class Toolchain(ToolchainV4):
                  'raw_bering_snapshot': source_folder/'observed.snapshot.json',
                  'semantic_projection': source_folder/'observed.supplied-aliases.json',
                  'provided_overlay': overlay_path, 'simulator_model': folder/'model.json'}
-        write_json(folder/'provided-metadata-attachment.json', {
+        if observation_derivation is not None:
+            files['observed_model'] = Path(observation_derivation['model']['path'])
+            files['observation_derivation'] = Path(observation_derivation['proof']['path'])
+        proof = {
             'origin': 'provided_metadata_after_verified_semantic_view',
             'files': {key: {'path': str(path),
                             'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
@@ -191,8 +225,123 @@ class Toolchain(ToolchainV4):
             'entity_ids_unchanged': True,
             'final_model_is_a_bering_emitted_snapshot': False,
             'source_signal_quality_unchanged': True,
-            'same_information_all_sources_and_direct_baseline': True})
+            'same_information_all_sources_and_direct_baseline': True}
+        if observation_derivation is not None:
+            proof.update(observed_graph_origin='paired_context_edge_union',
+                         source_signal_quality_scope='base entities and database aliases; added edge evidence is in the actual joint quality',
+                         observation_derivation=observation_derivation)
+        write_json(folder/'provided-metadata-attachment.json', proof)
         return attached, quality
+
+    def forecast(self, plans):
+        results = super().forecast(plans)
+        self.forecast_context_baseline(results)
+        return results
+
+    def forecast_context_baseline(self, original_results):
+        """A paired forecast in the same pre-target phase; original arms stay intact."""
+        from .bering_v4 import replay
+        from .runtime import write_json
+        from .supplied_alias_v5 import semantic_view
+        baseline = self.root/'context-baseline'
+        baseline.mkdir(parents=True, exist_ok=True)
+        predictions, variants = {}, {}
+        def reference(path):
+            return {'path': str(path), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+        for variant in ('raw', 'network_scope'):
+            predictions[variant] = {}
+            out = baseline/variant
+            out.mkdir(parents=True, exist_ok=True)
+            shared = self.root/'discovery'/'combined'/variant
+            input_path, manifest = self.input_manifests['combined', variant]
+            counts = {source: self.input_manifests[source, variant][1]['observations']
+                      for source in ('ebpf', 'native')}
+            provenance = {'input_manifest': reference(input_path), 'source_observations': counts,
+                          'original_forecasts': reference(self.root/'forecasts.json')}
+            if not all(counts.values()):
+                predictions[variant] = deepcopy(original_results['combined'][variant])
+                provenance.update(status='reuse_single_source_equivalence',
+                                  extra_bering_or_sheaft_executed=False)
+                variants[variant] = provenance
+                write_json(out/'provenance.json', provenance)
+                continue
+            original_path = shared/'observed.json'
+            original = json.loads(original_path.read_text(encoding='utf-8'))
+            quality = json.loads((shared/'observed.signal-quality.json').read_text(encoding='utf-8'))
+            joint_folder = out/'joint'
+            raw_joint, raw_quality = replay(
+                self.bin/'bering', manifest, joint_folder, self.system+'-deployment',
+                prefix='observed', publication_mode=self.publication_mode,
+                source_profile=self.bering_source_profile(), joint_otlp=True)
+            joint, joint_quality, alias_proof = semantic_view(
+                raw_joint, raw_quality, self.supplied_alias_table,
+                self.supplied_alias_admission['aliases'])
+            alias_proof.update(table_path=str(self.supplied_alias_path),
+                               table_sha256=reference(self.supplied_alias_path)['sha256'],
+                               raw_model_path='observed.json',
+                               raw_model_sha256=reference(joint_folder/'observed.json')['sha256'],
+                               raw_quality_path='observed.signal-quality.json',
+                               raw_quality_sha256=reference(joint_folder/'observed.signal-quality.json')['sha256'])
+            write_json(joint_folder/'canonical.json', joint)
+            write_json(joint_folder/'canonical.signal-quality.json', joint_quality)
+            write_json(joint_folder/'supplied-aliases.json', alias_proof)
+            model, union = context_edge_union(original, joint)
+            write_json(out/'union-model.json', model)
+            union['joint_alias_metadata_collisions'] = alias_proof['metadata_collisions']
+            union['files'] = {
+                'base_model': reference(original_path),
+                'base_raw_model': reference(shared/'observed.bering-raw.json'),
+                'base_snapshot': reference(shared/'observed.snapshot.json'),
+                'base_quality': reference(shared/'observed.signal-quality.json'),
+                'base_alias_projection': reference(shared/'observed.supplied-aliases.json'),
+                'joint_raw_model': reference(joint_folder/'observed.json'),
+                'joint_snapshot': reference(joint_folder/'observed.snapshot.json'),
+                'joint_quality': reference(joint_folder/'observed.signal-quality.json'),
+                'joint_model': reference(joint_folder/'canonical.json'),
+                'joint_canonical_quality': reference(joint_folder/'canonical.signal-quality.json'),
+                'joint_alias_projection': reference(joint_folder/'supplied-aliases.json'),
+                'joint_replay': reference(joint_folder/'observed-runtime/replay-command.json'),
+                'joint_config': reference(joint_folder/'observed-runtime/serve.yaml'),
+                'joint_accepted_sequence': reference(joint_folder/'observed-runtime/accepted-request-sequence.jsonl'),
+                'union_model': reference(out/'union-model.json'),
+                'input_manifest': reference(input_path),
+                'static_inputs': reference(self.root/'static-inputs.json'),
+                'alias_table': reference(self.supplied_alias_path),
+                'alias_admission': reference(self.supplied_alias_admission_path)}
+            union['configured_tool_pins'] = self.tool_pins
+            union['quality_scope'] = ('Base quality remains unchanged for original entities and DB aliases; '
+                                      'added SERVER edges have actual joint-view evidence, not invented aggregate quality.')
+            write_json(out/'union-proof.json', union)
+            derivation = {'model': reference(out/'union-model.json'),
+                          'proof': reference(out/'union-proof.json')}
+            provenance.update(union=derivation, extra_bering_executed=True)
+            if union['semantic_identity_conflicts'] or union['joint_alias_metadata_collisions']:
+                for name in self.declaration.CONTRACTS:
+                    predictions[variant][name] = {
+                        'prediction': None, 'interval': [0, 1], 'by_state': {}, 'available': False,
+                        'reason': 'context_view_identity_or_alias_conflict',
+                        'semantic_identity_conflicts': union['semantic_identity_conflicts'],
+                        'metadata_collisions': union['joint_alias_metadata_collisions']}
+                provenance.update(status='unknown_view_alignment', extra_sheaft_executed=False)
+            elif not union['added_edge_ids']:
+                predictions[variant] = deepcopy(original_results['combined'][variant])
+                provenance.update(status='reuse_unchanged_union', extra_sheaft_executed=False)
+            else:
+                for name, contract in self.declaration.CONTRACTS.items():
+                    predictions[variant][name] = self.forecast_operation(
+                        'combined', variant, name, contract, input_path, manifest, shared,
+                        model, quality, out/'operations'/name, observation_derivation=derivation)
+                provenance.update(status='forecast_from_observed_context_union',
+                                  simulation_commands_present=len(list((out/'operations').glob('*/simulation.command.json'))))
+            variants[variant] = provenance
+            write_json(out/'provenance.json', provenance)
+        write_json(baseline/'forecasts.json', predictions)
+        write_json(baseline/'manifest.json', {
+            'policy_id': 'observed_server_edge_union_v1',
+            'policy': 'original graph plus additional actual joint-view SERVER edges',
+            'variants': variants, 'same_policy_all_collectors_and_scenarios': True,
+            'requires_capture_freeze_before_targets': True,
+            'post_target_diagnostic_is_not_a_primary_forecast': True})
 
     def bering_source_profile(self):
         return {'source_id': 'ebpf', 'input_type': 'ebpf-otlp'}

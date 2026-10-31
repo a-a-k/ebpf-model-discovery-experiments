@@ -90,7 +90,10 @@ infrastructure blocker must be reported explicitly, not described as completion.
 
 Continue autonomously through implementation, execution, diagnosis, reporting and
 review. A completed PR, passing test suite or queued workflow is an intermediate
-step. Keep the user informed; do not send Telegram messages.
+step. Keep the user informed. The current dialog's later personal Telegram
+AGENTS.md instruction supersedes the earlier no-Telegram preference: use its
+context mailbox for milestones and decision questions, keeping ordinary replies
+in the Codex dialog.
 
 Real application traffic, discovery, simulation and authoritative empirical
 calculations run in GitHub Actions. Local work is editing, static checks, focused

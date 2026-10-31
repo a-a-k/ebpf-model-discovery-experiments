@@ -133,8 +133,12 @@ def evaluate_campaign(root):
     status = legacy._read(root / "status.json", {})
     smoke = status.get("smoke") is True
     declaration, counts, phases, states = expected_counts(status["system"], smoke)
+    static = legacy._read(root/'toolchain/static-inputs.json', {})
+    paired_context = bool((static.get('collector') or {}).get('paired_context_baseline')
+                          or (root/'toolchain/context-baseline/forecasts.json').is_file())
     report = legacy.evaluate_campaign(root, expected_phases=phases, expected_states=states,
-                                     completed_status="smoke_complete" if smoke else "acquisition_complete")
+                                     completed_status="smoke_complete" if smoke else "acquisition_complete",
+                                     paired_context_baseline=paired_context)
     acquisition = acquisition_checks(root, status, declaration)
     if status.get("workload_counts") != counts:
         acquisition["problems"].append("workload_configuration_differs_from_fixed_design")
