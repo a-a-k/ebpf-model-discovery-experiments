@@ -118,14 +118,17 @@ def _integrity(root: Path, frozen: dict, forecasts: dict, *, paired_context_base
     for source in sources:
         for variant in VARIANTS:
             for operation, forecast in forecasts.get(source, {}).get(variant, {}).items():
+                reuse = False
+                if source == 'context-baseline':
+                    provenance = _read(root/'toolchain/context-baseline'/variant/'provenance.json', {})
+                    reuse = provenance.get('status') in ('reuse_single_source_equivalence', 'reuse_unchanged_union')
+                    if reuse and forecast != forecasts.get('combined', {}).get(variant, {}).get(operation):
+                        problems.append(f'paired_reused_forecast_differs:{variant}:{operation}')
                 if not forecast.get("available"):
                     continue
                 if source == 'context-baseline':
-                    provenance = _read(root/'toolchain/context-baseline'/variant/'provenance.json', {})
-                    if provenance.get('status') in ('reuse_single_source_equivalence', 'reuse_unchanged_union'):
+                    if reuse:
                         model = root/'toolchain/combined'/variant/operation/'model.json'
-                        if forecast != forecasts.get('combined', {}).get(variant, {}).get(operation):
-                            problems.append(f'paired_reused_forecast_differs:{variant}:{operation}')
                     else:
                         model = root/'toolchain/context-baseline'/variant/'operations'/operation/'model.json'
                 else:
