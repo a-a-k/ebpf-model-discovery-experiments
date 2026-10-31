@@ -605,9 +605,9 @@ def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
         build([], declarations, tmp_path/'report')
 
 
-def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path):
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions])
+def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
-    prepared = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor]))
     _, old = summary(tmp_path/'inputs', 31, 'main', head_sha='b' * 40)
     _, current = summary(tmp_path/'inputs', 32, 'main', head_sha=prepared)
     declarations = declared(tmp_path/'declared.json', [run(31, 'main'), run(32, 'main')])
@@ -626,9 +626,9 @@ def test_prepared_source_preserves_both_identities_and_excludes_other_versions(t
     assert restored(report, first) == old and restored(report, second) == current
 
 
-def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path):
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions])
+def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
-    prepared = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor]))
     summary(tmp_path/'inputs', 33, 'main', head_sha=anchor)
     summary(tmp_path/'inputs', 34, 'main', head_sha=prepared)
     declarations = declared(tmp_path/'declared.json', [run(33, 'main'), run(34, 'main')])
@@ -645,9 +645,10 @@ def test_preparation_equivalence_does_not_allow_selection_between_two_complete_v
 
 @pytest.mark.parametrize('mutation', ['none', 'science_blob', 'science_mode', 'added_file',
                                      'deleted_file', 'workflow_blob', 'truncated', 'unknown_head'])
-def test_preparation_equivalence_checks_exact_git_entries(mutation):
+@pytest.mark.parametrize('revision', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions])
+def test_preparation_equivalence_checks_exact_git_entries(mutation, revision):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
-    revision, approved = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS[anchor].items()))
+    approved = PREPARATION_ONLY_SOURCE_REVISIONS[anchor][revision]
     original = {'sha': '1' * 40, 'truncated': False, 'tree': [
         {'path': 'src/study.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40},
         *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': 'b' * 40} for p in approved]]}

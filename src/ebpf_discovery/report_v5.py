@@ -62,6 +62,11 @@ PREPARATION_ONLY_SOURCE_REVISIONS = {
             ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
             "docs/WORKER_PACKAGING_V5.md": "48c220fcb158379a3cf6216da939eafe4a153a0b",
         },
+        "13c017bf72a86a6853f93a5b8f503de199bf7865": {
+            ".github/workflows/series-v5.yml": "e650edfcf90656bf06ed55fc5d824ba0c06c2381",
+            ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+            "docs/WORKER_PACKAGING_V5.md": "10edeef57398fc03c7f7405e55b24f157ec67cf3",
+        },
     },
 }
 
@@ -991,7 +996,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         lines += ['', 'Declared common source commit: `' + payload['declarations']['experiment_head'] +
                   '`. ' + boundary]
         if prepared:
-            lines += ['The reviewed parent-storage revision(s) `' + '`, `'.join(prepared) +
+            lines += ['The reviewed runner/guest preparation revision(s) `' + '`, `'.join(prepared) +
                       '` also use this scientific implementation. The reporting workflow verifies their exact approved operational blobs and all unchanged Git entries; actual source commits remain visible in every row. See `provenance/source-equivalence.json`.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
