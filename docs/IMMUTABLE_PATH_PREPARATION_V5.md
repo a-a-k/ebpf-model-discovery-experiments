@@ -33,3 +33,26 @@ All previous failed/stopped capture, preparation, worker, two failed profiling
 attempts, transfers, checks and future equivalence/archival costs remain. Profiling
 overhead is not a speed benchmark. Human effort remains unknown; a runtime gain
 and sufficient hosted-job headroom must be observed before they are claimed.
+
+The fixed offline comparison is `saved_full7_equivalence` in the existing
+`diagnose-dsb-training-checkpoint-v4.yml` workflow. It admits only training
+artifact13047984145 and successful worker artifact13053549827 by API identity,
+complete ZIP SHA and the existing lossless transport verification. Source checks
+admit exactly the three recorded core blobs against anchor0c98bf4; all downstream
+code and system declarations must remain unchanged. Checkout includes full Git
+history. The old worker is the actual baseline; it is not recomputed.
+
+The comparison runs complete unprofiled preparation, keeps the full checkpoint
+and logical index proof unchanged, matches the complete input-file census and
+all exported wire/native/shard/value bytes, and matches all18 serialized entry
+proofs. Six manifests and two request indexes allow only the three source-proven
+preparation clock pairs. Counts, values, roles, types, order and storage facts
+remain strict. Child references can differ only after physical-file binding and
+completed child equivalence. Actual old models/Sheaft outputs are reused through
+unchanged downstream code and observational inputs; tools are not rerun offline.
+
+Offline equivalence is not completion of a timed-out parent. One fresh worst-case
+full7 capture must close end to end and pass the existing strict evidence review
+before the other five timeout/failed-acquisition replacements are dispatched.
+Shorter preparation changes application idle time; retain that operational timing
+and do not use mixed operational revisions to rank intrinsic collector speed.
