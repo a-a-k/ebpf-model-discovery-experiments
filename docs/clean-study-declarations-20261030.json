@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Direct17:58:55API:20actualcapturejobs+7modelworkers;31technicallysuccessful exactfull/compactpairs as18:00:10API, nofullindependentMAINadmissionyet. Userapproved firstOBIconversion complete: oldcarrierterminal, first8queued+3provenpreforecastincomplete repeats dispatched as11isolatedS singlecasejobs. Other2carriers/N7/N8/M6untouched; remainingOBIPCfull6/7/8 rolloveronlyas20cap frees. ActualsourceS scienceidenticalqualifiedanchor; nooutcome-basedselection. All81/10ops/fourmethods retained. Latestdirectsnapshot2026-10-31T18:18:28UTC:31successfuljobs/20activecases/5modelworkers, nonewtechnicalissues. Smallarchive41227578403 published+root/skepticall174payload/176assetchecks complete; large41228221300active. FullMAINadmission remains0.",
+  "main_dispatch_status": "Direct19:09:07UTC:36technicallysuccessful MAIN jobs with exactfull/compactpairs; allfixed3savedreaderqualification packetsnowavailable (DFDSBabs6A/CorootOTelFull6A/OBIPCpartial6S), bothORIGINALexecutionGO forunchangedstrictActionsreader. Noindependentactual-outputMAINadmissionyet. OriginalDFDSBfull6 job124430030929 failed19:01:04 parentENOSPC before6h; exactsame-scienceS replacement predeclared, noPOSTyet. OBIPCfull6 S41232316943 launchedonceafterfreeslot, PCfull7/8remaining. Preserveallcompleted/adverse/unknown andoldcosts; all81/10ops/4methods unchanged.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2039,6 +2039,19 @@
         }
       ],
       "note": "Exact userapproved OBI queue conversion technical repeat of cancelledAcquire job124430027426. BothindependentfullCD/status/blocks+APIreviews prove noforecast/model/targetchain; no outcomesselection. Actual operational source1d646f907d0241f25445fcfb4d07d4e0ba89d88b,2126scientificentries unchangedanchor; alloldpartialdata/costsretained; global20casecap."
+    },
+    {
+      "run_id": 41232316943,
+      "collector": "obi",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "Last3ofapproved14OBIhandoff: oldqueuedjob124430028565 hadnoassignedrunner/steps; exactsinglecase actualsource1d646f907d0241f25445fcfb4d07d4e0ba89d88b, samequalifiedscientificfiles. Fixedcounts/fourmethods/tenops and all81 retained; old/newcosts preserved, nooutcomeinspection."
     }
   ],
   "related_runs": [

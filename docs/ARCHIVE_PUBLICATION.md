@@ -23,6 +23,14 @@ standalone output contract.
 This removes accumulation across artifacts, not every possible disk limit. The
 existing chunker can transiently retain the largest ZIP and all its parts:
 approximately twice the largest original ZIP, plus metadata and runner overhead.
+Revision `22576a1` records available disk immediately before each artifact
+download. Its preflight reserves one original copy, or two copies for chunking,
+plus an explicit 64 MiB filesystem/provenance allowance. The retained JSON records
+the API identity and size, actual free space, chunk settings and decision.
+Insufficient space stops before downloading that original. This measures
+headroom at that instant; free space can subsequently change. Both independent
+code review and exact-source Linux CI (`41227869738`, `41227864982`) passed before
+the large terminal OBI archive was dispatched. Capture and admission are unchanged.
 
 Main and independent reviewer gave design and actual-code GO before execution.
 Focused synthetic cases cover standalone compatibility, cleanup before a second
@@ -72,6 +80,7 @@ Subsequent preserved batches include failed preparation and early stopping:
 | [41162733906](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41162733906) | 119 | 290 | 2,233,096,346 | All288 payload ledger records and two metadata assets agree. Covers53 terminal runs, including all final0c98 qualification parents/workers, diagnostic41152205197, canceled first saved-reader41162303053 and failed archive41162374422. |
 | [41165335207](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41165335207) | 28 | 73 | 46,363,207 | All71 payload ledger records and two metadata assets agree. Covers27 qualification saved-facts packets in reader41162715350, preceding archive's own proof/logs and four pre-execution/main-declaration CI runs. |
 | [41204936218](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41204936218) | 31 | 154 | 22,924,555,553 | All152 published payload ledger records and two metadata assets agree in ID, state, size and SHA256. Covers47 terminal runs, including26 DSB workers, the completed OBI/DSB/absent6 replacement and prior publication/preparation tails. |
+| [41227578403](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41227578403) | 13 | 176 | 4,306,188,097 | Root and independent reviewer verified all174 payload ledger/checksum records and both small metadata hashes. Covers57 terminal worker/preparation/probe/failed-N6/archive-proof runs. |
 
 The41152387177 batch's locally rehashed metadata assets are provenance.tar.gz
 (130952 bytes, SHA256 `33b3d7d110fd189ac1a98a367e199dbc923140cc1d7407fbf71bdf20852388c3`)
@@ -117,3 +126,12 @@ and were excluded, as was the then-active full7 replacement. Their subsequent
 outputs, the new parent-disk replacements and later review/report/publication
 tails require future terminal-run batches. Publication does not establish
 scientific admission or utility.
+
+Batch41227578403 published at18:13:34UTC. The
+[retention proof](../results/iteration-5/archive-41227578403.json) records both
+reviews, exact counts and locally rehashed provenance/checksum identities.
+Original ZIPs were rehashed by archival Actions; only the two small metadata
+assets and remote asset metadata were read locally. The separate large archive
+`41228221300` of terminal OBI carrier `41164821492` and full7 replacement
+`41189048917` is still running. Its publication and verification remain due,
+together with active main parents/workers and subsequent review/report tails.

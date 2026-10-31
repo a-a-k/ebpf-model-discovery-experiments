@@ -248,10 +248,10 @@
       "mode": "full",
       "seed": 6,
       "collector": "obi",
-      "run_id": 41164821492,
+      "run_id": 41232316943,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "petclinic",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 50,
+  "pending_artifact_cells": 45,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1096,6 +1096,86 @@
       "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-6-41164821492",
       "full_artifact_bytes": 3589815084,
       "full_artifact_digest": "sha256:ab25a87253cfbda022dcace1ec02baf5b5aea099a0c5223d4a1aa76e9cfc2f5c"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41226702306,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13053398338,
+      "compact_artifact_name": "v5-summary-obi-main-petclinic-absent-6-41226702306",
+      "compact_artifact_bytes": 37671430,
+      "compact_artifact_digest": "sha256:941802ab8e14d8a917dd814ed029c024627b4e2265cc74baa59f3aa25116f27a",
+      "full_artifact_id": 13054067190,
+      "full_artifact_name": "campaign-v5-obi-main-petclinic-absent-6-41226702306",
+      "full_artifact_bytes": 848969704,
+      "full_artifact_digest": "sha256:12c7a437a7fbcc561da5b587d978d639e0d3c240cb140d5bd4716ce945d6ea72"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41226705392,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13054715516,
+      "compact_artifact_name": "v5-summary-obi-main-petclinic-absent-7-41226705392",
+      "compact_artifact_bytes": 37063658,
+      "compact_artifact_digest": "sha256:01f427484750e6ba8938fb62fd53212517a3ca340f4dab6a0166b7896a20cefa",
+      "full_artifact_id": 13054845260,
+      "full_artifact_name": "campaign-v5-obi-main-petclinic-absent-7-41226705392",
+      "full_artifact_bytes": 839786020,
+      "full_artifact_digest": "sha256:c81cc95e65b7454de001634279ce6f47ace562bfa7937f5e0f5fe935659830d2"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41226708635,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13054660512,
+      "compact_artifact_name": "v5-summary-obi-main-petclinic-absent-8-41226708635",
+      "compact_artifact_bytes": 37184499,
+      "compact_artifact_digest": "sha256:7611cb75dfd4eca5751efffbe89fac416a40d0c715f8f596f6e8c54c5f2db9af",
+      "full_artifact_id": 13054790319,
+      "full_artifact_name": "campaign-v5-obi-main-petclinic-absent-8-41226708635",
+      "full_artifact_bytes": 840150195,
+      "full_artifact_digest": "sha256:b4bc7b19c0583f0a48bd5b4fdf7f1000887f0dffccafc2a40cbd2ca1a56aba23"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41226692036,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13054590786,
+      "compact_artifact_name": "v5-summary-obi-main-petclinic-partial-6-41226692036",
+      "compact_artifact_bytes": 36905694,
+      "compact_artifact_digest": "sha256:af7e4bad62f246181fa6e3a6019947d611a083066fb872760147927b5d5b5221",
+      "full_artifact_id": 13054770324,
+      "full_artifact_name": "campaign-v5-obi-main-petclinic-partial-6-41226692036",
+      "full_artifact_bytes": 1161448836,
+      "full_artifact_digest": "sha256:bd967116726402b5ee5507905d7708afe8ec9a27c367d4820be5cf053bfab807"
     },
     {
       "system": "deathstarbench",
@@ -1456,6 +1536,26 @@
       "full_artifact_name": "campaign-v5-coroot-main-otel_demo-partial-8-41164826834",
       "full_artifact_bytes": 1418519141,
       "full_artifact_digest": "sha256:c4c838340ceade1fea7577cd6e3170fcac621d8d57bb4a9965a3047296753d9a"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13053851896,
+      "compact_artifact_name": "v5-summary-coroot-main-otel_demo-full-6-41164826834",
+      "compact_artifact_bytes": 43209404,
+      "compact_artifact_digest": "sha256:6c48df8e3a4420ef24b741636e6f8ebf6bd1f2985e13100100a8074eafd35c1f",
+      "full_artifact_id": 13053234263,
+      "full_artifact_name": "campaign-v5-coroot-main-otel_demo-full-6-41164826834",
+      "full_artifact_bytes": 1271712498,
+      "full_artifact_digest": "sha256:3eb1312814fa65875541f679e51abea1f9c990ce4fc81994565c4eb347dfc341"
     }
   ],
   "superseded_planned_source": {
@@ -1468,7 +1568,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-10-31T18:00:10.959890+00:00: 31 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-10-31T19:09:07.243699+00:00: 36 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
