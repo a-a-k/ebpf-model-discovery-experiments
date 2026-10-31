@@ -115,8 +115,9 @@ Both agents give ACTUAL-OUTPUT ORIGINAL-feasibility GO to merging the reviewed
 implementation and running the final common-source qualification27. The result
 supports the proposed source-domain mechanism and the simple observed-edge union;
 it does not establish fresh predictive accuracy, algorithm novelty or a cost
-advantage. All required DB channels remain unobserved and DB-fault prediction
-unavailable; supplied conditional DB assumptions are not recovered dependencies.
+advantage. Not all required DB channels are established for these forecasts, and
+DB-fault prediction remains unavailable. Existing DB observations are preserved;
+supplied conditional DB assumptions are not recovered dependencies.
 The diagnostic itself records1041.78 seconds, excluding earlier downloads, CI and
 preparation, which remain separately charged. Human preparation remains unknown.
 Main81 requires actual-output review of that final qualification first.
@@ -129,3 +130,20 @@ The existing main34800/9600/SmokeFalse boundary remains unchanged. Qualification
 uses its already declared54/24 counts (DSB/OTel) or72/32 (Petclinic), not main
 admission. No replay, refit, scoring, new schema or generic validation framework
 is introduced. Preserve concrete unknowns, all failed checks and complete costs.
+
+Both agents independently inspected common-smoke verifier
+`ae20480b171915a2e1d61923a26f37a1dc63eea4` and passed all 85 focused reader tests.
+Both give actual-code ORIGINAL-feasibility GO to its existing Actions check once
+all 27 fixed artifact identities are populated. Exact-source CI41155152306 and
+41155159733 passed. Every review cell is bound to the eight original planned
+identity fields, including its qualification run ID. This engineering GO does
+not admit the captures or authorize main81 before their actual review.
+
+Before the report cohort correction, both agents give ORIGINAL-feasibility design
+GO to honoring the already tracked experiment_head. Only that exact source can
+contribute main-grid coverage. Keep every historical attempt, original evaluation,
+self-reported technical flag and cost unchanged; label any source exclusion
+separately. Existing duplicate-selection rules still reject two eligible attempts
+at the same source. Reports without a declared common source retain their prior
+behavior. This is an outcome-independent cohort correction before main outcomes,
+not an accuracy-based selection or a scientific success claim.

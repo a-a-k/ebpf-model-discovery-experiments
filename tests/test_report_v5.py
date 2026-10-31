@@ -55,10 +55,10 @@ def run(run_id: int, stage: str, mode="absent") -> dict:
             "note": "declared attempt"}
 
 
-def summary(root: Path, run_id: int, stage: str, complete=True) -> tuple[Path, dict]:
+def summary(root: Path, run_id: int, stage: str, complete=True, *, head_sha='a' * 40) -> tuple[Path, dict]:
     name = f"v5-summary-obi-{stage}-petclinic-absent-6-{run_id}"
     folder = root / str(run_id) / name
-    status = {"run_id": str(run_id), "commit": "a" * 40, "collector": "obi",
+    status = {"run_id": str(run_id), "commit": head_sha, "collector": "obi",
               "system": "petclinic", "mode": "absent", "seed": 6,
               "smoke": stage == "smoke",
               "status": ("smoke_complete" if stage == "smoke" else "acquisition_complete")
@@ -93,14 +93,14 @@ def summary(root: Path, run_id: int, stage: str, complete=True) -> tuple[Path, d
     full = name.replace("v5-summary-", "campaign-v5-", 1)
     write(folder / "evaluation-manifest.json", {
         "schema_version": "v5-cell-summary-manifest", "run_id": str(run_id),
-        "commit": "a" * 40, "collector": "obi", "system": "petclinic",
+        "commit": head_sha, "collector": "obi", "system": "petclinic",
         "mode": "absent", "seed": 6, "smoke": stage == "smoke",
         "full_artifact_name": full, "files_sha256": {
             "evaluation-v5.json": sha(folder / "evaluation-v5.json"),
             "status.json": sha(folder / "status.json")}})
     write(folder / "artifact-provenance.json", {
         "run_id": run_id, "repository": "MB3R-Lab/ebpf-model-discovery-experiments",
-        "head_sha": "a" * 40, "artifact_id": run_id * 10,
+        "head_sha": head_sha, "artifact_id": run_id * 10,
         "name": name, "digest": f"sha256:summary-{run_id}", "expired": False,
         "full_artifact_id": run_id * 10 + 1, "full_artifact_name": full,
         "full_artifact_digest": f"sha256:full-{run_id}", "full_artifact_expired": False,
@@ -518,6 +518,71 @@ def test_duplicate_requires_exact_technical_selection(tmp_path: Path) -> None:
     write(selection, value)
     with pytest.raises(ValueError, match="technical-only replacement"):
         build([tmp_path / "inputs"], declarations, tmp_path / "bad", selection_path=selection)
+
+
+def test_declared_common_source_keeps_old_complete_results_and_requires_explicit_selection(tmp_path):
+    summary(tmp_path/'inputs', 20, 'smoke', head_sha='a' * 40)
+    _, old = summary(tmp_path/'inputs', 21, 'main', head_sha='a' * 40)
+    current_folder, current = summary(tmp_path/'inputs', 22, 'main', head_sha='b' * 40)
+    current['evaluations'][0].update(prediction=.01, forecast_interval=[.01, .01])
+    write(current_folder/'evaluation-v5.json', current)
+    current_manifest = json.loads((current_folder/'evaluation-manifest.json').read_text())
+    current_manifest['files_sha256']['evaluation-v5.json'] = sha(current_folder/'evaluation-v5.json')
+    write(current_folder/'evaluation-manifest.json', current_manifest)
+    declarations = declared(tmp_path/'declared.json', [run(20, 'smoke'), run(21, 'main'), run(22, 'main')])
+    value = json.loads(declarations.read_text())
+    value['experiment_head'] = 'b' * 40
+    write(declarations, value)
+    unselected = build([tmp_path/'inputs'], declarations, tmp_path/'unselected')
+    assert unselected['grid']['technically_complete_main_cells'] == 0
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [210, 220], 'candidate_run_ids': [21, 22],
+        'selected_artifact_id': 220, 'reason_code': 'technical_common_source_replacement'}]})
+    report = tmp_path/'selected'
+    result = build([tmp_path/'inputs'], declarations, report, selection_path=selection)
+    assert result['grid']['technically_complete_main_cells'] == 1
+    old_row, new_row = attempts(result, 'main')
+    smoke = attempts(result, 'smoke')[0]
+    assert smoke['eligible_main_coverage'] is True and 'common_source_coverage_exclusion' not in smoke
+    assert old_row['technical_complete_self_reported'] is new_row['technical_complete_self_reported'] is True
+    assert old_row['eligible_main_coverage'] is False and new_row['eligible_main_coverage'] is True
+    assert old_row['common_source_coverage_exclusion'] == {
+        'rule': 'outside_predeclared_common_source', 'expected_head': 'b' * 40,
+        'observed_head': 'a' * 40, 'previous_eligible_main_coverage': True, 'previous_reason': None}
+    assert old_row['reason'] is None
+    assert restored(report, old_row) == old and restored(report, new_row) == current
+    assert result['selected_main_attempt_references'] == [new_row['attempt_key']]
+    out = report/'report.md'
+    render(report/'evaluation-v5.json', out)
+    text = out.read_text(encoding='utf-8')
+    assert 'Declared common source commit: `' + 'b' * 40 + '`' in text
+    assert 'a' * 40 in text and 'outside_predeclared_common_source' in text
+
+
+def test_common_source_does_not_allow_picking_between_two_complete_same_head_attempts(tmp_path):
+    summary(tmp_path/'inputs', 23, 'main')
+    summary(tmp_path/'inputs', 24, 'main')
+    declarations = declared(tmp_path/'declared.json', [run(23, 'main'), run(24, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = 'a' * 40
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [230, 240], 'candidate_run_ids': [23, 24],
+        'selected_artifact_id': 240, 'reason_code': 'technical_common_source_replacement'}]})
+    with pytest.raises(ValueError, match='technical-only replacement'):
+        build([tmp_path/'inputs'], declarations, tmp_path/'report', selection_path=selection)
+
+
+@pytest.mark.parametrize('head', [None, '', 'b' * 7, 'g' * 40])
+def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
+    declarations = declared(tmp_path/'declared.json', [])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = head
+    write(declarations, value)
+    with pytest.raises(ValueError, match='full lowercase 40-character commit'):
+        build([], declarations, tmp_path/'report')
 
 
 def test_selection_cannot_be_applied_to_a_single_attempt(tmp_path: Path) -> None:

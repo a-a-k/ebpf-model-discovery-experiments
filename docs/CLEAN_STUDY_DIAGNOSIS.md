@@ -180,9 +180,33 @@ an available/accurate-forecast result. Fresh common qualification is still requi
 
 ## Interpretation boundary
 
+The later [catalog audit](OTEL_CATALOG_PARENT_AUDIT.md) closes one important
+OTel cause: in the fixed OBI partial prefix, 117 actual catalog SERVER spans have
+one SDK parent and no local eBPF parent. All literal fields survive raw-to-input
+conversion. The connector's internal source-domain separation prevents these
+genuine cross-emitter links; it is not an application-protocol interception
+limit. The [fixed paired diagnostic](CONTEXT_BASELINE_SAVED_AUDIT.md) adds 14
+actual SERVER edges per view and runs all three operations through actual Sheaft,
+while retaining the complete base graph and old forecasts. It does not establish
+fresh external accuracy, recover missing DB channels, resolve every opaque peer,
+or prove which component wrote a propagated context header.
+
+The [metadata attachment repair](SEMANTIC_METADATA_ATTACHMENT.md) addresses a
+different Petclinic failure. In four 6ef qualification cells, binding used canonical
+SDK roles but operation discovery reapplied metadata to raw Docker IDs. The
+DeepFlow/Coroot partial cases stopped before model preparation completed; the
+full cases lost a required visits path after a conflicting two-replica SDK and
+one-replica Docker alias merge. No target traffic or frozen primary forecast
+existed for those failed cells. PR8 attaches metadata only to existing entities
+of the already bound graph. Its fixed saved-input comparison passed after the
+first empty-metadata mismatch was retained and corrected. Fresh f60 qualification
+completed all 27 settings; those four crashes did not recur. The new paired method
+still requires qualification at its own final common 0c98 source.
+
 The conditional collection-to-Bering-to-Sheaft path has positive Petclinic
 evidence, including the new OBI partial smoke. DSB remains unsupported by these
-saved operation graphs. OTel combines a repaired product defect with unresolved
-identity/proxy binding. None of those observations justifies an intrinsic ranking
+saved operation graphs. OTel combines repaired product/adapter defects, a proven
+source-domain association boundary and remaining identity/proxy limits. None of
+those observations justifies an intrinsic ranking
 of the three collectors or a general negative verdict about eBPF. The fresh
 81-cell common-source matrix and independent artifact review remain required.

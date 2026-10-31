@@ -207,6 +207,10 @@ def _declarations(path: Path) -> tuple[dict[str, Any], dict[tuple[int, tuple], d
     value = _read(path)
     if not isinstance(value, dict) or value.get("schema_version") != "v5-report-declarations":
         raise ValueError("v5 report declarations have the wrong schema")
+    if 'experiment_head' in value and (not isinstance(value['experiment_head'], str)
+            or len(value['experiment_head']) != 40
+            or any(ch not in '0123456789abcdef' for ch in value['experiment_head'])):
+        raise ValueError('declared experiment_head must be a full lowercase 40-character commit SHA')
     attempts: dict[tuple[int, tuple], dict] = {}
     run_ids: set[int] = set()
     for run in value.get("attempt_runs") or []:
@@ -591,7 +595,16 @@ def build(
                 "status", "compact_artifact_not_retained"
             ),
         })
+    common_head = declarations.get('experiment_head')
     for item in attempts:
+        observed_head = (item.get('manifest') or {}).get('commit')
+        if common_head and item['stage'] == 'main' and observed_head and observed_head != common_head:
+            item['common_source_coverage_exclusion'] = {
+                'rule': 'outside_predeclared_common_source',
+                'expected_head': common_head, 'observed_head': observed_head,
+                'previous_eligible_main_coverage': item['eligible_main_coverage'],
+                'previous_reason': item.get('reason')}
+            item['eligible_main_coverage'] = False
         item["attempt_key"] = ":".join(str(value) for value in (
             item["run_id"], item["collector"], item["stage"], item["system"],
             item["mode"], item["seed"],
@@ -932,6 +945,9 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += _table(["Stored field", "Value"], [
         [key, value] for key, value in (payload.get("grid") or {}).items()
     ])
+    if (payload.get('declarations') or {}).get('experiment_head'):
+        lines += ['', 'Declared common source commit: `' + payload['declarations']['experiment_head'] +
+                  '`. Historical main rows remain visible; other source commits do not contribute to this grid.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:
@@ -949,6 +965,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             status.get("status"), artifact.get("artifact_id"), artifact.get("digest"),
             artifact.get("full_artifact_id"), artifact.get("full_artifact_digest"),
             item.get("reason"),
+            (item.get('manifest') or {}).get('commit'), item.get('common_source_coverage_exclusion'),
         ])
     lines += _table([
         "Run", "Repository", "Collector", "Stage", "System", "Mode", "Seed",
@@ -956,6 +973,7 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         "Full source artifact available", "Coverage eligible", "Independently admitted",
         "Status", "Summary artifact", "Summary digest",
         "Full artifact", "Full digest", "Missing/incomplete reason",
+        'Source commit', 'Common-source coverage exclusion',
     ], attempt_rows)
     lines += ["", "## Technical smoke qualification records", ""]
     smoke_rows = []
@@ -982,13 +1000,14 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             forecast_rows.append([
                 item.get("run_id"), item.get("collector"), item.get("system"), item.get("mode"),
                 item.get("seed"), item.get("technical_complete_self_reported"),
+                (item.get('manifest') or {}).get('commit'), item.get('eligible_main_coverage'),
                 row.get("operation"), row.get("source"), row.get("variant"), row.get("available"),
                 row.get("prediction", row.get("point_prediction")), row.get("forecast_interval"),
                 counts.get("true", counts.get("success")), counts.get("false", counts.get("failure")),
                 counts.get("none", counts.get("unknown")), row.get("reason"),
             ])
     lines += _table([
-        "Run", "Collector", "System", "Mode", "Seed", "Complete", "Operation", "Source",
+        "Run", "Collector", "System", "Mode", "Seed", "Complete", 'Source commit', 'Coverage eligible', "Operation", "Source",
         "Variant", "Available", "Stored forecast", "Stored interval", "Actual true",
         "Actual false", "Actual unknown", "Stored reason",
     ], forecast_rows)

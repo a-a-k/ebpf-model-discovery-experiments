@@ -2186,6 +2186,131 @@
       "run_id": 41152205197,
       "role": "evidence",
       "note": "Audit fixed saved capture facts; source 31322e1a467128daaa5bb76ff8fdca50adf9ab34. Include preparation, failed and unfinished costs; run status is not an empirical verdict."
+    },
+    {
+      "run_id": 41155159733,
+      "role": "preparation",
+      "note": "Focused implementation checks; source ae20480b171915a2e1d61923a26f37a1dc63eea4. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41155152306,
+      "role": "preparation",
+      "note": "Focused implementation checks; source ae20480b171915a2e1d61923a26f37a1dc63eea4. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41155064946,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41155019595,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41155013978,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41155012547,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154990147,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154982297,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a00995c270761ac7b0e6a2ebe959121d6eeeb20c. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154977914,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a00995c270761ac7b0e6a2ebe959121d6eeeb20c. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154969821,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154953956,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154937980,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154928799,
+      "role": "worker",
+      "note": "Iteration 4 exact remote toolchain worker; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154432062,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 24f76aa22ce474648187311f8e0e3664145615c9. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154425023,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 24f76aa22ce474648187311f8e0e3664145615c9. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154255399,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154236105,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 0c98bf4520e863ab021b60d00517ee2aa49ab38e. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154148684,
+      "role": "preparation",
+      "note": "Focused implementation checks; source fd44d4ab800bde99ac06b1647adf6e0703bd4d4c. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154103803,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a9ec034ba881e74b4aa7894d9bb76889797fb7b4. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154081688,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 22600e3affe9a5cf66439ecf956ee9bf09b4e7e9. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41154077137,
+      "role": "preparation",
+      "note": "Focused implementation checks; source 22600e3affe9a5cf66439ecf956ee9bf09b4e7e9. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41153737296,
+      "role": "preparation",
+      "note": "Focused implementation checks; source f5d618b8b1077a6c6ec632b2d2729c50901142db. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41153732046,
+      "role": "preparation",
+      "note": "Focused implementation checks; source f5d618b8b1077a6c6ec632b2d2729c50901142db. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41153637411,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a843df6708ecd4da7c7394fd9413f6f2fc60b6df. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
+    },
+    {
+      "run_id": 41153632945,
+      "role": "preparation",
+      "note": "Focused implementation checks; source a843df6708ecd4da7c7394fd9413f6f2fc60b6df. Retain complete measured preparation, worker, failed and unfinished costs independently of result; API job elapsed is not CPU/billed usage."
     }
   ],
   "blocked_main_cells": [],
