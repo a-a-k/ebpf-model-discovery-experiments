@@ -14,12 +14,16 @@ on:
         description: Compare full copy and closed final hardlinks on the fixed OTel partial6 raw prefix, with equal storage pressure
         type: boolean
         default: false
+      saved_duplicate_lifetime:
+        description: Verify imported guest-prefix cleanup and early parent checkpoint release on fixed saved inputs only
+        type: boolean
+        default: false
 permissions:
   contents: read
   actions: read
 jobs:
   diagnose:
-    if: ${{ !inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links }}
+    if: ${{ !inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -184,7 +188,7 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
   saved-full7-equivalence:
-    if: ${{ inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links }}
+    if: ${{ inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -229,7 +233,7 @@ jobs:
           retention-days: 90
           if-no-files-found: error
   saved-checkpoint-copy-release:
-    if: ${{ inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_deepflow_final_links }}
+    if: ${{ inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -253,7 +257,7 @@ jobs:
           retention-days: 90
           if-no-files-found: error
   saved-deepflow-final-links:
-    if: ${{ inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence }}
+    if: ${{ inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_duplicate_lifetime }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -283,5 +287,73 @@ jobs:
         with:
           name: fixed-T-OTel-partial6-deepflow-final-links-${{ github.run_id }}
           path: work/deepflow-final-links-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-guest-prefix-release:
+    if: ${{ inputs.saved_duplicate_lifetime && !inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/guest-prefix-release-proof
+          df -B1 . > work/guest-prefix-release-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/guest-prefix-release-proof/disk-after-sdk-cleanup.txt
+      - name: Compare fixed original bytes under equal storage pressure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo --preserve-env=GH_TOKEN,GITHUB_ACTIONS,GITHUB_REPOSITORY,GITHUB_SHA \
+            env PATH="$PATH" PYTHONPATH="$GITHUB_WORKSPACE/src" \
+            /usr/bin/time -v -o work/guest-prefix-release-proof/qualification-time.txt \
+            python scripts/check-fixed-guest-prefix-release-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-partial6-guest-prefix-release-${{ github.run_id }}
+          path: work/guest-prefix-release-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-early-checkpoint-release:
+    if: ${{ inputs.saved_duplicate_lifetime && !inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/early-checkpoint-release-proof
+          df -B1 . > work/early-checkpoint-release-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/early-checkpoint-release-proof/disk-after-sdk-cleanup.txt
+      - name: Compare fixed original bytes under equal storage pressure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo --preserve-env=GH_TOKEN,GITHUB_ACTIONS,GITHUB_REPOSITORY,GITHUB_SHA \
+            env PATH="$PATH" PYTHONPATH="$GITHUB_WORKSPACE/src" \
+            /usr/bin/time -v -o work/early-checkpoint-release-proof/qualification-time.txt \
+            python scripts/check-fixed-early-checkpoint-release-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-absent6-early-checkpoint-release-${{ github.run_id }}
+          path: work/early-checkpoint-release-proof/
           retention-days: 90
           if-no-files-found: error
