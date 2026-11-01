@@ -161,7 +161,16 @@
   },
   "strict_W_worker_import_required": true,
   "old_S_proof_source_attribution_unchanged": true,
-  "actual_consumer_Linux_CI": "pendingcommit",
+  "actual_consumer_Linux_CI": {
+    "source": "319321aa85ce1bc419dc874f90bcd61018d53f26",
+    "runs": [
+      41341262203,
+      41341266437
+    ],
+    "conclusion": "success",
+    "both_push_and_PR_costs_retained": true
+  },
   "actual_PC_case_or_final_study_GO": false,
-  "complete_costs": "All originals, failed143/prefix, old/newparent/worker/preparation/CI/read/transfer/hash/archive cost retained; humanunknown."
+  "complete_costs": "All originals, failed143/prefix, old/newparent/worker/preparation/CI/read/transfer/hash/archive cost retained; humanunknown.",
+  "independent_actual_source_admission": "clean-study-PC-worker-consumer-independent-actual-review-20261101.json"
 }

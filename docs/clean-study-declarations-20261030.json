@@ -2572,6 +2572,19 @@
         }
       ],
       "note": "One qualified lossless f7ba failure-only replacement of parent41305889879 job124846078191; exact9076 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41342083079,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430032803; exact319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
     }
   ],
   "related_runs": [
@@ -4910,6 +4923,16 @@
       "run_id": 41340135875,
       "role": "preparation",
       "note": "Exact0565115 Linux CI for reusing the existingworker forPC:one workflowroute+PC atomicimportfixtures, productionPython/app/model/binaries all exactf7. Originalsameprogram/input design/codeGO, noextra fullmodel qualification required; actualPCcase workerimport+independentoutcomesstillrequired. All checks/preparation/workeroperationalcosts retained."
+    },
+    {
+      "run_id": 41341262203,
+      "role": "preparation",
+      "note": "Exact319 strictW source/reader/workflow admission+existing PCworker routing integration LinuxCI. Both push/PR checks retained; actualWcaseworkerimport/fullindependentoutcomesstillrequired, no captureadmission for319mergehead."
+    },
+    {
+      "run_id": 41341266437,
+      "role": "preparation",
+      "note": "Exact319 strictW source/reader/workflow admission+existing PCworker routing integration LinuxCI. Both push/PR checks retained; actualWcaseworkerimport/fullindependentoutcomesstillrequired, no captureadmission for319mergehead."
     }
   ],
   "blocked_main_cells": [],
