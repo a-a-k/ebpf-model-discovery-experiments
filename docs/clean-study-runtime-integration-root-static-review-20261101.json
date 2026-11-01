@@ -54,7 +54,24 @@
     "elapsed_seconds": 28.85,
     "scope": "Focused checkpoint,collector,remote,identity,report,reader unit fixtures; no real application or authoritative results processing locally"
   },
-  "actual_Linux_CI": "not yet dispatched",
+  "actual_Linux_CI": {
+    "source": "aecbc8ce85082ebe5122ff8879555f1d15e47d78",
+    "runs": [
+      {
+        "id": 41333867788,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 41333873213,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "both_push_and_PR_costs_retained": true
+  },
   "original_final_study_GO": false,
-  "scientific_capture_admission_for_merge_head": false
+  "scientific_capture_admission_for_merge_head": false,
+  "independent_actual_code_and_CI_review": "clean-study-runtime-integration-independent-actual-review-20261101.json",
+  "independent_actual_review_original_bytes_sha256": "4aa08c07985a5329e6e3bd80e4b056948e7b77a814186f29613a275e64af0362"
 }

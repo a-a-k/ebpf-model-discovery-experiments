@@ -44,8 +44,8 @@ advantage is claimed; human preparation effort is unknown.
 
 The supported interpretation is narrow: this pinned DeepFlow configuration and
 repetition did not supply sufficient operation-level evidence for useful Sheaft
-forecasts when native tracing was absent. The other Petclinic repetitions and
-modes must still be assessed before a broader collector comparison.
+forecasts when native tracing was absent. Repetitions 7/8 are assessed below;
+the other Petclinic modes still require completion before the final comparison.
 
 ## DeathStarBench, partial SDK repetition 7 and full SDK repetition 6
 
@@ -128,8 +128,39 @@ phase; vets have 5/5 in both. The direct vets database prediction is explicitly
 conditional and unavailable, not a failed prediction of 0. These are retained
 negative or unsupported findings; no favorable-outcome reruns are warranted.
 
-This brings the independently reviewed main subset to 65/81. The complete
+The fifth batch brought the independently reviewed main subset to 65/81. The complete
 three-collector study, remaining captures, final report and retention tail remain
 unfinished. Paired method/view rows are not independent repetitions; all source,
 preparation, worker wait, reader, failure and archive costs remain attributable,
 and human preparation effort is unknown.
+
+## Petclinic absent repetition 8: all three absent repeats reviewed
+
+The existing [sixth saved reader](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41333444648)
+checked only the original absent/8 packet; the first 65 cases were not replayed.
+The [root review](clean-study-batch6-root-subset-review-20261101.json) and
+[independent review](clean-study-batch6-independent-subset-review-20261101.json)
+both admit the actual evidence. It contains 34,800 primary observations,
+9,600 independent targets, 16 blocks, two distinct guest boots and genuinely
+zero native training/final spans. Forecast bindings were frozen before targets.
+
+Four pooled Bering calls each ingested 425,804 observations from 1,666 input
+shards. The raw observed graph has 15 edges and 13 endpoints; the network view
+has 13 edges and 13 endpoints. These differ from repetition 6 and are not empty
+graphs. Required gateway-to-service and caller-to-database obligations remain
+missing or ambiguous, so all 32 source/context operation forecasts are unknown.
+No per-operation Sheaft execution is invented for an unavailable branch.
+
+Owners and vets succeed 2,400/2,400; visits and owner details succeed
+2,100/2,400, against direct primary predictions 1/1/0.875/0.875. The recorded
+DB-down phase has 0/5 for owners, visits and details, versus 5/5 in the up phase;
+vets have 5/5 in both. The direct vets DB prediction is conditional/unknown.
+These selected facts do not independently establish the physical DB stop state
+or the mechanism of that behavior. Kernel/exporter zero-loss remains unproved.
+
+All three DeepFlow Petclinic absent repetitions therefore fail to provide
+sufficient graph evidence for the requested operation forecasts in this pinned
+configuration. This is an observed applicability limitation, not a reason to
+replay a complete case or a universal impossibility claim. The independently
+reviewed main subset is now **66/81**; the remaining 15 DeepFlow cases, complete
+report and finite retention tail are still required.

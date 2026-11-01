@@ -4836,6 +4836,16 @@
       "run_id": 41333058746,
       "role": "preparation",
       "note": "Exact5e3 Linux CI for documentation-only seven qualified failure replacements and existing-reader PCabsent8 manifest. All preparation/check costs retained; no scientific admission."
+    },
+    {
+      "run_id": 41333867788,
+      "role": "preparation",
+      "note": "Actual aec runtime+consumer integration Ubuntu24.04 CI, including full pytest/shell syntax/compileall/pinned HAProxy control fixture. Both push and PR workflow runs retained, including duplicated checks/costs; no merged-head capture admission or scientific-success claim."
+    },
+    {
+      "run_id": 41333873213,
+      "role": "preparation",
+      "note": "Actual aec runtime+consumer integration Ubuntu24.04 CI, including full pytest/shell syntax/compileall/pinned HAProxy control fixture. Both push and PR workflow runs retained, including duplicated checks/costs; no merged-head capture admission or scientific-success claim."
     }
   ],
   "blocked_main_cells": [],
