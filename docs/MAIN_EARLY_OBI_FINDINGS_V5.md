@@ -1,7 +1,9 @@
 # Reviewed OBI main cases: observed limitations and conditional feasibility
 
-These are nine DeathStarBench cases and four OTel cases from the first fixed
-56-packet review batch, not the final 81-cell comparison. All three collectors
+These are all 26 OBI cases in the first fixed 56-packet review batch: nine
+DeathStarBench, eight OTel and nine Petclinic cases. The last OBI OTel partial/8
+packet is assigned to the next frozen review batch. This is not the final
+81-cell comparison. All three collectors
 still require the same complete matrix and original evidence checks. The original
 question is whether eBPF can replace or complement missing SDK traces through
 actual Bering graphs, actual Sheaft and independent application outcomes.
@@ -77,3 +79,29 @@ Unknown/adverse results, technical interruptions and all preparation, capture,
 worker, discovery, simulation, review, transfer and retention costs remain.
 Unmeasured human effort is unknown. No complete-study, collector-ranking,
 cost-superiority or scientific-novelty claim follows from these subsets.
+
+## Remaining OBI cases: Petclinic support and adverse OTel outcomes
+
+All nine Petclinic cases support the four operations through the actual eBPF
+and combined models. Partial native SDK tracing supports owners and vets but
+does not support the two visit-dependent operations. Full native tracing
+supports all four. Forecasts are 1 or 0.875; original external failures remain,
+including owner-details successes of 2098/2400 in absent/6 against 0.875.
+
+In OTel partial/6, the prespecified context union adds 17 observed SERVER edges
+per view and forecasts 0.875. External successes are 2693/3200 for browse/cart
+and 2589/3200 for checkout. Full/6 adds 16 context edges and yields 2735/3200
+for browse/cart and 2653/3200 for checkout. The separately verified PostgreSQL
+memory-limit OOM belongs to this full/6 capture. Full/7 also has adverse
+outcomes (0.8615625–0.868125), with no established transfer of that cause;
+full/8 has 0.875 for all three operations.
+
+The remaining thirteen metadata packets were checked by both reviewers:
+214 primary source/view/operation rows are available and 74 are unknown;
+96 context rows are available. These are paired rows, not independent samples.
+The three full OTel facts documents use an explicit facts-only 6 MiB transport
+exception. The original qualified reader, scientific criteria and original
+captures are unchanged.
+
+See the [root remaining-case review](clean-study-remaining13-OBI-derived-root-review-20261101.json)
+and [independent remaining-case review](clean-study-remaining13-OBI-derived-independent-review-20261101.json).

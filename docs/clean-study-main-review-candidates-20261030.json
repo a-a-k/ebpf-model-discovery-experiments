@@ -308,60 +308,60 @@
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41211541665,
+      "run_id": 41259904200,
       "stage": "main",
       "runner": "study",
-      "head_sha": "13c017bf72a86a6853f93a5b8f503de199bf7865"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41209827036,
+      "run_id": 41259915749,
       "stage": "main",
       "runner": "study",
-      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41209667348,
+      "run_id": 41259927579,
       "stage": "main",
       "runner": "study",
-      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41233204064,
+      "run_id": 41261041075,
       "stage": "main",
       "runner": "study",
-      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41259938855,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "deathstarbench",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41259950155,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "otel_demo",
@@ -1988,7 +1988,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-11-01T00:21:45.558070+00:00: 57 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-11-01T01:59:12.440800+00:00: 57 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
