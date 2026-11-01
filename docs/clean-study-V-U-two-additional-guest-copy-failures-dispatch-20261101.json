@@ -1,0 +1,798 @@
+{
+  "recorded_before_any_POST_utc": "2026-11-01T12:18:47.868448+00:00",
+  "state": "both_fixed_cases_dispatched_source_verified",
+  "plan": {
+    "recorded_before_any_V_case_POST_utc": "2026-11-01T12:13:32.984937+00:00",
+    "source": "6eaa441c40253a18f18af76e4e599496927c1739",
+    "ref": "fix/deepflow-final-snapshot-links",
+    "consumer_source": "3fa82570cb8628c4ef3bb83e46af3c66110ea96a",
+    "producer_CI_success": 41296469691,
+    "consumer_CI_success": 41298274264,
+    "actual_storage_qualification": {
+      "run": 41296733012,
+      "artifact": 13079348283,
+      "digest": "sha256:5c90398d86e0a842bfcb0d6fc63152ff7f3a51d1cc487f89a5c7d375d4eda2e4"
+    },
+    "cases": [
+      {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "old_parent": 41280961352,
+        "old_job": 124772641776,
+        "full": 13081416816,
+        "compact": 13081860443,
+        "salvage_record": "work/root-U-OTel-partial7-actual-salvage-verdict-20261101.json",
+        "retained_metadata_directory": "work/U-OTel-partial7-failed-final-small-metadata-20261101"
+      },
+      {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8,
+        "old_parent": 41281980516,
+        "old_job": 124775587735,
+        "full": 13083400186,
+        "compact": 13082336222,
+        "salvage_record": "work/root-U-OTel-partial8-actual-salvage-verdict-20261101.json",
+        "retained_metadata_directory": "work/U-OTel-partial8-failed-final-small-metadata-20261101"
+      }
+    ],
+    "original_criterion": "Full81/all10operations actualcollectorobservations->actualBering->actualSheaft->independentexternalappoutcomes when SDKabsent/partial. Same34800primaryincluding9600target/4methods/2views/3seeds/100000trials/twoindependentguestkernels. NoML/costsuperiority/smaller demonstration.",
+    "strongest_simple_baseline": "Directly reuse complete preserved original source if possible; bothfailed cases have no finalraw/drain/freeze/evidence, so neitherprefixnorworkeroutputreconstructs lostfinalsuffix. Existingliteralcopy compared with closedhardlinks on sameactualprefix; fullbytes/originalmanifest equal. All direct/native/ANDOR/context methods keep sameprovidedinformation/semantics.",
+    "causal_change": "Samefinalretainedbytes without second full guest data allocation afterpositivepernodeclosure. Inherited U parentcopyrelease/T inputpreparation proofs retain separate identities; no codec/model/scoring or app/resource/workloadchanges. Actualqualonly1288318890prefixbytes/8192metadataBpernode, not wholecasecapacity/sixhourguarantee.",
+    "complete_cost_policy": "Preserve oldUparent/worker/prefix/actual34951recordspercase/targets/unknown/adverse plus failedfillerqual/correctedqual/bothproducerCIs/consumerCI/allhashtransferstoragewaitreviewreportarchive costs and allnewoutcomes. Human effortunknown/APIintervalsnotCPUor billed/not summable criticalpath. No favorable-outcome repetition.",
+    "root_original_parallel_execution_GO": true,
+    "no_healthy_cancellation": true,
+    "fresh_owner_before_POST_required": true,
+    "capacity": {
+      "capture_cap": 20,
+      "total_job_cap": 40,
+      "before_capture_upper": 12,
+      "existing_worker_upper": 4,
+      "future_existing_worker_upper": 10,
+      "newparent_child_slots": 4,
+      "deferred_reader_slots": 1,
+      "new_CI_archive_qual_jobs": 0,
+      "conservative_total_slots": 32,
+      "planned_capture_after_two_POSTs": 14,
+      "this_batch_capture_ceiling": 17,
+      "diagnostic_job_upper": 1
+    },
+    "scientific_success_GO": false,
+    "if_technical_failure_repeats": "Inspect actualcause/subphase before another repetition, no unchanged loop or gate weakening.",
+    "parallel_cases": 2,
+    "capture_POST_allowed": true,
+    "skeptic_original_parallel_execution_GO": true,
+    "root_actual_salvage_verified_utc": "2026-11-01T12:14:10.016859+00:00",
+    "dispatch_transport_sha256": "b9b78c0158ab628527ce575654ba3c808c631a897e5a5a3c36d7db56ee50243e",
+    "skeptic_record": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\independent-V-U-two-additional-guest-copy-failures-original-execution-go.json",
+    "skeptic_record_sha256": "f9b5666583bb7ee1b1113ef49798cbe704b68071bfc9aad49bce751324ee4c4a",
+    "recorded_both_original_execution_GO_utc": "2026-11-01T12:18:39.463099+00:00"
+  },
+  "plan_sha256": "6ef9ba5cb3ea0c92370561f6fc2bab2584786cd2ae8b05173f756311835798d4",
+  "approval_path": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\independent-V-U-two-additional-guest-copy-failures-original-execution-go.json",
+  "approval_sha256": "f9b5666583bb7ee1b1113ef49798cbe704b68071bfc9aad49bce751324ee4c4a",
+  "owner_snapshot": "work\\owner-actions-capacity-20261101T121558Z.json",
+  "snapshot_age_seconds": 169.003021,
+  "capture_reserved_before": 11,
+  "capture_reserved_after": 13,
+  "existing_actual_workers": 3,
+  "potential_future_existing_workers": 9,
+  "all_batch_parent_child_slots": 4,
+  "deferred_reader_slots": 1,
+  "actual_diagnostic_jobs": 0,
+  "conservative_total_slots": 28,
+  "old_facts": [
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7
+      },
+      "actual_job": {
+        "id": 124772641776,
+        "run_id": 41280961352,
+        "workflow_name": "Iteration 5 collector smoke and matched series",
+        "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41280961352",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAdDQdr8A",
+        "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124772641776",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41280961352/job/124772641776",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-11-01T06:28:23Z",
+        "started_at": "2026-11-01T06:28:25Z",
+        "completed_at": "2026-11-01T11:22:37Z",
+        "name": "campaign (otel_demo, partial, 7)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-01T06:28:26Z",
+            "completed_at": "2026-11-01T06:28:27Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-01T06:28:27Z",
+            "completed_at": "2026-11-01T06:28:30Z"
+          },
+          {
+            "name": "Record fixed cell identity before setup",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-01T06:28:30Z",
+            "completed_at": "2026-11-01T06:28:30Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-01T06:28:30Z",
+            "completed_at": "2026-11-01T06:28:31Z"
+          },
+          {
+            "name": "Install experiment package",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-01T06:28:31Z",
+            "completed_at": "2026-11-01T06:28:39Z"
+          },
+          {
+            "name": "Initialize retained evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-01T06:28:39Z",
+            "completed_at": "2026-11-01T06:28:39Z"
+          },
+          {
+            "name": "Free unused hosted SDK disk before capture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-01T06:28:39Z",
+            "completed_at": "2026-11-01T06:29:22Z"
+          },
+          {
+            "name": "Build exact source-pinned toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-01T06:29:22Z",
+            "completed_at": "2026-11-01T06:29:57Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard runner",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-01T06:29:57Z",
+            "completed_at": "2026-11-01T06:29:58Z"
+          },
+          {
+            "name": "Boot two independent guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-01T06:29:58Z",
+            "completed_at": "2026-11-01T06:31:03Z"
+          },
+          {
+            "name": "Reserve the fixed DSB published port before application deployment",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11,
+            "started_at": "2026-11-01T06:31:03Z",
+            "completed_at": "2026-11-01T06:31:03Z"
+          },
+          {
+            "name": "Acquire and close the training prefix on the live guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-01T06:31:03Z",
+            "completed_at": "2026-11-01T08:35:12Z"
+          },
+          {
+            "name": "Retain DSB port state after a failed acquisition and application cleanup",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13,
+            "started_at": "2026-11-01T08:35:12Z",
+            "completed_at": "2026-11-01T08:35:12Z"
+          },
+          {
+            "name": "Persist the closed training checkpoint before discovery",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-11-01T08:35:12Z",
+            "completed_at": "2026-11-01T08:40:21Z"
+          },
+          {
+            "name": "Bind upload outcome to the same live campaign",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-01T08:40:21Z",
+            "completed_at": "2026-11-01T08:40:21Z"
+          },
+          {
+            "name": "Continue discovery and validation on the same live guests",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 16,
+            "started_at": "2026-11-01T08:40:21Z",
+            "completed_at": "2026-11-01T11:14:55Z"
+          },
+          {
+            "name": "Stop only the owned campaign processes before retention",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-11-01T11:14:55Z",
+            "completed_at": "2026-11-01T11:14:55Z"
+          },
+          {
+            "name": "Retain environment, status and cost evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-11-01T11:14:55Z",
+            "completed_at": "2026-11-01T11:15:00Z"
+          },
+          {
+            "name": "Stop guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-11-01T11:15:00Z",
+            "completed_at": "2026-11-01T11:15:00Z"
+          },
+          {
+            "name": "Evaluate retained full campaign evidence",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 20,
+            "started_at": "2026-11-01T11:15:00Z",
+            "completed_at": "2026-11-01T11:15:24Z"
+          },
+          {
+            "name": "Record compact evaluation provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-11-01T11:15:24Z",
+            "completed_at": "2026-11-01T11:15:24Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22,
+            "started_at": "2026-11-01T11:15:24Z",
+            "completed_at": "2026-11-01T11:15:29Z"
+          },
+          {
+            "name": "Package the complete DSB toolchain subtree without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 23,
+            "started_at": "2026-11-01T11:15:29Z",
+            "completed_at": "2026-11-01T11:15:29Z"
+          },
+          {
+            "name": "Package the closed DSB remote handoff evidence without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 24,
+            "started_at": "2026-11-01T11:15:29Z",
+            "completed_at": "2026-11-01T11:15:29Z"
+          },
+          {
+            "name": "Record DSB full artifact restore layout",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 25,
+            "started_at": "2026-11-01T11:15:29Z",
+            "completed_at": "2026-11-01T11:15:29Z"
+          },
+          {
+            "name": "Retain DSB packaging status independently of full upload",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 26,
+            "started_at": "2026-11-01T11:15:29Z",
+            "completed_at": "2026-11-01T11:15:29Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 27,
+            "started_at": "2026-11-01T11:15:29Z",
+            "completed_at": "2026-11-01T11:22:36Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 28,
+            "started_at": "2026-11-01T11:22:36Z",
+            "completed_at": "2026-11-01T11:22:36Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 55,
+            "started_at": "2026-11-01T11:22:36Z",
+            "completed_at": "2026-11-01T11:22:36Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 56,
+            "started_at": "2026-11-01T11:22:36Z",
+            "completed_at": "2026-11-01T11:22:36Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 57,
+            "started_at": "2026-11-01T11:22:36Z",
+            "completed_at": "2026-11-01T11:22:36Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124772641776",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000030206,
+        "runner_name": "GitHub Actions 1000030206",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "retained_originals": [
+        {
+          "id": 13081416816,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4MTQxNjgxNg==",
+          "name": "campaign-v5-deepflow-main-otel_demo-partial-7-41280961352",
+          "size_in_bytes": 3904998274,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13081416816",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13081416816/zip",
+          "expired": false,
+          "digest": "sha256:079ee307d4f19c838019927b397a375077f691d4d3d2732b3f440930ebbc212e",
+          "created_at": "2026-11-01T11:22:36Z",
+          "updated_at": "2026-11-01T11:22:36Z",
+          "expires_at": "2027-01-30T06:28:19Z",
+          "workflow_run": {
+            "id": 41280961352,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+            "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+          }
+        },
+        {
+          "id": 13081860443,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4MTg2MDQ0Mw==",
+          "name": "v5-summary-deepflow-main-otel_demo-partial-7-41280961352",
+          "size_in_bytes": 35536147,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13081860443",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13081860443/zip",
+          "expired": false,
+          "digest": "sha256:a8642ec40a7de5f5a131a835924f55e8634663735a4fab4d9137515066fc4c35",
+          "created_at": "2026-11-01T11:15:29Z",
+          "updated_at": "2026-11-01T11:15:29Z",
+          "expires_at": "2027-01-30T06:28:19Z",
+          "workflow_run": {
+            "id": 41280961352,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+            "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+          }
+        }
+      ]
+    },
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8
+      },
+      "actual_job": {
+        "id": 124775587735,
+        "run_id": 41281980516,
+        "workflow_name": "Iteration 5 collector smoke and matched series",
+        "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+        "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41281980516",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOVX6K988AAAAdDTRflw",
+        "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124775587735",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41281980516/job/124775587735",
+        "status": "completed",
+        "conclusion": "failure",
+        "created_at": "2026-11-01T06:43:47Z",
+        "started_at": "2026-11-01T06:43:49Z",
+        "completed_at": "2026-11-01T12:02:35Z",
+        "name": "campaign (otel_demo, partial, 8)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-11-01T06:43:50Z",
+            "completed_at": "2026-11-01T06:43:51Z"
+          },
+          {
+            "name": "Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-11-01T06:43:52Z",
+            "completed_at": "2026-11-01T06:43:55Z"
+          },
+          {
+            "name": "Record fixed cell identity before setup",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-11-01T06:43:55Z",
+            "completed_at": "2026-11-01T06:43:55Z"
+          },
+          {
+            "name": "Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-11-01T06:43:55Z",
+            "completed_at": "2026-11-01T06:43:55Z"
+          },
+          {
+            "name": "Install experiment package",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-11-01T06:43:55Z",
+            "completed_at": "2026-11-01T06:44:05Z"
+          },
+          {
+            "name": "Initialize retained evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-11-01T06:44:05Z",
+            "completed_at": "2026-11-01T06:44:05Z"
+          },
+          {
+            "name": "Free unused hosted SDK disk before capture",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-11-01T06:44:05Z",
+            "completed_at": "2026-11-01T06:44:56Z"
+          },
+          {
+            "name": "Build exact source-pinned toolchain",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-11-01T06:44:56Z",
+            "completed_at": "2026-11-01T06:45:34Z"
+          },
+          {
+            "name": "Allocate measured swap on the standard runner",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-11-01T06:45:34Z",
+            "completed_at": "2026-11-01T06:45:34Z"
+          },
+          {
+            "name": "Boot two independent guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10,
+            "started_at": "2026-11-01T06:45:34Z",
+            "completed_at": "2026-11-01T06:46:46Z"
+          },
+          {
+            "name": "Reserve the fixed DSB published port before application deployment",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11,
+            "started_at": "2026-11-01T06:46:47Z",
+            "completed_at": "2026-11-01T06:46:47Z"
+          },
+          {
+            "name": "Acquire and close the training prefix on the live guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12,
+            "started_at": "2026-11-01T06:46:47Z",
+            "completed_at": "2026-11-01T08:57:02Z"
+          },
+          {
+            "name": "Retain DSB port state after a failed acquisition and application cleanup",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13,
+            "started_at": "2026-11-01T08:57:02Z",
+            "completed_at": "2026-11-01T08:57:02Z"
+          },
+          {
+            "name": "Persist the closed training checkpoint before discovery",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-11-01T08:57:02Z",
+            "completed_at": "2026-11-01T09:02:47Z"
+          },
+          {
+            "name": "Bind upload outcome to the same live campaign",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-11-01T09:02:47Z",
+            "completed_at": "2026-11-01T09:02:47Z"
+          },
+          {
+            "name": "Continue discovery and validation on the same live guests",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 16,
+            "started_at": "2026-11-01T09:02:47Z",
+            "completed_at": "2026-11-01T11:54:47Z"
+          },
+          {
+            "name": "Stop only the owned campaign processes before retention",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-11-01T11:54:47Z",
+            "completed_at": "2026-11-01T11:54:47Z"
+          },
+          {
+            "name": "Retain environment, status and cost evidence",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-11-01T11:54:47Z",
+            "completed_at": "2026-11-01T11:54:51Z"
+          },
+          {
+            "name": "Stop guests",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-11-01T11:54:51Z",
+            "completed_at": "2026-11-01T11:54:51Z"
+          },
+          {
+            "name": "Evaluate retained full campaign evidence",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 20,
+            "started_at": "2026-11-01T11:54:51Z",
+            "completed_at": "2026-11-01T11:55:16Z"
+          },
+          {
+            "name": "Record compact evaluation provenance",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21,
+            "started_at": "2026-11-01T11:55:16Z",
+            "completed_at": "2026-11-01T11:55:16Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22,
+            "started_at": "2026-11-01T11:55:16Z",
+            "completed_at": "2026-11-01T11:55:21Z"
+          },
+          {
+            "name": "Package the complete DSB toolchain subtree without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 23,
+            "started_at": "2026-11-01T11:55:21Z",
+            "completed_at": "2026-11-01T11:55:21Z"
+          },
+          {
+            "name": "Package the closed DSB remote handoff evidence without changing its files",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 24,
+            "started_at": "2026-11-01T11:55:21Z",
+            "completed_at": "2026-11-01T11:55:21Z"
+          },
+          {
+            "name": "Record DSB full artifact restore layout",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 25,
+            "started_at": "2026-11-01T11:55:21Z",
+            "completed_at": "2026-11-01T11:55:21Z"
+          },
+          {
+            "name": "Retain DSB packaging status independently of full upload",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 26,
+            "started_at": "2026-11-01T11:55:21Z",
+            "completed_at": "2026-11-01T11:55:21Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 27,
+            "started_at": "2026-11-01T11:55:21Z",
+            "completed_at": "2026-11-01T12:02:32Z"
+          },
+          {
+            "name": "Run actions/upload-artifact@v4",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 28,
+            "started_at": "2026-11-01T12:02:32Z",
+            "completed_at": "2026-11-01T12:02:32Z"
+          },
+          {
+            "name": "Post Run actions/setup-python@v5",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 55,
+            "started_at": "2026-11-01T12:02:32Z",
+            "completed_at": "2026-11-01T12:02:32Z"
+          },
+          {
+            "name": "Post Run actions/checkout@v4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 56,
+            "started_at": "2026-11-01T12:02:32Z",
+            "completed_at": "2026-11-01T12:02:33Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 57,
+            "started_at": "2026-11-01T12:02:33Z",
+            "completed_at": "2026-11-01T12:02:33Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124775587735",
+        "labels": [
+          "ubuntu-24.04"
+        ],
+        "runner_id": 1000030211,
+        "runner_name": "GitHub Actions 1000030211",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "retained_originals": [
+        {
+          "id": 13083400186,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4MzQwMDE4Ng==",
+          "name": "campaign-v5-deepflow-main-otel_demo-partial-8-41281980516",
+          "size_in_bytes": 3922420518,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13083400186",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13083400186/zip",
+          "expired": false,
+          "digest": "sha256:e112b39b2eff44b283ab9e087977d3966608caae469104d648182d6d93d1d7cd",
+          "created_at": "2026-11-01T12:02:32Z",
+          "updated_at": "2026-11-01T12:02:32Z",
+          "expires_at": "2027-01-30T06:43:43Z",
+          "workflow_run": {
+            "id": 41281980516,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+            "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+          }
+        },
+        {
+          "id": 13082336222,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4MjMzNjIyMg==",
+          "name": "v5-summary-deepflow-main-otel_demo-partial-8-41281980516",
+          "size_in_bytes": 35580643,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13082336222",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13082336222/zip",
+          "expired": false,
+          "digest": "sha256:939f76f1f9dd9451b2bd7c3aa2a630619525fe42839b34c3ea5418171b8d79e4",
+          "created_at": "2026-11-01T11:55:21Z",
+          "updated_at": "2026-11-01T11:55:21Z",
+          "expires_at": "2027-01-30T06:43:43Z",
+          "workflow_run": {
+            "id": 41281980516,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261101-uploaded-checkpoint-release-v5",
+            "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+          }
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7
+      },
+      "old_parent": 41280961352,
+      "old_job": 124772641776,
+      "source": "6eaa441c40253a18f18af76e4e599496927c1739",
+      "recorded_before_POST_utc": "2026-11-01T12:18:48.642004+00:00",
+      "request": {
+        "ref": "fix/deepflow-final-snapshot-links",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": "7"
+        },
+        "return_run_details": true
+      },
+      "state": "dispatched_source_verified",
+      "run_id": 41305885228,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41305885228"
+    },
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8
+      },
+      "old_parent": 41281980516,
+      "old_job": 124775587735,
+      "source": "6eaa441c40253a18f18af76e4e599496927c1739",
+      "recorded_before_POST_utc": "2026-11-01T12:18:52.255138+00:00",
+      "request": {
+        "ref": "fix/deepflow-final-snapshot-links",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": "8"
+        },
+        "return_run_details": true
+      },
+      "state": "dispatched_source_verified",
+      "run_id": 41305889879,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41305889879"
+    }
+  ],
+  "healthy_cancellation_performed": false
+}

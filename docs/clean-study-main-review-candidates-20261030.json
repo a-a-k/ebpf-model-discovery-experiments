@@ -408,20 +408,20 @@
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41280961352,
+      "run_id": 41305885228,
       "stage": "main",
       "runner": "study",
-      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41281980516,
+      "run_id": 41305889879,
       "stage": "main",
       "runner": "study",
-      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
     },
     {
       "system": "otel_demo",
@@ -1996,6 +1996,46 @@
       "full_artifact_name": "campaign-v5-coroot-main-petclinic-full-8-41164826834",
       "full_artifact_bytes": 981301586,
       "full_artifact_digest": "sha256:f27760027e287cdef2e60b667d4f5372cc138f51801ecf894b733b33296c2260"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41282001013,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "full_artifact_id": 13082224454,
+      "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-partial-7-41282001013",
+      "full_artifact_bytes": 9164225611,
+      "full_artifact_digest": "sha256:21ad74e3e8a4ce5259e123e4251811fbd1901a3f5e92c46c8c2c98350b24724d",
+      "compact_artifact_id": 13082022381,
+      "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-partial-7-41282001013",
+      "compact_artifact_bytes": 2603012037,
+      "compact_artifact_digest": "sha256:4ae36bf30e77350f46a5a5da562ba3ce69c4966e5253d4ed6689504ab817847b"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41280950428,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "full_artifact_id": 13082563196,
+      "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-full-6-41280950428",
+      "full_artifact_bytes": 9574264895,
+      "full_artifact_digest": "sha256:14ed64dbccb799bb7c815e66b7b1153395255245e9bea2460b75bef9e24229eb",
+      "compact_artifact_id": 13082500813,
+      "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-full-6-41280950428",
+      "compact_artifact_bytes": 2602621501,
+      "compact_artifact_digest": "sha256:51a7d2ea7ca612d21fe05d67d64cf0ca17101543ab635b0c2ab89eff015c23dd"
     }
   ],
   "superseded_planned_source": {

@@ -2416,6 +2416,32 @@
         }
       ],
       "note": "One failure-only replacement of parent41164824120 job124430032004; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
+    },
+    {
+      "run_id": 41305885228,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "One failure-only replacement of parent41280961352 job124772641776; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
+    },
+    {
+      "run_id": 41305889879,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "One failure-only replacement of parent41281980516 job124775587735; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
     }
   ],
   "related_runs": [
@@ -4609,6 +4635,21 @@
       "run_id": 41296759449,
       "role": "worker",
       "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41302954468,
+      "role": "evidence",
+      "note": "One existing qualified fresh-batch savedreader at data-only281db594; onlynewDeepFlow/Petclinic/absent6 originalfull13081235666+compact13081240102, nofirst57replay/capture/refit/rescore/accuracyselection. Retain literalactual4operation source/graph/Sheaft/externaltargets/SDKabsence and allcosts; no full81successclaim."
+    },
+    {
+      "run_id": 41304902447,
+      "role": "preparation",
+      "note": "Actual exact3c2 fixed-original-resolver diagnostic source CI; two jobs successful; same untouched original collector/model/scenario code, no diagnostic output or scientific-success claim. Full actual CI/preparation cost retained; human unknown."
+    },
+    {
+      "run_id": 41305252794,
+      "role": "preparation",
+      "note": "One fixed T/OTel absent6 original resolver profile, unchanged module and immutable saved inputs, first10000 digest-order records. Auxiliary diagnosis only; no traffic, Bering, Sheaft, score or full81 change. All download/extraction/SDK/profile/checks/preparation costs retained; no whole-phase extrapolation, human unknown."
     }
   ],
   "blocked_main_cells": [],
