@@ -428,10 +428,10 @@
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41275223991,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
     },
     {
       "system": "otel_demo",
