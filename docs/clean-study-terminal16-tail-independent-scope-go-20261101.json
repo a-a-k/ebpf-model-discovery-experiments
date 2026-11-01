@@ -1,0 +1,134 @@
+{
+  "checked_utc": "2026-11-01T02:34:16.146455+00:00",
+  "original_exact_terminal16_tail_retention_scope_GO": true,
+  "plan_path": "work\\terminal16-tail-after-first56-preexecution-20261101.json",
+  "plan_sha256_before_review": "1baec4fbe5945c46ef8003ad2003330e1af37c0665b97639c0ca6a4c5771eaa3",
+  "source": "f4eafccea65834644190d81774e83a986a2b910c",
+  "source_CI": 41265153232,
+  "qualified_blobs": {
+    "scripts/archive-runs.sh": "7e9d4a1e29829c86b6a738d47e8260b6f6d4b9d6",
+    ".github/workflows/archive.yml": "d68b536b577b55bf82e4881173c8eddd5298875c"
+  },
+  "fresh_API_terminal_sources_and_exact_artifact_metadata": [
+    {
+      "run_id": 41233204064,
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "conclusion": "cancelled",
+      "artifact_count": 1,
+      "artifact_bytes": 3353256048
+    },
+    {
+      "run_id": 41239167446,
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "conclusion": "success",
+      "artifact_count": 3,
+      "artifact_bytes": 5130601882
+    },
+    {
+      "run_id": 41245172685,
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "conclusion": "success",
+      "artifact_count": 1,
+      "artifact_bytes": 1077094371
+    },
+    {
+      "run_id": 41254802097,
+      "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1",
+      "conclusion": "success",
+      "artifact_count": 56,
+      "artifact_bytes": 5786834599
+    },
+    {
+      "run_id": 41255602556,
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41255607582,
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41255795362,
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "conclusion": "success",
+      "artifact_count": 1,
+      "artifact_bytes": 29138334
+    },
+    {
+      "run_id": 41256806387,
+      "head_sha": "4571e2f788134db59317cde298f1d6c5de99ebe1",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41256810211,
+      "head_sha": "4571e2f788134db59317cde298f1d6c5de99ebe1",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41258382471,
+      "head_sha": "bfed1546d8dca54b9f00ce9e05ff7b0e928c079d",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41258385155,
+      "head_sha": "bfed1546d8dca54b9f00ce9e05ff7b0e928c079d",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41258526474,
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41258973084,
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41259234164,
+      "head_sha": "d3e31e0a9bf31192010c84f9a601a03f9a32f707",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41263703300,
+      "head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    },
+    {
+      "run_id": 41265153232,
+      "head_sha": "f4eafccea65834644190d81774e83a986a2b910c",
+      "conclusion": "success",
+      "artifact_count": 0,
+      "artifact_bytes": 0
+    }
+  ],
+  "exact16_sources_62_artifacts_15376925234B": true,
+  "disjoint_from_published446_and_active_archive16_sources": true,
+  "largest_per_artifact_required_bytes": 7364419328,
+  "before_POST_required": "Wait archive41256152140 actual publication and both independent remote ledger/checksum/chunk/disk-guard reviews. Refresh these16 terminal API identities, exact source/CI/blobs and owner capacity; ONE unchanged archive after current finishes, never a second overlapping archive for these sources. Actual free-space guard before each transfer remains mandatory.",
+  "original_criterion": "Full81 external-outcome eBPF/Bering/Sheaft feasibility with absent/partial SDK tracing and equal information/semantics. Retention is necessary evidence preservation, not scientific success.",
+  "strongest_baseline": "Run exactly the same qualified byte-preserving archive after all81. Earlier scheduling changes retention tail only, not models, predictions, outcomes or eligibility.",
+  "costs": "All source/failed/stopped/preparation/worker/CI/reader/transfer/hash/chunk/upload/storage/archive costs retained. API intervals not CPU/billing; human effort unknown.",
+  "limits": "No original ZIP/chunk/journal bodies locally. Not publication proof or final81 completion. Newer batch2/current worker/capture tails remain due."
+}

@@ -1,0 +1,1437 @@
+{
+  "recorded_utc": "2026-11-01T02:32:49.553952+00:00",
+  "state": "frozen_exact_scope_NOT_dispatched",
+  "source": "f4eafccea65834644190d81774e83a986a2b910c",
+  "source_CI_success": 41265153232,
+  "root_original_retention_scope_GO": true,
+  "source_inventory_observed_utc": "2026-11-01T02:29:15.409059+00:00",
+  "source_runs": [
+    {
+      "run_id": 41233204064,
+      "status": "completed",
+      "conclusion": "cancelled",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "artifact_count": 1,
+      "artifact_bytes": 3353256048,
+      "artifacts": [
+        {
+          "id": 13058805871,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA1ODgwNTg3MQ==",
+          "name": "training-v4-deathstarbench-full-6-41233204064",
+          "size_in_bytes": 3353256048,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13058805871",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13058805871/zip",
+          "expired": false,
+          "digest": "sha256:6969a5560000adc3d68eb87ebcabe59bb532e666b3789f65043cbf85e33d88b3",
+          "created_at": "2026-10-31T21:37:44Z",
+          "updated_at": "2026-10-31T21:37:44Z",
+          "expires_at": "2027-01-29T19:13:38Z",
+          "workflow_run": {
+            "id": 41233204064,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261031-guest-logs-v3",
+            "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": 41239167446,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "artifact_count": 3,
+      "artifact_bytes": 5130601882,
+      "artifacts": [
+        {
+          "id": 13063560730,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzU2MDczMA==",
+          "name": "campaign-v5-obi-main-otel_demo-partial-8-41239167446",
+          "size_in_bytes": 3648655232,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063560730",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063560730/zip",
+          "expired": false,
+          "digest": "sha256:90fbfbf47874d2ec437bfe3f90718010038e55f45a8343ead84c62912f3fd9ee",
+          "created_at": "2026-11-01T00:18:50Z",
+          "updated_at": "2026-11-01T00:18:50Z",
+          "expires_at": "2027-01-29T20:29:57Z",
+          "workflow_run": {
+            "id": 41239167446,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261031-guest-logs-v3",
+            "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+          }
+        },
+        {
+          "id": 13062912116,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjkxMjExNg==",
+          "name": "v5-summary-obi-main-otel_demo-partial-8-41239167446",
+          "size_in_bytes": 51058271,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062912116",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062912116/zip",
+          "expired": false,
+          "digest": "sha256:595959de2fbb30acc5e725c87f0cd693de4fa52734f3dab46fc7ef8e20ecd5fe",
+          "created_at": "2026-11-01T00:15:57Z",
+          "updated_at": "2026-11-01T00:15:57Z",
+          "expires_at": "2027-01-29T20:29:57Z",
+          "workflow_run": {
+            "id": 41239167446,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261031-guest-logs-v3",
+            "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+          }
+        },
+        {
+          "id": 13059146312,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA1OTE0NjMxMg==",
+          "name": "training-v4-otel_demo-partial-8-41239167446",
+          "size_in_bytes": 1430888379,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13059146312",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13059146312/zip",
+          "expired": false,
+          "digest": "sha256:ef88f7a4ee0be48785381536b69af424f1aef6b1ef3c689ba08eaac051f328b7",
+          "created_at": "2026-10-31T21:46:00Z",
+          "updated_at": "2026-10-31T21:46:00Z",
+          "expires_at": "2027-01-29T20:29:57Z",
+          "workflow_run": {
+            "id": 41239167446,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "capture-20261031-guest-logs-v3",
+            "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": 41245172685,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "artifact_count": 1,
+      "artifact_bytes": 1077094371,
+      "artifacts": [
+        {
+          "id": 13063476397,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzQ3NjM5Nw==",
+          "name": "toolchain-v4-deathstarbench-full-6-41245172685",
+          "size_in_bytes": 1077094371,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063476397",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063476397/zip",
+          "expired": false,
+          "digest": "sha256:2ac0e27fcb72bf5acbe63a57d7fdc0e4eebaf5d2c6cd1a19c1d6ab70a8ded119",
+          "created_at": "2026-11-01T00:25:28Z",
+          "updated_at": "2026-11-01T00:25:28Z",
+          "expires_at": "2027-01-29T21:46:55Z",
+          "workflow_run": {
+            "id": 41245172685,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "main",
+            "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": 41254802097,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1",
+      "artifact_count": 56,
+      "artifact_bytes": 5786834599,
+      "artifacts": [
+        {
+          "id": 13065725755,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTcyNTc1NQ==",
+          "name": "main-review-evidence-coroot-petclinic-full-6-41164826834",
+          "size_in_bytes": 102968102,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065725755",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065725755/zip",
+          "expired": false,
+          "digest": "sha256:e4374886f40d7a6459b5b6ab6252bbca173e9f1a6dd389339c05dc61e6158edc",
+          "created_at": "2026-11-01T01:30:57Z",
+          "updated_at": "2026-11-01T01:30:57Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065577646,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTU3NzY0Ng==",
+          "name": "main-review-evidence-coroot-petclinic-full-8-41164826834",
+          "size_in_bytes": 103081302,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065577646",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065577646/zip",
+          "expired": false,
+          "digest": "sha256:c8a31780f0ee7a6810393811e82f000419dddf0e05b00687c0b61949abfea47b",
+          "created_at": "2026-11-01T01:41:00Z",
+          "updated_at": "2026-11-01T01:41:00Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065571274,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTU3MTI3NA==",
+          "name": "main-review-evidence-coroot-petclinic-absent-8-41164826834",
+          "size_in_bytes": 86160163,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065571274",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065571274/zip",
+          "expired": false,
+          "digest": "sha256:b2d86063bad1550788556e101efb6cc550eb103a59d0ca93036765aa55a5a662",
+          "created_at": "2026-11-01T01:29:15Z",
+          "updated_at": "2026-11-01T01:29:15Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065436110,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTQzNjExMA==",
+          "name": "main-review-evidence-coroot-otel_demo-full-6-41164826834",
+          "size_in_bytes": 137597358,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065436110",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065436110/zip",
+          "expired": false,
+          "digest": "sha256:a5c973a44ad6a6e296c100f52d804f5c7944be0936f2574d64ddec310bd96f44",
+          "created_at": "2026-11-01T01:25:46Z",
+          "updated_at": "2026-11-01T01:25:46Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065331568,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTMzMTU2OA==",
+          "name": "main-review-evidence-coroot-petclinic-absent-7-41164826834",
+          "size_in_bytes": 85783366,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065331568",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065331568/zip",
+          "expired": false,
+          "digest": "sha256:19c1919b1462c1b612235e4086f3794744d4ca3cb745539ec51ad3ab90e9afe8",
+          "created_at": "2026-11-01T01:26:55Z",
+          "updated_at": "2026-11-01T01:26:55Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065322464,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTMyMjQ2NA==",
+          "name": "main-review-evidence-coroot-petclinic-partial-8-41164826834",
+          "size_in_bytes": 98488952,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065322464",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065322464/zip",
+          "expired": false,
+          "digest": "sha256:dcab4fa8906325dcc91e7a213bcfd48172cadd07f52fd5f061b5d9034c75771b",
+          "created_at": "2026-11-01T01:33:25Z",
+          "updated_at": "2026-11-01T01:33:25Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065288055,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTI4ODA1NQ==",
+          "name": "main-review-evidence-coroot-petclinic-partial-6-41164826834",
+          "size_in_bytes": 97953379,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065288055",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065288055/zip",
+          "expired": false,
+          "digest": "sha256:d8a58b443633df142719aed3a72e3e6b45dc687a246c42b1892af30b3f61db99",
+          "created_at": "2026-11-01T01:35:29Z",
+          "updated_at": "2026-11-01T01:35:29Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065221595,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTIyMTU5NQ==",
+          "name": "main-review-evidence-coroot-otel_demo-partial-8-41164826834",
+          "size_in_bytes": 154752205,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065221595",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065221595/zip",
+          "expired": false,
+          "digest": "sha256:d3277d1d99f8be0e2762e28bb4a83dbb8f302092d67c6998c4ff668f013feb73",
+          "created_at": "2026-11-01T01:22:59Z",
+          "updated_at": "2026-11-01T01:22:59Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065184729,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTE4NDcyOQ==",
+          "name": "main-review-evidence-coroot-petclinic-full-7-41164826834",
+          "size_in_bytes": 103162951,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065184729",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065184729/zip",
+          "expired": false,
+          "digest": "sha256:b0319049769979bd126f1b367ecd5bbe44025a38f954cc652da3b93ef6943d33",
+          "created_at": "2026-11-01T01:36:28Z",
+          "updated_at": "2026-11-01T01:36:28Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065181135,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTE4MTEzNQ==",
+          "name": "main-review-evidence-coroot-deathstarbench-full-6-41164826834",
+          "size_in_bytes": 127043791,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065181135",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065181135/zip",
+          "expired": false,
+          "digest": "sha256:5ae6489c699c0d5e11d2bfbdd98882a694cb419da2d8d79014515a221ed57c20",
+          "created_at": "2026-11-01T01:09:58Z",
+          "updated_at": "2026-11-01T01:09:58Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13065127019,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NTEyNzAxOQ==",
+          "name": "main-review-evidence-coroot-otel_demo-full-8-41164826834",
+          "size_in_bytes": 163401112,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065127019",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13065127019/zip",
+          "expired": false,
+          "digest": "sha256:ea4e29aadde7a166cab8cbd3c5a95d1163d6f1a167655849fb118796d4e96f36",
+          "created_at": "2026-11-01T01:23:38Z",
+          "updated_at": "2026-11-01T01:23:38Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064999094,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDk5OTA5NA==",
+          "name": "main-review-evidence-coroot-otel_demo-full-7-41164826834",
+          "size_in_bytes": 172599593,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064999094",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064999094/zip",
+          "expired": false,
+          "digest": "sha256:e7976706a3561e3c6eaf444a7a5cecb6621153e1a5808773f821a7bbc443ed2f",
+          "created_at": "2026-11-01T01:27:08Z",
+          "updated_at": "2026-11-01T01:27:08Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064966874,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDk2Njg3NA==",
+          "name": "main-review-evidence-coroot-otel_demo-absent-8-41164826834",
+          "size_in_bytes": 180242323,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064966874",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064966874/zip",
+          "expired": false,
+          "digest": "sha256:608578507867bdd915dbce2065fa51e222cf2f1026296d02db62f9b691659353",
+          "created_at": "2026-11-01T01:19:13Z",
+          "updated_at": "2026-11-01T01:19:13Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064915039,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDkxNTAzOQ==",
+          "name": "main-review-evidence-deepflow-deathstarbench-absent-6-41164824120",
+          "size_in_bytes": 65619208,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064915039",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064915039/zip",
+          "expired": false,
+          "digest": "sha256:ca9fc73e5c44d0974640b46604dd5aee73051a0ff4a3a79d424f23f8dfa1e26b",
+          "created_at": "2026-11-01T00:59:38Z",
+          "updated_at": "2026-11-01T00:59:38Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064885555,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDg4NTU1NQ==",
+          "name": "main-review-evidence-coroot-deathstarbench-absent-8-41164826834",
+          "size_in_bytes": 49963376,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064885555",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064885555/zip",
+          "expired": false,
+          "digest": "sha256:58d3fdddc258ec658d8940ac6a38c0ff6bf6f539d8001d7342df201af4abfdda",
+          "created_at": "2026-11-01T00:59:42Z",
+          "updated_at": "2026-11-01T00:59:42Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064828073,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDgyODA3Mw==",
+          "name": "main-review-evidence-coroot-petclinic-absent-6-41164826834",
+          "size_in_bytes": 85962609,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064828073",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064828073/zip",
+          "expired": false,
+          "digest": "sha256:18089efef219a7261eefe103786fa32eb0ed8740a3cd5c104119c319e0fe7994",
+          "created_at": "2026-11-01T01:28:40Z",
+          "updated_at": "2026-11-01T01:28:40Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064822878,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDgyMjg3OA==",
+          "name": "main-review-evidence-coroot-otel_demo-absent-7-41164826834",
+          "size_in_bytes": 178680342,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064822878",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064822878/zip",
+          "expired": false,
+          "digest": "sha256:96b6d857cf3fed1e36b54d6e7480c4c38d2a7f9af3a72387b1022278127c238e",
+          "created_at": "2026-11-01T01:16:15Z",
+          "updated_at": "2026-11-01T01:16:15Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064775707,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDc3NTcwNw==",
+          "name": "main-review-evidence-coroot-deathstarbench-absent-7-41164826834",
+          "size_in_bytes": 50347473,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064775707",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064775707/zip",
+          "expired": false,
+          "digest": "sha256:a25f86a6b87ecb9d45e118811bb8de3e0e3a0cd0075a6902e938fd49285ca129",
+          "created_at": "2026-11-01T00:58:35Z",
+          "updated_at": "2026-11-01T00:58:35Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064713275,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDcxMzI3NQ==",
+          "name": "main-review-evidence-coroot-petclinic-partial-7-41164826834",
+          "size_in_bytes": 97772967,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064713275",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064713275/zip",
+          "expired": false,
+          "digest": "sha256:547c4dac5a872359e96c248239d8c5a6f87ee9fe29245c7135ed48188bbad4f2",
+          "created_at": "2026-11-01T01:29:11Z",
+          "updated_at": "2026-11-01T01:29:11Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064542987,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDU0Mjk4Nw==",
+          "name": "main-review-evidence-coroot-deathstarbench-full-8-41164826834",
+          "size_in_bytes": 127795717,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064542987",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064542987/zip",
+          "expired": false,
+          "digest": "sha256:17941ec717bf72f7e649b19db988b693a8d028606f38d2be13c64eaa69bf105b",
+          "created_at": "2026-11-01T01:11:25Z",
+          "updated_at": "2026-11-01T01:11:25Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064489282,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDQ4OTI4Mg==",
+          "name": "main-review-evidence-coroot-otel_demo-partial-7-41164826834",
+          "size_in_bytes": 163315236,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064489282",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064489282/zip",
+          "expired": false,
+          "digest": "sha256:cde9938f1d6c4c5a3576556a22a4bfd204ff627f41ac7fcd8f5fe31f134b3bfb",
+          "created_at": "2026-11-01T01:18:29Z",
+          "updated_at": "2026-11-01T01:18:29Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064449532,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDQ0OTUzMg==",
+          "name": "main-review-evidence-coroot-otel_demo-partial-6-41164826834",
+          "size_in_bytes": 148169917,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064449532",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064449532/zip",
+          "expired": false,
+          "digest": "sha256:658bf29e53c22a97ac9b36f6cb41015559c169c6a02721cf929efdcb94d3b846",
+          "created_at": "2026-11-01T01:20:04Z",
+          "updated_at": "2026-11-01T01:20:04Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064406267,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDQwNjI2Nw==",
+          "name": "main-review-evidence-obi-petclinic-full-8-41233223018",
+          "size_in_bytes": 32246404,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064406267",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064406267/zip",
+          "expired": false,
+          "digest": "sha256:b4e5141a475fd188ef92ffe621e725f7f0d568d8a7b494d5483d5c1fe6be35f0",
+          "created_at": "2026-11-01T00:54:38Z",
+          "updated_at": "2026-11-01T00:54:38Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064397351,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDM5NzM1MQ==",
+          "name": "main-review-evidence-coroot-deathstarbench-full-7-41164826834",
+          "size_in_bytes": 127151101,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064397351",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064397351/zip",
+          "expired": false,
+          "digest": "sha256:3ed096ce80123f55b527e52e444238ff4cd7a880dfdf1b1a322e84a5a204343c",
+          "created_at": "2026-11-01T01:11:24Z",
+          "updated_at": "2026-11-01T01:11:24Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064385737,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDM4NTczNw==",
+          "name": "main-review-evidence-obi-otel_demo-full-8-41226698796",
+          "size_in_bytes": 218500784,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064385737",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064385737/zip",
+          "expired": false,
+          "digest": "sha256:ec376f970d18eccfab660e09e7ebacbe70c55b4bd1bf732befb5f333265c022b",
+          "created_at": "2026-11-01T00:50:13Z",
+          "updated_at": "2026-11-01T00:50:13Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064372796,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDM3Mjc5Ng==",
+          "name": "main-review-evidence-coroot-deathstarbench-partial-8-41164826834",
+          "size_in_bytes": 112963522,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064372796",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064372796/zip",
+          "expired": false,
+          "digest": "sha256:a9d3b64f04fd62830d3a6c9e5ab7de6436af054f3c3c8cbf90b32b2235a4e356",
+          "created_at": "2026-11-01T01:05:05Z",
+          "updated_at": "2026-11-01T01:05:05Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064366412,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDM2NjQxMg==",
+          "name": "main-review-evidence-obi-petclinic-full-6-41232316943",
+          "size_in_bytes": 32316581,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064366412",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064366412/zip",
+          "expired": false,
+          "digest": "sha256:828c8e3ddbce3a63f10f432f40d3271681c0ea9c4ec8cfb35d1ba1c2c55746bc",
+          "created_at": "2026-11-01T00:54:28Z",
+          "updated_at": "2026-11-01T00:54:28Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064359432,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDM1OTQzMg==",
+          "name": "main-review-evidence-coroot-otel_demo-absent-6-41164826834",
+          "size_in_bytes": 177073298,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064359432",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064359432/zip",
+          "expired": false,
+          "digest": "sha256:419982643e1500792dcfdcf34ac476932266454ffb9fd68427b60b682e5c6b40",
+          "created_at": "2026-11-01T01:15:37Z",
+          "updated_at": "2026-11-01T01:15:37Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064298057,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDI5ODA1Nw==",
+          "name": "main-review-evidence-deepflow-deathstarbench-absent-8-41164824120",
+          "size_in_bytes": 65813679,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064298057",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064298057/zip",
+          "expired": false,
+          "digest": "sha256:46a5f19df816a2d095839cd7f44de9816ba1ab8499d093af8ee357ccbd4e7cf7",
+          "created_at": "2026-11-01T01:05:23Z",
+          "updated_at": "2026-11-01T01:05:23Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064297518,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDI5NzUxOA==",
+          "name": "main-review-evidence-coroot-deathstarbench-partial-6-41164826834",
+          "size_in_bytes": 114858458,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064297518",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064297518/zip",
+          "expired": false,
+          "digest": "sha256:14463ae026de9f0ca0882acd5db99f0594d1550cb572b3c553a1c8d0d7278e6b",
+          "created_at": "2026-11-01T01:01:26Z",
+          "updated_at": "2026-11-01T01:01:26Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064283733,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDI4MzczMw==",
+          "name": "main-review-evidence-coroot-deathstarbench-partial-7-41164826834",
+          "size_in_bytes": 116994065,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064283733",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064283733/zip",
+          "expired": false,
+          "digest": "sha256:f9d7435754fcf7d519ad7e0b675b973644aefb09eef924814b98c04a7479decf",
+          "created_at": "2026-11-01T01:09:09Z",
+          "updated_at": "2026-11-01T01:09:09Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064265359,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDI2NTM1OQ==",
+          "name": "main-review-evidence-obi-petclinic-partial-8-41226716530",
+          "size_in_bytes": 24295563,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064265359",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064265359/zip",
+          "expired": false,
+          "digest": "sha256:336553b91e00799f7e2c50e98f9913005ab58e93bcad2609ab628a6cf20b06e6",
+          "created_at": "2026-11-01T00:45:38Z",
+          "updated_at": "2026-11-01T00:45:38Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064032933,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDAzMjkzMw==",
+          "name": "main-review-evidence-deepflow-deathstarbench-absent-7-41164824120",
+          "size_in_bytes": 65781984,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064032933",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064032933/zip",
+          "expired": false,
+          "digest": "sha256:04d2314217af8cae61494a54564fe48ddbafe5c2e557e7670cb9472dc72249ed",
+          "created_at": "2026-11-01T00:58:39Z",
+          "updated_at": "2026-11-01T00:58:39Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064016649,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDAxNjY0OQ==",
+          "name": "main-review-evidence-obi-petclinic-partial-6-41226692036",
+          "size_in_bytes": 24274835,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064016649",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064016649/zip",
+          "expired": false,
+          "digest": "sha256:01f984cf1f5685def12c7e307203e6b2e5d31c3be120d19b23bb640479b7c932",
+          "created_at": "2026-11-01T00:43:41Z",
+          "updated_at": "2026-11-01T00:43:41Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13064006440,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2NDAwNjQ0MA==",
+          "name": "main-review-evidence-obi-petclinic-absent-6-41226702306",
+          "size_in_bytes": 18056044,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064006440",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13064006440/zip",
+          "expired": false,
+          "digest": "sha256:d86545a19a3726f2618dfbf748261ff329dbf54756529fbfea2affee1d214285",
+          "created_at": "2026-11-01T00:39:55Z",
+          "updated_at": "2026-11-01T00:39:55Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063887308,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2Mzg4NzMwOA==",
+          "name": "main-review-evidence-obi-otel_demo-full-6-41227096018",
+          "size_in_bytes": 204040348,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063887308",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063887308/zip",
+          "expired": false,
+          "digest": "sha256:89b54266f9991fc9ee4cda064024b9185a9733027cb7bfad8dcc6cc0746ac21f",
+          "created_at": "2026-11-01T00:35:23Z",
+          "updated_at": "2026-11-01T00:35:23Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063878078,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2Mzg3ODA3OA==",
+          "name": "main-review-evidence-obi-petclinic-absent-7-41226705392",
+          "size_in_bytes": 17694483,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063878078",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063878078/zip",
+          "expired": false,
+          "digest": "sha256:f99cade8643301d31c6b63864e49d461356626b8b55f154cf6bb467f14b3fe48",
+          "created_at": "2026-11-01T00:39:50Z",
+          "updated_at": "2026-11-01T00:39:50Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063839055,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzgzOTA1NQ==",
+          "name": "main-review-evidence-obi-petclinic-partial-7-41226712664",
+          "size_in_bytes": 31355774,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063839055",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063839055/zip",
+          "expired": false,
+          "digest": "sha256:ee4d3c10032a60866f7f005e58394334b37f8b7c6028a5a257928ef76a5d9ea6",
+          "created_at": "2026-11-01T00:45:24Z",
+          "updated_at": "2026-11-01T00:45:24Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063614744,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzYxNDc0NA==",
+          "name": "main-review-evidence-obi-petclinic-absent-8-41226708635",
+          "size_in_bytes": 17861757,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063614744",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063614744/zip",
+          "expired": false,
+          "digest": "sha256:00fd15453220fb1498a93c30825111d5acf76611d5a980ef810826a651834265",
+          "created_at": "2026-11-01T00:44:37Z",
+          "updated_at": "2026-11-01T00:44:37Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063489599,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzQ4OTU5OQ==",
+          "name": "main-review-evidence-coroot-deathstarbench-absent-6-41164826834",
+          "size_in_bytes": 50641951,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063489599",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063489599/zip",
+          "expired": false,
+          "digest": "sha256:2180f556ab56964ed86e20a09c26c1b7adc40c29c0aedbe7627a0834947659b8",
+          "created_at": "2026-11-01T00:57:22Z",
+          "updated_at": "2026-11-01T00:57:22Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063414149,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzQxNDE0OQ==",
+          "name": "main-review-evidence-obi-petclinic-full-7-41233220186",
+          "size_in_bytes": 32104249,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063414149",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063414149/zip",
+          "expired": false,
+          "digest": "sha256:37e3c2048531704568a612105b1a7cbd5a83396a9214c22546dde2ed7dbc9fe9",
+          "created_at": "2026-11-01T00:52:40Z",
+          "updated_at": "2026-11-01T00:52:40Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063390956,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzM5MDk1Ng==",
+          "name": "main-review-evidence-obi-otel_demo-absent-8-41164821492",
+          "size_in_bytes": 172540211,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063390956",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063390956/zip",
+          "expired": false,
+          "digest": "sha256:ccd36d4731756b19b7cf127f9f9460c9f3826f80d2a309de507ff86dfeca8a8e",
+          "created_at": "2026-11-01T00:19:16Z",
+          "updated_at": "2026-11-01T00:19:16Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063348919,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzM0ODkxOQ==",
+          "name": "main-review-evidence-obi-otel_demo-partial-6-41164821492",
+          "size_in_bytes": 200528715,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063348919",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063348919/zip",
+          "expired": false,
+          "digest": "sha256:5d0d70eb3318f52e4b7986508d3bcc771093f9ddb2392342eac928be2299487d",
+          "created_at": "2026-11-01T00:34:35Z",
+          "updated_at": "2026-11-01T00:34:35Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063251392,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzI1MTM5Mg==",
+          "name": "main-review-evidence-obi-otel_demo-absent-6-41164821492",
+          "size_in_bytes": 171578043,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063251392",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063251392/zip",
+          "expired": false,
+          "digest": "sha256:de80d8927ab99fb22d4628e39ff028a44c9b26a3afe14794aa44a5c958729999",
+          "created_at": "2026-11-01T00:23:30Z",
+          "updated_at": "2026-11-01T00:23:30Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063205357,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzIwNTM1Nw==",
+          "name": "main-review-evidence-obi-deathstarbench-partial-6-41164821492",
+          "size_in_bytes": 84665707,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063205357",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063205357/zip",
+          "expired": false,
+          "digest": "sha256:37b756e54ba0a23664d08a5e0639416049eae85b2c5ff61db5c312bfd9cf0cfe",
+          "created_at": "2026-11-01T00:07:40Z",
+          "updated_at": "2026-11-01T00:07:40Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063176598,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzE3NjU5OA==",
+          "name": "main-review-evidence-obi-otel_demo-partial-7-41227089066",
+          "size_in_bytes": 202839101,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063176598",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063176598/zip",
+          "expired": false,
+          "digest": "sha256:156a31e4926a5d567442f5f4f63dc7737ccb38117bac218ee9cadb52481fca23",
+          "created_at": "2026-11-01T00:24:44Z",
+          "updated_at": "2026-11-01T00:24:44Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063081324,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzA4MTMyNA==",
+          "name": "main-review-evidence-obi-deathstarbench-partial-8-41164821492",
+          "size_in_bytes": 84037007,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063081324",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063081324/zip",
+          "expired": false,
+          "digest": "sha256:5a8f249c086f714ba8fde94317ae0a1fbbd96b0ecd70b70aa2d24adb45208925",
+          "created_at": "2026-11-01T00:13:39Z",
+          "updated_at": "2026-11-01T00:13:39Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063023241,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzAyMzI0MQ==",
+          "name": "main-review-evidence-obi-otel_demo-full-7-41226695588",
+          "size_in_bytes": 213516105,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063023241",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063023241/zip",
+          "expired": false,
+          "digest": "sha256:67e4f43e6de95e7451337d7a6bad4d520acd8d9e013751cd92172fe823f923a1",
+          "created_at": "2026-11-01T00:38:32Z",
+          "updated_at": "2026-11-01T00:38:32Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13063000849,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzAwMDg0OQ==",
+          "name": "main-review-evidence-obi-deathstarbench-full-8-41164821492",
+          "size_in_bytes": 96097150,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063000849",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063000849/zip",
+          "expired": false,
+          "digest": "sha256:567ef8c4a6913ede8c59a58d22e19dd0ff9fa3b56b869982ecf6163fc7b0b4ed",
+          "created_at": "2026-11-01T00:14:38Z",
+          "updated_at": "2026-11-01T00:14:38Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062837480,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjgzNzQ4MA==",
+          "name": "main-review-evidence-obi-deathstarbench-full-7-41189048917",
+          "size_in_bytes": 95517629,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062837480",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062837480/zip",
+          "expired": false,
+          "digest": "sha256:02a048a69d70f793feaafb5312dd3866e06ba8efdc0e951dd7de62a7bba2ed88",
+          "created_at": "2026-11-01T00:16:07Z",
+          "updated_at": "2026-11-01T00:16:07Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062809746,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjgwOTc0Ng==",
+          "name": "main-review-evidence-obi-otel_demo-absent-7-41164821492",
+          "size_in_bytes": 171661134,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062809746",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062809746/zip",
+          "expired": false,
+          "digest": "sha256:6df400759c9376e97e137c1cb0f1bbb35ed82ea99e8c36653f8910773d11184a",
+          "created_at": "2026-11-01T00:22:51Z",
+          "updated_at": "2026-11-01T00:22:51Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062719789,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjcxOTc4OQ==",
+          "name": "main-review-evidence-obi-deathstarbench-full-6-41164821492",
+          "size_in_bytes": 96134841,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062719789",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062719789/zip",
+          "expired": false,
+          "digest": "sha256:408e9f68a0e762b6ccc61561331b32a7720b72320bfa99b7032302870953308d",
+          "created_at": "2026-11-01T00:15:29Z",
+          "updated_at": "2026-11-01T00:15:29Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062469492,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjQ2OTQ5Mg==",
+          "name": "main-review-evidence-obi-deathstarbench-absent-7-41164821492",
+          "size_in_bytes": 17241844,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062469492",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062469492/zip",
+          "expired": false,
+          "digest": "sha256:bd918eb9ba60226f9438535ddbd3b067dd0c92e2debbcff15f9b47eef0d4cb80",
+          "created_at": "2026-11-01T00:03:23Z",
+          "updated_at": "2026-11-01T00:03:23Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062384498,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjM4NDQ5OA==",
+          "name": "main-review-evidence-obi-deathstarbench-absent-8-41164821492",
+          "size_in_bytes": 14602484,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062384498",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062384498/zip",
+          "expired": false,
+          "digest": "sha256:49428f02d31799ba3273ef09958420f7ce1a67cab3c327710ea7bc111dc16a9a",
+          "created_at": "2026-11-01T00:03:14Z",
+          "updated_at": "2026-11-01T00:03:14Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13062284906,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MjI4NDkwNg==",
+          "name": "main-review-evidence-obi-deathstarbench-absent-6-41173230022",
+          "size_in_bytes": 17423484,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062284906",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13062284906/zip",
+          "expired": false,
+          "digest": "sha256:1032c45cacecf39956a681965b00eac7a9c558f04c39c845d98292cae82b15c2",
+          "created_at": "2026-11-01T00:03:56Z",
+          "updated_at": "2026-11-01T00:03:56Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        },
+        {
+          "id": 13061959641,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MTk1OTY0MQ==",
+          "name": "main-review-evidence-obi-deathstarbench-partial-7-41164821492",
+          "size_in_bytes": 83564822,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13061959641",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13061959641/zip",
+          "expired": false,
+          "digest": "sha256:b6cb20639d80daa233e2c103a87a3ac9bc6252314c7b04525ea3ad88c37e4a5e",
+          "created_at": "2026-11-01T00:08:11Z",
+          "updated_at": "2026-11-01T00:08:11Z",
+          "expires_at": "2027-01-30T00:00:06Z",
+          "workflow_run": {
+            "id": 41254802097,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "analysis/clean-study-results",
+            "head_sha": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": 41255602556,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41255607582,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41255795362,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96",
+      "artifact_count": 1,
+      "artifact_bytes": 29138334,
+      "artifacts": [
+        {
+          "id": 13063339858,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA2MzMzOTg1OA==",
+          "name": "fixed-dsb-full7-preparation-equivalence-41255795362",
+          "size_in_bytes": 29138334,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063339858",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13063339858/zip",
+          "expired": false,
+          "digest": "sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c",
+          "created_at": "2026-11-01T00:42:58Z",
+          "updated_at": "2026-11-01T00:42:58Z",
+          "expires_at": "2027-01-30T00:13:28Z",
+          "workflow_run": {
+            "id": 41255795362,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "fix/immutable-path-preparation",
+            "head_sha": "7df056aee51ae0113626fac9e72ca673e2515d96"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": 41256806387,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4571e2f788134db59317cde298f1d6c5de99ebe1",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41256810211,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4571e2f788134db59317cde298f1d6c5de99ebe1",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41258382471,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "bfed1546d8dca54b9f00ce9e05ff7b0e928c079d",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41258385155,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "bfed1546d8dca54b9f00ce9e05ff7b0e928c079d",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41258526474,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41258973084,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41259234164,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "d3e31e0a9bf31192010c84f9a601a03f9a32f707",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41263703300,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    },
+    {
+      "run_id": 41265153232,
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "f4eafccea65834644190d81774e83a986a2b910c",
+      "artifact_count": 0,
+      "artifact_bytes": 0,
+      "artifacts": []
+    }
+  ],
+  "excluded_existing_active_archive": {
+    "run_id": 41256152140,
+    "exact_source_runs": [
+      41164826834,
+      41226695588,
+      41226698796,
+      41227089066,
+      41227096018,
+      41244411821,
+      41245544751,
+      41245852835,
+      41246768252,
+      41246965953,
+      41247102582,
+      41247191986,
+      41247196337,
+      41247251287,
+      41254564314,
+      41254567026
+    ],
+    "no_original_duplicates": true
+  },
+  "original_artifact_count": 62,
+  "original_bytes": 15376925234,
+  "largest_original_bytes": 3648655232,
+  "largest_2S_plus_64MiB_guard_bytes": 7364419328,
+  "script_git_blob": "7e9d4a1e29829c86b6a738d47e8260b6f6d4b9d6",
+  "workflow_git_blob": "d68b536b577b55bf82e4881173c8eddd5298875c",
+  "original_criterion": "Complete original81 external-outcome feasibility study with missing/incomplete SDK traces. Byte-preserving retention does not certify scientific success.",
+  "strongest_baseline": "Retain exactly these same terminal original artifacts with the same qualified archiver after all81. This prepares retention early; scientific data/model/outcomes and eligibility are identical.",
+  "causal_contribution": "Reduce final retention tail and keep actual input-equivalence proof/lastOBIpacket/failedSfull6prefix/first56reader originals permanent. No new experiments or outcome filter.",
+  "same_information_and_semantics": true,
+  "no_raw_original_or_chunk_local": true,
+  "no_new_archiver_schema_retry_or_validator": true,
+  "before_POST": "Wait currentarchive41256152140 publication and actualsmallledger/guard review; then freshcheck all16terminal run/artifactID/name/SHA/size/expiry, actualsourcehead/codeCI, ownercapacity and actualdiskguard. Explicit independent originalretention scopeGO required; no POST yet.",
+  "capacity": "Single nextarchive aftercurrent completes; current12captures+12workerreserve+4reader+4CI+1archive=33 below Pro40; freshowneractivity required, no immediatecapacity guarantee.",
+  "costs": "All source/failed/preparation/worker/reader/CI/transfer/storage/archival costs retained, including unproductive attempts and earlystops. APIintervals not CPU/billed; unmeasured humanunknown.",
+  "limitations": "Frozen16 excludes laterbatch2/currentworker and capture/artifact tails; those remain due. This does not close all81 or certify allretention complete."
+}

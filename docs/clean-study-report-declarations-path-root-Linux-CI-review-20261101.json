@@ -1,0 +1,19 @@
+{
+  "checked_utc": "2026-11-01T02:57:43.018914+00:00",
+  "root_original_report_transport_committed_code_Linux_CI_GO": true,
+  "source": "debe113a7a84d818e537277e39dc3175269adb4a",
+  "CI": 41266444651,
+  "actual_Linux_report_tests_PASS": 77,
+  "actual_Linux_report_tests_SKIP": 0,
+  "new_symlink_case_covered": true,
+  "actual_entire_suite": "1077PASS1otherSKIP",
+  "log_bytes": 42598,
+  "log_SHA256": "12c14e0f8e560c69c18aaddfce37600d87117d1c40cf75517aa26847bbf88bf1",
+  "exact_approved_blobs": {
+    ".github/workflows/report-v5.yml": "c35a2c82022e18178c818f9e814b905ec833186c",
+    "tests/test_report_v5.py": "39032059978f4ac6c7d629813356698b93d83c09"
+  },
+  "all_src_scripts_savedreader_unchanged_from_D3": true,
+  "criterion": "Same complete81 external-outcome feasibility and sameinformation/semantics/costs; transport alone changed. Legacy input and wholecommitteddeclarations preserve allfields/notes.",
+  "limits": "Actual77testLinuxlog and exactcode/CI, not final81/scientificreport admission. No new job, rawdata, model, traffic or scoring."
+}
