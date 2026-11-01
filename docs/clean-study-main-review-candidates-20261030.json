@@ -498,10 +498,10 @@
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41348999127,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144"
     },
     {
       "system": "petclinic",
@@ -2446,6 +2446,21 @@
       "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
       "reason": "terminal_runner_shutdown143_memory_contention_no_final_source_or_targets; existing_worker_placement_same_program_input",
       "pre_execution_record": "work/W-PC-partial8-worker-replacement-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430032288,
+      "original_prefix_artifact_id": 13089929905,
+      "replacement_run_id": 41348999127,
+      "actual_capture_commit": "0565115511b24db1d6bbe71e98784baded772144",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
+      "pre_execution_record": "work/W-PC-partial7-worker-replacement-preexecution-20261101.json",
       "original_costs_and_available_prefix_worker_evidence_retained": true
     }
   ]

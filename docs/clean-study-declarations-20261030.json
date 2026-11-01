@@ -2585,6 +2585,19 @@
         }
       ],
       "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430032803; exact319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41348999127,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430032288; exact30a docs-only descendant of strict319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
     }
   ],
   "related_runs": [
@@ -4973,6 +4986,26 @@
       "run_id": 41345755860,
       "role": "archive",
       "note": "Finite terminal28 retention wave batch1: 28 original source runs, 16 original artifacts. Same qualified archival bytes/pre-download disk guard/full SHA/ZIP CRC/chunk/reassembly/remote publication proof. No source deletion/capture/refit/rescore/admission. All transfer/publication/failure/proof costs retained; human unknown; active and finite closing tail separate."
+    },
+    {
+      "run_id": 41348385279,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head30a6e933b38fa8383319c2109e2a969420289f2c; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41348381301,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head30a6e933b38fa8383319c2109e2a969420289f2c; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41348074864,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41347598139,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4999,5 +5032,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T20:01:09.494486+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T20:53:22.806857+00:00"
 }
