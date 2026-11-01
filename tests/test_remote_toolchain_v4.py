@@ -105,6 +105,50 @@ def test_safe_extract_rejects_traversal_and_symlink(tmp_path):
         remote._safe_extract(archive2, tmp_path / "out2")
 
 
+@pytest.mark.parametrize('change', [None, 'legacy', 'conflict', 'path', 'hash', 'count',
+                                  'count_bool', 'encoding', 'unlisted', 'truncated', 'not_object'])
+def test_runtime_dependency_file_is_bound_and_legacy_array_remains_readable(tmp_path, change):
+    root = tmp_path/'checkpoint'
+    manifest = checkpoint(root, identity())
+    relative = 'runtime-observation-dependencies.jsonl'
+    payload = root/relative
+    payload.write_text('{"locator":{"text":"a\\nb"}}\n{"locator":{}}\n', encoding='utf-8')
+    if change == 'truncated':
+        payload.write_bytes(payload.read_bytes().rstrip(b'\n'))
+    if change == 'not_object':
+        payload.write_text('[]\n{}\n', encoding='utf-8')
+    proof = {'relative_path': relative, 'bytes': payload.stat().st_size, 'sha256': remote._sha(payload)}
+    manifest['files'][relative] = proof
+    reference = {**proof, 'records': 2, 'encoding': 'utf-8-jsonl'}
+    manifest['runtime_observation_dependencies_jsonl'] = reference
+    if change == 'legacy':
+        manifest.pop('runtime_observation_dependencies_jsonl')
+        manifest['runtime_observation_dependencies'] = [{'legacy': 'preserved'}]
+    elif change == 'conflict':
+        manifest['runtime_observation_dependencies'] = []
+    elif change == 'path':
+        reference['relative_path'] = '../' + relative
+    elif change == 'hash':
+        reference['sha256'] = '0' * 64
+    elif change == 'count':
+        reference['records'] = 3
+    elif change == 'count_bool':
+        reference['records'] = True
+    elif change == 'encoding':
+        reference['encoding'] = 'json'
+    elif change == 'unlisted':
+        manifest['files'].pop(relative)
+    write_json(root/'manifest.json', manifest)
+    expected = {**identity(), 'manifest_sha256': remote._sha(root/'manifest.json')}
+    write_json(root/'ready.json', {**expected, 'status': 'training_checkpoint_ready'})
+    if change in (None, 'legacy'):
+        actual, _ = remote._validate_checkpoint(root, expected)
+        assert actual == manifest
+    else:
+        with pytest.raises(ValueError):
+            remote._validate_checkpoint(root, expected)
+
+
 def worker_bundle(root, expected, worker_run_id=91):
     toolchain = root / "toolchain"
     write_json(toolchain / "forecasts.json", {"ebpf": {"raw": {"browse": {"available": False}}}})
@@ -502,12 +546,14 @@ def test_zip_restored_verified_binary_is_made_executable(tmp_path):
     assert result.stdout == "executable-mode-ok"
 
 
-def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path):
+@pytest.mark.parametrize('immutable_prefix', [False, True])
+def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path, immutable_prefix):
     path = tmp_path / "index.sqlite"
     with sqlite3.connect(path) as db:
         db.execute("CREATE TABLE spans(value TEXT)")
-    store = remote._readonly_store(path)
+    store = remote._readonly_store(path, immutable_prefix=immutable_prefix)
     try:
+        assert store._immutable_path_prefix is immutable_prefix
         assert store.db.execute("PRAGMA query_only").fetchone()[0] == 1
         assert store.db.execute("PRAGMA cache_size").fetchone()[0] == -65536
         assert store.db.execute("PRAGMA temp_store").fetchone()[0] == 1

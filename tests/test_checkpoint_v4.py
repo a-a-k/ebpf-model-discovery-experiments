@@ -206,6 +206,8 @@ def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
             '_runtime_identity': {'locator': locator}})))
         db.execute('INSERT INTO spans VALUES (?,?)', ('digest-2', json.dumps({
             '_runtime_identity': {'locator': second_locator}})))
+        db.execute('INSERT INTO spans VALUES (?,?)', ('digest-3', json.dumps({
+            '_runtime_identity': {'locator': locator}})))
     copied = {}
     source_raw_hashes = 0
     original_sha = checkpoint_module._sha
@@ -227,6 +229,45 @@ def test_runtime_locator_checkpoint_copies_deepflow_raw_snapshot_and_accounting(
                      (observations/'deepflow-codec-accounting.jsonl').relative_to(live)):
         assert (checkpoint/relative).read_bytes() == (live/relative).read_bytes()
         assert relative.as_posix() in copied
+    reference = checkpoint_module._write_runtime_observation_dependencies(
+        live.resolve(), checkpoint, copied)
+    proof_path = checkpoint/reference['relative_path']
+    with proof_path.open(encoding='utf-8') as stream:
+        assert [json.loads(line) for line in stream] == proofs
+    assert reference['records'] == 2
+    assert reference['sha256'] == original_sha(proof_path)
+    assert copied[reference['relative_path']]['sha256'] == reference['sha256']
+    raw.write_bytes(b'changed')
+    with pytest.raises(ValueError, match='raw locator changed'):
+        checkpoint_module._write_runtime_observation_dependencies(live.resolve(), checkpoint, {})
+    assert not (checkpoint/'.runtime-observation-dependencies.jsonl.tmp').exists()
+
+
+def test_runtime_proof_file_roundtrips_unicode_newlines_and_does_not_publish_partial(
+        tmp_path, monkeypatch):
+    proofs = [{'locator': {'text': 'line\nnext\u2028\u0411'}, 'raw_file': {'bytes': 12}},
+              {'locator': {'text': 'second'}, 'matching': 2}]
+    monkeypatch.setattr(checkpoint_module, '_iter_runtime_observation_dependencies',
+                        lambda *_: iter(proofs))
+    copied = {}
+    reference = checkpoint_module._write_runtime_observation_dependencies(tmp_path, tmp_path, copied)
+    path = tmp_path/reference['relative_path']
+    assert path.read_bytes().count(b'\n') == 2
+    with path.open(encoding='utf-8') as stream:
+        assert [json.loads(line) for line in stream] == proofs
+    path.unlink()
+    def failing(*_):
+        yield proofs[0]
+        raise ValueError('source changed during capture')
+    monkeypatch.setattr(checkpoint_module, '_iter_runtime_observation_dependencies', failing)
+    copied = {}
+    with pytest.raises(ValueError, match='source changed'):
+        checkpoint_module._write_runtime_observation_dependencies(tmp_path, tmp_path, copied)
+    assert not path.exists() and not copied
+    assert not (tmp_path/('.' + path.name + '.tmp')).exists()
+    monkeypatch.setattr(checkpoint_module, '_iter_runtime_observation_dependencies', lambda *_: iter(()))
+    assert checkpoint_module._write_runtime_observation_dependencies(tmp_path, tmp_path, copied) is None
+    assert not path.exists() and not copied
 
 
 def test_deepflow_accounting_count_stream_preserves_rows_and_boundaries(tmp_path: Path):

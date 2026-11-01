@@ -9,8 +9,11 @@ Before execution, both agents gave ORIGINAL-criterion design and actual-code GO
 for `fresh-batch` in the existing saved-evidence workflow. The strongest simple
 baseline is to wait for all 81 packets and run the same strict reader. A batch
 moves those checks earlier; it does not change the scientific method, data,
-assertions, default main counts or outcome assessment. The reader and evidence
-selector remain byte-identical to the qualified `e6dff1d` versions.
+assertions, default main counts or outcome assessment. The initial scheduling
+change retained the qualified `e6dff1d` reader and evidence selector. Subsequent
+exact-source admission changes are documented in the named-source records,
+including [the streamed-checkpoint source](NAMED_STREAMED_CHECKPOINT_SOURCE_V5.md).
+Each batch remains bound to its actual consumer commit and original packet IDs.
 
 Each first snapshot includes every currently compatible completed full/compact
 packet, without filtering availability or errors. The full 81-cell planned grid

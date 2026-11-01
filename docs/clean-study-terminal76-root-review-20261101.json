@@ -1,0 +1,54 @@
+{
+  "recorded_utc": "2026-11-01T17:44:10.962144+00:00",
+  "root_original_actual_archive_publication_GO": true,
+  "source": "13a65281b839ecd8dfab8b9fde55d23790f98c24",
+  "plan_sha256": "ea1a7bd4e696f9b639e4c15480af8725f771745a8c874885205aa2b094ac054e",
+  "source_runs": 76,
+  "original_artifacts": 88,
+  "original_bytes": 187746779891,
+  "batches": [
+    {
+      "run": 41322656566,
+      "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41322656566",
+      "source_runs": 52,
+      "original_artifacts": 51,
+      "original_bytes": 93760166697,
+      "remote_assets_checked": 244,
+      "chunk_manifests_checked": 20,
+      "minimum_predownload_headroom_bytes": 72295541212,
+      "small_assets": {
+        "provenance.tar.gz": {
+          "bytes": 138139,
+          "sha256": "d98f7f516c3d744b0b59b1b25bf15019ad76eb43839cca33e8525b39f7bece5a"
+        },
+        "SHA256SUMS.txt": {
+          "bytes": 34547,
+          "sha256": "8f092c0f05cfc03283860b7f4408f94bbb09ab65aa22da92ff15ce2704ad05e0"
+        }
+      }
+    },
+    {
+      "run": 41322660524,
+      "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41322660524",
+      "source_runs": 24,
+      "original_artifacts": 37,
+      "original_bytes": 93986613194,
+      "remote_assets_checked": 152,
+      "chunk_manifests_checked": 19,
+      "minimum_predownload_headroom_bytes": 72351580034,
+      "small_assets": {
+        "provenance.tar.gz": {
+          "bytes": 72883,
+          "sha256": "2aad0c01dd01ff075707acd7ec71baf641fa37206fb275a4be9c5873f73782c6"
+        },
+        "SHA256SUMS.txt": {
+          "bytes": 24404,
+          "sha256": "a035cf517f64095928cef02ae61c7aab344197affc62ba06df9561aebdd8eb7f"
+        }
+      }
+    }
+  ],
+  "verification_boundary": "Root rehashed only small published metadata assets. All remote ledger/chunk/reassembly/source identities and all88 disk guards checked against frozen original API inventory. Whole original ZIP CRC/SHA verified by actual Actions, not rehashed locally.",
+  "scientific_admission_or_entire_capture_disk_guarantee": false,
+  "complete_costs": "All original failures, source, capture/worker/preparation/CI/read/transfer/hash/chunk/upload/archive and finite closing tail retained; human unknown, API intervals not CPU/billing."
+}
