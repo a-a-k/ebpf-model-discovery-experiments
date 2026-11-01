@@ -701,6 +701,14 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     validation_started = time.monotonic_ns()
     expected, checkpoint_proof = _expected(campaign, Path(checkpoint), release, plans)
     checkpoint_index_proof = _index_table_proof(Path(checkpoint) / "observation-index.sqlite")
+    # The checkpoint payload has had its last parent read. Release its verified
+    # uploaded mirror before allocating another full consistent live DB backup.
+    session = requests.Session()
+    headers = _headers(token)
+    cost["uploaded_checkpoint_copy_release"] = _release_uploaded_checkpoint_copy(
+        checkpoint, campaign.ctx.out, expected, checkpoint_proof,
+        session, headers, repository, state)
+    cost["checkpoint_validation_includes_checkpoint_copy_release"] = True
     live_index_proof = _consistent_live_index_proof(
         campaign.store.db, state / ".parent-index-before.sqlite")
     if live_index_proof != checkpoint_index_proof:
@@ -727,12 +735,6 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
                 "checkpoint_proof": checkpoint_proof, "started_ns": time.time_ns(),
                 "status": "prepared_not_sent"}
     _atomic_json(state / "dispatch.json", dispatch)
-    session = requests.Session()
-    headers = _headers(token)
-    cost["uploaded_checkpoint_copy_release"] = _release_uploaded_checkpoint_copy(
-        checkpoint, campaign.ctx.out, expected, checkpoint_proof,
-        session, headers, repository, state)
-    _atomic_json(cost_path, cost)
     url = f"https://api.github.com/repos/{repository}/actions/workflows/{WORKFLOW}/dispatches"
     dispatch["status"] = "post_started_response_unknown"
     dispatch["post_started_ns"] = time.time_ns()

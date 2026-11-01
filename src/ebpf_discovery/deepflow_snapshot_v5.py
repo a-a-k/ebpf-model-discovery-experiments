@@ -173,14 +173,87 @@ def snapshot(data: Path, out: Path, mode: str, *, producer_closed: bool = False)
     return manifest
 
 
+def release_verified_prefix(data: Path, out: Path, manifest_sha256: str) -> dict:
+    """Release an imported prefix copy, retaining the live file and parent mirror."""
+    started = time.monotonic_ns()
+    data, out = Path(data), Path(out)
+    root = data.parent.resolve()
+    if (data.is_symlink() or data.parent.is_symlink() or data.name != "data" or not data.is_dir()
+            or out.is_symlink() or out.parent.is_symlink()
+            or not out.is_dir() or out.stat().st_dev != data.stat().st_dev
+            or out.resolve().parent != root / "snapshots" or out.resolve() == data.resolve()):
+        raise ValueError("prefix release is outside the owned snapshot directory")
+    manifest_path = out / "snapshot.json"
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise ValueError("prefix release lacks its original regular manifest")
+    free_before = shutil.disk_usage(out).free
+    if _sha256(manifest_path) != manifest_sha256:
+        raise ValueError("prefix release manifest differs from the imported manifest")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if (manifest.get("mode") != "prefix" or manifest.get("complete_prefix_only") is not True
+            or manifest.get("rotation_observed") or manifest.get("producer_closed")
+            or Path(manifest.get("data_directory", "")).resolve() != data.resolve()):
+        raise ValueError("only an unchanged live-prefix copy may be released")
+    targets, names = [], set()
+    for row in manifest.get("files", []):
+        name = row.get("snapshot_name")
+        if name != "l7_flow_log" or name != row.get("source_name") or name in names:
+            raise ValueError("prefix release has an unexpected or duplicate filename")
+        names.add(name)
+        target, source = out / name, data / name
+        if target.is_symlink() or source.is_symlink():
+            raise ValueError("prefix release refuses symlinks")
+        before, original = target.lstat(), source.lstat()
+        length = row.get("copied_bytes")
+        if (not stat.S_ISREG(before.st_mode) or not stat.S_ISREG(original.st_mode)
+                or type(length) is not int or length < 0 or before.st_size != length or before.st_nlink != 1
+                or original.st_size < length or (before.st_dev, before.st_ino) == (original.st_dev, original.st_ino)
+                or _sha256(target) != row.get("copied_sha256")
+                or _sha256(source, length) != row.get("copied_sha256")):
+            raise ValueError("prefix release cannot verify both retained copies")
+        targets.append((target, before))
+    if {item.name for item in out.iterdir()} != names | {"snapshot.json"}:
+        raise ValueError("prefix release directory has unexpected entries")
+    # Check the complete census and all identities before the first unlink.
+    for target, before in targets:
+        current = target.lstat()
+        if (current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns) != (
+                before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns):
+            raise ValueError("prefix copy changed before release")
+    verification_seconds = (time.monotonic_ns() - started) / 1e9
+    removed = 0
+    for target, before in targets:
+        target.unlink()
+        removed += before.st_size
+    manifest_path.unlink()
+    out.rmdir()
+    return {"schema": "deepflow-verified-prefix-copy-release-v5", "status": "released_verified_prefix_copy",
+            "original_manifest_sha256": manifest_sha256, "snapshot_directory": str(out),
+            "files_removed": len(targets), "logical_bytes_unlinked": removed,
+            "live_source_paths_retained": True, "parent_import_verified_by_caller": True,
+            "free_bytes_before": free_before, "free_bytes_after": shutil.disk_usage(data).free,
+            "verification_seconds": verification_seconds,
+            "elapsed_seconds": (time.monotonic_ns() - started) / 1e9,
+            "limit": "Only imported guest prefix duplicates; concurrent producer activity affects free-space delta."}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", choices=("prefix", "failure", "final"), required=True)
     parser.add_argument("--producer-closed", action="store_true")
+    parser.add_argument("--release-verified-prefix", action="store_true")
+    parser.add_argument("--imported-manifest-sha256")
     args = parser.parse_args()
-    snapshot(args.data, args.out, args.mode, producer_closed=args.producer_closed)
+    if args.release_verified_prefix:
+        if args.mode != "prefix" or args.producer_closed or not args.imported_manifest_sha256:
+            raise ValueError("prefix release requires the imported prefix manifest digest")
+        print(json.dumps(release_verified_prefix(args.data, args.out, args.imported_manifest_sha256), sort_keys=True))
+    else:
+        if args.imported_manifest_sha256 is not None:
+            raise ValueError("imported manifest digest is only valid for prefix release")
+        snapshot(args.data, args.out, args.mode, producer_closed=args.producer_closed)
 
 
 if __name__ == "__main__":

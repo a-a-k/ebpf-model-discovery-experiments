@@ -1060,6 +1060,7 @@ class DeepFlowCollectorsV5(CollectorsV5):
         local.mkdir(parents=True, exist_ok=False)
         self.ctx.node_get(node, remote_stage + "/snapshot.json", local / "snapshot.json")
         manifest = json.loads((local / "snapshot.json").read_text(encoding="utf-8"))
+        imported_manifest_sha256 = _sha256_file(local / "snapshot.json")
         if producer_closed:
             try:
                 storage_audit = json.loads(_stdout(result))
@@ -1143,6 +1144,31 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "pending_no_standalone_files": not bool(manifest.get("files")),
         })
         _write_json(local / "snapshot.json", manifest)
+        if not final and manifest["technical_valid"] and manifest.get("files"):
+            # The authoritative parent raw files and enriched manifest are now
+            # retained. The immutable guest prefix mirror has had its last read.
+            release_command = (
+                f"python3 {shlex.quote(remote + '/deepflow_snapshot_v5.py')} "
+                f"--data {shlex.quote(remote + '/data')} --out {shlex.quote(remote_stage)} "
+                f"--mode prefix --release-verified-prefix "
+                f"--imported-manifest-sha256 {shlex.quote(imported_manifest_sha256)}"
+            )
+            try:
+                released = self.ctx.node_exec(node, release_command, timeout=300, check=False)
+                try:
+                    audit = json.loads(_stdout(released))
+                except (ValueError, TypeError):
+                    audit = {"status": "release_not_confirmed"}
+                audit["command_returncode"] = _returncode(released)
+                if (_returncode(released) or audit.get("schema") != "deepflow-verified-prefix-copy-release-v5"):
+                    audit["status"] = "release_not_confirmed"
+            except Exception as error:
+                # A refused duplicate cleanup does not alter scientific evidence
+                # or make a complete capture ineligible.
+                audit = {"status": "release_not_confirmed", "error": repr(error)}
+            audit_path = self.ctx.out / "infrastructure" / "deepflow-prefix-copy-release" / f"{node}-{stage}.json"
+            audit_path.parent.mkdir(parents=True, exist_ok=True)
+            _write_json(audit_path, audit)
         return manifest
 
     @staticmethod

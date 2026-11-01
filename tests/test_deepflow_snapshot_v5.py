@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from ebpf_discovery.deepflow_snapshot_v5 import snapshot
+from ebpf_discovery.deepflow_snapshot_v5 import release_verified_prefix, snapshot
 
 
 def test_prefix_snapshot_closes_last_complete_record_and_retains_tail_metadata(tmp_path: Path) -> None:
@@ -74,6 +74,59 @@ def test_snapshot_output_is_fresh_and_never_overwritten(tmp_path: Path) -> None:
     snapshot(data, out, "prefix")
     with pytest.raises(FileExistsError):
         snapshot(data, out, "prefix")
+
+
+def test_imported_prefix_duplicate_release_preserves_parent_and_growing_source(tmp_path):
+    data = tmp_path / "data"
+    data.mkdir()
+    source = data / "l7_flow_log"
+    source.write_bytes(b'{"first":1}\n')
+    out = tmp_path / "snapshots" / "002-live-prefix"
+    snapshot(data, out, "prefix")
+    manifest_sha = hashlib.sha256((out / "snapshot.json").read_bytes()).hexdigest()
+    parent = tmp_path / "imported-parent-raw"
+    parent.write_bytes((out / "l7_flow_log").read_bytes())
+    source.write_bytes(source.read_bytes() + b'{"later":2}\n')
+    result = release_verified_prefix(data, out, manifest_sha)
+    assert not out.exists()
+    assert parent.read_bytes() == b'{"first":1}\n'
+    assert source.read_bytes() == b'{"first":1}\n{"later":2}\n'
+    assert result["logical_bytes_unlinked"] == len(parent.read_bytes())
+
+
+@pytest.mark.parametrize("fault", ["manifest", "target", "source", "extra", "symlink", "hardlink", "outside", "final"])
+def test_prefix_duplicate_release_refuses_unsafe_or_changed_inputs_without_deletion(tmp_path, fault):
+    data = tmp_path / "data"
+    data.mkdir()
+    source = data / "l7_flow_log"
+    source.write_bytes(b'{}\n')
+    out = tmp_path / "snapshots" / "002-live-prefix"
+    snapshot(data, out, "final" if fault == "final" else "prefix")
+    manifest_sha = hashlib.sha256((out / "snapshot.json").read_bytes()).hexdigest()
+    target = out / "l7_flow_log"
+    if fault == "manifest":
+        (out / "snapshot.json").write_text('{}', encoding="utf-8")
+    elif fault == "target":
+        target.write_bytes(b'changed\n')
+    elif fault == "source":
+        source.write_bytes(b'XX\n')
+    elif fault == "extra":
+        (out / "unexpected").write_bytes(b'preserve me')
+    elif fault == "symlink":
+        target.unlink()
+        try:
+            target.symlink_to(source)
+        except OSError:
+            pytest.skip("symlink creation unavailable on this host")
+    elif fault == "hardlink":
+        target.unlink()
+        os.link(source, target)
+    before_source, before_target = source.read_bytes(), target.read_bytes()
+    with pytest.raises(ValueError):
+        release_verified_prefix(data, data if fault == "outside" else out, manifest_sha)
+    assert source.read_bytes() == before_source
+    assert target.read_bytes() == before_target
+    assert (out / "snapshot.json").exists()
 
 
 def test_closed_final_links_keep_exact_copy_manifest_bytes_and_originals(tmp_path, capsys):
