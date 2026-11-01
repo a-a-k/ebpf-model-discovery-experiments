@@ -583,6 +583,99 @@ def _verify_worker_output(root: Path, expected: dict, worker_run_id: int) -> dic
     return _read(root / "toolchain" / "forecasts.json")
 
 
+def _release_uploaded_checkpoint_copy(checkpoint: Path, live_root: Path, expected: dict,
+                                      checkpoint_proof: dict, session, headers: dict,
+                                      repository: str, state: Path) -> dict:
+    """Release only the validated local payload after its final parent read."""
+    started_ns, started = time.time_ns(), time.monotonic_ns()
+    checkpoint = Path(checkpoint)
+    live_root = Path(live_root).resolve()
+    owned = live_root.parent / "training-checkpoint"
+    if checkpoint.is_symlink() or checkpoint.resolve() != owned:
+        return {"status": "not_the_owned_training_checkpoint", "payload_removed": False}
+    root = checkpoint.resolve()
+    keep = {"manifest.json", "ready.json", "release.json"}
+    files = checkpoint_proof.get("files") or {}
+    if not files or checkpoint_proof.get("manifest_sha256") != expected["manifest_sha256"]:
+        raise ValueError("checkpoint copy release lacks the complete validated payload proof")
+    metadata = {}
+    for name in sorted(keep):
+        path = root / name
+        if path.is_symlink() or not path.is_file():
+            raise ValueError("checkpoint copy release lacks retained identity metadata")
+        metadata[name] = _sha(path)
+    if metadata["manifest.json"] != expected["manifest_sha256"]:
+        raise ValueError("checkpoint manifest changed before local copy release")
+    artifact_id = int(expected["artifact_id"])
+    if artifact_id <= 0 or str(artifact_id) != str(expected["artifact_id"]):
+        raise ValueError("checkpoint copy release requires one exact artifact identity")
+    artifact = _get(session,
+        f"https://api.github.com/repos/{repository}/actions/artifacts/{artifact_id}",
+        headers, retry_log=state / "http-retries.jsonl",
+        operation="checkpoint_copy_release_binding").json()
+    artifact_run = artifact.get("workflow_run") or {}
+    if (artifact.get("id") != artifact_id or artifact.get("expired") is not False
+            or artifact.get("name") != expected["artifact_name"]
+            or artifact.get("digest") != expected["artifact_digest"]
+            or type(artifact.get("size_in_bytes")) is not int or artifact["size_in_bytes"] <= 0
+            or str(artifact_run.get("id")) != str(expected["run_id"])
+            or artifact_run.get("head_sha") != expected["commit"]):
+        raise ValueError("uploaded checkpoint identity differs before local copy release")
+    present = {p.relative_to(root).as_posix() for p in root.rglob("*")
+               if p.is_file() or p.is_symlink()}
+    if present != set(files) | keep:
+        raise ValueError("checkpoint contents changed before local copy release")
+    targets, resolved_targets = [], set()
+    for relative, record in sorted(files.items()):
+        name = Path(relative)
+        path = root / name
+        resolved = path.resolve()
+        if (name.is_absolute() or ".." in name.parts or relative in keep
+                or path.is_symlink() or not resolved.is_relative_to(root)
+                or resolved in resolved_targets or not path.is_file()
+                or path.stat().st_size != record["bytes"] or _sha(path) != record["sha256"]):
+            raise ValueError("checkpoint payload changed or escaped before local copy release")
+        resolved_targets.add(resolved)
+        targets.append((relative, path, record))
+    proof_path = state / "uploaded-checkpoint-copy-release.json"
+    result = {"schema_version": "uploaded-checkpoint-copy-release-v4",
+        "status": "prepared", "started_ns": started_ns,
+        "checkpoint_root": str(root), "live_root": str(live_root),
+        "retained_metadata_sha256": metadata, "manifest_sha256": expected["manifest_sha256"],
+        "original_actions_artifact": {key: artifact[key] for key in
+            ("id", "name", "digest", "size_in_bytes", "expired", "workflow_run")},
+        "validated_payload_files": files, "removed_files": 0,
+        "logical_payload_bytes": sum(record["bytes"] for _, _, record in targets),
+        "logical_bytes_unlinked": 0, "disk_free_before": shutil.disk_usage(root).free,
+        "verification_seconds": (time.monotonic_ns()-started)/1e9,
+        "scope": "Only manifest-listed local copies after last read; original Actions checkpoint and live campaign files remain. Free-space delta also includes concurrent host activity."}
+    _atomic_json(proof_path, result)
+    try:
+        parents = set()
+        for _, path, record in targets:
+            path.unlink()
+            result["removed_files"] += 1
+            result["logical_bytes_unlinked"] += record["bytes"]
+            parents.update(p for p in path.parents if p != root and p.is_relative_to(root))
+        for directory in sorted(parents, key=lambda p: len(p.parts), reverse=True):
+            # Empty-directory removal cannot remove unexpected concurrent files.
+            if directory.is_dir() and not directory.is_symlink():
+                directory.rmdir()
+        if {name: _sha(root / name) for name in sorted(keep)} != metadata:
+            raise RuntimeError("checkpoint identity metadata changed during copy release")
+        result["status"] = "released_verified_local_payload"
+    except BaseException as error:
+        result.update(status="release_failed", error=repr(error))
+        raise
+    finally:
+        result.update(ended_ns=time.time_ns(), elapsed_seconds=(time.monotonic_ns()-started)/1e9,
+            disk_free_after=shutil.disk_usage(root).free)
+        result["observed_disk_free_delta"] = result["disk_free_after"] - result["disk_free_before"]
+        _atomic_json(proof_path, result)
+    return {key: result[key] for key in ("status", "removed_files", "logical_bytes_unlinked",
+        "disk_free_before", "disk_free_after", "observed_disk_free_delta", "elapsed_seconds")}
+
+
 def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -> dict:
     """Dispatch once, wait synchronously, verify and atomically import forecasts."""
     if os.environ.get("GITHUB_ACTIONS") != "true":
@@ -636,6 +729,10 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(state / "dispatch.json", dispatch)
     session = requests.Session()
     headers = _headers(token)
+    cost["uploaded_checkpoint_copy_release"] = _release_uploaded_checkpoint_copy(
+        checkpoint, campaign.ctx.out, expected, checkpoint_proof,
+        session, headers, repository, state)
+    _atomic_json(cost_path, cost)
     url = f"https://api.github.com/repos/{repository}/actions/workflows/{WORKFLOW}/dispatches"
     dispatch["status"] = "post_started_response_unknown"
     dispatch["post_started_ns"] = time.time_ns()
