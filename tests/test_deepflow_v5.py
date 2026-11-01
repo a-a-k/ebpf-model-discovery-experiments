@@ -820,22 +820,28 @@ def test_successful_start_close_uses_normal_drain_not_never_started_branch(
     assert not (collector.root / "startup-incomplete.json").exists()
 
 
+@pytest.mark.parametrize("node_b_valid", [True, False, None])
 def test_final_drain_separates_retained_bytes_from_unproven_internal_flush(
-    tmp_path: Path, monkeypatch
+    tmp_path: Path, monkeypatch, node_b_valid
 ) -> None:
     collector = DeepFlowCollectorsV5(Context(tmp_path))
     collector.remote_roots = {"a": "/remote/a", "b": "/remote/b"}
     monkeypatch.setattr(collector, "_retain_node_evidence", lambda node, stage: None)
+    termination_values = iter([True, node_b_valid])
     monkeypatch.setattr(
         collector, "_termination_evidence",
-        lambda **kwargs: {"technical_valid": True, "log_assessment": {
+        lambda **kwargs: {"technical_valid": next(termination_values), "log_assessment": {
             "source_specific_failure_markers": [], "invalid_reasons": []
         }},
     )
-    monkeypatch.setattr(collector, "_capture_all", lambda label, final=False: {
-        "technical_valid": True,
-        "nodes": {"a": {"stage": "001-final"}, "b": {"stage": "001-final"}},
-    })
+    calls = []
+    def capture(label, *, final=False, producer_closed_by_node=None):
+        calls.append((label, final, producer_closed_by_node))
+        return {
+            "technical_valid": True,
+            "nodes": {"a": {"stage": "001-final"}, "b": {"stage": "001-final"}},
+        }
+    monkeypatch.setattr(collector, "_capture_all", capture)
     monkeypatch.setattr(collector, "_verify_prefixes", lambda capture: {
         "a/l7_flow_log": {"unchanged": True},
         "b/l7_flow_log": {"unchanged": True},
@@ -844,8 +850,14 @@ def test_final_drain_separates_retained_bytes_from_unproven_internal_flush(
     monkeypatch.setattr(collector, "_close_receivers", lambda: {
         "native": {"technical_valid": True, "parent_hash_verification": True}
     })
-    evidence = collector.final_drain()
-    assert evidence["technical_complete"] is True
+    if node_b_valid is True:
+        evidence = collector.final_drain()
+    else:
+        with pytest.raises(RuntimeError, match="final drain is technically invalid"):
+            collector.final_drain()
+        evidence = collector._drain_evidence
+    assert calls == [("final", True, {"a": True, "b": node_b_valid is True})]
+    assert evidence["technical_complete"] is (node_b_valid is True)
     assert evidence["accepted_receiver_bytes_closed_and_hashed"] is True
     assert evidence["collector_exporter_flush"]["status"] == "internal_flush_loss_unproven"
     assert evidence["kernel_or_producer_loss_absent"] is None

@@ -12,6 +12,9 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
+import stat
+import time
 
 
 def _sha256(path: Path, limit: int | None = None) -> str:
@@ -65,11 +68,51 @@ def _copy(path: Path, target: Path, length: int) -> str:
     return digest.hexdigest()
 
 
-def snapshot(data: Path, out: Path, mode: str) -> dict:
+def _link_closed_final(path: Path, target: Path, length: int) -> tuple[str, dict]:
+    """Retain the closed inode at both paths, without another full data allocation."""
+    before = path.lstat()
+    if not stat.S_ISREG(before.st_mode) or path.is_symlink():
+        raise ValueError(f"closed snapshot source must be a regular non-symlink: {path}")
+    if before.st_size != length or before.st_dev != target.parent.stat().st_dev:
+        raise ValueError(f"closed snapshot source size/filesystem mismatch: {path}")
+    linked = False
+    try:
+        os.link(path, target, follow_symlinks=False)
+        linked = True
+        retained = target.lstat()
+        if (not stat.S_ISREG(retained.st_mode)
+                or (retained.st_dev, retained.st_ino) != (before.st_dev, before.st_ino)):
+            raise RuntimeError(f"closed snapshot link identity mismatch: {path}")
+        copied_hash = _sha256(target)
+        after = path.lstat()
+        retained = target.lstat()
+        identity = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns)
+        if identity(after) != identity(before) or identity(retained) != identity(before):
+            raise RuntimeError(f"closed snapshot source changed while hashing: {path}")
+        return copied_hash, {
+            "name": path.name, "logical_bytes": length,
+            "source_device": before.st_dev, "snapshot_device": retained.st_dev,
+            "source_inode": before.st_ino, "snapshot_inode": retained.st_ino,
+            "source_mode": stat.S_IMODE(before.st_mode),
+            "snapshot_mode": stat.S_IMODE(retained.st_mode),
+            "same_inode": True, "source_path_retained": True,
+        }
+    except BaseException:
+        if linked:
+            target.unlink(missing_ok=True)
+        raise
+
+
+def snapshot(data: Path, out: Path, mode: str, *, producer_closed: bool = False) -> dict:
     data, out = Path(data), Path(out)
+    if producer_closed and mode != "final":
+        raise ValueError("hardlinks require final mode and explicit producer closure")
     if out.exists():
         raise FileExistsError(f"snapshot output already exists: {out}")
     out.mkdir(parents=True)
+    started_ns = time.time_ns() if producer_closed else None
+    free_before = shutil.disk_usage(out).free if producer_closed else None
+    storage_files = []
     files = []
     for path in sorted(item for item in data.iterdir() if item.is_file()):
         if mode == "prefix" and path.name not in {"l7_flow_log", "l7_flow_log.pre"}:
@@ -78,7 +121,11 @@ def snapshot(data: Path, out: Path, mode: str) -> dict:
         prefix = _complete_prefix(path, before) if path.name.startswith("l7_flow_log") else before
         copied = prefix if mode == "prefix" else before
         target = out / path.name
-        copied_hash = _copy(path, target, copied)
+        if producer_closed:
+            copied_hash, storage = _link_closed_final(path, target, copied)
+            storage_files.append(storage)
+        else:
+            copied_hash = _copy(path, target, copied)
         after = path.stat().st_size
         files.append({
             "source_name": path.name,
@@ -108,6 +155,21 @@ def snapshot(data: Path, out: Path, mode: str) -> dict:
     (out / "snapshot.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
+    if producer_closed:
+        audit = {
+            "schema": "deepflow-closed-final-snapshot-storage-v5",
+            "strategy": "hardlinks_after_positive_per_node_termination",
+            "positive_external_producer_closure_supplied": True,
+            "source_paths_unlinked": False,
+            "logical_bytes_retained": sum(item["logical_bytes"] for item in storage_files),
+            "free_bytes_before": free_before,
+            "free_bytes_after_manifest": shutil.disk_usage(out).free,
+            "elapsed_seconds": (time.time_ns() - started_ns) / 1e9,
+            "files": storage_files,
+            "scope": "same full bytes and unchanged snapshot manifest; no zero-loss or case-success claim",
+        }
+        # Keep this diagnostic off the nearly full guest filesystem.
+        print(json.dumps(audit, sort_keys=True), flush=True)
     return manifest
 
 
@@ -116,8 +178,9 @@ def main() -> None:
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--mode", choices=("prefix", "failure", "final"), required=True)
+    parser.add_argument("--producer-closed", action="store_true")
     args = parser.parse_args()
-    snapshot(args.data, args.out, args.mode)
+    snapshot(args.data, args.out, args.mode, producer_closed=args.producer_closed)
 
 
 if __name__ == "__main__":
