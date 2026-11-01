@@ -1,0 +1,60 @@
+{
+  "recorded_before_new_T_dispatch_utc": "2026-11-01T04:30:58.184523+00:00",
+  "original_exact_failure_only_T_repeat_GO": true,
+  "scope": {
+    "collector": "deepflow",
+    "system": "otel_demo",
+    "mode": "partial",
+    "seed": 6
+  },
+  "source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+  "ref": "capture-20261101-immutable-prefix-v4",
+  "consumer": "d3e31e0a9bf31192010c84f9a601a03f9a32f707",
+  "old_parent": 41164824120,
+  "old_job": 124430030995,
+  "annotation_messages": [
+    "The job has exceeded the maximum execution time of 6h0m0s"
+  ],
+  "failure": "Actual platform maximum6h, terminalcancelled. API interval6h5min includes300sec terminationgrace; not a user cancellation or guessed OOM/disk cause.",
+  "old_job_API_interval_seconds": 21900,
+  "productive_time_budget_seconds": 21600,
+  "termination_grace_not_productive_seconds": 300,
+  "published_artifacts": [
+    {
+      "id": 13064206089,
+      "name": "training-v4-otel_demo-partial-6-41164824120",
+      "bytes": 2538710984,
+      "digest": "sha256:e0849dbcca71cae729e4bc86e2ad4b52c0fb87b4f8281e245f9e5ae8598f8bfa",
+      "expired": false
+    }
+  ],
+  "complete_full_or_compact_packet_published": false,
+  "independent_API_checks": "Job124430030995 and exact annotations read directly; fullypaginated originalparent artifact API has only matchingprefix; currentcommittedcandidate57 has no DFOTelpartial6 eligiblepair. Remote immutabletag still exactT. No artifact bodies read.",
+  "root_plan_sha256_before_GO": "9925dbb8e045070bfda941da2ff770198074909a30492dca0b9e394cdbd41ae1",
+  "source_core_blobs": {
+    "src/ebpf_discovery/raw_v4.py": "8d964d7dc969a922f9ab1701f371eed5ea190321",
+    "src/ebpf_discovery/remote_toolchain_v4.py": "627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89",
+    "src/ebpf_discovery/store_v5.py": "6569299a8a0a31f2ded3781433045ba303ae097a",
+    "src/ebpf_discovery/toolchain_v4.py": "b8b4c635952b5d0e72d436951df2463b38f28105"
+  },
+  "bound_existing_original_GOs_sha256": {
+    "named-T-final-source-tree-CI-go.json": "5e52ba1ff518c4edfc4580263682cf00421713411e64633dbc79873c662ced4a",
+    "named-T-consumer-actual-code-original-go.json": "ee39258521a6c175d1d1bb2540f99332846b6f3b8f457ef9c52eab70207fd50d",
+    "offline-path-equivalence-41255795362/independent-actual-output-original-equivalence-go.json": "1929164fa79c021fb3c8164d75fb2024f4e852f335a256776b9642143a9ecc6c"
+  },
+  "original_criterion": "All81/all10operations actual eBPF to Bering to Sheaft with independent application outcomes under absent/partial SDK tracing. Same provided semantics, direct equivalent predicate and prespecified cheapcombination; no cost superiority hypothesis.",
+  "strongest_baseline": "Repeat unchanged A/S fullcase, or salvage completeexistingprefix/worker if a validfulltargetchain exists. Here actualA reached6h and no eligiblepacket exists. One fresh identicalmethod T fullcapture is the minimal complete measurement recovery using alreadyqualified preparation repair.",
+  "causal_scope": "Immutablepath memo and pruning discarded span copies preserve scientific observations/roles/order/projections/entries; actual completeold/new655-input proof is DSBfull7. Its6473to1142s observation is not an OTel-specific speedup or end-to-end6h guarantee.",
+  "same_information_semantics_workloads_trials": true,
+  "preserve_worker41260045890": "Stillactive and its scientific input/parent not yet bound. Do not label it exactchild or cancel it by proximity/head. Retain any eventualartifact and all orphanworker costs.",
+  "target_phase_limit": "Continue started00:49:28; no completedconsole/subphaseproof. Whether any targettraffic occurred is unknown, not asserted zero. Partial outcomes if later recovered remain retained.",
+  "capacity": "RootfreshbeforePOST: current12captures\u219213reserved;13futureworkers+all11alreadyactive workers deliberatelydoublecounted+1docsCI=38belowdocumented40. No newreader/archive while reserve needed, no healthyoldcarrier cancellation; originalpartial7/8 and12othercases continue.",
+  "outcome_policy": "Retain all unknown/adverse validresults and costs; exactlyone failedcell only. No favorable-result selection, workload/trial shortening or hypothesischange.",
+  "costs": "Retain oldfailure/closedprefix/possiblepartialtargets and every existing/unbound/orphanworker plus all failedprofiles, preparation, fixtures/CI, newcapture/model/Sheaft, wait/read/transfer/storage/report/archive costs. APIinterval not CPU/billing; humanunknown.",
+  "single_POST_only": true,
+  "no_healthy_cancellation": true,
+  "freshchecks_before_POST": "Rootfreshowner/source/tag/producerCI/consumerCI/candidateabsence/capturecap and onlymatchingprefix guard. Reviewed dispatchwrapper keeps exactonecell and responseunknown guard; stop/reconcile POST error, never blindrepeat.",
+  "reviewed_dispatch_wrapper_sha256": "b1f17d851ddcd07cb62fe09515836d7f10f90847b37370ccb653da6d2f633993",
+  "if_failure_recurs": "Inspect actualphase/cause before another repeat; no automatic endlessretry.",
+  "scientific_success_claimed": false
+}

@@ -1,0 +1,392 @@
+{
+  "observed_utc": "2026-11-01T03:51:24.601530+00:00",
+  "root_verdict": "Actual archival retention/publication GO, all remote assets and62 disk records; not scientific admission.",
+  "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41269124997",
+  "published_utc": "2026-11-01T03:47:55Z",
+  "remote_assets": 170,
+  "payload_ledger_entries_verified": 168,
+  "checksum_entries_verified": 170,
+  "internal_chunk_manifests_verified": 2,
+  "original_artifacts": 62,
+  "original_bytes": 15376925234,
+  "all62_disk_guards": [
+    {
+      "artifact": 13058805871,
+      "required": 6773620960,
+      "free": 91569020928,
+      "sha256": "7ebf5f4e9491196365ec52290a11172da4c5c1180eaea52d69d51bb4796a7919"
+    },
+    {
+      "artifact": 13063560730,
+      "required": 7364419328,
+      "free": 91568910336,
+      "sha256": "ec46267abac6df4084f295b4625e87eec25f5ef2acb2e2953e48db47778ce96f"
+    },
+    {
+      "artifact": 13062912116,
+      "required": 118167135,
+      "free": 91569020928,
+      "sha256": "d67af0cb0a600aaf1e68a6ce027a266de26cf779fc722fc161d78d274ee92c0c"
+    },
+    {
+      "artifact": 13059146312,
+      "required": 1497997243,
+      "free": 91569016832,
+      "sha256": "289a683f1888b1d114355f5876290745a6640215165602638a4095c31ae9a4fa"
+    },
+    {
+      "artifact": 13063476397,
+      "required": 1144203235,
+      "free": 91568943104,
+      "sha256": "ff6e224cef09e6b1d4f8e7ce2c7664de6a770b4e8e1c2537904b24fb9dad74b1"
+    },
+    {
+      "artifact": 13065725755,
+      "required": 170076966,
+      "free": 91567947776,
+      "sha256": "f202a0b9fb04f2254bd627a8afb941194dacdc309a1aecd2bcc333d90f7b95c5"
+    },
+    {
+      "artifact": 13065577646,
+      "required": 170190166,
+      "free": 91567939584,
+      "sha256": "cb66f617680ba8dfa7b45198cfd4ae0772adbbedcea27093c0d3fe9879175603"
+    },
+    {
+      "artifact": 13065571274,
+      "required": 153269027,
+      "free": 91567931392,
+      "sha256": "9bd156213a7704918b58b92b4906c126f0f74dd7bc7e61526f324d26c6f3d0a3"
+    },
+    {
+      "artifact": 13065436110,
+      "required": 204706222,
+      "free": 91567927296,
+      "sha256": "0e8e21277e4cf29282c2eefb5ba69982759e219cd2df080b98679438b020f4cf"
+    },
+    {
+      "artifact": 13065331568,
+      "required": 152892230,
+      "free": 91567906816,
+      "sha256": "384eb66ea94c847ada6c69728afbc8ad09a43b997c74e4e06f43539fca0a43ea"
+    },
+    {
+      "artifact": 13065322464,
+      "required": 165597816,
+      "free": 91567919104,
+      "sha256": "61a6950684728d076f32013c085bdfdac8add05acc19a93ec3afd6ef9bcb4c2a"
+    },
+    {
+      "artifact": 13065288055,
+      "required": 165062243,
+      "free": 91567915008,
+      "sha256": "62bb90d1ee38fb04fdee065692c7aafc39b1502820bb4ca5882775771532c2ee"
+    },
+    {
+      "artifact": 13065221595,
+      "required": 221861069,
+      "free": 91567886336,
+      "sha256": "60dc3d59f2336c448a44b63c6f7fe826b54abbe3e115ce26e84aa74bbc68caa0"
+    },
+    {
+      "artifact": 13065184729,
+      "required": 170271815,
+      "free": 91567878144,
+      "sha256": "a646fc7d68248fb3cd93cd6f6d93d1ac8671af5f484477c08809c2e2de3c5b69"
+    },
+    {
+      "artifact": 13065181135,
+      "required": 194152655,
+      "free": 91567874048,
+      "sha256": "e02e249582fe30e9861de506ceeea50f798ae74bc4d7f2d04c422196a3f72cbc"
+    },
+    {
+      "artifact": 13065127019,
+      "required": 230509976,
+      "free": 91567865856,
+      "sha256": "9b298c53dcf00e3d8a1628cd308a57d68b638f870edd7a22bb5862bfd5769ed9"
+    },
+    {
+      "artifact": 13064999094,
+      "required": 239708457,
+      "free": 91567857664,
+      "sha256": "7b996d95b59a3edec757f2aa4415890de80c3a18c3e673128dc73a3a3cdf09f1"
+    },
+    {
+      "artifact": 13064966874,
+      "required": 247351187,
+      "free": 91567853568,
+      "sha256": "9cc854456ffabee70528f4583c6832b71d6f2ce9d5eaea0e20aa8b9c3a0c6540"
+    },
+    {
+      "artifact": 13064915039,
+      "required": 132728072,
+      "free": 91567869952,
+      "sha256": "368d50b6db8b830ef2b1d4aaa7197e75859922c412d6aab902c1e60af3db6b0d"
+    },
+    {
+      "artifact": 13064885555,
+      "required": 117072240,
+      "free": 91567865856,
+      "sha256": "06f6d3f4b963ccb189fd35bd77988202f7295705c39cd380976fa3faf2facc4e"
+    },
+    {
+      "artifact": 13064828073,
+      "required": 153071473,
+      "free": 91567861760,
+      "sha256": "4744d8be7947f0375a43bf9d65cc878eb30c6f6ed2d8ba2632957b8ed155fe47"
+    },
+    {
+      "artifact": 13064822878,
+      "required": 245789206,
+      "free": 91567857664,
+      "sha256": "b67c2d2693fbd62d470fa6e8928026c9ab8ba40ece53f66101149a65d064367c"
+    },
+    {
+      "artifact": 13064775707,
+      "required": 117456337,
+      "free": 91567853568,
+      "sha256": "78b676ba0ebbe1f561e6bebb7560e1433e50f3460b8812e88740da602c5a3d6e"
+    },
+    {
+      "artifact": 13064713275,
+      "required": 164881831,
+      "free": 91567849472,
+      "sha256": "687b6e27ce13c1b72f1b92b165cbabfa139b2c9f26148e95e145f14287ce8cf8"
+    },
+    {
+      "artifact": 13064542987,
+      "required": 194904581,
+      "free": 91567841280,
+      "sha256": "de4b5635be4b2949438e0d30ba588f1a708044569d1d2a4c763131da99779a18"
+    },
+    {
+      "artifact": 13064489282,
+      "required": 230424100,
+      "free": 91567837184,
+      "sha256": "2c892bf4bae79e8dfc71e5b23c2bc1bc223fa18b64f3231f2fb375f6803c4e06"
+    },
+    {
+      "artifact": 13064449532,
+      "required": 215278781,
+      "free": 91567833088,
+      "sha256": "f815addd9ddccd1b66ddf56d5690a753c9a2973a9ae0af72a2cfc9ea6dc4c29a"
+    },
+    {
+      "artifact": 13064406267,
+      "required": 99355268,
+      "free": 91567828992,
+      "sha256": "445a57dc864d818986757af4757b5e2a008a07ac1c9af3ae0d937d46e4ac55eb"
+    },
+    {
+      "artifact": 13064397351,
+      "required": 194259965,
+      "free": 91567820800,
+      "sha256": "7a887b0357d0d123f3a597f573df0343f6514e760013aa05a3bf261be3d1cec0"
+    },
+    {
+      "artifact": 13064385737,
+      "required": 285609648,
+      "free": 91567812608,
+      "sha256": "b4e70fa2290850281dba4259608e193c789362a090117459038ba5ea0788dbf7"
+    },
+    {
+      "artifact": 13064372796,
+      "required": 180072386,
+      "free": 91567808512,
+      "sha256": "d369492d317016317d5929a3cebce37ea0af68464890a72307fbebafe4a9387f"
+    },
+    {
+      "artifact": 13064366412,
+      "required": 99425445,
+      "free": 91567800320,
+      "sha256": "77e99a77da066017e6adfc81f1a1a57669e5f4a30ac61b0cd1c4ec5a5546dd6d"
+    },
+    {
+      "artifact": 13064359432,
+      "required": 244182162,
+      "free": 91567796224,
+      "sha256": "1c234171d5e2db3d4f2fba500fe82f90c5f762ce0f81dc10dc19c670ec52e8b7"
+    },
+    {
+      "artifact": 13064298057,
+      "required": 132922543,
+      "free": 91567792128,
+      "sha256": "8ae747ef4d5f103371adfaf8f651ad19e23adb0468cd2c1100775a815c1bdcd2"
+    },
+    {
+      "artifact": 13064297518,
+      "required": 181967322,
+      "free": 91567788032,
+      "sha256": "d7b1806066a1197e4839ddc32553712a435ab61a345b90f0b05c3830ac24daab"
+    },
+    {
+      "artifact": 13064283733,
+      "required": 184102929,
+      "free": 91567779840,
+      "sha256": "f943c10be1962dd91f4ba617d417c59923a0b22f9238194621823db1a3c77c2d"
+    },
+    {
+      "artifact": 13064265359,
+      "required": 91404427,
+      "free": 91567775744,
+      "sha256": "6610dc3e8061d5298146a80525c2eef26a25bc8a313c6cbb8be1216889d1f642"
+    },
+    {
+      "artifact": 13064032933,
+      "required": 132890848,
+      "free": 91567771648,
+      "sha256": "42064e3c6ca60d9e381712237fb2d1cf6405c0e485d4839589650df691c34178"
+    },
+    {
+      "artifact": 13064016649,
+      "required": 91383699,
+      "free": 91567767552,
+      "sha256": "5e95d78c24a96d47e8adb82d162f96a0ffa9e92e801f77ce53a2615b87dfdbb1"
+    },
+    {
+      "artifact": 13064006440,
+      "required": 85164908,
+      "free": 91567763456,
+      "sha256": "0632838989b2270ad90cb05dc4e37e2b14bcc0150b69ebdb6d30da9cdbc4743b"
+    },
+    {
+      "artifact": 13063887308,
+      "required": 271149212,
+      "free": 91567755264,
+      "sha256": "c77d687de53dd996a1c42a9755173d015db63ac0ee94b91916a9ada1eaafea40"
+    },
+    {
+      "artifact": 13063878078,
+      "required": 84803347,
+      "free": 91567751168,
+      "sha256": "99d12b7f9872347a391a74742f72e0a572519b38a528e0a348ad45920edd67ea"
+    },
+    {
+      "artifact": 13063839055,
+      "required": 98464638,
+      "free": 91567747072,
+      "sha256": "3c554904aea83379462bff30134cb60387a67d38a1af61868b0879f24b008ac8"
+    },
+    {
+      "artifact": 13063614744,
+      "required": 84970621,
+      "free": 91567742976,
+      "sha256": "38e20b8f79b8771f18ff1f91fcacd345d92a6c1e741df5dc6e994c376b1442e0"
+    },
+    {
+      "artifact": 13063489599,
+      "required": 117750815,
+      "free": 91567738880,
+      "sha256": "238ba84b8ed2db1ca6339874417006fcd11521c04d7ebe721a78481d2f1dac47"
+    },
+    {
+      "artifact": 13063414149,
+      "required": 99213113,
+      "free": 91567734784,
+      "sha256": "8fac0e973f3e3f383c67bfdcffdcc3a3475f16aa1a31f6c72c06c25ac3e894b1"
+    },
+    {
+      "artifact": 13063390956,
+      "required": 239649075,
+      "free": 91567722496,
+      "sha256": "4a008fe88af93bced285356cb10e9c3355eb7a1fb79497ed4e939c4e3dd8636f"
+    },
+    {
+      "artifact": 13063348919,
+      "required": 267637579,
+      "free": 91567718400,
+      "sha256": "d35c28ea0ad5b3f2eb2193193e2579afe43135b980067979e1df68ab71eb564d"
+    },
+    {
+      "artifact": 13063251392,
+      "required": 238686907,
+      "free": 91567689728,
+      "sha256": "dbeed83baf8880895d93d8d40121d9235d3a44f6e5437949b135c9b5185ff78e"
+    },
+    {
+      "artifact": 13063205357,
+      "required": 151774571,
+      "free": 91567685632,
+      "sha256": "a5772e67084f1a7bba5b2701308e85fc8864e0d58df8443a227618a253d4fb21"
+    },
+    {
+      "artifact": 13063176598,
+      "required": 269947965,
+      "free": 91567681536,
+      "sha256": "a1b2ee46896207209840f279ded929d1aa55be78cc7d60a03ed6cd3592adda8b"
+    },
+    {
+      "artifact": 13063081324,
+      "required": 151145871,
+      "free": 91567673344,
+      "sha256": "c97f673df306432f74e7545e14a90a37876a2d0196316bb4ac04224d0bd15a1a"
+    },
+    {
+      "artifact": 13063023241,
+      "required": 280624969,
+      "free": 91567669248,
+      "sha256": "4b2d295041b5eddd4b667daf09258d8cdd3f058a694bf2340be77f65ae890501"
+    },
+    {
+      "artifact": 13063000849,
+      "required": 163206014,
+      "free": 91567689728,
+      "sha256": "d1ccc8363665c5af4f79cbb02df1aae66ad83f0ab02ffb03e0f2a871887ebd8c"
+    },
+    {
+      "artifact": 13062837480,
+      "required": 162626493,
+      "free": 91567685632,
+      "sha256": "c26e8fc8b1190e4bf179fbd1e8f1bfe026d14bc6e7dcab9d6295018aa3cb4a98"
+    },
+    {
+      "artifact": 13062809746,
+      "required": 238769998,
+      "free": 91567681536,
+      "sha256": "be74eca3b3f82d4dabd2a8fff3e79d659a02303d70e0c9d8b51d8136b9754501"
+    },
+    {
+      "artifact": 13062719789,
+      "required": 163243705,
+      "free": 91567673344,
+      "sha256": "ec3df38816279feba2b16d81e3bedb235ee006c50959f30cbe946431e386fcbb"
+    },
+    {
+      "artifact": 13062469492,
+      "required": 84350708,
+      "free": 91567656960,
+      "sha256": "73c2cbea49729677fd354b310ed6420c5da75792e69f90e194fdaae128138ef5"
+    },
+    {
+      "artifact": 13062384498,
+      "required": 81711348,
+      "free": 91567652864,
+      "sha256": "41d65b5397094de3deaa356852da918acee7967f59eb97dcb0cafe8657efe615"
+    },
+    {
+      "artifact": 13062284906,
+      "required": 84532348,
+      "free": 91567648768,
+      "sha256": "40e1a21df27778a92ab5590a594fc4f2b47a23108d9848cb7b2082f8a03b0e55"
+    },
+    {
+      "artifact": 13061959641,
+      "required": 150673686,
+      "free": 91567644672,
+      "sha256": "1e275e7fd7e9f1c477398c0dc4652c4ad6f48a96014513643570462196ae3a44"
+    },
+    {
+      "artifact": 13063339858,
+      "required": 96247198,
+      "free": 91567439872,
+      "sha256": "2959d1bcc33752ff20c794cbdca60f2c9ef18b72a31e3d8a932b379b4775820b"
+    }
+  ],
+  "large_source_or_chunk_bodies_read_locally": false,
+  "scope": "Rehashed only two small public metadata assets; fully paginated asset API+every saved ledger/guard. Whole source ZIP/chunk/reassembly hashes checked in archival Actions, not rehashed locally.",
+  "exact_frozen16_source_62_artifact_ID_digest_size_scope_checked": true,
+  "root_original_actual_retention_publication_GO": true,
+  "integrity_boundary": "Actions originalAPI SHA and actualreassemblySHA establish byte preservation; no separate claim that every originalZIP entry was CRC-scanned. Producer workflowlogZIP CRC validation is distinct.",
+  "body_transfer": "Reused exactly two alreadyselected smallmetadata assets85110+21166B, rehashed against ownfreshpublicationAPI. No original/chunk body GET."
+}

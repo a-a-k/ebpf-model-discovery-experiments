@@ -2221,6 +2221,32 @@
         }
       ],
       "note": "One exact6h-failure-only T replacement of parent41233204064 job124631511252; source06d7d52bfa4b7768a4cabf02f4e66f109b3a9492 preserves complete verified inputs with four real preparation core changes. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41273434210,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "One exact6h-failure-only T replacement of parent41164824120 job124430030995; source06d7d52bfa4b7768a4cabf02f4e66f109b3a9492 preserves complete verified inputs with four real preparation core changes. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41273870033,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "One exact6h-failure-only T replacement of parent41248344114 job124676438695; source06d7d52bfa4b7768a4cabf02f4e66f109b3a9492 preserves complete verified inputs with four real preparation core changes. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
     }
   ],
   "related_runs": [
@@ -4249,6 +4275,31 @@
       "run_id": 41269124997,
       "role": "archive",
       "note": "Exact16 terminal-source tail62 originals15376925234B; source debe113 actualCI41266444651, bothoriginalexecutionGO and actualprior105outputGO beforeonePOST. Disjointpayloads, no captures/refit/rescore; all costs retained."
+    },
+    {
+      "run_id": 41270553033,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head68040aada3cea30f48258b7ae703908b052582c2; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41271457408,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41271190179,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41270783460,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41270631794,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4275,5 +4326,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T03:39:59.890540+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T04:39:05.846223+00:00"
 }
