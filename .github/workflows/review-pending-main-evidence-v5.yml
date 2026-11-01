@@ -152,7 +152,8 @@ jobs:
                           '1d646f907d0241f25445fcfb4d07d4e0ba89d88b',
                           '06d7d52bfa4b7768a4cabf02f4e66f109b3a9492',
                           '8fa2a454db58af487451c9aead6477adc0ca0485',
-                          '6eaa441c40253a18f18af76e4e599496927c1739'}
+                          '6eaa441c40253a18f18af76e4e599496927c1739',
+                          'f7ba801d70f9d2327031efc6dd0c00b90d252708'}
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!='retrieve_family_selected'

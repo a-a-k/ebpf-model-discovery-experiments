@@ -1225,7 +1225,7 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
 
 
 @pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])
-@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD])
+@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD, REVIEW.STREAMED_CHECKPOINT_HEAD])
 def test_fresh_batch_is_scheduling_only_and_keeps_final81_boundary(tmp_path, change, head):
     name = 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
     template = json.loads((ROOT/name).read_text())['cells'][0]
@@ -1380,7 +1380,7 @@ def test_deepflow_closure_rejects_inconsistent_saved_sources(tmp_path: Path, pro
 @pytest.mark.parametrize("controller,smoke,valid", [("clean-study", False, True),
                                                    ("legacy", False, False),
                                                    ("clean-study", True, False)])
-@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD])
+@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD, REVIEW.STREAMED_CHECKPOINT_HEAD])
 def test_fresh_compact_binds_actual_clean_main_status(
         tmp_path: Path, controller: str, smoke: bool, valid: bool, head: str) -> None:
     declaration, compact, _ = fixture(tmp_path)
