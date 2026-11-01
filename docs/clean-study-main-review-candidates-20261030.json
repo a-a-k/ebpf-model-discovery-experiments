@@ -368,40 +368,40 @@
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41273870033,
+      "run_id": 41329450264,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41281990704,
+      "run_id": 41329454436,
       "stage": "main",
       "runner": "study",
-      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41282528449,
+      "run_id": 41329458921,
       "stage": "main",
       "runner": "study",
-      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41299248544,
+      "run_id": 41331875002,
       "stage": "main",
       "runner": "study",
-      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
@@ -428,30 +428,30 @@
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41275223991,
+      "run_id": 41329463221,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41299253111,
+      "run_id": 41331878803,
       "stage": "main",
       "runner": "study",
-      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41329467500,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "petclinic",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 16,
+  "pending_artifact_cells": 15,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1598,6 +1598,26 @@
       "full_artifact_digest": "sha256:b482a120fc646709d86e349eb14366833c910e0f28eec78321d35ba83c775644"
     },
     {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13089510112,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-absent-8-41164824120",
+      "compact_artifact_bytes": 41496613,
+      "compact_artifact_digest": "sha256:ee2d27dd60b15e6c51896f37dddc706a523e8d37eeb44bf0e93bc88d16008cc3",
+      "full_artifact_id": 13088534763,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-absent-8-41164824120",
+      "full_artifact_bytes": 3467422877,
+      "full_artifact_digest": "sha256:635f28a09a70c14b8cf54a50d92f2ab198e5ee6da57533585225657f47669045"
+    },
+    {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 6,
@@ -2148,7 +2168,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-11-01T15:11:48.895664+00:00: 65 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-11-01T17:42:11.436772+00:00: 66 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -2262,6 +2282,111 @@
       "pre_execution_record": "docs/clean-study-parent-full6-preexecution-20261031.json",
       "original_costs_and_available_failed_evidence_retained": true,
       "final_parent_data_not_recovered": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41273870033,
+      "original_job_id": 124751984520,
+      "original_prefix_artifact_id": 13075276795,
+      "replacement_run_id": 41329450264,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-five-OTel-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "original_run_id": 41281990704,
+      "original_job_id": 124775624969,
+      "original_prefix_artifact_id": 13078679070,
+      "replacement_run_id": 41329454436,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-five-OTel-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "original_run_id": 41282528449,
+      "original_job_id": 124777220428,
+      "original_prefix_artifact_id": 13078412714,
+      "replacement_run_id": 41329458921,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-five-OTel-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "original_run_id": 41275223991,
+      "original_job_id": 124755960760,
+      "original_prefix_artifact_id": 13074306251,
+      "replacement_run_id": 41329463221,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-five-OTel-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430032063,
+      "original_prefix_artifact_id": 13075687939,
+      "replacement_run_id": 41329467500,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-five-OTel-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41299248544,
+      "original_job_id": 124826590069,
+      "original_prefix_artifact_id": 13084817273,
+      "replacement_run_id": 41331875002,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-two-new-V-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "original_run_id": 41299253111,
+      "original_job_id": 124826598295,
+      "original_prefix_artifact_id": 13085290494,
+      "replacement_run_id": 41331878803,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-two-new-V-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
     }
   ]
 }

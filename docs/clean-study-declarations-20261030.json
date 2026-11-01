@@ -2442,6 +2442,97 @@
         }
       ],
       "note": "One failure-only replacement of parent41281980516 job124775587735; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
+    },
+    {
+      "run_id": 41329450264,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41273870033 job124751984520; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41329454436,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41281990704 job124775624969; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41329458921,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41282528449 job124777220428; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41329463221,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41275223991 job124755960760; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41329467500,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41164824120 job124430032063; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41331875002,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41299248544 job124826590069; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41331878803,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41299253111 job124826598295; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
     }
   ],
   "related_runs": [
@@ -4730,6 +4821,11 @@
       "run_id": 41327342199,
       "role": "preparation",
       "note": "Actual a1a4055 exact report/profile consumer CI succeeded. Separate review caught missing exact f7ba admission in existing saved-reader four sets/workflow before any main repeat; follow-on integration preserves all guards and gets its own CI. All preparation/check/verification costs retained; human unknown."
+    },
+    {
+      "run_id": 41327977432,
+      "role": "preparation",
+      "note": "Exact7abf Linux CI for already admitted streamed-checkpoint source support in all existing reader branches. All checks/preparation costs retained; no campaign or scientific admission."
     }
   ],
   "blocked_main_cells": [],
