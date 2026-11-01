@@ -1167,8 +1167,16 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 # or make a complete capture ineligible.
                 audit = {"status": "release_not_confirmed", "error": repr(error)}
             audit_path = self.ctx.out / "infrastructure" / "deepflow-prefix-copy-release" / f"{node}-{stage}.json"
-            audit_path.parent.mkdir(parents=True, exist_ok=True)
-            _write_json(audit_path, audit)
+            try:
+                audit_path.parent.mkdir(parents=True, exist_ok=True)
+                _write_json(audit_path, audit)
+            except OSError as error:
+                try:
+                    print(json.dumps({"deepflow_prefix_copy_release_audit_unwritten": True,
+                        "node": node, "stage": stage, "release_status": audit.get("status"),
+                        "error": repr(error)[:500]}, sort_keys=True), flush=True)
+                except OSError:
+                    pass
         return manifest
 
     @staticmethod

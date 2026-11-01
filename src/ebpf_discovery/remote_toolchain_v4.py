@@ -709,6 +709,7 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         checkpoint, campaign.ctx.out, expected, checkpoint_proof,
         session, headers, repository, state)
     cost["checkpoint_validation_includes_checkpoint_copy_release"] = True
+    _atomic_json(cost_path, cost)
     live_index_proof = _consistent_live_index_proof(
         campaign.store.db, state / ".parent-index-before.sqlite")
     if live_index_proof != checkpoint_index_proof:

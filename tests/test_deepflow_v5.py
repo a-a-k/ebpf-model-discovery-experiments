@@ -656,6 +656,35 @@ def test_capture_batches_flat_raw_with_portable_per_record_provenance(tmp_path: 
                for item in accounting)
 
 
+def test_prefix_cleanup_audit_disk_failure_does_not_discard_verified_capture(tmp_path, monkeypatch, capsys):
+    import errno
+    import ebpf_discovery.deepflow_v5 as deepflow
+
+    ctx = Context(tmp_path)
+    collector = DeepFlowCollectorsV5(ctx)
+    collector.remote_roots = {"a": "/remote/a", "b": "/remote/b"}
+    collector.guest_context = {
+        "a": {"boot_id": "boot-a", "pid_namespace": "pid:[1]"},
+        "b": {"boot_id": "boot-b", "pid_namespace": "pid:[2]"},
+    }
+    for node in ("a", "b"):
+        _remote_snapshot(ctx, collector, tmp_path, node, "001-training", [_row("/one")])
+    original_write = deepflow._write_json
+
+    def write_with_full_audit_disk(path, value):
+        if "deepflow-prefix-copy-release" in path.parts:
+            raise OSError(errno.ENOSPC, "injected optional audit write failure")
+        return original_write(path, value)
+
+    monkeypatch.setattr(deepflow, "_write_json", write_with_full_audit_disk)
+    capture = collector._capture_all("training")
+    assert capture["technical_valid"] is True
+    for node in ("a", "b"):
+        assert (collector.root / f"deepflow-raw/node-{node}/001-training/l7_flow_log").is_file()
+        assert (collector.root / f"deepflow-raw/node-{node}/001-training/snapshot.json").is_file()
+    assert '"deepflow_prefix_copy_release_audit_unwritten": true' in capsys.readouterr().out
+
+
 def test_deepflow_raw_control_proof_uses_retained_ebpf_record(tmp_path: Path) -> None:
     ctx = Context(tmp_path)
     collector = DeepFlowCollectorsV5(ctx)
