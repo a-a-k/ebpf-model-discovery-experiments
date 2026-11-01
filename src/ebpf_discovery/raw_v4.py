@@ -217,16 +217,20 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encodin
                     projection = _span_projection(span, service_projections)
                     group = projection.get('service') if projection else None
                     if group not in grouped:
-                        projected_resource = copy.deepcopy(resource)
-                        projected_resource[scope_key] = []
+                        # Keep the child key in its original JSON position, but
+                        # do not copy spans that this group immediately drops.
+                        projected_resource = copy.deepcopy({
+                            name: [] if name == scope_key else value
+                            for name, value in resource.items()})
                         if group is not None:
                             _project_resource_json(projected_resource, group)
                         grouped[group] = {'resource': projected_resource, 'scopes': {}}
                     state = grouped[group]
                     projected_scope = state['scopes'].get(scope_ordinal)
                     if projected_scope is None:
-                        projected_scope = copy.deepcopy(scope)
-                        projected_scope['spans'] = []
+                        projected_scope = copy.deepcopy({
+                            name: [] if name == 'spans' else value
+                            for name, value in scope.items()})
                         state['resource'][scope_key].append(projected_scope)
                         state['scopes'][scope_ordinal] = projected_scope
                     projected_scope['spans'].append(span)

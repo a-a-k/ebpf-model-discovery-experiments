@@ -550,7 +550,9 @@ class Toolchain:
         finally:
             write_json(self.root/'input-preparation-cost.json', {'started_ns': started,
                 'ended_ns': time.time_ns(), 'completed': len(self.input_manifests) == 6,
-                'scope': 'entry proofs, role union, frozen raw exports and combined references; shared across operations'})
+                'scope': 'entry proofs, role union, frozen raw exports and combined references; shared across operations',
+                **({'path_resolution': self.store.path_resolution_cost}
+                   if hasattr(self.store, 'path_resolution_cost') else {})})
 
     def discover(self, input_path, folder, overlay=None, prefix='model'):
         manifest = json.loads(input_path.read_text(encoding='utf-8'))

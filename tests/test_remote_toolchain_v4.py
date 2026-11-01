@@ -502,12 +502,14 @@ def test_zip_restored_verified_binary_is_made_executable(tmp_path):
     assert result.stdout == "executable-mode-ok"
 
 
-def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path):
+@pytest.mark.parametrize('immutable_prefix', [False, True])
+def test_readonly_store_preserves_observation_store_connection_pragmas(tmp_path, immutable_prefix):
     path = tmp_path / "index.sqlite"
     with sqlite3.connect(path) as db:
         db.execute("CREATE TABLE spans(value TEXT)")
-    store = remote._readonly_store(path)
+    store = remote._readonly_store(path, immutable_prefix=immutable_prefix)
     try:
+        assert store._immutable_path_prefix is immutable_prefix
         assert store.db.execute("PRAGMA query_only").fetchone()[0] == 1
         assert store.db.execute("PRAGMA cache_size").fetchone()[0] == -65536
         assert store.db.execute("PRAGMA temp_store").fetchone()[0] == 1

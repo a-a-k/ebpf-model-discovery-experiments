@@ -82,8 +82,9 @@ def test_clock_relation_verifies_exact_source_config_guest_proof(tmp_path):
         _verified_clock_relations(root)
 
 
+@pytest.mark.parametrize('immutable_prefix', [False, True])
 def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
-        tmp_path, monkeypatch):
+        tmp_path, monkeypatch, immutable_prefix):
     root = tmp_path / "campaign"; observations = root / "observations"
     raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
     raw.parent.mkdir(parents=True); raw.write_bytes(b'{"saved":"row"}\n')
@@ -151,6 +152,7 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
                                       "sha256": _sha(inventory_path),
                                       "bytes": inventory_path.stat().st_size}}
     store = ObservationStoreV5(root / "observation-index.sqlite", same_trace_parents=True)
+    store._immutable_path_prefix = immutable_prefix
     store.db.execute("INSERT INTO runtime_identity_projection VALUES (?,?,?,?,?,?,?,?,?)", (
         "z-first-insertion", "training", "resolved_enriched", "unknown", "database", "{}",
         json.dumps(resolution), inventory_path.relative_to(root).as_posix(), _sha(inventory_path)))
@@ -178,6 +180,58 @@ def test_source_clock_projection_export_revalidates_relation_captures_and_raw(
     resolver.close()
     assert inventory_decodes == 1
     assert not (root / "attempt-journal.sqlite").exists()
+    if immutable_prefix:
+        assert store.path_resolution_cost['hits'] > 0
+        assert store.path_resolution_cost['retained_entries'] <= 1024
+    # A warm path cache must never replace the per-occurrence raw hash check.
+    original_open = Path.open
+    saved_raw = raw.read_bytes()
+    reads = 0
+    def changed_second_raw_open(path, mode='r', *args, **kwargs):
+        nonlocal reads
+        if path == raw and mode == 'rb':
+            reads += 1
+            if reads == 2:
+                raw.write_bytes(saved_raw.replace(b'row', b'bad'))
+        return original_open(path, mode, *args, **kwargs)
+    with monkeypatch.context() as patch:
+        patch.setattr(Path, 'open', changed_second_raw_open)
+        with pytest.raises(ValueError, match='raw locator changed'):
+            store.service_projections()
+    raw.write_bytes(saved_raw)
+    if __import__('os').name != 'nt':
+        # Replacing a previously resolved file with an escaping symlink must
+        # still fail even when its replacement has the same expected bytes.
+        outside = tmp_path / 'outside-l7-flow-log'
+        outside.write_bytes(saved_raw)
+        reads = 0
+        class SwapAfterRawRead:
+            def __init__(self, stream):
+                self.stream = stream
+            def __enter__(self):
+                return self.stream.__enter__()
+            def __exit__(self, *args):
+                result = self.stream.__exit__(*args)
+                raw.unlink()
+                raw.symlink_to(outside)
+                return result
+        def replaced_after_first_read(path, mode='r', *args, **kwargs):
+            nonlocal reads
+            stream = original_open(path, mode, *args, **kwargs)
+            if path == raw and mode == 'rb':
+                reads += 1
+                if reads == 1:
+                    return SwapAfterRawRead(stream)
+            return stream
+        try:
+            with monkeypatch.context() as patch:
+                patch.setattr(Path, 'open', replaced_after_first_read)
+                with pytest.raises(ValueError, match='raw locator leaves'):
+                    store.service_projections()
+        finally:
+            if raw.is_symlink():
+                raw.unlink()
+            raw.write_bytes(saved_raw)
     config.write_text("changed: true\n")
     with pytest.raises(ValueError, match="configuration changed"):
         store.service_projections()
@@ -340,7 +394,8 @@ def test_parent_training_freezes_alias_and_final_append_uses_same_effective_rows
     journal.close(); store.close()
 
 
-def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypatch):
+@pytest.mark.parametrize('immutable_prefix', [False, True])
+def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypatch, immutable_prefix):
     root = tmp_path / "campaign"; observations = root / "observations"
     raw = observations / "deepflow-raw" / "a" / "l7_flow_log"
     row = {"signal_source": "EBPF", "tap_side": "ServerProcess", "ebpf_type": "TracePoint",
@@ -421,6 +476,7 @@ def test_hash_verified_enclosure_projects_copied_export_only(tmp_path, monkeypat
         key = str(path.resolve()); reads[key] = reads.get(key, 0) + 1
         return original_read_bytes(path)
     monkeypatch.setattr(Path, "read_bytes", tracked_read_bytes)
+    store._immutable_path_prefix = immutable_prefix
     assert len(store.service_projections()) == 1
     inventory_dependency = str((root / result["inventory"]["path"]).resolve())
     assert reads[inventory_dependency] == 1
