@@ -46,3 +46,42 @@ The supported interpretation is narrow: this pinned DeepFlow configuration and
 repetition did not supply sufficient operation-level evidence for useful Sheaft
 forecasts when native tracing was absent. The other Petclinic repetitions and
 modes must still be assessed before a broader collector comparison.
+
+## DeathStarBench, partial SDK repetition 7 and full SDK repetition 6
+
+The [saved-evidence reader](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41307478392)
+checked the original source-bound packets from
+[partial repetition 7](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41282001013)
+and [full repetition 6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41280950428).
+Both the main agent and independent skeptic admitted the actual evidence. Each
+case retained two independent guest boots, 34,800 primary observations including
+9,600 target observations, frozen forecasts before targets, raw closure and
+matching logical checkpoint/import proofs. Six pooled Bering models actually ran
+per case; available primary forecasts have actual Sheaft commands, models and
+successful execution records.
+
+The eBPF-only arm could not bind any of the three complete operation paths in
+either case. With full SDK tracing, native, combined and context arms predicted
+compose/home/user success probabilities of 0.875/1/0.875. Independent successes
+were 2,800/3,200, 3,200/3,200 and 2,800/3,200. With partial SDK tracing, only home
+had an available forecast, 1, matching 3,200/3,200 outcomes; compose and user stayed
+unknown, with 2,800/3,200 successes each. These are valid unsupported branches,
+not technical failures to rerun.
+
+Adding DeepFlow supplied observed database coverage: the combined home graph
+covered its required database channels in both cases, and full-SDK compose
+needed fewer assumed database requirements than native alone. Some compose and
+user requirements remained assumed. This structural information did not add an
+available primary operation forecast or improve an external primary prediction
+over native/context. Primary forecasts also explicitly hold nonintervened
+database requirements fulfilled; they do not prove complete database recovery.
+The selected database-fault forecasts remained unavailable. All 20 probe
+operations succeeded with the database both up and down, so those probes do not
+establish a useful database-fault prediction.
+
+The equal-information direct-contract baseline supplied all three primary
+predictions, 0.875/1/0.875. No discovery or total-effort advantage follows from
+matching it; human preparation costs remain unknown. These two cases support
+the narrow conclusion that observed extra database edges can coexist with
+unresolved operation paths and no demonstrated extra external utility. They do
+not establish universal Thrift incompatibility or the completed 81-cell result.
