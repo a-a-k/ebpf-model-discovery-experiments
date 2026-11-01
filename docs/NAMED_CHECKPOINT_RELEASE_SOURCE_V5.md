@@ -11,6 +11,19 @@ at 05:26:55 UTC on 2026-11-01. The exact consuming file/subphase is unknown;
 the GitHub runner's ENOSPC annotation is conclusive about storage exhaustion.
 An unchanged T repetition is not the storage repair.
 
+T partial6, run 41259904200/job 124710864475, independently exposes the packaging
+peak. Continuation and evaluation succeeded, but packaging the complete toolchain
+failed with `OSError(28, 'No space left on device')`: observed free space fell
+from 133,922,816 bytes to zero. The console records 1,072 files and
+2,033,982,202 uncompressed bytes in the attempted subtree, without deleting or
+trimming its source. The compact artifact 13073185961 retains the actual target
+outcomes; the original full artifact was never uploaded. Its unchanged full-source
+admission gate therefore remains unsatisfied. A fresh full case recovers this
+technical retention failure; the original outcomes and all costs remain visible.
+T partial7, run 41259915749/job 124710889139, also terminated with the runner's
+ENOSPC annotation, this time during environment/status retention. These old
+running jobs did not receive the later U code.
+
 The saved-prefix qualification 41278513379 at the exact U commit completed
 successfully. Artifact 13072487567 has digest
 `sha256:f7323f6195125699453ca2ba86d8ba3126aeefc469eef0ad5434a3847ea9a6f0`.
@@ -42,7 +55,16 @@ pre-target freezing, model/report checks, duplicate selection and external
 review boundaries are unchanged. Unknown/adverse outcomes and every failed,
 preparation, qualification, recovery, review, transfer and retention cost remain.
 
-Producer CI and actual output checks have passed. Exact committed consumer CI,
-source/tag/capacity verification and a separate ORIGINAL exact-case execution
-decision are still required before each new main replacement. Full-case and
-final-study success are not asserted here.
+Producer CI 41278220942 and actual output checks have passed. The exact consumer
+`23dc6d2b80b8bf79522ad7d79a73b709844f8ce3` passed CI 41280276240.
+Source/tag/capacity verification and a separate ORIGINAL exact-case execution
+decision remain required before each new main replacement. The
+[first two dispatches](clean-study-U-two-actual-failures-dispatch-20261101.json)
+and [four additional dispatches](clean-study-U-four-additional-failures-dispatch-20261101.json)
+retain their actual sources and requests. A subsequent
+[OTel absent8 replacement](clean-study-U-OTel-absent8-dispatch-20261101.json)
+follows S job 124705195734's actual six-hour stop at 06:48:44 UTC. That old case
+retains only its pre-target prefix. Its bounded console request returned an
+unavailable storage object; the precise continuation subphase remains unknown,
+and disk exhaustion is not established for that stop. Full-case and final-study
+success are not asserted here.

@@ -308,20 +308,20 @@
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41259904200,
+      "run_id": 41281970201,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "deathstarbench",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41259915749,
+      "run_id": 41282001013,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "deathstarbench",
@@ -338,10 +338,10 @@
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41261041075,
+      "run_id": 41280950428,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "deathstarbench",
@@ -378,20 +378,20 @@
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41256202754,
+      "run_id": 41281990704,
       "stage": "main",
       "runner": "study",
-      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41258000031,
+      "run_id": 41282528449,
       "stage": "main",
       "runner": "study",
-      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "otel_demo",
@@ -408,20 +408,20 @@
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41280961352,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41281980516,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
     },
     {
       "system": "otel_demo",

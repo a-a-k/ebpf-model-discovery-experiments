@@ -2260,6 +2260,97 @@
         }
       ],
       "note": "One exact acquisition-failure-only T replacement of parent41164824120 job124430032035; source06d7d52bfa4b7768a4cabf02f4e66f109b3a9492 preserves complete verified inputs with four real preparation core changes. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41280950428,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "One exact failure-only U replacement of parent41261041075 job124714202937; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41280961352,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "One exact failure-only U replacement of parent41164824120 job124430031830; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41281970201,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "One actual terminal technical failure-only U replacement of parent41259904200 job124710864475; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41281980516,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "One actual terminal technical failure-only U replacement of parent41164824120 job124430031948; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41281990704,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "One actual terminal technical failure-only U replacement of parent41256202754 job124699801063; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41282001013,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "deathstarbench",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "One actual terminal technical failure-only U replacement of parent41259915749 job124710889139; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41282528449,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "One actual terminal technical failure-only U replacement of parent41258000031 job124705195734; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
     }
   ],
   "related_runs": [
@@ -4343,6 +4434,16 @@
       "run_id": 41275404267,
       "role": "preparation",
       "note": "Actual checks.yml metadata head8a70ddaad0e117dbcc8707ed407679075f7e7ec1; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41280276240,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head23dc6d2b80b8bf79522ad7d79a73b709844f8ce3; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41281397808,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4369,5 +4470,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T06:16:13.031717+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T06:53:30.555437+00:00"
 }
