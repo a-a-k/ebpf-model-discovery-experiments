@@ -1,0 +1,60 @@
+{
+  "recorded_before_dispatch_utc": "2026-11-01T00:11:39.396122+00:00",
+  "case": {
+    "collector": "deepflow",
+    "system": "otel_demo",
+    "mode": "absent",
+    "seed": 7
+  },
+  "old_parent": 41164824120,
+  "old_job": 124430030953,
+  "source": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+  "ref": "capture-20261031-guest-logs-v3",
+  "original_criterion": "Actual eBPF to Bering to Sheaft to independent outcomes with absent/partial SDK traces; all81/10operations, same supplied semantics and direct equivalent baseline. No cost superiority condition.",
+  "strongest_baseline": "One fresh hosted runner using already qualified S and complete identical scientific method. Actual lost-runner capture cannot be continued without its guests.",
+  "actual_failure": {
+    "annotation": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/0c98bf4520e863ab021b60d00517ee2aa49ab38e/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "The hosted runner lost communication with the server. Anything in your workflow that terminates the runner process, starves it for CPU/Memory, or blocks its network access can cause this error.",
+        "raw_details": ""
+      }
+    ],
+    "started_at": "2026-10-31T20:02:23Z",
+    "completed_at": "2026-10-31T23:59:28Z",
+    "precise_cause": "Unknown; runner loss is not evidence of OOM, ENOSPC or six-hour stop.",
+    "prefix_upload_completed": "2026-10-31T23:01:41Z",
+    "no_later_worker_found": true
+  },
+  "retained_prefix": {
+    "artifact_id": 13061227041,
+    "api_bytes": 2900220062,
+    "api_sha256": "sha256:bad6e0acb1886a758698e3d94f323c318e18e5cc7b451f0c782547de3f146143",
+    "ready_manifest_sha256": "cd27f9f28550ce95133d108405e9c31ea851187b8f3f30b2d598df6b656f18fb",
+    "four_tiny_members_CRC_SHA_rechecked": true,
+    "manifest_bytes_not_read": 969170405,
+    "transport_proof": "work\\df-otel-absent7-runnerloss-20261101\\prefix-13061227041\\root-selected-transport.json"
+  },
+  "closure_limit": "Closed prefix contains no full forecast/validation chain; prefix does not establish absent final activity on lost host. No complete full/compact packet published. No worker dispatched after prefix upload in direct latest25 inventory.",
+  "root_original_GO": true,
+  "skeptic_original_GO": true,
+  "root_verdict": "EXPLICIT ORIGINAL exact failure-only S fresh-host repeat GO; no healthy cancellation or source T admission. S scientific2126 entries/modes same A except3 approved operational blobs. This is recovery, not a proven remedy for unknown runner-loss cause.",
+  "source_equivalence_proof": "work/root-finalS-source-equivalence-20261031.json",
+  "source_CI_success": [
+    41225073301,
+    41225096589
+  ],
+  "costs": "Retain failed parent interval3h57m05s (not CPU or billed), partial prefix2.900GB, selected range12,631,135B, all setup/worker/wait/CI/repeat/retention costs. Human effort unknown.",
+  "single_POST_only": true,
+  "no_healthy_cancellation": true,
+  "authorization": "User explicitly requires restarting technical failures. New healthy DF carrier cutover permission remains pending and is not inferred.",
+  "if_same_failure_repeats": "Investigate actual host/resource evidence before any further repeat; no automatic endless retry.",
+  "skeptic_verdict_file": "work\\skeptic-main-v5-observer\\parent-failure-124430030953\\independent-original-exact-S-repeat-go.json"
+}

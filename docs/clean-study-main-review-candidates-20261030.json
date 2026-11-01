@@ -378,10 +378,10 @@
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41256202754,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "otel_demo",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 25,
+  "pending_artifact_cells": 24,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1116,6 +1116,26 @@
       "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-7-41227089066",
       "full_artifact_bytes": 3604226789,
       "full_artifact_digest": "sha256:e3027c6989586ecc91a366659b8501e2df7c9ea6a31f6e6e68ecd63d4eb490e9"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41239167446,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13062912116,
+      "compact_artifact_name": "v5-summary-obi-main-otel_demo-partial-8-41239167446",
+      "compact_artifact_bytes": 51058271,
+      "compact_artifact_digest": "sha256:595959de2fbb30acc5e725c87f0cd693de4fa52734f3dab46fc7ef8e20ecd5fe",
+      "full_artifact_id": 13063560730,
+      "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-8-41239167446",
+      "full_artifact_bytes": 3648655232,
+      "full_artifact_digest": "sha256:90fbfbf47874d2ec437bfe3f90718010038e55f45a8343ead84c62912f3fd9ee"
     },
     {
       "system": "otel_demo",
@@ -1968,7 +1988,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-10-31T23:35:48.535009+00:00: 56 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-11-01T00:21:45.558070+00:00: 57 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and honest actual0c98/N/M/S source identities retained. No independent full saved-facts MAIN admission yet. Failed deployment packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {

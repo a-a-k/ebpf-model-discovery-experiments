@@ -1,0 +1,56 @@
+{
+  "observed_utc": "2026-11-01T00:05:03.596182+00:00",
+  "verdict": "EXPLICIT ORIGINAL actual-output GO for fixed offline preparation/input equivalence and qualified core semantics; NOT deadline repair, fresh capture/parallel T, or scientific utility success",
+  "run": 41247102582,
+  "artifact": 13062268721,
+  "artifact_API_ZIP_digest": "sha256:68334c9691ff8d9b474472634ba47726d9e963cd4487a6ef2f4385ad7bd77d62",
+  "source": "bdd5ae1f498cef2c8cbe0c9684100202cacd4f8f",
+  "all15selected_CRC_SHA_reverified": true,
+  "complete_old_input_census": 655,
+  "exact_byte_input_files": 647,
+  "exact_byte_input_bytes": 6900165504,
+  "metadata_manifest_exceptions": 6,
+  "request_indexes": {
+    "inputs/ebpf/network_scope/exports/ebpf-request-index.jsonl": {
+      "rows": 981,
+      "ordered_nonclock_rows_sha256": "fdf49287976342b2838793533826af7f0d2e231a904fd53112886c725ed9a140"
+    },
+    "inputs/ebpf/raw/exports/ebpf-request-index.jsonl": {
+      "rows": 981,
+      "ordered_nonclock_rows_sha256": "e6d821ce5057ae0c71f73987f84aa6ac94b7339e3d2d26840316ff390965bb74"
+    }
+  },
+  "all18entry_proof_hashes_match_old_actual_manifest": true,
+  "entry_proof_bytes_compared_in_Actions_not_read_locally": 406563530,
+  "allowed_clock_pairs_and_physical_child_binding_in_reviewed_Actions_helper": true,
+  "clock_pairs_source_windows_occurrences_independently_checked": true,
+  "old_preparation_seconds": 6473.154799267,
+  "new_preparation_seconds": 5587.452157557,
+  "observed_delta_seconds": 885.7026417100005,
+  "observed_relative_reduction": 0.13682704479897423,
+  "phase_seconds": {
+    "old": {
+      "stream.runtime_identity_values.preparation_cost": 368.047418566,
+      "codec_accounting.index_preparation_cost": 89.720389798,
+      "stream.archive_preparation_cost": 5774.834572266
+    },
+    "new": {
+      "stream.runtime_identity_values.preparation_cost": 103.855820619,
+      "codec_accounting.index_preparation_cost": 49.580210703000006,
+      "stream.archive_preparation_cost": 5289.241161746
+    }
+  },
+  "path_resolution": {
+    "enabled_for_validated_immutable_prefix": true,
+    "max_entries": 1024,
+    "hits": 4457762,
+    "misses": 83,
+    "retained_entries": 83,
+    "scope": "one validated immutable-prefix call; path identities only, all original reads and hashes retained"
+  },
+  "remaining_archive_export_share": 0.9466284475639455,
+  "no_finalization_SQL_dominance_or_speed_causality_claim": true,
+  "fresh_capture_GO": false,
+  "limits": "Whole prefix/index/wire hashes and index byte/order/physical refs verified by reviewed immutable Actions helper, not rehashed locally. No entry-evidence/wire/model bodies read here. 13.68% one-case preparation difference does not demonstrate six-hour end-to-end closure; parent residual after tool finish remains unknown. PeakRSS offline Python vs old whole Go/toolchain is not a controlled memory comparison.",
+  "costs": "Retain old/new full preparation, transfers/restoration/hashing, two failed profiling attempts, checks, actual old tools and future archival/review costs; human unknown. No novelty/effort superiority or intrinsic collector ranking."
+}

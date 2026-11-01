@@ -1,0 +1,25 @@
+{
+  "recorded_before_POST_utc": "2026-11-01T00:13:26.037904+00:00",
+  "state": "dispatched_verified",
+  "source": "7df056aee51ae0113626fac9e72ca673e2515d96",
+  "CI_success": 41255602556,
+  "request": {
+    "ref": "fix/immutable-path-preparation",
+    "inputs": {
+      "saved_full7_equivalence": true
+    },
+    "return_run_details": true
+  },
+  "root_original_GO": true,
+  "skeptic_original_GO": true,
+  "skeptic_record": "work\\skeptic-main-v5-observer\\pruned-json-7df056a-original-actual-code-go.json",
+  "original_criterion": "Actual eBPF/Bering/Sheaft/independent outcomes for missing SDK traces; all81/10operations and same direct equivalent baseline. No cost-superiority hypothesis.",
+  "strongest_baseline": "Same actualA full7 prefix13047984145 and saved successful worker13053549827, same literal old inputs; no old recomputation.",
+  "causal_change": "Only two pruned-dictionary deep copies preserve original child-key positions and skip discarded spans, plus qualified path cache. Raw hashes/codec/roles/identities/order/protobuf/downstream unchanged. Gain not yet measured.",
+  "strict_proof": "Same655inputcensus/647wire-native-shard-value bytefiles/6clock-only manifests/2ordered indexes/18serialized entry hashes, original checkpoint/index/binaries unchanged. No new traffic/models/scoring/profiling.",
+  "fresh_capture_GO": false,
+  "single_POST_only": true,
+  "costs": "Retain both offline comparisons/restoration/hash/transfers and all prior captures/failures/worker/profile/CI/review/retention costs. API interval not CPU/billed; human unknown.",
+  "run_id": 41255795362,
+  "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41255795362"
+}
