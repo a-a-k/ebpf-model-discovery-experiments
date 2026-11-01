@@ -148,6 +148,45 @@ UPLOADED_CHECKPOINT_COPY_SOURCE = {
 }
 
 
+CLOSED_FINAL_SNAPSHOT_SOURCE = {
+    'anchor': IMMUTABLE_PATH_SOURCE['anchor'],
+    'revision': '6eaa441c40253a18f18af76e4e599496927c1739',
+    'tested_source': '6eaa441c40253a18f18af76e4e599496927c1739',
+    'parent_revision': UPLOADED_CHECKPOINT_COPY_SOURCE['revision'],
+    'final_snapshot_proof': {
+        'run_id': 41296733012, 'artifact_id': 13079348283,
+        'artifact_digest': 'sha256:5c90398d86e0a842bfcb0d6fc63152ff7f3a51d1cc487f89a5c7d375d4eda2e4',
+        'source_run': 41273434210, 'source_artifact': 13073478195,
+        'source_archive_digest': 'sha256:02c499bca37d3e5d91299234840cedf2132f499e16cee77fb1e5b6ee70b9ba99',
+        'node_logical_bytes': {'a': 1170778914, 'b': 117539976},
+        'same_initial_image_source_free_inodes_and_root_uid': True,
+        'roomy_original_copy_succeeded': True,
+        'tight_original_copy_ENOSPC_both_nodes': True,
+        'tight_closed_links_full_bytes_and_original_manifest_identical': True,
+        'source_paths_bytes_and_modes_preserved': True,
+        'snapshot_target_mode_matches_source_not_original_copy_0600': True,
+        'final_directory_and_manifest_allocation_bytes_per_node': 8192,
+        'closed_replay_of_retained_live_prefix_only': True,
+        'root_and_independent_actual_original_GO': True,
+        'lost_final_source_reconstructed': False,
+        'new_traffic_models_or_scoring': False,
+        'whole_case_headroom_zero_loss_or_six_hour_cure': False,
+    },
+    'changed_core_blobs': {**UPLOADED_CHECKPOINT_COPY_SOURCE['changed_core_blobs'],
+        'src/ebpf_discovery/deepflow_snapshot_v5.py': '2d98f55e43956f3a95f59df118348ef495e9f1e1',
+        'src/ebpf_discovery/deepflow_v5.py': 'ce4bc3c7e17d3d65c06a7330866b431205d21d49'},
+    'added_paths': UPLOADED_CHECKPOINT_COPY_SOURCE['added_paths'] | {
+        'scripts/check-fixed-deepflow-final-links-v5.py'},
+    'reviewed_changed_blobs': {**UPLOADED_CHECKPOINT_COPY_SOURCE['reviewed_changed_blobs'],
+        '.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': 'dbe6ec78dfd9ba05a846190b727152e4d685bac6',
+        'scripts/check-fixed-deepflow-final-links-v5.py': '5560fc0ac9212a5e87e8fda752f83f98ad128f02',
+        'src/ebpf_discovery/deepflow_snapshot_v5.py': '2d98f55e43956f3a95f59df118348ef495e9f1e1',
+        'src/ebpf_discovery/deepflow_v5.py': 'ce4bc3c7e17d3d65c06a7330866b431205d21d49',
+        'tests/test_deepflow_snapshot_v5.py': 'a2923cb9982632af8007260121b2730b536f45f9',
+        'tests/test_deepflow_v5.py': '14fde390228e054cc80fc26c3e211a3196b2c7df'},
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -155,6 +194,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = IMMUTABLE_PATH_SOURCE
         elif revision == UPLOADED_CHECKPOINT_COPY_SOURCE['revision']:
             profile = UPLOADED_CHECKPOINT_COPY_SOURCE
+        elif revision == CLOSED_FINAL_SNAPSHOT_SOURCE['revision']:
+            profile = CLOSED_FINAL_SNAPSHOT_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -177,6 +218,20 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
         if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
+    if profile is CLOSED_FINAL_SNAPSHOT_SOURCE:
+        return {'anchor': anchor, 'revision': revision,
+                'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+                'evidence_kind': 'actual_closed_final_snapshot_storage_equivalence',
+                'tested_source': profile['tested_source'],
+                'parent_revision': profile['parent_revision'],
+                'parent_input_equivalence_tested_source': IMMUTABLE_PATH_SOURCE['tested_source'],
+                'parent_input_equivalence': IMMUTABLE_PATH_SOURCE['input_equivalence'],
+                'uploaded_checkpoint_release_tested_source': UPLOADED_CHECKPOINT_COPY_SOURCE['tested_source'],
+                'copy_release_proof': UPLOADED_CHECKPOINT_COPY_SOURCE['copy_release_proof'],
+                'final_snapshot_proof': profile['final_snapshot_proof'],
+                'reviewed_changed_blobs': approved,
+                'changed_core_blobs': profile['changed_core_blobs'],
+                'identical_remaining_entries': len(set(original) - set(approved))}
     if profile is UPLOADED_CHECKPOINT_COPY_SOURCE:
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
@@ -750,6 +805,7 @@ def build(
     if common_head == IMMUTABLE_PATH_SOURCE['anchor']:
         compatible_heads.add(IMMUTABLE_PATH_SOURCE['revision'])
         compatible_heads.add(UPLOADED_CHECKPOINT_COPY_SOURCE['revision'])
+        compatible_heads.add(CLOSED_FINAL_SNAPSHOT_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
@@ -1113,6 +1169,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
                       '` changes four preparation core files. The separate record in `provenance/source-equivalence.json` verifies its exact Git entries and binds the complete saved-input proof artifact by ID and digest. Actual source and timings remain visible; shorter preparation changes guest idle age and does not identify intrinsic collector speed or causal accuracy.']
             lines += ['The exact source `' + UPLOADED_CHECKPOINT_COPY_SOURCE['revision'] +
                       '` adds verified release of an uploaded local checkpoint copy. Its separate actual cleanup proof (run 41278513379, artifact 13072487567) preserves all 25,180 physical live-mirror files and three identity files. The inherited T input-equivalence proof remains attributed to its own tested source; the cleanup is not a new model/scoring result or proof of sufficient end-to-end headroom.']
+            lines += ['The exact final-retention source `' + CLOSED_FINAL_SNAPSHOT_SOURCE['revision'] +
+                      '` adds shared-inode final snapshots after positive per-node producer termination. Actual storage qualification run 41296733012 (artifact 13079348283) compares the literal original copy with links on retained prefixes from both guests: identical initial filesystems, full raw bytes and original snapshot manifests. This is a closed replay of saved live prefixes, not reconstruction of the failed final source or a whole-case capacity, zero-loss or study-success claim. Original source modes remain; linked snapshot modes follow the source rather than the old copy mode 0600. T input-equivalence and U checkpoint-release proofs retain their original tested-source attribution.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:

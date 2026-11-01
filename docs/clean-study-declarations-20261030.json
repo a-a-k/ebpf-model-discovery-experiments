@@ -4498,6 +4498,76 @@
       "run_id": 41283090284,
       "role": "worker",
       "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41295902428,
+      "role": "preparation",
+      "note": "One fixed actual T OTel partial6 prefix13073478195 closed-replay final-storage qualification at exact b074853; old literalcopy vs final-only hardlinks/fullSHA/same initial loopfilesystem. No traffic/models/simulations or campaign success. Retain validation/transfer/storage/CI/review/all failure costs; human effort unknown."
+    },
+    {
+      "run_id": 41295165381,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata headb074853233ff6e179cb0865ad4917f087e010805; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41295127816,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41295014091,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41293411772,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41292801994,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41292344838,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41292141373,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41291100841,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41290998393,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41288841096,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41287494157,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41296733012,
+      "role": "preparation",
+      "note": "One corrected fixed savedT OTel partial6 prefix final-storage proof at exact6eaa441; no filler, same boundedFS/source/rootUID/pristineclones/fullSHA/originalmanifest checks. Prior failed filler fixture41295902428 and both CI sources retained. No application traffic/model/simulation/scoring or case success claim; actual timings retained, human effort unknown."
+    },
+    {
+      "run_id": 41296469691,
+      "role": "preparation",
+      "note": "Actual exact6eaa441 corrected fixture producer CI, both implementation and Docker control jobs succeeded. Production core byte-identical to earlier b074853, both CI revisions and failed first qualification remain preparation cost; no campaign/scientific success claimed."
     }
   ],
   "blocked_main_cells": [],
@@ -4524,5 +4594,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T07:27:51.888427+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T10:06:46.688389+00:00"
 }
