@@ -117,10 +117,46 @@ IMMUTABLE_PATH_SOURCE = {
 }
 
 
+UPLOADED_CHECKPOINT_COPY_SOURCE = {
+    'anchor': IMMUTABLE_PATH_SOURCE['anchor'],
+    'revision': '8fa2a454db58af487451c9aead6477adc0ca0485',
+    'tested_source': '8fa2a454db58af487451c9aead6477adc0ca0485',
+    'parent_revision': IMMUTABLE_PATH_SOURCE['revision'],
+    'copy_release_proof': {
+        'run_id': 41278513379, 'artifact_id': 13072487567,
+        'artifact_digest': 'sha256:f7323f6195125699453ca2ba86d8ba3126aeefc469eef0ad5434a3847ea9a6f0',
+        'payload_files': 25180, 'logical_bytes_unlinked': 21031649232,
+        'observed_disk_free_delta': 21094756352,
+        'all_live_mirror_hashes_and_three_metadata_hashes_preserved': True,
+        'synthetic_release_control_explicit': True,
+        'root_and_independent_actual_original_GO': True,
+        'new_traffic_models_or_scoring': False,
+        'sufficient_future_headroom_or_six_hour_cure': False,
+    },
+    'changed_core_blobs': {**IMMUTABLE_PATH_SOURCE['changed_core_blobs'],
+        'src/ebpf_discovery/remote_toolchain_v4.py': 'eeb42971b85bbf2f15f06660bba4f2078dce30d8'},
+    'added_paths': IMMUTABLE_PATH_SOURCE['added_paths'] | {
+        'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md',
+        'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py',
+        'tests/test_uploaded_checkpoint_copy_release.py'},
+    'reviewed_changed_blobs': {**IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs'],
+        '.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': 'b17914718961afa75227a04a7fa9b1e2996f6433',
+        'src/ebpf_discovery/remote_toolchain_v4.py': 'eeb42971b85bbf2f15f06660bba4f2078dce30d8',
+        'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md': '83f08a45f9bd5866eb126315db7b0cc8c2489dc3',
+        'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py': '102825a665b8dad9f63b014181beeaa95484c208',
+        'tests/test_uploaded_checkpoint_copy_release.py': 'cde25145c6ad39ecc7136d909fbac45156812348'},
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
-    algorithm = (anchor == IMMUTABLE_PATH_SOURCE['anchor']
-                 and revision == IMMUTABLE_PATH_SOURCE['revision'])
-    approved = (IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs'] if algorithm else
+    profile = None
+    if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
+        if revision == IMMUTABLE_PATH_SOURCE['revision']:
+            profile = IMMUTABLE_PATH_SOURCE
+        elif revision == UPLOADED_CHECKPOINT_COPY_SOURCE['revision']:
+            profile = UPLOADED_CHECKPOINT_COPY_SOURCE
+    algorithm = profile is not None
+    approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
     if not approved or anchor_tree.get('truncated') is not False or revision_tree.get('truncated') is not False:
         raise ValueError('unreviewed preparation source or incomplete Git tree')
@@ -137,10 +173,22 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             != {k: v for k, v in prepared.items() if k not in approved}):
         raise ValueError('preparation revision changes scientific source or file modes')
     for path, blob in approved.items():
-        added = algorithm and path in IMMUTABLE_PATH_SOURCE['added_paths']
+        added = algorithm and path in profile['added_paths']
         if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
+    if profile is UPLOADED_CHECKPOINT_COPY_SOURCE:
+        return {'anchor': anchor, 'revision': revision,
+                'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+                'evidence_kind': 'actual_uploaded_checkpoint_copy_release',
+                'tested_source': profile['tested_source'],
+                'parent_revision': profile['parent_revision'],
+                'parent_input_equivalence_tested_source': IMMUTABLE_PATH_SOURCE['tested_source'],
+                'parent_input_equivalence': IMMUTABLE_PATH_SOURCE['input_equivalence'],
+                'copy_release_proof': profile['copy_release_proof'],
+                'reviewed_changed_blobs': approved,
+                'changed_core_blobs': profile['changed_core_blobs'],
+                'identical_remaining_entries': len(set(original) - set(approved))}
     if algorithm:
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
@@ -701,6 +749,7 @@ def build(
     compatible_heads = {common_head, *PREPARATION_ONLY_SOURCE_REVISIONS.get(common_head, {})}
     if common_head == IMMUTABLE_PATH_SOURCE['anchor']:
         compatible_heads.add(IMMUTABLE_PATH_SOURCE['revision'])
+        compatible_heads.add(UPLOADED_CHECKPOINT_COPY_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
@@ -1062,6 +1111,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         if payload['declarations']['experiment_head'] == IMMUTABLE_PATH_SOURCE['anchor']:
             lines += ['The separately reviewed algorithm revision `' + IMMUTABLE_PATH_SOURCE['revision'] +
                       '` changes four preparation core files. The separate record in `provenance/source-equivalence.json` verifies its exact Git entries and binds the complete saved-input proof artifact by ID and digest. Actual source and timings remain visible; shorter preparation changes guest idle age and does not identify intrinsic collector speed or causal accuracy.']
+            lines += ['The exact source `' + UPLOADED_CHECKPOINT_COPY_SOURCE['revision'] +
+                      '` adds verified release of an uploaded local checkpoint copy. Its separate actual cleanup proof (run 41278513379, artifact 13072487567) preserves all 25,180 physical live-mirror files and three identity files. The inherited T input-equivalence proof remains attributed to its own tested source; the cleanup is not a new model/scoring result or proof of sufficient end-to-end headroom.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:

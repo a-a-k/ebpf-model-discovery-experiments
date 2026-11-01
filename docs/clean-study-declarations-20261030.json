@@ -4318,6 +4318,31 @@
       "run_id": 41274274831,
       "role": "preparation",
       "note": "Actual checks.yml metadata headd304e8e5301dd4b0778295b597a712f4a2f247a1; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41278513379,
+      "role": "preparation",
+      "note": "ExactfixedrealTfull6 checkpoint-copy release qualification at8fa2; fullZIP/hash/physicalmirror/livepreservation/free-space check only; noVM/traffic/Bering/Sheaft/rescore/capture. Allcosts retained."
+    },
+    {
+      "run_id": 41279962513,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head8fa2a454db58af487451c9aead6477adc0ca0485; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41278246378,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head8fa2a454db58af487451c9aead6477adc0ca0485; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41278220942,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head8fa2a454db58af487451c9aead6477adc0ca0485; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41275404267,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head8a70ddaad0e117dbcc8707ed407679075f7e7ec1; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4344,5 +4369,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T05:02:12.997552+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T06:16:13.031717+00:00"
 }

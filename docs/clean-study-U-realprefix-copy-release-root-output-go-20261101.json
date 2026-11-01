@@ -1,0 +1,21 @@
+{
+  "observed_utc": "2026-11-01T06:04:25.296700+00:00",
+  "root_actual_realprefix_copy_release_ORIGINAL_engineering_GO": true,
+  "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "qualification_run": 41278513379,
+  "artifact_id": 13072487567,
+  "artifact_digest": "sha256:f7323f6195125699453ca2ba86d8ba3126aeefc469eef0ad5434a3847ea9a6f0",
+  "selected_transport": "work\\U-fixed-real-checkpoint-copy-release-output-41278513379\\selected-transport-proof.json",
+  "all25180mirrored_file_hash_and_bytes_exact": true,
+  "all3identity_metadata_hashes_preserved": true,
+  "module_SHA256_bound_to_actual_git_blob": true,
+  "logical_bytes_unlinked": 21031649232,
+  "observed_disk_free_delta": 21094756352,
+  "cleanup_seconds": 71.197735361,
+  "whole_qualification_seconds": 391.194467154,
+  "original_remote_checkpoint_still_available": true,
+  "synthetic_release_boundary_explicit": true,
+  "no_new_traffic_models_simulation_or_rescore": true,
+  "sufficient_future_headroom_or_end_to_end_six_hour_GO": false,
+  "fresh_capture_GO": false
+}

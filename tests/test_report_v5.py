@@ -17,6 +17,7 @@ from ebpf_discovery.compact_transport_v5 import (
 from ebpf_discovery.report_v5 import (
     build, render, resolve_evaluation_reference,
     PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
+    UPLOADED_CHECKPOINT_COPY_SOURCE,
 )
 
 
@@ -679,7 +680,7 @@ def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
         build([], declarations, tmp_path/'report')
 
 
-@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision']])
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision']])
 def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
     _, old = summary(tmp_path/'inputs', 31, 'main', head_sha='b' * 40)
@@ -700,7 +701,7 @@ def test_prepared_source_preserves_both_identities_and_excludes_other_versions(t
     assert restored(report, first) == old and restored(report, second) == current
 
 
-@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision']])
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision']])
 def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
     summary(tmp_path/'inputs', 33, 'main', head_sha=anchor)
@@ -746,10 +747,11 @@ def test_preparation_equivalence_checks_exact_git_entries(mutation, revision):
             _preparation_equivalence_facts(anchor, revision, original, prepared)
 
 
+@pytest.mark.parametrize('profile', [IMMUTABLE_PATH_SOURCE, UPLOADED_CHECKPOINT_COPY_SOURCE])
 @pytest.mark.parametrize('mutation', ['none', 'extra_science', 'changed_core', 'core_mode', 'missing_added', 'truncated'])
-def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation):
-    approved = IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs']
-    added = IMMUTABLE_PATH_SOURCE['added_paths']
+def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, profile):
+    approved = profile['reviewed_changed_blobs']
+    added = profile['added_paths']
     original = {'sha': '1' * 40, 'truncated': False, 'tree': [
         {'path': 'systems/unchanged.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40},
         *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': 'b' * 40}
@@ -757,7 +759,9 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation):
     prepared = {'sha': '2' * 40, 'truncated': False, 'tree': [
         copy.deepcopy(original['tree'][0]),
         *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': sha} for p, sha in approved.items()]]}
-    core = next(row for row in prepared['tree'] if row['path'] == 'src/ebpf_discovery/raw_v4.py')
+    core_path = ('src/ebpf_discovery/remote_toolchain_v4.py' if profile is UPLOADED_CHECKPOINT_COPY_SOURCE
+                 else 'src/ebpf_discovery/raw_v4.py')
+    core = next(row for row in prepared['tree'] if row['path'] == core_path)
     if mutation == 'extra_science': prepared['tree'][0]['sha'] = 'c' * 40
     if mutation == 'changed_core': core['sha'] = 'c' * 40
     if mutation == 'core_mode': core['mode'] = '100755'
@@ -765,13 +769,21 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation):
         prepared['tree'] = [row for row in prepared['tree'] if row['path'] != 'scripts/check-fixed-dsb-path-preparation-v5.py']
     if mutation == 'truncated': prepared['truncated'] = True
     if mutation == 'none':
-        facts = _preparation_equivalence_facts(IMMUTABLE_PATH_SOURCE['anchor'], IMMUTABLE_PATH_SOURCE['revision'], original, prepared)
-        assert facts['evidence_kind'] == 'actual_immutable_prefix_input_equivalence'
+        facts = _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
+        if profile is UPLOADED_CHECKPOINT_COPY_SOURCE:
+            assert facts['evidence_kind'] == 'actual_uploaded_checkpoint_copy_release'
+            assert facts['parent_input_equivalence'] == IMMUTABLE_PATH_SOURCE['input_equivalence']
+            assert facts['parent_input_equivalence_tested_source'] == IMMUTABLE_PATH_SOURCE['tested_source']
+            assert facts['copy_release_proof']['artifact_id'] == 13072487567
+            assert facts['tested_source'] == UPLOADED_CHECKPOINT_COPY_SOURCE['revision']
+            assert 'input_equivalence' not in facts
+        else:
+            assert facts['evidence_kind'] == 'actual_immutable_prefix_input_equivalence'
         assert facts['identical_remaining_entries'] == 1
         assert len(facts['changed_core_blobs']) == 4 and 'approved_operational_blobs' not in facts
     else:
         with pytest.raises(ValueError):
-            _preparation_equivalence_facts(IMMUTABLE_PATH_SOURCE['anchor'], IMMUTABLE_PATH_SOURCE['revision'], original, prepared)
+            _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
 
 
 def test_selection_cannot_be_applied_to_a_single_attempt(tmp_path: Path) -> None:

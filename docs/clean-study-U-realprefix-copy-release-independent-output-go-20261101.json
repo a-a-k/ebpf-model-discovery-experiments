@@ -1,0 +1,79 @@
+{
+  "checked_utc": "2026-11-01T06:06:01.555827+00:00",
+  "original_actual_output_engineering_GO": true,
+  "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "qualification_run": 41278513379,
+  "qualification_artifact": 13072487567,
+  "qualification_artifact_digest": "sha256:f7323f6195125699453ca2ba86d8ba3126aeefc469eef0ad5434a3847ea9a6f0",
+  "member_CRC_SHA_rechecked": {
+    "disk-final.txt": {
+      "bytes": 127,
+      "sha256": "06c05e0b590e13ea5c6df19b258052ee47d5f56589a3d877ac268afceb2b3a2c",
+      "crc32": "69dcf69b"
+    },
+    "original-artifact-api.json": {
+      "bytes": 868,
+      "sha256": "1d91bcdc32aced54f155404300a0195ba44e9c584fd5e3db4bce74697c2be4f7",
+      "crc32": "c1ca34b7"
+    },
+    "original-run-api.json": {
+      "bytes": 15214,
+      "sha256": "3a3d238a6038a9ba33305ed19dbf61a9dc40ab8d6b53ce7d6450f23de6424fdc",
+      "crc32": "79b610b7"
+    },
+    "proof.json": {
+      "bytes": 5551151,
+      "sha256": "bcbe241357c4bddc6d473aacc407c1bc0571bc965ed21f580f021456dea2e93f",
+      "crc32": "3e252134"
+    },
+    "uploaded-checkpoint-copy-release.json": {
+      "bytes": 5551189,
+      "sha256": "7a01f73937a3047a81bcb6aa5f6c4757587070680e6a2e553ef811e6dd78f0e1",
+      "crc32": "5cdc118c"
+    }
+  },
+  "transport": "Rootselected5derivedmetadatafiles once with exactbeforebody6MiBscope fortwo; independently recomputed all5CRC/SHA, freshqualifier/derived/sourceAPI identities. Selectedranges/memberCRC/SHA+API proof only, not localwholeZIPrehash. No originalcheckpoint/workerpayload/rawbody download.",
+  "source_binding": {
+    "module_sha256": "f46d9c8cbbdb6c3267d9a69fbbec4d09ec29914a5214a5616569b230b5c662ed",
+    "GitmoduleSHA_exact": true,
+    "old_source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+    "prefix_id": 13067209799,
+    "prefix_archive_SHA": "49ca3a52504fd8087472087b852631fe0f2e0c3bac99813676e0136a7e975706",
+    "prefix_archive_bytes": 3296703585,
+    "manifest_SHA": "7d7e6990be5caeba2e1698fe5a9736781d2b0df081fa6e1be3fdcacb594fc757"
+  },
+  "actual_complete_checks": {
+    "all_payload_paths_after_physical_mirror_equal_before_validated_copy": true,
+    "payload_files": 25180,
+    "logical_payload_bytes_unlinked": 21031649232,
+    "three_metadata_hashes_preserved": {
+      "manifest.json": "7d7e6990be5caeba2e1698fe5a9736781d2b0df081fa6e1be3fdcacb594fc757",
+      "ready.json": "3c4aea4d7e0653a274fa464ad653373d646307b835e3bfabf6e58a9f8a56446c",
+      "release.json": "cd9f780b1fee4e90c60256cdbf0a0d266f6710ea3d6dc95b571a41e6e36630ba"
+    },
+    "synthetic_release_explicit": true,
+    "original_remote_artifact_remains_available": true,
+    "actual_disk_free_before": 63656878080,
+    "actual_disk_free_after": 84751634432,
+    "actual_net_free_delta": 21094756352,
+    "payload_logical_GiB": 19.58724971115589,
+    "net_free_GiB": 19.64602279663086
+  },
+  "actual_costs": {
+    "download_seconds": 36.820948982,
+    "extract_seconds": 60.778082329,
+    "full_checkpoint_validation_seconds": 61.439807999,
+    "physical_mirror_seconds": 104.160327311,
+    "total_seconds": 391.194467154
+  },
+  "actual_cleanup_costs": {
+    "verification_seconds": 62.34321913,
+    "elapsed_seconds": 71.197735361
+  },
+  "interpretation": "Complete real savedTfull6prefix copy retained exactphysicalmirror25180files and3identitymetadata hashes while onlymanifestlisted uploadedlocalpayload unlinked. This supports actualUengineeringpreservation/reclamation, notU655preparationrerun or scientificapplicationeffect. RootnamedUprofile maynow bind thisdistinctactualproof withbothGOs alongside unchangedTbaseequivalence.",
+  "causal_limits": "Diskfreeincrease is observed onqualhost and includes concurrenthostactivity; not exactENOSPCfilesystemconsumption onlostparent, notguaranteedfutureheadroom/6hcure or parentendtoend/main81admission. Physicalmirroris qualification copy, notliveguest applicationload; noVM/tools/forecast/outcomes reconstructed.",
+  "original_criterion": "All81/all10ops eBPF/Bering/Sheaft/externaloutcome feasibility and equalprovidedknowledge/directpredicate/contextbaseline preserved; allnegative/unknown/adverse and prior/new/qualification/CI/cleanup/reader/report/archivecosts retained, no cost-superiorityclaim.",
+  "actual_scientific_outcomes_recomputed": false,
+  "fresh_U_capture_execution_GO": false,
+  "consumer_actual_code_GO_pending": true
+}

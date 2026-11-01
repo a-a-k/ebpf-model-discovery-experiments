@@ -1,0 +1,24 @@
+{
+  "recorded_utc": "2026-11-01T05:55:16.924022+00:00",
+  "original_immutable_U_source_identity_design_GO": true,
+  "previous_named_consumer_design_updated": true,
+  "exact_U_revision": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "base_T": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+  "direct_tested_immutable_commit_allowed_without_merge": true,
+  "source_binds_actual_cleanup_qualification_run": 41278513379,
+  "qualified_producer_CI": 41278220942,
+  "U_vs_T_exact_changed_paths": [
+    "M\t.github/workflows/diagnose-dsb-training-checkpoint-v4.yml",
+    "A\tdocs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md",
+    "A\tscripts/check-fixed-uploaded-checkpoint-copy-release-v5.py",
+    "M\tsrc/ebpf_discovery/remote_toolchain_v4.py",
+    "A\ttests/test_uploaded_checkpoint_copy_release.py"
+  ],
+  "worker_workflow_U_and_T_byte_identical": true,
+  "worker_workflow_SHA256": "049f885a44857e79562e56473a578e5160cfc6a6f874c75c8d3e691f7ac0e0b9",
+  "source_protocol": "Parentseries mayrun exactimmutabletag8fa while existingworkerworkflow@main dispatches/checksout inputs.commit8fa. Actualworkerworkflowhead remains separatelyrecorded; scientificinputcommit mustbe literal8fa, neverinferredfromAPIhead or normalized. This is the alreadyreviewed parentA/S->workerT mechanism.",
+  "criterion": "Sameall81/all10ops/fullcounts/semanticinformation/directpredicate/contextbaseline/freeze/models/externaloutcome andallcosts; stableexactsource strengthens reproducibility, no weakerheadwaiver.",
+  "profile_activation": "Only exactA->8fa fullGitcensus/blobs/modes/addedpaths +Uall4strictsets/reportbootstrap/compatibility after actualcleanupartifact+bothoutputGOs andactualconsumerCI. FuturemergeSHA is NOTimplicitlyadmitted. Do not overwrite tag or sourceidentity if PRlatermerges.",
+  "scope_limits": "Currentapproval adjusts sourceidentity design only. Qualificationactualoutput, exacttagbinding, namedconsumeractualcode/CI and onefailedUfull6execution stillseparate. No newcapture or successclaim.",
+  "fresh_capture_execution_GO": false
+}
