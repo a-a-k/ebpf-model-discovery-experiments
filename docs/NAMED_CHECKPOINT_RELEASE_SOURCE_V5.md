@@ -24,6 +24,30 @@ T partial7, run 41259915749/job 124710889139, also terminated with the runner's
 ENOSPC annotation, this time during environment/status retention. These old
 running jobs did not receive the later U code.
 
+The complete six-case T social-network cohort ended as follows on 2026-11-01:
+
+| Mode/seed | Parent run | Actual terminal evidence | Retained campaign evidence |
+|---|---|---|---|
+| partial/6 | 41259904200 | Packaging ENOSPC after continuation/evaluation succeeded | Compact, retention status, prefix; original full missing |
+| partial/7 | 41259915749 | Runner ENOSPC during environment/status retention | Prefix only |
+| partial/8 | 41259927579 | Six-hour stop at 07:15:20 UTC; internal subphase unknown | Prefix only |
+| full/6 | 41261041075 | Runner ENOSPC during continuation; exact subphase unknown | Prefix only |
+| full/7 | 41259938855 | Runner ENOSPC at 06:55:40 UTC; exact subphase unknown | Prefix only |
+| full/8 | 41259950155 | Six-hour stop at 07:15:38 UTC; internal subphase unknown | Prefix only |
+
+All six bound model workers completed. For the last two cases, the worker had
+finished about 145 minutes before the parent's productive six-hour limit, so
+worker completion alone does not resolve the remaining critical path. The job
+console endpoints returned unavailable storage objects. Bounded workflow-log
+archives were available but contained only the preparation job's logs, with no
+campaign console. Disk causality is established for four rows; the cause within
+the last two continuation paths remains unknown. Their
+[two exact full U replacements](clean-study-U-DSB-two-seed8-dispatch-20261101.json)
+measure the original complete pipeline after the qualified space repair. This
+does not establish a timeout cure. The
+[full7 replacement](clean-study-U-DSB-full7-dispatch-20261101.json) likewise
+retains its exact source and old failure. All original evidence and costs remain.
+
 The saved-prefix qualification 41278513379 at the exact U commit completed
 successfully. Artifact 13072487567 has digest
 `sha256:f7323f6195125699453ca2ba86d8ba3126aeefc469eef0ad5434a3847ea9a6f0`.
