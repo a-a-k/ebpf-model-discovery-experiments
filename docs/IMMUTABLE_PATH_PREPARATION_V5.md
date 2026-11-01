@@ -52,11 +52,14 @@ remain strict. Child references can differ only after physical-file binding and
 completed child equivalence. Actual old models/Sheaft outputs are reused through
 unchanged downstream code and observational inputs; tools are not rerun offline.
 
-Offline equivalence is not completion of a timed-out parent. One fresh worst-case
-full7 capture must close end to end and pass the existing strict evidence review
-before replacements for the remaining technically incomplete cells are dispatched.
-Shorter preparation changes application idle time; retain that operational timing
-and do not use mixed operational revisions to rank intrinsic collector speed.
+Offline equivalence is not completion of a timed-out parent. Fresh failure-only
+captures require a separate ORIGINAL execution review of the exact source,
+critical-path budget, scope and runner capacity. A single full7 capture first is
+a conservative scheduling option. Any separately approved parallel plan must be
+frozen before new-source validation outcomes and retain the full counts, strict
+evidence review and every original failure/cost. Shorter preparation changes
+application idle time; keep that timing and actual source visible and do not use
+mixed operational revisions to rank intrinsic collector speed or causal accuracy.
 
 The first actual comparison,41247102582 at bdd5ae1, passed independent root and
 skeptic input/core-semantics review:647 byte-exact input files, complete655-file
@@ -88,3 +91,26 @@ saved-prefix comparison must again pass unchanged655-input/18-entry checks,
 now admitting the actual fourth core blob,raw_v4.py. Keep both comparisons and
 all prior failures, preparation, transfers, CI and review costs. No fresh-capture
 or parallel execution GO is implied by this design review.
+
+The second actual comparison,41255795362 at7df056a, passed both independent
+actual-output reviews. It retained the same655-file input census,647 byte-exact
+files (6,900,165,504 bytes), six strictly clock/reference-only manifests, two981-row
+ordered indexes and all18 entry-evidence SHA/byte claims. All three tool pins,
+checkpoint/index bytes and downstream code remained unchanged. Original and new
+preparation took6473.154799267 and1141.882265196 seconds respectively, an observed
+difference of5331.272534071 seconds (88 minutes51 seconds). This is a one-prefix
+engineering comparison, not a collector benchmark or an end-to-end six-hour result.
+
+The proof artifact is13063339858,29,138,334 bytes, API ZIP SHA256
+`76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c`.
+Both reviewers rechecked only15 selected small metadata files locally, by CRC and
+SHA, after complete verification in Actions. No local whole ZIP, request bodies,
+large entry-evidence bodies, new application traffic or scientific tool execution
+was needed for this review. The original worker remains the actual baseline.
+
+The two original DeepFlow/OTel absent7/8 hosts lost communication before a child
+worker was dispatched. Their precise host cause is unknown. Worker-side pruned
+copies do not identify or establish a remedy for that parent phase. Each case has
+one separately reviewed fresh-host S recovery; healthy captures remain running.
+New-source admission must separately record all four real core changes and the
+complete reviewed Git tree, rather than reuse the earlier operational-only claim.
