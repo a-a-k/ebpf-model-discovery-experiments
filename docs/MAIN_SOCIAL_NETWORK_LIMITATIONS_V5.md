@@ -39,3 +39,7 @@ See the [root twelve-packet metadata review](clean-study-next12-DF-Coroot-DSB-de
 and [independent metadata review](clean-study-next12-DF-Coroot-DSB-derived-independent-review-20261101.json).
 Literal representative proofs supplement these metadata checks; they do not
 replace the qualified Actions checks of every available saved model and report.
+See the [Coroot root model/report chains](clean-study-Coroot-DSB-full6-literal-root-review-20261101.json),
+[independent chains](clean-study-Coroot-DSB-full6-literal-independent-review-20261101.json),
+[root negative graph inspection](clean-study-Coroot-DF-negative-literal-root-review-20261101.json)
+and [independent graph inspection](clean-study-Coroot-DF-negative-literal-independent-review-20261101.json).

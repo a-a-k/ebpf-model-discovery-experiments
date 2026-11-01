@@ -1,0 +1,30 @@
+{
+  "recorded_before_POST_utc": "2026-11-01T02:06:41.381976+00:00",
+  "state": "dispatched_verified",
+  "source": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+  "CI_success": 41263703300,
+  "manifest": "docs/clean-study-main-review-batch2-20261101.json",
+  "manifest_sha256_GitLF": "deaf84a82dbd08142bc7346d247a5637bb12a4d2281047c63cfd4cbf9404828c",
+  "manifest_git_blob": "d6c01c409441467088a8bdf78d4a9731e89d163c",
+  "root_GO": "work/main-review-batch2-preexecution-20261101.json",
+  "skeptic_GO": "work/skeptic-main-v5-observer/batch2-one-new-case-original-execution-go.json",
+  "request": {
+    "ref": "analysis/clean-study-results",
+    "inputs": {
+      "phase": "fresh-batch",
+      "qualification_system": "all",
+      "candidate_manifest": "docs/clean-study-main-review-batch2-20261101.json",
+      "fresh_series_after_qualification_go": true
+    },
+    "return_run_details": true
+  },
+  "capacity_owner_snapshot": "work\\owner-actions-capacity-20261101T020207Z.json",
+  "capacity_age_seconds": 274.190744,
+  "reader_jobs": 1,
+  "old56_replayed": false,
+  "resource_budget": "12capture reservations+12workerreserve+4readers+4CI+1archive=33 below Pro40; this reader requests1. Existing owner43repo snapshot no otherrepoactive; actualqueue still controls availability.",
+  "scope": "One saved review, no captures/refit/rescore/accuracy filter; finalexact81 not admitted. All costs retained, humanunknown.",
+  "run_id": 41263818898,
+  "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41263818898",
+  "actual_head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787"
+}

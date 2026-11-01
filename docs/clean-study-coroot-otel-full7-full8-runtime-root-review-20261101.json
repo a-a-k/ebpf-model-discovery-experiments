@@ -1,0 +1,1045 @@
+{
+  "checked_utc": "2026-11-01T02:18:52.388208+00:00",
+  "root_original_Coroot_full7_full8_runtime_review_GO": true,
+  "cases": [
+    {
+      "seed": 7,
+      "artifact": {
+        "id": 13054879537,
+        "node_id": "MDg6QXJ0aWZhY3QxMzA1NDg3OTUzNw==",
+        "name": "campaign-v5-coroot-main-otel_demo-full-7-41164826834",
+        "size_in_bytes": 1545064437,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13054879537",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13054879537/zip",
+        "expired": false,
+        "digest": "sha256:2c67d220ec348b2040bb62e57209b92da65dad4d6146dfe15b0d480e0994f646",
+        "created_at": "2026-10-31T19:39:07Z",
+        "updated_at": "2026-10-31T19:39:07Z",
+        "expires_at": "2027-01-29T03:32:42Z",
+        "workflow_run": {
+          "id": 41164826834,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "study-20261031-v5",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+        }
+      },
+      "selected25_member_claims": {
+        "native/final/application-logs/a-shipping.log": {
+          "bytes": 1205944,
+          "sha256": "37b9f48cbea98b43af68f24bee05865c7183b7d902a165b1700991153e1b4fa8",
+          "crc32": "1e3d3cf1"
+        },
+        "native/final/application-logs/a-checkout.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "crc32": "00000000"
+        },
+        "native/final/application-logs/a-product-catalog-router.log": {
+          "bytes": 36982,
+          "sha256": "3af6af3b488c537aea8264b53f050c754370597d856c54ef98d664f2fdfa7184",
+          "crc32": "edfa4e72"
+        },
+        "native/final/compose-ps-a.jsonl": {
+          "bytes": 25802,
+          "sha256": "b942587be470b7c3804af73e7aadfe5377371288ad22fb0e19c8fa8e38f2d4f5",
+          "crc32": "7df1e607"
+        },
+        "native/training/compose-ps-a.jsonl": {
+          "bytes": 25489,
+          "sha256": "9a739591663bdccc6e2628742c8e4bcb726f07774e5507de491703e97ee10481",
+          "crc32": "6748ce7c"
+        },
+        "deployment/otel_demo/runtime-resolved-node-a.yaml": {
+          "bytes": 26046,
+          "sha256": "72afefc92e1e27225b5102c0937e2266d853cb34103ade32606e78afea901180",
+          "crc32": "ef220983"
+        },
+        "deployment/otel_demo/runtime-resolved-node-b.yaml": {
+          "bytes": 1885,
+          "sha256": "367074219fc3e9ed69b3d0c39bb0182364ff8f949680920016028cc481c587ab",
+          "crc32": "1b9fe9cf"
+        },
+        "blocks.json": {
+          "bytes": 29886,
+          "sha256": "229235ff25396279322e4243382635abab57932c17f07c4acd6e16e7b3dffd7d",
+          "crc32": "1a62c411"
+        },
+        "runtime-identity-v5/capture-before-target-05.json": {
+          "bytes": 292261,
+          "sha256": "5ab069c6ba3649c2113005b089503342bf8f6d059fd315ce818615b14d848c0f",
+          "crc32": "dc10a800"
+        },
+        "runtime-identity-v5/capture-after-target-05.json": {
+          "bytes": 296977,
+          "sha256": "70f2b705bffacb5224bdd6b531864652a13b203ace1078491d1b5597572b9669",
+          "crc32": "c218627a"
+        },
+        "runtime-identity-v5/capture-before-target-06.json": {
+          "bytes": 287754,
+          "sha256": "999118a4541f6be55cde4c72fae1af1de5d213982b3ac9989f6f010c90ea7e49",
+          "crc32": "0bd45ec2"
+        },
+        "runtime-identity-v5/capture-after-target-06.json": {
+          "bytes": 285727,
+          "sha256": "a4881d39872422ec8ee7a6b79fc1b537f892e0928ac7ec592c2672e53aceb38b",
+          "crc32": "81af0004"
+        },
+        "runtime-identity-v5/capture-before-target-07.json": {
+          "bytes": 292581,
+          "sha256": "4fae6d88ab01a64c11548f0e60bb09f89ff8a51665d0441dae85c13c9909fa7c",
+          "crc32": "a4b796e7"
+        },
+        "runtime-identity-v5/capture-after-target-07.json": {
+          "bytes": 296277,
+          "sha256": "a6d544c98c720af003d4f872facc91ee4cd5a1a57aa1aa16d82f7fc5e4fd258e",
+          "crc32": "a3a15b89"
+        },
+        "runtime-identity-v5/capture-before-target-08.json": {
+          "bytes": 292254,
+          "sha256": "23d82a2f64ad7ea90339d76e27117e85ef9ff3463509cbe0b3d15a2380d9a5b5",
+          "crc32": "7e98c642"
+        },
+        "runtime-identity-v5/capture-after-target-08.json": {
+          "bytes": 297171,
+          "sha256": "7646ddd270ab75779ff6a3d2156f0e36e69251bdf5076891097b453bdb5d6c6e",
+          "crc32": "26067e3d"
+        },
+        "runtime-identity-v5/capture-before-target-09.json": {
+          "bytes": 284522,
+          "sha256": "ba872e2d2595e2acc357332d2da1695115798a29d81d3bac8d2b5c398c61ff28",
+          "crc32": "0b92602c"
+        },
+        "runtime-identity-v5/capture-after-target-09.json": {
+          "bytes": 279154,
+          "sha256": "02d658984317792eeea98ddf1eae049aaddf2bd15dbf2b27b6d602ddfe1f88c4",
+          "crc32": "cc66590d"
+        },
+        "runtime-identity-v5/capture-before-target-10.json": {
+          "bytes": 287990,
+          "sha256": "17d7cf1c387a62fa02baceb095464d2a556f8858a3000d6980f05ae1a977b3c1",
+          "crc32": "a7a4fccd"
+        },
+        "runtime-identity-v5/capture-after-target-10.json": {
+          "bytes": 291146,
+          "sha256": "5d7e200c3c52d98a4f158a9fa4e546fb60613214194f9b5b4dae33d4ff0cd022",
+          "crc32": "2ea9dd1a"
+        },
+        "runtime-identity-v5/capture-before-target-11.json": {
+          "bytes": 289674,
+          "sha256": "cebe9f2ff1b9f4894f5f55c9b4ae5534dcaf36ce2c0053426ad83c522e6e0753",
+          "crc32": "0ec0b2b6"
+        },
+        "runtime-identity-v5/capture-after-target-11.json": {
+          "bytes": 288479,
+          "sha256": "ff4b306515a13797f624baca3bea1aeda2ee62d7bc283b725d61f8e1991863c7",
+          "crc32": "cca109cd"
+        },
+        "runtime-identity-v5/capture-before-target-12.json": {
+          "bytes": 298852,
+          "sha256": "63fd9a2e77e14a55e363a194dc2624d9a8a540eeed7636425f9e16f8527321cd",
+          "crc32": "08f6a548"
+        },
+        "runtime-identity-v5/capture-after-target-12.json": {
+          "bytes": 298899,
+          "sha256": "568bfc9b8d0741a730f864fab4f6bdb8fc96a509b5066ffc0104cc976d727d3d",
+          "crc32": "9cec949d"
+        },
+        "native/final/application-logs/a-frontend.log": {
+          "bytes": 5742906,
+          "sha256": "3b28e6636def43d77a773a9334d4fb94f9bf168c20ad76daea26db58cbbefbe6",
+          "crc32": "606cec3f"
+        }
+      },
+      "same_guest_and_checkout_CID": "39e6cca1392051dcbb57f60da45d9ad09ae14eb6f9c56cd3b65bce8604646892",
+      "checkout3_PID_StartAt_states": [
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+          "Pid": 116922,
+          "Running": true,
+          "StartedAt": "2026-10-31T18:13:05.20849589Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-before-target-05.json"
+        },
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+          "Pid": 329319,
+          "Running": true,
+          "StartedAt": "2026-10-31T19:03:16.759988671Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-before-target-08.json"
+        },
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T19:11:30.129203984Z",
+          "Pid": 367312,
+          "Running": true,
+          "StartedAt": "2026-10-31T19:11:30.159686418Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-after-target-12.json"
+        }
+      ],
+      "all16_runtime_samples": [
+        {
+          "capture": "runtime-identity-v5/capture-before-target-05.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-05.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-06.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-06.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-07.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-07.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:13:05.170053793Z",
+            "Pid": 116922,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:13:05.20849589Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-08.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-08.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-09.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-09.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-10.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-10.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-11.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-11.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-12.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:03:16.71081918Z",
+            "Pid": 329319,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:03:16.759988671Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-12.json",
+          "guest_boot_id": "bddaf19b-d12f-427c-a617-212858bf5e57",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:11:30.129203984Z",
+            "Pid": 367312,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:11:30.159686418Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:08:30.894838849Z",
+            "Pid": 97758,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:08:30.982761025Z",
+            "Status": "running"
+          }
+        }
+      ],
+      "postgresql_same_CID_PID_StartAt_all16": [
+        "a2e8f19fb955cea1d3419a10844ffd84b3435218b67da31d8415a66e88c6881b",
+        97758,
+        "2026-10-31T18:08:30.982761025Z"
+      ],
+      "frontend_error_examples": {
+        "broken pipe": "2026-10-31T18:57:45.868840591Z Error: 14 UNAVAILABLE: shipping error: failed POST to shipping service: Post \"http://shipping:50050/ship-order\": readfrom tcp 172.28.11.42:33342->172.28.11.51:50050: write tcp 172.28.11.42:33342->172.28.11.51:50050: write: broken pipe",
+        "ECONNRESET": "2026-10-31T19:03:16.863732717Z Error: 14 UNAVAILABLE: read ECONNRESET"
+      },
+      "actual_state11_target_with_both_catalog_replicas_running_at_boundaries": "target-05",
+      "empty_checkout_log_and_no_OOMKilled_field": true,
+      "all_external_outcomes_retained_without_rescoring": true,
+      "timing_limit": "Docker StartedAt and app-log times are guest UTC. Capture labels bracket observations. These are not per-request causal matches, and guest/runner timing must not be treated as exact without clock alignment."
+    },
+    {
+      "seed": 8,
+      "artifact": {
+        "id": 13055916899,
+        "node_id": "MDg6QXJ0aWZhY3QxMzA1NTkxNjg5OQ==",
+        "name": "campaign-v5-coroot-main-otel_demo-full-8-41164826834",
+        "size_in_bytes": 1466635385,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13055916899",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13055916899/zip",
+        "expired": false,
+        "digest": "sha256:c4e3b582abcb944ef766a04399b59b1a85eea5a6e3815323ae723ed1b4f34b6a",
+        "created_at": "2026-10-31T19:56:01Z",
+        "updated_at": "2026-10-31T19:56:01Z",
+        "expires_at": "2027-01-29T03:32:42Z",
+        "workflow_run": {
+          "id": 41164826834,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "study-20261031-v5",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+        }
+      },
+      "selected25_member_claims": {
+        "native/final/application-logs/a-shipping.log": {
+          "bytes": 611185,
+          "sha256": "c15aa58defbf3d46220a1a3a917e7fe25195c3c95cfcbffc8207ee5e0597790c",
+          "crc32": "7b6396cc"
+        },
+        "native/final/application-logs/a-checkout.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "crc32": "00000000"
+        },
+        "native/final/application-logs/a-product-catalog-router.log": {
+          "bytes": 36982,
+          "sha256": "7c17a2403658a9eb73fcb3d5fdd60519582afe72299f810885dc9b57a8a3dc6d",
+          "crc32": "5c8591a3"
+        },
+        "native/final/compose-ps-a.jsonl": {
+          "bytes": 25598,
+          "sha256": "132a3124c0021e5ed8d092447abd0da98248a9892df202f362ebb98fef904245",
+          "crc32": "4fcea54b"
+        },
+        "native/training/compose-ps-a.jsonl": {
+          "bytes": 25494,
+          "sha256": "d2ed7c898a37a555eee38c72a285432e04190446393f93f8528aa6a8f0e6a36e",
+          "crc32": "76f568f8"
+        },
+        "deployment/otel_demo/runtime-resolved-node-a.yaml": {
+          "bytes": 26046,
+          "sha256": "72afefc92e1e27225b5102c0937e2266d853cb34103ade32606e78afea901180",
+          "crc32": "ef220983"
+        },
+        "deployment/otel_demo/runtime-resolved-node-b.yaml": {
+          "bytes": 1885,
+          "sha256": "367074219fc3e9ed69b3d0c39bb0182364ff8f949680920016028cc481c587ab",
+          "crc32": "1b9fe9cf"
+        },
+        "blocks.json": {
+          "bytes": 29881,
+          "sha256": "9303c2c02b0507d77734698d747b4226da9c2f48befe74dbeb5aaeab1a6a8c21",
+          "crc32": "31c0f80f"
+        },
+        "runtime-identity-v5/capture-before-target-05.json": {
+          "bytes": 285949,
+          "sha256": "f480b28a01538b01999cc69a64579a1cb6b05cab4ce4a4349fcb27e0165d194f",
+          "crc32": "449af71a"
+        },
+        "runtime-identity-v5/capture-after-target-05.json": {
+          "bytes": 290339,
+          "sha256": "192f15f8b7598d0895d0854beeefa29b77da111a359f3d8ae838ae1a2dd1ff89",
+          "crc32": "ddea56af"
+        },
+        "runtime-identity-v5/capture-before-target-06.json": {
+          "bytes": 289463,
+          "sha256": "d173b94478649a03831ae761dc0f9bdeaf65772e9c62483cdf6a4dc393fcb7a8",
+          "crc32": "529df0ff"
+        },
+        "runtime-identity-v5/capture-after-target-06.json": {
+          "bytes": 288890,
+          "sha256": "ef2d00dc64ea88abea4ef7915c23e3a2fcbb3d68a84f9d22d428efb6133f2243",
+          "crc32": "111cb95e"
+        },
+        "runtime-identity-v5/capture-before-target-07.json": {
+          "bytes": 294833,
+          "sha256": "bbab59889864b4236a086475d3c13a3a8e894a2e4278fbfa8c63a8395d962bcf",
+          "crc32": "8e3ed83f"
+        },
+        "runtime-identity-v5/capture-after-target-07.json": {
+          "bytes": 295712,
+          "sha256": "01c950c7183104c81383461410a8bce8e60ff5abc9f8894421dffe3b2756015d",
+          "crc32": "dee70ec6"
+        },
+        "runtime-identity-v5/capture-before-target-08.json": {
+          "bytes": 297756,
+          "sha256": "ca9274171c1232de7c8eba2a4d1d3514ddb121aa774eee7911a1b84c1b71f29d",
+          "crc32": "8cdf730b"
+        },
+        "runtime-identity-v5/capture-after-target-08.json": {
+          "bytes": 295158,
+          "sha256": "a65dca872d7e7b6b45d8f41f00902d42c4a00562fdff8e6b8a385861bc5e2fe8",
+          "crc32": "7b21fe9e"
+        },
+        "runtime-identity-v5/capture-before-target-09.json": {
+          "bytes": 300537,
+          "sha256": "99492fe26cc95d85e28229bc479f315bf6625c4ca6bec7a96fa009bda0d66ad3",
+          "crc32": "8b7ccb9d"
+        },
+        "runtime-identity-v5/capture-after-target-09.json": {
+          "bytes": 300106,
+          "sha256": "a20bd6e3f1acd00b55776585076a84bffa4d49b6d65ed853c43a32cd654ae684",
+          "crc32": "b7ff918b"
+        },
+        "runtime-identity-v5/capture-before-target-10.json": {
+          "bytes": 287774,
+          "sha256": "7a0c882bd37d48154fdd8206a530390f0488ef4e4748894b2841272b81f9d3e2",
+          "crc32": "341d90ff"
+        },
+        "runtime-identity-v5/capture-after-target-10.json": {
+          "bytes": 278221,
+          "sha256": "505a321ddcf284130216602d9fc5988cb963ed6d7bb1076b6582ece17f881669",
+          "crc32": "df457e5d"
+        },
+        "runtime-identity-v5/capture-before-target-11.json": {
+          "bytes": 291935,
+          "sha256": "e3d615ad4a99ef23bd070111f4e2b480145abafc31ea7b6970a6e2e9820767ce",
+          "crc32": "c692d3d7"
+        },
+        "runtime-identity-v5/capture-after-target-11.json": {
+          "bytes": 297795,
+          "sha256": "f60fb8a222ff8705273b01d8a21e684cbd846e1f7c0054d19a4c0f8df35f46b8",
+          "crc32": "0b7aaaae"
+        },
+        "runtime-identity-v5/capture-before-target-12.json": {
+          "bytes": 286899,
+          "sha256": "fb98e799ce647002509db5480938ecbfa1a26db81ec16996ba9ee8dffaa10aa0",
+          "crc32": "6b97680c"
+        },
+        "runtime-identity-v5/capture-after-target-12.json": {
+          "bytes": 287718,
+          "sha256": "03c4f3482074a7a9cbd963048e33d8135d1222df10e7b2029f382d02f6cf7704",
+          "crc32": "1228b972"
+        },
+        "native/final/application-logs/a-frontend.log": {
+          "bytes": 5975467,
+          "sha256": "d6bfe4f9bedb8877dd4c33b3d85d33be8f2f7d6548b5a1ff7a39d11eb0a7681b",
+          "crc32": "f858f3e1"
+        }
+      },
+      "same_guest_and_checkout_CID": "6f62739dbefee099d8275e3821bc063e5199aae5f9f1e8e2bbb9bb1d048ffb5c",
+      "checkout3_PID_StartAt_states": [
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T18:31:14.722435144Z",
+          "Pid": 133517,
+          "Running": true,
+          "StartedAt": "2026-10-31T18:31:14.807060822Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-before-target-05.json"
+        },
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+          "Pid": 328613,
+          "Running": true,
+          "StartedAt": "2026-10-31T19:18:26.090854411Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-before-target-07.json"
+        },
+        {
+          "ExitCode": 0,
+          "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+          "Pid": 359134,
+          "Running": true,
+          "StartedAt": "2026-10-31T19:25:12.851943814Z",
+          "Status": "running",
+          "first_seen_capture": "runtime-identity-v5/capture-before-target-10.json"
+        }
+      ],
+      "all16_runtime_samples": [
+        {
+          "capture": "runtime-identity-v5/capture-before-target-05.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:31:14.722435144Z",
+            "Pid": 133517,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:31:14.807060822Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-05.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:31:14.722435144Z",
+            "Pid": 133517,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:31:14.807060822Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-06.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:31:14.722435144Z",
+            "Pid": 133517,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:31:14.807060822Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-06.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:31:14.722435144Z",
+            "Pid": 133517,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:31:14.807060822Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-07.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-07.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-08.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-08.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-09.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-09.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:18:26.059083491Z",
+            "Pid": 328613,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:18:26.090854411Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-10.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-10.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-11.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-11.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-before-target-12.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        },
+        {
+          "capture": "runtime-identity-v5/capture-after-target-12.json",
+          "guest_boot_id": "43a73d8f-4335-4964-b5e3-fdb5910f71ba",
+          "checkout": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T19:25:12.761425525Z",
+            "Pid": 359134,
+            "Running": true,
+            "StartedAt": "2026-10-31T19:25:12.851943814Z",
+            "Status": "running"
+          },
+          "postgresql": {
+            "ExitCode": 0,
+            "FinishedAt": "2026-10-31T18:20:32.098211024Z",
+            "Pid": 88124,
+            "Running": true,
+            "StartedAt": "2026-10-31T18:20:32.145860421Z",
+            "Status": "running"
+          }
+        }
+      ],
+      "postgresql_same_CID_PID_StartAt_all16": [
+        "e9d009678262a810335d68b17ecf3e041fac5ebee86cda8406885cc111ddf806",
+        88124,
+        "2026-10-31T18:20:32.145860421Z"
+      ],
+      "frontend_error_examples": {
+        "broken pipe": "2026-10-31T19:15:10.342726413Z Error: 14 UNAVAILABLE: shipping error: failed POST to shipping service: Post \"http://shipping:50050/ship-order\": readfrom tcp 172.28.11.42:54564->172.28.11.51:50050: write tcp 172.28.11.42:54564->172.28.11.51:50050: write: broken pipe",
+        "ECONNRESET": "2026-10-31T19:18:26.080391713Z Error: 14 UNAVAILABLE: read ECONNRESET"
+      },
+      "actual_state11_target_with_both_catalog_replicas_running_at_boundaries": "target-07",
+      "empty_checkout_log_and_no_OOMKilled_field": true,
+      "all_external_outcomes_retained_without_rescoring": true,
+      "timing_limit": "Docker StartedAt and app-log times are guest UTC. Capture labels bracket observations. These are not per-request causal matches, and guest/runner timing must not be treated as exact without clock alignment."
+    }
+  ],
+  "actual_fault_source": {
+    "commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "path": "systems/otel_demo/adapter.py",
+    "Git_blob": "57152bfc61219bbbf6ec0a95dc1206564e656dd3",
+    "set_replicas_method_sha256": "3ddf25224b4d13d904a13d31041df40953528d5cf98693060a57037a7953bc68",
+    "primary_fault_method_only_changes_two_catalog_replicas": true
+  },
+  "conclusion": "In each full7/8 case the same checkout container changes mainPID/StartedAt twice across retainedtarget snapshots; frontend logs retain shipping POST brokenpipe errors and connectionresets. These noncatalog problems are outside the controlledcatalog failure method. PGmaincontainer/PID/StartedAt remain identical at all16 snapshots percase. OOMcause, everyrequestattribution and collectorcausality are not proved; do not transfer OBI PostgreSQL OOM.",
+  "scope": "Two exact originalcases;25members each withCRC/SHA, frontendonly explicit6MiB exception. No originalZIP/rawattemptjournal/wire/SQLite or rescoring; all losses, unknowns, costs retained. No final81success."
+}

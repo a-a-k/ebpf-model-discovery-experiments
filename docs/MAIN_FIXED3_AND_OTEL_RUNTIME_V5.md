@@ -110,6 +110,54 @@ healthcheck `role root does not exist` lines are not failed business-request
 counts. The old Coroot checkout case still lacks evidence proving its restart
 cause. All original outcomes and forecasts remain unchanged.
 
+## Coroot full/7 and full/8: separate runtime evidence
+
+The remaining full OTel repeats also retain severe checkout disagreement:
+671/3200 and 183/3200 successes against a 0.875 forecast; browse/cart each have
+2800/3200. Root and the independent reviewer checked 50 selected original
+members by CRC/SHA: container snapshots, configuration and necessary app logs.
+Only the two frontend logs use an explicit 6 MiB transport exception; no raw
+attempt journal, wire body or original whole ZIP was read locally.
+
+Each case has one unchanged checkout container ID and guest boot but three
+successive main PIDs/start times. In full/7, the new PIDs first appear before
+target-08 and after target-12. In full/8, they first appear before target-07
+and before target-10. These labels describe actual snapshot observations; they
+do not place every restart inside active request load. PostgreSQL retains its
+same container/PID/start time in all 16 target snapshots of each case.
+
+The frontend logs retain shipping POST failures ending in `broken pipe` and
+connection resets near recorded checkout restarts. The primary fault method
+only switches the two catalogue replicas. These are concrete noncatalogue
+runtime problems, with no attribution of every failed response. The checkout
+logs are empty and the old runtime schema omits OOM cause fields. Neither an
+OOM cause nor collector causality is established. Guest UTC and runner timing
+must not be treated as exactly aligned without clock evidence.
+
+See the [root literal runtime review](clean-study-coroot-otel-full7-full8-runtime-root-review-20261101.json)
+and [independent review](clean-study-coroot-otel-full7-full8-runtime-independent-review-20261101.json).
+The OBI PostgreSQL OOM above is a separate case; its cause is not transferred
+to these Coroot repeats. All original forecasts and outcomes remain unchanged.
+
+## All Coroot OTel and Petclinic metadata in the first batch
+
+Both reviewers checked all nine OTel and nine Petclinic packets under the same
+qualified reader. Coroot eBPF operation forecasts are unknown throughout these
+18 cases. In Petclinic, absent tracing leaves all operations unknown; partial
+native/combined tracing supports owners and vets, while both visit-dependent
+operations remain unknown; full tracing supports all four. The eBPF bindings
+retain missing required HTTP calls, entry endpoints and reachability obligations.
+
+In OTel, absent and partial tracing leave all operation forecasts unknown;
+full native/combined tracing supports all three, with the adverse checkout
+results described above. The context comparison adds zero edges and reuses
+combined results in all 18 cases. These are observations of the tested pinned
+pipeline, not intrinsic collector or cost rankings. All external outcomes,
+unknown obligations and processing costs remain.
+
+See the [root eighteen-packet review](clean-study-final18-Coroot-derived-root-review-20261101.json)
+and [independent review](clean-study-final18-Coroot-derived-independent-review-20261101.json).
+
 ## Scope of interpretation
 
 The fixed DeepFlow social-network packet contains genuine nonempty Bering

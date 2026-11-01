@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-11-01T02:09:29.752667+00:00",
+  "original_first56_saved_evidence_subset_review_GO": true,
+  "reader_run": 41254802097,
+  "reader_head": "2cd6ad47c23c71caf3d5ccb8d4789faed4b500b1",
+  "exact_frozen56_cells_covered_once": true,
+  "primary_available": 454,
+  "primary_unknown": 662,
+  "proof_files_sha256": {
+    "independent-first9-derived-metadata-review.json": "0ecc126fdac851c7d274210f7dc1b530cb0fc994c0c5cc9f23698b95fe561b46",
+    "independent-OTel-first4-derived-metadata-review.json": "6d786626b249b839ffb330609baac05b9b480711915596d6ce07f722d76c776b",
+    "independent-remaining13-OBI-derived-metadata-review.json": "693943b8baa88b0a5ff4c118ca203c9397b180b0acc85ea0be2c32f99ad161cc",
+    "independent-next12-DF3-CorootDSB9-derived-metadata-review.json": "aa35f0dcf4d17ba7172c1ab6ec6672ff5dd33e2fb2dbce2dd61f879b39ad8239",
+    "independent-final18-Coroot-derived-metadata-review.json": "5f2ad81db48e8e0f54af0f1749f7784a48e3f6348a60f635f8bc8ac95341bb4b",
+    "independent-DSB-representative-literal-review.json": "c8477f9ac34a48e14c6e47c203897157070de568c2cb7e521024d984de97f393",
+    "independent-OTel-representative-literal-review.json": "8ac4e3e3ef61aed110e1f10fe1d5ebd64659640e94e313e29670b2481b371d83",
+    "independent-Coroot-DSB-full6-literal-chain-review.json": "d499178d60df5920b0104fb7d622fc3f5d1ab42bde51c4ef3316788cb2c43cdf",
+    "independent-Coroot-DF-negative-literal-review.json": "39064867dffc233b943d2b36d56fb54d40b80bb2d2b33d1e144b8d11d6107bdf"
+  },
+  "scope": "All56 actual saved-derived packets and their original source/freeze/model/analysis/report bindings reviewed; representative literal graph/model/union/command/output chains supplement the qualified Actions checks. Not a claim that every wire or model body was read locally.",
+  "original_criterion": "Actual eBPF to Bering to Sheaft usefulness judged by independent application outcomes under missing or partial SDK tracing, with the same supplied semantics and direct/cheap combined baselines. No cost-superiority or novelty criterion substituted.",
+  "findings": "Some OBI absent/partial OTel and Petclinic branches support the original conditional feasibility question. DSB required Thrift channels and Coroot strict observed entries/calls remain unknown; Coroot timeline replicas and database activity are present despite unresolved SDK logical group. Uncontrolled runtime failures and adverse external outcomes remain in the result.",
+  "scientific_success_or_complete_three_collector_comparison_claimed": false,
+  "pending": "Final OBIpartial8 saved-reader packet is separate batch2. Remaining24 DeepFlow captures, their saved evidence, full81 grid, external-outcome interpretation, complete cost/report/archive closure are still required.",
+  "costs": "Preserve all failed/stopped/preparation/capture/worker/CI/model/Sheaft/joint-view/reader/transfer/archive costs, including repeated fixed3 reviews. API elapsed is not CPU, billing or wall-time sum; human effort remains unknown."
+}
