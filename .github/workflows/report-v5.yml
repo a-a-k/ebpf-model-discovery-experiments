@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       declarations:
-        description: JSON v5-report-declarations with attempt cells and related cost runs
+        description: Inline v5-report-declarations JSON or a tracked docs/*.json path
         required: true
         type: string
       selection_manifest:
@@ -31,15 +31,36 @@ jobs:
           rm -rf results/iteration-5 work/v5-inputs
           mkdir -p results/iteration-5/provenance work/v5-inputs
           python - <<'PY'
-          import json, os, pathlib, subprocess
+          import hashlib, json, os, pathlib, subprocess
           from ebpf_discovery.report_v5 import (
               _declarations, PREPARATION_ONLY_SOURCE_REVISIONS,
               _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
           )
-          value=json.loads(os.environ['DECLARATIONS'])
+          declaration_input=os.environ['DECLARATIONS']
+          input_source={'kind':'inline_json'}
+          if declaration_input.startswith('docs/'):
+              selected=pathlib.PurePosixPath(declaration_input)
+              if (selected.is_absolute() or selected.as_posix()!=declaration_input
+                      or len(selected.parts)!=2 or selected.suffix!='.json'):
+                  raise SystemExit('declarations path must be normalized docs/*.json')
+              local=pathlib.Path(declaration_input)
+              if local.is_symlink() or not local.resolve().is_relative_to(pathlib.Path.cwd().resolve()/'docs'):
+                  raise SystemExit('declarations path escapes the checked-out docs directory')
+              head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+              if head!=os.environ['GITHUB_SHA']:
+                  raise SystemExit('declarations checkout differs from workflow head')
+              body=subprocess.check_output(['git','show',head+':'+declaration_input])
+              if local.read_bytes()!=body:
+                  raise SystemExit('declarations file differs from its committed Git blob')
+              input_source={'kind':'tracked_file','path':declaration_input,
+                  'git_blob':subprocess.check_output(['git','rev-parse',head+':'+declaration_input],text=True).strip(),
+                  'sha256':hashlib.sha256(body).hexdigest(),'workflow_head_sha':head}
+              declaration_input=body.decode('utf-8')
+          value=json.loads(declaration_input)
           path=pathlib.Path('results/iteration-5/provenance/declarations.json')
           path.write_text(json.dumps(value,indent=2,sort_keys=True)+'\n')
           _declarations(path)
+          (path.parent/'declarations-input.json').write_text(json.dumps(input_source,indent=2)+'\n')
           anchor=value.get('experiment_head')
           approved=dict(PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}))
           if anchor==IMMUTABLE_PATH_SOURCE['anchor']:

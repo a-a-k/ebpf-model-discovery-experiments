@@ -1,7 +1,11 @@
 import hashlib
 import json
 import copy
+import os
 from pathlib import Path
+import subprocess
+import textwrap
+from unittest.mock import patch
 import zipfile
 
 import pytest
@@ -56,6 +60,76 @@ def run(run_id: int, stage: str, mode="absent") -> dict:
     return {"run_id": run_id, "collector": "obi", "stage": stage,
             "cells": [{"system": "petclinic", "mode": mode, "seed": 6}],
             "note": "declared attempt"}
+
+
+@pytest.fixture
+def report_declarations_bootstrap(tmp_path, monkeypatch):
+    """Execute the real workflow's input preparation, before any API/data work."""
+    repository = Path(__file__).resolve().parents[1]
+    workflow = (repository / '.github/workflows/report-v5.yml').read_text()
+    script = workflow.split("          python - <<'PY'\n", 1)[1]
+    script = script.split("          anchor=value.get('experiment_head')", 1)[0]
+    bootstrap = compile(textwrap.dedent(script), 'actual-report-bootstrap', 'exec')
+    body = (repository / 'docs/clean-study-declarations-20261030.json').read_bytes()
+    assert len(json.dumps(json.loads(body), separators=(',', ':'))) > 65535
+    file = tmp_path / 'docs/declared.json'
+    file.parent.mkdir()
+    file.write_bytes(body)
+    subprocess.run(['git', 'init', '-q', str(tmp_path)], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), 'config', 'core.autocrlf', 'false'], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), 'add', 'docs/declared.json'], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), '-c', 'user.name=Fixture',
+                    '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture'], check=True)
+    head = subprocess.check_output(['git', '-C', str(tmp_path), 'rev-parse', 'HEAD'], text=True).strip()
+    monkeypatch.chdir(tmp_path)
+    destination = tmp_path / 'results/iteration-5/provenance'
+    destination.mkdir(parents=True)
+
+    def execute(argument):
+        # A dict keeps the oversized legacy inline fixture in memory; it is not
+        # submitted through a real OS environment or GitHub dispatch payload.
+        environment = {**os.environ, 'DECLARATIONS': argument, 'GITHUB_SHA': head}
+        with patch.object(os, 'environ', environment):
+            exec(bootstrap, {})
+        return (destination / 'declarations.json').read_bytes()
+
+    return execute, body, head, destination
+
+
+def test_report_workflow_tracked_path_preserves_complete_oversized_declarations(report_declarations_bootstrap):
+    execute, body, head, destination = report_declarations_bootstrap
+    legacy = execute(body.decode('utf-8'))
+    assert execute('docs/declared.json') == legacy
+    assert json.loads(legacy) == json.loads(body)
+    source = json.loads((destination / 'declarations-input.json').read_text())
+    assert source == {'kind': 'tracked_file', 'path': 'docs/declared.json',
+        'git_blob': subprocess.check_output(['git', 'rev-parse', 'HEAD:docs/declared.json'], text=True).strip(),
+        'sha256': hashlib.sha256(body).hexdigest(), 'workflow_head_sha': head}
+
+
+@pytest.mark.parametrize('kind', ['traversal', 'unnormalized', 'untracked', 'modified', 'absolute', 'symlink'])
+def test_report_workflow_rejects_uncommitted_or_escaping_declarations(report_declarations_bootstrap, kind):
+    execute, body, _, _ = report_declarations_bootstrap
+    if kind == 'traversal':
+        argument = 'docs/../declared.json'
+    elif kind == 'unnormalized':
+        argument = 'docs//declared.json'
+    elif kind == 'untracked':
+        Path('docs/untracked.json').write_bytes(body)
+        argument = 'docs/untracked.json'
+    elif kind == 'modified':
+        Path('docs/declared.json').write_bytes(body + b'\n')
+        argument = 'docs/declared.json'
+    elif kind == 'absolute':
+        argument = str(Path('docs/declared.json').resolve())
+    else:
+        try:
+            Path('docs/escape.json').symlink_to(Path('docs/declared.json').resolve())
+        except OSError:
+            pytest.skip('symlink creation unavailable on this platform')
+        argument = 'docs/escape.json'
+    with pytest.raises((SystemExit, ValueError, subprocess.CalledProcessError)):
+        execute(argument)
 
 
 def summary(root: Path, run_id: int, stage: str, complete=True, *, head_sha='a' * 40) -> tuple[Path, dict]:

@@ -1,8 +1,8 @@
 # Reviewed OBI main cases: observed limitations and conditional feasibility
 
-These are all 26 OBI cases in the first fixed 56-packet review batch: nine
-DeathStarBench, eight OTel and nine Petclinic cases. The last OBI OTel partial/8
-packet is assigned to the next frozen review batch. This is not the final
+These are all 27 OBI cases: 26 in the first fixed 56-packet review batch and the
+last OTel partial/8 packet in the completed second, one-cell saved review.
+Both reviewers inspected all 27. This is not the final
 81-cell comparison. All three collectors
 still require the same complete matrix and original evidence checks. The original
 question is whether eBPF can replace or complement missing SDK traces through
@@ -105,3 +105,25 @@ captures are unchanged.
 
 See the [root remaining-case review](clean-study-remaining13-OBI-derived-root-review-20261101.json)
 and [independent remaining-case review](clean-study-remaining13-OBI-derived-independent-review-20261101.json).
+
+## Last OBI partial/8 packet: complete OBI review
+
+The second frozen review batch contains exactly one already completed packet,
+OBI OTel partial/8. It repeats none of the first 56 packets. All 18 original
+source/view/operation branches are unknown because required calls remain
+missing or ambiguous; the native source also lacks the controlled logical
+service. No disagreement between supported entry vectors is established.
+
+The prespecified context comparison adds 17 actual joint SERVER edges per view.
+All six operation/view forecasts are 0.875 and each operation has 2800/3200
+independent successes. The qualified reader checks the whole union, saved models,
+actual Sheaft report bindings, source identity and pre-target freeze. Both
+reviewers rechecked the six selected metadata members; the sole 4,211,426-byte
+facts document uses an explicit facts-only 5 MiB transport exception. No traffic,
+model or score is recomputed. The extra context processing and saved review
+costs remain; the other case's PostgreSQL OOM is not transferred here.
+
+See the [root actual second-batch review](clean-study-main-review-batch2-root-actual-review-20261101.json)
+and [independent review](clean-study-main-review-batch2-independent-actual-review-20261101.json).
+All 27 OBI, all 27 Coroot and three DeepFlow packets now have both saved-metadata
+reviews. The remaining 24 DeepFlow cases and final 81-cell report remain due.

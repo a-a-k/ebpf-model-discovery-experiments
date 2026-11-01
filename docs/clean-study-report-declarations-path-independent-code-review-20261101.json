@@ -1,0 +1,26 @@
+{
+  "checked_utc": "2026-11-01T02:42:03.844325+00:00",
+  "original_report_declarations_path_actual_code_GO": true,
+  "reviewed_files": {
+    ".github/workflows/report-v5.yml": {
+      "Git_blob": "c35a2c82022e18178c818f9e814b905ec833186c",
+      "worktree_sha256": "4dcd6e4f5ca75556f93185cc4303d417f879cd9ca83b552505e4b4a0d0741671"
+    },
+    "tests/test_report_v5.py": {
+      "Git_blob": "39032059978f4ac6c7d629813356698b93d83c09",
+      "worktree_sha256": "d4624abcac579165e5ae1b008fcb4af031a4c738e5cb1b22946bb38a0112b188"
+    }
+  },
+  "unchanged_report_selection_evaluation_source_guard_and_plot_logic": true,
+  "actual_fixture_run": "PYTHONPATH=src python -m pytest tests/test_report_v5.py -q -k report_workflow",
+  "independent_result": {
+    "passed": 6,
+    "skipped": 1,
+    "skip": "Windows cannot create symlink; LinuxCI must cover it"
+  },
+  "scope": "One existing workflow input gains a normalized exact HEAD tracked docs JSON reference; full object and byte-identical canonical declarations materialization compared against legacy inline using the actual workflow bootstrap and real oversized declarations. Rejects traversal/unnormalized/untracked/modified/absolute/symlink inputs. HEAD/GITHUB_SHA and Gitbody/worktree equality plus sourceblob/SHA provenance retained.",
+  "before_authoritative_use": "Commit exact reviewed blobs; successful exact-head LinuxCI including symlink fixture before report execution. Existing all81 source/count/model/external-outcome checks remain mandatory.",
+  "original_criterion": "Full81 external-outcome eBPF/Bering/Sheaft feasibility with equal information and semantics; this removes only input transport constraint and preserves all cost/provenance notes.",
+  "costs": "Retain all original/failed/stopped/preparation/worker/model/Sheaft/CI/reader/transport/report/archive costs; API intervals not CPU/billing; humanunknown.",
+  "final81_or_scientific_success": false
+}

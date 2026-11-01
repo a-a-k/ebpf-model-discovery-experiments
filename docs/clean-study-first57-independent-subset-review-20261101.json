@@ -1,0 +1,21 @@
+{
+  "checked_utc": "2026-11-01T02:36:09.056808+00:00",
+  "original_saved_evidence_subset57_review_GO": true,
+  "exact_frozen57_cells_reviewed_once": true,
+  "cells_by_collector": {
+    "obi": 27,
+    "coroot": 27,
+    "deepflow": 3
+  },
+  "primary_available_rows": 454,
+  "primary_unknown_rows": 680,
+  "proof_files_sha256": {
+    "batch1-41254802097\\independent-first56-original-subset-review-go.json": "3ffb2bdeeb4a813aebc6d9459e5562cbe5bbed593e60e6554a03130f15867b02",
+    "batch2-41263818898\\independent-original-one-packet-actual-review-go.json": "e5015d7571afdba0a7f2d61dcc8e4d7a7d2e4dacbb0c486346fd50f3c437515a"
+  },
+  "scope": "Two completed read-only saved-review batches. Actual source/freeze/model/analysis/commands/report/independent external outcome bindings checked; representative original literal chains supplement qualified Actions checks. No new forecasts, experiments or rescoring.",
+  "findings": "Last OBIpartial8 retains18 unknown primary branches and six paired context forecasts at.875; seventeen observed SERVER edges added perview and actual2800/3200 for each operation. All unknown and adverse rows in both batches retained.",
+  "remaining": "Twenty-four DeepFlow cells and their actual saved evidence, complete81 selection/outcome interpretation/report/cost/archive closure still required.",
+  "final81_or_general_success_claimed": false,
+  "costs": "All failed/stopped/preparation/capture/worker/model/joint/Sheaft/CI/reader/transfer/storage/archive costs remain, with humanunknown and no CPU/billed interpretation of API intervals."
+}
