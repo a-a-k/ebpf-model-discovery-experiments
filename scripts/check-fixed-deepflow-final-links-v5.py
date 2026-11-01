@@ -139,7 +139,7 @@ def main():
         logical_bytes = sum(source_census[name]["bytes"] for name in relatives)
         maximum_file = max(source_census[name]["bytes"] for name in relatives)
         assert maximum_file > MIB
-        image_bytes = ((logical_bytes + 128 * MIB + MIB - 1) // MIB) * MIB
+        image_bytes = ((logical_bytes + logical_bytes // 8 + 64 * MIB + MIB - 1) // MIB) * MIB
         assert shutil.disk_usage(scratch).free > 2 * image_bytes + logical_bytes + 128 * MIB
         pristine, active = scratch / "pristine.ext4", scratch / "active.ext4"
         with pristine.open("xb") as stream:
@@ -156,12 +156,12 @@ def main():
             original = census(data)
             assert {name: {k: row[k] for k in ("bytes", "sha256")} for name, row in original.items()} == {
                 PurePosixPath(name).name: source_census[name] for name in relatives}
-            # Deliberate identical pressure in both clones; this filler is not data.
-            leave_free = min(maximum_file // 4, 8 * MIB)
-            filler_bytes = filesystem(mount)["free_bytes"] - leave_free
-            with (mount / "synthetic-storage-pressure").open("xb") as stream:
-                os.posix_fallocate(stream.fileno(), 0, filler_bytes)
+            # The bounded filesystem itself cannot fit another full source file.
+            # No filler allocation depends on reported free space being allocatable.
             command("sync")
+            initial_space = filesystem(mount)
+            assert initial_space["available_bytes"] > 64 * 1024
+            assert initial_space["free_bytes"] < maximum_file
             command("umount", str(mount))
             mounted = False
             pristine_sha = remote._sha(pristine)
@@ -221,7 +221,8 @@ def main():
                     shutil.rmtree(destination)
             assert comparisons["tight_original_copy"]["initial_filesystem"] == comparisons["tight_closed_links"]["initial_filesystem"]
             results[node] = {"selected_source": relatives, "logical_bytes": logical_bytes,
-                "image_bytes": image_bytes, "synthetic_filler_bytes": filler_bytes,
+                "image_bytes": image_bytes, "synthetic_filler_bytes": 0,
+                "storage_pressure": "bounded ext4 filesystem; no filler file",
                 "original_source_census": original, "comparisons": comparisons,
                 "node_total_seconds": (time.monotonic_ns() - node_start) / 1e9}
             remote._atomic_json(output / f"node-{node}-comparison.json", results[node])
