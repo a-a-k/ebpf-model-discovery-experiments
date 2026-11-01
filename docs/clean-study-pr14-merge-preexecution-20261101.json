@@ -1,0 +1,27 @@
+{
+  "recorded_before_mutation_utc": "2026-11-01T00:50:36.268425+00:00",
+  "PR": 14,
+  "head": "bfed1546d8dca54b9f00ce9e05ff7b0e928c079d",
+  "base": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+  "original_criterion": "Full81/10operations actual eBPF/Bering/Sheaft/independent outcomes with absent/partial traces; equally provided semantics/direct equivalent baseline. Cost superiority not original hypothesis.",
+  "strongest_baseline": "Actual originalA fixed full7 prefix13047984145 and successful worker13053549827, literal old function; no repeated old tools.",
+  "root_actual_original_core_semantics_GO": true,
+  "skeptic_actual_original_core_semantics_GO": true,
+  "fixed_actual_comparison": {
+    "run": 41255795362,
+    "source": "7df056aee51ae0113626fac9e72ca673e2515d96",
+    "artifact": 13063339858,
+    "digest": "sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c",
+    "complete_input_census": 655,
+    "byte_exact_files": 647,
+    "entry_proofs": 18,
+    "old_seconds": 6473.154799267,
+    "new_seconds": 1141.882265196
+  },
+  "source_check": "bfed differs from tested7df only in the reviewed preparation documentation; all4core/helper/workflow/tests identical. Exactbfed Linux CI bothsuccess;13changedpaths toA.",
+  "root_merge_GO": "EXPLICIT ORIGINAL algorithm-repair merge GO after complete actual input equivalence and exact CI; no new hypothesis or data. Final actual source/tree/CI and named consumer admission still required before separately reviewed fresh captures.",
+  "skeptic_merge_GO": "Explicit actual source/code GO received after inspecting bfed documentation-only diff and actual7df proof; exact bfed CI prerequisite now satisfied.",
+  "costs": "Retain all original/failure/cancel/recovery, two failed profiling attempts, two offline comparisons, all CI/read/transfer/archive/human-unknown costs.",
+  "fresh_capture_GO": false,
+  "study_success_claimed": false
+}

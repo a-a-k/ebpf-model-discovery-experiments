@@ -388,10 +388,10 @@
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41258000031,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
     },
     {
       "system": "otel_demo",

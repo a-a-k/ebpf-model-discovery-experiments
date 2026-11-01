@@ -1,0 +1,92 @@
+{
+  "checked_utc": "2026-11-01T00:42:09.128718+00:00",
+  "root_original_representative_literal_chain_GO": true,
+  "selected_CRC_SHA_oldworker_freeze_verified": 67,
+  "chains": [
+    {
+      "artifact_id": 13063251392,
+      "branch": "ebpf/raw",
+      "operation": "browse_product",
+      "model_sha256": "936b3fc3be08b5d3b0c802372b1f5883fa3d35fad5be83c4ddc11932802bf075",
+      "report_sha256": "478728795f969b9273c05994acf82c1cd015425332a9fda5acb928fbcb226487",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    },
+    {
+      "artifact_id": 13063251392,
+      "branch": "ebpf/raw",
+      "operation": "add_to_cart",
+      "model_sha256": "73004c57adce7f42fea97c59109f9757d9a68bc95b081e1a463d14d97076d951",
+      "report_sha256": "ea837732fbf90842759790499d92624e44b96a40978d578cfe863bed2b58bc44",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    },
+    {
+      "artifact_id": 13063251392,
+      "branch": "ebpf/raw",
+      "operation": "checkout",
+      "model_sha256": "dfea6f5197feaf916cdfca27bb7ad8f4e2e988c9a544c17240ff5e85f45113c1",
+      "report_sha256": "9efe3b26586e21ff4a1849a4da7c8f1a5355bdae57c4b1ae61abe66b8f2b24b4",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    },
+    {
+      "artifact_id": 13063176598,
+      "branch": "context-baseline/network_scope/operations",
+      "operation": "browse_product",
+      "model_sha256": "004a0cb6ee73cae2afa8877692468821941f56782bd62198a87c5a19a11981c2",
+      "report_sha256": "93de874b9f71ae3c9e1ce1deaaa7a2030129907fc7c6e9981c05d077ed42483a",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    },
+    {
+      "artifact_id": 13063176598,
+      "branch": "context-baseline/network_scope/operations",
+      "operation": "add_to_cart",
+      "model_sha256": "a7f7d6fb07d138dca5b6f1e188bbb1ad0a203e464191d0c5748da58f7cd3be42",
+      "report_sha256": "f009f64e4057630fd5ba6b52252ef3114446ecdab2a928d9180926b8444e2fa3",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    },
+    {
+      "artifact_id": 13063176598,
+      "branch": "context-baseline/network_scope/operations",
+      "operation": "checkout",
+      "model_sha256": "f3b0b0bcffac955366c3fb42fdc29317751e18a9f85408b232ff58d89e654c56",
+      "report_sha256": "3391f9694b93cd2c664753fae5b0c18e376c27c70ce9ef0e64f5d8e1a01324a7",
+      "forecast_copied": 0.875,
+      "full_model_reconstructed_exact": true
+    }
+  ],
+  "derived_union": {
+    "base_edges": 203,
+    "union_edges": 221,
+    "all18_eligible_actual_joint_SERVER_edges": [
+      "checkout|cart|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+      "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FEmptyCart|span_kind=server",
+      "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+      "checkout|currency|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+      "checkout|currency|sync|true|protocol=grpc|operation=oteldemo.CurrencyService%2FConvert|span_kind=server",
+      "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+      "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveInt|span_kind=server",
+      "checkout|payment|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+      "checkout|payment|sync|true|protocol=grpc|operation=oteldemo.PaymentService%2FCharge|span_kind=server",
+      "checkout|product-catalog|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+      "checkout|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+      "email|flagd|sync|true|protocol=grpc|operation=ResolveInt|span_kind=server",
+      "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FAddItem|span_kind=server",
+      "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+      "frontend|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+      "payment|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server",
+      "product-catalog|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+      "recommendation|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server"
+    ],
+    "all_base_fields_nodes_endpoints_metadata_retained": true,
+    "union_is_a_bering_emitted_snapshot": false
+  },
+  "conditional_original_feasibility_supported_for_reviewed_subset": true,
+  "whole81_or_novelty_or_cost_success_claimed": false,
+  "interpretation": "Absent SDK traces: actual eBPF Bering graph feeds real Sheaft for all3operations, with saved.875 versus2800/3200. Partial7: the prespecified derived union of18actualSERVERedges supports all3 while originalarms unavailable. Same supplied semantics/direct predicate baseline; no invented causal IDs/nodes/CLIENT channels.",
+  "limits": "Conditional replica intervention with other requirements fixed fulfilled; subset evidence only, no intrinsic collector ranking or per-request causal truth. No old full6 OOM transfer. Unknown/adverse original outcomes retained.",
+  "costs": "All original and failed setup/capture/worker/replay/contextunion/Sheaft/review/transfer/archive costs retained; human unknown."
+}

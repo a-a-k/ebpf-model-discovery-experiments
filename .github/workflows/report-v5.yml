@@ -34,14 +34,16 @@ jobs:
           import json, os, pathlib, subprocess
           from ebpf_discovery.report_v5 import (
               _declarations, PREPARATION_ONLY_SOURCE_REVISIONS,
-              _preparation_equivalence_facts,
+              _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
           )
           value=json.loads(os.environ['DECLARATIONS'])
           path=pathlib.Path('results/iteration-5/provenance/declarations.json')
           path.write_text(json.dumps(value,indent=2,sort_keys=True)+'\n')
           _declarations(path)
           anchor=value.get('experiment_head')
-          approved=PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {})
+          approved=dict(PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}))
+          if anchor==IMMUTABLE_PATH_SOURCE['anchor']:
+              approved[IMMUTABLE_PATH_SOURCE['revision']]=IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs']
           proofs=[]
           if approved:
               destination=path.parent/'source-equivalence'

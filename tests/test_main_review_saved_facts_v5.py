@@ -1225,11 +1225,12 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
 
 
 @pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])
-def test_fresh_batch_is_scheduling_only_and_keeps_final81_boundary(tmp_path, change):
+@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD])
+def test_fresh_batch_is_scheduling_only_and_keeps_final81_boundary(tmp_path, change, head):
     name = 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
     template = json.loads((ROOT/name).read_text())['cells'][0]
     planned = [{**template, 'collector': collector, 'system': system, 'mode': mode,
-                'seed': seed, 'run_id': 1, 'head_sha': REVIEW.FRESH_HEAD,
+                'seed': seed, 'run_id': 1, 'head_sha': head,
                 'stage': 'main', 'runner': 'study'}
                for collector in ('obi', 'deepflow', 'coroot')
                for system in ('deathstarbench', 'otel_demo', 'petclinic')
@@ -1379,15 +1380,16 @@ def test_deepflow_closure_rejects_inconsistent_saved_sources(tmp_path: Path, pro
 @pytest.mark.parametrize("controller,smoke,valid", [("clean-study", False, True),
                                                    ("legacy", False, False),
                                                    ("clean-study", True, False)])
+@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD])
 def test_fresh_compact_binds_actual_clean_main_status(
-        tmp_path: Path, controller: str, smoke: bool, valid: bool) -> None:
+        tmp_path: Path, controller: str, smoke: bool, valid: bool, head: str) -> None:
     declaration, compact, _ = fixture(tmp_path)
-    declaration["head_sha"] = REVIEW.FRESH_HEAD
+    declaration["head_sha"] = head
     status = json.loads((compact / "status.json").read_text())
-    status.update(commit=REVIEW.FRESH_HEAD, controller=controller, smoke=smoke)
+    status.update(commit=head, controller=controller, smoke=smoke)
     write(compact / "status.json", status)
     manifest = json.loads((compact / "evaluation-manifest.json").read_text())
-    manifest["commit"] = REVIEW.FRESH_HEAD
+    manifest["commit"] = head
     manifest["files_sha256"]["status.json"] = digest(compact / "status.json")
     write(compact / "evaluation-manifest.json", manifest)
     if valid:

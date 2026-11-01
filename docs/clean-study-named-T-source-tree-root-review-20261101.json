@@ -1,0 +1,204 @@
+{
+  "recorded_utc": "2026-11-01T00:52:51.911995+00:00",
+  "status": "Exact merged source/core/tree and final Linux CI qualified; consumer CI and capture execution decision remain separate",
+  "anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "anchor_entries": 2129,
+  "candidate_entries": 2132,
+  "changed_entries": {
+    ".github/workflows/diagnose-dsb-training-checkpoint-v4.yml": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "14da5cec8cb0275d799ca6aab2305c6ac4fc9ad7"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7fa61ce470cc4a8ff6346dafb402ebabdb3b9d37"
+      }
+    },
+    ".github/workflows/series-v5.yml": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ce93538832937e296a01911f2f3b3e851bd3ceb2"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "5546ce9214eead4e07dae0e8ed50828153f6e6e4"
+      }
+    },
+    ".github/workflows/toolchain-worker-v4.yml": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0d33edba77685911fd49b4e963d7e655dfe17ae2"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4b833fed808c6701426d758bb3b9feb84e81cfa1"
+      }
+    },
+    "docs/IMMUTABLE_PATH_PREPARATION_V5.md": {
+      "anchor": null,
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "04d2c2ce314b4547723746019cf962a7837452d1"
+      }
+    },
+    "docs/WORKER_PACKAGING_V5.md": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6d162d4b0cd3e02a1bc1c1118d2997aee4fb7a77"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c270e8e4a2fb48f6d17c4dc0a334b99743d50f94"
+      }
+    },
+    "scripts/check-fixed-dsb-path-preparation-v5.py": {
+      "anchor": null,
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c0422ee45523be1954cc38422bb64d35083e8b18"
+      }
+    },
+    "src/ebpf_discovery/raw_v4.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "759a62b148f87b1a89611bd0dd50ba02d6d229ba"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8d964d7dc969a922f9ab1701f371eed5ea190321"
+      }
+    },
+    "src/ebpf_discovery/remote_toolchain_v4.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a46e16b4f5fad1e4942a5441042862758743887b"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89"
+      }
+    },
+    "src/ebpf_discovery/store_v5.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "65db6a2eb403c1f2a0e8a94770bfeb65720c2ffd"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6569299a8a0a31f2ded3781433045ba303ae097a"
+      }
+    },
+    "src/ebpf_discovery/toolchain_v4.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "02bde9a76ca50ed7c9ad485dc30ca673b31c74a9"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b8b4c635952b5d0e72d436951df2463b38f28105"
+      }
+    },
+    "tests/test_fixed_path_preparation_comparison_v5.py": {
+      "anchor": null,
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "cad466c8affd8f72d1611c93d6784fcb9585b079"
+      }
+    },
+    "tests/test_identity_projection_v5.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "075e0e1f17dcf2dc1c0174255141335ca23ac006"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "40227ccf66fe6e118e7dd74f87f97ddbfb037c66"
+      }
+    },
+    "tests/test_remote_toolchain_v4.py": {
+      "anchor": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "d5a6a546c5ef7285ac5dcc7f706464a59e4484df"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "a14d76277d9179123a912c4106cee317803c77b2"
+      }
+    }
+  },
+  "added_entries": [
+    "docs/IMMUTABLE_PATH_PREPARATION_V5.md",
+    "scripts/check-fixed-dsb-path-preparation-v5.py",
+    "tests/test_fixed_path_preparation_comparison_v5.py"
+  ],
+  "identical_remaining_entries": 2119,
+  "real_changed_core_entries": {
+    "src/ebpf_discovery/raw_v4.py": {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d964d7dc969a922f9ab1701f371eed5ea190321"
+    },
+    "src/ebpf_discovery/remote_toolchain_v4.py": {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89"
+    },
+    "src/ebpf_discovery/store_v5.py": {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6569299a8a0a31f2ded3781433045ba303ae097a"
+    },
+    "src/ebpf_discovery/toolchain_v4.py": {
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b8b4c635952b5d0e72d436951df2463b38f28105"
+    }
+  },
+  "root_original_design_GO": "One named final merged revision in existing source checks, exact13 changed Git entries/modes plus4realcore blobs and all remaining entries equal anchor. Bind actual fixed-input equivalence run/artifact/digest/bothactualGO, mergedsource same testedcore and finalCI. N/M/S operational registry unchanged; strict reader4profiles/counts/trials/model/report/freeze/outcomes untouched.",
+  "skeptic_original_design_GO": "Explicit separate skeptic design GO received in current dialog before implementation; actual-code/finalsource/execution GO remains separate.",
+  "original_criterion": "All81/10operations actual eBPF to Bering to Sheaft to independent outcomes with missing SDK traces. Same information/semantics/direct law, no cost-superiority requirement.",
+  "strongest_baseline": "Original A/S with the same frozen observations and literal old function; direct predicate law equivalent. New admission must not call real algorithm changes operational-only.",
+  "causal_mechanism": "Avoid discarded deep copies and repeated immutable path resolution. End-to-end benefit unproven until actual runs; no intrinsic collector speed ranking.",
+  "pending": [
+    "consumer exact Linux CI",
+    "separate frozen failure-only capture source/capacity/critical-path execution review"
+  ],
+  "costs": "All original/failed/cancelled/Srecoveries, old/new comparisons, failed profiles, preparation/CI/review/transfer/retention costs retained; human unknown.",
+  "revision": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+  "git_tree": "cbdf25b1277ec47e573d95f716e7cc366af49860",
+  "tested_core_source": "7df056aee51ae0113626fac9e72ca673e2515d96",
+  "offline_artifact": {
+    "id": 13063339858,
+    "run_id": 41255795362,
+    "bytes": 29138334,
+    "digest": "sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c"
+  },
+  "root_actual_core_and_tree_GO": true,
+  "final_CI_run": 41258526474,
+  "final_CI_success_not_yet_claimed": false,
+  "final_CI_success": true
+}

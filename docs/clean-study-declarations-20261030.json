@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Fixed main reader qualified on actual fixed3 at41240585632; first56 completed packets under identical strict review41254802097. All81 unfinished. Path-cache preparation equivalence passed both actual reviews, observed6473.154799267 to5587.452157557 seconds; no six-hour repair demonstrated. Exact two pruned JSON copies now undergoing full old-prefix comparison41255795362. New source not admitted to fresh captures. DF healthy carrier cutover question pending; no cancellation. Unknown/adverse results retained; no ML or cost-superiority hypothesis.",
+  "main_dispatch_status": "57 unique technically complete MAIN packets:OBI27,Coroot27,DF3. First56 strict saved review41254802097 continues; first9DSB and first4OTel have both metadata+representative-literal reviews, no81admission. PR14 merged actualT06d7: full saved prefix preparation6473.154799267\u21921141.882265196s with exactinputs; source/tree/CI qualified, named consumer code bothGO+187root/179independent tests, consumerCI/freshcapture execution still separate. SOTelabs6/7/8 recoveries run after actual disk/losthost failures. Original DFhealthy carrier cutover question pending, no cancellation. Unknown/adverse valid; no ML or cost-superiority hypothesis.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2130,6 +2130,19 @@
         }
       ],
       "note": "Exact technical lost-host replacement of original A parent41164824120 job124430030953. Qualified S scientific source equivalence and one fresh-host recovery; precise lost-host cause unknown; no T cache admission or healthy cancellation. Keep original training13061227041, failed acquisition and all setup/worker/transfer/review/archive costs; human effort unknown."
+    },
+    {
+      "run_id": 41258000031,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Exact technical lost-host replacement of original A parent41164824120 job124430030985. Qualified S scientific source equivalence and one fresh-host recovery; precise lost-host cause unknown; no T cache admission or healthy cancellation. Keep original training13061795612, failed acquisition and all setup/worker/transfer/review/archive costs; human effort unknown."
     }
   ],
   "related_runs": [
@@ -4046,12 +4059,38 @@
     {
       "run_id": 41255795362,
       "role": "evidence",
-      "note": "One unprofiled fixed full7 comparison at7df056a, original A prefix and actual old worker baseline. Same exact655input/18entry proof contract; no new traffic, graph fitting, scoring or fresh source admission. Keep first offline comparison and both failed profiling costs."
+      "note": "One unprofiled fixed full7 comparison at7df056a, original A prefix and actual old worker baseline. Same exact655input/18entry proof contract; no new traffic, graph fitting, scoring or fresh source admission. Keep first offline comparison and both failed profiling costs.",
+      "actual_review": "Full input/core equivalence root+skeptic actualGO:655inputfiles/647byte-exact/18entryproofs. Original6473.154799267s,new1141.882265196s; no six-hour closure or scientific success claim. Actual merged T separately admitted via named13blob/fourcore record."
     },
     {
       "run_id": 41256152140,
       "role": "archive",
       "note": "Exact16 terminal tail,105 unchanged originals156482746556B, disjoint prior446 archived runs. Includes all90 Coroot main originals. Existing qualified disk/hash/chunk/reassembly/remote ledger code. Retention only; all actual costs kept, publication and independent closure still due."
+    },
+    {
+      "run_id": 41258385155,
+      "role": "preparation",
+      "note": "Exact bfed PR14 final documentation/core-preserving Linux CI, actual success. All preparation costs retained; API interval is not CPU/billed, human unknown."
+    },
+    {
+      "run_id": 41258382471,
+      "role": "preparation",
+      "note": "Exact bfed PR14 final documentation/core-preserving Linux CI, actual success. All preparation costs retained; API interval is not CPU/billed, human unknown."
+    },
+    {
+      "run_id": 41258526474,
+      "role": "preparation",
+      "note": "Exact merged algorithm sourceT06d7 Linux CI, actual success; real source identity preserved. All preparation costs retained; API interval is not CPU/billed, human unknown."
+    },
+    {
+      "run_id": 41256810211,
+      "role": "preparation",
+      "note": "Analysis4571 evidence/recovery documentation Linux CI, actual success. All preparation costs retained; API interval is not CPU/billed, human unknown."
+    },
+    {
+      "run_id": 41256806387,
+      "role": "preparation",
+      "note": "Analysis4571 evidence/recovery documentation Linux CI, actual success. All preparation costs retained; API interval is not CPU/billed, human unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4078,5 +4117,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T00:09:05.450801+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T01:00:33.670301+00:00"
 }

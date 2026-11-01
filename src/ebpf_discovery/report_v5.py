@@ -76,8 +76,52 @@ PREPARATION_ONLY_SOURCE_REVISIONS = {
 }
 
 
+# This one algorithm revision has a complete actual saved-input equivalence
+# proof. Keep it separate from the operational-only N/M/S registry above.
+IMMUTABLE_PATH_SOURCE = {
+    'anchor': '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
+    'revision': '06d7d52bfa4b7768a4cabf02f4e66f109b3a9492',
+    'tested_source': '7df056aee51ae0113626fac9e72ca673e2515d96',
+    'input_equivalence': {
+        'run_id': 41255795362, 'artifact_id': 13063339858,
+        'artifact_digest': 'sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c',
+        'input_files': 655, 'byte_exact_files': 647, 'entry_evidence_hashes': 18,
+        'root_and_independent_actual_original_GO': True,
+    },
+    'changed_core_blobs': {
+        'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+        'src/ebpf_discovery/remote_toolchain_v4.py': '627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89',
+        'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+        'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105',
+    },
+    'added_paths': {
+        'docs/IMMUTABLE_PATH_PREPARATION_V5.md',
+        'scripts/check-fixed-dsb-path-preparation-v5.py',
+        'tests/test_fixed_path_preparation_comparison_v5.py',
+    },
+    'reviewed_changed_blobs': {
+        '.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': '7fa61ce470cc4a8ff6346dafb402ebabdb3b9d37',
+        '.github/workflows/series-v5.yml': '5546ce9214eead4e07dae0e8ed50828153f6e6e4',
+        '.github/workflows/toolchain-worker-v4.yml': '4b833fed808c6701426d758bb3b9feb84e81cfa1',
+        'docs/IMMUTABLE_PATH_PREPARATION_V5.md': '04d2c2ce314b4547723746019cf962a7837452d1',
+        'docs/WORKER_PACKAGING_V5.md': 'c270e8e4a2fb48f6d17c4dc0a334b99743d50f94',
+        'scripts/check-fixed-dsb-path-preparation-v5.py': 'c0422ee45523be1954cc38422bb64d35083e8b18',
+        'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+        'src/ebpf_discovery/remote_toolchain_v4.py': '627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89',
+        'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+        'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105',
+        'tests/test_fixed_path_preparation_comparison_v5.py': 'cad466c8affd8f72d1611c93d6784fcb9585b079',
+        'tests/test_identity_projection_v5.py': '40227ccf66fe6e118e7dd74f87f97ddbfb037c66',
+        'tests/test_remote_toolchain_v4.py': 'a14d76277d9179123a912c4106cee317803c77b2',
+    },
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
-    approved = PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision)
+    algorithm = (anchor == IMMUTABLE_PATH_SOURCE['anchor']
+                 and revision == IMMUTABLE_PATH_SOURCE['revision'])
+    approved = (IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs'] if algorithm else
+                PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
     if not approved or anchor_tree.get('truncated') is not False or revision_tree.get('truncated') is not False:
         raise ValueError('unreviewed preparation source or incomplete Git tree')
 
@@ -93,9 +137,19 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             != {k: v for k, v in prepared.items() if k not in approved}):
         raise ValueError('preparation revision changes scientific source or file modes')
     for path, blob in approved.items():
-        if (path not in original or prepared.get(path)
+        added = algorithm and path in IMMUTABLE_PATH_SOURCE['added_paths']
+        if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
-            raise ValueError('preparation revision differs from reviewed workflow blobs')
+            raise ValueError('preparation revision differs from reviewed source blobs')
+    if algorithm:
+        return {'anchor': anchor, 'revision': revision,
+                'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+                'evidence_kind': 'actual_immutable_prefix_input_equivalence',
+                'tested_source': IMMUTABLE_PATH_SOURCE['tested_source'],
+                'reviewed_changed_blobs': approved,
+                'changed_core_blobs': IMMUTABLE_PATH_SOURCE['changed_core_blobs'],
+                'input_equivalence': IMMUTABLE_PATH_SOURCE['input_equivalence'],
+                'identical_remaining_entries': len(set(original) - set(approved))}
     return {'anchor': anchor, 'revision': revision,
             'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
             'approved_operational_blobs': approved,
@@ -645,6 +699,8 @@ def build(
         })
     common_head = declarations.get('experiment_head')
     compatible_heads = {common_head, *PREPARATION_ONLY_SOURCE_REVISIONS.get(common_head, {})}
+    if common_head == IMMUTABLE_PATH_SOURCE['anchor']:
+        compatible_heads.add(IMMUTABLE_PATH_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
@@ -1003,6 +1059,9 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
         if prepared:
             lines += ['The reviewed runner/guest preparation revision(s) `' + '`, `'.join(prepared) +
                       '` also use this scientific implementation. The reporting workflow verifies their exact approved operational blobs and all unchanged Git entries; actual source commits remain visible in every row. See `provenance/source-equivalence.json`.']
+        if payload['declarations']['experiment_head'] == IMMUTABLE_PATH_SOURCE['anchor']:
+            lines += ['The separately reviewed algorithm revision `' + IMMUTABLE_PATH_SOURCE['revision'] +
+                      '` changes four preparation core files. The separate record in `provenance/source-equivalence.json` verifies its exact Git entries and binds the complete saved-input proof artifact by ID and digest. Actual source and timings remain visible; shorter preparation changes guest idle age and does not identify intrinsic collector speed or causal accuracy.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:
