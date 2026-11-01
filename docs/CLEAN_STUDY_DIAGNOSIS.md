@@ -63,6 +63,27 @@ They are retained separately from graph availability in the
 [historical runtime diagnosis](OTEL_RUNTIME_LIMITS_V5.md). Neither the semantic
 fix nor a technical smoke establishes the cause of those application failures.
 
+## DSB: HTTP acknowledgement can conceal a backend error
+
+A read-only audit of the pinned upstream source found a concrete boundary defect:
+the generated Lua `recv_ComposePost` parses a declared `ServiceException` into
+`result.se`, then returns without checking it. The HTTP handler uses `pcall`
+status and can therefore acknowledge a backend error as success. Pinned C++
+awaits the upload futures; selected user-timeline MongoDB write failures throw.
+The HTTP acknowledgement is consequently insufficient evidence of a saved post.
+
+One additional original full/6 Docker metadata member observes the selected
+user-timeline MongoDB stopped after the DB-down calls and before restore; the
+different post-storage MongoDB remains running. This narrows the former
+physical-state uncertainty for that phase only. It does not prove continuous
+state for all calls or the contents of their actual Thrift replies. The prebuilt
+backend image has no established build-source attestation here. Keep the direct
+DB prediction 0 and measured 7/7 acknowledgements unchanged; do not infer cache
+or asynchronous behaviour, rescore outcomes, or repair this application during
+the fixed comparison. Exact source hashes, phase ordering, member SHA/CRC and
+limits are in the [root audit](clean-study-DSB-HTTP-ack-root-audit-20261101.json)
+and [independent audit](clean-study-DSB-HTTP-ack-independent-audit-20261101.json).
+
 ## DSB: complete saved-prefix evidence for all three collectors
 
 [Audit run 41097340456](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41097340456)

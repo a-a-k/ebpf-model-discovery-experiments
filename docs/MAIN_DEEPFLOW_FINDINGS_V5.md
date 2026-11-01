@@ -82,11 +82,26 @@ remained unavailable. All 20 probe operations succeeded in each condition. This
 zero-impact agreement does not demonstrate an added database-fault prognostic
 benefit. An available binding flag alone does not establish a saved simulation:
 the eBPF network binding had such a flag but no available operation forecast.
-The recorded `db_down` phase also has 7/7 compose successes against the direct
-database prediction of 0. These selected facts do not independently establish
-the MongoDB container's physical state during the probes. Retain the discrepancy
-and this intervention-evidence limit; neither a proved contract failure nor a
-cache or asynchronous-completion explanation follows from it.
+The recorded `db_down` phase also has 7/7 compose HTTP acknowledgements against
+the direct database prediction of 0. A subsequent bounded audit of the original
+full/6 packet confirms that the selected **user-timeline MongoDB** was stopped
+after these requests and before restore; the separate post-storage MongoDB was
+running. This is one phase-end observation, not continuous proof for every
+request or evidence for all repetitions.
+
+The pinned generated Lua client parses a declared `ServiceException` into
+`result.se` but `recv_ComposePost` never checks or raises it. The HTTP handler
+therefore can return its success acknowledgement after a declared backend
+error. Pinned C++ awaits the upload futures and the selected MongoDB write path
+throws on failure: neither cache use nor asynchronous completion is needed to
+explain this source-level acknowledgement gap. The measured HTTP success does
+not prove a successful database write. Actual reply structs were not inspected,
+and the prebuilt backend image lacks a demonstrated build-source attestation;
+this is not a complete causal trace of the seven replies. Preserve the original
+prediction and 7/7 outcomes, without retroactive rescoring or application fixes.
+The [root audit](clean-study-DSB-HTTP-ack-root-audit-20261101.json) and
+[independent audit](clean-study-DSB-HTTP-ack-independent-audit-20261101.json)
+record the exact source, original metadata member and limits.
 
 The equal-information direct-contract baseline supplied all three primary
 predictions, 0.875/1/0.875. No discovery or total-effort advantage follows from
