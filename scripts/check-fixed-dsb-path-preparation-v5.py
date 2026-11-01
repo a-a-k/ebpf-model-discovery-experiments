@@ -30,6 +30,7 @@ EXPECTED = {
     'training_index_proof_sha256': '8a7fcacb6207a9a58066e0754438cf3fd316112b675044b684e7ba008b663877',
 }
 CORE_BLOBS = {
+    'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
     'src/ebpf_discovery/remote_toolchain_v4.py': '627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89',
     'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
     'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105',
