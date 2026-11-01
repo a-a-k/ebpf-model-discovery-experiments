@@ -17,7 +17,7 @@ from ebpf_discovery.compact_transport_v5 import (
 from ebpf_discovery.report_v5 import (
     build, render, resolve_evaluation_reference,
     PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
-    UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE,
+    UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
 )
 
 
@@ -680,7 +680,7 @@ def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
         build([], declarations, tmp_path/'report')
 
 
-@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision']])
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision'], PETCLINIC_WORKER_SOURCE['revision']])
 def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
     _, old = summary(tmp_path/'inputs', 31, 'main', head_sha='b' * 40)
@@ -701,7 +701,7 @@ def test_prepared_source_preserves_both_identities_and_excludes_other_versions(t
     assert restored(report, first) == old and restored(report, second) == current
 
 
-@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision']])
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision'], PETCLINIC_WORKER_SOURCE['revision']])
 def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path, prepared):
     anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
     summary(tmp_path/'inputs', 33, 'main', head_sha=anchor)
@@ -752,6 +752,7 @@ def test_preparation_equivalence_checks_exact_git_entries(mutation, revision):
     (UPLOADED_CHECKPOINT_COPY_SOURCE, 'src/ebpf_discovery/remote_toolchain_v4.py'),
     *[(CLOSED_FINAL_SNAPSHOT_SOURCE, path) for path in CLOSED_FINAL_SNAPSHOT_SOURCE['changed_core_blobs']],
     *[(STREAMED_CHECKPOINT_SOURCE, path) for path in STREAMED_CHECKPOINT_SOURCE['changed_core_blobs']],
+    *[(PETCLINIC_WORKER_SOURCE, path) for path in PETCLINIC_WORKER_SOURCE['changed_core_blobs']],
 ])
 @pytest.mark.parametrize('mutation', ['none', 'extra_science', 'added_file', 'deleted_file',
                                      'changed_core', 'core_mode', 'missing_added', 'truncated', 'unknown_head'])
@@ -778,8 +779,15 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, 
     revision = 'd' * 40 if mutation == 'unknown_head' else profile['revision']
     if mutation == 'none':
         facts = _preparation_equivalence_facts(profile['anchor'], revision, original, prepared)
-        if profile is STREAMED_CHECKPOINT_SOURCE:
-            assert facts['evidence_kind'] == 'actual_lossless_checkpoint_proof_encoding_and_storage'
+        if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE:
+            expected_kind = ('existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
+                             if profile is PETCLINIC_WORKER_SOURCE else
+                             'actual_lossless_checkpoint_proof_encoding_and_storage')
+            assert facts['evidence_kind'] == expected_kind
+            if profile is PETCLINIC_WORKER_SOURCE:
+                assert facts['existing_worker_placement']['code_tested_source'] == PETCLINIC_WORKER_SOURCE['revision']
+                assert facts['existing_worker_placement']['actual_PC_worker_import_and_independent_outcomes_required_for_case_GO'] is True
+                assert facts['existing_worker_placement']['actual_PC_case_or_whole_study_success_claimed'] is False
             assert facts['tested_source'] == STREAMED_CHECKPOINT_SOURCE['revision']
             assert facts['proof_encoding_equivalence']['artifact_id'] == 13091257133
             assert facts['proof_encoding_equivalence']['ordered_equal_records'] == 828668
@@ -811,7 +819,7 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, 
         else:
             assert facts['evidence_kind'] == 'actual_immutable_prefix_input_equivalence'
         assert facts['identical_remaining_entries'] == 1
-        assert len(facts['changed_core_blobs']) == (7 if profile is STREAMED_CHECKPOINT_SOURCE else 6 if profile is CLOSED_FINAL_SNAPSHOT_SOURCE else 4)
+        assert len(facts['changed_core_blobs']) == (7 if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE else 6 if profile is CLOSED_FINAL_SNAPSHOT_SOURCE else 4)
         assert 'approved_operational_blobs' not in facts
     else:
         with pytest.raises(ValueError):

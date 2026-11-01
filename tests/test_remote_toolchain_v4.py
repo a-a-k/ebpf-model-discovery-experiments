@@ -368,7 +368,8 @@ def test_artifact_get_retries_headers_but_never_partial_body(tmp_path, monkeypat
 
 @pytest.mark.parametrize("system,fail_import,collector", [("otel_demo", False, None),
     ("deathstarbench", False, None), ("deathstarbench", True, None),
-    ("deathstarbench", False, "obi")])
+    ("deathstarbench", False, "obi"),
+    ("petclinic", False, "deepflow"), ("petclinic", True, "deepflow")])
 def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch, system, fail_import, collector):
     class Ctx:
         out = tmp_path / "campaign"
@@ -448,8 +449,10 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
     monkeypatch.setattr(remote.time, "sleep", sleeps.append)
     if fail_import:
         original_replace = os.replace
+        staged_name = ("staged-worker-output-unpacked" if system == "deathstarbench"
+                       else "staged-worker-output")
         def fail_final_import(source, destination):
-            if Path(source).name == "staged-worker-output-unpacked" and Path(destination).name == "worker":
+            if Path(source).name == staged_name and Path(destination).name == "worker":
                 raise OSError("injected import rename failure")
             return original_replace(source, destination)
         monkeypatch.setattr(remote.os, "replace", fail_final_import)
@@ -457,7 +460,10 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
             remote.forecast_on_worker(Campaign(), tmp_path / "checkpoint", {}, [])
         evidence = Ctx.out / "infrastructure/remote-toolchain-v4"
         assert (evidence / "worker-output.zip").is_file()
-        assert (evidence / "staged-worker-output/payload.tar.gz").is_file()
+        if system == "deathstarbench":
+            assert (evidence / "staged-worker-output/payload.tar.gz").is_file()
+        else:
+            assert (evidence / staged_name / "output-manifest.json").is_file()
         assert not (Ctx.out / "toolchain").exists()
         assert not (evidence / "parent-import.json").exists()
         return

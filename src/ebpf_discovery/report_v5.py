@@ -272,6 +272,31 @@ STREAMED_CHECKPOINT_SOURCE = {'anchor': '0c98bf4520e863ab021b60d00517ee2aa49ab38
                             'tests/test_uploaded_checkpoint_copy_release.py': 'cde25145c6ad39ecc7136d909fbac45156812348'}}
 
 
+PETCLINIC_WORKER_SOURCE = {
+    **STREAMED_CHECKPOINT_SOURCE,
+    'revision': '0565115511b24db1d6bbe71e98784baded772144',
+    'parent_revision': STREAMED_CHECKPOINT_SOURCE['revision'],
+    'reviewed_changed_blobs': {
+        **STREAMED_CHECKPOINT_SOURCE['reviewed_changed_blobs'],
+        '.github/workflows/series-v5.yml': '952d42a430e171319d01ab3f5d98299b1832e8bd',
+        'tests/test_remote_toolchain_v4.py': 'e98a8296e1ef16b05b343ce1a5496fdc30bb53f1',
+    },
+    'existing_worker_placement': {
+        'code_tested_source': '0565115511b24db1d6bbe71e98784baded772144',
+        'CI_run_id': 41340135875,
+        'CI_conclusion': 'success',
+        'same_existing_PC_declaration_ToolchainV5_StoreV5_plans_and_binaries': True,
+        'all_production_Python_and_app_code_identical_to_streamed_source': True,
+        'existing_immutable_worker_preparation_and_GOMEMLIMIT_12GiB_retained': True,
+        'same_program_and_input_equivalence_root_and_independent_original_GO': True,
+        'extra_full_model_qualification_run_required': False,
+        'actual_PC_worker_import_and_independent_outcomes_required_for_case_GO': True,
+        'actual_PC_case_or_whole_study_success_claimed': False,
+        'whole_case_speedup_or_SIGTERM_cause_proven': False,
+    },
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -283,6 +308,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = CLOSED_FINAL_SNAPSHOT_SOURCE
         elif revision == STREAMED_CHECKPOINT_SOURCE['revision']:
             profile = STREAMED_CHECKPOINT_SOURCE
+        elif revision == PETCLINIC_WORKER_SOURCE['revision']:
+            profile = PETCLINIC_WORKER_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -305,10 +332,12 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
         if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
-    if profile is STREAMED_CHECKPOINT_SOURCE:
+    if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE:
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
-                'evidence_kind': 'actual_lossless_checkpoint_proof_encoding_and_storage',
+                'evidence_kind': ('existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
+                                  if profile is PETCLINIC_WORKER_SOURCE else
+                                  'actual_lossless_checkpoint_proof_encoding_and_storage'),
                 'tested_source': profile['tested_source'],
                 'parent_revision': profile['parent_revision'],
                 'parent_input_equivalence_tested_source': IMMUTABLE_PATH_SOURCE['tested_source'],
@@ -319,6 +348,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 'final_snapshot_proof': CLOSED_FINAL_SNAPSHOT_SOURCE['final_snapshot_proof'],
                 'storage_lifetime_proof': profile['storage_lifetime_proof'],
                 'proof_encoding_equivalence': profile['proof_encoding_equivalence'],
+                **({'existing_worker_placement': profile['existing_worker_placement']}
+                   if profile is PETCLINIC_WORKER_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -911,6 +942,7 @@ def build(
         compatible_heads.add(UPLOADED_CHECKPOINT_COPY_SOURCE['revision'])
         compatible_heads.add(CLOSED_FINAL_SNAPSHOT_SOURCE['revision'])
         compatible_heads.add(STREAMED_CHECKPOINT_SOURCE['revision'])
+        compatible_heads.add(PETCLINIC_WORKER_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
@@ -1278,6 +1310,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
                       '` adds shared-inode final snapshots after positive per-node producer termination. Actual storage qualification run 41296733012 (artifact 13079348283) compares the literal original copy with links on retained prefixes from both guests: identical initial filesystems, full raw bytes and original snapshot manifests. This is a closed replay of saved live prefixes, not reconstruction of the failed final source or a whole-case capacity, zero-loss or study-success claim. Original source modes remain; linked snapshot modes follow the source rather than the old copy mode 0600. T input-equivalence and U checkpoint-release proofs retain their original tested-source attribution.']
             lines += ['The exact lossless checkpoint source `' + STREAMED_CHECKPOINT_SOURCE['revision'] +
                       '` retains all 828,668 ordered audit records and all 86,527 original payload/SQL input proofs in actual qualification 41321994264 (artifact 13091257133). Its 51,225,433-byte manifest references a retained 792,183,147-byte JSONL payload. The C duplicate-lifetime proof remains attributed to source c1369df and run 41313534176; guest whole blobs and the parent release/caller functions are inherited exactly, while the remote module also adds JSONL validation. Component memory measurements and fixed-order/pagecache/extra-legacy-validation/cleanup boundaries do not establish whole-case speed, capacity or scientific success. The full exact Git profile and inherited T/U/V proofs remain in `provenance/source-equivalence.json`.']
+            lines += ['The exact existing-worker source `' + PETCLINIC_WORKER_SOURCE['revision'] +
+                      '` routes Petclinic models through the already implemented closed-prefix worker. All production Python, application declarations, observations, model code and binaries remain identical to f7ba801; the only producer changes are one routing line and PC atomic-import fixtures. Its source-specific Git profile and Linux CI establish this operational placement, not a new model or observed speedup. Inherited JSONL/storage qualifications retain their actual f7ba801/c1369df/T/U/V tested sources. Each PC case still requires actual retained worker import and independent outcomes.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:

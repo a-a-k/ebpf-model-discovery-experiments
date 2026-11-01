@@ -186,7 +186,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SELECTED_COLLECTOR: ${{ inputs.collector }}
           SELECTED_STAGE: ${{ inputs.stage }}
-          TOOLCHAIN_EXECUTION: ${{ (matrix.system == 'otel_demo' || matrix.system == 'deathstarbench') && 'worker' || 'local' }}
+          TOOLCHAIN_EXECUTION: worker
         run: |
           smoke_args=()
           if [[ "$SELECTED_STAGE" == smoke ]]; then smoke_args+=(--smoke); fi

@@ -1,0 +1,134 @@
+{
+  "recorded_before_implementation_utc": "2026-11-01T19:06:50.198956+00:00",
+  "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+  "original_existing_PC_worker_placement_design_GO": true,
+  "root_design": "work\\PC-existing-worker-placement-original-design-20261101.json",
+  "root_design_sha256": "56991b7addf385b8126d50d0f4fc99fd0bf135408971d6e6b9a60ea23cc2ef18",
+  "original_criterion": "Finish originalfixed81/all10operations/3collectors/allSDKmodes/3seeds/4methods/2views/full34800primary9600targets/100000trials/2independentguestkernels. ActualeBPF->Bering->Sheaft->independentappoutcomes; no ML/costsuperiority or weakerdemo.",
+  "intended_contribution": "Repair measured parent resource contention while preserving full original scientific computation/information. A technical execution placement change, not a new inference method.",
+  "strongest_simple_baseline": "Use the ALREADY existing Study toolchain_execution=worker branch with the same closed uploaded checkpoint and same existing ToolchainV5.forecast, as already used for OTel/DSB. Keep app guests on parent and heavy Bering/Sheaft on existing dedicated worker. No newrunner/cache/schema/retry/profiler or reducedinput/workload.",
+  "causal_mechanism": "Move the already existing heavy Bering/Sheaft forecast path from the16GB parent allocation holding two live guest VMs to the existing separate Actions worker allocation. This removes that same inference process from demonstrated parent co-residence, while keeping application guests and original workload/observer protocol on their parent. It is known execution reuse, not a new inference method or research hypothesis.",
+  "actual_evidence": {
+    "failed_job": 124430032803,
+    "parent": 41164824120,
+    "source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "end": "2026-11-01T18:46:22Z",
+    "step_exit": 143,
+    "exact_log_error": "The runner has received a shutdown signal. This can happen when the runner service is stopped, or a manually started runner is canceled.",
+    "resource_sample": "2026-11-01T18:46:07.500854585Z",
+    "mem_available_KiB": 247472,
+    "mem_total_KiB": 16367524,
+    "swap_total_KiB": 11534328,
+    "swap_free_KiB": 835784,
+    "bering_RSS_KiB": 8069868,
+    "qemu_RSS_KiB": [
+      4689296,
+      2369892
+    ],
+    "oom_kill_counter": 0,
+    "interpretation": "Severe RAM/swap pressure and co-resident Bering+2VM demonstrated. Physical origin of SIGTERM is NOT provenOOM/provideroutage; do not claim that.",
+    "selected_connector_log_tail": "work\\A-PC-partial8-actual-failure-20261101\\connector-selected-last200-log-lines.txt",
+    "selected_tail_sha256": "bde59f1ef13cca54b58dff992dd07a4c5e0523e2d96ca2d780725d32a0235e5e",
+    "connector_full_decoded_log_characters": 1133702,
+    "full_original_log_octets_or_archive_SHA_locally_verified": false
+  },
+  "actual_evidence_independent_checks": {
+    "work\\A-PC-partial8-actual-failure-20261101\\annotations-api.json": "723e7620cb7659fc3d04389641ee0f00596f0657e63a601d818146353a112144",
+    "work\\A-PC-partial8-actual-failure-20261101\\connector-selected-last200-log-lines.txt": "bde59f1ef13cca54b58dff992dd07a4c5e0523e2d96ca2d780725d32a0235e5e",
+    "work\\A-PC-partial8-actual-failure-20261101\\job-api.json": "7f1ab1a808f2d7b27cbf0ad60392b28ba6fcf5f3fde21839adb15f10ea530a32",
+    "work\\A-PC-partial8-actual-failure-20261101\\selected-original-artifacts-api.json": "5c5cf8ce6cf77598a1177182b3e0e92ac0c7b69cbb4bdbb448de2ef64f3e5219"
+  },
+  "physical_failure_cause_limit": "Actual tail proves severe available-memory/swap pressure, large Bering plus two QEMU RSS and increasing page-in/page-out/memory-stall metrics before shutdown143. OOM counter0 and absence of cgroup events do not prove OOM or a provider/manual shutdown origin. Do not name physicalSIGTERM cause, zero risk, six-hour cure, wholecase speedup or cost advantage.",
+  "exact_base_program_proof": [
+    {
+      "path": "src/ebpf_discovery/study.py",
+      "Git_blob": "52f13a0645d0965ad28b0e6911d0713731cfcc4f",
+      "GitLF_sha256": "1b3b2d81d7cd42d38a08d84980f659d74f53b53ace60064b0383bb0caac44852"
+    },
+    {
+      "path": "src/ebpf_discovery/checkpoint_v4.py",
+      "Git_blob": "50d7db510f5ee75c3485133b046df223b77baa74",
+      "GitLF_sha256": "79f0ba1c4dbff4f35a565b063e5dd1689b8ae8ba38b9a632ea1684c6d1601d9e"
+    },
+    {
+      "path": "src/ebpf_discovery/remote_toolchain_v4.py",
+      "Git_blob": "612948d7f7926357d1b77404d5191230ac1e8865",
+      "GitLF_sha256": "b90eb4c67064b460a43143c5273e0d0a18bc5fc48ea3ff580f18d96067e1c378"
+    },
+    {
+      "path": "src/ebpf_discovery/toolchain_v5.py",
+      "Git_blob": "9fd74d4abc3323ce1f08c99b358607f715de475c",
+      "GitLF_sha256": "a3fd85324e4fcd3eddb382fd66b88889d3a6c1959612d91f3b99301e5aebc429"
+    },
+    {
+      "path": "src/ebpf_discovery/toolchain_v4.py",
+      "Git_blob": "b8b4c635952b5d0e72d436951df2463b38f28105",
+      "GitLF_sha256": "f672c8cd407725e54313873db8c9653ac1a25f2835464f29b5b82ceefa32b061"
+    },
+    {
+      "path": "src/ebpf_discovery/store_v5.py",
+      "Git_blob": "6569299a8a0a31f2ded3781433045ba303ae097a",
+      "GitLF_sha256": "4202e788d0e032e9d392b48b69dd7313ed270f91267cfef0c575635e9e4869f7"
+    },
+    {
+      "path": "src/ebpf_discovery/bering_v4.py",
+      "Git_blob": "843c6d2aa01fefedc7ff21efc77b98bc12888a83",
+      "GitLF_sha256": "82a92bb3634e86a401e6bb22a756d3e251315b212e14e1f2531ce2475826a473"
+    },
+    {
+      "path": "systems/petclinic/experiment_v4.py",
+      "Git_blob": "8dcf8cf31dde8b402d77b2cc50b40cd3e6a757d6",
+      "GitLF_sha256": "f114f5b8d4b1378ec19522a47eecc5587b1b1b102d5302659da77c5697da1cf2"
+    },
+    {
+      "path": "systems/petclinic/adapter.py",
+      "Git_blob": "9593adff2ce9283833b4888044797321f92495e0",
+      "GitLF_sha256": "07fdc6591c4e9c0715416f4df192d65607b728f765a0fc525e7debb2c7d54a19"
+    },
+    {
+      "path": ".github/workflows/toolchain-worker-v4.yml",
+      "Git_blob": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+      "GitLF_sha256": "049f885a44857e79562e56473a578e5160cfc6a6f874c75c8d3e691f7ac0e0b9"
+    }
+  ],
+  "equivalence_review": [
+    {
+      "point": "same PC declaration",
+      "evidence": "Study.__init__ selects experiment_v4 for PC; worker execute_worker imports systems.<system>.experiment_v4. The declaration, all4contracts, aliases, database/replica semantics and driver planning remain exact same source. No expected graph, target label or new semantic information enters either arm."
+    },
+    {
+      "point": "same forecast program and scientific parameters",
+      "evidence": "Study.freeze local branch uses ToolchainV5(ctx,system,store,declaration).forecast(plans). Worker _checkpoint_toolchain selects the same ToolchainV5, same V5 pins and ObservationStoreV5 from validated graph-v5 collector provenance, then calls forecast(plans) with the same mode/seed/absolute root and supplied metadata. Same native envelope, shutdown publication, uncapped full observation population,100000trial analysis and seed. No new schema/model/algorithm."
+    },
+    {
+      "point": "same closed training input and immutable proof",
+      "evidence": "PC already creates/uploads a closed training prefix. Existing worker expected identity binds producer commit, parent/cell/attempt/request, prefix ID/digest/manifest/plans. All manifest files and entire logical SQLite proof are checked; checkpoint input is unchanged before/after compute. Restore uses exact original absolute root. Existing validated-immutable path preparation is a known equivalent path-resolution fastpath, with original reads and SHA checks retained; its actual T/U/V/S equivalence evidence remains separately attributed."
+    },
+    {
+      "point": "known operational differences explicitly retained",
+      "evidence": "Worker is a separate Actions allocation with read-only immutable store/pragmas, existing GOMEMLIMIT12GiB and GODEBUG=gctrace=1 for Bering children only. These are already qualified worker operational paths and do not alter model/source/count/trial/sampling parameters or impose a new experimental deadline. Keep actual environment/provenance/resource costs; do not claim identical runtime, model metadata timestamps or total effort."
+    },
+    {
+      "point": "same result import, freeze and independent outcome protocol",
+      "evidence": "Existing _verify_worker_output checks implementation/source, worker/cell/attempt/request/artifact/plans/SQL proof and exact complete output-file manifests, then atomically imports whole toolchain. Parent class fitting remains where it is; all models freeze before targets. Study continues the same34800primary/9600targets, real SDK modes, two independent guest kernels, state/DB/async checks and final capture/closure/evaluation. Missing/failing import remains technical failure, never a fabricated unavailable forecast or successful complete case."
+    },
+    {
+      "point": "saved-reader/report compatibility",
+      "evidence": "FULL_FIXED already selects generic parent-import, expected worker status/provenance/output/index proofs. full_facts validates worker facts whenever parent-import exists, with no PC exclusion; source equality is declaration producer head. Actual new PC worker scientific admission must include complete worker import proofs and independent targets. No requirement to rewrite reader architecture or weaken source/closure gates."
+    }
+  ],
+  "minimal_required_qualification_before_first_PC_worker_capture": {
+    "new_expensive_saved_PC_prefix_or_full_model_duplicate_job_required": false,
+    "reason": "No new forecast program, input projection, semantic selection or worker implementation is proposed. Existing full-file/SQL/input/output checks and mathematically same program/input plus separately actual-qualified generic worker paths settle placement semantics. A second full model run adds no necessary evidence for this one routing line. No fake binding of an oldA prefix to a future source commit is permitted.",
+    "required": "Freeze exact producer with only series-v5.yml TOOLCHAIN_EXECUTION=worker plus meaningful PC cases added to the existing atomic worker import/provenance fixture. Verify all production Python, apps, binaries and scientific parameters stay exact S. Run relevant existing study/remote-worker/immutable preparation fixtures and exact Linux CI. Independently review concrete source. Before POST, exact named new-source fullGit mode/type/blob/add/delete consumer admission, four saved-reader head sets and existing fresh-batch literal must remain strict, plus actual CI and exact one-failure-only execution review/fresh capacity. These are ordinary source/execution gates, not a new qualification framework.",
+    "actual_results_requirement": "The eventual PC8 attempt still needs actual worker identity/import and full original outcome/closure review; code/CI do not admit scientific success. All unknown/adverse complete outcomes stay valid and are not replayed."
+  },
+  "complete_comparable_costs": "Retain originalfailedPCprefix/parent/modelcosts+all otherattempts, currenthealthyS10/oldA untouched, and all newqualification/CI/extraActionsworker/transfer/download/hash/preparation/wait/archive/earlystop costs. Same suppliedsemanticinfo andinventory for everyarm, humanunknown. No walltime/costsuperiority promise. Parent waiting overlaps worker computation and must not be summed as independent sequentialCPU. Include the extra worker allocation/job, queue, checkpoint download/hash/restore/preparation/compute/upload, parent verification/import, and any new failures plus all retained old local Bering costs.",
+  "protected_scope": "All healthy S10 and remaining oldA PC jobs/queue remain untouched. No new capture, cancellation or model computation is authorized by this design record alone. Proposed workflow default applies generic placement consistently for future system arms; no previously complete case is rerun solely for placement.",
+  "allowed_next_implementation": "Only the concrete minimal workflow routing line and existing meaningful PC import/provenance test parameter additions, followed by strict named-source consumer maintenance necessary for that exact producer. No new runner type/cache/schema/framework/retry/profiler/class-fit relocation or algorithm.",
+  "actual_new_code_GO": false,
+  "new_capture_POST_GO": false,
+  "full81_scientific_success_GO": false,
+  "full81_still_required": true,
+  "source_edits_heavy_processing_POST_cancel_or_Telegram_by_reviewer": false
+}
