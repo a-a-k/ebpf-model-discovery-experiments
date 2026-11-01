@@ -221,6 +221,28 @@ def _validate_checkpoint(root: Path, expected: dict, *, allow_toolchain: bool = 
         permitted_extras.update(path for path in extras if Path(path).parts[0] == "toolchain")
     if extras - permitted_extras or allowed - present:
         raise ValueError("checkpoint contains unmanifested or missing files")
+    if "runtime_observation_dependencies_jsonl" in manifest:
+        from .checkpoint_v4 import RUNTIME_DEPENDENCIES_FILE
+        reference = manifest["runtime_observation_dependencies_jsonl"]
+        fields = {"relative_path", "bytes", "sha256", "records", "encoding"}
+        if ("runtime_observation_dependencies" in manifest
+                or not isinstance(reference, dict) or set(reference) != fields
+                or reference.get("relative_path") != RUNTIME_DEPENDENCIES_FILE
+                or reference.get("encoding") != "utf-8-jsonl"
+                or type(reference.get("records")) is not int or reference["records"] < 1
+                or type(reference.get("bytes")) is not int
+                or RUNTIME_DEPENDENCIES_FILE not in actual
+                or {key: reference[key] for key in ("bytes", "sha256")}
+                   != actual[RUNTIME_DEPENDENCIES_FILE]):
+            raise ValueError("invalid runtime observation JSONL reference")
+        count = 0
+        with (root / RUNTIME_DEPENDENCIES_FILE).open(encoding="utf-8", newline="") as stream:
+            for line in stream:
+                if not line.endswith("\n") or not isinstance(json.loads(line), dict):
+                    raise ValueError("invalid runtime observation JSONL record")
+                count += 1
+        if count != reference["records"]:
+            raise ValueError("runtime observation JSONL record count mismatch")
     return manifest, {"manifest_sha256": _sha(manifest_path), "files": actual}
 
 
