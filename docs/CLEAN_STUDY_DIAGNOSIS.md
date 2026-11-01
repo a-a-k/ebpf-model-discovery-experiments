@@ -259,6 +259,48 @@ The equally informed direct contract/inventory baseline remains the strong simpl
 comparison. SDK-only observations were captured with the collector co-running,
 so fullmode is not an agent-free SDK counterfactual. Unadmitted aliases remain
 rejection records; they are distinct from conflicting joint graph metadata.
-The complete matched81 series uses the same0c98 source after both explicit
-ORIGINAL-feasibility GO verdicts. All failures, early stops, preparation and
-publication costs remain; human effort is unmeasured.
+The matched81 series retains `0c98bf4` as its scientific anchor. Later admitted
+named preparation and lossless runtime revisions keep their actual source and
+qualification identities; see [the runtime source record](NAMED_STREAMED_CHECKPOINT_SOURCE_V5.md).
+All failures, early stops, preparation and publication costs remain; human effort
+is unmeasured.
+
+## Measured wall time in the two final V OTel partial failures
+
+The saved worker bindings match the exact original parent, case, source,
+checkpoint manifest and prefix artifact. Both workers completed successfully
+before their parents ended. This differs from the earlier three cases whose
+workers finished after the parent cutoff.
+
+| Disjoint API wall interval | Partial/7 | Partial/8 |
+| --- | ---: | ---: |
+| Parent start to child job start | 2:36:26 | 2:47:16 |
+| Whole child job, including preparation and transfer | 1:33:24 | 2:16:00 |
+| Child job end to parent end | 1:55:10 | 0:52:01 |
+| Whole parent job | 6:05:00 | 5:55:17 |
+
+The [partial/7 parent](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41305885228)
+ended with the actual six-hour-limit annotation; API wall time also retains its
+five-minute termination interval. The
+[partial/8 parent](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41305889879)
+failed with the hosted-runner lost-communication annotation before six hours.
+That message does not establish CPU starvation, OOM, disk exhaustion or a
+network cause.
+
+Within the child jobs, saved shared-input preparation took 2,250.055 and
+3,094.616 seconds. These are nested costs, not additional time to add to the
+table or pure Bering/Sheaft compute time. Whole-module GNU time records report
+maximum RSS of 12,466,976 and 12,582,812 KiB. The JSONL qualification's lower
+metadata-arm RSS does not describe the whole model worker.
+
+The remaining parent intervals do not identify polling/download/import,
+class fitting, target traffic, asynchronous checks, drain, final identity
+refresh or evaluation separately. No phase-specific cause or complete-case
+speedup follows from them. The already running qualified `f7ba801` attempts
+must provide their own actual results; these technical failures are not
+scientific negative cases.
+
+The [exact binding review](clean-study-final-V-worker-binding-timing-independent-review-20261101.json)
+and [API timeline supplement](clean-study-final-V-worker-timeline-independent-review-20261101.json)
+retain the selected metadata hashes and cost boundary. No models, raw journals
+or whole source ZIPs were downloaded locally for this diagnosis.

@@ -408,20 +408,20 @@
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41305885228,
+      "run_id": 41336793680,
       "stage": "main",
       "runner": "study",
-      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41305889879,
+      "run_id": 41336799720,
       "stage": "main",
       "runner": "study",
-      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "otel_demo",
@@ -488,10 +488,10 @@
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41336179872,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
       "system": "petclinic",
@@ -2386,6 +2386,51 @@
       "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
       "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
       "pre_execution_record": "work/f7ba-two-new-V-timeout-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430032310,
+      "original_prefix_artifact_id": 13085777771,
+      "replacement_run_id": 41336179872,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_six_hour_timeout_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-one-PC-partial6-timeout-replacement-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "original_run_id": 41305885228,
+      "original_job_id": 124846073085,
+      "original_prefix_artifact_id": 13087778181,
+      "replacement_run_id": 41336793680,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_case_failure_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-two-final-V-partial-failure-replacements-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "original_run_id": 41305889879,
+      "original_job_id": 124846078191,
+      "original_prefix_artifact_id": 13088375654,
+      "replacement_run_id": 41336799720,
+      "actual_capture_commit": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_case_failure_no_final_source_or_independent_target_packet; qualified_lossless_metadata_and_duplicate_lifetime_repair",
+      "pre_execution_record": "work/f7ba-two-final-V-partial-failure-replacements-preexecution-20261101.json",
       "original_costs_and_available_prefix_worker_evidence_retained": true
     }
   ]

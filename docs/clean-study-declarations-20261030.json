@@ -2533,6 +2533,45 @@
         }
       ],
       "note": "One qualified lossless f7ba failure-only replacement of parent41299253111 job124826598295; exact7abf consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41336179872,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41164824120 job124430032310; exact9076 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41336793680,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41305885228 job124846073085; exact9076 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41336799720,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "One qualified lossless f7ba failure-only replacement of parent41305889879 job124846078191; exact9076 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
     }
   ],
   "related_runs": [
@@ -4846,6 +4885,16 @@
       "run_id": 41333873213,
       "role": "preparation",
       "note": "Actual aec runtime+consumer integration Ubuntu24.04 CI, including full pytest/shell syntax/compileall/pinned HAProxy control fixture. Both push and PR workflow runs retained, including duplicated checks/costs; no merged-head capture admission or scientific-success claim."
+    },
+    {
+      "run_id": 41334516453,
+      "role": "preparation",
+      "note": "Exact9076 docs-only Ubuntu24.04 checks after reviewed66thcase/public integrationCI records. Both push/PR duplicate check costs retained; not a new capture or scientific result."
+    },
+    {
+      "run_id": 41334521571,
+      "role": "preparation",
+      "note": "Exact9076 docs-only Ubuntu24.04 checks after reviewed66thcase/public integrationCI records. Both push/PR duplicate check costs retained; not a new capture or scientific result."
     }
   ],
   "blocked_main_cells": [],

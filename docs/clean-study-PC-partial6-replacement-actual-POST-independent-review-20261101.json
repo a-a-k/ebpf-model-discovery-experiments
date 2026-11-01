@@ -1,0 +1,140 @@
+{
+  "recorded_utc": "2026-11-01T18:22:54.773644+00:00",
+  "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+  "original_one_PC_partial6_actual_POST_source_scope_cost_GO": true,
+  "producer_source": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+  "consumer_source": "9076e9685f2fc9dcc40b8de51bfbad8ca97812b7",
+  "run_id": 41336179872,
+  "scope": {
+    "collector": "deepflow",
+    "system": "petclinic",
+    "mode": "partial",
+    "seed": 6,
+    "old_parent": 41164824120,
+    "old_job": 124430032310,
+    "old_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "original_prefix": {
+      "id": 13085777771,
+      "node_id": "MDg6QXJ0aWZhY3QxMzA4NTc3Nzc3MQ==",
+      "name": "training-v4-petclinic-partial-6-41164824120",
+      "size_in_bytes": 1572569516,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13085777771",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13085777771/zip",
+      "expired": false,
+      "digest": "sha256:a6e1e44b8f247553c3e314a8dd8e55924e6e3bfea326b04fb04aec11be8e34fe",
+      "created_at": "2026-11-01T13:44:22Z",
+      "updated_at": "2026-11-01T13:44:22Z",
+      "expires_at": "2027-01-29T03:32:40Z",
+      "workflow_run": {
+        "id": 41164824120,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "study-20261031-v5",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      }
+    },
+    "salvage_verdict": "Fresh API exact old job terminalcancelled with sole training prefix; no full/compact/independenttargetpacket to salvage.",
+    "diagnosis": "Actual annotation: maximum execution time6h0m0s, jobend18:14:34Z afterstart12:09:34Z. Continue step started13:44:23Z; exact late subphase/physical cause unproven, do not call disk or claim cure.",
+    "request": {
+      "ref": "fix/stream-checkpoint-proof-records",
+      "inputs": {
+        "collector": "deepflow",
+        "stage": "main",
+        "runner": "study",
+        "system": "petclinic",
+        "mode": "partial",
+        "seed": "6"
+      },
+      "return_run_details": true
+    }
+  },
+  "actual_run_API_fields": {
+    "id": 41336179872,
+    "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+    "path": ".github/workflows/series-v5.yml",
+    "event": "workflow_dispatch",
+    "created_at": "2026-11-01T18:21:13Z",
+    "status": "queued"
+  },
+  "global_receipt": "work\\f7ba-one-PC-partial6-timeout-replacement-dispatch-20261101.json",
+  "global_receipt_sha256": "434b443949fbf5d3e111b8ca47c18b490607cc365dd1ea0bc678466a766fba35",
+  "case_receipt": "work\\f7ba-newPC-partial6-timeout-repeat-partial-6-20261101.dispatch.json",
+  "case_receipt_sha256": "84486855bee30b05b5c28362b9a03024b89f96afad7245cf3860b32d946a1600",
+  "raw_response_sha256": "e7c064144c5c9c141a52d36cef6dc0bce1ba21f13a9a15679410ef2016064e4b",
+  "owner_snapshot": "work\\owner-actions-capacity-20261101T181748Z.json",
+  "owner_snapshot_sha256": "ea7f5fd46c83bdf8f62e5399138c7ab04d67f2c003c44256319a63ca2ff391ab",
+  "owner_observed_utc": "2026-11-01T18:17:48.288068+00:00",
+  "owner_age_seconds_immediately_before_POST": 202.828884,
+  "reservation": {
+    "captures": 11,
+    "future_existing_workers": 11,
+    "workers": 0,
+    "archives": 0,
+    "new_capture_plus_worker_slots": 2,
+    "reader_reserved": 4,
+    "conservative_total_slots": 28
+  },
+  "protected_oldA_PC_planned_cells": [
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    }
+  ],
+  "post_mutation_hashes": {
+    ".worktrees\\clean-study-results\\docs\\clean-study-main-review-candidates-20261030.json": "3f7ccc16d6a64f52e04dedbcc96638a271b2f3461f0f5dcdccbf85c06ed0468e",
+    ".worktrees\\clean-study-results\\docs\\clean-study-declarations-20261030.json": "605fa2bb8d82c8689bcff6703dfe7b8b050fca71308c916d84517057978db215",
+    "work\\poll-main81-metadata-direct-20261031.py": "b3f6e218697e271685f162212345d106c2e9823c90f8352b285d7ead7db6af21"
+  },
+  "scope_verdict": "Exactly one retained raw response and embedded actual run API identify the unique new f7 Petclinic partial6 run. Same one-cell study request/counts/source implementation. Current metadata persists one new attempt/planned replacement/monitor ID; other PCpartial7/8 and full6/7/8 remain originalA. Reviewed literal transport has no cancellation, PCqueue or V/S request changes. These are retained dispatch observations, not a fresh all-job health inventory.",
+  "original_criterion": "Unchanged full81/10operations/4methods/2views/34800primary incl9600targets/100000trials/two independent guest kernels; actual observed source/Bering/Sheaft where supported/independent outcomes. New POST is not case or scientific admission.",
+  "strongest_baseline_and_costs": "Old exact job had external six-hour timeout with only pretarget prefix; no full final-source/independent target packet can be salvaged. Preserve old source/prefix/waits/failedcase/quals/CI/preparation/encoding/hashes/transfers/storage/archive and new costs; same supplied semantics across direct/ANDOR/context, human effort unknown. No whole-six-hour cause/cure/capacity or performance superiority claim.",
+  "case_or_scientific_success_GO": false,
+  "full81_still_required": true,
+  "POST_cancel_HTTP_payload_or_Telegram_by_reviewer": false
+}

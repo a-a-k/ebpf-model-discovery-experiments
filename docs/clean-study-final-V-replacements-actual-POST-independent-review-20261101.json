@@ -1,0 +1,161 @@
+{
+  "recorded_utc": "2026-11-01T18:36:00.580794+00:00",
+  "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+  "original_two_final_V_replacements_actual_POST_source_scope_cost_GO": true,
+  "producer_source": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+  "consumer_source": "9076e9685f2fc9dcc40b8de51bfbad8ca97812b7",
+  "global_receipt": "work\\f7ba-two-final-V-partial-failure-replacements-dispatch-20261101.json",
+  "global_receipt_sha256": "1c3d1980604861e9f58a83145e14d2786af639de006fb2e65cee9e77d7b1ce7a",
+  "prior_original_exact_execution_GO": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\independent-f7ba-two-final-V-partial-failure-replacements-exact-execution-original-GO.json",
+  "prior_original_exact_execution_GO_sha256": "af159339712b6dccad6576f4740d5e9900b26ea9185b690fafa92f11323c47c9",
+  "cases": [
+    {
+      "run_id": 41336793680,
+      "seed": 7,
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "old_parent": 41305885228,
+        "old_job": 124846073085,
+        "old_source": "6eaa441c40253a18f18af76e4e599496927c1739",
+        "original_prefix": {
+          "id": 13087778181,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4Nzc3ODE4MQ==",
+          "name": "training-v4-otel_demo-partial-7-41305885228",
+          "size_in_bytes": 2497721126,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13087778181",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13087778181/zip",
+          "expired": false,
+          "digest": "sha256:b7bf8fd9a328d190acc6659ab1dbbf7be924e4183ec23206e22ee1957372ae95",
+          "created_at": "2026-11-01T14:37:37Z",
+          "updated_at": "2026-11-01T14:37:37Z",
+          "expires_at": "2027-01-30T12:18:51Z",
+          "workflow_run": {
+            "id": 41305885228,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "fix/deepflow-final-snapshot-links",
+            "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+          }
+        },
+        "salvage_verdict": "Only original training prefix exists, no finalsource/compact/independenttargets to recover.",
+        "diagnosis": "Actual6h0m0s annotation; exact latephasecause unknown.",
+        "request": {
+          "ref": "fix/stream-checkpoint-proof-records",
+          "inputs": {
+            "collector": "deepflow",
+            "stage": "main",
+            "runner": "study",
+            "system": "otel_demo",
+            "mode": "partial",
+            "seed": "7"
+          },
+          "return_run_details": true
+        },
+        "old_conclusion": "cancelled",
+        "actual_annotation_messages": [
+          "The job has exceeded the maximum execution time of 6h0m0s"
+        ]
+      },
+      "owner_age_seconds_immediately_before_POST": 115.858895,
+      "actual_dispatch_run": {
+        "id": 41336793680,
+        "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+        "path": ".github/workflows/series-v5.yml",
+        "event": "workflow_dispatch",
+        "created_at": "2026-11-01T18:28:24Z",
+        "status": "queued"
+      },
+      "receipt": "work\\f7ba-finalV-partial-failure-repeat-partial-7-20261101.dispatch.json",
+      "receipt_sha256": "a2871c2b6e2c58deb582e08a4486e8fc41534c62f6e979aa678654480945ecb9",
+      "raw_response_sha256": "79ca5f7e6bbebc5007d52c3b2ff99c17cbc117f3087a381cc0751c6657c2bd98"
+    },
+    {
+      "run_id": 41336799720,
+      "seed": 8,
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8,
+        "old_parent": 41305889879,
+        "old_job": 124846078191,
+        "old_source": "6eaa441c40253a18f18af76e4e599496927c1739",
+        "original_prefix": {
+          "id": 13088375654,
+          "node_id": "MDg6QXJ0aWZhY3QxMzA4ODM3NTY1NA==",
+          "name": "training-v4-otel_demo-partial-8-41305889879",
+          "size_in_bytes": 3332504807,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13088375654",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13088375654/zip",
+          "expired": false,
+          "digest": "sha256:9d35b851b0ceee446e264ea897815b0ef0a087399a0975d4b294e7ed80d1bf54",
+          "created_at": "2026-11-01T14:45:01Z",
+          "updated_at": "2026-11-01T14:45:01Z",
+          "expires_at": "2027-01-30T12:18:55Z",
+          "workflow_run": {
+            "id": 41305889879,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "fix/deepflow-final-snapshot-links",
+            "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+          }
+        },
+        "salvage_verdict": "Only original training prefix exists, no finalsource/compact/independenttargets to recover.",
+        "diagnosis": "Actual hostedrunner lostcommunication before6h. CPU/memory/network suggestions are not causeproof, not ENOSPC or6htimeout.",
+        "request": {
+          "ref": "fix/stream-checkpoint-proof-records",
+          "inputs": {
+            "collector": "deepflow",
+            "stage": "main",
+            "runner": "study",
+            "system": "otel_demo",
+            "mode": "partial",
+            "seed": "8"
+          },
+          "return_run_details": true
+        },
+        "old_conclusion": "failure",
+        "actual_annotation_messages": [
+          "The hosted runner lost communication with the server. Anything in your workflow that terminates the runner process, starves it for CPU/Memory, or blocks its network access can cause this error."
+        ]
+      },
+      "owner_age_seconds_immediately_before_POST": 120.19664,
+      "actual_dispatch_run": {
+        "id": 41336799720,
+        "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+        "path": ".github/workflows/series-v5.yml",
+        "event": "workflow_dispatch",
+        "created_at": "2026-11-01T18:28:29Z",
+        "status": "queued"
+      },
+      "receipt": "work\\f7ba-finalV-partial-failure-repeat-partial-8-20261101.dispatch.json",
+      "receipt_sha256": "3c6f3ef0504e9ebcc6744f682fc8e14f8bbed932ff02741703a6b54f421138d5",
+      "raw_response_sha256": "b9cf6cd0da68d95ff1f5ed6bcefcef0cff650758bfc8509a3cc150e14dbae0ce"
+    }
+  ],
+  "owner_snapshot": "work\\owner-actions-capacity-20261101T182626Z.json",
+  "owner_snapshot_sha256": "2184ae1da06c6baae95bc07a20873b543470e3e7dae08ba87dc1dbd58e478273",
+  "reserved_slots": {
+    "captures": 11,
+    "future_existing_workers": 11,
+    "workers": 0,
+    "archives": 0,
+    "new_capture_plus_worker_slots": 4,
+    "reader_reserved": 4,
+    "conservative_total_slots": 30
+  },
+  "preservation_verdict": "Exact two unique response/run identities and intended same-scenario partial7/8 requests; each actual sourcef7 verified in retained API. Both new planned/attempt/monitor identities persist once. Existing8S attempts and all5other oldA PCpartial/full planned cells remain unchanged; no cancellation or carrier queue mutation exists in reviewed transport. This is dispatch-observation proof, not new live health enumeration.",
+  "metadata_state_hashes": {
+    ".worktrees\\clean-study-results\\docs\\clean-study-main-review-candidates-20261030.json": "b0415c4da5e467b8defd791870dfa1618970a5f2ef95574d3b9b82d5c89633fc",
+    ".worktrees\\clean-study-results\\docs\\clean-study-declarations-20261030.json": "8d2f109c1ab3551d71acf03450d6767fe27cb86d30e260a053b04a3dc460f13d",
+    "work\\poll-main81-metadata-direct-20261031.py": "9186e3edb1dd71af78c8c43572911080e22c1f39b2a82577871630e0f070dd97"
+  },
+  "original_criterion": "Full81/all10operations/4methods/2views/34800primary incl9600targets/100000trials/two independent guest kernels and actual source/Bering/Sheaft when supported/external outcomes remain. No scientific or case admission follows from POST identity.",
+  "baseline_causal_and_cost_verdict": "Training prefixes cannot reconstruct missing independent targets/finalsource. Exact qualified common C/S lossless metadata/storage repair differs V while preserving semantics/records/files/SQL; it is not proof of either timeout or lost-runner physical cause/cure. Retain every original/failed prefix/worker/wait/build/preparation/CI/qualification/encoding/hash/transfer/storage/archive and new attempt costs. Human effort unknown; shared timings and method rows not additive independent N.",
+  "case_or_scientific_success_GO": false,
+  "full81_still_required": true,
+  "additional_POST_cancel_raw_model_processing_or_Telegram_by_reviewer": false
+}
