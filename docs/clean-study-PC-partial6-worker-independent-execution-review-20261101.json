@@ -1,0 +1,120 @@
+{
+  "recorded_utc": "2026-11-01T21:00:27.473331+00:00",
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "original_W_failed_PC_partial6_existing_worker_execution_GO": true,
+  "transport_sha256": "1fcf860fee215ee2099025a08ed7c3141f92da95059763b120c9eb8aa8f5cadd",
+  "plan_sha256": "990cc5038aa504f0c07e1743c10a2342af48abad27271b8a81b8147ff7a2b19d",
+  "producer_source": "0565115511b24db1d6bbe71e98784baded772144",
+  "consumer_source": "9b877c06544659f9a6d0d7380ca0694cc7912471",
+  "producer_ref": "fix/petclinic-existing-worker",
+  "scope": [
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "old_parent": 41336179872,
+      "old_job": 124936403455,
+      "old_source": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "sole_prefix_id": 13097488108,
+      "sole_prefix_bytes": 1564745071,
+      "sole_prefix_digest": "sha256:664423748b8793342e64af4ce00feafd83392c0d4c6a2783962331abf4dc8a94"
+    }
+  ],
+  "original_criterion": "Same original81/all10operations/3collectors/allSDKmodes/seeds6,7,8/4methods/2views/34800primary incl9600targets/100000Sheafttrials/two independent guest kernels. Actual source->Bering->Sheaft where supported->independent app outcomes; no ML/cost-superiority or smaller demonstration.",
+  "strongest_baseline": "Existing supported worker withidenticalToolchainV5/StoreV5/PCexperiment_v4, sameclosedcheckpoint/plans/inputfiles/binaries/scientificparameters. Noextra expensive full-modelqualifier needed peroriginaldesign/codeGO; sameprogram/input equivalence addressed beforeexecution. Actualcaseworkerimport+independentoutcomes required; never replaycompletenegative/adverse cases.",
+  "causal_engineering_scope": "One existing workflow executionroute usesworker forPC instead ofco-residentlocalBering+twoVMs. AllproductionPython/app/model/binarycode identicalalreadyqualifiedS; existingimmutableprepare and12GiBGC workerpaths retained. SJSONL/Cstorage/TUV proofs remainat ACTUALS/C/T/U/Vtestedheads, not falselyW. Additional sourceWliteralfullGit/strictconsumer+43producerimportfixtures/460consumerfixturetests+actualLinuxCIs reviewed. No wholecase speedup/SIGTERMcausation/zeroloss claim.",
+  "actual_failure_evidence": {
+    "job_path": "work\\S-PC-partial6-actual-failure-20261101\\job-api.json",
+    "job_SHA256": "44feec924e679f98e65c8e0a4e7df563b1cbf9745e2cb19306c7bf4fb4c206f0",
+    "completed_at": "2026-11-01T20:56:09Z",
+    "exit143_runner_shutdown": true,
+    "selected_resource_tail_path": "work\\S-PC-partial6-actual-failure-20261101\\connector-selected-last42-log-lines.txt",
+    "selected_resource_tail_SHA256": "a484b3d9f4e28e7061853033bd9d8c42d865aabf4f8d258f433d2a9b41743a56",
+    "observed_205552_UTC": {
+      "memory_available_KiB": 220016,
+      "memory_total_KiB": 16366508,
+      "swap_free_KiB": 993976,
+      "swap_total_KiB": 11534328,
+      "Bering_RSS_KiB": 7936800,
+      "QEMU_RSS_KiB": [
+        5060132,
+        2144684
+      ],
+      "OOM_kill_counter": 0
+    },
+    "interpretation": "Severe simultaneous Bering+twoGuest memory/swap pressure is observed. The physical shutdown/signal origin is not established as OOM or disk; no six-hour, cure or wholecase success claim.",
+    "salvage": "Only one training prefix in retained paginated artifact index. No full/compact/final raw/independent target evidence to recover this original cell. No valid complete negative or adverse replay."
+  },
+  "reviewed_source_and_consumer": {
+    "same_W_already_qualified_existing_worker_route": true,
+    "strict_consumer_319_actual_GO_SHA256": "bc130fef9636cfd1c6120f6210a0c2791c68a5430f5f53d65aa2e62914b5a66e",
+    "complete_319_to9b_Git_changed_paths_docs_only": [
+      "docs/CLEAN_STUDY_DIAGNOSIS.md",
+      "docs/MAIN_DEEPFLOW_FINDINGS_V5.md",
+      "docs/clean-study-DSB-HTTP-ack-independent-audit-20261101.json",
+      "docs/clean-study-DSB-HTTP-ack-root-audit-20261101.json",
+      "docs/clean-study-PC-partial7-worker-independent-actual-POST-review-20261101.json",
+      "docs/clean-study-PC-partial7-worker-independent-execution-review-20261101.json",
+      "docs/clean-study-PC-partial7-worker-root-preexecution-review-20261101.json",
+      "docs/clean-study-PC-partial8-worker-independent-actual-POST-review-20261101.json",
+      "docs/clean-study-PC-partial8-worker-independent-execution-review-20261101.json",
+      "docs/clean-study-PC-worker-consumer-independent-actual-review-20261101.json",
+      "docs/clean-study-PC-worker-consumer-root-static-review-20261101.json",
+      "docs/clean-study-declarations-20261030.json",
+      "docs/clean-study-main-review-candidates-20261030.json",
+      "docs/clean-study-terminal28-independent-publication-review-20261101.json",
+      "docs/clean-study-terminal28-root-publication-review-20261101.json"
+    ],
+    "actual_independent_consumer_CIs": [
+      {
+        "id": 41349274788,
+        "head_sha": "9b877c06544659f9a6d0d7380ca0694cc7912471",
+        "status": "completed",
+        "conclusion": "success",
+        "event": "push",
+        "path": ".github/workflows/checks.yml"
+      },
+      {
+        "id": 41349280807,
+        "head_sha": "9b877c06544659f9a6d0d7380ca0694cc7912471",
+        "status": "completed",
+        "conclusion": "success",
+        "event": "pull_request",
+        "path": ".github/workflows/checks.yml"
+      }
+    ],
+    "S_qualifier_413219_actual_tested_source_still": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+    "no_new_model_qualification_needed_for_same_program_input_placement": true,
+    "actual_worker_import_and_all_independent_case_outcomes_required": true
+  },
+  "literal_transport_original_execution_review": [
+    "Exactly one fixed failed PCpartial6 request; ownapproval/key/hashes/rootpreexec; actualproducerrefW/consumer9b branches and allthreeCIruns checked.",
+    "InheritedJSONL qualifier remains tested at actualf7 with original artifact digest. W/consumer source guard/import requirements inherited unchanged, no descendant capture admission.",
+    "Actualoldjob name/source/failure and sole prefix ID/name/size/digest/head/run/unexpired API checked beforePOST. Candidate must retain plannedoldsource and no completedcase.",
+    "All43 freshowner/noerrors/noforeign; allowedonlyseries/worker/archive so any currentCI/reader/unrelatedjob stops execution; all live workers retained separately, futureworker slots allcaptures, oldA maxparallel3.",
+    "PerPOSTowner age rechecked<300; receipts before singlePOST; uncertainty raises/no blindretry; actualsource/workflow verified; oneattempt+planned/monitor updates, monitor atomicreplace. No cancellation/queue switching."
+  ],
+  "two_future_reader_report_slots_GO": true,
+  "two_future_slots_scope": "One single-packet existing saved-reader job plus one report job. No four-way reader batch is planned. Actual other jobs are never hidden; any multi-packet parallel batch/further workflow needs a fresh complete capacity budget. Scientific workloads/checks unchanged.",
+  "capacity_observation_not_future_authorization": {
+    "owner_path": "work\\owner-actions-capacity-20261101T205913Z.json",
+    "owner_SHA256": "fec11babb6745e25e64963bb25dc8e0cabc931b318ccd1c3546e6a01160c8d48",
+    "observed_utc": "2026-11-01T20:59:13.180058+00:00",
+    "capture_envelope": 14,
+    "additional_actual_unbound_workers": 4,
+    "archives": 0,
+    "new_parent_worker_reserved": 2,
+    "future_reader_report_reserved": 2,
+    "conservative_total": 36,
+    "cap": 40,
+    "fresh_before_each_POST_required": true
+  },
+  "protected_otherS9_WPC7_WPC8_oldA_full6_7_8": true,
+  "all_earlier_attempts_prefixes_and_costs_retained": "All old prefixes/parents/children/waits/technical failures/qualifications/CI/reads/hashes/copies/archives and new actual outcomes retained. Known API intervals not CPU/billed/criticalpath sums, paired rows not independentN; humanunknown. Local stopped broad metadata helper network costunknownnot0. Qualification fixed order/pagecache/extra legacyvalidation/outercleanup limits retained.",
+  "root_preexecution_path": "work\\W-PC-partial6-worker-replacement-preexecution-20261101.json",
+  "root_preexecution_SHA256": "6140175d981767455a87b19836da7efb8a6cc2dd9e67180aea5e60d81aeeca07",
+  "no_new_source_code_or_model_qualifier_GO": true,
+  "reviewer_POST_cancel_Telegram": false,
+  "scientific_case_or_full81_success_GO": false
+}
