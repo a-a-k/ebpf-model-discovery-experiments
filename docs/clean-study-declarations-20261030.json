@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "All57 technically complete MAIN packets have passed strict savedreader batches41254802097(first56) and41263818898(one lastOBIpartial8), and root+independent metadata reviews: OBI27,Coroot27,DeepFlow3. Actual representative literals and CorootOTel full6/7/8 runtime faults retained; unknown/adverse never replay criteria. All24 DeepFlow cases still pending acquisition/review. SourceT06d7 fourcore/13Gitpaths/2119remaining qualified by actual655input18entry oldprefix proof6473.154799267 to1141.882265196seconds; six actualtimedout DSB cases have separately approvedT replacements. SOTelabs6/7/8 recoveries and healthy originalAcarrier continue; no healthyDF cancellation, pendingquestion unanswered. Report declarationobject exceedsGitHubinput65535chars; minimal trackedpath transport has bothoriginaldesign/codeGO and actualbootstrap6PASS1Windows skip, exactnewLinuxCI required before finalreport. No scientific selection/source/defaultcount/report/plot change. Finalall81 actualreport/costs/permanentarchives/EnglishREADME/originalskepticGO required; noML orcostsuperiorityhypothesis.",
+  "main_dispatch_status": "Original fixed81 unchanged. Actual saved evidence root+independent reviewed65: OBI27,Coroot27,DeepFlowDSB9,DeepFlowPCabsent6/7. The16:34UTC direct main snapshot has66 technical complete packets; PCabsent8 review pending,7 mainjobs active and3PCfullcases in original A queue. FourVsource6eaa OTel repeats remain healthy; five older OTel timeouts await qualified failure-only replacement. No healthy cancellation/queue switch. Sourcef7ba actual CI41321355288 and lossless record/input qualification41321994264 succeeded with both engineering reviews; exact named consumer/profile CI and per-failure execution admission still required. All adverse/unknown valid, no favorable rerun; noML/costsuperiority hypothesis. Final full81 report/figures/costs/permanentarchives/EnglishREADME/originalskepticGO stillrequired. All archive-related costs include finite76source/twojobwave; publication pending. Never send Telegram in current dialog.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -4695,6 +4695,36 @@
       "run_id": 41311351975,
       "role": "worker",
       "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41321088337,
+      "role": "evidence",
+      "note": "Fifth saved-evidence reader: only DeepFlow/DSB partial6/partial8/full7/full8 and DeepFlow/Petclinic absent7 original source packets. No first60 replay, traffic, refit, rescore or outcome eligibility gate. All reader/preparation/checks/transfer costs retained; human unknown. Actual interpretation separate."
+    },
+    {
+      "run_id": 41321994264,
+      "role": "preparation",
+      "note": "One fixed savedT/OTelabsent6 full-prefix ordered runtime proof JSONL equivalence qualification. Every saved/old-regenerated/new record, original files and SQL proofs compared; current and legacy validators. Conversion controls explicit, no fake uploaded artifact binding/capture/model/simulation/rescore/source admission. All costs and fixed-order/pagecache/extra-legacy-validation/cleanup boundaries retained; human unknown."
+    },
+    {
+      "run_id": 41322656566,
+      "role": "archive",
+      "note": "Finite terminal76 retention wave batch1: 52 original source runs, 51 original artifacts. Same qualified archival bytes/pre-download disk guard/full SHA/ZIP CRC/chunk/reassembly/remote publication proof. No source deletion/capture/refit/rescore/admission. All transfer/publication/failure/proof costs retained; human unknown; active and finite closing tail separate."
+    },
+    {
+      "run_id": 41322660524,
+      "role": "archive",
+      "note": "Finite terminal76 retention wave batch2: 24 original source runs, 37 original artifacts. Same qualified archival bytes/pre-download disk guard/full SHA/ZIP CRC/chunk/reassembly/remote publication proof. No source deletion/capture/refit/rescore/admission. All transfer/publication/failure/proof costs retained; human unknown; active and finite closing tail separate."
+    },
+    {
+      "run_id": 41320280501,
+      "role": "preparation",
+      "note": "Actual docs-only batch5 source13a652 CI; both jobs succeeded, no change to saved-reader runtime3fa. Retain all CI/preparation costs; human unknown."
+    },
+    {
+      "run_id": 41321355288,
+      "role": "preparation",
+      "note": "Actual exact f7ba801 source CI for lossless checkpoint proof encoding; both jobs succeeded. Qualification41321994264 preserves every828668record/all86527originalfiles/fullSQLproof; source consumer CI/admission separate. Retain all CI/preparation costs; human unknown."
     }
   ],
   "blocked_main_cells": [],

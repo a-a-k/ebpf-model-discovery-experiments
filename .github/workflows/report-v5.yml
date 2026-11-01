@@ -35,7 +35,7 @@ jobs:
           from ebpf_discovery.report_v5 import (
               _declarations, PREPARATION_ONLY_SOURCE_REVISIONS,
               _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE, UPLOADED_CHECKPOINT_COPY_SOURCE,
-              CLOSED_FINAL_SNAPSHOT_SOURCE,
+              CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE,
           )
           declaration_input=os.environ['DECLARATIONS']
           input_source={'kind':'inline_json'}
@@ -68,6 +68,7 @@ jobs:
               approved[IMMUTABLE_PATH_SOURCE['revision']]=IMMUTABLE_PATH_SOURCE['reviewed_changed_blobs']
               approved[UPLOADED_CHECKPOINT_COPY_SOURCE['revision']]=UPLOADED_CHECKPOINT_COPY_SOURCE['reviewed_changed_blobs']
               approved[CLOSED_FINAL_SNAPSHOT_SOURCE['revision']]=CLOSED_FINAL_SNAPSHOT_SOURCE['reviewed_changed_blobs']
+              approved[STREAMED_CHECKPOINT_SOURCE['revision']]=STREAMED_CHECKPOINT_SOURCE['reviewed_changed_blobs']
           proofs=[]
           if approved:
               destination=path.parent/'source-equivalence'

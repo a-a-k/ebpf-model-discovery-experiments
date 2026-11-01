@@ -187,6 +187,91 @@ CLOSED_FINAL_SNAPSHOT_SOURCE = {
 }
 
 
+# Exact lossless proof encoding and duplicate lifetime; inherited proofs keep their sources.
+STREAMED_CHECKPOINT_SOURCE = {'anchor': '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
+ 'revision': 'f7ba801d70f9d2327031efc6dd0c00b90d252708',
+ 'tested_source': 'f7ba801d70f9d2327031efc6dd0c00b90d252708',
+ 'parent_revision': 'c1369df7b579f9a4c73e9ebc7df63a9d6eef6349',
+ 'storage_lifetime_proof': {'tested_source': 'c1369df7b579f9a4c73e9ebc7df63a9d6eef6349',
+                            'run_id': 41313534176,
+                            'guest_artifact_id': 13086567672,
+                            'guest_artifact_digest': 'sha256:8ad34a716dec8058edc1282831c95aa57830b7d88248e373ce07cf7396f2ba64',
+                            'guest_duplicate_logical_bytes_released': 1288318890,
+                            'parent_artifact_id': 13088581221,
+                            'parent_artifact_digest': 'sha256:2874bddabdde57d630094b7f101a614cb2d80d6495ddec6e6cfca0bc58147acd',
+                            'parent_duplicate_logical_bytes_released': 27340802393,
+                            'parent_preserved_payload_files': 86527,
+                            'original_bytes_and_logical_SQL_proofs_preserved': True,
+                            'guest_whole_blobs_and_parent_release_functions_inherited_exactly': True,
+                            'parent_entire_remote_module_identical': False,
+                            'root_and_independent_actual_original_GO': True,
+                            'whole_case_headroom_or_six_hour_cure': False},
+ 'proof_encoding_equivalence': {'run_id': 41321994264,
+                                'artifact_id': 13091257133,
+                                'artifact_digest': 'sha256:98c424d47bfdf19b75574137555907cde3fb45d47a07785cd536c7f4b7dbf1aa',
+                                'source_run': 41273870033,
+                                'source_artifact': 13075276795,
+                                'source_archive_digest': 'sha256:22d706c5099c16203cef5f407273a067042a1def970ab4e3d72d3e362422d555',
+                                'original_manifest_sha256': '5aad17e431831e4deb7a046af03fdf8b39249e89ade6b67c86c87dabfc745749',
+                                'ordered_equal_records': 828668,
+                                'original_payload_files': 86527,
+                                'canonical_ordered_records_sha256': '4f6c9fab3163f82f34876e280561392b9e382bc0368318d538a6f27e3a14fd6a',
+                                'every_original_file_and_logical_SQL_proof_equal': True,
+                                'current_and_legacy_validators_pass': True,
+                                'converted_artifact_controls_explicit': True,
+                                'original_array_manifest_bytes': 1037316434,
+                                'new_manifest_bytes': 51225433,
+                                'retained_JSONL_bytes': 792183147,
+                                'old_new_arm_maxRSS_KiB': [3036364, 751636],
+                                'timing_order_pagecache_extra_legacy_validation_and_cleanup_limits_retained': True,
+                                'root_and_independent_actual_original_GO': True,
+                                'new_traffic_models_or_scoring': False,
+                                'whole_case_headroom_or_six_hour_cure': False},
+ 'changed_core_blobs': {'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+                        'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+                        'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+                        'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+                        'src/ebpf_discovery/remote_toolchain_v4.py': '612948d7f7926357d1b77404d5191230ac1e8865',
+                        'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+                        'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105'},
+ 'added_paths': {'docs/IMMUTABLE_PATH_PREPARATION_V5.md',
+                 'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md',
+                 'scripts/check-fixed-deepflow-final-links-v5.py',
+                 'scripts/check-fixed-dsb-path-preparation-v5.py',
+                 'scripts/check-fixed-early-checkpoint-release-v5.py',
+                 'scripts/check-fixed-guest-prefix-release-v5.py',
+                 'scripts/check-fixed-runtime-proof-jsonl-v5.py',
+                 'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py',
+                 'tests/test_fixed_path_preparation_comparison_v5.py',
+                 'tests/test_uploaded_checkpoint_copy_release.py'},
+ 'reviewed_changed_blobs': {'.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': '105bb8fd738f5956f3e942741ba574e93d01617d',
+                            '.github/workflows/series-v5.yml': '5546ce9214eead4e07dae0e8ed50828153f6e6e4',
+                            '.github/workflows/toolchain-worker-v4.yml': '4b833fed808c6701426d758bb3b9feb84e81cfa1',
+                            'docs/IMMUTABLE_PATH_PREPARATION_V5.md': '04d2c2ce314b4547723746019cf962a7837452d1',
+                            'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md': '83f08a45f9bd5866eb126315db7b0cc8c2489dc3',
+                            'docs/WORKER_PACKAGING_V5.md': 'c270e8e4a2fb48f6d17c4dc0a334b99743d50f94',
+                            'scripts/check-fixed-deepflow-final-links-v5.py': '5560fc0ac9212a5e87e8fda752f83f98ad128f02',
+                            'scripts/check-fixed-dsb-path-preparation-v5.py': 'c0422ee45523be1954cc38422bb64d35083e8b18',
+                            'scripts/check-fixed-early-checkpoint-release-v5.py': '4a2eea6d8d99027ed082f48527bc66a004b1fc01',
+                            'scripts/check-fixed-guest-prefix-release-v5.py': '5444be2c8232a51e7461cc8109f69c30ab9f2aa7',
+                            'scripts/check-fixed-runtime-proof-jsonl-v5.py': '7b6e494de4b78b144790f281573e22d0b4c1f1d0',
+                            'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py': '102825a665b8dad9f63b014181beeaa95484c208',
+                            'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+                            'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+                            'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+                            'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+                            'src/ebpf_discovery/remote_toolchain_v4.py': '612948d7f7926357d1b77404d5191230ac1e8865',
+                            'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+                            'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105',
+                            'tests/test_checkpoint_v4.py': '1f934e29aaa88cc42f57f20c87623cfb402e143a',
+                            'tests/test_deepflow_snapshot_v5.py': 'd205c350ecde2035f2d4afcfd488bd48ffb17318',
+                            'tests/test_deepflow_v5.py': '8963e26c652e0def46d32306bcd87447bbbf8ecc',
+                            'tests/test_fixed_path_preparation_comparison_v5.py': 'cad466c8affd8f72d1611c93d6784fcb9585b079',
+                            'tests/test_identity_projection_v5.py': '40227ccf66fe6e118e7dd74f87f97ddbfb037c66',
+                            'tests/test_remote_toolchain_v4.py': '513ff85dc91f8915ed61f2fde348fcbc16387c10',
+                            'tests/test_uploaded_checkpoint_copy_release.py': 'cde25145c6ad39ecc7136d909fbac45156812348'}}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -196,6 +281,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = UPLOADED_CHECKPOINT_COPY_SOURCE
         elif revision == CLOSED_FINAL_SNAPSHOT_SOURCE['revision']:
             profile = CLOSED_FINAL_SNAPSHOT_SOURCE
+        elif revision == STREAMED_CHECKPOINT_SOURCE['revision']:
+            profile = STREAMED_CHECKPOINT_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -218,6 +305,23 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
         if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
+    if profile is STREAMED_CHECKPOINT_SOURCE:
+        return {'anchor': anchor, 'revision': revision,
+                'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
+                'evidence_kind': 'actual_lossless_checkpoint_proof_encoding_and_storage',
+                'tested_source': profile['tested_source'],
+                'parent_revision': profile['parent_revision'],
+                'parent_input_equivalence_tested_source': IMMUTABLE_PATH_SOURCE['tested_source'],
+                'parent_input_equivalence': IMMUTABLE_PATH_SOURCE['input_equivalence'],
+                'uploaded_checkpoint_release_tested_source': UPLOADED_CHECKPOINT_COPY_SOURCE['tested_source'],
+                'copy_release_proof': UPLOADED_CHECKPOINT_COPY_SOURCE['copy_release_proof'],
+                'closed_final_snapshot_tested_source': CLOSED_FINAL_SNAPSHOT_SOURCE['tested_source'],
+                'final_snapshot_proof': CLOSED_FINAL_SNAPSHOT_SOURCE['final_snapshot_proof'],
+                'storage_lifetime_proof': profile['storage_lifetime_proof'],
+                'proof_encoding_equivalence': profile['proof_encoding_equivalence'],
+                'reviewed_changed_blobs': approved,
+                'changed_core_blobs': profile['changed_core_blobs'],
+                'identical_remaining_entries': len(set(original) - set(approved))}
     if profile is CLOSED_FINAL_SNAPSHOT_SOURCE:
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
@@ -806,6 +910,7 @@ def build(
         compatible_heads.add(IMMUTABLE_PATH_SOURCE['revision'])
         compatible_heads.add(UPLOADED_CHECKPOINT_COPY_SOURCE['revision'])
         compatible_heads.add(CLOSED_FINAL_SNAPSHOT_SOURCE['revision'])
+        compatible_heads.add(STREAMED_CHECKPOINT_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
@@ -1171,6 +1276,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
                       '` adds verified release of an uploaded local checkpoint copy. Its separate actual cleanup proof (run 41278513379, artifact 13072487567) preserves all 25,180 physical live-mirror files and three identity files. The inherited T input-equivalence proof remains attributed to its own tested source; the cleanup is not a new model/scoring result or proof of sufficient end-to-end headroom.']
             lines += ['The exact final-retention source `' + CLOSED_FINAL_SNAPSHOT_SOURCE['revision'] +
                       '` adds shared-inode final snapshots after positive per-node producer termination. Actual storage qualification run 41296733012 (artifact 13079348283) compares the literal original copy with links on retained prefixes from both guests: identical initial filesystems, full raw bytes and original snapshot manifests. This is a closed replay of saved live prefixes, not reconstruction of the failed final source or a whole-case capacity, zero-loss or study-success claim. Original source modes remain; linked snapshot modes follow the source rather than the old copy mode 0600. T input-equivalence and U checkpoint-release proofs retain their original tested-source attribution.']
+            lines += ['The exact lossless checkpoint source `' + STREAMED_CHECKPOINT_SOURCE['revision'] +
+                      '` retains all 828,668 ordered audit records and all 86,527 original payload/SQL input proofs in actual qualification 41321994264 (artifact 13091257133). Its 51,225,433-byte manifest references a retained 792,183,147-byte JSONL payload. The C duplicate-lifetime proof remains attributed to source c1369df and run 41313534176; guest whole blobs and the parent release/caller functions are inherited exactly, while the remote module also adds JSONL validation. Component memory measurements and fixed-order/pagecache/extra-legacy-validation/cleanup boundaries do not establish whole-case speed, capacity or scientific success. The full exact Git profile and inherited T/U/V proofs remain in `provenance/source-equivalence.json`.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:
