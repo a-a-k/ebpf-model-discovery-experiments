@@ -398,10 +398,10 @@
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41273434210,
+      "run_id": 41299248544,
       "stage": "main",
       "runner": "study",
-      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
     },
     {
       "system": "otel_demo",
@@ -438,10 +438,10 @@
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41299253111,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
     },
     {
       "system": "otel_demo",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 24,
+  "pending_artifact_cells": 23,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1438,6 +1438,26 @@
       "full_artifact_digest": "sha256:b2776a18f2f0fd4d8d20861a4f175a2d6a6a686468fd0cd99a45d84c2e900bac"
     },
     {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13081240102,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-absent-6-41164824120",
+      "compact_artifact_bytes": 41545518,
+      "compact_artifact_digest": "sha256:d16b9988f09d9ae55bc522a9020c25c0aceac3864b58f3e0ab90f94ba3965060",
+      "full_artifact_id": 13081235666,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-absent-6-41164824120",
+      "full_artifact_bytes": 3521155168,
+      "full_artifact_digest": "sha256:ca805203888a146237e4564cfbf28a95278cc372c4007a76d5171b441005cc77"
+    },
+    {
       "system": "deathstarbench",
       "mode": "absent",
       "seed": 6,
@@ -1988,7 +2008,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Metadata snapshot 2026-11-01T07:29:09.062209+00:00: 57 technically complete planned full/compact pairs have separate root and skeptic saved-facts subset reviews. Remaining24 need complete packets and the same actual reviews. Reviewed A/N/M/S/T/U source profiles retain actual identities. Ten U technical failure replacements have been dispatched; their completion/admission is not asserted. Final81 report remains pending.",
+  "status": "Direct paginated API 2026-11-01T11:14:04.078370+00:00: 58 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {

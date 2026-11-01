@@ -2390,6 +2390,32 @@
         }
       ],
       "note": "One actual terminal technical failure-only U replacement of parent41259950155 job124710990873; source8fa2a454db58af487451c9aead6477adc0ca0485 preserves complete inputs with the qualified inherited T preparation and verified uploaded-copy release. Same main counts/operations/trials/faults, all4methods; no healthy cancellation or accuracy selection. All original failures/prefixes/workers/recovery/CI/transfer/retention costs kept; idle age/source visible, human unknown."
+    },
+    {
+      "run_id": 41299248544,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "One failure-only replacement of parent41273434210 job124750728744; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
+    },
+    {
+      "run_id": 41299253111,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "One failure-only replacement of parent41164824120 job124430032004; exact6eaa qualified closed-final retention and exact3fa consumer. Same full counts/trials/operations/faults/4methods/2views/two independent guests. No healthy cancellation or accuracy choice; old actual targets/unknown/adverse/worker/qual/CI/transfer/storage and all new costs retained. No full-case capacity/timing or scientific-success claim; human effort unknown."
     }
   ],
   "related_runs": [
@@ -4568,6 +4594,21 @@
       "run_id": 41296469691,
       "role": "preparation",
       "note": "Actual exact6eaa441 corrected fixture producer CI, both implementation and Docker control jobs succeeded. Production core byte-identical to earlier b074853, both CI revisions and failed first qualification remain preparation cost; no campaign/scientific success claimed."
+    },
+    {
+      "run_id": 41298274264,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head3fa82570cb8628c4ef3bb83e46af3c66110ea96a; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41297167856,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41296759449,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -4594,5 +4635,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-01T10:06:46.688389+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-01T11:14:11.297419+00:00"
 }
