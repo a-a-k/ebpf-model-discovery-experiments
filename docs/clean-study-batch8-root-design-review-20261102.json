@@ -65,13 +65,15 @@
       "full_artifact_digest": "sha256:3dce15c02eaff62775e64914aebe2f5587c2f206ed013474186b2bcb3603eb86"
     }
   ],
-  "manifest_work_LF_SHA256": "31f52ae7044bb438a93eae3255cb3716e31bfee4fddb6c6187d9710c3cbf885d",
-  "independent_design_GO_SHA256": "2f985b43ebda1082752e0a8be4d6f53ba9deebd6a714e53b69bf5aaf1047b2fe",
+  "independent_design_GO_SHA256": "c95027e1120776fcfb3bc36e01644e2881fa71ecd8cb2c2280183e2e1f23e1fd",
   "one_POST_declare1_review3": true,
   "no_first70_replay_or_refit_rescore": true,
   "local_member_default_bytes": 4194304,
   "larger_pure_metadata_requires_exact_both_scope_shape_GO_before_body": true,
   "costs": "All originals/failures/worker/prep/download/hash/selected extraction/reader/CI/wait/archive/report costs retained; API wall not CPU/billing, human unknown. Existing selector has no explicit JITfree assertion; no new guard claimed.",
   "no_scientific_admission_before_actual_results": true,
-  "source_exactCI_and_transport_execution_GO_still_required": true
+  "source_exactCI_and_transport_execution_GO_still_required": true,
+  "original_work_CRLF_manifest_SHA256": "31f52ae7044bb438a93eae3255cb3716e31bfee4fddb6c6187d9710c3cbf885d",
+  "manifest_GitLF_SHA256": "1b8d13931249a08e419b3b2fbc51fc43a265f49a5f69f10dfea6b2db2e7ad951",
+  "format_correction_note": "Originalwork31f52hashdescribedCRLFbytes; GitLFmanifest1b8dhashbelow. OnlynewlineprovenancewordingcorrectedbeforePOST; semanticJSONscopeunchanged."
 }

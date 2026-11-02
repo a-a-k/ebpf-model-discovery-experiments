@@ -79,9 +79,14 @@
     "original_lost_or_failed_attempts_no_reconstruction_or_deletion": true,
     "reuse_streamed_remoteZIP_selected_members_no_whole_archive_local_download": true
   },
-  "manifest_bytes": 43624,
+  "manifest_bytes": 42357,
+  "manifest_line_endings": {
+    "actual_proposed_file_now_explicit_Git_LF": true,
+    "prior_CRLF_working_copy_SHA256": "31f52ae7044bb438a93eae3255cb3716e31bfee4fddb6c6187d9710c3cbf885d",
+    "semantic_JSON_unchanged": true
+  },
   "manifest_planned81_and_all_technical_replacement_records_exact_existing_candidate": true,
-  "manifest_proposal_GitLF_SHA256": "31f52ae7044bb438a93eae3255cb3716e31bfee4fddb6c6187d9710c3cbf885d",
+  "manifest_proposal_GitLF_SHA256": "1b8d13931249a08e419b3b2fbc51fc43a265f49a5f69f10dfea6b2db2e7ad951",
   "manifest_proposal_path": "work/skeptic-main-v5-observer/deepflow-final-links-b074853-review/batch8-three-PC-full-proposed-manifest-20261102.json",
   "observed_at": "2026-11-02T13:43:38.671702+00:00",
   "original_criterion": {
