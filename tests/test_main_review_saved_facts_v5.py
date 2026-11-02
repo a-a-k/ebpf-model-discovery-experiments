@@ -30,7 +30,7 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
-@pytest.mark.parametrize('mutation', ['none', 'changed_diagnostic', 'unowned_overlay', 'missing_exit', 'empty_capture'])
+@pytest.mark.parametrize('mutation', ['none', 'changed_diagnostic', 'unowned_overlay', 'missing_exit', 'empty_capture', 'missing_identity'])
 def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_diagnostics(tmp_path,mutation):
     declaration={'head_sha':REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD,'collector':'deepflow',
                  'system':'otel_demo','mode':'absent','seed':6,'run_id':99}
@@ -63,6 +63,9 @@ def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_di
         release['removed_ephemeral_overlays'][0]['path']='/other/important.qcow2'
     if mutation=='missing_exit':
         release.pop('owned_guests_confirmed_exited_ns')
+    if mutation=='missing_identity':
+        release['owned_processes'][0].pop('start_ticks')
+        release['verified_pidfd_signal_result'][0].pop('start_ticks')
     if mutation=='changed_diagnostic':
         (tmp_path/'infrastructure/a/guest-kernel-final.txt').write_bytes(b'changed')
     (tmp_path/'infrastructure/postcapture-guest-release.json').write_text(json.dumps(release))
@@ -1270,7 +1273,7 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
 
 
 @pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])
-@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD, REVIEW.STREAMED_CHECKPOINT_HEAD, REVIEW.PETCLINIC_WORKER_HEAD])
+@pytest.mark.parametrize('head', [REVIEW.FRESH_HEAD, REVIEW.IMMUTABLE_PATH_HEAD, REVIEW.UPLOADED_CHECKPOINT_COPY_HEAD, REVIEW.CLOSED_FINAL_SNAPSHOT_HEAD, REVIEW.STREAMED_CHECKPOINT_HEAD, REVIEW.PETCLINIC_WORKER_HEAD, REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD])
 def test_fresh_batch_is_scheduling_only_and_keeps_final81_boundary(tmp_path, change, head):
     name = 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
     template = json.loads((ROOT/name).read_text())['cells'][0]

@@ -1126,6 +1126,10 @@ def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
     if not vm_root.is_absolute() or not PurePosixPath(str(capture.get('campaign_root', ''))).is_absolute():
         raise ValueError('postcapture proof lacks the original guest/campaign roots')
     for row in owned:
+        if (type(row.get('pid')) is not int or row['pid'] <= 1
+                or not isinstance(row.get('start_ticks'), str)
+                or not row['start_ticks'].isdecimal()):
+            raise ValueError('postcapture proof lacks an actual PID/start-time identity')
         node = row['node']
         expected_pidfile, expected_overlay = str(vm_root/(node+'.pid')), str(vm_root/node/'root.qcow2')
         args = row.get('args') or []
