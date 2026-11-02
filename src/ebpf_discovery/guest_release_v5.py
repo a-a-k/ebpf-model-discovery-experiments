@@ -117,14 +117,22 @@ def release(ctx):
         result['verified_pidfd_signal_result']=json.loads(signalled)
         deadline=time.monotonic()+30
         pending=list(owned)
+        result['pidfile_cleanup']=[]
         while pending:
             for row in pending[:]:
                 current=_process(row['pid'])
                 if (current is None or current['start_ticks']!=row['start_ticks']
                         or current['state']=='Z'):
                     pidfile=Path(row['pidfile'])
-                    assert int(subprocess.check_output(['sudo','cat','--',str(pidfile)]))==row['pid']
-                    subprocess.run(['sudo','rm','--',str(pidfile)],check=True)
+                    if pidfile.exists():
+                        assert pidfile.is_file() and not pidfile.is_symlink()
+                        assert int(subprocess.check_output(['sudo','cat','--',str(pidfile)]))==row['pid']
+                        subprocess.run(['sudo','rm','--',str(pidfile)],check=True)
+                        disposition='removed_after_confirmed_exit'
+                    else:
+                        disposition='already_removed_after_confirmed_exit'
+                    result['pidfile_cleanup'].append({'node':row['node'],'path':str(pidfile),
+                                                      'disposition':disposition})
                     pending.remove(row)
             if not pending:
                 break

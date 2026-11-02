@@ -1,6 +1,7 @@
 """Ordering and failure checks around real captured data and owned VM lifetime."""
 import json
 import importlib.util
+import os
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -152,3 +153,43 @@ def test_final_fallback_rejects_unowned_pid_without_signal(monkeypatch,tmp_path)
     with pytest.raises(AssertionError):
         module.stop(tmp_path)
     assert sent==[]
+
+
+@pytest.mark.skipif(os.name!='posix',reason='POSIX allocated-block accounting')
+def test_qemu_removing_own_pidfiles_after_exit_does_not_block_safe_overlay_cleanup(monkeypatch,tmp_path):
+    monkeypatch.setenv('GITHUB_ACTIONS','true')
+    root=(tmp_path/'vms').resolve()
+    root.mkdir()
+    out=(tmp_path/'campaign').resolve()
+    (out/'infrastructure').mkdir(parents=True)
+    (out/'infrastructure/guest-evidence-capture.json').write_text('{}')
+    ctx=SimpleNamespace(vm_dir=root,out=out,repo_dir=tmp_path.resolve())
+    owned=[]
+    for index,node in enumerate(('a','b')):
+        (root/node).mkdir()
+        image=root/node/'root.qcow2'
+        image.write_bytes(b'only-owned-ephemeral-overlay')
+        info=image.stat()
+        pidfile=root/(node+'.pid')
+        pidfile.write_text(str(2000+index))
+        owned.append({'node':node,'pid':2000+index,'start_ticks':'4','args':[],
+            'pidfile':str(pidfile),'overlay':str(image),'overlay_device':info.st_dev,'overlay_inode':info.st_ino})
+    monkeypatch.setattr(guests,'retain',lambda ctx:{'status':'complete'})
+    monkeypatch.setattr(guests,'_owned',lambda ctx,node:owned[('a','b').index(node)])
+    monkeypatch.setattr(guests,'_process',lambda pid:None)
+    def signal_and_qemu_exit(args,**kwargs):
+        assert '--expected-json' in args
+        for row in owned:
+            Path(row['pidfile']).unlink()
+        return b'[]'
+    monkeypatch.setattr(guests.subprocess,'check_output',signal_and_qemu_exit)
+    def remove_only_overlay(args,**kwargs):
+        assert args[:3]==['sudo','rm','--']
+        assert args[3] in {row['overlay'] for row in owned}
+        Path(args[3]).unlink()
+    monkeypatch.setattr(guests.subprocess,'run',remove_only_overlay)
+    result=guests.release(ctx)
+    assert result['status']=='complete'
+    assert len(result['removed_ephemeral_overlays'])==2
+    assert all(row['disposition']=='already_removed_after_confirmed_exit' for row in result['pidfile_cleanup'])
+    assert all(not Path(row['overlay']).exists() for row in owned)
