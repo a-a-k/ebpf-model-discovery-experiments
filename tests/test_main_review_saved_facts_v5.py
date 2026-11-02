@@ -30,6 +30,51 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+@pytest.mark.parametrize('mutation', ['none', 'changed_diagnostic', 'unowned_overlay', 'missing_exit', 'empty_capture'])
+def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_diagnostics(tmp_path,mutation):
+    declaration={'head_sha':REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD,'collector':'deepflow',
+                 'system':'otel_demo','mode':'absent','seed':6,'run_id':99}
+    files={}
+    for node in ('a','b'):
+        for name in ('check-copy.err','serial-test.err','guest-kernel-final.txt',
+                     'guest-kernel-final.err','guest-kernel-final.returncode',
+                     'serial-test.returncode','serial-copy.status'):
+            path=tmp_path/'infrastructure'/node/name
+            path.parent.mkdir(parents=True,exist_ok=True)
+            path.write_bytes(b'1')  # Failed diagnostic RC is preserved, not fabricated as success.
+            files[path.relative_to(tmp_path).as_posix()]={'bytes':1,'sha256':hashlib.sha256(b'1').hexdigest()}
+    capture={'status':'complete','schema':'owned-guest-diagnostics-v5','campaign_root':'/own/campaign',
+             'vm_root':'/own/vms','run_id':99,'source':declaration['head_sha'],'files':files}
+    if mutation=='empty_capture':
+        capture['files']={}
+    capture_path=tmp_path/'infrastructure/guest-evidence-capture.json'
+    capture_path.write_text(json.dumps(capture))
+    owned=[{'node':node,'pid':2000+i,'start_ticks':'4','pidfile':f'/own/vms/{node}.pid',
+        'overlay':f'/own/vms/{node}/root.qcow2','args':['qemu-system-x86_64','-pidfile',
+        f'/own/vms/{node}.pid','-drive',f'file=/own/vms/{node}/root.qcow2,format=qcow2,if=virtio']}
+        for i,node in enumerate(('a','b'))]
+    release={'status':'complete','started_ns':1,'owned_guests_confirmed_exited_ns':2,'ended_ns':3,
+        'guest_evidence_capture_SHA256':REVIEW.sha(capture_path),'owned_processes':owned,
+        'verified_pidfd_signal_result':[{**row,'status':'TERM_sent_through_verified_pidfd'} for row in owned],
+        'removed_ephemeral_overlays':[{'path':row['overlay']} for row in owned],
+        'pidfile_cleanup':[{'node':row['node'],'path':row['pidfile'],
+                           'disposition':'already_removed_after_confirmed_exit'} for row in owned]}
+    if mutation=='unowned_overlay':
+        release['removed_ephemeral_overlays'][0]['path']='/other/important.qcow2'
+    if mutation=='missing_exit':
+        release.pop('owned_guests_confirmed_exited_ns')
+    if mutation=='changed_diagnostic':
+        (tmp_path/'infrastructure/a/guest-kernel-final.txt').write_bytes(b'changed')
+    (tmp_path/'infrastructure/postcapture-guest-release.json').write_text(json.dumps(release))
+    if mutation=='none':
+        facts=REVIEW.postcapture_guest_facts(tmp_path,declaration)
+        assert facts['diagnostic_returncodes_preserved_not_forced_success'] is True
+        assert facts['whole_case_memory_disk_headroom_or_six_hour_cure_proven'] is False
+    else:
+        with pytest.raises(ValueError):
+            REVIEW.postcapture_guest_facts(tmp_path,declaration)
+
+
 @pytest.mark.parametrize('supported', [False, True])
 def test_binding_summary_preserves_literal_candidates_without_witness_arrays(tmp_path, supported):
     toolchain = tmp_path/'toolchain'

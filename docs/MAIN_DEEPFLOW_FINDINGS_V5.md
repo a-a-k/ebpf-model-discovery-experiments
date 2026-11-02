@@ -4,11 +4,35 @@ This is a partial evidence review, not the completed 81-cell conclusion. Negativ
 and unavailable results remain part of the study and are not reasons to rerun a
 technically complete case.
 
-Seventy main cells have now passed both actual-evidence reviews: 27 OBI,
-27 Coroot and 16 DeepFlow. At 2026-11-02T13:36Z, all three DeepFlow Petclinic
-full cases also have technically complete packets: 73 completed captures in
-total. Those three await saved-evidence review; eight DeepFlow OTel cases
-still require technical repair and completion.
+Seventy-three main cells have now passed both actual-evidence reviews: 27 OBI,
+27 Coroot and 19 DeepFlow. Eight DeepFlow OTel cases require technical repair
+and completion. All nine DeepFlow Petclinic cases are now reviewed.
+
+## Petclinic full repetitions 6/7/8
+
+The eighth saved-evidence batch verified the three completed full-SDK packets
+without replaying traffic, refitting models or recomputing outcomes. Each has
+34,800 primary observations, 9,600 targets, 16 blocks, two independent guest
+boots, forecasts saved before targets, six actual Bering executions and sixteen
+actual native/combined Sheaft executions. Context reuses combined evidence and
+adds no distinct simulation. Exact W worker imports and SQL/checkpoint/input
+proofs passed in all three cases.
+
+In every full-SDK repetition, DeepFlow alone leaves all four operation forecasts
+unknown in both views. Native, combined and context support all four: owners
+and vets predict 1 versus 2,400/2,400 successes each; creation and owner details
+predict 0.875 versus 2,100/2,400 each. Adding DeepFlow supplies no extra primary
+operation forecast over the full native/context baseline. Together with absent
+and partial cases, this completes the Petclinic negative finding for this
+DeepFlow configuration: it did not replace absent tracing or fill the partial
+SDK gaps. These are completed negative results and must not be replayed.
+
+Network database forecasts and raw-view unknowns remain separate; a binding
+flag alone is not an executed simulator forecast. See the actual
+[root full/7 review](clean-study-batch8-PCfull7-root-actual-review-20261102.json),
+[independent full/7 review](clean-study-batch8-PCfull7-independent-actual-review-20261102.json),
+[root full/6 and full/8 review](clean-study-batch8-PCfull6-8-root-actual-review-20261102.json)
+and [independent full/6 and full/8 review](clean-study-batch8-PCfull6-8-independent-actual-review-20261102.json).
 
 ## Petclinic partial repetitions 6/7/8 and OTel full repetition 7
 

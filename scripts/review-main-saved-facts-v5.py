@@ -30,15 +30,16 @@ UPLOADED_CHECKPOINT_COPY_HEAD = "8fa2a454db58af487451c9aead6477adc0ca0485"
 CLOSED_FINAL_SNAPSHOT_HEAD = "6eaa441c40253a18f18af76e4e599496927c1739"
 STREAMED_CHECKPOINT_HEAD = "f7ba801d70f9d2327031efc6dd0c00b90d252708"
 PETCLINIC_WORKER_HEAD = "0565115511b24db1d6bbe71e98784baded772144"
+POSTCAPTURE_GUEST_RELEASE_HEAD = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260",
                "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD}
+               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
-METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD}
+METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
 GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD}
-CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD}
+                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
+CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
@@ -1092,9 +1093,87 @@ def guest_platform_facts(root: Path) -> dict:
             "guest_image_bytes_independently_rehashed_by_this_review": False}
 
 
+def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
+    if declaration['head_sha'] != POSTCAPTURE_GUEST_RELEASE_HEAD:
+        return None
+    if (declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo') or (
+            declaration['mode'], declaration['seed']) == ('full', 7):
+        raise ValueError('postcapture source is restricted to the eight technical OTel replacements')
+    release_path = root / 'infrastructure/postcapture-guest-release.json'
+    capture_path = root / 'infrastructure/guest-evidence-capture.json'
+    release, capture = read(release_path), read(capture_path)
+    if (release.get('status') != 'complete' or capture.get('status') != 'complete'
+            or capture.get('schema') != 'owned-guest-diagnostics-v5'
+            or str(capture.get('run_id')) != str(declaration['run_id'])
+            or capture.get('source') != declaration['head_sha']
+            or release.get('guest_evidence_capture_SHA256') != sha(capture_path)):
+        raise ValueError('postcapture source lacks its actual bound release/capture proofs')
+    started, exited, ended = (release.get(name) for name in
+        ('started_ns', 'owned_guests_confirmed_exited_ns', 'ended_ns'))
+    if not all(type(value) is int for value in (started, exited, ended)) or not started < exited <= ended:
+        raise ValueError('owned guest exit was not confirmed before completion')
+    owned = release.get('owned_processes') or []
+    signals = release.get('verified_pidfd_signal_result') or []
+    removed = release.get('removed_ephemeral_overlays') or []
+    cleanup = release.get('pidfile_cleanup') or []
+    if (len(owned) != 2 or {row.get('node') for row in owned} != {'a', 'b'}
+            or len({row.get('pid') for row in owned}) != 2
+            or len(signals) != 2 or {row.get('node') for row in signals} != {'a', 'b'}
+            or len(removed) != 2 or len(cleanup) != 2
+            or {row.get('node') for row in cleanup} != {'a', 'b'}):
+        raise ValueError('postcapture ownership proof does not cover exactly two guests')
+    vm_root = PurePosixPath(str(capture.get('vm_root', '')))
+    if not vm_root.is_absolute() or not PurePosixPath(str(capture.get('campaign_root', ''))).is_absolute():
+        raise ValueError('postcapture proof lacks the original guest/campaign roots')
+    for row in owned:
+        node = row['node']
+        expected_pidfile, expected_overlay = str(vm_root/(node+'.pid')), str(vm_root/node/'root.qcow2')
+        args = row.get('args') or []
+        if (row.get('pidfile') != expected_pidfile or row.get('overlay') != expected_overlay
+                or not args or PurePosixPath(args[0]).name != 'qemu-system-x86_64'
+                or not any(args[i] == '-pidfile' and args[i+1] == expected_pidfile for i in range(len(args)-1))
+                or not any(args[i] == '-drive' and args[i+1] == 'file='+expected_overlay+',format=qcow2,if=virtio'
+                           for i in range(len(args)-1))):
+            raise ValueError('postcapture proof differs from the owned guest paths')
+        signal = next(item for item in signals if item['node'] == node)
+        if signal.get('pid') != row['pid'] or signal.get('status') not in (
+                'TERM_sent_through_verified_pidfd', 'already_exited_without_signal', 'exited_before_signal'):
+            raise ValueError('owned guest signal/exit proof differs')
+        if signal['status'] == 'TERM_sent_through_verified_pidfd' and (
+                signal.get('start_ticks') != row.get('start_ticks') or signal.get('args') != args):
+            raise ValueError('signal was not bound to the original guest identity')
+        disposition = next(item for item in cleanup if item['node'] == node)
+        if disposition.get('path') != expected_pidfile or disposition.get('disposition') not in (
+                'already_removed_after_confirmed_exit', 'removed_after_confirmed_exit'):
+            raise ValueError('owned PID file cleanup differs')
+        prefix = 'infrastructure/'+node+'/'
+        files = capture.get('files') or {}
+        required = {prefix+name for name in ('check-copy.err', 'serial-test.err',
+            'guest-kernel-final.txt', 'guest-kernel-final.err', 'guest-kernel-final.returncode')}
+        if not required <= files.keys():
+            raise ValueError('postcapture diagnostic proof lacks a guest command')
+        serial_required = ({prefix+name for name in ('serial-stat.txt', 'serial-stat.err',
+                            'serial-copy.err', 'serial.log')} if prefix+'serial-copy.returncode' in files else
+                           {prefix+'serial-test.returncode', prefix+'serial-copy.status'})
+        if not serial_required <= files.keys():
+            raise ValueError('postcapture serial disposition is missing')
+    if {row.get('path') for row in removed} != {row['overlay'] for row in owned}:
+        raise ValueError('postcapture removal includes an unowned overlay')
+    for name, claim in capture['files'].items():
+        path = (root/name).resolve()
+        if (not _safe(name) or not path.is_relative_to(root.resolve()) or not path.is_file()
+                or path.stat().st_size != claim.get('bytes') or sha(path) != claim.get('sha256')):
+            raise ValueError('postcapture diagnostic file changed: '+name)
+    return {'release': release, 'capture': capture,
+            'release_sha256': sha(release_path), 'capture_sha256': sha(capture_path),
+            'diagnostic_returncodes_preserved_not_forced_success': True,
+            'whole_case_memory_disk_headroom_or_six_hour_cure_proven': False}
+
+
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
                evaluation: dict | None, package_out: Path) -> dict:
     proof = _selected_proof(root, declaration)
+    postcapture = postcapture_guest_facts(root, declaration)
     toolchain = root / "toolchain"
     packages = {}
     typed = root / "toolchain-package"
@@ -1404,8 +1483,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
         remote_root = handoff_selected
     parent_import_path = remote_root / "parent-import.json"
-    if declaration["head_sha"] == PETCLINIC_WORKER_HEAD and not parent_import_path.is_file():
-        raise ValueError("existing-PC-worker source requires retained parent worker import")
+    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD) and not parent_import_path.is_file():
+        raise ValueError("named worker source requires retained parent worker import")
     worker_provenance_path = remote_root / "worker/worker-provenance.json"
     worker_status_path = remote_root / "worker/worker-status.json"
     if parent_import_path.is_file():
@@ -1517,6 +1596,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "supplied_logical_alias_facts": alias_facts,
         "paired_context_baseline_facts": context_facts,
         "worker_import_facts": worker_facts,
+        "postcapture_guest_release_facts": postcapture,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
         "actual_procrustes": preflights, "saved_branch_facts": branch_facts,
         "selected_raw_controls": controls, "final_drain": drain,

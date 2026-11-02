@@ -1,0 +1,2316 @@
+{
+  "both_reviewed_count_after_root_concurrence": 73,
+  "cases": [
+    {
+      "actual_computation": {
+        "actual_Sheaft_command_model_pairs": 16,
+        "available_commands_checked_success_model_report_frozen": true,
+        "available_primary_evaluation_rows_including_context": 24,
+        "context": [
+          {
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true,
+            "joint_alias_metadata_collisions": [],
+            "semantic_identity_conflicts": [],
+            "status": "reuse_unchanged_union",
+            "variant": "network_scope"
+          },
+          {
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true,
+            "joint_alias_metadata_collisions": [],
+            "semantic_identity_conflicts": [],
+            "status": "reuse_unchanged_union",
+            "variant": "raw"
+          }
+        ],
+        "context_extra_independent_Sheaft_runs": 0,
+        "pooled_Bering_calls": [
+          {
+            "accepted_inputs": 2290,
+            "metric_traces": 24650,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "d407e76f8493263f93096873218a14d66fb37c98f331c6eda63bf29900b58d29",
+            "source": "combined",
+            "spans": 655812,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 2290,
+            "metric_traces": 24650,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "cc0a34e560be01af6735d9b9e65196202834525871c9bb56b1f842c7eac1df35",
+            "source": "combined",
+            "spans": 655812,
+            "variant": "raw"
+          },
+          {
+            "accepted_inputs": 1677,
+            "metric_traces": 0,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "33fe555b6f0d3bc005cceb12fe2deed2efb40c4c09a2f6c3c0af97703690ed37",
+            "source": "ebpf",
+            "spans": 428972,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 1677,
+            "metric_traces": 0,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "a2295493415b70d866b03e340eb17e2ff8129d07451ae8d1744e7dffca173f66",
+            "source": "ebpf",
+            "spans": 428972,
+            "variant": "raw"
+          },
+          {
+            "accepted_inputs": 613,
+            "metric_traces": 24650,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "54dbe2cf35035e9fbdeacc8faa29f15b9851953b1304513e5d5f2eda6f965654",
+            "source": "native",
+            "spans": 226840,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 613,
+            "metric_traces": 24650,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "b4fb40914942c4d32db0cb9a9890f05f049ead55d0b55047eba3f279211859bd",
+            "source": "native",
+            "spans": 226840,
+            "variant": "raw"
+          }
+        ],
+        "same_original_100000Sheafttrials_and_fixedseed": "Literalqualifiedtoolchainanalysis/source and actualfrozencommand/input/report chain retained; no refit/rescore locally.",
+        "saved_graph_branches": 24,
+        "total_primary_evaluation_rows": 32
+      },
+      "actual_external_outcomes_and_forecasts_copied": [
+        {
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "create_visit"
+        },
+        {
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "list_owners"
+        },
+        {
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "list_vets"
+        },
+        {
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "owner_details_with_visits"
+        }
+      ],
+      "actual_raw_proof": {
+        "all_raw_payloads_rehashed_by_this_localreview": false,
+        "drain_technical_complete_and_accepted_native_bytes_closed_hashed": true,
+        "positive_control_nodes": [
+          "a",
+          "b"
+        ],
+        "snapshot_hash_chains_verified": 6,
+        "training_prefixes_unchanged": 2,
+        "zero_kernel_producer_flushloss_proven": false
+      },
+      "costs": {
+        "bering_replay_attempts_including_context_joint": 8,
+        "bering_replay_command_seconds": 1564.605406262,
+        "campaign_elapsed_seconds": 16097.230703136,
+        "checkpoint_creation_upload_hold": {
+          "checkpoint_path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/training-checkpoint",
+          "creation_wall_seconds": 735.405818664,
+          "ended_ns": 1793598104239239037,
+          "ready": true,
+          "scope": "checkpoint creation and upload hold on same live runner and guests; toolchain setup and earlier campaign are recorded separately",
+          "started_ns": 1793597239782516822,
+          "total_wall_seconds": 864.456697062,
+          "upload_hold_wall_seconds": 129.050878398,
+          "upload_success": true
+        },
+        "human_unknown_not_zero": true,
+        "nested_overlap_note": "checkpoint creation/upload/hold and any remote worker wait are included in campaign elapsed; worker compute overlaps parent wait and is a separate Actions job; swap setup precedes campaign elapsed",
+        "prior_failedAparents_prefixes_workers_CI_all_reader_transfers_hash_storage_archive_report_observer_finiteclosingtail_costs_retained": true,
+        "selected_full_transport": {
+          "complete": true,
+          "cost_boundary": "Actions evidence transport only; original campaign and human review costs are separate",
+          "elapsed_seconds": 408.73830869200003,
+          "failure": null,
+          "human_effort_seconds": null,
+          "method": "exact HTTP206 Content-Range plus selected ZIP CRC/SHA256",
+          "process_cpu_seconds": 59.13129506,
+          "process_max_rss_platform_units": 82444,
+          "process_max_rss_units": "KiB on Linux; platform units otherwise",
+          "range_attempted_received_bytes": 206921440,
+          "range_failures": [],
+          "range_verified_received_bytes": 206921440,
+          "schema_version": "selected-main-review-evidence-v5",
+          "scientific_processing_performed": false,
+          "scope": "full",
+          "selected_evidence_bytes_excluding_transport_proof": 1372140812,
+          "selected_member_count": 381,
+          "whole_archive_sha256_verified": false
+        },
+        "shared_input_preparation_seconds": 2268.133463326,
+        "toolchain_build_seconds": 20.892843866,
+        "toolchain_clone_seconds": 3.037918493,
+        "toolchain_command_count": 48,
+        "toolchain_command_failures": 0,
+        "toolchain_command_seconds": 1938.544693375,
+        "worker_parent_import": {
+          "archive_download_seconds": 16.568517858,
+          "checkpoint_manifest_sha256": "101cd8e335ab7ea766c076bc58b4be2a59aff63873d8b70cc77aa04947ca4e52",
+          "downloaded_archive_bytes": 1190946250,
+          "downloaded_archive_disposition": "deleted after digest verification and successful import; Actions artifact and complete imported files retained",
+          "downloaded_archive_retained": false,
+          "downloaded_archive_sha256": "9bf98caa463f0830471983d9476831a30ba084aef561b37136fb35969998e654",
+          "identity": {
+            "commit": "0565115511b24db1d6bbe71e98784baded772144",
+            "manifest_sha256": "101cd8e335ab7ea766c076bc58b4be2a59aff63873d8b70cc77aa04947ca4e52",
+            "mode": "full",
+            "run_id": "41387281004",
+            "seed": 6,
+            "system": "petclinic"
+          },
+          "imported_ns": 1793605256962863307,
+          "new_application_traffic": false,
+          "output_package_unpack_seconds": null,
+          "output_transfer_seconds": 86.030814961,
+          "output_zip_extract_seconds": 69.4253413,
+          "parent_cell_id": "petclinic:full:6",
+          "parent_run_attempt": "1",
+          "parent_wait_wall_seconds": 5725.950828525,
+          "plans_sha256": "85734ed599c3997b04a58ec0d1b135f2ad6cfada0e310687f6635b35beabb178",
+          "post_import_cleanup_errors": [],
+          "schema_version": "remote-toolchain-parent-import-v4",
+          "verification_import_seconds": 447.588950315,
+          "worker_artifact_digest": "sha256:9bf98caa463f0830471983d9476831a30ba084aef561b37136fb35969998e654",
+          "worker_artifact_id": 13123757850,
+          "worker_head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "worker_run_attempt": 1,
+          "worker_run_id": 41396916274,
+          "worker_transport": null
+        }
+      },
+      "counts": {
+        "all_records": 34904,
+        "blocks": 16,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "database_outcomes_and_selected_forecast_impact_copied": {
+        "db_down": {
+          "create_visit": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "db_up": {
+          "create_visit": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "forecast_impact": [
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          }
+        ]
+      },
+      "declaration": {
+        "collector": "deepflow",
+        "compact_artifact_bytes": 43833745,
+        "compact_artifact_digest": "sha256:cf7eeeb7175f2fb8690759e69058faf87075b4b2c28bc017d8973ed15313c6af",
+        "compact_artifact_id": 13127576461,
+        "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-6-41387281004",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_artifact_bytes": 3972684893,
+        "full_artifact_digest": "sha256:f70f7f0c69d3b8d23ed721a801a6ab54eee4fb0cec5f56b386516dd129c81c11",
+        "full_artifact_id": 13127827466,
+        "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-6-41387281004",
+        "full_scope": "retrieve_family_selected",
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "mode": "full",
+        "run_id": 41387281004,
+        "runner": "study",
+        "seed": 6,
+        "stage": "main",
+        "system": "petclinic"
+      },
+      "direct_manual_baseline_copied": {
+        "create_visit": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_owners": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_vets": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": false,
+            "reason": "declared_database_requirement_is_conditional"
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "owner_details_with_visits": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        }
+      },
+      "facts": {
+        "CRC32": "33265444",
+        "SHA256": "bf5e1d643226110eabb1b5dc017d3a2e3f7e04ad447f3c8899f62a3bdc42c113",
+        "bytes": 12991952,
+        "exact_transport_proof_SHA256": "015e3a33392c2fde5ee3c9fb69af303c3f992f5552efc15c334332348781583f",
+        "exact_transport_proof_path": "work/main-review-batch8-PCfull3-41456677272-exact-facts/13148725023/exact-facts-transport-proof.json",
+        "path": "work/main-review-batch8-PCfull3-41456677272-exact-facts/13148725023/facts/saved-evidence-facts.json",
+        "secondary_artifact": 13148725023
+      },
+      "first_target_started_ns": 1793605311589708900,
+      "forecast_saved_ns": 1793605307030117101,
+      "guest_platform": {
+        "boot_ids": {
+          "a": "b8fe23f7-3824-4ec4-aeb9-4d9d3f5f671c",
+          "b": "5fe0501b-f19f-419f-981c-3b8e80e8c47d"
+        },
+        "guest_image_bytes_independently_rehashed_by_this_review": false,
+        "guest_memory_mib": 6144,
+        "independent_guest_boots": true,
+        "kernel_releases": {
+          "a": "6.8.0-147-generic",
+          "b": "6.8.0-147-generic"
+        },
+        "recorded_image_provenance": {
+          "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+          "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+        },
+        "separate_physical_hosts_claimed": false,
+        "shared_runner_host": true
+      },
+      "native_mode_facts": {
+        "final": {
+          "actual_census": {
+            "malformed_records": 0,
+            "services": {
+              "api-gateway": 23267,
+              "customers-service": 51564,
+              "vets-service": 2583,
+              "visits-service": 20450
+            },
+            "source_files_expected": 2,
+            "source_files_present": 2,
+            "spans": 97864,
+            "valid_records": 375
+          },
+          "metadata_sha256": "f3cb1377c275b7fa4528ef13127f4b27adac71f961a021e7fb2871b4a8e81dbe",
+          "mode_compliance": {
+            "compliant": true,
+            "observed_services": [
+              "api-gateway",
+              "customers-service",
+              "vets-service",
+              "visits-service"
+            ],
+            "reason": "service_mode_matches_actual_spans"
+          },
+          "schema": "native-metadata"
+        },
+        "training": {
+          "actual_census": {
+            "malformed_records": 0,
+            "services": {
+              "api-gateway": 55527,
+              "customers-service": 123222,
+              "vets-service": 6173,
+              "visits-service": 41918
+            },
+            "source_files_expected": 2,
+            "source_files_present": 2,
+            "spans": 226840,
+            "valid_records": 613
+          },
+          "metadata_sha256": "713ba3492bc9d9d8bdb39c3bd87c6d9758f38f19847f59651781d234aff3a444",
+          "mode_compliance": {
+            "compliant": true,
+            "observed_services": [
+              "api-gateway",
+              "customers-service",
+              "vets-service",
+              "visits-service"
+            ],
+            "reason": "service_mode_matches_actual_spans"
+          },
+          "schema": "native-metadata"
+        }
+      },
+      "native_receiver_closure": {
+        "native": {
+          "errors_json_decode_error_count": 0,
+          "in_flight_handlers_joined": true,
+          "listening_socket_closed": true,
+          "receiver_parse_or_read_failure_count": 0,
+          "saved_bytes_valid": true,
+          "wrapper_json_decode_error_count": 0
+        }
+      },
+      "rendered_SDK_disabled_values": [
+        "false",
+        "false",
+        "false",
+        "false",
+        "false"
+      ],
+      "source_binary_pins": {
+        "bering": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+        "procrustes": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+        "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a"
+      },
+      "worker": {
+        "checkpoint_parent_before_after_SQL_proofs": {
+          "files": {
+            "rows": 4,
+            "sha256": "5da24ba6cd841838f79c52359983e670bd4bd135ae1e9942a648ced3e21df5a4"
+          },
+          "links": {
+            "rows": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observation_provenance": {
+            "rows": 655812,
+            "sha256": "aac7837da5cb3b56a64d108d14b7dae3e7d64b7fc11e6b8bfcbfbaa005c1293f"
+          },
+          "proof_basis": "rowid-and-all-columns-v1",
+          "runtime_identity_projection": {
+            "rows": 655812,
+            "sha256": "8be3315c286503c3038aba3d97a0be8ff53c942a6bace8592d7ab185832e5517"
+          },
+          "schema_sha256": "668d44331e0bc949eb2764772c7c5422f32ea2e61872909101f862219f2f2dbe",
+          "spans": {
+            "rows": 655812,
+            "sha256": "7613b0cf0c66d29616cf47bbadc73022eea237fc4209aa29930546885f1bba14"
+          },
+          "supplied_logical_alias_projection": {
+            "rows": 244496,
+            "sha256": "d75c7ea523cf4edc87c22d068441ced35a8f9b09526b63781a3285d3878b8b9b"
+          }
+        },
+        "frozen_claim_binding": "compact_freeze_equals_forecast_saved_and_selected_claims_match",
+        "implementation_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "run": 41396916274,
+        "scientific_input_commit": "0565115511b24db1d6bbe71e98784baded772144",
+        "scientific_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "status_complete_checkpoint_unchanged_no_new_traffic": true,
+        "unselected_claim_count": 8224,
+        "verified_selected_file_claims": 315,
+        "whole_worker_tree_verified": false,
+        "workflow_head": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      }
+    },
+    {
+      "actual_computation": {
+        "actual_Sheaft_command_model_pairs": 16,
+        "available_commands_checked_success_model_report_frozen": true,
+        "available_primary_evaluation_rows_including_context": 24,
+        "context": [
+          {
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true,
+            "joint_alias_metadata_collisions": [],
+            "semantic_identity_conflicts": [],
+            "status": "reuse_unchanged_union",
+            "variant": "network_scope"
+          },
+          {
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true,
+            "joint_alias_metadata_collisions": [],
+            "semantic_identity_conflicts": [],
+            "status": "reuse_unchanged_union",
+            "variant": "raw"
+          }
+        ],
+        "context_extra_independent_Sheaft_runs": 0,
+        "pooled_Bering_calls": [
+          {
+            "accepted_inputs": 2505,
+            "metric_traces": 24655,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "ba042ec5de85b2c0d37bb85ca8000b5652c8557a8653daabbea4b2524c40ad76",
+            "source": "combined",
+            "spans": 658541,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 2505,
+            "metric_traces": 24655,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "75d0d7e257bd82712ff58f2e91045c5c2ef4599033708a859270380de41d4d60",
+            "source": "combined",
+            "spans": 658541,
+            "variant": "raw"
+          },
+          {
+            "accepted_inputs": 1689,
+            "metric_traces": 0,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "985822602dc766c92d9799e93ef7eacf8f5b575720c7282ed787e35b661061ef",
+            "source": "ebpf",
+            "spans": 431692,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 1689,
+            "metric_traces": 0,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "c20f89ada5864264f50234901efe3df4563753a5f5923c309ea13031c714267f",
+            "source": "ebpf",
+            "spans": 431692,
+            "variant": "raw"
+          },
+          {
+            "accepted_inputs": 816,
+            "metric_traces": 24655,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "0c157f1c52570337e1a79d3536ddcd1ed267f32756a70e41acea6daaa716ae35",
+            "source": "native",
+            "spans": 226849,
+            "variant": "network_scope"
+          },
+          {
+            "accepted_inputs": 816,
+            "metric_traces": 24655,
+            "metrics_dropped_spans": 0,
+            "metrics_late_spans": 0,
+            "observed_model_sha256": "413013354582d5158612ed780cf1a7653ecafb2c0500fc128e8110ddb399a44f",
+            "source": "native",
+            "spans": 226849,
+            "variant": "raw"
+          }
+        ],
+        "same_original_100000Sheafttrials_and_fixedseed": "Literalqualifiedtoolchainanalysis/source and actualfrozencommand/input/report chain retained; no refit/rescore locally.",
+        "saved_graph_branches": 24,
+        "total_primary_evaluation_rows": 32
+      },
+      "actual_external_outcomes_and_forecasts_copied": [
+        {
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "create_visit"
+        },
+        {
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "list_owners"
+        },
+        {
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 1.0,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "list_vets"
+        },
+        {
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          },
+          "forecasts": [
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "raw"
+            },
+            {
+              "available": false,
+              "point_prediction": null,
+              "reason": "required_graph_evidence_unavailable",
+              "source": "ebpf",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "native",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "combined",
+              "variant": "network_scope"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "raw"
+            },
+            {
+              "available": true,
+              "point_prediction": 0.875,
+              "reason": null,
+              "source": "context-baseline",
+              "variant": "network_scope"
+            }
+          ],
+          "operation": "owner_details_with_visits"
+        }
+      ],
+      "actual_raw_proof": {
+        "all_raw_payloads_rehashed_by_this_localreview": false,
+        "drain_technical_complete_and_accepted_native_bytes_closed_hashed": true,
+        "positive_control_nodes": [
+          "a",
+          "b"
+        ],
+        "snapshot_hash_chains_verified": 6,
+        "training_prefixes_unchanged": 2,
+        "zero_kernel_producer_flushloss_proven": false
+      },
+      "costs": {
+        "bering_replay_attempts_including_context_joint": 8,
+        "bering_replay_command_seconds": 1573.336191218,
+        "campaign_elapsed_seconds": 17436.709198731,
+        "checkpoint_creation_upload_hold": {
+          "checkpoint_path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/training-checkpoint",
+          "creation_wall_seconds": 768.737769648,
+          "ended_ns": 1793598707077716589,
+          "ready": true,
+          "scope": "checkpoint creation and upload hold on same live runner and guests; toolchain setup and earlier campaign are recorded separately",
+          "started_ns": 1793597786153266338,
+          "total_wall_seconds": 920.924433477,
+          "upload_hold_wall_seconds": 152.186663829,
+          "upload_success": true
+        },
+        "human_unknown_not_zero": true,
+        "nested_overlap_note": "checkpoint creation/upload/hold and any remote worker wait are included in campaign elapsed; worker compute overlaps parent wait and is a separate Actions job; swap setup precedes campaign elapsed",
+        "prior_failedAparents_prefixes_workers_CI_all_reader_transfers_hash_storage_archive_report_observer_finiteclosingtail_costs_retained": true,
+        "selected_full_transport": {
+          "complete": true,
+          "cost_boundary": "Actions evidence transport only; original campaign and human review costs are separate",
+          "elapsed_seconds": 456.704017999,
+          "failure": null,
+          "human_effort_seconds": null,
+          "method": "exact HTTP206 Content-Range plus selected ZIP CRC/SHA256",
+          "process_cpu_seconds": 42.661662287,
+          "process_max_rss_platform_units": 83684,
+          "process_max_rss_units": "KiB on Linux; platform units otherwise",
+          "range_attempted_received_bytes": 208812773,
+          "range_failures": [],
+          "range_verified_received_bytes": 208812773,
+          "schema_version": "selected-main-review-evidence-v5",
+          "scientific_processing_performed": false,
+          "scope": "full",
+          "selected_evidence_bytes_excluding_transport_proof": 1384163025,
+          "selected_member_count": 381,
+          "whole_archive_sha256_verified": false
+        },
+        "shared_input_preparation_seconds": 2250.587666429,
+        "toolchain_build_seconds": 23.881148746,
+        "toolchain_clone_seconds": 4.832746972000001,
+        "toolchain_command_count": 48,
+        "toolchain_command_failures": 0,
+        "toolchain_command_seconds": 1966.778287787,
+        "worker_parent_import": {
+          "archive_download_seconds": 44.740868852,
+          "checkpoint_manifest_sha256": "ef778d6476c4f061dd624f69038cd9461a53b1c9bf81adc60db826582d87bf05",
+          "downloaded_archive_bytes": 1200806073,
+          "downloaded_archive_disposition": "deleted after digest verification and successful import; Actions artifact and complete imported files retained",
+          "downloaded_archive_retained": false,
+          "downloaded_archive_sha256": "f60ec35ed34b26a88719b53794eca98b126d7b333907cfa2a593296ea934e1e3",
+          "identity": {
+            "commit": "0565115511b24db1d6bbe71e98784baded772144",
+            "manifest_sha256": "ef778d6476c4f061dd624f69038cd9461a53b1c9bf81adc60db826582d87bf05",
+            "mode": "full",
+            "run_id": "41387290675",
+            "seed": 8,
+            "system": "petclinic"
+          },
+          "imported_ns": 1793605834224103379,
+          "new_application_traffic": false,
+          "output_package_unpack_seconds": null,
+          "output_transfer_seconds": 130.284122444,
+          "output_zip_extract_seconds": 85.36246523,
+          "parent_cell_id": "petclinic:full:8",
+          "parent_run_attempt": "1",
+          "parent_wait_wall_seconds": 5792.335396827,
+          "plans_sha256": "1ed2b2349f3dad6ded523df22c19bd80c979520c39e72b0d2e1068973c377f27",
+          "post_import_cleanup_errors": [],
+          "schema_version": "remote-toolchain-parent-import-v4",
+          "verification_import_seconds": 426.53369633,
+          "worker_artifact_digest": "sha256:f60ec35ed34b26a88719b53794eca98b126d7b333907cfa2a593296ea934e1e3",
+          "worker_artifact_id": 13123474159,
+          "worker_head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "worker_run_attempt": 1,
+          "worker_run_id": 41397694366,
+          "worker_transport": null
+        }
+      },
+      "counts": {
+        "all_records": 34904,
+        "blocks": 16,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "database_outcomes_and_selected_forecast_impact_copied": {
+        "db_down": {
+          "create_visit": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "db_up": {
+          "create_visit": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "forecast_impact": [
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          }
+        ]
+      },
+      "declaration": {
+        "collector": "deepflow",
+        "compact_artifact_bytes": 44041659,
+        "compact_artifact_digest": "sha256:dcde0f2b0f98cfa39e2d59f05f0e659f4145f782729843970ab96941cb834921",
+        "compact_artifact_id": 13128766763,
+        "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-8-41387290675",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_artifact_bytes": 4012791824,
+        "full_artifact_digest": "sha256:3dce15c02eaff62775e64914aebe2f5587c2f206ed013474186b2bcb3603eb86",
+        "full_artifact_id": 13128722911,
+        "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-8-41387290675",
+        "full_scope": "retrieve_family_selected",
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "mode": "full",
+        "run_id": 41387290675,
+        "runner": "study",
+        "seed": 8,
+        "stage": "main",
+        "system": "petclinic"
+      },
+      "direct_manual_baseline_copied": {
+        "create_visit": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_owners": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_vets": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": false,
+            "reason": "declared_database_requirement_is_conditional"
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "owner_details_with_visits": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        }
+      },
+      "facts": {
+        "CRC32": "0c3e42ab",
+        "SHA256": "ffb49490aeaa19a235975262d39ad22aea3c3cb908e089f1ed9322d6a4e80a9c",
+        "bytes": 13214600,
+        "exact_transport_proof_SHA256": "8e2c6336804ac127d1dd43940860247c29dadded050162a0903eb060976a5c9e",
+        "exact_transport_proof_path": "work/main-review-batch8-PCfull3-41456677272-exact-facts/13148560484/exact-facts-transport-proof.json",
+        "path": "work/main-review-batch8-PCfull3-41456677272-exact-facts/13148560484/facts/saved-evidence-facts.json",
+        "secondary_artifact": 13148560484
+      },
+      "first_target_started_ns": 1793605892048837806,
+      "forecast_saved_ns": 1793605888907996696,
+      "guest_platform": {
+        "boot_ids": {
+          "a": "3cdc5133-416e-4a4a-a6c5-5479a841601e",
+          "b": "7fc1751f-d058-4631-91f7-b5c279fc730b"
+        },
+        "guest_image_bytes_independently_rehashed_by_this_review": false,
+        "guest_memory_mib": 6144,
+        "independent_guest_boots": true,
+        "kernel_releases": {
+          "a": "6.8.0-147-generic",
+          "b": "6.8.0-147-generic"
+        },
+        "recorded_image_provenance": {
+          "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+          "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+        },
+        "separate_physical_hosts_claimed": false,
+        "shared_runner_host": true
+      },
+      "native_mode_facts": {
+        "final": {
+          "actual_census": {
+            "malformed_records": 0,
+            "services": {
+              "api-gateway": 23267,
+              "customers-service": 51564,
+              "vets-service": 2583,
+              "visits-service": 20448
+            },
+            "source_files_expected": 2,
+            "source_files_present": 2,
+            "spans": 97862,
+            "valid_records": 394
+          },
+          "metadata_sha256": "67593be4b81f749578a5e38e12ae3d2e7266a0decf8811feb1e48ebd5ff494b7",
+          "mode_compliance": {
+            "compliant": true,
+            "observed_services": [
+              "api-gateway",
+              "customers-service",
+              "vets-service",
+              "visits-service"
+            ],
+            "reason": "service_mode_matches_actual_spans"
+          },
+          "schema": "native-metadata"
+        },
+        "training": {
+          "actual_census": {
+            "malformed_records": 0,
+            "services": {
+              "api-gateway": 55533,
+              "customers-service": 123222,
+              "vets-service": 6174,
+              "visits-service": 41920
+            },
+            "source_files_expected": 2,
+            "source_files_present": 2,
+            "spans": 226849,
+            "valid_records": 816
+          },
+          "metadata_sha256": "87cda84b0fde2f35278e38a0e21b1ac895bb6c15021d763d627ab5251d42adc4",
+          "mode_compliance": {
+            "compliant": true,
+            "observed_services": [
+              "api-gateway",
+              "customers-service",
+              "vets-service",
+              "visits-service"
+            ],
+            "reason": "service_mode_matches_actual_spans"
+          },
+          "schema": "native-metadata"
+        }
+      },
+      "native_receiver_closure": {
+        "native": {
+          "errors_json_decode_error_count": 0,
+          "in_flight_handlers_joined": true,
+          "listening_socket_closed": true,
+          "receiver_parse_or_read_failure_count": 0,
+          "saved_bytes_valid": true,
+          "wrapper_json_decode_error_count": 0
+        }
+      },
+      "rendered_SDK_disabled_values": [
+        "false",
+        "false",
+        "false",
+        "false",
+        "false"
+      ],
+      "source_binary_pins": {
+        "bering": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+        "procrustes": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+        "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a"
+      },
+      "worker": {
+        "checkpoint_parent_before_after_SQL_proofs": {
+          "files": {
+            "rows": 4,
+            "sha256": "6db288ca13124b1a251d04d5ade017289b73331dc052308d478d902567d9583e"
+          },
+          "links": {
+            "rows": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "observation_provenance": {
+            "rows": 658541,
+            "sha256": "b0cfbef2f4887b4a59875a949b65b1d6d78e2d26e4e22db0f3eca6ee0dee99ff"
+          },
+          "proof_basis": "rowid-and-all-columns-v1",
+          "runtime_identity_projection": {
+            "rows": 658541,
+            "sha256": "d3e93a9d401d2b59717850d7ea39f26c107bc42ceb42106664b6d80ee805c24d"
+          },
+          "schema_sha256": "668d44331e0bc949eb2764772c7c5422f32ea2e61872909101f862219f2f2dbe",
+          "spans": {
+            "rows": 658541,
+            "sha256": "e884259ce4a89328e3b9db8b54c91c8f88d478aee2e068f2f74c1cb3962f5182"
+          },
+          "supplied_logical_alias_projection": {
+            "rows": 245862,
+            "sha256": "b7aae9f8cbf080de45c43791f5e6ae3b60e1e0b7c5a0d668178c06bacebcecd0"
+          }
+        },
+        "frozen_claim_binding": "compact_freeze_equals_forecast_saved_and_selected_claims_match",
+        "implementation_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "run": 41397694366,
+        "scientific_input_commit": "0565115511b24db1d6bbe71e98784baded772144",
+        "scientific_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "status_complete_checkpoint_unchanged_no_new_traffic": true,
+        "unselected_claim_count": 8678,
+        "verified_selected_file_claims": 315,
+        "whole_worker_tree_verified": false,
+        "workflow_head": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+      }
+    }
+  ],
+  "concrete_interpretation": {
+    "actual_method_execution": "Perseed6pooledBeringexecutions plus16actualnative/combinedoperationSheaftcommands;24availableevaluationrowsinclude8contextreuseswith0additionalindependentSheaft. Beringebpfmetrictraces0doesnotproveemptycausalinformation.",
+    "both_seeds": "eBPFaloneall4 primaryforecastsunknowninbothviews; native/combined/contextall4available. Owners/vetspredict1andobserved2400/2400;create/details.875and2100/2400. BotharevalidnegativeeBPFutilitycases underpinnedconfig, notglobalDeepFlowimpossibility.",
+    "direct_baseline": "Sameprovidedsemantics/directtwo-slotreplicacontract1/1/.875/.875 andknownarithmetic equivalence retained. No discovery/cost-superiorityorML claim.",
+    "native_increment": "NoadditionalprimaryoperationavailabilityfromaddingDeepFlowbeyondfullnative orunchangedcontext inthesecases.32method-view-operationrowspercasearepairedsameoutcomes, notindependentrepetitions.",
+    "primary_vs_DB": "Primaryreplicaintervention conditionalonnonintervenedrequirementsfulfilled; rawmissingDBchannelsmaybefixedassumptionsbutare notrecovereddependencies. Selectednative/combined/contextnetwork_scopeDBforecast0/healthy1/impact1 forowners/create/details, recordeddown0/5/up5/5. RawDBforecastunknown, vetsDBconditionalunknown despitebindingbooleantrueinoneview andrecordeddown5/5; no false0/failure attribution.",
+    "scope_of_usefulness": "Judgeactualexternaloutcomes andunknownoperationcoverage, notARI1/flags/admission alone; no source/simulationinvented wherebindingunavailable."
+  },
+  "full81_complete": false,
+  "limits": [
+    "Source/raw/SQL/model checks performed byexactqualifiedActions reader; selectedmetadata locallyread, no originaljournals/SQLite/typedmodel bodies locallyprocessed.",
+    "Allrawpayloadbytes/wholeoriginalZIP notindependentlyrehashedbylocalreview, andonly315selectedcriticalworkerclaims checked; unselected/wholeworker-treefalse limitsretained.",
+    "Closedacceptedreceivers/rawsnapshothashchains/prefixes do notprovezerokernel/producer/exporterinternalflushloss.",
+    "DistinctguestbootIDs/samepinnedkernelrelease/sharedhost prove2guestkernels, not2physicalhosts.",
+    "AllfailedoldA+newworker/preparation/CI/reader/hash/transfer/archive/report/observer/closingtail costsretained; overlappingparentwait/workercompute/nestedtimersarenotindependenttotals;APIwallnotCPU/invoice,humanunknown."
+  ],
+  "observed_at": "2026-11-02T14:20:50.136796+00:00",
+  "original_PC_full6_8_actual_saved_evidence_subset_GO": true,
+  "original_criterion": "Explicit ORIGINAL actualsubsetGO:full81cells/10ops/4methods/2views/34800primaryincluding9600targets/100000Sheafttrials/twoindependentguestkernels/actualobservedeBPF->actualBering->actualSheaftwhereavailable->independentexternaloutcomes unchanged. NoML,costsuperiority,smallerdemo oraccuracy/availabilityeligibilitythreshold. Allunknown/adversecompletedcases remain andmustnotbefavorablyreplayed.",
+  "prior_PCfull7_GO": {
+    "SHA256": "7fae07c3b92362196eadbcb855458717310e9d69ef72ea77f76a007d82b44e2a",
+    "path": "work/skeptic-main-v5-observer/deepflow-final-links-b074853-review/independent-main-review-batch8-PCfull7-original-actual-evidence-GO-20261102.json"
+  },
+  "remaining_original_cells": 8,
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "reviewer_new_POST_compute_refit_rescore_production_edit": false,
+  "verdict": "GO"
+}

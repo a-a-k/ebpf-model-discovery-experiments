@@ -1,0 +1,2014 @@
+{
+  "recorded_utc": "2026-11-02T14:16:02.349781+00:00",
+  "root_original_PC_full6_8_actual_case_admission_GO": true,
+  "cases": [
+    {
+      "declaration": {
+        "collector": "deepflow",
+        "compact_artifact_bytes": 43833745,
+        "compact_artifact_digest": "sha256:cf7eeeb7175f2fb8690759e69058faf87075b4b2c28bc017d8973ed15313c6af",
+        "compact_artifact_id": 13127576461,
+        "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-6-41387281004",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_artifact_bytes": 3972684893,
+        "full_artifact_digest": "sha256:f70f7f0c69d3b8d23ed721a801a6ab54eee4fb0cec5f56b386516dd129c81c11",
+        "full_artifact_id": 13127827466,
+        "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-6-41387281004",
+        "full_scope": "retrieve_family_selected",
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "mode": "full",
+        "run_id": 41387281004,
+        "runner": "study",
+        "seed": 6,
+        "stage": "main",
+        "system": "petclinic"
+      },
+      "facts_sha256": "bf5e1d643226110eabb1b5dc017d3a2e3f7e04ad447f3c8899f62a3bdc42c113",
+      "facts_bytes": 12991952,
+      "counts": {
+        "all_records": 34904,
+        "blocks": 16,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "independent_guest_boots": true,
+      "actual_pooled_Bering_executions": 6,
+      "worker_run_id": 41396916274,
+      "primary_forecasts_and_external_counts_copied": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        }
+      ],
+      "database_summary_copied": {
+        "db_down": {
+          "create_visit": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "db_up": {
+          "create_visit": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "forecast_impact": [
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          }
+        ]
+      },
+      "strong_direct_baseline_copied": {
+        "create_visit": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_owners": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_vets": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": false,
+            "reason": "declared_database_requirement_is_conditional"
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "owner_details_with_visits": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        }
+      },
+      "scope_limits": "Metadata only; actual original source/input/output/SQL/closure proof processing performed by the unchanged qualified Actions reader. No whole archive/model/raw journal/SQLite read locally. Closure does not establish zero kernel loss."
+    },
+    {
+      "declaration": {
+        "collector": "deepflow",
+        "compact_artifact_bytes": 44041659,
+        "compact_artifact_digest": "sha256:dcde0f2b0f98cfa39e2d59f05f0e659f4145f782729843970ab96941cb834921",
+        "compact_artifact_id": 13128766763,
+        "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-8-41387290675",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_artifact_bytes": 4012791824,
+        "full_artifact_digest": "sha256:3dce15c02eaff62775e64914aebe2f5587c2f206ed013474186b2bcb3603eb86",
+        "full_artifact_id": 13128722911,
+        "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-8-41387290675",
+        "full_scope": "retrieve_family_selected",
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "mode": "full",
+        "run_id": 41387290675,
+        "runner": "study",
+        "seed": 8,
+        "stage": "main",
+        "system": "petclinic"
+      },
+      "facts_sha256": "ffb49490aeaa19a235975262d39ad22aea3c3cb908e089f1ed9322d6a4e80a9c",
+      "facts_bytes": 13214600,
+      "counts": {
+        "all_records": 34904,
+        "blocks": 16,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "independent_guest_boots": true,
+      "actual_pooled_Bering_executions": 6,
+      "worker_run_id": 41397694366,
+      "primary_forecasts_and_external_counts_copied": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "create_visit",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "list_owners",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "list_vets",
+          "available": true,
+          "point_prediction": 1.0,
+          "actual_counts": {
+            "failure": 0,
+            "invalid": 0,
+            "success": 2400,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": false,
+          "point_prediction": null,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "owner_details_with_visits",
+          "available": true,
+          "point_prediction": 0.875,
+          "actual_counts": {
+            "failure": 300,
+            "invalid": 0,
+            "success": 2100,
+            "total": 2400,
+            "unknown": 0
+          }
+        }
+      ],
+      "database_summary_copied": {
+        "db_down": {
+          "create_visit": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 5,
+              "invalid": 0,
+              "success": 0,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "db_up": {
+          "create_visit": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_owners": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "list_vets": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          },
+          "owner_details_with_visits": {
+            "counts": {
+              "failure": 0,
+              "invalid": 0,
+              "success": 5,
+              "total": 5,
+              "unknown": 0
+            }
+          }
+        },
+        "forecast_impact": [
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "create_visit",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_owners",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "list_vets",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "raw"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": null,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "ebpf",
+            "structural_graph_available": false,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "native",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "combined",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          },
+          {
+            "comparison": "unknown_unless_both_predictions_available",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": null,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": null,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "raw"
+          },
+          {
+            "comparison": "healthy_state_11_minus_database_down",
+            "counted_as_accuracy_benefit": false,
+            "database_down_prediction": 0,
+            "healthy_state_11_prediction": 1,
+            "operation": "owner_details_with_visits",
+            "prognostic_impact": 1,
+            "source": "context-baseline",
+            "structural_graph_available": true,
+            "variant": "network_scope"
+          }
+        ]
+      },
+      "strong_direct_baseline_copied": {
+        "create_visit": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_owners": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "list_vets": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 1.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": false,
+          "database": {
+            "available": false,
+            "reason": "declared_database_requirement_is_conditional"
+          },
+          "prediction": 1.0,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        },
+        "owner_details_with_visits": {
+          "available": true,
+          "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+          "by_state": {
+            "00": 0.0,
+            "01": 1.0,
+            "10": 1.0,
+            "11": 1.0
+          },
+          "controlled_service_required": true,
+          "database": {
+            "available": true,
+            "basis": "declared unconditional selected database requirement",
+            "database_down_prediction": 0.0
+          },
+          "prediction": 0.875,
+          "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+        }
+      },
+      "scope_limits": "Metadata only; actual original source/input/output/SQL/closure proof processing performed by the unchanged qualified Actions reader. No whole archive/model/raw journal/SQLite read locally. Closure does not establish zero kernel loss."
+    }
+  ],
+  "independent_actual_review_pending": true,
+  "full81_complete": false,
+  "original_criterion": "Same fixed81 eBPF feasibility under missing/partial SDK traces, actual Bering/Sheaft where available and independent external outcomes. No ML/cost-superiority or weaker demonstration.",
+  "finding": "DeepFlowPCfull6-8 eBPF alone leaves allfour operationforecastsunknown; native/combined/context supportallfour. Owners/vets predict1 vs2400/2400; creation/details.875 vs2100/2400. Thus availablefullSDKsupportsallfour, addingDeepFlowdoesnotadd primaryoperationavailability over native/context. This completednegativeeBPFresult is retainedwithoutreplay. Databaseclaims mustfollow copieddatabaseviewrows andneverinferfrombindingsalone.",
+  "strongest_baseline": "Same supplied semantics, direct replica contract1/1/.875/.875; known arithmetic equivalence is retained and no discovery/cost superiority is inferred.",
+  "complete_costs": "All originalA/S failed parents/prefixes, newWworkers/preparation/waiting, initialfailedCI+rerun, reader/download/hash/storage/archive/observer/finiteclosingtails retained; API intervals not CPU/billing and human effort unknown. Paired method/view rows are not independent repetitions.",
+  "successful_negative_unknown_adverse_cases_must_not_be_rerun": true,
+  "public_record_provenance": {
+    "original_root_work_SHA256": "8f67966de646dd7c97ee81b31df1bdb9561d264460d21bfcedddae8c85c0c3a1",
+    "original_work_unchanged": true,
+    "later_independent_actual_GO": "clean-study-batch8-PCfull6-8-independent-actual-review-20261102.json",
+    "independent_original_work_SHA256": "4fd77f3ea8e10a695ec613c2b05e00dc73530d270a82d4432c7cd11712d040aa",
+    "historical_pending_fields_describe_original_root_record_time": true
+  }
+}

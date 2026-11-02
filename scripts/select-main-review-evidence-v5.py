@@ -38,6 +38,8 @@ INPUT_SUPPLEMENT = {
     },
 }
 FULL_FIXED = {
+    "infrastructure/postcapture-guest-release.json", "infrastructure/guest-evidence-capture.json",
+    "infrastructure/a/check-copy.err", "infrastructure/b/check-copy.err",
     "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",
     "infrastructure/a/check.txt", "infrastructure/b/check.txt",
     "infrastructure/parent-disk-preparation.json",

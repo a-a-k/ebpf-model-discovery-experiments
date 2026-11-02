@@ -297,6 +297,45 @@ PETCLINIC_WORKER_SOURCE = {
 }
 
 
+POSTCAPTURE_GUEST_RELEASE_SOURCE = {
+    **STREAMED_CHECKPOINT_SOURCE,
+    'revision': '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+    'tested_source': '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+    'parent_revision': STREAMED_CHECKPOINT_SOURCE['revision'],
+    'added_paths': STREAMED_CHECKPOINT_SOURCE['added_paths'] | {
+        'scripts/retain-guest-evidence-v5.sh', 'scripts/stop-owned-guests-v5.py',
+        'src/ebpf_discovery/guest_release_v5.py', 'tests/test_guest_release_v5.py'},
+    'changed_core_blobs': {**STREAMED_CHECKPOINT_SOURCE['changed_core_blobs'],
+        'src/ebpf_discovery/study.py': '872e3e9d8422d7c0aaa849e478df949b1abec5bd',
+        'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1'},
+    'reviewed_changed_blobs': {**STREAMED_CHECKPOINT_SOURCE['reviewed_changed_blobs'],
+        '.github/workflows/infrastructure.yml': 'cad7b31d9d329259a37654e5af373b7dda9da285',
+        '.github/workflows/series-v5.yml': '8623ad511d72be07f15e08305212a6c341fc148f',
+        'scripts/retain-guest-evidence-v5.sh': 'aadf01ab89d9b09730844f63b522b026f3a9121d',
+        'scripts/stop-owned-guests-v5.py': 'e5665a5de110abb89a9a0c008efd35e3e32af491',
+        'scripts/vms.sh': '79aa2c5fc1fc877c78f602845a6ff517e11110f4',
+        'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1',
+        'src/ebpf_discovery/study.py': '872e3e9d8422d7c0aaa849e478df949b1abec5bd',
+        'tests/test_guest_release_v5.py': '2cca3fefed4fbe25f5cf140411d0cb948f7226aa'},
+    'postcapture_lifecycle_qualification': {
+        'tested_source': '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+        'run_id': 41464411920, 'artifact_id': 13150063491,
+        'artifact_digest': 'sha256:e382caa9a95b9245101f2c6fa445f892a21f6a5537b635061caeccc3c12c1751',
+        'qualification_metadata_sha256': 'c676d1356b6a881ca627269c7849127b613c06022f3f6a34ad53c6b9345cb016',
+        'release_metadata_sha256': '843e83b579e801cc24ff45fce97474a96dc55099d09b96af1a37126b42661ca4',
+        'real_two_kernel_owned_exit_and_only_ephemeral_overlay_removal': True,
+        'closed_source_file_controls_unchanged_and_diagnostics_reused': True,
+        'control_files_are_scientific_observations': False,
+        'new_traffic_Bering_or_Sheaft_executions': 0,
+        'inherited_scientific_input_proofs_keep_actual_tested_sources': True,
+        'actual_new_case_import_resource_and_external_outcome_proofs_required': True,
+        'independent_actual_review_required_before_source_admission': True,
+        'whole_case_memory_headroom_or_six_hour_cure_proven': False,
+        'failed_prior_qualification_retained': 41462775370,
+    },
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -310,6 +349,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = STREAMED_CHECKPOINT_SOURCE
         elif revision == PETCLINIC_WORKER_SOURCE['revision']:
             profile = PETCLINIC_WORKER_SOURCE
+        elif revision == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']:
+            profile = POSTCAPTURE_GUEST_RELEASE_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -332,10 +373,13 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
         if ((path in original if added else path not in original) or prepared.get(path)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
-    if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE:
+    if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
+            or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE):
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
-                'evidence_kind': ('existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
+                'evidence_kind': ('postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
+                                  if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else
+                                  'existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
                                   if profile is PETCLINIC_WORKER_SOURCE else
                                   'actual_lossless_checkpoint_proof_encoding_and_storage'),
                 'tested_source': profile['tested_source'],
@@ -348,8 +392,11 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 'final_snapshot_proof': CLOSED_FINAL_SNAPSHOT_SOURCE['final_snapshot_proof'],
                 'storage_lifetime_proof': profile['storage_lifetime_proof'],
                 'proof_encoding_equivalence': profile['proof_encoding_equivalence'],
+                'proof_encoding_equivalence_tested_source': STREAMED_CHECKPOINT_SOURCE['tested_source'],
                 **({'existing_worker_placement': profile['existing_worker_placement']}
                    if profile is PETCLINIC_WORKER_SOURCE else {}),
+                **({'postcapture_lifecycle_qualification': profile['postcapture_lifecycle_qualification']}
+                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -943,9 +990,13 @@ def build(
         compatible_heads.add(CLOSED_FINAL_SNAPSHOT_SOURCE['revision'])
         compatible_heads.add(STREAMED_CHECKPOINT_SOURCE['revision'])
         compatible_heads.add(PETCLINIC_WORKER_SOURCE['revision'])
+        compatible_heads.add(POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
-        if common_head and item['stage'] == 'main' and observed_head not in compatible_heads:
+        outside_postcapture_scope = (observed_head == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'] and (
+            (item['collector'], item['system']) != ('deepflow', 'otel_demo') or
+            (item['mode'], item['seed']) == ('full', 7)))
+        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope):
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,
