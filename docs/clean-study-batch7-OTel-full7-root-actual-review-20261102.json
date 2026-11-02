@@ -1,0 +1,815 @@
+{
+  "recorded_utc": "2026-11-02T05:16:05.155618+00:00",
+  "root_original_OTel_full7_actual_case_admission_GO": true,
+  "declaration": {
+    "collector": "deepflow",
+    "compact_artifact_bytes": 50117334,
+    "compact_artifact_digest": "sha256:43668e4f9bdd4629b25286790ebddd95f193fb28551601d2cd08c8299aff8071",
+    "compact_artifact_id": 13105935887,
+    "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-7-41331878803",
+    "compact_scope": "retrieve_selected_nonjournal",
+    "full_artifact_bytes": 5536654728,
+    "full_artifact_digest": "sha256:8d6862f0891372194b3fe4d40ac6c7630b660ada25a8ea9f1121133cbb46acec",
+    "full_artifact_id": 13105593437,
+    "full_artifact_name": "campaign-v5-deepflow-main-otel_demo-full-7-41331878803",
+    "full_scope": "retrieve_family_selected",
+    "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+    "mode": "full",
+    "run_id": 41331878803,
+    "runner": "study",
+    "seed": 7,
+    "stage": "main",
+    "system": "otel_demo"
+  },
+  "facts_sha256": "a1575ecd803fb933f59df5c75c8dd59177576d91dd78602bfdab3bdb542dbcc5",
+  "facts_bytes": 27056292,
+  "counts": {
+    "all_records": 34951,
+    "blocks": 19,
+    "expected_primary": 34800,
+    "primary": 34800,
+    "primary_count_matches": true,
+    "target": 9600,
+    "target_state_counts": {
+      "00": 1200,
+      "01": 1200,
+      "10": 2400,
+      "11": 4800
+    }
+  },
+  "independent_guest_boots": true,
+  "actual_Bering_executions": 6,
+  "actual_graph_branches": 18,
+  "copied_primary_method_view_rows": 24,
+  "distinct_native_combined_Sheaft_executions": 12,
+  "context_reuses_unchanged_union": true,
+  "primary_forecasts_and_external_counts_copied": [
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 566,
+        "invalid": 0,
+        "success": 2634,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "browse_product",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "raw",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 554,
+        "invalid": 0,
+        "success": 2646,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "checkout",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "available": false,
+      "point_prediction": null,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "raw",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    },
+    {
+      "source": "context-baseline",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "available": true,
+      "point_prediction": 0.875,
+      "actual_counts": {
+        "failure": 2286,
+        "invalid": 0,
+        "success": 914,
+        "total": 3200,
+        "unknown": 0
+      }
+    }
+  ],
+  "database_summary_copied": {
+    "db_down": {
+      "add_to_cart": {
+        "counts": {
+          "failure": 7,
+          "invalid": 0,
+          "success": 0,
+          "total": 7,
+          "unknown": 0
+        }
+      },
+      "browse_product": {
+        "counts": {
+          "failure": 7,
+          "invalid": 0,
+          "success": 0,
+          "total": 7,
+          "unknown": 0
+        }
+      },
+      "checkout": {
+        "counts": {
+          "failure": 6,
+          "invalid": 0,
+          "success": 0,
+          "total": 6,
+          "unknown": 0
+        }
+      }
+    },
+    "db_up": {
+      "add_to_cart": {
+        "counts": {
+          "failure": 0,
+          "invalid": 0,
+          "success": 7,
+          "total": 7,
+          "unknown": 0
+        }
+      },
+      "browse_product": {
+        "counts": {
+          "failure": 0,
+          "invalid": 0,
+          "success": 7,
+          "total": 7,
+          "unknown": 0
+        }
+      },
+      "checkout": {
+        "counts": {
+          "failure": 0,
+          "invalid": 0,
+          "success": 6,
+          "total": 6,
+          "unknown": 0
+        }
+      }
+    },
+    "forecast_impact": [
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "add_to_cart",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "browse_product",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": null,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "ebpf",
+        "structural_graph_available": false,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "native",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "combined",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "raw"
+      },
+      {
+        "comparison": "unknown_unless_both_predictions_available",
+        "counted_as_accuracy_benefit": false,
+        "database_down_prediction": null,
+        "healthy_state_11_prediction": 1,
+        "operation": "checkout",
+        "prognostic_impact": null,
+        "source": "context-baseline",
+        "structural_graph_available": true,
+        "variant": "network_scope"
+      }
+    ]
+  },
+  "async_summary_copied": {
+    "normal": {
+      "available": true,
+      "paused_absence_is_failure": false,
+      "records": 20,
+      "states": {
+        "persisted_exact": 20
+      }
+    },
+    "paused_after_resume": {
+      "available": true,
+      "paused_absence_is_failure": false,
+      "records": 20,
+      "states": {
+        "persisted_exact": 20
+      }
+    },
+    "paused_snapshot": {
+      "available": true,
+      "paused_absence_is_failure": false,
+      "records": 20,
+      "states": {
+        "pending": 20
+      }
+    },
+    "recovered": {
+      "available": true,
+      "paused_absence_is_failure": false,
+      "records": 20,
+      "states": {
+        "persisted_exact": 20
+      }
+    }
+  },
+  "manual_baselines_copied": {
+    "add_to_cart": {
+      "available": true,
+      "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+      "by_state": {
+        "00": 0.0,
+        "01": 1.0,
+        "10": 1.0,
+        "11": 1.0
+      },
+      "controlled_service_required": true,
+      "database": {
+        "available": true,
+        "basis": "declared unconditional selected database requirement",
+        "database_down_prediction": 0.0
+      },
+      "prediction": 0.875,
+      "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+    },
+    "browse_product": {
+      "available": true,
+      "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+      "by_state": {
+        "00": 0.0,
+        "01": 1.0,
+        "10": 1.0,
+        "11": 1.0
+      },
+      "controlled_service_required": true,
+      "database": {
+        "available": true,
+        "basis": "declared unconditional selected database requirement",
+        "database_down_prediction": 0.0
+      },
+      "prediction": 0.875,
+      "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+    },
+    "checkout": {
+      "available": true,
+      "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+      "by_state": {
+        "00": 0.0,
+        "01": 1.0,
+        "10": 1.0,
+        "11": 1.0
+      },
+      "controlled_service_required": true,
+      "database": {
+        "available": true,
+        "basis": "declared unconditional selected database requirement",
+        "database_down_prediction": 0.0
+      },
+      "prediction": 0.875,
+      "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+    }
+  },
+  "original_criterion": "Original fixed81 missing/partial/fullSDK eBPFfeasibility with actualmodels where available and independentexternaloutcomes. NoML/costsuperiority or smaller substitute.",
+  "finding": "eBPFalone unknownall3operations/bothviews. Native/combined/context predict.875each; actualadd_to_cart2634/3200,browse_product2646/3200,checkout914/3200. All known adverseoutcomes retained with noaccuracygate/replay; no added primaryeBPFforecast overnative/context. Prediction is conditional on nonintervenedrequirementsbeingfulfilled; selectedfacts donotestablish thecauseoftheextraapplicationfailures.",
+  "secondary_limits": "All saved database-fault forecasts unknown in this case. Asyncnormal/recovered/resumed20eachpersisted, paused20pending; nativecausalmarkersdo notestablish acommon explicitmessageID, eBPFcompletecausalchainunknown. Do nottransferPCownersDB0toOTel or useARIasexternalutility.",
+  "costs_and_source_limits": "Selectedhash-boundmetadata only; raw/model/journal/SQLitebodies notreadlocally. All originalfailures/worker/preparation/waits/CIincludingfailedattempt/reader/transfer/storage/archive/observer/closingcosts retained. APIwallnotCPU/billing,humanunknown. Closure doesnotprovezerokernelloss. Contextreuseisnot6additionalSheaftruns.",
+  "separate_actual_review_pending": false,
+  "independent_actual_GO_original_SHA256": "e5c949d2624580db2ca4d2e025f8eaea8c2055aa08701feb8b2078785f6eb837",
+  "full81_complete": false,
+  "do_not_replay_successful_adverse_or_unknown_case": true,
+  "public_record_provenance": {
+    "original_work_record_SHA256": "9dd37f35da3cf2a8a5f1cbe23d95c27e28eea2d45e5f377972e7f54991bd2950",
+    "original_work_record_unchanged": true,
+    "subsequent_independent_concurrence_file": "clean-study-batch7-OTel-full7-independent-actual-review-20261102.json",
+    "subsequent_independent_concurrence_original_work_SHA256": "e5c949d2624580db2ca4d2e025f8eaea8c2055aa08701feb8b2078785f6eb837",
+    "status_note": "Root decision was recorded before independent review; later independent actual-evidence ORIGINAL GO is now complete. Historical pending fields describe original root record time."
+  }
+}

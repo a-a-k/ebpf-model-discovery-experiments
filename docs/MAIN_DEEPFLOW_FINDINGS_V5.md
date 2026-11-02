@@ -4,6 +4,51 @@ This is a partial evidence review, not the completed 81-cell conclusion. Negativ
 and unavailable results remain part of the study and are not reasons to rerun a
 technically complete case.
 
+Seventy main cells have now passed both actual-evidence reviews: 27 OBI,
+27 Coroot and 16 DeepFlow. At 2026-11-02T13:36Z, all three DeepFlow Petclinic
+full cases also have technically complete packets: 73 completed captures in
+total. Those three await saved-evidence review; eight DeepFlow OTel cases
+still require technical repair and completion.
+
+## Petclinic partial repetitions 6/7/8 and OTel full repetition 7
+
+The [seventh saved-evidence batch](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41386739556)
+verified only these four new packets, retaining all 66 earlier reviews.
+Each has 34,800 primary observations, 9,600 targets, forecasts frozen before
+targets and two independent guest boots. Petclinic's actual worker imports
+and unchanged checkpoint/SQL proofs passed at exact source `0565115`.
+
+In all three Petclinic partial cases, eBPF alone leaves all four operation
+forecasts unknown. Native, combined and context support owners and vets only:
+prediction 1 versus 2,400/2,400 successes. Visits and owner details remain
+unsupported. The saved binding cannot establish the required gateway-to-visits
+call and visits-to-MySQL write channel. Creation succeeds 2,100/2,400 each;
+details succeeds 2,100/2,099/2,100 in repetitions 6/7/8. The extra seed-7 failure
+is retained. DeepFlow did not fill these partial-SDK operation gaps. Each case
+has six actual Bering runs; unchanged context unions reuse combined Sheaft
+evidence and do not add distinct simulations. Network native/combined/context
+owners database-fault predictions are 0 versus 0/5 successes when down and
+5/5 when healthy. Raw database forecasts remain unknown; vets' direct database
+baseline is conditional/unknown. See the [root review](clean-study-batch7-PC3-root-actual-review-20261102.json)
+and [independent review](clean-study-batch7-PC3-independent-actual-review-20261102.json).
+
+In OTel full/7, eBPF alone leaves all three operation forecasts unknown. Native,
+combined and context predict 0.875 for each in both views; actual successes
+are 2,634/3,200 for cart, 2,646/3,200 for browse and 914/3,200 for checkout.
+The six Bering runs and twelve distinct native/combined Sheaft executions are
+retained, together with context reuse. This is a completed adverse result.
+The topological prediction is conditional on nonintervened requirements being
+fulfilled; this packet does not establish the cause of the extra failed
+operations. All saved database-fault forecasts are unknown in this case.
+Async normal/recovered/resumed controls each retain 20 persisted orders;
+paused controls retain 20 pending orders. Native causal markers do not prove
+a common explicit message ID, and the complete eBPF async chain remains unknown.
+See the [root review](clean-study-batch7-OTel-full7-root-actual-review-20261102.json)
+and [independent review](clean-study-batch7-OTel-full7-independent-actual-review-20261102.json).
+
+These four cases are retained without an availability or accuracy admission
+threshold. No successful unknown or adverse case is selected for recapture.
+
 ## Petclinic, absent SDK, repetition 6
 
 The [original campaign job](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120/job/124430032086)

@@ -1,0 +1,93 @@
+{
+  "recorded_utc": "2026-11-02T04:18:04.733912+00:00",
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "original_W_PC_full3_actual_three_once_POSTs_source_scope_cost_GO": true,
+  "producer_source": "0565115511b24db1d6bbe71e98784baded772144",
+  "consumer_source": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+  "outer_receipt": {
+    "path": "work\\W-PC-full3-worker-replacement-dispatch-20261102.json",
+    "SHA256": "09513453d10a8d40f4ce3bf149052d176faf11af9cea107ec925ea5fda78ad2e"
+  },
+  "exact_original_execution_GO_SHA256": "1988e9f6b773eaa23ad765edb92f4effe585524b7ac0169c8577eecdfea57426",
+  "scope_and_actual_once_POSTs": [
+    {
+      "seed": 6,
+      "run_id": 41387281004,
+      "receipt": "work\\W-PC-full3-worker-repeat-full-6-20261102.dispatch.json",
+      "receipt_SHA256": "3e31f0ef67546f6a884d78aa47e128d8f1974816955509543b125a918ee1132e",
+      "owner_age_seconds_immediately_before_POST": 37.216606,
+      "actual_job": {
+        "id": 125090840324,
+        "name": "campaign (petclinic, full, 6)",
+        "run_id": 41387281004,
+        "run_attempt": 1,
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      "independent_actual_run_API": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\PCfull3-41387281004-actual-run-independent.json",
+      "original_failed_job": 124430032945,
+      "retained_original_prefix": 13098690268
+    },
+    {
+      "seed": 7,
+      "run_id": 41387285443,
+      "receipt": "work\\W-PC-full3-worker-repeat-full-7-20261102.dispatch.json",
+      "receipt_SHA256": "3840717bb56f2a4b1c052940eef22d35d873682d09be7a49dec62468613542d6",
+      "owner_age_seconds_immediately_before_POST": 40.053767,
+      "actual_job": {
+        "id": 125090848621,
+        "name": "campaign (petclinic, full, 7)",
+        "run_id": 41387285443,
+        "run_attempt": 1,
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      "independent_actual_run_API": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\PCfull3-41387285443-actual-run-independent.json",
+      "original_failed_job": 124430033032,
+      "retained_original_prefix": 13098919889
+    },
+    {
+      "seed": 8,
+      "run_id": 41387290675,
+      "receipt": "work\\W-PC-full3-worker-repeat-full-8-20261102.dispatch.json",
+      "receipt_SHA256": "1bfabf31b1a620abe812429397c5bceed8796c49914e7265bf44a1b99cf11e15",
+      "owner_age_seconds_immediately_before_POST": 42.821384,
+      "actual_job": {
+        "id": 125090869082,
+        "name": "campaign (petclinic, full, 8)",
+        "run_id": 41387290675,
+        "run_attempt": 1,
+        "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+        "status": "in_progress",
+        "conclusion": null
+      },
+      "independent_actual_run_API": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\PCfull3-41387290675-actual-run-independent.json",
+      "original_failed_job": 124430033102,
+      "retained_original_prefix": 13104105455
+    }
+  ],
+  "capacity_at_dispatch": {
+    "owner": "work\\owner-actions-capacity-20261102T041308Z.json",
+    "owner_age_seconds": 37.212969,
+    "captures": 0,
+    "future_existing_workers": 0,
+    "workers": 0,
+    "archives": 0,
+    "new_capture_plus_worker_slots": 6,
+    "reader_reserved": 5,
+    "conservative_total_slots": 11
+  },
+  "actual_job_snapshot_observed_utc": "2026-11-02T04:17:06.900443+00:00",
+  "raw_snapshot_SHA256": "f3878c504eacaebcc77897c4ffc8b87999eaaa3eded0c67659692c5a98638038",
+  "all70_successful_candidate_packet_records_exactly_unchanged": true,
+  "all81planned_retained": true,
+  "each_new_attempt_planned_technicalreplacement_monitor_identity_once": true,
+  "oldA_original_attempt_and3prefixes_retained": true,
+  "all_costs": "AllfailedoldA/preparation/CIattempt1failure+2pass/qualifiedsource/worker/wait/transfer/hash/storage/archive/reader/observer andnewactualcosts retained; humanunknown. Only3alreadyterminalPCfullcases, no completednegative/adverse replay orhealthy cancellation/queue switch. Actualrootfreshowner/checks andprePOSTunknownreceipts retained.",
+  "original_criterion": "Same original81/all10operations/3collectors/allSDKmodes/seeds6,7,8/4methods/2views/34800primary incl9600targets/100000Sheafttrials/two independent guest kernels. Actual source->Bering->Sheaft where supported->independent app outcomes; no ML/cost-superiority or smaller demonstration.",
+  "actual_fullcase_worker_import_and_independent_outcomes_still_required": true,
+  "scientific_case_or_full81_success_GO": false,
+  "reviewer_actions": "3small independentrunAPI GETs plus existingmetadata; no duplicatejobAPI/raw/modelbody reads/POST/cancel/Telegram."
+}

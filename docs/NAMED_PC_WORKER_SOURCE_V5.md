@@ -30,6 +30,17 @@ review accepted same-program/input equivalence without another expensive
 full-model qualification run. An actual Petclinic worker case still needs its
 retained verified worker import and independent outcomes before case admission.
 
+That actual-case requirement has now passed for partial repetitions 6/7/8:
+[the source-bound reader](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41386739556)
+and both [root](clean-study-batch7-PC3-root-actual-review-20261102.json) and
+[independent](clean-study-batch7-PC3-independent-actual-review-20261102.json)
+reviews verified all three worker imports, unchanged logical checkpoint proofs,
+pre-target forecasts, two guest boots and independent outcomes. Their eBPF
+operation forecasts remain unsupported; completion does not turn that valid
+negative into a scientific benefit. Full-SDK repetitions are separate pending
+cases. This establishes these three completed imports/captures, not a general
+speedup, zero-loss claim or whole-study capacity guarantee.
+
 The consumer names this exact source and retains the full Git path/blob/type/mode
 guard. Compared with the common scientific anchor, its changed and added path
 sets equal the streamed source's sets; only the reviewed workflow and test blob

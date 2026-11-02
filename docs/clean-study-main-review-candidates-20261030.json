@@ -518,30 +518,30 @@
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41387281004,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41387285443,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144"
     },
     {
       "system": "petclinic",
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41164824120,
+      "run_id": 41387290675,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144"
     },
     {
       "system": "deathstarbench",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 11,
+  "pending_artifact_cells": 8,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2236,6 +2236,66 @@
       "full_artifact_name": "campaign-v5-coroot-main-petclinic-full-8-41164826834",
       "full_artifact_bytes": 981301586,
       "full_artifact_digest": "sha256:f27760027e287cdef2e60b667d4f5372cc138f51801ecf894b733b33296c2260"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41387281004,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13127576461,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-6-41387281004",
+      "compact_artifact_bytes": 43833745,
+      "compact_artifact_digest": "sha256:cf7eeeb7175f2fb8690759e69058faf87075b4b2c28bc017d8973ed15313c6af",
+      "full_artifact_id": 13127827466,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-6-41387281004",
+      "full_artifact_bytes": 3972684893,
+      "full_artifact_digest": "sha256:f70f7f0c69d3b8d23ed721a801a6ab54eee4fb0cec5f56b386516dd129c81c11"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41387285443,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13125689765,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-7-41387285443",
+      "compact_artifact_bytes": 43904772,
+      "compact_artifact_digest": "sha256:a9407005d8255a2df060b07512ba43968c10e4133347b0ee45a5378f63d48324",
+      "full_artifact_id": 13126498143,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-7-41387285443",
+      "full_artifact_bytes": 3987381743,
+      "full_artifact_digest": "sha256:539e11fbeb7daefe7ad3f8a0392d1080b5d8e777370aab7866ec765f1211961f"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41387290675,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13128766763,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-full-8-41387290675",
+      "compact_artifact_bytes": 44041659,
+      "compact_artifact_digest": "sha256:dcde0f2b0f98cfa39e2d59f05f0e659f4145f782729843970ab96941cb834921",
+      "full_artifact_id": 13128722911,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-8-41387290675",
+      "full_artifact_bytes": 4012791824,
+      "full_artifact_digest": "sha256:3dce15c02eaff62775e64914aebe2f5587c2f206ed013474186b2bcb3603eb86"
     }
   ],
   "superseded_planned_source": {
@@ -2248,7 +2308,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-11-02T03:54:53.711867+00:00: 70 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
+  "status": "Direct exact run/artifact API 2026-11-02T13:40Z:73 technically successful planned MAIN jobs with full/compact pairs;70 passed both actual-evidence reviews;3PCfull awaitbatch8. Samefixed81;8OTeltechnicalfailuresawaitrepair. Unknown/adverse outcomes retained. Inventory alone grants no scientific admission.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -2556,6 +2616,51 @@
       "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
       "reason": "terminal_runner_shutdown143_memory_contention_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
       "pre_execution_record": "work/W-PC-partial6-worker-replacement-preexecution-20261101.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430032945,
+      "original_prefix_artifact_id": 13098690268,
+      "replacement_run_id": 41387281004,
+      "actual_capture_commit": "0565115511b24db1d6bbe71e98784baded772144",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_oldA_local_PC_full_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
+      "pre_execution_record": "work/W-PC-full3-worker-replacement-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430033032,
+      "original_prefix_artifact_id": 13098919889,
+      "replacement_run_id": 41387285443,
+      "actual_capture_commit": "0565115511b24db1d6bbe71e98784baded772144",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_oldA_local_PC_full_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
+      "pre_execution_record": "work/W-PC-full3-worker-replacement-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430033102,
+      "original_prefix_artifact_id": 13104105455,
+      "replacement_run_id": 41387290675,
+      "actual_capture_commit": "0565115511b24db1d6bbe71e98784baded772144",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_oldA_local_PC_full_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
+      "pre_execution_record": "work/W-PC-full3-worker-replacement-preexecution-20261102.json",
       "original_costs_and_available_prefix_worker_evidence_retained": true
     }
   ]

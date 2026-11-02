@@ -2611,6 +2611,45 @@
         }
       ],
       "note": "One same-program existing-worker W failure-only replacement of parent41336179872 job124936403455; exact9b docs-only descendant of strict319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41387281004,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 6
+        }
+      ],
+      "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430032945; exacta821 docs-only descendant of strict319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41387285443,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 7
+        }
+      ],
+      "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430033032; exacta821 docs-only descendant of strict319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
+    },
+    {
+      "run_id": 41387290675,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "petclinic",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "One same-program existing-worker W failure-only replacement of parent41164824120 job124430033102; exacta821 docs-only descendant of strict319 consumer. Same34800primary/9600targets/100000trials/all4methods/2views/twoindependentkernels/scenarios. No healthy cancellation or accuracy selection; all originals/prefixes/children/waits/preparation/CI/qual/transfer/storage/reader/archive and new costs retained. No entire-six-hour-cause/cure/fullcase-capacity/scientific-success claim; humanunknown."
     }
   ],
   "related_runs": [
@@ -5064,6 +5103,66 @@
       "run_id": 41349907137,
       "role": "worker",
       "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41386739556,
+      "role": "evidence",
+      "note": "Seventh saved-evidence reader: only OTel full7 and PC partial6/7/8 original source packets. No first66 replay, traffic, refit, rescore or outcome eligibility gate. All reader/preparation/checks/transfer costs retained; human unknown. Actual interpretation separate."
+    },
+    {
+      "run_id": 41394490046,
+      "role": "evidence",
+      "note": "One fixed auxiliary originalSfinal100k readonly resolver profile. No traffic/model/refit/rescore or primarycount/sourceadmission. All5.5GBdownload/hash/extraction/integrity/decode/profile/cleanup/CIincludingfailedcarrierrevision/observercosts retained; no full64min/6hspeed extrapolation, humanunknown."
+    },
+    {
+      "run_id": 41393347772,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata headc1664806232436fabc2542344b1886ccb1ca7793; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41392848886,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata head8e362781187d2c6e46468bcc24db448e6f9fc752; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41392089991,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata heada6e74605c7e253a086c22b74bdff05ef79c28a1e; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41385972792,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata heada82191f8d3b5b868a206f786eeba71f8da2ae8c6; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41385969397,
+      "role": "preparation",
+      "note": "Actual checks.yml metadata heada82191f8d3b5b868a206f786eeba71f8da2ae8c6; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41397694366,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41397165487,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41396916274,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41455028566,
+      "role": "preparation",
+      "note": "Actual source44bd3b89 fixedread-onlyprofileexactSQLitebytescorrection CI; bothjobsSUCCESS. Technicalformatonly; no primary replay/model/rescore/admission. Firstfailedprepare41394490046andallpriorCIretained; humanunknown."
+    },
+    {
+      "run_id": 41455806625,
+      "role": "evidence",
+      "note": "Same fixed auxiliary originalSfinal100k readonly resolver profile after exactfinalSQLite byteconstant correction. First attempt41394490046failedpreparebeforeextraction/calls; allfailedcostsretained. No traffic/model/refit/rescore or primarycount/sourceadmission. All5.5GBdownload/hash/extraction/integrity/decode/profile/cleanup/CIincludingfailedcarrierrevision/observercosts retained; no full64min/6hspeed extrapolation, humanunknown."
     }
   ],
   "blocked_main_cells": [],
@@ -5090,5 +5189,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-02T03:59:23.171196+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-02T13:40:39.913179+00:00"
 }
