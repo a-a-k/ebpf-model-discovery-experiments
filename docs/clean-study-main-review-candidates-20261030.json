@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 15,
+  "pending_artifact_cells": 11,
   "cells": [
     {
       "system": "deathstarbench",
@@ -1558,6 +1558,26 @@
       "full_artifact_digest": "sha256:aa36b4383b10648b69c19415d973891b3deadd12c7cff18f65028f3438e6d74a"
     },
     {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41331878803,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13105935887,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-7-41331878803",
+      "compact_artifact_bytes": 50117334,
+      "compact_artifact_digest": "sha256:43668e4f9bdd4629b25286790ebddd95f193fb28551601d2cd08c8299aff8071",
+      "full_artifact_id": 13105593437,
+      "full_artifact_name": "campaign-v5-deepflow-main-otel_demo-full-7-41331878803",
+      "full_artifact_bytes": 5536654728,
+      "full_artifact_digest": "sha256:8d6862f0891372194b3fe4d40ac6c7630b660ada25a8ea9f1121133cbb46acec"
+    },
+    {
       "system": "petclinic",
       "mode": "absent",
       "seed": 6,
@@ -1616,6 +1636,66 @@
       "full_artifact_name": "campaign-v5-deepflow-main-petclinic-absent-8-41164824120",
       "full_artifact_bytes": 3467422877,
       "full_artifact_digest": "sha256:635f28a09a70c14b8cf54a50d92f2ab198e5ee6da57533585225657f47669045"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41349757716,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13108419474,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-6-41349757716",
+      "compact_artifact_bytes": 43036684,
+      "compact_artifact_digest": "sha256:66bcc5fda3bfdcf33c806b72022aaeaa7a8d4837c2a7e03265f44f67a8060883",
+      "full_artifact_id": 13109376475,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-6-41349757716",
+      "full_artifact_bytes": 3893791860,
+      "full_artifact_digest": "sha256:1f92b656958d958300f6a7307afbe5011b07881cc6fade60dd385b4d9cf2f3af"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41348999127,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13109324655,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-7-41348999127",
+      "compact_artifact_bytes": 43148129,
+      "compact_artifact_digest": "sha256:2d2808f2481292a29481b662b26ab0bb761bb2e669e1f14b5b534d3c1cf656f6",
+      "full_artifact_id": 13110051976,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-7-41348999127",
+      "full_artifact_bytes": 3910545465,
+      "full_artifact_digest": "sha256:b6a12896ba2351a41b2de9b4a326972206f0d980fd7206aceec721176a228791"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41342083079,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13107244130,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-8-41342083079",
+      "compact_artifact_bytes": 43156810,
+      "compact_artifact_digest": "sha256:e585083139136d804bef0b3d49f46ae395c9f4c3188c135caf1b09f23f32a2a2",
+      "full_artifact_id": 13108040513,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-8-41342083079",
+      "full_artifact_bytes": 3926682519,
+      "full_artifact_digest": "sha256:e8e9bc55f43920e7d3ab0c78f81b178622be44aadcc05218c45dbcb9b3cb23da"
     },
     {
       "system": "deathstarbench",
@@ -2168,7 +2248,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct paginated API 2026-11-01T17:42:11.436772+00:00: 66 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
+  "status": "Direct paginated API 2026-11-02T03:54:53.711867+00:00: 70 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
