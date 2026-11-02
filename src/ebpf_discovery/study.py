@@ -81,6 +81,7 @@ class Study:
         self.training_checkpoint = Path(training_checkpoint) if training_checkpoint else None
         self.training_release = None
         self.toolchain_execution = toolchain_execution
+        self._application_close_attempted = False
 
     def run(self):
         counts = workload_counts(len(self.declaration.CONTRACTS), self.smoke)
@@ -149,7 +150,7 @@ class Study:
             raise
         finally:
             cleanup_errors = []
-            for name, action in [("collectors", self.collectors.close), ("application", self.adapter.close),
+            for name, action in [("collectors", self.collectors.close), ("application", self.close_application),
                                  ("index", self.store.close)]:
                 try:
                     action()
@@ -277,9 +278,20 @@ class Study:
 
         self.collectors.snapshot()
         self.adapter.collect_native(self.ctx.out / "native" / stage)
+        if stage == "final" and self.collector == "deepflow" and self.system == "otel_demo":
+            from .guest_release_v5 import release
+
+            self.collectors.close()
+            self.close_application()
+            release(self.ctx)
         write_json(self.ctx.out / f"index-{stage}.json",
                    self.store.ingest(self.collectors.root, self.ctx.out / "native"))
         refresh(self, stage)
+
+    def close_application(self):
+        if not self._application_close_attempted:
+            self._application_close_attempted = True
+            self.adapter.close()
 
     def before_workload_block(self, block_id, phase, state):
         from .runtime_identity_v5 import capture

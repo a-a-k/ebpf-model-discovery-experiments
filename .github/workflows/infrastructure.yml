@@ -16,6 +16,44 @@ jobs:
         run: python -m pip install -e . opentelemetry-proto
       - name: Start two independent guest kernels
         run: bash scripts/vms.sh start work/vms
+      - name: Qualify owned postcapture guest release without traffic or model execution
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,pathlib,shutil,time
+          from ebpf_discovery.runtime import Context,write_json
+          from ebpf_discovery.guest_release_v5 import release,retain,_process
+          ctx=Context(pathlib.Path('results/infrastructure/lifecycle'),'qualification-only',0)
+          controls=ctx.out/'closed-host-control-files'
+          controls.mkdir()
+          for name in ('store_v5.py','identity_projection_v5.py'):
+              shutil.copyfile(pathlib.Path('src/ebpf_discovery')/name,controls/name)
+          hashes=lambda:{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(controls.iterdir())}
+          before=hashes()
+          started=time.time_ns()
+          result=release(ctx)
+          assert result['status']=='complete'
+          capture=ctx.out/'infrastructure/guest-evidence-capture.json'
+          capture_before=(capture.stat().st_mtime_ns,capture.read_bytes())
+          retain(ctx)  # Must reuse original diagnostics without SSH to the stopped guests.
+          assert (capture.stat().st_mtime_ns,capture.read_bytes())==capture_before
+          assert hashes()==before
+          for row in result['owned_processes']:
+              current=_process(row['pid'])
+              assert current is None or current['start_ticks']!=row['start_ticks'] or current['state']=='Z'
+              assert not pathlib.Path(row['overlay']).exists()
+              assert not pathlib.Path(row['pidfile']).exists()
+          guests=json.loads(pathlib.Path('work/vms/infrastructure.json').read_text())
+          assert guests['nodes']['a'].splitlines()[1]!=guests['nodes']['b'].splitlines()[1]
+          write_json(ctx.out/'qualification.json',{
+              'status':'complete','source':os.environ['GITHUB_SHA'],
+              'scope':'Lifecycle-only real two-kernel VM qualification; copied source files are closed-input controls, not scientific observations',
+              'started_ns':started,'ended_ns':time.time_ns(),
+              'control_SHA256_before':before,'control_SHA256_after':hashes(),
+              'independent_guest_boots':True,'actual_owned_guests_exited':True,
+              'only_two_ephemeral_overlays_removed':True,'retained_diagnostics_reused_without_overwrite':True,
+              'application_traffic':0,'Bering_executions':0,'Sheaft_executions':0,
+              'primary_scientific_case_admission':False})
+          PY
       - name: Preserve infrastructure evidence
         if: always()
         run: |
