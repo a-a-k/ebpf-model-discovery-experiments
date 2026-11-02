@@ -368,70 +368,70 @@
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41329450264,
+      "run_id": 41470525869,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41329454436,
+      "run_id": 41470533050,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41329458921,
+      "run_id": 41470540023,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41331875002,
+      "run_id": 41470550646,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41336793680,
+      "run_id": 41470558415,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41336799720,
+      "run_id": 41470566316,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
       "mode": "full",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41329463221,
+      "run_id": 41470575905,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "otel_demo",
@@ -448,10 +448,10 @@
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41329467500,
+      "run_id": 41479813348,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
     },
     {
       "system": "petclinic",
@@ -835,7 +835,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 8,
+  "pending_artifact_cells": 7,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2296,6 +2296,26 @@
       "full_artifact_name": "campaign-v5-deepflow-main-petclinic-full-8-41387290675",
       "full_artifact_bytes": 4012791824,
       "full_artifact_digest": "sha256:3dce15c02eaff62775e64914aebe2f5587c2f206ed013474186b2bcb3603eb86"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41470575905,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "full_artifact_id": 13180555929,
+      "full_artifact_name": "campaign-v5-deepflow-main-otel_demo-full-6-41470575905",
+      "full_artifact_bytes": 5335924987,
+      "full_artifact_digest": "sha256:7541e1387ba9311fc8b4c09eb3685d8b6dbc4774cad035e72cabf128661db26d",
+      "compact_artifact_id": 13180120980,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-6-41470575905",
+      "compact_artifact_bytes": 48001958,
+      "compact_artifact_digest": "sha256:142ba54c9a184c662dbda20bf0b27f66d091d32072d72f677cbe2314453d126a"
     }
   ],
   "superseded_planned_source": {
@@ -2661,6 +2681,144 @@
       "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
       "reason": "terminal_oldA_local_PC_full_no_final_source_or_targets; existing_qualified_worker_placement_same_program_input",
       "pre_execution_record": "work/W-PC-full3-worker-replacement-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41329450264,
+      "original_job_id": 124916291215,
+      "original_prefix_artifact_id": 13099395054,
+      "replacement_run_id": 41470525869,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "original_run_id": 41329454436,
+      "original_job_id": 124916300817,
+      "original_prefix_artifact_id": 13098639669,
+      "replacement_run_id": 41470533050,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "original_run_id": 41329458921,
+      "original_job_id": 124916314135,
+      "original_prefix_artifact_id": 13097805035,
+      "replacement_run_id": 41470540023,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41331875002,
+      "original_job_id": 124923528546,
+      "original_prefix_artifact_id": 13098037917,
+      "replacement_run_id": 41470550646,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "original_run_id": 41336793680,
+      "original_job_id": 124938242345,
+      "original_prefix_artifact_id": 13100256956,
+      "replacement_run_id": 41470558415,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "original_run_id": 41336799720,
+      "original_job_id": 124938266776,
+      "original_prefix_artifact_id": 13099894670,
+      "replacement_run_id": 41470566316,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "original_run_id": 41329463221,
+      "original_job_id": 124916326640,
+      "original_prefix_artifact_id": 13096836055,
+      "replacement_run_id": 41470575905,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "original_run_id": 41329467500,
+      "original_job_id": 124916341675,
+      "original_prefix_artifact_id": 13096849018,
+      "replacement_run_id": 41470585319,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_S_OTel_prefix_only; qualified_owned_postcapture_release_same_acquisition_and_host_algorithms",
+      "pre_execution_record": "work\\OTel8-postcapture-failure-replacements-preexecution-20261102.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "original_run_id": 41470585319,
+      "original_job_id": 125362864940,
+      "original_failed_artifact_ids": [
+        13158215042,
+        13157986304
+      ],
+      "replacement_run_id": 41479813348,
+      "actual_capture_commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_full8_precheckpoint_137_80MiB_postgres_OOM_target0; same_source_settings_one_failed_case_replacement",
+      "pre_execution_record": "work\\OTel-full8-after137-same-scenario-preexecution-20261102.json",
       "original_costs_and_available_prefix_worker_evidence_retained": true
     }
   ]
