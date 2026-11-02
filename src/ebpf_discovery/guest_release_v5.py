@@ -25,6 +25,21 @@ def retain(ctx):
     if proof_path.exists():
         proof=json.loads(proof_path.read_text(encoding='utf-8'))
         assert proof['status']=='complete'
+        assert proof['schema']=='owned-guest-diagnostics-v5'
+        assert proof['campaign_root']==str(ctx.out.resolve())
+        assert proof['vm_root']==str(ctx.vm_dir.resolve())
+        assert proof['run_id']==os.environ.get('GITHUB_RUN_ID')
+        assert proof['source']==os.environ.get('GITHUB_SHA')
+        for node in ('a','b'):
+            prefix='infrastructure/'+node+'/'
+            required={prefix+name for name in ('check-copy.err','serial-test.err',
+                'guest-kernel-final.txt','guest-kernel-final.err','guest-kernel-final.returncode')}
+            assert required<=set(proof['files']), 'Incomplete two-guest diagnostic capture'
+            if prefix+'serial-copy.returncode' in proof['files']:
+                assert {prefix+name for name in ('serial-stat.txt','serial-stat.err',
+                    'serial-copy.err','serial.log')}<=set(proof['files'])
+            else:
+                assert {prefix+'serial-test.returncode',prefix+'serial-copy.status'}<=set(proof['files'])
         for name, expected in proof['files'].items():
             path=(ctx.out/name).resolve()
             assert path.is_relative_to(ctx.out.resolve())
@@ -39,7 +54,10 @@ def retain(ctx):
             if path.is_file():
                 files[path.relative_to(ctx.out).as_posix()]={
                     'bytes':path.stat().st_size,'sha256':_sha(path)}
-    proof={'status':'complete','started_ns':started,'ended_ns':time.time_ns(),
+    proof={'status':'complete','schema':'owned-guest-diagnostics-v5',
+           'campaign_root':str(ctx.out.resolve()),'vm_root':str(ctx.vm_dir.resolve()),
+           'run_id':os.environ.get('GITHUB_RUN_ID'),'source':os.environ.get('GITHUB_SHA'),
+           'started_ns':started,'ended_ns':time.time_ns(),
            'scope':'Original check/serial/stat/dmesg commands and actual returncodes; no zero-loss claim',
            'files':files}
     write_json(proof_path,proof)
@@ -93,7 +111,10 @@ def release(ctx):
         assert len({row['pid'] for row in owned})==2
         result['owned_processes']=owned
         write_json(proof_path,result)
-        subprocess.run(['bash',str(ctx.repo_dir/'scripts/vms.sh'),'stop',str(ctx.vm_dir)],check=True,timeout=30)
+        signalled=subprocess.check_output(['sudo','--preserve-env=GITHUB_ACTIONS','python3',
+            str(ctx.repo_dir/'scripts/stop-owned-guests-v5.py'),'--vms',str(ctx.vm_dir),
+            '--expected-json',json.dumps(owned)],timeout=30)
+        result['verified_pidfd_signal_result']=json.loads(signalled)
         deadline=time.monotonic()+30
         pending=list(owned)
         while pending:

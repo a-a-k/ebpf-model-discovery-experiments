@@ -5,11 +5,8 @@ study_work=${2:-work/vms}
 mkdir -p "$study_work"
 study_work=$(realpath "$study_work")
 if [[ "$action" == stop ]]; then
-  for node in a b; do
-    if [[ -f "$study_work/$node.pid" ]]; then
-      sudo kill "$(sudo cat "$study_work/$node.pid")" 2>/dev/null || true
-    fi
-  done
+  script_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+  sudo --preserve-env=GITHUB_ACTIONS python3 "$script_root/stop-owned-guests-v5.py" --vms "$study_work"
   exit 0
 fi
 [[ "${GITHUB_ACTIONS:-}" == true ]] || { echo 'VM execution is GitHub Actions only' >&2; exit 2; }
