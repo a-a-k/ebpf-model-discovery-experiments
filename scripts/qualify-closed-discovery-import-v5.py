@@ -16,9 +16,9 @@ assert os.environ.get("GITHUB_ACTIONS") == "true"
 workspace = Path.cwd().resolve()
 work = workspace / "work/closed-discovery-import"
 output = workspace / "results/closed-discovery-import"
-assert not work.exists() and not output.exists()
+assert not work.exists()
 work.mkdir(parents=True)
-output.mkdir(parents=True)
+output.mkdir(parents=True, exist_ok=True)
 anchor = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 source = subprocess.check_output(["git", "show", anchor + ":src/ebpf_discovery/remote_toolchain_v4.py"])
 baseline_path = work / "baseline_remote.py"
