@@ -21,7 +21,7 @@ ARTIFACT = 13105593437
 ARCHIVE_SHA = '8d6862f0891372194b3fe4d40ac6c7630b660ada25a8ea9f1121133cbb46acec'
 ARCHIVE_BYTES = 5536654728
 INVENTORY_SHA = 'd67a584f4e997d311881c5e70a811eb26e66ed652f48607e317af1b6263a9935'
-INPUTS = {'observation-index.sqlite': 10481643520,
+INPUTS = {'observation-index.sqlite': 14597591040,
           'runtime-identity-v5/inventory-final.json': 149942755}
 FULL_ROWS, SAMPLE_ROWS = 1475382, 100000
 REPOSITORY = 'a-a-k/ebpf-model-discovery-experiments'
