@@ -74,10 +74,18 @@ for name, extractor in (("baseline", baseline._safe_extract), ("candidate", curr
     expected = current._read(arm / "infrastructure/expected.json")
     assert expected["run_id"] == "41470540023" and expected["commit"] == anchor
     assert expected["worker_run_id"] == "41504119650" and expected["parent_cell_id"] == "otel_demo:absent:8"
+    # Real parents obtain this declared context from the closed checkpoint;
+    # workflow dispatch inputs deliberately omit it. Supply the same fixed
+    # graph-v5/DeepFlow declaration to BOTH arms; retain every original check.
+    expected["collector_provenance"] = {
+        "protocol_version": "graph-v5", "collector": "deepflow",
+        "source_domain": "ebpf-deepflow", "collector_schema": "collector-lifecycle-v5",
+        "collector_file": "observations/collector.json"}
     forecasts = current._verify_worker_output(arm, expected, 41504119650)
     record = {"arm": name, "started_ns": started, "ended_ns": time.time_ns(),
               "free_before": free_before, "free_after": shutil.disk_usage(work).free,
               "census": census(arm), "existing_worker_output_verification": "PASS",
+              "declared_collector_context": expected["collector_provenance"],
               "forecasts_canonical_SHA256": current._json_sha(forecasts), "extraction": extraction}
     arms.append(record)
     current._atomic_json(output / (name + ".json"), record)
