@@ -1,11 +1,550 @@
-name: Fixed saved final identity resolver diagnostic
+name: Iteration 4 immutable DSB checkpoint GC diagnostic
 on:
   workflow_dispatch:
+    inputs:
+      fixed_final_identity_profile:
+        description: Profile fixed100000 unchanged resolver calls on the retained final full7 data
+        type: boolean
+        default: false
+      profile_full7_preparation:
+        description: Profile unchanged input preparation on the fixed saved full7 prefix
+        type: boolean
+        default: false
+      saved_full7_timing:
+        description: Read existing full7 worker timings only; no tool rerun
+        type: boolean
+        default: false
+      saved_full7_equivalence:
+        description: Compare unprofiled repaired preparation against the fixed actual full7 worker output
+        type: boolean
+        default: false
+      saved_checkpoint_copy_release:
+        description: Verify local duplicate release on the fixed actual T full6 checkpoint without model execution
+        type: boolean
+        default: false
+      saved_deepflow_final_links:
+        description: Compare full copy and closed final hardlinks on the fixed OTel partial6 raw prefix, with equal storage pressure
+        type: boolean
+        default: false
+      saved_duplicate_lifetime:
+        description: Verify imported guest-prefix cleanup and early parent checkpoint release on fixed saved inputs only
+        type: boolean
+        default: false
+      saved_runtime_proof_jsonl:
+        description: Compare every original proof record and all inputs against lossless JSONL on the fixed saved prefix
+        type: boolean
+        default: false
 permissions:
-  actions: read
   contents: read
+  actions: read
 jobs:
-  profile:
+  diagnose:
+    if: ${{ !inputs.fixed_final_identity_profile && !inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Admit the one immutable checkpoint artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_RUN: '40731158179'
+          SOURCE_ARTIFACT: '12843610949'
+          SOURCE_NAME: training-v4-deathstarbench-full-6-40731158179
+          SOURCE_DIGEST: sha256:8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0
+          SOURCE_HEAD: 3e708879889eac8a238027a4640466fc8a76eca5
+          MANIFEST_SHA256: 8a518c3edbfb4f6904ece3b344c85f211cd55bd909cd0629f4a5f29303948235
+        run: |
+          mkdir -p work/diagnostic/source-metadata work/original
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN" > work/diagnostic/source-metadata/run.json
+          gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT" > work/diagnostic/source-metadata/artifact.json
+          python - <<'PY'
+          import json, os, pathlib
+          run=json.loads(pathlib.Path('work/diagnostic/source-metadata/run.json').read_text())
+          artifact=json.loads(pathlib.Path('work/diagnostic/source-metadata/artifact.json').read_text())
+          expected={'run_id':int(os.environ['SOURCE_RUN']),'artifact_id':int(os.environ['SOURCE_ARTIFACT']),
+              'artifact_name':os.environ['SOURCE_NAME'],'artifact_digest':os.environ['SOURCE_DIGEST'],
+              'run_sha':os.environ['SOURCE_HEAD'],'expired':False,
+              'manifest_sha256':os.environ['MANIFEST_SHA256']}
+          if (run.get('id') != expected['run_id'] or run.get('head_sha') != expected['run_sha']
+                  or artifact.get('id') != expected['artifact_id']
+                  or artifact.get('name') != expected['artifact_name']
+                  or artifact.get('digest') != expected['artifact_digest']
+                  or artifact.get('expired') is True
+                  or (artifact.get('workflow_run') or {}).get('id') != expected['run_id']
+                  or (artifact.get('workflow_run') or {}).get('head_sha') != expected['run_sha']):
+              raise SystemExit('immutable checkpoint Actions metadata mismatch')
+          expected.update(run_status=run.get('status'),run_conclusion=run.get('conclusion'),
+              run_url=run.get('html_url'),artifact_bytes=artifact.get('size_in_bytes'),
+              source_workflow_path=run.get('path'))
+          pathlib.Path('work/diagnostic/source-metadata/source-artifact.json').write_text(
+              json.dumps(expected,indent=2)+'\n')
+          PY
+      - name: Download and verify the original artifact archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_ARTIFACT: '12843610949'
+          SOURCE_DIGEST_HEX: 8689c137f482d5ffef5a184762c7f212a5d35f22ea6d014b0d06984788cafed0
+        run: |
+          mkdir -p work/diagnostic/infrastructure
+          /usr/bin/time -v -o work/diagnostic/infrastructure/download-time.txt \
+            gh api "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT/zip" \
+            > work/checkpoint.zip
+          printf '%s  %s\n' "$SOURCE_DIGEST_HEX" work/checkpoint.zip \
+            > work/diagnostic/source-metadata/archive.sha256
+          sha256sum --check work/diagnostic/source-metadata/archive.sha256
+          /usr/bin/time -v -o work/diagnostic/infrastructure/extract-time.txt \
+            unzip -q work/checkpoint.zip -d work/original
+          du -B1 -s work/checkpoint.zip work/original > work/diagnostic/infrastructure/source-disk-bytes.txt
+      - name: Allocate measured swap on the standard runner
+        env:
+          GITHUB_ACTIONS: 'true'
+        run: bash scripts/setup-v4-swap.sh work/diagnostic/infrastructure/swap
+      - name: Run full-prefix toolchain with Bering-child-only soft GC target
+        env:
+          PYTHONPATH: src
+        run: |
+          set +e
+          bash scripts/capture-v4-resources.sh \
+            work/diagnostic/infrastructure/resources 15 work/no-guests &
+          sampler=$!
+          printf '%s\n' "$sampler" > work/diagnostic/infrastructure/resource-sampler.pid
+          (
+            while true; do
+              find work/diagnostic/output -type f -name bering.log -print0 2>/dev/null \
+                | while IFS= read -r -d '' log; do
+                    printf 'BERING_GC_HEARTBEAT '
+                    stat --printf='path=%n inode=%i bytes=%s mtime=%Y\n' "$log"
+                    tail -n 400 "$log" | grep -E '^gc [0-9]+ ' | tail -n 3 | cut -c1-1000 || true
+                  done
+              sleep 60
+            done
+          ) &
+          gc_heartbeat=$!
+          printf '%s\n' "$gc_heartbeat" > work/diagnostic/infrastructure/gc-heartbeat.pid
+          /usr/bin/time -v -o work/diagnostic/infrastructure/diagnostic-time.txt \
+            python -m ebpf_discovery.checkpoint_diagnostic_v4 \
+              --profile full6-40731158179-dsb-gomemlimit12g \
+              --original work/original --out work/diagnostic/output \
+              --source work/diagnostic/source-metadata/source-artifact.json
+          code=$?
+          kill -TERM "$gc_heartbeat" 2>/dev/null || true
+          wait "$gc_heartbeat" 2>/dev/null || true
+          kill -TERM "$sampler" 2>/dev/null || true
+          wait "$sampler" 2>/dev/null || true
+          exit "$code"
+      - name: Retain final runner and disk evidence
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/diagnostic/infrastructure
+          uname -a > work/diagnostic/infrastructure/runner-final.txt
+          free -b >> work/diagnostic/infrastructure/runner-final.txt
+          swapon --show --bytes >> work/diagnostic/infrastructure/runner-final.txt
+          df -B1 | tee -a work/diagnostic/infrastructure/runner-final.txt
+          df -i | tee work/diagnostic/infrastructure/inodes-final.txt
+          du -B1 -s work/diagnostic work/original work/checkpoint.zip \
+            > work/diagnostic/infrastructure/final-disk-bytes.txt 2>&1 || true
+          ps -eo pid,ppid,rss,vsz,%cpu,%mem,etimes,comm,args --sort=-rss \
+            > work/diagnostic/infrastructure/processes-final.txt
+          python -m pip freeze > work/diagnostic/infrastructure/python-environment.txt
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=100" \
+            > work/diagnostic/infrastructure/workflow-jobs.json 2>work/diagnostic/infrastructure/workflow-jobs.err || true
+          cat work/diagnostic/output/status.json work/diagnostic/infrastructure/diagnostic-time.txt \
+            work/diagnostic/infrastructure/final-disk-bytes.txt || true
+          find work/diagnostic -type f -printf '%s\n' \
+            | awk '{files++; bytes+=$1} END {printf "{\"files\":%d,\"bytes\":%.0f}\n", files, bytes}' \
+            | tee work/diagnostic/infrastructure/pre-packaging-file-census.json
+      - name: Collect compact diagnostic evidence before full packaging
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.diagnostic_artifacts_v4 compact \
+            --source work/diagnostic --out work/diagnostic-summary
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostic-summary-v4-dsb-${{ github.run_id }}
+          path: work/diagnostic-summary/
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Package and verify the complete diagnostic tree without filtering
+        id: package
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.diagnostic_artifacts_v4 package \
+            --source work/diagnostic --out work/diagnostic-package
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.package.outcome == 'success'
+        with:
+          name: diagnostic-v4-dsb-checkpoint-gc-${{ github.run_id }}
+          path: |
+            work/diagnostic-package/diagnostic-output.tar.gz
+            work/diagnostic-package/output-manifest.jsonl
+            work/diagnostic-package/packaging.json
+          compression-level: 0
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: diagnostic-packaging-v4-dsb-${{ github.run_id }}
+          path: work/diagnostic-package/packaging.json
+          compression-level: 1
+          retention-days: 90
+          if-no-files-found: warn
+  saved-full7-equivalence:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the same preparation dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Retain and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/preparation-equivalence
+          df -B1 . > work/preparation-equivalence/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/preparation-equivalence/disk-after-sdk-cleanup.txt
+      - name: Allocate the same measured worker swap
+        run: bash scripts/setup-v4-swap.sh work/preparation-equivalence/swap
+      - name: Compare complete preparation without profiling or model execution
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
+        run: |
+          bash scripts/capture-v4-resources.sh work/preparation-equivalence/resources 15 work/no-guests &
+          sampler=$!
+          trap 'kill -TERM "$sampler" 2>/dev/null || true' EXIT
+          /usr/bin/time -v -o work/preparation-equivalence/full-comparison-time.txt \
+            python scripts/check-fixed-dsb-path-preparation-v5.py
+      - name: Retain final resource and environment metadata
+        if: always()
+        run: |
+          mkdir -p work/preparation-equivalence
+          df -B1 . > work/preparation-equivalence/disk-final.txt
+          free -b > work/preparation-equivalence/memory-final.txt
+          swapon --show --bytes > work/preparation-equivalence/swap-final.txt
+          python -m pip freeze > work/preparation-equivalence/python-environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-dsb-full7-preparation-equivalence-${{ github.run_id }}
+          path: work/preparation-equivalence/
+          retention-days: 90
+          if-no-files-found: error
+  saved-checkpoint-copy-release:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the same preparation dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Free unused hosted-image SDK directories
+        run: sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+      - name: Verify and release only the fixed uploaded checkpoint copy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: src
+        run: python scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-full6-checkpoint-copy-release-${{ github.run_id }}
+          path: work/checkpoint-copy-release-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-deepflow-final-links:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/deepflow-final-links-proof
+          df -B1 . > work/deepflow-final-links-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/deepflow-final-links-proof/disk-after-sdk-cleanup.txt
+      - name: Compare preserved full bytes and identical manifests under equal storage pressure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo --preserve-env=GH_TOKEN,GITHUB_ACTIONS,GITHUB_REPOSITORY,GITHUB_SHA \
+            env PATH="$PATH" PYTHONPATH="$GITHUB_WORKSPACE/src" \
+            /usr/bin/time -v -o work/deepflow-final-links-proof/qualification-time.txt \
+            python scripts/check-fixed-deepflow-final-links-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-OTel-partial6-deepflow-final-links-${{ github.run_id }}
+          path: work/deepflow-final-links-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-guest-prefix-release:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_duplicate_lifetime && !inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/guest-prefix-release-proof
+          df -B1 . > work/guest-prefix-release-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/guest-prefix-release-proof/disk-after-sdk-cleanup.txt
+      - name: Compare fixed original bytes under equal storage pressure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo --preserve-env=GH_TOKEN,GITHUB_ACTIONS,GITHUB_REPOSITORY,GITHUB_SHA \
+            env PATH="$PATH" PYTHONPATH="$GITHUB_WORKSPACE/src" \
+            /usr/bin/time -v -o work/guest-prefix-release-proof/qualification-time.txt \
+            python scripts/check-fixed-guest-prefix-release-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-partial6-guest-prefix-release-${{ github.run_id }}
+          path: work/guest-prefix-release-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-early-checkpoint-release:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_duplicate_lifetime && !inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.saved_runtime_proof_jsonl && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/early-checkpoint-release-proof
+          df -B1 . > work/early-checkpoint-release-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/early-checkpoint-release-proof/disk-after-sdk-cleanup.txt
+      - name: Compare fixed original bytes under equal storage pressure
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sudo --preserve-env=GH_TOKEN,GITHUB_ACTIONS,GITHUB_REPOSITORY,GITHUB_SHA \
+            env PATH="$PATH" PYTHONPATH="$GITHUB_WORKSPACE/src" \
+            /usr/bin/time -v -o work/early-checkpoint-release-proof/qualification-time.txt \
+            python scripts/check-fixed-early-checkpoint-release-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-absent6-early-checkpoint-release-${{ github.run_id }}
+          path: work/early-checkpoint-release-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-runtime-proof-jsonl:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_runtime_proof_jsonl && !inputs.saved_duplicate_lifetime && !inputs.saved_deepflow_final_links && !inputs.saved_checkpoint_copy_release && !inputs.saved_full7_equivalence && !inputs.profile_full7_preparation && !inputs.saved_full7_timing }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the existing experiment package
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Record and free unused hosted-image SDK directories
+        run: |
+          mkdir -p work/runtime-proof-jsonl-proof
+          df -B1 . > work/runtime-proof-jsonl-proof/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/runtime-proof-jsonl-proof/disk-after-sdk-cleanup.txt
+      - name: Compare every original record and all original payload and SQL proofs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PYTHONPATH: src
+        run: |
+          /usr/bin/time -v -o work/runtime-proof-jsonl-proof/qualification-time.txt \
+            python scripts/check-fixed-runtime-proof-jsonl-v5.py
+      - name: Retain final resource and environment metadata
+        if: always()
+        run: |
+          df -B1 . > work/runtime-proof-jsonl-proof/disk-final.txt
+          free -b > work/runtime-proof-jsonl-proof/memory-final.txt
+          python -m pip freeze > work/runtime-proof-jsonl-proof/python-environment.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-T-absent6-runtime-proof-jsonl-${{ github.run_id }}
+          path: work/runtime-proof-jsonl-proof/
+          retention-days: 90
+          if-no-files-found: error
+  saved-full7-timing:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.saved_full7_timing && !inputs.profile_full7_preparation && !inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read the fixed successful worker API metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/timing-review
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41219370499 > work/timing-review/run-api.json
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13053549827 > work/timing-review/artifact-api.json
+          python - <<'PY'
+          import json,pathlib
+          root=pathlib.Path('work/timing-review')
+          run=json.loads((root/'run-api.json').read_text())
+          artifact=json.loads((root/'artifact-api.json').read_text())
+          assert run['id']==41219370499 and run['conclusion']=='success'
+          assert run['head_sha']=='13c017bf72a86a6853f93a5b8f503de199bf7865'
+          assert artifact['id']==13053549827 and not artifact['expired']
+          assert artifact['name']=='toolchain-v4-deathstarbench-full-7-41219370499'
+          assert artifact['size_in_bytes']==1074613934
+          assert artifact['digest']=='sha256:8120d163a0c995ce20e562ac48d2c76070a425de106938749b9706d983761202'
+          assert artifact['workflow_run']['id']==run['id']
+          assert artifact['workflow_run']['head_sha']==run['head_sha']
+          PY
+      - name: Download and hash the one immutable saved output
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13053549827/zip > work/worker.zip
+          printf '%s  %s\n' 8120d163a0c995ce20e562ac48d2c76070a425de106938749b9706d983761202 work/worker.zip | sha256sum --check
+      - name: Verify existing lossless package and copy only saved timing metadata
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib,shutil,zipfile
+          from ebpf_discovery.artifact_transport_v4 import unpack
+          output=pathlib.Path('work/timing-review')
+          package=pathlib.Path('work/saved-package')
+          with zipfile.ZipFile('work/worker.zip') as archive:
+              names=archive.namelist()
+              assert len(names)==5 and set(names)=={'package-status.json','packaging.json','payload.manifest.jsonl','payload.tar.gz','transport.json'}
+              archive.extractall(package)
+          tree=pathlib.Path('work/saved-worker')
+          proof=unpack(package,tree,kind='worker')
+          (output/'unpack-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+          status=json.loads((tree/'worker-status.json').read_text())
+          identity=status['identity']
+          assert status['status']=='complete'
+          assert identity['commit']=='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
+          assert identity['run_id']=='41164824120'
+          assert identity['system']=='deathstarbench' and identity['mode']=='full' and identity['seed']=='7'
+          assert identity['parent_cell_id']=='deathstarbench:full:7'
+          names=['worker-status.json','worker-commands.jsonl',
+              'infrastructure/toolchain-time.txt','bering-go-environment.json',
+              'toolchain/input-preparation-cost.json','toolchain/execution-summary.json']
+          selected={}
+          for name in names:
+              source=tree/name
+              assert source.is_file(),name
+              assert source.stat().st_size<=4*1024*1024,name
+              target=output/'selected'/name
+              target.parent.mkdir(parents=True,exist_ok=True)
+              shutil.copyfile(source,target)
+              selected[name]={'bytes':source.stat().st_size,'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}
+          (output/'literal-review-scope.json').write_text(json.dumps({
+              'source_worker':41219370499,'source_artifact':13053549827,
+              'source_scientific_head':'0c98bf4520e863ab021b60d00517ee2aa49ab38e',
+              'parent_cell':'deathstarbench:full:7','parent_run':41164824120,
+              'new_application_traffic':False,'tool_reexecution':False,
+              'new_fitting_simulation_or_scoring':False,'selected':selected},indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-dsb-full7-worker-timing-${{ github.run_id }}
+          path: work/timing-review/
+          retention-days: 90
+          if-no-files-found: error
+  preparation-profile:
+    if: ${{ !inputs.fixed_final_identity_profile && inputs.profile_full7_preparation && !inputs.saved_full7_equivalence && !inputs.saved_checkpoint_copy_release && !inputs.saved_deepflow_final_links && !inputs.saved_duplicate_lifetime && !inputs.saved_runtime_proof_jsonl }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the unchanged preparation dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Retain and free the same unused hosted-image SDK directories
+        run: |
+          mkdir -p work/preparation-profile
+          df -B1 . > work/preparation-profile/disk-before-sdk-cleanup.txt
+          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          df -B1 . > work/preparation-profile/disk-after-sdk-cleanup.txt
+      - name: Bind and download the one immutable training prefix
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p work/preparation-profile
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13047984145 > work/preparation-profile/artifact-api.json
+          python - <<'PY'
+          import json,pathlib
+          a=json.loads(pathlib.Path('work/preparation-profile/artifact-api.json').read_text())
+          assert a['id']==13047984145 and a['size_in_bytes']==3356747245 and not a['expired']
+          assert a['name']=='training-v4-deathstarbench-full-7-41164824120'
+          assert a['digest']=='sha256:a36d286a30830b93e2958f22da6f6e5ad735ad4f32bfe1dcc6b5a0a2abe1ddac'
+          assert a['workflow_run']['id']==41164824120
+          assert a['workflow_run']['head_sha']=='0c98bf4520e863ab021b60d00517ee2aa49ab38e'
+          PY
+          gh api repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13047984145/zip > work/training-prefix.zip
+          printf '%s  %s\n' a36d286a30830b93e2958f22da6f6e5ad735ad4f32bfe1dcc6b5a0a2abe1ddac work/training-prefix.zip | sha256sum --check
+      - name: Allocate the same measured worker swap
+        run: bash scripts/setup-v4-swap.sh work/preparation-profile/swap
+      - name: Profile full unchanged preparation without running model tools
+        env:
+          PYTHONPATH: ${{ github.workspace }}:${{ github.workspace }}/src
+        run: python scripts/profile-fixed-dsb-preparation-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fixed-dsb-full7-preparation-profile-${{ github.run_id }}
+          path: work/preparation-profile/
+          retention-days: 90
+          if-no-files-found: error
+  fixed-final-identity-profile:
+    if: ${{ inputs.fixed_final_identity_profile }}
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
