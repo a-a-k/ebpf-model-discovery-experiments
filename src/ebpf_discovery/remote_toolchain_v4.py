@@ -84,14 +84,26 @@ def _manifest(root: Path) -> dict[str, dict]:
     return result
 
 
-def _safe_extract(archive: Path, destination: Path) -> None:
+def _safe_extract(archive: Path, destination: Path, *, closed_discovery_links=False):
     """Extract an Actions ZIP without accepting links, duplicates or traversal."""
     destination = Path(destination).resolve()
     if destination.exists() and any(destination.iterdir()):
         raise ValueError("archive destination must be empty")
     destination.mkdir(parents=True, exist_ok=True)
     seen = set()
+    linked = {}
+    result = {"schema_version": "closed-discovery-import-hardlinks-v1",
+              "immutable_subtree": "toolchain/discovery/", "linked_files": 0,
+              "duplicate_bytes_not_allocated": 0, "discovery_members_verified": 0,
+              "discovery_bytes_verified": 0, "all_original_members_read_to_EOF": False}
     with zipfile.ZipFile(archive) as bundle:
+        hints = {}
+        if closed_discovery_links:
+            manifest_body = bundle.read("output-manifest.json")
+            hints = json.loads(manifest_body)["toolchain_files"]
+            if not isinstance(hints, dict):
+                raise ValueError("closed worker output file manifest is invalid")
+            result["output_manifest_sha256"] = hashlib.sha256(manifest_body).hexdigest()
         for member in bundle.infolist():
             name = member.filename.replace("\\", "/")
             parts = Path(name).parts
@@ -107,8 +119,44 @@ def _safe_extract(archive: Path, destination: Path) -> None:
                 target.mkdir(parents=True, exist_ok=True)
                 continue
             target.parent.mkdir(parents=True, exist_ok=True)
+            record = hints.get(name.removeprefix("toolchain/")) if name.startswith("toolchain/discovery/") else None
+            if closed_discovery_links and record is not None:
+                size, expected_sha = record.get("bytes"), record.get("sha256")
+                if (type(size) is not int or size < 0 or not isinstance(expected_sha, str)
+                        or re.fullmatch(r"[0-9a-f]{64}", expected_sha) is None):
+                    raise ValueError("closed discovery file hint is invalid")
+                key = (size, expected_sha)
+                first = linked.get(key)
+                actual, received = hashlib.sha256(), 0
+                output = None if first is not None else target.open("xb")
+                try:
+                    with bundle.open(member) as source:
+                        while chunk := source.read(1024 * 1024):
+                            actual.update(chunk)
+                            received += len(chunk)
+                            if output is not None:
+                                output.write(chunk)
+                finally:
+                    if output is not None:
+                        output.close()
+                # Even aliases consume and CRC-check their entire original ZIP
+                # member; a manifest hint never substitutes for reading bytes.
+                if received != size or actual.hexdigest() != expected_sha:
+                    raise ValueError("closed discovery member differs from its file manifest")
+                if first is not None:
+                    os.link(first, target, follow_symlinks=False)
+                    result["linked_files"] += 1
+                    result["duplicate_bytes_not_allocated"] += received
+                else:
+                    linked[key] = target
+                result["discovery_members_verified"] += 1
+                result["discovery_bytes_verified"] += received
+                continue
             with bundle.open(member) as source, target.open("xb") as output:
                 shutil.copyfileobj(source, output, length=1024 * 1024)
+    if closed_discovery_links:
+        result["all_original_members_read_to_EOF"] = True
+        return result
 
 
 def _read(path: Path):
@@ -850,7 +898,16 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     if advertised != "sha256:" + archive_sha:
         raise RuntimeError("downloaded worker artifact differs from Actions digest")
     zip_stage = state / "staged-worker-output"
-    _safe_extract(archive, zip_stage)
+    closed_discovery_links = (campaign.system == "otel_demo"
+                              and getattr(campaign, "collector", None) == "deepflow")
+    extraction = _safe_extract(archive, zip_stage,
+                               closed_discovery_links=closed_discovery_links)
+    if extraction is not None:
+        _atomic_json(state / "closed-discovery-import-hardlinks.json", {
+            **extraction, "identity": {key: expected.get(key) for key in IDENTITY_KEYS},
+            "worker_run_id": worker_run_id, "worker_artifact_id": artifact["id"],
+            "worker_artifact_digest": advertised, "archive_sha256": archive_sha,
+            "scope": "Only closed discovery files share verified backing storage; every logical path and all existing verification/import/freeze checks remain."})
     zip_extract_ended = time.monotonic_ns()
     cost["output_zip_extract_seconds"] = (zip_extract_ended - download_ended) / 1e9
     _atomic_json(cost_path, cost)
