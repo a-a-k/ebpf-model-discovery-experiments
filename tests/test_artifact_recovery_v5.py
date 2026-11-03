@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import zipfile
 
+import yaml
+
 from ebpf_discovery.artifact_recovery_v5 import recover_declared_files
 
 
@@ -95,7 +97,14 @@ def test_does_not_assume_declared_member_from_nested_or_prefixed_transport(
 
 
 def test_future_compact_upload_includes_manifest_declared_journal() -> None:
-    workflow = (
+    workflow = yaml.safe_load((
         Path(__file__).resolve().parents[1] / ".github" / "workflows" / "series-v5.yml"
-    ).read_text(encoding="utf-8")
-    assert workflow.count("work/campaign/attempt-journal.jsonl") == 1
+    ).read_text(encoding="utf-8"))
+    assert {"campaign", "postcapture"} <= set(workflow["jobs"])
+    for job_name in ("campaign", "postcapture"):
+        summaries = [step for step in workflow["jobs"][job_name]["steps"]
+                     if step.get("uses", "").startswith("actions/upload-artifact@")
+                     and step.get("with", {}).get("name", "").startswith("v5-summary-")]
+        assert len(summaries) == 1, job_name
+        paths = [line.strip() for line in summaries[0]["with"]["path"].splitlines()]
+        assert paths.count("work/campaign/attempt-journal.jsonl") == 1, job_name
