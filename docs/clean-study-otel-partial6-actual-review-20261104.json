@@ -1,0 +1,1982 @@
+{
+  "schema_version": "original-partial6-joint-scientific-admission-v1",
+  "recorded_utc": "2026-11-03T21:51:52.020314+00:00",
+  "both_actual_original_scientific_GO": true,
+  "admitted_main_case_count": 76,
+  "whole81_complete": false,
+  "reader": 41723570034,
+  "source": "610f747553b6ff044992a3215a16e0bfd1174922",
+  "facts_sha256": "5b7fd9a34e282c2df1458c7814bda626aaad4319567d7d05411e8009efd8124e",
+  "root_review": {
+    "sha256": "fdcfe2ca96d83ea56b0abcd6f0e6d9811bb0c4fc181a2132980979189e8f211a",
+    "body": {
+      "recorded_utc": "2026-11-03T21:49:30.115735+00:00",
+      "root_original_actual_scientific_case_GO": true,
+      "independent_actual_scientific_case_GO_still_required": true,
+      "case": {
+        "collector": "deepflow",
+        "mode": "partial",
+        "run_id": 41642775376,
+        "seed": 6,
+        "system": "otel_demo"
+      },
+      "producer_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "reader": 41723570034,
+      "reader_job": 126222629640,
+      "reader_source": "610f747553b6ff044992a3215a16e0bfd1174922",
+      "artifact_id": 13271874623,
+      "artifact_digest": "sha256:17faa10a124b3d7631e7614728536fec29150d10beec4822b7d590a821d8c098",
+      "facts_path": "work\\main-review-partial68-original-union-41723570034-exact-facts\\13271874623\\facts\\saved-evidence-facts.json",
+      "facts_bytes": 30890447,
+      "facts_sha256": "5b7fd9a34e282c2df1458c7814bda626aaad4319567d7d05411e8009efd8124e",
+      "facts_crc32": "9d2cd7d0",
+      "scope_and_shape_GO": "work/partial6-union-exact-facts-independent-before-body-scope-shape-GO-20261104.json",
+      "acquisition": {
+        "all_records": 34951,
+        "blocks": 19,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "actual_prospective_output_freeze_ns": [
+        1793728815801400307,
+        1793728819959556877
+      ],
+      "actual_tool_executions": {
+        "pooled_Bering": 6,
+        "context_Bering": 2,
+        "total_Bering_costed": 8,
+        "Procrustes_preflights": 6,
+        "Sheaft": 0
+      },
+      "actual_scientific_result": {
+        "all24primaryforecasts_UNKNOWN": true,
+        "by_operation_target_successes_of3200": {
+          "add_to_cart": 2800,
+          "browse_product": 2800,
+          "checkout": 1247
+        },
+        "specific_combined_raw_missing_obligations": {
+          "browse_product": [
+            "browse.frontend.catalog.get_product",
+            "browse.catalog.postgresql.get_product"
+          ],
+          "add_to_cart": [
+            "browse.frontend.catalog.get_product",
+            "browse.catalog.postgresql.get_product"
+          ],
+          "checkout": [
+            "browse.frontend.catalog.get_product",
+            "browse.catalog.postgresql.get_product",
+            "checkout.checkout.catalog.get_product",
+            "checkout.catalog.postgresql.price_product",
+            "checkout.frontend.catalog.enrich_response",
+            "checkout.catalog.postgresql.enrich_response"
+          ]
+        },
+        "context": {
+          "network_scope": {
+            "status": "reuse_unchanged_union",
+            "added_edges": []
+          },
+          "raw": {
+            "status": "reuse_unchanged_union",
+            "added_edges": []
+          }
+        },
+        "direct_baseline": {
+          "add_to_cart": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          },
+          "browse_product": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          },
+          "checkout": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "interpretation": "DeepFlowdidnotfillpartialSDKproductcatalog/selectedSQL operationevidence gaps in thisexactcase. Contextunionaddsnoedges oravailableprimaryforecasts. Preservecheckout1247/3200adverseoutcome; allforecastUNKNOWN ratherthanforcedsimulations. No decoder/rootcause/universalcapability or costwin inferred."
+      },
+      "native_mode": "BothcatalogreplicasSDKdisabled; training/finalindependentnativeauditpartialcompliant andzero productcatalogmentions, othernativeSDKdata present.",
+      "independent_guests": {
+        "boot_ids": {
+          "a": "c6e60337-4d23-4b1d-b719-102a945c711e",
+          "b": "d95a783c-7b54-473c-b8f2-b288a4231c91"
+        },
+        "guest_image_bytes_independently_rehashed_by_this_review": false,
+        "guest_memory_mib": 6144,
+        "independent_guest_boots": true,
+        "kernel_releases": {
+          "a": "6.8.0-147-generic",
+          "b": "6.8.0-147-generic"
+        },
+        "recorded_image_provenance": {
+          "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+          "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+        },
+        "separate_physical_hosts_claimed": false,
+        "shared_runner_host": true
+      },
+      "database": {
+        "all_selected_forecast_impact_predictions_null": true,
+        "independent_diagnostics": {
+          "db_down": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 6,
+                "invalid": 0,
+                "success": 0,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "db_up": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 6,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          }
+        },
+        "interpretation": "Internalnetworkdatabasebindingavailablebooleannota selectedexternalforecast; noDButilityclaim."
+      },
+      "async_persistence": {
+        "normal": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        },
+        "paused_after_resume": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        },
+        "paused_snapshot": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "pending": 20
+          }
+        },
+        "recovered": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        }
+      },
+      "closed_original_evidence": {
+        "scientific_input_files": 98839,
+        "scientific_input_bytes": 53251916394,
+        "selected_immutable_bodies_bound": 210,
+        "allfrozenclaims_source_worker_and_actualrestore_APIchain_verified": true,
+        "processing_receipt_is_None": true,
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "limit": "ActualselectedbodyCRC/SHA+fulloriginalinventory/source/restore validation; noallunselectedraw/localmodelread or finalmutableSQLclaim."
+      },
+      "all75_admitted_prior_cases_preserved": true,
+      "replay_this_valid_negative": false,
+      "whole81_complete": false,
+      "costs": "Alloriginalcapture/worker/setup/prepare/wait/freeze/targets/offlinesuffix/eval/failedfullupload, priorfailed/staticCI/actualreader/transport/review/retentioncosts retained; humanunknown. No doubledwallworkerwaitcount, no zeroeffortclaim."
+    }
+  },
+  "independent_review": {
+    "sha256": "73eb3353038fa2bf3ffed3526fe6749e2bf0451a8f72e1765065c83ac45a41a2",
+    "body": {
+      "independent_original_actual_scientific_case_GO": true,
+      "original_partial6_closed_union_actual_evidence_GO": true,
+      "original_scientific_subset_admission_GO": true,
+      "recorded_utc": "2026-11-03T21:50:18.822186+00:00",
+      "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+      "case": {
+        "collector": "deepflow",
+        "mode": "partial",
+        "run_id": 41642775376,
+        "seed": 6,
+        "system": "otel_demo"
+      },
+      "producer_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "reader_source": "610f747553b6ff044992a3215a16e0bfd1174922",
+      "reader_run": 41723570034,
+      "reader_job": 126222629640,
+      "reader_artifact": 13271874623,
+      "facts": {
+        "path": "work\\main-review-partial68-original-union-41723570034-exact-facts\\13271874623\\facts\\saved-evidence-facts.json",
+        "bytes": 30890447,
+        "sha256": "5b7fd9a34e282c2df1458c7814bda626aaad4319567d7d05411e8009efd8124e",
+        "crc32": "9d2cd7d0",
+        "transport_proof_sha256": "55e025bd98a794e1d112772cb22c922d659adc7fc2f2bd56b303693a65a755b9"
+      },
+      "original_criterion": "Admit this original matched81 case on preserved actual scientific evidence, including real Bering, available-model Sheaft where possible and independent outcomes. All negative/adverse/unknown results valid. This is not full81 completion, utility, cost superiority, global DeepFlow impossibility or approval to replay the case.",
+      "integrity": {
+        "counts": {
+          "all_records": 34951,
+          "blocks": 19,
+          "expected_primary": 34800,
+          "primary": 34800,
+          "primary_count_matches": true,
+          "target": 9600,
+          "target_state_counts": {
+            "00": 1200,
+            "01": 1200,
+            "10": 2400,
+            "11": 4800
+          }
+        },
+        "all_methods": [
+          "ebpf",
+          "native",
+          "combined",
+          "context-baseline"
+        ],
+        "both_views": [
+          "raw",
+          "network_scope"
+        ],
+        "saved_primary_rows": 24,
+        "saved_model_branch_rows": 18,
+        "source_pins": {
+          "bering": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+          "procrustes": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+          "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a"
+        },
+        "guest_platform": {
+          "boot_ids": {
+            "a": "c6e60337-4d23-4b1d-b719-102a945c711e",
+            "b": "d95a783c-7b54-473c-b8f2-b288a4231c91"
+          },
+          "guest_image_bytes_independently_rehashed_by_this_review": false,
+          "guest_memory_mib": 6144,
+          "independent_guest_boots": true,
+          "kernel_releases": {
+            "a": "6.8.0-147-generic",
+            "b": "6.8.0-147-generic"
+          },
+          "recorded_image_provenance": {
+            "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+            "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+          },
+          "separate_physical_hosts_claimed": false,
+          "shared_runner_host": true
+        },
+        "selected_positive_ebpf_controls": [
+          {
+            "matches": [
+              {
+                "l7_protocol": "Http1",
+                "request_resource": "/collector-control-v5-deepflow-1793712337917360248",
+                "signal_source": "EBPF",
+                "tap_side": "ServerProcess"
+              }
+            ],
+            "node": "a",
+            "raw_length": 1240,
+            "raw_member": "deepflow-raw/node-a/001-positive-control/l7_flow_log",
+            "raw_offset": 2695349,
+            "raw_sha256": "5d66b54d1f5685fa42b2d7f3a2525a543aac67fab23e67d9a986127f7d49f5e9"
+          },
+          {
+            "matches": [
+              {
+                "l7_protocol": "Http1",
+                "request_resource": "/collector-control-v5-deepflow-1793712337917360248",
+                "signal_source": "EBPF",
+                "tap_side": "ClientProcess"
+              }
+            ],
+            "node": "b",
+            "raw_length": 1238,
+            "raw_member": "deepflow-raw/node-b/001-positive-control/l7_flow_log",
+            "raw_offset": 410499,
+            "raw_sha256": "81760784bd631b91e82cea3d45e22543e08cf715007ad676c25b3f69d55ea50c"
+          }
+        ],
+        "prospective_output_freeze": {
+          "saved_ns": 1793728815801400307,
+          "first_target_started_ns": 1793728819959556877,
+          "all_branch_hashes_match": true,
+          "sealed_frozen_file_count": 12587
+        },
+        "training_SQL_checkpoint_parent_before_parent_after_and_sealed_equal": true,
+        "training_SQL_proof": {
+          "files": {
+            "rows": 3,
+            "sha256": "fe34cf682035e89cb0f2971e4c9a3e067ab4068e75146e1453f638bd76530c63"
+          },
+          "links": {
+            "rows": 763,
+            "sha256": "c37043fd53657aebee989633a19e87b94ad0088df997490ef096cfb8fb03ed5c"
+          },
+          "observation_provenance": {
+            "rows": 953516,
+            "sha256": "9ad122e1c8da5da501e6b10b2818d05455a73a4c90e66321ab6d095157cd7159"
+          },
+          "proof_basis": "rowid-and-all-columns-v1",
+          "runtime_identity_projection": {
+            "rows": 953516,
+            "sha256": "7ade33a3ad51be8e4c1486e3e21b98a6e1e28b5a2ba3c7e511cb5b5f488f1cd9"
+          },
+          "schema_sha256": "668d44331e0bc949eb2764772c7c5422f32ea2e61872909101f862219f2f2dbe",
+          "spans": {
+            "rows": 953516,
+            "sha256": "8a70ddbac055361368eb50f575179d87fb93c2e9c0ed8b57cf0e8803ea024fb9"
+          },
+          "supplied_logical_alias_projection": {
+            "rows": 419234,
+            "sha256": "b9f7d6fa248898785d495e197dc02db2972525329034fffa5705b4c12fee6842"
+          }
+        },
+        "worker": {
+          "run": 41667258329,
+          "artifact_id": 13255014507,
+          "digest": "sha256:401f4be60f81157e1cb52fbeabcdcf57d2bd4204357b4262de2046c54ef9830f",
+          "scientific_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "implementation_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "workflow_definition_source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "checkpoint_unchanged": true,
+          "new_application_traffic": false,
+          "selected_output_claim_scope": {
+            "freeze_map_binding": "compact_freeze_equals_forecast_saved_and_selected_claims_match",
+            "scope": "selected_untyped_outputs_only",
+            "unselected_claims": 12444,
+            "verified_claims": 139,
+            "verified_selected_paths": 139,
+            "whole_worker_tree_verified": false
+          }
+        },
+        "native_partial_mode": {
+          "final": {
+            "saved_audit": {
+              "exporter_records": 5183,
+              "malformed_record_evidence": [],
+              "malformed_record_evidence_truncated": false,
+              "malformed_records": 0,
+              "method": "streamed collector-file JSONL inspection after graceful collector termination",
+              "mode": "partial",
+              "mode_compliant": true,
+              "mode_definition": "verified_resolved_sdk_configuration",
+              "native_coverage_status": "observed",
+              "product_catalog_mentions": 0,
+              "request_id_capture_status": "observed",
+              "request_id_header_attributes": 19508,
+              "resource_service_names": [
+                "accounting",
+                "ad",
+                "cart",
+                "checkout",
+                "currency",
+                "email",
+                "flagd",
+                "frontend",
+                "frontend-proxy",
+                "image-provider",
+                "payment",
+                "quote",
+                "recommendation",
+                "shipping"
+              ],
+              "span_markers": 277994,
+              "trace_file_bytes": 237121617,
+              "trace_file_sha256": "c37a6f4c317b5080ffb6e95842e2ee26fec4659079d12ed5a1fb7f51d200fd90"
+            },
+            "schema": "native-suppression-verification",
+            "suppression_sha256": "ba4540dddc2a2da5642b01ed3c0b2dd7fd8bad00ecd909d84040723eb6985622"
+          },
+          "training": {
+            "saved_audit": {
+              "exporter_records": 1990,
+              "malformed_record_evidence": [],
+              "malformed_record_evidence_truncated": false,
+              "malformed_records": 0,
+              "method": "streamed collector-file JSONL inspection after graceful collector termination",
+              "mode": "partial",
+              "mode_compliant": true,
+              "mode_definition": "verified_resolved_sdk_configuration",
+              "native_coverage_status": "observed",
+              "product_catalog_mentions": 0,
+              "request_id_capture_status": "observed",
+              "request_id_header_attributes": 42365,
+              "resource_service_names": [
+                "accounting",
+                "ad",
+                "cart",
+                "checkout",
+                "currency",
+                "email",
+                "flagd",
+                "frontend",
+                "frontend-proxy",
+                "image-provider",
+                "payment",
+                "quote",
+                "recommendation",
+                "shipping"
+              ],
+              "span_markers": 429159,
+              "trace_file_bytes": 389343740,
+              "trace_file_sha256": "0b53a281c663c2b92536bad742c12ecc7d5d8b057d67d0010ccfc19f50580270"
+            },
+            "schema": "native-suppression-verification",
+            "suppression_sha256": "9e97a116277ff307a06cd0dceaaf674d2698e826321c4391ed318bf55c2addfd"
+          }
+        },
+        "native_partial_interpretation": "Both controlled catalog SDKs are disabled, while fourteen other application services supply genuine native spans. Catalog mentions0 in training/final; do not equate controlled disabled flags with wholly absent native tracing.",
+        "all_scientific_bodies_used_by_existing_reader_present_and_bound": true,
+        "availability_or_accuracy_used_as_admission_gate": false
+      },
+      "actual_pipeline": {
+        "pooled_Bering": [
+          {
+            "source": "combined",
+            "variant": "network_scope",
+            "accepted_inputs": 4041,
+            "ordinary_requests": 1990,
+            "streamed_requests": 2051,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 953516,
+              "traces": 64951
+            },
+            "observed_model_sha256": "5835275154eb4e311735fe2bd09c1ba4b380293c074082d8e4e1806848b3a993",
+            "snapshot_sha256": "e615170f9e158cf7fc23cbe3ff647c7be4d4289a77ccddf7284b69c5d6a6ad9c"
+          },
+          {
+            "source": "combined",
+            "variant": "raw",
+            "accepted_inputs": 4041,
+            "ordinary_requests": 1990,
+            "streamed_requests": 2051,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 953516,
+              "traces": 64951
+            },
+            "observed_model_sha256": "681fc45ae2cca9c984f13b4e6cb7e7fb2ea76f97b4a70e0a8dd74474afba7ba3",
+            "snapshot_sha256": "9cf9be658dd8f4f3cb8cc25d84a570232613d2748511c9305a562a6d3f1566cc"
+          },
+          {
+            "source": "ebpf",
+            "variant": "network_scope",
+            "accepted_inputs": 2051,
+            "ordinary_requests": 0,
+            "streamed_requests": 2051,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 524357,
+              "traces": 0
+            },
+            "observed_model_sha256": "aecfe21a99ebb43a08cf9f03d235c05a5b97d2043cfaa512b84235655e0ea09d",
+            "snapshot_sha256": "73979b485f0ee6a2eadb256ab281780a8c6603fc6f97bfca6855ca3ac29322f1"
+          },
+          {
+            "source": "ebpf",
+            "variant": "raw",
+            "accepted_inputs": 2051,
+            "ordinary_requests": 0,
+            "streamed_requests": 2051,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 524357,
+              "traces": 0
+            },
+            "observed_model_sha256": "0bd0f9be9866db3d61472c14edd565b5f32c37f9d558a92ad805beb824233453",
+            "snapshot_sha256": "29be2093c544815ff022b721e47646e415d68af7706193d4c741b33d7fb9b129"
+          },
+          {
+            "source": "native",
+            "variant": "network_scope",
+            "accepted_inputs": 1990,
+            "ordinary_requests": 1990,
+            "streamed_requests": 0,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 429159,
+              "traces": 64951
+            },
+            "observed_model_sha256": "a099dd8f146067e9788bbe953133db135adea509cdc6432605877e7f749fc73b",
+            "snapshot_sha256": "a5f75e69593fba7b63b00bd210149f8e45eeac175ae0afad85331e4f7c4af3d2"
+          },
+          {
+            "source": "native",
+            "variant": "raw",
+            "accepted_inputs": 1990,
+            "ordinary_requests": 1990,
+            "streamed_requests": 0,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 429159,
+              "traces": 64951
+            },
+            "observed_model_sha256": "3c9e7971ef8fca8e1e17ed29a9015ec22c956bfbcc34476550b2b99904cd18c3",
+            "snapshot_sha256": "b385174a4c51fc7535c128a52ac88e6e13357ebb7b3f9f14a7dd6fa721aeb0fe"
+          }
+        ],
+        "observed_graph_counts": {
+          "combined": {
+            "network_scope": {
+              "edges": 86,
+              "endpoints": 37,
+              "services": 41
+            },
+            "raw": {
+              "edges": 100,
+              "endpoints": 37,
+              "services": 70
+            }
+          },
+          "ebpf": {
+            "network_scope": {
+              "edges": 64,
+              "endpoints": 33,
+              "services": 39
+            },
+            "raw": {
+              "edges": 78,
+              "endpoints": 33,
+              "services": 68
+            }
+          },
+          "native": {
+            "network_scope": {
+              "edges": 22,
+              "endpoints": 11,
+              "services": 16
+            },
+            "raw": {
+              "edges": 22,
+              "endpoints": 11,
+              "services": 16
+            }
+          }
+        },
+        "total_actual_Bering_replays": 8,
+        "actual_primary_operation_Sheaft_commands": [],
+        "interpretation": "All18 saved primary graph bindings are unavailable and contain no saved operation model or simulation command. No100000-trial Sheaft output is invented; configured trial count remains unchanged for available models. Six pooled plus2context Bering executions are actual and costed. Zero eBPF trace counters alone do not establish lack of distributed causality.",
+        "context": {
+          "network_scope": {
+            "status": "reuse_unchanged_union",
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true
+          },
+          "raw": {
+            "status": "reuse_unchanged_union",
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true
+          }
+        },
+        "context_additional_operation_Sheaft_runs": 0
+      },
+      "actual_primary_rows": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ]
+        }
+      ],
+      "external_outcomes": {
+        "add_to_cart": {
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.875,
+            0.875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 400,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 800,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 1600,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "browse_product": {
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.875,
+            0.875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 400,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 800,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 1600,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "checkout": {
+          "actual_counts": {
+            "failure": 1953,
+            "invalid": 0,
+            "success": 1247,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.3896875,
+            0.3896875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 328,
+                "invalid": 0,
+                "success": 72,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.18,
+                0.18
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 426,
+                "invalid": 0,
+                "success": 374,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                0.4675,
+                0.4675
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 799,
+                "invalid": 0,
+                "success": 801,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                0.500625,
+                0.500625
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        }
+      },
+      "interpretation": {
+        "availability": "All24 primary method/view/operation forecasts are unavailable. Required frontend/catalog and catalog PostgreSQL evidence is missing or ambiguous; native partial, combined and context do not supply the catalog gap. Preserve as a valid negative for this source/configuration/seed.",
+        "direct_baseline_and_adverse": "Declared conditional direct source-contract forecast .875 for all3 operations; browse2800/3200 andadd2800/3200 match that conditional value, checkout1247/3200 is adverse. Preserve all1953 checkout failures; do not attribute cause without direct evidence or replay to improve outcomes. Same operation/replica/database/alias semantic information is available to all methods and baselines.",
+        "database": {
+          "db_up": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 6,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "db_down": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 6,
+                "invalid": 0,
+                "success": 0,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "selected_forecast_impact": [
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            }
+          ],
+          "qualification": "eBPF/combined network binding fields database_fault_prediction_available=true are distinct from the selected experiments. Every selected database_down and healthy forecast remainsnull with structural_graph_available=false. No DB usefulness from internal booleans; no new physical-stop assertion beyond retained control evidence."
+        },
+        "async": {
+          "normal": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          },
+          "paused_after_resume": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          },
+          "paused_snapshot": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "pending": 20
+            }
+          },
+          "recovered": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          }
+        },
+        "classes": "No fit update during evaluation. ARI1.0 plus600 eBPF no_positive_evidence classifications is not predictive usefulness or an external improvement."
+      },
+      "raw_closure": {
+        "standalone": {
+          "all_raw_payload_bytes_independently_rehashed": false,
+          "nodes": [
+            "a",
+            "b"
+          ],
+          "snapshot_hash_chains_verified": 6,
+          "training_prefix_claims_verified": 2,
+          "zero_kernel_producer_or_flush_loss_proven": false
+        },
+        "native_receiver": {
+          "native": {
+            "errors_json_decode_error_count": 0,
+            "in_flight_handlers_joined": true,
+            "listening_socket_closed": true,
+            "receiver_parse_or_read_failure_count": 0,
+            "saved_bytes_valid": true,
+            "wrapper_json_decode_error_count": 0
+          }
+        },
+        "training_prefix_unchanged_in_final": {
+          "a/l7_flow_log": {
+            "bytes": 1223037057,
+            "final_prefix_sha256": "eeb91b3a4539dec8da28e49f77553f1475e4cdf524067906951e7fc00915822a",
+            "training_sha256": "eeb91b3a4539dec8da28e49f77553f1475e4cdf524067906951e7fc00915822a",
+            "unchanged": true
+          },
+          "b/l7_flow_log": {
+            "bytes": 122051653,
+            "final_prefix_sha256": "e5e06cd15a63df85a69a77130b352ca60ea3ebbf3556f946bb7dd8fa4d557009",
+            "training_sha256": "e5e06cd15a63df85a69a77130b352ca60ea3ebbf3556f946bb7dd8fa4d557009",
+            "unchanged": true
+          }
+        },
+        "technical_complete": true,
+        "collector_exporter_flush": {
+          "clean_process_termination_observed": true,
+          "known_write_failure_absent": true,
+          "status": "internal_flush_loss_unproven",
+          "zero_kernel_buffer_or_file_flush_loss_proven": false
+        },
+        "limit": "Complete retained standalone/native receiver bytes with normal observed exits and no recorded write failure. No zero kernel/producer/internalflush loss, universal protocol coverage or independent local rehash of all raw payloads is claimed."
+      },
+      "union": {
+        "source_artifacts": {
+          "capture_artifact_id": 13262027581,
+          "compact_artifact_id": 13269692140,
+          "restore_artifact_id": 13269437315
+        },
+        "inventory_rows": 98839,
+        "inventory_logical_bytes": 53251916394,
+        "selected_immutable_payloads_bound": 210,
+        "all_frozen_claims_bound": true,
+        "restore": {
+          "actual_available_after_restore": 69072674816,
+          "all_original_members_read_to_EOF_and_CRC_checked": true,
+          "archive_bytes": 4847677527,
+          "archive_sha256": "48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+          "artifact_digest": "sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+          "artifact_id": 13262027581,
+          "closed_manifest_sha256": "c19034c8608b7d67c0df094f9b3ac9039e6e81a971e1862f65a69f4a01c023ee",
+          "elapsed_seconds": 769.813024494,
+          "ended_ns": 1793733058470229056,
+          "retry_log_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/offline-host/transport-retries.jsonl",
+          "selected_members": 98842,
+          "started_ns": 1793732288657204562,
+          "status": "complete",
+          "whole_scientific_manifest_validation": "Required by finalize BEFORE any mutation"
+        },
+        "capacity_guard": {
+          "SQL_WAL_growth_reserve_bytes": 40239480832,
+          "archive_bytes": 4847677527,
+          "available_bytes": 127383130112,
+          "proof_bytes": 21405997,
+          "required_bytes": 99434222574,
+          "scientific_file_bytes": 53251916394,
+          "scientific_limit_or_filter": false
+        },
+        "actual_completion_chain": {
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "independent_scientific_admission": false,
+          "job_id": 126134790196,
+          "kind": "actual_source_API_step_chain_not_retained_processing_json",
+          "run_id": 41642775376,
+          "scientific_steps": {
+            "10": {
+              "completed_at": "2026-11-03T20:46:00Z",
+              "conclusion": "success",
+              "name": "Record compact evaluation provenance",
+              "number": 10,
+              "started_at": "2026-11-03T20:45:59Z",
+              "status": "completed"
+            },
+            "11": {
+              "completed_at": "2026-11-03T20:46:11Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 11,
+              "started_at": "2026-11-03T20:46:00Z",
+              "status": "completed"
+            },
+            "12": {
+              "completed_at": "2026-11-03T20:46:12Z",
+              "conclusion": "failure",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "started_at": "2026-11-03T20:46:11Z",
+              "status": "completed"
+            },
+            "13": {
+              "completed_at": "2026-11-03T20:46:13Z",
+              "conclusion": "success",
+              "name": "Retain the compact postcapture processing diagnostics",
+              "number": 13,
+              "started_at": "2026-11-03T20:46:12Z",
+              "status": "completed"
+            },
+            "6": {
+              "completed_at": "2026-11-03T19:10:58Z",
+              "conclusion": "success",
+              "name": "Restore the exact closed capture after the actual disk guard",
+              "number": 6,
+              "started_at": "2026-11-03T18:58:08Z",
+              "status": "completed"
+            },
+            "7": {
+              "completed_at": "2026-11-03T20:44:17Z",
+              "conclusion": "success",
+              "name": "Verify all closed inputs and run the unchanged offline suffix",
+              "number": 7,
+              "started_at": "2026-11-03T19:10:58Z",
+              "status": "completed"
+            },
+            "9": {
+              "completed_at": "2026-11-03T20:45:59Z",
+              "conclusion": "success",
+              "name": "Evaluate retained full campaign evidence",
+              "number": 9,
+              "started_at": "2026-11-03T20:44:17Z",
+              "status": "completed"
+            }
+          },
+          "unavailable": [
+            "processed_full_snapshot",
+            "final_mutable_SQL",
+            "retained_processing_json"
+          ]
+        },
+        "processing": null,
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "boundary": "Exact original capsule preserves frozen input/model/command/context bodies and final raw observations; actual completed compact preserves final scientific reports/outcomes. Actual f045 source/restore/step chain proves suffix completion without invented processing receipt. Processed full/finalmutableSQL unavailable and not locally reconstructed/rehashed. Selected immutable bodies and full frozen claim set bind to original inventory; reader scope does not rehash all unselected raw/model bodies."
+      },
+      "complete_comparable_costs": {
+        "copied": {
+          "campaign_elapsed_seconds": 26702.635529496,
+          "shared_input_preparation_seconds": 2998.916642483,
+          "toolchain_build_seconds": 28.781041681,
+          "toolchain_clone_seconds": 1.802005747,
+          "bering_replay_command_count": 8,
+          "bering_replay_command_seconds": 1978.268617249,
+          "toolchain_command_count": 20,
+          "toolchain_command_seconds": 1978.3841506210001,
+          "toolchain_command_failures": 0,
+          "manual_preparation": {
+            "measured": false,
+            "reason": "human preparation time was not instrumented; no full-cost advantage claimed"
+          },
+          "cost_overlap_note": "checkpoint creation/upload/hold and any remote worker wait are included in campaign elapsed; worker compute overlaps parent wait and is a separate Actions job; swap setup precedes campaign elapsed"
+        },
+        "remote_toolchain": {
+          "archive_download_seconds": 18.095086576,
+          "checkpoint_validation_includes_checkpoint_copy_release": true,
+          "checkpoint_validation_seconds": 1081.425958304,
+          "dispatch_seconds": 2.260058402,
+          "ended_ns": 1793728745222605701,
+          "nesting": "parent_wait_wall_seconds contains worker compute; do not add it to worker command or compute costs",
+          "output_package_unpack_seconds": null,
+          "output_transfer_seconds": 73.532980821,
+          "output_zip_extract_seconds": 55.436954969,
+          "parent_wait_wall_seconds": 7408.619673412,
+          "post_import_cleanup_errors": [],
+          "schema_version": "remote-toolchain-cost-v4",
+          "scope": "parent-side checkpoint validation, dispatch, wait, transfer, verification and import",
+          "started_ns": 1793719672596293417,
+          "uploaded_checkpoint_copy_release": {
+            "disk_free_after": 60293525504,
+            "disk_free_before": 40046481408,
+            "elapsed_seconds": 122.308959095,
+            "logical_bytes_unlinked": 20107198909,
+            "observed_disk_free_delta": 20247044096,
+            "removed_files": 85770,
+            "status": "released_verified_local_payload"
+          },
+          "verification_import_seconds": 505.530533529,
+          "worker_artifact_digest": "sha256:401f4be60f81157e1cb52fbeabcdcf57d2bd4204357b4262de2046c54ef9830f",
+          "worker_artifact_id": 13255014507,
+          "worker_poll_interval_seconds": 60,
+          "worker_run_attempt": 1,
+          "worker_run_id": 41667258329
+        },
+        "restore_seconds": 769.813024494,
+        "seal_scope": "All seal prechecks, closure, inventory and SQL proof; excludes marker write and outer upload/job costs",
+        "suffix_API_interval": [
+          "2026-11-03T19:10:58Z",
+          "2026-11-03T20:44:17Z"
+        ],
+        "failed_full_upload_retained": true,
+        "boundary": "Keep every original/failure acquisition, VM/kernel/SDK/native capture, preparation, checkpoint proof, worker compute/import/transfer/wait overlap, source/CI/recovery/qualification, seal/ingest/identity/class/evidence/evaluation/publication, actualreader and boundedtransport cost. Human effort unknown; no cost-superiority or six-hour/capacity guarantee."
+      },
+      "strongest_simple_baseline": "Same-semantic direct conditional calculation and cheap unchanged context union; reuse retained capsule/compact/actualrestore completion chain for this format-only full publication failure, without new scientific work.",
+      "full81_success_GO": false,
+      "primary_repeat_authorized": false
+    }
+  },
+  "scope": "Admission of actualvalidnegativepartial6 only. Any pendingflag in the originalrootreview reflectsits issuance beforeindependentreview; originalsretained unchanged. No restarts ofvalidnegative/UNKNOWN orutilityclaim."
+}

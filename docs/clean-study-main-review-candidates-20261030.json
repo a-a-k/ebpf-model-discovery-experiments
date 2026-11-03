@@ -837,7 +837,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 6,
+  "pending_artifact_cells": 4,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2343,6 +2343,56 @@
       "restore_artifact_name": "postcapture-processing-partial-7-41642781338",
       "restore_artifact_bytes": 7760,
       "restore_artifact_digest": "sha256:0130290a604d10471cd0ee6ed4b8ae931d1d025420a07d0f77c1714d3c494b8a"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41642775376,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_closed_capture_union",
+      "capture_artifact_id": 13262027581,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-partial-6-41642775376",
+      "capture_artifact_bytes": 4847677527,
+      "capture_artifact_digest": "sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+      "compact_artifact_id": 13269692140,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-partial-6-41642775376",
+      "compact_artifact_bytes": 53811751,
+      "compact_artifact_digest": "sha256:68ffb5ac99836f9b5eac05ab5d2e7b55af1e8c69afebc11d8ce206208536e949",
+      "restore_artifact_id": 13269437315,
+      "restore_artifact_name": "postcapture-processing-partial-6-41642775376",
+      "restore_artifact_bytes": 7753,
+      "restore_artifact_digest": "sha256:42753edb2e06edbbf035fdb8911fbe66dc16c54eb93b7e6c85a2db913c8b348e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41642789738,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_closed_capture_union",
+      "capture_artifact_id": 13263018872,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-partial-8-41642789738",
+      "capture_artifact_bytes": 5160928093,
+      "capture_artifact_digest": "sha256:9a070135efb0206461933b7517af0e4ffcee3de3452e63952d1777b26d120dd7",
+      "compact_artifact_id": 13269654367,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-partial-8-41642789738",
+      "compact_artifact_bytes": 55261962,
+      "compact_artifact_digest": "sha256:4e0819108fa5bdd50a6970228bdb933822fe581b66dd75095d2298d6239d630d",
+      "restore_artifact_id": 13270767555,
+      "restore_artifact_name": "postcapture-processing-partial-8-41642789738",
+      "restore_artifact_bytes": 7728,
+      "restore_artifact_digest": "sha256:9ada9d9fdfbd674b0b02888c96a182ef691f4bd03c1397c341300109f684edf8"
     }
   ],
   "superseded_planned_source": {
@@ -2355,7 +2405,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "75 of fixed81 MAIN cases admitted by BOTH actual scientific-evidence reviews, including valid negative DeepFlow OTelpartial7 retained via exact original capsule/compact/restore/sourceAPI chain. Six remain: partial6/partial8 completed science awaiting originalunionreader, full8 savedprocessing active, absent6/7/8 technicaltimeouts awaiting justified runtime repair. All74 earliercases preserved; inventory/jobSUCCESS alone neveradmits science.",
+  "status": "77 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews. All3DeepFlowOTelpartial6/7/8 validnegative: all24primaryforecastsUNKNOWN each; retainedexactoriginalcapsule/compact/restore/APIchain. Remainingfull8savedprocessing active; absent6/7/8technicaltimeouts awaitjustifiedruntimefix. All77preserved; nooutcome-basedeligibility gate.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -2967,5 +3017,5 @@
       "scientific_admission": false
     }
   ],
-  "latest_actual_review": "docs/clean-study-otel-partial7-actual-review-20261104.json"
+  "latest_actual_review": "docs/clean-study-otel-partial8-actual-review-20261104.json"
 }

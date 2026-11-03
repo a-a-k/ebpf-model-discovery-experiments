@@ -1,0 +1,197 @@
+{
+  "scope": "Onlyoriginalf045full8+actuala9processing dualidentity scientific readset; no newcapture/model/suffix, no77replay, actualcase78 notadmitted.",
+  "reviews": {
+    "full8-a9-original-capsule-compact-union-root-design-20261104.json": {
+      "sha256": "609957fb6afcaa093ef29cec683c3d7d8228fcd0736a623d9b3ff82ae483fd87",
+      "body": {
+        "recorded_utc": "2026-11-03T22:12:59.304636+00:00",
+        "root_original_named_union_design_GO": true,
+        "original_scientific_case": {
+          "run_id": 41642796796,
+          "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "cell": [
+            "deepflow",
+            "otel_demo",
+            "full",
+            8
+          ],
+          "capture_job": 125940346422
+        },
+        "actual_processing_publication": {
+          "run_id": 41706823165,
+          "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "workflow_path": ".github/workflows/infrastructure.yml",
+          "job": 126164235460
+        },
+        "capture_artifact": {
+          "id": 13261622894,
+          "size_in_bytes": 6429750292,
+          "name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+          "digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "run_id": 41642796796,
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+        },
+        "actual_new_processing_artifacts": [
+          {
+            "id": 13274316899,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI3NDMxNjg5OQ==",
+            "name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+            "size_in_bytes": 62995907,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13274316899",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13274316899/zip",
+            "expired": false,
+            "digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+            "created_at": "2026-11-03T22:01:29Z",
+            "updated_at": "2026-11-03T22:01:29Z",
+            "expires_at": "2027-02-01T19:49:20Z",
+            "workflow_run": {
+              "id": 41706823165,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/closed-capture-capacity-recovery",
+              "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
+            }
+          },
+          {
+            "id": 13273877181,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI3Mzg3NzE4MQ==",
+            "name": "postcapture-processing-full-8-41706823165",
+            "size_in_bytes": 8441,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13273877181",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13273877181/zip",
+            "expired": false,
+            "digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+            "created_at": "2026-11-03T22:01:31Z",
+            "updated_at": "2026-11-03T22:01:31Z",
+            "expires_at": "2027-02-01T19:49:20Z",
+            "workflow_run": {
+              "id": 41706823165,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/closed-capture-capacity-recovery",
+              "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
+            }
+          }
+        ],
+        "actual_event": "Qualifieda9two-phasecapacityrecovery restoredexactoriginalcapsule, suffixSUCCESS19:59:36-21:59:11, eval/manifest/compactSUCCESS through22:01:29, onlyfulluploadFAILED22:01:30 Maximumcallstacksizeexceeded, diagnosticsSUCCESS; rootlogselectedwork/full8-a9-recovery-126164235460-publication-selected-console-20261104.txt. No newcapture/model/suffixrequiredafterthispublicationfailure.",
+        "known_source_equivalence": "Same originalf045 presealallmodel/command/frozeninput readset theorem as admittedpartial6/7/8. Recoverya9diffonlyreleaseverifiedownedtemporarydeliveryZIPafterSHA/EOFCRC+markerchecks, bothactualstagedSQLguards/full4I reserve retained. Sourcea9actualcodeCI/restorerecoveryalreadyoriginalGO; allsrc/systems science algorithms equaloriginalf045.",
+        "proposed_consumer_extension": [
+          "Oneexplicitfull8dualidentityunionprofile alongside3fixedoriginalpartialprofiles; NEVERreplaceoriginalscientificcapture/source byprocessingrun/source.",
+          "Profilemustpin scientificrun/head/capturejob/originalcapsule AND actualprocessingrun/head/workflowjob/compact/restoreAPI tuples. Explicitexpectedprofilematching atbothscientificreader/report/workflows remains mandatory, crossknowncase and crosssourceartifactsreject.",
+          "ActualprocessingAPIbundle includes originalcapsule metadata fromitsactualoldrun, notinventednewrunartifact. Require capturejobSUCCESS onoriginalrun, processingrunFAILonlyfullupload withrealrestore/suffix/eval/manifest/compactsuccess onactuala9. OriginalcapsuleSHA/API+newcompact/restoreSHA/APIallbound bykindidentity.",
+          "Keep _capture_declaration/_saved_capture_identity exactexistinga9 header guards, originalstatus/native/worker/freeze/body proofs and actualnewmanifest recoveryidentity. Keep actuala9ownedregularZIPrelease+bothdiskguards. Allmissingmandatoryscientificbodyrejects; no fabricatedprocessing.json orprocessedfullAPI.",
+          "Readonlyexistingcapsulepresealdata+newcompact+newrestore diagnostics actualsource/APIchain, allavailableBering/Sheaft/Procrustes/context/independentoutcomes required. MissingfinalmutableSQL/processedfull/processing.json explicitaspartialunion. No scientificmetricrecomputation locally."
+        ],
+        "strongest_baseline": "Reusereadpredicate-completeoriginalclosedcapsuleandactualcompletedcompact/restore. No fourth fullcapture, model or suffix computation. One existingqualifiedsavedreader withnamedprofile after exactsource/CI/executionGO, not newscientificqualifier.",
+        "costs": "Retainoriginalfull8capture+failedcapacityprocessing+a9recoverysuffix+failedfullupload+allCI/source/review/reader/transfer/archivecosts; nozeroefforthumanassumption orutilityclaim.",
+        "actual_scientific_case_GO": false,
+        "implementation_requires_independent_original_design_GO": true
+      }
+    },
+    "independent-full8-a9-original-capsule-compact-union-original-design-GO-20261104.json": {
+      "sha256": "85c80a3b7c66fc8001d237f07dc7a0c1a699fc1cc9b670e3d65a211dd55b9bf7",
+      "body": {
+        "independent_original_full8_dual_identity_union_design_GO": true,
+        "original_named_full8_capsule_compact_union_design_GO": true,
+        "recorded_utc": "2026-11-03T22:14:37.097579+00:00",
+        "root_design": "work\\full8-a9-original-capsule-compact-union-root-design-20261104.json",
+        "root_design_sha256": "609957fb6afcaa093ef29cec683c3d7d8228fcd0736a623d9b3ff82ae483fd87",
+        "original_scientific_case": {
+          "run_id": 41642796796,
+          "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "cell": [
+            "deepflow",
+            "otel_demo",
+            "full",
+            8
+          ],
+          "capture_job": 125940346422
+        },
+        "actual_processing_publication": {
+          "run_id": 41706823165,
+          "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "workflow_path": ".github/workflows/infrastructure.yml",
+          "job": 126164235460
+        },
+        "capture_artifact": {
+          "id": 13261622894,
+          "size_in_bytes": 6429750292,
+          "name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+          "digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "run_id": 41642796796,
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+        },
+        "actual_new_processing_artifacts": [
+          {
+            "id": 13274316899,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI3NDMxNjg5OQ==",
+            "name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+            "size_in_bytes": 62995907,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13274316899",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13274316899/zip",
+            "expired": false,
+            "digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+            "created_at": "2026-11-03T22:01:29Z",
+            "updated_at": "2026-11-03T22:01:29Z",
+            "expires_at": "2027-02-01T19:49:20Z",
+            "workflow_run": {
+              "id": 41706823165,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/closed-capture-capacity-recovery",
+              "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
+            }
+          },
+          {
+            "id": 13273877181,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI3Mzg3NzE4MQ==",
+            "name": "postcapture-processing-full-8-41706823165",
+            "size_in_bytes": 8441,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13273877181",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13273877181/zip",
+            "expired": false,
+            "digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+            "created_at": "2026-11-03T22:01:31Z",
+            "updated_at": "2026-11-03T22:01:31Z",
+            "expires_at": "2027-02-01T19:49:20Z",
+            "workflow_run": {
+              "id": 41706823165,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/closed-capture-capacity-recovery",
+              "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
+            }
+          }
+        ],
+        "own_actual_API": {
+          "path": "work\\independent-full8-recovery-publication-failure-actual-API-20261104.json",
+          "sha256": "4fbbbca0adddcf6b6c766ca18e8f59c6fd766444f3db7cf76ad0fc98881f5b8b"
+        },
+        "actual_failure_boundary": "Original capsule restored; unchanged suffix, evaluation, evaluation manifest, compact publication and diagnostics succeeded. Only fullupload failed; rootselectedonceconsole confirms Maximum call stack size exceeded. No scientific suffix/capture/model replay required by this publication failure.",
+        "original_criterion": "Complete original81 matched cases with actual scientific inputs/commands/frozenmodels/kernel/native/worker/externaloutcomes and sameinformation/semantics/fullcosts. All77 actualreviewedcases protected; this engineering source-adapter design does not substitute a weaker study or assert utility/full81success.",
+        "strongest_simple_baseline": "Use exact alreadycomplete originalf045 capsule plus actual completed a9 compact/restore/sourceAPIchain. One existing saved-evidence reader; no additional qualifier, refit, traffic, scoring, model or suffix.",
+        "known_equivalence": "Same f045 preseal sequence as all3 admitted partial cases: actual available Bering/Sheaft/context outputs and every frozen scientific input/model/command are written and hashed before targets and preserved in the original capsule. a9 changes only verified deliveryZIP lifetime and explicit originalcapture/processing identity in the transport/workflow, with unchanged scientific src/systems. Postseal ingestion/identity/class/evidence/evaluation reports are retained in the actualnew compact. Existing reader scientific predicates can consume that exact readset without finalmutableSQL/full snapshot or invented processing receipt. Every required scientific body must still actually be present and bound.",
+        "mandatory_identity_by_kind": [
+          "Scientific identity and acquisition remain original f045/run41642796796/full8/capturejob125940346422; never rewrite to a9/41706823165.",
+          "Original capsule13261622894 API belongs to original capture run/source; actualbundle must explicitly fetch/bind that API and original capturejob. Never require or fabricate this capsule in the new processing run artifact list.",
+          "Actual processing/evaluation/publication identity is a9/run41706823165/infrastructure.yml/job126164235460. New compact13274316899 andrestore13273877181 belong to this new identity. Source/profile must validate all3 exact artifacts against their correct component identity.",
+          "All saved-reader/report and workflow callers bind explicit expectedprofile, including cross-known-case/source/old-new artifact swaps. Existing3 same-run partial profiles and normalfull paths retain original guards.",
+          "Existing _capture_declaration/_saved_capture_identity plus originalstatus/worker/SQL/freeze/SDK/native/kernel/closure/outcome predicates and actualnew evaluation-manifest scientific_capture_identity remain. No alternate source fallback.",
+          "Require actual a9 restore ownedregularZIP verification/release receipt and both stageddisk/full4I guards, and exactoriginalcapsule marker/inputinventory/allfrozen/selectedimmutable claims.",
+          "Missing required Bering/availableSheaft/Procrustes/context/independentoutcome or scientific body rejects. No favorable result/availability eligibility gate."
+        ],
+        "unavailable_components_explicit": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "tests": "Existing fixed-profile synthetic tests extend only this exact dualidentity case; test wrongkindsource, original/new run swaps, foreign knownprofile, absentcapsule/currentAPI, missing requiredproof/model/command and missing stagedguard/release. No extra scientific qualifier/model run needed.",
+        "costs": "Keep original full8capture and oldcapacity failure, recovery restore/twohour suffix/evaluation/fullupload failure, all source/CI/qualifiers/proofreviews, boundedtransport, existingreader and retention costs. Humanunknown; no zero-cost/speedup/sixhour or studyutility claim.",
+        "actual_code_CI_GO": false,
+        "reader_execution_GO": false,
+        "actual_scientific_case_GO": false,
+        "full81_success_GO": false
+      }
+    }
+  }
+}

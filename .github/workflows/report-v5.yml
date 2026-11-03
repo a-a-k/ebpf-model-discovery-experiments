@@ -178,7 +178,7 @@ jobs:
               extract_verified_compact, remove_verified_working_copy,
               verified_nonmaterialized_files,
           )
-          from ebpf_discovery.report_v5 import _closed_union_profile, _closed_union_api_facts
+          from ebpf_discovery.report_v5 import _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin
           provenance=pathlib.Path('results/iteration-5/provenance')
           declaration=json.loads((provenance/'declarations.json').read_text())
           costs=json.loads(pathlib.Path('results/iteration-5/costs-v5.json').read_text())
@@ -198,10 +198,13 @@ jobs:
                   if union is not None:
                       def actual_api(path):
                           return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/{path}']))
+                      union_artifacts=list(artifacts)
+                      if union.get('capture_run_id',run_id)!=run_id:
+                          union_artifacts.append(actual_api(f'artifacts/{union["artifacts"]["capture"]["id"]}'))
                       union_evidence={'run':actual_api(f'runs/{run_id}'),
                           'job':actual_api(f'jobs/{union["processing_job"]}'),
                           'capture_job':actual_api(f'jobs/{union["capture_job"]}'),
-                          'artifacts':artifacts}
+                          'artifacts':union_artifacts}
                       _closed_union_api_facts(union_evidence, expected_profile=union)
                   row={'run_id':run_id,'repository':repo,'cell':identity,'stage':stage,
                        'name':name,'full_artifact_name':full_name}

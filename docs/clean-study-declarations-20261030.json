@@ -2873,10 +2873,12 @@
         {
           "system": "otel_demo",
           "mode": "full",
-          "seed": 8
+          "seed": 8,
+          "evidence_layout": "closed_capture_compact_union_v1",
+          "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
         }
       ],
-      "note": "ONLYsaved original f045/full8 capture41642796796 processing recovery at a9c5785; capsule13261622894 unchanged. No newtraffic/Bering/Sheaft/measurement/trial: publicationrun differs from scientificcaptureidentity and is explicitly validated. Original132290505403B summedguard failedbeforelargeDL; phase-lifetime recovery preservesfull4*SQL/WAL reserve+1GiB/all scientificbytes and actualsecondguard. Oldattempt/failure/capture/worker/CI/review/transfer/processing/wait/retention and closingcosts allretained. No eligibility/admission/success or six-hour cure claim."
+      "note": "ONLYsaved original f045/full8 capture41642796796 processing recovery at a9c5785; capsule13261622894 unchanged. No newtraffic/Bering/Sheaft/measurement/trial: publicationrun differs from scientificcaptureidentity and is explicitly validated. Original132290505403B summedguard failedbeforelargeDL; phase-lifetime recovery preservesfull4*SQL/WAL reserve+1GiB/all scientificbytes and actualsecondguard. Oldattempt/failure/capture/worker/CI/review/transfer/processing/wait/retention and closingcosts allretained. No eligibility/admission/success or six-hour cure claim. Actual savedsuffix/evaluation/compactcompleted; onlyfullpublicationfailed Maximumcallstacksizeexceeded. Originalf045capsule +actuala9compact/restore/sourceAPI union requires unchangedscientificpredicates andactualcaseGO; finalSQL/full/processingreceiptunavailableexplicitly."
     }
   ],
   "related_runs": [
@@ -5700,6 +5702,26 @@
       "run_id": 41721133052,
       "role": "preparation",
       "note": "Correctedf7d0f85exactSQLproofreuse source LinuxCI bothjobsSUCCESS; onlyoldfixturemockchanged vs37bf779. PriorfailedCIretained; no scientificcase or freshcapture."
+    },
+    {
+      "run_id": 41722909530,
+      "role": "preparation",
+      "note": "Exact610f747consumer PR LinuxCI alljobsSUCCESS; sourceprofile/readsetonly."
+    },
+    {
+      "run_id": 41722900376,
+      "role": "preparation",
+      "note": "Exact610f747consumer push LinuxCI alljobsSUCCESS; sourceprofile/readsetonly."
+    },
+    {
+      "run_id": 41723570034,
+      "role": "evidence",
+      "note": "Originalpartial6+8 ONLYsavedreader, all3jobsSUCCESS and BOTHscientificreviews; no traffic/model/suffix/scoring replay, prior75protected."
+    },
+    {
+      "run_id": 41722244664,
+      "role": "preparation",
+      "note": "ONEsavedoriginalabsent8SQLiteproof qualification f7d0f85SUCCESS. Exactcompleteinputbytes+logicalproofequal, measuredbaseline/2optimizedbackupcosts; no whole6hcure/maincaseclaim."
     }
   ],
   "blocked_main_cells": [],

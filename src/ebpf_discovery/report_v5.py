@@ -544,6 +544,28 @@ CLOSED_CAPTURE_COMPACT_UNIONS[41642789738] = {
 }
 
 
+CLOSED_CAPTURE_COMPACT_UNIONS[41706823165] = {
+    **CLOSED_CAPTURE_COMPACT_UNION,
+    'run_id': 41706823165,
+    'head_sha': 'a9c5785516550b45ed39df8ada37749c061a9f5d',
+    'cell': ('deepflow', 'otel_demo', 'full', 8),
+    'capture_run_id': 41642796796,
+    'capture_head_sha': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'capture_job': 125940346422,
+    'processing_job': 126164235460,
+    'workflow_path': '.github/workflows/infrastructure.yml',
+    'artifacts': {'capture': {'id': 13261622894, 'name': 'postcapture-v5-deepflow-main-otel_demo-full-8-41642796796', 'size_in_bytes': 6429750292, 'digest': 'sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f'}, 'compact': {'id': 13274316899, 'name': 'v5-summary-deepflow-main-otel_demo-full-8-41706823165', 'size_in_bytes': 62995907, 'digest': 'sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35'}, 'restore': {'id': 13273877181, 'name': 'postcapture-processing-full-8-41706823165', 'size_in_bytes': 8441, 'digest': 'sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4'}},
+    'independent_original_design_GO_sha256': '85c80a3b7c66fc8001d237f07dc7a0c1a699fc1cc9b670e3d65a211dd55b9bf7',
+}
+
+
+def _closed_union_artifact_origin(profile, kind):
+    if kind == 'capture':
+        return (profile.get('capture_run_id', profile['run_id']),
+                profile.get('capture_head_sha', profile['head_sha']))
+    return profile['run_id'], profile['head_sha']
+
+
 def _closed_union_profile(declaration):
     if declaration.get('evidence_layout') != CLOSED_CAPTURE_COMPACT_UNION['layout']:
         return None
@@ -565,11 +587,13 @@ def _closed_union_api_facts(bundle, *, expected_profile=None):
     if expected_profile is not None and p != expected_profile:
         raise ValueError('closed union actual processing API belongs to a different declared case')
     if (run.get('id') != p['run_id'] or run.get('head_sha') != p['head_sha']
-            or run.get('path') != '.github/workflows/series-v5.yml'
+            or run.get('path') != p.get('workflow_path', '.github/workflows/series-v5.yml')
             or run.get('status') != 'completed' or run.get('conclusion') != 'failure'
             or job.get('id') != p['processing_job'] or job.get('run_id') != p['run_id']
             or job.get('status') != 'completed' or job.get('conclusion') != 'failure'
-            or capture.get('id') != p['capture_job'] or capture.get('run_id') != p['run_id']
+            or capture.get('id') != p['capture_job']
+            or capture.get('run_id') != p.get('capture_run_id', p['run_id'])
+            or capture.get('head_sha') != p.get('capture_head_sha', p['head_sha'])
             or capture.get('status') != 'completed' or capture.get('conclusion') != 'success'):
         raise ValueError('closed union lacks actual original source/capture/processing API identity')
     expected = {
@@ -593,8 +617,9 @@ def _closed_union_api_facts(bundle, *, expected_profile=None):
         if len(selected)!=1:
             raise ValueError('closed union lacks its actual named artifact')
         a=selected[0];w=a.get('workflow_run') or {}
+        origin_run, origin_head = _closed_union_artifact_origin(p, kind)
         if ({k:a.get(k) for k in wanted} != wanted or a.get('expired') is not False
-                or w.get('id') != p['run_id'] or w.get('head_sha') != p['head_sha']):
+                or w.get('id') != origin_run or w.get('head_sha') != origin_head):
             raise ValueError('closed union actual artifact API differs')
     failed_full=p['artifacts']['compact']['name'].replace('v5-summary-', 'campaign-v5-', 1)
     if any(a.get('name')==failed_full for a in actual):

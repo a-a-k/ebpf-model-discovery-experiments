@@ -304,14 +304,17 @@ def union_api_fixture(profile=None):
         11: ('Run actions/upload-artifact@v4','success'),
         12: ('Run actions/upload-artifact@v4','failure'),
         13: ('Retain the compact postcapture processing diagnostics','success')}
-    artifacts = [{**a,'expired':False,'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}}
-                 for a in p['artifacts'].values()]
+    artifacts = [{**a,'expired':False,'workflow_run':{
+        'id':REVIEW._closed_union_artifact_origin(p,kind)[0],
+        'head_sha':REVIEW._closed_union_artifact_origin(p,kind)[1]}}
+        for kind,a in p['artifacts'].items()]
     return {'run':{'id':p['run_id'],'head_sha':p['head_sha'],
-                'path':'.github/workflows/series-v5.yml','status':'completed','conclusion':'failure'},
+                'path':p.get('workflow_path','.github/workflows/series-v5.yml'),'status':'completed','conclusion':'failure'},
         'job':{'id':p['processing_job'],'run_id':p['run_id'],'status':'completed','conclusion':'failure',
                'steps':[{'number':n,'name':name,'status':'completed','conclusion':c}
                         for n,(name,c) in expected.items()]},
-        'capture_job':{'id':p['capture_job'],'run_id':p['run_id'],'status':'completed','conclusion':'success'},
+        'capture_job':{'id':p['capture_job'],'run_id':p.get('capture_run_id',p['run_id']),
+            'head_sha':p.get('capture_head_sha',p['head_sha']),'status':'completed','conclusion':'success'},
         'artifacts':artifacts}
 
 
@@ -397,3 +400,45 @@ def test_closed_union_preserves_scientific_predicates_without_fabricated_full_re
         assert facts['processing'] is None
         assert facts['scientific_packet_layout']==p['layout']
         assert 'final_mutable_SQL' in facts['unavailable_processed_full_components']
+
+
+@pytest.mark.parametrize('mutation',['none','capture_as_processing','foreign_api_chain','missing_phase_guard','missing_original_identity'])
+def test_full8_union_retains_both_original_and_actual_processing_identity(tmp_path,mutation):
+    import shutil
+    p=REVIEW.CLOSED_CAPTURE_COMPACT_UNIONS[41706823165]
+    root=tmp_path/'capsule';compact=tmp_path/'compact';host=tmp_path/'restore'
+    declaration,frozen,worker,selected=recovery_fixture(root)
+    declaration.update(evidence_layout=p['layout'],compact_artifact_name=p['artifacts']['compact']['name'])
+    compact.mkdir();host.mkdir()
+    for name in ('status.json','evaluation-manifest.json'):
+        shutil.copyfile(root/name,compact/name);(root/name).unlink()
+    folder=root/'infrastructure/postcapture';(folder/'processing.json').unlink()
+    for f in (root/'infrastructure/postcapture-host').iterdir():
+        if f.is_file():shutil.copyfile(f,host/f.name)
+    artifact={**p['artifacts']['capture'],'expired':False,
+        'workflow_run':{'id':p['capture_run_id'],'head_sha':p['capture_head_sha']}}
+    write(host/'artifact-api.json',artifact)
+    write(host/'selected-transport-proof.json',{'complete':True,'scope':'restore-diagnostics',
+        'scientific_processing_performed':False,'artifact':{**p['artifacts']['restore'],'expired':False,
+        'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}},
+        'files':{f.name:{'bytes':f.stat().st_size,'sha256':REVIEW.sha(f)} for f in host.iterdir()}})
+    marker=REVIEW.read(folder/'closed.json');guard=REVIEW.read(host/'disk-before-download.json')
+    selected['artifact']=artifact;selected['files'].pop('status.json')
+    selected['closed_capture_namespace']={'scientific_file_bytes':marker['file_bytes'],'scientific_files':marker['files'],
+        'proof_bytes':guard['proof_bytes'],'processed_full_snapshot':False}
+    actual=tmp_path/'actual.json';body=union_api_fixture(p)
+    if mutation=='capture_as_processing':body['artifacts'][0]['workflow_run']['id']=p['run_id']
+    if mutation=='foreign_api_chain':body=union_api_fixture()
+    if mutation=='missing_phase_guard':(host/'disk-before-processing.json').unlink()
+    if mutation=='missing_original_identity':declaration.pop('scientific_capture_run_id')
+    write(actual,body)
+    call=lambda:REVIEW.closed_postcapture_facts(root,declaration,frozen,worker,selected,
+        compact=compact,restore_root=host,actual_processing=actual)
+    if mutation!='none':
+        with pytest.raises((ValueError,FileNotFoundError)):call()
+    else:
+        result=call()
+        assert result['processing'] is None
+        assert result['capture_status']['run_id']==str(p['capture_run_id'])
+        assert result['processing_completion_evidence']['run_id']==p['run_id']
+        assert result['actual_restore']['processing_run_id']==str(p['run_id'])

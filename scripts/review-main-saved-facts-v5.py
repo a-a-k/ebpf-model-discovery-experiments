@@ -15,7 +15,7 @@ import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
-    CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts)
+    CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
 
 
 PINS = {
@@ -990,15 +990,17 @@ def _selected_proof(root: Path, declaration: dict) -> dict:
     workflow = artifact.get("workflow_run") or {}
     expected_name = declaration["compact_artifact_name"].replace("v5-summary-", "campaign-v5-", 1)
     union = _closed_union_profile(declaration)
+    origin_run, origin_head = declaration["run_id"], declaration["head_sha"]
     if union:
+        origin_run, origin_head = _closed_union_artifact_origin(union, 'capture')
         expected_name = union['artifacts']['capture']['name']
         if (proof.get('scope') != 'closed-capture' or
                 {k:artifact.get(k) for k in union['artifacts']['capture']} != union['artifacts']['capture']):
             raise ValueError('closed union selected input is not its actual original capsule')
     if (proof.get("complete") is not True or proof.get("scientific_processing_performed") is not False
             or artifact.get("name") != expected_name or artifact.get("expired") is not False
-            or workflow.get("id") != declaration["run_id"]
-            or workflow.get("head_sha") != declaration["head_sha"]):
+            or workflow.get("id") != origin_run
+            or workflow.get("head_sha") != origin_head):
         raise ValueError("selected evidence transport identity/integrity differs")
     if "full_artifact_id" in declaration and {
             "id": artifact.get("id"), "name": artifact.get("name"),
