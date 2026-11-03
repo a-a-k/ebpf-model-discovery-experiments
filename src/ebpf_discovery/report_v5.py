@@ -336,6 +336,124 @@ POSTCAPTURE_GUEST_RELEASE_SOURCE = {
 }
 
 
+CLOSED_POSTCAPTURE_SOURCE = {
+    **POSTCAPTURE_GUEST_RELEASE_SOURCE,
+    'revision': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'tested_source': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'parent_revision': '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+    'added_paths': {'docs/IMMUTABLE_PATH_PREPARATION_V5.md',
+     'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md',
+     'scripts/check-fixed-deepflow-final-links-v5.py',
+     'scripts/check-fixed-dsb-path-preparation-v5.py',
+     'scripts/check-fixed-early-checkpoint-release-v5.py',
+     'scripts/check-fixed-guest-prefix-release-v5.py',
+     'scripts/check-fixed-runtime-proof-jsonl-v5.py',
+     'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py',
+     'scripts/qualify-closed-discovery-import-v5.py',
+     'scripts/qualify-closed-postcapture-v5.py',
+     'scripts/restore-closed-postcapture-v5.py',
+     'scripts/retain-guest-evidence-v5.sh',
+     'scripts/stop-owned-guests-v5.py',
+     'src/ebpf_discovery/guest_release_v5.py',
+     'src/ebpf_discovery/postcapture_v5.py',
+     'src/ebpf_discovery/summary_manifest_v5.py',
+     'tests/test_closed_discovery_import_v5.py',
+     'tests/test_fixed_path_preparation_comparison_v5.py',
+     'tests/test_guest_release_v5.py',
+     'tests/test_postcapture_v5.py',
+     'tests/test_summary_manifest_v5.py',
+     'tests/test_uploaded_checkpoint_copy_release.py'},
+    'changed_core_blobs': {'src/ebpf_discovery/campaign_process_v4.py': '1824994b9d3519208941c2795b186c89075c2fcb',
+     'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+     'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+     'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+     'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1',
+     'src/ebpf_discovery/postcapture_v5.py': 'e0b0eac5474743509133373994ea65e2e12f1947',
+     'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+     'src/ebpf_discovery/remote_toolchain_v4.py': '028b0aafbef8395ab32943bfbe6c6266623e7621',
+     'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+     'src/ebpf_discovery/study.py': '299c0f45ed2e1fe06cd7cbc884dcb7b161fddff5',
+     'src/ebpf_discovery/summary_manifest_v5.py': '02d9d2bb622598ce718d3a36d167f1c8885573bd',
+     'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105'},
+    'reviewed_changed_blobs': {'.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': '105bb8fd738f5956f3e942741ba574e93d01617d',
+     '.github/workflows/infrastructure.yml': 'c367b847069276c38f2af87879e6f6b1930a2307',
+     '.github/workflows/series-v5.yml': '4d4cae38f1c93d8653d21d846f58c6b1bb2308c8',
+     '.github/workflows/toolchain-worker-v4.yml': '4b833fed808c6701426d758bb3b9feb84e81cfa1',
+     'docs/IMMUTABLE_PATH_PREPARATION_V5.md': '04d2c2ce314b4547723746019cf962a7837452d1',
+     'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md': '83f08a45f9bd5866eb126315db7b0cc8c2489dc3',
+     'docs/WORKER_PACKAGING_V5.md': 'c270e8e4a2fb48f6d17c4dc0a334b99743d50f94',
+     'scripts/check-fixed-deepflow-final-links-v5.py': '5560fc0ac9212a5e87e8fda752f83f98ad128f02',
+     'scripts/check-fixed-dsb-path-preparation-v5.py': 'c0422ee45523be1954cc38422bb64d35083e8b18',
+     'scripts/check-fixed-early-checkpoint-release-v5.py': '4a2eea6d8d99027ed082f48527bc66a004b1fc01',
+     'scripts/check-fixed-guest-prefix-release-v5.py': '5444be2c8232a51e7461cc8109f69c30ab9f2aa7',
+     'scripts/check-fixed-runtime-proof-jsonl-v5.py': '7b6e494de4b78b144790f281573e22d0b4c1f1d0',
+     'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py': '102825a665b8dad9f63b014181beeaa95484c208',
+     'scripts/qualify-closed-discovery-import-v5.py': '76fc327f2c65aeeb0e0d15bca06e687973f58b9e',
+     'scripts/qualify-closed-postcapture-v5.py': '42362b2d34e36d4e7a27320d59ad6a3c11d26022',
+     'scripts/restore-closed-postcapture-v5.py': '9458123cc56a3b8341f9233f9b48fc963db8793b',
+     'scripts/retain-guest-evidence-v5.sh': 'aadf01ab89d9b09730844f63b522b026f3a9121d',
+     'scripts/stop-owned-guests-v5.py': 'e5665a5de110abb89a9a0c008efd35e3e32af491',
+     'scripts/vms.sh': '79aa2c5fc1fc877c78f602845a6ff517e11110f4',
+     'src/ebpf_discovery/campaign_process_v4.py': '1824994b9d3519208941c2795b186c89075c2fcb',
+     'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+     'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+     'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+     'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1',
+     'src/ebpf_discovery/postcapture_v5.py': 'e0b0eac5474743509133373994ea65e2e12f1947',
+     'src/ebpf_discovery/raw_v4.py': '8d964d7dc969a922f9ab1701f371eed5ea190321',
+     'src/ebpf_discovery/remote_toolchain_v4.py': '028b0aafbef8395ab32943bfbe6c6266623e7621',
+     'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+     'src/ebpf_discovery/study.py': '299c0f45ed2e1fe06cd7cbc884dcb7b161fddff5',
+     'src/ebpf_discovery/summary_manifest_v5.py': '02d9d2bb622598ce718d3a36d167f1c8885573bd',
+     'src/ebpf_discovery/toolchain_v4.py': 'b8b4c635952b5d0e72d436951df2463b38f28105',
+     'tests/test_artifact_recovery_v5.py': '5ad62af5e34d4c0ac175bbf065fb93dd021924c3',
+     'tests/test_checkpoint_v4.py': '1f934e29aaa88cc42f57f20c87623cfb402e143a',
+     'tests/test_closed_discovery_import_v5.py': '57b8582a585e1f4762d51355701d20d6e8f416de',
+     'tests/test_deepflow_snapshot_v5.py': 'd205c350ecde2035f2d4afcfd488bd48ffb17318',
+     'tests/test_deepflow_v5.py': '8963e26c652e0def46d32306bcd87447bbbf8ecc',
+     'tests/test_fixed_path_preparation_comparison_v5.py': 'cad466c8affd8f72d1611c93d6784fcb9585b079',
+     'tests/test_guest_release_v5.py': '2cca3fefed4fbe25f5cf140411d0cb948f7226aa',
+     'tests/test_identity_projection_v5.py': '40227ccf66fe6e118e7dd74f87f97ddbfb037c66',
+     'tests/test_postcapture_v5.py': 'cb87e772cba846470d461f67a9b393dada4ea620',
+     'tests/test_remote_toolchain_v4.py': '513ff85dc91f8915ed61f2fde348fcbc16387c10',
+     'tests/test_summary_manifest_v5.py': '258887578982dc6e7601399402e63726930311a2',
+     'tests/test_uploaded_checkpoint_copy_release.py': 'cde25145c6ad39ecc7136d909fbac45156812348'},
+    'closed_discovery_import_qualification': {'all_ZIP_members_read_to_EOF_CRC': True,
+     'all_logical_paths_bytes_modes_forecasts_equal': True,
+     'allocated_bytes_saved_fixed_artifact': 9932513280,
+     'artifact_id': 13183705889,
+     'artifact_digest': 'sha256:0eb6be77a2a287586d7c02355441317307fea5a62e6a2ef46686f0ee93d79864',
+     'source_worker_artifact_id': 13179122874,
+     'no_full_case_headroom_or_speedup_claim': True,
+     'original_worker_run': 41504119650,
+     'run_id': 41533099422,
+     'tested_source': '68230876fb1130cecfc63cfb19649beb69c83493'},
+    'closed_postcapture_qualification': {'ALL_SQL_journal_scientific_output_and_input_equality': True,
+     'closed_artifact_digest': 'sha256:4169f5a37906f4938ffc1df56d1362f40bddcb493b641d9f772f0fb9c4762215',
+     'closed_artifact_id': 13223167765,
+     'compact_artifact_digest': 'sha256:511918c80abb84bb2962dab2f54cda26aece3708c8a727dd9d87e31c154de25b',
+     'compact_artifact_id': 13229222064,
+     'equality_metadata_sha256': '29563572d1d17323ec081fd60506170c7b8df8f568cf01f51094fde0e51d1bb4',
+     'frozen_model_and_input_hashes_equal': 10897,
+     'full_artifact_digest': 'sha256:f1ac06042055abf24f04eb8ed2699023925f4c2a9f841db975571809b2ae9477',
+     'full_artifact_id': 13229083043,
+     'immutable_inputs_rehashed': 124072,
+     'independent_actual_GO_sha256': '68001cb75f1cb3d6d0690c74b08f518a8059c1bf8f678057f114883e01302804',
+     'independent_original_actual_GO': True,
+     'jobs_success': [125847044031, 125864222442],
+     'new_main_case_or_traffic_refit_Sheaft': False,
+     'original_producer': 41470575905,
+     'original_scientific_source': '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+     'processing_seconds': 4555.127210296,
+     'proof_artifact_digest': 'sha256:aed36024764ac9bea51c65a1aae00d0c0a4031ca2309e67a12ac0b66b2177c31',
+     'proof_artifact_id': 13230510106,
+     'root_actual_GO_sha256': '7d65b1bfefbe878cf5e3660e73f4a1df21f58c9338b03e2990bd251ad14de84c',
+     'run_id': 41615267517,
+     'tested_source': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+     'whole_all_seven_or_smallhost_cure_proven': False},
+}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -351,6 +469,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = PETCLINIC_WORKER_SOURCE
         elif revision == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']:
             profile = POSTCAPTURE_GUEST_RELEASE_SOURCE
+        elif revision == CLOSED_POSTCAPTURE_SOURCE['revision']:
+            profile = CLOSED_POSTCAPTURE_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -374,10 +494,12 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
     if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
-            or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE):
+            or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE):
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
-                'evidence_kind': ('postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
+                'evidence_kind': ('closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
+                                  if profile is CLOSED_POSTCAPTURE_SOURCE else
+                                  'postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
                                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else
                                   'existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
                                   if profile is PETCLINIC_WORKER_SOURCE else
@@ -396,7 +518,10 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 **({'existing_worker_placement': profile['existing_worker_placement']}
                    if profile is PETCLINIC_WORKER_SOURCE else {}),
                 **({'postcapture_lifecycle_qualification': profile['postcapture_lifecycle_qualification']}
-                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else {}),
+                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE else {}),
+                **({'closed_postcapture_qualification': profile['closed_postcapture_qualification'],
+                    'closed_discovery_import_qualification': profile['closed_discovery_import_qualification']}
+                   if profile is CLOSED_POSTCAPTURE_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -991,12 +1116,16 @@ def build(
         compatible_heads.add(STREAMED_CHECKPOINT_SOURCE['revision'])
         compatible_heads.add(PETCLINIC_WORKER_SOURCE['revision'])
         compatible_heads.add(POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'])
+        compatible_heads.add(CLOSED_POSTCAPTURE_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         outside_postcapture_scope = (observed_head == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'] and (
             (item['collector'], item['system']) != ('deepflow', 'otel_demo') or
             (item['mode'], item['seed']) == ('full', 7)))
-        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope):
+        outside_closed_scope = (observed_head == CLOSED_POSTCAPTURE_SOURCE['revision'] and (
+            (item['collector'], item['system']) != ('deepflow', 'otel_demo') or
+            (item['mode'] == 'full' and item['seed'] in (6, 7))))
+        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope):
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,
@@ -1363,6 +1492,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
                       '` retains all 828,668 ordered audit records and all 86,527 original payload/SQL input proofs in actual qualification 41321994264 (artifact 13091257133). Its 51,225,433-byte manifest references a retained 792,183,147-byte JSONL payload. The C duplicate-lifetime proof remains attributed to source c1369df and run 41313534176; guest whole blobs and the parent release/caller functions are inherited exactly, while the remote module also adds JSONL validation. Component memory measurements and fixed-order/pagecache/extra-legacy-validation/cleanup boundaries do not establish whole-case speed, capacity or scientific success. The full exact Git profile and inherited T/U/V proofs remain in `provenance/source-equivalence.json`.']
             lines += ['The exact existing-worker source `' + PETCLINIC_WORKER_SOURCE['revision'] +
                       '` routes Petclinic models through the already implemented closed-prefix worker. All production Python, application declarations, observations, model code and binaries remain identical to f7ba801; the only producer changes are one routing line and PC atomic-import fixtures. Its source-specific Git profile and Linux CI establish this operational placement, not a new model or observed speedup. Inherited JSONL/storage qualifications retain their actual f7ba801/c1369df/T/U/V tested sources. Each PC case still requires actual retained worker import and independent outcomes.']
+            lines += ['The exact closed-postcapture source `' + CLOSED_POSTCAPTURE_SOURCE['revision'] +
+                      '` is restricted to the seven technically incomplete DeepFlow OTel cells. Actual qualification 41615267517 transferred the complete saved full/6 input and reproduced all logical SQL, ordered journal and scientific outputs with the unchanged offline suffix. Qualified source 68230876 separately preserves closed discovery-copy paths, bytes, modes and forecasts. These engineering qualifications are not new main cases or an all-seven/smaller-host capacity guarantee; their actual tested sources and all failed, transfer, processing and retention costs remain explicit in `provenance/source-equivalence.json`.']
     lines += ["", "## Every declared attempt", ""]
     attempt_rows = []
     for item in attempts:

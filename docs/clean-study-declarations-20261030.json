@@ -5404,7 +5404,7 @@
     {
       "run_id": 41581377543,
       "role": "preparation",
-      "note": "Exactsavedfull6 trainingSQL+finalraw reconstruction, unchanged0056 ingest/fullrefresh under processCPUprofile; finalSQL/outputequality required. No app/VM/Bering/Sheaft/outcome replay, no sampling/optimizer/sourceadmission. Allrestore/profile/check/CI/failure/retentioncosts retained; timing/cachelimits explicit."
+      "note": "Exact saved full6 identity-only c564 diagnostic stopped by its 300-minute job timeout, job125736773021 cancelled10:01:18UTC; not manually cancelled. Final ingest completed588.097s, then profiled refresh did not complete within about4h30. No completed profile, final equality or processing cure; no extrapolation to unprofiled runtime. Preserve all five-hour job/restore/proof/transfer/CPU/publication/observer/retention costs; no capture/refit/Sheaft/new main case or rerun of this diagnostic."
     },
     {
       "run_id": 41534974688,
@@ -5474,7 +5474,7 @@
     {
       "run_id": 41608528466,
       "role": "preparation",
-      "note": "Engineering qualification at 8f5d37289432d4a115665c07eca3bd48e9876f01, active at this publication: reconstruct saved full6, transfer a closed capture, then compare the whole unchanged offline suffix and production publications. Actual equality and headroom remain pending. No capture/refit/Sheaft/new main cell/source admission. All reconstruction/proof/transfer/processing/publication/wait/failure/observer/retention costs retained; historical copied costs are not new model runs; human effort unknown."
+      "note": "Whole-suffix qualification at 8f5d37289432d4a115665c07eca3bd48e9876f01 failed after 22m42s prepare: direct script could not import systems because PYTHONPATH omitted repository root. Compare skipped, no complete handoff/equality/source admission. 78,340,276,224 free bytes at failed seal, not ENOSPC/time limit. Preserve all restore/proof/transfer/CPU/publication/failure/observer/retention costs. Repair and technical retry separate; no scientific case replay."
     },
     {
       "run_id": 41602416740,
@@ -5485,6 +5485,31 @@
       "run_id": 41607019816,
       "role": "preparation",
       "note": "Closedpostcapture qualification code head8f5d37289432d4a115665c07eca3bd48e9876f01. ActualCIbothsuccess;independentoriginalcodeCIreadinessGO9c8616;actualdataqualification41608528466separate, no scientificsourceadmission. AllCI/failure/repair/observer/retentioncostsretained;APIwallnotCPU/billing,humanunknown."
+    },
+    {
+      "run_id": 41611701718,
+      "role": "preparation",
+      "note": "Push CI for docs-only a1958c7268e8b81e4a008349923d63e234576c83, both jobs success. Published 74 reviewed cases and own-case OOM limits, no new source admission. Retain all preparation, checks, observer and retention costs; API elapsed is not CPU/billing and human effort remains unknown."
+    },
+    {
+      "run_id": 41611710820,
+      "role": "preparation",
+      "note": "PR CI for same docs-only a1958c7268e8b81e4a008349923d63e234576c83, both jobs success; separate actual run costs retained. Retain all preparation, checks, observer and retention costs; API elapsed is not CPU/billing and human effort remains unknown."
+    },
+    {
+      "run_id": 41612275057,
+      "role": "preparation",
+      "note": "Push CI for narrow auxiliary-import repair f045cc0adec187ec00443da0bea72b4ec4d2082e: both jobs success. Only infrastructure.yml two import-path corrections and two early import checks; all scientific and production processing code unchanged. Whole qualification actual result separate. Retain all preparation, checks, observer and retention costs; API elapsed is not CPU/billing and human effort remains unknown."
+    },
+    {
+      "run_id": 41613040494,
+      "role": "preparation",
+      "note": "Exact f045cc0 unchanged whole-suffix qualification failed prepare before any large download: available49,214,042,112 below67,858,429,365-byte actual disk guard, compare skipped. Early systems import check passed. No ENOSPC or six-hour failure. Preserve 2m08s prepare and all cleanup/check/metadata/observer/retention costs. Any bounded standard-runner reallocation has its own run and costs; no source admission/main case."
+    },
+    {
+      "run_id": 41615267517,
+      "role": "preparation",
+      "note": "First bounded standard-runner allocation retry at exact f045cc0 after capacity-only41613040494; both jobs SUCCESS. Complete saved full6 whole offline SQL/journal/scientific equality, closed handoff/restore and production publication passed root+independent ORIGINAL review. 124072 immutable inputs/10897 frozen hashes; processing4555.127s. Qualification not a new main case or all-seven/smallhost cure. Retain all setup/reconstruction/proof/transfer/processing/comparison/publication/observer/retention and failed predecessor costs; copied original case wall duration is not new compute, API elapsed not CPU/billing, human unknown."
     }
   ],
   "blocked_main_cells": [],
@@ -5511,5 +5536,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-03T05:06:49.484372+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-03T10:03:00.456878+00:00"
 }

@@ -1,0 +1,123 @@
+{
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "reviewed_utc": "2026-11-03T12:36:15.807618+00:00",
+  "verdict": "GO",
+  "original_whole_postcapture_actual_qualification_GO": true,
+  "original_f045_complete_closed_postcapture_engineering_GO": true,
+  "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+  "actual_run": 41615267517,
+  "actual_jobs_success": [
+    125847044031,
+    125864222442
+  ],
+  "actual_run_API_proof": "work\\41615267517-final-run-jobs-artifacts-independent-20261103.json",
+  "actual_run_API_proof_SHA256": "86d44a895e9b2422d13c400561d25d1304d7f5a3e06e74a3f795aa5d622c8ad6",
+  "root_actual_whole_GO": "work\\root-41615267517-whole-postcapture-actual-original-GO-20261103.json",
+  "root_actual_whole_GO_SHA256": "7d65b1bfefbe878cf5e3660e73f4a1df21f58c9338b03e2990bd251ad14de84c",
+  "original_criterion_verdict": "Explicit ORIGINAL criterion GO for the actual complete fixed full/6 lossless closed-handoff and unchanged whole offline suffix qualification. It supports the original 81-cell eBPF feasibility study under absent/partial SDK tracing; it does not substitute this full-SDK control for seven missing cells or declare scientific usefulness from flags. All 74 valid negative, adverse and unknown cases remain protected. Original ten operations, four methods, two views, 34,800 primary/9,600 targets, 100,000 Sheaft trials where available and two independent guest kernels remain required.",
+  "baseline_equal_information_and_causal_scope": "The reference is the original unchanged one-job full/6 suffix with identical scientific inputs, frozen models, plans, records, native/eBPF observations and supplied semantics. Thirteen scientific engine blobs are unchanged from0056. The candidate changes placement and transport only, with the minimal direct-script import repair. Known lossless/job-placement equivalence has now been exercised using the entire saved scientific read set, not a sample or smaller model. Separate platform budgets provide completion headroom; no algorithm speedup, cheaper-method hypothesis, missing-data reconstruction or all-seven cure is claimed.",
+  "actual_complete_checks": {
+    "all_five_whole_equality_booleans": {
+      "ALL_final_logical_SQL_rows_and_schema_equal": true,
+      "ALL_saved_scientific_evaluation_fields_equal": true,
+      "ALL_reference_outputs_equal": true,
+      "ALL_ingest_refresh_non_cost_fields_equal": true,
+      "ALL_journal_rows_and_schema_equal": true
+    },
+    "immutable_inputs_rehashed": 124072,
+    "frozen_models_and_inputs": 10897,
+    "production_manifest_payloads_verified": 9,
+    "sealed_files": 124076,
+    "sealed_bytes": 43468927624,
+    "input_inventory_SHA256": "c769296d9fbab8702b2017be6c50f7de0f92de8f90e56fc934a2b3a9b145b3aa",
+    "closed_manifest_SHA256": "1bd4084cf7519d09e847fab83fee70b0ec188045d086a83e59366e8044a6382b",
+    "training_SQL_and_closed_acquisition_proof_verified": true,
+    "ordered_journal_and_all_scientific_values_preserved": true,
+    "actual_processing_no_traffic_refit": true
+  },
+  "semantic_equality_boundaries": "All final SQL rowids/columns/schema, all journal seq/kind/wall/monotonic/data/schema, reference classes/evidence/freeze/projection/alias/journal outputs and the entire scientific evaluation report passed the reviewed assertions. JSON object ordering/format is normalized; JSONL sequence and every value remain. Only top evaluation cost and status ended_ns/elapsed_seconds, index-final seconds/index_bytes, and refresh-cost elapsed_seconds are excluded, with full hashes and observed values retained. UNKNOWN/adverse outcomes are not filtered or rescored.",
+  "actual_handoff_restore": {
+    "artifact_id": 13223167765,
+    "digest": "sha256:4169f5a37906f4938ffc1df56d1362f40bddcb493b641d9f772f0fb9c4762215",
+    "archive_bytes": 4053754562,
+    "all_members_EOF_CRC": 124080,
+    "restore_seconds": 187.499275656,
+    "guard_required_bytes": 79282695173,
+    "guard_available_bytes": 127379013632,
+    "SQL_WAL_reserve_bytes": 30659624960,
+    "available_after_restore": 79594041344,
+    "same_run_source_and_manifest_input_chain_verified": true
+  },
+  "publication": {
+    "full_artifact": {
+      "id": 13229083043,
+      "bytes": 5345228437,
+      "digest": "sha256:f1ac06042055abf24f04eb8ed2699023925f4c2a9f841db975571809b2ae9477",
+      "directory_files": 124092,
+      "logical_bytes": 53810505360,
+      "directory_metadata_SHA256": "4c5bcb6f9df64039005ad14b40f64d7f598b96ecfaf3616b14bb4a289b92996e"
+    },
+    "compact_artifact": {
+      "id": 13229222064,
+      "bytes": 48002042,
+      "digest": "sha256:511918c80abb84bb2962dab2f54cda26aece3708c8a727dd9d87e31c154de25b",
+      "directory_files": 21,
+      "logical_bytes": 831864460,
+      "directory_metadata_SHA256": "bd6471c94a0679de2ffeb9d3191ecb13da3e760f8b6fc2d8a7d6338fae895050"
+    },
+    "same_manifest_SHA256": "eca4fa749da8f7b7714250078d446770f1e7bbd49984bf10563d53ce4cb45141",
+    "all_nine_payloads_plus_manifest_full_compact_size_CRC_mode_equal": true,
+    "qualification_namespace_and_old_scientific_identity_explicit": true,
+    "logical_capture": {
+      "run_id": "41470575905",
+      "commit": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+      "system": "otel_demo",
+      "collector": "deepflow",
+      "controller": "clean-study",
+      "mode": "full",
+      "seed": 6,
+      "smoke": false
+    },
+    "actual_sealing_processing_source_run_separate": true
+  },
+  "selected_metadata_proofs": {
+    "compare": {
+      "path": "work\\whole-postcapture-qualification-41615267517-compare-small-metadata\\selected-transport-proof.json",
+      "SHA256": "0e3684fbf69ad20605487f32b5b5c8cdec218700b9a03cc8d302a9262c564bff",
+      "members": 17,
+      "received_bytes": 18191
+    },
+    "compact": {
+      "path": "work\\whole-postcapture-qualification-41615267517-publication-metadata\\compact\\selected-transport-proof.json",
+      "SHA256": "35f2e7cda8620f2fb03875241721fecf5395df939e3e8544965eb1b48c251cfb",
+      "members": 2,
+      "received_bytes": 2768
+    },
+    "full": {
+      "path": "work\\whole-postcapture-qualification-41615267517-publication-metadata\\full\\selected-transport-proof.json",
+      "SHA256": "4082c0456fbc14841933cab58ea589b3778403a5d0a6f8453a0ffcd72c135561",
+      "members": 6,
+      "received_bytes": 18602587
+    }
+  },
+  "local_verification_boundary": "Only the small compare artifact, compact manifest/status and named closed/processing receipts were read as bodies, each<=4MiB and CRC/SHA verified. Full/compact directory metadata was checked completely, but scientific payloads, SQL, models, attempt journals and the large closed-capture body were not downloaded, decoded or rehashed locally. All-file/SQL/output computations ran in Actions in the exact reviewed producer. No claim that the compact reader independently rehashed every scientific body.",
+  "complete_costs": {
+    "processing_elapsed_seconds": 4555.127210296,
+    "comparison_elapsed_seconds": 803.312017522,
+    "original_ingest_seconds": 420.7654593579973,
+    "candidate_ingest_seconds": 385.62422222300006,
+    "original_refresh_seconds": 3099.534459192,
+    "candidate_refresh_seconds": 3097.02963931,
+    "original_cost_object_SHA256": "b7511aa8a04c0120955f8694c84247e6c7fb5cd1adb14cc194bcc85c1cf1d13e",
+    "candidate_cost_object_SHA256": "c9576e884af8afe558a7c5bb5b1b1671827f06c6005737c686756b5fe90838f6",
+    "logical_status_elapsed_seconds_not_new_processing_CPU": 73919.53274366,
+    "cost_scope": "The logical qualification status retains the old capture start and the new processing end; its73919.533s spans the intervening gap and is not new processing time or billing. Use actual job/phase/processing receipts for new qualification costs and retain original capture/model costs separately. Preserve failed8f import, f045 low-capacity refusal, unfinished300min diagnostic, all CI/setup/restore/reference SQL/hash/seal/upload/wait/download/verify/suffix/comparison/publication/observer/retention/closing-tail costs. API wall is not CPU/billing; process CPU excludes children; human effort is unknown."
+  },
+  "capacity_limits": "Prepare and compare both actually completed on the observed larger allocations with unchanged guards. This does not establish deterministic capacity for ubuntu24, a49GB host, all seven future cases, or their live capture durations. The second bounded allocation is unused and must not be dispatched after this success.",
+  "next_authorized_design_state": "Root and independent actual whole-qualification reviews are now complete. The already approved strict named-f045 consumer design may be implemented and receive exact code/full-Git/Linux-CI review. Scientific producer admission and seven failure-only primary dispatches still require those separate reviews and exact execution GOs. No additional technical qualification is required merely to seek a more favorable outcome.",
+  "scientific_source_admission_GO": false,
+  "primary_restart_GO": false,
+  "full81_scientific_success_GO": false,
+  "second_bounded_allocation_execution_GO": false,
+  "reviewer_POST_or_cancel_or_production_edit": false
+}

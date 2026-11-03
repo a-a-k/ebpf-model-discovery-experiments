@@ -38,6 +38,14 @@ INPUT_SUPPLEMENT = {
     },
 }
 FULL_FIXED = {
+    "status.json", "evaluation-manifest.json",
+    *{f"infrastructure/postcapture/{name}" for name in
+      ("closed.json", "capture-status.json", "files.jsonl", "artifact-api.json", "processing.json")},
+    "infrastructure/remote-toolchain-v4/closed-discovery-import-hardlinks.json",
+    *{f"infrastructure/postcapture-host/{name}" for name in
+      ("restore.json", "disk-before-download.json", "diagnostic-sdk-cleanup.json",
+       "host-disk-before.txt", "host-disk-after.txt", "disk-final.txt", "memory-final.txt",
+       "python-environment.txt", "transport-retries.jsonl")},
     "infrastructure/postcapture-guest-release.json", "infrastructure/guest-evidence-capture.json",
     "infrastructure/a/check-copy.err", "infrastructure/b/check-copy.err",
     "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",

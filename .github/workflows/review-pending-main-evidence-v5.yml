@@ -155,13 +155,19 @@ jobs:
                           '6eaa441c40253a18f18af76e4e599496927c1739',
                           'f7ba801d70f9d2327031efc6dd0c00b90d252708',
                           '0565115511b24db1d6bbe71e98784baded772144',
-                          '0056b4c8ecb85e8b40c433e63af442133a21f3cc'}
+                          '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
+                          'f045cc0adec187ec00443da0bea72b4ec4d2082e'}
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!='retrieve_family_selected'
                           or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
                                   'full_artifact_digest'}<=cell.keys()):
                       raise SystemExit('fresh review requires exact main source and both full/compact packets')
+                  if cell.get('head_sha')=='f045cc0adec187ec00443da0bea72b4ec4d2082e' and (
+                          (cell['collector'],cell['system'])!=('deepflow','otel_demo') or
+                          (cell['mode'],cell['seed']) not in {('absent',6),('absent',7),('absent',8),
+                              ('partial',6),('partial',7),('partial',8),('full',8)}):
+                      raise SystemExit('closed postcapture source is restricted to seven technical replacements')
           else:
               raise SystemExit('unknown review phase')
           required={'collector','system','mode','seed','run_id','head_sha',

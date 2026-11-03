@@ -31,15 +31,17 @@ CLOSED_FINAL_SNAPSHOT_HEAD = "6eaa441c40253a18f18af76e4e599496927c1739"
 STREAMED_CHECKPOINT_HEAD = "f7ba801d70f9d2327031efc6dd0c00b90d252708"
 PETCLINIC_WORKER_HEAD = "0565115511b24db1d6bbe71e98784baded772144"
 POSTCAPTURE_GUEST_RELEASE_HEAD = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+CLOSED_POSTCAPTURE_HEAD = "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+CLOSED_POSTCAPTURE_CELLS = {(mode, seed) for mode in ("absent", "partial") for seed in (6, 7, 8)} | {("full", 8)}
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260",
                "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
+               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
-METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
+METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
 GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
-CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD}
+                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
+CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 COLLECTOR_PINS = {
@@ -1094,8 +1096,10 @@ def guest_platform_facts(root: Path) -> dict:
 
 
 def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
-    if declaration['head_sha'] != POSTCAPTURE_GUEST_RELEASE_HEAD:
+    if declaration['head_sha'] not in {POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}:
         return None
+    if declaration['head_sha'] == CLOSED_POSTCAPTURE_HEAD and (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS:
+        raise ValueError('closed postcapture source is restricted to the seven technical replacements')
     if (declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo') or (
             declaration['mode'], declaration['seed']) == ('full', 7):
         raise ValueError('postcapture source is restricted to the eight technical OTel replacements')
@@ -1172,6 +1176,146 @@ def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
             'release_sha256': sha(release_path), 'capture_sha256': sha(capture_path),
             'diagnostic_returncodes_preserved_not_forced_success': True,
             'whole_case_memory_disk_headroom_or_six_hour_cure_proven': False}
+
+
+def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
+                            worker: dict | None, selected: dict) -> dict | None:
+    """Bind the exact new source's sealed inputs to its actual offline output."""
+    if declaration['head_sha'] != CLOSED_POSTCAPTURE_HEAD:
+        return None
+    if ((declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo')
+            or (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS):
+        raise ValueError('closed postcapture case is outside the seven technical replacements')
+    folder = root/'infrastructure/postcapture'
+    marker, captured, processing, artifact = (read(folder/name) for name in
+        ('closed.json', 'capture-status.json', 'processing.json', 'artifact-api.json'))
+    final, summary = read(root/'status.json'), read(root/'evaluation-manifest.json')
+    expected = {'run_id': str(declaration['run_id']), 'commit': declaration['head_sha'],
+        'system': 'otel_demo', 'collector': 'deepflow', 'controller': 'clean-study',
+        'mode': declaration['mode'], 'seed': declaration['seed'], 'smoke': False}
+    for identity in (marker.get('identity') or {}, processing.get('identity') or {}, captured, final):
+        actual = {key: str(identity.get(key)) if key == 'run_id' else identity.get(key) for key in expected}
+        if actual != expected:
+            raise ValueError('closed capture or processing identity differs from the main case')
+    workflow = artifact.get('workflow_run') or {}
+    expected_name = f"postcapture-v5-deepflow-main-otel_demo-{declaration['mode']}-{declaration['seed']}-{declaration['run_id']}"
+    if (marker.get('schema') != 'closed-otel-postcapture-v5'
+            or marker.get('sealing_run_id') != expected['run_id']
+            or marker.get('sealing_source') != expected['commit']
+            or artifact.get('name') != expected_name or artifact.get('expired') is not False
+            or type(artifact.get('id')) is not int or artifact['id'] <= 0
+            or type(artifact.get('size_in_bytes')) is not int or artifact['size_in_bytes'] <= 0
+            or workflow.get('id') != declaration['run_id'] or workflow.get('head_sha') != expected['commit']
+            or not isinstance(artifact.get('digest'), str) or not artifact['digest'].startswith('sha256:')
+            or len(artifact['digest']) != 71 or set(artifact['digest'][7:]) - set('0123456789abcdef')):
+        raise ValueError('closed artifact lacks its exact main-run source binding')
+    if (captured.get('status') != 'postcapture_complete' or final.get('status') != 'acquisition_complete'
+            or processing.get('status') != 'complete' or processing.get('offline_only') is not True
+            or processing.get('traffic_replay_or_model_refit') is not False
+            or processing.get('processing_run_id') != expected['run_id']
+            or processing.get('processing_source') != expected['commit']
+            or processing.get('closed_manifest_sha256') != sha(folder/'closed.json')
+            or marker.get('capture_status_sha256') != sha(folder/'capture-status.json')
+            or processing.get('input_file_inventory_sha256') != marker.get('file_inventory_sha256')
+            or marker.get('file_inventory_sha256') != sha(folder/'files.jsonl')):
+        raise ValueError('closed input inventory and actual processing chain differ')
+    if (summary.get('qualification_only') is True or summary.get('scientific_capture_identity') is not None
+            or str(summary.get('run_id')) != expected['run_id'] or summary.get('commit') != expected['commit']
+            or summary.get('full_artifact_name') != selected['artifact']['name']
+            or summary.get('files_sha256', {}).get('status.json') != sha(root/'status.json')):
+        raise ValueError('qualification or unrelated publication cannot stand in for a new main case')
+    host = root/'infrastructure/postcapture-host'
+    restore, guard = read(host/'restore.json'), read(host/'disk-before-download.json')
+    if (restore.get('status') != 'complete' or restore.get('artifact_id') != artifact['id']
+            or restore.get('artifact_digest') != artifact['digest']
+            or restore.get('archive_bytes') != artifact['size_in_bytes']
+            or 'sha256:'+str(restore.get('archive_sha256')) != artifact['digest']
+            or restore.get('all_original_members_read_to_EOF_and_CRC_checked') is not True
+            or restore.get('closed_manifest_sha256') != processing['closed_manifest_sha256']
+            or guard.get('archive_bytes') != artifact['size_in_bytes']
+            or guard.get('scientific_file_bytes') != marker.get('file_bytes')
+            or guard.get('proof_bytes') != sum((folder/name).stat().st_size for name in
+                ('closed.json', 'capture-status.json', 'files.jsonl'))
+            or guard.get('SQL_WAL_growth_reserve_bytes') != 4*marker.get('index_bytes', 0)
+            or guard.get('scientific_limit_or_filter') is not False
+            or guard.get('required_bytes') != sum(guard.get(k, -1) for k in
+                ('archive_bytes', 'scientific_file_bytes', 'proof_bytes', 'SQL_WAL_growth_reserve_bytes'))+1024**3
+            or guard.get('available_bytes', -1) < guard.get('required_bytes', 0)):
+        raise ValueError('actual closed restore, archive integrity or pre-download capacity proof differs')
+    closure = marker.get('acquisition_closure') or {}
+    if (closure.get('unresolved_transports') != 0
+            or (closure.get('completeness') or {}).get('valid') is not True
+            or (closure.get('acquisition') or {}).get('valid') is not True
+            or any(key.endswith('_close_error') for key in captured)
+            or not worker or marker.get('training_SQL') != worker['training_index_proof']['parent_after_worker']):
+        raise ValueError('closed acquisition or pre-mutation worker SQL proof differs')
+    guest_capture = read(root/'infrastructure/guest-evidence-capture.json')
+    if (not PurePosixPath(str(marker.get('scientific_root', ''))).is_absolute()
+            or marker['scientific_root'] != guest_capture.get('campaign_root')):
+        raise ValueError('closed processing root differs from the captured scientific root')
+    for name, mode in (marker.get('directories') or {}).items():
+        if not _safe(name) or type(mode) is not int or not 0 <= mode <= 0o7777:
+            raise ValueError('closed directory permission claim is invalid')
+    mutable = {'status.json', 'observation-index.sqlite', 'attempt-journal.sqlite', 'attempt-journal.jsonl'}
+    names, frozen_names, logical_bytes, selected_count = set(), set(), 0, 0
+    hashes = frozen['sha256_by_path']
+    with (folder/'files.jsonl').open(encoding='utf-8') as stream:
+        for line in stream:
+            row = json.loads(line)
+            name = row['path']
+            if (not _safe(name) or name in names or type(row['bytes']) is not int or row['bytes'] < 0
+                    or type(row['mode']) is not int or not 0 <= row['mode'] <= 0o7777
+                    or not isinstance(row['sha256'], str) or len(row['sha256']) != 64
+                    or set(row['sha256']) - set('0123456789abcdef')):
+                raise ValueError('closed file inventory entry is invalid')
+            if name == 'observation-index.sqlite' and row['bytes'] != marker.get('index_bytes'):
+                raise ValueError('closed SQL byte size differs from its sealed inventory')
+            if name == 'status.json' and (row['sha256'] != marker['capture_status_sha256']
+                    or row['bytes'] != (folder/'capture-status.json').stat().st_size):
+                raise ValueError('closed capture status differs from its sealed inventory')
+            if name == 'attempt-journal.sqlite' and row['sha256'] != marker.get('journal_sha256'):
+                raise ValueError('closed journal differs from its sealed inventory')
+            names.add(name)
+            logical_bytes += row['bytes']
+            if name in hashes:
+                if hashes[name] != row['sha256']:
+                    raise ValueError('pre-mutation frozen model/input claim changed')
+                frozen_names.add(name)
+            claim = selected.get('files', {}).get(name)
+            if claim is not None and name not in mutable:
+                if claim['bytes'] != row['bytes'] or claim['sha256'] != row['sha256']:
+                    raise ValueError('selected immutable payload differs from its sealed input')
+                selected_count += 1
+    if (len(names) != marker.get('files') or logical_bytes != marker.get('file_bytes')
+            or frozen_names != set(hashes) or len(frozen_names) != marker.get('frozen_file_count')
+            or type(marker.get('journal_events')) is not int or marker['journal_events'] < 0
+            or type(marker.get('journal_max_seq')) is not int or marker['journal_max_seq'] < 0
+            or not {'status.json', 'observation-index.sqlite', 'attempt-journal.sqlite'} <= names):
+        raise ValueError('closed input population, SQL or frozen file claims are incomplete')
+    linked = read(root/'infrastructure/remote-toolchain-v4/closed-discovery-import-hardlinks.json')
+    parent = worker['parent_import']
+    for key in ('run_id', 'commit', 'system', 'mode', 'seed', 'manifest_sha256'):
+        if (linked.get('identity') or {}).get(key) != parent['identity'].get(key):
+            raise ValueError('closed discovery-copy import identity differs')
+    if (linked.get('schema_version') != 'closed-discovery-import-hardlinks-v1'
+            or linked.get('immutable_subtree') != 'toolchain/discovery/'
+            or linked.get('all_original_members_read_to_EOF') is not True
+            or linked.get('output_manifest_sha256') != sha(root/'infrastructure/remote-toolchain-v4/worker/output-manifest.json')
+            or linked.get('worker_run_id') != parent.get('worker_run_id')
+            or linked.get('worker_artifact_id') != parent.get('worker_artifact_id')
+            or linked.get('worker_artifact_digest') != parent.get('worker_artifact_digest')
+            or linked.get('archive_sha256') != parent.get('downloaded_archive_sha256')):
+        raise ValueError('closed discovery-copy import lacks complete worker/archive verification')
+    return {'closed_manifest': marker, 'capture_status': captured, 'processing': processing,
+        'closed_artifact': artifact, 'actual_restore': restore, 'pre_download_capacity': guard,
+        'closed_discovery_import': linked,
+        'inventory_rows': len(names), 'inventory_logical_bytes': logical_bytes,
+        'selected_immutable_payloads_bound_to_inventory': selected_count,
+        'all_frozen_claims_bound_to_pre_mutation_inventory': True,
+        'mutable_SQL_status_journal_not_compared_to_pre_mutation_file_bytes': True,
+        'producer_full_input_hash_and_mode_verification': 'Exact qualified source verifies all before mutation',
+        'reader_body_rehash_scope': 'Selected payload bodies; complete input inventory claims streamed, not every unselected payload re-read',
+        'whole_case_memory_disk_headroom_or_six_hour_cure_proven': False}
 
 
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
@@ -1487,7 +1631,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
         remote_root = handoff_selected
     parent_import_path = remote_root / "parent-import.json"
-    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD) and not parent_import_path.is_file():
+    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD) and not parent_import_path.is_file():
         raise ValueError("named worker source requires retained parent worker import")
     worker_provenance_path = remote_root / "worker/worker-provenance.json"
     worker_status_path = remote_root / "worker/worker-status.json"
@@ -1589,6 +1733,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 or (expected == "full" and set(sdk_flags) != {"false"})):
             raise ValueError("rendered SDK configuration differs from declared mode")
     native_facts = native_mode_facts(root, declaration, evaluation)
+    closed = closed_postcapture_facts(root, declaration,
+        freeze or {"sha256_by_path": saved.get("sha256_by_path") or {}}, worker_facts, proof)
     return {
         "selected_transport": proof, "typed_packages": packages,
         "source_pins": pins, "saved_mode_evidence_sha256": mode_files,
@@ -1601,6 +1747,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "paired_context_baseline_facts": context_facts,
         "worker_import_facts": worker_facts,
         "postcapture_guest_release_facts": postcapture,
+        "closed_postcapture_processing_facts": closed,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
         "actual_procrustes": preflights, "saved_branch_facts": branch_facts,
         "selected_raw_controls": controls, "final_drain": drain,

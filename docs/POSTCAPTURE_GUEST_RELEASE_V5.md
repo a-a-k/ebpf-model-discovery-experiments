@@ -80,12 +80,32 @@ the unchanged final identity refresh. Its first attempt
 failed the disk-capacity guard before extraction or scientific computation.
 The replacement
 [41581377543](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41581377543)
-uses a staged restore and measured capacity guards; its outcome is pending.
-No completed scientific case is replayed by either diagnostic.
+used a staged restore and measured capacity guards, but stopped at its
+300-minute job timeout. Its final ingest finished in 588.097 seconds including
+outer reconstruction checks; the inner ingest timer was 330.965 seconds. The
+profiled refresh did not finish in the remaining interval. No final profile or
+new final-SQL/runtime equality was emitted. This does not establish a particular
+hotspot or the unprofiled runtime. The diagnostic is not repeated. No completed
+scientific case is replayed by either diagnostic; all five-hour job costs remain.
 
 A separate [whole-suffix qualification](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41608528466)
-at `8f5d372` reconstructs the complete saved full/6 scientific inputs, transfers
-a closed capture between jobs, and compares the unchanged offline processing and
-production publication. Its actual equality and capacity results are pending.
-This is an engineering check of a separate-job execution baseline, not an
-additional main experiment or admission of a new scientific producer source.
+at `8f5d372` reconstructed the original inputs and reference proofs, then failed
+when the direct script could not import the existing `systems` package. At this
+failed seal 78,340,276,224 bytes were free; this was not an ENOSPC failure. The
+next [attempt](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41613040494)
+at `f045cc0` passed the new early import check but stopped before large downloads:
+its actual guard observed 49,214,042,112 free bytes, below the unchanged
+67,858,429,365-byte requirement. The same `ubuntu-24.04` label had provided
+127,378,870,272 free bytes in the earlier job. Neither failed attempt establishes
+whole-suffix equality, a scientific case or source admission.
+
+A bounded [standard-runner reallocation](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41615267517)
+uses exactly the same `f045cc0` workflow, inputs, disk guards and equality checks.
+Both jobs completed successfully and the complete scientific outputs matched.
+The actual whole-input/SQL/journal/equality/restore/publication checks passed root
+and independent review; see [the exact evidence and limits](CLOSED_POSTCAPTURE_JOB_V5.md). At most two additional allocations
+after the capacity-only refusal are allowed, sequentially; a second requires an
+actual capacity-only failure, and success, another error or an ambiguous POST
+stops this allowance. A compare-job capacity refusal may require repeating the
+whole preparation, whose costs are retained. No deterministic disk guarantee,
+smaller scientific workload or cure of all seven cases is claimed.

@@ -31,8 +31,9 @@ SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evid
 
 
 @pytest.mark.parametrize('mutation', ['none', 'changed_diagnostic', 'unowned_overlay', 'missing_exit', 'empty_capture', 'missing_identity'])
-def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_diagnostics(tmp_path,mutation):
-    declaration={'head_sha':REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD,'collector':'deepflow',
+@pytest.mark.parametrize('head', [REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD, REVIEW.CLOSED_POSTCAPTURE_HEAD])
+def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_diagnostics(tmp_path,mutation,head):
+    declaration={'head_sha':head,'collector':'deepflow',
                  'system':'otel_demo','mode':'absent','seed':6,'run_id':99}
     files={}
     for node in ('a','b'):
@@ -1270,6 +1271,30 @@ def test_fresh_qualification_requires_main_source_and_all_three_fixed_families(t
     assert result.returncode == 0, result.stderr
     values = dict(line.split("=", 1) for line in output.read_text().splitlines())
     assert len(json.loads(values["matrix"])["cell"]) == 3
+
+
+@pytest.mark.parametrize('cell_key,accepted', [
+    (('deepflow', 'otel_demo', 'absent', 6), True),
+    (('deepflow', 'otel_demo', 'full', 8), True),
+    (('deepflow', 'otel_demo', 'full', 6), False),
+    (('deepflow', 'otel_demo', 'full', 7), False),
+    (('coroot', 'otel_demo', 'absent', 6), False),
+])
+def test_closed_job_fresh_batch_preserves_seven_case_scope(tmp_path, cell_key, accepted):
+    name = 'docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
+    template = json.loads((ROOT/name).read_text())['cells'][0]
+    planned = [{**template, 'collector': collector, 'system': system, 'mode': mode,
+                'seed': seed, 'run_id': 1, 'head_sha': REVIEW.FRESH_HEAD,
+                'stage': 'main', 'runner': 'study'}
+               for collector in ('obi', 'deepflow', 'coroot')
+               for system in ('deathstarbench', 'otel_demo', 'petclinic')
+               for mode in ('absent', 'partial', 'full') for seed in (6, 7, 8)]
+    cell = next(row for row in planned if
+        tuple(row[key] for key in ('collector', 'system', 'mode', 'seed')) == cell_key)
+    cell['head_sha'] = REVIEW.CLOSED_POSTCAPTURE_HEAD
+    result, _ = _run_manifest_selector(tmp_path, name, phase='fresh-batch',
+        document={'cells': [cell], 'planned_cells': planned}, fresh_go=True)
+    assert (result.returncode == 0) is accepted, result.stderr
 
 
 @pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])

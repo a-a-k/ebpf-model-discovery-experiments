@@ -18,7 +18,7 @@ from ebpf_discovery.report_v5 import (
     build, render, resolve_evaluation_reference,
     PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
     UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
-    POSTCAPTURE_GUEST_RELEASE_SOURCE,
+    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE,
 )
 
 
@@ -755,6 +755,7 @@ def test_preparation_equivalence_checks_exact_git_entries(mutation, revision):
     *[(STREAMED_CHECKPOINT_SOURCE, path) for path in STREAMED_CHECKPOINT_SOURCE['changed_core_blobs']],
     *[(PETCLINIC_WORKER_SOURCE, path) for path in PETCLINIC_WORKER_SOURCE['changed_core_blobs']],
     *[(POSTCAPTURE_GUEST_RELEASE_SOURCE, path) for path in POSTCAPTURE_GUEST_RELEASE_SOURCE['changed_core_blobs']],
+    *[(CLOSED_POSTCAPTURE_SOURCE, path) for path in CLOSED_POSTCAPTURE_SOURCE['changed_core_blobs']],
 ])
 @pytest.mark.parametrize('mutation', ['none', 'extra_science', 'added_file', 'deleted_file',
                                      'changed_core', 'core_mode', 'missing_added', 'truncated', 'unknown_head'])
@@ -782,8 +783,10 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, 
     if mutation == 'none':
         facts = _preparation_equivalence_facts(profile['anchor'], revision, original, prepared)
         if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
-                or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE):
-            expected_kind = ('postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
+                or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE):
+            expected_kind = ('closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
+                             if profile is CLOSED_POSTCAPTURE_SOURCE else
+                             'postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
                              if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else
                              'existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
                              if profile is PETCLINIC_WORKER_SOURCE else
@@ -793,12 +796,17 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, 
                 assert facts['existing_worker_placement']['code_tested_source'] == PETCLINIC_WORKER_SOURCE['revision']
                 assert facts['existing_worker_placement']['actual_PC_worker_import_and_independent_outcomes_required_for_case_GO'] is True
                 assert facts['existing_worker_placement']['actual_PC_case_or_whole_study_success_claimed'] is False
-            assert facts['tested_source'] == (POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']
+            assert facts['tested_source'] == (CLOSED_POSTCAPTURE_SOURCE['revision']
+                if profile is CLOSED_POSTCAPTURE_SOURCE else POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']
                 if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else STREAMED_CHECKPOINT_SOURCE['revision'])
-            if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE:
+            if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE:
                 assert facts['postcapture_lifecycle_qualification']['run_id'] == 41464411920
                 assert facts['postcapture_lifecycle_qualification']['control_files_are_scientific_observations'] is False
                 assert facts['proof_encoding_equivalence_tested_source'] == STREAMED_CHECKPOINT_SOURCE['revision']
+            if profile is CLOSED_POSTCAPTURE_SOURCE:
+                assert facts['closed_postcapture_qualification']['run_id'] == 41615267517
+                assert facts['closed_postcapture_qualification']['new_main_case_or_traffic_refit_Sheaft'] is False
+                assert facts['closed_discovery_import_qualification']['tested_source'] == '68230876fb1130cecfc63cfb19649beb69c83493'
             assert facts['proof_encoding_equivalence']['artifact_id'] == 13091257133
             assert facts['proof_encoding_equivalence']['ordered_equal_records'] == 828668
             assert facts['proof_encoding_equivalence']['retained_JSONL_bytes'] == 792183147
@@ -829,11 +837,25 @@ def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, 
         else:
             assert facts['evidence_kind'] == 'actual_immutable_prefix_input_equivalence'
         assert facts['identical_remaining_entries'] == 1
-        assert len(facts['changed_core_blobs']) == (9 if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else 7 if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE else 6 if profile is CLOSED_FINAL_SNAPSHOT_SOURCE else 4)
+        assert len(facts['changed_core_blobs']) == (12 if profile is CLOSED_POSTCAPTURE_SOURCE else 9 if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else 7 if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE else 6 if profile is CLOSED_FINAL_SNAPSHOT_SOURCE else 4)
         assert 'approved_operational_blobs' not in facts
     else:
         with pytest.raises(ValueError):
             _preparation_equivalence_facts(profile['anchor'], revision, original, prepared)
+
+
+def test_closed_source_does_not_admit_an_unrelated_completed_collector_case(tmp_path):
+    summary(tmp_path/'inputs', 11, 'main', head_sha=CLOSED_POSTCAPTURE_SOURCE['revision'])
+    declarations = declared(tmp_path/'declared.json', [run(11, 'main')])
+    value = json.loads(declarations.read_text())
+    value['experiment_head'] = CLOSED_POSTCAPTURE_SOURCE['anchor']
+    write(declarations, value)
+    result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+    row = attempts(result, 'main')[0]
+    assert row['technical_complete_self_reported'] is True
+    assert row['eligible_main_coverage'] is False
+    assert row['common_source_coverage_exclusion']['observed_head'] == CLOSED_POSTCAPTURE_SOURCE['revision']
+    assert result['grid']['technically_complete_main_cells'] == 0
 
 
 def test_selection_cannot_be_applied_to_a_single_attempt(tmp_path: Path) -> None:
