@@ -24,6 +24,12 @@ except ImportError:  # pragma: no cover - Actions qualification is Linux.
     resource = None
 
 
+RESTORE_DIAGNOSTIC_FIXED = {
+    'restore.json', 'artifact-api.json', 'disk-before-download.json', 'diagnostic-sdk-cleanup.json',
+    'host-disk-before.txt', 'host-disk-after.txt', 'disk-final.txt', 'memory-final.txt',
+    'python-environment.txt', 'disk-before-processing.json',
+}
+
 COMPACT_FIXED = {
     "blocks.json", "census.json", "classes-v4.json", "classes-v5.json",
     "evaluation-manifest.json", "evaluation-v5.json", "evidence-v4.json",
@@ -43,7 +49,7 @@ FULL_FIXED = {
       ("closed.json", "capture-status.json", "files.jsonl", "artifact-api.json", "processing.json")},
     "infrastructure/remote-toolchain-v4/closed-discovery-import-hardlinks.json",
     *{f"infrastructure/postcapture-host/{name}" for name in
-      ("restore.json", "disk-before-download.json", "diagnostic-sdk-cleanup.json",
+      ("restore.json", "disk-before-download.json", "disk-before-processing.json", "diagnostic-sdk-cleanup.json",
        "host-disk-before.txt", "host-disk-after.txt", "disk-final.txt", "memory-final.txt",
        "python-environment.txt", "transport-retries.jsonl")},
     "infrastructure/postcapture-guest-release.json", "infrastructure/guest-evidence-capture.json",
@@ -99,6 +105,10 @@ FULL_FIXED = {
 
 
 def wanted_member(name: str, scope: str) -> bool:
+    if scope == 'restore-diagnostics':
+        return name in RESTORE_DIAGNOSTIC_FIXED
+    if scope == 'closed-capture':
+        scope = 'full'
     if scope == "compact":
         return name in COMPACT_FIXED
     if scope == "input-supplement":
@@ -275,14 +285,44 @@ def select(metadata: dict, expected: dict, scope: str, out: Path) -> dict:
             names = [row.filename for row in infos]
             if len(names) != len(set(names)) or not all(_safe(name) for name in names):
                 raise ValueError("duplicate or unsafe ZIP member")
-            selected = sorted(name for name in names if wanted_member(name, scope))
+            member_names = {name: name for name in names}
+            if scope == 'closed-capture':
+                member_names = {}
+                scientific_bytes = proof_bytes = scientific_files = 0
+                for info in infos:
+                    if info.is_dir():
+                        continue
+                    if info.filename.startswith('campaign/'):
+                        logical = info.filename[len('campaign/'):]
+                        scientific_bytes += info.file_size
+                        scientific_files += 1
+                    elif info.filename.startswith('postcapture-proof/'):
+                        logical = 'infrastructure/postcapture/'+info.filename[len('postcapture-proof/'):]
+                        proof_bytes += info.file_size
+                    else:
+                        raise ValueError('closed capture has an unrelated ZIP namespace')
+                    if (not _safe(logical) or str(PurePosixPath(logical)) != logical
+                            or logical in member_names):
+                        raise ValueError('duplicate or unsafe closed capture logical member')
+                    member_names[logical] = info.filename
+                proof['closed_capture_namespace'] = {'scientific_file_bytes': scientific_bytes,
+                    'scientific_files': scientific_files, 'proof_bytes': proof_bytes,
+                    'processed_full_snapshot': False}
+            selected = sorted(name for name in member_names if wanted_member(name, scope))
+            if scope == 'closed-capture' and not {
+                    'infrastructure/postcapture/closed.json', 'infrastructure/postcapture/capture-status.json',
+                    'infrastructure/postcapture/files.jsonl'} <= set(selected):
+                raise ValueError('closed capture lacks its sealed inventory or original status')
+            if scope == 'restore-diagnostics' and not {
+                    'restore.json', 'artifact-api.json', 'disk-before-download.json'} <= set(selected):
+                raise ValueError('restore diagnostics lack original restore/API/capacity records')
             if scope == "compact" and not COMPACT_FIXED.issubset(selected):
                 raise ValueError("compact is missing a required selected non-journal member")
             if scope == "input-supplement" and not INPUT_SUPPLEMENT.issubset(selected):
                 raise ValueError("full artifact is missing the exact input supplement")
 
             def fetch(name: str) -> None:
-                info = archive.getinfo(name)
+                info = archive.getinfo(member_names[name])
                 if info.is_dir():
                     raise ValueError(f"selected evidence is a directory: {name}")
                 target = out / PurePosixPath(name)
@@ -300,11 +340,13 @@ def select(metadata: dict, expected: dict, scope: str, out: Path) -> dict:
                     "bytes": size, "sha256": digest.hexdigest(),
                     "zip_crc32": f"{info.CRC:08x}", "zip_compressed_bytes": info.compress_size,
                 }
+                if scope == 'closed-capture':
+                    proof['files'][name]['archive_member_name'] = info.filename
                 save()
 
             for name in selected:
                 fetch(name)
-            if scope == "full":
+            if scope in ("full", "closed-capture"):
                 control_path = out / "observations/technical-positive-control.json"
                 if not control_path.is_file():
                     raise ValueError("full evidence lacks technical-positive-control.json")
@@ -365,7 +407,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--artifact", type=int, required=True)
     parser.add_argument("--expected", type=Path, required=True)
-    parser.add_argument("--scope", choices=("compact", "full", "input-supplement"), required=True)
+    parser.add_argument("--scope", choices=("compact", "full", "input-supplement", "closed-capture", "restore-diagnostics"), required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--repository", default="a-a-k/ebpf-model-discovery-experiments")
     args = parser.parse_args()

@@ -109,8 +109,8 @@ jobs:
                           or cell.get('stage')!='smoke' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!='retrieve_family_selected'
-                          or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
-                                  'full_artifact_digest'}<=cell.keys()):
+                          or (not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
+                                  'full_artifact_digest'}<=cell.keys())):
                       raise SystemExit('common smoke requires exact source and full/compact packets')
           elif phase in ('fresh-qualification','fresh-series','fresh-batch'):
               if qualification_system!='all' or manifest==default_manifest:
@@ -145,6 +145,7 @@ jobs:
                               for key,row in zip(keys,cells))):
                           raise SystemExit('fresh batch packet differs from its frozen planned identity')
               for cell in cells:
+                  union = cell.get('evidence_layout')=='closed_capture_compact_union_v1'
                   if (cell.get('head_sha') not in {
                           '0c98bf4520e863ab021b60d00517ee2aa49ab38e',
                           'fbbda015cefc4f11ee73f32be6ed661c70375f18',
@@ -156,28 +157,42 @@ jobs:
                           'f7ba801d70f9d2327031efc6dd0c00b90d252708',
                           '0565115511b24db1d6bbe71e98784baded772144',
                           '0056b4c8ecb85e8b40c433e63af442133a21f3cc',
-                          'f045cc0adec187ec00443da0bea72b4ec4d2082e'}
+                          'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+                          'a9c5785516550b45ed39df8ada37749c061a9f5d'}
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
-                          or cell.get('full_scope')!='retrieve_family_selected'
-                          or not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
-                                  'full_artifact_digest'}<=cell.keys()):
+                          or cell.get('full_scope')!=('retrieve_closed_capture_union' if union else 'retrieve_family_selected')
+                          or (not union and not {'full_artifact_id','full_artifact_name','full_artifact_bytes',
+                                  'full_artifact_digest'}<=cell.keys())):
                       raise SystemExit('fresh review requires exact main source and both full/compact packets')
                   if cell.get('head_sha')=='f045cc0adec187ec00443da0bea72b4ec4d2082e' and (
                           (cell['collector'],cell['system'])!=('deepflow','otel_demo') or
                           (cell['mode'],cell['seed']) not in {('absent',6),('absent',7),('absent',8),
                               ('partial',6),('partial',7),('partial',8),('full',8)}):
                       raise SystemExit('closed postcapture source is restricted to seven technical replacements')
+                  if cell.get('head_sha')=='a9c5785516550b45ed39df8ada37749c061a9f5d' and (
+                          tuple(cell[k] for k in ('collector','system','mode','seed','run_id')) !=
+                              ('deepflow','otel_demo','full',8,41706823165) or
+                          cell.get('scientific_capture_run_id') != 41642796796 or
+                          cell.get('scientific_capture_head_sha') != 'f045cc0adec187ec00443da0bea72b4ec4d2082e'):
+                      raise SystemExit('saved capture recovery is restricted to the one original full8 identity')
           else:
               raise SystemExit('unknown review phase')
           required={'collector','system','mode','seed','run_id','head_sha',
                     'compact_artifact_id','compact_artifact_name','compact_artifact_bytes',
                     'compact_artifact_digest','compact_scope','full_scope'}
           compact_scopes={'retrieve_selected_nonjournal','reuse_existing_verified_facts'}
-          full_scopes={'retrieve_family_selected','retrieve_input_supplement'}
+          full_scopes={'retrieve_family_selected','retrieve_input_supplement','retrieve_closed_capture_union'}
           if not cells:
               raise SystemExit('candidate manifest selected no review cells')
           for cell in cells:
+              if cell.get('full_scope')=='retrieve_closed_capture_union' and (
+                      cell.get('evidence_layout')!='closed_capture_compact_union_v1' or
+                      tuple(cell.get(k) for k in ('collector','system','mode','seed','run_id','head_sha','stage','runner')) !=
+                          ('deepflow','otel_demo','partial',7,41642781338,'f045cc0adec187ec00443da0bea72b4ec4d2082e','main','study') or
+                      cell.get('compact_artifact_id')!=13267240784 or cell.get('capture_artifact_id')!=13259365500 or
+                      cell.get('restore_artifact_id')!=13267395741 or 'full_artifact_id' in cell):
+                  raise SystemExit('closed capsule union must be its exact original partial7 packet; no fake full artifact')
               if (not isinstance(cell,dict) or not required<=cell.keys()
                       or cell['compact_scope'] not in compact_scopes
                       or cell['full_scope'] not in full_scopes):
@@ -215,14 +230,16 @@ jobs:
         run: |
           python - <<'PY'
           import json, os, pathlib, subprocess
+          from ebpf_discovery.report_v5 import _closed_union_profile, _closed_union_api_facts
           cell=json.loads(os.environ['CELL_JSON'])
+          union=_closed_union_profile(cell)
           raw=subprocess.check_output(['gh','api','--paginate','--slurp',
               f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{cell['run_id']}/artifacts"])
           pages=json.loads(raw); artifacts=[row for page in pages for row in page['artifacts']]
           compact=[row for row in artifacts if row['name']==cell['compact_artifact_name']]
           full_name=cell['compact_artifact_name'].replace('v5-summary-','campaign-v5-',1)
           full=[row for row in artifacts if row['name']==full_name]
-          if len(compact)!=1 or len(full)!=1:
+          if len(compact)!=1 or (not union and len(full)!=1):
               raise SystemExit(f"ambiguous/missing declared artifacts: compact={len(compact)} full={len(full)}")
           c=compact[0]
           expected_compact={
@@ -232,23 +249,45 @@ jobs:
           if {k:c.get(k) for k in ('id','name','size_in_bytes','digest')} != {
                   k:expected_compact[k] for k in ('id','name','size_in_bytes','digest')}:
               raise SystemExit('compact API identity differs from fixed declaration')
-          f=full[0]
-          expected_full={k:f[k] for k in ('id','name','size_in_bytes','digest')}
-          if 'full_artifact_id' in cell:
-              declared_full={
-                  'id':cell['full_artifact_id'],'name':cell['full_artifact_name'],
-                  'size_in_bytes':cell['full_artifact_bytes'],
-                  'digest':cell['full_artifact_digest']}
-              if expected_full != declared_full:
-                  raise SystemExit('full API identity differs from fixed qualification declaration')
-          expected_full.update(run_id=cell['run_id'],head_sha=cell['head_sha'])
           pathlib.Path('work/review').mkdir(parents=True)
           pathlib.Path('work/review/declaration.json').write_text(json.dumps(cell,indent=2)+'\n')
           pathlib.Path('work/review/expected-compact.json').write_text(json.dumps(expected_compact,indent=2)+'\n')
-          pathlib.Path('work/review/expected-full.json').write_text(json.dumps(expected_full,indent=2)+'\n')
+          if union:
+              if full:
+                  raise SystemExit('closed union cannot replace an actual processed full packet')
+              for kind in ('capture','restore'):
+                  selected=[a for a in artifacts if a['id']==union['artifacts'][kind]['id']]
+                  if len(selected)!=1 or {k:selected[0].get(k) for k in union['artifacts'][kind]}!=union['artifacts'][kind]:
+                      raise SystemExit('closed union input/restore API differs')
+                  expected={**union['artifacts'][kind], 'run_id':cell['run_id'],'head_sha':cell['head_sha']}
+                  for key in ('id','name','bytes','digest'):
+                      wanted=expected['size_in_bytes' if key=='bytes' else key]
+                      if cell.get(kind+'_artifact_'+key)!=wanted:
+                          raise SystemExit('closed union tracked artifact declaration differs')
+                  pathlib.Path('work/review/expected-'+kind+'.json').write_text(json.dumps(expected,indent=2)+'\n')
+              def api(path):
+                  return json.loads(subprocess.check_output(['gh','api',f"repos/{os.environ['GITHUB_REPOSITORY']}/"+path]))
+              actual={'run':api('actions/runs/'+str(cell['run_id'])),
+                      'job':api('actions/jobs/'+str(union['processing_job'])),
+                      'capture_job':api('actions/jobs/'+str(union['capture_job'])), 'artifacts':artifacts}
+              _closed_union_api_facts(actual)
+              pathlib.Path('work/review/actual-processing.json').write_text(json.dumps(actual,indent=2)+'\n')
+              resolved={'compact':c,'full':None,'capture':union['artifacts']['capture'],
+                        'restore_diagnostics':union['artifacts']['restore'],'evidence_layout':union['layout']}
+          else:
+              f=full[0]
+              expected_full={k:f[k] for k in ('id','name','size_in_bytes','digest')}
+              if 'full_artifact_id' in cell:
+                  declared_full={'id':cell['full_artifact_id'],'name':cell['full_artifact_name'],
+                      'size_in_bytes':cell['full_artifact_bytes'],'digest':cell['full_artifact_digest']}
+                  if expected_full != declared_full:
+                      raise SystemExit('full API identity differs from fixed qualification declaration')
+              expected_full.update(run_id=cell['run_id'],head_sha=cell['head_sha'])
+              pathlib.Path('work/review/expected-full.json').write_text(json.dumps(expected_full,indent=2)+'\n')
+              resolved={'compact':c,'full':f}
           pathlib.Path('work/review/resolved-api.json').write_text(json.dumps({
               'repository':os.environ['GITHUB_REPOSITORY'],'run_id':cell['run_id'],
-              'head_sha':cell['head_sha'],'compact':c,'full':f},indent=2)+'\n')
+              'head_sha':cell['head_sha'],**resolved},indent=2)+'\n')
           pathlib.Path('work/review/candidate-manifest.json').write_text(json.dumps({
               'path':os.environ['CANDIDATE_MANIFEST'],
               'sha256':os.environ['CANDIDATE_MANIFEST_SHA256'],
@@ -267,7 +306,15 @@ jobs:
               --expected work/review/expected-compact.json --scope compact \
               --out work/review/compact
           fi
-          FULL_ID=$(python -c "import json;print(json.load(open('work/review/expected-full.json'))['id'])")
+          if [ "$FULL_SCOPE" = "retrieve_closed_capture_union" ]; then
+            CAPTURE_ID=$(python -c "import json;print(json.load(open('work/review/expected-capture.json'))['id'])")
+            RESTORE_ID=$(python -c "import json;print(json.load(open('work/review/expected-restore.json'))['id'])")
+            python scripts/select-main-review-evidence-v5.py --artifact "$CAPTURE_ID" \
+              --expected work/review/expected-capture.json --scope closed-capture --out work/review/full
+            python scripts/select-main-review-evidence-v5.py --artifact "$RESTORE_ID" \
+              --expected work/review/expected-restore.json --scope restore-diagnostics --out work/review/restore
+          else
+            FULL_ID=$(python -c "import json;print(json.load(open('work/review/expected-full.json'))['id'])")
           if [ "$FULL_SCOPE" = "retrieve_input_supplement" ]; then
             python scripts/select-main-review-evidence-v5.py \
               --artifact "$FULL_ID" --expected work/review/expected-full.json \
@@ -277,14 +324,19 @@ jobs:
               --artifact "$FULL_ID" --expected work/review/expected-full.json \
               --scope full --out work/review/full
           fi
+          fi
       - name: Verify saved facts where the family packet is present
-        if: matrix.cell.full_scope == 'retrieve_family_selected'
+        if: matrix.cell.full_scope == 'retrieve_family_selected' || matrix.cell.full_scope == 'retrieve_closed_capture_union'
         env:
           PYTHONPATH: ${{ github.workspace }}
           COMPACT_SCOPE: ${{ matrix.cell.compact_scope }}
           REVIEW_PHASE: ${{ inputs.phase }}
+          FULL_SCOPE: ${{ matrix.cell.full_scope }}
         run: |
           review_args=()
+          if [ "$FULL_SCOPE" = "retrieve_closed_capture_union" ]; then
+            review_args+=(--restore-diagnostics work/review/restore --actual-processing-metadata work/review/actual-processing.json)
+          fi
           if [ "$REVIEW_PHASE" = "common-smoke" ]; then review_args+=(--smoke-qualification); fi
           if [ "$COMPACT_SCOPE" = "retrieve_selected_nonjournal" ]; then
             python scripts/review-main-saved-facts-v5.py \

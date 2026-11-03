@@ -2767,6 +2767,112 @@
         }
       ],
       "note": "Exactqualified0056postcapture-only terminaltechnicalreplacement ofparent41470585319 job125362864940;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All73completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642750701,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 6
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470525869 job125362662927;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642758914,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 7
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470533050 job125362684205;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642766254,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": 8
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470540023 job125362734313;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642775376,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 6
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470550646 job125362727883;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642781338,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 7,
+          "evidence_layout": "closed_capture_compact_union_v1",
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470558415 job125362759990;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim. Completed scientific suffix and compact retained; processed-full upload failed (Maximum call stack size exceeded). Named original capsule/compact/restore union requires all unchanged scientific predicates and independent actual admission; no final mutable SQL or retained processing.json claim."
+    },
+    {
+      "run_id": 41642789738,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "partial",
+          "seed": 8
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470566316 job125362786450;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41642796796,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41479813348 job125394917938;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+    },
+    {
+      "run_id": 41706823165,
+      "collector": "deepflow",
+      "stage": "main",
+      "cells": [
+        {
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": 8
+        }
+      ],
+      "note": "ONLYsaved original f045/full8 capture41642796796 processing recovery at a9c5785; capsule13261622894 unchanged. No newtraffic/Bering/Sheaft/measurement/trial: publicationrun differs from scientificcaptureidentity and is explicitly validated. Original132290505403B summedguard failedbeforelargeDL; phase-lifetime recovery preservesfull4*SQL/WAL reserve+1GiB/all scientificbytes and actualsecondguard. Oldattempt/failure/capture/worker/CI/review/transfer/processing/wait/retention and closingcosts allretained. No eligibility/admission/success or six-hour cure claim."
     }
   ],
   "related_runs": [
@@ -5510,6 +5616,61 @@
       "run_id": 41615267517,
       "role": "preparation",
       "note": "First bounded standard-runner allocation retry at exact f045cc0 after capacity-only41613040494; both jobs SUCCESS. Complete saved full6 whole offline SQL/journal/scientific equality, closed handoff/restore and production publication passed root+independent ORIGINAL review. 124072 immutable inputs/10897 frozen hashes; processing4555.127s. Qualification not a new main case or all-seven/smallhost cure. Retain all setup/reconstruction/proof/transfer/processing/comparison/publication/observer/retention and failed predecessor costs; copied original case wall duration is not new compute, API elapsed not CPU/billing, human unknown."
+    },
+    {
+      "run_id": 41640735038,
+      "role": "preparation",
+      "note": "Actual source-admission consumer a6d51a1bb6d573d3ba262a99888000f10e3fcd06 CI, both jobs SUCCESS. Exact f045 seven-cell named profile/handoff/restore/processing checks plus existing gates; all 74 valid cases protected. Preserve all CI/static/reviewer/metadata/retention costs; API elapsed not CPU/billing, human effort unknown. No new scientific case."
+    },
+    {
+      "run_id": 41640726482,
+      "role": "preparation",
+      "note": "Actual source-admission consumer a6d51a1bb6d573d3ba262a99888000f10e3fcd06 CI, both jobs SUCCESS. Exact f045 seven-cell named profile/handoff/restore/processing checks plus existing gates; all 74 valid cases protected. Preserve all CI/static/reviewer/metadata/retention costs; API elapsed not CPU/billing, human effort unknown. No new scientific case."
+    },
+    {
+      "run_id": 41645364506,
+      "role": "archive",
+      "note": "Finite terminal14 retention wave batch1 SUCCESS: 14 exact frozen terminal source runs, 9 original artifacts/9,447,385,033 bytes permanently published at data-41645364506. Root and independent actual API/source/ledger/disk guard reviews GO; 687 distinct sources retained across finite disjoint waves. Original ZIP byte preservation by exact API SHA256, remote asset digests and lossless chunk/reassembly SHA; workflow-log ZIP CRC validation is separate, no claim of nine fresh original-artifact ZIP CRC scans. No source deletion/capture/refit/rescore/admission. Preserve all transfer/publication/failure/proof/observer costs; human unknown; active7 and finite closing tail separate."
+    },
+    {
+      "run_id": 41705252206,
+      "role": "preparation",
+      "note": "Actuala9c5785 saved-full8 recovery producer CI: BOTHchecks/controlfixture SUCCESS; allsrc/systems exactf045. Retain all test/static/source/review/failedpredecessor/publication/metadata/retention costs; APIelapsed notCPU/billing,humanunknown. No newscientificcase."
+    },
+    {
+      "run_id": 41667258329,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel partial6 parent41642775376; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41668409871,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel partial7 parent41642781338; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41668110699,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel partial8 parent41642789738; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41667812697,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel full8 parent41642796796; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41669899513,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel absent7 parent41642758914; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41674402052,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel absent6 parent41642750701; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41676388484,
+      "role": "worker",
+      "note": "Actual unchanged-toolchain worker for originalf045 OTel absent8 parent41642766254; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
     }
   ],
   "blocked_main_cells": [],
@@ -5536,5 +5697,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-03T10:03:00.456878+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-03T13:25:28.848410+00:00"
 }

@@ -18,7 +18,7 @@ from ebpf_discovery.report_v5 import (
     build, render, resolve_evaluation_reference,
     PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
     UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
-    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE,
+    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE, SOURCE_PINS,
 )
 
 
@@ -999,3 +999,139 @@ def test_referenced_and_legacy_schemas_render_identical_tables(tmp_path: Path) -
     new_tables = [line for line in new_out.read_text().splitlines() if line.startswith("|")]
     old_tables = [line for line in old_out.read_text().splitlines() if line.startswith("|")]
     assert new_tables == old_tables
+
+
+@pytest.mark.parametrize('mutation', ['none', 'unlisted_source', 'mode_change'])
+def test_saved_recovery_profile_binds_exact_delivery_source_tree(mutation):
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    original = {'sha': '1'*40, 'truncated': False, 'tree': [
+        {'path': 'systems/unchanged.py', 'mode': '100644', 'type': 'blob', 'sha': 'a'*40},
+        *[{'path': path, 'mode': '100644', 'type': 'blob', 'sha': 'b'*40}
+          for path in profile['reviewed_changed_blobs'] if path not in profile['added_paths']]]}
+    prepared = {'sha': '2'*40, 'truncated': False, 'tree': [
+        copy.deepcopy(original['tree'][0]),
+        *[{'path': path, 'mode': '100644', 'type': 'blob', 'sha': blob}
+          for path, blob in profile['reviewed_changed_blobs'].items()]]}
+    if mutation == 'unlisted_source': prepared['tree'][0]['sha'] = 'c'*40
+    if mutation == 'mode_change':
+        next(row for row in prepared['tree'] if row['path']=='scripts/restore-closed-postcapture-v5.py')['mode']='100755'
+    if mutation == 'none':
+        proof = _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
+        assert proof['evidence_kind'] == 'saved_closed_capture_with_verified_delivery_release'
+        assert proof['recovered_capture_identity'] == profile['capture_identity']
+        assert proof['actual_processing_run_id'] == profile['processing_run_id']
+        assert proof['independent_actual_case_admission_still_required'] is True
+    else:
+        with pytest.raises(ValueError):
+            _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
+
+
+def recovered_summary(root):
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    run_id = profile['processing_run_id']
+    folder, evaluation = summary(root, run_id, 'main', head_sha=profile['revision'])
+    identity = {'collector': 'deepflow', 'system': 'otel_demo', 'mode': 'full', 'seed': 8}
+    evaluation.update(identity)
+    evaluation['status'].update(profile['capture_identity'])
+    pins = {**SOURCE_PINS['deepflow'], 'collector': 'deepflow', 'source_domain': 'ebpf-deepflow'}
+    evaluation['acquisition'].update(provenance={'collector': 'deepflow', 'source_domain': pins['source_domain']},
+        positive_control={'collector': 'deepflow'},
+        final_drain={'collector': 'deepflow', 'source_version': pins['source_version']})
+    write(folder/'evaluation-v5.json', evaluation)
+    write(folder/'status.json', evaluation['status'])
+    write(folder/'observations/collector.json', pins)
+    name = f'v5-summary-deepflow-main-otel_demo-full-8-{run_id}'
+    full_name = name.replace('v5-summary-', 'campaign-v5-', 1)
+    manifest = json.loads((folder/'evaluation-manifest.json').read_text())
+    manifest.update(identity, full_artifact_name=full_name,
+        scientific_capture_identity=profile['capture_identity'],
+        closed_capture_recovery={'capture_run_id': profile['capture_identity']['run_id'],
+            'capture_source': profile['capture_identity']['commit'],
+            'capture_artifact_id': profile['capture_artifact']['id'],
+            'capture_artifact_digest': profile['capture_artifact']['digest'],
+            'processing_run_id': str(run_id), 'processing_source': profile['revision'],
+            'new_application_traffic': False, 'refit_models': False})
+    manifest['files_sha256'].update({'evaluation-v5.json': sha(folder/'evaluation-v5.json'),
+                                   'status.json': sha(folder/'status.json')})
+    write(folder/'evaluation-manifest.json', manifest)
+    artifact = json.loads((folder/'artifact-provenance.json').read_text())
+    artifact.update(name=name, full_artifact_name=full_name)
+    write(folder/'artifact-provenance.json', artifact)
+    return folder, evaluation
+
+
+@pytest.mark.parametrize('mutation', ['none', 'publication_as_capture', 'original_substitute', 'capsule_substitute',
+                                      'qualification', 'refit', 'wrong_processing_run'])
+def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path, mutation):
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    folder, evaluation = recovered_summary(tmp_path/'inputs')
+    manifest = json.loads((folder/'evaluation-manifest.json').read_text())
+    if mutation == 'publication_as_capture':
+        evaluation['status'].update(run_id=str(profile['processing_run_id']), commit=profile['revision'])
+        write(folder/'status.json', evaluation['status']); write(folder/'evaluation-v5.json', evaluation)
+        manifest['files_sha256'].update({'evaluation-v5.json': sha(folder/'evaluation-v5.json'),
+                                        'status.json': sha(folder/'status.json')})
+    if mutation == 'original_substitute': manifest['scientific_capture_identity']['run_id']='100'
+    if mutation == 'capsule_substitute': manifest['closed_capture_recovery']['capture_artifact_id']+=1
+    if mutation == 'qualification': manifest['qualification_only']=True
+    if mutation == 'refit': manifest['closed_capture_recovery']['refit_models']=True
+    if mutation == 'wrong_processing_run': manifest['closed_capture_recovery']['processing_run_id']='100'
+    write(folder/'evaluation-manifest.json', manifest)
+    declarations = declared(tmp_path/'declared.json', [{'run_id': profile['processing_run_id'],
+        'collector': 'deepflow', 'stage': 'main',
+        'cells': [{'system': 'otel_demo', 'mode': 'full', 'seed': 8}], 'note': 'saved original capture processing'}])
+    if mutation == 'none':
+        result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+        item = attempts(result, 'main')[0]
+        assert item['run_id'] == profile['processing_run_id']
+        assert item['manifest']['commit'] == profile['revision']
+        assert restored(tmp_path/'report', item) == evaluation
+        assert evaluation['status']['run_id'] == profile['capture_identity']['run_id']
+        assert item['independently_admitted'] is False
+    else:
+        with pytest.raises(ValueError):
+            build([tmp_path/'inputs'], declarations, tmp_path/'report')
+
+
+@pytest.mark.parametrize('mutation',['none','undeclared','foreign_case','failed_suffix','fake_full'])
+def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_independent_admission(tmp_path,mutation):
+    import importlib.util
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNION as p
+    spec=importlib.util.spec_from_file_location('tiny_union_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    folder,evaluation=summary(tmp_path/'inputs',p['run_id'],'main',head_sha=p['head_sha'])
+    identity=dict(zip(('collector','system','mode','seed'),p['cell']))
+    evaluation.update(identity);evaluation['status'].update(identity)
+    pins={**SOURCE_PINS['deepflow'],'collector':'deepflow','source_domain':'ebpf-deepflow'}
+    evaluation['acquisition'].update(provenance={'collector':'deepflow','source_domain':pins['source_domain']},
+        positive_control={'collector':'deepflow'},final_drain={'collector':'deepflow','source_version':pins['source_version']})
+    write(folder/'evaluation-v5.json',evaluation);write(folder/'status.json',evaluation['status'])
+    write(folder/'observations/collector.json',pins)
+    manifest=json.loads((folder/'evaluation-manifest.json').read_text())
+    full=p['artifacts']['compact']['name'].replace('v5-summary-','campaign-v5-',1)
+    manifest.update(identity,full_artifact_name=full)
+    manifest['files_sha256'].update({'status.json':sha(folder/'status.json'),'evaluation-v5.json':sha(folder/'evaluation-v5.json')})
+    write(folder/'evaluation-manifest.json',manifest)
+    artifact=json.loads((folder/'artifact-provenance.json').read_text())
+    c=p['artifacts']['compact']
+    artifact.update(name=c['name'],artifact_id=c['id'],digest=c['digest'],full_artifact_name=full,
+        full_artifact_id=None,full_artifact_digest=None,full_artifact_expired=None,
+        closed_capture_union=module.union_api_fixture())
+    artifact['compact_zip_verification'].update(expected_sha256=c['digest'],computed_sha256=c['digest'],received_bytes=c['size_in_bytes'])
+    cell={**identity,'evidence_layout':p['layout'],'head_sha':p['head_sha']}
+    if mutation=='undeclared':cell.pop('evidence_layout')
+    if mutation=='foreign_case':cell['head_sha']='0'*40
+    if mutation=='failed_suffix':artifact['closed_capture_union']['job']['steps'][1]['conclusion']='failure'
+    if mutation=='fake_full':artifact.update(full_artifact_id=777,full_artifact_digest='sha256:'+'a'*64,full_artifact_expired=False)
+    write(folder/'artifact-provenance.json',artifact)
+    declarations=declared(tmp_path/'declared.json',[{'run_id':p['run_id'],'collector':'deepflow','stage':'main','cells':[cell]}])
+    if mutation!='none':
+        with pytest.raises(ValueError):build([tmp_path/'inputs'],declarations,tmp_path/'report')
+    else:
+        result=build([tmp_path/'inputs'],declarations,tmp_path/'report')
+        item=attempts(result,'main')[0]
+        assert item['eligible_main_coverage'] and item['closed_capture_union_available']
+        assert not item['full_source_artifact_available']
+        assert item['artifact']['full_artifact_id'] is None
+        assert 'final_mutable_SQL' in item['closed_capture_union_unavailable_components']
+        assert not item['independently_admitted']

@@ -20,11 +20,12 @@ def write(path, value):
     path.write_text(json.dumps(value), encoding='utf-8')
 
 
-def fixture(root):
+def fixture(root, *, identity_override=None):
     identity = {'run_id': '99', 'commit': REVIEW.CLOSED_POSTCAPTURE_HEAD,
         'system': 'otel_demo', 'collector': 'deepflow', 'controller': 'clean-study',
         'mode': 'absent', 'seed': 6, 'smoke': False}
-    declaration = {**identity, 'head_sha': identity['commit'], 'run_id': 99}
+    identity.update(identity_override or {})
+    declaration = {**identity, 'head_sha': identity['commit'], 'run_id': int(identity['run_id'])}
     captured = {**identity, 'status': 'postcapture_complete'}
     write(root/'status.json', captured)
     for name, body in {'observation-index.sqlite': b'pre-mutation SQL',
@@ -47,7 +48,7 @@ def fixture(root):
     sql = {'proof_basis': 'rowid-and-all-columns-v1', 'schema_sha256': '1'*64,
            'spans': {'rows': 1, 'sha256': '2'*64}}
     marker = {'schema': 'closed-otel-postcapture-v5', 'identity': identity,
-        'sealing_run_id': '99', 'sealing_source': identity['commit'],
+        'sealing_run_id': identity['run_id'], 'sealing_source': identity['commit'],
         'scientific_root': '/original/work/campaign',
         'directories': {'toolchain': 0o755, 'toolchain/discovery': 0o755},
         'files': len(rows), 'file_bytes': sum(row['bytes'] for row in rows),
@@ -61,14 +62,14 @@ def fixture(root):
             'completeness': {'valid': True}, 'acquisition': {'valid': True}}}
     write(folder/'closed.json', marker)
     processing = {'identity': identity, 'status': 'complete', 'offline_only': True,
-        'traffic_replay_or_model_refit': False, 'processing_run_id': '99',
+        'traffic_replay_or_model_refit': False, 'processing_run_id': identity['run_id'],
         'processing_source': identity['commit'],
         'closed_manifest_sha256': REVIEW.sha(folder/'closed.json'),
         'input_file_inventory_sha256': marker['file_inventory_sha256']}
     write(folder/'processing.json', processing)
-    artifact = {'id': 777, 'name': 'postcapture-v5-deepflow-main-otel_demo-absent-6-99',
+    artifact = {'id': 777, 'name': f"postcapture-v5-deepflow-main-otel_demo-{identity['mode']}-{identity['seed']}-{identity['run_id']}",
         'expired': False, 'size_in_bytes': 100, 'digest': 'sha256:'+'3'*64,
-        'workflow_run': {'id': 99, 'head_sha': identity['commit']}}
+        'workflow_run': {'id': int(identity['run_id']), 'head_sha': identity['commit']}}
     write(folder/'artifact-api.json', artifact)
     host = root/'infrastructure/postcapture-host'
     guard = {'archive_bytes': 100, 'scientific_file_bytes': marker['file_bytes'],
@@ -105,10 +106,10 @@ def fixture(root):
     write(root/'status.json', {**captured, 'status': 'acquisition_complete'})
     (root/'observation-index.sqlite').write_bytes(b'final SQL after ingest and refresh')
     (root/'attempt-journal.sqlite').write_bytes(b'final journal file')
-    selected = {'artifact': {'name': 'campaign-v5-deepflow-main-otel_demo-absent-6-99'},
+    selected = {'artifact': {'name': f"campaign-v5-deepflow-main-otel_demo-{identity['mode']}-{identity['seed']}-{identity['run_id']}"},
         'files': {name: {'bytes': (root/name).stat().st_size, 'sha256': REVIEW.sha(root/name)}
                   for name in ('status.json', 'plans.json', 'observation-index.sqlite')}}
-    write(root/'evaluation-manifest.json', {'run_id': '99', 'commit': identity['commit'],
+    write(root/'evaluation-manifest.json', {'run_id': identity['run_id'], 'commit': identity['commit'],
         'full_artifact_name': selected['artifact']['name'],
         'files_sha256': {'status.json': REVIEW.sha(root/'status.json')}})
     worker = {'parent_import': parent, 'output_manifest': {},
@@ -190,3 +191,205 @@ def test_closed_job_requires_complete_same_source_chain_and_preserves_mutable_st
     else:
         with pytest.raises((ValueError, FileNotFoundError)):
             REVIEW.closed_postcapture_facts(tmp_path, declaration, frozen, worker, selected)
+
+
+def recovery_fixture(root):
+    profile = REVIEW.CLOSED_CAPTURE_RECOVERY_SOURCE
+    original = profile['capture_identity']
+    declaration, frozen, worker, selected = fixture(root, identity_override=original)
+    declaration.update(run_id=profile['processing_run_id'], head_sha=profile['revision'],
+        scientific_capture_run_id=int(original['run_id']), scientific_capture_head_sha=original['commit'])
+    folder, host = root/'infrastructure/postcapture', root/'infrastructure/postcapture-host'
+    artifact = {**profile['capture_artifact'], 'expired': False,
+        'workflow_run': {'id': int(original['run_id']), 'head_sha': original['commit']}}
+    write(folder/'artifact-api.json', artifact)
+    processing = REVIEW.read(folder/'processing.json')
+    processing.update(processing_run_id=str(declaration['run_id']), processing_source=profile['revision'])
+    write(folder/'processing.json', processing)
+    selected['artifact']['name'] = f"campaign-v5-deepflow-main-otel_demo-full-8-{declaration['run_id']}"
+    summary = REVIEW.read(root/'evaluation-manifest.json')
+    summary.update(run_id=str(declaration['run_id']), commit=profile['revision'],
+        full_artifact_name=selected['artifact']['name'], scientific_capture_identity=original,
+        closed_capture_recovery={'capture_run_id': original['run_id'], 'capture_source': original['commit'],
+            'capture_artifact_id': artifact['id'], 'capture_artifact_digest': artifact['digest'],
+            'processing_run_id': str(declaration['run_id']), 'processing_source': profile['revision'],
+            'new_application_traffic': False, 'refit_models': False})
+    write(root/'evaluation-manifest.json', summary)
+    guard = REVIEW.read(host/'disk-before-download.json')
+    guard.update(archive_bytes=artifact['size_in_bytes'], budget=profile['delivery_budget'])
+    fixed = guard['scientific_file_bytes']+guard['proof_bytes']
+    reserve = guard['SQL_WAL_growth_reserve_bytes']
+    guard.update(download_restore_required_bytes=artifact['size_in_bytes']+fixed+1024**3,
+        restored_processing_peak_bytes=fixed+reserve+1024**3)
+    guard['required_bytes'] = max(guard['download_restore_required_bytes'], guard['restored_processing_peak_bytes'])
+    guard['available_bytes'] = guard['required_bytes']+1
+    write(host/'disk-before-download.json', guard)
+    phase = {'required_bytes': reserve+1024**3, 'available_bytes': reserve+1024**3+1,
+        'SQL_WAL_growth_reserve_bytes': reserve, 'scientific_limit_or_filter': False,
+        'scientific_tree_already_restored': True, 'verified_delivery_removed': True}
+    write(host/'disk-before-processing.json', phase)
+    restored = REVIEW.read(host/'restore.json')
+    owned = {'device': 1, 'inode': 22, 'type': 0o100000, 'bytes': artifact['size_in_bytes']}
+    restored.update(artifact_id=artifact['id'], artifact_digest=artifact['digest'],
+        archive_bytes=artifact['size_in_bytes'], archive_sha256=artifact['digest'][7:],
+        capture_run_id=original['run_id'], capture_source=original['commit'],
+        processing_run_id=str(declaration['run_id']), processing_source=profile['revision'],
+        verified_delivery_identity=owned,
+        delivery_working_copy={'path': '/original/work/closed-postcapture.zip',
+            'bytes': artifact['size_in_bytes'], 'sha256': artifact['digest'][7:],
+            'disposition': 'verified_then_removed_owned_delivery',
+            'removed_after_all_restore_checks': True, 'verified_file_identity': dict(owned),
+            'recorded_ns': 123, 'free_before': 0, 'free_after': phase['available_bytes']})
+    write(host/'restore.json', restored)
+    return declaration, frozen, worker, selected
+
+
+@pytest.mark.parametrize('mutation', ['none', 'original_identity', 'publication_run', 'capsule',
+    'restore_capture_source', 'processing_identity', 'legacy_budget', 'second_guard',
+    'reserve_reduction', 'inode_replaced', 'symlink_type', 'scientific_path_deletion',
+    'qualification', 'refit_claim'])
+def test_recovered_full8_requires_both_identities_and_owned_delivery_guards(tmp_path, mutation):
+    declaration, frozen, worker, selected = recovery_fixture(tmp_path)
+    folder, host = tmp_path/'infrastructure/postcapture', tmp_path/'infrastructure/postcapture-host'
+    if mutation == 'original_identity':
+        path = tmp_path/'evaluation-manifest.json'; value = REVIEW.read(path)
+        value['scientific_capture_identity']['run_id'] = '100'; write(path, value)
+    if mutation == 'publication_run': declaration['run_id'] += 1
+    if mutation == 'capsule':
+        path = folder/'artifact-api.json'; value = REVIEW.read(path); value['id'] += 1; write(path, value)
+    if mutation == 'restore_capture_source':
+        path = host/'restore.json'; value = REVIEW.read(path); value['capture_source'] = declaration['head_sha']; write(path, value)
+    if mutation == 'processing_identity':
+        path = folder/'processing.json'; value = REVIEW.read(path); value['processing_run_id'] = '41642796796'; write(path, value)
+    if mutation == 'legacy_budget':
+        path = host/'disk-before-download.json'; value = REVIEW.read(path)
+        value['required_bytes'] = sum(value[k] for k in ('archive_bytes', 'scientific_file_bytes',
+            'proof_bytes', 'SQL_WAL_growth_reserve_bytes'))+1024**3
+        value['available_bytes'] = value['required_bytes']+1; write(path, value)
+    if mutation in ('second_guard', 'reserve_reduction'):
+        path = host/'disk-before-processing.json'; value = REVIEW.read(path)
+        if mutation == 'second_guard': value['available_bytes'] = 0
+        else: value['SQL_WAL_growth_reserve_bytes'] = 1
+        write(path, value)
+    if mutation in ('inode_replaced', 'symlink_type', 'scientific_path_deletion'):
+        path = host/'restore.json'; value = REVIEW.read(path)
+        if mutation == 'inode_replaced': value['delivery_working_copy']['verified_file_identity']['inode'] += 1
+        if mutation == 'symlink_type':
+            value['verified_delivery_identity']['type'] = 0o120000
+            value['delivery_working_copy']['verified_file_identity']['type'] = 0o120000
+        if mutation == 'scientific_path_deletion': value['delivery_working_copy']['path'] = '/original/work/campaign/observation-index.sqlite'
+        write(path, value)
+    if mutation in ('qualification', 'refit_claim'):
+        path = tmp_path/'evaluation-manifest.json'; value = REVIEW.read(path)
+        if mutation == 'qualification': value['qualification_only'] = True
+        else: value['closed_capture_recovery']['refit_models'] = True
+        write(path, value)
+    if mutation == 'none':
+        result = REVIEW.closed_postcapture_facts(tmp_path, declaration, frozen, worker, selected)
+        assert result['processing']['processing_run_id'] == str(declaration['run_id'])
+        assert result['capture_status']['run_id'] == '41642796796'
+        assert result['mutable_SQL_status_journal_not_compared_to_pre_mutation_file_bytes']
+    else:
+        with pytest.raises(ValueError):
+            REVIEW.closed_postcapture_facts(tmp_path, declaration, frozen, worker, selected)
+
+
+def union_api_fixture():
+    p = REVIEW.CLOSED_CAPTURE_COMPACT_UNION
+    expected = {
+        6: ('Restore the exact closed capture after the actual disk guard','success'),
+        7: ('Verify all closed inputs and run the unchanged offline suffix','success'),
+        9: ('Evaluate retained full campaign evidence','success'),
+        10: ('Record compact evaluation provenance','success'),
+        11: ('Run actions/upload-artifact@v4','success'),
+        12: ('Run actions/upload-artifact@v4','failure'),
+        13: ('Retain the compact postcapture processing diagnostics','success')}
+    artifacts = [{**a,'expired':False,'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}}
+                 for a in p['artifacts'].values()]
+    return {'run':{'id':p['run_id'],'head_sha':p['head_sha'],
+                'path':'.github/workflows/series-v5.yml','status':'completed','conclusion':'failure'},
+        'job':{'id':p['processing_job'],'run_id':p['run_id'],'status':'completed','conclusion':'failure',
+               'steps':[{'number':n,'name':name,'status':'completed','conclusion':c}
+                        for n,(name,c) in expected.items()]},
+        'capture_job':{'id':p['capture_job'],'run_id':p['run_id'],'status':'completed','conclusion':'success'},
+        'artifacts':artifacts}
+
+
+@pytest.mark.parametrize('mutation',['none','foreign_run','failed_suffix','missing_compact',
+    'existing_full','duplicate_step','foreign_capture','expired_restore','changed_digest'])
+def test_closed_union_requires_actual_named_source_and_publication_chain(mutation):
+    body=union_api_fixture()
+    if mutation=='foreign_run':body['run']['head_sha']='0'*40
+    if mutation=='failed_suffix':body['job']['steps'][1]['conclusion']='failure'
+    if mutation=='missing_compact':body['artifacts'].pop(1)
+    if mutation=='existing_full':body['artifacts'].append({'name':'campaign-v5-deepflow-main-otel_demo-partial-7-41642781338'})
+    if mutation=='duplicate_step':body['job']['steps'].append(body['job']['steps'][0])
+    if mutation=='foreign_capture':body['capture_job']['run_id']=123
+    if mutation=='expired_restore':body['artifacts'][2]['expired']=True
+    if mutation=='changed_digest':body['artifacts'][0]['digest']='sha256:'+'0'*64
+    if mutation!='none':
+        with pytest.raises(ValueError):REVIEW._closed_union_api_facts(body)
+    else:
+        facts=REVIEW._closed_union_api_facts(body)
+        assert not facts['independent_scientific_admission']
+        assert 'final_mutable_SQL' in facts['unavailable']
+
+
+@pytest.mark.parametrize('mutation',['none','missing_restore','changed_metadata','wrong_namespace',
+    'wrong_frozen_model','failed_suffix','foreign_declaration','missing_status'])
+def test_closed_union_preserves_scientific_predicates_without_fabricated_full_receipt(tmp_path,mutation):
+    import shutil
+    p=REVIEW.CLOSED_CAPTURE_COMPACT_UNION
+    root=tmp_path/'capsule'; compact=tmp_path/'compact'; host=tmp_path/'restore'
+    declaration,frozen,worker,selected=fixture(root,identity_override={
+        'run_id':str(p['run_id']),'commit':p['head_sha'],'mode':'partial','seed':7})
+    declaration.update(evidence_layout=p['layout'],compact_artifact_name=p['artifacts']['compact']['name'])
+    compact.mkdir();host.mkdir()
+    for name in ('status.json','evaluation-manifest.json'):
+        shutil.copyfile(root/name,compact/name)
+        (root/name).unlink()
+    folder=root/'infrastructure/postcapture'
+    (folder/'processing.json').unlink()
+    artifact={**p['artifacts']['capture'],'expired':False,
+        'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}}
+    write(host/'artifact-api.json',artifact)
+    for name in ('restore.json','disk-before-download.json'):
+        shutil.copyfile(root/'infrastructure/postcapture-host'/name,host/name)
+    marker=REVIEW.read(folder/'closed.json')
+    guard=REVIEW.read(host/'disk-before-download.json')
+    guard['archive_bytes']=artifact['size_in_bytes']
+    guard['required_bytes']=sum(guard[k] for k in ('archive_bytes','scientific_file_bytes','proof_bytes','SQL_WAL_growth_reserve_bytes'))+1024**3
+    guard['available_bytes']=guard['required_bytes']+1
+    write(host/'disk-before-download.json',guard)
+    write(host/'restore.json',{'status':'complete','artifact_id':artifact['id'],
+        'artifact_digest':artifact['digest'],'archive_bytes':artifact['size_in_bytes'],
+        'archive_sha256':artifact['digest'][7:],
+        'all_original_members_read_to_EOF_and_CRC_checked':True,
+        'closed_manifest_sha256':REVIEW.sha(folder/'closed.json')})
+    diag={'complete':True,'scope':'restore-diagnostics','scientific_processing_performed':False,
+        'artifact':{**p['artifacts']['restore'],'expired':False,
+            'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}},
+        'files':{f.name:{'bytes':f.stat().st_size,'sha256':REVIEW.sha(f)} for f in host.iterdir()}}
+    write(host/'selected-transport-proof.json',diag)
+    actual=tmp_path/'actual.json';write(actual,union_api_fixture())
+    selected['artifact']=artifact
+    selected['files'].pop('status.json')
+    selected['closed_capture_namespace']={'scientific_file_bytes':marker['file_bytes'],
+        'scientific_files':marker['files'],'proof_bytes':guard['proof_bytes'],'processed_full_snapshot':False}
+    if mutation=='missing_restore':(host/'restore.json').unlink()
+    if mutation=='changed_metadata':write(host/'disk-before-download.json',{})
+    if mutation=='wrong_namespace':selected['closed_capture_namespace']['scientific_files']+=1
+    if mutation=='wrong_frozen_model':frozen['sha256_by_path']['toolchain/discovery/model.json']='0'*64
+    if mutation=='failed_suffix':
+        body=REVIEW.read(actual);body['job']['steps'][1]['conclusion']='failure';write(actual,body)
+    if mutation=='foreign_declaration':declaration['seed']=8
+    if mutation=='missing_status':(compact/'status.json').unlink()
+    invoke=lambda:REVIEW.closed_postcapture_facts(root,declaration,frozen,worker,selected,
+        compact=compact,restore_root=host,actual_processing=actual)
+    if mutation!='none':
+        with pytest.raises((ValueError,FileNotFoundError)):invoke()
+    else:
+        facts=invoke()
+        assert facts['processing'] is None
+        assert facts['scientific_packet_layout']==p['layout']
+        assert 'final_mutable_SQL' in facts['unavailable_processed_full_components']

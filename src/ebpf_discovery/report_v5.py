@@ -454,6 +454,128 @@ CLOSED_POSTCAPTURE_SOURCE = {
 }
 
 
+
+CLOSED_CAPTURE_RECOVERY_SOURCE = {
+    **CLOSED_POSTCAPTURE_SOURCE,
+    'revision': 'a9c5785516550b45ed39df8ada37749c061a9f5d',
+    'tested_source': 'a9c5785516550b45ed39df8ada37749c061a9f5d',
+    'parent_revision': CLOSED_POSTCAPTURE_SOURCE['revision'],
+    'added_paths': CLOSED_POSTCAPTURE_SOURCE['added_paths'] | {'tests/test_closed_capture_restore_v5.py'},
+    'reviewed_changed_blobs': {**CLOSED_POSTCAPTURE_SOURCE['reviewed_changed_blobs'],
+        '.github/workflows/infrastructure.yml': '0372928417f5ed0079bcec329ee7b8ddd1b017bc',
+        'scripts/restore-closed-postcapture-v5.py': '8213610b9fb0e187a3a4e2a6bab2c38465fef1ea',
+        'tests/test_closed_capture_restore_v5.py': '5e7ca8d6a09b2895291c43e2d4e80eec5ee46979',
+    },
+    'processing_run_id': 41706823165,
+    'capture_identity': {'run_id': '41642796796', 'commit': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+                         'system': 'otel_demo', 'collector': 'deepflow', 'mode': 'full', 'seed': 8},
+    'capture_artifact': {'id': 13261622894, 'size_in_bytes': 6429750292,
+        'name': 'postcapture-v5-deepflow-main-otel_demo-full-8-41642796796',
+        'digest': 'sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f'},
+    'delivery_budget': 'verified-delivery-nonoverlapping-phases-v1',
+    'actual_code_CI_run': 41705252206,
+    'independent_original_code_CI_GO_sha256': '23785859d28f985761a7ed5a3b3a09331a0fb7f747c0e8fc8d2e3d2091a8d683',
+    'independent_actual_case_admission_still_required': True,
+}
+
+
+def _saved_capture_identity(manifest, run_id, identity):
+    """The one named delivery recovery has distinct capture/publication identities."""
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    if manifest.get('commit') != profile['revision']:
+        return None
+    original = profile['capture_identity']
+    expected = {'capture_run_id': original['run_id'], 'capture_source': original['commit'],
+        'capture_artifact_id': profile['capture_artifact']['id'],
+        'capture_artifact_digest': profile['capture_artifact']['digest'],
+        'processing_run_id': str(run_id), 'processing_source': profile['revision'],
+        'new_application_traffic': False, 'refit_models': False}
+    if (run_id != profile['processing_run_id'] or tuple(identity) != ('deepflow', 'otel_demo', 'full', 8)
+            or manifest.get('qualification_only') is True
+            or manifest.get('scientific_capture_identity') != original
+            or manifest.get('closed_capture_recovery') != expected):
+        raise ValueError('saved capture recovery publication differs from its fixed original/processing identity')
+    return original
+
+
+
+CLOSED_CAPTURE_COMPACT_UNION = {
+    'layout': 'closed_capture_compact_union_v1',
+    'run_id': 41642781338, 'head_sha': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'cell': ('deepflow', 'otel_demo', 'partial', 7),
+    'capture_job': 125940283692, 'processing_job': 126119275731,
+    'artifacts': {'capture': {'digest': 'sha256:eeefc20485a926e99af4bff208a79b71d47a40384ccb49b01560dcc222b842ae',
+             'id': 13259365500,
+             'name': 'postcapture-v5-deepflow-main-otel_demo-partial-7-41642781338',
+             'size_in_bytes': 4687525971},
+ 'compact': {'digest': 'sha256:55b12b9311ef9cc5c53969a82a8dee5bf08b7ff42bb01eedf8b4edfdb9b3ec5c',
+             'id': 13267240784,
+             'name': 'v5-summary-deepflow-main-otel_demo-partial-7-41642781338',
+             'size_in_bytes': 52437110},
+ 'restore': {'digest': 'sha256:0130290a604d10471cd0ee6ed4b8ae931d1d025420a07d0f77c1714d3c494b8a',
+             'id': 13267395741,
+             'name': 'postcapture-processing-partial-7-41642781338',
+             'size_in_bytes': 7760}},
+    'independent_original_design_GO_sha256': '1ec1d6152823afa5026b23f0846c7ae15d93c610b35853ac87745297cecf8a65',
+    'unavailable': ('processed_full_snapshot', 'final_mutable_SQL', 'retained_processing_json'),
+}
+
+
+def _closed_union_profile(declaration):
+    if declaration.get('evidence_layout') != CLOSED_CAPTURE_COMPACT_UNION['layout']:
+        return None
+    p = CLOSED_CAPTURE_COMPACT_UNION
+    if (declaration.get('run_id') != p['run_id'] or declaration.get('head_sha') != p['head_sha']
+            or tuple(declaration.get(k) for k in ('collector','system','mode','seed')) != p['cell']):
+        raise ValueError('closed capture union is outside its one fixed original scientific case')
+    return p
+
+
+def _closed_union_api_facts(bundle):
+    """Actual source/API step chain; never a fabricated processing/full receipt."""
+    p = CLOSED_CAPTURE_COMPACT_UNION
+    run, job, capture = (bundle.get(k) or {} for k in ('run','job','capture_job'))
+    if (run.get('id') != p['run_id'] or run.get('head_sha') != p['head_sha']
+            or run.get('path') != '.github/workflows/series-v5.yml'
+            or run.get('status') != 'completed' or run.get('conclusion') != 'failure'
+            or job.get('id') != p['processing_job'] or job.get('run_id') != p['run_id']
+            or job.get('status') != 'completed' or job.get('conclusion') != 'failure'
+            or capture.get('id') != p['capture_job'] or capture.get('run_id') != p['run_id']
+            or capture.get('status') != 'completed' or capture.get('conclusion') != 'success'):
+        raise ValueError('closed union lacks actual original source/capture/processing API identity')
+    expected = {
+        6: ('Restore the exact closed capture after the actual disk guard','success'),
+        7: ('Verify all closed inputs and run the unchanged offline suffix','success'),
+        9: ('Evaluate retained full campaign evidence','success'),
+        10: ('Record compact evaluation provenance','success'),
+        11: ('Run actions/upload-artifact@v4','success'),
+        12: ('Run actions/upload-artifact@v4','failure'),
+        13: ('Retain the compact postcapture processing diagnostics','success')}
+    steps = {r['number']:r for r in job.get('steps') or []}
+    if len(steps) != len(job.get('steps') or []):
+        raise ValueError('duplicate actual processing step number')
+    for number,(name,conclusion) in expected.items():
+        row=steps.get(number) or {}
+        if (row.get('name'),row.get('status'),row.get('conclusion')) != (name,'completed',conclusion):
+            raise ValueError('closed union actual scientific/evaluation/publication step did not finish as required')
+    actual = bundle.get('artifacts') or []
+    for kind,wanted in p['artifacts'].items():
+        selected=[a for a in actual if a.get('id')==wanted['id']]
+        if len(selected)!=1:
+            raise ValueError('closed union lacks its actual named artifact')
+        a=selected[0];w=a.get('workflow_run') or {}
+        if ({k:a.get(k) for k in wanted} != wanted or a.get('expired') is not False
+                or w.get('id') != p['run_id'] or w.get('head_sha') != p['head_sha']):
+            raise ValueError('closed union actual artifact API differs')
+    failed_full=f"campaign-v5-deepflow-main-otel_demo-partial-7-{p['run_id']}"
+    if any(a.get('name')==failed_full for a in actual):
+        raise ValueError('closed union cannot replace an existing processed full packet')
+    return {'kind':'actual_source_API_step_chain_not_retained_processing_json',
+        'run_id':p['run_id'],'head_sha':p['head_sha'],'job_id':p['processing_job'],
+        'scientific_steps':{str(n):steps[n] for n in expected},
+        'unavailable':list(p['unavailable']),'independent_scientific_admission':False}
+
+
 def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree):
     profile = None
     if anchor == IMMUTABLE_PATH_SOURCE['anchor']:
@@ -471,6 +593,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = POSTCAPTURE_GUEST_RELEASE_SOURCE
         elif revision == CLOSED_POSTCAPTURE_SOURCE['revision']:
             profile = CLOSED_POSTCAPTURE_SOURCE
+        elif revision == CLOSED_CAPTURE_RECOVERY_SOURCE['revision']:
+            profile = CLOSED_CAPTURE_RECOVERY_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -494,10 +618,13 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 != {'mode': '100644', 'type': 'blob', 'sha': blob}):
             raise ValueError('preparation revision differs from reviewed source blobs')
     if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
-            or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE):
+            or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE
+            or profile is CLOSED_CAPTURE_RECOVERY_SOURCE):
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
-                'evidence_kind': ('closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
+                'evidence_kind': ('saved_closed_capture_with_verified_delivery_release'
+                                  if profile is CLOSED_CAPTURE_RECOVERY_SOURCE else
+                                  'closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
                                   if profile is CLOSED_POSTCAPTURE_SOURCE else
                                   'postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
                                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else
@@ -518,10 +645,15 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 **({'existing_worker_placement': profile['existing_worker_placement']}
                    if profile is PETCLINIC_WORKER_SOURCE else {}),
                 **({'postcapture_lifecycle_qualification': profile['postcapture_lifecycle_qualification']}
-                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE else {}),
+                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
                 **({'closed_postcapture_qualification': profile['closed_postcapture_qualification'],
                     'closed_discovery_import_qualification': profile['closed_discovery_import_qualification']}
-                   if profile is CLOSED_POSTCAPTURE_SOURCE else {}),
+                   if profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
+                **({'recovered_capture_identity': profile['capture_identity'],
+                    'actual_processing_run_id': profile['processing_run_id'],
+                    'delivery_budget': profile['delivery_budget'],
+                    'independent_actual_case_admission_still_required': True}
+                   if profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -754,6 +886,7 @@ def _declarations(path: Path) -> tuple[dict[str, Any], dict[tuple[int, tuple], d
                 "run_id": run_id, "collector": collector, "stage": stage,
                 "system": identity[1], "mode": identity[2], "seed": identity[3],
                 "repository": repository, "note": run.get("note"),
+                **{k: raw[k] for k in ("evidence_layout", "head_sha") if k in raw},
             }
     related_ids = set()
     roles = {"preparation", "product_ci", "worker", "wait", "report", "archive", "evidence"}
@@ -858,6 +991,20 @@ def _saved_summaries(
             and bool(artifact.get("full_artifact_digest"))
             and artifact.get("full_artifact_expired") is False
         )
+        union = _closed_union_profile(declaration)
+        union_evidence = artifact.get("closed_capture_union")
+        union_available = False
+        if union is not None:
+            if not isinstance(union_evidence, dict) or full_available:
+                raise ValueError("named closed capture union lacks actual source metadata")
+            _closed_union_api_facts(union_evidence)
+            compact_api = union["artifacts"]["compact"]
+            if (artifact_id != compact_api["id"] or artifact["digest"] != compact_api["digest"]
+                    or zip_proof["received_bytes"] != compact_api["size_in_bytes"]):
+                raise ValueError("closed capture union compact differs from original artifact")
+            union_available = True
+        elif union_evidence is not None:
+            raise ValueError("closed capture union is undeclared for this case")
         full_unavailable_reason = (
             None if full_available else
             "full_artifact_expired" if artifact.get("full_artifact_expired") is True else
@@ -974,6 +1121,8 @@ def _saved_summaries(
                 "technical_complete_self_reported": False,
                 "full_source_artifact_available": full_available,
                 "full_source_artifact_reason": full_unavailable_reason,
+                "closed_capture_union_available": union_available,
+                "closed_capture_union_unavailable_components": list(union["unavailable"]) if union else [],
                 "eligible_main_coverage": False,
                 "independently_admitted": False,
                 "manifest_declared_transport_complete": not missing_declared,
@@ -994,7 +1143,10 @@ def _saved_summaries(
             status_run_id = int(status.get("run_id"))
         except (TypeError, ValueError):
             status_run_id = None
-        if (status_run_id != run_id or status.get("commit") != manifest.get("commit")
+        captured = _saved_capture_identity(manifest, run_id, identity)
+        expected_status_run = int(captured['run_id']) if captured else run_id
+        expected_status_commit = captured['commit'] if captured else manifest.get('commit')
+        if (status_run_id != expected_status_run or status.get("commit") != expected_status_commit
                 or status.get("smoke") is not (stage == "smoke")):
             raise ValueError(f"saved v5 status run/commit/stage mismatch: {evaluation_path}")
         for key, wanted in zip(("collector", "system", "mode", "seed"), identity):
@@ -1010,7 +1162,7 @@ def _saved_summaries(
         if evaluation.get("primary_series_result") is not (stage == "main" and complete):
             raise ValueError(f"saved main verdict inconsistent with completeness: {evaluation_path}")
         source = _validate_source(folder, evaluation, identity[0]) if complete else None
-        coverage_eligible = complete and full_available and not missing_declared
+        coverage_eligible = complete and (full_available or union_available) and not missing_declared
         reference = _retain_evaluation_payload(
             evaluation_path, report_dir, artifact_id=artifact_id, run_id=run_id,
             head_sha=manifest["commit"], expected_sha256=hashes["evaluation-v5.json"],
@@ -1023,6 +1175,8 @@ def _saved_summaries(
             "technical_complete_self_reported": complete,
             "full_source_artifact_available": full_available,
             "full_source_artifact_reason": full_unavailable_reason,
+                "closed_capture_union_available": union_available,
+                "closed_capture_union_unavailable_components": list(union["unavailable"]) if union else [],
             "eligible_main_coverage": coverage_eligible,
             "independently_admitted": False,
             "manifest_declared_transport_complete": not missing_declared,
@@ -1117,6 +1271,7 @@ def build(
         compatible_heads.add(PETCLINIC_WORKER_SOURCE['revision'])
         compatible_heads.add(POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'])
         compatible_heads.add(CLOSED_POSTCAPTURE_SOURCE['revision'])
+        compatible_heads.add(CLOSED_CAPTURE_RECOVERY_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         outside_postcapture_scope = (observed_head == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'] and (
@@ -1125,7 +1280,10 @@ def build(
         outside_closed_scope = (observed_head == CLOSED_POSTCAPTURE_SOURCE['revision'] and (
             (item['collector'], item['system']) != ('deepflow', 'otel_demo') or
             (item['mode'] == 'full' and item['seed'] in (6, 7))))
-        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope):
+        outside_recovery_scope = (observed_head == CLOSED_CAPTURE_RECOVERY_SOURCE['revision'] and (
+            (item['collector'], item['system'], item['mode'], item['seed'], item['run_id']) !=
+            ('deepflow', 'otel_demo', 'full', 8, CLOSED_CAPTURE_RECOVERY_SOURCE['processing_run_id'])))
+        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope or outside_recovery_scope):
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,

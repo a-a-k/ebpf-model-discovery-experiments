@@ -1,0 +1,11 @@
+# Saved capture evidence review
+
+The fixed 81 scientific cases and all previously admitted adverse or UNKNOWN results are unchanged. This update only reads retained evidence.
+
+The full8 processing recovery (41706823165, source a9c5785516550b45ed39df8ada37749c061a9f5d) consumes the exact original full8 capture (41642796796, source f045cc0adec187ec00443da0bea72b4ec4d2082e, artifact 13261622894). The reader distinguishes original scientific identity from actual processing/publication identity and checks both actual disk guards, all restore SHA/CRC receipts, and the owned verified delivery ZIP release. No application traffic or model fitting is repeated.
+
+The original partial7 suffix completed, evaluation and compact upload succeeded, and only the processed-full artifact upload failed with `Maximum call stack size exceeded`. Its one named evidence layout reads the actual original sealed capsule 13259365500, actual completed compact 13267240784, actual restore diagnostics 13267395741, and the actual GitHub run/capture/processing step chain. The capsule selector records original ZIP member names and logical names separately; it never labels the capsule as a processed-full artifact. All original scientific/model/freeze/independent-outcome predicates remain mandatory. The pre-target freeze and successful seal include the actual Bering and Sheaft models, commands, reports and context proofs. The offline suffix performs final ingestion and evaluation, not new model computation.
+
+The final mutable SQL, processed-full snapshot and retained processing.json are unavailable for this partial7 layout. The actual qualified source, successful restore/finalize/evaluation/provenance/compact steps, failed full publication, and original restore receipts supply an explicit source/API completion chain. A processing receipt is never fabricated. Missing required scientific bodies or changed hashes fail review. Source and design approvals do not admit a scientific case: ROOT and independent actual-output review are still required. Report availability remains separate from independent admission.
+
+All failed capture/processing runs, worker jobs, recovery jobs and later reader/report costs remain declared. Three timed-out absent captures are not replaced by compact-only scientific claims.

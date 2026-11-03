@@ -14,6 +14,8 @@ import uuid
 import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
+from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
+    CLOSED_CAPTURE_COMPACT_UNION, _closed_union_profile, _closed_union_api_facts)
 
 
 PINS = {
@@ -32,17 +34,31 @@ STREAMED_CHECKPOINT_HEAD = "f7ba801d70f9d2327031efc6dd0c00b90d252708"
 PETCLINIC_WORKER_HEAD = "0565115511b24db1d6bbe71e98784baded772144"
 POSTCAPTURE_GUEST_RELEASE_HEAD = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 CLOSED_POSTCAPTURE_HEAD = "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+CLOSED_CAPTURE_RECOVERY_HEAD = CLOSED_CAPTURE_RECOVERY_SOURCE["revision"]
 CLOSED_POSTCAPTURE_CELLS = {(mode, seed) for mode in ("absent", "partial") for seed in (6, 7, 8)} | {("full", 8)}
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260",
                "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
+               "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 FRESH_BERING = "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb"
-METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
+METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
-                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
-CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}
+                     "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
+CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
+
+
+def _capture_declaration(declaration):
+    if declaration['head_sha'] != CLOSED_CAPTURE_RECOVERY_HEAD:
+        return declaration
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    if ((declaration['collector'], declaration['system'], declaration['mode'], declaration['seed'],
+         declaration['run_id']) != ('deepflow', 'otel_demo', 'full', 8, profile['processing_run_id'])
+            or declaration.get('scientific_capture_run_id') != int(profile['capture_identity']['run_id'])
+            or declaration.get('scientific_capture_head_sha') != profile['capture_identity']['commit']):
+        raise ValueError('saved recovery declaration is outside the fixed original full8 case')
+    return {**declaration, 'run_id': int(profile['capture_identity']['run_id']),
+            'head_sha': profile['capture_identity']['commit']}
 
 COLLECTOR_PINS = {
     "deepflow": {
@@ -896,16 +912,20 @@ def compact_facts(root: Path, declaration: dict, *, smoke_qualification=False) -
     manifest = read(root / "evaluation-manifest.json")
     status = read(root / "status.json")
     evaluation = read(root / "evaluation-v5.json")
+    scientific = _capture_declaration(declaration)
+    if declaration['head_sha'] == CLOSED_CAPTURE_RECOVERY_HEAD:
+        _saved_capture_identity(manifest, declaration['run_id'],
+            tuple(declaration[k] for k in ('collector', 'system', 'mode', 'seed')))
     identity = (status.get("collector"), status.get("system"), status.get("mode"),
                 status.get("seed"), int(status.get("run_id")))
     expected = (declaration["collector"], declaration["system"], declaration["mode"],
-                declaration["seed"], declaration["run_id"])
+                declaration["seed"], scientific["run_id"])
     if smoke_qualification and (
             declaration['head_sha'] not in CONTEXT_BASELINE_HEADS
             or declaration.get('stage') != 'smoke' or declaration.get('runner') != 'study'
             or declaration.get('seed') != 6 or status.get('smoke') is not True):
         raise ValueError('qualification reader requires the fixed final-source smoke identity')
-    if identity != expected or status.get("commit") != declaration["head_sha"]:
+    if identity != expected or status.get("commit") != scientific["head_sha"]:
         raise ValueError(f"saved compact identity differs: {identity!r}")
     if declaration["head_sha"] in FRESH_HEADS and (
             status.get("controller") != "clean-study" or status.get("smoke") is not smoke_qualification):
@@ -969,6 +989,12 @@ def _selected_proof(root: Path, declaration: dict) -> dict:
     artifact = proof.get("artifact") or {}
     workflow = artifact.get("workflow_run") or {}
     expected_name = declaration["compact_artifact_name"].replace("v5-summary-", "campaign-v5-", 1)
+    union = _closed_union_profile(declaration)
+    if union:
+        expected_name = union['artifacts']['capture']['name']
+        if (proof.get('scope') != 'closed-capture' or
+                {k:artifact.get(k) for k in union['artifacts']['capture']} != union['artifacts']['capture']):
+            raise ValueError('closed union selected input is not its actual original capsule')
     if (proof.get("complete") is not True or proof.get("scientific_processing_performed") is not False
             or artifact.get("name") != expected_name or artifact.get("expired") is not False
             or workflow.get("id") != declaration["run_id"]
@@ -1096,7 +1122,8 @@ def guest_platform_facts(root: Path) -> dict:
 
 
 def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
-    if declaration['head_sha'] not in {POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD}:
+    declaration = _capture_declaration(declaration)
+    if declaration['head_sha'] not in {POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}:
         return None
     if declaration['head_sha'] == CLOSED_POSTCAPTURE_HEAD and (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS:
         raise ValueError('closed postcapture source is restricted to the seven technical replacements')
@@ -1179,69 +1206,147 @@ def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
 
 
 def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
-                            worker: dict | None, selected: dict) -> dict | None:
+                            worker: dict | None, selected: dict, *, compact=None, restore_root=None, actual_processing=None) -> dict | None:
     """Bind the exact new source's sealed inputs to its actual offline output."""
-    if declaration['head_sha'] != CLOSED_POSTCAPTURE_HEAD:
+    recovered = declaration['head_sha'] == CLOSED_CAPTURE_RECOVERY_HEAD
+    if declaration['head_sha'] not in {CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}:
         return None
+    scientific = _capture_declaration(declaration)
     if ((declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo')
             or (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS):
         raise ValueError('closed postcapture case is outside the seven technical replacements')
+    union = _closed_union_profile(declaration)
     folder = root/'infrastructure/postcapture'
-    marker, captured, processing, artifact = (read(folder/name) for name in
-        ('closed.json', 'capture-status.json', 'processing.json', 'artifact-api.json'))
-    final, summary = read(root/'status.json'), read(root/'evaluation-manifest.json')
-    expected = {'run_id': str(declaration['run_id']), 'commit': declaration['head_sha'],
+    processing_evidence = None
+    if union:
+        if compact is None or restore_root is None or actual_processing is None:
+            raise ValueError('closed union lacks its actual compact/restore/source API chain')
+        processing_evidence = _closed_union_api_facts(read(actual_processing))
+        diagnostic = read(restore_root/'selected-transport-proof.json')
+        meta = diagnostic.get('artifact') or {}; wanted = union['artifacts']['restore']
+        if (diagnostic.get('complete') is not True or diagnostic.get('scope') != 'restore-diagnostics'
+                or diagnostic.get('scientific_processing_performed') is not False
+                or {k:meta.get(k) for k in wanted} != wanted
+                or (meta.get('workflow_run') or {}).get('id') != union['run_id']
+                or (meta.get('workflow_run') or {}).get('head_sha') != union['head_sha']):
+            raise ValueError('closed union actual restore metadata transport differs')
+        for name,claim in diagnostic.get('files',{}).items():
+            if (not _safe(name) or not (restore_root/name).is_file()
+                    or (restore_root/name).stat().st_size != claim.get('bytes')
+                    or sha(restore_root/name) != claim.get('sha256')):
+                raise ValueError('closed union actual restore metadata changed')
+        marker, captured = (read(folder/name) for name in ('closed.json','capture-status.json'))
+        processing, artifact = None, read(restore_root/'artifact-api.json')
+        final, summary = read(compact/'status.json'), read(compact/'evaluation-manifest.json')
+    else:
+        marker, captured, processing, artifact = (read(folder/name) for name in
+            ('closed.json', 'capture-status.json', 'processing.json', 'artifact-api.json'))
+        final, summary = read(root/'status.json'), read(root/'evaluation-manifest.json')
+    expected = {'run_id': str(scientific['run_id']), 'commit': scientific['head_sha'],
         'system': 'otel_demo', 'collector': 'deepflow', 'controller': 'clean-study',
         'mode': declaration['mode'], 'seed': declaration['seed'], 'smoke': False}
-    for identity in (marker.get('identity') or {}, processing.get('identity') or {}, captured, final):
+    for identity in (marker.get('identity') or {}, captured, final,
+                     *(() if union else (processing.get('identity') or {},))):
         actual = {key: str(identity.get(key)) if key == 'run_id' else identity.get(key) for key in expected}
         if actual != expected:
             raise ValueError('closed capture or processing identity differs from the main case')
+    publication = {'run_id': str(declaration['run_id']), 'commit': declaration['head_sha']}
     workflow = artifact.get('workflow_run') or {}
-    expected_name = f"postcapture-v5-deepflow-main-otel_demo-{declaration['mode']}-{declaration['seed']}-{declaration['run_id']}"
+    expected_name = f"postcapture-v5-deepflow-main-otel_demo-{declaration['mode']}-{declaration['seed']}-{scientific['run_id']}"
     if (marker.get('schema') != 'closed-otel-postcapture-v5'
             or marker.get('sealing_run_id') != expected['run_id']
             or marker.get('sealing_source') != expected['commit']
             or artifact.get('name') != expected_name or artifact.get('expired') is not False
             or type(artifact.get('id')) is not int or artifact['id'] <= 0
             or type(artifact.get('size_in_bytes')) is not int or artifact['size_in_bytes'] <= 0
-            or workflow.get('id') != declaration['run_id'] or workflow.get('head_sha') != expected['commit']
+            or workflow.get('id') != scientific['run_id'] or workflow.get('head_sha') != expected['commit']
             or not isinstance(artifact.get('digest'), str) or not artifact['digest'].startswith('sha256:')
             or len(artifact['digest']) != 71 or set(artifact['digest'][7:]) - set('0123456789abcdef')):
         raise ValueError('closed artifact lacks its exact main-run source binding')
     if (captured.get('status') != 'postcapture_complete' or final.get('status') != 'acquisition_complete'
-            or processing.get('status') != 'complete' or processing.get('offline_only') is not True
-            or processing.get('traffic_replay_or_model_refit') is not False
-            or processing.get('processing_run_id') != expected['run_id']
-            or processing.get('processing_source') != expected['commit']
-            or processing.get('closed_manifest_sha256') != sha(folder/'closed.json')
+            or (not union and (processing.get('status') != 'complete' or processing.get('offline_only') is not True
+                or processing.get('traffic_replay_or_model_refit') is not False
+                or processing.get('processing_run_id') != publication['run_id']
+                or processing.get('processing_source') != publication['commit']
+                or processing.get('closed_manifest_sha256') != sha(folder/'closed.json')
+                or processing.get('input_file_inventory_sha256') != marker.get('file_inventory_sha256')))
             or marker.get('capture_status_sha256') != sha(folder/'capture-status.json')
-            or processing.get('input_file_inventory_sha256') != marker.get('file_inventory_sha256')
             or marker.get('file_inventory_sha256') != sha(folder/'files.jsonl')):
         raise ValueError('closed input inventory and actual processing chain differ')
-    if (summary.get('qualification_only') is True or summary.get('scientific_capture_identity') is not None
-            or str(summary.get('run_id')) != expected['run_id'] or summary.get('commit') != expected['commit']
-            or summary.get('full_artifact_name') != selected['artifact']['name']
-            or summary.get('files_sha256', {}).get('status.json') != sha(root/'status.json')):
+    if recovered:
+        _saved_capture_identity(summary, declaration['run_id'],
+            tuple(declaration[k] for k in ('collector', 'system', 'mode', 'seed')))
+        if {k: artifact.get(k) for k in ('id', 'name', 'size_in_bytes', 'digest')} != CLOSED_CAPTURE_RECOVERY_SOURCE['capture_artifact']:
+            raise ValueError('recovered case uses a different original closed artifact')
+    expected_publication_name = (declaration['compact_artifact_name'].replace('v5-summary-', 'campaign-v5-', 1)
+                                 if union else selected['artifact']['name'])
+    if (summary.get('qualification_only') is True or (not recovered and summary.get('scientific_capture_identity') is not None)
+            or str(summary.get('run_id')) != publication['run_id'] or summary.get('commit') != publication['commit']
+            or summary.get('full_artifact_name') != expected_publication_name
+            or summary.get('files_sha256', {}).get('status.json') != sha((compact if union else root)/'status.json')):
         raise ValueError('qualification or unrelated publication cannot stand in for a new main case')
-    host = root/'infrastructure/postcapture-host'
+    host = restore_root if union else root/'infrastructure/postcapture-host'
     restore, guard = read(host/'restore.json'), read(host/'disk-before-download.json')
+    original_required = sum(guard.get(k, -1) for k in
+        ('archive_bytes', 'scientific_file_bytes', 'proof_bytes', 'SQL_WAL_growth_reserve_bytes'))+1024**3
+    if recovered:
+        fixed = guard.get('scientific_file_bytes', -1) + guard.get('proof_bytes', -1)
+        original_required = max(guard.get('archive_bytes', -1)+fixed,
+                                fixed+guard.get('SQL_WAL_growth_reserve_bytes', -1))+1024**3
     if (restore.get('status') != 'complete' or restore.get('artifact_id') != artifact['id']
             or restore.get('artifact_digest') != artifact['digest']
             or restore.get('archive_bytes') != artifact['size_in_bytes']
             or 'sha256:'+str(restore.get('archive_sha256')) != artifact['digest']
             or restore.get('all_original_members_read_to_EOF_and_CRC_checked') is not True
-            or restore.get('closed_manifest_sha256') != processing['closed_manifest_sha256']
+            or restore.get('closed_manifest_sha256') != sha(folder/'closed.json')
             or guard.get('archive_bytes') != artifact['size_in_bytes']
             or guard.get('scientific_file_bytes') != marker.get('file_bytes')
             or guard.get('proof_bytes') != sum((folder/name).stat().st_size for name in
                 ('closed.json', 'capture-status.json', 'files.jsonl'))
             or guard.get('SQL_WAL_growth_reserve_bytes') != 4*marker.get('index_bytes', 0)
             or guard.get('scientific_limit_or_filter') is not False
-            or guard.get('required_bytes') != sum(guard.get(k, -1) for k in
-                ('archive_bytes', 'scientific_file_bytes', 'proof_bytes', 'SQL_WAL_growth_reserve_bytes'))+1024**3
+            or guard.get('required_bytes') != original_required
             or guard.get('available_bytes', -1) < guard.get('required_bytes', 0)):
         raise ValueError('actual closed restore, archive integrity or pre-download capacity proof differs')
+    if recovered:
+        phase = read(host/'disk-before-processing.json')
+        delivery = restore.get('delivery_working_copy') or {}
+        owned = restore.get('verified_delivery_identity') or {}
+        reserve = 4*marker['index_bytes']
+        expected_delivery = str(PurePosixPath(marker['scientific_root']).parent/'closed-postcapture.zip')
+        if (guard.get('budget') != CLOSED_CAPTURE_RECOVERY_SOURCE['delivery_budget']
+                or guard.get('download_restore_required_bytes') != artifact['size_in_bytes']+fixed+1024**3
+                or guard.get('restored_processing_peak_bytes') != fixed+reserve+1024**3
+                or restore.get('capture_run_id') != expected['run_id']
+                or restore.get('capture_source') != expected['commit']
+                or restore.get('processing_run_id') != publication['run_id']
+                or restore.get('processing_source') != publication['commit']
+                or set(owned) != {'device', 'inode', 'type', 'bytes'}
+                or any(type(owned.get(k)) is not int for k in owned)
+                or owned.get('device', 0) <= 0 or owned.get('inode', 0) <= 0
+                or owned.get('type') != 0o100000 or owned.get('bytes') != artifact['size_in_bytes']
+                or delivery.get('verified_file_identity') != owned
+                or delivery.get('path') != expected_delivery
+                or delivery.get('bytes') != artifact['size_in_bytes']
+                or delivery.get('sha256') != restore.get('archive_sha256')
+                or delivery.get('disposition') != 'verified_then_removed_owned_delivery'
+                or delivery.get('removed_after_all_restore_checks') is not True
+                or type(delivery.get('recorded_ns')) is not int
+                or phase.get('scientific_tree_already_restored') is not True
+                or phase.get('verified_delivery_removed') is not True
+                or phase.get('scientific_limit_or_filter') is not False
+                or phase.get('SQL_WAL_growth_reserve_bytes') != reserve
+                or phase.get('required_bytes') != reserve+1024**3
+                or phase.get('available_bytes') != delivery.get('free_after')
+                or phase.get('available_bytes', -1) < phase.get('required_bytes', 0)):
+            raise ValueError('saved recovery lacks its exact owned delivery lifetime or actual SQL/WAL guard')
+    if union:
+        namespace = selected.get('closed_capture_namespace') or {}
+        if (namespace.get('scientific_file_bytes') != marker['file_bytes']
+                or namespace.get('scientific_files') != marker['files']
+                or namespace.get('proof_bytes') != guard['proof_bytes']
+                or namespace.get('processed_full_snapshot') is not False):
+            raise ValueError('closed union complete original capsule population differs')
     closure = marker.get('acquisition_closure') or {}
     if (closure.get('unresolved_transports') != 0
             or (closure.get('completeness') or {}).get('valid') is not True
@@ -1307,6 +1412,10 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
             or linked.get('archive_sha256') != parent.get('downloaded_archive_sha256')):
         raise ValueError('closed discovery-copy import lacks complete worker/archive verification')
     return {'closed_manifest': marker, 'capture_status': captured, 'processing': processing,
+        **({'processing_completion_evidence': processing_evidence,
+            'scientific_packet_layout': union['layout'],
+            'unavailable_processed_full_components': list(union['unavailable'])}
+           if union else {}),
         'closed_artifact': artifact, 'actual_restore': restore, 'pre_download_capacity': guard,
         'closed_discovery_import': linked,
         'inventory_rows': len(names), 'inventory_logical_bytes': logical_bytes,
@@ -1319,8 +1428,9 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
 
 
 def full_facts(root: Path, declaration: dict, freeze: dict | None,
-               evaluation: dict | None, package_out: Path) -> dict:
+               evaluation: dict | None, package_out: Path, *, compact=None, restore_root=None, actual_processing=None) -> dict:
     proof = _selected_proof(root, declaration)
+    scientific = _capture_declaration(declaration)
     postcapture = postcapture_guest_facts(root, declaration)
     toolchain = root / "toolchain"
     packages = {}
@@ -1631,7 +1741,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
         remote_root = handoff_selected
     parent_import_path = remote_root / "parent-import.json"
-    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD) and not parent_import_path.is_file():
+    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD) and not parent_import_path.is_file():
         raise ValueError("named worker source requires retained parent worker import")
     worker_provenance_path = remote_root / "worker/worker-provenance.json"
     worker_status_path = remote_root / "worker/worker-status.json"
@@ -1646,11 +1756,11 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                       worker_status.get("identity") or {},
                       output_manifest.get("identity") or {}]
         for identity in identities:
-            if (str(identity.get("run_id")) != str(declaration["run_id"])
+            if (str(identity.get("run_id")) != str(scientific["run_id"])
                     or identity.get("system") != declaration["system"]
                     or identity.get("mode") != declaration["mode"]
                     or int(identity.get("seed")) != declaration["seed"]
-                    or identity.get("commit") != declaration["head_sha"]):
+                    or identity.get("commit") != scientific["head_sha"]):
                 raise ValueError("saved worker/handoff identity differs from declared cell")
         if (parent_import.get("downloaded_archive_sha256")
                 != str(parent_import.get("worker_artifact_digest", "")).removeprefix("sha256:")
@@ -1732,9 +1842,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 or (expected == "partial" and set(sdk_flags) != {"true", "false"})
                 or (expected == "full" and set(sdk_flags) != {"false"})):
             raise ValueError("rendered SDK configuration differs from declared mode")
-    native_facts = native_mode_facts(root, declaration, evaluation)
+    native_facts = native_mode_facts(root, scientific, evaluation)
     closed = closed_postcapture_facts(root, declaration,
-        freeze or {"sha256_by_path": saved.get("sha256_by_path") or {}}, worker_facts, proof)
+        freeze or {"sha256_by_path": saved.get("sha256_by_path") or {}}, worker_facts, proof,
+        compact=compact, restore_root=restore_root, actual_processing=actual_processing)
     return {
         "selected_transport": proof, "typed_packages": packages,
         "source_pins": pins, "saved_mode_evidence_sha256": mode_files,
@@ -1754,7 +1865,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     }
 
 
-def review(declaration: dict, compact: Path | None, full: Path | None, out: Path, *, smoke_qualification=False) -> dict:
+def review(declaration: dict, compact: Path | None, full: Path | None, out: Path, *, smoke_qualification=False, restore_root=None, actual_processing=None) -> dict:
     if smoke_qualification and (compact is None or full is None):
         raise ValueError('qualification requires both selected full and compact evidence')
     if out.exists():
@@ -1765,7 +1876,8 @@ def review(declaration: dict, compact: Path | None, full: Path | None, out: Path
         compact_result, evaluation, freeze = compact_facts(compact, declaration, smoke_qualification=smoke_qualification)
     full_result = None
     if full is not None:
-        full_result = full_facts(full, declaration, freeze, evaluation, out / "selected-packages")
+        full_result = full_facts(full, declaration, freeze, evaluation, out / "selected-packages",
+            compact=compact, restore_root=restore_root, actual_processing=actual_processing)
         if compact_result is not None and full_result["forecast_saved_ns"] >= compact_result["first_target_started_ns"]:
             raise ValueError("saved forecast does not precede first target block")
     result = {
@@ -1800,10 +1912,13 @@ def main() -> None:
     parser.add_argument("--compact", type=Path)
     parser.add_argument("--full", type=Path)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--restore-diagnostics", type=Path)
+    parser.add_argument("--actual-processing-metadata", type=Path)
     parser.add_argument('--smoke-qualification', action='store_true')
     args = parser.parse_args()
     declaration = read(args.declaration)
-    result = review(declaration, args.compact, args.full, args.out, smoke_qualification=args.smoke_qualification)
+    result = review(declaration, args.compact, args.full, args.out, smoke_qualification=args.smoke_qualification,
+        restore_root=args.restore_diagnostics, actual_processing=args.actual_processing_metadata)
     print(json.dumps({"cell": [declaration[key] for key in
                                ("collector", "system", "mode", "seed")],
                       "domains": {"compact": result["compact_facts"] is not None,

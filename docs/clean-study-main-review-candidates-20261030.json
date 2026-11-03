@@ -368,60 +368,60 @@
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41470525869,
+      "run_id": 41642750701,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41470533050,
+      "run_id": 41642758914,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41470540023,
+      "run_id": 41642766254,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41470550646,
+      "run_id": 41642775376,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41470558415,
+      "run_id": 41642781338,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
       "mode": "partial",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41470566316,
+      "run_id": 41642789738,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "otel_demo",
@@ -448,10 +448,12 @@
       "mode": "full",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41479813348,
+      "run_id": 41706823165,
       "stage": "main",
       "runner": "study",
-      "head_sha": "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
+      "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+      "scientific_capture_run_id": 41642796796,
+      "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
     },
     {
       "system": "petclinic",
@@ -2820,6 +2822,124 @@
       "reason": "terminal_0056_full8_precheckpoint_137_80MiB_postgres_OOM_target0; same_source_settings_one_failed_case_replacement",
       "pre_execution_record": "work\\OTel-full8-after137-same-scenario-preexecution-20261102.json",
       "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41470525869,
+      "original_job_id": 125362662927,
+      "original_prefix_artifact_id": 13167818062,
+      "replacement_run_id": 41642750701,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "original_run_id": 41470533050,
+      "original_job_id": 125362684205,
+      "original_prefix_artifact_id": 13168308510,
+      "replacement_run_id": 41642758914,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "original_run_id": 41470540023,
+      "original_job_id": 125362734313,
+      "original_prefix_artifact_id": 13168241989,
+      "replacement_run_id": 41642766254,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41470550646,
+      "original_job_id": 125362727883,
+      "original_prefix_artifact_id": 13164383101,
+      "replacement_run_id": 41642775376,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "original_run_id": 41470558415,
+      "original_job_id": 125362759990,
+      "original_prefix_artifact_id": 13163314568,
+      "replacement_run_id": 41642781338,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "original_run_id": 41470566316,
+      "original_job_id": 125362786450,
+      "original_prefix_artifact_id": 13165290041,
+      "replacement_run_id": 41642789738,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "original_run_id": 41479813348,
+      "original_job_id": 125394917938,
+      "original_prefix_artifact_id": 13169386591,
+      "replacement_run_id": 41642796796,
+      "actual_capture_commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "terminal_0056_OTel_prefix_only; qualified_closedcapture_realhandoff_unchanged_offline_suffix_and_worker_copy_storage",
+      "pre_execution_record": "work\\OTel7-closed-postcapture-failure-replacements-preexecution-20261103.json",
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "original_capture_run_id": 41642796796,
+      "original_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "processing_run_id": 41706823165,
+      "processing_head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+      "reason": "saved_complete_capture_processing_delivery_capacity_recovery",
+      "new_traffic_or_model_fit": false,
+      "scientific_admission": false
     }
   ]
 }

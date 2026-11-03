@@ -1470,3 +1470,57 @@ def test_fresh_compact_binds_actual_clean_main_status(
     else:
         with pytest.raises(ValueError, match="clean main controller"):
             REVIEW.compact_facts(compact, declaration)
+
+
+@pytest.mark.parametrize('mutation',['none','unsafe','foreign_namespace','logical_collision','missing_seal'])
+def test_original_capsule_selector_preserves_actual_zip_names_and_rejects_aliasing(tmp_path,monkeypatch,mutation):
+    import io
+    import zipfile
+    bodies={'campaign/plans.json':b'{}','campaign/status.json':b'{}',
+        'campaign/observations/technical-positive-control.json':b'{"collector":"deepflow","proofs":{}}',
+        'postcapture-proof/closed.json':b'{}','postcapture-proof/capture-status.json':b'{}',
+        'postcapture-proof/files.jsonl':b'{}\n','campaign/ignored.bin':b'raw'}
+    if mutation=='unsafe':bodies['campaign/../escape']=b'bad'
+    if mutation=='foreign_namespace':bodies['unknown/member']=b'bad'
+    if mutation=='logical_collision':bodies['campaign/infrastructure/postcapture/closed.json']=b'bad'
+    if mutation=='missing_seal':del bodies['postcapture-proof/closed.json']
+    memory=io.BytesIO()
+    with zipfile.ZipFile(memory,'w') as archive:
+        for name,body in bodies.items():archive.writestr(name,body)
+    class TinyRemote(io.BytesIO):
+        verified_received_bytes=1
+        attempted_received_bytes=1
+        failures=[]
+        def __init__(self,metadata,out):super().__init__(memory.getvalue())
+    monkeypatch.setattr(SELECT,'RemoteZip',TinyRemote)
+    meta={'id':1,'name':'capsule','size_in_bytes':len(memory.getvalue()),'digest':'sha256:'+'a'*64,
+        'expired':False,'workflow_run':{'id':2,'head_sha':'b'*40}}
+    expected={**{k:meta[k] for k in ('id','name','size_in_bytes','digest')},'run_id':2,'head_sha':'b'*40}
+    if mutation!='none':
+        with pytest.raises(ValueError):SELECT.select(meta,expected,'closed-capture',tmp_path/'selected')
+    else:
+        proof=SELECT.select(meta,expected,'closed-capture',tmp_path/'selected')
+        assert proof['scope']=='closed-capture' and proof['complete']
+        assert proof['artifact']['name']=='capsule'
+        assert proof['files']['status.json']['archive_member_name']=='campaign/status.json'
+        assert proof['closed_capture_namespace']['scientific_files']==4
+        assert not proof['closed_capture_namespace']['processed_full_snapshot']
+        assert not (tmp_path/'selected/ignored.bin').exists()
+
+
+@pytest.mark.parametrize('mutation',['none','wrong_scope','fake_full','foreign_seed','foreign_artifact','no_layout'])
+def test_actual_partial7_union_manifest_passes_literal_workflow_gate_only_at_exact_scope(tmp_path,mutation):
+    import copy
+    document=json.loads((ROOT/'docs/clean-study-partial7-closed-union-review-20261103.json').read_text())
+    row=document['cells'][0]
+    if mutation=='wrong_scope':row['full_scope']='retrieve_family_selected'
+    if mutation=='fake_full':row['full_artifact_id']=777
+    if mutation=='foreign_seed':row['seed']=8
+    if mutation=='foreign_artifact':row['capture_artifact_id']+=1
+    if mutation=='no_layout':row.pop('evidence_layout')
+    result,output=_run_manifest_selector(tmp_path,'docs/iteration5-main-review-candidates-coroot-petclinic-full.json',
+        phase='fresh-batch',fresh_go=True,document=document)
+    assert (result.returncode==0)==(mutation=='none'),result.stderr
+    if mutation=='none':
+        matrix=json.loads(dict(line.split('=',1) for line in output.read_text().splitlines())['matrix'])
+        assert len(matrix['cell'])==1 and 'full_artifact_id' not in matrix['cell'][0]

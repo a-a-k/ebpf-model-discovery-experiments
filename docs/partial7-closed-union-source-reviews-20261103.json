@@ -1,0 +1,214 @@
+{
+  "purpose": "Original-criterion design approvals; actual case admission still required",
+  "reviews": {
+    "partial7-capsule-compact-salvage-root-design-20261103.json": {
+      "sha256": "86c9d1e7bc4d6c80d48682e512d609d936ffe90ff7767aefd2695aa5aabc5e32",
+      "body": {
+        "recorded_before_implementation_utc": "2026-11-03T20:21:51.967445+00:00",
+        "root_original_capsule_compact_scientific_salvage_design_GO": true,
+        "original_criterion": "Finish81 matched eBPF feasibility cases with absent/partialSDK traces, actualBering/Sheaftwhere supported, independentexternaloutcomes and samefourmethods/twoviews/seeds/workloads. No cost-superiority/ML/weakercontribution. All74valid prior cases protected.",
+        "scope": "ONLYactualf045 OTelpartial7/run41642781338/postjob126119275731, finishedsuffix/evaluation/manifest/compact but FULLuploadfailedinside actions/upload-artifact@v4 Maximumcallstacksize. No newcapture/models/finalSQLrefresh/rescore.",
+        "strongest_simple_baseline": "Validate original complete closedcapture plus actual completedcompact and actualrestore/API/source stepchain. Every scientificinput,frozenmodel/command/body,rawclosure,two kernels,SDKmode,actual100kSheaft/context/forecast/freeze/count/outcomepredicate muststillbeverified. Existingprocessedfull has no additional required scientificpredicate in finalSQL: it is a derived unavailable cache, not substituteinput.",
+        "equivalence_boundary": "Information/predicate equivalence for ORIGINALcriterion, NOTbyte-identical full snapshot. FinalmutableSQL/processing.json/finalfullarchive ARE UNAVAILABLE and mustbeexplicit. Never fabricate processing.json/fullAPI, never weaken actualdata/source/hash/freeze/gates. If anyrequiredscientificbody/proofnotin actualunion, rejectadmission and use format-onlyrecovery fromoriginalcapsule.",
+        "actual_artifacts": [
+          {
+            "id": 13259365500,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI1OTM2NTUwMA==",
+            "name": "postcapture-v5-deepflow-main-otel_demo-partial-7-41642781338",
+            "size_in_bytes": 4687525971,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13259365500",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13259365500/zip",
+            "expired": false,
+            "digest": "sha256:eeefc20485a926e99af4bff208a79b71d47a40384ccb49b01560dcc222b842ae",
+            "created_at": "2026-11-03T18:26:54Z",
+            "updated_at": "2026-11-03T18:26:54Z",
+            "expires_at": "2027-02-01T13:15:51Z",
+            "workflow_run": {
+              "id": 41642781338,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13267240784,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2NzI0MDc4NA==",
+            "name": "v5-summary-deepflow-main-otel_demo-partial-7-41642781338",
+            "size_in_bytes": 52437110,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13267240784",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13267240784/zip",
+            "expired": false,
+            "digest": "sha256:55b12b9311ef9cc5c53969a82a8dee5bf08b7ff42bb01eedf8b4edfdb9b3ec5c",
+            "created_at": "2026-11-03T19:58:10Z",
+            "updated_at": "2026-11-03T19:58:10Z",
+            "expires_at": "2027-02-01T13:15:51Z",
+            "workflow_run": {
+              "id": 41642781338,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13267395741,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2NzM5NTc0MQ==",
+            "name": "postcapture-processing-partial-7-41642781338",
+            "size_in_bytes": 7760,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13267395741",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13267395741/zip",
+            "expired": false,
+            "digest": "sha256:0130290a604d10471cd0ee6ed4b8ae931d1d025420a07d0f77c1714d3c494b8a",
+            "created_at": "2026-11-03T19:58:12Z",
+            "updated_at": "2026-11-03T19:58:12Z",
+            "expires_at": "2027-02-01T13:15:51Z",
+            "workflow_run": {
+              "id": 41642781338,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          }
+        ],
+        "actual_API_metadata": "work\\partial7-original-capsule-compact-restore-API-for-salvage-20261103.json",
+        "failed_action_source": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+        "evidence_routing": "Explicit named closed_capture_compact_union_v1 profile keyedsource/run/cell/3actualartifactIDs/job. Normal full artifact route retainsALLoldchecks. RealcapsuleAPI distinctfromfullAPI; compact ninepayload hashes/freeze/context/actualSheaft+outcomes preserved. Actualrestorediagnosticbody/API/hash bound, wholemarker/inventory/trainingSQL/immutablefilebindings and guest/rawcontrols unchanged. Missingprocessingreceipt replaced ONLY by exact actual source-qualified restore/finalize/eval/manifest/compact SUCCESS chain plus failedFULLupload, never jobstatus alone.",
+        "transport": "Reuseexistingqualifiedrange selectors; explicitcampaign-prefix stripping and postcapture-proof namespace mapping, safeunique names/CRC/SHA/API binding. Keepcapturedstatus/SQL/journal namespaces unchanged; finalstatus+manifest stayactualcompact separate. Select actualsmallrestoremetadata from actualdiag; fetchexactactualjob/run metadata onActions. No newgenericframework/schema/retry/cache. Allheavy/scientificbodyreaderworkActionsONLY.",
+        "report_boundary": "Reporter distinguishes full_source_artifact_available=False from complete scientific input union available under exactprofile. Externalqualifiedsavedreader+ROOT/INDactualcaseGO mandatory before count/admission. No copiedoutput/selfverdict-only gate. Technicalselection preservesallhistoricalattempts/costs,81keysnot82trials.",
+        "costs": "Alloriginal capture/workers/failedpublication/computation/evaluation/compact/metadata/CI/reviewer/transfer/reader/retentiontail retained. No invalid/negative selection orhiddenearlystop; humanunknown/APIwallnotCPU/billing.",
+        "independent_original_design_GO": "work\\independent-partial7-capsule-compact-salvage-original-design-GO-20261103.json",
+        "independent_original_design_GO_SHA256": "1ec1d6152823afa5026b23f0846c7ae15d93c610b35853ac87745297cecf8a65",
+        "actual_case_GO": false,
+        "healthy_jobs_not_cancelled": true
+      }
+    },
+    "independent-partial7-capsule-compact-salvage-original-design-GO-20261103.json": {
+      "sha256": "1ec1d6152823afa5026b23f0846c7ae15d93c610b35853ac87745297cecf8a65",
+      "body": {
+        "recorded_utc": "2026-11-03T20:16:55.210993+00:00",
+        "original_capsule_compact_scientific_readset_salvage_design_GO": true,
+        "original_full81_criterion_GO": true,
+        "actual_scientific_case_GO": false,
+        "scope": {
+          "case": "deepflow/otel_demo/partial/7",
+          "original_capture_run": 41642781338,
+          "original_capture_job": 125940283692,
+          "postcapture_job": 126119275731,
+          "scientific_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "actual_closed_capsule": 13259365500,
+          "actual_compact": 13267240784,
+          "actual_processing_diagnostics": 13267395741,
+          "no_new_capture_model_fit_or_suffix_run": true
+        },
+        "original_criterion": "Complete unchanged matched81 OBI/Coroot/DeepFlow/app/SDK/seed cases, actual observed source->Bering->Sheaft where supported and independent external outcomes, all10ops/4methods/2views/34800primary9600targets/100000trials/two independent guests. Protect all74 prior valid/adverse/unknown cases. No ML or cost-superiority substitute.",
+        "actual_failure": "Unchanged suffix success18:39:40->19:56:30, evaluation/provenance success, compact upload success19:58:01->19:58:10; only full upload failed19:58:10->19:58:11 with Maximum call stack size exceeded. No ENOSPC/quota/engine cause established. Pinned actionea165f8d65b6e75b540449e92b4886f43607fa02.",
+        "failure_excerpt": "work/partial7-postcapture-full-upload-126119275731-failure-selected-console-20261103.txt",
+        "failure_excerpt_sha256": "4277a477a06e843db916401e5803bb9ffc7c5c8b2e73c103ed63d44aa7b2f8eb",
+        "strongest_simple_baseline": "Use the already preserved full closed scientific input capsule plus actual completed compact outputs, actual restore diagnostics and source-bound workflow API, verifying every existing scientific predicate. This avoids duplicate deterministic ingest/identity refresh/evaluation and a new delivery representation when no scientific information used by the existing reader is missing.",
+        "known_equivalence_and_boundary": "This is not a byte-identical processed full snapshot and must never be presented as one. Closed capsule retains every original observation/raw final/native closure, target/outcome record, trainingSQL, frozen graph/model/input/command and guest/worker/acquisition proof. Compact retains actual scientific outputs and their actual9payload hashes/freeze/evidence/classes/journal. Existing full_facts does not consume final observation-index.sqlite; closed_postcapture_facts treats finalSQL/status/journal as mutable, binds sealed trainingSQL/inventory and requires a processing receipt. The semantic receipt predicates may instead be proved by actual exact-source restore/finalize/evaluate/manifest/compact API steps and restore metadata, without inventing the missing file. Unavailable actual finalSQL/derived refresh cache/processing.json remain explicitly unavailable.",
+        "source_inspection": {
+          "reader_path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\.worktrees\\clean-study-results\\scripts\\review-main-saved-facts-v5.py",
+          "reader_body_sha256_at_WIP_inspection": "f8563852c61a53f2fa6c513f460da992a167f25edb1ffc52916e4fc0c1df7dbb",
+          "functions": [
+            "full_facts",
+            "closed_postcapture_facts",
+            "native_mode_facts"
+          ],
+          "producer_finalize_path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\.worktrees\\otel-postcapture-job\\src\\ebpf_discovery\\postcapture_v5.py",
+          "producer_finalize_sha256": "9f0a9e854603378b22291ca2feb851f5416f52d4f43f73622a99c90319526b3c",
+          "actual_source_whole_suffix_equivalence_already_qualified": "f045 actual41615267517 root+independent68001cb...; does not become new case success or a substitute for actual input/outcome checks."
+        },
+        "causal_source": "Remove redundant recomputation/publication after a transport-only failure by selecting the same actual scientific readset from two retained artifacts plus real execution evidence. No changed observation/model/outcome, expected topology, synthetic label or favorable selection.",
+        "mandatory_strict_design": [
+          "Exact named partial7/f045/capture/job/capsule/compact/diagnostic/API tuple; no permissive fallback on any failed full upload. Default old source guards remain intact.",
+          "Validate current artifact identities/digests/sizes/source/attempt and actual capture success, restore/finalize/evaluation/manifest/compact step success, full-upload-only failure. Bind exact checked-out scientific code and real restore API/SHA/size/EOF/CRC/marker/inventory capacity metadata.",
+          "On Actions, stream complete sealed inventory and validate the existing source/input/trainingSQL/worker-import/boots/guest-release/finalraw/native closure/SDK-mode/actual Bering input-output/actual Sheaft100000/frozen-before-target/pairedcontext/output/cohort/external-outcome checks from real capsule+compact bytes. No local scientific bodies or rescore/refit.",
+          "Every compact payload SHA and frozen model/input path must cross-bind to preserved original scientific data. Final mutable status/journal come from actual compact, retained pre-mutation SQL/journal remain labelled original. No falsely byte-comparing mutable output with input.",
+          "Record proof origin as actual API/code/restore/compact evidence rather than writing or claiming a nonexistent processing.json or full-artifact API. Explicitly retain unavailable finalSQL/refresh-cache/full-publication boundaries.",
+          "Meaningful invalid identity/hash/freeze/worker/closure/output/API-step/missing-required-body tests, actual CI and independent code review precede existing qualified reader execution. Actual reader facts plus ROOT and independent original scientific interpretation required before case admission. No new whole/model qualifier requested."
+        ],
+        "same_information_semantics": "Allmethods/direct/ANDOR/context and independent evaluation retain the same complete original observations, semantic knowledge, frozen actual graphs/models/commands and external outcome records. The transport union cannot introduce target information into pre-target forecasts.",
+        "complete_costs": "Retain every original capture/worker/preparation/validation/restore/suffix/evaluation/failed-upload/metadata/CI/review/permanent-retention cost; newly avoided recompute is not measured speedup or scientific cost-superiority. Human unknown; no favorable stopping or erased attempts. Root and independent duplicate completed-log requests were read-only and their network/review costs are not claimed zero.",
+        "falsifiers": "Any required scientific body/proof absent from actual union, inconsistent source/API/input/output hashes, unproven restore/finalize success, changed methods/counts/outcomes or fabricated receipt rejects case admission. Flags/ARI/job success alone never establish utility. Then use exact lossless publication recovery of the unchanged saved suffix, not weaker science.",
+        "fallback_if_real_required_information_missing": "Explicit complete-file packaging using existing qualified transport, preserving allbytes/modes/namespaces/SHA/CRC and real source identities; rerun only unchanged suffix from the original closed capsule if necessary, never traffic/model fitting. Separate exact implementation/execution reviews; do not cancel healthy full8/partials.",
+        "verdict": "Explicit ORIGINAL design GO for scientifically equivalent evidence selection supporting full81 completion. No current scientific result/admission GO, no code execution/POST by reviewer, no narrowed demonstration."
+      }
+    },
+    "independent-partial7-union-required-bodies-source-sequence-original-GO-20261103.json": {
+      "sha256": "f7808789a63f7a71689e200fcdff4f97c4bbbcc391bd14851d5e0e7fb8bd9279",
+      "body": {
+        "recorded_utc": "2026-11-03T20:39:50.874851+00:00",
+        "original_union_required_body_causal_availability_GO": true,
+        "original_scientific_case_GO": false,
+        "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "case": "deepflow/otel_demo/partial/7/run41642781338",
+        "design_GO": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-partial7-capsule-compact-salvage-original-design-GO-20261103.json",
+        "design_GO_sha256": "1ec1d6152823afa5026b23f0846c7ae15d93c610b35853ac87745297cecf8a65",
+        "exact_source_proofs": {
+          "src/ebpf_discovery/study.py": {
+            "Git_blob": "299c0f45ed2e1fe06cd7cbc884dcb7b161fddff5",
+            "Git_body_sha256": "5eef4604e6c13c9969cb5861d6561263b641030d90b70ef33c61d1ae1d79fbdb"
+          },
+          "src/ebpf_discovery/postcapture_v5.py": {
+            "Git_blob": "e0b0eac5474743509133373994ea65e2e12f1947",
+            "Git_body_sha256": "9f0a9e854603378b22291ca2feb851f5416f52d4f43f73622a99c90319526b3c"
+          },
+          "src/ebpf_discovery/toolchain_v4.py": {
+            "Git_blob": "b8b4c635952b5d0e72d436951df2463b38f28105",
+            "Git_body_sha256": "f672c8cd407725e54313873db8c9653ac1a25f2835464f29b5b82ceefa32b061"
+          },
+          "src/ebpf_discovery/toolchain_v5.py": {
+            "Git_blob": "9fd74d4abc3323ce1f08c99b358607f715de475c",
+            "Git_body_sha256": "a3fd85324e4fcd3eddb382fd66b88889d3a6c1959612d91f3b99301e5aebc429"
+          },
+          "src/ebpf_discovery/classes_v5.py": {
+            "Git_blob": "fa55f35eff16bc80fb72b3b959790baeff2bb37a",
+            "Git_body_sha256": "d036d95b9f58aea710dedbf4a41b4d3440bfac22d08616a10fca781c4cd98203"
+          },
+          "src/ebpf_discovery/classes_v4.py": {
+            "Git_blob": "3d620bee590ce79b7bc642b97a7a7e316444fe7d",
+            "Git_body_sha256": "2c3bfa2f330c068553a0761e26d42eabae2cd94c657802b836c5eb54bc8e5c75"
+          },
+          "src/ebpf_discovery/evidence_v4.py": {
+            "Git_blob": "69dfc9434c19819fbf4f5d949f7f447b066d598c",
+            "Git_body_sha256": "1c69e9b69da9411148baae98635f3c44e6ae272974bd95a63246012d9ef08de2"
+          }
+        },
+        "producer_sequence": [
+          "Study.run performs training snapshot/checkpoint, then Study.freeze, then target/class_test/database/async blocks, finaldrain and final snapshot.",
+          "Study.freeze synchronously obtains complete actual Toolchain forecast, then fits training-only class models, hashes every toolchain file and training aliases into forecast-saved before target acquisition.",
+          "ToolchainV4.forecast creates source/view graph and each available operation model/quality/analysis/fault/predicate/simulation.command/report; unavailable branches explicitly lack simulation. ToolchainV5.forecast calls its context baseline after baseforecast and before returning. All context graphs/proofs/operations/commands are in toolchain before worker completion.",
+          "Worker validates unchanged input and publishes complete toolchain/provenance, parent atomically imports and checks unchangedSQL, Study.freeze hashes entire imported subtree and class models.",
+          "Deferred final snapshot collects native and raw, closes/releases guests, then captures postcapture_complete status/journal. seal frozen_files verifies EVERY frozen body exists, is delivered, stays inside scientificroot, no symlinks and correctSHA; files(root) delivers/inventories entire tree including toolchain.",
+          "finalize verifies sealed input then runs store.ingest, identityrefresh, classes.evaluate using already frozen familymodels, evidence.evaluate reading existing graphs, freeze_integrity check, finalstatus/journal export and processing receipt. It invokes no forecast, Sheaft, Bering or class fit."
+        ],
+        "required_bodies_already_in_sealed_capsule": [
+          "All actual pre-target Bering and available Sheaft inputs/models/analysis/simulation.command/report and snapshots/qualities under toolchain.",
+          "All context-baseline graph/union/provenance/commands and forecasts, including any extra actual Sheaft operation models.",
+          "Training-only class family/legacy models and descriptors; frozen aliases, manifests, Procrustes preflight and supplied metadata.",
+          "Original raw/native/final closure, external outcomes/plans/census/blocks/journal, two guest kernels/diagnostics/release, originalworker and SQL proofs."
+        ],
+        "new_compact_scientific_output_bodies": [
+          "classes-v4.json",
+          "classes-v5.json",
+          "evidence-v4.json",
+          "freeze-integrity.json",
+          "status.json",
+          "attempt-journal.jsonl",
+          "evaluation-v5.json",
+          "evaluation-manifest.json"
+        ],
+        "new_derived_outputs_not_claimed_retained_in_union": [
+          "Actual processed final observation-index.sqlite and derived final identity refresh/cache files.",
+          "infrastructure/postcapture/processing.json receipt, replaced only by actual exactsource restore/finalize/evaluation/compact step/API and retainedrestore evidence, not fabricated."
+        ],
+        "availability_boundary": "Source causality proves mandatory forecast/model/command/context files predate seal and must be delivered; actual reader still has to verify their existence/hashes/contents against frozen map and input inventory. This is not admission on status alone. Current full_facts does not read finalSQL body; all existing science predicates still must pass. Any genuinely required post-seal scientific body absent from actual compact/capsule rejects union admission and requires lossless saved-state processing/publication recovery.",
+        "complete_costs": "Retain all original acquisition/worker/prepare/restore/suffix/evaluation/failedfullupload/metadata/CI/reader/retention costs; missing internal subphase detail remains unknown, no zero-cost inference. Total API step/job intervals preserve full runtime boundary.",
+        "no_extra_qualifier_requested": true,
+        "no_newcapture_refit_POST_cancel_Telegram": true
+      }
+    }
+  }
+}

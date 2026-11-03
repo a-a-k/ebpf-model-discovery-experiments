@@ -36,7 +36,7 @@ jobs:
               _declarations, PREPARATION_ONLY_SOURCE_REVISIONS,
               _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE, UPLOADED_CHECKPOINT_COPY_SOURCE,
               CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
-              POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE,
+              POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE,
           )
           declaration_input=os.environ['DECLARATIONS']
           input_source={'kind':'inline_json'}
@@ -73,6 +73,7 @@ jobs:
               approved[PETCLINIC_WORKER_SOURCE['revision']]=PETCLINIC_WORKER_SOURCE['reviewed_changed_blobs']
               approved[POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']]=POSTCAPTURE_GUEST_RELEASE_SOURCE['reviewed_changed_blobs']
               approved[CLOSED_POSTCAPTURE_SOURCE['revision']]=CLOSED_POSTCAPTURE_SOURCE['reviewed_changed_blobs']
+              approved[CLOSED_CAPTURE_RECOVERY_SOURCE['revision']]=CLOSED_CAPTURE_RECOVERY_SOURCE['reviewed_changed_blobs']
           proofs=[]
           if approved:
               destination=path.parent/'source-equivalence'
@@ -177,6 +178,7 @@ jobs:
               extract_verified_compact, remove_verified_working_copy,
               verified_nonmaterialized_files,
           )
+          from ebpf_discovery.report_v5 import _closed_union_profile, _closed_union_api_facts
           provenance=pathlib.Path('results/iteration-5/provenance')
           declaration=json.loads((provenance/'declarations.json').read_text())
           costs=json.loads(pathlib.Path('results/iteration-5/costs-v5.json').read_text())
@@ -191,6 +193,16 @@ jobs:
                   identity=[collector,cell['system'],cell['mode'],cell['seed']]
                   name=f"v5-summary-{collector}-{stage}-{cell['system']}-{cell['mode']}-{cell['seed']}-{run_id}"
                   full_name=name.replace('v5-summary-','campaign-v5-',1)
+                  union=_closed_union_profile({**cell,'collector':collector,'run_id':run_id})
+                  union_evidence=None
+                  if union is not None:
+                      def actual_api(path):
+                          return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/{path}']))
+                      union_evidence={'run':actual_api(f'runs/{run_id}'),
+                          'job':actual_api(f'jobs/{union["processing_job"]}'),
+                          'capture_job':actual_api(f'jobs/{union["capture_job"]}'),
+                          'artifacts':artifacts}
+                      _closed_union_api_facts(union_evidence)
                   row={'run_id':run_id,'repository':repo,'cell':identity,'stage':stage,
                        'name':name,'full_artifact_name':full_name}
                   if not isinstance(artifacts,list):
@@ -270,6 +282,7 @@ jobs:
                   sidecar={'run_id':run_id,'repository':repo,'head_sha':retained.get('head_sha'),
                       'artifact_id':compact[0]['id'],'name':name,'digest':compact[0].get('digest'),
                       'expired':False,
+                      'closed_capture_union':union_evidence,
                       'full_artifact_id':full_artifact.get('id') if full_artifact else None,
                       'full_artifact_name':full_name,
                       'full_artifact_digest':full_artifact.get('digest') if full_artifact else None,
@@ -281,11 +294,13 @@ jobs:
                           'status':recovery.get('status'),
                       } if recovery else None)}
                   (destination/'artifact-provenance.json').write_text(json.dumps(sidecar,indent=2)+'\n')
-                  status=('downloaded' if full_available else
+                  status=('downloaded_closed_capture_union' if union is not None else
+                          'downloaded' if full_available else
                           'downloaded_full_artifact_expired' if full_artifact else
                           'downloaded_full_artifact_missing')
                   rows.append({**row,'status':status,'artifact':compact[0],
                                'full_artifact':full_artifact,
+                               'closed_capture_union':union_evidence,
                                'compact_zip_verification':zip_proof,
                                'declared_file_recovery':recovery})
           (provenance/'retrieval.json').write_text(json.dumps(rows,indent=2)+'\n')
