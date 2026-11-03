@@ -8,6 +8,7 @@ issue application traffic, filter observations, or choose between outcomes.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import importlib
 import json
@@ -197,21 +198,122 @@ def _index_table_proof(path: Path) -> dict:
         db.close()
 
 
-def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path) -> dict:
+def _complete_index_input(path: Path) -> dict:
+    """Hash a closed, regular SQLite backup, including every byte and WAL content."""
+    import stat
+    before = path.lstat()
+    if not stat.S_ISREG(before.st_mode) or path.is_symlink():
+        raise ValueError("training index proof input is not a regular closed backup")
+    digest, size = hashlib.sha256(), 0
+    with path.open('rb') as stream:
+        opened = os.fstat(stream.fileno())
+        if (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):
+            raise ValueError("training index proof input was replaced before hashing")
+        while chunk := stream.read(1024 * 1024):
+            digest.update(chunk)
+            size += len(chunk)
+        after = os.fstat(stream.fileno())
+    current = path.lstat()
+    identity = lambda row: (row.st_dev, row.st_ino, row.st_mode, row.st_size,
+                            row.st_mtime_ns, row.st_ctime_ns)
+    # Windows path stat and descriptor stat expose different ctime semantics;
+    # compare each stable view to itself, and bind descriptor to path by inode.
+    if (size != before.st_size or identity(opened) != identity(after)
+            or identity(before) != identity(current)
+            or identity(before)[:-1] != identity(opened)[:-1]):
+        raise ValueError("training index proof input changed during complete hashing")
+    return {'bytes': size, 'sha256': digest.hexdigest()}
+
+
+def _checkpoint_index_reference(checkpoint: Path, verified: dict) -> dict:
+    """Bind one original logical proof to its exact manifest-verified input bytes."""
+    started = time.monotonic_ns()
+    manifest = _read(checkpoint / 'manifest.json')
+    expected = (verified.get('files') or {}).get('observation-index.sqlite')
+    record = (manifest.get('files') or {}).get('observation-index.sqlite') or {}
+    if (verified.get('manifest_sha256') != _sha(checkpoint / 'manifest.json')
+            or not expected or expected != {k: record.get(k) for k in ('bytes', 'sha256')}):
+        raise ValueError('original logical proof lacks its verified checkpoint manifest/input')
+    path = checkpoint / 'observation-index.sqlite'
+    before = path.lstat()
+    import stat
+    if not stat.S_ISREG(before.st_mode) or path.is_symlink():
+        raise ValueError('original logical proof input is not a regular closed backup')
+    logical_started = time.monotonic_ns()
+    logical = _index_table_proof(path)
+    logical_seconds = (time.monotonic_ns() - logical_started) / 1e9
+    actual = _complete_index_input(path)
+    after = path.lstat()
+    if (actual != expected or (before.st_dev, before.st_ino, before.st_size,
+            before.st_mtime_ns, before.st_ctime_ns) != (after.st_dev, after.st_ino,
+            after.st_size, after.st_mtime_ns, after.st_ctime_ns)):
+        raise ValueError('original logical proof input differs from its verified checkpoint')
+    return {'schema_version': 'exact-checkpoint-index-proof-reference-v1',
+        'checkpoint_identity': manifest['identity'],
+        'manifest_sha256': verified['manifest_sha256'], 'input': actual,
+        'logical_proof': logical, 'logical_proof_sha256': _json_sha(logical),
+        'original_full_logical_proof_executed': True,
+        'original_logical_proof_seconds': logical_seconds,
+        'elapsed_seconds': (time.monotonic_ns() - started) / 1e9}
+
+
+def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path,
+                                 *, reference=None, receipt=None) -> dict:
     temporary = Path(temporary)
     temporary.parent.mkdir(parents=True, exist_ok=True)
-    if temporary.exists():
+    if temporary.exists() or temporary.is_symlink():
         raise ValueError("consistent parent-index backup destination already exists")
+    started = time.monotonic_ns()
     target = sqlite3.connect(temporary)
     try:
         connection.backup(target)
         target.commit()
     finally:
         target.close()
+    result = {'schema_version': 'consistent-index-exact-input-proof-v1',
+        'backup_path': str(temporary), 'status': 'started',
+        'backup_seconds': (time.monotonic_ns() - started) / 1e9,
+        'whole_consistent_backup_bytes_verified': False,
+        'logical_proof_reused': False, 'full_fallback_executed': False}
     try:
-        return _index_table_proof(temporary)
+        if reference is None:
+            return _index_table_proof(temporary)
+        if (reference.get('schema_version') != 'exact-checkpoint-index-proof-reference-v1'
+                or reference.get('original_full_logical_proof_executed') is not True
+                or not reference.get('checkpoint_identity')
+                or len(str(reference.get('manifest_sha256'))) != 64
+                or reference.get('logical_proof_sha256') != _json_sha(reference.get('logical_proof'))):
+            raise ValueError('consistent backup proof lacks its original input-bound logical proof')
+        hashing_started = time.monotonic_ns()
+        actual = _complete_index_input(temporary)
+        result.update(backup_input=actual, checkpoint_input=reference['input'],
+            checkpoint_identity=reference['checkpoint_identity'],
+            manifest_sha256=reference['manifest_sha256'],
+            original_logical_proof_sha256=reference['logical_proof_sha256'],
+            complete_backup_hash_seconds=(time.monotonic_ns()-hashing_started)/1e9,
+            whole_consistent_backup_bytes_verified=True)
+        if actual == reference['input']:
+            logical = copy.deepcopy(reference['logical_proof'])
+            result.update(logical_proof_reused=True,
+                proof_basis='complete immutable input byte equality; original logical proof reused')
+        else:
+            fallback_started = time.monotonic_ns()
+            logical = _index_table_proof(temporary)
+            result.update(full_fallback_executed=True,
+                full_fallback_seconds=(time.monotonic_ns()-fallback_started)/1e9,
+                proof_basis='original complete rowid/all-column/schema/quickcheck proof executed')
+        result.update(status='complete', resulting_logical_proof_sha256=_json_sha(logical))
+        return logical
+    except BaseException as error:
+        result.update(status='failed', error=repr(error))
+        raise
     finally:
-        temporary.unlink(missing_ok=True)
+        result['elapsed_seconds'] = (time.monotonic_ns() - started) / 1e9
+        try:
+            if receipt is not None:
+                _atomic_json(receipt, result)
+        finally:
+            temporary.unlink(missing_ok=True)
 
 
 def _readonly_store(path: Path, store_type=ObservationStore, *, immutable_prefix=False) -> ObservationStore:
@@ -770,7 +872,9 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(cost_path, cost)
     validation_started = time.monotonic_ns()
     expected, checkpoint_proof = _expected(campaign, Path(checkpoint), release, plans)
-    checkpoint_index_proof = _index_table_proof(Path(checkpoint) / "observation-index.sqlite")
+    index_reference = _checkpoint_index_reference(Path(checkpoint), checkpoint_proof)
+    checkpoint_index_proof = index_reference["logical_proof"]
+    cost["checkpoint_index_proof_reference"] = index_reference
     # The checkpoint payload has had its last parent read. Release its verified
     # uploaded mirror before allocating another full consistent live DB backup.
     session = requests.Session()
@@ -781,7 +885,8 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     cost["checkpoint_validation_includes_checkpoint_copy_release"] = True
     _atomic_json(cost_path, cost)
     live_index_proof = _consistent_live_index_proof(
-        campaign.store.db, state / ".parent-index-before.sqlite")
+        campaign.store.db, state / ".parent-index-before.sqlite",
+        reference=index_reference, receipt=state / "parent-index-before-proof-reuse.json")
     if live_index_proof != checkpoint_index_proof:
         raise RuntimeError("live parent training index differs from its closed checkpoint backup")
     expected["training_index_proof_sha256"] = _json_sha(checkpoint_index_proof)
@@ -935,7 +1040,8 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     if destination.exists():
         raise ValueError("toolchain destination appeared before atomic import")
     live_after = _consistent_live_index_proof(
-        campaign.store.db, state / ".parent-index-after.sqlite")
+        campaign.store.db, state / ".parent-index-after.sqlite",
+        reference=index_reference, receipt=state / "parent-index-after-proof-reuse.json")
     if live_after != checkpoint_index_proof:
         raise RuntimeError("live parent training index changed while worker was running")
     _atomic_json(state / "training-index-proof.json", {
