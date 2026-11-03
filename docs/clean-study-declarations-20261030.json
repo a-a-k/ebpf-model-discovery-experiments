@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Original fixed81 unchanged. Actual saved evidence root+independent reviewed65: OBI27,Coroot27,DeepFlowDSB9,DeepFlowPCabsent6/7. The16:34UTC direct main snapshot has66 technical complete packets; PCabsent8 review pending,7 mainjobs active and3PCfullcases in original A queue. FourVsource6eaa OTel repeats remain healthy; five older OTel timeouts await qualified failure-only replacement. No healthy cancellation/queue switch. Sourcef7ba actual CI41321355288 and lossless record/input qualification41321994264 succeeded with both engineering reviews; exact named consumer/profile CI and per-failure execution admission still required. All adverse/unknown valid, no favorable rerun; noML/costsuperiority hypothesis. Final full81 report/figures/costs/permanentarchives/EnglishREADME/originalskepticGO stillrequired. All archive-related costs include finite76source/twojobwave; publication pending. Never send Telegram in current dialog.",
+  "main_dispatch_status": "Fixed81 unchanged;78cases BOTH ORIGINALactualscienceGO:OBI27,Coroot27,DF24 including allpartial+fullOTel. Actualfull8reader41732175407SUCCESS andROOT+INDscienceGO; all3externalrates2800/3200,6ebpfUNKNOWN/18other.875/context0extra. ThreeabsentOTeltechnicaltimeouts stillincomplete, no newcaptures. ExactSQLproof engineeringGO aloneinsufficient6h; exactprojectionreference qualifier41731168063healthyactive. All78validnegative/adverse/UNKNOWN protected; noML/costsuperiority,full81/6hclaim. Finalreport/figures/fullcosts/finitearchive/EnglishREADME/finalskepticGO remain. NoTelegram.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -5722,6 +5722,31 @@
       "run_id": 41722244664,
       "role": "preparation",
       "note": "ONEsavedoriginalabsent8SQLiteproof qualification f7d0f85SUCCESS. Exactcompleteinputbytes+logicalproofequal, measuredbaseline/2optimizedbackupcosts; no whole6hcure/maincaseclaim."
+    },
+    {
+      "run_id": 41730595883,
+      "role": "preparation",
+      "note": "Exactfe24519 stored projection-reference LinuxCI bothjobsSUCCESS; no capture/model or scientificadmission."
+    },
+    {
+      "run_id": 41731250503,
+      "role": "preparation",
+      "note": "Exact719997b full8dualidentityunionconsumer LinuxCI SUCCESS; no science replay."
+    },
+    {
+      "run_id": 41731242041,
+      "role": "preparation",
+      "note": "Secondactual719997b consumer CI SUCCESS; retained separate cost."
+    },
+    {
+      "run_id": 41731168063,
+      "role": "preparation",
+      "note": "ONEsaved originalabsent8 exact storedprojectionreference exportqualification; actualsourcefe24519, allorderedindexes/wire/fullvaluestore equality plus completeprep costs; active, no model/traffic/newmain or6hGO."
+    },
+    {
+      "run_id": 41732175407,
+      "role": "evidence",
+      "note": "ONEoriginalfull8savedreader source719997b bothjobsSUCCESS andROOT+IND ORIGINALactualscientificGO. Oldf045capsule/newa9compact+restore/API truthfuldualidentity; no traffic/model/suffix replay.78admitted,3technicalabsentremain."
     }
   ],
   "blocked_main_cells": [],
@@ -5748,5 +5773,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-03T13:25:28.848410+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-03T23:00:06.835988+00:00"
 }

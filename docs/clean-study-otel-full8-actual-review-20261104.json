@@ -1,0 +1,4023 @@
+{
+  "schema_version": "original-full8-dual-union-joint-scientific-admission-v1",
+  "recorded_utc": "2026-11-03T23:01:20.474417+00:00",
+  "both_actual_original_scientific_GO": true,
+  "admitted_main_case_count": 78,
+  "whole81_complete": false,
+  "reader": 41732175407,
+  "source": "719997bda8a5b57e49c729ba2f45f0c28ead061d",
+  "facts_sha256": "532c1fe99c9818c112f7ecc6ff3aa5112111291c8d8a3ad332620ae5eeb2c076",
+  "root_review": {
+    "path": "work\\root-actual-DF-OTel-full8-original-scientific-review-20261104.json",
+    "sha256": "8ea50064c4a898acdbc532d657fd357861c4da3d17f25a82d7dc051def718855",
+    "record": {
+      "recorded_utc": "2026-11-03T22:57:43.705286+00:00",
+      "root_original_actual_scientific_case_GO": true,
+      "independent_actual_scientific_case_GO_still_required": true,
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 8,
+        "scientific_capture_run": 41642796796
+      },
+      "declaration": {
+        "capture_artifact_bytes": 6429750292,
+        "capture_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+        "capture_artifact_id": 13261622894,
+        "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+        "collector": "deepflow",
+        "compact_artifact_bytes": 62995907,
+        "compact_artifact_digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+        "compact_artifact_id": 13274316899,
+        "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "evidence_layout": "closed_capture_compact_union_v1",
+        "full_scope": "retrieve_closed_capture_union",
+        "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "mode": "full",
+        "restore_artifact_bytes": 8441,
+        "restore_artifact_digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+        "restore_artifact_id": 13273877181,
+        "restore_artifact_name": "postcapture-processing-full-8-41706823165",
+        "run_id": 41706823165,
+        "runner": "study",
+        "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "scientific_capture_run_id": 41642796796,
+        "seed": 8,
+        "stage": "main",
+        "system": "otel_demo"
+      },
+      "reader": 41732175407,
+      "reader_job": 126252151479,
+      "reader_source": "719997bda8a5b57e49c729ba2f45f0c28ead061d",
+      "artifact_id": 13278830092,
+      "artifact_digest": "sha256:1a8f3a8862102b028f43c7e63f060adcaf724644cd09ed39b679f4714fde0eec",
+      "facts_path": "work\\main-review-full8-dual-original-union-41732175407-exact-facts\\13278830092\\facts\\saved-evidence-facts.json",
+      "facts_bytes": 33279476,
+      "facts_sha256": "532c1fe99c9818c112f7ecc6ff3aa5112111291c8d8a3ad332620ae5eeb2c076",
+      "facts_crc32": "e49e08a7",
+      "scope_and_shape_GO": "work/full8-dual-union-exact-facts-independent-before-body-scope-shape-GO-20261104.json",
+      "acquisition": {
+        "all_records": 34951,
+        "blocks": 19,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "prospective_output_and_target_ns": [
+        1793729243590309801,
+        1793729247232144454
+      ],
+      "independent_guests": {
+        "boot_ids": {
+          "a": "c3cc0e67-e842-45ff-94c7-025da120b7d0",
+          "b": "9a179677-ed06-419c-8312-649385f2f533"
+        },
+        "guest_image_bytes_independently_rehashed_by_this_review": false,
+        "guest_memory_mib": 6144,
+        "independent_guest_boots": true,
+        "kernel_releases": {
+          "a": "6.8.0-147-generic",
+          "b": "6.8.0-147-generic"
+        },
+        "recorded_image_provenance": {
+          "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+          "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+        },
+        "separate_physical_hosts_claimed": false,
+        "shared_runner_host": true
+      },
+      "actual_tool_executions": {
+        "pooled_Bering": 6,
+        "context_Bering": 2,
+        "total_Bering_costed": 8,
+        "Procrustes_preflights": 6,
+        "actual_distinct_Sheaft": 12,
+        "context_new_Sheaft": 0
+      },
+      "actual_scientific_result": {
+        "all_three_external_successes_of3200": 2800,
+        "ebpf_all6primary_rows_UNKNOWN": true,
+        "native_combined_context_all18_predictions": 0.875,
+        "direct_source_contract_baseline": {
+          "add_to_cart": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          },
+          "browse_product": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          },
+          "checkout": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "context_extra_edges_and_new_primary_forecasts": 0,
+        "interpretation": "DeepFlow alone did not supply the required operation-level RPC/selecteddatabase obligations, even with fullSDK enabled elsewhere. Native/combined/context match the same conditional source-contract baseline and all3 actualexternal rates. No extra primaryforecast utility from adding DeepFlow; no pureBering/costsuperiority claim. This full8checkout outcome2800/3200 does not erase adversefull6/full7 or partial6/7/8 outcomes or transfer theirOOMcause."
+      },
+      "database": {
+        "all_selected_database_down_predictions_null": true,
+        "independent_diagnostics": {
+          "db_down": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 6,
+                "invalid": 0,
+                "success": 0,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "db_up": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 6,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          }
+        },
+        "interpretation": "Catalog DB fault causes independent failures, but all selected DB-fault forecasts remain unknown; no DBforecastbenefit."
+      },
+      "async_persistence": {
+        "normal": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        },
+        "paused_after_resume": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        },
+        "paused_snapshot": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "pending": 20
+          }
+        },
+        "recovered": {
+          "available": true,
+          "paused_absence_is_failure": false,
+          "records": 20,
+          "states": {
+            "persisted_exact": 20
+          }
+        }
+      },
+      "causal_limit": "Native causal stage spans observed but same explicitmessageID across allstages is absent; eBPFfourstagechainunknown. HTTPcompletion and eventualDBpersistence are distinct; paused20pending notfailure.",
+      "closed_original_evidence": {
+        "scientific_input_files": 101793,
+        "scientific_input_bytes": 69977528106,
+        "selected_immutable_bodies_bound": 330,
+        "all_frozen_claims_bound": true,
+        "training_SQL_before_after_worker_and_seal_equal": true,
+        "complete_producer_source_verification_before_mutation": "Exact qualified source verifies all before mutation",
+        "reader_rehash_scope": "Selected payload bodies; complete input inventory claims streamed, not every unselected payload re-read",
+        "processing_is_None": true,
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "zero_kernel_or_buffer_loss_proven": false
+      },
+      "actual_recovery": {
+        "pre_download_capacity": {
+          "SQL_WAL_growth_reserve_bytes": 54787309568,
+          "archive_bytes": 6429750292,
+          "available_bytes": 127383117824,
+          "budget": "verified-delivery-nonoverlapping-phases-v1",
+          "download_restore_required_bytes": 77503195835,
+          "proof_bytes": 22175613,
+          "required_bytes": 125860755111,
+          "restored_processing_peak_bytes": 125860755111,
+          "scientific_file_bytes": 69977528106,
+          "scientific_limit_or_filter": false
+        },
+        "verified_original_restore": {
+          "actual_available_after_restore": 57190821888,
+          "all_original_members_read_to_EOF_and_CRC_checked": true,
+          "archive_bytes": 6429750292,
+          "archive_sha256": "9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "artifact_id": 13261622894,
+          "capture_run_id": "41642796796",
+          "capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "closed_manifest_sha256": "9d72a5bed6f598e0ee14abfd7ab29c2bce300f604de812bfac6c243e7e27e498",
+          "delivery_working_copy": {
+            "bytes": 6429750292,
+            "disposition": "verified_then_removed_owned_delivery",
+            "free_after": 57190825984,
+            "free_before": 50761068544,
+            "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/closed-postcapture.zip",
+            "recorded_ns": 1793735976035979911,
+            "removed_after_all_restore_checks": true,
+            "sha256": "9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+            "verified_file_identity": {
+              "bytes": 6429750292,
+              "device": 2049,
+              "inode": 9177540,
+              "type": 32768
+            }
+          },
+          "elapsed_seconds": 417.792755026,
+          "ended_ns": 1793735976037080052,
+          "processing_run_id": "41706823165",
+          "processing_source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "retry_log_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/offline-host/transport-retries.jsonl",
+          "selected_members": 101796,
+          "started_ns": 1793735558244325026,
+          "status": "complete",
+          "verified_delivery_identity": {
+            "bytes": 6429750292,
+            "device": 2049,
+            "inode": 9177540,
+            "type": 32768
+          },
+          "whole_scientific_manifest_validation": "Required by finalize BEFORE any mutation"
+        },
+        "actual_source_API_completion_chain": {
+          "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "independent_scientific_admission": false,
+          "job_id": 126164235460,
+          "kind": "actual_source_API_step_chain_not_retained_processing_json",
+          "run_id": 41706823165,
+          "scientific_steps": {
+            "10": {
+              "completed_at": "2026-11-03T22:01:18Z",
+              "conclusion": "success",
+              "name": "Record compact evaluation provenance",
+              "number": 10,
+              "started_at": "2026-11-03T22:01:17Z",
+              "status": "completed"
+            },
+            "11": {
+              "completed_at": "2026-11-03T22:01:29Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 11,
+              "started_at": "2026-11-03T22:01:18Z",
+              "status": "completed"
+            },
+            "12": {
+              "completed_at": "2026-11-03T22:01:30Z",
+              "conclusion": "failure",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "started_at": "2026-11-03T22:01:29Z",
+              "status": "completed"
+            },
+            "13": {
+              "completed_at": "2026-11-03T22:01:31Z",
+              "conclusion": "success",
+              "name": "Retain the compact postcapture processing diagnostics",
+              "number": 13,
+              "started_at": "2026-11-03T22:01:30Z",
+              "status": "completed"
+            },
+            "6": {
+              "completed_at": "2026-11-03T19:59:36Z",
+              "conclusion": "success",
+              "name": "Restore the exact closed capture after the actual disk guard",
+              "number": 6,
+              "started_at": "2026-11-03T19:52:37Z",
+              "status": "completed"
+            },
+            "7": {
+              "completed_at": "2026-11-03T21:59:11Z",
+              "conclusion": "success",
+              "name": "Verify all closed inputs and run the unchanged offline suffix",
+              "number": 7,
+              "started_at": "2026-11-03T19:59:36Z",
+              "status": "completed"
+            },
+            "9": {
+              "completed_at": "2026-11-03T22:01:17Z",
+              "conclusion": "success",
+              "name": "Evaluate retained full campaign evidence",
+              "number": 9,
+              "started_at": "2026-11-03T21:59:11Z",
+              "status": "completed"
+            }
+          },
+          "unavailable": [
+            "processed_full_snapshot",
+            "final_mutable_SQL",
+            "retained_processing_json"
+          ]
+        }
+      },
+      "complete_costs": {
+        "copied": {
+          "campaign_elapsed_seconds": 31209.138089228,
+          "shared_input_preparation_seconds": 2659.308684301,
+          "toolchain_build_seconds": 21.738445523,
+          "toolchain_clone_seconds": 5.02642475,
+          "bering_replay_command_count": 8,
+          "bering_replay_command_seconds": 1628.394986863,
+          "toolchain_command_count": 44,
+          "toolchain_command_seconds": 2067.319223346,
+          "toolchain_command_failures": 0,
+          "manual_preparation": {
+            "measured": false,
+            "reason": "human preparation time was not instrumented; no full-cost advantage claimed"
+          },
+          "cost_overlap_note": "checkpoint creation/upload/hold and any remote worker wait are included in campaign elapsed; worker compute overlaps parent wait and is a separate Actions job; swap setup precedes campaign elapsed"
+        },
+        "remote_toolchain": {
+          "archive_download_seconds": 58.3504089,
+          "checkpoint_validation_includes_checkpoint_copy_release": true,
+          "checkpoint_validation_seconds": 1159.197499914,
+          "dispatch_seconds": 2.217978754,
+          "ended_ns": 1793729158568415215,
+          "nesting": "parent_wait_wall_seconds contains worker compute; do not add it to worker command or compute costs",
+          "output_package_unpack_seconds": null,
+          "output_transfer_seconds": 159.32632011,
+          "output_zip_extract_seconds": 100.905630587,
+          "parent_wait_wall_seconds": 7487.544990312,
+          "post_import_cleanup_errors": [],
+          "schema_version": "remote-toolchain-cost-v4",
+          "scope": "parent-side checkpoint validation, dispatch, wait, transfer, verification and import",
+          "started_ns": 1793719794250324287,
+          "uploaded_checkpoint_copy_release": {
+            "disk_free_after": 52910637056,
+            "disk_free_before": 26115198976,
+            "elapsed_seconds": 115.833006898,
+            "logical_bytes_unlinked": 26658035031,
+            "observed_disk_free_delta": 26795438080,
+            "removed_files": 85640,
+            "status": "released_verified_local_payload"
+          },
+          "verification_import_seconds": 555.214005773,
+          "worker_artifact_digest": "sha256:749903bf1c69ca35176e297f1b1ad9ff90ea54a498d4138fe8f3d23313230c8d",
+          "worker_artifact_id": 13257430252,
+          "worker_poll_interval_seconds": 60,
+          "worker_run_attempt": 1,
+          "worker_run_id": 41667812697
+        },
+        "restore_seconds": 417.792755026,
+        "suffix_API_interval": [
+          "2026-11-03T19:59:36Z",
+          "2026-11-03T21:59:11Z"
+        ],
+        "limit": "All originalacquisition/worker/waits/checkpoint/import/release/seal+capacityguardfailure+actuala9recovery+failedfullupload+consumerCI+reader+transfer+retention/closing costs retained. Workerwall overlapsparentwait; no billable/CPU equivalence or humanmeasurement. No6h/costsuperiorityclaim."
+      },
+      "original_criterion": "Fixed81 eBPFfeasibility under absent/partialSDK with independentlyobservedexternaloutcomes; allactualpretargetoutputs, same4methods/2views/3seeds/3agents. No ML/costsuperiority hypothesis.",
+      "strongest_simple_baseline": "Direct conditional source-contract .875, plus same-information observedcontextunion unchanged. Exactsealedcapsule+actualcompletedcompact+restore/API chain for publication-onlyloss avoids repeating healthy science.",
+      "all77_prior_admitted_cases_protected": true,
+      "replay_this_valid_case": false,
+      "whole81_complete": false
+    }
+  },
+  "independent_review": {
+    "path": "work\\independent-full8-dual-original-union-actual-scientific-evidence-original-GO-20261104.json",
+    "sha256": "2c7bed6c3d731f9ea3f983c9b14631c912ac04d96420979ae0c5f50bd25bd5fa",
+    "record": {
+      "independent_original_actual_scientific_case_GO": true,
+      "original_full8_dual_identity_union_actual_evidence_GO": true,
+      "original_scientific_subset_admission_GO": true,
+      "recorded_utc": "2026-11-03T23:00:21.220090+00:00",
+      "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+      "original_scientific_case": {
+        "collector": "deepflow",
+        "mode": "full",
+        "run_id": 41642796796,
+        "seed": 8,
+        "system": "otel_demo"
+      },
+      "original_scientific_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "actual_processing_publication": {
+        "run_id": 41706823165,
+        "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "workflow": ".github/workflows/infrastructure.yml",
+        "job": 126164235460
+      },
+      "reader": {
+        "run_id": 41732175407,
+        "source": "719997bda8a5b57e49c729ba2f45f0c28ead061d",
+        "job": 126252151479,
+        "artifact": 13278830092
+      },
+      "facts": {
+        "path": "work\\main-review-full8-dual-original-union-41732175407-exact-facts\\13278830092\\facts\\saved-evidence-facts.json",
+        "bytes": 33279476,
+        "sha256": "532c1fe99c9818c112f7ecc6ff3aa5112111291c8d8a3ad332620ae5eeb2c076",
+        "crc32": "e49e08a7",
+        "transport_proof_sha256": "fcfa30282dce3f2972688883ae5de3f259c7ccbe1ca78dbbe92cac8a9e0f1d4c"
+      },
+      "original_criterion": "Admit this original81 case on actual source/raw/kernel/native/worker/frozenmodel/command/independentoutcome evidence. Originalcapture remains f045 while processing is a9. No narrowing of methods/views/operations/counts/trials or prospective OUTPUT freeze. All77 earlier validnegative/adverse/unknowncases protected. This is not full81 or eBPFutility/cost superiority success.",
+      "integrity": {
+        "counts": {
+          "all_records": 34951,
+          "blocks": 19,
+          "expected_primary": 34800,
+          "primary": 34800,
+          "primary_count_matches": true,
+          "target": 9600,
+          "target_state_counts": {
+            "00": 1200,
+            "01": 1200,
+            "10": 2400,
+            "11": 4800
+          }
+        },
+        "four_methods": [
+          "ebpf",
+          "native",
+          "combined",
+          "context-baseline"
+        ],
+        "both_views": [
+          "raw",
+          "network_scope"
+        ],
+        "primary_evaluation_rows": 24,
+        "saved_graph_model_branches": 18,
+        "source_pins": {
+          "bering": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+          "procrustes": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+          "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a"
+        },
+        "guest_platform": {
+          "boot_ids": {
+            "a": "c3cc0e67-e842-45ff-94c7-025da120b7d0",
+            "b": "9a179677-ed06-419c-8312-649385f2f533"
+          },
+          "guest_image_bytes_independently_rehashed_by_this_review": false,
+          "guest_memory_mib": 6144,
+          "independent_guest_boots": true,
+          "kernel_releases": {
+            "a": "6.8.0-147-generic",
+            "b": "6.8.0-147-generic"
+          },
+          "recorded_image_provenance": {
+            "sha256": "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94",
+            "url": "https://cloud-images.ubuntu.com/noble/20261017/noble-server-cloudimg-amd64.img"
+          },
+          "separate_physical_hosts_claimed": false,
+          "shared_runner_host": true
+        },
+        "selected_true_ebpf_controls": [
+          {
+            "matches": [
+              {
+                "l7_protocol": "Http1",
+                "request_resource": "/collector-control-v5-deepflow-1793712228416308899",
+                "signal_source": "EBPF",
+                "tap_side": "ServerProcess"
+              }
+            ],
+            "node": "a",
+            "raw_length": 1240,
+            "raw_member": "deepflow-raw/node-a/001-positive-control/l7_flow_log",
+            "raw_offset": 2644035,
+            "raw_sha256": "466748f3cb91c912434594a0a5a7938f80efb4dc8fe5e88049457267a037cd56"
+          },
+          {
+            "matches": [
+              {
+                "l7_protocol": "Http1",
+                "request_resource": "/collector-control-v5-deepflow-1793712228416308899",
+                "signal_source": "EBPF",
+                "tap_side": "ServerProcess"
+              }
+            ],
+            "node": "b",
+            "raw_length": 1241,
+            "raw_member": "deepflow-raw/node-b/001-positive-control/l7_flow_log",
+            "raw_offset": 425370,
+            "raw_sha256": "d9d00b7ce5bb82cd4795cd0ad41048001e346294f18bc6223ea601ea861121ee"
+          }
+        ],
+        "pre_target_output_freeze": {
+          "saved_ns": 1793729243590309801,
+          "first_target_started_ns": 1793729247232144454,
+          "all_binding_hashes_match": true,
+          "sealed_frozen_file_count": 15671
+        },
+        "checkpoint_parent_before_after_and_sealed_allrowSQL_equal": true,
+        "training_SQL_proof": {
+          "files": {
+            "rows": 3,
+            "sha256": "f2b26d762b722d5f956e322163251751b7ab83f348e0a1adc5565f9126d9352a"
+          },
+          "links": {
+            "rows": 4256,
+            "sha256": "205b17b9308b4f2f0d6658bcb9541288e243400458393add0688f44a7b703a88"
+          },
+          "observation_provenance": {
+            "rows": 1342339,
+            "sha256": "e6889f3af4e23090e3bcc5196595c29dc87e1642889595d452e5df91f916eb0e"
+          },
+          "proof_basis": "rowid-and-all-columns-v1",
+          "runtime_identity_projection": {
+            "rows": 1342339,
+            "sha256": "96a930f56d08b79e6864d24f975c9b715f06a6ebc7c619c38b61c3f065f6de9d"
+          },
+          "schema_sha256": "668d44331e0bc949eb2764772c7c5422f32ea2e61872909101f862219f2f2dbe",
+          "spans": {
+            "rows": 1342339,
+            "sha256": "26eaf501bdccb77cdc467a62c755844b02bb3023adc91aec301c3cbe5ad341ee"
+          },
+          "supplied_logical_alias_projection": {
+            "rows": 576705,
+            "sha256": "2f7ab9431c4eb2c30888d016c94fbcb450299e98381733101a77f7777e3bb9c3"
+          }
+        },
+        "worker": {
+          "run": 41667812697,
+          "artifact": 13257430252,
+          "digest": "sha256:749903bf1c69ca35176e297f1b1ad9ff90ea54a498d4138fe8f3d23313230c8d",
+          "scientific_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "implementation_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "workflow_definition_source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "checkpoint_unchanged": true,
+          "new_application_traffic": false,
+          "output_claim_scope": {
+            "freeze_map_binding": "compact_freeze_equals_forecast_saved_and_selected_claims_match",
+            "scope": "selected_untyped_outputs_only",
+            "unselected_claims": 15408,
+            "verified_claims": 259,
+            "verified_selected_paths": 259,
+            "whole_worker_tree_verified": false
+          }
+        },
+        "native_full_mode": {
+          "final": {
+            "saved_audit": {
+              "exporter_records": 5208,
+              "malformed_record_evidence": [],
+              "malformed_record_evidence_truncated": false,
+              "malformed_records": 0,
+              "method": "streamed collector-file JSONL inspection after graceful collector termination",
+              "mode": "full",
+              "mode_compliant": true,
+              "mode_definition": "verified_resolved_sdk_configuration",
+              "native_coverage_status": "observed",
+              "product_catalog_mentions": 183,
+              "request_id_capture_status": "observed",
+              "request_id_header_attributes": 19508,
+              "resource_service_names": [
+                "accounting",
+                "ad",
+                "cart",
+                "checkout",
+                "currency",
+                "email",
+                "flagd",
+                "frontend",
+                "frontend-proxy",
+                "image-provider",
+                "payment",
+                "product-catalog",
+                "quote",
+                "recommendation",
+                "shipping"
+              ],
+              "span_markers": 374921,
+              "trace_file_bytes": 312441297,
+              "trace_file_sha256": "e07b5d6f60651bb34b46d4b215e05c47ffd7a0029ba8d090eb9119e8e042913e"
+            },
+            "schema": "native-suppression-verification",
+            "suppression_sha256": "6e5affd046346ba7b9aa4eba8f006e237fa2036383318dc45ff06d37d07162dd"
+          },
+          "training": {
+            "saved_audit": {
+              "exporter_records": 2249,
+              "malformed_record_evidence": [],
+              "malformed_record_evidence_truncated": false,
+              "malformed_records": 0,
+              "method": "streamed collector-file JSONL inspection after graceful collector termination",
+              "mode": "full",
+              "mode_compliant": true,
+              "mode_definition": "verified_resolved_sdk_configuration",
+              "native_coverage_status": "observed",
+              "product_catalog_mentions": 268,
+              "request_id_capture_status": "observed",
+              "request_id_header_attributes": 42889,
+              "resource_service_names": [
+                "accounting",
+                "ad",
+                "cart",
+                "checkout",
+                "currency",
+                "email",
+                "flagd",
+                "frontend",
+                "frontend-proxy",
+                "image-provider",
+                "payment",
+                "product-catalog",
+                "quote",
+                "recommendation",
+                "shipping"
+              ],
+              "span_markers": 664962,
+              "trace_file_bytes": 574043749,
+              "trace_file_sha256": "1849a6a71a079191b52aebd7dea91d874edb807d59c995400f52e313629fd6f7"
+            },
+            "schema": "native-suppression-verification",
+            "suppression_sha256": "3691b1b8edb96af41bd8d37439a3b8c1b53be90b5a343d69a206b053216b6abf"
+          }
+        },
+        "native_interpretation": "Actualnativefull includes product-catalog:268training/183final mentions and fifteen named applicationservices. Not merely labels or disabledcollector blockedexport. Fullmodeobserved spans664962training/374921final are kept; no universal nativecoverage claim."
+      },
+      "actual_pipeline": {
+        "pooled_Bering": [
+          {
+            "source": "combined",
+            "variant": "network_scope",
+            "accepted_inputs": 4896,
+            "ordinary_requests": 2249,
+            "streamed_requests": 2647,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 1342339,
+              "traces": 79078
+            },
+            "observed_model_sha256": "a1feb4f32900dedf1dfde2997578c6770a0207f1aaadf0e9db40a5ade8e081cc",
+            "snapshot_sha256": "5856f0ea3da764c0fded48ec8a0ff73c85a33768df5acc64be862a904fd3682b"
+          },
+          {
+            "source": "combined",
+            "variant": "raw",
+            "accepted_inputs": 4896,
+            "ordinary_requests": 2249,
+            "streamed_requests": 2647,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 1342339,
+              "traces": 79078
+            },
+            "observed_model_sha256": "576aabefd45ce92ffb945dccb885454cef03956bd5ec66527d4459633ae90b18",
+            "snapshot_sha256": "9238291d7bada8f1c67444e947491e2685b48096c1dd289593a3e089282831f6"
+          },
+          {
+            "source": "ebpf",
+            "variant": "network_scope",
+            "accepted_inputs": 2647,
+            "ordinary_requests": 0,
+            "streamed_requests": 2647,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 677377,
+              "traces": 0
+            },
+            "observed_model_sha256": "052ca41876c3e104f8117dc9f96410392d3db1e0246712c06fc6b3281261a705",
+            "snapshot_sha256": "108118d5180da2fafbd887703fb7a42e0903a253bd469826d36d249e3f0e407a"
+          },
+          {
+            "source": "ebpf",
+            "variant": "raw",
+            "accepted_inputs": 2647,
+            "ordinary_requests": 0,
+            "streamed_requests": 2647,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 677377,
+              "traces": 0
+            },
+            "observed_model_sha256": "3405bc395cca808de874b8387819892438c7a14e22d1b65c0f22590cc1e313f6",
+            "snapshot_sha256": "e24f157ec1f56ee09f298e9f070b5e64419a7c3dd564d947134e63ba8754a33f"
+          },
+          {
+            "source": "native",
+            "variant": "network_scope",
+            "accepted_inputs": 2249,
+            "ordinary_requests": 2249,
+            "streamed_requests": 0,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 664962,
+              "traces": 79078
+            },
+            "observed_model_sha256": "bc710a18cf5d7bf2fcc1bae1a79da7a878310f704acbe71e843ba7b03e93a407",
+            "snapshot_sha256": "ad5f07b9f5f29f026c4290ab0b27d9658f0eef5e4eb1cf735de7c91a4e264b2b"
+          },
+          {
+            "source": "native",
+            "variant": "raw",
+            "accepted_inputs": 2249,
+            "ordinary_requests": 2249,
+            "streamed_requests": 0,
+            "ingest": {
+              "dropped_spans": 0,
+              "late_spans": 0,
+              "spans": 664962,
+              "traces": 79078
+            },
+            "observed_model_sha256": "ce75b157e80b1dce73518beac9a6698842c646e01c1b4ed1b55d1c0c8d2ac887",
+            "snapshot_sha256": "9dd055c2bc98c12bce5d20170c1c8132741e6f3e9d003a91afd9759e8c59de64"
+          }
+        ],
+        "observed_graph_counts": {
+          "combined": {
+            "network_scope": {
+              "edges": 94,
+              "endpoints": 36,
+              "services": 44
+            },
+            "raw": {
+              "edges": 111,
+              "endpoints": 36,
+              "services": 77
+            }
+          },
+          "ebpf": {
+            "network_scope": {
+              "edges": 67,
+              "endpoints": 32,
+              "services": 40
+            },
+            "raw": {
+              "edges": 84,
+              "endpoints": 32,
+              "services": 72
+            }
+          },
+          "native": {
+            "network_scope": {
+              "edges": 27,
+              "endpoints": 11,
+              "services": 20
+            },
+            "raw": {
+              "edges": 27,
+              "endpoints": 11,
+              "services": 20
+            }
+          }
+        },
+        "actual_Procrustes_preflight_records": 6,
+        "actual_total_Bering_replays": 8,
+        "actual_primary_Sheaft_simulations": 12,
+        "actual_Sheaft_branch_proofs": [
+          {
+            "source": "native",
+            "variant": "raw",
+            "operation": "browse_product",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/raw/browse_product/binding.json",
+              "pre_target_freeze_sha256": "b5a640555d3ad18c604f7920d7c99c9f0fcdd232b23e956a94a1f5ec31e450c3",
+              "present": true,
+              "sha256": "b5a640555d3ad18c604f7920d7c99c9f0fcdd232b23e956a94a1f5ec31e450c3"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "946a40dfe667e81955468ebc2498fc824ab06c3d79e703ec684e40470305323f",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/raw/browse_product/simulation/report.json",
+                "sha256": "423d73bfa877c16ee2d8f934b062d46b88087ddff7a41e10cf7776da0a5d9554"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/raw/observed.bering-raw.json",
+                "toolchain/discovery/native/raw/observed.json",
+                "toolchain/discovery/native/raw/observed.signal-quality.json",
+                "toolchain/discovery/native/raw/observed.snapshot.json",
+                "toolchain/discovery/native/raw/observed.supplied-aliases.json",
+                "toolchain/native/raw/browse_product/model.json",
+                "toolchain/native/raw/browse_product/model.signal-quality.json",
+                "toolchain/native/raw/browse_product/overlay.json",
+                "toolchain/native/raw/browse_product/provided-metadata-attachment.json",
+                "toolchain/native/raw/browse_product/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "native",
+            "variant": "raw",
+            "operation": "add_to_cart",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/raw/add_to_cart/binding.json",
+              "pre_target_freeze_sha256": "a65074c8cf9f119ea4775d10a8daa563a383834a8746f169c2406fee34641c2d",
+              "present": true,
+              "sha256": "a65074c8cf9f119ea4775d10a8daa563a383834a8746f169c2406fee34641c2d"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "41bfa3a7481e85b1df70278921e57718a3f58f21e0e1d6472956725c3432163a",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/raw/add_to_cart/simulation/report.json",
+                "sha256": "41e7b4d7282c5885e4d8f5a37fce8d4c6fe9c2bbdb1df51f647ac6fa83092c74"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/raw/observed.bering-raw.json",
+                "toolchain/discovery/native/raw/observed.json",
+                "toolchain/discovery/native/raw/observed.signal-quality.json",
+                "toolchain/discovery/native/raw/observed.snapshot.json",
+                "toolchain/discovery/native/raw/observed.supplied-aliases.json",
+                "toolchain/native/raw/add_to_cart/model.json",
+                "toolchain/native/raw/add_to_cart/model.signal-quality.json",
+                "toolchain/native/raw/add_to_cart/overlay.json",
+                "toolchain/native/raw/add_to_cart/provided-metadata-attachment.json",
+                "toolchain/native/raw/add_to_cart/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "native",
+            "variant": "raw",
+            "operation": "checkout",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/raw/checkout/binding.json",
+              "pre_target_freeze_sha256": "0725c81864001e5c1c59139b5d8563d5798304163e468ad642d7ded4aa4e44f2",
+              "present": true,
+              "sha256": "0725c81864001e5c1c59139b5d8563d5798304163e468ad642d7ded4aa4e44f2"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "67b5a7996ef9ad94acbd409494592f1cc121d3d6fd80739bd2dbf59717c6475f",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/raw/checkout/simulation/report.json",
+                "sha256": "e0169c3ef3b75294f2fbaf1b8c9eb809db1ccfb6776c2a00d575bdc49aac20a1"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/raw/observed.bering-raw.json",
+                "toolchain/discovery/native/raw/observed.json",
+                "toolchain/discovery/native/raw/observed.signal-quality.json",
+                "toolchain/discovery/native/raw/observed.snapshot.json",
+                "toolchain/discovery/native/raw/observed.supplied-aliases.json",
+                "toolchain/native/raw/checkout/model.json",
+                "toolchain/native/raw/checkout/model.signal-quality.json",
+                "toolchain/native/raw/checkout/overlay.json",
+                "toolchain/native/raw/checkout/provided-metadata-attachment.json",
+                "toolchain/native/raw/checkout/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "native",
+            "variant": "network_scope",
+            "operation": "browse_product",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/network_scope/browse_product/binding.json",
+              "pre_target_freeze_sha256": "b5a640555d3ad18c604f7920d7c99c9f0fcdd232b23e956a94a1f5ec31e450c3",
+              "present": true,
+              "sha256": "b5a640555d3ad18c604f7920d7c99c9f0fcdd232b23e956a94a1f5ec31e450c3"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "9221d082f7804cbe58d55d6f0ae1a7cc39cff17f6e18975629cc64a08b46e78a",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/network_scope/browse_product/simulation/report.json",
+                "sha256": "8f0cbb793abfcf72afb6d00d4dfe1fe0d92ae59db900f2bae30287e14b476b34"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/native/network_scope/observed.json",
+                "toolchain/discovery/native/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/native/network_scope/observed.snapshot.json",
+                "toolchain/discovery/native/network_scope/observed.supplied-aliases.json",
+                "toolchain/native/network_scope/browse_product/model.json",
+                "toolchain/native/network_scope/browse_product/model.signal-quality.json",
+                "toolchain/native/network_scope/browse_product/overlay.json",
+                "toolchain/native/network_scope/browse_product/provided-metadata-attachment.json",
+                "toolchain/native/network_scope/browse_product/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "native",
+            "variant": "network_scope",
+            "operation": "add_to_cart",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/network_scope/add_to_cart/binding.json",
+              "pre_target_freeze_sha256": "c1965a0835362d6cb6529617d199888dcb3dda3533da821f0e86db96dd2e896c",
+              "present": true,
+              "sha256": "c1965a0835362d6cb6529617d199888dcb3dda3533da821f0e86db96dd2e896c"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "72c62b0fbbb1233cf0b44d15a8163736950b606f99096f7f8f3cc143f70e8e99",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/network_scope/add_to_cart/simulation/report.json",
+                "sha256": "490b58ec0af4e5bca517986433ef1bbc8d049e2269fc0442692b9484d94a3a87"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/native/network_scope/observed.json",
+                "toolchain/discovery/native/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/native/network_scope/observed.snapshot.json",
+                "toolchain/discovery/native/network_scope/observed.supplied-aliases.json",
+                "toolchain/native/network_scope/add_to_cart/model.json",
+                "toolchain/native/network_scope/add_to_cart/model.signal-quality.json",
+                "toolchain/native/network_scope/add_to_cart/overlay.json",
+                "toolchain/native/network_scope/add_to_cart/provided-metadata-attachment.json",
+                "toolchain/native/network_scope/add_to_cart/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "native",
+            "variant": "network_scope",
+            "operation": "checkout",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/native/network_scope/checkout/binding.json",
+              "pre_target_freeze_sha256": "0d7b0d7aef8e4f66ba413dc0879bd496997a68a4f84f65d33ae32280c046d224",
+              "present": true,
+              "sha256": "0d7b0d7aef8e4f66ba413dc0879bd496997a68a4f84f65d33ae32280c046d224"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "111b8c326688eac6bd7b9c9e935abefea4c13308be62a098666c63fa28db4f3e",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/native/network_scope/checkout/simulation/report.json",
+                "sha256": "276f0b26a2debfda8cb7ccea2755a2fdbe0f445646fb4d0690537ae1a84d00dd"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/discovery/native/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/native/network_scope/observed.json",
+                "toolchain/discovery/native/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/native/network_scope/observed.snapshot.json",
+                "toolchain/discovery/native/network_scope/observed.supplied-aliases.json",
+                "toolchain/native/network_scope/checkout/model.json",
+                "toolchain/native/network_scope/checkout/model.signal-quality.json",
+                "toolchain/native/network_scope/checkout/overlay.json",
+                "toolchain/native/network_scope/checkout/provided-metadata-attachment.json",
+                "toolchain/native/network_scope/checkout/provided-metadata-validation.command.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "raw",
+            "operation": "browse_product",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/raw/browse_product/binding.json",
+              "pre_target_freeze_sha256": "332346c914269387507a0073dc2d8c20716845ead384a1077736f7bf84cd5518",
+              "present": true,
+              "sha256": "332346c914269387507a0073dc2d8c20716845ead384a1077736f7bf84cd5518"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "9b83661c4c2ecb90723d28e89c563380524074ebc065396aa9ef7770e07f28ed",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/raw/browse_product/simulation/report.json",
+                "sha256": "56f80cad971a7630f2b3938833ec1f06a9061daf9472e245a5ab42f0a8626a4d"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/raw/browse_product/model.json",
+                "toolchain/combined/raw/browse_product/model.signal-quality.json",
+                "toolchain/combined/raw/browse_product/overlay.json",
+                "toolchain/combined/raw/browse_product/provided-metadata-attachment.json",
+                "toolchain/combined/raw/browse_product/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/raw/observed.bering-raw.json",
+                "toolchain/discovery/combined/raw/observed.json",
+                "toolchain/discovery/combined/raw/observed.signal-quality.json",
+                "toolchain/discovery/combined/raw/observed.snapshot.json",
+                "toolchain/discovery/combined/raw/observed.supplied-aliases.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "raw",
+            "operation": "add_to_cart",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/raw/add_to_cart/binding.json",
+              "pre_target_freeze_sha256": "2bc904b0b9499c1f75635f8f54aea19853b284903dfd0fa3752cb2cb9028bdf8",
+              "present": true,
+              "sha256": "2bc904b0b9499c1f75635f8f54aea19853b284903dfd0fa3752cb2cb9028bdf8"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "9c37cde81322130a954d4ff97362bdda59f62d08cce80ac43e1762f9bedc0fbe",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/raw/add_to_cart/simulation/report.json",
+                "sha256": "83ac91b85c8a759461c922c2637c3a9c921171345e7850fd148c1bd4169e8906"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/raw/add_to_cart/model.json",
+                "toolchain/combined/raw/add_to_cart/model.signal-quality.json",
+                "toolchain/combined/raw/add_to_cart/overlay.json",
+                "toolchain/combined/raw/add_to_cart/provided-metadata-attachment.json",
+                "toolchain/combined/raw/add_to_cart/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/raw/observed.bering-raw.json",
+                "toolchain/discovery/combined/raw/observed.json",
+                "toolchain/discovery/combined/raw/observed.signal-quality.json",
+                "toolchain/discovery/combined/raw/observed.snapshot.json",
+                "toolchain/discovery/combined/raw/observed.supplied-aliases.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "raw",
+            "operation": "checkout",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart during PlaceOrder"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart during PlaceOrder"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/raw/checkout/binding.json",
+              "pre_target_freeze_sha256": "50d73acd94571e609a26b40832c12f2029da862ff5a909e4895b369ee7841535",
+              "present": true,
+              "sha256": "50d73acd94571e609a26b40832c12f2029da862ff5a909e4895b369ee7841535"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "d00fe368eb57c8ba9d433a2989fd28d03dd0e11e3bfe9551958df13410bd35a2",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/raw/checkout/simulation/report.json",
+                "sha256": "5916bc977f52d94635b68eac9ea6b42dc533b6e952b7eed33609a498dd0d9a9b"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/raw/checkout/model.json",
+                "toolchain/combined/raw/checkout/model.signal-quality.json",
+                "toolchain/combined/raw/checkout/overlay.json",
+                "toolchain/combined/raw/checkout/provided-metadata-attachment.json",
+                "toolchain/combined/raw/checkout/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/raw/observed.bering-raw.json",
+                "toolchain/discovery/combined/raw/observed.json",
+                "toolchain/discovery/combined/raw/observed.signal-quality.json",
+                "toolchain/discovery/combined/raw/observed.snapshot.json",
+                "toolchain/discovery/combined/raw/observed.supplied-aliases.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "network_scope",
+            "operation": "browse_product",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/network_scope/browse_product/binding.json",
+              "pre_target_freeze_sha256": "332346c914269387507a0073dc2d8c20716845ead384a1077736f7bf84cd5518",
+              "present": true,
+              "sha256": "332346c914269387507a0073dc2d8c20716845ead384a1077736f7bf84cd5518"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "6e0f58f3936a1f756bb6ee84ad08fe787c125dfbe31b8e0c129a46af670dd3a9",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/network_scope/browse_product/simulation/report.json",
+                "sha256": "c662bed027f94389a5511a01cef98797d13d3838c42d3a57f028b935a2ac262e"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/network_scope/browse_product/model.json",
+                "toolchain/combined/network_scope/browse_product/model.signal-quality.json",
+                "toolchain/combined/network_scope/browse_product/overlay.json",
+                "toolchain/combined/network_scope/browse_product/provided-metadata-attachment.json",
+                "toolchain/combined/network_scope/browse_product/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/combined/network_scope/observed.json",
+                "toolchain/discovery/combined/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/combined/network_scope/observed.snapshot.json",
+                "toolchain/discovery/combined/network_scope/observed.supplied-aliases.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "network_scope",
+            "operation": "add_to_cart",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/network_scope/add_to_cart/binding.json",
+              "pre_target_freeze_sha256": "2bc904b0b9499c1f75635f8f54aea19853b284903dfd0fa3752cb2cb9028bdf8",
+              "present": true,
+              "sha256": "2bc904b0b9499c1f75635f8f54aea19853b284903dfd0fa3752cb2cb9028bdf8"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "bea1b63d86176cb52eeff876d25dbc643a9ebed889378149617ef9c314f12f54",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/network_scope/add_to_cart/simulation/report.json",
+                "sha256": "0eec45c14ba53d655ad66544a799ecd23c057e79e43985e26b4c70d47c06c0ef"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/network_scope/add_to_cart/model.json",
+                "toolchain/combined/network_scope/add_to_cart/model.signal-quality.json",
+                "toolchain/combined/network_scope/add_to_cart/overlay.json",
+                "toolchain/combined/network_scope/add_to_cart/provided-metadata-attachment.json",
+                "toolchain/combined/network_scope/add_to_cart/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/combined/network_scope/observed.json",
+                "toolchain/discovery/combined/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/combined/network_scope/observed.snapshot.json",
+                "toolchain/discovery/combined/network_scope/observed.supplied-aliases.json"
+              ]
+            }
+          },
+          {
+            "source": "combined",
+            "variant": "network_scope",
+            "operation": "checkout",
+            "returncode": 0,
+            "model_present": true,
+            "frozen_binding": {
+              "fields_copied": {
+                "all_required_database_channels_observed": false,
+                "assumed_satisfied_database_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart during PlaceOrder"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "available": true,
+                "database_fault_fixed_other_requirements": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.add_item",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "AddItem"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "add.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.cart.redis.get_cart",
+                      "caller": [
+                        "cart",
+                        "cart-service",
+                        "oteldemo.CartService"
+                      ],
+                      "db_role": "cart",
+                      "db_system": "redis",
+                      "operation_hint": "GetCart during PlaceOrder"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "cart"
+                  }
+                ],
+                "database_fault_prediction_available": false,
+                "database_fault_unknown": [
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "browse.catalog.postgresql.get_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.price_product",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  },
+                  {
+                    "assumption": "database requirement fulfilled under primary replica-only conditional model",
+                    "basis": "declared fixed condition; not inferred from process readiness or observed outcomes",
+                    "obligation": {
+                      "call_id": "checkout.catalog.postgresql.enrich_response",
+                      "caller": [
+                        "product-catalog",
+                        "product_catalog",
+                        "oteldemo.ProductCatalogService"
+                      ],
+                      "db_role": "catalog",
+                      "db_system": "postgresql",
+                      "operation_hint": "SELECT catalog.products by product id"
+                    },
+                    "reason": "database_channel_missing_or_ambiguous",
+                    "recovered_dependency": false,
+                    "resolved_callee": null,
+                    "resolved_caller": "product-catalog"
+                  }
+                ],
+                "entry_service": "frontend",
+                "primary_scope": "topology-only replica intervention conditional on nonintervened requirements being fulfilled",
+                "unknown": []
+              },
+              "frozen_hash_matches": true,
+              "path": "toolchain/combined/network_scope/checkout/binding.json",
+              "pre_target_freeze_sha256": "50d73acd94571e609a26b40832c12f2029da862ff5a909e4895b369ee7841535",
+              "present": true,
+              "sha256": "50d73acd94571e609a26b40832c12f2029da862ff5a909e4895b369ee7841535"
+            },
+            "provided_metadata_attachment": {
+              "all_model_fields_exact": true,
+              "final_model_is_a_bering_emitted_snapshot": false,
+              "proof_sha256": "d9c82b143839a75d0037749c17dd1b9e52d60d24ce68d90795917544e7b43fc9",
+              "saved_simulation_report": {
+                "database_down_prediction_bound_if_present": false,
+                "model_digest_and_all_operation_endpoint_state_values_match": true,
+                "path": "toolchain/combined/network_scope/checkout/simulation/report.json",
+                "sha256": "ba2e883ee65d909172ba342d359c1f5cc4a4fbeff80bafd3b4f2808d799c63a3"
+              },
+              "source_signal_quality_bytes_unchanged": true,
+              "verified_frozen_paths": [
+                "toolchain/combined/network_scope/checkout/model.json",
+                "toolchain/combined/network_scope/checkout/model.signal-quality.json",
+                "toolchain/combined/network_scope/checkout/overlay.json",
+                "toolchain/combined/network_scope/checkout/provided-metadata-attachment.json",
+                "toolchain/combined/network_scope/checkout/provided-metadata-validation.command.json",
+                "toolchain/discovery/combined/network_scope/observed.bering-raw.json",
+                "toolchain/discovery/combined/network_scope/observed.json",
+                "toolchain/discovery/combined/network_scope/observed.signal-quality.json",
+                "toolchain/discovery/combined/network_scope/observed.snapshot.json",
+                "toolchain/discovery/combined/network_scope/observed.supplied-aliases.json"
+              ]
+            }
+          }
+        ],
+        "trial_evidence": {
+          "configured_trials_per_available_model": 100000,
+          "literal_source": "f045:src/ebpf_discovery/toolchain_v4.py:685",
+          "source_GitLF_sha256": "f672c8cd407725e54313873db8c9653ac1a25f2835464f29b5b82ceefa32b061",
+          "scope": "Exact actualf045 generator writes seed8 and literal100000trials into each analysis. Savedreader validates exact successful sheaft run --model --analysis --out-dir command, frozenmodel/analysis/contract/report hashes and every operation endpoint state value. Originalanalysis bodies are verified onActions, not independently downloaded locally."
+        },
+        "primary_eBPF_unavailable_branches": 6,
+        "context": {
+          "network_scope": {
+            "status": "reuse_unchanged_union",
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true
+          },
+          "raw": {
+            "status": "reuse_unchanged_union",
+            "added_edge_ids": [],
+            "exact_base_and_all_added_fields": true
+          }
+        },
+        "additional_context_Sheaft_runs": 0,
+        "metadata_boundary": "Availableoperationmodels preserve observededge/endpoint identities and frozen complete providedmetadata attachments. Finaloperationmodel is NOT claimed to be an unmodified Bering-emitted snapshot. Declaredreplica/conditional semantics and logicalaliases are supplied equally to direct/context baselines; no expected graph edges or outcome labels fill missing observed dependencies.",
+        "trace_counter_limit": "eBPF traces0 alone is not evidence of no distributedcausality; use actual missing/ambiguous required binding evidence."
+      },
+      "all_primary_rows": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "reason": "required_graph_evidence_unavailable",
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "raw",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        },
+        {
+          "source": "context-baseline",
+          "variant": "network_scope",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "reason": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "observed_empirical_bounds": [
+            0.875,
+            0.875
+          ]
+        }
+      ],
+      "external_outcomes": {
+        "add_to_cart": {
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.875,
+            0.875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 400,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 800,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 1600,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "browse_product": {
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.875,
+            0.875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 400,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 800,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 1600,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        },
+        "checkout": {
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "copied_empirical_bounds": [
+            0.875,
+            0.875
+          ],
+          "by_state": {
+            "00": {
+              "counts": {
+                "failure": 400,
+                "invalid": 0,
+                "success": 0,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                0.0,
+                0.0
+              ]
+            },
+            "01": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 400,
+                "total": 400,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "10": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 800,
+                "total": 800,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            },
+            "11": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 1600,
+                "total": 1600,
+                "unknown": 0
+              },
+              "bounds": [
+                1.0,
+                1.0
+              ]
+            }
+          },
+          "direct_conditional_baseline": {
+            "available": true,
+            "basis": "declared source contract plus two-slot controlled inventory; A OR B; no HTTP outcomes or recovered graph",
+            "by_state": {
+              "00": 0.0,
+              "01": 1.0,
+              "10": 1.0,
+              "11": 1.0
+            },
+            "controlled_service_required": true,
+            "database": {
+              "available": true,
+              "basis": "declared unconditional selected database requirement",
+              "database_down_prediction": 0.0
+            },
+            "prediction": 0.875,
+            "primary_conditional_assumption": "nonintervened requirements are fulfilled; not inferred from readiness or fitted outcomes"
+          }
+        }
+      },
+      "interpretation": {
+        "primary": "Allthree targetoperations2800/3200=.875, allfaultstates copied. Native/combined/context18rows predict.875 and match; eBPF6rows remainUNKNOWN. The positive conditional native/model result does not show eBPF augmentation gain over native/direct or show feasibility under absent/partialSDK.",
+        "strongest_baseline": "Same-semantic declared direct A OR B primaryconditional forecast.875 alreadymatches allthreeoperations. Combined/context add noedges and noaccuracygain. No claim of betterresult or lower completeeffort than equivalentdirectcalculation.",
+        "database": {
+          "db_up": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 7,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 0,
+                "invalid": 0,
+                "success": 6,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "db_down": {
+            "add_to_cart": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "browse_product": {
+              "counts": {
+                "failure": 7,
+                "invalid": 0,
+                "success": 0,
+                "total": 7,
+                "unknown": 0
+              }
+            },
+            "checkout": {
+              "counts": {
+                "failure": 6,
+                "invalid": 0,
+                "success": 0,
+                "total": 6,
+                "unknown": 0
+              }
+            }
+          },
+          "selected_forecast_impact": [
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "add_to_cart",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "browse_product",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": null,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "ebpf",
+              "structural_graph_available": false,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "native",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "combined",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "raw"
+            },
+            {
+              "comparison": "unknown_unless_both_predictions_available",
+              "counted_as_accuracy_benefit": false,
+              "database_down_prediction": null,
+              "healthy_state_11_prediction": 1,
+              "operation": "checkout",
+              "prognostic_impact": null,
+              "source": "context-baseline",
+              "structural_graph_available": true,
+              "variant": "network_scope"
+            }
+          ],
+          "limit": "Healthy primary state11 predictions1 exist for native/combined/context, but every selectedDBdown prediction isnull, so prognosticDBimpactunknown. Availableprimarymodels assume nonintervenedDB requirementsfulfilled; missing/ambiguous DBchannels are not recovered dependencies. eBPFnetworkinternalDBavailability flags do not override selectedforecasts. ActualDBdown successes0/7,0/7,0/6 andallDBupsuccesses retained; no physicalstop cause beyondselectedcontrols asserted."
+        },
+        "async": {
+          "normal": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          },
+          "paused_after_resume": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          },
+          "paused_snapshot": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "pending": 20
+            }
+          },
+          "recovered": {
+            "available": true,
+            "paused_absence_is_failure": false,
+            "records": 20,
+            "states": {
+              "persisted_exact": 20
+            }
+          }
+        },
+        "classes": "No classfit update duringevaluation. ARI/coverage or eBPF no_positive_evidence statuses are not externalpredictiveutility."
+      },
+      "raw_closure": {
+        "standalone": {
+          "all_raw_payload_bytes_independently_rehashed": false,
+          "nodes": [
+            "a",
+            "b"
+          ],
+          "snapshot_hash_chains_verified": 6,
+          "training_prefix_claims_verified": 2,
+          "zero_kernel_producer_or_flush_loss_proven": false
+        },
+        "native_receiver": {
+          "native": {
+            "errors_json_decode_error_count": 0,
+            "in_flight_handlers_joined": true,
+            "listening_socket_closed": true,
+            "receiver_parse_or_read_failure_count": 0,
+            "saved_bytes_valid": true,
+            "wrapper_json_decode_error_count": 0
+          }
+        },
+        "training_prefix_unchanged_in_final": {
+          "a/l7_flow_log": {
+            "bytes": 1586840679,
+            "final_prefix_sha256": "3d8aed1314867e0976ec28248c5c2c59dfa43268de889f6dae8d2ccc50044185",
+            "training_sha256": "3d8aed1314867e0976ec28248c5c2c59dfa43268de889f6dae8d2ccc50044185",
+            "unchanged": true
+          },
+          "b/l7_flow_log": {
+            "bytes": 160323623,
+            "final_prefix_sha256": "76f9061eea35ba21f63410f876ea657cb87d2dd23b756ac8eeafc23ae294e161",
+            "training_sha256": "76f9061eea35ba21f63410f876ea657cb87d2dd23b756ac8eeafc23ae294e161",
+            "unchanged": true
+          }
+        },
+        "technical_complete": true,
+        "exporter_flush": {
+          "clean_process_termination_observed": true,
+          "known_write_failure_absent": true,
+          "status": "internal_flush_loss_unproven",
+          "zero_kernel_buffer_or_file_flush_loss_proven": false
+        },
+        "limit": "Complete savedstandalone/native receiverbytes with observed clean exits/hashboundtrainingprefixes andtrueeBPFcontrols. No zerokernel/producer/internalflush loss, fullprotocolcoverage or localallrawrehash claimed."
+      },
+      "dual_union": {
+        "declaration": {
+          "capture_artifact_bytes": 6429750292,
+          "capture_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "capture_artifact_id": 13261622894,
+          "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+          "collector": "deepflow",
+          "compact_artifact_bytes": 62995907,
+          "compact_artifact_digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+          "compact_artifact_id": 13274316899,
+          "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+          "compact_scope": "retrieve_selected_nonjournal",
+          "evidence_layout": "closed_capture_compact_union_v1",
+          "full_scope": "retrieve_closed_capture_union",
+          "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "mode": "full",
+          "restore_artifact_bytes": 8441,
+          "restore_artifact_digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+          "restore_artifact_id": 13273877181,
+          "restore_artifact_name": "postcapture-processing-full-8-41706823165",
+          "run_id": 41706823165,
+          "runner": "study",
+          "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "scientific_capture_run_id": 41642796796,
+          "seed": 8,
+          "stage": "main",
+          "system": "otel_demo"
+        },
+        "inventory_rows": 101793,
+        "inventory_bytes": 69977528106,
+        "selected_immutable_payloads_bound": 330,
+        "all_frozen_claims_bound": true,
+        "original_capture_status": {
+          "collector": "deepflow",
+          "commit": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "controller": "clean-study",
+          "elapsed_seconds": 19139.501888493,
+          "ended_ns": 1793731080640971503,
+          "mode": "full",
+          "observed_operations": 34951,
+          "protocol_version": "graph-v5",
+          "run_id": "41642796796",
+          "seed": 8,
+          "smoke": false,
+          "started_ns": 1793711941139083010,
+          "status": "postcapture_complete",
+          "system": "otel_demo",
+          "toolchain_execution": "worker",
+          "workload_counts": {
+            "async": 20,
+            "calibration": 6000,
+            "class_test": 600,
+            "class_train": 600,
+            "database": 20,
+            "target": 1200
+          }
+        },
+        "actual_restore": {
+          "actual_available_after_restore": 57190821888,
+          "all_original_members_read_to_EOF_and_CRC_checked": true,
+          "archive_bytes": 6429750292,
+          "archive_sha256": "9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "artifact_id": 13261622894,
+          "capture_run_id": "41642796796",
+          "capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "closed_manifest_sha256": "9d72a5bed6f598e0ee14abfd7ab29c2bce300f604de812bfac6c243e7e27e498",
+          "delivery_working_copy": {
+            "bytes": 6429750292,
+            "disposition": "verified_then_removed_owned_delivery",
+            "free_after": 57190825984,
+            "free_before": 50761068544,
+            "path": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/closed-postcapture.zip",
+            "recorded_ns": 1793735976035979911,
+            "removed_after_all_restore_checks": true,
+            "sha256": "9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+            "verified_file_identity": {
+              "bytes": 6429750292,
+              "device": 2049,
+              "inode": 9177540,
+              "type": 32768
+            }
+          },
+          "elapsed_seconds": 417.792755026,
+          "ended_ns": 1793735976037080052,
+          "processing_run_id": "41706823165",
+          "processing_source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "retry_log_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/offline-host/transport-retries.jsonl",
+          "selected_members": 101796,
+          "started_ns": 1793735558244325026,
+          "status": "complete",
+          "verified_delivery_identity": {
+            "bytes": 6429750292,
+            "device": 2049,
+            "inode": 9177540,
+            "type": 32768
+          },
+          "whole_scientific_manifest_validation": "Required by finalize BEFORE any mutation"
+        },
+        "first_staged_capacity_guard": {
+          "SQL_WAL_growth_reserve_bytes": 54787309568,
+          "archive_bytes": 6429750292,
+          "available_bytes": 127383117824,
+          "budget": "verified-delivery-nonoverlapping-phases-v1",
+          "download_restore_required_bytes": 77503195835,
+          "proof_bytes": 22175613,
+          "required_bytes": 125860755111,
+          "restored_processing_peak_bytes": 125860755111,
+          "scientific_file_bytes": 69977528106,
+          "scientific_limit_or_filter": false
+        },
+        "second_staged_guard_evidence": {
+          "required_bytes": 55861051392,
+          "available_bytes_bound_by_reader_to_delivery_free_after": 57190825984,
+          "post_guard_restore_available_bytes": 57190821888,
+          "scope": "Reader source verifies actual disk-before-processing.json against exactdelivery.free_after andfull4I+1GiB reserve. Restore actual_available_after_restore is separately4096B lower aftermetadata write; do not conflate these fields."
+        },
+        "actual_source_completion_chain": {
+          "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+          "independent_scientific_admission": false,
+          "job_id": 126164235460,
+          "kind": "actual_source_API_step_chain_not_retained_processing_json",
+          "run_id": 41706823165,
+          "scientific_steps": {
+            "10": {
+              "completed_at": "2026-11-03T22:01:18Z",
+              "conclusion": "success",
+              "name": "Record compact evaluation provenance",
+              "number": 10,
+              "started_at": "2026-11-03T22:01:17Z",
+              "status": "completed"
+            },
+            "11": {
+              "completed_at": "2026-11-03T22:01:29Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 11,
+              "started_at": "2026-11-03T22:01:18Z",
+              "status": "completed"
+            },
+            "12": {
+              "completed_at": "2026-11-03T22:01:30Z",
+              "conclusion": "failure",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 12,
+              "started_at": "2026-11-03T22:01:29Z",
+              "status": "completed"
+            },
+            "13": {
+              "completed_at": "2026-11-03T22:01:31Z",
+              "conclusion": "success",
+              "name": "Retain the compact postcapture processing diagnostics",
+              "number": 13,
+              "started_at": "2026-11-03T22:01:30Z",
+              "status": "completed"
+            },
+            "6": {
+              "completed_at": "2026-11-03T19:59:36Z",
+              "conclusion": "success",
+              "name": "Restore the exact closed capture after the actual disk guard",
+              "number": 6,
+              "started_at": "2026-11-03T19:52:37Z",
+              "status": "completed"
+            },
+            "7": {
+              "completed_at": "2026-11-03T21:59:11Z",
+              "conclusion": "success",
+              "name": "Verify all closed inputs and run the unchanged offline suffix",
+              "number": 7,
+              "started_at": "2026-11-03T19:59:36Z",
+              "status": "completed"
+            },
+            "9": {
+              "completed_at": "2026-11-03T22:01:17Z",
+              "conclusion": "success",
+              "name": "Evaluate retained full campaign evidence",
+              "number": 9,
+              "started_at": "2026-11-03T21:59:11Z",
+              "status": "completed"
+            }
+          },
+          "unavailable": [
+            "processed_full_snapshot",
+            "final_mutable_SQL",
+            "retained_processing_json"
+          ]
+        },
+        "processing": null,
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "readset_boundary": "Originalf045 capsulecontains all raw/frozen models/commands/contextscientificinputs. Actuala9 completedcompact provides finalscientificreports/outcomes. Actualqualifiedsource+restore+suffix/eval/manifest/compact APIchain provesexecution without fabricating processing.json/newrun capsule/processedfull/finalmutableSQL. Allsourceorigins bykind andallselectedimmutable/fullfrozenclaims bound. Reader doesnot locally independently rehash everyunselectedscientificpayload."
+      },
+      "complete_costs": {
+        "copied": {
+          "campaign_elapsed_seconds": 31209.138089228,
+          "shared_input_preparation_seconds": 2659.308684301,
+          "toolchain_build_seconds": 21.738445523,
+          "toolchain_clone_seconds": 5.02642475,
+          "bering_replay_command_count": 8,
+          "bering_replay_command_seconds": 1628.394986863,
+          "toolchain_command_count": 44,
+          "toolchain_command_seconds": 2067.319223346,
+          "toolchain_command_failures": 0,
+          "manual_preparation": {
+            "measured": false,
+            "reason": "human preparation time was not instrumented; no full-cost advantage claimed"
+          },
+          "cost_overlap_note": "checkpoint creation/upload/hold and any remote worker wait are included in campaign elapsed; worker compute overlaps parent wait and is a separate Actions job; swap setup precedes campaign elapsed"
+        },
+        "parent_remote_toolchain": {
+          "archive_download_seconds": 58.3504089,
+          "checkpoint_validation_includes_checkpoint_copy_release": true,
+          "checkpoint_validation_seconds": 1159.197499914,
+          "dispatch_seconds": 2.217978754,
+          "ended_ns": 1793729158568415215,
+          "nesting": "parent_wait_wall_seconds contains worker compute; do not add it to worker command or compute costs",
+          "output_package_unpack_seconds": null,
+          "output_transfer_seconds": 159.32632011,
+          "output_zip_extract_seconds": 100.905630587,
+          "parent_wait_wall_seconds": 7487.544990312,
+          "post_import_cleanup_errors": [],
+          "schema_version": "remote-toolchain-cost-v4",
+          "scope": "parent-side checkpoint validation, dispatch, wait, transfer, verification and import",
+          "started_ns": 1793719794250324287,
+          "uploaded_checkpoint_copy_release": {
+            "disk_free_after": 52910637056,
+            "disk_free_before": 26115198976,
+            "elapsed_seconds": 115.833006898,
+            "logical_bytes_unlinked": 26658035031,
+            "observed_disk_free_delta": 26795438080,
+            "removed_files": 85640,
+            "status": "released_verified_local_payload"
+          },
+          "verification_import_seconds": 555.214005773,
+          "worker_artifact_digest": "sha256:749903bf1c69ca35176e297f1b1ad9ff90ea54a498d4138fe8f3d23313230c8d",
+          "worker_artifact_id": 13257430252,
+          "worker_poll_interval_seconds": 60,
+          "worker_run_attempt": 1,
+          "worker_run_id": 41667812697
+        },
+        "recovery_restore_seconds": 417.792755026,
+        "recovery_suffix_API_interval": [
+          "2026-11-03T19:59:36Z",
+          "2026-11-03T21:59:11Z"
+        ],
+        "seal_scope": "All seal prechecks, closure, inventory and SQL proof; excludes marker write and outer upload/job costs",
+        "full_upload_failure_retained": true,
+        "boundary": "Alloriginalcapture/oldcapacityfailure, worker/preparation/Bering/Sheaft/Procrustes/import/wait overlap, ownedVMrelease/seal/upload, a9recoveryrestore/twohoursuffix/eval/fullpublicationfailure, source/CI/qualification/reader/transport/retention/review andhumanunknown retained. No doublecountedworkerwait, zeroearlystop cost, cost-superiority or allhostdisk/6h cure claim."
+      },
+      "availability_or_accuracy_used_as_admission_gate": false,
+      "primary_repeat_authorized": false,
+      "all81_success_GO": false
+    }
+  },
+  "scope": "Originalfull8actualscientificcaseONLY, honestoldf045capsule/newa9processingunion. OriginalROOTpendingflag retainedasissuancehistory; originalsimmutable. All77priorvalidcasesprotected. Remaining3absenttechnicalfailures, no full81success/eBPFgain/costsuperiority/replayauthorization."
+}

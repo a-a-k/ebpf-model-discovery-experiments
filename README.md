@@ -1,6 +1,8 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
 **Current work: a fresh matched series with an explicit experiment controller.**
+
+Actual scientific evidence has passed both original-criterion reviews for **78 of 81 main cases**. All OBI and Coroot cases and 24 DeepFlow cases are retained, including valid adverse and UNKNOWN results. The three remaining cases are DeepFlow/OTel without SDK traces, stopped by technical timeouts. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
 The question is eBPF feasibility with absent/incomplete tracing. The user selected
 a new runner reusing verified deployment and collection components. The common
 source pins Bering 1.3.1 and corrected DeepFlow parser configuration.

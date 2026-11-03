@@ -444,16 +444,31 @@
       "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708"
     },
     {
-      "system": "otel_demo",
-      "mode": "full",
-      "seed": 8,
+      "capture_artifact_bytes": 6429750292,
+      "capture_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+      "capture_artifact_id": 13261622894,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
       "collector": "deepflow",
-      "run_id": 41706823165,
-      "stage": "main",
-      "runner": "study",
+      "compact_artifact_bytes": 62995907,
+      "compact_artifact_digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+      "compact_artifact_id": 13274316899,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "full_scope": "retrieve_closed_capture_union",
       "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+      "mode": "full",
+      "restore_artifact_bytes": 8441,
+      "restore_artifact_digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+      "restore_artifact_id": 13273877181,
+      "restore_artifact_name": "postcapture-processing-full-8-41706823165",
+      "run_id": 41706823165,
+      "runner": "study",
+      "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
       "scientific_capture_run_id": 41642796796,
-      "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+      "seed": 8,
+      "stage": "main",
+      "system": "otel_demo"
     },
     {
       "system": "petclinic",
@@ -837,7 +852,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 4,
+  "pending_artifact_cells": 3,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2393,6 +2408,33 @@
       "restore_artifact_name": "postcapture-processing-partial-8-41642789738",
       "restore_artifact_bytes": 7728,
       "restore_artifact_digest": "sha256:9ada9d9fdfbd674b0b02888c96a182ef691f4bd03c1397c341300109f684edf8"
+    },
+    {
+      "capture_artifact_bytes": 6429750292,
+      "capture_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+      "capture_artifact_id": 13261622894,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+      "collector": "deepflow",
+      "compact_artifact_bytes": 62995907,
+      "compact_artifact_digest": "sha256:09e5754eb7b7ce4eacd523d7f126e0ed967556640b6e0c321c1bb04526a9de35",
+      "compact_artifact_id": 13274316899,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-8-41706823165",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "full_scope": "retrieve_closed_capture_union",
+      "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+      "mode": "full",
+      "restore_artifact_bytes": 8441,
+      "restore_artifact_digest": "sha256:162c20c708407319a8dc93e5c0697947fa077b09465e95e8fb91bc894b23c9b4",
+      "restore_artifact_id": 13273877181,
+      "restore_artifact_name": "postcapture-processing-full-8-41706823165",
+      "run_id": 41706823165,
+      "runner": "study",
+      "scientific_capture_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "scientific_capture_run_id": 41642796796,
+      "seed": 8,
+      "stage": "main",
+      "system": "otel_demo"
     }
   ],
   "superseded_planned_source": {
@@ -2405,7 +2447,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "77 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews. All3DeepFlowOTelpartial6/7/8 validnegative: all24primaryforecastsUNKNOWN each; retainedexactoriginalcapsule/compact/restore/APIchain. Remainingfull8savedprocessing active; absent6/7/8technicaltimeouts awaitjustifiedruntimefix. All77preserved; nooutcome-basedeligibility gate.",
+  "status": "78 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews. Allpartial6/7/8 andfull8 originalOTelscience retained viaqualified originalcapsule+actualcompact/restore/APIchain, no scientificreplay. Full8 eBPF6UNKNOWN; native/combined/context18predict.875, all3externalrates2800/3200, sameconditionaldirectbaseline, noaddedprimaryforecast. Remaining3DFOTelabsenttechnicaltimeouts await justifiedruntimefix. All78validnegative/adverse/UNKNOWN preserved.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -3017,5 +3059,5 @@
       "scientific_admission": false
     }
   ],
-  "latest_actual_review": "docs/clean-study-otel-partial8-actual-review-20261104.json"
+  "latest_actual_review": "docs/clean-study-otel-full8-actual-review-20261104.json"
 }
