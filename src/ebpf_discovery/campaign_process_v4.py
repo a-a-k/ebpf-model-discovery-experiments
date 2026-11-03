@@ -170,6 +170,10 @@ def _commands(config: dict) -> tuple[list[str], list[str]]:
         campaign.extend(["--collector", config["collector"]])
         if config.get("smoke"):
             campaign.append("--smoke")
+    if config.get("defer_postcapture"):
+        if runner != "study":
+            raise ValueError("postcapture handoff requires the explicit study controller")
+        campaign.append("--defer-postcapture")
     resources = ["bash", str(root / "scripts" / "capture-v4-resources.sh"),
                  str(out / "infrastructure" / "resources"), "15", config["vms"]]
     return campaign, resources
@@ -264,6 +268,8 @@ def _spawn(args) -> int:
               "vms": str(Path(args.vms).resolve()),
                "toolchain_execution": args.toolchain_execution,
                "runner": getattr(args, "runner", "legacy")}
+    if getattr(args, "defer_postcapture", False):
+        config["defer_postcapture"] = True
     if getattr(args, "collector", None):
         config.update(collector=args.collector, smoke=bool(args.smoke))
     elif getattr(args, "smoke", False):
@@ -399,6 +405,7 @@ def main() -> None:
     start.add_argument("--collector", choices=("obi", "deepflow", "coroot"))
     start.add_argument("--runner", choices=("legacy", "study"), default="legacy")
     start.add_argument("--smoke", action="store_true")
+    start.add_argument("--defer-postcapture", action="store_true")
     wait = commands.add_parser("wait")
     _common(wait)
     wait.add_argument("--until", choices=("checkpoint", "exit"), required=True)

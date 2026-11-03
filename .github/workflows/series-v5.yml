@@ -68,6 +68,16 @@ jobs:
   campaign:
     needs: prepare
     runs-on: ubuntu-24.04
+    env:
+      DEFER_POSTCAPTURE: ${{ inputs.runner == 'study' && inputs.collector == 'deepflow' && inputs.stage == 'main' && inputs.system == 'otel_demo' && inputs.mode != 'all' && inputs.seed != 'all' }}
+    outputs:
+      postcapture_ready: ${{ steps.capture_handoff.outputs.ready }}
+      postcapture_file_bytes: ${{ steps.capture_handoff.outputs.file_bytes }}
+      postcapture_proof_bytes: ${{ steps.capture_handoff.outputs.proof_bytes }}
+      postcapture_index_bytes: ${{ steps.capture_handoff.outputs.index_bytes }}
+      postcapture_manifest_sha256: ${{ steps.capture_handoff.outputs.manifest_sha256 }}
+      postcapture_artifact_id: ${{ steps.capture_upload.outputs.artifact-id }}
+      postcapture_artifact_digest: ${{ steps.capture_upload.outputs.artifact-digest }}
     permissions:
       contents: read
       actions: write
@@ -190,6 +200,7 @@ jobs:
         run: |
           smoke_args=()
           if [[ "$SELECTED_STAGE" == smoke ]]; then smoke_args+=(--smoke); fi
+          if [[ "$DEFER_POSTCAPTURE" == true ]]; then smoke_args+=(--defer-postcapture); fi
           python -m ebpf_discovery.campaign_process_v4 start \
             --state-dir work/campaign-process --out work/campaign \
             --checkpoint work/training-checkpoint --vms work/vms \
@@ -297,15 +308,51 @@ jobs:
       - name: Stop guests
         if: always()
         run: bash scripts/vms.sh stop work/vms
+      - name: Seal the complete closed postcapture input before offline processing
+        id: capture_handoff
+        if: success() && env.DEFER_POSTCAPTURE == 'true'
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.postcapture_v5 seal --campaign work/campaign --proof work/postcapture-proof
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          from pathlib import Path
+          from ebpf_discovery.remote_toolchain_v4 import _read, _sha
+          root = Path('work/postcapture-proof')
+          proof = _read(root/'closed.json')
+          print('ready=true')
+          print('file_bytes='+str(proof['file_bytes']))
+          print('index_bytes='+str(proof['index_bytes']))
+          print('proof_bytes='+str(sum(p.stat().st_size for p in root.rglob('*') if p.is_file())))
+          print('manifest_sha256='+_sha(root/'closed.json'))
+          PY
+      - uses: actions/upload-artifact@v4
+        id: capture_upload
+        if: steps.capture_handoff.outputs.ready == 'true'
+        with:
+          name: postcapture-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/
+            work/postcapture-proof/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
       - name: Evaluate retained full campaign evidence
-        if: always()
+        if: always() && steps.capture_upload.outcome != 'success'
         env:
           PYTHONPATH: src
         run: |
           python -m ebpf_discovery.evaluate_v5 --campaign work/campaign \
             --out work/campaign/evaluation-v5.json
       - name: Record compact evaluation provenance
-        if: always()
+        if: always() && steps.capture_upload.outcome != 'success'
         run: |
           python - <<'PY'
           import hashlib, json, os
@@ -335,7 +382,7 @@ jobs:
           (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
           PY
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && steps.capture_upload.outcome != 'success'
         with:
           name: v5-summary-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
           path: |
@@ -480,7 +527,7 @@ jobs:
           retention-days: 90
           if-no-files-found: warn
       - uses: actions/upload-artifact@v4
-        if: always() && matrix.system != 'deathstarbench'
+        if: always() && matrix.system != 'deathstarbench' && steps.capture_upload.outcome != 'success'
         with:
           name: campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}
           path: |
@@ -513,3 +560,172 @@ jobs:
           include-hidden-files: true
           retention-days: 90
           if-no-files-found: error
+
+  postcapture:
+    name: Complete the closed OTel capture offline
+    needs: campaign
+    if: needs.campaign.result == 'success' && needs.campaign.outputs.postcapture_ready == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      PYTHONPATH: src
+      GH_TOKEN: ${{ github.token }}
+      CAPTURE_ARTIFACT_ID: ${{ needs.campaign.outputs.postcapture_artifact_id }}
+      CAPTURE_ARTIFACT_DIGEST: ${{ needs.campaign.outputs.postcapture_artifact_digest }}
+      CAPTURE_FILE_BYTES: ${{ needs.campaign.outputs.postcapture_file_bytes }}
+      CAPTURE_PROOF_BYTES: ${{ needs.campaign.outputs.postcapture_proof_bytes }}
+      CAPTURE_INDEX_BYTES: ${{ needs.campaign.outputs.postcapture_index_bytes }}
+      CAPTURE_MANIFEST_SHA256: ${{ needs.campaign.outputs.postcapture_manifest_sha256 }}
+      CAPTURE_MODE: ${{ inputs.mode }}
+      CAPTURE_SEED: ${{ inputs.seed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the unchanged scientific processing dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Free unused hosted SDK copies before restoring the closed capture
+        run: |
+          mkdir -p work/offline-host
+          df -B1 . > work/offline-host/host-disk-before.txt
+          python - <<'PY'
+          import json,pathlib,shutil,subprocess,sys,time
+          out=pathlib.Path('work/offline-host')
+          protected=[pathlib.Path.cwd().resolve(),pathlib.Path(sys.executable).resolve()]
+          for tool in ('gh','git','node'):
+              binary=shutil.which(tool)
+              if binary: protected.append(pathlib.Path(binary).resolve())
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc',
+                 '/usr/local/.ghcup','/usr/share/swift','/usr/lib/jvm',
+                 '/opt/hostedtoolcache/CodeQL','/opt/hostedtoolcache/go',
+                 '/opt/hostedtoolcache/Ruby','/opt/az','/opt/google',
+                 '/opt/microsoft','/usr/local/share/powershell','/usr/local/share/boost']
+          proof={'scope':'Offline postcapture unused hosted SDK/images; no scientific payload deletion',
+                 'started_ns':time.time_ns(),'free_before':shutil.disk_usage('.').free,
+                 'protected_runtime_paths':[str(p) for p in protected],'paths':[],'docker_cleanup':[]}
+          for name in paths:
+              path=pathlib.Path(name)
+              assert not any(p.is_relative_to(path.resolve()) for p in protected)
+              before=shutil.disk_usage('.').free
+              size=subprocess.run(['sudo','du','-sx','-B1','--',name],capture_output=True,text=True)
+              subprocess.run(['sudo','rm','-rf','--',name],check=True)
+              proof['paths'].append({'path':name,'du_returncode':size.returncode,'du_stdout':size.stdout,
+                                     'du_stderr':size.stderr,'free_before':before,'free_after':shutil.disk_usage('.').free})
+              (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          for command in (['sudo','docker','image','prune','--all','--force'],
+                          ['sudo','docker','builder','prune','--all','--force']):
+              result=subprocess.run(command,capture_output=True,text=True)
+              proof['docker_cleanup'].append({'command':command,'returncode':result.returncode,
+                                              'stdout':result.stdout,'stderr':result.stderr})
+          proof.update(ended_ns=time.time_ns(),free_after=shutil.disk_usage('.').free)
+          (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps({'free_before':proof['free_before'],'free_after':proof['free_after'],
+                            'scope':proof['scope']}))
+          PY
+          df -B1 . > work/offline-host/host-disk-after.txt
+      - name: Restore the exact closed capture after the actual disk guard
+        run: python scripts/restore-closed-postcapture-v5.py
+      - name: Verify all closed inputs and run the unchanged offline suffix
+        run: python -m ebpf_discovery.postcapture_v5 finalize --campaign work/campaign --proof work/restored-postcapture/postcapture-proof
+      - name: Retain offline host and restore costs after either outcome
+        if: always()
+        run: |
+          mkdir -p work/offline-host
+          df -B1 . > work/offline-host/disk-final.txt
+          free -b > work/offline-host/memory-final.txt
+          python -m pip freeze > work/offline-host/python-environment.txt
+          if [[ -d work/campaign ]]; then
+            mkdir -p work/campaign/infrastructure/postcapture-host
+            cp -a work/offline-host/. work/campaign/infrastructure/postcapture-host/
+          fi
+      - name: Evaluate retained full campaign evidence
+        if: always()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.evaluate_v5 --campaign work/campaign \
+            --out work/campaign/evaluation-v5.json
+      - name: Record compact evaluation provenance
+        if: always()
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('work/campaign')
+          names = ['evaluation-v5.json', 'status.json', 'plans.json', 'census.json',
+                   'blocks.json', 'freeze-integrity.json', 'toolchain/forecasts.json',
+                   'evidence-v4.json', 'attempt-journal.jsonl']
+          files = {}
+          for name in names:
+              path = root/name
+              if path.is_file():
+                  with path.open('rb') as stream:
+                      files[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
+              else:
+                  files[name] = None
+          manifest = {'schema_version': 'v5-cell-summary-manifest',
+                      'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                      'system': '${{ inputs.system }}', 'mode': '${{ inputs.mode }}',
+                      'seed': ${{ inputs.seed }}, 'collector': '${{ inputs.collector }}',
+                      'smoke': '${{ inputs.stage }}' == 'smoke',
+                      'full_artifact_name': 'campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}',
+                      'files_sha256': files,
+                      'full_artifact_transport': ('dsb-subtree-retention-v1'
+                          if '${{ inputs.system }}' == 'deathstarbench' else 'original-file-tree'),
+                      'original_evidence_reverified_by_compact_report': False}
+          (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v5-summary-${{ inputs.collector }}-${{ inputs.stage }}-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/evaluation-v5.json
+            work/campaign/evaluation-manifest.json
+            work/campaign/status.json
+            work/campaign/plans.json
+            work/campaign/census.json
+            work/campaign/blocks.json
+            work/campaign/freeze-integrity.json
+            work/campaign/toolchain/forecasts.json
+            work/campaign/evidence-v4.json
+            work/campaign/attempt-journal.jsonl
+            work/campaign/classes-v5.json
+            work/campaign/classes-v4.json
+            work/campaign/observations/collector.json
+            work/campaign/observations/drain-evidence.json
+            work/campaign/observations/technical-positive-control.json
+            work/campaign/observations/control-prestart*.json
+            work/campaign/observations/startup-*.json
+            work/campaign/observations/startup-*.log
+            work/campaign/observations/readiness.json
+            work/campaign/observations/receiver-*.log
+            work/campaign/observations/pre-drain-*-logs.log
+            work/campaign/observations/final-*-collector.log
+          retention-days: 90
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Retain the compact postcapture processing diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postcapture-processing-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}
+          path: work/offline-host/
+          retention-days: 90
+          if-no-files-found: warn
