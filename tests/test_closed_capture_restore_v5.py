@@ -149,3 +149,38 @@ def test_rejects_partial_explicit_identity_without_io(tmp_path, monkeypatch):
     with pytest.raises(ValueError, match="supplied together"):
         RESTORE.restore(capture_run_id="123", release_verified_delivery=True)
     assert not (tmp_path / "work").exists()
+
+
+def test_existing_dangling_delivery_symlink_is_not_overwritten(tmp_path, monkeypatch):
+    capture = fixture_capture(tmp_path, monkeypatch)
+    work = tmp_path / "work"
+    work.mkdir()
+    delivery = work / "closed-postcapture.zip"
+    try:
+        delivery.symlink_to(work / "missing-target")
+    except OSError:
+        pytest.skip("platform does not permit creation of symlinks")
+    with pytest.raises(AssertionError):
+        RESTORE.restore(**capture.kwargs, release_verified_delivery=True)
+    assert capture.downloads == []
+    assert delivery.is_symlink()
+
+
+def test_replaced_delivery_inode_is_not_removed(tmp_path, monkeypatch):
+    capture = fixture_capture(tmp_path, monkeypatch)
+    extract = RESTORE.transport._safe_extract
+
+    def extract_and_replace(archive, destination):
+        extract(archive, destination)
+        saved = archive.with_name("original-delivery.backup")
+        archive.rename(saved)
+        archive.write_bytes(saved.read_bytes())
+
+    monkeypatch.setattr(RESTORE.transport, "_safe_extract", extract_and_replace)
+    with pytest.raises(AssertionError):
+        RESTORE.restore(**capture.kwargs, release_verified_delivery=True)
+    assert read(tmp_path, "restore.json")["status"] == "failed"
+    assert (tmp_path / "work/closed-postcapture.zip").is_file()
+    assert (tmp_path / "work/original-delivery.backup").is_file()
+    assert (tmp_path / "work/campaign/input.bin").read_bytes() == capture.payload
+    assert "delivery_working_copy" not in read(tmp_path, "restore.json")

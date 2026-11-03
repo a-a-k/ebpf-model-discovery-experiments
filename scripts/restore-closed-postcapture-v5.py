@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import stat
 import time
 import zipfile
 
@@ -59,10 +60,15 @@ def restore(*, capture_run_id=None, capture_source=None, release_verified_delive
         transport._atomic_json(host / "disk-before-download.json", guard)
         assert guard["available_bytes"] >= required, "Closed-capture restore has insufficient actual disk capacity"
         archive, restored, campaign = work / "closed-postcapture.zip", work / "restored-postcapture", work / "campaign"
-        assert not archive.exists() and not restored.exists() and not campaign.exists()
+        assert not os.path.lexists(archive) and not restored.exists() and not campaign.exists()
         actual = transport._download(session, metadata["archive_download_url"], headers, archive,
                                      retry_log=retry_log)
         assert "sha256:"+actual == expected_digest and archive.stat().st_size == metadata["size_in_bytes"]
+        delivery_stat = archive.lstat()
+        assert stat.S_ISREG(delivery_stat.st_mode) and not archive.is_symlink()
+        delivery_identity = {"device": delivery_stat.st_dev, "inode": delivery_stat.st_ino,
+                             "type": stat.S_IFMT(delivery_stat.st_mode), "bytes": delivery_stat.st_size}
+        record["verified_delivery_identity"] = delivery_identity
         with zipfile.ZipFile(archive) as bundle:
             members = bundle.infolist()
             assert all(e.filename.split("/", 1)[0] in {"campaign", "postcapture-proof"} for e in members)
@@ -81,13 +87,18 @@ def restore(*, capture_run_id=None, capture_source=None, release_verified_delive
         if release_verified_delivery:
             # This exact owned delivery was completely SHA/size/EOF/CRC/marker checked above.
             # Its original API artifact and every restored scientific file remain intact.
+            current = archive.lstat()
+            assert stat.S_ISREG(current.st_mode) and not archive.is_symlink()
+            assert {"device": current.st_dev, "inode": current.st_ino,
+                    "type": stat.S_IFMT(current.st_mode), "bytes": current.st_size} == delivery_identity
+            assert archive.parent == work and archive.name == "closed-postcapture.zip"
             free_before = shutil.disk_usage(work).free
             archive.unlink()
             assert not archive.exists()
             free_after = shutil.disk_usage(work).free
             record["delivery_working_copy"] = {"path": str(archive), "bytes": metadata["size_in_bytes"],
                 "sha256": actual, "disposition": "verified_then_removed_owned_delivery",
-                "removed_after_all_restore_checks": True, "free_before": free_before,
+                "removed_after_all_restore_checks": True, "verified_file_identity": delivery_identity, "free_before": free_before,
                 "free_after": free_after, "recorded_ns": time.time_ns()}
             processing_guard = {"required_bytes": 4*index_bytes + 1024**3, "available_bytes": free_after,
                 "SQL_WAL_growth_reserve_bytes": 4*index_bytes, "scientific_limit_or_filter": False,
