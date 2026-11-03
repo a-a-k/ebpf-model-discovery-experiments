@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
-      PYTHONPATH: src
+      PYTHONPATH: src:.
       GH_TOKEN: ${{ github.token }}
     outputs:
       file_bytes: ${{ steps.build.outputs.file_bytes }}
@@ -27,6 +27,8 @@ jobs:
           python-version: '3.12'
       - name: Install the unchanged scientific processing dependencies
         run: python -m pip install -e . opentelemetry-proto
+      - name: Verify scientific declaration imports before restoring artifacts
+        run: python -P -c "import systems.otel_demo.experiment_v4; import ebpf_discovery.postcapture_v5"
       - name: Free unused hosted SDK copies before restoring the closed capture
         run: |
           mkdir -p work/offline-host
@@ -106,7 +108,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
-      PYTHONPATH: src
+      PYTHONPATH: src:.
       GH_TOKEN: ${{ github.token }}
       CAPTURE_ARTIFACT_ID: ${{ needs.prepare.outputs.artifact_id }}
       CAPTURE_ARTIFACT_DIGEST: ${{ needs.prepare.outputs.artifact_digest }}
@@ -125,6 +127,8 @@ jobs:
           python-version: '3.12'
       - name: Install the unchanged scientific processing dependencies
         run: python -m pip install -e . opentelemetry-proto
+      - name: Verify scientific declaration imports before restoring artifacts
+        run: python -P -c "import systems.otel_demo.experiment_v4; import ebpf_discovery.postcapture_v5"
       - name: Free unused hosted SDK copies before restoring the closed capture
         run: |
           mkdir -p work/offline-host
