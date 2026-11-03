@@ -127,6 +127,7 @@ def seal(root: Path, proof: Path, *, capture_run_id=None, capture_source=None):
         events = journal.execute("SELECT count(*),max(seq) FROM events").fetchone()
     write_json(proof / "capture-status.json", status)
     marker = {"schema": "closed-otel-postcapture-v5", "identity": expected,
+              "scientific_root": str(root),
               "files": count, "file_bytes": size, "file_inventory_sha256": _sha(proof / "files.jsonl"),
               "capture_status_sha256": _sha(proof / "capture-status.json"),
               "directories": directories,
@@ -149,6 +150,8 @@ def verify(root: Path, proof: Path, *, capture_run_id=None, capture_source=None)
     marker = _read(proof / "closed.json")
     if marker["schema"] != "closed-otel-postcapture-v5":
         raise ValueError("closed capture marker differs")
+    if str(root) != marker["scientific_root"]:
+        raise ValueError("closed capture must be restored at its original absolute scientific root")
     status = _read(proof / "capture-status.json")
     expected = identity(status)
     if (marker["identity"] != expected or status["status"] != "postcapture_complete"

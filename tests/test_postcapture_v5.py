@@ -97,6 +97,15 @@ def test_added_scientific_file_is_not_silently_ignored(capsule):
         postcapture.verify(root, proof)
 
 
+def test_relocated_capture_is_rejected_before_index_mutation(capsule):
+    root, proof = capsule
+    postcapture.seal(root, proof)
+    relocated = root.parent / "different-root"
+    root.rename(relocated)
+    with pytest.raises(ValueError, match="original absolute scientific root"):
+        postcapture.verify(relocated, proof)
+
+
 def test_capture_identity_is_distinct_from_actual_processing_identity(capsule, monkeypatch):
     root, proof = capsule
     monkeypatch.setenv("GITHUB_RUN_ID", "99")
