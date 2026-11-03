@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections import OrderedDict
+from dataclasses import dataclass
 import hashlib
 import json
 import os
@@ -18,6 +19,25 @@ def _digest(row: dict) -> str:
     evidence = {key: value for key, value in row.items() if key != 'raw_file'}
     encoded = json.dumps(evidence, sort_keys=True, separators=(',', ':'), allow_nan=False)
     return hashlib.sha256(encoded.encode()).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
+class _ExportProjectionReference:
+    service: str
+    value_sha256: str
+    resolver_token: object
+    value_store_sha256: str
+    locator_key: tuple
+
+    def get(self, key, default=None):
+        return self.service if key == 'service' else default
+
+
+def _closed_file_signature(path):
+    row = Path(path).lstat()
+    if Path(path).is_symlink() or not Path(path).is_file():
+        raise ValueError('finalized projection reference dependency is not a regular file')
+    return (row.st_dev, row.st_ino, row.st_size, row.st_mtime_ns, row.st_ctime_ns)
 
 
 class ProjectionResolver:
@@ -45,6 +65,10 @@ class ProjectionResolver:
         self.value_store_proof = None
         self.count = 0
         self.closed = False
+        self._reference_token = None
+        self._value_store_signature = None
+        self._value_store_binding = None
+        self._reference_index_signature = None
         self.started_ns = time.time_ns()
 
     @staticmethod
@@ -105,6 +129,50 @@ class ProjectionResolver:
                                       'validated_locator_values': self.count,
                                       'transient_index_bytes': self.path.stat().st_size}}
 
+        self._value_store_signature = _closed_file_signature(self.value_store)
+        self._value_store_binding = (self.value_store_proof['path'], total, digest.hexdigest())
+        self._reference_token = None
+        self._reference_index_signature = None
+
+    def _ready_export_references(self):
+        if self.closed:
+            raise ValueError('projection reference resolver is closed')
+        if self._value_store_binding is None:
+            return False
+        current = self.value_store_proof or {}
+        if ((current.get('path'), current.get('bytes'), current.get('sha256')) != self._value_store_binding
+                or _closed_file_signature(self.value_store) != self._value_store_signature):
+            raise ValueError('authoritative projection value store changed after finalization')
+        if self._reference_token is None:
+            # This fast path is only for a completed, immutable export pass.
+            self.db.execute('PRAGMA query_only=ON')
+            self._reference_index_signature = _closed_file_signature(self.path)
+            self._reference_token = object()
+        elif _closed_file_signature(self.path) != self._reference_index_signature:
+            raise ValueError('finalized projection reference index changed')
+        return True
+
+    def get_for_stream_export(self, key, default=None):
+        """Read the same service and authoritative full-value SHA without Python JSON walks."""
+        if not self._ready_export_references():
+            return self.get(key, default)
+        try:
+            rows = self.db.execute(
+                "SELECT v.sha256,json_type(v.encoded,'$.service'),"
+                "json_extract(v.encoded,'$.service') FROM locator_values l JOIN values_by_sha v "
+                "ON v.sha256=l.value_sha256 WHERE source_file=? AND retained_file=? "
+                "AND offset=? AND length=? AND raw_sha256=?", tuple(key)).fetchall()
+        except UnicodeDecodeError:
+            return self.get(key, default)
+        if not rows:
+            return default
+        if len(rows) != 1 or rows[0][1] != 'text' or not isinstance(rows[0][2], str):
+            # JSON boolean/numeric/null and other shapes keep the original representation.
+            return self.get(key, default)
+        value_sha, _, service = rows[0]
+        return _ExportProjectionReference(service, value_sha, self._reference_token,
+                                           self._value_store_binding[2], tuple(key))
+
     def get(self, key, default=None):
         rows = self.db.execute(
             'SELECT v.encoded FROM locator_values l JOIN values_by_sha v '
@@ -129,6 +197,19 @@ class ProjectionResolver:
         return self.count
 
     def value_reference(self, value):
+        if isinstance(value, _ExportProjectionReference):
+            if (not self._ready_export_references()
+                    or value.resolver_token is not self._reference_token
+                    or value.value_store_sha256 != self._value_store_binding[2]):
+                raise ValueError('streamed projection reference belongs to a different finalized resolver')
+            row = self.db.execute(
+                "SELECT json_type(v.encoded,'$.service'),json_extract(v.encoded,'$.service') "
+                'FROM locator_values l JOIN values_by_sha v ON v.sha256=l.value_sha256 '
+                'WHERE l.source_file=? AND l.retained_file=? AND l.offset=? AND l.length=? '
+                'AND l.raw_sha256=? AND v.sha256=?', (*value.locator_key, value.value_sha256)).fetchone()
+            if row != ('text', value.service):
+                raise ValueError('streamed projection reference differs from its authoritative value')
+            return {'sha256': value.value_sha256}
         encoded = self._encoded(value)
         value_sha = hashlib.sha256(encoded.encode()).hexdigest()
         actual = self.db.execute('SELECT encoded FROM values_by_sha WHERE sha256=?',

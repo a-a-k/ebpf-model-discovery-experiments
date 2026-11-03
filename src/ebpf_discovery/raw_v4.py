@@ -161,7 +161,7 @@ def _json_value(value):
     return next(iter(value.values()), None)
 
 
-def _span_projection(span, projections, *, protobuf=False):
+def _span_projection(span, projections, *, protobuf=False, reference_only=False):
     if not projections:
         return None
     from .runtime_identity_v5 import _locator
@@ -181,6 +181,8 @@ def _span_projection(span, projections, *, protobuf=False):
         return None
     key = tuple(canonical[name] for name in
                 ('source_file', 'retained_file', 'offset', 'length', 'sha256'))
+    if reference_only and hasattr(projections, 'get_for_stream_export'):
+        return projections.get_for_stream_export(key)
     return projections.get(key)
 
 
@@ -201,7 +203,7 @@ def _project_resource_json(resource, service):
 def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encoding: str,
                  network_scope: str | None, source: str = "ebpf",
                  roles: dict | None = None, service_projections: dict | None = None,
-                 transformations: list | None = None) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
+                 transformations: list | None = None, *, projection_references=False) -> tuple[dict, int, list[tuple[str, str]], list[dict]]:
     filtered = copy.deepcopy(payload)
     kept_resources, found, supplied, count = [], [] if identities is not None else None, [], 0
     for resource in filtered.get("resourceSpans", []):
@@ -214,7 +216,8 @@ def _filter_json(payload: dict, identities: set[tuple[str, str]] | None, encodin
                     role = _supply_server_role(span, key, source, roles or {})
                     if role is not None:
                         supplied.append(role)
-                    projection = _span_projection(span, service_projections)
+                    projection = _span_projection(span, service_projections,
+                                                  reference_only=projection_references)
                     group = projection.get('service') if projection else None
                     if group not in grouped:
                         # Keep the child key in its original JSON position, but
@@ -730,7 +733,8 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
                 encoding = document.get("id_encoding", "hex")
                 transformations = []
                 filtered, count, found, supplied = _filter_json(payload, identities, encoding,
-                    network_scope, source, roles, service_projections, transformations)
+                    network_scope, source, roles, service_projections, transformations,
+                    projection_references=bool(derived_proof and identities is None))
                 if not count:
                     continue
                 ordinal += 1

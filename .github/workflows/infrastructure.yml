@@ -1,4 +1,4 @@
-name: Fixed original absent8 consistent SQLite proof comparison
+name: Fixed original absent8 exact export reference comparison
 on:
   workflow_dispatch:
 permissions:
@@ -19,19 +19,19 @@ jobs:
       - run: python -m pip install -e . pytest opentelemetry-proto
       - name: Free only the existing unused hosted SDK directories
         run: |
-          mkdir -p work/sql-proof-reuse-host
-          df -B1 . > work/sql-proof-reuse-host/disk-before.txt
+          mkdir -p work/projection-reference-host
+          df -B1 . > work/projection-reference-host/disk-before.txt
           sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
-          df -B1 . > work/sql-proof-reuse-host/disk-after.txt
-      - name: Compare the exact original saved SQLite proofs and measured costs
-        run: python scripts/validate-exact-sql-backup-proof-reuse-v5.py
-      - name: Retain exact proof equality and phase costs after either outcome
+          df -B1 . > work/projection-reference-host/disk-after.txt
+      - name: Compare exact original exported requests and full value references
+        run: python scripts/validate-exact-projection-export-references-v5.py
+      - name: Retain exact request equality and complete preparation costs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: exact-sql-proof-reuse-${{ github.run_id }}
+          name: exact-projection-reference-${{ github.run_id }}
           path: |
-            work/sql-proof-reuse-qualification/
-            work/sql-proof-reuse-host/
+            work/projection-reference-qualification/
+            work/projection-reference-host/
           if-no-files-found: error
           retention-days: 90
