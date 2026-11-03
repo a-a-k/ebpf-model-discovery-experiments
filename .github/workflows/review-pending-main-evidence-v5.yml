@@ -185,14 +185,20 @@ jobs:
           full_scopes={'retrieve_family_selected','retrieve_input_supplement','retrieve_closed_capture_union'}
           if not cells:
               raise SystemExit('candidate manifest selected no review cells')
+          union_packets={
+              41642781338:(7,13267240784,13259365500,13267395741),
+              41642775376:(6,13269692140,13262027581,13269437315),
+              41642789738:(8,13269654367,13263018872,13270767555)}
           for cell in cells:
               if cell.get('full_scope')=='retrieve_closed_capture_union' and (
                       cell.get('evidence_layout')!='closed_capture_compact_union_v1' or
-                      tuple(cell.get(k) for k in ('collector','system','mode','seed','run_id','head_sha','stage','runner')) !=
-                          ('deepflow','otel_demo','partial',7,41642781338,'f045cc0adec187ec00443da0bea72b4ec4d2082e','main','study') or
-                      cell.get('compact_artifact_id')!=13267240784 or cell.get('capture_artifact_id')!=13259365500 or
-                      cell.get('restore_artifact_id')!=13267395741 or 'full_artifact_id' in cell):
-                  raise SystemExit('closed capsule union must be its exact original partial7 packet; no fake full artifact')
+                      tuple(cell.get(k) for k in ('collector','system','mode','head_sha','stage','runner')) !=
+                          ('deepflow','otel_demo','partial','f045cc0adec187ec00443da0bea72b4ec4d2082e','main','study') or
+                      cell.get('run_id') not in union_packets or
+                      tuple(cell.get(k) for k in ('seed','compact_artifact_id','capture_artifact_id','restore_artifact_id')) !=
+                          union_packets.get(cell.get('run_id')) or
+                      any(k.startswith('full_artifact_') for k in cell)):
+                  raise SystemExit('closed capsule union must be an exact reviewed original partial packet; no fake full artifact')
               if (not isinstance(cell,dict) or not required<=cell.keys()
                       or cell['compact_scope'] not in compact_scopes
                       or cell['full_scope'] not in full_scopes):
@@ -270,7 +276,7 @@ jobs:
               actual={'run':api('actions/runs/'+str(cell['run_id'])),
                       'job':api('actions/jobs/'+str(union['processing_job'])),
                       'capture_job':api('actions/jobs/'+str(union['capture_job'])), 'artifacts':artifacts}
-              _closed_union_api_facts(actual)
+              _closed_union_api_facts(actual, expected_profile=union)
               pathlib.Path('work/review/actual-processing.json').write_text(json.dumps(actual,indent=2)+'\n')
               resolved={'compact':c,'full':None,'capture':union['artifacts']['capture'],
                         'restore_diagnostics':union['artifacts']['restore'],'evidence_layout':union['layout']}

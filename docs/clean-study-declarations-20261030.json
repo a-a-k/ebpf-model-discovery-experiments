@@ -2815,10 +2815,12 @@
         {
           "system": "otel_demo",
           "mode": "partial",
-          "seed": 6
+          "seed": 6,
+          "evidence_layout": "closed_capture_compact_union_v1",
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
         }
       ],
-      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470550646 job125362727883;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470550646 job125362727883;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim. Actual suffix/evaluation/compact completed; processed-full publication failed Maximum call stack size exceeded. Exact original capsule/compact/restore union retains all scientific predicates and requires separate actual admission; final mutable SQL/full snapshot/retained processing.json unavailable."
     },
     {
       "run_id": 41642781338,
@@ -2843,10 +2845,12 @@
         {
           "system": "otel_demo",
           "mode": "partial",
-          "seed": 8
+          "seed": 8,
+          "evidence_layout": "closed_capture_compact_union_v1",
+          "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
         }
       ],
-      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470566316 job125362786450;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim."
+      "note": "Exactqualifiedf045closedpostcapture terminaltechnicalreplacement ofparent41470566316 job125362786450;samefull81/34800primary9600targets100000Sheaft/all4methods2views/two independentkernels. All74completednegative/adversecasesretained; alloldfailed/prefix/worker/CI/profile/qual/storage/transfer/archive/reporttailscosts retained; no6hcure/scientificsuccess/humanzero claim. Actual suffix/evaluation/compact completed; processed-full publication failed Maximum call stack size exceeded. Exact original capsule/compact/restore union retains all scientific predicates and requires separate actual admission; final mutable SQL/full snapshot/retained processing.json unavailable."
     },
     {
       "run_id": 41642796796,
@@ -5671,6 +5675,31 @@
       "run_id": 41676388484,
       "role": "worker",
       "note": "Actual unchanged-toolchain worker for originalf045 OTel absent8 parent41642766254; workflowdefinition06d7 separate actualproducercheckoutf045. TinyAPI/CRC/SHA statusbinding independentlyreviewed. Allprep/index/export/Bering/100kSheaft/wait/transfer/validation/publication/failedparent/orphan/retentioncosts retained; workerSUCCESS notcompletecaseGO; no duplicate trial/outcome selection."
+    },
+    {
+      "run_id": 41716278632,
+      "role": "preparation",
+      "note": "Exactfaf1consumer PR LinuxCI alljobsSUCCESS; no new scientificcase."
+    },
+    {
+      "run_id": 41716269745,
+      "role": "preparation",
+      "note": "Exactfaf1consumer push LinuxCI alljobsSUCCESS; no new scientificcase."
+    },
+    {
+      "run_id": 41717118186,
+      "role": "evidence",
+      "note": "ONEactual originalpartial7 closedcapsule+compact+restore savedreader; allautomatedgatesSUCCESS, scientificinterpretation/admission separate; no experiment/model/suffix/scoring replay."
+    },
+    {
+      "run_id": 41719964681,
+      "role": "preparation",
+      "note": "Exact37bf779 proofreuse CI: controlSUCCESS, checks1oldfixturefailure/1017pass1skip. AllfailedCIcostretained; no model/case execution."
+    },
+    {
+      "run_id": 41721133052,
+      "role": "preparation",
+      "note": "Correctedf7d0f85exactSQLproofreuse source LinuxCI bothjobsSUCCESS; onlyoldfixturemockchanged vs37bf779. PriorfailedCIretained; no scientificcase or freshcapture."
     }
   ],
   "blocked_main_cells": [],

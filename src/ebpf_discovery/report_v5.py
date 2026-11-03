@@ -521,20 +521,49 @@ CLOSED_CAPTURE_COMPACT_UNION = {
 }
 
 
+CLOSED_CAPTURE_COMPACT_UNIONS = {CLOSED_CAPTURE_COMPACT_UNION['run_id']: CLOSED_CAPTURE_COMPACT_UNION}
+CLOSED_CAPTURE_COMPACT_UNIONS[41642775376] = {
+    **CLOSED_CAPTURE_COMPACT_UNION,
+    'run_id': 41642775376,
+    'head_sha': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'cell': ('deepflow', 'otel_demo', 'partial', 6),
+    'capture_job': 125940257481,
+    'processing_job': 126134790196,
+    'artifacts': {'capture': {'id': 13262027581, 'name': 'postcapture-v5-deepflow-main-otel_demo-partial-6-41642775376', 'size_in_bytes': 4847677527, 'digest': 'sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4'}, 'compact': {'id': 13269692140, 'name': 'v5-summary-deepflow-main-otel_demo-partial-6-41642775376', 'size_in_bytes': 53811751, 'digest': 'sha256:68ffb5ac99836f9b5eac05ab5d2e7b55af1e8c69afebc11d8ce206208536e949'}, 'restore': {'id': 13269437315, 'name': 'postcapture-processing-partial-6-41642775376', 'size_in_bytes': 7753, 'digest': 'sha256:42753edb2e06edbbf035fdb8911fbe66dc16c54eb93b7e6c85a2db913c8b348e'}},
+    'independent_original_design_GO_sha256': '3d1293d8d9fa16ea6e52e05fb7ea4b339658a3e7e466a4cec02d6cf8483256f2',
+}
+CLOSED_CAPTURE_COMPACT_UNIONS[41642789738] = {
+    **CLOSED_CAPTURE_COMPACT_UNION,
+    'run_id': 41642789738,
+    'head_sha': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'cell': ('deepflow', 'otel_demo', 'partial', 8),
+    'capture_job': 125940313489,
+    'processing_job': 126145745298,
+    'artifacts': {'capture': {'id': 13263018872, 'name': 'postcapture-v5-deepflow-main-otel_demo-partial-8-41642789738', 'size_in_bytes': 5160928093, 'digest': 'sha256:9a070135efb0206461933b7517af0e4ffcee3de3452e63952d1777b26d120dd7'}, 'compact': {'id': 13269654367, 'name': 'v5-summary-deepflow-main-otel_demo-partial-8-41642789738', 'size_in_bytes': 55261962, 'digest': 'sha256:4e0819108fa5bdd50a6970228bdb933822fe581b66dd75095d2298d6239d630d'}, 'restore': {'id': 13270767555, 'name': 'postcapture-processing-partial-8-41642789738', 'size_in_bytes': 7728, 'digest': 'sha256:9ada9d9fdfbd674b0b02888c96a182ef691f4bd03c1397c341300109f684edf8'}},
+    'independent_original_design_GO_sha256': '306fdf3c0b1b50a3a9f5cba41901c14ccc8639274c59c393c67bbbcbc34cf1aa',
+}
+
+
 def _closed_union_profile(declaration):
     if declaration.get('evidence_layout') != CLOSED_CAPTURE_COMPACT_UNION['layout']:
         return None
-    p = CLOSED_CAPTURE_COMPACT_UNION
+    p = CLOSED_CAPTURE_COMPACT_UNIONS.get(declaration.get('run_id'))
+    if p is None:
+        raise ValueError('closed capture union is not an explicitly reviewed original case')
     if (declaration.get('run_id') != p['run_id'] or declaration.get('head_sha') != p['head_sha']
             or tuple(declaration.get(k) for k in ('collector','system','mode','seed')) != p['cell']):
         raise ValueError('closed capture union is outside its one fixed original scientific case')
     return p
 
 
-def _closed_union_api_facts(bundle):
+def _closed_union_api_facts(bundle, *, expected_profile=None):
     """Actual source/API step chain; never a fabricated processing/full receipt."""
-    p = CLOSED_CAPTURE_COMPACT_UNION
     run, job, capture = (bundle.get(k) or {} for k in ('run','job','capture_job'))
+    p = CLOSED_CAPTURE_COMPACT_UNIONS.get(run.get('id'))
+    if p is None:
+        raise ValueError('closed union actual API run is outside its fixed reviewed cases')
+    if expected_profile is not None and p != expected_profile:
+        raise ValueError('closed union actual processing API belongs to a different declared case')
     if (run.get('id') != p['run_id'] or run.get('head_sha') != p['head_sha']
             or run.get('path') != '.github/workflows/series-v5.yml'
             or run.get('status') != 'completed' or run.get('conclusion') != 'failure'
@@ -567,7 +596,7 @@ def _closed_union_api_facts(bundle):
         if ({k:a.get(k) for k in wanted} != wanted or a.get('expired') is not False
                 or w.get('id') != p['run_id'] or w.get('head_sha') != p['head_sha']):
             raise ValueError('closed union actual artifact API differs')
-    failed_full=f"campaign-v5-deepflow-main-otel_demo-partial-7-{p['run_id']}"
+    failed_full=p['artifacts']['compact']['name'].replace('v5-summary-', 'campaign-v5-', 1)
     if any(a.get('name')==failed_full for a in actual):
         raise ValueError('closed union cannot replace an existing processed full packet')
     return {'kind':'actual_source_API_step_chain_not_retained_processing_json',
@@ -997,7 +1026,7 @@ def _saved_summaries(
         if union is not None:
             if not isinstance(union_evidence, dict) or full_available:
                 raise ValueError("named closed capture union lacks actual source metadata")
-            _closed_union_api_facts(union_evidence)
+            _closed_union_api_facts(union_evidence, expected_profile=union)
             compact_api = union["artifacts"]["compact"]
             if (artifact_id != compact_api["id"] or artifact["digest"] != compact_api["digest"]
                     or zip_proof["received_bytes"] != compact_api["size_in_bytes"]):

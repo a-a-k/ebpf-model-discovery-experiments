@@ -1524,3 +1524,19 @@ def test_actual_partial7_union_manifest_passes_literal_workflow_gate_only_at_exa
     if mutation=='none':
         matrix=json.loads(dict(line.split('=',1) for line in output.read_text().splitlines())['matrix'])
         assert len(matrix['cell'])==1 and 'full_artifact_id' not in matrix['cell'][0]
+
+
+@pytest.mark.parametrize('mutation',['none','foreign_seed','foreign_artifact','fake_full','foreign_run'])
+def test_actual_partial68_union_manifest_retains81plan_and_only2exact_original_packets(tmp_path,mutation):
+    document=json.loads((ROOT/'docs/clean-study-partial68-closed-union-review-20261104.json').read_text())
+    if mutation=='foreign_seed':document['cells'][0]['seed']=9
+    if mutation=='foreign_artifact':document['cells'][1]['restore_artifact_id']+=1
+    if mutation=='fake_full':document['cells'][0]['full_artifact_digest']='sha256:'+'0'*64
+    if mutation=='foreign_run':document['cells'][1]['run_id']=123
+    result,output=_run_manifest_selector(tmp_path,'docs/iteration5-main-review-candidates-coroot-petclinic-full.json',
+        phase='fresh-batch',fresh_go=True,document=document)
+    assert (result.returncode==0)==(mutation=='none'),result.stderr
+    if mutation=='none':
+        matrix=json.loads(dict(line.split('=',1) for line in output.read_text().splitlines())['matrix'])
+        assert {r['seed'] for r in matrix['cell']}=={6,8}
+        assert all(not any(k.startswith('full_artifact_') for k in r) for r in matrix['cell'])

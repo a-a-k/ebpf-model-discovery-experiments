@@ -15,7 +15,7 @@ import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
-    CLOSED_CAPTURE_COMPACT_UNION, _closed_union_profile, _closed_union_api_facts)
+    CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts)
 
 
 PINS = {
@@ -1221,7 +1221,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
     if union:
         if compact is None or restore_root is None or actual_processing is None:
             raise ValueError('closed union lacks its actual compact/restore/source API chain')
-        processing_evidence = _closed_union_api_facts(read(actual_processing))
+        processing_evidence = _closed_union_api_facts(read(actual_processing), expected_profile=union)
         diagnostic = read(restore_root/'selected-transport-proof.json')
         meta = diagnostic.get('artifact') or {}; wanted = union['artifacts']['restore']
         if (diagnostic.get('complete') is not True or diagnostic.get('scope') != 'restore-diagnostics'

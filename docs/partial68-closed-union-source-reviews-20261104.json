@@ -1,0 +1,425 @@
+{
+  "scope": "Onlyoriginalf045partial6/8 unionprofiles; actualpartial7readerSUCCESS and75actualcasesretained; no actual6/8caseadmission yet",
+  "reviews": {
+    "partial6-original-capsule-compact-union-root-design-20261103.json": {
+      "sha256": "0c9871964b44a7b458910f6165e6978590d41f58f6c2c1a7455760da5b2d2926",
+      "body": {
+        "recorded_utc": "2026-11-03T20:59:13.202610+00:00",
+        "root_original_named_union_design_GO": true,
+        "original_case": 41642775376,
+        "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "cell": [
+          "deepflow",
+          "otel_demo",
+          "partial",
+          6
+        ],
+        "capture_job": 125940257481,
+        "processing_job": 126134790196,
+        "actual_artifacts": [
+          {
+            "id": 13269692140,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2OTY5MjE0MA==",
+            "name": "v5-summary-deepflow-main-otel_demo-partial-6-41642775376",
+            "size_in_bytes": 53811751,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269692140",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269692140/zip",
+            "expired": false,
+            "digest": "sha256:68ffb5ac99836f9b5eac05ab5d2e7b55af1e8c69afebc11d8ce206208536e949",
+            "created_at": "2026-11-03T20:46:10Z",
+            "updated_at": "2026-11-03T20:46:10Z",
+            "expires_at": "2027-02-01T13:15:48Z",
+            "workflow_run": {
+              "id": 41642775376,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13269437315,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2OTQzNzMxNQ==",
+            "name": "postcapture-processing-partial-6-41642775376",
+            "size_in_bytes": 7753,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269437315",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269437315/zip",
+            "expired": false,
+            "digest": "sha256:42753edb2e06edbbf035fdb8911fbe66dc16c54eb93b7e6c85a2db913c8b348e",
+            "created_at": "2026-11-03T20:46:13Z",
+            "updated_at": "2026-11-03T20:46:13Z",
+            "expires_at": "2027-02-01T13:15:48Z",
+            "workflow_run": {
+              "id": 41642775376,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13262027581,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2MjAyNzU4MQ==",
+            "name": "postcapture-v5-deepflow-main-otel_demo-partial-6-41642775376",
+            "size_in_bytes": 4847677527,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13262027581",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13262027581/zip",
+            "expired": false,
+            "digest": "sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+            "created_at": "2026-11-03T18:55:12Z",
+            "updated_at": "2026-11-03T18:55:12Z",
+            "expires_at": "2027-02-01T13:15:48Z",
+            "workflow_run": {
+              "id": 41642775376,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          }
+        ],
+        "same_strict_scientific_predicates": "Exactsame qualifiedf045 sealedcapsule+completedcompact+actualrestore/sourceAPIchain as existingfixedpartial7. All mandatoryrawcontrols/models/commands/freeze/independentoutcomes, Bering/Sheaft/context/kernel/nativeSDK/worker gates retained; no fabricatedfullAPI orprocessing.json. Actualroot+indcaseGO stillrequired.",
+        "actual_completion": "Suffix19:10:58-20:44:17SUCCESS; eval/provenance+compactSUCCESS; fulluploadFAIL20:46:12 Maximumcallstacksizeexceeded; restorediagnosticsSUCCESS.",
+        "actual_restore_metadata": "work/partial6-original-restore-small-metadata-20261103 (3puremetadataJSON849+871+255B actualZIPCRC/SHA/rangeverified, capsuleSHA48abc...4ac4, selected98842members allEOFCRC verified byproducerrestore, markerSHA c19034c8608b7d67c0df094f9b3ac9039e6e81a971e1862f65a69f4a01c023ee; actualguardrequired99434222574 available127383130112).",
+        "strongest_baseline": "Reuse complete original capsule and actual completedsciencecompact/restorechain; no recapture/model/suffix/rescore. Currentpartial7 reader underway sourcefaf1; wait actualevidencebeforechangingconsumer toavoid repeatingadaptererrors.",
+        "code_extension_scope": "Only add oneexplicit fixed originalcaseprofile to existing unionselection; APIhelper takes resolvednamedprofile, oldpartial7defaultunchanged. Normalfullartifactgatesunchanged and exactcase/sources/3artifacttuplevalidation remains. No genericfallback/framework or fabricatedprocessedfull.",
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "costs": "All originalcapture/model/suffix/eval/uploadfailure, 2CI/reader/publication/futureextensioncosts, humanunknown retained; no speedupsuccessclaim",
+        "scientific_case_admission": false,
+        "implementation_requires_independent_original_design_GO": true
+      }
+    },
+    "independent-partial6-original-capsule-compact-union-design-GO-20261103.json": {
+      "sha256": "3d1293d8d9fa16ea6e52e05fb7ea4b339658a3e7e466a4cec02d6cf8483256f2",
+      "body": {
+        "recorded_utc": "2026-11-03T21:02:20.817155+00:00",
+        "original_partial6_exact_capsule_compact_union_design_GO": true,
+        "original_full81_criterion_preserved": true,
+        "root_design": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\partial6-original-capsule-compact-union-root-design-20261103.json",
+        "root_design_sha256": "0c9871964b44a7b458910f6165e6978590d41f58f6c2c1a7455760da5b2d2926",
+        "exact_scope": {
+          "run": 41642775376,
+          "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "cell": [
+            "deepflow",
+            "otel_demo",
+            "partial",
+            6
+          ],
+          "capture_job": 125940257481,
+          "processing_job": 126134790196,
+          "actual_artifacts": [
+            {
+              "id": 13269692140,
+              "node_id": "MDg6QXJ0aWZhY3QxMzI2OTY5MjE0MA==",
+              "name": "v5-summary-deepflow-main-otel_demo-partial-6-41642775376",
+              "size_in_bytes": 53811751,
+              "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269692140",
+              "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269692140/zip",
+              "expired": false,
+              "digest": "sha256:68ffb5ac99836f9b5eac05ab5d2e7b55af1e8c69afebc11d8ce206208536e949",
+              "created_at": "2026-11-03T20:46:10Z",
+              "updated_at": "2026-11-03T20:46:10Z",
+              "expires_at": "2027-02-01T13:15:48Z",
+              "workflow_run": {
+                "id": 41642775376,
+                "repository_id": 1434356471,
+                "head_repository_id": 1434356471,
+                "head_branch": "fix/otel-postcapture-job",
+                "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+              }
+            },
+            {
+              "id": 13269437315,
+              "node_id": "MDg6QXJ0aWZhY3QxMzI2OTQzNzMxNQ==",
+              "name": "postcapture-processing-partial-6-41642775376",
+              "size_in_bytes": 7753,
+              "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269437315",
+              "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269437315/zip",
+              "expired": false,
+              "digest": "sha256:42753edb2e06edbbf035fdb8911fbe66dc16c54eb93b7e6c85a2db913c8b348e",
+              "created_at": "2026-11-03T20:46:13Z",
+              "updated_at": "2026-11-03T20:46:13Z",
+              "expires_at": "2027-02-01T13:15:48Z",
+              "workflow_run": {
+                "id": 41642775376,
+                "repository_id": 1434356471,
+                "head_repository_id": 1434356471,
+                "head_branch": "fix/otel-postcapture-job",
+                "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+              }
+            },
+            {
+              "id": 13262027581,
+              "node_id": "MDg6QXJ0aWZhY3QxMzI2MjAyNzU4MQ==",
+              "name": "postcapture-v5-deepflow-main-otel_demo-partial-6-41642775376",
+              "size_in_bytes": 4847677527,
+              "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13262027581",
+              "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13262027581/zip",
+              "expired": false,
+              "digest": "sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+              "created_at": "2026-11-03T18:55:12Z",
+              "updated_at": "2026-11-03T18:55:12Z",
+              "expires_at": "2027-02-01T13:15:48Z",
+              "workflow_run": {
+                "id": 41642775376,
+                "repository_id": 1434356471,
+                "head_repository_id": 1434356471,
+                "head_branch": "fix/otel-postcapture-job",
+                "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+              }
+            }
+          ]
+        },
+        "independent_selected_restore_metadata": {
+          "files": [
+            {
+              "bytes": 849,
+              "sha256": "f3777cbf914f982b408bbe5a29efedad9f148034f8d63916b2313c6f959d4a28",
+              "crc32": "a53d5eea",
+              "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\partial6-original-restore-small-metadata-20261103\\restore.json"
+            },
+            {
+              "bytes": 871,
+              "sha256": "fad08f35221cdb472a95427962ded84b50c141bb1eb42423ad0d7ea6a7212ede",
+              "crc32": "bb9ab535",
+              "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\partial6-original-restore-small-metadata-20261103\\artifact-api.json"
+            },
+            {
+              "bytes": 255,
+              "sha256": "77afa3b08a9cdd1ea51004a55f720faeb62e910075e13d55cf69dca899b8ace8",
+              "crc32": "792b1955",
+              "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\partial6-original-restore-small-metadata-20261103\\disk-before-download.json"
+            }
+          ],
+          "scope": "Rehashed3smallpuremetadataCRC/SHA/bytes, not wholeoriginalarchive locally. Producerrestore reports full98842member EOFCRC; actualreader will validate selectedscientific evidence from originalcapsule.",
+          "actual_restore": {
+            "status": "complete",
+            "started_ns": 1793732288657204562,
+            "retry_log_file": "/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/work/offline-host/transport-retries.jsonl",
+            "artifact_id": 13262027581,
+            "artifact_digest": "sha256:48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+            "archive_bytes": 4847677527,
+            "archive_sha256": "48abc46c414751fb7d2c27f7ebd83053701875b1a69ae950d495d702514c4ac4",
+            "selected_members": 98842,
+            "all_original_members_read_to_EOF_and_CRC_checked": true,
+            "closed_manifest_sha256": "c19034c8608b7d67c0df094f9b3ac9039e6e81a971e1862f65a69f4a01c023ee",
+            "actual_available_after_restore": 69072674816,
+            "whole_scientific_manifest_validation": "Required by finalize BEFORE any mutation",
+            "ended_ns": 1793733058470229056,
+            "elapsed_seconds": 769.813024494
+          },
+          "actual_capacity_guard": {
+            "required_bytes": 99434222574,
+            "available_bytes": 127383130112,
+            "archive_bytes": 4847677527,
+            "scientific_file_bytes": 53251916394,
+            "proof_bytes": 21405997,
+            "SQL_WAL_growth_reserve_bytes": 40239480832,
+            "scientific_limit_or_filter": false
+          },
+          "transport_proof_sha256": "886207fa87508c2cc4f16fac50d3639aa0b544ab2acf9fde64048536963192ac"
+        },
+        "strongest_simple_baseline": "Reuse actual complete sealed scientific capsule, actual completedcompact and real restore/source/API success chain after sole fulluploadstackfailure. No recapture, forecast, Bering/Sheaft, class fit or unchanged suffix recomputation needed if all original scientific bodies/predicates validate.",
+        "known_readset_equivalence": "Exactly the same f045 producer sequence as reviewedpartial7: allactualmodels, commands, analysis, reports and context/familymodels pretarget frozen and sealverified; post-seal evaluationreport bodies in actualcompact. Actual finalSQL/derivedcache/processing receipt remain explicitly unavailable; do not fabricate or claim processedfull snapshot.",
+        "prior_design_and_causal_proof": [
+          "work/independent-partial7-capsule-compact-salvage-original-design-GO-20261103.json",
+          "work/independent-partial7-union-required-bodies-source-sequence-original-GO-20261103.json"
+        ],
+        "exact_implementation_scope": "One explicit partial6literal profile/actualsource+run+jobs+3artifacttuples extension of existingstrictpartial7 union. APIhelper must receive a resolvednamed allowedprofile, not arbitrary declaration-supplied constants. Keep currentpartial7 behavior and allnormalfullartifact/scientific admission gates unchanged. No generic failed-upload fallback.",
+        "same_information_outcome_gates": "All original source/raw/control/SDK/native/kernel/workerSQL/input/Bering/Sheaft/context/forecastbeforetarget/counts/independentexternaloutcome checks still required; availability/accuracy/ARI cannot be eligibility filters. All74priorvalid/adverse/unknown and all81plan retained.",
+        "root_staging_retained": "Root plans to wait actualpartial7 reader evidence before editing registry, then exactcode/CI and existingreader executionreview, actualfacts ROOT+indcaseverdict. This is designGO, not actualadmission or newPOST permission; no extra modelqualifier requested.",
+        "full_costs": "Alloriginalcapture/model/preparation/restore/suffix/evaluation/fulluploadfailure, CI/review/newreader/metadata/publication/retention attempts retained; human and unavailable internalphase costs remain unknown, no speedup/cure/scientificsuccess claim.",
+        "actual_scientific_case_or_execution_GO": false,
+        "reviewer_new_capture_POST_code_mutation_Telegram": false
+      }
+    },
+    "partial8-original-capsule-compact-union-root-design-20261104.json": {
+      "sha256": "2ff1769705b41550090f9f7e978d8e14327201d099571ae078bafd9c024b6236",
+      "body": {
+        "recorded_utc": "2026-11-03T21:08:10.291080+00:00",
+        "root_original_named_union_design_GO": true,
+        "original_case": 41642789738,
+        "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "cell": [
+          "deepflow",
+          "otel_demo",
+          "partial",
+          8
+        ],
+        "capture_job": 125940313489,
+        "processing_job": 126145745298,
+        "actual_artifacts": [
+          {
+            "id": 13270767555,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI3MDc2NzU1NQ==",
+            "name": "postcapture-processing-partial-8-41642789738",
+            "size_in_bytes": 7728,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13270767555",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13270767555/zip",
+            "expired": false,
+            "digest": "sha256:9ada9d9fdfbd674b0b02888c96a182ef691f4bd03c1397c341300109f684edf8",
+            "created_at": "2026-11-03T21:03:06Z",
+            "updated_at": "2026-11-03T21:03:06Z",
+            "expires_at": "2027-02-01T13:15:56Z",
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13269654367,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2OTY1NDM2Nw==",
+            "name": "v5-summary-deepflow-main-otel_demo-partial-8-41642789738",
+            "size_in_bytes": 55261962,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269654367",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13269654367/zip",
+            "expired": false,
+            "digest": "sha256:4e0819108fa5bdd50a6970228bdb933822fe581b66dd75095d2298d6239d630d",
+            "created_at": "2026-11-03T21:03:03Z",
+            "updated_at": "2026-11-03T21:03:03Z",
+            "expires_at": "2027-02-01T13:15:56Z",
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13263018872,
+            "node_id": "MDg6QXJ0aWZhY3QxMzI2MzAxODg3Mg==",
+            "name": "postcapture-v5-deepflow-main-otel_demo-partial-8-41642789738",
+            "size_in_bytes": 5160928093,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13263018872",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13263018872/zip",
+            "expired": false,
+            "digest": "sha256:9a070135efb0206461933b7517af0e4ffcee3de3452e63952d1777b26d120dd7",
+            "created_at": "2026-11-03T19:15:13Z",
+            "updated_at": "2026-11-03T19:15:13Z",
+            "expires_at": "2027-02-01T13:15:56Z",
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          }
+        ],
+        "same_strict_scientific_predicates": "Exactsame qualifiedf045 sealedcapsule+completedcompact+actualrestore/sourceAPIchain as existingfixedpartial7. All mandatoryrawcontrols/models/commands/freeze/independentoutcomes, Bering/Sheaft/context/kernel/nativeSDK/worker gates retained; no fabricatedfullAPI orprocessing.json. Actualroot+indcaseGO stillrequired.",
+        "actual_completion": "Suffix19:27:42-21:01:13SUCCESS, eval/provenance/compactSUCCESS; fulluploadFAIL21:03:05 Maximumcallstacksizeexceeded; restorediagSUCCESS. Rootselectedconsole work/partial8-postcapture-126145745298-publication-selected-console-20261104.txt.",
+        "actual_restore_metadata": "Actualrestorecompleted19:27:42 in exactf045source; 7728B actualrestorediagnostic13270767555 remains retained and mustbe byte/SHA/CRC-read by reader andcheckedagainst exactcapsulemarker/guard. Body notreadlocallyorassumed; actualscientificreader mustfail ifanyrequiredproofdiffers.",
+        "strongest_baseline": "Reuse complete original capsule and actual completedsciencecompact/restorechain; no recapture/model/suffix/rescore. Currentpartial7 reader underway sourcefaf1; wait actualevidencebeforechangingconsumer toavoid repeatingadaptererrors.",
+        "code_extension_scope": "Add onlyexplicit fixedpartial8 originalprofile alongsidealreadyapprovedpartial6+partial7 source/cell/3artifacttuples; helper resolves profile fromknownrun andstillchecksallactualAPI/steps. No unspecifiedcasefallback.",
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "costs": "All originalcapture/model/suffix/eval/uploadfailure, 2CI/reader/publication/futureextensioncosts, humanunknown retained; no speedupsuccessclaim",
+        "scientific_case_admission": false,
+        "implementation_requires_independent_original_design_GO": true
+      }
+    },
+    "independent-partial8-original-capsule-compact-union-design-GO-20261104.json": {
+      "sha256": "306fdf3c0b1b50a3a9f5cba41901c14ccc8639274c59c393c67bbbcbc34cf1aa",
+      "body": {
+        "independent_original_named_union_design_GO": true,
+        "original_partial8_union_design_GO": true,
+        "recorded_utc": "2026-11-03T21:19:43.859351+00:00",
+        "root_design": "work\\partial8-original-capsule-compact-union-root-design-20261104.json",
+        "root_design_sha256": "2ff1769705b41550090f9f7e978d8e14327201d099571ae078bafd9c024b6236",
+        "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "cell": [
+          "deepflow",
+          "otel_demo",
+          "partial",
+          8
+        ],
+        "original_case": 41642789738,
+        "capture_job": 125940313489,
+        "processing_job": 126145745298,
+        "actual_artifacts": [
+          {
+            "id": 13270767555,
+            "name": "postcapture-processing-partial-8-41642789738",
+            "size_in_bytes": 7728,
+            "digest": "sha256:9ada9d9fdfbd674b0b02888c96a182ef691f4bd03c1397c341300109f684edf8",
+            "expired": false,
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13269654367,
+            "name": "v5-summary-deepflow-main-otel_demo-partial-8-41642789738",
+            "size_in_bytes": 55261962,
+            "digest": "sha256:4e0819108fa5bdd50a6970228bdb933822fe581b66dd75095d2298d6239d630d",
+            "expired": false,
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          },
+          {
+            "id": 13263018872,
+            "name": "postcapture-v5-deepflow-main-otel_demo-partial-8-41642789738",
+            "size_in_bytes": 5160928093,
+            "digest": "sha256:9a070135efb0206461933b7517af0e4ffcee3de3452e63952d1777b26d120dd7",
+            "expired": false,
+            "workflow_run": {
+              "id": 41642789738,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "fix/otel-postcapture-job",
+              "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+            }
+          }
+        ],
+        "own_actual_job_API": {
+          "path": "work/partial8-postcapture-publication-failure-actual-metadata-20261103/jobs-api.json",
+          "sha256": "8df97887c925d526d36d41b4845045b7f2600a7bfb0df7f45ed3dba8897dcacc"
+        },
+        "actual_boundary": "Restore, unchanged offline scientific suffix, evaluation, evaluation manifest and compact publication succeeded. Only processed full-upload failed with retained Maximum call stack size exceeded; diagnostics publication succeeded. No ENOSPC inference from this error.",
+        "original_criterion": "Complete original81 fixed cells with actual Bering/Sheaft and independent outcomes, prospective output freeze, same information/semantics for all methods; all74 valid negatives/adverse/unknown remain protected.",
+        "strongest_simple_baseline": "Reuse this exact complete closed capsule plus actual completed compact, actual restore diagnostics and source/API completion chain. No traffic, fitting, scoring, offline suffix repetition or new qualifier.",
+        "known_equivalence": "The exact f045 pre-seal freeze writes and hashes every forecast/model/command/context artifact, and sealing requires their presence and preserves them. Offline suffix adds only derived ingestion/identity/class evaluation/evidence and final reports, available in the completed compact. The already reviewed source-sequence proof applies to this same f045 mode/seed implementation; actual reader must still find and verify every required body.",
+        "source_sequence_proof": {
+          "path": "work/independent-partial7-union-required-bodies-source-sequence-original-GO-20261103.json",
+          "sha256": "f7808789a63f7a71689e200fcdff4f97c4bbbcc391bd14851d5e0e7fb8bd9279"
+        },
+        "implementation_scope": "Only explicit literal seed6 and seed8 union registrations alongside seed7. Exact case/source/three API tuples and actual job-step chain remain mandatory; no generic failed-upload fallback.",
+        "mandatory_actual_reader_checks": [
+          "Actual diagnostics body CRC/SHA and capsule/marker/guard binding, not merely job success.",
+          "All original raw acquisition/closure, SDK census, two boots, training SQL proof, worker/import, frozen files, actual Bering/available Sheaft, context, counts, independent outcomes and complete costs.",
+          "Reject any missing or altered required scientific body; do not invent full artifact, final mutable SQL or processing.json."
+        ],
+        "unavailable": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "costs": "Retain original capture/model/processing/evaluation/full-upload failure, all CI/selection/reader/publication attempts and transport costs; human effort unknown. No cost or runtime superiority claim.",
+        "scientific_case_admission_GO": false,
+        "execution_GO": false,
+        "full81_success": false
+      }
+    }
+  }
+}

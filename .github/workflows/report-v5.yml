@@ -202,7 +202,7 @@ jobs:
                           'job':actual_api(f'jobs/{union["processing_job"]}'),
                           'capture_job':actual_api(f'jobs/{union["capture_job"]}'),
                           'artifacts':artifacts}
-                      _closed_union_api_facts(union_evidence)
+                      _closed_union_api_facts(union_evidence, expected_profile=union)
                   row={'run_id':run_id,'repository':repo,'cell':identity,'stage':stage,
                        'name':name,'full_artifact_name':full_name}
                   if not isinstance(artifacts,list):

@@ -837,7 +837,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 7,
+  "pending_artifact_cells": 6,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2318,6 +2318,31 @@
       "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-6-41470575905",
       "compact_artifact_bytes": 48001958,
       "compact_artifact_digest": "sha256:142ba54c9a184c662dbda20bf0b27f66d091d32072d72f677cbe2314453d126a"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41642781338,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_closed_capture_union",
+      "compact_artifact_id": 13267240784,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-partial-7-41642781338",
+      "compact_artifact_bytes": 52437110,
+      "compact_artifact_digest": "sha256:55b12b9311ef9cc5c53969a82a8dee5bf08b7ff42bb01eedf8b4edfdb9b3ec5c",
+      "capture_artifact_id": 13259365500,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-partial-7-41642781338",
+      "capture_artifact_bytes": 4687525971,
+      "capture_artifact_digest": "sha256:eeefc20485a926e99af4bff208a79b71d47a40384ccb49b01560dcc222b842ae",
+      "restore_artifact_id": 13267395741,
+      "restore_artifact_name": "postcapture-processing-partial-7-41642781338",
+      "restore_artifact_bytes": 7760,
+      "restore_artifact_digest": "sha256:0130290a604d10471cd0ee6ed4b8ae931d1d025420a07d0f77c1714d3c494b8a"
     }
   ],
   "superseded_planned_source": {
@@ -2330,7 +2355,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "Direct exact run/artifact API 2026-11-02T13:40Z:73 technically successful planned MAIN jobs with full/compact pairs;70 passed both actual-evidence reviews;3PCfull awaitbatch8. Samefixed81;8OTeltechnicalfailuresawaitrepair. Unknown/adverse outcomes retained. Inventory alone grants no scientific admission.",
+  "status": "75 of fixed81 MAIN cases admitted by BOTH actual scientific-evidence reviews, including valid negative DeepFlow OTelpartial7 retained via exact original capsule/compact/restore/sourceAPI chain. Six remain: partial6/partial8 completed science awaiting originalunionreader, full8 savedprocessing active, absent6/7/8 technicaltimeouts awaiting justified runtime repair. All74 earliercases preserved; inventory/jobSUCCESS alone neveradmits science.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -2941,5 +2966,6 @@
       "new_traffic_or_model_fit": false,
       "scientific_admission": false
     }
-  ]
+  ],
+  "latest_actual_review": "docs/clean-study-otel-partial7-actual-review-20261104.json"
 }

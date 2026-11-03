@@ -294,8 +294,8 @@ def test_recovered_full8_requires_both_identities_and_owned_delivery_guards(tmp_
             REVIEW.closed_postcapture_facts(tmp_path, declaration, frozen, worker, selected)
 
 
-def union_api_fixture():
-    p = REVIEW.CLOSED_CAPTURE_COMPACT_UNION
+def union_api_fixture(profile=None):
+    p = profile or REVIEW.CLOSED_CAPTURE_COMPACT_UNION
     expected = {
         6: ('Restore the exact closed capture after the actual disk guard','success'),
         7: ('Verify all closed inputs and run the unchanged offline suffix','success'),
@@ -336,13 +336,14 @@ def test_closed_union_requires_actual_named_source_and_publication_chain(mutatio
 
 
 @pytest.mark.parametrize('mutation',['none','missing_restore','changed_metadata','wrong_namespace',
-    'wrong_frozen_model','failed_suffix','foreign_declaration','missing_status'])
-def test_closed_union_preserves_scientific_predicates_without_fabricated_full_receipt(tmp_path,mutation):
+    'wrong_frozen_model','failed_suffix','foreign_declaration','missing_status','foreign_known_chain'])
+@pytest.mark.parametrize('union_run',[41642781338,41642775376,41642789738])
+def test_closed_union_preserves_scientific_predicates_without_fabricated_full_receipt(tmp_path,mutation,union_run):
     import shutil
-    p=REVIEW.CLOSED_CAPTURE_COMPACT_UNION
+    p=REVIEW.CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
     root=tmp_path/'capsule'; compact=tmp_path/'compact'; host=tmp_path/'restore'
     declaration,frozen,worker,selected=fixture(root,identity_override={
-        'run_id':str(p['run_id']),'commit':p['head_sha'],'mode':'partial','seed':7})
+        'run_id':str(p['run_id']),'commit':p['head_sha'],'mode':'partial','seed':p['cell'][3]})
     declaration.update(evidence_layout=p['layout'],compact_artifact_name=p['artifacts']['compact']['name'])
     compact.mkdir();host.mkdir()
     for name in ('status.json','evaluation-manifest.json'):
@@ -371,7 +372,7 @@ def test_closed_union_preserves_scientific_predicates_without_fabricated_full_re
             'workflow_run':{'id':p['run_id'],'head_sha':p['head_sha']}},
         'files':{f.name:{'bytes':f.stat().st_size,'sha256':REVIEW.sha(f)} for f in host.iterdir()}}
     write(host/'selected-transport-proof.json',diag)
-    actual=tmp_path/'actual.json';write(actual,union_api_fixture())
+    actual=tmp_path/'actual.json';write(actual,union_api_fixture(p))
     selected['artifact']=artifact
     selected['files'].pop('status.json')
     selected['closed_capture_namespace']={'scientific_file_bytes':marker['file_bytes'],
@@ -380,9 +381,12 @@ def test_closed_union_preserves_scientific_predicates_without_fabricated_full_re
     if mutation=='changed_metadata':write(host/'disk-before-download.json',{})
     if mutation=='wrong_namespace':selected['closed_capture_namespace']['scientific_files']+=1
     if mutation=='wrong_frozen_model':frozen['sha256_by_path']['toolchain/discovery/model.json']='0'*64
+    if mutation=='foreign_known_chain':
+        other=next(v for k,v in REVIEW.CLOSED_CAPTURE_COMPACT_UNIONS.items() if k!=union_run)
+        write(actual,union_api_fixture(other))
     if mutation=='failed_suffix':
         body=REVIEW.read(actual);body['job']['steps'][1]['conclusion']='failure';write(actual,body)
-    if mutation=='foreign_declaration':declaration['seed']=8
+    if mutation=='foreign_declaration':declaration['seed']=9
     if mutation=='missing_status':(compact/'status.json').unlink()
     invoke=lambda:REVIEW.closed_postcapture_facts(root,declaration,frozen,worker,selected,
         compact=compact,restore_root=host,actual_processing=actual)

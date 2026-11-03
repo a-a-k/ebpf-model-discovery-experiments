@@ -1093,10 +1093,12 @@ def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path,
             build([tmp_path/'inputs'], declarations, tmp_path/'report')
 
 
-@pytest.mark.parametrize('mutation',['none','undeclared','foreign_case','failed_suffix','fake_full'])
-def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_independent_admission(tmp_path,mutation):
+@pytest.mark.parametrize('mutation',['none','undeclared','foreign_case','failed_suffix','fake_full','foreign_known_chain'])
+@pytest.mark.parametrize('union_run',[41642781338,41642775376,41642789738])
+def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_independent_admission(tmp_path,mutation,union_run):
     import importlib.util
-    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNION as p
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS
+    p=CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
     spec=importlib.util.spec_from_file_location('tiny_union_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     folder,evaluation=summary(tmp_path/'inputs',p['run_id'],'main',head_sha=p['head_sha'])
@@ -1116,12 +1118,15 @@ def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_indepen
     c=p['artifacts']['compact']
     artifact.update(name=c['name'],artifact_id=c['id'],digest=c['digest'],full_artifact_name=full,
         full_artifact_id=None,full_artifact_digest=None,full_artifact_expired=None,
-        closed_capture_union=module.union_api_fixture())
+        closed_capture_union=module.union_api_fixture(p))
     artifact['compact_zip_verification'].update(expected_sha256=c['digest'],computed_sha256=c['digest'],received_bytes=c['size_in_bytes'])
     cell={**identity,'evidence_layout':p['layout'],'head_sha':p['head_sha']}
     if mutation=='undeclared':cell.pop('evidence_layout')
     if mutation=='foreign_case':cell['head_sha']='0'*40
     if mutation=='failed_suffix':artifact['closed_capture_union']['job']['steps'][1]['conclusion']='failure'
+    if mutation=='foreign_known_chain':
+        other=next(v for k,v in CLOSED_CAPTURE_COMPACT_UNIONS.items() if k!=union_run)
+        artifact['closed_capture_union']=module.union_api_fixture(other)
     if mutation=='fake_full':artifact.update(full_artifact_id=777,full_artifact_digest='sha256:'+'a'*64,full_artifact_expired=False)
     write(folder/'artifact-provenance.json',artifact)
     declarations=declared(tmp_path/'declared.json',[{'run_id':p['run_id'],'collector':'deepflow','stage':'main','cells':[cell]}])
