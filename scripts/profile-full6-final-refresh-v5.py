@@ -7,7 +7,6 @@ from pathlib import Path
 import pstats
 import resource
 import shutil
-import sqlite3
 import stat
 import subprocess
 import time
@@ -56,6 +55,7 @@ def measure(name, function):
                       process_peak_rss_kib=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
         phases.append(record)
         remote._atomic_json(out / "phases.json", phases)
+        print(json.dumps(record), flush=True)
 
 
 def artifact(number, size, digest):
@@ -76,6 +76,7 @@ def restore_full_inputs(archive):
     """Fixed diagnostic input selection; models are not inputs to refresh."""
     campaign_root.mkdir()
     seen, count, logical = set(), 0, 0
+    sql_member = None
     census = hashlib.sha256()
     with zipfile.ZipFile(archive) as bundle:
         for entry in bundle.infolist():
@@ -99,10 +100,14 @@ def restore_full_inputs(archive):
                     sha.update(chunk)
                     received += len(chunk)
             assert received == entry.file_size
+            if name == "observation-index.sqlite":
+                sql_member = {"name": name, "bytes": received, "sha256": sha.hexdigest(),
+                              "crc32": f"{entry.CRC:08x}"}
             census.update(json.dumps([name, received, sha.hexdigest()], separators=(",", ":")).encode() + b"\n")
             count += 1
             logical += received
-    return {"selected_files": count, "selected_bytes": logical,
+    assert sql_member is not None
+    return {"selected_files": count, "selected_bytes": logical, "original_final_SQL_member": sql_member,
             "selected_path_size_SHA256_census": census.hexdigest(), "all_selected_member_CRCs_checked": True,
             "excluded": ["toolchain/", "toolchain-build/"], "excluded_model_member_CRCs_claimed": False}
 
@@ -124,22 +129,28 @@ def runtime_census():
 
 store = journal = None
 try:
+    # Exact pinned-artifact stage bounds, checked again against actual ZIP directories.
+    known_training_bytes = 15735636394
+    known_training_SQL_bytes = 7664906240
+    known_full_nonmodel_bytes = 35776434485
+    known_final_SQL_bytes = 14050770944
+    full_ZIP_bytes = 5335924987
+    margin = 1073741824
+    peak = known_full_nonmodel_bytes + known_final_SQL_bytes + full_ZIP_bytes + margin
+    free = shutil.disk_usage(work).free
+    remote._atomic_json(out / "initial-peak-reservation.json", {
+        "available_bytes": free, "required_bytes": peak,
+        "basis": "Retained full ZIP plus full nonmodel tree, final SQLite-sized WAL allowance and 1GiB; no simultaneous training mirror or redundant decoded SQL reference."})
+    assert free >= peak
     training = measure("download_exact_training", lambda: artifact(
         13162514595, 1864728289, "709e6c4f3e8af5dd9dfadb31b2c90c28449ca3a635be31c1cb5363fc3e6ba36e"))
-    full = measure("download_exact_final", lambda: artifact(
-        13180555929, 5335924987, "7541e1387ba9311fc8b4c09eb3685d8b6dbc4774cad035e72cabf128661db26d"))
-    with zipfile.ZipFile(training) as left, zipfile.ZipFile(full) as right:
+    with zipfile.ZipFile(training) as left:
         training_bytes = sum(e.file_size for e in left.infolist() if not e.is_dir())
-        full_bytes = sum(e.file_size for e in right.infolist()
-                         if not e.is_dir() and not e.filename.startswith(("toolchain/", "toolchain-build/")))
-        final_index_bytes = right.getinfo("observation-index.sqlite").file_size
-    required = training_bytes + full_bytes + 2 * final_index_bytes + 1073741824
+    assert training_bytes == known_training_bytes
     free = shutil.disk_usage(work).free
-    remote._atomic_json(out / "restore-disk-guard.json", {
-        "free_after_download": free, "required_remaining_bytes": required,
-        "training_uncompressed": training_bytes, "final_selected_uncompressed": full_bytes,
-        "extra_final_SQLite_and_WAL_allowance": 2 * final_index_bytes})
-    assert free >= required
+    remote._atomic_json(out / "training-restore-disk-guard.json", {
+        "available_bytes": free, "required_bytes": training_bytes + margin})
+    assert free >= training_bytes + margin
     prefix = work / "closed-training"
     measure("restore_training", lambda: remote._safe_extract(training, prefix))
     ready = remote._read(prefix / "ready.json")
@@ -152,6 +163,38 @@ try:
     remote._atomic_json(out / "training-binding.json", {
         "identity": expected, "collector": provenance, "input_proof_SHA256": remote._json_sha(proof),
         "closed_files_verified": len(proof["files"]), "manifest_SHA256": proof["manifest_sha256"]})
+    training_index = prefix / "observation-index.sqlite"
+    assert training_index.stat().st_size == known_training_SQL_bytes
+    training_SHA = remote._sha(training_index)
+    assert training_SHA == "c36fdfafd41dea71b12e06744c2988e01a3e20bdb5c295093ea9b4a77186b745"
+    training_proof = measure("prove_training_SQL", lambda: remote._index_table_proof(training_index))
+    training_reference = references / "closed-training.sqlite"
+    before = training_index.stat()
+    os.replace(training_index, training_reference)
+    after = training_reference.stat()
+    assert (before.st_dev, before.st_ino, before.st_size) == (after.st_dev, after.st_ino, after.st_size)
+    assert remote._sha(training_reference) == training_SHA
+    del manifest, proof
+    assert prefix.resolve().parent == work and prefix.name == "closed-training" and not prefix.is_symlink()
+    measure("release_validated_training_mirror_after_SQL_move", lambda: shutil.rmtree(prefix))
+    measure("release_verified_downloaded_training_ZIP", training.unlink)
+    remote._atomic_json(out / "training-reference.json", {
+        "bytes": after.st_size, "sha256": training_SHA, "same_inode_move": True,
+        "complete_logical_proof": training_proof, "original_remote_artifact_retained": 13162514595})
+    free = shutil.disk_usage(work).free
+    required = full_ZIP_bytes + known_full_nonmodel_bytes + margin
+    remote._atomic_json(out / "final-download-restore-disk-guard.json", {
+        "available_bytes": free, "required_bytes": required})
+    assert free >= required
+    full = measure("download_exact_final", lambda: artifact(
+        13180555929, full_ZIP_bytes, "7541e1387ba9311fc8b4c09eb3685d8b6dbc4774cad035e72cabf128661db26d"))
+    with zipfile.ZipFile(full) as right:
+        full_bytes = sum(e.file_size for e in right.infolist()
+                         if not e.is_dir() and not e.filename.startswith(("toolchain/", "toolchain-build/")))
+        final_index_bytes = right.getinfo("observation-index.sqlite").file_size
+    assert (full_bytes, final_index_bytes) == (known_full_nonmodel_bytes, known_final_SQL_bytes)
+    assert shutil.disk_usage(work).free >= full_bytes + margin
+    os.chmod(full, 0o444)
     restored = measure("restore_final_nonmodel_inputs", lambda: restore_full_inputs(full))
     remote._atomic_json(out / "final-input-selection.json", restored)
     original_cost = remote._read(campaign_root / "runtime-identity-v5/refresh-cost-final.json")
@@ -160,25 +203,37 @@ try:
         "elapsed_seconds": original_cost["elapsed_seconds"], "captures": original_cost["captures"],
         "enclosures": original_cost["enclosures"], "cost_file_SHA256": remote._sha(
             campaign_root / "runtime-identity-v5/refresh-cost-final.json")})
-    del original_cost, manifest, proof
+    del original_cost
     reference_runtime = measure("hash_original_runtime_inputs_and_outputs", runtime_census)
     remote._atomic_json(references / "runtime-census.json", reference_runtime)
     index = campaign_root / "observation-index.sqlite"
     original_final = references / "original-final.sqlite"
-    def preserve_final_sql():
-        with sqlite3.connect(f"file:{index}?mode=ro", uri=True) as source, sqlite3.connect(original_final) as target:
-            source.backup(target)
-        return remote._index_table_proof(original_final)
-    final_proof = measure("preserve_original_final_SQL_outside_mutable_root", preserve_final_sql)
-    remote._atomic_json(out / "original-final-logical-proof.json", final_proof)
-    training_proof = measure("prove_training_SQL", lambda: remote._index_table_proof(prefix / "observation-index.sqlite"))
-    for path in (index, Path(str(index) + "-wal"), Path(str(index) + "-shm")):
+    for path in (Path(str(index) + "-wal"), Path(str(index) + "-shm")):
+        assert not path.exists() or path.stat().st_size == 0, "Original final SQLite must be closed/checkpointed"
         path.unlink(missing_ok=True)
-    measure("copy_closed_training_SQL_into_active_campaign", lambda: shutil.copyfile(prefix / "observation-index.sqlite", index))
+    before = index.stat()
+    os.replace(index, original_final)
+    after = original_final.stat()
+    assert (before.st_dev, before.st_ino, before.st_size) == (after.st_dev, after.st_ino, after.st_size)
+    os.chmod(original_final, 0o444)
+    assert remote._sha(original_final) == restored["original_final_SQL_member"]["sha256"]
+    final_proof = measure("prove_original_final_SQL_before_last_read_release",
+                          lambda: remote._index_table_proof(original_final))
+    remote._atomic_json(out / "original-final-logical-proof.json", final_proof)
+    remote._atomic_json(references / "encoded-original-final-SQL.json", {
+        "archive": str(full), "archive_sha256": "7541e1387ba9311fc8b4c09eb3685d8b6dbc4774cad035e72cabf128661db26d",
+        "complete_SQL_member": restored["original_final_SQL_member"], "logical_proof": final_proof,
+        "source": "Unchanged readonly original full ZIP retains every original SQLite byte; decoded redundant file has had its last reference read."})
+    measure("release_only_redundant_decoded_SQL_reference", original_final.unlink)
+    os.replace(training_reference, index)
+    assert remote._sha(index) == training_SHA
     assert remote._index_table_proof(index) == training_proof
-    # All original data remain in pinned artifacts; remove only this validated temporary mirror.
-    assert prefix.resolve().parent == work and prefix.name == "closed-training" and not prefix.is_symlink()
-    shutil.rmtree(prefix)
+    removed_outputs = {}
+    for name in ("projection-final.jsonl", "supplied-alias-scope-final.json"):
+        path = campaign_root / "runtime-identity-v5" / name
+        removed_outputs[name] = {"bytes": path.stat().st_size, "sha256": remote._sha(path)}
+        path.unlink()
+    remote._atomic_json(out / "removed_derived_final_outputs_to_be_recreated.json", removed_outputs)
     store = ObservationStoreV5(index, same_trace_parents=True)
     journal = Journal(campaign_root / "attempt-journal.sqlite")
     campaign = SimpleNamespace(ctx=SimpleNamespace(out=campaign_root, journal=journal),
@@ -209,6 +264,8 @@ try:
     store = None
     after_proof = measure("prove_complete_profiled_final_SQL", lambda: remote._index_table_proof(index))
     after_runtime = measure("hash_profiled_runtime_inputs_and_outputs", runtime_census)
+    encoded_SHA = measure("verify_immutable_encoded_SQL_reference_after_profile", lambda: remote._sha(full))
+    assert encoded_SHA == "7541e1387ba9311fc8b4c09eb3685d8b6dbc4774cad035e72cabf128661db26d"
     remote._atomic_json(out / "reconstructed-final-logical-proof.json", after_proof)
     remote._atomic_json(out / "runtime-output-equality.json", {
         "original": reference_runtime, "reconstructed": after_runtime, "equal": reference_runtime == after_runtime})

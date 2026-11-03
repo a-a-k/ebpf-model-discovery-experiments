@@ -17,11 +17,44 @@ jobs:
           python-version: '3.12'
       - name: Install unchanged preparation implementation
         run: python -m pip install -e . opentelemetry-proto
-      - name: Free unused hosted SDK disk before exact saved-data restoration
+      - name: Free unused diagnostic-only SDK and image copies before reserving the full peak
         run: |
           mkdir -p results/final-refresh-profile
           df -B1 . > results/final-refresh-profile/host-disk-before.txt
-          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
+          python - <<'PY'
+          import json,pathlib,shutil,subprocess,sys,time
+          out=pathlib.Path('results/final-refresh-profile')
+          protected=[pathlib.Path.cwd().resolve(),pathlib.Path(sys.executable).resolve()]
+          for tool in ('gh','git','node'):
+              binary=shutil.which(tool)
+              if binary: protected.append(pathlib.Path(binary).resolve())
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc',
+                 '/usr/local/.ghcup','/usr/share/swift','/usr/lib/jvm',
+                 '/opt/hostedtoolcache/CodeQL','/opt/hostedtoolcache/go',
+                 '/opt/hostedtoolcache/Ruby','/opt/az','/opt/google',
+                 '/opt/microsoft','/usr/local/share/powershell','/usr/local/share/boost']
+          proof={'scope':'Diagnostic-only unused hosted SDK/images; no VM/application/model execution or scientific payload deletion',
+                 'started_ns':time.time_ns(),'free_before':shutil.disk_usage('.').free,
+                 'protected_runtime_paths':[str(p) for p in protected],'paths':[],'docker_cleanup':[]}
+          for name in paths:
+              path=pathlib.Path(name)
+              assert not any(p.is_relative_to(path.resolve()) for p in protected)
+              before=shutil.disk_usage('.').free
+              size=subprocess.run(['sudo','du','-sx','-B1','--',name],capture_output=True,text=True)
+              subprocess.run(['sudo','rm','-rf','--',name],check=True)
+              proof['paths'].append({'path':name,'du_returncode':size.returncode,'du_stdout':size.stdout,
+                                     'du_stderr':size.stderr,'free_before':before,'free_after':shutil.disk_usage('.').free})
+              (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          for command in (['sudo','docker','image','prune','--all','--force'],
+                          ['sudo','docker','builder','prune','--all','--force']):
+              result=subprocess.run(command,capture_output=True,text=True)
+              proof['docker_cleanup'].append({'command':command,'returncode':result.returncode,
+                                              'stdout':result.stdout,'stderr':result.stderr})
+          proof.update(ended_ns=time.time_ns(),free_after=shutil.disk_usage('.').free)
+          (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps({'free_before':proof['free_before'],'free_after':proof['free_after'],
+                            'scope':proof['scope']}))
+          PY
           df -B1 . > results/final-refresh-profile/host-disk-after.txt
       - name: Reconstruct and profile the full unchanged final refresh
         env:
