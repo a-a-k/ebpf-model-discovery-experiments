@@ -101,6 +101,7 @@ def test_relocated_capture_is_rejected_before_index_mutation(capsule):
     root, proof = capsule
     postcapture.seal(root, proof)
     relocated = root.parent / "different-root"
+    assert root.resolve().parent == relocated.resolve().parent == proof.resolve().parent
     root.rename(relocated)
     with pytest.raises(ValueError, match="original absolute scientific root"):
         postcapture.verify(relocated, proof)

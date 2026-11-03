@@ -121,10 +121,13 @@ def seal(root: Path, proof: Path, *, capture_run_id=None, capture_source=None):
     directories = {path.relative_to(root).as_posix(): stat.S_IMODE(path.stat().st_mode)
                    for path in sorted(root.rglob("*"))
                    if delivered(path.relative_to(root).as_posix()) and path.is_dir()}
-    with sqlite3.connect(f"file:{(root/'attempt-journal.sqlite').as_posix()}?mode=ro&immutable=1", uri=True) as journal:
+    journal = sqlite3.connect(f"file:{(root/'attempt-journal.sqlite').as_posix()}?mode=ro&immutable=1", uri=True)
+    try:
         if journal.execute("PRAGMA quick_check").fetchone()[0] != "ok":
             raise ValueError("closed attempt journal failed quick_check")
         events = journal.execute("SELECT count(*),max(seq) FROM events").fetchone()
+    finally:
+        journal.close()
     write_json(proof / "capture-status.json", status)
     marker = {"schema": "closed-otel-postcapture-v5", "identity": expected,
               "scientific_root": str(root),
