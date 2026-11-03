@@ -4,9 +4,62 @@ This is a partial evidence review, not the completed 81-cell conclusion. Negativ
 and unavailable results remain part of the study and are not reasons to rerun a
 technically complete case.
 
-Seventy-three main cells have now passed both actual-evidence reviews: 27 OBI,
-27 Coroot and 19 DeepFlow. Eight DeepFlow OTel cases require technical repair
-and completion. All nine DeepFlow Petclinic cases are now reviewed.
+Seventy-four main cells have now passed both actual-evidence reviews: 27 OBI,
+27 Coroot and 20 DeepFlow. Seven DeepFlow OTel cases require technical completion.
+All nine DeepFlow Petclinic cases are reviewed.
+
+## OTel full repetition 6
+
+The [ninth saved-evidence reader](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41529601438)
+verified the completed packet from
+[full/6](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41470575905)
+at exact source `0056b4c`. Both actual-evidence reviews passed. The packet retains
+34,800 primary observations, 9,600 targets, 19 blocks, two independent guest
+boots, a source-bound worker import, unchanged SQL/input/output/freeze proofs
+and the actual owned-guest release after final capture.
+
+DeepFlow alone leaves all three operation forecasts unknown in both views.
+Native, combined and context each predict 0.875. Actual successes are
+2,800/3,200 for cart, 2,800/3,200 for browse and 472/3,200 for checkout.
+The extra checkout failures are retained. A separate own-case runtime review
+establishes five checkout process deaths at its container's 20 MiB memory
+limit: the kernel names the exact checkout Docker cgroup, five distinct PIDs
+are corroborated in the serial log, and saved Docker snapshots bind the
+container identity. This establishes a service-process failure mechanism in
+this run. It does not attribute every one of the 2,728 unsuccessful requests,
+establish that DeepFlow caused the OOM, or identify whole-guest memory shortage.
+Database mappings and their forecasts remain unknown.
+
+Six actual Bering fits, six preflight checks and twelve distinct native/combined
+Sheaft executions are retained. Context reuses the unchanged union and adds no
+distinct simulation. The twelve final simulation models carry the declared
+metadata attachment; they are not labelled raw Bering-emitted snapshots.
+The reader selected 259 of 10,893 worker file claims, preserving the explicit
+boundary on independently rehashed payloads. No coverage or accuracy threshold
+selected this case for inclusion or replay.
+
+Async normal, paused and resumed controls each retain 20 `identity_unavailable`
+outcomes; recovered controls retain 20 `persisted_exact` outcomes. Missing
+identity does not prove nonpersistence or a paused-consumer failure. This full-SDK
+control adds no operation forecast from DeepFlow over native/context; it does
+not substitute for the six technically incomplete absent/partial OTel cases.
+See the [root review](clean-study-batch9-OTel-full6-root-actual-review-20261103.json)
+and [independent review](clean-study-batch9-OTel-full6-independent-actual-review-20261103.json).
+The subsequent narrow causal review is preserved separately in the
+[root runtime review](clean-study-OTel-full6-checkout-OOM-root-actual-review-20261103.json)
+and [independent runtime review](clean-study-OTel-full6-checkout-OOM-independent-actual-review-20261103.json).
+Forecasts, outcomes and scientific case admission remain unchanged.
+
+The unchanged 0.875 forecast is conditional on nonintervened requirements being
+fulfilled. These process deaths show that sustained fulfilment of the
+nonintervened services cannot be presumed; the evidence does not identify which
+failed requests violated it. The full/6 and full/7 outcome discrepancies cannot
+be assigned wholly to graph reconstruction quality on that evidence alone.
+Their eBPF-only operation forecasts remain unknown independently of
+this runtime finding. These two full-SDK controls do not establish DeepFlow's
+absent/partial feasibility; the seven technically incomplete OTel cases remain
+required. Memory limits are not changed selectively and adverse outcomes are
+not replaced or rescored.
 
 ## Petclinic full repetitions 6/7/8
 
@@ -62,15 +115,25 @@ are 2,634/3,200 for cart, 2,646/3,200 for browse and 914/3,200 for checkout.
 The six Bering runs and twelve distinct native/combined Sheaft executions are
 retained, together with context reuse. This is a completed adverse result.
 The topological prediction is conditional on nonintervened requirements being
-fulfilled; this packet does not establish the cause of the extra failed
-operations. All saved database-fault forecasts are unknown in this case.
+fulfilled. The subsequent own-case runtime audit establishes four checkout-named
+memory-cgroup OOM deaths in the serial log. Three later deaths additionally have
+dated kernel contexts binding the exact Docker container to a 20 MiB limit;
+the earlier fourth event has only serial evidence. This establishes a
+service-process failure mechanism, without attributing every one of the 2,286
+unsuccessful checkout requests or establishing that DeepFlow caused the OOM.
+Shipping's retained SDK telemetry-export error is not a business POST
+broken-pipe report. All saved database-fault forecasts are unknown in this case.
 Async normal/recovered/resumed controls each retain 20 persisted orders;
 paused controls retain 20 pending orders. Native causal markers do not prove
 a common explicit message ID, and the complete eBPF async chain remains unknown.
 See the [root review](clean-study-batch7-OTel-full7-root-actual-review-20261102.json)
 and [independent review](clean-study-batch7-OTel-full7-independent-actual-review-20261102.json).
+The subsequent narrow runtime finding is bound separately in the
+[root runtime review](clean-study-OTel-full7-checkout-OOM-root-actual-review-20261103.json)
+and [independent runtime review](clean-study-OTel-full7-checkout-OOM-independent-actual-review-20261103.json).
+Original forecasts and outcomes remain unchanged.
 
-These four cases are retained without an availability or accuracy admission
+These completed cases are retained without an availability or accuracy admission
 threshold. No successful unknown or adverse case is selected for recapture.
 
 ## Petclinic, absent SDK, repetition 6

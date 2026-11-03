@@ -5355,6 +5355,136 @@
       "run_id": 41472653406,
       "role": "archive",
       "note": "Finite terminal62 retention wave batch1: 62 original source runs, 102 original artifacts. Same qualified archival bytes/pre-download disk guard/full SHA/ZIP CRC/chunk/reassembly/remote publication proof. No source deletion/capture/refit/rescore/admission. All transfer/publication/failure/proof costs retained; human unknown; active and finite closing tail separate."
+    },
+    {
+      "run_id": 41529601438,
+      "role": "evidence",
+      "note": "Ninth existing saved reader: ONLY new0056 DeepFlow OTel full6; all73prior reviews preserved. All check/transfer/CI/preparation/failed/retention costs retained. Actual interpretation separate; no capture/refit/rescore/outcome gate."
+    },
+    {
+      "run_id": 41530697439,
+      "role": "preparation",
+      "note": "Closed discovery-copy import qualification at f99f530346f156ea6f11526521d8cd8e69c7ed92 failed a fixed-context check before a complete result. No scientific cell admission. Repair and all failed preparation, transfer, validation and retention costs retained; replacement 41533099422 is separate."
+    },
+    {
+      "run_id": 41533099422,
+      "role": "preparation",
+      "note": "Exact retained worker-output qualification at 68230876fb1130cecfc63cfb19649beb69c83493 completed successfully: all 13,059 logical paths, bytes, modes and forecasts preserved, with 9,932,513,280 fewer allocated bytes for verified closed discovery copies. No traffic/refit/rescore/scientific admission or full-case disk/time cure claim. All preparation, CI, both-arm, transfer and retention costs retained."
+    },
+    {
+      "run_id": 41527918261,
+      "role": "preparation",
+      "note": "Actualsourceb94 CI; alljobs/preparation/failures/check/retention costs retained. No traffic/refit/scientificcaseadmission. Runtimecandidateandqualificationcontextheadidentities keptseparate."
+    },
+    {
+      "run_id": 41527909656,
+      "role": "preparation",
+      "note": "Actualsourceb94 CI; alljobs/preparation/failures/check/retention costs retained. No traffic/refit/scientificcaseadmission. Runtimecandidateandqualificationcontextheadidentities keptseparate."
+    },
+    {
+      "run_id": 41528807453,
+      "role": "preparation",
+      "note": "Actualsource4dc CI; alljobs/preparation/failures/check/retention costs retained. No traffic/refit/scientificcaseadmission. Runtimecandidateandqualificationcontextheadidentities keptseparate."
+    },
+    {
+      "run_id": 41529652266,
+      "role": "preparation",
+      "note": "Actualsourcef99 CI; alljobs/preparation/failures/check/retention costs retained. No traffic/refit/scientificcaseadmission. Runtimecandidateandqualificationcontextheadidentities keptseparate."
+    },
+    {
+      "run_id": 41531995804,
+      "role": "preparation",
+      "note": "Actualsource682 CI; alljobs/preparation/failures/check/retention costs retained. No traffic/refit/scientificcaseadmission. Runtimecandidateandqualificationcontextheadidentities keptseparate."
+    },
+    {
+      "run_id": 41577287043,
+      "role": "preparation",
+      "note": "Exactsavedfull6 trainingSQL+finalraw reconstruction, unchanged0056 ingest/fullrefresh under processCPUprofile; finalSQL/outputequality required. No app/VM/Bering/Sheaft/outcome replay, no sampling/optimizer/sourceadmission. Allrestore/profile/check/CI/failure/retentioncosts retained; timing/cachelimits explicit."
+    },
+    {
+      "run_id": 41581377543,
+      "role": "preparation",
+      "note": "Exactsavedfull6 trainingSQL+finalraw reconstruction, unchanged0056 ingest/fullrefresh under processCPUprofile; finalSQL/outputequality required. No app/VM/Bering/Sheaft/outcome replay, no sampling/optimizer/sourceadmission. Allrestore/profile/check/CI/failure/retentioncosts retained; timing/cachelimits explicit."
+    },
+    {
+      "run_id": 41534974688,
+      "role": "preparation",
+      "note": "Actualdiagnostic-only f8d codeCI; all2jobs/setup/check/failure/retentioncosts retained; no scientificsourceadmission/primaryreplay."
+    },
+    {
+      "run_id": 41580933465,
+      "role": "preparation",
+      "note": "Actualdiagnostic-only c564 codeCI; all2jobs/setup/check/failure/retentioncosts retained; no scientificsourceadmission/primaryreplay."
+    },
+    {
+      "run_id": 41506759651,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41504762094,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41504119650,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41503811060,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41495535212,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41494707074,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41494422422,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41491700099,
+      "role": "worker",
+      "note": "Actual toolchain-worker-v4.yml metadata head06d7d52bfa4b7768a4cabf02f4e66f109b3a9492; retain all completed/failed/queued preparation or worker job costs. Worker workflow head alone is not scientific input identity; bind actual parent/prefix separately. API intervals are not CPU/billed usage; human effort unknown."
+    },
+    {
+      "run_id": 41582737265,
+      "role": "archive",
+      "note": "Finite terminal29 retention wave batch1: 29 original source runs, 25 original artifacts. Same qualified archival bytes/pre-download disk guard/full SHA/ZIP CRC/chunk/reassembly/remote publication proof. No source deletion/capture/refit/rescore/admission. All transfer/publication/failure/proof costs retained; human unknown; active and finite closing tail separate."
+    },
+    {
+      "run_id": 41596950199,
+      "role": "preparation",
+      "note": "Closedpostcapture engineering candidate head6d6472e1b47d357c58b5d8b6762553713c6b0cd4. ActualCI failure:1oldglobaljournalcounttest failed;1007passed1skip,controlfixturepassed. Preserve failure/repair/preparation costs; no scientific execution. Fullqualification/transfer/observer/retention costs separate; APIintervalnotCPU/billing,humanunknown."
+    },
+    {
+      "run_id": 41597600905,
+      "role": "preparation",
+      "note": "Closedpostcapture engineering candidate head23be2a12124f074d118d2c12eabe4a1ee9996be8. ActualCI bothjobsSUCCESS after journal test nowrequiresonejournalpercanonicalsummaryjob. Runtime/workflowblobs same6d; no scientificsourceadmission or primaryreplay. Fullqualification/transfer/observer/retention costs separate; APIintervalnotCPU/billing,humanunknown."
+    },
+    {
+      "run_id": 41608528466,
+      "role": "preparation",
+      "note": "Engineering qualification at 8f5d37289432d4a115665c07eca3bd48e9876f01, active at this publication: reconstruct saved full6, transfer a closed capture, then compare the whole unchanged offline suffix and production publications. Actual equality and headroom remain pending. No capture/refit/Sheaft/new main cell/source admission. All reconstruction/proof/transfer/processing/publication/wait/failure/observer/retention costs retained; historical copied costs are not new model runs; human effort unknown."
+    },
+    {
+      "run_id": 41602416740,
+      "role": "preparation",
+      "note": "Closedpostcapture qualification code head8c1ce34b722c16a5bd924b026de56a949e99f51a. ActualCIbothsuccess;auxreviewthenidentifiedmissingmetadata/defaultpublicationcoverage, repairedbeforeanyqualificationPOST. AllCI/failure/repair/observer/retentioncostsretained;APIwallnotCPU/billing,humanunknown."
+    },
+    {
+      "run_id": 41607019816,
+      "role": "preparation",
+      "note": "Closedpostcapture qualification code head8f5d37289432d4a115665c07eca3bd48e9876f01. ActualCIbothsuccess;independentoriginalcodeCIreadinessGO9c8616;actualdataqualification41608528466separate, no scientificsourceadmission. AllCI/failure/repair/observer/retentioncostsretained;APIwallnotCPU/billing,humanunknown."
     }
   ],
   "blocked_main_cells": [],
@@ -5381,5 +5511,5 @@
     "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
     "status": "Merged and finalqualification27 fully independently reviewed by bothagents. Both ORIGINAL MAIN81 GO recorded in clean-study-requalification-v5-20261031.json before dispatch. Original81scope unchanged."
   },
-  "cost_scope_metadata_observed_at_utc": "2026-11-02T15:22:14.531054+00:00"
+  "cost_scope_metadata_observed_at_utc": "2026-11-03T05:06:49.484372+00:00"
 }
