@@ -1,10 +1,10 @@
 # Reviewed social-network evidence from all three collectors
 
-This is a subset of the fixed 81-cell study. All nine OBI cases, all nine
-Coroot cases and the three DeepFlow absent-tracing cases have passed the
-qualified saved-evidence reader and both metadata reviews. The six remaining
-DeepFlow social-network cases are technical timeout replacements in progress;
-no complete three-collector comparison is claimed here.
+All 27 matched social-network cases now have both original actual-evidence
+reviews: all three collectors, all three SDK modes and seeds 6/7/8. This completes
+the social-network subset of the fixed81 matrix. Three DeepFlow/OTel SDK-absent
+cases and the final whole-study report remain due; the social-network cases are
+not waiting for a rerun.
 
 OBI and Coroot do not supply the required cross-service Thrift paths in these
 actual Bering graphs. Their eBPF operation forecasts remain unknown. Partial
@@ -43,3 +43,31 @@ See the [Coroot root model/report chains](clean-study-Coroot-DSB-full6-literal-r
 [independent chains](clean-study-Coroot-DSB-full6-literal-independent-review-20261101.json),
 [root negative graph inspection](clean-study-Coroot-DF-negative-literal-root-review-20261101.json)
 and [independent graph inspection](clean-study-Coroot-DF-negative-literal-independent-review-20261101.json).
+
+
+The completed DeepFlow partial/full repetitions preserve the same negative
+eBPF-only finding: none of the three full operation forecasts is available.
+Partial native, combined and context support home timeline only (1 versus
+3200/3200); compose and user timeline remain unknown. Full native/combined/context
+predict .875/1/.875 versus 2800/3200, 3200/3200 and 2800/3200. Extra observed DB
+channels do not create an additional primary operation forecast. See the
+[completed DeepFlow evidence](MAIN_DEEPFLOW_FINDINGS_V5.md).
+
+The pinned application uses framed binary Thrift for these RPC paths. Required
+operation-level calls are absent from the tested collector-to-Bering evidence;
+nonempty TCP/HTTP/database graphs do not supply their method, caller and callee
+semantics. This observation does not prove that Thrift is undecodable or that
+all versions/configurations of these collectors lack support. No specialized
+Thrift decoder was integrated or tested in this study. Adding such a decoder
+would require a separate matched experiment, not reclassification of these
+completed negative results.
+
+HTTP acknowledgements also differ from durable database writes in the pinned
+compose adapter. A source audit found that its generated Lua receiver reads a
+declared backend ServiceException but does not raise it. The recorded db_down
+phase has 7/7 HTTP acknowledgements. The own full/6 phase-end snapshot confirms
+the selected user-timeline MongoDB was stopped before restore; it does not prove
+continuous downtime for every request. Those acknowledgements cannot establish
+7 durable writes. The source mechanism does not establish the actual reply
+contents or all repetitions' causes. Existing measured outcomes remain unchanged; see the
+[own-case audit and limits](MAIN_DEEPFLOW_FINDINGS_V5.md).

@@ -4,9 +4,59 @@ This is a partial evidence review, not the completed 81-cell conclusion. Negativ
 and unavailable results remain part of the study and are not reasons to rerun a
 technically complete case.
 
-Seventy-four main cells have now passed both actual-evidence reviews: 27 OBI,
-27 Coroot and 20 DeepFlow. Seven DeepFlow OTel cases require technical completion.
-All nine DeepFlow Petclinic cases are reviewed.
+Seventy-eight main cells have now passed both original actual-evidence reviews:
+27 OBI, 27 Coroot and 24 DeepFlow. All DeepFlow social-network and Petclinic cases,
+and all OTel partial/full cases, are reviewed. Only three OTel SDK-absent cases
+remain technically incomplete. Earlier batch counts below describe their
+review dates, not the current remaining scope.
+
+## OTel partial repetitions 6/7/8 and full repetition 8
+
+Both actual-evidence reviews admitted the original partial cases and full/8,
+without repeating their traffic or model computations. Each preserves 34,800
+primary attempts, 9,600 targets, 19 blocks, two separate guest boots, actual
+forecast outputs frozen before targets and the original SQL/worker/input proofs.
+Successful sealed capsules and compact publications supply the explicitly
+qualified evidence unions after processed-full upload failures. The full/8
+processing recovery retains its distinct original scientific and actual
+processing identities. The [readset and publication limits](saved-capture-recovery-consumer-20261103.md)
+remain explicit; final mutable SQL and processed-full snapshots are unavailable.
+
+In partial/6, /7 and /8, all four methods in both views leave all three primary
+operation forecasts unavailable. Both catalogue replicas have SDK tracing
+disabled; other native spans remain. The combined evidence still lacks the
+required frontend-to-catalogue RPC and catalogue-to-PostgreSQL obligations,
+with additional checkout requirements unresolved. Context adds no edges or
+available operation forecast. Each case executed six pooled plus two context
+Bering replays, with no fabricated operation Sheaft run. Independent browse/cart
+successes were 2800/2800, 2796/2797 and 2800/2800 out of 3200 per operation;
+checkout successes were 1247, 379 and 1029. These negative and adverse results
+are valid. The earlier full/6 and full/7 OOM diagnoses are not transferred to
+these cases.
+
+In full/8, eBPF alone again leaves all three operations unknown in both views.
+Native, combined and context predict .875 for all operations; each independently
+succeeds 2800/3200, including checkout. This matches the same conditional direct
+source-contract baseline. Six pooled and two context Bering replays and twelve
+distinct primary Sheaft runs were executed. Context adds no edges or distinct
+simulation. Adding DeepFlow supplies no new primary operation forecast. This
+favorable repetition does not replace earlier adverse checkout observations.
+
+All selected OTel database-down forecasts remain unknown in these four cases,
+even where an internal database binding flag is true. Independent DB-down
+counts are 0/(7,7,6) and DB-up counts (7,7,6)/(7,7,6) for cart, browse and checkout.
+Normal, resumed and recovered async checks each show 20 exact persisted records;
+the paused snapshot has 20 pending records, not failures. Native causal stage
+spans in full/8 do not prove one shared explicit message ID across all stages;
+the eBPF four-stage causal chain remains unknown.
+
+The immutable root and independent verdicts are preserved in the joint actual
+reviews for [partial/6](clean-study-otel-partial6-actual-review-20261104.json),
+[partial/7](clean-study-otel-partial7-actual-review-20261104.json),
+[partial/8](clean-study-otel-partial8-actual-review-20261104.json) and
+[full/8](clean-study-otel-full8-actual-review-20261104.json). They admit these
+original cases; they do not establish the three unfinished absent cases, a
+universal collector limitation, a cost advantage or the final full81 result.
 
 ## OTel full repetition 6
 
@@ -42,7 +92,7 @@ Async normal, paused and resumed controls each retain 20 `identity_unavailable`
 outcomes; recovered controls retain 20 `persisted_exact` outcomes. Missing
 identity does not prove nonpersistence or a paused-consumer failure. This full-SDK
 control adds no operation forecast from DeepFlow over native/context; it does
-not substitute for the six technically incomplete absent/partial OTel cases.
+not substitute for the separate missing-trace cases.
 See the [root review](clean-study-batch9-OTel-full6-root-actual-review-20261103.json)
 and [independent review](clean-study-batch9-OTel-full6-independent-actual-review-20261103.json).
 The subsequent narrow causal review is preserved separately in the
@@ -57,8 +107,8 @@ failed requests violated it. The full/6 and full/7 outcome discrepancies cannot
 be assigned wholly to graph reconstruction quality on that evidence alone.
 Their eBPF-only operation forecasts remain unknown independently of
 this runtime finding. These two full-SDK controls do not establish DeepFlow's
-absent/partial feasibility; the seven technically incomplete OTel cases remain
-required. Memory limits are not changed selectively and adverse outcomes are
+absent/partial feasibility; the three technically incomplete SDK-absent OTel
+cases remain required. Memory limits are not changed selectively and adverse outcomes are
 not replaced or rescored.
 
 ## Petclinic full repetitions 6/7/8
@@ -177,7 +227,7 @@ advantage is claimed; human preparation effort is unknown.
 The supported interpretation is narrow: this pinned DeepFlow configuration and
 repetition did not supply sufficient operation-level evidence for useful Sheaft
 forecasts when native tracing was absent. Repetitions 7/8 are assessed below;
-the other Petclinic modes still require completion before the final comparison.
+all Petclinic modes have since completed review, as detailed above.
 
 ## DeathStarBench, partial SDK repetition 7 and full SDK repetition 6
 

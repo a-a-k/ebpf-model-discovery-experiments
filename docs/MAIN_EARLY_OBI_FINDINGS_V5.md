@@ -125,5 +125,6 @@ costs remain; the other case's PostgreSQL OOM is not transferred here.
 
 See the [root actual second-batch review](clean-study-main-review-batch2-root-actual-review-20261101.json)
 and [independent review](clean-study-main-review-batch2-independent-actual-review-20261101.json).
-All 27 OBI, all 27 Coroot and three DeepFlow packets now have both saved-metadata
-reviews. The remaining 24 DeepFlow cases and final 81-cell report remain due.
+All 27 OBI, all 27 Coroot and 24 DeepFlow cases now have both original actual
+scientific-evidence reviews (78/81). Only DeepFlow/OTel SDK-absent repetitions
+6/7/8 and the final whole-study report remain due. OBI results are unchanged.
