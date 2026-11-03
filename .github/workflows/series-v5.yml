@@ -353,34 +353,12 @@ jobs:
             --out work/campaign/evaluation-v5.json
       - name: Record compact evaluation provenance
         if: always() && steps.capture_upload.outcome != 'success'
+        env:
+          PYTHONPATH: src
         run: |
-          python - <<'PY'
-          import hashlib, json, os
-          from pathlib import Path
-          root = Path('work/campaign')
-          names = ['evaluation-v5.json', 'status.json', 'plans.json', 'census.json',
-                   'blocks.json', 'freeze-integrity.json', 'toolchain/forecasts.json',
-                   'evidence-v4.json', 'attempt-journal.jsonl']
-          files = {}
-          for name in names:
-              path = root/name
-              if path.is_file():
-                  with path.open('rb') as stream:
-                      files[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
-              else:
-                  files[name] = None
-          manifest = {'schema_version': 'v5-cell-summary-manifest',
-                      'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
-                      'system': '${{ matrix.system }}', 'mode': '${{ matrix.mode }}',
-                      'seed': ${{ matrix.seed }}, 'collector': '${{ inputs.collector }}',
-                      'smoke': '${{ inputs.stage }}' == 'smoke',
-                      'full_artifact_name': 'campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ matrix.system }}-${{ matrix.mode }}-${{ matrix.seed }}-${{ github.run_id }}',
-                      'files_sha256': files,
-                      'full_artifact_transport': ('dsb-subtree-retention-v1'
-                          if '${{ matrix.system }}' == 'deathstarbench' else 'original-file-tree'),
-                      'original_evidence_reverified_by_compact_report': False}
-          (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
-          PY
+          python -m ebpf_discovery.summary_manifest_v5 --campaign work/campaign \
+            --system '${{ matrix.system }}' --mode '${{ matrix.mode }}' --seed '${{ matrix.seed }}' \
+            --collector '${{ inputs.collector }}' --stage '${{ inputs.stage }}'
       - uses: actions/upload-artifact@v4
         if: always() && steps.capture_upload.outcome != 'success'
         with:
@@ -648,34 +626,12 @@ jobs:
             --out work/campaign/evaluation-v5.json
       - name: Record compact evaluation provenance
         if: always()
+        env:
+          PYTHONPATH: src
         run: |
-          python - <<'PY'
-          import hashlib, json, os
-          from pathlib import Path
-          root = Path('work/campaign')
-          names = ['evaluation-v5.json', 'status.json', 'plans.json', 'census.json',
-                   'blocks.json', 'freeze-integrity.json', 'toolchain/forecasts.json',
-                   'evidence-v4.json', 'attempt-journal.jsonl']
-          files = {}
-          for name in names:
-              path = root/name
-              if path.is_file():
-                  with path.open('rb') as stream:
-                      files[name] = hashlib.file_digest(stream, 'sha256').hexdigest()
-              else:
-                  files[name] = None
-          manifest = {'schema_version': 'v5-cell-summary-manifest',
-                      'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
-                      'system': '${{ inputs.system }}', 'mode': '${{ inputs.mode }}',
-                      'seed': ${{ inputs.seed }}, 'collector': '${{ inputs.collector }}',
-                      'smoke': '${{ inputs.stage }}' == 'smoke',
-                      'full_artifact_name': 'campaign-v5-${{ inputs.collector }}-${{ inputs.stage }}-${{ inputs.system }}-${{ inputs.mode }}-${{ inputs.seed }}-${{ github.run_id }}',
-                      'files_sha256': files,
-                      'full_artifact_transport': ('dsb-subtree-retention-v1'
-                          if '${{ inputs.system }}' == 'deathstarbench' else 'original-file-tree'),
-                      'original_evidence_reverified_by_compact_report': False}
-          (root/'evaluation-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
-          PY
+          python -m ebpf_discovery.summary_manifest_v5 --campaign work/campaign \
+            --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --seed '${{ inputs.seed }}' \
+            --collector '${{ inputs.collector }}' --stage '${{ inputs.stage }}'
       - uses: actions/upload-artifact@v4
         if: always()
         with:

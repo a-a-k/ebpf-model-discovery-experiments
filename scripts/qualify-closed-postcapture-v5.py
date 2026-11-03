@@ -16,6 +16,7 @@ import requests
 from ebpf_discovery import postcapture_v5 as closed
 from ebpf_discovery import remote_toolchain_v4 as transport
 from ebpf_discovery.evaluate_v5 import evaluate_campaign
+from ebpf_discovery.summary_manifest_v5 import record as record_manifest
 
 ANCHOR = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 PRODUCER = "41470575905"
@@ -30,6 +31,8 @@ FINAL_OUTPUTS = (
 RECREATED = (*FINAL_OUTPUTS[:-1], "index-final.json", "evaluation-v5.json", "evaluation-manifest.json",
              "runtime-identity-v5/refresh-cost-final.json")
 MUTABLE_INPUTS = {"status.json", "observation-index.sqlite", "attempt-journal.sqlite", "attempt-journal.jsonl"}
+OBSERVED_COST_FIELDS = {"index-final.json": ("seconds", "index_bytes"),
+                        "runtime-identity-v5/refresh-cost-final.json": ("elapsed_seconds",)}
 WORK = Path("work/closed-postcapture-qualification").resolve()
 ROOT = Path("work/campaign").resolve()
 PROOF = Path("work/postcapture-proof").resolve()
@@ -58,6 +61,13 @@ def evaluation_scientific_sha(path):
     status.pop("ended_ns")
     status.pop("elapsed_seconds")
     return transport._json_sha(value), transport._json_sha(removed_cost)
+
+
+def non_cost_metadata(path, cost_fields):
+    value = transport._read(path)
+    observed_cost = {key: value.pop(key) for key in cost_fields}
+    return {"non_cost_fields_sha256": transport._json_sha(value),
+            "full_file_sha256": transport._sha(path), "observed_cost_fields": observed_cost}
 
 
 def journal_proof(path):
@@ -160,8 +170,10 @@ def build():
                  "original_final_SQL_file_SHA256": transport._sha(index),
                  "expected_outputs": expected_outputs, "scientific_evaluation_sha256": scientific_SHA,
                  "original_cost_object_sha256": cost_SHA,
+                 "ingest_refresh_metadata": {
+                     name: non_cost_metadata(ROOT / name, fields) for name, fields in OBSERVED_COST_FIELDS.items()},
                  "journal": measure("prove_original_journal_rows", lambda: journal_proof(ROOT / "attempt-journal.sqlite")),
-                 "semantic_normalization": "JSON object key order only; JSONL sequence retained. Evaluation excludes only cost and status.ended_ns/status.elapsed_seconds; all costs retained separately.",
+                 "semantic_normalization": "JSON object key order, whitespace and escape formatting normalized; JSONL row sequence and all field values retained exactly. Evaluation excludes only cost and status.ended_ns/status.elapsed_seconds; all costs retained separately. Ingest metadata excludes only seconds/index_bytes; refresh metadata excludes only elapsed_seconds, with both complete-file hashes and observed costs retained.",
                  "no_historical_missing_source_build_cache_recovery_claim": True,
                  "no_new_traffic_model_fitting_or_simulation": True}
     transport._atomic_json(OUT / "original-reference.json", reference)
@@ -211,6 +223,12 @@ def compare():
     del report
     actual_scientific, actual_cost = measure("compare_ALL_scientific_evaluation_fields", lambda: evaluation_scientific_sha(ROOT / "evaluation-v5.json"))
     assert actual_scientific == reference["scientific_evaluation_sha256"]
+    compared_metadata = {}
+    for name, fields in OBSERVED_COST_FIELDS.items():
+        actual = non_cost_metadata(ROOT / name, fields)
+        original = reference["ingest_refresh_metadata"][name]
+        assert actual["non_cost_fields_sha256"] == original["non_cost_fields_sha256"], name
+        compared_metadata[name] = {"original": original, "candidate": actual}
     immutable_count = 0
     with (ROOT / "infrastructure/postcapture/files.jsonl").open(encoding="utf-8") as stream:
         for line in stream:
@@ -222,11 +240,21 @@ def compare():
             assert path.stat().st_mode & 0o7777 == row["mode"], row["path"]
             immutable_count += 1
     frozen = closed.frozen_files(ROOT)
+    manifest = measure("record_production_compact_payload_manifest", lambda: record_manifest(
+        ROOT, system="otel_demo", mode="full", seed=6, collector="deepflow", stage="main",
+        run_id=os.environ["GITHUB_RUN_ID"], commit=os.environ["GITHUB_SHA"], qualification_only=True))
+    assert manifest["qualification_only"] is True
+    for name, digest in manifest["files_sha256"].items():
+        assert digest is not None and transport._sha(ROOT / name) == digest, name
     transport._atomic_json(OUT / "whole-suffix-equality.json", {
         "status": "complete", "actual_processing_run_id": os.environ["GITHUB_RUN_ID"],
         "actual_processing_source": os.environ["GITHUB_SHA"], "original_producer": PRODUCER,
         "original_scientific_source": ANCHOR, "ALL_final_logical_SQL_rows_and_schema_equal": True,
         "ALL_saved_scientific_evaluation_fields_equal": True, "ALL_reference_outputs_equal": True,
+        "ALL_ingest_refresh_non_cost_fields_equal": True, "ingest_refresh_metadata": compared_metadata,
+        "production_compact_manifest_payload_hashes_verified": len(manifest["files_sha256"]),
+        "published_full_artifact_name": manifest["full_artifact_name"],
+        "compact_manifest_sha256": transport._sha(ROOT / "evaluation-manifest.json"),
         "ALL_journal_rows_and_schema_equal": True, "immutable_input_files_rehashed": immutable_count,
         "ALL_frozen_model_and_input_hashes_equal": len(frozen),
         "original_cost_object_sha256": reference["original_cost_object_sha256"],

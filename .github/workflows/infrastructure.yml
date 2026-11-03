@@ -178,28 +178,51 @@ jobs:
           cp -a work/offline-host/. results/closed-postcapture-qualification/host/
           df -B1 . > results/closed-postcapture-qualification/host/disk-final.txt
           free -b > results/closed-postcapture-qualification/host/memory-final.txt
-      - name: Retain complete regenerated scientific outputs for exact review after either outcome
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: closed-postcapture-outputs-${{ github.run_id }}
+          name: qualification-v5-summary-deepflow-main-otel_demo-full-6-${{ github.run_id }}
           path: |
-            work/campaign/observation-index.sqlite
-            work/campaign/classes-v4.json
-            work/campaign/classes-v5.json
-            work/campaign/evidence-v4.json
-            work/campaign/freeze-integrity.json
-            work/campaign/index-final.json
             work/campaign/evaluation-v5.json
+            work/campaign/evaluation-manifest.json
             work/campaign/status.json
-            work/campaign/runtime-identity-v5/projection-final.jsonl
-            work/campaign/runtime-identity-v5/supplied-alias-scope-final.json
-            work/campaign/runtime-identity-v5/refresh-cost-final.json
-            work/campaign/infrastructure/postcapture/processing.json
+            work/campaign/plans.json
+            work/campaign/census.json
+            work/campaign/blocks.json
+            work/campaign/freeze-integrity.json
+            work/campaign/toolchain/forecasts.json
+            work/campaign/evidence-v4.json
+            work/campaign/attempt-journal.jsonl
+            work/campaign/classes-v5.json
+            work/campaign/classes-v4.json
+            work/campaign/observations/collector.json
+            work/campaign/observations/drain-evidence.json
+            work/campaign/observations/technical-positive-control.json
+            work/campaign/observations/control-prestart*.json
+            work/campaign/observations/startup-*.json
+            work/campaign/observations/startup-*.log
+            work/campaign/observations/readiness.json
+            work/campaign/observations/receiver-*.log
+            work/campaign/observations/pre-drain-*-logs.log
+            work/campaign/observations/final-*-collector.log
+          retention-days: 90
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: qualification-campaign-v5-deepflow-main-otel_demo-full-6-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
           compression-level: 1
           include-hidden-files: true
           retention-days: 90
-          if-no-files-found: warn
+          if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
