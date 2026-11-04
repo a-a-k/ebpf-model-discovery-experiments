@@ -38,6 +38,20 @@ WORKFLOW = "toolchain-worker-v4.yml"
 WORKER_POLL_SECONDS = 60
 IDENTITY_KEYS = ("run_id", "commit", "system", "mode", "seed", "manifest_sha256")
 WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
+_TRAINING_ADMISSION_ALGORITHM = {
+    'supplied_alias_v5.py': 'c7fb93a270928c521bd089bb27e07b66cf5102a4',
+    'identity_projection_v5.py': '11817ff5a90fb378694d56961749f3714ca6b44b',
+    'checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+    'store_v3.py': '3a823452fc74240bc14c176327a9be12159a5e1f',
+    'store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+    'deepflow_handoff_v5.py': '6fb85c896dd1c9f89604da495d37b3b24191f9bb',
+    'deepflow_codec_v5.py': '072cc890b6e0b60cc736738e962fab42295c39cc',
+}
+_TRAINING_ADMISSION_INPUTS = (
+    'observation-index.sqlite',
+    'runtime-identity-v5/supplied-service-aliases-training.json',
+    'runtime-identity-v5/supplied-service-alias-admission-training.json',
+)
 # Public compatibility seam used by existing v4 worker tests and callers.
 Toolchain = ToolchainV4
 
@@ -445,6 +459,87 @@ def _make_binaries_executable(proofs: dict) -> None:
         path.chmod(path.stat().st_mode | 0o111)
 
 
+def _frozen_training_admission_reference(root, manifest, verified, index_proof,
+                                       expected, collector):
+    """Reference one actually computed result after the worker's existing gates."""
+    if (collector or {}).get('collector') != 'deepflow' or (
+            expected['system'], expected['mode']) != ('otel_demo', 'absent'):
+        return None
+    root = Path(root).resolve()
+    if (os.environ.get('GITHUB_ACTIONS') != 'true'
+            or _sha(root / 'manifest.json') != expected['manifest_sha256']
+            or verified['manifest_sha256'] != expected['manifest_sha256']
+            or _read(root / 'manifest.json') != manifest
+            or _json_sha(index_proof) != expected['training_index_proof_sha256']
+            or any(str(manifest['identity'][key]) != str(expected[key])
+                   for key in IDENTITY_KEYS[:-1])):
+        raise ValueError('frozen admission reference lacks exact worker checkpoint proof')
+    claims = {name: {'bytes': row['bytes'], 'sha256': row['sha256']}
+              for name, row in manifest['files'].items()}
+    if claims != verified['files']:
+        raise ValueError('frozen admission reference lacks the complete verified census')
+    repository = Path(__file__).resolve().parents[2]
+    for name, wanted in _TRAINING_ADMISSION_ALGORITHM.items():
+        path = 'src/ebpf_discovery/' + name
+        recorded = subprocess.check_output(
+            ['git', 'rev-parse', expected['commit'] + ':' + path], cwd=repository, text=True).strip()
+        actual = subprocess.check_output(
+            ['git', 'hash-object', '--path=' + path, path], cwd=repository, text=True).strip()
+        if recorded != wanted or actual != wanted:
+            raise ValueError('frozen admission algorithm differs from its original producer')
+    return {'schema_version': 'exact-frozen-training-admission-reference-v1',
+            'campaign_root': str(root), 'checkpoint_identity': manifest['identity'],
+            'manifest_sha256': expected['manifest_sha256'],
+            'complete_checkpoint_census_sha256': _json_sha(claims),
+            'training_index_proof': index_proof,
+            'training_index_proof_sha256': _json_sha(index_proof),
+            'input_claims': {name: claims[name] for name in _TRAINING_ADMISSION_INPUTS},
+            'algorithm_files': dict(_TRAINING_ADMISSION_ALGORITHM),
+            'same_trace_parents': True, 'expected_source_prefix': 'ebpf-deepflow',
+            'original_computation': 'training refresh admit_observed before checkpoint creation',
+            'current_semantic_admission_recomputed': False,
+            'original_training_admission_cost_counted_once': True}
+
+
+def _verify_frozen_training_admission_reference(reference, root, store, admission):
+    """Check the narrow reference; the ordinary alias loaders still run first."""
+    root = Path(root).resolve()
+    if (os.environ.get('GITHUB_ACTIONS') != 'true'
+            or reference.get('schema_version') != 'exact-frozen-training-admission-reference-v1'
+            or reference.get('campaign_root') != str(root)
+            or not getattr(store, '_immutable_path_prefix', False)
+            or getattr(store, 'same_trace_parents', None) is not True
+            or Path(store.path).resolve() != root / 'observation-index.sqlite'
+            or store.db.execute('PRAGMA query_only').fetchone()[0] != 1
+            or reference.get('same_trace_parents') is not True
+            or reference.get('expected_source_prefix') != 'ebpf-deepflow'
+            or reference.get('algorithm_files') != _TRAINING_ADMISSION_ALGORITHM
+            or set(reference.get('input_claims', {})) != set(_TRAINING_ADMISSION_INPUTS)):
+        raise ValueError('frozen admission reference differs from immutable worker profile')
+    manifest = _read(root / 'manifest.json')
+    identity = manifest['identity']
+    claims = {name: {'bytes': row['bytes'], 'sha256': row['sha256']}
+              for name, row in manifest['files'].items()}
+    if (reference['manifest_sha256'] != _sha(root / 'manifest.json')
+            or reference['checkpoint_identity'] != identity
+            or (identity['system'], identity['mode']) != ('otel_demo', 'absent')
+            or _json_sha(claims) != reference['complete_checkpoint_census_sha256']
+            or _json_sha(reference['training_index_proof']) != reference['training_index_proof_sha256']
+            or not re.fullmatch(r'[0-9a-f]{64}', reference['training_index_proof_sha256'])):
+        raise ValueError('frozen admission manifest or SQL identity changed')
+    for name, proof in reference['input_claims'].items():
+        path = root / name
+        if (name not in claims or proof != claims[name] or path.is_symlink()
+                or path.stat().st_size != proof['bytes'] or _sha(path) != proof['sha256']):
+            raise ValueError('frozen admission input claim changed')
+    if (admission.get('receiver_segments_reverified') is not True
+            or admission.get('same_table_all_sources_and_direct_baseline') is not True
+            or admission.get('physical_identity_inferred') is not False):
+        raise ValueError('frozen admission lacks its actual original semantic verification')
+    return dict(reference, current_checkpoint_SQL_and_admission_bytes_verified=True,
+                full_projection_verification_still_required=True)
+
+
 def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Path,
                    expected: dict) -> dict:
     """Restore one checkpoint at its original absolute root and execute tools."""
@@ -498,7 +593,12 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
                 # This setting affects every Bering branch, not the Python
                 # parent, Procrustes or Sheaft. Retain it even if tools fail.
                 _atomic_json(artifact_root / "bering-go-environment.json", go_environment)
-                forecasts = toolchain_type(ctx, expected["system"], store, declaration).forecast(plans)
+                reference = _frozen_training_admission_reference(
+                    campaign_root, manifest, input_proof, index_proof, expected, collector_provenance)
+                options = ({'frozen_training_admission_reference': reference}
+                           if reference is not None else {})
+                forecasts = toolchain_type(ctx, expected["system"], store, declaration,
+                                           **options).forecast(plans)
         finally:
             store.close()
             if old_bin is None:

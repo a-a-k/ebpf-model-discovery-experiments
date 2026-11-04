@@ -6,6 +6,7 @@ import hashlib
 import json
 import re
 import shutil
+import time
 from pathlib import Path
 
 from .toolchain_v4 import Toolchain as ToolchainV4
@@ -106,7 +107,9 @@ def collector_provenance(root: Path, status: dict | None = None) -> dict:
 
 
 class Toolchain(ToolchainV4):
-    def __init__(self, ctx, system, store, declaration, *, collector=None, **kwargs):
+    def __init__(self, ctx, system, store, declaration, *, collector=None,
+                 frozen_training_admission_reference=None, **kwargs):
+        constructor_started = time.monotonic_ns()
         provenance = collector_provenance(ctx.out)
         if collector is not None and collector != provenance['collector']:
             raise ValueError('requested collector differs from hash-bound collector provenance')
@@ -128,16 +131,33 @@ class Toolchain(ToolchainV4):
         super().__init__(ctx, system, store, declaration, **kwargs)
         if self.store is not None and hasattr(self.store, 'db'):
             from .supplied_alias_v5 import admission_core, admit_observed
-            recomputed = admit_observed(
-                self.store, self.supplied_alias_table,
-                expected_source_prefix='ebpf-' + self.collector_provenance['collector'])
-            if admission_core(recomputed) != admission_core(self.supplied_alias_admission):
-                raise ValueError('frozen supplied logical alias admission does not revalidate')
+            reuse = None
+            if frozen_training_admission_reference is not None:
+                from .remote_toolchain_v4 import _verify_frozen_training_admission_reference
+                if provenance['collector'] != 'deepflow' or system != 'otel_demo':
+                    raise ValueError('frozen admission reference differs from collector/system')
+                reuse = _verify_frozen_training_admission_reference(
+                    frozen_training_admission_reference, ctx.out, self.store,
+                    self.supplied_alias_admission)
+            else:
+                recomputed = admit_observed(
+                    self.store, self.supplied_alias_table,
+                    expected_source_prefix='ebpf-' + self.collector_provenance['collector'])
+                if admission_core(recomputed) != admission_core(self.supplied_alias_admission):
+                    raise ValueError('frozen supplied logical alias admission does not revalidate')
             if not hasattr(self.store, 'verify_supplied_logical_aliases'):
                 raise ValueError('graph-v5 Store cannot verify supplied logical projections')
             self.supplied_alias_projection_verification = (
                 self.store.verify_supplied_logical_aliases(self.supplied_alias_admission))
+            if reuse is not None:
+                from .runtime import write_json
+                write_json(self.root/'frozen-training-admission-reference.json', dict(
+                    reuse, full_projection_verification=self.supplied_alias_projection_verification,
+                    constructor_elapsed_seconds=(time.monotonic_ns()-constructor_started)/1e9,
+                    original_source_cost_reused=True, current_semantic_recomputation_executed=False))
         else:
+            if frozen_training_admission_reference is not None:
+                raise ValueError('frozen admission reference requires the immutable worker store')
             self.supplied_alias_projection_verification = {
                 'logical_projection_verified': False,
                 'reason': 'observation_store_unavailable'}
