@@ -19,7 +19,7 @@ import yaml
 
 from .runtime import write_json
 from .selection_v4 import canonical_route, select_planned, supplied_entry_roles
-from .raw_v4 import export_selection
+from .raw_v4 import export_selection, _scope_validated_deepflow_export
 from .bering_v4 import replay
 from .binding_v4 import endpoint_alias_evidence, matches_call_hint
 
@@ -478,6 +478,7 @@ class Toolchain:
         """
         started = time.time_ns()
         self.entry_evidence, self.input_manifests = {}, {}
+        prepared_raw = {}
         roles = {}
         untyped = getattr(self.declaration, 'UNTYPED_ENTRY_COMPONENTS', {})
         try:
@@ -504,11 +505,22 @@ class Toolchain:
                     for source in ('ebpf', 'native'):
                         folder = self.root/'inputs'/source/variant
                         folder.mkdir(parents=True, exist_ok=True)
-                        manifest = export_selection(self.store, {source: None}, folder/'exports',
-                            self.system+'-routed-network' if variant == 'network_scope' else None,
-                            supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
-                            native_jaeger_envelope=self.native_jaeger_envelope,
-                            service_projections=service_projections)
+                        raw = self.input_manifests.get((source, 'raw'))
+                        reuse_raw = (variant == 'network_scope' and source == 'ebpf'
+                            and (getattr(self, 'collector_provenance', {}) or {}).get('collector') == 'deepflow'
+                            and bool(service_projections)
+                            and raw is not None and not raw[1].get('exports')
+                            and len(raw[1].get('stream_exports', [])) == 1)
+                        if reuse_raw:
+                            manifest = _scope_validated_deepflow_export(
+                                raw[0], prepared_raw[source], folder/'exports',
+                                self.system+'-routed-network', service_projections)
+                        else:
+                            manifest = export_selection(self.store, {source: None}, folder/'exports',
+                                self.system+'-routed-network' if variant == 'network_scope' else None,
+                                supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
+                                native_jaeger_envelope=self.native_jaeger_envelope,
+                                service_projections=service_projections)
                         manifest.update(graph_input='all source-separated frozen training-prefix observations',
                             exported_wire_bytes=(sum(Path(export['path']).stat().st_size
                                                      for export in manifest['exports'])
@@ -520,6 +532,8 @@ class Toolchain:
                         path = folder/'observations.json'
                         write_json(path, manifest)
                         self.input_manifests[source, variant] = (path, manifest)
+                        if variant == 'raw':
+                            prepared_raw[source] = digest(path)
                     pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
                     streamed = any(piece.get('stream_exports') for _, piece in pieces)
                     manifest = {'exports': ([] if streamed else
