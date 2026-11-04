@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Fixed81 unchanged:78cases BOTH original actual scientific GO (OBI27,Coroot27,DeepFlow24). All3 remaining original DF/OTel SDK-absent maincases now dispatched:816/7 run41781475751 Continue+targets closed and sealing;2fa/6 run41788955167 modelworker active;2fa/8 run41816827576 actualmain startup. No diagnostic or healthy cancellation; all78 valid negative/adverse/UNKNOWN protected. Actual7 fullworker and complete postworker2146s allow original8 fullbudget21474.526s with B120+variation600 and all other conservative costs retained; bothoriginalexecutionGO, no deterministic6h/scientificsuccess claim.717 unique terminalsource runs jointlypermanentlyretained; finitefuturetail/full81report/figures/costs/EnglishREADME/finaloriginalskepticGO remain. NoTelegram.",
+  "main_dispatch_status": "Fixed81 unchanged:78cases BOTH originalactual scientificGO (OBI27,Coroot27,DeepFlow24). All3remaining DeepFlow/OTel absent6/7/8 actualmain launched. Captures6/7SUCCESS; offline6active and offline7 once technicalshutdownretryactive, sameoriginalfullcapsule/no traffic replay. Absent8liveAcquireactive. All78validnegative/adverse/UNKNOWN protected; actualscience/strictreaderstillpending.743unique terminalsource runs jointly permanentlyretained; ownarchive/activecase/worker/reader/report/CI/finiteclosingtail separate. NoTelegram.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -2892,7 +2892,7 @@
           "head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070"
         }
       ],
-      "note": "Only technically failed absent7 replacement; exact original full workload/methods/outcomes and all78 reviewed cases retained. Actual shared frozen-input Bering source816 and named consumer021, A actual input/cost BOTHGO; original per-seed hard360 BOTH executionGO with zeroSQLcredit and fullcost/120sBbinding+600svariation. No scientific admission until actual full evidence and independent review. All old attempts/costs retained."
+      "note": "Only technically failed absent7 replacement; exact original full workload/methods/outcomes and all78 reviewed cases retained. Actual shared frozen-input Bering source816 and named consumer021, A actual input/cost BOTHGO; original per-seed hard360 BOTH executionGO with zeroSQLcredit and fullcost/120sBbinding+600svariation. No scientific admission until actual full evidence and independent review. All old attempts/costs retained. Actualcapture completed11:00:48UTC; unchanged offlinejob126533627211 received hostedrunner shutdown12:48:39UTC after6472s (below360min), physicalcauseunproved. Oncefailed-onlypluginretry12:55:49UTC same816/run/capsule13315023235, actualprocessor126586450797; capture reused, no newtraffic. Allreal failed/retrycosts retained; GitHub virtualsuccessclones chargedonce only under complete exactidentity metadata. ROOT+INDoriginalretryGO, no scientificadmission."
     },
     {
       "run_id": 41788955167,
@@ -6827,6 +6827,16 @@
       "run_id": 41044061764,
       "role": "report",
       "note": "Historical cumulative cost-only run, not a new selected fixed81 cell or assertion of current-protocol equivalence. Actual .github/workflows/report-v5.yml headc7defbcb470adc2b3af3a54879fe1d1be9a7c655, terminalsuccess; retained published pure run metadata work/archive-review-41048730378/provenance.tar.gz member./41044061764-run.json. Query all actual attempts/jobs for final cost snapshot without outcome filtering; preserve saved previous cost observations as provenance. Count each repository/run once; never add the old149 aggregate total on top. API job elapsed includes waits/overlap and is not actual CPU, billed usage or campaign wall; human preparation remains unknown."
+    },
+    {
+      "run_id": 41825444141,
+      "role": "preparation",
+      "note": "Actual solepushCI for qualified-runtime/strict-consumer integration c31256b completedSUCCESS; all3actualjobsSUCCESS: fullLinuximplementationchecks, HAProxytechnicalcontrol, genuineBeringtwo-discovery/four-logicalviews tinyfixture. Scientificsrc/systems exact2fa, sixstrictconsumer files exact0fad, qualifiedPCworker route preserved. No maincapture/report/admission/PRmerge from thisCI. All clone/build/tinyfixture/failed/successfulCI/wait/review/retention costs retained."
+    },
+    {
+      "run_id": 41830032924,
+      "role": "archive",
+      "note": "Finite CURRENT26 retention, exact c312 qualified archiver: 26 terminal source runs, 10 original Actions artifacts/3109692247B. Existing717, all3 active original parents and116 historical cost-only IDs excluded. Byte-preserving original SHA/API remote publication and one-copy (<2GiB)/two-copy guard retained. No original source deletion, capture/refit/rescore/admission; workingcopies released only after verified publication. All actual transfer/publication/failure/proof/review costs retained; ownarchive/futurecases/readers/report/CI/finiteclosingtail separate, humanunknown."
     }
   ],
   "blocked_main_cells": [],

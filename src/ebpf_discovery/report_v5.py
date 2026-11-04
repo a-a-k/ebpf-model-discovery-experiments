@@ -1923,7 +1923,9 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
     lines += ["", "## Saved campaign and Actions costs", ""]
     lines += _table(["Ledger field", "Stored value"], [
         [key, costs.get(key)] for key in (
-            "known_completed_job_elapsed_seconds", "runs_with_unknown_job_elapsed",
+            "known_completed_job_elapsed_seconds", "raw_completed_job_elapsed_seconds",
+            "reused_success_rows", "reused_success_elapsed_seconds",
+            "reused_success_rule", "runs_with_unknown_job_elapsed",
             "known_stored_artifact_bytes", "runs_with_unknown_artifact_bytes",
             "report_artifact_transfer", "human_agent_seconds",
             "current_report_job_tail_seconds",
@@ -1957,11 +1959,12 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
                 run.get("run_id"), run.get("repository"), run.get("role"),
                 run.get("status"), run.get("conclusion"),
                 job.get("id"), job.get("name"), job.get("status"), job.get("conclusion"),
-                job.get("elapsed_seconds"), len(run.get("artifacts") or []),
+                job.get("elapsed_seconds"), job.get("charged_elapsed_seconds"),
+                job.get("alias_of_job_id"), len(run.get("artifacts") or []),
             ])
     lines += _table([
         "Run", "Repository", "Role", "Run status", "Run conclusion", "Job", "Job name", "Job status",
-        "Job conclusion", "API interval s", "Artifacts",
+        "Job conclusion", "API interval s", "Charged interval s", "Reused from job", "Artifacts",
     ], job_rows)
     lines += [
         "", "Human/agent preparation effort: " + _value(costs.get("human_agent_seconds")),

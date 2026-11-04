@@ -898,7 +898,15 @@ Their job metadata enters the final cost snapshot; the old aggregate total is
 not added again. These historical runs do not add scientific cases to the fixed
 81-case cohort. For 116 historical IDs, retained cost metadata does not establish
 retention of the original raw or model payloads. The finite current archive tail
-is recorded separately.
+is recorded separately. The [latest completed archive](docs/clean-study-terminal26-retention-actual-review-20261104.json)
+adds 26 disjoint terminal sources, bringing jointly verified permanent retention
+to 743 sources. This archival count is separate from the 78 scientifically reviewed cases.
+
+For failed-only GitHub retries, every API job record and its observed duration
+remains in the cost ledger. An exact reused successful execution is charged once
+across attempts only when source, runner identity, job clocks and all step clocks
+match; the copied record names its original job. Genuine failed and retried work
+remains charged. Reported job elapsed time is neither CPU time nor billed usage.
 
 ## 11. Discussion, limitations and conclusions
 

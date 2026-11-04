@@ -104,14 +104,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import datetime as dt, json, os, pathlib, subprocess
+          import json, os, pathlib, subprocess
+          from ebpf_discovery.actions_cost_v5 import recorded_job_costs
           root=pathlib.Path('results/iteration-5/provenance')
           declaration=json.loads((root/'declarations.json').read_text())
           rows=[]
-          def elapsed(a,b):
-              if not a or not b: return None
-              return (dt.datetime.fromisoformat(b.replace('Z','+00:00'))-
-                      dt.datetime.fromisoformat(a.replace('Z','+00:00'))).total_seconds()
           declared=[]
           for row in declaration.get('attempt_runs',[]):
               declared.append((row,'series'))
@@ -141,15 +138,12 @@ jobs:
               (destination/'run.json').write_text(json.dumps(run,indent=2)+'\n')
               (destination/'jobs.json').write_text(json.dumps(jobs,indent=2)+'\n')
               (destination/'artifacts.json').write_text(json.dumps(artifacts,indent=2)+'\n')
-              durations=[elapsed(job.get('started_at'),job.get('completed_at')) for job in job_rows]
+              job_costs=recorded_job_costs(job_rows,repository=repo,run_id=run_id,
+                  workflow_path=run['path'],head_sha=run['head_sha'])
               rows.append({'run_id':run_id,'repository':repo,'role':role,'note':item.get('note'),
                   'metadata_status':'retained','head_sha':run.get('head_sha'),
                   'status':run.get('status'),'conclusion':run.get('conclusion'),'html_url':run.get('html_url'),
-                  'jobs':[{'id':job.get('id'),'name':job.get('name'),'status':job.get('status'),
-                           'conclusion':job.get('conclusion'),'elapsed_seconds':duration}
-                          for job,duration in zip(job_rows,durations)],
-                  'completed_job_elapsed_seconds':sum(v for v in durations if v is not None),
-                  'jobs_with_unknown_elapsed':sum(v is None for v in durations),
+                  **job_costs,
                   'artifacts':[{'id':a.get('id'),'name':a.get('name'),'digest':a.get('digest'),
                                 'expired':a.get('expired'),'size_in_bytes':a.get('size_in_bytes')}
                                for a in artifact_rows],
@@ -161,6 +155,10 @@ jobs:
           ledger={'schema_version':'v5-actions-costs','runs':rows,
               'known_completed_job_elapsed_seconds':sum(known_seconds),
               'runs_with_unknown_job_elapsed':sum(row.get('completed_job_elapsed_seconds') is None for row in rows),
+              'raw_completed_job_elapsed_seconds':sum(row.get('raw_completed_job_elapsed_seconds',0) for row in rows),
+              'reused_success_rows':sum(row.get('reused_success_rows',0) for row in rows),
+              'reused_success_elapsed_seconds':sum(row.get('reused_success_elapsed_seconds',0) for row in rows),
+              'reused_success_rule':'Only complete exact cross-attempt success execution identities are charged once; every API row, original observed time, alias identity and genuine failed/retry cost remain retained.',
               'known_stored_artifact_bytes':sum(known_bytes),
               'runs_with_unknown_artifact_bytes':sum(row.get('stored_artifact_bytes') is None for row in rows),
               'human_agent_seconds':None,'current_report_job_tail_seconds':None,
