@@ -603,7 +603,7 @@ jobs:
           PY
           df -B1 . > work/offline-host/host-disk-after.txt
       - name: Restore the exact closed capture after the actual disk guard
-        run: python scripts/restore-closed-postcapture-v5.py
+        run: python scripts/restore-closed-postcapture-v5.py --release-verified-delivery
       - name: Verify all closed inputs and run the unchanged offline suffix
         run: python -m ebpf_discovery.postcapture_v5 finalize --campaign work/campaign --proof work/restored-postcapture/postcapture-proof
       - name: Retain offline host and restore costs after either outcome
