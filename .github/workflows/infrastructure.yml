@@ -1,4 +1,4 @@
-name: Fixed original absent8 shared scope export comparison
+name: Fixed original prepared raw scope export comparison
 on:
   workflow_dispatch:
 permissions:
@@ -23,7 +23,7 @@ jobs:
           df -B1 . > work/shared-scope-host/disk-before.txt
           sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
           df -B1 . > work/shared-scope-host/disk-after.txt
-      - name: Compare all original requests and metadata using the validated raw scope composition
+      - name: Compare the new scope operator on every original prepared raw request
         run: python scripts/validate-shared-deepflow-scope-export-v5.py
       - name: Retain exact request equality and complete preparation costs
         if: always()
