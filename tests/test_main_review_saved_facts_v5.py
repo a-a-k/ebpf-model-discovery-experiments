@@ -30,6 +30,132 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+def _shared_discovery_fixture(root, monkeypatch):
+    monkeypatch.setattr(REVIEW, 'IDENTICAL_INPUT_DISCOVERY_HEADS', {'shared-fixture'})
+    toolchain = root/'toolchain'
+    def write(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value)+'\n', encoding='utf-8')
+    def claim(relative):
+        path = toolchain/relative
+        return {'path':'/original/campaign/toolchain/'+relative, 'bytes':path.stat().st_size,
+                'sha256':REVIEW.sha(path)}
+    origin = 'discovery/ebpf/raw'
+    aliases = root/'runtime-identity-v5/supplied-service-aliases-training.json'
+    admission = aliases.with_name('supplied-service-alias-admission-training.json')
+    write(aliases, {}); write(admission, {'aliases':{}})
+    binary = {'name':'bering', 'binary':'/original/campaign/toolchain-build/bin/bering',
+              'binary_sha256':'b'*64}
+    invocation = {'binary':binary['binary'], 'binary_sha256':binary['binary_sha256'],
+        'source_profile':{'source_id':'ebpf','input_type':'ebpf-otlp'},
+        'source_domain':'otel_demo-deployment','publication_mode':'on_shutdown',
+        'clock_admission_filter':False,'go_runtime_environment':{'synthetic':True},
+        'alias_table_sha256':REVIEW.sha(aliases), 'alias_admission_sha256':REVIEW.sha(admission)}
+    replay = {**invocation, 'ended_ns':10, 'argv':[binary['binary']],
+              'status':'complete','returncode':0}
+    files = ['observed.json','observed.signal-quality.json','observed.snapshot.json',
+             'observed.bering-raw.json','observed.bering-raw.signal-quality.json',
+             'observed.supplied-aliases.json','observed-runtime/replay-command.json',
+             'observed-runtime/serve.yaml','observed-runtime/accepted-request-sequence.jsonl']
+    for name in files:
+        write(toolchain/origin/name, replay if name.endswith('replay-command.json') else {'synthetic':name})
+    for name in ('index.jsonl','shard.bin','values.jsonl'):
+        write(toolchain/'inputs/ebpf/raw'/name, {'synthetic':name})
+    stream = {'request_index':claim('inputs/ebpf/raw/index.jsonl'),
+              'shards':[claim('inputs/ebpf/raw/shard.bin')],
+              'runtime_identity_values':claim('inputs/ebpf/raw/values.jsonl')}
+    ebpf = {'observations':2,'exports':[],'stream_exports':[stream]}
+    native = {'observations':0,'exports':[],'stream_exports':[]}
+    write(toolchain/'inputs/ebpf/raw/observations.json', ebpf)
+    write(toolchain/'inputs/native/raw/observations.json', native)
+    groups = [claim('inputs/'+source+'/raw/observations.json') for source in ('ebpf','native')]
+    combined = {'observations':2,'exports':[],'stream_exports':[], 'ordered_request_group_manifests':groups}
+    write(toolchain/'inputs/combined/raw/observations.json', combined)
+    reference = {'schema_version':'identical-empty-native-observed-discovery-v1',
+        'declared_source':'combined','variant':'raw','origin_source':'ebpf',
+        'origin_folder':'/original/campaign/toolchain/'+origin,
+        'additional_Bering_execution':False,'actual_discovery_cost_counted_once':True,
+        'source_specific_operations_and_Sheaft_not_reused':True,
+        'original_request_and_value_semantic_validation_reused_under_byte_identity':True,
+        'genuine_origin_files':{name:claim(origin+'/'+name) for name in files},
+        'origin_input':groups[0], 'empty_native_input':groups[1],
+        'combined_input':claim('inputs/combined/raw/observations.json'),
+        'ordered_input_groups':groups,'whole_current_source_files_reverified':[
+            stream['request_index'],*stream['shards'],stream['runtime_identity_values']],
+        'invocation':invocation,'started_ns':20,'ended_ns':30}
+    path = toolchain/'discovery/combined/raw/shared-observed-reference.json'; write(path, reference)
+    write(toolchain/'forecasts.json', {'combined':{'raw':{'fixture':{'available':False}}}})
+    write(toolchain/'combined/raw/fixture/observed-reference.json', {
+        'folder':'../../../discovery/ebpf/raw', 'files':{n:claim(origin+'/'+n)['sha256'] for n in
+          ('observed.json','observed.signal-quality.json','observed.snapshot.json')}})
+    write(toolchain/'execution-summary.json', {'branches':[{'source':'combined','variant':'raw','operation':'fixture',
+        'bering_executed':True,'bering_discovery_shared_across_sources':True,'bering_discovery_source':'ebpf',
+        'bering_discovery_record':'/original/campaign/toolchain/'+origin+'/observed-runtime/replay-command.json',
+        'shared_discovery_reference':'/original/campaign/toolchain/discovery/combined/raw/shared-observed-reference.json'}]})
+    claims = {p.relative_to(toolchain).as_posix():{'bytes':p.stat().st_size,'sha256':REVIEW.sha(p)}
+              for p in toolchain.rglob('*') if p.is_file()}
+    worker = root/'infrastructure/remote-toolchain-v4/worker'
+    write(worker/'output-manifest.json', {'toolchain_files':claims})
+    write(worker/'worker-status.json', {'started_ns':1,'ended_ns':40})
+    freeze = {'sha256_by_path':{'toolchain/'+k:v['sha256'] for k,v in claims.items()}}
+    graphs = [{'source':'ebpf','variant':'raw','observed_model_sha256':claim(origin+'/observed.json')['sha256'],
+               'snapshot_sha256':claim(origin+'/observed.snapshot.json')['sha256']}]
+    declaration = {'head_sha':'shared-fixture','collector':'deepflow','system':'otel_demo','mode':'absent'}
+    return toolchain, declaration, freeze, graphs, {'binaries':[binary]}, path
+
+
+def test_shared_discovery_has_two_logical_sources_and_one_physical_graph(tmp_path, monkeypatch):
+    toolchain, decl, freeze, graphs, build, path = _shared_discovery_fixture(tmp_path, monkeypatch)
+    facts = REVIEW.shared_observed_discovery_facts(tmp_path, toolchain, decl, freeze, graphs, build)
+    assert len(graphs)==len(facts)==1
+    assert facts[0]['source']=='combined' and facts[0]['actual_origin_source']=='ebpf'
+    assert facts[0]['additional_Bering_execution'] is False
+    assert SELECT.wanted_member(path.relative_to(tmp_path).as_posix(), 'full')
+    assert REVIEW._package_selected(path.relative_to(toolchain).as_posix(), 'toolchain')
+
+
+def test_named_identical_source_does_not_skip_guest_or_closed_capture_proofs(tmp_path):
+    decl={'head_sha':REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'], 'collector':'deepflow',
+          'system':'otel_demo','mode':'absent','seed':6,'run_id':123}
+    with pytest.raises((ValueError,OSError)):
+        REVIEW.postcapture_guest_facts(tmp_path,decl)
+    with pytest.raises((ValueError,OSError)):
+        REVIEW.closed_postcapture_facts(tmp_path,decl,{},None,{})
+
+
+@pytest.mark.parametrize('mutation', ['unreviewed_source','other_mode','extra_replay','origin_source',
+    'wrong_variant','file_coverage','child_order','wire_coverage','wrong_invocation','late_worker',
+    'physical_graph','source_graph_hash','shadow_combined','operation_origin'])
+def test_shared_discovery_rejects_false_logical_coverage(tmp_path, monkeypatch, mutation):
+    toolchain, decl, freeze, graphs, build, path = _shared_discovery_fixture(tmp_path, monkeypatch)
+    value = json.loads(path.read_text())
+    if mutation=='unreviewed_source': decl['head_sha']='unknown'
+    elif mutation=='other_mode': decl['mode']='partial'
+    elif mutation=='extra_replay': value['additional_Bering_execution']=True
+    elif mutation=='origin_source': value['origin_source']='native'
+    elif mutation=='wrong_variant': value['variant']='network_scope'
+    elif mutation=='file_coverage': value['genuine_origin_files'].pop('observed.snapshot.json')
+    elif mutation=='child_order': value['ordered_input_groups']=list(reversed(value['ordered_input_groups']))
+    elif mutation=='wire_coverage': value['whole_current_source_files_reverified'].pop()
+    elif mutation=='wrong_invocation': value['invocation']['publication_mode']='windowed'
+    elif mutation=='late_worker': value['ended_ns']=41
+    elif mutation=='physical_graph': graphs=[]
+    elif mutation=='source_graph_hash': graphs[0]['observed_model_sha256']='0'*64
+    elif mutation=='shadow_combined':
+        manifest=tmp_path/'infrastructure/remote-toolchain-v4/worker/output-manifest.json'
+        body=json.loads(manifest.read_text());body['toolchain_files']['discovery/combined/raw/observed.json']={'sha256':'0'*64,'bytes':1}
+        manifest.write_text(json.dumps(body))
+    elif mutation=='operation_origin':
+        item=toolchain/'combined/raw/fixture/observed-reference.json';body=json.loads(item.read_text());body['folder']='../../../discovery/native/raw';item.write_text(json.dumps(body))
+    path.write_text(json.dumps(value)+'\n')
+    # Bind the mutated proof itself so semantic rejections cannot pass merely by checksum failure.
+    current={'bytes':path.stat().st_size,'sha256':REVIEW.sha(path)}
+    freeze['sha256_by_path']['toolchain/discovery/combined/raw/shared-observed-reference.json']=current['sha256']
+    manifest=tmp_path/'infrastructure/remote-toolchain-v4/worker/output-manifest.json';body=json.loads(manifest.read_text());body['toolchain_files']['discovery/combined/raw/shared-observed-reference.json']=current;manifest.write_text(json.dumps(body))
+    with pytest.raises((ValueError, OSError)):
+        REVIEW.shared_observed_discovery_facts(tmp_path,toolchain,decl,freeze,graphs,build)
+
+
 @pytest.mark.parametrize('mutation', ['none', 'changed_diagnostic', 'unowned_overlay', 'missing_exit', 'empty_capture', 'missing_identity'])
 @pytest.mark.parametrize('head', [REVIEW.POSTCAPTURE_GUEST_RELEASE_HEAD, REVIEW.CLOSED_POSTCAPTURE_HEAD])
 def test_named_postcapture_source_requires_actual_owned_release_and_unchanged_diagnostics(tmp_path,mutation,head):
@@ -1295,6 +1421,27 @@ def test_closed_job_fresh_batch_preserves_seven_case_scope(tmp_path, cell_key, a
     result, _ = _run_manifest_selector(tmp_path, name, phase='fresh-batch',
         document={'cells': [cell], 'planned_cells': planned}, fresh_go=True)
     assert (result.returncode == 0) is accepted, result.stderr
+
+
+@pytest.mark.parametrize('cell_key,accepted', [
+    (('deepflow','otel_demo','absent',6),True),
+    (('deepflow','otel_demo','absent',7),True),
+    (('deepflow','otel_demo','absent',8),True),
+    (('deepflow','otel_demo','partial',6),False),
+    (('deepflow','petclinic','absent',6),False),
+    (('coroot','otel_demo','absent',6),False),
+])
+def test_identical_input_source_is_limited_to_three_original_cells(tmp_path,cell_key,accepted):
+    name='docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
+    template=json.loads((ROOT/name).read_text())['cells'][0]
+    planned=[{**template,'collector':c,'system':s,'mode':m,'seed':z,'run_id':1,
+              'head_sha':REVIEW.FRESH_HEAD,'stage':'main','runner':'study'}
+             for c in ('obi','deepflow','coroot') for s in ('deathstarbench','otel_demo','petclinic')
+             for m in ('absent','partial','full') for z in (6,7,8)]
+    cell=next(r for r in planned if tuple(r[k] for k in ('collector','system','mode','seed'))==cell_key)
+    cell['head_sha']=REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']
+    result,_=_run_manifest_selector(tmp_path,name,phase='fresh-batch',document={'cells':[cell],'planned_cells':planned},fresh_go=True)
+    assert (result.returncode==0) is accepted,result.stderr
 
 
 @pytest.mark.parametrize('change', ['none', 'missing_plan_cell', 'different_packet', 'no_GO', 'final_series'])

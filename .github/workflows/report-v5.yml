@@ -37,6 +37,7 @@ jobs:
               _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE, UPLOADED_CHECKPOINT_COPY_SOURCE,
               CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
               POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE,
+              IDENTICAL_INPUT_DISCOVERY_SOURCE,
           )
           declaration_input=os.environ['DECLARATIONS']
           input_source={'kind':'inline_json'}
@@ -74,6 +75,7 @@ jobs:
               approved[POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']]=POSTCAPTURE_GUEST_RELEASE_SOURCE['reviewed_changed_blobs']
               approved[CLOSED_POSTCAPTURE_SOURCE['revision']]=CLOSED_POSTCAPTURE_SOURCE['reviewed_changed_blobs']
               approved[CLOSED_CAPTURE_RECOVERY_SOURCE['revision']]=CLOSED_CAPTURE_RECOVERY_SOURCE['reviewed_changed_blobs']
+              approved[IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']]=IDENTICAL_INPUT_DISCOVERY_SOURCE['reviewed_changed_blobs']
           proofs=[]
           if approved:
               destination=path.parent/'source-equivalence'

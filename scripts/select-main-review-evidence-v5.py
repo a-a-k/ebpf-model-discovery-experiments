@@ -140,7 +140,8 @@ def wanted_member(name: str, scope: str) -> bool:
                               "observed.supplied-aliases.json", "observed.bering-raw.json",
                               "observed.signal-quality.json",
                               "observations.json", "replay-command.json", "bering.log",
-                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl",
+                              "shared-observed-reference.json"))
     if name.startswith("toolchain/procrustes/") and "/0/" in name:
         return parts[-1] in ("preflight.command.json", "report.json")
     if (len(parts) == 5 and parts[0] == "toolchain"
@@ -150,7 +151,7 @@ def wanted_member(name: str, scope: str) -> bool:
                              "analysis.json", "predicates.json", "faults.json",
                              "simulation.command.json", "model.json", "overlay.json",
                              "model.signal-quality.json", "provided-metadata-attachment.json",
-                             "provided-metadata-validation.command.json")
+                             "provided-metadata-validation.command.json", "observed-reference.json")
     if (len(parts) == 6 and parts[0] == 'toolchain'
             and parts[1] in ('ebpf', 'native', 'combined')
             and parts[2] in ('raw', 'network_scope')

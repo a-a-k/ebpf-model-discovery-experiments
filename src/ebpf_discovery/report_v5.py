@@ -479,6 +479,114 @@ CLOSED_CAPTURE_RECOVERY_SOURCE = {
 }
 
 
+
+IDENTICAL_INPUT_DISCOVERY_SOURCE = {
+    **CLOSED_POSTCAPTURE_SOURCE,
+    'revision': '8166f7d5ed3ef1e5c505cd22aea6745d5ad81070',
+    'tested_source': '8166f7d5ed3ef1e5c505cd22aea6745d5ad81070',
+    'parent_revision': 'f045cc0adec187ec00443da0bea72b4ec4d2082e',
+    'added_paths': {'docs/IMMUTABLE_PATH_PREPARATION_V5.md',
+ 'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md',
+ 'scripts/check-fixed-deepflow-final-links-v5.py',
+ 'scripts/check-fixed-dsb-path-preparation-v5.py',
+ 'scripts/check-fixed-early-checkpoint-release-v5.py',
+ 'scripts/check-fixed-guest-prefix-release-v5.py',
+ 'scripts/check-fixed-runtime-proof-jsonl-v5.py',
+ 'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py',
+ 'scripts/check-identical-input-discovery-v5.py',
+ 'scripts/qualify-closed-discovery-import-v5.py',
+ 'scripts/qualify-closed-postcapture-v5.py',
+ 'scripts/restore-closed-postcapture-v5.py',
+ 'scripts/retain-guest-evidence-v5.sh',
+ 'scripts/stop-owned-guests-v5.py',
+ 'scripts/validate-exact-sql-backup-proof-reuse-v5.py',
+ 'scripts/validate-frozen-training-admission-reference-v5.py',
+ 'scripts/validate-shared-deepflow-scope-export-v5.py',
+ 'src/ebpf_discovery/guest_release_v5.py',
+ 'src/ebpf_discovery/postcapture_v5.py',
+ 'src/ebpf_discovery/summary_manifest_v5.py',
+ 'tests/test_closed_capture_restore_v5.py',
+ 'tests/test_closed_discovery_import_v5.py',
+ 'tests/test_fixed_path_preparation_comparison_v5.py',
+ 'tests/test_frozen_training_admission_reference_v5.py',
+ 'tests/test_guest_release_v5.py',
+ 'tests/test_identical_input_discovery_v5.py',
+ 'tests/test_postcapture_v5.py',
+ 'tests/test_summary_manifest_v5.py',
+ 'tests/test_uploaded_checkpoint_copy_release.py'},
+    'reviewed_changed_blobs': {'.github/workflows/checks.yml': 'f3becf9604c1e29686213ad520bf930200a0401a',
+ '.github/workflows/diagnose-dsb-training-checkpoint-v4.yml': '105bb8fd738f5956f3e942741ba574e93d01617d',
+ '.github/workflows/infrastructure.yml': '9ea554f302b05fd960ee4a771a57ba3161c1ea9b',
+ '.github/workflows/series-v5.yml': 'b4c5acb60a371d3eef508625ccec6817b774bcda',
+ '.github/workflows/toolchain-worker-v4.yml': '4b833fed808c6701426d758bb3b9feb84e81cfa1',
+ 'docs/IMMUTABLE_PATH_PREPARATION_V5.md': '04d2c2ce314b4547723746019cf962a7837452d1',
+ 'docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md': '83f08a45f9bd5866eb126315db7b0cc8c2489dc3',
+ 'docs/WORKER_PACKAGING_V5.md': 'c270e8e4a2fb48f6d17c4dc0a334b99743d50f94',
+ 'scripts/check-fixed-deepflow-final-links-v5.py': '5560fc0ac9212a5e87e8fda752f83f98ad128f02',
+ 'scripts/check-fixed-dsb-path-preparation-v5.py': 'c0422ee45523be1954cc38422bb64d35083e8b18',
+ 'scripts/check-fixed-early-checkpoint-release-v5.py': '4a2eea6d8d99027ed082f48527bc66a004b1fc01',
+ 'scripts/check-fixed-guest-prefix-release-v5.py': '5444be2c8232a51e7461cc8109f69c30ab9f2aa7',
+ 'scripts/check-fixed-runtime-proof-jsonl-v5.py': '7b6e494de4b78b144790f281573e22d0b4c1f1d0',
+ 'scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py': '102825a665b8dad9f63b014181beeaa95484c208',
+ 'scripts/check-identical-input-discovery-v5.py': '6b90d6585232ac3ade77fb1f6fbe18b53c82fea4',
+ 'scripts/qualify-closed-discovery-import-v5.py': '76fc327f2c65aeeb0e0d15bca06e687973f58b9e',
+ 'scripts/qualify-closed-postcapture-v5.py': '42362b2d34e36d4e7a27320d59ad6a3c11d26022',
+ 'scripts/restore-closed-postcapture-v5.py': '8213610b9fb0e187a3a4e2a6bab2c38465fef1ea',
+ 'scripts/retain-guest-evidence-v5.sh': 'aadf01ab89d9b09730844f63b522b026f3a9121d',
+ 'scripts/stop-owned-guests-v5.py': 'e5665a5de110abb89a9a0c008efd35e3e32af491',
+ 'scripts/validate-exact-sql-backup-proof-reuse-v5.py': 'd6cc9275d7c7cd1d6860f5c5125084b9dcad9b01',
+ 'scripts/validate-frozen-training-admission-reference-v5.py': '297205b620811bdca74ccbc613ec73cdbfe50637',
+ 'scripts/validate-shared-deepflow-scope-export-v5.py': '5fc3bb92f915d11435457ba0df8c676ad3530f6d',
+ 'scripts/vms.sh': '79aa2c5fc1fc877c78f602845a6ff517e11110f4',
+ 'src/ebpf_discovery/campaign_process_v4.py': '1824994b9d3519208941c2795b186c89075c2fcb',
+ 'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+ 'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+ 'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+ 'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1',
+ 'src/ebpf_discovery/postcapture_v5.py': 'e0b0eac5474743509133373994ea65e2e12f1947',
+ 'src/ebpf_discovery/raw_v4.py': '219eab1f343076dd18f4ae46ec01d558e472d379',
+ 'src/ebpf_discovery/remote_toolchain_v4.py': 'f3d642d1020533ab51308c6b1ea20cbbbabfe130',
+ 'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+ 'src/ebpf_discovery/study.py': '299c0f45ed2e1fe06cd7cbc884dcb7b161fddff5',
+ 'src/ebpf_discovery/summary_manifest_v5.py': '02d9d2bb622598ce718d3a36d167f1c8885573bd',
+ 'src/ebpf_discovery/toolchain_v4.py': '29a018c60d7310f54a8b4e3c5e5ce8eae8417f22',
+ 'src/ebpf_discovery/toolchain_v5.py': 'cc60d2a2b1c1ec32abd8e8c0754fca62b3ca347f',
+ 'tests/test_artifact_recovery_v5.py': '5ad62af5e34d4c0ac175bbf065fb93dd021924c3',
+ 'tests/test_checkpoint_v4.py': '1f934e29aaa88cc42f57f20c87623cfb402e143a',
+ 'tests/test_closed_capture_restore_v5.py': '5e7ca8d6a09b2895291c43e2d4e80eec5ee46979',
+ 'tests/test_closed_discovery_import_v5.py': '57b8582a585e1f4762d51355701d20d6e8f416de',
+ 'tests/test_deepflow_handoff_v5.py': 'ba1dbaa043a5def0cae25c88847845e4e337e1cd',
+ 'tests/test_deepflow_snapshot_v5.py': 'd205c350ecde2035f2d4afcfd488bd48ffb17318',
+ 'tests/test_deepflow_v5.py': '8963e26c652e0def46d32306bcd87447bbbf8ecc',
+ 'tests/test_fixed_path_preparation_comparison_v5.py': 'cad466c8affd8f72d1611c93d6784fcb9585b079',
+ 'tests/test_frozen_training_admission_reference_v5.py': '891fb9942b4df4e6e59acc6ced36638ddc0ed853',
+ 'tests/test_guest_release_v5.py': '2cca3fefed4fbe25f5cf140411d0cb948f7226aa',
+ 'tests/test_identical_input_discovery_v5.py': '73ef8f52ccf7470cd7f2188141f95ad5ede5c8ad',
+ 'tests/test_identity_projection_v5.py': '40227ccf66fe6e118e7dd74f87f97ddbfb037c66',
+ 'tests/test_postcapture_v5.py': 'cb87e772cba846470d461f67a9b393dada4ea620',
+ 'tests/test_remote_index_proof_v4.py': 'de4c4d49e6a9d59b89d98c77bb0c0a524d9efa4f',
+ 'tests/test_remote_toolchain_v4.py': 'fec0e20a8d0f0cea413fadce6917562493d58446',
+ 'tests/test_summary_manifest_v5.py': '258887578982dc6e7601399402e63726930311a2',
+ 'tests/test_uploaded_checkpoint_copy_release.py': '16982a94d4556b838b88e187f413163ebc2beb72'},
+    'changed_core_blobs': {'src/ebpf_discovery/campaign_process_v4.py': '1824994b9d3519208941c2795b186c89075c2fcb',
+ 'src/ebpf_discovery/checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+ 'src/ebpf_discovery/deepflow_snapshot_v5.py': 'bc645c0b924f093740de819f51c33470e145afe6',
+ 'src/ebpf_discovery/deepflow_v5.py': 'b8bf9e39c0969da18a39e39522e0b3293db24526',
+ 'src/ebpf_discovery/guest_release_v5.py': '96ef95f160f590b6cc5c16791807d616d3e3b4b1',
+ 'src/ebpf_discovery/postcapture_v5.py': 'e0b0eac5474743509133373994ea65e2e12f1947',
+ 'src/ebpf_discovery/raw_v4.py': '219eab1f343076dd18f4ae46ec01d558e472d379',
+ 'src/ebpf_discovery/remote_toolchain_v4.py': 'f3d642d1020533ab51308c6b1ea20cbbbabfe130',
+ 'src/ebpf_discovery/store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+ 'src/ebpf_discovery/study.py': '299c0f45ed2e1fe06cd7cbc884dcb7b161fddff5',
+ 'src/ebpf_discovery/summary_manifest_v5.py': '02d9d2bb622598ce718d3a36d167f1c8885573bd',
+ 'src/ebpf_discovery/toolchain_v4.py': '29a018c60d7310f54a8b4e3c5e5ce8eae8417f22',
+ 'src/ebpf_discovery/toolchain_v5.py': 'cc60d2a2b1c1ec32abd8e8c0754fca62b3ca347f'},
+    'shared_discovery_policy': 'identical-empty-native-observed-discovery-v1',
+    'delivery_budget': 'verified-delivery-nonoverlapping-phases-v1',
+    'delivery_release_tested_source': CLOSED_CAPTURE_RECOVERY_SOURCE['revision'],
+    'scope': ('deepflow', 'otel_demo', 'absent', (6, 7, 8)),
+}
+
 def _saved_capture_identity(manifest, run_id, identity):
     """The one named delivery recovery has distinct capture/publication identities."""
     profile = CLOSED_CAPTURE_RECOVERY_SOURCE
@@ -649,6 +757,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = CLOSED_POSTCAPTURE_SOURCE
         elif revision == CLOSED_CAPTURE_RECOVERY_SOURCE['revision']:
             profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+        elif revision == IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']:
+            profile = IDENTICAL_INPUT_DISCOVERY_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -673,10 +783,12 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             raise ValueError('preparation revision differs from reviewed source blobs')
     if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
             or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE
-            or profile is CLOSED_CAPTURE_RECOVERY_SOURCE):
+            or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE):
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
-                'evidence_kind': ('saved_closed_capture_with_verified_delivery_release'
+                'evidence_kind': ('genuine_shared_observed_discovery_for_identical_frozen_inputs'
+                                  if profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else
+                                  'saved_closed_capture_with_verified_delivery_release'
                                   if profile is CLOSED_CAPTURE_RECOVERY_SOURCE else
                                   'closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
                                   if profile is CLOSED_POSTCAPTURE_SOURCE else
@@ -699,15 +811,20 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 **({'existing_worker_placement': profile['existing_worker_placement']}
                    if profile is PETCLINIC_WORKER_SOURCE else {}),
                 **({'postcapture_lifecycle_qualification': profile['postcapture_lifecycle_qualification']}
-                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
+                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
                 **({'closed_postcapture_qualification': profile['closed_postcapture_qualification'],
                     'closed_discovery_import_qualification': profile['closed_discovery_import_qualification']}
-                   if profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
+                   if profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
                 **({'recovered_capture_identity': profile['capture_identity'],
                     'actual_processing_run_id': profile['processing_run_id'],
                     'delivery_budget': profile['delivery_budget'],
                     'independent_actual_case_admission_still_required': True}
                    if profile is CLOSED_CAPTURE_RECOVERY_SOURCE else {}),
+                **({'shared_observed_discovery_policy':profile['shared_discovery_policy'],
+                    'delivery_budget':profile['delivery_budget'],
+                    'delivery_release_tested_source':profile['delivery_release_tested_source'],
+                    'independent_actual_case_admission_still_required':True}
+                   if profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -1326,6 +1443,7 @@ def build(
         compatible_heads.add(POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'])
         compatible_heads.add(CLOSED_POSTCAPTURE_SOURCE['revision'])
         compatible_heads.add(CLOSED_CAPTURE_RECOVERY_SOURCE['revision'])
+        compatible_heads.add(IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         outside_postcapture_scope = (observed_head == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'] and (
@@ -1337,7 +1455,9 @@ def build(
         outside_recovery_scope = (observed_head == CLOSED_CAPTURE_RECOVERY_SOURCE['revision'] and (
             (item['collector'], item['system'], item['mode'], item['seed'], item['run_id']) !=
             ('deepflow', 'otel_demo', 'full', 8, CLOSED_CAPTURE_RECOVERY_SOURCE['processing_run_id'])))
-        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope or outside_recovery_scope):
+        outside_identical_input_scope = (observed_head == IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'] and (
+            (item['collector'],item['system'],item['mode']) != ('deepflow','otel_demo','absent') or item['seed'] not in (6,7,8)))
+        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope or outside_recovery_scope or outside_identical_input_scope):
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,

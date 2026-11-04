@@ -15,7 +15,7 @@ import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
-    CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
+    IDENTICAL_INPUT_DISCOVERY_SOURCE, CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
 
 
 PINS = {
@@ -35,6 +35,7 @@ PETCLINIC_WORKER_HEAD = "0565115511b24db1d6bbe71e98784baded772144"
 POSTCAPTURE_GUEST_RELEASE_HEAD = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 CLOSED_POSTCAPTURE_HEAD = "f045cc0adec187ec00443da0bea72b4ec4d2082e"
 CLOSED_CAPTURE_RECOVERY_HEAD = CLOSED_CAPTURE_RECOVERY_SOURCE["revision"]
+IDENTICAL_INPUT_DISCOVERY_HEADS = {IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']}
 CLOSED_POSTCAPTURE_CELLS = {(mode, seed) for mode in ("absent", "partial") for seed in (6, 7, 8)} | {("full", 8)}
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260",
@@ -45,6 +46,8 @@ METADATA_ATTACHMENT_HEADS = {"f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_H
 GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
                      "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
+for _named_heads in (FRESH_HEADS, METADATA_ATTACHMENT_HEADS, GUEST_PROOF_HEADS, CONTEXT_BASELINE_HEADS):
+    _named_heads.update(IDENTICAL_INPUT_DISCOVERY_HEADS)
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 
@@ -123,7 +126,8 @@ def _package_selected(name: str, kind: str) -> bool:
                               "observed.supplied-aliases.json", "observed.snapshot.json",
                               "observed.signal-quality.json",
                               "replay-command.json", "observations.json",
-                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl"))
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl",
+                              "shared-observed-reference.json"))
     if name.startswith("procrustes/") and "/0/" in name:
         return name.endswith(("preflight.command.json", "report.json"))
     parts = name.split("/")
@@ -137,7 +141,7 @@ def _package_selected(name: str, kind: str) -> bool:
                               "analysis.json", "predicates.json", "faults.json",
                               "simulation.command.json", "model.json", "overlay.json",
                               "model.signal-quality.json", "provided-metadata-attachment.json",
-                              "provided-metadata-validation.command.json"))
+                              "provided-metadata-validation.command.json", "observed-reference.json"))
 
 
 def operation_metadata_facts(toolchain: Path, branch: Path, freeze: dict) -> dict:
@@ -255,6 +259,142 @@ def verified_reference(root: Path, claim: dict, freeze: dict | None) -> Path:
     if freeze is not None and freeze["sha256_by_path"].get("toolchain/" + name) != claim["sha256"]:
         raise ValueError("saved request metadata is not frozen")
     return path
+
+
+def shared_observed_discovery_facts(root, toolchain, declaration, freeze, graphs, build):
+    """Verify named logical coverage of a genuine identical-input origin; no replay."""
+    paths = sorted(toolchain.glob('discovery/*/*/shared-observed-reference.json'))
+    if not paths:
+        return []
+    if (declaration['head_sha'] not in IDENTICAL_INPUT_DISCOVERY_HEADS
+            or (declaration['collector'], declaration['system'], declaration['mode'])
+            != ('deepflow', 'otel_demo', 'absent') or freeze is None):
+        raise ValueError('shared observed discovery is outside its named producer scope')
+    worker_root = root/'infrastructure/remote-toolchain-v4/worker'
+    output = read(worker_root/'output-manifest.json')
+    worker_status = read(worker_root/'worker-status.json')
+    claims = output['toolchain_files']
+    frozen = freeze['sha256_by_path']
+    physical = {(g['source'], g['variant']) for g in graphs}
+    names = {'observed.json', 'observed.signal-quality.json', 'observed.snapshot.json',
+             'observed.bering-raw.json', 'observed.bering-raw.signal-quality.json',
+             'observed.supplied-aliases.json', 'observed-runtime/replay-command.json',
+             'observed-runtime/serve.yaml', 'observed-runtime/accepted-request-sequence.jsonl'}
+    core = names - {'observed.bering-raw.signal-quality.json', 'observed-runtime/serve.yaml'}
+    binary = next(row for row in build['binaries'] if row['name']=='bering')
+    def same(a, b):
+        return json.dumps(a, sort_keys=True, separators=(',', ':'), allow_nan=False) == json.dumps(
+            b, sort_keys=True, separators=(',', ':'), allow_nan=False)
+    def bound(claim, expected, require_body=True):
+        if (toolchain_relative(claim['path']) != expected
+                or frozen.get('toolchain/'+expected) != claim['sha256']
+                or claims.get(expected) != {key: claim[key] for key in ('bytes','sha256')}):
+            raise ValueError('shared discovery reference differs from frozen complete worker census')
+        local = toolchain/expected
+        if require_body or local.is_file():
+            if local.is_symlink() or local.stat().st_size != claim['bytes'] or sha(local) != claim['sha256']:
+                raise ValueError('shared discovery selected reference body changed')
+        return local
+    for name in ('forecasts.json','execution-summary.json'):
+        body = toolchain/name
+        bound({'path':name,'bytes':body.stat().st_size,'sha256':sha(body)}, name)
+    forecasts = read(toolchain/'forecasts.json')
+    execution = read(toolchain/'execution-summary.json')['branches']
+    result = []
+    for path in paths:
+        parts = path.relative_to(toolchain).parts
+        source, view = parts[1:3]
+        if source!='combined' or view not in ('raw','network_scope') or ('ebpf',view) not in physical or (source,view) in physical:
+            raise ValueError('shared discovery duplicates or lacks its genuine physical origin')
+        relative = path.relative_to(toolchain).as_posix()
+        claim = {'path':relative, 'bytes':path.stat().st_size, 'sha256':sha(path)}
+        bound(claim, relative)
+        value = read(path)
+        origin = f'discovery/ebpf/{view}'
+        if (value.get('schema_version') != 'identical-empty-native-observed-discovery-v1'
+                or value.get('declared_source') != source or value.get('variant') != view
+                or value.get('origin_source') != 'ebpf' or toolchain_relative(value['origin_folder']) != origin
+                or value.get('additional_Bering_execution') is not False
+                or value.get('actual_discovery_cost_counted_once') is not True
+                or value.get('source_specific_operations_and_Sheaft_not_reused') is not True
+                or value.get('original_request_and_value_semantic_validation_reused_under_byte_identity') is not True):
+            raise ValueError('shared discovery overstates execution or semantic equivalence')
+        if set(value['genuine_origin_files']) != names:
+            raise ValueError('shared discovery origin file coverage differs')
+        origin_graph = next(g for g in graphs if (g['source'],g['variant'])==('ebpf',view))
+        if (origin_graph['observed_model_sha256'] != value['genuine_origin_files']['observed.json']['sha256']
+                or origin_graph['snapshot_sha256'] != value['genuine_origin_files']['observed.snapshot.json']['sha256']):
+            raise ValueError('shared discovery differs from the verified physical graph')
+        for name, member in value['genuine_origin_files'].items():
+            bound(member, origin+'/'+name, name in core)
+        if any(n.startswith(f'discovery/combined/{view}/') and n!=relative for n in claims):
+            raise ValueError('shared discovery contains a fabricated combined output')
+        ebpf_path = bound(value['origin_input'], f'inputs/ebpf/{view}/observations.json')
+        native_path = bound(value['empty_native_input'], f'inputs/native/{view}/observations.json')
+        combined_path = bound(value['combined_input'], f'inputs/combined/{view}/observations.json')
+        ebpf, native, combined = read(ebpf_path), read(native_path), read(combined_path)
+        if (type(native.get('observations')) is not int or native['observations'] != 0
+                or native.get('exports') or native.get('stream_exports') or native.get('ordered_request_group_manifests')
+                or type(ebpf.get('observations')) is not int or ebpf['observations']<=0
+                or ebpf.get('exports') or len(ebpf.get('stream_exports', []))!=1
+                or type(combined.get('observations')) is not int or combined['observations']!=ebpf['observations']
+                or combined.get('exports') or combined.get('stream_exports')):
+            raise ValueError('shared discovery does not have exactly one nonempty input')
+        groups = combined.get('ordered_request_group_manifests') or []
+        if len(groups)!=2 or not same(groups, value['ordered_input_groups']):
+            raise ValueError('shared discovery ordered group coverage differs')
+        for group, expected in zip(groups, (value['origin_input'],value['empty_native_input']), strict=True):
+            if not same(group, expected):
+                raise ValueError('shared discovery group identity or order differs')
+        stream = ebpf['stream_exports'][0]
+        source_claims = [{key:p[key] for key in ('path','bytes','sha256')} for p in
+                         [stream['request_index'], *stream['shards'], stream['runtime_identity_values']]]
+        if not same(source_claims, value['whole_current_source_files_reverified']):
+            raise ValueError('shared discovery source-byte receipt coverage differs')
+        for member in source_claims:
+            relative_input = toolchain_relative(member['path'])
+            if not relative_input.startswith('inputs/'):
+                raise ValueError('shared discovery current source bytes are outside frozen inputs')
+            bound(member, relative_input, False)
+        replay = read(toolchain/origin/'observed-runtime/replay-command.json')
+        invocation = value['invocation']
+        if (invocation['binary'] != binary['binary'] or invocation['binary_sha256'] != binary['binary_sha256']
+                or replay['argv'][0] != invocation['binary']
+                or any(not same(invocation[key],replay.get(key)) for key in
+                       ('source_profile','source_domain','publication_mode','clock_admission_filter','go_runtime_environment'))
+                or invocation['source_profile'] != {'source_id':'ebpf','input_type':'ebpf-otlp'}
+                or invocation['source_domain'] != 'otel_demo-deployment' or invocation['publication_mode']!='on_shutdown'
+                or invocation['clock_admission_filter'] is not False
+                or invocation['alias_table_sha256'] != sha(root/'runtime-identity-v5/supplied-service-aliases-training.json')
+                or invocation['alias_admission_sha256'] != sha(root/'runtime-identity-v5/supplied-service-alias-admission-training.json')):
+            raise ValueError('shared discovery invocation differs from its actual pinned origin')
+        start,end = value['started_ns'],value['ended_ns']
+        if (type(start) is not int or type(end) is not int
+                or not worker_status['started_ns'] <= replay['ended_ns'] <= start <= end <= worker_status['ended_ns']):
+            raise ValueError('shared discovery validation was not completed inside the original worker')
+        for operation in forecasts[source][view]:
+            branch = toolchain/source/view/operation
+            reference_path = branch/'observed-reference.json'
+            proof = read(reference_path)
+            bound({'path':reference_path.relative_to(toolchain).as_posix(), 'bytes':reference_path.stat().st_size,
+                   'sha256':sha(reference_path)}, reference_path.relative_to(toolchain).as_posix())
+            if ((branch/proof['folder']).resolve() != (toolchain/origin).resolve()
+                    or proof['files'] != {n:value['genuine_origin_files'][n]['sha256'] for n in
+                                         ('observed.json','observed.signal-quality.json','observed.snapshot.json')}):
+                raise ValueError('combined operation does not reference the genuine shared graph')
+            rows = [r for r in execution if (r['source'],r['variant'],r['operation'])==(source,view,operation)]
+            if (len(rows)!=1 or rows[0].get('bering_executed') is not True
+                    or rows[0].get('bering_discovery_shared_across_sources') is not True
+                    or rows[0].get('bering_discovery_source')!='ebpf'
+                    or toolchain_relative(rows[0]['bering_discovery_record'])!=origin+'/observed-runtime/replay-command.json'
+                    or toolchain_relative(rows[0]['shared_discovery_reference'])!=relative):
+                raise ValueError('combined execution summary misstates actual Bering execution')
+        result.append({'source':source, 'variant':view, 'actual_origin_source':'ebpf',
+                       'actual_origin_folder':origin, 'reference_sha256':sha(path),
+                       'additional_Bering_execution':False, 'logical_nonempty_graph_coverage':True,
+                       'selected_origin_bodies_rehashed':sorted(core),
+                       'other_origin_and_wire_value_claims':'bound to full frozen worker census; unselected bodies not reread'})
+    return result
 
 
 def indexed_requests(root: Path, manifest: dict, freeze: dict | None):
@@ -1125,7 +1265,7 @@ def guest_platform_facts(root: Path) -> dict:
 
 def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
     declaration = _capture_declaration(declaration)
-    if declaration['head_sha'] not in {POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}:
+    if declaration['head_sha'] not in ({POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS):
         return None
     if declaration['head_sha'] == CLOSED_POSTCAPTURE_HEAD and (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS:
         raise ValueError('closed postcapture source is restricted to the seven technical replacements')
@@ -1211,12 +1351,15 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
                             worker: dict | None, selected: dict, *, compact=None, restore_root=None, actual_processing=None) -> dict | None:
     """Bind the exact new source's sealed inputs to its actual offline output."""
     recovered = declaration['head_sha'] == CLOSED_CAPTURE_RECOVERY_HEAD
-    if declaration['head_sha'] not in {CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}:
+    staged_delivery = recovered or declaration['head_sha'] in IDENTICAL_INPUT_DISCOVERY_HEADS
+    if declaration['head_sha'] not in ({CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS):
         return None
     scientific = _capture_declaration(declaration)
     if ((declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo')
             or (declaration['mode'], declaration['seed']) not in CLOSED_POSTCAPTURE_CELLS):
         raise ValueError('closed postcapture case is outside the seven technical replacements')
+    if declaration['head_sha'] in IDENTICAL_INPUT_DISCOVERY_HEADS and (declaration['mode']!='absent' or declaration['seed'] not in (6,7,8)):
+        raise ValueError('identical-input completion source is outside its three original cells')
     union = _closed_union_profile(declaration)
     folder = root/'infrastructure/postcapture'
     processing_evidence = None
@@ -1291,7 +1434,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
     restore, guard = read(host/'restore.json'), read(host/'disk-before-download.json')
     original_required = sum(guard.get(k, -1) for k in
         ('archive_bytes', 'scientific_file_bytes', 'proof_bytes', 'SQL_WAL_growth_reserve_bytes'))+1024**3
-    if recovered:
+    if staged_delivery:
         fixed = guard.get('scientific_file_bytes', -1) + guard.get('proof_bytes', -1)
         original_required = max(guard.get('archive_bytes', -1)+fixed,
                                 fixed+guard.get('SQL_WAL_growth_reserve_bytes', -1))+1024**3
@@ -1310,7 +1453,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
             or guard.get('required_bytes') != original_required
             or guard.get('available_bytes', -1) < guard.get('required_bytes', 0)):
         raise ValueError('actual closed restore, archive integrity or pre-download capacity proof differs')
-    if recovered:
+    if staged_delivery:
         phase = read(host/'disk-before-processing.json')
         delivery = restore.get('delivery_working_copy') or {}
         owned = restore.get('verified_delivery_identity') or {}
@@ -1504,6 +1647,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                        "snapshot_sha256": sha(snapshot_path)})
     if not graphs:
         raise ValueError("selected evidence contains no actual Bering execution")
+    shared_graphs = shared_observed_discovery_facts(root, toolchain, declaration,
+        freeze or {'sha256_by_path':saved['sha256_by_path']}, graphs, build)
+    shared_origins = {(r['source'],r['variant']):r['actual_origin_folder'] for r in shared_graphs}
     if fresh:
         expected_graphs = set()
         for source in ("ebpf", "native", "combined"):
@@ -1514,7 +1660,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     raise ValueError("source/variant input manifest is not frozen")
                 if read(path).get("observations", 0) > 0:
                     expected_graphs.add((source, variant))
-        if {(row["source"], row["variant"]) for row in graphs} != expected_graphs:
+        if ({(row["source"], row["variant"]) for row in graphs} | set(shared_origins)) != expected_graphs:
             raise ValueError("fresh evidence lacks a nonempty source/variant Bering execution")
 
     preflights = []
@@ -1629,7 +1775,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                             if (freeze is not None
                                     and freeze["sha256_by_path"].get(freeze_key) != sha(path)):
                                 raise ValueError("available Sheaft input is not frozen")
-                        graph_path = toolchain / "discovery" / source / variant / "observed.json"
+                        graph_path = (toolchain/shared_origins[source,variant]/'observed.json'
+                                      if (source,variant) in shared_origins else
+                                      toolchain / "discovery" / source / variant / "observed.json")
                         graph = read(graph_path)
                         model = read(model_path)
                         graph_edges = {item["id"] for item in graph.get("edges") or []}
@@ -1743,7 +1891,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
         remote_root = handoff_selected
     parent_import_path = remote_root / "parent-import.json"
-    if declaration["head_sha"] in (PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD) and not parent_import_path.is_file():
+    if (declaration["head_sha"] in ({PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS)) and not parent_import_path.is_file():
         raise ValueError("named worker source requires retained parent worker import")
     worker_provenance_path = remote_root / "worker/worker-provenance.json"
     worker_status_path = remote_root / "worker/worker-status.json"
@@ -1864,6 +2012,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         "forecast_saved_ns": saved.get("saved_ns"), "actual_bering": graphs,
         "actual_procrustes": preflights, "saved_branch_facts": branch_facts,
         "selected_raw_controls": controls, "final_drain": drain,
+        **({'shared_observed_discovery_facts':shared_graphs} if shared_graphs else {}),
     }
 
 
