@@ -2,7 +2,7 @@
 
 **Current work: a fresh matched series with an explicit experiment controller.**
 
-Actual scientific evidence has passed both original-criterion reviews for **78 of 81 main cases**. All OBI and Coroot cases and 24 DeepFlow cases are retained, including valid adverse and UNKNOWN results. The three remaining cases are DeepFlow/OTel without SDK traces, stopped by technical timeouts. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
+Actual scientific evidence has passed both original-criterion reviews for **78 of 81 main cases**. All OBI and Coroot cases and 24 DeepFlow cases are retained, including valid adverse and UNKNOWN results. The three remaining cases are DeepFlow/OTel without SDK traces. After the earlier technical timeouts, all three replacement cases have been launched; their final evidence reviews are pending. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
 Read the [brief interpretation](docs/CURRENT_FEASIBILITY_FINDINGS_V5.md) for the supported missing-trace findings, direct baselines and application failure limits.
 The question is eBPF feasibility with absent/incomplete tracing. The user selected
 a new runner reusing verified deployment and collection components. The common
@@ -890,6 +890,15 @@ allocate shared CI overhead as instrumentation cost to one source. Earlier
 iterations and independent product development remain outside this v4 automation
 window; human/agent effort is unmeasured. Earlier interim ledgers retain their
 original declared subsets; the final snapshot uses the reconciled inventory above.
+
+The [historical cost reconciliation](docs/clean-study-historical-cost-scope-20261104.json)
+adds 153 cost-only run declarations: the earlier 149-run ledger and 37 archived
+runs omitted from the current declarations, with 33 overlapping IDs counted once.
+Their job metadata enters the final cost snapshot; the old aggregate total is
+not added again. These historical runs do not add scientific cases to the fixed
+81-case cohort. For 116 historical IDs, retained cost metadata does not establish
+retention of the original raw or model payloads. The finite current archive tail
+is recorded separately.
 
 ## 11. Discussion, limitations and conclusions
 

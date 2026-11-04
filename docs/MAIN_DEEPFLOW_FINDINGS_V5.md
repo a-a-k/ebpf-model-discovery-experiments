@@ -359,5 +359,7 @@ All three DeepFlow Petclinic absent repetitions therefore fail to provide
 sufficient graph evidence for the requested operation forecasts in this pinned
 configuration. This is an observed applicability limitation, not a reason to
 replay a complete case or a universal impossibility claim. The independently
-reviewed main subset is now **66/81**; the remaining 15 DeepFlow cases, complete
-report and finite retention tail are still required.
+reviewed main subset reached **66/81 at that sixth-batch checkpoint**. The current
+reviewed subset is **78/81**; only the three DeepFlow/OTel SDK-absent cases remain
+scientifically incomplete. The final full81 report and finite retention tail are
+still required.
