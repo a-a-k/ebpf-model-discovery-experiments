@@ -8,6 +8,7 @@ import hashlib
 import heapq
 import itertools
 import json
+import math
 from pathlib import Path, PurePosixPath
 import tarfile
 import uuid
@@ -15,7 +16,7 @@ import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
 from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
-    IDENTICAL_INPUT_DISCOVERY_SOURCE, CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
+    IDENTICAL_INPUT_DISCOVERY_SOURCE, UPLOAD_HOLD_PARENT_PROOF_SOURCE, CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
 
 
 PINS = {
@@ -35,7 +36,8 @@ PETCLINIC_WORKER_HEAD = "0565115511b24db1d6bbe71e98784baded772144"
 POSTCAPTURE_GUEST_RELEASE_HEAD = "0056b4c8ecb85e8b40c433e63af442133a21f3cc"
 CLOSED_POSTCAPTURE_HEAD = "f045cc0adec187ec00443da0bea72b4ec4d2082e"
 CLOSED_CAPTURE_RECOVERY_HEAD = CLOSED_CAPTURE_RECOVERY_SOURCE["revision"]
-IDENTICAL_INPUT_DISCOVERY_HEADS = {IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']}
+UPLOAD_HOLD_PARENT_PROOF_HEAD = UPLOAD_HOLD_PARENT_PROOF_SOURCE['revision']
+IDENTICAL_INPUT_DISCOVERY_HEADS = {IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'], UPLOAD_HOLD_PARENT_PROOF_HEAD}
 CLOSED_POSTCAPTURE_CELLS = {(mode, seed) for mode in ("absent", "partial") for seed in (6, 7, 8)} | {("full", 8)}
 FRESH_HEADS = {"bf49d464816aa71b7c820a02778117d3e6a0ba9d",
                "a43404ec02c77e9414878632ec6248835cf7a260",
@@ -268,7 +270,8 @@ def shared_observed_discovery_facts(root, toolchain, declaration, freeze, graphs
         return []
     if (declaration['head_sha'] not in IDENTICAL_INPUT_DISCOVERY_HEADS
             or (declaration['collector'], declaration['system'], declaration['mode'])
-            != ('deepflow', 'otel_demo', 'absent') or freeze is None):
+            != ('deepflow', 'otel_demo', 'absent') or freeze is None
+            or (declaration['head_sha'] == UPLOAD_HOLD_PARENT_PROOF_HEAD and declaration.get('seed') not in (6,8))):
         raise ValueError('shared observed discovery is outside its named producer scope')
     worker_root = root/'infrastructure/remote-toolchain-v4/worker'
     output = read(worker_root/'output-manifest.json')
@@ -1013,6 +1016,102 @@ def verify_package(package: Path, selected: Path, *, kind: str,
         "_file_claims": {name: {"bytes": row["bytes"], "sha256": row["sha256"]}
                          for name, row in expected.items()},
     }
+
+
+def upload_hold_parent_proof_facts(root, remote_root, declaration, index, provenance, parent_import, saved):
+    """Bind the one named schedule to actual full proofs and same-parent clocks."""
+    if declaration['head_sha'] != UPLOAD_HOLD_PARENT_PROOF_HEAD:
+        return None
+    if ((declaration['collector'], declaration['system'], declaration['mode'])
+            != ('deepflow', 'otel_demo', 'absent') or declaration['seed'] not in (6,8)):
+        raise ValueError('upload-hold proof is outside its named absent6/8 source')
+    preflight_path = remote_root/'upload-hold-preflight.json'
+    preflight = read(preflight_path)
+    schedule = read(remote_root/'parent-proof-schedule.json')
+    dispatch = read(remote_root/'dispatch.json')
+    cost = read(remote_root/'cost.json')
+    hold = read(root/'training-checkpoint-cost.json')
+    ready = read(root/'infrastructure/training-checkpoint/ready.json')
+    release = read(root/'infrastructure/training-checkpoint/release.json')
+    inputs = dispatch.get('inputs') or {}
+    proof = dispatch.get('checkpoint_proof') or {}
+    logical = index.get('checkpoint')
+    identity = parent_import.get('identity') or {}
+    canonical_sha = lambda value: hashlib.sha256(json.dumps(
+        value, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+    if (set(identity) != {'run_id','commit','system','mode','seed','manifest_sha256'}
+            or identity.get('commit') != declaration['head_sha']
+            or str(identity.get('run_id')) != str(declaration['run_id'])
+            or (identity.get('system'),identity.get('mode'),identity.get('seed'))
+                != (declaration['system'],declaration['mode'],declaration['seed'])
+            or preflight.get('schema_version') != 'upload-hold-parent-preflight-v1'
+            or preflight.get('status') != 'complete'
+            or preflight.get('complete_original_checkpoint_proof_executed') is not True
+            or preflight.get('identity') != identity or schedule.get('identity') != identity
+            or any(str(ready.get(k)) != str(v) or str(inputs.get(k)) != str(v)
+                   or str(release.get(k)) != str(v) for k,v in identity.items())
+            or release.get('upload_success') is not True
+            or proof.get('manifest_sha256') != identity['manifest_sha256']
+            or not isinstance(proof.get('files'), dict) or not proof['files']
+            or preflight.get('checkpoint_proof_sha256') != canonical_sha(proof)
+            or provenance.get('checkpoint_input') != proof
+            or type(preflight.get('verified_files')) is not int
+            or preflight['verified_files'] != len(proof['files'])
+            or preflight.get('plans_sha256') != inputs.get('plans_sha256')
+            or preflight.get('plans_sha256') != parent_import.get('plans_sha256')
+            or preflight.get('plans_sha256') != provenance.get('plans_sha256')
+            or not isinstance(preflight.get('plans_sha256'), str)
+            or len(preflight['plans_sha256']) != 64
+            or any(c not in '0123456789abcdef' for c in preflight['plans_sha256'])
+            or not logical or provenance.get('training_index_proof') != logical
+            or preflight.get('training_index_proof_sha256') != canonical_sha(logical)
+            or inputs.get('training_index_proof_sha256') != canonical_sha(logical)
+            or schedule.get('training_index_proof_sha256') != canonical_sha(logical)
+            or index.get('parent_after_dispatch_before_import') != logical
+            or index.get('parent_after_worker') != logical or 'parent_before_dispatch' in index):
+        raise ValueError('upload-hold preflight lacks its exact full checkpoint/worker/SQL proof')
+    if (schedule.get('schema_version') != 'upload-hold-parent-proof-schedule-v1'
+            or schedule.get('status') != 'complete'
+            or schedule.get('phase') != 'parent_after_dispatch_before_import'
+            or schedule.get('all_checks_before_import_or_target') is not True
+            or schedule.get('upload_hold_preflight_sha256') != sha(preflight_path)
+            or cost.get('upload_hold_preflight_sha256') != sha(preflight_path)
+            or dispatch.get('status') != 'dispatched'
+            or not str(parent_import.get('worker_run_id')).isdigit()
+            or int(parent_import['worker_run_id']) <= 0
+            or any(str(item.get('worker_run_id')) != str(parent_import.get('worker_run_id'))
+                   for item in (dispatch, schedule, cost, provenance))
+            or hold.get('ready') is not True or hold.get('upload_success') is not True
+            or cost.get('checkpoint_validation_includes_checkpoint_copy_release') is not False):
+        raise ValueError('upload-hold schedule lacks completed source-bound worker/phase/cost evidence')
+    times = [ready.get('created_ns'), hold.get('ready_callback_started_ns'),
+             preflight.get('started_ns'), preflight.get('ended_ns'),
+             hold.get('ready_callback_ended_ns'), hold.get('ended_ns'),
+             dispatch.get('post_started_ns'), dispatch.get('dispatched_ns'),
+             schedule.get('parent_proof_started_ns'), schedule.get('parent_proof_ended_ns'),
+             parent_import.get('imported_ns'), saved.get('saved_ns')]
+    if (any(type(v) is not int or v <= 0 for v in times) or times != sorted(times)
+            or schedule.get('confirmed_dispatch_ns') != dispatch.get('dispatched_ns')
+            or type(release.get('released_ns')) is not int
+            or not ready['created_ns'] <= release['released_ns'] <= dispatch['post_started_ns']):
+        raise ValueError('upload-hold schedule violates same-parent callback/POST/proof/import/freeze order')
+    phase_seconds = (schedule['parent_proof_ended_ns']-schedule['parent_proof_started_ns'])/1e9
+    callback_seconds = (hold['ready_callback_ended_ns']-hold['ready_callback_started_ns'])/1e9
+    if (cost.get('parent_after_dispatch_proof_seconds') != phase_seconds
+            or hold.get('ready_callback_seconds') != callback_seconds
+            or type(hold.get('upload_hold_wall_seconds')) not in (int,float)
+            or not math.isfinite(hold['upload_hold_wall_seconds'])
+            or hold['upload_hold_wall_seconds'] < callback_seconds):
+        raise ValueError('upload-hold schedule cost clocks disagree')
+    return {'source': declaration['head_sha'], 'phase': schedule['phase'],
+            'worker_run_id': parent_import['worker_run_id'],
+            'full_checkpoint_proof_sha256': canonical_sha(proof),
+            'verified_files': len(proof['files']), 'training_index_proof_sha256': canonical_sha(logical),
+            'upload_hold_preflight_sha256': sha(preflight_path),
+            'same_parent_clock_order_ns': times, 'callback_seconds': callback_seconds,
+            'upload_hold_wall_seconds': hold['upload_hold_wall_seconds'],
+            'parent_after_dispatch_proof_seconds': phase_seconds,
+            'whole_case_speedup_or_six_hour_guarantee_claimed': False}
 
 
 def verify_worker_output_claims(manifest_claims: dict, provenance_claims: dict,
@@ -1901,6 +2000,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         worker_status = read(worker_status_path)
         output_manifest = read(remote_root / "worker/output-manifest.json")
         index = read(remote_root / "training-index-proof.json")
+        parent_phase = ('parent_after_dispatch_before_import'
+                        if declaration['head_sha'] == UPLOAD_HOLD_PARENT_PROOF_HEAD else 'parent_before_dispatch')
         identities = [parent_import.get("identity") or {},
                       worker_provenance.get("identity") or {},
                       worker_status.get("identity") or {},
@@ -1923,7 +2024,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                     != str(worker_provenance.get("worker_run_id"))
                 or str(parent_import.get("worker_run_id"))
                     != str(worker_status["identity"].get("worker_run_id"))
-                or index.get("checkpoint") != index.get("parent_before_dispatch")
+                or index.get("checkpoint") != index.get(parent_phase)
                 or index.get("checkpoint") != index.get("parent_after_worker")):
             raise ValueError("saved worker import/status identity is incomplete")
         manifest_claims = output_manifest.get("toolchain_files") or {}
@@ -1943,6 +2044,10 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "output_manifest": output_manifest,
                         "training_index_proof": index,
                         "output_claim_scope": output_claim_scope}
+        scheduled_proof = upload_hold_parent_proof_facts(
+            root, remote_root, declaration, index, worker_provenance, parent_import, saved)
+        if scheduled_proof is not None:
+            worker_facts['parent_proof_schedule'] = scheduled_proof
     if declaration["system"] == "deathstarbench" and worker_facts is None:
         raise ValueError("DSB evidence lacks the required remote worker/handoff proof")
     for package in packages.values():

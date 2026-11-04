@@ -587,6 +587,28 @@ IDENTICAL_INPUT_DISCOVERY_SOURCE = {
     'scope': ('deepflow', 'otel_demo', 'absent', (6, 7, 8)),
 }
 
+UPLOAD_HOLD_PARENT_PROOF_SOURCE = {
+    **IDENTICAL_INPUT_DISCOVERY_SOURCE,
+    'revision': '2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',
+    'tested_source': '2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',
+    'parent_revision': IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'],
+    'added_paths': IDENTICAL_INPUT_DISCOVERY_SOURCE['added_paths'] | {'tests/test_parent_upload_hold_v5.py'},
+    'reviewed_changed_blobs': {
+        **IDENTICAL_INPUT_DISCOVERY_SOURCE['reviewed_changed_blobs'],
+        'src/ebpf_discovery/checkpoint_v4.py': '6e7da532c7ac8ef92fd7a4a8d93dca27a3f41727',
+        'src/ebpf_discovery/remote_toolchain_v4.py': '877be55b4aaf2ae84f322ec01dd4be4fc8942cce',
+        'src/ebpf_discovery/study.py': '97e92552c3af9bcf95be8849d654eaac354a4b48',
+        'tests/test_parent_upload_hold_v5.py': '597d59a7edb0b523e8c97306ec075cba7ab1451a'},
+    'changed_core_blobs': {
+        **IDENTICAL_INPUT_DISCOVERY_SOURCE['changed_core_blobs'],
+        'src/ebpf_discovery/checkpoint_v4.py': '6e7da532c7ac8ef92fd7a4a8d93dca27a3f41727',
+        'src/ebpf_discovery/remote_toolchain_v4.py': '877be55b4aaf2ae84f322ec01dd4be4fc8942cce',
+        'src/ebpf_discovery/study.py': '97e92552c3af9bcf95be8849d654eaac354a4b48'},
+    'scope': ('deepflow', 'otel_demo', 'absent', (6, 8)),
+    'parent_proof_schedule': 'upload-hold-parent-proof-schedule-v1',
+}
+
+
 def _saved_capture_identity(manifest, run_id, identity):
     """The one named delivery recovery has distinct capture/publication identities."""
     profile = CLOSED_CAPTURE_RECOVERY_SOURCE
@@ -759,6 +781,8 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             profile = CLOSED_CAPTURE_RECOVERY_SOURCE
         elif revision == IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']:
             profile = IDENTICAL_INPUT_DISCOVERY_SOURCE
+        elif revision == UPLOAD_HOLD_PARENT_PROOF_SOURCE['revision']:
+            profile = UPLOAD_HOLD_PARENT_PROOF_SOURCE
     algorithm = profile is not None
     approved = (profile['reviewed_changed_blobs'] if algorithm else
                 PREPARATION_ONLY_SOURCE_REVISIONS.get(anchor, {}).get(revision))
@@ -783,11 +807,11 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
             raise ValueError('preparation revision differs from reviewed source blobs')
     if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
             or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE
-            or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE):
+            or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or (profile is IDENTICAL_INPUT_DISCOVERY_SOURCE or profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE)):
         return {'anchor': anchor, 'revision': revision,
                 'anchor_tree': anchor_tree['sha'], 'revision_tree': revision_tree['sha'],
                 'evidence_kind': ('genuine_shared_observed_discovery_for_identical_frozen_inputs'
-                                  if profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else
+                                  if (profile is IDENTICAL_INPUT_DISCOVERY_SOURCE or profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE) else
                                   'saved_closed_capture_with_verified_delivery_release'
                                   if profile is CLOSED_CAPTURE_RECOVERY_SOURCE else
                                   'closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
@@ -811,10 +835,10 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                 **({'existing_worker_placement': profile['existing_worker_placement']}
                    if profile is PETCLINIC_WORKER_SOURCE else {}),
                 **({'postcapture_lifecycle_qualification': profile['postcapture_lifecycle_qualification']}
-                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
+                   if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or (profile is IDENTICAL_INPUT_DISCOVERY_SOURCE or profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE) else {}),
                 **({'closed_postcapture_qualification': profile['closed_postcapture_qualification'],
                     'closed_discovery_import_qualification': profile['closed_discovery_import_qualification']}
-                   if profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
+                   if profile is CLOSED_POSTCAPTURE_SOURCE or profile is CLOSED_CAPTURE_RECOVERY_SOURCE or (profile is IDENTICAL_INPUT_DISCOVERY_SOURCE or profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE) else {}),
                 **({'recovered_capture_identity': profile['capture_identity'],
                     'actual_processing_run_id': profile['processing_run_id'],
                     'delivery_budget': profile['delivery_budget'],
@@ -824,7 +848,10 @@ def _preparation_equivalence_facts(anchor, revision, anchor_tree, revision_tree)
                     'delivery_budget':profile['delivery_budget'],
                     'delivery_release_tested_source':profile['delivery_release_tested_source'],
                     'independent_actual_case_admission_still_required':True}
-                   if profile is IDENTICAL_INPUT_DISCOVERY_SOURCE else {}),
+                   if (profile is IDENTICAL_INPUT_DISCOVERY_SOURCE or profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE) else {}),
+                **({'parent_proof_schedule': profile['parent_proof_schedule'],
+                    'independent_actual_case_admission_still_required': True}
+                   if profile is UPLOAD_HOLD_PARENT_PROOF_SOURCE else {}),
                 'reviewed_changed_blobs': approved,
                 'changed_core_blobs': profile['changed_core_blobs'],
                 'identical_remaining_entries': len(set(original) - set(approved))}
@@ -1444,6 +1471,7 @@ def build(
         compatible_heads.add(CLOSED_POSTCAPTURE_SOURCE['revision'])
         compatible_heads.add(CLOSED_CAPTURE_RECOVERY_SOURCE['revision'])
         compatible_heads.add(IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'])
+        compatible_heads.add(UPLOAD_HOLD_PARENT_PROOF_SOURCE['revision'])
     for item in attempts:
         observed_head = (item.get('manifest') or {}).get('commit')
         outside_postcapture_scope = (observed_head == POSTCAPTURE_GUEST_RELEASE_SOURCE['revision'] and (
@@ -1457,7 +1485,9 @@ def build(
             ('deepflow', 'otel_demo', 'full', 8, CLOSED_CAPTURE_RECOVERY_SOURCE['processing_run_id'])))
         outside_identical_input_scope = (observed_head == IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'] and (
             (item['collector'],item['system'],item['mode']) != ('deepflow','otel_demo','absent') or item['seed'] not in (6,7,8)))
-        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope or outside_recovery_scope or outside_identical_input_scope):
+        outside_parent_proof_scope = (observed_head == UPLOAD_HOLD_PARENT_PROOF_SOURCE['revision'] and (
+            (item['collector'],item['system'],item['mode']) != ('deepflow','otel_demo','absent') or item['seed'] not in (6,8)))
+        if common_head and item['stage'] == 'main' and (observed_head not in compatible_heads or outside_postcapture_scope or outside_closed_scope or outside_recovery_scope or outside_identical_input_scope or outside_parent_proof_scope):
             item['common_source_coverage_exclusion'] = {
                 'rule': ('outside_predeclared_common_source' if observed_head else 'source_commit_unavailable'),
                 'expected_head': common_head, 'observed_head': observed_head,

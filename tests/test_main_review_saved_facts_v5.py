@@ -30,6 +30,120 @@ REVIEW = load("review_main_saved_facts_v5", "scripts/review-main-saved-facts-v5.
 SELECT = load("select_main_review_evidence_v5", "scripts/select-main-review-evidence-v5.py")
 
 
+@pytest.fixture
+def upload_hold_packet(tmp_path):
+    root = tmp_path
+    remote = root/'infrastructure/remote-toolchain-v4'
+    canonical = lambda value: hashlib.sha256(json.dumps(
+        value, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()).hexdigest()
+    identity = {'run_id':'123', 'commit':REVIEW.UPLOAD_HOLD_PARENT_PROOF_HEAD,
+                'system':'otel_demo', 'mode':'absent', 'seed':6, 'manifest_sha256':'a'*64}
+    declaration = {'run_id':123,'head_sha':identity['commit'],'collector':'deepflow',
+                   'system':'otel_demo','mode':'absent','seed':6}
+    logical = {'proof_basis':'rowid-and-all-columns-v1','spans':{'rows':1,'sha256':'e'*64}}
+    proof = {'manifest_sha256':'a'*64, 'files':{'plans.json':{'bytes':2,'sha256':'f'*64}}}
+    preflight = {'schema_version':'upload-hold-parent-preflight-v1','status':'complete',
+        'identity':identity,'started_ns':25,'ended_ns':70,'plans_sha256':'b'*64,
+        'checkpoint_proof_sha256':canonical(proof),'verified_files':1,
+        'complete_original_checkpoint_proof_executed':True,
+        'training_index_proof_sha256':canonical(logical)}
+    def write(relative, value):
+        path = root/relative
+        path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_text(json.dumps(value)+'\n',encoding='utf-8')
+        return path
+    prefix = 'infrastructure/remote-toolchain-v4/'
+    preflight_path = write(prefix+'upload-hold-preflight.json',preflight)
+    digest = hashlib.sha256(preflight_path.read_bytes()).hexdigest()
+    write(prefix+'parent-proof-schedule.json',{'schema_version':'upload-hold-parent-proof-schedule-v1',
+        'status':'complete','identity':identity,'worker_run_id':456,'confirmed_dispatch_ns':110,
+        'parent_proof_started_ns':120,'parent_proof_ended_ns':150,
+        'training_index_proof_sha256':canonical(logical),'upload_hold_preflight_sha256':digest,
+        'phase':'parent_after_dispatch_before_import','all_checks_before_import_or_target':True})
+    write(prefix+'dispatch.json',{'status':'dispatched','worker_run_id':456,
+        'post_started_ns':100,'dispatched_ns':110,'checkpoint_proof':proof,
+        'inputs':{**{k:str(v) for k,v in identity.items()},'plans_sha256':'b'*64,
+                  'training_index_proof_sha256':canonical(logical)}})
+    write(prefix+'cost.json',{'worker_run_id':456,'upload_hold_preflight_sha256':digest,
+        'checkpoint_validation_includes_checkpoint_copy_release':False,
+        'parent_after_dispatch_proof_seconds':30/1e9})
+    write('training-checkpoint-cost.json',{'ready':True,'upload_success':True,
+        'ready_callback_started_ns':20,'ready_callback_ended_ns':80,'ended_ns':90,
+        'ready_callback_seconds':60/1e9,'upload_hold_wall_seconds':100/1e9})
+    write('infrastructure/training-checkpoint/ready.json',{**identity,'created_ns':10})
+    # Upload legitimately finishes before the callback; the HOLD ends afterward.
+    write('infrastructure/training-checkpoint/release.json',{
+        **identity,'released_ns':55,'upload_success':True})
+    index = {'checkpoint':logical,'parent_after_dispatch_before_import':logical,'parent_after_worker':logical}
+    provenance = {'worker_run_id':456,'plans_sha256':'b'*64,'training_index_proof':logical,
+                  'checkpoint_input':proof}
+    imported = {'identity':identity,'worker_run_id':456,'plans_sha256':'b'*64,'imported_ns':200}
+    return root,remote,declaration,index,provenance,imported,{'saved_ns':220}
+
+
+def test_upload_hold_full_proof_order_accepts_callback_finishing_after_upload(upload_hold_packet):
+    facts = REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+    assert facts['verified_files'] == 1 and facts['worker_run_id'] == 456
+    assert facts['same_parent_clock_order_ns'] == sorted(facts['same_parent_clock_order_ns'])
+    assert facts['whole_case_speedup_or_six_hour_guarantee_claimed'] is False
+
+
+@pytest.mark.parametrize('file,key,value', [
+    ('upload-hold-preflight.json','status','failed'),
+    ('upload-hold-preflight.json','checkpoint_proof_sha256','0'*64),
+    ('upload-hold-preflight.json','verified_files',2),
+    ('upload-hold-preflight.json','complete_original_checkpoint_proof_executed',False),
+    ('parent-proof-schedule.json','status','failed'),
+    ('parent-proof-schedule.json','worker_run_id',999),
+    ('parent-proof-schedule.json','confirmed_dispatch_ns',109),
+    ('parent-proof-schedule.json','parent_proof_started_ns',99),
+    ('parent-proof-schedule.json','parent_proof_ended_ns',201),
+    ('parent-proof-schedule.json','phase','parent_before_dispatch'),
+    ('parent-proof-schedule.json','upload_hold_preflight_sha256','0'*64),
+    ('dispatch.json','checkpoint_proof',{'manifest_sha256':'a'*64,'files':{'other':{}}}),
+    ('dispatch.json','post_started_ns',60),
+    ('cost.json','parent_after_dispatch_proof_seconds',-1),
+    ('cost.json','checkpoint_validation_includes_checkpoint_copy_release',True)])
+def test_upload_hold_rejects_incomplete_changed_or_mistimed_actual_proofs(upload_hold_packet,file,key,value):
+    path = upload_hold_packet[1]/file
+    data = json.loads(path.read_text())
+    data[key] = value
+    path.write_text(json.dumps(data),encoding='utf-8')
+    with pytest.raises(ValueError):
+        REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+
+
+def test_upload_hold_never_accepts_a_legacy_phase_label(upload_hold_packet):
+    index = upload_hold_packet[3]
+    index['parent_before_dispatch'] = index['checkpoint']
+    with pytest.raises(ValueError):
+        REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+
+
+def test_upload_hold_requires_the_unchanged_worker_SQL_proof(upload_hold_packet):
+    upload_hold_packet[4]['training_index_proof'] = {'spans':{'rows':2}}
+    with pytest.raises(ValueError):
+        REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+
+
+def test_upload_hold_requires_the_independently_verified_worker_full_census(upload_hold_packet):
+    upload_hold_packet[4]['checkpoint_input'] = {'manifest_sha256':'a'*64,
+                                               'files':{'foreign.json':{'bytes':2,'sha256':'f'*64}}}
+    with pytest.raises(ValueError):
+        REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+
+
+def test_upload_hold_scope_excludes_running_seed7(upload_hold_packet):
+    upload_hold_packet[2]['seed'] = 7
+    with pytest.raises(ValueError,match='absent6/8'):
+        REVIEW.upload_hold_parent_proof_facts(*upload_hold_packet)
+
+
+def test_old_sources_do_not_acquire_new_receipt_requirements(tmp_path):
+    assert REVIEW.upload_hold_parent_proof_facts(tmp_path,tmp_path,
+        {'head_sha':REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']},{},{},{},{}) is None
+
+
 def _shared_discovery_fixture(root, monkeypatch):
     monkeypatch.setattr(REVIEW, 'IDENTICAL_INPUT_DISCOVERY_HEADS', {'shared-fixture'})
     toolchain = root/'toolchain'
@@ -114,8 +228,9 @@ def test_shared_discovery_has_two_logical_sources_and_one_physical_graph(tmp_pat
     assert REVIEW._package_selected(path.relative_to(toolchain).as_posix(), 'toolchain')
 
 
-def test_named_identical_source_does_not_skip_guest_or_closed_capture_proofs(tmp_path):
-    decl={'head_sha':REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'], 'collector':'deepflow',
+@pytest.mark.parametrize('head', [REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'], REVIEW.UPLOAD_HOLD_PARENT_PROOF_HEAD])
+def test_named_identical_source_does_not_skip_guest_or_closed_capture_proofs(tmp_path, head):
+    decl={'head_sha':head, 'collector':'deepflow',
           'system':'otel_demo','mode':'absent','seed':6,'run_id':123}
     with pytest.raises((ValueError,OSError)):
         REVIEW.postcapture_guest_facts(tmp_path,decl)
@@ -1431,7 +1546,8 @@ def test_closed_job_fresh_batch_preserves_seven_case_scope(tmp_path, cell_key, a
     (('deepflow','petclinic','absent',6),False),
     (('coroot','otel_demo','absent',6),False),
 ])
-def test_identical_input_source_is_limited_to_three_original_cells(tmp_path,cell_key,accepted):
+@pytest.mark.parametrize('head', [REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision'], REVIEW.UPLOAD_HOLD_PARENT_PROOF_HEAD])
+def test_identical_input_source_is_limited_to_its_original_cells(tmp_path,cell_key,accepted,head):
     name='docs/iteration5-main-review-candidates-coroot-petclinic-full.json'
     template=json.loads((ROOT/name).read_text())['cells'][0]
     planned=[{**template,'collector':c,'system':s,'mode':m,'seed':z,'run_id':1,
@@ -1439,7 +1555,9 @@ def test_identical_input_source_is_limited_to_three_original_cells(tmp_path,cell
              for c in ('obi','deepflow','coroot') for s in ('deathstarbench','otel_demo','petclinic')
              for m in ('absent','partial','full') for z in (6,7,8)]
     cell=next(r for r in planned if tuple(r[k] for k in ('collector','system','mode','seed'))==cell_key)
-    cell['head_sha']=REVIEW.IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']
+    cell['head_sha']=head
+    if head == REVIEW.UPLOAD_HOLD_PARENT_PROOF_HEAD and cell_key == ('deepflow','otel_demo','absent',7):
+        accepted=False
     result,_=_run_manifest_selector(tmp_path,name,phase='fresh-batch',document={'cells':[cell],'planned_cells':planned},fresh_go=True)
     assert (result.returncode==0) is accepted,result.stderr
 
