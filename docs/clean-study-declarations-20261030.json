@@ -5772,6 +5772,36 @@
       "run_id": 41738362259,
       "role": "preparation",
       "note": "Actualf3b6971 interim78 scientificinterpretation documentation CI; bothjobsSUCCESS, no executablechange. Finiteclosingcosttail retained."
+    },
+    {
+      "run_id": 41750684959,
+      "role": "preparation",
+      "note": "Actual ced62c2 shared-scope producer and initial comparison source CI: both Linux jobs SUCCESS. Production helper, caller and original full projection source passed independent design/static/code-CI review. No full-prefix comparison was dispatched at ced."
+    },
+    {
+      "run_id": 41753816457,
+      "role": "preparation",
+      "note": "Actual 018604d direct prepared-input qualifier source CI: both Linux jobs SUCCESS. Only qualification workflow/script changed from ced; production source unchanged. No model/acquisition/main result or six-hour headroom follows."
+    },
+    {
+      "run_id": 41754731780,
+      "role": "preparation",
+      "note": "SUCCESS direct retained prepared-raw scope operator comparison at 018604d; ROOT+independent actual output GO: all3275 ordered nonclock rows,69 wire shards and793692 full value refs equal. Operator224.2306s; historical network pass1688.0190s, different host/cache/order. Artifact13287986796/32616B. No full-preparation timing, Bering/Sheaft/traffic or main/six-hour GO. All original/failed/CI/transfer/restoration/comparison/proof/review/finite-retention costs retained."
+    },
+    {
+      "run_id": 41757554405,
+      "role": "preparation",
+      "note": "SUCCESS Linux CI for exact frozen-training-admission reference be0714c: all implementation checks and pinned HAProxy control jobs126337144017/126337144442. Ordinary exact semantic-result reuse candidateA only; no scientific case or three-main/budget GO. All CI/test/review costs retained."
+    },
+    {
+      "run_id": 41758321392,
+      "role": "preparation",
+      "note": "SUCCESS Linux CI for exact original-prefix frozen-admission qualifier7ef12df: checks/control jobs126339631997/126339632438. Production src/systems/tests remain approvedbe0714c. No traffic, Bering/Sheaft, new scientific case or three-main budget GO from CI. Full CI/review costs retained."
+    },
+    {
+      "run_id": 41758861575,
+      "role": "preparation",
+      "note": "ONE exact old absent8 prefix frozen-admission constructor/full preparation check at7ef12df. All original API/ZIP/source/SQL/admission/projection/wire/value/equality gates, strict3cost clock scopes, actual phases, disk guard and failure metadata. No Bering/Sheaft/traffic/main admission. Entire original/failed/CI/current transfer/restore/proof/prep/comparison/review/retention costs retained."
     }
   ],
   "blocked_main_cells": [],
