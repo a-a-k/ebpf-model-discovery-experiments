@@ -9,6 +9,7 @@ import re
 import sqlite3
 import time
 from collections.abc import Iterator
+from contextlib import closing
 
 from .toolchain_v4 import PINS as V4_PINS
 
@@ -91,7 +92,7 @@ def _copy(path: Path, live_root: Path, checkpoint: Path, copied: dict,
 
 
 def _backup(connection: sqlite3.Connection, destination: Path) -> dict:
-    with sqlite3.connect(destination) as target:
+    with closing(sqlite3.connect(destination)) as target, target:
         connection.backup(target)
         if target.execute('PRAGMA quick_check').fetchone()[0] != 'ok':
             raise ValueError(f'checkpoint SQLite backup failed quick_check: {destination}')
@@ -101,7 +102,7 @@ def _backup(connection: sqlite3.Connection, destination: Path) -> dict:
 
 def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
     live_root = campaign.ctx.out.resolve()
-    with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
+    with closing(sqlite3.connect(checkpoint/'observation-index.sqlite')) as frozen_index:
         indexed = list(frozen_index.execute('SELECT path,consumed FROM files ORDER BY path'))
     source_records, wire_records, metadata_records, absent_metadata = [], [], [], []
     for name, consumed in indexed:
@@ -170,7 +171,7 @@ def _iter_runtime_observation_dependencies(live_root: Path, checkpoint: Path,
     from .runtime_identity_v5 import _locator
 
     locators = {}
-    with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
+    with closing(sqlite3.connect(checkpoint/'observation-index.sqlite')) as frozen_index:
         for (encoded,) in frozen_index.execute('SELECT data FROM spans ORDER BY digest'):
             runtime = _runtime(json.loads(encoded))
             canonical = _locator((runtime or {}).get('locator'))
@@ -437,7 +438,7 @@ def wait_for_release(campaign, folder: Path, ready: dict) -> dict:
     return release
 
 
-def checkpoint_and_wait(campaign, folder: Path) -> dict:
+def checkpoint_and_wait(campaign, folder: Path, *, ready_callback=None) -> dict:
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('live v4 training checkpoint is permitted only in GitHub Actions')
     started_ns = time.time_ns()
@@ -445,10 +446,17 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
     ready = None
     ready_mono = None
     release = None
+    callback_started_ns = callback_ended_ns = None
     try:
         ready = create_checkpoint(campaign, folder)
         ready_mono = time.monotonic_ns()
         campaign.ctx.journal.append('training_checkpoint_ready', ready)
+        if ready_callback is not None:
+            callback_started_ns = time.time_ns()
+            try:
+                ready_callback(ready)
+            finally:
+                callback_ended_ns = time.time_ns()
         release = wait_for_release(campaign, folder, ready)
         return release
     finally:
@@ -471,5 +479,10 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
             'upload_hold_wall_seconds': (ended_mono-ready_mono)/1e9 if ready_mono else None,
             'ready': ready is not None, 'upload_success': release.get('upload_success') if release else None,
             'checkpoint_path': str(Path(folder).resolve()),
+            'ready_callback_started_ns': callback_started_ns,
+            'ready_callback_ended_ns': callback_ended_ns,
+            'ready_callback_seconds': ((callback_ended_ns-callback_started_ns)/1e9
+                                       if callback_ended_ns is not None else None),
+            'ready_callback_nesting': 'read-only work inside upload hold; uploader is a separate workflow process',
             'scope': 'checkpoint creation and upload hold on same live runner and guests; toolchain setup and earlier campaign are recorded separately',
         })

@@ -114,7 +114,16 @@ class Study:
             if self.training_checkpoint is not None:
                 from .checkpoint_v4 import checkpoint_and_wait
                 self.require_completed_transports()
-                self.training_release = checkpoint_and_wait(self, self.training_checkpoint)
+                callback = None
+                if (self.toolchain_execution == 'worker' and self.collector == 'deepflow'
+                        and self.system == 'otel_demo' and self.ctx.mode == 'absent'
+                        and self.ctx.seed in (6, 8) and not self.smoke):
+                    from .remote_toolchain_v4 import prepare_parent_checkpoint
+                    plans = [p for p in self.plans if p['phase'] in ('class_train', 'calibration')]
+                    callback = lambda ready: prepare_parent_checkpoint(
+                        self, self.training_checkpoint, ready, plans)
+                self.training_release = checkpoint_and_wait(
+                    self, self.training_checkpoint, ready_callback=callback)
             self.freeze()
             states = ["11"] * 4 + ["10"] * 2 + ["01", "00"]
             self.rng.shuffle(states)

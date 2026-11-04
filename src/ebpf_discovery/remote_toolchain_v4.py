@@ -41,7 +41,7 @@ WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
 _TRAINING_ADMISSION_ALGORITHM = {
     'supplied_alias_v5.py': 'c7fb93a270928c521bd089bb27e07b66cf5102a4',
     'identity_projection_v5.py': '11817ff5a90fb378694d56961749f3714ca6b44b',
-    'checkpoint_v4.py': '50d7db510f5ee75c3485133b046df223b77baa74',
+    'checkpoint_v4.py': '6e7da532c7ac8ef92fd7a4a8d93dca27a3f41727',
     'store_v3.py': '3a823452fc74240bc14c176327a9be12159a5e1f',
     'store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
     'deepflow_handoff_v5.py': '6fb85c896dd1c9f89604da495d37b3b24191f9bb',
@@ -774,6 +774,85 @@ def _download(session, url: str, headers: dict, destination: Path, *, retry_log=
     return digest.hexdigest()
 
 
+def _parent_preflight_scope(campaign):
+    return (getattr(campaign, 'toolchain_execution', None) == 'worker'
+            and getattr(campaign, 'collector', None) == 'deepflow'
+            and campaign.system == 'otel_demo' and campaign.ctx.mode == 'absent'
+            and campaign.ctx.seed in (6, 8) and not getattr(campaign, 'smoke', True))
+
+
+def _checkpoint_stamps(checkpoint, files):
+    """Bind one campaign's closed proof to unchanged owned files during upload."""
+    checkpoint = Path(checkpoint).resolve()
+    expected = set(files) | {'ready.json', 'manifest.json'}
+    present = {p.relative_to(checkpoint).as_posix() for p in checkpoint.rglob('*') if p.is_file()}
+    if present - {'release.json'} != expected:
+        raise ValueError('preflight checkpoint file census changed')
+    result = {}
+    for relative in sorted(expected):
+        path = checkpoint / relative
+        row = path.lstat()
+        if path.is_symlink() or not stat.S_ISREG(row.st_mode) or not path.resolve().is_relative_to(checkpoint):
+            raise ValueError('preflight checkpoint is not an owned regular file')
+        result[relative] = (row.st_dev, row.st_ino, row.st_mode, row.st_size,
+                            row.st_mtime_ns, row.st_ctime_ns)
+    return result
+
+
+def prepare_parent_checkpoint(campaign, checkpoint, ready, plans):
+    """Run the original full read-only proofs while the separate uploader runs."""
+    if (os.environ.get('GITHUB_ACTIONS') != 'true' or not _parent_preflight_scope(campaign)
+            or getattr(campaign, '_remote_checkpoint_preflight', None) is not None):
+        raise ValueError('upload-hold preflight is outside its exact main scope')
+    started_ns = time.time_ns()
+    state = campaign.ctx.out / 'infrastructure' / 'remote-toolchain-v4'
+    receipt = {'schema_version': 'upload-hold-parent-preflight-v1', 'started_ns': started_ns,
+               'status': 'started', 'scope': 'full original checkpoint/source/binary/SQL proofs; read-only during upload'}
+    expected = {key: ready[key] for key in IDENTITY_KEYS}
+    try:
+        if (ready != _read(Path(checkpoint) / 'ready.json')
+                or str(ready['run_id']) != str(os.environ.get('GITHUB_RUN_ID'))
+                or ready['commit'] != os.environ.get('GITHUB_SHA')
+                or (ready['system'], ready['mode'], int(ready['seed'])) != (
+                    campaign.system, campaign.ctx.mode, campaign.ctx.seed)):
+            raise ValueError('upload-hold preflight differs from live parent identity')
+        manifest = _read(Path(checkpoint) / 'manifest.json')
+        before = _checkpoint_stamps(checkpoint, manifest.get('files') or {})
+        manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
+        pins, _, provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
+        _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+        reference = _checkpoint_index_reference(Path(checkpoint), proof)
+        if _checkpoint_stamps(checkpoint, proof['files']) != before:
+            raise ValueError('closed checkpoint changed during upload-hold preflight')
+        campaign._remote_checkpoint_preflight = {
+            'checkpoint': str(Path(checkpoint).resolve()), 'identity': expected,
+            'plans_sha256': _json_sha(plans), 'proof': proof, 'index_reference': reference,
+            'collector_provenance': provenance, 'stamps': before}
+        receipt.update(status='complete', ended_ns=time.time_ns(), identity=expected,
+                       plans_sha256=_json_sha(plans), checkpoint_proof=proof,
+                       training_index_proof_sha256=reference['logical_proof_sha256'])
+    except BaseException as error:
+        receipt.update(status='failed', ended_ns=time.time_ns(), error=repr(error))
+        raise
+    finally:
+        receipt['elapsed_seconds'] = (receipt['ended_ns']-started_ns)/1e9
+        _atomic_json(state / 'upload-hold-preflight.json', receipt)
+
+
+def _bound_parent_preflight(campaign, checkpoint, expected, plans):
+    prepared = getattr(campaign, '_remote_checkpoint_preflight', None)
+    if prepared is None:
+        return None
+    if (not _parent_preflight_scope(campaign)
+            or prepared['checkpoint'] != str(Path(checkpoint).resolve())
+            or prepared['identity'] != {key: expected[key] for key in IDENTITY_KEYS}
+            or prepared['plans_sha256'] != _json_sha(plans)
+            or _sha(Path(checkpoint) / 'manifest.json') != expected['manifest_sha256']
+            or _checkpoint_stamps(checkpoint, prepared['proof']['files']) != prepared['stamps']):
+        raise ValueError('upload-hold preflight differs from the released closed checkpoint')
+    return prepared
+
+
 def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[dict, dict]:
     if release.get("upload_success") is not True:
         raise ValueError("remote toolchain requires a successful immutable checkpoint upload")
@@ -803,9 +882,13 @@ def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[d
                     artifact_digest=artifact_digest,
                     artifact_name=f"training-v4-{campaign.system}-{campaign.ctx.mode}-{campaign.ctx.seed}-{ready['run_id']}",
                     plans_sha256=_json_sha(plans))
-    manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
-    pins, _, collector_provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
-    _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+    prepared = _bound_parent_preflight(campaign, checkpoint, expected, plans)
+    if prepared is None:
+        manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
+        pins, _, collector_provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
+        _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+    else:
+        proof, collector_provenance = prepared['proof'], prepared['collector_provenance']
     if collector_provenance is not None:
         expected['collector_provenance'] = collector_provenance
     return expected, proof
@@ -972,26 +1055,54 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(cost_path, cost)
     validation_started = time.monotonic_ns()
     expected, checkpoint_proof = _expected(campaign, Path(checkpoint), release, plans)
-    index_reference = _checkpoint_index_reference(Path(checkpoint), checkpoint_proof)
+    prepared = _bound_parent_preflight(campaign, checkpoint, expected, plans)
+    index_reference = (prepared['index_reference'] if prepared is not None else
+                       _checkpoint_index_reference(Path(checkpoint), checkpoint_proof))
     checkpoint_index_proof = index_reference["logical_proof"]
     cost["checkpoint_index_proof_reference"] = index_reference
-    # The checkpoint payload has had its last parent read. Release its verified
-    # uploaded mirror before allocating another full consistent live DB backup.
     session = requests.Session()
     headers = _headers(token)
-    cost["uploaded_checkpoint_copy_release"] = _release_uploaded_checkpoint_copy(
-        checkpoint, campaign.ctx.out, expected, checkpoint_proof,
-        session, headers, repository, state)
-    cost["checkpoint_validation_includes_checkpoint_copy_release"] = True
-    _atomic_json(cost_path, cost)
-    live_index_proof = _consistent_live_index_proof(
-        campaign.store.db, state / ".parent-index-before.sqlite",
-        reference=index_reference, receipt=state / "parent-index-before-proof-reuse.json")
-    if live_index_proof != checkpoint_index_proof:
-        raise RuntimeError("live parent training index differs from its closed checkpoint backup")
+    parent_phase = ('parent_after_dispatch_before_import' if prepared is not None
+                    else 'parent_before_dispatch')
+    live_index_proof = None
+
+    def prove_live_parent():
+        # Last parent checkpoint read is complete. Release only the verified
+        # uploaded mirror before allocating the unchanged full live DB backup.
+        phase_started = time.time_ns()
+        cost['uploaded_checkpoint_copy_release'] = _release_uploaded_checkpoint_copy(
+            checkpoint, campaign.ctx.out, expected, checkpoint_proof,
+            session, headers, repository, state)
+        result = _consistent_live_index_proof(
+            campaign.store.db, state / '.parent-index-before.sqlite',
+            reference=index_reference, receipt=state / 'parent-index-before-proof-reuse.json')
+        if result != checkpoint_index_proof:
+            raise RuntimeError('live parent training index differs from its closed checkpoint backup')
+        if prepared is not None:
+            phase_ended = time.time_ns()
+            cost['parent_after_dispatch_proof_seconds'] = (phase_ended-phase_started)/1e9
+            cost['nesting'] = ('Worker compute overlaps both parent_after_dispatch_proof_seconds '
+                               'and parent_wait_wall_seconds; upload-hold full preflight is '
+                               'recorded in training-checkpoint-cost.json and counted once')
+            _atomic_json(state / 'parent-proof-schedule.json', {
+                'schema_version': 'upload-hold-parent-proof-schedule-v1',
+                'identity': {key: expected[key] for key in IDENTITY_KEYS},
+                'worker_run_id': cost['worker_run_id'],
+                'confirmed_dispatch_ns': dispatch['dispatched_ns'],
+                'parent_proof_started_ns': phase_started, 'parent_proof_ended_ns': phase_ended,
+                'training_index_proof_sha256': _json_sha(result),
+                'upload_hold_preflight_sha256': _sha(state / 'upload-hold-preflight.json'),
+                'phase': parent_phase, 'all_checks_before_import_or_target': True})
+        return result
+
+    if prepared is None:
+        live_index_proof = prove_live_parent()
+    else:
+        cost['upload_hold_preflight_sha256'] = _sha(state / 'upload-hold-preflight.json')
+    cost['checkpoint_validation_includes_checkpoint_copy_release'] = prepared is None
     expected["training_index_proof_sha256"] = _json_sha(checkpoint_index_proof)
     _atomic_json(state / "training-index-proof.json", {
-        "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
+        "checkpoint": checkpoint_index_proof, parent_phase: live_index_proof,
         "parent_after_worker": None,
         "basis": "rowid and every table column from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
     cost["checkpoint_validation_seconds"] = (time.monotonic_ns() - validation_started) / 1e9
@@ -1054,6 +1165,14 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(state / "dispatch.json", dispatch)
     cost["worker_run_id"] = worker_run_id
     _atomic_json(cost_path, cost)
+
+    if prepared is not None:
+        live_index_proof = prove_live_parent()
+        _atomic_json(state / 'training-index-proof.json', {
+            'checkpoint': checkpoint_index_proof, parent_phase: live_index_proof,
+            'parent_after_worker': None,
+            'basis': 'original full logical proof; live consistent backup after confirmed dispatch and before import'})
+        _atomic_json(cost_path, cost)
 
     run_url = f"https://api.github.com/repos/{repository}/actions/runs/{worker_run_id}"
     polls = state / "polls.jsonl"
@@ -1145,7 +1264,7 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     if live_after != checkpoint_index_proof:
         raise RuntimeError("live parent training index changed while worker was running")
     _atomic_json(state / "training-index-proof.json", {
-        "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
+        "checkpoint": checkpoint_index_proof, parent_phase: live_index_proof,
         "parent_after_worker": live_after,
         "basis": "logical tables from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
     worker_evidence = state / "worker"
