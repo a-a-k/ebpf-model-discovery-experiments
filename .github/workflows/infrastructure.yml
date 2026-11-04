@@ -1,4 +1,4 @@
-name: Fixed original prepared raw scope export comparison
+name: Fixed original prefix frozen training admission comparison
 on:
   workflow_dispatch:
 permissions:
@@ -13,25 +13,27 @@ jobs:
       PYTHONPATH: src:.
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch only the original producer source for exact algorithm comparison
+        run: git fetch --no-tags --depth=1 origin f045cc0adec187ec00443da0bea72b4ec4d2082e
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -e . pytest opentelemetry-proto
       - name: Free only the existing unused hosted SDK directories
         run: |
-          mkdir -p work/shared-scope-host
-          df -B1 . > work/shared-scope-host/disk-before.txt
+          mkdir -p work/frozen-admission-host
+          df -B1 . > work/frozen-admission-host/disk-before.txt
           sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
-          df -B1 . > work/shared-scope-host/disk-after.txt
-      - name: Compare the new scope operator on every original prepared raw request
-        run: python scripts/validate-shared-deepflow-scope-export-v5.py
+          df -B1 . > work/frozen-admission-host/disk-after.txt
+      - name: Check original prefix construction and every complete prepared request
+        run: python scripts/validate-frozen-training-admission-reference-v5.py
       - name: Retain exact request equality and complete preparation costs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: exact-shared-scope-${{ github.run_id }}
+          name: exact-frozen-admission-${{ github.run_id }}
           path: |
-            work/shared-scope-qualification/
-            work/shared-scope-host/
+            work/frozen-admission-qualification/
+            work/frozen-admission-host/
           if-no-files-found: error
           retention-days: 90
