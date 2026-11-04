@@ -808,8 +808,9 @@ def prepare_parent_checkpoint(campaign, checkpoint, ready, plans):
     state = campaign.ctx.out / 'infrastructure' / 'remote-toolchain-v4'
     receipt = {'schema_version': 'upload-hold-parent-preflight-v1', 'started_ns': started_ns,
                'status': 'started', 'scope': 'full original checkpoint/source/binary/SQL proofs; read-only during upload'}
-    expected = {key: ready[key] for key in IDENTITY_KEYS}
+    _atomic_json(state / 'upload-hold-preflight.json', receipt)
     try:
+        expected = {key: ready[key] for key in IDENTITY_KEYS}
         if (ready != _read(Path(checkpoint) / 'ready.json')
                 or str(ready['run_id']) != str(os.environ.get('GITHUB_RUN_ID'))
                 or ready['commit'] != os.environ.get('GITHUB_SHA')
@@ -1070,30 +1071,46 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
         # Last parent checkpoint read is complete. Release only the verified
         # uploaded mirror before allocating the unchanged full live DB backup.
         phase_started = time.time_ns()
-        cost['uploaded_checkpoint_copy_release'] = _release_uploaded_checkpoint_copy(
-            checkpoint, campaign.ctx.out, expected, checkpoint_proof,
-            session, headers, repository, state)
-        result = _consistent_live_index_proof(
-            campaign.store.db, state / '.parent-index-before.sqlite',
-            reference=index_reference, receipt=state / 'parent-index-before-proof-reuse.json')
-        if result != checkpoint_index_proof:
-            raise RuntimeError('live parent training index differs from its closed checkpoint backup')
+        schedule = None
         if prepared is not None:
-            phase_ended = time.time_ns()
-            cost['parent_after_dispatch_proof_seconds'] = (phase_ended-phase_started)/1e9
-            cost['nesting'] = ('Worker compute overlaps both parent_after_dispatch_proof_seconds '
-                               'and parent_wait_wall_seconds; upload-hold full preflight is '
-                               'recorded in training-checkpoint-cost.json and counted once')
-            _atomic_json(state / 'parent-proof-schedule.json', {
+            schedule = {
                 'schema_version': 'upload-hold-parent-proof-schedule-v1',
+                'status': 'started',
                 'identity': {key: expected[key] for key in IDENTITY_KEYS},
                 'worker_run_id': cost['worker_run_id'],
                 'confirmed_dispatch_ns': dispatch['dispatched_ns'],
-                'parent_proof_started_ns': phase_started, 'parent_proof_ended_ns': phase_ended,
-                'training_index_proof_sha256': _json_sha(result),
+                'parent_proof_started_ns': phase_started,
                 'upload_hold_preflight_sha256': _sha(state / 'upload-hold-preflight.json'),
-                'phase': parent_phase, 'all_checks_before_import_or_target': True})
-        return result
+                'phase': parent_phase, 'all_checks_before_import_or_target': True}
+            _atomic_json(state / 'parent-proof-schedule.json', schedule)
+        try:
+            cost['uploaded_checkpoint_copy_release'] = _release_uploaded_checkpoint_copy(
+                checkpoint, campaign.ctx.out, expected, checkpoint_proof,
+                session, headers, repository, state)
+            # Preserve the existing release receipt even if the large backup fails.
+            _atomic_json(cost_path, cost)
+            result = _consistent_live_index_proof(
+                campaign.store.db, state / '.parent-index-before.sqlite',
+                reference=index_reference, receipt=state / 'parent-index-before-proof-reuse.json')
+            if result != checkpoint_index_proof:
+                raise RuntimeError('live parent training index differs from its closed checkpoint backup')
+            if schedule is not None:
+                schedule.update(status='complete', training_index_proof_sha256=_json_sha(result))
+            return result
+        except BaseException as error:
+            if schedule is not None:
+                schedule.update(status='failed', error=repr(error))
+            raise
+        finally:
+            if schedule is not None:
+                phase_ended = time.time_ns()
+                schedule['parent_proof_ended_ns'] = phase_ended
+                cost['parent_after_dispatch_proof_seconds'] = (phase_ended-phase_started)/1e9
+                cost['nesting'] = ('Worker compute overlaps both parent_after_dispatch_proof_seconds '
+                                   'and parent_wait_wall_seconds; upload-hold full preflight is '
+                                   'recorded in training-checkpoint-cost.json and counted once')
+                _atomic_json(state / 'parent-proof-schedule.json', schedule)
+            _atomic_json(cost_path, cost)
 
     if prepared is None:
         live_index_proof = prove_live_parent()

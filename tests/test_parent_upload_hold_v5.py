@@ -172,6 +172,8 @@ def test_actual_once_POST_precedes_live_proof_and_all_failures_block_import(tmp_
     monkeypatch.setattr(remote, '_release_uploaded_checkpoint_copy', mirror)
     def live(*_, **__):
         assert events == ['POST', 'release_verified_mirror']
+        retained_cost = json.loads((state / 'cost.json').read_text())
+        assert retained_cost['uploaded_checkpoint_copy_release']['status'] == 'released_verified_local_payload'
         events.append('full_live_proof')
         return {'spans': 'changed' if failure == 'live_SQL' else 'same'}
     monkeypatch.setattr(remote, '_consistent_live_index_proof', live)
@@ -200,8 +202,14 @@ def test_actual_once_POST_precedes_live_proof_and_all_failures_block_import(tmp_
         assert not (state / 'parent-proof-schedule.json').exists()
     elif failure is None:
         proof = json.loads((state / 'parent-proof-schedule.json').read_text())
+        assert proof['status'] == 'complete'
         assert proof['worker_run_id'] == 91
         assert proof['confirmed_dispatch_ns'] <= proof['parent_proof_started_ns'] <= proof['parent_proof_ended_ns']
         index = json.loads((state / 'training-index-proof.json').read_text())
         assert index['parent_after_dispatch_before_import'] == index['checkpoint']
         assert 'parent_before_dispatch' not in index
+    else:
+        proof = json.loads((state / 'parent-proof-schedule.json').read_text())
+        assert proof['status'] == 'failed' and 'differs from its closed' in proof['error']
+        cost = json.loads((state / 'cost.json').read_text())
+        assert cost['parent_after_dispatch_proof_seconds'] >= 0
