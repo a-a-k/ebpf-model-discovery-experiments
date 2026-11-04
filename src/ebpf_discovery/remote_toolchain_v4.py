@@ -8,6 +8,7 @@ issue application traffic, filter observations, or choose between outcomes.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import importlib
 import json
@@ -37,6 +38,20 @@ WORKFLOW = "toolchain-worker-v4.yml"
 WORKER_POLL_SECONDS = 60
 IDENTITY_KEYS = ("run_id", "commit", "system", "mode", "seed", "manifest_sha256")
 WORKER_BERING_GO_ENV = {"GOMEMLIMIT": "12GiB", "GODEBUG": "gctrace=1"}
+_TRAINING_ADMISSION_ALGORITHM = {
+    'supplied_alias_v5.py': 'c7fb93a270928c521bd089bb27e07b66cf5102a4',
+    'identity_projection_v5.py': '11817ff5a90fb378694d56961749f3714ca6b44b',
+    'checkpoint_v4.py': '6e7da532c7ac8ef92fd7a4a8d93dca27a3f41727',
+    'store_v3.py': '3a823452fc74240bc14c176327a9be12159a5e1f',
+    'store_v5.py': '6569299a8a0a31f2ded3781433045ba303ae097a',
+    'deepflow_handoff_v5.py': '6fb85c896dd1c9f89604da495d37b3b24191f9bb',
+    'deepflow_codec_v5.py': '072cc890b6e0b60cc736738e962fab42295c39cc',
+}
+_TRAINING_ADMISSION_INPUTS = (
+    'observation-index.sqlite',
+    'runtime-identity-v5/supplied-service-aliases-training.json',
+    'runtime-identity-v5/supplied-service-alias-admission-training.json',
+)
 # Public compatibility seam used by existing v4 worker tests and callers.
 Toolchain = ToolchainV4
 
@@ -84,14 +99,26 @@ def _manifest(root: Path) -> dict[str, dict]:
     return result
 
 
-def _safe_extract(archive: Path, destination: Path) -> None:
+def _safe_extract(archive: Path, destination: Path, *, closed_discovery_links=False):
     """Extract an Actions ZIP without accepting links, duplicates or traversal."""
     destination = Path(destination).resolve()
     if destination.exists() and any(destination.iterdir()):
         raise ValueError("archive destination must be empty")
     destination.mkdir(parents=True, exist_ok=True)
     seen = set()
+    linked = {}
+    result = {"schema_version": "closed-discovery-import-hardlinks-v1",
+              "immutable_subtree": "toolchain/discovery/", "linked_files": 0,
+              "duplicate_bytes_not_allocated": 0, "discovery_members_verified": 0,
+              "discovery_bytes_verified": 0, "all_original_members_read_to_EOF": False}
     with zipfile.ZipFile(archive) as bundle:
+        hints = {}
+        if closed_discovery_links:
+            manifest_body = bundle.read("output-manifest.json")
+            hints = json.loads(manifest_body)["toolchain_files"]
+            if not isinstance(hints, dict):
+                raise ValueError("closed worker output file manifest is invalid")
+            result["output_manifest_sha256"] = hashlib.sha256(manifest_body).hexdigest()
         for member in bundle.infolist():
             name = member.filename.replace("\\", "/")
             parts = Path(name).parts
@@ -107,8 +134,44 @@ def _safe_extract(archive: Path, destination: Path) -> None:
                 target.mkdir(parents=True, exist_ok=True)
                 continue
             target.parent.mkdir(parents=True, exist_ok=True)
+            record = hints.get(name.removeprefix("toolchain/")) if name.startswith("toolchain/discovery/") else None
+            if closed_discovery_links and record is not None:
+                size, expected_sha = record.get("bytes"), record.get("sha256")
+                if (type(size) is not int or size < 0 or not isinstance(expected_sha, str)
+                        or re.fullmatch(r"[0-9a-f]{64}", expected_sha) is None):
+                    raise ValueError("closed discovery file hint is invalid")
+                key = (size, expected_sha)
+                first = linked.get(key)
+                actual, received = hashlib.sha256(), 0
+                output = None if first is not None else target.open("xb")
+                try:
+                    with bundle.open(member) as source:
+                        while chunk := source.read(1024 * 1024):
+                            actual.update(chunk)
+                            received += len(chunk)
+                            if output is not None:
+                                output.write(chunk)
+                finally:
+                    if output is not None:
+                        output.close()
+                # Even aliases consume and CRC-check their entire original ZIP
+                # member; a manifest hint never substitutes for reading bytes.
+                if received != size or actual.hexdigest() != expected_sha:
+                    raise ValueError("closed discovery member differs from its file manifest")
+                if first is not None:
+                    os.link(first, target, follow_symlinks=False)
+                    result["linked_files"] += 1
+                    result["duplicate_bytes_not_allocated"] += received
+                else:
+                    linked[key] = target
+                result["discovery_members_verified"] += 1
+                result["discovery_bytes_verified"] += received
+                continue
             with bundle.open(member) as source, target.open("xb") as output:
                 shutil.copyfileobj(source, output, length=1024 * 1024)
+    if closed_discovery_links:
+        result["all_original_members_read_to_EOF"] = True
+        return result
 
 
 def _read(path: Path):
@@ -149,21 +212,122 @@ def _index_table_proof(path: Path) -> dict:
         db.close()
 
 
-def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path) -> dict:
+def _complete_index_input(path: Path) -> dict:
+    """Hash a closed, regular SQLite backup, including every byte and WAL content."""
+    import stat
+    before = path.lstat()
+    if not stat.S_ISREG(before.st_mode) or path.is_symlink():
+        raise ValueError("training index proof input is not a regular closed backup")
+    digest, size = hashlib.sha256(), 0
+    with path.open('rb') as stream:
+        opened = os.fstat(stream.fileno())
+        if (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):
+            raise ValueError("training index proof input was replaced before hashing")
+        while chunk := stream.read(1024 * 1024):
+            digest.update(chunk)
+            size += len(chunk)
+        after = os.fstat(stream.fileno())
+    current = path.lstat()
+    identity = lambda row: (row.st_dev, row.st_ino, row.st_mode, row.st_size,
+                            row.st_mtime_ns, row.st_ctime_ns)
+    # Windows path stat and descriptor stat expose different ctime semantics;
+    # compare each stable view to itself, and bind descriptor to path by inode.
+    if (size != before.st_size or identity(opened) != identity(after)
+            or identity(before) != identity(current)
+            or identity(before)[:-1] != identity(opened)[:-1]):
+        raise ValueError("training index proof input changed during complete hashing")
+    return {'bytes': size, 'sha256': digest.hexdigest()}
+
+
+def _checkpoint_index_reference(checkpoint: Path, verified: dict) -> dict:
+    """Bind one original logical proof to its exact manifest-verified input bytes."""
+    started = time.monotonic_ns()
+    manifest = _read(checkpoint / 'manifest.json')
+    expected = (verified.get('files') or {}).get('observation-index.sqlite')
+    record = (manifest.get('files') or {}).get('observation-index.sqlite') or {}
+    if (verified.get('manifest_sha256') != _sha(checkpoint / 'manifest.json')
+            or not expected or expected != {k: record.get(k) for k in ('bytes', 'sha256')}):
+        raise ValueError('original logical proof lacks its verified checkpoint manifest/input')
+    path = checkpoint / 'observation-index.sqlite'
+    before = path.lstat()
+    import stat
+    if not stat.S_ISREG(before.st_mode) or path.is_symlink():
+        raise ValueError('original logical proof input is not a regular closed backup')
+    logical_started = time.monotonic_ns()
+    logical = _index_table_proof(path)
+    logical_seconds = (time.monotonic_ns() - logical_started) / 1e9
+    actual = _complete_index_input(path)
+    after = path.lstat()
+    if (actual != expected or (before.st_dev, before.st_ino, before.st_size,
+            before.st_mtime_ns, before.st_ctime_ns) != (after.st_dev, after.st_ino,
+            after.st_size, after.st_mtime_ns, after.st_ctime_ns)):
+        raise ValueError('original logical proof input differs from its verified checkpoint')
+    return {'schema_version': 'exact-checkpoint-index-proof-reference-v1',
+        'checkpoint_identity': manifest['identity'],
+        'manifest_sha256': verified['manifest_sha256'], 'input': actual,
+        'logical_proof': logical, 'logical_proof_sha256': _json_sha(logical),
+        'original_full_logical_proof_executed': True,
+        'original_logical_proof_seconds': logical_seconds,
+        'elapsed_seconds': (time.monotonic_ns() - started) / 1e9}
+
+
+def _consistent_live_index_proof(connection: sqlite3.Connection, temporary: Path,
+                                 *, reference=None, receipt=None) -> dict:
     temporary = Path(temporary)
     temporary.parent.mkdir(parents=True, exist_ok=True)
-    if temporary.exists():
+    if temporary.exists() or temporary.is_symlink():
         raise ValueError("consistent parent-index backup destination already exists")
+    started = time.monotonic_ns()
     target = sqlite3.connect(temporary)
     try:
         connection.backup(target)
         target.commit()
     finally:
         target.close()
+    result = {'schema_version': 'consistent-index-exact-input-proof-v1',
+        'backup_path': str(temporary), 'status': 'started',
+        'backup_seconds': (time.monotonic_ns() - started) / 1e9,
+        'whole_consistent_backup_bytes_verified': False,
+        'logical_proof_reused': False, 'full_fallback_executed': False}
     try:
-        return _index_table_proof(temporary)
+        if reference is None:
+            return _index_table_proof(temporary)
+        if (reference.get('schema_version') != 'exact-checkpoint-index-proof-reference-v1'
+                or reference.get('original_full_logical_proof_executed') is not True
+                or not reference.get('checkpoint_identity')
+                or len(str(reference.get('manifest_sha256'))) != 64
+                or reference.get('logical_proof_sha256') != _json_sha(reference.get('logical_proof'))):
+            raise ValueError('consistent backup proof lacks its original input-bound logical proof')
+        hashing_started = time.monotonic_ns()
+        actual = _complete_index_input(temporary)
+        result.update(backup_input=actual, checkpoint_input=reference['input'],
+            checkpoint_identity=reference['checkpoint_identity'],
+            manifest_sha256=reference['manifest_sha256'],
+            original_logical_proof_sha256=reference['logical_proof_sha256'],
+            complete_backup_hash_seconds=(time.monotonic_ns()-hashing_started)/1e9,
+            whole_consistent_backup_bytes_verified=True)
+        if actual == reference['input']:
+            logical = copy.deepcopy(reference['logical_proof'])
+            result.update(logical_proof_reused=True,
+                proof_basis='complete immutable input byte equality; original logical proof reused')
+        else:
+            fallback_started = time.monotonic_ns()
+            logical = _index_table_proof(temporary)
+            result.update(full_fallback_executed=True,
+                full_fallback_seconds=(time.monotonic_ns()-fallback_started)/1e9,
+                proof_basis='original complete rowid/all-column/schema/quickcheck proof executed')
+        result.update(status='complete', resulting_logical_proof_sha256=_json_sha(logical))
+        return logical
+    except BaseException as error:
+        result.update(status='failed', error=repr(error))
+        raise
     finally:
-        temporary.unlink(missing_ok=True)
+        result['elapsed_seconds'] = (time.monotonic_ns() - started) / 1e9
+        try:
+            if receipt is not None:
+                _atomic_json(receipt, result)
+        finally:
+            temporary.unlink(missing_ok=True)
 
 
 def _readonly_store(path: Path, store_type=ObservationStore, *, immutable_prefix=False) -> ObservationStore:
@@ -295,6 +459,87 @@ def _make_binaries_executable(proofs: dict) -> None:
         path.chmod(path.stat().st_mode | 0o111)
 
 
+def _frozen_training_admission_reference(root, manifest, verified, index_proof,
+                                       expected, collector):
+    """Reference one actually computed result after the worker's existing gates."""
+    if (collector or {}).get('collector') != 'deepflow' or (
+            expected['system'], expected['mode']) != ('otel_demo', 'absent'):
+        return None
+    root = Path(root).resolve()
+    if (os.environ.get('GITHUB_ACTIONS') != 'true'
+            or _sha(root / 'manifest.json') != expected['manifest_sha256']
+            or verified['manifest_sha256'] != expected['manifest_sha256']
+            or _read(root / 'manifest.json') != manifest
+            or _json_sha(index_proof) != expected['training_index_proof_sha256']
+            or any(str(manifest['identity'][key]) != str(expected[key])
+                   for key in IDENTITY_KEYS[:-1])):
+        raise ValueError('frozen admission reference lacks exact worker checkpoint proof')
+    claims = {name: {'bytes': row['bytes'], 'sha256': row['sha256']}
+              for name, row in manifest['files'].items()}
+    if claims != verified['files']:
+        raise ValueError('frozen admission reference lacks the complete verified census')
+    repository = Path(__file__).resolve().parents[2]
+    for name, wanted in _TRAINING_ADMISSION_ALGORITHM.items():
+        path = 'src/ebpf_discovery/' + name
+        recorded = subprocess.check_output(
+            ['git', 'rev-parse', expected['commit'] + ':' + path], cwd=repository, text=True).strip()
+        actual = subprocess.check_output(
+            ['git', 'hash-object', '--path=' + path, path], cwd=repository, text=True).strip()
+        if recorded != wanted or actual != wanted:
+            raise ValueError('frozen admission algorithm differs from its original producer')
+    return {'schema_version': 'exact-frozen-training-admission-reference-v1',
+            'campaign_root': str(root), 'checkpoint_identity': manifest['identity'],
+            'manifest_sha256': expected['manifest_sha256'],
+            'complete_checkpoint_census_sha256': _json_sha(claims),
+            'training_index_proof': index_proof,
+            'training_index_proof_sha256': _json_sha(index_proof),
+            'input_claims': {name: claims[name] for name in _TRAINING_ADMISSION_INPUTS},
+            'algorithm_files': dict(_TRAINING_ADMISSION_ALGORITHM),
+            'same_trace_parents': True, 'expected_source_prefix': 'ebpf-deepflow',
+            'original_computation': 'training refresh admit_observed before checkpoint creation',
+            'current_semantic_admission_recomputed': False,
+            'original_training_admission_cost_counted_once': True}
+
+
+def _verify_frozen_training_admission_reference(reference, root, store, admission):
+    """Check the narrow reference; the ordinary alias loaders still run first."""
+    root = Path(root).resolve()
+    if (os.environ.get('GITHUB_ACTIONS') != 'true'
+            or reference.get('schema_version') != 'exact-frozen-training-admission-reference-v1'
+            or reference.get('campaign_root') != str(root)
+            or not getattr(store, '_immutable_path_prefix', False)
+            or getattr(store, 'same_trace_parents', None) is not True
+            or Path(store.path).resolve() != root / 'observation-index.sqlite'
+            or store.db.execute('PRAGMA query_only').fetchone()[0] != 1
+            or reference.get('same_trace_parents') is not True
+            or reference.get('expected_source_prefix') != 'ebpf-deepflow'
+            or reference.get('algorithm_files') != _TRAINING_ADMISSION_ALGORITHM
+            or set(reference.get('input_claims', {})) != set(_TRAINING_ADMISSION_INPUTS)):
+        raise ValueError('frozen admission reference differs from immutable worker profile')
+    manifest = _read(root / 'manifest.json')
+    identity = manifest['identity']
+    claims = {name: {'bytes': row['bytes'], 'sha256': row['sha256']}
+              for name, row in manifest['files'].items()}
+    if (reference['manifest_sha256'] != _sha(root / 'manifest.json')
+            or reference['checkpoint_identity'] != identity
+            or (identity['system'], identity['mode']) != ('otel_demo', 'absent')
+            or _json_sha(claims) != reference['complete_checkpoint_census_sha256']
+            or _json_sha(reference['training_index_proof']) != reference['training_index_proof_sha256']
+            or not re.fullmatch(r'[0-9a-f]{64}', reference['training_index_proof_sha256'])):
+        raise ValueError('frozen admission manifest or SQL identity changed')
+    for name, proof in reference['input_claims'].items():
+        path = root / name
+        if (name not in claims or proof != claims[name] or path.is_symlink()
+                or path.stat().st_size != proof['bytes'] or _sha(path) != proof['sha256']):
+            raise ValueError('frozen admission input claim changed')
+    if (admission.get('receiver_segments_reverified') is not True
+            or admission.get('same_table_all_sources_and_direct_baseline') is not True
+            or admission.get('physical_identity_inferred') is not False):
+        raise ValueError('frozen admission lacks its actual original semantic verification')
+    return dict(reference, current_checkpoint_SQL_and_admission_bytes_verified=True,
+                full_projection_verification_still_required=True)
+
+
 def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Path,
                    expected: dict) -> dict:
     """Restore one checkpoint at its original absolute root and execute tools."""
@@ -348,7 +593,12 @@ def execute_worker(checkpoint_zip: Path, campaign_root: Path, artifact_root: Pat
                 # This setting affects every Bering branch, not the Python
                 # parent, Procrustes or Sheaft. Retain it even if tools fail.
                 _atomic_json(artifact_root / "bering-go-environment.json", go_environment)
-                forecasts = toolchain_type(ctx, expected["system"], store, declaration).forecast(plans)
+                reference = _frozen_training_admission_reference(
+                    campaign_root, manifest, input_proof, index_proof, expected, collector_provenance)
+                options = ({'frozen_training_admission_reference': reference}
+                           if reference is not None else {})
+                forecasts = toolchain_type(ctx, expected["system"], store, declaration,
+                                           **options).forecast(plans)
         finally:
             store.close()
             if old_bin is None:
@@ -524,6 +774,87 @@ def _download(session, url: str, headers: dict, destination: Path, *, retry_log=
     return digest.hexdigest()
 
 
+def _parent_preflight_scope(campaign):
+    return (getattr(campaign, 'toolchain_execution', None) == 'worker'
+            and getattr(campaign, 'collector', None) == 'deepflow'
+            and campaign.system == 'otel_demo' and campaign.ctx.mode == 'absent'
+            and campaign.ctx.seed in (6, 8) and not getattr(campaign, 'smoke', True))
+
+
+def _checkpoint_stamps(checkpoint, files):
+    """Bind one campaign's closed proof to unchanged owned files during upload."""
+    checkpoint = Path(checkpoint).resolve()
+    expected = set(files) | {'ready.json', 'manifest.json'}
+    present = {p.relative_to(checkpoint).as_posix() for p in checkpoint.rglob('*') if p.is_file()}
+    if present - {'release.json'} != expected:
+        raise ValueError('preflight checkpoint file census changed')
+    result = {}
+    for relative in sorted(expected):
+        path = checkpoint / relative
+        row = path.lstat()
+        if path.is_symlink() or not stat.S_ISREG(row.st_mode) or not path.resolve().is_relative_to(checkpoint):
+            raise ValueError('preflight checkpoint is not an owned regular file')
+        result[relative] = (row.st_dev, row.st_ino, row.st_mode, row.st_size,
+                            row.st_mtime_ns, row.st_ctime_ns)
+    return result
+
+
+def prepare_parent_checkpoint(campaign, checkpoint, ready, plans):
+    """Run the original full read-only proofs while the separate uploader runs."""
+    if (os.environ.get('GITHUB_ACTIONS') != 'true' or not _parent_preflight_scope(campaign)
+            or getattr(campaign, '_remote_checkpoint_preflight', None) is not None):
+        raise ValueError('upload-hold preflight is outside its exact main scope')
+    started_ns = time.time_ns()
+    state = campaign.ctx.out / 'infrastructure' / 'remote-toolchain-v4'
+    receipt = {'schema_version': 'upload-hold-parent-preflight-v1', 'started_ns': started_ns,
+               'status': 'started', 'scope': 'full original checkpoint/source/binary/SQL proofs; read-only during upload'}
+    _atomic_json(state / 'upload-hold-preflight.json', receipt)
+    try:
+        expected = {key: ready[key] for key in IDENTITY_KEYS}
+        if (ready != _read(Path(checkpoint) / 'ready.json')
+                or str(ready['run_id']) != str(os.environ.get('GITHUB_RUN_ID'))
+                or ready['commit'] != os.environ.get('GITHUB_SHA')
+                or (ready['system'], ready['mode'], int(ready['seed'])) != (
+                    campaign.system, campaign.ctx.mode, campaign.ctx.seed)):
+            raise ValueError('upload-hold preflight differs from live parent identity')
+        manifest = _read(Path(checkpoint) / 'manifest.json')
+        before = _checkpoint_stamps(checkpoint, manifest.get('files') or {})
+        manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
+        pins, _, provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
+        _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+        reference = _checkpoint_index_reference(Path(checkpoint), proof)
+        if _checkpoint_stamps(checkpoint, proof['files']) != before:
+            raise ValueError('closed checkpoint changed during upload-hold preflight')
+        campaign._remote_checkpoint_preflight = {
+            'checkpoint': str(Path(checkpoint).resolve()), 'identity': expected,
+            'plans_sha256': _json_sha(plans), 'proof': proof, 'index_reference': reference,
+            'collector_provenance': provenance, 'stamps': before}
+        receipt.update(status='complete', ended_ns=time.time_ns(), identity=expected,
+                       plans_sha256=_json_sha(plans), checkpoint_proof_sha256=_json_sha(proof),
+                       verified_files=len(proof['files']), complete_original_checkpoint_proof_executed=True,
+                       training_index_proof_sha256=reference['logical_proof_sha256'])
+    except BaseException as error:
+        receipt.update(status='failed', ended_ns=time.time_ns(), error=repr(error))
+        raise
+    finally:
+        receipt['elapsed_seconds'] = (receipt['ended_ns']-started_ns)/1e9
+        _atomic_json(state / 'upload-hold-preflight.json', receipt)
+
+
+def _bound_parent_preflight(campaign, checkpoint, expected, plans):
+    prepared = getattr(campaign, '_remote_checkpoint_preflight', None)
+    if prepared is None:
+        return None
+    if (not _parent_preflight_scope(campaign)
+            or prepared['checkpoint'] != str(Path(checkpoint).resolve())
+            or prepared['identity'] != {key: expected[key] for key in IDENTITY_KEYS}
+            or prepared['plans_sha256'] != _json_sha(plans)
+            or _sha(Path(checkpoint) / 'manifest.json') != expected['manifest_sha256']
+            or _checkpoint_stamps(checkpoint, prepared['proof']['files']) != prepared['stamps']):
+        raise ValueError('upload-hold preflight differs from the released closed checkpoint')
+    return prepared
+
+
 def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[dict, dict]:
     if release.get("upload_success") is not True:
         raise ValueError("remote toolchain requires a successful immutable checkpoint upload")
@@ -553,9 +884,13 @@ def _expected(campaign, checkpoint: Path, release: dict, plans: list) -> tuple[d
                     artifact_digest=artifact_digest,
                     artifact_name=f"training-v4-{campaign.system}-{campaign.ctx.mode}-{campaign.ctx.seed}-{ready['run_id']}",
                     plans_sha256=_json_sha(plans))
-    manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
-    pins, _, collector_provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
-    _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+    prepared = _bound_parent_preflight(campaign, checkpoint, expected, plans)
+    if prepared is None:
+        manifest, proof = _validate_checkpoint(Path(checkpoint), expected)
+        pins, _, collector_provenance = _checkpoint_toolchain(Path(checkpoint), manifest)
+        _verify_binaries(Path(checkpoint), manifest, runtime_root=campaign.ctx.out, pins=pins)
+    else:
+        proof, collector_provenance = prepared['proof'], prepared['collector_provenance']
     if collector_provenance is not None:
         expected['collector_provenance'] = collector_provenance
     return expected, proof
@@ -722,23 +1057,70 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     _atomic_json(cost_path, cost)
     validation_started = time.monotonic_ns()
     expected, checkpoint_proof = _expected(campaign, Path(checkpoint), release, plans)
-    checkpoint_index_proof = _index_table_proof(Path(checkpoint) / "observation-index.sqlite")
-    # The checkpoint payload has had its last parent read. Release its verified
-    # uploaded mirror before allocating another full consistent live DB backup.
+    prepared = _bound_parent_preflight(campaign, checkpoint, expected, plans)
+    index_reference = (prepared['index_reference'] if prepared is not None else
+                       _checkpoint_index_reference(Path(checkpoint), checkpoint_proof))
+    checkpoint_index_proof = index_reference["logical_proof"]
+    cost["checkpoint_index_proof_reference"] = index_reference
     session = requests.Session()
     headers = _headers(token)
-    cost["uploaded_checkpoint_copy_release"] = _release_uploaded_checkpoint_copy(
-        checkpoint, campaign.ctx.out, expected, checkpoint_proof,
-        session, headers, repository, state)
-    cost["checkpoint_validation_includes_checkpoint_copy_release"] = True
-    _atomic_json(cost_path, cost)
-    live_index_proof = _consistent_live_index_proof(
-        campaign.store.db, state / ".parent-index-before.sqlite")
-    if live_index_proof != checkpoint_index_proof:
-        raise RuntimeError("live parent training index differs from its closed checkpoint backup")
+    parent_phase = ('parent_after_dispatch_before_import' if prepared is not None
+                    else 'parent_before_dispatch')
+    live_index_proof = None
+
+    def prove_live_parent():
+        # Last parent checkpoint read is complete. Release only the verified
+        # uploaded mirror before allocating the unchanged full live DB backup.
+        phase_started = time.time_ns()
+        schedule = None
+        if prepared is not None:
+            schedule = {
+                'schema_version': 'upload-hold-parent-proof-schedule-v1',
+                'status': 'started',
+                'identity': {key: expected[key] for key in IDENTITY_KEYS},
+                'worker_run_id': cost['worker_run_id'],
+                'confirmed_dispatch_ns': dispatch['dispatched_ns'],
+                'parent_proof_started_ns': phase_started,
+                'upload_hold_preflight_sha256': _sha(state / 'upload-hold-preflight.json'),
+                'phase': parent_phase, 'all_checks_before_import_or_target': True}
+            _atomic_json(state / 'parent-proof-schedule.json', schedule)
+        try:
+            cost['uploaded_checkpoint_copy_release'] = _release_uploaded_checkpoint_copy(
+                checkpoint, campaign.ctx.out, expected, checkpoint_proof,
+                session, headers, repository, state)
+            # Preserve the existing release receipt even if the large backup fails.
+            _atomic_json(cost_path, cost)
+            result = _consistent_live_index_proof(
+                campaign.store.db, state / '.parent-index-before.sqlite',
+                reference=index_reference, receipt=state / 'parent-index-before-proof-reuse.json')
+            if result != checkpoint_index_proof:
+                raise RuntimeError('live parent training index differs from its closed checkpoint backup')
+            if schedule is not None:
+                schedule.update(status='complete', training_index_proof_sha256=_json_sha(result))
+            return result
+        except BaseException as error:
+            if schedule is not None:
+                schedule.update(status='failed', error=repr(error))
+            raise
+        finally:
+            if schedule is not None:
+                phase_ended = time.time_ns()
+                schedule['parent_proof_ended_ns'] = phase_ended
+                cost['parent_after_dispatch_proof_seconds'] = (phase_ended-phase_started)/1e9
+                cost['nesting'] = ('Worker compute overlaps both parent_after_dispatch_proof_seconds '
+                                   'and parent_wait_wall_seconds; upload-hold full preflight is '
+                                   'recorded in training-checkpoint-cost.json and counted once')
+                _atomic_json(state / 'parent-proof-schedule.json', schedule)
+            _atomic_json(cost_path, cost)
+
+    if prepared is None:
+        live_index_proof = prove_live_parent()
+    else:
+        cost['upload_hold_preflight_sha256'] = _sha(state / 'upload-hold-preflight.json')
+    cost['checkpoint_validation_includes_checkpoint_copy_release'] = prepared is None
     expected["training_index_proof_sha256"] = _json_sha(checkpoint_index_proof)
     _atomic_json(state / "training-index-proof.json", {
-        "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
+        "checkpoint": checkpoint_index_proof, parent_phase: live_index_proof,
         "parent_after_worker": None,
         "basis": "rowid and every table column from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
     cost["checkpoint_validation_seconds"] = (time.monotonic_ns() - validation_started) / 1e9
@@ -802,6 +1184,14 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     cost["worker_run_id"] = worker_run_id
     _atomic_json(cost_path, cost)
 
+    if prepared is not None:
+        live_index_proof = prove_live_parent()
+        _atomic_json(state / 'training-index-proof.json', {
+            'checkpoint': checkpoint_index_proof, parent_phase: live_index_proof,
+            'parent_after_worker': None,
+            'basis': 'original full logical proof; live consistent backup after confirmed dispatch and before import'})
+        _atomic_json(cost_path, cost)
+
     run_url = f"https://api.github.com/repos/{repository}/actions/runs/{worker_run_id}"
     polls = state / "polls.jsonl"
     retries = state / "http-retries.jsonl"
@@ -850,7 +1240,16 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     if advertised != "sha256:" + archive_sha:
         raise RuntimeError("downloaded worker artifact differs from Actions digest")
     zip_stage = state / "staged-worker-output"
-    _safe_extract(archive, zip_stage)
+    closed_discovery_links = (campaign.system == "otel_demo"
+                              and getattr(campaign, "collector", None) == "deepflow")
+    extraction = _safe_extract(archive, zip_stage,
+                               closed_discovery_links=closed_discovery_links)
+    if extraction is not None:
+        _atomic_json(state / "closed-discovery-import-hardlinks.json", {
+            **extraction, "identity": {key: expected.get(key) for key in IDENTITY_KEYS},
+            "worker_run_id": worker_run_id, "worker_artifact_id": artifact["id"],
+            "worker_artifact_digest": advertised, "archive_sha256": archive_sha,
+            "scope": "Only closed discovery files share verified backing storage; every logical path and all existing verification/import/freeze checks remain."})
     zip_extract_ended = time.monotonic_ns()
     cost["output_zip_extract_seconds"] = (zip_extract_ended - download_ended) / 1e9
     _atomic_json(cost_path, cost)
@@ -878,11 +1277,12 @@ def forecast_on_worker(campaign, checkpoint: Path, release: dict, plans: list) -
     if destination.exists():
         raise ValueError("toolchain destination appeared before atomic import")
     live_after = _consistent_live_index_proof(
-        campaign.store.db, state / ".parent-index-after.sqlite")
+        campaign.store.db, state / ".parent-index-after.sqlite",
+        reference=index_reference, receipt=state / "parent-index-after-proof-reuse.json")
     if live_after != checkpoint_index_proof:
         raise RuntimeError("live parent training index changed while worker was running")
     _atomic_json(state / "training-index-proof.json", {
-        "checkpoint": checkpoint_index_proof, "parent_before_dispatch": live_index_proof,
+        "checkpoint": checkpoint_index_proof, parent_phase: live_index_proof,
         "parent_after_worker": live_after,
         "basis": "logical tables from consistent SQLite backup; mutable DB/WAL bytes and append-only collector tails excluded"})
     worker_evidence = state / "worker"

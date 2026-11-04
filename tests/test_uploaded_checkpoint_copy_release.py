@@ -153,7 +153,8 @@ def test_parent_releases_verified_copy_before_its_single_worker_dispatch(copied_
         monkeypatch.setenv(key, value)
     monkeypatch.setattr(remote, "_expected", lambda *_: (dict(expected), proof))
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"same": True})
-    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"same": True})
+    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_, **__: {"same": True})
+    monkeypatch.setattr(remote, "_checkpoint_index_reference", lambda *_: {"logical_proof": {"same": True}})
     monkeypatch.setattr(remote.requests, "Session", lambda: session)
     with pytest.raises(RuntimeError, match="ambiguous"):
         remote.forecast_on_worker(Campaign(), cp, {}, [])

@@ -276,3 +276,87 @@ def test_actions_qualification_is_no_vm_and_uses_exact_v5_build_path() -> None:
     assert "vms.sh" not in workflow and "campaign_v5" not in workflow
     assert "sheaft_executed\": False" in script
     assert "refit_rescore_or_external_outcomes_used\": False" in script
+
+
+def _prepared_scope_source(tmp_path):
+    wrapper, _, accounting = _source(tmp_path/'source')
+    inputs = tmp_path/'inputs'; inputs.mkdir()
+    resolver = ProjectionResolver(inputs, inputs/'runtime-identity-values.jsonl')
+    for i, row in enumerate(accounting):
+        key = tuple(row[name] for name in ('source_file','retained_file','offset','length','sha256'))
+        resolver.add(key, {'service': 'database-β' if i else 'database',
+                           'resolution': {'status':'resolved','number':i,'truth':True}})
+    resolver.finalize()
+    store = Store(wrapper)
+    folder = inputs/'ebpf'/'raw'; folder.mkdir(parents=True)
+    manifest = export_selection(store, {'ebpf':None}, folder/'exports', service_projections=resolver)
+    path = folder/'observations.json'; path.write_text(json.dumps(manifest), encoding='utf-8')
+    return store, resolver, path, hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _without_only_codec_times(line):
+    row = json.loads(line)
+    cost = row['derived_otlp_proof']['codec_accounting']['index_preparation_cost']
+    assert type(cost['started_ns']) is type(cost['ended_ns']) is int
+    del cost['started_ns'], cost['ended_ns']
+    return json.dumps(row, sort_keys=True, separators=(',',':')).encode()
+
+
+def test_scope_composition_matches_original_full_export_without_second_codec_walk(tmp_path, monkeypatch):
+    from ebpf_discovery.raw_v4 import _scope_validated_deepflow_export
+    store, resolver, path, expected = _prepared_scope_source(tmp_path)
+    out = path.parent.parent/'network_scope'/'exports'
+    try:
+        old = export_selection(store, {'ebpf':None}, out, 'same-network', service_projections=resolver)
+        prior = old['stream_exports'][0]
+        old_index = Path(prior['request_index']['path']).read_bytes()
+        old_wire = [Path(c['path']).read_bytes() for c in prior['shards']]
+        monkeypatch.setattr(handoff.DeepFlowDerivedValidator, 'validate',
+                            lambda *args: pytest.fail('duplicated source codec validation'))
+        new = _scope_validated_deepflow_export(path, expected, out, 'same-network', resolver)
+        current = new['stream_exports'][0]
+        assert old_wire == [Path(c['path']).read_bytes() for c in current['shards']]
+        assert _without_only_codec_times(old_index) == _without_only_codec_times(
+            Path(current['request_index']['path']).read_bytes())
+        assert prior['shards'] == current['shards']
+        assert prior['runtime_identity_values'] == current['runtime_identity_values']
+        receipt = json.loads((out.parent/'network-scope-derivation.json').read_text())
+        assert receipt['second_source_codec_traversal_executed'] is False
+        assert receipt['original_source_cost_counted_once'] is True
+    finally:
+        resolver.close(); store.db.close()
+
+
+@pytest.mark.parametrize('changed', ['manifest','index','shard','values','foreign_folder'])
+def test_scope_composition_rejects_changed_or_foreign_prepared_input(tmp_path, changed):
+    from ebpf_discovery.raw_v4 import _scope_validated_deepflow_export
+    store, resolver, path, expected = _prepared_scope_source(tmp_path)
+    out = path.parent.parent/'network_scope'/'exports'
+    try:
+        raw = json.loads(path.read_text())['stream_exports'][0]
+        target = {'manifest': path, 'index':Path(raw['request_index']['path']),
+                  'shard':Path(raw['shards'][0]['path']),
+                  'values':Path(raw['runtime_identity_values']['path'])}.get(changed)
+        if target: target.write_bytes(target.read_bytes()+b' ')
+        if changed == 'foreign_folder': out = tmp_path/'foreign'/'network_scope'/'exports'
+        with pytest.raises(ValueError):
+            _scope_validated_deepflow_export(path, expected, out, 'same-network', resolver)
+    finally:
+        resolver.close(); store.db.close()
+
+
+@pytest.mark.parametrize('extra', [None, True, 1, 1.0, -0.0, 2**60, 'β\u2028漢',
+                                   [None,1,True], {'x':{'y':False}}])
+def test_scope_append_preserves_original_json_roundtrip_and_existing_attribute_order(extra):
+    from copy import deepcopy
+    from ebpf_discovery.raw_v4 import _filter_json, _add_network_scope_json
+    payload = {'metadata':extra, 'resourceSpans':[{'resource':{'attributes':[
+        {'key':'bering.network.scope','value':{'stringValue':'already-present'}}]},
+        'scopeSpans':[{'scope':{'metadata':extra},'spans':[{'name':'request','attributes':[],
+            'extra':extra}]}]}]}
+    old, *_ = _filter_json(payload, None, 'hex', 'same-network')
+    raw, *_ = _filter_json(payload, None, 'hex', None)
+    copied = json.loads((json.dumps(raw,separators=(',',':'))+'\n').encode())
+    _add_network_scope_json(copied, 'same-network')
+    assert json.dumps(old,separators=(',',':')) == json.dumps(copied,separators=(',',':'))
+    assert len(copied['resourceSpans'][0]['resource']['attributes']) == 2

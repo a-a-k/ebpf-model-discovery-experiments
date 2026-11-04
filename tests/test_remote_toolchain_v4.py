@@ -248,7 +248,8 @@ def test_dispatch_transport_ambiguity_is_persisted_without_retry(tmp_path, monke
     monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "3")
     monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
-    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
+    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_, **__: {"spans": "same"})
+    monkeypatch.setattr(remote, "_checkpoint_index_reference", lambda *_: {"logical_proof": {"spans": "same"}})
     session = AmbiguousSession()
     monkeypatch.setattr(remote.requests, "Session", lambda: session)
     with pytest.raises(RuntimeError, match="ambiguous"):
@@ -443,7 +444,8 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
                      if key not in ("request_id", "worker_workflow_sha", "worker_run_attempt")}
     monkeypatch.setattr(remote, "_expected", lambda *_: (dict(base_expected), {"files": {}}))
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
-    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
+    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_, **__: {"spans": "same"})
+    monkeypatch.setattr(remote, "_checkpoint_index_reference", lambda *_: {"logical_proof": {"spans": "same"}})
     monkeypatch.setattr(remote.requests, "Session", Session)
     sleeps = []
     monkeypatch.setattr(remote.time, "sleep", sleeps.append)

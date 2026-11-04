@@ -19,7 +19,7 @@ import yaml
 
 from .runtime import write_json
 from .selection_v4 import canonical_route, select_planned, supplied_entry_roles
-from .raw_v4 import export_selection
+from .raw_v4 import export_selection, _scope_validated_deepflow_export
 from .bering_v4 import replay
 from .binding_v4 import endpoint_alias_evidence, matches_call_hint
 
@@ -478,6 +478,7 @@ class Toolchain:
         """
         started = time.time_ns()
         self.entry_evidence, self.input_manifests = {}, {}
+        prepared_raw = {}
         roles = {}
         untyped = getattr(self.declaration, 'UNTYPED_ENTRY_COMPONENTS', {})
         try:
@@ -504,11 +505,22 @@ class Toolchain:
                     for source in ('ebpf', 'native'):
                         folder = self.root/'inputs'/source/variant
                         folder.mkdir(parents=True, exist_ok=True)
-                        manifest = export_selection(self.store, {source: None}, folder/'exports',
-                            self.system+'-routed-network' if variant == 'network_scope' else None,
-                            supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
-                            native_jaeger_envelope=self.native_jaeger_envelope,
-                            service_projections=service_projections)
+                        raw = self.input_manifests.get((source, 'raw'))
+                        reuse_raw = (variant == 'network_scope' and source == 'ebpf'
+                            and (getattr(self, 'collector_provenance', {}) or {}).get('collector') == 'deepflow'
+                            and bool(service_projections)
+                            and raw is not None and not raw[1].get('exports')
+                            and len(raw[1].get('stream_exports', [])) == 1)
+                        if reuse_raw:
+                            manifest = _scope_validated_deepflow_export(
+                                raw[0], prepared_raw[source], folder/'exports',
+                                self.system+'-routed-network', service_projections)
+                        else:
+                            manifest = export_selection(self.store, {source: None}, folder/'exports',
+                                self.system+'-routed-network' if variant == 'network_scope' else None,
+                                supplied_server_roles={key: value for key, value in roles.items() if key[0] == source},
+                                native_jaeger_envelope=self.native_jaeger_envelope,
+                                service_projections=service_projections)
                         manifest.update(graph_input='all source-separated frozen training-prefix observations',
                             exported_wire_bytes=(sum(Path(export['path']).stat().st_size
                                                      for export in manifest['exports'])
@@ -520,6 +532,8 @@ class Toolchain:
                         path = folder/'observations.json'
                         write_json(path, manifest)
                         self.input_manifests[source, variant] = (path, manifest)
+                        if variant == 'raw':
+                            prepared_raw[source] = digest(path)
                     pieces = [self.input_manifests[source, variant] for source in ('ebpf', 'native')]
                     streamed = any(piece.get('stream_exports') for _, piece in pieces)
                     manifest = {'exports': ([] if streamed else
@@ -559,6 +573,10 @@ class Toolchain:
         return replay(self.bin/'bering', manifest, folder, self.system+'-deployment', overlay, prefix,
                       publication_mode=self.publication_mode,
                       source_profile=self.bering_source_profile())
+
+    def reuse_observed_discovery(self, source, variant):
+        """Default source paths execute their own original discovery."""
+        return None
 
     def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder):
         return self.discover(input_path, folder, overlay_path)
@@ -748,6 +766,7 @@ class Toolchain:
         self.preflight()
         self.prepare_inputs(plans)
         results = {}
+        observed_folders = {}
         for source in ('ebpf', 'native', 'combined'):
             results[source] = {}
             for variant in ('raw', 'network_scope'):
@@ -757,13 +776,23 @@ class Toolchain:
                 shared.mkdir(parents=True, exist_ok=True)
                 observed_model = observed_quality = None
                 if manifest['observations']:
-                    print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
-                        'variant': variant, 'observations': manifest['observations'],
-                        'wire_bytes': manifest['exported_wire_bytes']}), flush=True)
-                    observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
+                    reuse = self.reuse_observed_discovery(source, variant)
+                    if reuse is not None:
+                        write_json(shared/'shared-observed-reference.json', reuse)
+                        shared = Path(reuse['origin_folder'])
+                        observed_model = json.loads((shared/'observed.json').read_text(encoding='utf-8'))
+                        observed_quality = json.loads((shared/'observed.signal-quality.json').read_text(encoding='utf-8'))
+                        print(json.dumps({'toolchain_event': 'identical_input_discovery_reused',
+                            'source': source, 'variant': variant, 'actual_source': reuse['origin_source']}), flush=True)
+                    else:
+                        print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
+                            'variant': variant, 'observations': manifest['observations'],
+                            'wire_bytes': manifest['exported_wire_bytes']}), flush=True)
+                        observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
                     print(json.dumps({'toolchain_event': 'shared_discovery_complete', 'source': source,
                         'variant': variant, 'services': len(observed_model['services']),
                         'edges': len(observed_model['edges']), 'endpoints': len(observed_model['endpoints'])}), flush=True)
+                observed_folders[source, variant] = shared
                 for name, contract in self.declaration.CONTRACTS.items():
                     results[source][variant][name] = self.forecast_operation(
                         source, variant, name, contract, input_path, manifest, shared,
@@ -774,7 +803,7 @@ class Toolchain:
             for variant, operations in variants.items():
                 for operation, forecast in operations.items():
                     folder = self.root/source/variant/operation
-                    replay_path = self.root/'discovery'/source/variant/'observed-runtime'/'replay-command.json'
+                    replay_path = observed_folders[source, variant]/'observed-runtime'/'replay-command.json'
                     simulation_path = folder/'simulation.command.json'
                     execution.append({'source': source, 'variant': variant, 'operation': operation,
                         'bering_executed': replay_path.is_file(),
@@ -784,6 +813,10 @@ class Toolchain:
                         'sheaft_executed': simulation_path.is_file(),
                         'prediction_available': forecast['available'],
                         'unknown_reason': forecast.get('reason')})
+                    reference = self.root/'discovery'/source/variant/'shared-observed-reference.json'
+                    if reference.is_file():
+                        execution[-1].update(bering_discovery_shared_across_sources=True,
+                            bering_discovery_source='ebpf', shared_discovery_reference=str(reference))
         write_json(self.root/'execution-summary.json', {'branches': execution,
             'interpretation': 'completed acquisition or qualification does not imply every source produced a graph or reached simulation'})
         return results
