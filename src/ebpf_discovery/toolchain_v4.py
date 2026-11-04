@@ -574,6 +574,10 @@ class Toolchain:
                       publication_mode=self.publication_mode,
                       source_profile=self.bering_source_profile())
 
+    def reuse_observed_discovery(self, source, variant):
+        """Default source paths execute their own original discovery."""
+        return None
+
     def operation_model(self, input_path, folder, overlay_path, model, quality, source_folder):
         return self.discover(input_path, folder, overlay_path)
 
@@ -762,6 +766,7 @@ class Toolchain:
         self.preflight()
         self.prepare_inputs(plans)
         results = {}
+        observed_folders = {}
         for source in ('ebpf', 'native', 'combined'):
             results[source] = {}
             for variant in ('raw', 'network_scope'):
@@ -771,13 +776,23 @@ class Toolchain:
                 shared.mkdir(parents=True, exist_ok=True)
                 observed_model = observed_quality = None
                 if manifest['observations']:
-                    print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
-                        'variant': variant, 'observations': manifest['observations'],
-                        'wire_bytes': manifest['exported_wire_bytes']}), flush=True)
-                    observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
+                    reuse = self.reuse_observed_discovery(source, variant)
+                    if reuse is not None:
+                        write_json(shared/'shared-observed-reference.json', reuse)
+                        shared = Path(reuse['origin_folder'])
+                        observed_model = json.loads((shared/'observed.json').read_text(encoding='utf-8'))
+                        observed_quality = json.loads((shared/'observed.signal-quality.json').read_text(encoding='utf-8'))
+                        print(json.dumps({'toolchain_event': 'identical_input_discovery_reused',
+                            'source': source, 'variant': variant, 'actual_source': reuse['origin_source']}), flush=True)
+                    else:
+                        print(json.dumps({'toolchain_event': 'shared_discovery_start', 'source': source,
+                            'variant': variant, 'observations': manifest['observations'],
+                            'wire_bytes': manifest['exported_wire_bytes']}), flush=True)
+                        observed_model, observed_quality = self.discover(input_path, shared, prefix='observed')
                     print(json.dumps({'toolchain_event': 'shared_discovery_complete', 'source': source,
                         'variant': variant, 'services': len(observed_model['services']),
                         'edges': len(observed_model['edges']), 'endpoints': len(observed_model['endpoints'])}), flush=True)
+                observed_folders[source, variant] = shared
                 for name, contract in self.declaration.CONTRACTS.items():
                     results[source][variant][name] = self.forecast_operation(
                         source, variant, name, contract, input_path, manifest, shared,
@@ -788,7 +803,7 @@ class Toolchain:
             for variant, operations in variants.items():
                 for operation, forecast in operations.items():
                     folder = self.root/source/variant/operation
-                    replay_path = self.root/'discovery'/source/variant/'observed-runtime'/'replay-command.json'
+                    replay_path = observed_folders[source, variant]/'observed-runtime'/'replay-command.json'
                     simulation_path = folder/'simulation.command.json'
                     execution.append({'source': source, 'variant': variant, 'operation': operation,
                         'bering_executed': replay_path.is_file(),
@@ -798,6 +813,10 @@ class Toolchain:
                         'sheaft_executed': simulation_path.is_file(),
                         'prediction_available': forecast['available'],
                         'unknown_reason': forecast.get('reason')})
+                    reference = self.root/'discovery'/source/variant/'shared-observed-reference.json'
+                    if reference.is_file():
+                        execution[-1].update(bering_discovery_shared_across_sources=True,
+                            bering_discovery_source='ebpf', shared_discovery_reference=str(reference))
         write_json(self.root/'execution-summary.json', {'branches': execution,
             'interpretation': 'completed acquisition or qualification does not imply every source produced a graph or reached simulation'})
         return results

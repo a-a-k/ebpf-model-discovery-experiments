@@ -9,7 +9,7 @@ import shutil
 import time
 from pathlib import Path
 
-from .toolchain_v4 import Toolchain as ToolchainV4
+from .toolchain_v4 import Toolchain as ToolchainV4, digest as _file_sha
 
 
 PROTOCOL_VERSION = 'graph-v5'
@@ -186,6 +186,13 @@ class Toolchain(ToolchainV4):
 
     def discover(self, input_path, folder, overlay=None, prefix='model'):
         """Keep exact Bering output and bind only a copied semantic presentation."""
+        origin_profile = self._identical_input_profile()
+        origin_input = None
+        if origin_profile is not None and prefix == 'observed' and overlay is None:
+            parts = Path(input_path).relative_to(self.root/'inputs').parts
+            if len(parts) == 3 and parts[0] == 'ebpf' and parts[1] in ('raw', 'network_scope'):
+                origin_input = {'path': str(input_path), 'sha256': _file_sha(input_path),
+                                'bytes': Path(input_path).stat().st_size}
         raw_model, raw_quality = super().discover(input_path, folder, overlay, prefix)
         model_path = Path(folder) / f"{prefix}.json"
         quality_path = Path(folder) / f"{prefix}.signal-quality.json"
@@ -209,7 +216,117 @@ class Toolchain(ToolchainV4):
         write_json(model_path, model)
         write_json(quality_path, quality)
         write_json(Path(folder) / f"{prefix}.supplied-aliases.json", proof)
+        if origin_input is not None:
+            names = ('observed.json', 'observed.signal-quality.json', 'observed.snapshot.json',
+                     'observed.bering-raw.json', 'observed.bering-raw.signal-quality.json',
+                     'observed.supplied-aliases.json', 'observed-runtime/replay-command.json',
+                     'observed-runtime/serve.yaml', 'observed-runtime/accepted-request-sequence.jsonl')
+            origins = getattr(self, '_identical_input_origins', {})
+            origins[parts[1]] = {'input': origin_input, 'invocation': origin_profile,
+                'files': {name: {'path': str(Path(folder)/name), 'sha256': _file_sha(Path(folder)/name),
+                                 'bytes': (Path(folder)/name).stat().st_size} for name in names}}
+            self._identical_input_origins = origins
         return model, quality
+
+    def _identical_input_profile(self):
+        if ((getattr(self, 'collector_provenance', {}) or {}).get('collector') != 'deepflow'
+                or self.system != 'otel_demo' or getattr(self.ctx, 'mode', None) != 'absent'
+                or self.publication_mode != 'on_shutdown'
+                or self.tool_pins.get('Bering') != PINS['Bering']):
+            return None
+        from .bering_v4 import _child_process_environment
+        return {'binary': str((self.bin/'bering').resolve()), 'binary_sha256': _file_sha(self.bin/'bering'),
+                'source_profile': self.bering_source_profile(), 'source_domain': self.system+'-deployment',
+                'publication_mode': self.publication_mode, 'clock_admission_filter': False,
+                'go_runtime_environment': _child_process_environment()[1],
+                'alias_table_sha256': _file_sha(self.supplied_alias_path),
+                'alias_admission_sha256': _file_sha(self.supplied_alias_admission_path)}
+
+    def reuse_observed_discovery(self, source, variant):
+        if source != 'combined' or variant not in ('raw', 'network_scope'):
+            return None
+        profile = self._identical_input_profile()
+        if profile is None:
+            return None
+        native_path, native = self.input_manifests['native', variant]
+        if (type(native.get('observations')) is not int or native['observations'] != 0
+                or native.get('exports') or native.get('stream_exports')
+                or native.get('ordered_request_group_manifests')):
+            return None
+        path, combined = self.input_manifests[source, variant]
+        ebpf_path, ebpf = self.input_manifests['ebpf', variant]
+        if (combined.get('exports') or combined.get('stream_exports')
+                or len(combined.get('ordered_request_group_manifests', [])) != 2
+                or len(ebpf.get('stream_exports', [])) != 1 or ebpf.get('exports')
+                or type(ebpf.get('observations')) is not int or ebpf['observations'] <= 0):
+            return None
+        from .bering_v4 import _request_manifests
+        def canonical(value):
+            return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+        for name, saved_path, registered in [('ebpf', ebpf_path, ebpf),
+                                              ('native', native_path, native),
+                                              ('combined', path, combined)]:
+            saved_path = Path(saved_path)
+            expected_path = self.root/'inputs'/name/variant/'observations.json'
+            if (saved_path.is_symlink() or saved_path.resolve() != expected_path.resolve()
+                    or canonical(json.loads(saved_path.read_text(encoding='utf-8'))) != canonical(registered)):
+                raise ValueError('shared discovery current input manifest differs from prepared source')
+        groups = _request_manifests(combined)
+        if canonical(groups) != canonical([ebpf, native]):
+            raise ValueError('shared discovery ordered input groups differ from actual source inputs')
+        for proof, expected in zip(combined['ordered_request_group_manifests'], (ebpf_path, native_path), strict=True):
+            if Path(proof['path']).resolve() != Path(expected).resolve():
+                raise ValueError('shared discovery input group points to a foreign source')
+        origin = (getattr(self, '_identical_input_origins', {}) or {}).get(variant)
+        if origin is None:
+            return None
+        if canonical(origin['invocation']) != canonical(profile):
+            return None
+        started_ns = time.time_ns()
+        original = origin['input']
+        if (Path(original['path']).resolve() != Path(ebpf_path).resolve()
+                or original['bytes'] != Path(ebpf_path).stat().st_size
+                or original['sha256'] != _file_sha(ebpf_path)):
+            raise ValueError('shared discovery original input manifest changed')
+        shared = self.root/'discovery/ebpf'/variant
+        for name, claim in origin['files'].items():
+            target = shared/name
+            if (Path(claim['path']).resolve() != target.resolve() or target.is_symlink()
+                    or target.stat().st_size != claim['bytes'] or _file_sha(target) != claim['sha256']):
+                raise ValueError('shared discovery genuine origin output changed')
+        replay = json.loads((shared/'observed-runtime/replay-command.json').read_text(encoding='utf-8'))
+        if (replay.get('status') != 'complete' or replay.get('returncode') != 0
+                or replay.get('source_profile') != profile['source_profile']
+                or replay.get('source_domain') != profile['source_domain']
+                or replay.get('publication_mode') != 'on_shutdown'
+                or replay.get('clock_admission_filter') is not False
+                or replay.get('go_runtime_environment') != profile['go_runtime_environment']
+                or replay.get('ingest', {}).get('spans') != ebpf['observations']
+                or replay.get('ingest', {}).get('dropped_spans') != 0
+                or replay.get('ingest', {}).get('late_spans') != 0
+                or Path(replay['argv'][0]).resolve() != (self.bin/'bering').resolve()):
+            raise ValueError('shared discovery actual Bering invocation differs')
+        stream = ebpf['stream_exports'][0]
+        verified = []
+        for claim in [stream['request_index'], *stream['shards'], stream['runtime_identity_values']]:
+            target = Path(claim['path'])
+            if (target.is_symlink() or not target.resolve().is_relative_to((self.root/'inputs').resolve())
+                    or target.stat().st_size != claim['bytes'] or _file_sha(target) != claim['sha256']):
+                raise ValueError('shared discovery current whole source bytes changed')
+            verified.append({key: claim[key] for key in ('path', 'bytes', 'sha256')})
+        return {'schema_version': 'identical-empty-native-observed-discovery-v1',
+                'declared_source': source, 'variant': variant, 'origin_source': 'ebpf',
+                'origin_folder': str(shared), 'origin_input': original,
+                'combined_input': {'path': str(path), 'sha256': _file_sha(path), 'bytes': Path(path).stat().st_size},
+                'empty_native_input': {'path': str(native_path), 'sha256': _file_sha(native_path),
+                                       'bytes': Path(native_path).stat().st_size},
+                'ordered_input_groups': combined['ordered_request_group_manifests'],
+                'invocation': profile, 'genuine_origin_files': origin['files'],
+                'whole_current_source_files_reverified': verified,
+                'original_request_and_value_semantic_validation_reused_under_byte_identity': True,
+                'additional_Bering_execution': False, 'actual_discovery_cost_counted_once': True,
+                'source_specific_operations_and_Sheaft_not_reused': True,
+                'started_ns': started_ns, 'ended_ns': time.time_ns()}
 
     def binding_uncertainties(self, model, quality):
         collisions = quality.get('supplied_logical_alias_uncertainty') or []
