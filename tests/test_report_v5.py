@@ -1094,7 +1094,7 @@ def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path,
 
 
 @pytest.mark.parametrize('mutation',['none','undeclared','foreign_case','failed_suffix','fake_full','foreign_known_chain'])
-@pytest.mark.parametrize('union_run',[41642781338,41642775376,41642789738])
+@pytest.mark.parametrize('union_run',[41642781338,41642775376,41642789738,41788955167])
 def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_independent_admission(tmp_path,mutation,union_run):
     import importlib.util
     from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS

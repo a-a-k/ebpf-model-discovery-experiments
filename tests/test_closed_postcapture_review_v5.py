@@ -320,12 +320,14 @@ def union_api_fixture(profile=None):
 
 @pytest.mark.parametrize('mutation',['none','foreign_run','failed_suffix','missing_compact',
     'existing_full','duplicate_step','foreign_capture','expired_restore','changed_digest'])
-def test_closed_union_requires_actual_named_source_and_publication_chain(mutation):
-    body=union_api_fixture()
+@pytest.mark.parametrize('union_run',[41642781338,41788955167])
+def test_closed_union_requires_actual_named_source_and_publication_chain(mutation,union_run):
+    profile=REVIEW.CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
+    body=union_api_fixture(profile)
     if mutation=='foreign_run':body['run']['head_sha']='0'*40
     if mutation=='failed_suffix':body['job']['steps'][1]['conclusion']='failure'
     if mutation=='missing_compact':body['artifacts'].pop(1)
-    if mutation=='existing_full':body['artifacts'].append({'name':'campaign-v5-deepflow-main-otel_demo-partial-7-41642781338'})
+    if mutation=='existing_full':body['artifacts'].append({'name':profile['artifacts']['compact']['name'].replace('v5-summary-','campaign-v5-',1)})
     if mutation=='duplicate_step':body['job']['steps'].append(body['job']['steps'][0])
     if mutation=='foreign_capture':body['capture_job']['run_id']=123
     if mutation=='expired_restore':body['artifacts'][2]['expired']=True

@@ -2903,10 +2903,11 @@
           "system": "otel_demo",
           "mode": "absent",
           "seed": 6,
-          "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932"
+          "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932",
+          "evidence_layout": "closed_capture_compact_union_v1"
         }
       ],
-      "note": "Only technically failed original absent6 replacement. Exact2fa source/0fad strictconsumer actualCI BOTHGO, originalwholehard360 budget total21214.286s afterallreserves/zeroSQLsaving with385.714s remaining. Same completeproof calculations read-only during upload; realSQL/release beforeoncePOST, mirror+liveproof afterconfirmedPOST beforeimport/freeze/targets. Full same scientificworkloads/methods/outcomes; all78 reviewed cases and active816/7 protected. All oldfailures/CI/overlapfullwork/transfer/review/retention costs retained. No scientificadmission from executionGO alone."
+      "note": "Only technically failed original absent6 replacement. Exact2fa source/0fad strictconsumer actualCI BOTHGO, originalwholehard360 budget total21214.286s afterallreserves/zeroSQLsaving with385.714s remaining. Same completeproof calculations read-only during upload; realSQL/release beforeoncePOST, mirror+liveproof afterconfirmedPOST beforeimport/freeze/targets. Full same scientificworkloads/methods/outcomes; all78 reviewed cases and active816/7 protected. All oldfailures/CI/overlapfullwork/transfer/review/retention costs retained. No scientificadmission from executionGO alone. Actual unchangedoffline suffix/evaluation/provenance/compactpublicationSUCCESS; onlyadditionalprocessedfullupload failed Maximumcallstacksizeexceeded. Originalcapsule+actualcompact+restore/APIchain retained under exactoriginaluniondesignGO; strictnew-onlyreader and ROOT/IND actualadmission pending, no repeatedtraffic."
     },
     {
       "run_id": 41816827576,
@@ -6837,6 +6838,16 @@
       "run_id": 41830032924,
       "role": "archive",
       "note": "Finite CURRENT26 retention, exact c312 qualified archiver: 26 terminal source runs, 10 original Actions artifacts/3109692247B. Existing717, all3 active original parents and116 historical cost-only IDs excluded. Byte-preserving original SHA/API remote publication and one-copy (<2GiB)/two-copy guard retained. No original source deletion, capture/refit/rescore/admission; workingcopies released only after verified publication. All actual transfer/publication/failure/proof/review costs retained; ownarchive/futurecases/readers/report/CI/finiteclosingtail separate, humanunknown."
+    },
+    {
+      "run_id": 41836581353,
+      "role": "preparation",
+      "note": "Soleordinary deliverybranch pushCI for f9a5fd8 metadata-only exact virtualsuccess cost accounting: all3actualLinuxjobs SUCCESS (fullsuite,HAProxycontrol,genuine tiny identical-input Bering fixture). Scientificfunctions allunchanged exceptcostrender; no newmain/sourcequalification/report/scientificadmission. Allclone/build/fixture/wait/metadata/review/retention costs retained; ownCI/finalfinite tail separate. No selfCI-only recursivecommit."
+    },
+    {
+      "run_id": 41837856794,
+      "role": "worker",
+      "note": "Actual repo toolchain-worker-v4 workflow_dispatch, created2026-11-04T13:24:48Z, source06d7, currentjob126601341672 executingunchanged fullprefix toolchain. Count allactual environment/restore/preparation/build/compute/proof/publish/overlap/retention costs. Typed expected/status parentbinding not yetread; do not infer specificmaincell or scientificGO bytime/namealone. Parentassociation will be appended onlyafteractualretainedmetadata."
     }
   ],
   "blocked_main_cells": [],

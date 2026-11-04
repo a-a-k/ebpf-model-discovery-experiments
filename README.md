@@ -908,6 +908,15 @@ across attempts only when source, runner identity, job clocks and all step clock
 match; the copied record names its original job. Genuine failed and retried work
 remains charged. Reported job elapsed time is neither CPU time nor billed usage.
 
+The final reporter reuses the [fixed retained cost observations](docs/clean-study-retained-cost-snapshot-20261104.json)
+for 743 archived terminal runs and 116 earlier cost summaries. Each archived row
+names its published metadata asset and exact source-member hashes. Historical
+summaries preserve their original totals and unknowns; full clock identities are
+not inferred for them. These 859 cost records add no scientific cases and do not
+assert fresh artifact availability. Current declaration roles and notes take
+precedence, while live API requests cover the unarchived tail. This avoids
+querying the complete retained history again under the Actions API rate limit.
+
 ## 11. Discussion, limitations and conclusions
 
 The current evidence supports a precise, conditional statement: eBPF observations

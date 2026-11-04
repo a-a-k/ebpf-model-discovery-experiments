@@ -114,11 +114,34 @@ jobs:
               declared.append((row,'series'))
           for row in declaration.get('related_runs',[]):
               declared.append((row,row['role']))
+          snapshot_path='docs/clean-study-retained-cost-snapshot-20261104.json'
+          snapshot_body=subprocess.check_output(['git','show',os.environ['GITHUB_SHA']+':'+snapshot_path])
+          if pathlib.Path(snapshot_path).read_bytes()!=snapshot_body:
+              raise SystemExit('retained cost snapshot differs from its committed Git blob')
+          snapshot=json.loads(snapshot_body)
+          if snapshot.get('schema_version')!='v5-fixed-retained-cost-snapshot' or len(snapshot.get('rows',[]))!=859:
+              raise SystemExit('retained cost snapshot is outside its fixed reviewed scope')
+          saved={(r['repository'],r['run_id']):r for r in snapshot['rows']}
+          declared_keys={(r.get('repository') or os.environ['GITHUB_REPOSITORY'],r['run_id']) for r,_ in declared}
+          if len(saved)!=859 or not set(saved)<=declared_keys:
+              raise SystemExit('retained cost snapshot has duplicate or undeclared identities')
+          (root/'retained-cost-snapshot.json').write_bytes(snapshot_body)
+          import hashlib
+          (root/'retained-cost-snapshot-input.json').write_text(json.dumps({
+              'path':snapshot_path,'source':os.environ['GITHUB_SHA'],
+              'git_blob':subprocess.check_output(['git','rev-parse',os.environ['GITHUB_SHA']+':'+snapshot_path],text=True).strip(),
+              'sha256':hashlib.sha256(snapshot_body).hexdigest(),
+              'scope':'859 historical cost observations; full original API records remain in the hash-bound published metadata archives. Fresh APIs cover unarchived declarations only.'},indent=2)+'\n')
           for item,role in declared:
               run_id=item['run_id']
               repo=item.get('repository') or os.environ['GITHUB_REPOSITORY']
               destination=root/'actions'/repo.replace('/','__')/str(run_id)
               destination.mkdir(parents=True,exist_ok=True)
+              if (repo,run_id) in saved:
+                  observed={**saved[(repo,run_id)],'role':role,'note':item.get('note')}
+                  (destination/'retained-cost-observation.json').write_text(json.dumps(observed,indent=2)+'\n')
+                  rows.append(observed)
+                  continue
               base=f'repos/{repo}/actions/runs/{run_id}'
               try:
                   run=json.loads(subprocess.check_output(['gh','api',base],text=True,stderr=subprocess.STDOUT))
@@ -158,6 +181,9 @@ jobs:
               'raw_completed_job_elapsed_seconds':sum(row.get('raw_completed_job_elapsed_seconds',0) for row in rows),
               'reused_success_rows':sum(row.get('reused_success_rows',0) for row in rows),
               'reused_success_elapsed_seconds':sum(row.get('reused_success_elapsed_seconds',0) for row in rows),
+              'jobs_with_unknown_elapsed':sum(row.get('jobs_with_unknown_elapsed',0) for row in rows),
+              'runs_with_partial_unknown_job_elapsed':sum(bool(row.get('jobs_with_unknown_elapsed',0)) for row in rows),
+              'metadata_source_counts':{state:sum(row.get('metadata_status')==state for row in rows) for state in ('retained_terminal_archive_snapshot','retained_historical_observed_cost_summary','retained','unavailable')},
               'reused_success_rule':'Only complete exact cross-attempt success execution identities are charged once; every API row, original observed time, alias identity and genuine failed/retry cost remain retained.',
               'known_stored_artifact_bytes':sum(known_bytes),
               'runs_with_unknown_artifact_bytes':sum(row.get('stored_artifact_bytes') is None for row in rows),

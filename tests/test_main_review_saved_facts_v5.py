@@ -1774,9 +1774,12 @@ def test_original_capsule_selector_preserves_actual_zip_names_and_rejects_aliasi
 
 
 @pytest.mark.parametrize('mutation',['none','wrong_scope','fake_full','foreign_seed','foreign_artifact','no_layout'])
-def test_actual_partial7_union_manifest_passes_literal_workflow_gate_only_at_exact_scope(tmp_path,mutation):
+@pytest.mark.parametrize('manifest_path',[
+    'docs/clean-study-partial7-closed-union-review-20261103.json',
+    'docs/clean-study-absent6-closed-union-review-20261104.json'])
+def test_actual_named_union_manifest_passes_literal_workflow_gate_only_at_exact_scope(tmp_path,mutation,manifest_path):
     import copy
-    document=json.loads((ROOT/'docs/clean-study-partial7-closed-union-review-20261103.json').read_text())
+    document=json.loads((ROOT/manifest_path).read_text())
     row=document['cells'][0]
     if mutation=='wrong_scope':row['full_scope']='retrieve_family_selected'
     if mutation=='fake_full':row['full_artifact_id']=777

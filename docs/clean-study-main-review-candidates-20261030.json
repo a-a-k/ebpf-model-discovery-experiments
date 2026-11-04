@@ -368,30 +368,30 @@
       "mode": "absent",
       "seed": 6,
       "collector": "deepflow",
-      "run_id": 41642750701,
+      "run_id": 41788955167,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+      "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41642758914,
+      "run_id": 41781475751,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+      "head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41642766254,
+      "run_id": 41816827576,
       "stage": "main",
       "runner": "study",
-      "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+      "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932"
     },
     {
       "system": "otel_demo",
@@ -2447,7 +2447,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "78 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews. Allpartial6/7/8 andfull8 originalOTelscience retained viaqualified originalcapsule+actualcompact/restore/APIchain, no scientificreplay. Full8 eBPF6UNKNOWN; native/combined/context18predict.875, all3externalrates2800/3200, sameconditionaldirectbaseline, noaddedprimaryforecast. Remaining3DFOTelabsenttechnicaltimeouts await justifiedruntimefix. All78validnegative/adverse/UNKNOWN preserved.",
+  "status": "78 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews; allvalidnegative/adverse/UNKNOWN preserved. Planned identities for ONLY remaining DeepFlow/OTel absent6/7/8 now match previously jointly approved actual replacements2fa/816/2fa and their oncePOST source/API records. Captures6/7 complete, unchanged offlineprocessing active (7 onlyfailed-processing retry afterhostshutdown);8 liveContinue. No new scientificadmission, outcome-based choice, old78 replay or workloadchange.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -3057,6 +3057,51 @@
       "reason": "saved_complete_capture_processing_delivery_capacity_recovery",
       "new_traffic_or_model_fit": false,
       "scientific_admission": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41642750701,
+      "original_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "replacement_run_id": 41788955167,
+      "actual_capture_commit": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "Only the prior terminal technical-incomplete same fixed cell is replaced. Exact published producer and complete original workload/model/target/outcome scope were jointly approved before POST. This metadata synchronizes the already executed plan; forecast/result values are not inspected for selection.",
+      "pre_execution_proof_index": "work/codex-ebpf-audit-checkpoint-20261031.json:authoritative_latest_20261104_ALL3_ABSENT_RUNNING",
+      "scientific_admission": false,
+      "all_previous_attempt_costs_and_valid78_cases_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "original_run_id": 41642758914,
+      "original_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "replacement_run_id": 41781475751,
+      "actual_capture_commit": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "Only the prior terminal technical-incomplete same fixed cell is replaced. Exact published producer and complete original workload/model/target/outcome scope were jointly approved before POST. This metadata synchronizes the already executed plan; forecast/result values are not inspected for selection.",
+      "pre_execution_proof_index": "work/codex-ebpf-audit-checkpoint-20261031.json:authoritative_latest_20261104_ALL3_ABSENT_RUNNING",
+      "scientific_admission": false,
+      "all_previous_attempt_costs_and_valid78_cases_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "original_run_id": 41642766254,
+      "original_head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+      "replacement_run_id": 41816827576,
+      "actual_capture_commit": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "Only the prior terminal technical-incomplete same fixed cell is replaced. Exact published producer and complete original workload/model/target/outcome scope were jointly approved before POST. This metadata synchronizes the already executed plan; forecast/result values are not inspected for selection.",
+      "pre_execution_proof_index": "work/codex-ebpf-audit-checkpoint-20261031.json:authoritative_latest_20261104_ALL3_ABSENT_RUNNING",
+      "scientific_admission": false,
+      "all_previous_attempt_costs_and_valid78_cases_retained": true
     }
   ],
   "latest_actual_review": "docs/clean-study-otel-full8-actual-review-20261104.json"

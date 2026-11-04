@@ -689,6 +689,29 @@ CLOSED_CAPTURE_COMPACT_UNIONS[41706823165] = {
 }
 
 
+CLOSED_CAPTURE_COMPACT_UNIONS[41788955167] = {
+    **CLOSED_CAPTURE_COMPACT_UNION,
+    'run_id': 41788955167,
+    'head_sha': '2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',
+    'cell': ('deepflow', 'otel_demo', 'absent', 6),
+    'capture_job': 126437602332,
+    'processing_job': 126568855878,
+    'artifacts': {'capture': {'id': 13321126179,
+             'name': 'postcapture-v5-deepflow-main-otel_demo-absent-6-41788955167',
+             'size_in_bytes': 5218375781,
+             'digest': 'sha256:13d5ae2a5540909e336fcdb89b5f8217d6ef02fac7e76360e3c479989583b3de'},
+ 'compact': {'id': 13328831922,
+             'name': 'v5-summary-deepflow-main-otel_demo-absent-6-41788955167',
+             'size_in_bytes': 55411351,
+             'digest': 'sha256:e9faaa6976b092ca01f9751c5b289faec8716148dd53418babcc4a976fe30255'},
+ 'restore': {'id': 13328492678,
+             'name': 'postcapture-processing-absent-6-41788955167',
+             'size_in_bytes': 8404,
+             'digest': 'sha256:4122c83d623e2489450f45d978235bab40e4b4e479bd2b8c16cc5c8289bd19e9'}},
+    'independent_original_design_GO_sha256': '0d3db6cedf7627ed72da9c930c06ebfff336170962f869bd6e75d5e1125b9eea',
+}
+
+
 def _closed_union_artifact_origin(profile, kind):
     if kind == 'capture':
         return (profile.get('capture_run_id', profile['run_id']),
@@ -1926,6 +1949,8 @@ def render(aggregate_path: Path, out: Path, costs_path: Path | None = None) -> d
             "known_completed_job_elapsed_seconds", "raw_completed_job_elapsed_seconds",
             "reused_success_rows", "reused_success_elapsed_seconds",
             "reused_success_rule", "runs_with_unknown_job_elapsed",
+            "jobs_with_unknown_elapsed", "runs_with_partial_unknown_job_elapsed",
+            "metadata_source_counts",
             "known_stored_artifact_bytes", "runs_with_unknown_artifact_bytes",
             "report_artifact_transfer", "human_agent_seconds",
             "current_report_job_tail_seconds",
