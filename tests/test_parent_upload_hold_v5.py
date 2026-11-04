@@ -48,6 +48,10 @@ def test_full_proofs_during_upload_equal_original_after_release(parent, monkeypa
     assert not (cp / 'release.json').exists()
     prepared = campaign._remote_checkpoint_preflight
     assert prepared['proof'] == original_proof
+    receipt = json.loads((campaign.ctx.out / 'infrastructure/remote-toolchain-v4/upload-hold-preflight.json').read_text())
+    assert receipt['checkpoint_proof_sha256'] == remote._json_sha(original_proof)
+    assert receipt['verified_files'] == len(original_proof['files'])
+    assert 'checkpoint_proof' not in receipt
     assert prepared['index_reference']['logical_proof'] == original_reference['logical_proof']
     assert prepared['index_reference']['input'] == original_reference['input']
     def no_repeated_full_scan(*_):

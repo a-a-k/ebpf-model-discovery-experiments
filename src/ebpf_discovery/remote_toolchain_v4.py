@@ -830,7 +830,8 @@ def prepare_parent_checkpoint(campaign, checkpoint, ready, plans):
             'plans_sha256': _json_sha(plans), 'proof': proof, 'index_reference': reference,
             'collector_provenance': provenance, 'stamps': before}
         receipt.update(status='complete', ended_ns=time.time_ns(), identity=expected,
-                       plans_sha256=_json_sha(plans), checkpoint_proof=proof,
+                       plans_sha256=_json_sha(plans), checkpoint_proof_sha256=_json_sha(proof),
+                       verified_files=len(proof['files']), complete_original_checkpoint_proof_executed=True,
                        training_index_proof_sha256=reference['logical_proof_sha256'])
     except BaseException as error:
         receipt.update(status='failed', ended_ns=time.time_ns(), error=repr(error))
