@@ -37,3 +37,34 @@ retains the original failed run and explicitly identifies its complete repeat;
 it does not assert independent scientific admission. A generated report's
 technical coverage and independently reviewed coverage are reported separately.
 No scientific utility, speed or complete-cost advantage follows from this check.
+
+
+## Current report disk checks
+
+The report job uses the already qualified cleanup of unused hosted SDKs and
+images while protecting Python, gh, git, node and the checkout. Before each
+compact or required full-archive download it checks the actual filesystem free
+space against the API byte count plus a 2 GiB output reserve. Before compact
+extraction it checks every materialized nonjournal ZIP member, including members
+outside the manifest. Before declared-file recovery it checks the exact requested
+member sizes. These checks run before member bodies are read or written.
+
+Full archives used for recovery remain on disk for the unchanged downstream
+size/SHA verification. They are included in capacity planning. Only verified
+compact working ZIPs are removed through the existing transport proof. Before
+aggregation, a further check reserves every raw source-evaluation byte before
+deterministic gzip retention, plus 2 GiB for aggregate, tables, figures and small
+provenance. The raw byte count is a conservative budget for the gzip copies. The checks
+preserve the source bytes and every eligibility predicate; insufficient capacity
+is a technical stop before the corresponding write.
+
+The 247 existing compact ZIP directories describe 27,504,579,665 bytes of
+materialized nonjournal inputs and a conservative raw source-evaluation
+retention budget of 12,784,914,362 bytes (the retained copies use deterministic
+gzip). Including the largest temporary compact ZIP and the output reserve gives
+45,049,451,558 bytes before the two pending compact artifacts and any recovery
+they require. Existing hash-bound nullable manifests, ZIP directories and the
+qualified publisher's fixed file list establish zero full recovery for the
+current 247 compacts. This does not assume the two pending cases cost zero or
+establish actual runner free space. No scientific member body
+or whole original ZIP was read locally for this calculation.

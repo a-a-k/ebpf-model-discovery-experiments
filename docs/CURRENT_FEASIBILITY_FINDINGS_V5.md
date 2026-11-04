@@ -1,8 +1,9 @@
 # Current interpretation of the matched eBPF experiment
 
-Both original actual-evidence reviews admit 78 of the fixed 81 main cases.
-All 27 OBI, 27 Coroot and 24 DeepFlow cases are retained. Only DeepFlow/OTel
-SDK-absent seeds 6/7/8 remain technically incomplete. This is an interim
+Both original actual-evidence reviews admit 79 of the fixed 81 main cases.
+All 27 OBI, 27 Coroot and 25 DeepFlow cases are retained. Only DeepFlow/OTel
+SDK-absent seeds 7/8 remain scientifically incomplete; their application workloads
+have finished and processing/review remain. This is an interim
 interpretation; the final full 81 comparison and figures remain due.
 
 The question is whether the tested eBPF evidence can support operation graphs
@@ -17,7 +18,7 @@ superiority or new-calculation claim is required or inferred.
 |---|---|---|---|
 | OBI, all 27 cases reviewed | Supports all 4 Petclinic and all 3 OTel operations; social-network operations remain unknown | Petclinic gaps are supported; OTel needs the prespecified observed SERVER-edge union to obtain all 3 forecasts | Conditional feasibility demonstrated for these applications/configuration; the OTel union is a separate baseline, not a pure Bering output |
 | Coroot, all 27 reviewed | Required operation forecasts unknown in all 3 applications | Missing operation paths remain unresolved; available native forecasts are retained | This tested pipeline did not replace absent traces or fill the selected partial-trace gaps |
-| DeepFlow,24 of 27 reviewed | Petclinic and social-network operation forecasts unknown; OTel cases still technically incomplete | Selected Petclinic and OTel gaps remain unresolved; social-network home is supported by native evidence only | Negative or unsupported findings for completed cases; no conclusion yet for unfinished OTel absent traces |
+| DeepFlow,25 of 27 reviewed | Petclinic, social-network and OTel absent/6 operation forecasts unknown; OTel absent/7/8 await processing/review | Selected Petclinic and OTel gaps remain unresolved; social-network home is supported by native evidence only | Negative or unsupported findings for completed cases; no conclusion yet for unfinished OTel absent traces |
 
 For OBI/OTel without SDK spans, forecasts are .875 and external outcomes are
 2800/3200 for every operation/repetition except one checkout at 2799/3200.
@@ -25,6 +26,17 @@ This establishes a useful supported forecast in the missing-trace setting,
 not superiority over the equally informed direct .875 baseline. OBI partial
 OTel forecasts from the edge-union baseline retain adverse outcomes too; no
 accuracy threshold selects cases. [OBI evidence](MAIN_EARLY_OBI_FINDINGS_V5.md).
+
+The newly reviewed DeepFlow/OTel absent/6 case has no native SDK spans and all
+24 operation forecasts remain UNKNOWN. Each of browse, cart and checkout
+independently succeeds 2800/3200, matching the supplied conditional direct
+baseline of .875. Thus missing forecasts persist even without the severe
+checkout target degradation seen in some earlier repetitions. The exported
+evidence and model pipeline do not reconstruct the required catalogue/RPC/DB
+operation paths. Extra global database edges and the prespecified edge union
+produce no additional forecast. This establishes a limitation of the tested
+pipeline, not that every DeepFlow capture mode or eBPF implementation lacks
+the information. [Absent/6 actual review](clean-study-otel-absent6-actual-review-20261104.json).
 
 All 27 social-network cases are reviewed. Each tested eBPF pipeline lacks the
 required operation-level framed binary Thrift RPC paths. Visible TCP, ingress

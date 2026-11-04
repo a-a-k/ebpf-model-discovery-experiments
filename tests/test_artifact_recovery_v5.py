@@ -2,6 +2,9 @@ import hashlib
 import json
 from pathlib import Path
 import zipfile
+from types import SimpleNamespace
+
+import pytest
 
 import yaml
 
@@ -108,3 +111,38 @@ def test_future_compact_upload_includes_manifest_declared_journal() -> None:
         assert len(summaries) == 1, job_name
         paths = [line.strip() for line in summaries[0]["with"]["path"].splitlines()]
         assert paths.count("work/campaign/attempt-journal.jsonl") == 1, job_name
+
+
+@pytest.mark.parametrize("spare", [-1, 0])
+def test_recovery_checks_requested_bytes_before_reading_members(tmp_path, monkeypatch, spare):
+    from ebpf_discovery.compact_transport_v5 import REPORT_DISK_RESERVE_BYTES, ReportDiskSpaceError
+    folder = tmp_path / "summary"
+    folder.mkdir()
+    raw = b"requested metadata"
+    (folder / "evaluation-manifest.json").write_text(json.dumps({
+        "files_sha256": {"status.json": _sha(raw)},
+    }))
+    archive = tmp_path / "full.zip"
+    with zipfile.ZipFile(archive, "w") as bundle:
+        bundle.writestr("status.json", raw)
+        bundle.writestr("unrequested.bin", b"x" * 8192)
+    digest = "sha256:" + _sha(archive.read_bytes())
+    monkeypatch.setattr("ebpf_discovery.compact_transport_v5.shutil.disk_usage",
+                        lambda _: SimpleNamespace(free=REPORT_DISK_RESERVE_BYTES + len(raw) + spare))
+    opened = []
+    original = zipfile.ZipFile.open
+    def observe(self, *args, **kwargs):
+        opened.append(args[0])
+        return original(self, *args, **kwargs)
+    monkeypatch.setattr(zipfile.ZipFile, "open", observe)
+    if spare < 0:
+        with pytest.raises(ReportDiskSpaceError):
+            recover_declared_files(folder, archive, _source(digest))
+        assert opened == []
+        assert not (folder / "status.json").exists()
+    else:
+        proof = recover_declared_files(folder, archive, _source(digest))
+        assert proof["status"] == "recovered"
+        assert proof["source"]["disk_before_recovery"]["incoming_bytes"] == len(raw)
+        assert (folder / "status.json").read_bytes() == raw
+        assert not (folder / "unrequested.bin").exists()

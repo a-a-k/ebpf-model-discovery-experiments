@@ -2,7 +2,7 @@
 
 **Current work: a fresh matched series with an explicit experiment controller.**
 
-Actual scientific evidence has passed both original-criterion reviews for **78 of 81 main cases**. All OBI and Coroot cases and 24 DeepFlow cases are retained, including valid adverse and UNKNOWN results. The three remaining cases are DeepFlow/OTel without SDK traces. After the earlier technical timeouts, all three replacement cases have been launched; their final evidence reviews are pending. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
+Actual scientific evidence has passed both original-criterion reviews for **79 of 81 main cases**. All OBI and Coroot cases and 25 DeepFlow cases are retained, including valid adverse and UNKNOWN results. Two DeepFlow/OTel cases without SDK traces remain. The [completed absent/6 review](docs/clean-study-otel-absent6-actual-review-20261104.json) is a valid negative result: all 24 model forecasts remain UNKNOWN, while each operation has 2800 successes in 3200 independent target attempts and the separately supplied conditional direct baseline predicts 0.875. Both remaining application workloads have finished; their saved-data processing and actual-evidence reviews remain in progress. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
 Read the [brief interpretation](docs/CURRENT_FEASIBILITY_FINDINGS_V5.md) for the supported missing-trace findings, direct baselines and application failure limits.
 The question is eBPF feasibility with absent/incomplete tracing. The user selected
 a new runner reusing verified deployment and collection components. The common
@@ -50,8 +50,8 @@ records both explicit ORIGINAL-feasibility verdicts before the fresh full81 seri
 [DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
 [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
 The three original dispatches use immutable `study-20261031-v5`, all three
-applications/tracing modes, seeds6/7/8 and all ten operations. The series is running; no final main result or
-scientific success is claimed. Unknown and adverse outcomes remain in scope.
+applications/tracing modes, seeds6/7/8 and all ten operations. The final full81 result remains incomplete; the reviewed79-case findings are
+reported above with their application-specific limits. Unknown and adverse outcomes remain in scope.
 Technical replacements additionally use actual revisions `fbbda015` (parent disk
 preparation) and `13c017bf` (preventive guest port preparation). Experiment code,
 dependencies and fixtures remain identical to qualified `0c98bf4`; reporting
@@ -65,7 +65,8 @@ Earlier attempts, diagnostics and preparation costs are preserved in
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
 RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
 The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
-independent review and qualification decisions. Fresh main results are pending execution and independent evidence review.
+independent review and qualification decisions. The current reviewed and pending cases are listed above; the following section
+preserves historical snapshots rather than the latest cohort status.
 
 **Historical iteration 5 series and audit snapshots.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
@@ -147,7 +148,7 @@ journal copies in the report job.
 The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
 Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.
-The [current 54-cell report](results/iteration-5/snapshot-41044061764/SOURCE.md)
+The [historical 54-cell report](results/iteration-5/snapshot-41044061764/SOURCE.md)
 contains all OBI and Coroot main cells, with [per-operation error figures and exact saved values](results/iteration-5/snapshot-41044061764/figures/figures-v5.md).
 Every selected cell also has a separate actual evidence review. DeepFlow is
 incomplete at this snapshot boundary. The full report, including referenced
@@ -898,9 +899,11 @@ Their job metadata enters the final cost snapshot; the old aggregate total is
 not added again. These historical runs do not add scientific cases to the fixed
 81-case cohort. For 116 historical IDs, retained cost metadata does not establish
 retention of the original raw or model payloads. The finite current archive tail
-is recorded separately. The [latest completed archive](docs/clean-study-terminal26-retention-actual-review-20261104.json)
-adds 26 disjoint terminal sources, bringing jointly verified permanent retention
-to 743 sources. This archival count is separate from the 78 scientifically reviewed cases.
+is recorded separately. The [previous archive](docs/clean-study-terminal26-retention-actual-review-20261104.json)
+added 26 disjoint terminal sources. The [latest actual publication review](docs/clean-study-terminal5-retention-actual-review-20261104.json)
+adds another five terminal sources and all eight original artifacts, bringing
+jointly verified permanent retention to 748 sources. This archival count is
+separate from the 79 scientifically reviewed cases.
 
 For failed-only GitHub retries, every API job record and its observed duration
 remains in the cost ledger. An exact reused successful execution is charged once

@@ -4,11 +4,47 @@ This is a partial evidence review, not the completed 81-cell conclusion. Negativ
 and unavailable results remain part of the study and are not reasons to rerun a
 technically complete case.
 
-Seventy-eight main cells have now passed both original actual-evidence reviews:
-27 OBI, 27 Coroot and 24 DeepFlow. All DeepFlow social-network and Petclinic cases,
-and all OTel partial/full cases, are reviewed. Only three OTel SDK-absent cases
-remain technically incomplete. Earlier batch counts below describe their
+Seventy-nine main cells have now passed both original actual-evidence reviews:
+27 OBI, 27 Coroot and 25 DeepFlow. All DeepFlow social-network and Petclinic cases,
+all OTel partial/full cases and OTel absent/6, are reviewed. Only two OTel
+SDK-absent cases remain scientifically incomplete. Their application workloads
+have finished; processing and evidence review remain. Earlier batch counts below describe their
 review dates, not the current remaining scope.
+
+## OTel absent repetition 6
+
+The [actual saved-evidence review](clean-study-otel-absent6-actual-review-20261104.json)
+admits the original capture and its strict sealed-capsule/compact/restore
+evidence union. All 19 blocks have SDK tracing disabled, with zero native spans.
+The two genuinely executed eBPF Bering replays each use 754,412 spans; two
+truthful combined references reuse those results. Eighteen saved model branches
+and six preflights yield no operation Sheaft execution because every required
+forecast remains unavailable. Across four methods, two views and three
+operations, all 24 forecasts are UNKNOWN. No missing simulation is fabricated.
+
+The independent target results are 2800/3200 for each of browse, cart and
+checkout. The supplied, equally informed conditional direct baseline predicts
+.875 for each. The raw global graph contains 48 services, 45 edges and 30
+endpoints; the network-scope graph contains 39 services, 43 edges and 30
+endpoints. Neither establishes the required frontend/catalogue RPC and
+catalogue/PostgreSQL operation paths, with cart/checkout obligations also
+unresolved. The prespecified observed-edge union adds no available forecast.
+This negative result therefore persists without severe checkout target
+degradation; it is bounded to the tested collector/export/normalization/model
+pipeline rather than an intrinsic limit of all DeepFlow or eBPF capture.
+
+All 34,800 primary attempts and 9,600 targets are retained. Models were frozen
+3.815529656 seconds before the first target. DB-down outcomes are 0/7, 0/7 and
+0/6 and the corresponding restored outcomes 7/7, 7/7 and 6/6; every selected
+model DB forecast is unknown. Async checks retain 20 persisted records after
+normal/recovered/resumed execution and 20 pending during pause, without proving
+a shared explicit message ID. Zero kernel/agent loss is not established.
+
+The processing suffix, evaluation, provenance and compact publication succeeded.
+Only the additional processed-full upload failed with a JavaScript stack error.
+That publication failure does not justify replaying this scientifically complete
+negative case. The original sealed inputs remain available; unavailable final
+mutable SQL and processed-full snapshots are not claimed.
 
 ## OTel partial repetitions 6/7/8 and full repetition 8
 
@@ -360,6 +396,6 @@ sufficient graph evidence for the requested operation forecasts in this pinned
 configuration. This is an observed applicability limitation, not a reason to
 replay a complete case or a universal impossibility claim. The independently
 reviewed main subset reached **66/81 at that sixth-batch checkpoint**. The current
-reviewed subset is **78/81**; only the three DeepFlow/OTel SDK-absent cases remain
+reviewed subset is **79/81**; only DeepFlow/OTel SDK-absent seeds 7/8 remain
 scientifically incomplete. The final full81 report and finite retention tail are
 still required.

@@ -8,6 +8,8 @@ import stat
 from typing import Any
 import zipfile
 
+from .compact_transport_v5 import ReportDiskSpaceError, require_report_disk_space
+
 
 PROOF_NAME = "declared-file-recovery.json"
 
@@ -111,6 +113,10 @@ def recover_declared_files(
                         member.filename,
                     )
             by_name = {member.filename: member for member in members}
+            proof_source["disk_before_recovery"] = require_report_disk_space(folder, sum(
+                by_name[row["name"]].file_size for row in missing
+                if row["name"] in by_name and not by_name[row["name"]].is_dir()
+            ))
             verified: list[tuple[dict[str, str], zipfile.ZipInfo, bytes]] = []
             for request in missing:
                 member = by_name.get(request["name"])
@@ -127,6 +133,8 @@ def recover_declared_files(
                         "declared_member_manifest_hash_mismatch", request["name"],
                     )
                 verified.append((request, member, raw))
+    except ReportDiskSpaceError:
+        raise
     except (OSError, zipfile.BadZipFile) as exc:
         return retain_unavailable(
             folder, missing, proof_source, "full_zip_unreadable",

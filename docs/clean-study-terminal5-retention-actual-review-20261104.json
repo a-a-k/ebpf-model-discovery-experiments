@@ -1,0 +1,371 @@
+{
+  "schema_version": "original-terminal5-joint-permanent-retention-v1",
+  "recorded_utc": "2026-11-04T16:25:29.475931+00:00",
+  "both_original_actual_permanent_retention_GO": true,
+  "prior_distinct_sources": 743,
+  "new_distinct_terminal_sources": 5,
+  "joint_distinct_permanently_retained_sources": 748,
+  "scientific_admitted_main_cases": 79,
+  "whole81_complete": false,
+  "root_review": {
+    "path": "work\\archive-41860605149\\root-actual-8-original-retention-review.json",
+    "sha256": "afd33dcc9ecbff4eafaa8d5070988862b910b97bf9d7020f44c97461b9035220",
+    "record": {
+      "recorded_utc": "2026-11-04T16:11:32.137145+00:00",
+      "root_original_actual_retention_publication_GO": true,
+      "archiver_actual_run_status": "in_progress",
+      "archiver_actual_job_status": "in_progress",
+      "archiver_actual_completed_at": null,
+      "archiver_terminal_or_success_claim": false,
+      "archiver_own_elapsed_cost": "unknown_until_actual_terminal_API",
+      "independent_actual_publication_GO_still_required": true,
+      "run": 41860605149,
+      "source": "4dde05b91dd501d644a41efb3a4b720a10dd24c3",
+      "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41860605149",
+      "release_id": 434123836,
+      "published_at": "2026-11-04T15:50:27Z",
+      "new_terminal_source_count": 5,
+      "source_runs": [
+        41788955167,
+        41830032924,
+        41836581353,
+        41845839318,
+        41847375918
+      ],
+      "original_artifacts": 8,
+      "original_bytes": 8436602385,
+      "remote_assets": 33,
+      "payload_ledger_entries_verified": 31,
+      "checksum_entries_verified": 33,
+      "internal_chunk_manifests_verified": 2,
+      "small_metadata_assets_verified": {
+        "provenance.tar.gz": {
+          "bytes": 18313,
+          "sha256": "0edc17ea9a4d44097ee2d22591ea0238d3b318500d399601c08fe715f6f95b25"
+        },
+        "SHA256SUMS.txt": {
+          "bytes": 4219,
+          "sha256": "ddd2d5a98ec8cf86407765418cc3df8823a90a0ade2db5d70b61475eb005e4b4"
+        }
+      },
+      "artifacts": [
+        {
+          "run": 41788955167,
+          "artifact": 13328831922,
+          "bytes": 55411351,
+          "digest": "sha256:e9faaa6976b092ca01f9751c5b289faec8716148dd53418babcc4a976fe30255"
+        },
+        {
+          "run": 41788955167,
+          "artifact": 13328492678,
+          "bytes": 8404,
+          "digest": "sha256:4122c83d623e2489450f45d978235bab40e4b4e479bd2b8c16cc5c8289bd19e9"
+        },
+        {
+          "run": 41788955167,
+          "artifact": 13321126179,
+          "bytes": 5218375781,
+          "digest": "sha256:13d5ae2a5540909e336fcdb89b5f8217d6ef02fac7e76360e3c479989583b3de"
+        },
+        {
+          "run": 41788955167,
+          "artifact": 13311562524,
+          "bytes": 2862129249,
+          "digest": "sha256:9f6f388775d99889700cf87c8a295d87406716ff5dc18e974182187a22d5a84c"
+        },
+        {
+          "run": 41847375918,
+          "artifact": 13333510032,
+          "bytes": 300246405,
+          "digest": "sha256:b95a151798fa1bdf803691b3c27dce36e2c11547bc998f87c9b8676b2818a632"
+        },
+        {
+          "run": 41836581353,
+          "artifact": 13328130169,
+          "bytes": 71781,
+          "digest": "sha256:6ad4e6b56f43d1fd79ed3a776144b95fff250a7f586c9cff867586458c8760cc"
+        },
+        {
+          "run": 41845839318,
+          "artifact": 13330727837,
+          "bytes": 71775,
+          "digest": "sha256:11988039f3ebce7068d187ecd3243ff2bc26fef6b187fefd22bcdc4296e8da5a"
+        },
+        {
+          "run": 41830032924,
+          "artifact": 13321384216,
+          "bytes": 287639,
+          "digest": "sha256:622e683b16ee67bf7b3d2e462bbe9bdbd94ed69a4b0ec9523a28dae1723870bb"
+        }
+      ],
+      "all8_disk_guards": [
+        {
+          "artifact": 13328831922,
+          "required": 122520215,
+          "free": 91801460736,
+          "receipt_SHA256": "df4c7b957de1c24a0de9f98a46014437659aa4f937a4839b1711cc0902e7a4a0"
+        },
+        {
+          "artifact": 13328492678,
+          "required": 67117268,
+          "free": 91801456640,
+          "receipt_SHA256": "eb1af0737d0124ddfa7d94482716e8c2af33327c34a927937069b8d37cee0cbb"
+        },
+        {
+          "artifact": 13321126179,
+          "required": 10503860426,
+          "free": 91801452544,
+          "receipt_SHA256": "2b08c2b5c06df02d3c4a18cdce110a677d66d1df09bf04b1335280b8f92fc636"
+        },
+        {
+          "artifact": 13311562524,
+          "required": 5791367362,
+          "free": 91801518080,
+          "receipt_SHA256": "d9eff7300a5ce674c704a6fee3f0e6933d8ed6c56d9bdadfa47c5809f6da4e33"
+        },
+        {
+          "artifact": 13333510032,
+          "required": 367355269,
+          "free": 91801329664,
+          "receipt_SHA256": "0f43e629136f0804e61df74cbca24a746752316a2b15f6d99d8cef6846fcee87"
+        },
+        {
+          "artifact": 13328130169,
+          "required": 67180645,
+          "free": 91801251840,
+          "receipt_SHA256": "20a0c58db9a70abd703208652a16a1c3851b06e736b515c96f6eb16841a220ee"
+        },
+        {
+          "artifact": 13330727837,
+          "required": 67180639,
+          "free": 91801174016,
+          "receipt_SHA256": "7798817e6d7d248580a262896874e5048a490535d210531e65639ac4e3b0d4ff"
+        },
+        {
+          "artifact": 13321384216,
+          "required": 67396503,
+          "free": 91801128960,
+          "receipt_SHA256": "cc24c665860eee7663c4d57f03795a7b4051e32241544b2759eb96bc68fe3066"
+        }
+      ],
+      "all_originals_source_scope_SHA_remote_assets_reassembly_bound": true,
+      "original_ZIP_or_chunk_bodies_read_locally": false,
+      "integrity_boundary": "OriginalActionsAPI fullZIP SHA and actualremotechunk API/reassemblySHA establishbytepreservation; no independentCRCscan ofalloriginalZIPentries claimed. ProducerworkflowlogZIPCRCscope distinct.",
+      "cost_boundary": "Alloriginal/failed/CI/worker/recovery/reader/prep/transfer/hash/chunk/API/publication/archival/reviewcosts retained. Ownarchive/active7and8/worker8/futureworkers/readers/report/docsCI/finiteclosingtail remainseparate. Prior743 retainedsources stayunchanged; no748untilindependentactualpublicationGO. Scientific79unchanged, nofinalsuccess."
+    }
+  },
+  "independent_review": {
+    "path": "work\\independent-terminal5-41860605149-actual-publication-original-GO-20261104.json",
+    "sha256": "ef3c4bd005793d0c7e475fd41249cf8b5a46e61a3b78fa706968d899fdb5d6f1",
+    "record": {
+      "schema_version": "independent-terminal5-41860605149-actual-original-publication-GO-v1",
+      "recorded_utc": "2026-11-04T16:23:40.188266+00:00",
+      "reviewer": "/root/ebpf_audit_skeptic_recovery",
+      "original_actual_terminal5_retention_publication_GO": true,
+      "archive_run": 41860605149,
+      "source": "4dde05b91dd501d644a41efb3a4b720a10dd24c3",
+      "release_id": 434123836,
+      "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41860605149",
+      "published_at": "2026-11-04T15:50:27Z",
+      "saved_pure_metadata": {
+        "provenance.tar.gz": {
+          "path": "work/archive-41860605149/provenance.tar.gz",
+          "bytes": 18313,
+          "sha256": "0edc17ea9a4d44097ee2d22591ea0238d3b318500d399601c08fe715f6f95b25"
+        },
+        "SHA256SUMS.txt": {
+          "path": "work/archive-41860605149/SHA256SUMS.txt",
+          "bytes": 4219,
+          "sha256": "ddd2d5a98ec8cf86407765418cc3df8823a90a0ade2db5d70b61475eb005e4b4"
+        },
+        "release-api.json": {
+          "path": "work/archive-41860605149/release-api.json",
+          "bytes": 72883,
+          "sha256": "1d386f57623ab5fd722d2ce575155b69334444eee28d06393e1be0ce7431eff2"
+        },
+        "assets-api.json": {
+          "path": "work/archive-41860605149/assets-api.json",
+          "bytes": 67618,
+          "sha256": "a30ab31f4ec7e5531af443ec1b27bd870e61888a1f251385ecaa264418481ecd"
+        },
+        "run-api.json": {
+          "path": "work/archive-41860605149/run-api.json",
+          "bytes": 15339,
+          "sha256": "c55b527a4d4041632f97d89b9015d1112929fbb40623cec68fb65696dda365c9"
+        },
+        "job-api.json": {
+          "path": "work/archive-41860605149/job-api.json",
+          "bytes": 3017,
+          "sha256": "ccdfa3be77bed74afa47f66aa32dde53bf3aa0fc51e2e9c2ffcda0413fe7e233"
+        },
+        "root-actual-8-original-retention-review.json": {
+          "path": "work/archive-41860605149/root-actual-8-original-retention-review.json",
+          "bytes": 5233,
+          "sha256": "afd33dcc9ecbff4eafaa8d5070988862b910b97bf9d7020f44c97461b9035220"
+        }
+      },
+      "actual_verified": {
+        "source_ids": [
+          41788955167,
+          41847375918,
+          41836581353,
+          41845839318,
+          41830032924
+        ],
+        "all5sources_actualterminal_heads_attempts_conclusions_completeartifactindexes_match": true,
+        "originals": [
+          {
+            "run": 41788955167,
+            "id": 13328831922,
+            "bytes": 55411351,
+            "digest": "sha256:e9faaa6976b092ca01f9751c5b289faec8716148dd53418babcc4a976fe30255"
+          },
+          {
+            "run": 41788955167,
+            "id": 13328492678,
+            "bytes": 8404,
+            "digest": "sha256:4122c83d623e2489450f45d978235bab40e4b4e479bd2b8c16cc5c8289bd19e9"
+          },
+          {
+            "run": 41788955167,
+            "id": 13321126179,
+            "bytes": 5218375781,
+            "digest": "sha256:13d5ae2a5540909e336fcdb89b5f8217d6ef02fac7e76360e3c479989583b3de"
+          },
+          {
+            "run": 41788955167,
+            "id": 13311562524,
+            "bytes": 2862129249,
+            "digest": "sha256:9f6f388775d99889700cf87c8a295d87406716ff5dc18e974182187a22d5a84c"
+          },
+          {
+            "run": 41847375918,
+            "id": 13333510032,
+            "bytes": 300246405,
+            "digest": "sha256:b95a151798fa1bdf803691b3c27dce36e2c11547bc998f87c9b8676b2818a632"
+          },
+          {
+            "run": 41836581353,
+            "id": 13328130169,
+            "bytes": 71781,
+            "digest": "sha256:6ad4e6b56f43d1fd79ed3a776144b95fff250a7f586c9cff867586458c8760cc"
+          },
+          {
+            "run": 41845839318,
+            "id": 13330727837,
+            "bytes": 71775,
+            "digest": "sha256:11988039f3ebce7068d187ecd3243ff2bc26fef6b187fefd22bcdc4296e8da5a"
+          },
+          {
+            "run": 41830032924,
+            "id": 13321384216,
+            "bytes": 287639,
+            "digest": "sha256:622e683b16ee67bf7b3d2e462bbe9bdbd94ed69a4b0ec9523a28dae1723870bb"
+          }
+        ],
+        "original_count": 8,
+        "original_bytes": 8436602385,
+        "remote_assets": 33,
+        "verified_payloadledger": 31,
+        "full_checksum_rows": 33,
+        "payload_checksum_rows": 31,
+        "checksum_structure": "31remote payloadassets plus2internalchunkmanifest checksums; internalmanifests are bound by provenance.tar.gz wholeSHA. OriginalwholeSHA is recorded in each chunkmanifest/API, not an extra direct-asset checksum.",
+        "JITguards": [
+          {
+            "id": 13328831922,
+            "required": 122520215,
+            "available": 91801460736
+          },
+          {
+            "id": 13328492678,
+            "required": 67117268,
+            "available": 91801456640
+          },
+          {
+            "id": 13321126179,
+            "required": 10503860426,
+            "available": 91801452544
+          },
+          {
+            "id": 13311562524,
+            "required": 5791367362,
+            "available": 91801518080
+          },
+          {
+            "id": 13333510032,
+            "required": 367355269,
+            "available": 91801329664
+          },
+          {
+            "id": 13328130169,
+            "required": 67180645,
+            "available": 91801251840
+          },
+          {
+            "id": 13330727837,
+            "required": 67180639,
+            "available": 91801174016
+          },
+          {
+            "id": 13321384216,
+            "required": 67396503,
+            "available": 91801128960
+          }
+        ],
+        "chunkmanifests": [
+          {
+            "id": 13321126179,
+            "parts": 5,
+            "original_size": 5218375781,
+            "original_sha256": "13d5ae2a5540909e336fcdb89b5f8217d6ef02fac7e76360e3c479989583b3de",
+            "manifest_sha256": "3240dfa0e647d565f004d489cf0ace28fc3eb5a9b610c400a2c7f06a6bca0037"
+          },
+          {
+            "id": 13311562524,
+            "parts": 3,
+            "original_size": 2862129249,
+            "original_sha256": "9f6f388775d99889700cf87c8a295d87406716ff5dc18e974182187a22d5a84c",
+            "manifest_sha256": "d91365900e1d71998f70771dfdc4c41ae20ecc9057b55e5cec686daaac125cac"
+          }
+        ],
+        "source_job_metadata_rows": 12,
+        "all_available_log_records": 17,
+        "reviewer_GETs": 0,
+        "local_originalZIP_or_chunkbodies": false
+      },
+      "publication_timing_boundary": "Explicit ORIGINALchatGO allowedbyte-preservation publication reviewbeforeoverallarchiverterminal; ROOTselected2smallassetsonce. Originalrun/job snapshotsin_progress/completed_atnull preserved. All5 SOURCEruns were terminal and allpublication/JIT/SHA/reassemblychecks unchanged. This doesnotbypassscientificcapture/source/evidencegates.",
+      "later_terminal_appendix": {
+        "proof": {
+          "path": "work/two-fully-stepped-jobs-independent-check-status-metadata-20261104.json",
+          "bytes": 1339,
+          "sha256": "382c77dfed4140987804042f423a8c9ea7cb94e5b78b2fb122649d960f7e4c01"
+        },
+        "observed_utc": "2026-11-04T16:16:38.961257+00:00",
+        "archive_run_status": "completed",
+        "actual_single_archive_job_check": {
+          "id": 126681044129,
+          "name": "archive",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-11-04T15:43:00Z",
+          "completed_at": "2026-11-04T15:50:30Z"
+        },
+        "note": "JobSUCCESScompleted15:50:30 nowacknowledged viaindependentcheck/API. Preserve rootpublication-onlyproof unchanged; ownjob450s/APIelapsed mayclosecostmetadata separately, no CPU/billing inference."
+      },
+      "integrity_scope": "WholeoriginalAPI SHA and remoteasset/partSHA,size plus qualifiedproducer concatenate verification establishbytepreservation. Onlyboundedpuremetadata tar members read. Workflow-logZIPCRC test is Actionsproducer scope; no freshlocalCRC of alloriginalscientificZIPentries or localchunkreassembly claim.",
+      "joint_retention": {
+        "previous_explicit_sources": 743,
+        "new5_overlap": 0,
+        "actual_explicit_unique_union": 748,
+        "ROOT_actual_GO": "work/archive-41860605149/root-actual-8-original-retention-review.json",
+        "ROOT_IND_actual_publication_GO": true
+      },
+      "original_criterion_costs": "Unchangedfixed81feasibility and validnegative/UNKNOWN/adversecases. Allfailures/preparation/hash/transfer/split/API/publication/archive/review/overlap and unknownhumancosts retained; ownarchive/remaining7/8/worker/readers/report/CI/finiteclosingtail separate; fixed859snapshot notextended, no recursiveownarchive.",
+      "science_joint79_unchanged": true,
+      "actual80_full81_report_PR4_merge_GO": false
+    }
+  },
+  "archiver_status_boundary": "ROOT publication-only proof preserves the earlier in_progress API observation. Later independent Checks and converged job APIs confirm completed SUCCESS15:50:30; own450recordedjobseconds enter finalcostscope separately. Originalpublicationbyte-preservation is verified from publishedasset/API identities, not inferred fromworkflowgreen.",
+  "remaining_finite_tail": "Own currentarchive publicationproof, worker8, original7and8, future strictreaders/report/CI/finalclosing metadata remain separate. Do not recursivelyarchivearchivejobs forever; finaloutsideActions metadata closure stilldue.",
+  "scope_boundary": "Retention counts do not add scientific cases or assume every historical cost-only ID has retained raw/modelpayloads. No originalZIP/chunkbody locally read. All original failed work, transfers/publication/review retained; humanpreparation unmeasured."
+}

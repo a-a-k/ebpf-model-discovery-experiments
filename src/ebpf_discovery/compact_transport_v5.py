@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
+import shutil
 import stat
 import time
 from typing import Any
@@ -12,6 +13,25 @@ import zipfile
 
 PROOF_SCHEMA = "v5-compact-stream-verification"
 SKIPPED_MEMBER = "attempt-journal.jsonl"
+REPORT_DISK_RESERVE_BYTES = 2 * 1024 ** 3
+
+
+class ReportDiskSpaceError(OSError):
+    """An input write would consume the reserved report output space."""
+
+
+def require_report_disk_space(path: Path, incoming_bytes: int) -> dict[str, int]:
+    """Keep actual input writes clear of the report output reserve."""
+    if type(incoming_bytes) is not int or incoming_bytes < 0:
+        raise ValueError("report incoming byte count must be a nonnegative integer")
+    free = shutil.disk_usage(path).free
+    required = incoming_bytes + REPORT_DISK_RESERVE_BYTES
+    if free < required:
+        raise ReportDiskSpaceError(
+            f"insufficient report disk space: free={free}, required={required}, "
+            f"incoming={incoming_bytes}, reserve={REPORT_DISK_RESERVE_BYTES}")
+    return {"available_bytes": free, "incoming_bytes": incoming_bytes,
+            "reserve_bytes": REPORT_DISK_RESERVE_BYTES, "required_bytes": required}
 
 
 def _safe_name(name: str) -> bool:
@@ -54,6 +74,10 @@ def extract_verified_compact(
                                 if member.filename == "evaluation-manifest.json"]
             if len(manifest_members) != 1:
                 raise ValueError("compact ZIP lacks one evaluation manifest")
+            disk_before_extract = require_report_disk_space(destination, sum(
+                member.file_size for member in members
+                if not member.is_dir() and member.filename != SKIPPED_MEMBER
+            ))
             manifest_raw = bundle.read(manifest_members[0])
             manifest = json.loads(manifest_raw)
             claims = manifest.get("files_sha256") if isinstance(manifest, dict) else None
@@ -160,6 +184,7 @@ def extract_verified_compact(
         "received_bytes": received_bytes,
         "member_count": len(rows),
         "safe_extract": True,
+        "disk_before_extract": disk_before_extract,
         "members": rows,
         "manifest_member_sha256": hashlib.sha256(manifest_raw).hexdigest(),
         "skipped_member": journal,

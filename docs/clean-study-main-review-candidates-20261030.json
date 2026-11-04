@@ -852,7 +852,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 3,
+  "pending_artifact_cells": 2,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2435,6 +2435,31 @@
       "seed": 8,
       "stage": "main",
       "system": "otel_demo"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41788955167,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_closed_capture_union",
+      "capture_artifact_id": 13321126179,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-absent-6-41788955167",
+      "capture_artifact_bytes": 5218375781,
+      "capture_artifact_digest": "sha256:13d5ae2a5540909e336fcdb89b5f8217d6ef02fac7e76360e3c479989583b3de",
+      "compact_artifact_id": 13328831922,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-absent-6-41788955167",
+      "compact_artifact_bytes": 55411351,
+      "compact_artifact_digest": "sha256:e9faaa6976b092ca01f9751c5b289faec8716148dd53418babcc4a976fe30255",
+      "restore_artifact_id": 13328492678,
+      "restore_artifact_name": "postcapture-processing-absent-6-41788955167",
+      "restore_artifact_bytes": 8404,
+      "restore_artifact_digest": "sha256:4122c83d623e2489450f45d978235bab40e4b4e479bd2b8c16cc5c8289bd19e9"
     }
   ],
   "superseded_planned_source": {
@@ -2447,7 +2472,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "78 of fixed81 MAIN cases admitted by BOTH originalactual scientificreviews; allvalidnegative/adverse/UNKNOWN preserved. Planned identities for ONLY remaining DeepFlow/OTel absent6/7/8 now match previously jointly approved actual replacements2fa/816/2fa and their oncePOST source/API records. Captures6/7 complete, unchanged offlineprocessing active (7 onlyfailed-processing retry afterhostshutdown);8 liveContinue. No new scientificadmission, outcome-based choice, old78 replay or workloadchange.",
+  "status": "79 of fixed81 MAIN cases BOTHoriginalactualscientificGO: OBI27 Coroot27 DeepFlow25. NeworiginalDeepFlow/OTel absent6 is VALIDNEGATIVE: native0, full34800primary/9600target, all24model forecastsUNKNOWN thoughall3independenttargetrates2800/3200 andconditionaldirectbaseline.875. RequiredoperationRPC/database paths unavailable despiteglobalgraph; no utilityfrominternalgraph/routefamilymetrics. All78priorvalidpositive/negative/adverse/UNKNOWN retained. RemainingONLYabsent7offlineprocessing andabsent8main/worker, no replay.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -3104,5 +3129,5 @@
       "all_previous_attempt_costs_and_valid78_cases_retained": true
     }
   ],
-  "latest_actual_review": "docs/clean-study-otel-full8-actual-review-20261104.json"
+  "latest_actual_review": "docs/clean-study-otel-absent6-actual-review-20261104.json"
 }

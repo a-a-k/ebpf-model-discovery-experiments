@@ -99,6 +99,45 @@ jobs:
                   proofs.append(_preparation_equivalence_facts(anchor,revision,original,tree(revision)))
           (path.parent/'source-equivalence.json').write_text(json.dumps(proofs,indent=2)+'\n')
           PY
+      - name: Free unused hosted SDK copies before assembling the saved report
+        run: |
+          mkdir -p results/iteration-5/provenance/report-host
+          df -B1 . > results/iteration-5/provenance/report-host/host-disk-before.txt
+          python - <<'PY'
+          import json,pathlib,shutil,subprocess,sys,time
+          out=pathlib.Path('results/iteration-5/provenance/report-host')
+          protected=[pathlib.Path.cwd().resolve(),pathlib.Path(sys.executable).resolve()]
+          for tool in ('gh','git','node'):
+              binary=shutil.which(tool)
+              if binary: protected.append(pathlib.Path(binary).resolve())
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc',
+                 '/usr/local/.ghcup','/usr/share/swift','/usr/lib/jvm',
+                 '/opt/hostedtoolcache/CodeQL','/opt/hostedtoolcache/go',
+                 '/opt/hostedtoolcache/Ruby','/opt/az','/opt/google',
+                 '/opt/microsoft','/usr/local/share/powershell','/usr/local/share/boost']
+          proof={'scope':'Saved report unused hosted SDK/images; no scientific payload deletion',
+                 'started_ns':time.time_ns(),'free_before':shutil.disk_usage('.').free,
+                 'protected_runtime_paths':[str(p) for p in protected],'paths':[],'docker_cleanup':[]}
+          for name in paths:
+              path=pathlib.Path(name)
+              assert not any(p.is_relative_to(path.resolve()) for p in protected)
+              before=shutil.disk_usage('.').free
+              size=subprocess.run(['sudo','du','-sx','-B1','--',name],capture_output=True,text=True)
+              subprocess.run(['sudo','rm','-rf','--',name],check=True)
+              proof['paths'].append({'path':name,'du_returncode':size.returncode,'du_stdout':size.stdout,
+                                     'du_stderr':size.stderr,'free_before':before,'free_after':shutil.disk_usage('.').free})
+              (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          for command in (['sudo','docker','image','prune','--all','--force'],
+                          ['sudo','docker','builder','prune','--all','--force']):
+              result=subprocess.run(command,capture_output=True,text=True)
+              proof['docker_cleanup'].append({'command':command,'returncode':result.returncode,
+                                              'stdout':result.stdout,'stderr':result.stderr})
+          proof.update(ended_ns=time.time_ns(),free_after=shutil.disk_usage('.').free)
+          (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps({'free_before':proof['free_before'],'free_after':proof['free_after'],
+                            'scope':proof['scope']}))
+          PY
+          df -B1 . > results/iteration-5/provenance/report-host/host-disk-after.txt
       - name: Retain Actions metadata and complete declared cost scope
         env:
           GH_TOKEN: ${{ github.token }}
@@ -204,7 +243,7 @@ jobs:
           )
           from ebpf_discovery.compact_transport_v5 import (
               extract_verified_compact, remove_verified_working_copy,
-              verified_nonmaterialized_files,
+              verified_nonmaterialized_files, require_report_disk_space,
           )
           from ebpf_discovery.report_v5 import _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin
           provenance=pathlib.Path('results/iteration-5/provenance')
@@ -250,6 +289,7 @@ jobs:
                   destination.mkdir(parents=True,exist_ok=False)
                   archive=pathlib.Path('results/iteration-5/source-artifacts')/repo.replace('/','__')/f"{compact[0]['id']}.zip"
                   archive.parent.mkdir(parents=True,exist_ok=True)
+                  download_disk_guard=require_report_disk_space(archive.parent,compact[0]['size_in_bytes'])
                   download_started=time.monotonic()
                   with archive.open('wb') as stream:
                       completed=subprocess.run(['gh','api',
@@ -271,6 +311,7 @@ jobs:
                       raise SystemExit(f'compact ZIP verification failed for {name}: {error}')
                   remove_verified_working_copy(archive,zip_proof)
                   zip_proof['download_elapsed_seconds']=download_elapsed
+                  zip_proof['disk_before_download']=download_disk_guard
                   nonmaterialized=verified_nonmaterialized_files(
                       zip_proof,destination/'evaluation-manifest.json',expected)
                   full_artifact=full[0] if full else None
@@ -292,6 +333,8 @@ jobs:
                   if missing and full_available:
                       full_archive=(pathlib.Path('results/iteration-5/source-artifacts')/
                           repo.replace('/','__')/f"{full_artifact['id']}.zip")
+                      recovery_source['disk_before_download']=require_report_disk_space(
+                          full_archive.parent,full_artifact['size_in_bytes'])
                       with full_archive.open('wb') as stream:
                           full_download=subprocess.run(['gh','api',
                               f"repos/{repo}/actions/artifacts/{full_artifact['id']}/zip"],
@@ -377,6 +420,15 @@ jobs:
         env:
           SELECTION: ${{ inputs.selection_manifest }}
         run: |
+          python - <<'PY'
+          import json,pathlib
+          from ebpf_discovery.compact_transport_v5 import require_report_disk_space
+          # Reserve raw source bytes before build() retains deterministic gzip copies.
+          evaluation_bytes=sum(p.stat().st_size for p in pathlib.Path('work/v5-inputs').rglob('evaluation-v5.json'))
+          proof=require_report_disk_space(pathlib.Path('.'),evaluation_bytes)
+          proof['scope']='Conservative raw source-evaluation budget before deterministic gzip retention plus report/figures reserve; no source bytes removed'
+          pathlib.Path('results/iteration-5/provenance/disk-before-aggregate.json').write_text(json.dumps(proof,indent=2)+'\n')
+          PY
           args=()
           if [[ -n "$SELECTION" ]]; then
             git ls-files --error-unmatch "$SELECTION" >/dev/null
