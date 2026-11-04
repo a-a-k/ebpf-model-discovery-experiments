@@ -8,8 +8,8 @@ import requests
 
 from ebpf_discovery import checkpoint_v4 as checkpoints
 from ebpf_discovery import remote_toolchain_v4 as remote
-from test_checkpoint_v4 import _capture
-from test_remote_toolchain_v4 import FakeResponse
+from tests.test_checkpoint_v4 import _capture
+from tests.test_remote_toolchain_v4 import FakeResponse
 
 
 @pytest.fixture
