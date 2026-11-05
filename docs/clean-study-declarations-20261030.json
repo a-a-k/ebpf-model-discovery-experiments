@@ -2932,7 +2932,8 @@
           "system": "otel_demo",
           "mode": "absent",
           "seed": 7,
-          "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b"
+          "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b",
+          "evidence_layout": "closed_capture_compact_union_v1"
         }
       ],
       "note": "ONLYsame original closed absent7 capture41781475751/source8166f7d5ed3ef1e5c505cd22aea6745d5ad81070/capsule13315023235 resource-controlled processing. No applicationtraffic/refit/newtrials. Source src/systems/restorer unchanged from original. New processingrun/source explicit, actual2GiBswap only afterfullstagepeakguard, original4I guard retained; nice/ionice/ownedOOMscore/samples/diagnostics. All original4failed processing34048s and currentprep/CI/review/transfers/processing/publication/closing retained. Not scientificadmission, no proven rootcause/cure/sufficiency/ETA. Future sourceconsumer exact dual-origin profile and actualcaseGO required."
@@ -6906,6 +6907,16 @@
       "run_id": 41986886869,
       "role": "product_ci",
       "note": "Actual standard3-job Linux CI for fixed original closed absent8 resource-control recovery sourceea40d2595dd35b4c384633d4201c9d3602f0cb4f. Owned-child priorities/lifecycle tests actuallypassed7/7 on Linux; unchanged src/systems/restorer. No applicationtraffic/modelrefit/scientificadmission. All CI/preparation/transfer and failed costs retained."
+    },
+    {
+      "run_id": 41999799434,
+      "role": "product_ci",
+      "note": "StandardthreejobLinuxCI for5362c12251631cfb7d6b5de66e2e577aa150853c exacttwo controlledsavedcapture consumer profiles. Unchanged originalcapture scientificmethod/inputs and existing79cases; strict dualscientific/publication identity, own816/2fa scientificGitprofiles, exactnew8uploadhold/sharedB/4I/resourcechildexit guards. No scientificmain/smoke replay/admission; no futureartifactIDs/unions. IncludeallactualCIjob/fixture/preparation/verification/failurecosts; no selfCIonlycommit."
+    },
+    {
+      "run_id": 42003162078,
+      "role": "archive",
+      "note": "Finite seven-terminal-source retention with unchanged qualified bbcd archiver, nine original artifacts/19234264245B. Exact old7/8 captures+prefixes, worker8, three prior CIs and previous archive ownproof. Existing748, currentcontrolledprocessing7/8, currentconsumerCI and116historical rawpayloads excluded. Whole source SHA/API, remote chunks/reassembly, ledger/checksums and actual JIT disk guards retained. No original deletion/capture/refit/rescore/admission; all actual transfer/archive/failure/proof/finiteclosing costs retained; fixed859 snapshot unchanged, humanunknown."
     }
   ],
   "blocked_main_cells": [],

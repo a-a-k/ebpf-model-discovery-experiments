@@ -856,7 +856,7 @@
     ]
   ],
   "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
-  "pending_artifact_cells": 2,
+  "pending_artifact_cells": 1,
   "cells": [
     {
       "system": "deathstarbench",
@@ -2464,6 +2464,33 @@
       "restore_artifact_name": "postcapture-processing-absent-6-41788955167",
       "restore_artifact_bytes": 8404,
       "restore_artifact_digest": "sha256:4122c83d623e2489450f45d978235bab40e4b4e479bd2b8c16cc5c8289bd19e9"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41991292539,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b",
+      "scientific_capture_run_id": 41781475751,
+      "scientific_capture_head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070",
+      "evidence_layout": "closed_capture_compact_union_v1",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_closed_capture_union",
+      "capture_artifact_id": 13315023235,
+      "capture_artifact_name": "postcapture-v5-deepflow-main-otel_demo-absent-7-41781475751",
+      "capture_artifact_bytes": 5725603997,
+      "capture_artifact_digest": "sha256:c91fafafbfaf8a752a19083c882ae29552fb46c5eb916822fbce9568a3683169",
+      "compact_artifact_id": 13404526182,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-absent-7-41991292539",
+      "compact_artifact_bytes": 58628004,
+      "compact_artifact_digest": "sha256:a1a5a8f7b88f0f9c1ddd0c1d47fcdaffcd6e430a548965317d8d8549313774a3",
+      "restore_artifact_id": 13404705385,
+      "restore_artifact_name": "postcapture-processing-absent-7-41991292539",
+      "restore_artifact_bytes": 49257,
+      "restore_artifact_digest": "sha256:231f07bb9f8d333d5e18e0677f20fe87e3293b40a31bfc1cec207a522355a175"
     }
   ],
   "superseded_planned_source": {

@@ -761,6 +761,24 @@ CLOSED_CAPTURE_COMPACT_UNIONS[41788955167] = {
 }
 
 
+CLOSED_CAPTURE_COMPACT_UNIONS[41991292539] = {
+    **CLOSED_CAPTURE_COMPACT_UNION,
+    'run_id': 41991292539, 'head_sha': '67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b',
+    'cell': ('deepflow', 'otel_demo', 'absent', 7),
+    'capture_run_id': 41781475751, 'capture_head_sha': '8166f7d5ed3ef1e5c505cd22aea6745d5ad81070',
+    'capture_job': 126413805627, 'processing_job': 127123892184,
+    'workflow_path': '.github/workflows/infrastructure.yml',
+    'artifacts': {
+        'capture': {'id': 13315023235, 'name': 'postcapture-v5-deepflow-main-otel_demo-absent-7-41781475751',
+            'size_in_bytes': 5725603997, 'digest': 'sha256:c91fafafbfaf8a752a19083c882ae29552fb46c5eb916822fbce9568a3683169'},
+        'compact': {'id': 13404526182, 'name': 'v5-summary-deepflow-main-otel_demo-absent-7-41991292539',
+            'size_in_bytes': 58628004, 'digest': 'sha256:a1a5a8f7b88f0f9c1ddd0c1d47fcdaffcd6e430a548965317d8d8549313774a3'},
+        'restore': {'id': 13404705385, 'name': 'postcapture-processing-absent-7-41991292539',
+            'size_in_bytes': 49257, 'digest': 'sha256:231f07bb9f8d333d5e18e0677f20fe87e3293b40a31bfc1cec207a522355a175'}},
+    'independent_original_design_GO_sha256': 'f2c3635ce0b300ba716282869bf98d12470345e970a1261dbdcbe19d619420a1',
+}
+
+
 def _closed_union_artifact_origin(profile, kind):
     if kind == 'capture':
         return (profile.get('capture_run_id', profile['run_id']),

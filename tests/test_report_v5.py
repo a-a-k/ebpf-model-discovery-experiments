@@ -1144,13 +1144,15 @@ def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_indepen
 
 
 @pytest.mark.parametrize('mutation',['none','capture_as_processing','foreign_chain','wrong_original','fake_full'])
-def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tmp_path,mutation):
+@pytest.mark.parametrize('union_run', [41706823165,41991292539])
+def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tmp_path,mutation,union_run):
     import importlib.util
     from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS
-    p=CLOSED_CAPTURE_COMPACT_UNIONS[41706823165]
+    p=CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
     spec=importlib.util.spec_from_file_location('full8_union_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
-    folder,_=recovered_summary(tmp_path/'inputs')
+    from ebpf_discovery.report_v5 import SAVED_CAPTURE_RECOVERY_SOURCES
+    folder,_=recovered_summary(tmp_path/'inputs', SAVED_CAPTURE_RECOVERY_SOURCES[p['head_sha']])
     a=json.loads((folder/'artifact-provenance.json').read_text());c=p['artifacts']['compact']
     a.update(artifact_id=c['id'],name=c['name'],digest=c['digest'],full_artifact_id=None,
         full_artifact_digest=None,full_artifact_expired=None,closed_capture_union=module.union_api_fixture(p))
@@ -1163,7 +1165,7 @@ def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tm
         manifest['scientific_capture_identity']['run_id']='123';write(folder/'evaluation-manifest.json',manifest)
     write(folder/'artifact-provenance.json',a)
     declarations=declared(tmp_path/'declared.json',[{'run_id':p['run_id'],'collector':'deepflow','stage':'main',
-        'cells':[{'collector':'deepflow','system':'otel_demo','mode':'full','seed':8,
+        'cells':[{**dict(zip(('collector','system','mode','seed'),p['cell'])),
                   'head_sha':p['head_sha'],'evidence_layout':p['layout']}]}])
     call=lambda:build([tmp_path/'inputs'],declarations,tmp_path/'report')
     if mutation!='none':
@@ -1172,5 +1174,5 @@ def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tm
         result=call();row=attempts(result,'main')[0]
         assert row['eligible_main_coverage'] and row['closed_capture_union_available']
         assert not row['full_source_artifact_available'] and not row['independently_admitted']
-        assert row['manifest']['scientific_capture_identity']['run_id']=='41642796796'
-        assert row['run_id']==41706823165
+        assert row['manifest']['scientific_capture_identity']['run_id']==str(p['capture_run_id'])
+        assert row['run_id']==p['run_id']
