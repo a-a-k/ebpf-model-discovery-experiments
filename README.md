@@ -29,8 +29,14 @@ separates these actual decisions from technical source/CI flags. The original
 captures, frozen models and external outcomes were retained during processing
 recovery. Failures of additional processed-full uploads do not trigger new
 traffic or model calculations; their explicit evidence unions preserve the
-unavailable final mutable SQL/full snapshots honestly. Final aggregate figures,
-publication and the finite closing-cost appendix are being exported separately.
+unavailable final mutable SQL/full snapshots honestly. The
+[final saved report](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42030778818)
+has completed successfully: all 81 selected cases, 2,160 copied operation/source/view
+rows and 27 figure groups, each in PNG, SVG and PDF. The
+[delivery record](docs/clean-study-final-report-delivery-20261105.json) binds the
+actual source, artifact, file hashes and separate original-criterion reviews.
+Small presentation exports and the finite closing-cost/publication receipt will
+be recorded with the [evidence releases](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases).
 
 Read the [brief interpretation](docs/CURRENT_FEASIBILITY_FINDINGS_V5.md) for the supported missing-trace findings, direct baselines and application failure limits.
 The question is eBPF feasibility with absent/incomplete tracing. The user selected

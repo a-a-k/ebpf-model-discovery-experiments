@@ -2,7 +2,7 @@
   "schema_version": "v5-report-declarations",
   "purpose": "Feasibility of eBPF graph discovery and graph-driven simulation with absent or incomplete native tracing.",
   "experiment_head": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
-  "main_dispatch_status": "Completed scientific reviews of all 81 fixed cases (27 per collector), including adverse and UNKNOWN outcomes. Final 7/8 used the same original sealed captures. All 886 currently declared repository/run cost keys remain. The first final report failed at a metadata projection boundary before aggregation; scientific results are complete. Saved-report delivery, its source CI and finite closing costs remain separately attributable; no scientific replay or outcome-based selection.",
+  "main_dispatch_status": "Completed all 81 fixed scientific cases (27 per collector) and the final saved report42030778818, retaining adverse and UNKNOWN outcomes. Final7/8 reused original sealed captures. All current888 repository/run cost keys are terminal; the report freezes886 and the sourceCI/reportself complete the separate888 cut. Final source integration CI and one closing archive/ownproof appendix are recorded finitely outside that cut, without scientific replay or recursive CI/archive commits.",
   "attempt_runs": [
     {
       "run_id": 41085491102,
@@ -6948,6 +6948,16 @@
       "run_id": 42023089985,
       "role": "report",
       "note": "Actual failed saved-report delivery at source a9b8d75f07467e2301388afc5d2f375286439e6f: job127230469585 ran 2048 seconds and failed at compact retrieval before aggregation/rendering. Cost-ledger projections omit workflow_run origin fields; the strict closed-union guard correctly rejected them. All scientific81 cases remain complete. Fix uses complete paginated actual artifact API metadata, preserving every source/hash/origin and existing-full guard; all seven real API bundles pass the unchanged guard. No raw/model/SQL/journal/evaluation payloads were read locally. Preserve this failed report, all transfers, CI/review and finite closing costs; rebuild only the saved report, never scientific cases."
+    },
+    {
+      "run_id": 42029816722,
+      "role": "product_ci",
+      "note": "Ordinary source CI at d5b3ef01b7c75e4faacc3172ae7cb114fc9e4de7 for the exact four-path saved-report origin metadata boundary fix. Complete paginated artifact API replaces shortened cost projections; strict source/hash/origin checks and all scientific implementation unchanged. No new scientific case, diagnostic qualification, capture or model replay. All CI/fixture/preparation/review costs remain in the finite closing appendix outside the committed 886-key report input cut."
+    },
+    {
+      "run_id": 42030778818,
+      "role": "report",
+      "note": "Actual SUCCESS final saved report at d5b3ef01b7c75e4faacc3172ae7cb114fc9e4de7, job127256379744/all16steps success: 7783 recorded runner seconds; artifact13426995942/303971824 bytes/SHA25696abfc6640b831c94960276dc7d7ddf26cbecef5fb0c7089c82f2353cb186bcf. All81canonicalcases/2160copiedforecastrows/27figuregroups/81PNG-SVG-PDF files verified by both original-criterion output reviews; valid negative/adverse/UNKNOWN and equal direct/context/native baselines retained. Exactly249compact ZIPs77239065376B received, fullrecovery0. SourceCI42029816722/148recordedjobseconds plus thisreport are outside committed886-key reportcut; current terminal888cut known4851365 recorded jobseconds. All future integrationCI/lastarchive/ownproof/nonrunnerpublication costs follow once in finite closing appendix. No new study traffic/Bering/Sheaft/refit/outcome replay; no sourceevaluation/raw/model/SQL/journal/fullscientificZIP local."
     }
   ],
   "blocked_main_cells": [],

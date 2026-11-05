@@ -109,3 +109,13 @@ The failed report's 2,048 recorded runner seconds and its transfer/review costs
 remain attributable. All 81 scientific cases remain complete. Only the saved
 report is rebuilt; no application traffic, model calculation or outcome
 measurement is repeated.
+
+The corrected [final run 42030778818](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42030778818)
+completed all steps successfully at `d5b3ef01b7c75e4faacc3172ae7cb114fc9e4de7`.
+It received exactly 249 compact ZIPs (77,239,065,376 bytes), with zero full-archive
+recovery downloads. Its source evaluations yield the complete 81-cell selection,
+2,160 copied forecast rows and 27 PNG/SVG/PDF figure groups. Actual pre-aggregate
+free space was 99,310,800,896 bytes against a 15,266,386,700-byte guarded requirement.
+The report job's 7,783 recorded seconds and the preceding source CI's 148 recorded
+job seconds are retained outside the report's explicit 886-key cost cut. These are API job
+intervals, including I/O and waits, rather than CPU, billing or campaign wall time.

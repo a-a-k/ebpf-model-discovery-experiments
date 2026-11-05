@@ -3,8 +3,9 @@
 Both original actual-evidence reviews admit all 81 fixed main cases:
 27 OBI, 27 Coroot and 27 DeepFlow. Valid negative, adverse and UNKNOWN results
 remain in the comparison. All application workloads, saved-data processing and
-case interpretations are complete. Aggregate figures and the finite publication
-and cost appendix are exported separately.
+case interpretations are complete. The final saved report and all 27 figure
+groups are complete too. The [delivery record](clean-study-final-report-delivery-20261105.json)
+binds their actual source, hashes, reviews and the separate finite closing-cost scope.
 
 The question is whether the tested eBPF evidence can support operation graphs
 and actual Sheaft forecasts when SDK traces are absent or incomplete. Availability
@@ -75,3 +76,21 @@ parent/worker waits, recovery, CI, review, transfer and finite retention/closing
 costs stay attributable. Human preparation is unmeasured. The [current saved
 evidence review](saved-capture-recovery-consumer-20261103.md) records original
 capsule/compact identities and the limits of missing processed-full publications.
+
+The [final report run](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42030778818)
+completed at source `d5b3ef01b7c75e4faacc3172ae7cb114fc9e4de7`.
+It retains all 81 current case selections and 2,160 copied forecast rows.
+The four methods and two views share the same external attempts; those rows
+do not add independent trials. UNKNOWN forecasts remain visibly unavailable.
+Figure ranges copy saved error ranges and are not confidence intervals.
+
+The presentation exports are `report-v5.md`, `saved-values-v5.json`,
+`figure-files-v5.json` and the 7.4 MB `figures-v5.zip` with all 27 PNG/SVG/PDF
+groups and their value/hash sidecars. Full hash-bound source evaluations remain
+in the separate retained report archive. Actual release tags, asset hashes,
+source-integration checks and final costs will be recorded in the finite closing
+publication receipt in [evidence releases](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases).
+The generated report freezes 886 cost keys; the delivery record also accounts
+for the source CI and finished report, bringing the current terminal cut to 888.
+Subsequent integration CI and the last archive are appended once in that closing
+receipt, without another scientific run or a recursive archive/CI cycle.
