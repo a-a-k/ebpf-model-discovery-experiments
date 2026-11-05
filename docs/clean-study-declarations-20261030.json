@@ -2947,7 +2947,8 @@
           "system": "otel_demo",
           "mode": "absent",
           "seed": 8,
-          "head_sha": "ea40d2595dd35b4c384633d4201c9d3602f0cb4f"
+          "head_sha": "ea40d2595dd35b4c384633d4201c9d3602f0cb4f",
+          "evidence_layout": "closed_capture_compact_union_v1"
         }
       ],
       "note": "ONLYsame original closed absent8 capture41816827576/source2fae9a6bdc8519444bb84dcfa74a8fd4f3705932/capsule13340037317 resource-controlled processing. No applicationtraffic/refit/newtrials. Source src/systems/restorer unchanged from original. New processingrun/source explicit, actual2GiBswap only afterfullstagepeakguard, original4I guard retained; nice/ionice/ownedOOMscore/samples/diagnostics. All original4failed processing34048s and currentprep/CI/review/transfers/processing/publication/closing retained. Not scientificadmission, no proven rootcause/cure/sufficiency/ETA. Future sourceconsumer exact dual-origin profile and actualcaseGO required."
@@ -6917,6 +6918,16 @@
       "run_id": 42003162078,
       "role": "archive",
       "note": "Finite seven-terminal-source retention with unchanged qualified bbcd archiver, nine original artifacts/19234264245B. Exact old7/8 captures+prefixes, worker8, three prior CIs and previous archive ownproof. Existing748, currentcontrolledprocessing7/8, currentconsumerCI and116historical rawpayloads excluded. Whole source SHA/API, remote chunks/reassembly, ledger/checksums and actual JIT disk guards retained. No original deletion/capture/refit/rescore/admission; all actual transfer/archive/failure/proof/finiteclosing costs retained; fixed859 snapshot unchanged, humanunknown."
+    },
+    {
+      "run_id": 42007362561,
+      "role": "product_ci",
+      "note": "Standard three-job Linux CI for e88215da4ef5364afbcb86bf0bfc7c2408853f92 actual controlled absent7 literal capsule+compact union packet and one-cell strict reader manifest. Qualified5362 scientific mapping/resource/reader/selector/bootstrap functions unchanged; no missing processedfull fabrication, old79 replay, newtraffic/refit/rescore or scientificadmission. Include all CI/fixture/preparation/failure/verification costs, no self-CI-only commit."
+    },
+    {
+      "run_id": 42008468607,
+      "role": "evidence",
+      "note": "Existing strict saved-reader, ONLY actual controlledprocessing41991292539/source67c5 of originalcapture41781475751/source8166 DeepFlow OTel absent7 capsule+compact+restore/API union. All79 reviewed cases retained, no application traffic/refit/rescore/replay or outcome-based selection. Complete source/worker/SQL/hold/release/freeze/native/context/external outcome predicates unchanged. All metadata/check/transfer/failure/review/retention costs retained. Scientificadmission remains separate; no processedfull/finalSQL availability claim."
     }
   ],
   "blocked_main_cells": [],

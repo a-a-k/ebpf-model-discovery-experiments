@@ -1144,7 +1144,7 @@ def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_indepen
 
 
 @pytest.mark.parametrize('mutation',['none','capture_as_processing','foreign_chain','wrong_original','fake_full'])
-@pytest.mark.parametrize('union_run', [41706823165,41991292539])
+@pytest.mark.parametrize('union_run', [41706823165,41991292539,41991299175])
 def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tmp_path,mutation,union_run):
     import importlib.util
     from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS
@@ -1176,3 +1176,15 @@ def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tm
         assert not row['full_source_artifact_available'] and not row['independently_admitted']
         assert row['manifest']['scientific_capture_identity']['run_id']==str(p['capture_run_id'])
         assert row['run_id']==p['run_id']
+
+
+@pytest.mark.parametrize('run_id', [41991292539, 41991299175])
+def test_actual_controlled_union_never_accepts_other_known_controlled_case(run_id):
+    import importlib.util
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_api_facts
+    spec=importlib.util.spec_from_file_location('controlled_union_cross_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+    other=41991299175 if run_id==41991292539 else 41991292539
+    with pytest.raises(ValueError,match='different declared case'):
+        _closed_union_api_facts(fixture.union_api_fixture(CLOSED_CAPTURE_COMPACT_UNIONS[other]),
+                               expected_profile=CLOSED_CAPTURE_COMPACT_UNIONS[run_id])

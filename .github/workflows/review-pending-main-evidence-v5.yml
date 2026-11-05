@@ -213,7 +213,8 @@ jobs:
               41642789738:('partial',8,'f045cc0adec187ec00443da0bea72b4ec4d2082e',13269654367,13263018872,13270767555),
               41706823165:('full',8,'a9c5785516550b45ed39df8ada37749c061a9f5d',13274316899,13261622894,13273877181),
               41788955167:('absent',6,'2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',13328831922,13321126179,13328492678),
-              41991292539:('absent',7,'67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b',13404526182,13315023235,13404705385)}
+              41991292539:('absent',7,'67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b',13404526182,13315023235,13404705385),
+              41991299175:('absent',8,'ea40d2595dd35b4c384633d4201c9d3602f0cb4f',13405832633,13340037317,13406261986)}
           for cell in cells:
               if cell.get('full_scope')=='retrieve_closed_capture_union' and (
                       cell.get('evidence_layout')!='closed_capture_compact_union_v1' or
