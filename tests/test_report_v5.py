@@ -18,7 +18,7 @@ from ebpf_discovery.report_v5 import (
     build, render, resolve_evaluation_reference,
     PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
     UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
-    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE, SOURCE_PINS,
+    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE, CONTROLLED_CAPTURE_RECOVERY_SOURCES, SOURCE_PINS,
 )
 
 
@@ -1026,11 +1026,10 @@ def test_saved_recovery_profile_binds_exact_delivery_source_tree(mutation):
             _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
 
 
-def recovered_summary(root):
-    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+def recovered_summary(root, profile=CLOSED_CAPTURE_RECOVERY_SOURCE):
     run_id = profile['processing_run_id']
     folder, evaluation = summary(root, run_id, 'main', head_sha=profile['revision'])
-    identity = {'collector': 'deepflow', 'system': 'otel_demo', 'mode': 'full', 'seed': 8}
+    identity = {k: profile['capture_identity'][k] for k in ('collector', 'system', 'mode', 'seed')}
     evaluation.update(identity)
     evaluation['status'].update(profile['capture_identity'])
     pins = {**SOURCE_PINS['deepflow'], 'collector': 'deepflow', 'source_domain': 'ebpf-deepflow'}
@@ -1040,7 +1039,7 @@ def recovered_summary(root):
     write(folder/'evaluation-v5.json', evaluation)
     write(folder/'status.json', evaluation['status'])
     write(folder/'observations/collector.json', pins)
-    name = f'v5-summary-deepflow-main-otel_demo-full-8-{run_id}'
+    name = f"v5-summary-deepflow-main-otel_demo-{identity['mode']}-{identity['seed']}-{run_id}"
     full_name = name.replace('v5-summary-', 'campaign-v5-', 1)
     manifest = json.loads((folder/'evaluation-manifest.json').read_text())
     manifest.update(identity, full_artifact_name=full_name,
@@ -1062,9 +1061,10 @@ def recovered_summary(root):
 
 @pytest.mark.parametrize('mutation', ['none', 'publication_as_capture', 'original_substitute', 'capsule_substitute',
                                       'qualification', 'refit', 'wrong_processing_run'])
-def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path, mutation):
-    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
-    folder, evaluation = recovered_summary(tmp_path/'inputs')
+@pytest.mark.parametrize('profile', [CLOSED_CAPTURE_RECOVERY_SOURCE,
+    *CONTROLLED_CAPTURE_RECOVERY_SOURCES.values()])
+def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path, mutation, profile):
+    folder, evaluation = recovered_summary(tmp_path/'inputs', profile)
     manifest = json.loads((folder/'evaluation-manifest.json').read_text())
     if mutation == 'publication_as_capture':
         evaluation['status'].update(run_id=str(profile['processing_run_id']), commit=profile['revision'])
@@ -1079,7 +1079,8 @@ def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path,
     write(folder/'evaluation-manifest.json', manifest)
     declarations = declared(tmp_path/'declared.json', [{'run_id': profile['processing_run_id'],
         'collector': 'deepflow', 'stage': 'main',
-        'cells': [{'system': 'otel_demo', 'mode': 'full', 'seed': 8}], 'note': 'saved original capture processing'}])
+        'cells': [{k:profile['capture_identity'][k] for k in ('system','mode','seed')}],
+        'note': 'saved original capture processing'}])
     if mutation == 'none':
         result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
         item = attempts(result, 'main')[0]

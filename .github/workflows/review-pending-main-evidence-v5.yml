@@ -160,7 +160,9 @@ jobs:
                           'f045cc0adec187ec00443da0bea72b4ec4d2082e',
                           '8166f7d5ed3ef1e5c505cd22aea6745d5ad81070',
                           '2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',
-                          'a9c5785516550b45ed39df8ada37749c061a9f5d'}
+                          'a9c5785516550b45ed39df8ada37749c061a9f5d',
+                          '67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b',
+                          'ea40d2595dd35b4c384633d4201c9d3602f0cb4f'}
                           or cell.get('stage')!='main' or cell.get('runner')!='study'
                           or cell.get('compact_scope')!='retrieve_selected_nonjournal'
                           or cell.get('full_scope')!=('retrieve_closed_capture_union' if union else 'retrieve_family_selected')
@@ -186,6 +188,16 @@ jobs:
                           cell.get('scientific_capture_run_id') != 41642796796 or
                           cell.get('scientific_capture_head_sha') != 'f045cc0adec187ec00443da0bea72b4ec4d2082e'):
                       raise SystemExit('saved capture recovery is restricted to the one original full8 identity')
+                  controlled={
+                      '67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b':(7,41991292539,41781475751,'8166f7d5ed3ef1e5c505cd22aea6745d5ad81070'),
+                      'ea40d2595dd35b4c384633d4201c9d3602f0cb4f':(8,41991299175,41816827576,'2fae9a6bdc8519444bb84dcfa74a8fd4f3705932')}
+                  if cell.get('head_sha') in controlled:
+                      seed,processing,capture,source=controlled[cell['head_sha']]
+                      if (tuple(cell[k] for k in ('collector','system','mode','seed','run_id')) !=
+                              ('deepflow','otel_demo','absent',seed,processing) or
+                              cell.get('scientific_capture_run_id')!=capture or
+                              cell.get('scientific_capture_head_sha')!=source):
+                          raise SystemExit('controlled saved capture differs from its exact original and processing identity')
           else:
               raise SystemExit('unknown review phase')
           required={'collector','system','mode','seed','run_id','head_sha',

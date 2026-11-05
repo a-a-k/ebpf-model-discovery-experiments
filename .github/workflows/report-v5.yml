@@ -38,7 +38,7 @@ jobs:
               CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
               POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE,
               IDENTICAL_INPUT_DISCOVERY_SOURCE,
-              UPLOAD_HOLD_PARENT_PROOF_SOURCE,
+              UPLOAD_HOLD_PARENT_PROOF_SOURCE, CONTROLLED_CAPTURE_RECOVERY_SOURCES,
           )
           declaration_input=os.environ['DECLARATIONS']
           input_source={'kind':'inline_json'}
@@ -78,6 +78,8 @@ jobs:
               approved[CLOSED_CAPTURE_RECOVERY_SOURCE['revision']]=CLOSED_CAPTURE_RECOVERY_SOURCE['reviewed_changed_blobs']
               approved[IDENTICAL_INPUT_DISCOVERY_SOURCE['revision']]=IDENTICAL_INPUT_DISCOVERY_SOURCE['reviewed_changed_blobs']
               approved[UPLOAD_HOLD_PARENT_PROOF_SOURCE['revision']]=UPLOAD_HOLD_PARENT_PROOF_SOURCE['reviewed_changed_blobs']
+              for revision, profile in CONTROLLED_CAPTURE_RECOVERY_SOURCES.items():
+                  approved[revision]=profile['reviewed_changed_blobs']
           proofs=[]
           if approved:
               destination=path.parent/'source-equivalence'

@@ -28,6 +28,8 @@ RESTORE_DIAGNOSTIC_FIXED = {
     'restore.json', 'artifact-api.json', 'disk-before-download.json', 'diagnostic-sdk-cleanup.json',
     'host-disk-before.txt', 'host-disk-after.txt', 'disk-final.txt', 'memory-final.txt',
     'python-environment.txt', 'disk-before-processing.json',
+    'resource-prepare.json', 'processing-child-result.json', 'processing-resource-samples.jsonl',
+    'kernel-final.txt', 'kernel-final.err',
 }
 
 COMPACT_FIXED = {
@@ -51,7 +53,8 @@ FULL_FIXED = {
     *{f"infrastructure/postcapture-host/{name}" for name in
       ("restore.json", "disk-before-download.json", "disk-before-processing.json", "diagnostic-sdk-cleanup.json",
        "host-disk-before.txt", "host-disk-after.txt", "disk-final.txt", "memory-final.txt",
-       "python-environment.txt", "transport-retries.jsonl")},
+       "python-environment.txt", "transport-retries.jsonl", "resource-prepare.json",
+        "processing-child-result.json", "processing-resource-samples.jsonl", "kernel-final.txt", "kernel-final.err")},
     "infrastructure/postcapture-guest-release.json", "infrastructure/guest-evidence-capture.json",
     "infrastructure/a/check-copy.err", "infrastructure/b/check-copy.err",
     "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",

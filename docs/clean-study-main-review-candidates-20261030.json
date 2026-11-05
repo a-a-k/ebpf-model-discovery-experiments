@@ -378,20 +378,24 @@
       "mode": "absent",
       "seed": 7,
       "collector": "deepflow",
-      "run_id": 41781475751,
+      "run_id": 41991292539,
       "stage": "main",
       "runner": "study",
-      "head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070"
+      "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b",
+      "scientific_capture_run_id": 41781475751,
+      "scientific_capture_head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070"
     },
     {
       "system": "otel_demo",
       "mode": "absent",
       "seed": 8,
       "collector": "deepflow",
-      "run_id": 41816827576,
+      "run_id": 41991299175,
       "stage": "main",
       "runner": "study",
-      "head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932"
+      "head_sha": "ea40d2595dd35b4c384633d4201c9d3602f0cb4f",
+      "scientific_capture_run_id": 41816827576,
+      "scientific_capture_head_sha": "2fae9a6bdc8519444bb84dcfa74a8fd4f3705932"
     },
     {
       "system": "otel_demo",

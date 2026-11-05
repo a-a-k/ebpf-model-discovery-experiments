@@ -15,7 +15,8 @@ import uuid
 import yaml
 
 from opentelemetry.proto.collector.trace.v1.trace_service_pb2 import ExportTraceServiceRequest
-from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, _saved_capture_identity,
+from ebpf_discovery.report_v5 import (CLOSED_CAPTURE_RECOVERY_SOURCE, SAVED_CAPTURE_RECOVERY_SOURCES,
+    CONTROLLED_CAPTURE_RECOVERY_SOURCES, _saved_capture_identity,
     IDENTICAL_INPUT_DISCOVERY_SOURCE, UPLOAD_HOLD_PARENT_PROOF_SOURCE, CLOSED_CAPTURE_COMPACT_UNION, CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_profile, _closed_union_api_facts, _closed_union_artifact_origin)
 
 
@@ -49,19 +50,20 @@ GUEST_PROOF_HEADS = {"6ef079a7a7eac91e464a87a97881a56bc4449e5c",
                      "f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c", FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 CONTEXT_BASELINE_HEADS = {FRESH_HEAD, PREPARED_PARENT_HEAD, PREPARED_PORT_HEAD, PREPARED_GUEST_LOG_HEAD, IMMUTABLE_PATH_HEAD, UPLOADED_CHECKPOINT_COPY_HEAD, CLOSED_FINAL_SNAPSHOT_HEAD, STREAMED_CHECKPOINT_HEAD, PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD}
 for _named_heads in (FRESH_HEADS, METADATA_ATTACHMENT_HEADS, GUEST_PROOF_HEADS, CONTEXT_BASELINE_HEADS):
-    _named_heads.update(IDENTICAL_INPUT_DISCOVERY_HEADS)
+    _named_heads.update(IDENTICAL_INPUT_DISCOVERY_HEADS | set(CONTROLLED_CAPTURE_RECOVERY_SOURCES))
 FRESH_GUEST_IMAGE_SHA256 = "04e8f2461a16a44e78a370284471f29616cdd9baf1893df25807b71f985b6c94"
 
 
 def _capture_declaration(declaration):
-    if declaration['head_sha'] != CLOSED_CAPTURE_RECOVERY_HEAD:
+    profile = SAVED_CAPTURE_RECOVERY_SOURCES.get(declaration['head_sha'])
+    if profile is None:
         return declaration
-    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
     if ((declaration['collector'], declaration['system'], declaration['mode'], declaration['seed'],
-         declaration['run_id']) != ('deepflow', 'otel_demo', 'full', 8, profile['processing_run_id'])
+         declaration['run_id']) != tuple(profile['capture_identity'][k] for k in
+             ('collector', 'system', 'mode', 'seed')) + (profile['processing_run_id'],)
             or declaration.get('scientific_capture_run_id') != int(profile['capture_identity']['run_id'])
             or declaration.get('scientific_capture_head_sha') != profile['capture_identity']['commit']):
-        raise ValueError('saved recovery declaration is outside the fixed original full8 case')
+        raise ValueError('saved recovery declaration is outside its fixed original capture case')
     return {**declaration, 'run_id': int(profile['capture_identity']['run_id']),
             'head_sha': profile['capture_identity']['commit']}
 
@@ -265,8 +267,12 @@ def verified_reference(root: Path, claim: dict, freeze: dict | None) -> Path:
 
 def shared_observed_discovery_facts(root, toolchain, declaration, freeze, graphs, build):
     """Verify named logical coverage of a genuine identical-input origin; no replay."""
+    controlled = declaration['head_sha'] in CONTROLLED_CAPTURE_RECOVERY_SOURCES
+    declaration = _capture_declaration(declaration)
     paths = sorted(toolchain.glob('discovery/*/*/shared-observed-reference.json'))
     if not paths:
+        if controlled:
+            raise ValueError('controlled absent capture lacks its mandatory shared observed discovery')
         return []
     if (declaration['head_sha'] not in IDENTICAL_INPUT_DISCOVERY_HEADS
             or (declaration['collector'], declaration['system'], declaration['mode'])
@@ -1020,6 +1026,7 @@ def verify_package(package: Path, selected: Path, *, kind: str,
 
 def upload_hold_parent_proof_facts(root, remote_root, declaration, index, provenance, parent_import, saved):
     """Bind the one named schedule to actual full proofs and same-parent clocks."""
+    declaration = _capture_declaration(declaration)
     if declaration['head_sha'] != UPLOAD_HOLD_PARENT_PROOF_HEAD:
         return None
     if ((declaration['collector'], declaration['system'], declaration['mode'])
@@ -1152,7 +1159,7 @@ def compact_facts(root: Path, declaration: dict, *, smoke_qualification=False) -
     status = read(root / "status.json")
     evaluation = read(root / "evaluation-v5.json")
     scientific = _capture_declaration(declaration)
-    if declaration['head_sha'] == CLOSED_CAPTURE_RECOVERY_HEAD:
+    if declaration['head_sha'] in SAVED_CAPTURE_RECOVERY_SOURCES:
         _saved_capture_identity(manifest, declaration['run_id'],
             tuple(declaration[k] for k in ('collector', 'system', 'mode', 'seed')))
     identity = (status.get("collector"), status.get("system"), status.get("mode"),
@@ -1446,12 +1453,103 @@ def postcapture_guest_facts(root: Path, declaration: dict) -> dict | None:
             'whole_case_memory_disk_headroom_or_six_hour_cure_proven': False}
 
 
+def controlled_processing_resource_facts(host, declaration, marker):
+    """Check actual resource receipts for only the two named saved captures."""
+    profile = CONTROLLED_CAPTURE_RECOVERY_SOURCES.get(declaration['head_sha'])
+    if profile is None:
+        return None
+    scientific = _capture_declaration(declaration)
+    ready = read(host/'resource-prepare.json')
+    child = read(host/'processing-child-result.json')
+    original = profile['capture_identity']
+    identity = {'seed': original['seed'], 'capture_run_id': original['run_id'],
+        'capture_source': original['commit'], 'processing_run_id': str(declaration['run_id']),
+        'processing_source': declaration['head_sha']}
+    sizes = {'Z': profile['capture_artifact']['size_in_bytes'], **profile['resource_input_bytes']}
+    gib = 1024**3
+    required = max(sizes['Z']+sizes['F']+sizes['P'], sizes['F']+sizes['P']+4*sizes['I'])+3*gib
+    swap = str(PurePosixPath(marker['scientific_root']).parent/'closed-offline-swapfile')
+    commands = [['sudo', 'install', '-m', '600', '/dev/null', swap],
+        ['sudo', 'fallocate', '-l', str(2*gib), swap], ['sudo', 'mkswap', swap], ['sudo', 'swapon', swap]]
+    allocation = ready.get('allocation_commands') or []
+    active = ready.get('active_owned_swap') or []
+    if (any({k: row.get(k) for k in identity} != identity for row in (ready, child))
+            or {k: ready.get(k) for k in sizes} != sizes
+            or marker.get('file_bytes') != sizes['F'] or marker.get('index_bytes') != sizes['I']
+            or ready.get('status') != 'ready' or ready.get('requested_swap_bytes') != 2*gib
+            or ready.get('swap_path') != swap or ready.get('required_before_allocation') != required
+            or type(ready.get('actual_free_before')) is not int or ready['actual_free_before'] < required
+            or type(ready.get('actual_free_after')) is not int or ready['actual_free_after'] < required-2*gib
+            or ready.get('memory_sufficiency_or_root_cause_proven') is not False
+            or [r.get('argv') for r in allocation] != commands
+            or any(type(r.get('returncode')) is not int or r['returncode'] != 0 for r in allocation)
+            or len(active) != 5 or active[:2] != [swap, 'file']
+            or not active[2].isdigit() or int(active[2])*1024 < 2*gib-1024**2):
+        raise ValueError('controlled resource preparation differs from its exact original inputs and full disk budget')
+    expected_argv = ['ionice', '-c', '2', '-n', '7']
+    tail = ['-m', 'ebpf_discovery.postcapture_v5', 'finalize', '--campaign', 'work/campaign',
+        '--proof', 'work/restored-postcapture/postcapture-proof', '--capture-run-id',
+        str(scientific['run_id']), '--capture-source', scientific['head_sha']]
+    argv = child.get('argv') or []
+    clocks = [ready.get('started_ns'), ready.get('ended_ns'), child.get('started_ns'), child.get('ended_ns')]
+    import math
+    if (child.get('status') != 'complete' or type(child.get('child_returncode')) is not int
+            or child['child_returncode'] != 0 or type(child.get('final_child_returncode')) is not int
+            or child['final_child_returncode'] != 0 or child.get('new_application_traffic') is not False
+            or child.get('model_refit') is not False
+            or child.get('priority_policy') != {'nice_increment': 10, 'ionice_class': 2,
+                'ionice_level': 7, 'child_oom_score_adj_at_least': 500}
+            or type(child.get('owned_pid')) is not int or child['owned_pid'] <= 0
+            or len(argv) != 6+len(tail) or argv[:5] != expected_argv or argv[6:] != tail
+            or not PurePosixPath(argv[5]).is_absolute() or not PurePosixPath(argv[5]).name.startswith('python')
+            or any(type(n) is not int or n <= 0 for n in clocks) or clocks != sorted(clocks)
+            or any(type(child.get(k)) not in (int, float) or not math.isfinite(child[k]) or child[k] < 0
+                for k in ('child_maxrss_kib', 'child_user_seconds', 'child_system_seconds'))):
+        raise ValueError('controlled child result lacks its exact successful unchanged command and retained costs')
+    samples = host/'processing-resource-samples.jsonl'
+    count, observed, previous = 0, 0, child['started_ns']
+    with samples.open(encoding='utf8') as stream:
+        for line in stream:
+            row = json.loads(line)
+            recorded = row.get('recorded_ns')
+            if (row.get('owned_pid') != child['owned_pid'] or type(recorded) is not int
+                    or not previous <= recorded <= child['ended_ns']
+                    or type(row.get('actual_disk_free')) is not int or row['actual_disk_free'] < 0
+                    or not {'MemTotal', 'MemAvailable', 'SwapTotal', 'SwapFree'} <= (row.get('host_memory') or {}).keys()
+                    or any(type(v) is not int or v < 0 for v in row['host_memory'].values())):
+                raise ValueError('controlled resource sample has a foreign process, invalid clocks or missing core fields')
+            previous = recorded
+            status = row.get('process_status') or {}
+            terminal = str(status.get('State', '')).split()[:1] == ['Z']
+            if terminal and 'process_sample_error' not in row:
+                if (not {'Name', 'State', 'Threads'} <= status.keys()
+                        or type(row.get('oom_score_adj')) is not int or row['oom_score_adj'] < 500
+                        or not str(row.get('cpu_stat', '')).startswith(str(child['owned_pid'])+' ')
+                        or not row.get('io')):
+                    raise ValueError('controlled terminal-process sample lacks its retained identity or policy')
+            elif 'process_sample_error' not in row:
+                if (not {'Name', 'State', 'VmRSS', 'VmHWM', 'VmSize', 'VmSwap', 'Threads'} <= (row.get('process_status') or {}).keys()
+                        or type(row.get('oom_score_adj')) is not int or row['oom_score_adj'] < 500
+                        or not str(row.get('cpu_stat', '')).startswith(str(child['owned_pid'])+' ')
+                        or not row.get('io')):
+                    raise ValueError('controlled owned-process sample lacks its retained status or policy')
+                observed += 1
+            count += 1
+    if count == 0 or observed == 0:
+        raise ValueError('controlled processing has no retained owned-process observation')
+    return {'resource_prepare': ready, 'processing_child_result': child, 'sample_rows': count,
+        'owned_process_observations': observed, 'samples_sha256': sha(samples),
+        'optional_pressure_or_kernel_availability_is_not_an_eligibility_gate': True,
+        'memory_sufficiency_or_root_cause_proven': False}
+
+
 def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
                             worker: dict | None, selected: dict, *, compact=None, restore_root=None, actual_processing=None) -> dict | None:
     """Bind the exact new source's sealed inputs to its actual offline output."""
-    recovered = declaration['head_sha'] == CLOSED_CAPTURE_RECOVERY_HEAD
+    recovery_profile = SAVED_CAPTURE_RECOVERY_SOURCES.get(declaration['head_sha'])
+    recovered = recovery_profile is not None
     staged_delivery = recovered or declaration['head_sha'] in IDENTICAL_INPUT_DISCOVERY_HEADS
-    if declaration['head_sha'] not in ({CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS):
+    if not recovered and declaration['head_sha'] not in ({CLOSED_POSTCAPTURE_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS):
         return None
     scientific = _capture_declaration(declaration)
     if ((declaration['collector'], declaration['system']) != ('deepflow', 'otel_demo')
@@ -1520,8 +1618,11 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
     if recovered:
         _saved_capture_identity(summary, declaration['run_id'],
             tuple(declaration[k] for k in ('collector', 'system', 'mode', 'seed')))
-        if {k: artifact.get(k) for k in ('id', 'name', 'size_in_bytes', 'digest')} != CLOSED_CAPTURE_RECOVERY_SOURCE['capture_artifact']:
+        if {k: artifact.get(k) for k in ('id', 'name', 'size_in_bytes', 'digest')} != recovery_profile['capture_artifact']:
             raise ValueError('recovered case uses a different original closed artifact')
+        if (declaration['head_sha'] in CONTROLLED_CAPTURE_RECOVERY_SOURCES
+                and sha(folder/'closed.json') != recovery_profile['closed_manifest_sha256']):
+            raise ValueError('controlled processing uses a different original closed manifest')
     expected_publication_name = (declaration['compact_artifact_name'].replace('v5-summary-', 'campaign-v5-', 1)
                                  if union else selected['artifact']['name'])
     if (summary.get('qualification_only') is True or (not recovered and summary.get('scientific_capture_identity') is not None)
@@ -1558,7 +1659,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
         owned = restore.get('verified_delivery_identity') or {}
         reserve = 4*marker['index_bytes']
         expected_delivery = str(PurePosixPath(marker['scientific_root']).parent/'closed-postcapture.zip')
-        if (guard.get('budget') != CLOSED_CAPTURE_RECOVERY_SOURCE['delivery_budget']
+        if (guard.get('budget') != (recovery_profile or IDENTICAL_INPUT_DISCOVERY_SOURCE)['delivery_budget']
                 or guard.get('download_restore_required_bytes') != artifact['size_in_bytes']+fixed+1024**3
                 or guard.get('restored_processing_peak_bytes') != fixed+reserve+1024**3
                 or restore.get('capture_run_id') != expected['run_id']
@@ -1584,6 +1685,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
                 or phase.get('available_bytes') != delivery.get('free_after')
                 or phase.get('available_bytes', -1) < phase.get('required_bytes', 0)):
             raise ValueError('saved recovery lacks its exact owned delivery lifetime or actual SQL/WAL guard')
+    resources = controlled_processing_resource_facts(host, declaration, marker)
     if union:
         namespace = selected.get('closed_capture_namespace') or {}
         if (namespace.get('scientific_file_bytes') != marker['file_bytes']
@@ -1661,6 +1763,7 @@ def closed_postcapture_facts(root: Path, declaration: dict, frozen: dict,
             'unavailable_processed_full_components': list(union['unavailable'])}
            if union else {}),
         'closed_artifact': artifact, 'actual_restore': restore, 'pre_download_capacity': guard,
+        **({'controlled_processing_resources': resources} if resources is not None else {}),
         'closed_discovery_import': linked,
         'inventory_rows': len(names), 'inventory_logical_bytes': logical_bytes,
         'selected_immutable_payloads_bound_to_inventory': selected_count,
@@ -1699,8 +1802,8 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                 raise ValueError(f"selected full evidence differs from pre-target freeze: {name}")
     build = read(root / "toolchain-build/toolchain-build.json")
     pins = {row["name"]: row["commit"] for row in build.get("binaries") or []}
-    fresh = declaration["head_sha"] in FRESH_HEADS
-    guest_facts = guest_platform_facts(root) if declaration["head_sha"] in GUEST_PROOF_HEADS else None
+    fresh = scientific["head_sha"] in FRESH_HEADS
+    guest_facts = guest_platform_facts(root) if scientific["head_sha"] in GUEST_PROOF_HEADS else None
     expected_pins = {**PINS, "bering": FRESH_BERING} if fresh else PINS
     if pins != expected_pins:
         raise ValueError("saved toolchain source pins differ")
@@ -1822,7 +1925,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
 
     branch_facts = []
     context_facts = None
-    paired = declaration['head_sha'] in CONTEXT_BASELINE_HEADS
+    paired = scientific['head_sha'] in CONTEXT_BASELINE_HEADS
     forecasts_path = toolchain / "forecasts.json"
     forecasts = read(forecasts_path) if forecasts_path.is_file() else None
     if forecasts is not None:
@@ -1886,9 +1989,9 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         if not model_edges.issubset(graph_edges) or not model_endpoints.issubset(graph_endpoints):
                             raise ValueError("Sheaft model contains unobserved graph identities")
                     metadata_facts = None
-                    if saved_row.get('available') and declaration['head_sha'] in METADATA_ATTACHMENT_HEADS:
+                    if saved_row.get('available') and scientific['head_sha'] in METADATA_ATTACHMENT_HEADS:
                         metadata_facts = (paired_simulation_facts(toolchain, branch, saved_row, freeze)
-                            if declaration['head_sha'] in CONTEXT_BASELINE_HEADS
+                            if scientific['head_sha'] in CONTEXT_BASELINE_HEADS
                             else operation_metadata_facts(toolchain, branch, freeze))
                     branch_facts.append({
                         "source": source, "variant": variant, "operation": operation,
@@ -1990,7 +2093,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
     if not (remote_root / "parent-import.json").is_file() and handoff_selected.is_dir():
         remote_root = handoff_selected
     parent_import_path = remote_root / "parent-import.json"
-    if (declaration["head_sha"] in ({PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS)) and not parent_import_path.is_file():
+    if (scientific["head_sha"] in ({PETCLINIC_WORKER_HEAD, POSTCAPTURE_GUEST_RELEASE_HEAD, CLOSED_POSTCAPTURE_HEAD, CLOSED_CAPTURE_RECOVERY_HEAD} | IDENTICAL_INPUT_DISCOVERY_HEADS)) and not parent_import_path.is_file():
         raise ValueError("named worker source requires retained parent worker import")
     worker_provenance_path = remote_root / "worker/worker-provenance.json"
     worker_status_path = remote_root / "worker/worker-status.json"
@@ -2001,7 +2104,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
         output_manifest = read(remote_root / "worker/output-manifest.json")
         index = read(remote_root / "training-index-proof.json")
         parent_phase = ('parent_after_dispatch_before_import'
-                        if declaration['head_sha'] == UPLOAD_HOLD_PARENT_PROOF_HEAD else 'parent_before_dispatch')
+                        if scientific['head_sha'] == UPLOAD_HOLD_PARENT_PROOF_HEAD else 'parent_before_dispatch')
         identities = [parent_import.get("identity") or {},
                       worker_provenance.get("identity") or {},
                       worker_status.get("identity") or {},
@@ -2045,7 +2148,7 @@ def full_facts(root: Path, declaration: dict, freeze: dict | None,
                         "training_index_proof": index,
                         "output_claim_scope": output_claim_scope}
         scheduled_proof = upload_hold_parent_proof_facts(
-            root, remote_root, declaration, index, worker_provenance, parent_import, saved)
+            root, remote_root, scientific, index, worker_provenance, parent_import, saved)
         if scheduled_proof is not None:
             worker_facts['parent_proof_schedule'] = scheduled_proof
     if declaration["system"] == "deathstarbench" and worker_facts is None:
