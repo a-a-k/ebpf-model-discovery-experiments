@@ -1188,3 +1188,58 @@ def test_actual_controlled_union_never_accepts_other_known_controlled_case(run_i
     with pytest.raises(ValueError,match='different declared case'):
         _closed_union_api_facts(fixture.union_api_fixture(CLOSED_CAPTURE_COMPACT_UNIONS[other]),
                                expected_profile=CLOSED_CAPTURE_COMPACT_UNIONS[run_id])
+
+
+@pytest.mark.parametrize('run_id', [41642781338, 41991292539, 41991299175])
+@pytest.mark.parametrize('mutation', ['none', 'missing_origin', 'wrong_origin', 'existing_full'])
+def test_report_workflow_uses_complete_api_for_union_not_cost_projection(tmp_path, monkeypatch, run_id, mutation):
+    import importlib.util
+    import pathlib
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_api_facts
+    spec = importlib.util.spec_from_file_location('report_union_boundary_fixture',
+        Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    fixture = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fixture)
+    profile = CLOSED_CAPTURE_COMPACT_UNIONS[run_id]
+    bundle = fixture.union_api_fixture(profile)
+    compact = next(a for a in bundle['artifacts'] if a['id'] == profile['artifacts']['compact']['id'])
+    if mutation == 'missing_origin': compact.pop('workflow_run')
+    if mutation == 'wrong_origin': compact['workflow_run']['head_sha'] = '0' * 40
+    actual = [a for a in bundle['artifacts'] if
+              a.get('workflow_run', {}).get('id', run_id) == run_id]
+    if mutation == 'existing_full':
+        actual.append({'name': compact['name'].replace('v5-summary-', 'campaign-v5-', 1)})
+    pages = [{'artifacts': actual[:1]}, {'artifacts': actual[1:]}]
+    calls = []
+
+    def api(command):
+        calls.append(command)
+        path = command[-1]
+        if path.endswith(f'runs/{run_id}/artifacts?per_page=100'):
+            assert command[2:4] == ['--paginate', '--slurp']
+            return json.dumps(pages).encode()
+        for suffix, body in [(f'runs/{run_id}', bundle['run']),
+                (f'jobs/{profile["processing_job"]}', bundle['job']),
+                (f'jobs/{profile["capture_job"]}', bundle['capture_job']),
+                (f'artifacts/{profile["artifacts"]["capture"]["id"]}', bundle['artifacts'][0])]:
+            if path.endswith(suffix): return json.dumps(body).encode()
+        raise AssertionError(command)
+
+    monkeypatch.setattr(subprocess, 'check_output', api)
+    workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/report-v5.yml').read_text()
+    script = workflow.split('                  if union is not None:\n', 1)[1]
+    script = script.split('                  row=', 1)[0]
+    cost_projection = [{key: a.get(key) for key in
+                       ('id', 'name', 'digest', 'expired', 'size_in_bytes')} for a in actual]
+    namespace = {'union': profile, 'run_id': run_id, 'repo': 'a-a-k/ebpf-model-discovery-experiments',
+        'artifacts': cost_projection, 'provenance': tmp_path, 'json': json,
+        'pathlib': pathlib, 'subprocess': subprocess, '_closed_union_api_facts': _closed_union_api_facts}
+    if mutation == 'none':
+        exec(compile(textwrap.dedent(script), 'actual-report-union-boundary', 'exec'), namespace)
+        assert sorted(namespace['union_evidence']['artifacts'], key=lambda a: a['id']) == sorted(
+            bundle['artifacts'], key=lambda a: a['id'])
+    else:
+        with pytest.raises(ValueError):
+            exec(compile(textwrap.dedent(script), 'actual-report-union-boundary', 'exec'), namespace)
+    assert json.loads((tmp_path / f'closed-union-artifacts-{run_id}.json').read_text()) == pages
+    assert len(calls) >= 1

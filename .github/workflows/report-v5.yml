@@ -267,7 +267,14 @@ jobs:
                   if union is not None:
                       def actual_api(path):
                           return json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/{path}']))
-                      union_artifacts=list(artifacts)
+                      # Cost rows intentionally omit workflow_run. The strict
+                      # evidence guard needs the complete, current API objects.
+                      union_artifact_pages=json.loads(subprocess.check_output([
+                          'gh','api','--paginate','--slurp',
+                          f'repos/{repo}/actions/runs/{run_id}/artifacts?per_page=100']))
+                      (provenance/f'closed-union-artifacts-{run_id}.json').write_text(
+                          json.dumps(union_artifact_pages,indent=2)+'\n')
+                      union_artifacts=[a for page in union_artifact_pages for a in page['artifacts']]
                       if union.get('capture_run_id',run_id)!=run_id:
                           union_artifacts.append(actual_api(f'artifacts/{union["artifacts"]["capture"]["id"]}'))
                       union_evidence={'run':actual_api(f'runs/{run_id}'),

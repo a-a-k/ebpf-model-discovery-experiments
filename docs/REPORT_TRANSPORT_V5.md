@@ -84,3 +84,28 @@ exactly one eligible candidate per cell; scientific interpretation is recorded
 separately in the [matrix closure](clean-study-original-matrix81-scientific-closure-20261105.json).
 The report copies saved evaluations and renders their values. It does not invoke
 Bering, Sheaft, new application traffic, model fitting or outcome remeasurement.
+
+## Final report metadata boundary correction
+
+The first final saved-report attempt,
+[42023089985](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42023089985),
+stopped before aggregation and plotting. The cost ledger deliberately projects
+artifact metadata to ID, name, digest, expiry and size. The report mistakenly
+passed those shortened rows to the closed-capture evidence check, which also
+requires the original `workflow_run.id` and `workflow_run.head_sha`. The strict
+check correctly rejected the missing fields. This was a report integration bug;
+it did not identify an empirical or hash mismatch.
+
+The correction retrieves complete paginated artifact API objects for each named
+closed-capture union and retains the original API pages in report provenance.
+The separate original-capsule API lookup for different capture/processing runs
+remains. Every source, size, digest, expiry, origin and existing-full check is
+unchanged. Complete actual API bundles for all seven unions passed that same
+check before rebuilding. A regression executes the literal workflow boundary
+with shortened cost rows and two full API pages, including rejection of missing
+or wrong origins and an unexpected processed-full archive.
+
+The failed report's 2,048 recorded runner seconds and its transfer/review costs
+remain attributable. All 81 scientific cases remain complete. Only the saved
+report is rebuilt; no application traffic, model calculation or outcome
+measurement is repeated.
