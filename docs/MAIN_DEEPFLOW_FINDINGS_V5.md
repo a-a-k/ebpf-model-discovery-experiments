@@ -1,15 +1,11 @@
 # Main-study DeepFlow findings
 
-This is a partial evidence review, not the completed 81-cell conclusion. Negative
-and unavailable results remain part of the study and are not reasons to rerun a
-technically complete case.
-
-Seventy-nine main cells have now passed both original actual-evidence reviews:
-27 OBI, 27 Coroot and 25 DeepFlow. All DeepFlow social-network and Petclinic cases,
-all OTel partial/full cases and OTel absent/6, are reviewed. Only two OTel
-SDK-absent cases remain scientifically incomplete. Their application workloads
-have finished; processing and evidence review remain. Earlier batch counts below describe their
-review dates, not the current remaining scope.
+All 81 main cases have passed both original actual-evidence reviews:
+27 OBI, 27 Coroot and 27 DeepFlow. All three DeepFlow applications, all SDK modes
+and seeds 6/7/8 are complete. Valid negative, adverse and unavailable results
+remain in the study. Earlier batch counts below describe their review dates,
+not the current scope. Aggregate publication and closing costs are separate
+from scientific case completion.
 
 ## OTel absent repetition 6
 
@@ -45,6 +41,50 @@ Only the additional processed-full upload failed with a JavaScript stack error.
 That publication failure does not justify replaying this scientifically complete
 negative case. The original sealed inputs remain available; unavailable final
 mutable SQL and processed-full snapshots are not claimed.
+
+## OTel SDK-absent repetitions 7 and 8
+
+The [seed 7](clean-study-otel-absent7-controlled-actual-review-20261105.json) and
+[seed 8](clean-study-otel-absent8-controlled-actual-review-20261105.json) reviews
+complete the fixed matrix. Each original capture retains 34,800 primary
+attempts, 9,600 targets, 19 blocks with SDK tracing disabled, exactly empty
+training/final Native inputs, and forecasts frozen before the first target.
+Separate resource-controlled processing reuses those same sealed captures;
+it does not repeat traffic, refit models or run new Sheaft calculations.
+
+| SDK-absent seed | Genuine Bering spans per view | Raw services / edges / endpoints | Network-scope services / edges / endpoints | Available operation forecasts |
+|---|---:|---|---|---:|
+| 6 | 754,412 | 48 / 45 / 30 | 39 / 43 / 30 | 0 of 24 |
+| 7 | 852,346 | 48 / 44 / 28 | 39 / 42 / 28 | 0 of 24 |
+| 8 | 835,061 | 50 / 47 / 30 | 39 / 43 / 30 | 0 of 24 |
+
+Each seed executes two genuine Bering calls, one per view; two combined-source
+references reuse their identical inputs because Native is empty. The 18 original
+branches and six preflights retain no operation Sheaft command when a forecast
+is unavailable. The four-method, two-view comparison retains null point values
+and [0,1] intervals. Global database aliases do not prove the missing operation
+RPC/SQL/Redis paths, and the prespecified edge union adds no point forecast.
+
+Every operation in both final repetitions has 2800 successes and 400 failures
+out of 3200 externally evaluated target attempts. The equally informed direct conditional
+A OR B baseline predicts the matching .875. DB-down has 0/20 successes and
+restored DB-up 20/20; graph-derived DB forecasts remain null. Normal, resumed
+and recovered async checks each retain 20 exact persisted records; a paused
+snapshot has 20 pending records. A shared explicit causal message ID remains
+unproved. Hierarchical ARI1 on 600 family labels equals the cheap family
+assignment and does not establish extra external prediction value.
+
+Seed 7 retains the original before-dispatch SQL proof. Seed 8 retains the
+original upload-hold preflight and after-dispatch/before-import proof, equal to
+the checkpoint and post-worker state. Both retain the full input inventory,
+frozen hashes, worker/source pins, original ZIP SHA/CRC and owned delivery
+removal/4I disk proofs. Their unchanged offline suffix subprocesses exit
+successfully and retain 179/249 resource samples. The workflow jobs fail only at
+the additional processed-full upload;
+the exact capsule/compact/restore/API unions keep final mutable SQL and full
+snapshots explicitly unavailable. All failed and successful processing costs
+remain. These results neither prove the cause of earlier runner disconnections
+nor transfer old checkout OOM diagnoses to these repetitions.
 
 ## OTel partial repetitions 6/7/8 and full repetition 8
 
@@ -91,8 +131,9 @@ reviews for [partial/6](clean-study-otel-partial6-actual-review-20261104.json),
 [partial/7](clean-study-otel-partial7-actual-review-20261104.json),
 [partial/8](clean-study-otel-partial8-actual-review-20261104.json) and
 [full/8](clean-study-otel-full8-actual-review-20261104.json). They admit these
-original cases; they do not establish the three unfinished absent cases, a
-universal collector limitation, a cost advantage or the final full81 result.
+original cases. The separate SDK-absent reviews above complete the matrix;
+none of these decisions establishes a universal collector limitation or a
+complete-cost advantage.
 
 ## OTel full repetition 6
 
@@ -143,8 +184,8 @@ failed requests violated it. The full/6 and full/7 outcome discrepancies cannot
 be assigned wholly to graph reconstruction quality on that evidence alone.
 Their eBPF-only operation forecasts remain unknown independently of
 this runtime finding. These two full-SDK controls do not establish DeepFlow's
-absent/partial feasibility; the three technically incomplete SDK-absent OTel
-cases remain required. Memory limits are not changed selectively and adverse outcomes are
+absent/partial feasibility. The three SDK-absent OTel cases are now reviewed
+separately above. Memory limits are not changed selectively and adverse outcomes are
 not replaced or rescored.
 
 ## Petclinic full repetitions 6/7/8
@@ -396,6 +437,6 @@ sufficient graph evidence for the requested operation forecasts in this pinned
 configuration. This is an observed applicability limitation, not a reason to
 replay a complete case or a universal impossibility claim. The independently
 reviewed main subset reached **66/81 at that sixth-batch checkpoint**. The current
-reviewed subset is **79/81**; only DeepFlow/OTel SDK-absent seeds 7/8 remain
-scientifically incomplete. The final full81 report and finite retention tail are
-still required.
+scientifically reviewed matrix is **81/81**, including all three SDK-absent OTel
+repetitions. Aggregate report publication and the finite closing-cost tail are
+separate remaining steps.

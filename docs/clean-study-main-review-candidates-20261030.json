@@ -2530,7 +2530,7 @@
     ],
     "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
   },
-  "status": "79 of fixed81 MAIN cases BOTHoriginalactualscientificGO: OBI27 Coroot27 DeepFlow25. NeworiginalDeepFlow/OTel absent6 is VALIDNEGATIVE: native0, full34800primary/9600target, all24model forecastsUNKNOWN thoughall3independenttargetrates2800/3200 andconditionaldirectbaseline.875. RequiredoperationRPC/database paths unavailable despiteglobalgraph; no utilityfrominternalgraph/routefamilymetrics. All78priorvalidpositive/negative/adverse/UNKNOWN retained. RemainingONLYabsent7offlineprocessing andabsent8main/worker, no replay.",
+  "status": "All81 actual main-case scientific reviews complete under original missing/partialSDK feasibility criterion. Technicalpublished81 isnot81 positive or accurateforecasts. Aggregatefigures/publication/finitecostclosing separate.",
   "source_qualification": "docs/clean-study-declarations-20261030.json",
   "technical_replacements": [
     {
@@ -3187,5 +3187,21 @@
       "all_previous_attempt_costs_and_valid78_cases_retained": true
     }
   ],
-  "latest_actual_review": "docs/clean-study-otel-absent6-actual-review-20261104.json"
+  "latest_actual_review": {
+    "scientific_cases_BOTH_original_GO": 81,
+    "per_collector": {
+      "obi": 27,
+      "coroot": 27,
+      "deepflow": 27
+    },
+    "last_two_joint_reviews": [
+      "clean-study-otel-absent7-controlled-actual-review-20261105.json",
+      "clean-study-otel-absent8-controlled-actual-review-20261105.json"
+    ],
+    "scientific_matrix_closure": "clean-study-original-matrix81-scientific-closure-20261105.json",
+    "source_flags_are_not_external_utility": true,
+    "valid_negative_adverse_UNKNOWN_retained": true,
+    "aggregate_report_and_finite_closing_tail_pending": true
+  },
+  "prior_actual_review_before_final7and8": "docs/clean-study-otel-absent6-actual-review-20261104.json"
 }

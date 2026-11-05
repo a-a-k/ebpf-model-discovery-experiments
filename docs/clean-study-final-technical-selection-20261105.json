@@ -1,0 +1,1576 @@
+{
+  "policy": "technical_replacement_only_no_outcome_selection",
+  "scope": "Complete fixed81 CURRENTstudy technical-only duplicate selection from all119 declaredattempts/fullfreshartifactmetadata. Existing79canonical selections unchanged; originalabsent7/8 replacedonlyby qualified processing of SAMEsealedcaptures. Technical selection itself doesnot perform independentadmission; all81 actualscientific reviews are recorded separately.",
+  "cells": [
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13003274189,
+        13033430360
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13033430360,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13032887964
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13032887964,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13003174483,
+        13031719441
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13031719441,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13044720585
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13044720585,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13046016626
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13046016626,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13046041626
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13046041626,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13038523968
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13038523968,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13039485017
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13039485017,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13037724718
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13037724718,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13047725578
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13047725578,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13048841139
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13048841139,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13048312811
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13048312811,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13053851896
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13053851896,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13054379140
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13054379140,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13055870902
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13055870902,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13050303509
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13050303509,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13051618061
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13051618061,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13052315110
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13052315110,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13054174963
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13054174963,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13056622161
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13056622161,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13056877327
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13056877327,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13059797978
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13059797978,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13061076246
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13061076246,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13061398385
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13061398385,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13058311131
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13058311131,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13058536003
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13058536003,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "coroot",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13059063220
+      ],
+      "candidate_run_ids": [
+        41099997831,
+        41164826834
+      ],
+      "selected_artifact_id": 13059063220,
+      "selected_run_id": 41164826834,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13004585837,
+        13035719944
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13035719944,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13036640776
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13036640776,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13002919676,
+        13036566651
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13036566651,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13082500813
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41233204064,
+        41261041075,
+        41280950428
+      ],
+      "selected_artifact_id": 13082500813,
+      "selected_run_id": 41280950428,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13083132767
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41259938855,
+        41283135027
+      ],
+      "selected_artifact_id": 13083132767,
+      "selected_run_id": 41283135027,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13084307904
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41259950155,
+        41284561833
+      ],
+      "selected_artifact_id": 13084307904,
+      "selected_run_id": 41284561833,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13045643140,
+        13073185961,
+        13083570431
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41209663599,
+        41211541665,
+        41259904200,
+        41281970201
+      ],
+      "selected_artifact_id": 13083570431,
+      "selected_run_id": 41281970201,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13082022381
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41209827036,
+        41259915749,
+        41282001013
+      ],
+      "selected_artifact_id": 13082022381,
+      "selected_run_id": 41282001013,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13083863317
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41209667348,
+        41259927579,
+        41284552140
+      ],
+      "selected_artifact_id": 13083863317,
+      "selected_run_id": 41284552140,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13328831922
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41248344114,
+        41273870033,
+        41329450264,
+        41470525869,
+        41642750701,
+        41788955167
+      ],
+      "selected_artifact_id": 13328831922,
+      "selected_run_id": 41788955167,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13264370521,
+        13404526182
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41256202754,
+        41281990704,
+        41329454436,
+        41470533050,
+        41642758914,
+        41781475751,
+        41991292539
+      ],
+      "selected_artifact_id": 13404526182,
+      "selected_run_id": 41991292539,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13405832633
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41258000031,
+        41282528449,
+        41329458921,
+        41470540023,
+        41642766254,
+        41816827576,
+        41991299175
+      ],
+      "selected_artifact_id": 13405832633,
+      "selected_run_id": 41991299175,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13070855924,
+        13180120980
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41275223991,
+        41329463221,
+        41470575905
+      ],
+      "selected_artifact_id": 13180120980,
+      "selected_run_id": 41470575905,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13078899884,
+        13105935887
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41299253111,
+        41331878803
+      ],
+      "selected_artifact_id": 13105935887,
+      "selected_run_id": 41331878803,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13158215042,
+        13274316899
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41329467500,
+        41470585319,
+        41479813348,
+        41642796796,
+        41706823165
+      ],
+      "selected_artifact_id": 13274316899,
+      "selected_run_id": 41706823165,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13077297595,
+        13269692140
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41273434210,
+        41299248544,
+        41331875002,
+        41470550646,
+        41642775376
+      ],
+      "selected_artifact_id": 13269692140,
+      "selected_run_id": 41642775376,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13081860443,
+        13267240784
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41280961352,
+        41305885228,
+        41336793680,
+        41470558415,
+        41642781338
+      ],
+      "selected_artifact_id": 13267240784,
+      "selected_run_id": 41642781338,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13082336222,
+        13269654367
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41281980516,
+        41305889879,
+        41336799720,
+        41470566316,
+        41642789738
+      ],
+      "selected_artifact_id": 13269654367,
+      "selected_run_id": 41642789738,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13081240102
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13081240102,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13087352766
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13087352766,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13089510112
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120
+      ],
+      "selected_artifact_id": 13089510112,
+      "selected_run_id": 41164824120,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13127576461
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41387281004
+      ],
+      "selected_artifact_id": 13127576461,
+      "selected_run_id": 41387281004,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13125689765
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41387285443
+      ],
+      "selected_artifact_id": 13125689765,
+      "selected_run_id": 41387285443,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13128766763
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41387290675
+      ],
+      "selected_artifact_id": 13128766763,
+      "selected_run_id": 41387290675,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13108419474
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41336179872,
+        41349757716
+      ],
+      "selected_artifact_id": 13108419474,
+      "selected_run_id": 41349757716,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13109324655
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41348999127
+      ],
+      "selected_artifact_id": 13109324655,
+      "selected_run_id": 41348999127,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13107244130
+      ],
+      "candidate_run_ids": [
+        41099992213,
+        41164824120,
+        41342083079
+      ],
+      "selected_artifact_id": 13107244130,
+      "selected_run_id": 41342083079,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13002854306,
+        13031955460,
+        13036736462
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41173230022
+      ],
+      "selected_artifact_id": 13036736462,
+      "selected_run_id": 41173230022,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13005085242,
+        13033775073
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13033775073,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13031540651
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13031540651,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13043389060
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13043389060,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13037762162,
+        13043752982
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41189048917
+      ],
+      "selected_artifact_id": 13043752982,
+      "selected_run_id": 41189048917,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13044144045
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13044144045,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13037133622
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13037133622,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13038126178
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13038126178,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13039786797
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13039786797,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13044637241
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13044637241,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13050697068
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13050697068,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13051270662
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13051270662,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13051448270,
+        13060716608
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41227096018
+      ],
+      "selected_artifact_id": 13060716608,
+      "selected_run_id": 41227096018,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13060444344
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226695588
+      ],
+      "selected_artifact_id": 13060444344,
+      "selected_run_id": 41226695588,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13059407135
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226698796
+      ],
+      "selected_artifact_id": 13059407135,
+      "selected_run_id": 41226698796,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13050298135
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492
+      ],
+      "selected_artifact_id": 13050298135,
+      "selected_run_id": 41164821492,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13051759380,
+        13058538611
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41227089066
+      ],
+      "selected_artifact_id": 13058538611,
+      "selected_run_id": 41227089066,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13052325035,
+        13055928844,
+        13062912116
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41227092801,
+        41239167446
+      ],
+      "selected_artifact_id": 13062912116,
+      "selected_run_id": 41239167446,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13053398338
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226702306
+      ],
+      "selected_artifact_id": 13053398338,
+      "selected_run_id": 41226702306,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13054715516
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226705392
+      ],
+      "selected_artifact_id": 13054715516,
+      "selected_run_id": 41226705392,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13054660512
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226708635
+      ],
+      "selected_artifact_id": 13054660512,
+      "selected_run_id": 41226708635,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13057756387
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41232316943
+      ],
+      "selected_artifact_id": 13057756387,
+      "selected_run_id": 41232316943,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13057726582
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41233220186
+      ],
+      "selected_artifact_id": 13057726582,
+      "selected_run_id": 41233220186,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13056763084
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41233223018
+      ],
+      "selected_artifact_id": 13056763084,
+      "selected_run_id": 41233223018,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "candidate_artifact_ids": [
+        13054590786
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226692036
+      ],
+      "selected_artifact_id": 13054590786,
+      "selected_run_id": 41226692036,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "candidate_artifact_ids": [
+        13054433243
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226712664
+      ],
+      "selected_artifact_id": 13054433243,
+      "selected_run_id": 41226712664,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    },
+    {
+      "collector": "obi",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "candidate_artifact_ids": [
+        13054308157
+      ],
+      "candidate_run_ids": [
+        41099986985,
+        41164821492,
+        41226716530
+      ],
+      "selected_artifact_id": 13054308157,
+      "selected_run_id": 41226716530,
+      "reason_code": "technical_preparation_or_closure_replacement",
+      "reason": "Retain already independentlyreviewed currentstudy candidate, or exactcontrolled recovery ofsame originallycaptured case. Alternatives remainallprior technicalfailures/source replacements; no selection by forecast/accuracy/availability/outcome. Reporter muststill prove exactlyONE eligibletechnicallycomplete candidate.",
+      "independent_review_claim": false
+    }
+  ],
+  "single_attempt_keys_without_selection": [],
+  "pending_selected_keys": [],
+  "inventory_path": "work\\current119-final-report-technical-artifact-inventory-20261105.json",
+  "inventory_sha256": "9f25afba80a6fbf19a77aae7c626de6782ad4c0e0a81668912e2a993f8fbb75f",
+  "updated_utc": "2026-11-05T10:45:56.740570+00:00"
+}

@@ -1,8 +1,37 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: a fresh matched series with an explicit experiment controller.**
+**Completed matched scientific review: 81 of 81 main cases.**
 
-Actual scientific evidence has passed both original-criterion reviews for **79 of 81 main cases**. All OBI and Coroot cases and 25 DeepFlow cases are retained, including valid adverse and UNKNOWN results. Two DeepFlow/OTel cases without SDK traces remain. The [completed absent/6 review](docs/clean-study-otel-absent6-actual-review-20261104.json) is a valid negative result: all 24 model forecasts remain UNKNOWN, while each operation has 2800 successes in 3200 independent target attempts and the separately supplied conditional direct baseline predicts 0.875. Both remaining application workloads have finished; their saved-data processing and actual-evidence reviews remain in progress. The [current evidence review](docs/saved-capture-recovery-consumer-20261103.md) records the completed partial/full OTel results and their limits. The full81 comparison and final report remain incomplete.
+All 27 OBI, 27 Coroot and 27 DeepFlow cases have passed both original-criterion
+actual-evidence reviews, including valid adverse and UNKNOWN results. This is
+the fixed three-collector, three-application, three-SDK-mode matrix with seeds
+6/7/8. The question is whether eBPF can support operation models and external
+outcome forecasts when SDK traces are absent or incomplete.
+
+OBI supports the tested Petclinic and OTel HTTP operations without SDK traces;
+partial OTel also needs the separately declared observed SERVER-edge union.
+The tested Coroot and DeepFlow pipelines do not close the selected missing
+operation paths. All three lack the required social-network Thrift operation
+evidence. These findings concern the pinned collection/export/normalization/model
+pipelines, not a universal inability of eBPF or those products.
+
+The last DeepFlow/OTel SDK-absent cases are complete:
+[seed 6](docs/clean-study-otel-absent6-actual-review-20261104.json),
+[seed 7](docs/clean-study-otel-absent7-controlled-actual-review-20261105.json) and
+[seed 8](docs/clean-study-otel-absent8-controlled-actual-review-20261105.json).
+Each retains all 24 forecasts as UNKNOWN, while each operation has 2800 successes
+and 400 failures in 3200 externally evaluated target attempts. The equally informed,
+declared conditional direct baseline predicts the matching 0.875. No cost,
+novelty or prediction advantage over that baseline is claimed.
+
+The [scientific closure record](docs/clean-study-original-matrix81-scientific-closure-20261105.json)
+separates these actual decisions from technical source/CI flags. The original
+captures, frozen models and external outcomes were retained during processing
+recovery. Failures of additional processed-full uploads do not trigger new
+traffic or model calculations; their explicit evidence unions preserve the
+unavailable final mutable SQL/full snapshots honestly. Final aggregate figures,
+publication and the finite closing-cost appendix are being exported separately.
+
 Read the [brief interpretation](docs/CURRENT_FEASIBILITY_FINDINGS_V5.md) for the supported missing-trace findings, direct baselines and application failure limits.
 The question is eBPF feasibility with absent/incomplete tracing. The user selected
 a new runner reusing verified deployment and collection components. The common
@@ -15,8 +44,8 @@ and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/r
 An exact saved-input audit found that v5 lost v4's same-observation HTTP route
 alias binding, artificially disadvantaging native inputs. [PR6](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/6)
 repairs that adapter without changing graphs or supplied semantics. All three
-collectors require the complete new 81-cell matrix at one repaired source after
-paired evidence review and qualification. Superseded data and costs remain.
+collectors subsequently completed the matched 81-cell matrix at qualified
+sources with explicitly reviewed operational equivalents. Superseded data and costs remain.
 The a434 replacement qualification completed with 26 technical successes and one
 OBI OTel parser failure. It also exposed SDK/Compose role ambiguity in Petclinic
 fusion. [PR7](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/7)
@@ -50,8 +79,8 @@ records both explicit ORIGINAL-feasibility verdicts before the fresh full81 seri
 [DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
 [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
 The three original dispatches use immutable `study-20261031-v5`, all three
-applications/tracing modes, seeds6/7/8 and all ten operations. The final full81 result remains incomplete; the reviewed79-case findings are
-reported above with their application-specific limits. Unknown and adverse outcomes remain in scope.
+applications/tracing modes, seeds6/7/8 and all ten operations. The full81 scientific matrix is now reviewed; aggregate export and finite
+publication-cost closure remain separate. Unknown and adverse outcomes remain in scope.
 Technical replacements additionally use actual revisions `fbbda015` (parent disk
 preparation) and `13c017bf` (preventive guest port preparation). Experiment code,
 dependencies and fixtures remain identical to qualified `0c98bf4`; reporting
@@ -65,7 +94,7 @@ Earlier attempts, diagnostics and preparation costs are preserved in
 The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
 RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
 The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
-independent review and qualification decisions. The current reviewed and pending cases are listed above; the following section
+independent review and qualification decisions. The current completed case reviews are listed above; the following section
 preserves historical snapshots rather than the latest cohort status.
 
 **Historical iteration 5 series and audit snapshots.**
@@ -900,10 +929,14 @@ not added again. These historical runs do not add scientific cases to the fixed
 81-case cohort. For 116 historical IDs, retained cost metadata does not establish
 retention of the original raw or model payloads. The finite current archive tail
 is recorded separately. The [previous archive](docs/clean-study-terminal26-retention-actual-review-20261104.json)
-added 26 disjoint terminal sources. The [latest actual publication review](docs/clean-study-terminal5-retention-actual-review-20261104.json)
-adds another five terminal sources and all eight original artifacts, bringing
-jointly verified permanent retention to 748 sources. This archival count is
-separate from the 79 scientifically reviewed cases.
+added 26 disjoint terminal sources. The [next historical publication review](docs/clean-study-terminal5-retention-actual-review-20261104.json)
+added five terminal sources and eight original artifacts, reaching the 748-source
+checkpoint. The [current terminal7 publication review](docs/clean-study-terminal7-retention-actual-review-20261105.json)
+adds seven disjoint terminal sources and nine original artifacts, bringing
+jointly verified permanent retention to **755 sources**. This archival count is
+separate from the **81 scientifically reviewed cases**. New processing, reader,
+report and CI artifacts and the last archive's own proof remain in the finite
+closing tail until their actual publication is checked.
 
 For failed-only GitHub retries, every API job record and its observed duration
 remains in the cost ledger. An exact reused successful execution is charged once

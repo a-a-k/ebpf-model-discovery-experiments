@@ -58,13 +58,29 @@ provenance. The raw byte count is a conservative budget for the gzip copies. The
 preserve the source bytes and every eligibility predicate; insufficient capacity
 is a technical stop before the corresponding write.
 
-The 247 existing compact ZIP directories describe 27,504,579,665 bytes of
-materialized nonjournal inputs and a conservative raw source-evaluation
-retention budget of 12,784,914,362 bytes (the retained copies use deterministic
-gzip). Including the largest temporary compact ZIP and the output reserve gives
-45,049,451,558 bytes before the two pending compact artifacts and any recovery
-they require. Existing hash-bound nullable manifests, ZIP directories and the
-qualified publisher's fixed file list establish zero full recovery for the
-current 247 compacts. This does not assume the two pending cases cost zero or
-establish actual runner free space. No scientific member body
-or whole original ZIP was read locally for this calculation.
+The current 249 compact ZIP directories cover every available compact across
+all 119 declared study attempts. Their aggregate transfer size is
+77,239,065,376 bytes, not the simultaneous disk requirement. Sequential verified
+ZIP disposal and journal stream verification retain 28,221,017,375 bytes of
+materialized nonjournal inputs. The conservative raw source-evaluation copy
+budget is 13,118,903,052 bytes; retained copies use deterministic gzip.
+
+Including the largest temporary compact ZIP (2,612,473,883 bytes) and the 2 GiB
+output reserve gives a conservative bound of **46,099,877,958 bytes**. Existing
+247 API identities and prior hash-bound header/nullability proofs are unchanged.
+The final two compact directories and their small provenance manifests have all
+non-null publisher claims present. Required full recovery is therefore zero
+for these exact 249 compacts; this is not an assumption about missing future
+data. Actual runner free space remains subject to the qualified runtime guards.
+No source evaluation, raw, SQL, model, journal or whole scientific ZIP body was
+read locally to calculate this bound.
+
+The [current 81-cell technical selection](clean-study-final-technical-selection-20261105.json)
+includes every candidate run/artifact identity across all current attempts.
+The earlier79 selections are unchanged. The final two selections are verified
+processing of the same original captures, not repetitions selected by forecast
+availability, accuracy or external outcomes. The reporter still requires
+exactly one eligible candidate per cell; scientific interpretation is recorded
+separately in the [matrix closure](clean-study-original-matrix81-scientific-closure-20261105.json).
+The report copies saved evaluations and renders their values. It does not invoke
+Bering, Sheaft, new application traffic, model fitting or outcome remeasurement.

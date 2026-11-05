@@ -1,0 +1,78 @@
+{
+  "utc": "2026-11-05T10:49:32.567961+00:00",
+  "scope": "All249current availablecompacts for119declaredattempts, exactfinal7/8headers+sameexisting247BOTHmetadatazero-recovery proof. No source/scientificmember bodies locally.",
+  "old247_proof": "work/report-existing247-header-only-disk-byte-bound-20261104.json",
+  "new2": [
+    {
+      "artifact": {
+        "id": 13404526182,
+        "node_id": "MDg6QXJ0aWZhY3QxMzQwNDUyNjE4Mg==",
+        "name": "v5-summary-deepflow-main-otel_demo-absent-7-41991292539",
+        "size_in_bytes": 58628004,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13404526182",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13404526182/zip",
+        "expired": false,
+        "digest": "sha256:a1a5a8f7b88f0f9c1ddd0c1d47fcdaffcd6e430a548965317d8d8549313774a3",
+        "created_at": "2026-11-05T09:41:19Z",
+        "updated_at": "2026-11-05T09:41:19Z",
+        "expires_at": "2027-02-03T08:01:03Z",
+        "workflow_run": {
+          "id": 41991292539,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "fix/closed7-resource-recovery",
+          "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b"
+        }
+      },
+      "member_count": 21,
+      "materialized_nonjournal_bytes": 360130883,
+      "source_evaluation_copy_raw_budget_bytes": 167834524,
+      "required_full_recovery_bytes": 0,
+      "manifest_metadata": {
+        "bytes": 1959,
+        "sha256": "c46351ac68882ce7cdf519cdd3d788f3061e34160f5b78ec60e4d9003add148b",
+        "CRC32": "6fc3069d"
+      }
+    },
+    {
+      "artifact": {
+        "id": 13405832633,
+        "node_id": "MDg6QXJ0aWZhY3QxMzQwNTgzMjYzMw==",
+        "name": "v5-summary-deepflow-main-otel_demo-absent-8-41991299175",
+        "size_in_bytes": 58296054,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13405832633",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13405832633/zip",
+        "expired": false,
+        "digest": "sha256:a6631e2ec527812ff5b7699e2a5495816760adb51b82462bfd1ebfdd251c739a",
+        "created_at": "2026-11-05T10:14:08Z",
+        "updated_at": "2026-11-05T10:14:08Z",
+        "expires_at": "2027-02-03T08:01:08Z",
+        "workflow_run": {
+          "id": 41991299175,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "fix/closed8-resource-recovery",
+          "head_sha": "ea40d2595dd35b4c384633d4201c9d3602f0cb4f"
+        }
+      },
+      "member_count": 21,
+      "materialized_nonjournal_bytes": 356306827,
+      "source_evaluation_copy_raw_budget_bytes": 166154166,
+      "required_full_recovery_bytes": 0,
+      "manifest_metadata": {
+        "bytes": 1959,
+        "sha256": "398084307aa1fd3c48698ea939a779569d18ca0e2c94b99d9b7b773aab29066a",
+        "CRC32": "58f04017"
+      }
+    }
+  ],
+  "materialized_nonjournal_bytes": 28221017375,
+  "source_evaluation_copy_raw_budget_bytes": 13118903052,
+  "largest_encoded_compact_bytes": 2612473883,
+  "report_output_reserve_bytes": 2147483648,
+  "conservative_required_free_bytes": 46099877958,
+  "full_recovery_for_all249_bytes": 0,
+  "no_measured_output_gzip_size_or_runtime_free_claim": true,
+  "qualified_report_must_still_check_actual_free_before_download_extract_recovery_and_aggregation": true,
+  "ZIP_or_scientificmember_BODY_GETs": 0
+}
