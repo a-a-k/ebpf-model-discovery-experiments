@@ -1,0 +1,36 @@
+{
+  "recorded_utc": "2026-11-01T20:50:39.404563+00:00",
+  "root_original_actual_archive_publication_GO": true,
+  "source": "9a7b86a9562192517d379d584d2d54b1ff1b5665",
+  "plan_sha256": "cf170eb5709d8db8c100fd33d094af5ae88265bfb2918ee12e40bf8ced69246d",
+  "source_runs": 28,
+  "original_artifacts": 16,
+  "original_bytes": 17418265145,
+  "batches": [
+    {
+      "run": 41345755860,
+      "release": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/data-41345755860",
+      "source_runs": 28,
+      "original_artifacts": 16,
+      "original_bytes": 17418265145,
+      "remote_assets_checked": 105,
+      "chunk_manifests_checked": 5,
+      "minimum_predownload_headroom_bytes": 84834321970,
+      "small_assets": {
+        "provenance.tar.gz": {
+          "bytes": 64306,
+          "sha256": "7044d735f5931abf38b1f456a544c3768406180666f5844c3b71ebb0bbd23d19"
+        },
+        "SHA256SUMS.txt": {
+          "bytes": 12649,
+          "sha256": "75cf7ad520002ae1d547ad90a2e3ff87c498ef86cf24015f71f82101acd63c6c"
+        }
+      }
+    }
+  ],
+  "verification_boundary": "Root rehashed only small published metadata assets. All remote ledger/chunk/reassembly/source identities and all16 disk guards checked against frozen original API inventory. Whole original ZIP CRC/SHA verified by actual Actions, not rehashed locally.",
+  "scientific_admission_or_entire_capture_disk_guarantee": false,
+  "complete_costs": "All original failures, source, capture/worker/preparation/CI/read/transfer/hash/chunk/upload/archive and finite closing tail retained; human unknown, API intervals not CPU/billing.",
+  "independent_original_record_sha256": "e99c8ae099b0034a862dd7b97da6e4174499cd2dcc91b846874b210e25afdffa",
+  "both_root_and_independent_actual_retention_GO": true
+}

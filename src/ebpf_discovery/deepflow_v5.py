@@ -1033,14 +1033,17 @@ class DeepFlowCollectorsV5(CollectorsV5):
             },
         }
 
-    def _capture_node(self, node: str, stage: str, *, final: bool) -> dict[str, Any]:
+    def _capture_node(self, node: str, stage: str, *, final: bool,
+                      producer_closed: bool = False) -> dict[str, Any]:
         remote = self.remote_roots[node]
         remote_stage = remote + "/snapshots/" + stage
         mode = "final" if final else "prefix"
+        if producer_closed and not final:
+            raise ValueError("closed-producer snapshot requires final capture")
         command = (
-            f"python3 {shlex.quote(remote + '/deepflow_snapshot_v5.py')} "
+            f"{'sudo ' if producer_closed else ''}python3 {shlex.quote(remote + '/deepflow_snapshot_v5.py')} "
             f"--data {shlex.quote(remote + '/data')} --out {shlex.quote(remote_stage)} "
-            f"--mode {mode}"
+            f"--mode {mode}" + (" --producer-closed" if producer_closed else "")
         )
         permissions = self.ctx.node_exec(
             node, f"sudo chmod -R a+rX {shlex.quote(remote + '/data')}",
@@ -1057,6 +1060,13 @@ class DeepFlowCollectorsV5(CollectorsV5):
         local.mkdir(parents=True, exist_ok=False)
         self.ctx.node_get(node, remote_stage + "/snapshot.json", local / "snapshot.json")
         manifest = json.loads((local / "snapshot.json").read_text(encoding="utf-8"))
+        imported_manifest_sha256 = _sha256_file(local / "snapshot.json")
+        if producer_closed:
+            try:
+                storage_audit = json.loads(_stdout(result))
+            except (TypeError, ValueError):
+                storage_audit = {"available": False, "stdout": _stdout(result)}
+            _write_json(local / "snapshot-storage.json", storage_audit)
         normalized, accounting, codec_failures = 0, 0, 0
         file_log_write_failures: list[dict[str, Any]] = []
         for item in manifest.get("files", []):
@@ -1134,6 +1144,39 @@ class DeepFlowCollectorsV5(CollectorsV5):
             "pending_no_standalone_files": not bool(manifest.get("files")),
         })
         _write_json(local / "snapshot.json", manifest)
+        if not final and manifest["technical_valid"] and manifest.get("files"):
+            # The authoritative parent raw files and enriched manifest are now
+            # retained. The immutable guest prefix mirror has had its last read.
+            release_command = (
+                f"python3 {shlex.quote(remote + '/deepflow_snapshot_v5.py')} "
+                f"--data {shlex.quote(remote + '/data')} --out {shlex.quote(remote_stage)} "
+                f"--mode prefix --release-verified-prefix "
+                f"--imported-manifest-sha256 {shlex.quote(imported_manifest_sha256)}"
+            )
+            try:
+                released = self.ctx.node_exec(node, release_command, timeout=300, check=False)
+                try:
+                    audit = json.loads(_stdout(released))
+                except (ValueError, TypeError):
+                    audit = {"status": "release_not_confirmed"}
+                audit["command_returncode"] = _returncode(released)
+                if (_returncode(released) or audit.get("schema") != "deepflow-verified-prefix-copy-release-v5"):
+                    audit["status"] = "release_not_confirmed"
+            except Exception as error:
+                # A refused duplicate cleanup does not alter scientific evidence
+                # or make a complete capture ineligible.
+                audit = {"status": "release_not_confirmed", "error": repr(error)}
+            audit_path = self.ctx.out / "infrastructure" / "deepflow-prefix-copy-release" / f"{node}-{stage}.json"
+            try:
+                audit_path.parent.mkdir(parents=True, exist_ok=True)
+                _write_json(audit_path, audit)
+            except OSError as error:
+                try:
+                    print(json.dumps({"deepflow_prefix_copy_release_audit_unwritten": True,
+                        "node": node, "stage": stage, "release_status": audit.get("status"),
+                        "error": repr(error)[:500]}, sort_keys=True), flush=True)
+                except OSError:
+                    pass
         return manifest
 
     @staticmethod
@@ -1151,10 +1194,14 @@ class DeepFlowCollectorsV5(CollectorsV5):
                     })
         return failures
 
-    def _capture_all(self, label: str, *, final: bool = False) -> dict[str, Any]:
+    def _capture_all(self, label: str, *, final: bool = False,
+                     producer_closed_by_node: dict[str, bool] | None = None) -> dict[str, Any]:
         self._capture_counter += 1
         stage = f"{self._capture_counter:03d}-{label}"
-        nodes = {node: self._capture_node(node, stage, final=final) for node in ("a", "b")}
+        closed = producer_closed_by_node or {}
+        nodes = {node: self._capture_node(node, stage, final=final,
+                                        producer_closed=closed.get(node) is True)
+                 for node in ("a", "b")}
         result = {
             "schema": "deepflow-capture-v5",
             "stage": stage,
@@ -1358,7 +1405,12 @@ class DeepFlowCollectorsV5(CollectorsV5):
                 }
             raw_evidence["events_time_range"] = {"since_epoch_s": since, "until_epoch_s": until}
             termination[node]["raw_evidence"] = raw_evidence
-        final_capture = self._capture_all("final", final=True)
+        final_capture = self._capture_all(
+            "final", final=True,
+            producer_closed_by_node={
+                node: facts.get("technical_valid") is True for node, facts in termination.items()
+            },
+        )
         prefix_checks = self._verify_prefixes(final_capture)
         native_barrier = self._receiver_barrier("native")
         receivers = self._close_receivers()

@@ -1,6 +1,109 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
-**Current work: iteration 5, three-collector main series and evidence audit.**
+**Completed matched scientific review: 81 of 81 main cases.**
+
+All 27 OBI, 27 Coroot and 27 DeepFlow cases have passed both original-criterion
+actual-evidence reviews, including valid adverse and UNKNOWN results. This is
+the fixed three-collector, three-application, three-SDK-mode matrix with seeds
+6/7/8. The question is whether eBPF can support operation models and external
+outcome forecasts when SDK traces are absent or incomplete.
+
+OBI supports the tested Petclinic and OTel HTTP operations without SDK traces;
+partial OTel also needs the separately declared observed SERVER-edge union.
+The tested Coroot and DeepFlow pipelines do not close the selected missing
+operation paths. All three lack the required social-network Thrift operation
+evidence. These findings concern the pinned collection/export/normalization/model
+pipelines, not a universal inability of eBPF or those products.
+
+The last DeepFlow/OTel SDK-absent cases are complete:
+[seed 6](docs/clean-study-otel-absent6-actual-review-20261104.json),
+[seed 7](docs/clean-study-otel-absent7-controlled-actual-review-20261105.json) and
+[seed 8](docs/clean-study-otel-absent8-controlled-actual-review-20261105.json).
+Each retains all 24 forecasts as UNKNOWN, while each operation has 2800 successes
+and 400 failures in 3200 externally evaluated target attempts. The equally informed,
+declared conditional direct baseline predicts the matching 0.875. No cost,
+novelty or prediction advantage over that baseline is claimed.
+
+The [scientific closure record](docs/clean-study-original-matrix81-scientific-closure-20261105.json)
+separates these actual decisions from technical source/CI flags. The original
+captures, frozen models and external outcomes were retained during processing
+recovery. Failures of additional processed-full uploads do not trigger new
+traffic or model calculations; their explicit evidence unions preserve the
+unavailable final mutable SQL/full snapshots honestly. The
+[final saved report](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42030778818)
+has completed successfully: all 81 selected cases, 2,160 copied operation/source/view
+rows and 27 figure groups, each in PNG, SVG and PDF. The
+[delivery record](docs/clean-study-final-report-delivery-20261105.json) binds the
+actual source, artifact, file hashes and separate original-criterion reviews.
+Small presentation exports and the finite closing-cost/publication receipt will
+be recorded with the [evidence releases](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases).
+
+Read the [brief interpretation](docs/CURRENT_FEASIBILITY_FINDINGS_V5.md) for the supported missing-trace findings, direct baselines and application failure limits.
+The question is eBPF feasibility with absent/incomplete tracing. The user selected
+a new runner reusing verified deployment and collection components. The common
+source pins Bering 1.3.1 and corrected DeepFlow parser configuration.
+The 27 original clean-controller smoke settings passed;
+additional source regressions passed independent review. The first fresh
+series was technically stopped at 2026-10-30 19:05 UTC: [OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099986985),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099992213),
+and [Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41099997831).
+An exact saved-input audit found that v5 lost v4's same-observation HTTP route
+alias binding, artificially disadvantaging native inputs. [PR6](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/6)
+repairs that adapter without changing graphs or supplied semantics. All three
+collectors subsequently completed the matched 81-cell matrix at qualified
+sources with explicitly reviewed operational equivalents. Superseded data and costs remain.
+The a434 replacement qualification completed with 26 technical successes and one
+OBI OTel parser failure. It also exposed SDK/Compose role ambiguity in Petclinic
+fusion. [PR7](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/7)
+repairs those common paths using the literal protobuf default and existing
+verified runtime/deployment identities. Independent code and fixed saved-input
+review passed; this does not certify prediction availability or accuracy.
+Qualification at `6ef079a` exposed four pre-target Petclinic failures: operation
+metadata was applied in raw Docker IDs after binding a canonical SDK-role graph.
+[PR8](https://github.com/a-a-k/ebpf-model-discovery-experiments/pull/8) attaches only
+provided metadata to the already bound graph and preserves its actual discovery
+provenance. All27 settings at immutable `study-20261030-v4` (`f60cbfe`) completed
+and passed independent evidence review:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143808524),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143812257),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41143815710).
+Unknown or inaccurate forecasts remain valid empirical results.
+The [pre-execution decision](docs/clean-study-requalification-v3-20261030.json)
+records the original criterion, simple baselines, both agents' verdicts and costs.
+The OBI OTel partial-prefix audit found117 real SERVER children with unique SDK
+parents but no local eBPF parent. Literal fields survived ingestion; Bering's
+internal source-domain separation prevented these cross-emitter links. The
+[catalog diagnosis](docs/OTEL_CATALOG_PARENT_AUDIT.md) therefore does not support
+an intrinsic inability to observe the calls. A separately declared
+[ordinary-OTLP edge-union baseline](docs/CONTEXT_BASELINE.md) preserves all original
+source arms and evaluates the strongest simple combination of the same data.
+All27 final common-source qualification cases at `0c98bf4` completed and passed
+both agents' actual saved-model, binding, simulator and pre-target evidence review.
+The [pre-execution record](docs/clean-study-requalification-v5-20261031.json)
+records both explicit ORIGINAL-feasibility verdicts before the fresh full81 series:
+[OBI](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164821492),
+[DeepFlow](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120),
+[Coroot](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164826834).
+The three original dispatches use immutable `study-20261031-v5`, all three
+applications/tracing modes, seeds6/7/8 and all ten operations. The full81 scientific matrix is now reviewed; aggregate export and finite
+publication-cost closure remain separate. Unknown and adverse outcomes remain in scope.
+Technical replacements additionally use actual revisions `fbbda015` (parent disk
+preparation) and `13c017bf` (preventive guest port preparation). Experiment code,
+dependencies and fixtures remain identical to qualified `0c98bf4`; reporting
+verifies the exact operational differences and retains actual source identities.
+The [disk-recovery decision](docs/clean-study-parent-preparation-preexecution-20261031.json)
+and [port-preparation decision](docs/clean-study-guest-port-preexecution-20261031.json)
+precede those captures. Current exact planned identities and completed packets
+are recorded in the [main candidate inventory](docs/clean-study-main-review-candidates-20261030.json).
+Earlier attempts, diagnostics and preparation costs are preserved in
+[verified permanent archives](docs/ARCHIVE_PUBLICATION.md).
+The [verified diagnosis](docs/CLEAN_STUDY_DIAGNOSIS.md) separates the repaired OTel
+RPC defect, unresolved proxy identity, DSB protocol evidence and binding limits.
+The [execution record](docs/CLEAN_STUDY_RUNNER.md) preserves scope, baseline,
+independent review and qualification decisions. The current completed case reviews are listed above; the following section
+preserves historical snapshots rather than the latest cohort status.
+
+**Historical iteration 5 series and audit snapshots.**
 The [new protocol](docs/PROTOCOL_V5.md) repairs operation-class fragmentation and
 plans matched OBI, DeepFlow and Coroot campaigns: **81 main cells and 27 smoke settings**. All nine
 system/mode settings for each of OBI, Coroot and DeepFlow have passed actual smoke
@@ -80,7 +183,7 @@ journal copies in the report job.
 The retained [observation limits](docs/OBSERVATION_LIMITS_V5.md) explain a
 Petclinic native endpoint-binding mismatch and DeepFlow collection/retention guards
 without relabelling their original evidence.
-The [current 54-cell report](results/iteration-5/snapshot-41044061764/SOURCE.md)
+The [historical 54-cell report](results/iteration-5/snapshot-41044061764/SOURCE.md)
 contains all OBI and Coroot main cells, with [per-operation error figures and exact saved values](results/iteration-5/snapshot-41044061764/figures/figures-v5.md).
 Every selected cell also has a separate actual evidence review. DeepFlow is
 incomplete at this snapshot boundary. The full report, including referenced
@@ -161,10 +264,10 @@ observed application behavior:
 
 [Procrustes] supplies static preparation and confirmed deployment facts, [Bering]
 discovers the runtime graph, and [Sheaft] evaluates declared failure profiles on that
-graph. The desired contribution is the same useful external result with less
-instrumentation effort, or a better useful result at comparable complete cost. A
-graph that merely looks plausible, a high internal quality score, or an outcome-rate
-predictor stored beside a graph does not satisfy that criterion.
+graph. The original contribution criterion is feasibility with absent or
+incomplete native tracing, assessed against independent application outcomes.
+Cost superiority was not the original hypothesis. A plausible graph or an
+internal quality flag alone does not establish this end-to-end result.
 
 The strongest simple baseline receives the same operation contracts, controlled
 replica inventory and state mixture as the graph arm. For a required two-replica
@@ -181,7 +284,8 @@ Manual semantic declarations are charged to both methods. Human/agent preparatio
 time was not instrumented and remains explicitly unmeasured; no full-cost advantage
 will be claimed from runtime measurements alone.
 
-The executable protocol is [PROTOCOL_V4.md](docs/PROTOCOL_V4.md). It supersedes old
+The active executable protocol is [PROTOCOL_V5.md](docs/PROTOCOL_V5.md);
+[iteration4](docs/PROTOCOL_V4.md) remains historical. They supersede old
 two/ten-second admission rules, timestamp-containment gates and arbitrary accuracy
 thresholds. An unfavorable result remains an empirical result; it does not authorize
 a weaker post-hoc claim.
@@ -822,6 +926,38 @@ allocate shared CI overhead as instrumentation cost to one source. Earlier
 iterations and independent product development remain outside this v4 automation
 window; human/agent effort is unmeasured. Earlier interim ledgers retain their
 original declared subsets; the final snapshot uses the reconciled inventory above.
+
+The [historical cost reconciliation](docs/clean-study-historical-cost-scope-20261104.json)
+adds 153 cost-only run declarations: the earlier 149-run ledger and 37 archived
+runs omitted from the current declarations, with 33 overlapping IDs counted once.
+Their job metadata enters the final cost snapshot; the old aggregate total is
+not added again. These historical runs do not add scientific cases to the fixed
+81-case cohort. For 116 historical IDs, retained cost metadata does not establish
+retention of the original raw or model payloads. The finite current archive tail
+is recorded separately. The [previous archive](docs/clean-study-terminal26-retention-actual-review-20261104.json)
+added 26 disjoint terminal sources. The [next historical publication review](docs/clean-study-terminal5-retention-actual-review-20261104.json)
+added five terminal sources and eight original artifacts, reaching the 748-source
+checkpoint. The [current terminal7 publication review](docs/clean-study-terminal7-retention-actual-review-20261105.json)
+adds seven disjoint terminal sources and nine original artifacts, bringing
+jointly verified permanent retention to **755 sources**. This archival count is
+separate from the **81 scientifically reviewed cases**. New processing, reader,
+report and CI artifacts and the last archive's own proof remain in the finite
+closing tail until their actual publication is checked.
+
+For failed-only GitHub retries, every API job record and its observed duration
+remains in the cost ledger. An exact reused successful execution is charged once
+across attempts only when source, runner identity, job clocks and all step clocks
+match; the copied record names its original job. Genuine failed and retried work
+remains charged. Reported job elapsed time is neither CPU time nor billed usage.
+
+The final reporter reuses the [fixed retained cost observations](docs/clean-study-retained-cost-snapshot-20261104.json)
+for 743 archived terminal runs and 116 earlier cost summaries. Each archived row
+names its published metadata asset and exact source-member hashes. Historical
+summaries preserve their original totals and unknowns; full clock identities are
+not inferred for them. These 859 cost records add no scientific cases and do not
+assert fresh artifact availability. Current declaration roles and notes take
+precedence, while live API requests cover the unarchived tail. This avoids
+querying the complete retained history again under the Actions API rate limit.
 
 ## 11. Discussion, limitations and conclusions
 

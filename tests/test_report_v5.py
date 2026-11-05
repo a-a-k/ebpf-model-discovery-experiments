@@ -1,7 +1,11 @@
 import hashlib
 import json
 import copy
+import os
 from pathlib import Path
+import subprocess
+import textwrap
+from unittest.mock import patch
 import zipfile
 
 import pytest
@@ -10,7 +14,12 @@ from ebpf_discovery.artifact_recovery_v5 import recover_declared_files, retain_u
 from ebpf_discovery.compact_transport_v5 import (
     extract_verified_compact, remove_verified_working_copy,
 )
-from ebpf_discovery.report_v5 import build, render, resolve_evaluation_reference
+from ebpf_discovery.report_v5 import (
+    build, render, resolve_evaluation_reference,
+    PREPARATION_ONLY_SOURCE_REVISIONS, _preparation_equivalence_facts, IMMUTABLE_PATH_SOURCE,
+    UPLOADED_CHECKPOINT_COPY_SOURCE, CLOSED_FINAL_SNAPSHOT_SOURCE, STREAMED_CHECKPOINT_SOURCE, PETCLINIC_WORKER_SOURCE,
+    POSTCAPTURE_GUEST_RELEASE_SOURCE, CLOSED_POSTCAPTURE_SOURCE, CLOSED_CAPTURE_RECOVERY_SOURCE, CONTROLLED_CAPTURE_RECOVERY_SOURCES, SOURCE_PINS,
+)
 
 
 OBI_IMAGE = (
@@ -55,10 +64,80 @@ def run(run_id: int, stage: str, mode="absent") -> dict:
             "note": "declared attempt"}
 
 
-def summary(root: Path, run_id: int, stage: str, complete=True) -> tuple[Path, dict]:
+@pytest.fixture
+def report_declarations_bootstrap(tmp_path, monkeypatch):
+    """Execute the real workflow's input preparation, before any API/data work."""
+    repository = Path(__file__).resolve().parents[1]
+    workflow = (repository / '.github/workflows/report-v5.yml').read_text()
+    script = workflow.split("          python - <<'PY'\n", 1)[1]
+    script = script.split("          anchor=value.get('experiment_head')", 1)[0]
+    bootstrap = compile(textwrap.dedent(script), 'actual-report-bootstrap', 'exec')
+    body = (repository / 'docs/clean-study-declarations-20261030.json').read_bytes()
+    assert len(json.dumps(json.loads(body), separators=(',', ':'))) > 65535
+    file = tmp_path / 'docs/declared.json'
+    file.parent.mkdir()
+    file.write_bytes(body)
+    subprocess.run(['git', 'init', '-q', str(tmp_path)], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), 'config', 'core.autocrlf', 'false'], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), 'add', 'docs/declared.json'], check=True)
+    subprocess.run(['git', '-C', str(tmp_path), '-c', 'user.name=Fixture',
+                    '-c', 'user.email=fixture@example.invalid', 'commit', '-qm', 'fixture'], check=True)
+    head = subprocess.check_output(['git', '-C', str(tmp_path), 'rev-parse', 'HEAD'], text=True).strip()
+    monkeypatch.chdir(tmp_path)
+    destination = tmp_path / 'results/iteration-5/provenance'
+    destination.mkdir(parents=True)
+
+    def execute(argument):
+        # A dict keeps the oversized legacy inline fixture in memory; it is not
+        # submitted through a real OS environment or GitHub dispatch payload.
+        environment = {**os.environ, 'DECLARATIONS': argument, 'GITHUB_SHA': head}
+        with patch.object(os, 'environ', environment):
+            exec(bootstrap, {})
+        return (destination / 'declarations.json').read_bytes()
+
+    return execute, body, head, destination
+
+
+def test_report_workflow_tracked_path_preserves_complete_oversized_declarations(report_declarations_bootstrap):
+    execute, body, head, destination = report_declarations_bootstrap
+    legacy = execute(body.decode('utf-8'))
+    assert execute('docs/declared.json') == legacy
+    assert json.loads(legacy) == json.loads(body)
+    source = json.loads((destination / 'declarations-input.json').read_text())
+    assert source == {'kind': 'tracked_file', 'path': 'docs/declared.json',
+        'git_blob': subprocess.check_output(['git', 'rev-parse', 'HEAD:docs/declared.json'], text=True).strip(),
+        'sha256': hashlib.sha256(body).hexdigest(), 'workflow_head_sha': head}
+
+
+@pytest.mark.parametrize('kind', ['traversal', 'unnormalized', 'untracked', 'modified', 'absolute', 'symlink'])
+def test_report_workflow_rejects_uncommitted_or_escaping_declarations(report_declarations_bootstrap, kind):
+    execute, body, _, _ = report_declarations_bootstrap
+    if kind == 'traversal':
+        argument = 'docs/../declared.json'
+    elif kind == 'unnormalized':
+        argument = 'docs//declared.json'
+    elif kind == 'untracked':
+        Path('docs/untracked.json').write_bytes(body)
+        argument = 'docs/untracked.json'
+    elif kind == 'modified':
+        Path('docs/declared.json').write_bytes(body + b'\n')
+        argument = 'docs/declared.json'
+    elif kind == 'absolute':
+        argument = str(Path('docs/declared.json').resolve())
+    else:
+        try:
+            Path('docs/escape.json').symlink_to(Path('docs/declared.json').resolve())
+        except OSError:
+            pytest.skip('symlink creation unavailable on this platform')
+        argument = 'docs/escape.json'
+    with pytest.raises((SystemExit, ValueError, subprocess.CalledProcessError)):
+        execute(argument)
+
+
+def summary(root: Path, run_id: int, stage: str, complete=True, *, head_sha='a' * 40) -> tuple[Path, dict]:
     name = f"v5-summary-obi-{stage}-petclinic-absent-6-{run_id}"
     folder = root / str(run_id) / name
-    status = {"run_id": str(run_id), "commit": "a" * 40, "collector": "obi",
+    status = {"run_id": str(run_id), "commit": head_sha, "collector": "obi",
               "system": "petclinic", "mode": "absent", "seed": 6,
               "smoke": stage == "smoke",
               "status": ("smoke_complete" if stage == "smoke" else "acquisition_complete")
@@ -93,14 +172,14 @@ def summary(root: Path, run_id: int, stage: str, complete=True) -> tuple[Path, d
     full = name.replace("v5-summary-", "campaign-v5-", 1)
     write(folder / "evaluation-manifest.json", {
         "schema_version": "v5-cell-summary-manifest", "run_id": str(run_id),
-        "commit": "a" * 40, "collector": "obi", "system": "petclinic",
+        "commit": head_sha, "collector": "obi", "system": "petclinic",
         "mode": "absent", "seed": 6, "smoke": stage == "smoke",
         "full_artifact_name": full, "files_sha256": {
             "evaluation-v5.json": sha(folder / "evaluation-v5.json"),
             "status.json": sha(folder / "status.json")}})
     write(folder / "artifact-provenance.json", {
         "run_id": run_id, "repository": "MB3R-Lab/ebpf-model-discovery-experiments",
-        "head_sha": "a" * 40, "artifact_id": run_id * 10,
+        "head_sha": head_sha, "artifact_id": run_id * 10,
         "name": name, "digest": f"sha256:summary-{run_id}", "expired": False,
         "full_artifact_id": run_id * 10 + 1, "full_artifact_name": full,
         "full_artifact_digest": f"sha256:full-{run_id}", "full_artifact_expired": False,
@@ -520,6 +599,265 @@ def test_duplicate_requires_exact_technical_selection(tmp_path: Path) -> None:
         build([tmp_path / "inputs"], declarations, tmp_path / "bad", selection_path=selection)
 
 
+def test_declared_common_source_keeps_old_complete_results_and_requires_explicit_selection(tmp_path):
+    summary(tmp_path/'inputs', 20, 'smoke', head_sha='a' * 40)
+    _, old = summary(tmp_path/'inputs', 21, 'main', head_sha='a' * 40)
+    current_folder, current = summary(tmp_path/'inputs', 22, 'main', head_sha='b' * 40)
+    current['evaluations'][0].update(prediction=.01, forecast_interval=[.01, .01])
+    write(current_folder/'evaluation-v5.json', current)
+    current_manifest = json.loads((current_folder/'evaluation-manifest.json').read_text())
+    current_manifest['files_sha256']['evaluation-v5.json'] = sha(current_folder/'evaluation-v5.json')
+    write(current_folder/'evaluation-manifest.json', current_manifest)
+    declarations = declared(tmp_path/'declared.json', [run(20, 'smoke'), run(21, 'main'), run(22, 'main')])
+    value = json.loads(declarations.read_text())
+    value['experiment_head'] = 'b' * 40
+    write(declarations, value)
+    unselected = build([tmp_path/'inputs'], declarations, tmp_path/'unselected')
+    assert unselected['grid']['technically_complete_main_cells'] == 0
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [210, 220], 'candidate_run_ids': [21, 22],
+        'selected_artifact_id': 220, 'reason_code': 'technical_common_source_replacement'}]})
+    report = tmp_path/'selected'
+    result = build([tmp_path/'inputs'], declarations, report, selection_path=selection)
+    assert result['grid']['technically_complete_main_cells'] == 1
+    old_row, new_row = attempts(result, 'main')
+    smoke = attempts(result, 'smoke')[0]
+    assert smoke['eligible_main_coverage'] is True and 'common_source_coverage_exclusion' not in smoke
+    assert old_row['technical_complete_self_reported'] is new_row['technical_complete_self_reported'] is True
+    assert old_row['eligible_main_coverage'] is False and new_row['eligible_main_coverage'] is True
+    assert old_row['common_source_coverage_exclusion'] == {
+        'rule': 'outside_predeclared_common_source', 'expected_head': 'b' * 40,
+        'observed_head': 'a' * 40, 'previous_eligible_main_coverage': True, 'previous_reason': None}
+    assert old_row['reason'] is None
+    assert restored(report, old_row) == old and restored(report, new_row) == current
+    assert result['selected_main_attempt_references'] == [new_row['attempt_key']]
+    out = report/'report.md'
+    render(report/'evaluation-v5.json', out)
+    text = out.read_text(encoding='utf-8')
+    assert 'Declared common source commit: `' + 'b' * 40 + '`' in text
+    assert 'a' * 40 in text and 'outside_predeclared_common_source' in text
+
+
+def test_common_source_does_not_allow_picking_between_two_complete_same_head_attempts(tmp_path):
+    summary(tmp_path/'inputs', 23, 'main')
+    summary(tmp_path/'inputs', 24, 'main')
+    declarations = declared(tmp_path/'declared.json', [run(23, 'main'), run(24, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = 'a' * 40
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [230, 240], 'candidate_run_ids': [23, 24],
+        'selected_artifact_id': 240, 'reason_code': 'technical_common_source_replacement'}]})
+    with pytest.raises(ValueError, match='technical-only replacement'):
+        build([tmp_path/'inputs'], declarations, tmp_path/'report', selection_path=selection)
+
+
+@pytest.mark.parametrize('observed_head', [None, ''])
+def test_complete_unknown_source_cannot_count_in_explicit_common_source_grid(tmp_path, observed_head):
+    _, original = summary(tmp_path/'inputs', 25, 'main', head_sha=observed_head)
+    declarations = declared(tmp_path/'declared.json', [run(25, 'main')])
+    legacy = build([tmp_path/'inputs'], declarations, tmp_path/'legacy')
+    assert legacy['grid']['technically_complete_main_cells'] == 1
+    value = json.loads(declarations.read_text()); value['experiment_head'] = 'b' * 40
+    write(declarations, value)
+    result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+    assert result['grid']['technically_complete_main_cells'] == 0
+    item = attempts(result, 'main')[0]
+    assert item['eligible_main_coverage'] is False and item['technical_complete_self_reported'] is True
+    assert item['common_source_coverage_exclusion']['rule'] == 'source_commit_unavailable'
+    assert item['common_source_coverage_exclusion']['previous_eligible_main_coverage'] is True
+    assert restored(tmp_path/'report', item) == original
+
+
+@pytest.mark.parametrize('head', [None, '', 'b' * 7, 'g' * 40])
+def test_explicit_common_head_must_name_a_full_commit(tmp_path, head):
+    declarations = declared(tmp_path/'declared.json', [])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = head
+    write(declarations, value)
+    with pytest.raises(ValueError, match='full lowercase 40-character commit'):
+        build([], declarations, tmp_path/'report')
+
+
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision'], PETCLINIC_WORKER_SOURCE['revision']])
+def test_prepared_source_preserves_both_identities_and_excludes_other_versions(tmp_path, prepared):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    _, old = summary(tmp_path/'inputs', 31, 'main', head_sha='b' * 40)
+    _, current = summary(tmp_path/'inputs', 32, 'main', head_sha=prepared)
+    declarations = declared(tmp_path/'declared.json', [run(31, 'main'), run(32, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = anchor
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [310, 320], 'candidate_run_ids': [31, 32],
+        'selected_artifact_id': 320, 'reason_code': 'technical_parent_storage_repair'}]})
+    report = tmp_path/'report'
+    result = build([tmp_path/'inputs'], declarations, report, selection_path=selection)
+    first, second = attempts(result, 'main')
+    assert first['eligible_main_coverage'] is False and second['eligible_main_coverage'] is True
+    assert second['manifest']['commit'] == prepared
+    assert restored(report, first) == old and restored(report, second) == current
+
+
+@pytest.mark.parametrize('prepared', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions] + [IMMUTABLE_PATH_SOURCE['revision'], UPLOADED_CHECKPOINT_COPY_SOURCE['revision'], CLOSED_FINAL_SNAPSHOT_SOURCE['revision'], STREAMED_CHECKPOINT_SOURCE['revision'], PETCLINIC_WORKER_SOURCE['revision']])
+def test_preparation_equivalence_does_not_allow_selection_between_two_complete_versions(tmp_path, prepared):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    summary(tmp_path/'inputs', 33, 'main', head_sha=anchor)
+    summary(tmp_path/'inputs', 34, 'main', head_sha=prepared)
+    declarations = declared(tmp_path/'declared.json', [run(33, 'main'), run(34, 'main')])
+    value = json.loads(declarations.read_text()); value['experiment_head'] = anchor
+    write(declarations, value)
+    selection = tmp_path/'selection.json'
+    write(selection, {'policy': 'technical_replacement_only_no_outcome_selection', 'cells': [{
+        'collector': 'obi', 'system': 'petclinic', 'mode': 'absent', 'seed': 6,
+        'candidate_artifact_ids': [330, 340], 'candidate_run_ids': [33, 34],
+        'selected_artifact_id': 340, 'reason_code': 'technical_parent_storage_repair'}]})
+    with pytest.raises(ValueError, match='technical-only replacement'):
+        build([tmp_path/'inputs'], declarations, tmp_path/'report', selection_path=selection)
+
+
+@pytest.mark.parametrize('mutation', ['none', 'science_blob', 'science_mode', 'added_file',
+                                     'deleted_file', 'workflow_blob', 'truncated', 'unknown_head'])
+@pytest.mark.parametrize('revision', [revision for versions in PREPARATION_ONLY_SOURCE_REVISIONS.values() for revision in versions])
+def test_preparation_equivalence_checks_exact_git_entries(mutation, revision):
+    anchor = next(iter(PREPARATION_ONLY_SOURCE_REVISIONS))
+    approved = PREPARATION_ONLY_SOURCE_REVISIONS[anchor][revision]
+    original = {'sha': '1' * 40, 'truncated': False, 'tree': [
+        {'path': 'src/study.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40},
+        *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': 'b' * 40} for p in approved]]}
+    prepared = copy.deepcopy(original); prepared['sha'] = '2' * 40
+    for entry in prepared['tree'][1:]:
+        entry['sha'] = approved[entry['path']]
+    if mutation == 'science_blob': prepared['tree'][0]['sha'] = 'c' * 40
+    if mutation == 'science_mode': prepared['tree'][0]['mode'] = '100755'
+    if mutation == 'added_file': prepared['tree'].append(
+        {'path': 'systems/new.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40})
+    if mutation == 'deleted_file': prepared['tree'].pop(0)
+    if mutation == 'workflow_blob': prepared['tree'][1]['sha'] = 'c' * 40
+    if mutation == 'truncated': prepared['truncated'] = True
+    if mutation == 'unknown_head': revision = 'd' * 40
+    if mutation == 'none':
+        facts = _preparation_equivalence_facts(anchor, revision, original, prepared)
+        assert facts['identical_remaining_entries'] == 1
+        assert facts['anchor'] == anchor and facts['revision'] == revision
+    else:
+        with pytest.raises(ValueError):
+            _preparation_equivalence_facts(anchor, revision, original, prepared)
+
+
+@pytest.mark.parametrize('profile,core_path', [
+    (IMMUTABLE_PATH_SOURCE, 'src/ebpf_discovery/raw_v4.py'),
+    (UPLOADED_CHECKPOINT_COPY_SOURCE, 'src/ebpf_discovery/remote_toolchain_v4.py'),
+    *[(CLOSED_FINAL_SNAPSHOT_SOURCE, path) for path in CLOSED_FINAL_SNAPSHOT_SOURCE['changed_core_blobs']],
+    *[(STREAMED_CHECKPOINT_SOURCE, path) for path in STREAMED_CHECKPOINT_SOURCE['changed_core_blobs']],
+    *[(PETCLINIC_WORKER_SOURCE, path) for path in PETCLINIC_WORKER_SOURCE['changed_core_blobs']],
+    *[(POSTCAPTURE_GUEST_RELEASE_SOURCE, path) for path in POSTCAPTURE_GUEST_RELEASE_SOURCE['changed_core_blobs']],
+    *[(CLOSED_POSTCAPTURE_SOURCE, path) for path in CLOSED_POSTCAPTURE_SOURCE['changed_core_blobs']],
+])
+@pytest.mark.parametrize('mutation', ['none', 'extra_science', 'added_file', 'deleted_file',
+                                     'changed_core', 'core_mode', 'missing_added', 'truncated', 'unknown_head'])
+def test_named_algorithm_source_keeps_exact_blobs_modes_and_additions(mutation, profile, core_path):
+    approved = profile['reviewed_changed_blobs']
+    added = profile['added_paths']
+    original = {'sha': '1' * 40, 'truncated': False, 'tree': [
+        {'path': 'systems/unchanged.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40},
+        *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': 'b' * 40}
+          for p in approved if p not in added]]}
+    prepared = {'sha': '2' * 40, 'truncated': False, 'tree': [
+        copy.deepcopy(original['tree'][0]),
+        *[{'path': p, 'mode': '100644', 'type': 'blob', 'sha': sha} for p, sha in approved.items()]]}
+    core = next(row for row in prepared['tree'] if row['path'] == core_path)
+    if mutation == 'extra_science': prepared['tree'][0]['sha'] = 'c' * 40
+    if mutation == 'added_file': prepared['tree'].append(
+        {'path': 'systems/unlisted.py', 'mode': '100644', 'type': 'blob', 'sha': 'a' * 40})
+    if mutation == 'deleted_file': prepared['tree'].pop(0)
+    if mutation == 'changed_core': core['sha'] = 'c' * 40
+    if mutation == 'core_mode': core['mode'] = '100755'
+    if mutation == 'missing_added':
+        prepared['tree'] = [row for row in prepared['tree'] if row['path'] != 'scripts/check-fixed-dsb-path-preparation-v5.py']
+    if mutation == 'truncated': prepared['truncated'] = True
+    revision = 'd' * 40 if mutation == 'unknown_head' else profile['revision']
+    if mutation == 'none':
+        facts = _preparation_equivalence_facts(profile['anchor'], revision, original, prepared)
+        if (profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE
+                or profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE):
+            expected_kind = ('closed_postcapture_job_with_inherited_lossless_input_and_storage_proofs'
+                             if profile is CLOSED_POSTCAPTURE_SOURCE else
+                             'postcapture_owned_guest_release_with_inherited_lossless_checkpoint_proofs'
+                             if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else
+                             'existing_PC_worker_execution_placement_with_inherited_lossless_checkpoint_proofs'
+                             if profile is PETCLINIC_WORKER_SOURCE else
+                             'actual_lossless_checkpoint_proof_encoding_and_storage')
+            assert facts['evidence_kind'] == expected_kind
+            if profile is PETCLINIC_WORKER_SOURCE:
+                assert facts['existing_worker_placement']['code_tested_source'] == PETCLINIC_WORKER_SOURCE['revision']
+                assert facts['existing_worker_placement']['actual_PC_worker_import_and_independent_outcomes_required_for_case_GO'] is True
+                assert facts['existing_worker_placement']['actual_PC_case_or_whole_study_success_claimed'] is False
+            assert facts['tested_source'] == (CLOSED_POSTCAPTURE_SOURCE['revision']
+                if profile is CLOSED_POSTCAPTURE_SOURCE else POSTCAPTURE_GUEST_RELEASE_SOURCE['revision']
+                if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else STREAMED_CHECKPOINT_SOURCE['revision'])
+            if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE or profile is CLOSED_POSTCAPTURE_SOURCE:
+                assert facts['postcapture_lifecycle_qualification']['run_id'] == 41464411920
+                assert facts['postcapture_lifecycle_qualification']['control_files_are_scientific_observations'] is False
+                assert facts['proof_encoding_equivalence_tested_source'] == STREAMED_CHECKPOINT_SOURCE['revision']
+            if profile is CLOSED_POSTCAPTURE_SOURCE:
+                assert facts['closed_postcapture_qualification']['run_id'] == 41615267517
+                assert facts['closed_postcapture_qualification']['new_main_case_or_traffic_refit_Sheaft'] is False
+                assert facts['closed_discovery_import_qualification']['tested_source'] == '68230876fb1130cecfc63cfb19649beb69c83493'
+            assert facts['proof_encoding_equivalence']['artifact_id'] == 13091257133
+            assert facts['proof_encoding_equivalence']['ordered_equal_records'] == 828668
+            assert facts['proof_encoding_equivalence']['retained_JSONL_bytes'] == 792183147
+            assert facts['storage_lifetime_proof']['tested_source'] == 'c1369df7b579f9a4c73e9ebc7df63a9d6eef6349'
+            assert facts['storage_lifetime_proof']['parent_entire_remote_module_identical'] is False
+            assert facts['closed_final_snapshot_tested_source'] == CLOSED_FINAL_SNAPSHOT_SOURCE['revision']
+            assert facts['parent_input_equivalence_tested_source'] == IMMUTABLE_PATH_SOURCE['tested_source']
+            assert facts['proof_encoding_equivalence']['whole_case_headroom_or_six_hour_cure'] is False
+            assert 'input_equivalence' not in facts
+        elif profile is CLOSED_FINAL_SNAPSHOT_SOURCE:
+            assert facts['evidence_kind'] == 'actual_closed_final_snapshot_storage_equivalence'
+            assert facts['tested_source'] == CLOSED_FINAL_SNAPSHOT_SOURCE['revision']
+            assert facts['parent_input_equivalence_tested_source'] == IMMUTABLE_PATH_SOURCE['tested_source']
+            assert facts['uploaded_checkpoint_release_tested_source'] == UPLOADED_CHECKPOINT_COPY_SOURCE['revision']
+            assert facts['copy_release_proof']['artifact_id'] == 13072487567
+            assert facts['final_snapshot_proof']['artifact_id'] == 13079348283
+            assert facts['final_snapshot_proof']['closed_replay_of_retained_live_prefix_only'] is True
+            assert facts['final_snapshot_proof']['lost_final_source_reconstructed'] is False
+            assert facts['final_snapshot_proof']['whole_case_headroom_zero_loss_or_six_hour_cure'] is False
+            assert 'input_equivalence' not in facts
+        elif profile is UPLOADED_CHECKPOINT_COPY_SOURCE:
+            assert facts['evidence_kind'] == 'actual_uploaded_checkpoint_copy_release'
+            assert facts['parent_input_equivalence'] == IMMUTABLE_PATH_SOURCE['input_equivalence']
+            assert facts['parent_input_equivalence_tested_source'] == IMMUTABLE_PATH_SOURCE['tested_source']
+            assert facts['copy_release_proof']['artifact_id'] == 13072487567
+            assert facts['tested_source'] == UPLOADED_CHECKPOINT_COPY_SOURCE['revision']
+            assert 'input_equivalence' not in facts
+        else:
+            assert facts['evidence_kind'] == 'actual_immutable_prefix_input_equivalence'
+        assert facts['identical_remaining_entries'] == 1
+        assert len(facts['changed_core_blobs']) == (12 if profile is CLOSED_POSTCAPTURE_SOURCE else 9 if profile is POSTCAPTURE_GUEST_RELEASE_SOURCE else 7 if profile is STREAMED_CHECKPOINT_SOURCE or profile is PETCLINIC_WORKER_SOURCE else 6 if profile is CLOSED_FINAL_SNAPSHOT_SOURCE else 4)
+        assert 'approved_operational_blobs' not in facts
+    else:
+        with pytest.raises(ValueError):
+            _preparation_equivalence_facts(profile['anchor'], revision, original, prepared)
+
+
+def test_closed_source_does_not_admit_an_unrelated_completed_collector_case(tmp_path):
+    summary(tmp_path/'inputs', 11, 'main', head_sha=CLOSED_POSTCAPTURE_SOURCE['revision'])
+    declarations = declared(tmp_path/'declared.json', [run(11, 'main')])
+    value = json.loads(declarations.read_text())
+    value['experiment_head'] = CLOSED_POSTCAPTURE_SOURCE['anchor']
+    write(declarations, value)
+    result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+    row = attempts(result, 'main')[0]
+    assert row['technical_complete_self_reported'] is True
+    assert row['eligible_main_coverage'] is False
+    assert row['common_source_coverage_exclusion']['observed_head'] == CLOSED_POSTCAPTURE_SOURCE['revision']
+    assert result['grid']['technically_complete_main_cells'] == 0
+
+
 def test_selection_cannot_be_applied_to_a_single_attempt(tmp_path: Path) -> None:
     summary(tmp_path / "inputs", 11, "main", complete=True)
     declarations = declared(tmp_path / "declared.json", [run(11, "main")])
@@ -661,3 +999,247 @@ def test_referenced_and_legacy_schemas_render_identical_tables(tmp_path: Path) -
     new_tables = [line for line in new_out.read_text().splitlines() if line.startswith("|")]
     old_tables = [line for line in old_out.read_text().splitlines() if line.startswith("|")]
     assert new_tables == old_tables
+
+
+@pytest.mark.parametrize('mutation', ['none', 'unlisted_source', 'mode_change'])
+def test_saved_recovery_profile_binds_exact_delivery_source_tree(mutation):
+    profile = CLOSED_CAPTURE_RECOVERY_SOURCE
+    original = {'sha': '1'*40, 'truncated': False, 'tree': [
+        {'path': 'systems/unchanged.py', 'mode': '100644', 'type': 'blob', 'sha': 'a'*40},
+        *[{'path': path, 'mode': '100644', 'type': 'blob', 'sha': 'b'*40}
+          for path in profile['reviewed_changed_blobs'] if path not in profile['added_paths']]]}
+    prepared = {'sha': '2'*40, 'truncated': False, 'tree': [
+        copy.deepcopy(original['tree'][0]),
+        *[{'path': path, 'mode': '100644', 'type': 'blob', 'sha': blob}
+          for path, blob in profile['reviewed_changed_blobs'].items()]]}
+    if mutation == 'unlisted_source': prepared['tree'][0]['sha'] = 'c'*40
+    if mutation == 'mode_change':
+        next(row for row in prepared['tree'] if row['path']=='scripts/restore-closed-postcapture-v5.py')['mode']='100755'
+    if mutation == 'none':
+        proof = _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
+        assert proof['evidence_kind'] == 'saved_closed_capture_with_verified_delivery_release'
+        assert proof['recovered_capture_identity'] == profile['capture_identity']
+        assert proof['actual_processing_run_id'] == profile['processing_run_id']
+        assert proof['independent_actual_case_admission_still_required'] is True
+    else:
+        with pytest.raises(ValueError):
+            _preparation_equivalence_facts(profile['anchor'], profile['revision'], original, prepared)
+
+
+def recovered_summary(root, profile=CLOSED_CAPTURE_RECOVERY_SOURCE):
+    run_id = profile['processing_run_id']
+    folder, evaluation = summary(root, run_id, 'main', head_sha=profile['revision'])
+    identity = {k: profile['capture_identity'][k] for k in ('collector', 'system', 'mode', 'seed')}
+    evaluation.update(identity)
+    evaluation['status'].update(profile['capture_identity'])
+    pins = {**SOURCE_PINS['deepflow'], 'collector': 'deepflow', 'source_domain': 'ebpf-deepflow'}
+    evaluation['acquisition'].update(provenance={'collector': 'deepflow', 'source_domain': pins['source_domain']},
+        positive_control={'collector': 'deepflow'},
+        final_drain={'collector': 'deepflow', 'source_version': pins['source_version']})
+    write(folder/'evaluation-v5.json', evaluation)
+    write(folder/'status.json', evaluation['status'])
+    write(folder/'observations/collector.json', pins)
+    name = f"v5-summary-deepflow-main-otel_demo-{identity['mode']}-{identity['seed']}-{run_id}"
+    full_name = name.replace('v5-summary-', 'campaign-v5-', 1)
+    manifest = json.loads((folder/'evaluation-manifest.json').read_text())
+    manifest.update(identity, full_artifact_name=full_name,
+        scientific_capture_identity=profile['capture_identity'],
+        closed_capture_recovery={'capture_run_id': profile['capture_identity']['run_id'],
+            'capture_source': profile['capture_identity']['commit'],
+            'capture_artifact_id': profile['capture_artifact']['id'],
+            'capture_artifact_digest': profile['capture_artifact']['digest'],
+            'processing_run_id': str(run_id), 'processing_source': profile['revision'],
+            'new_application_traffic': False, 'refit_models': False})
+    manifest['files_sha256'].update({'evaluation-v5.json': sha(folder/'evaluation-v5.json'),
+                                   'status.json': sha(folder/'status.json')})
+    write(folder/'evaluation-manifest.json', manifest)
+    artifact = json.loads((folder/'artifact-provenance.json').read_text())
+    artifact.update(name=name, full_artifact_name=full_name)
+    write(folder/'artifact-provenance.json', artifact)
+    return folder, evaluation
+
+
+@pytest.mark.parametrize('mutation', ['none', 'publication_as_capture', 'original_substitute', 'capsule_substitute',
+                                      'qualification', 'refit', 'wrong_processing_run'])
+@pytest.mark.parametrize('profile', [CLOSED_CAPTURE_RECOVERY_SOURCE,
+    *CONTROLLED_CAPTURE_RECOVERY_SOURCES.values()])
+def test_report_keeps_original_science_and_actual_recovery_publication(tmp_path, mutation, profile):
+    folder, evaluation = recovered_summary(tmp_path/'inputs', profile)
+    manifest = json.loads((folder/'evaluation-manifest.json').read_text())
+    if mutation == 'publication_as_capture':
+        evaluation['status'].update(run_id=str(profile['processing_run_id']), commit=profile['revision'])
+        write(folder/'status.json', evaluation['status']); write(folder/'evaluation-v5.json', evaluation)
+        manifest['files_sha256'].update({'evaluation-v5.json': sha(folder/'evaluation-v5.json'),
+                                        'status.json': sha(folder/'status.json')})
+    if mutation == 'original_substitute': manifest['scientific_capture_identity']['run_id']='100'
+    if mutation == 'capsule_substitute': manifest['closed_capture_recovery']['capture_artifact_id']+=1
+    if mutation == 'qualification': manifest['qualification_only']=True
+    if mutation == 'refit': manifest['closed_capture_recovery']['refit_models']=True
+    if mutation == 'wrong_processing_run': manifest['closed_capture_recovery']['processing_run_id']='100'
+    write(folder/'evaluation-manifest.json', manifest)
+    declarations = declared(tmp_path/'declared.json', [{'run_id': profile['processing_run_id'],
+        'collector': 'deepflow', 'stage': 'main',
+        'cells': [{k:profile['capture_identity'][k] for k in ('system','mode','seed')}],
+        'note': 'saved original capture processing'}])
+    if mutation == 'none':
+        result = build([tmp_path/'inputs'], declarations, tmp_path/'report')
+        item = attempts(result, 'main')[0]
+        assert item['run_id'] == profile['processing_run_id']
+        assert item['manifest']['commit'] == profile['revision']
+        assert restored(tmp_path/'report', item) == evaluation
+        assert evaluation['status']['run_id'] == profile['capture_identity']['run_id']
+        assert item['independently_admitted'] is False
+    else:
+        with pytest.raises(ValueError):
+            build([tmp_path/'inputs'], declarations, tmp_path/'report')
+
+
+@pytest.mark.parametrize('mutation',['none','undeclared','foreign_case','failed_suffix','fake_full','foreign_known_chain'])
+@pytest.mark.parametrize('union_run',[41642781338,41642775376,41642789738,41788955167])
+def test_report_named_closed_union_keeps_missing_full_explicit_and_needs_independent_admission(tmp_path,mutation,union_run):
+    import importlib.util
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS
+    p=CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
+    spec=importlib.util.spec_from_file_location('tiny_union_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    folder,evaluation=summary(tmp_path/'inputs',p['run_id'],'main',head_sha=p['head_sha'])
+    identity=dict(zip(('collector','system','mode','seed'),p['cell']))
+    evaluation.update(identity);evaluation['status'].update(identity)
+    pins={**SOURCE_PINS['deepflow'],'collector':'deepflow','source_domain':'ebpf-deepflow'}
+    evaluation['acquisition'].update(provenance={'collector':'deepflow','source_domain':pins['source_domain']},
+        positive_control={'collector':'deepflow'},final_drain={'collector':'deepflow','source_version':pins['source_version']})
+    write(folder/'evaluation-v5.json',evaluation);write(folder/'status.json',evaluation['status'])
+    write(folder/'observations/collector.json',pins)
+    manifest=json.loads((folder/'evaluation-manifest.json').read_text())
+    full=p['artifacts']['compact']['name'].replace('v5-summary-','campaign-v5-',1)
+    manifest.update(identity,full_artifact_name=full)
+    manifest['files_sha256'].update({'status.json':sha(folder/'status.json'),'evaluation-v5.json':sha(folder/'evaluation-v5.json')})
+    write(folder/'evaluation-manifest.json',manifest)
+    artifact=json.loads((folder/'artifact-provenance.json').read_text())
+    c=p['artifacts']['compact']
+    artifact.update(name=c['name'],artifact_id=c['id'],digest=c['digest'],full_artifact_name=full,
+        full_artifact_id=None,full_artifact_digest=None,full_artifact_expired=None,
+        closed_capture_union=module.union_api_fixture(p))
+    artifact['compact_zip_verification'].update(expected_sha256=c['digest'],computed_sha256=c['digest'],received_bytes=c['size_in_bytes'])
+    cell={**identity,'evidence_layout':p['layout'],'head_sha':p['head_sha']}
+    if mutation=='undeclared':cell.pop('evidence_layout')
+    if mutation=='foreign_case':cell['head_sha']='0'*40
+    if mutation=='failed_suffix':artifact['closed_capture_union']['job']['steps'][1]['conclusion']='failure'
+    if mutation=='foreign_known_chain':
+        other=next(v for k,v in CLOSED_CAPTURE_COMPACT_UNIONS.items() if k!=union_run)
+        artifact['closed_capture_union']=module.union_api_fixture(other)
+    if mutation=='fake_full':artifact.update(full_artifact_id=777,full_artifact_digest='sha256:'+'a'*64,full_artifact_expired=False)
+    write(folder/'artifact-provenance.json',artifact)
+    declarations=declared(tmp_path/'declared.json',[{'run_id':p['run_id'],'collector':'deepflow','stage':'main','cells':[cell]}])
+    if mutation!='none':
+        with pytest.raises(ValueError):build([tmp_path/'inputs'],declarations,tmp_path/'report')
+    else:
+        result=build([tmp_path/'inputs'],declarations,tmp_path/'report')
+        item=attempts(result,'main')[0]
+        assert item['eligible_main_coverage'] and item['closed_capture_union_available']
+        assert not item['full_source_artifact_available']
+        assert item['artifact']['full_artifact_id'] is None
+        assert 'final_mutable_SQL' in item['closed_capture_union_unavailable_components']
+        assert not item['independently_admitted']
+
+
+@pytest.mark.parametrize('mutation',['none','capture_as_processing','foreign_chain','wrong_original','fake_full'])
+@pytest.mark.parametrize('union_run', [41706823165,41991292539,41991299175])
+def test_report_full8_union_keeps_dual_identity_and_unavailable_full_explicit(tmp_path,mutation,union_run):
+    import importlib.util
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS
+    p=CLOSED_CAPTURE_COMPACT_UNIONS[union_run]
+    spec=importlib.util.spec_from_file_location('full8_union_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    from ebpf_discovery.report_v5 import SAVED_CAPTURE_RECOVERY_SOURCES
+    folder,_=recovered_summary(tmp_path/'inputs', SAVED_CAPTURE_RECOVERY_SOURCES[p['head_sha']])
+    a=json.loads((folder/'artifact-provenance.json').read_text());c=p['artifacts']['compact']
+    a.update(artifact_id=c['id'],name=c['name'],digest=c['digest'],full_artifact_id=None,
+        full_artifact_digest=None,full_artifact_expired=None,closed_capture_union=module.union_api_fixture(p))
+    a['compact_zip_verification'].update(expected_sha256=c['digest'],computed_sha256=c['digest'],received_bytes=c['size_in_bytes'])
+    if mutation=='capture_as_processing':a['closed_capture_union']['artifacts'][0]['workflow_run']['id']=p['run_id']
+    if mutation=='foreign_chain':a['closed_capture_union']=module.union_api_fixture()
+    if mutation=='fake_full':a.update(full_artifact_id=777,full_artifact_digest='sha256:'+'a'*64,full_artifact_expired=False)
+    if mutation=='wrong_original':
+        manifest=json.loads((folder/'evaluation-manifest.json').read_text())
+        manifest['scientific_capture_identity']['run_id']='123';write(folder/'evaluation-manifest.json',manifest)
+    write(folder/'artifact-provenance.json',a)
+    declarations=declared(tmp_path/'declared.json',[{'run_id':p['run_id'],'collector':'deepflow','stage':'main',
+        'cells':[{**dict(zip(('collector','system','mode','seed'),p['cell'])),
+                  'head_sha':p['head_sha'],'evidence_layout':p['layout']}]}])
+    call=lambda:build([tmp_path/'inputs'],declarations,tmp_path/'report')
+    if mutation!='none':
+        with pytest.raises(ValueError):call()
+    else:
+        result=call();row=attempts(result,'main')[0]
+        assert row['eligible_main_coverage'] and row['closed_capture_union_available']
+        assert not row['full_source_artifact_available'] and not row['independently_admitted']
+        assert row['manifest']['scientific_capture_identity']['run_id']==str(p['capture_run_id'])
+        assert row['run_id']==p['run_id']
+
+
+@pytest.mark.parametrize('run_id', [41991292539, 41991299175])
+def test_actual_controlled_union_never_accepts_other_known_controlled_case(run_id):
+    import importlib.util
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_api_facts
+    spec=importlib.util.spec_from_file_location('controlled_union_cross_fixture',Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+    other=41991299175 if run_id==41991292539 else 41991292539
+    with pytest.raises(ValueError,match='different declared case'):
+        _closed_union_api_facts(fixture.union_api_fixture(CLOSED_CAPTURE_COMPACT_UNIONS[other]),
+                               expected_profile=CLOSED_CAPTURE_COMPACT_UNIONS[run_id])
+
+
+@pytest.mark.parametrize('run_id', [41642781338, 41991292539, 41991299175])
+@pytest.mark.parametrize('mutation', ['none', 'missing_origin', 'wrong_origin', 'existing_full'])
+def test_report_workflow_uses_complete_api_for_union_not_cost_projection(tmp_path, monkeypatch, run_id, mutation):
+    import importlib.util
+    import pathlib
+    from ebpf_discovery.report_v5 import CLOSED_CAPTURE_COMPACT_UNIONS, _closed_union_api_facts
+    spec = importlib.util.spec_from_file_location('report_union_boundary_fixture',
+        Path(__file__).with_name('test_closed_postcapture_review_v5.py'))
+    fixture = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fixture)
+    profile = CLOSED_CAPTURE_COMPACT_UNIONS[run_id]
+    bundle = fixture.union_api_fixture(profile)
+    compact = next(a for a in bundle['artifacts'] if a['id'] == profile['artifacts']['compact']['id'])
+    if mutation == 'missing_origin': compact.pop('workflow_run')
+    if mutation == 'wrong_origin': compact['workflow_run']['head_sha'] = '0' * 40
+    actual = [a for a in bundle['artifacts'] if
+              a.get('workflow_run', {}).get('id', run_id) == run_id]
+    if mutation == 'existing_full':
+        actual.append({'name': compact['name'].replace('v5-summary-', 'campaign-v5-', 1)})
+    pages = [{'artifacts': actual[:1]}, {'artifacts': actual[1:]}]
+    calls = []
+
+    def api(command):
+        calls.append(command)
+        path = command[-1]
+        if path.endswith(f'runs/{run_id}/artifacts?per_page=100'):
+            assert command[2:4] == ['--paginate', '--slurp']
+            return json.dumps(pages).encode()
+        for suffix, body in [(f'runs/{run_id}', bundle['run']),
+                (f'jobs/{profile["processing_job"]}', bundle['job']),
+                (f'jobs/{profile["capture_job"]}', bundle['capture_job']),
+                (f'artifacts/{profile["artifacts"]["capture"]["id"]}', bundle['artifacts'][0])]:
+            if path.endswith(suffix): return json.dumps(body).encode()
+        raise AssertionError(command)
+
+    monkeypatch.setattr(subprocess, 'check_output', api)
+    workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/report-v5.yml').read_text()
+    script = workflow.split('                  if union is not None:\n', 1)[1]
+    script = script.split('                  row=', 1)[0]
+    cost_projection = [{key: a.get(key) for key in
+                       ('id', 'name', 'digest', 'expired', 'size_in_bytes')} for a in actual]
+    namespace = {'union': profile, 'run_id': run_id, 'repo': 'a-a-k/ebpf-model-discovery-experiments',
+        'artifacts': cost_projection, 'provenance': tmp_path, 'json': json,
+        'pathlib': pathlib, 'subprocess': subprocess, '_closed_union_api_facts': _closed_union_api_facts}
+    if mutation == 'none':
+        exec(compile(textwrap.dedent(script), 'actual-report-union-boundary', 'exec'), namespace)
+        assert sorted(namespace['union_evidence']['artifacts'], key=lambda a: a['id']) == sorted(
+            bundle['artifacts'], key=lambda a: a['id'])
+    else:
+        with pytest.raises(ValueError):
+            exec(compile(textwrap.dedent(script), 'actual-report-union-boundary', 'exec'), namespace)
+    assert json.loads((tmp_path / f'closed-union-artifacts-{run_id}.json').read_text()) == pages
+    assert len(calls) >= 1

@@ -1,0 +1,32 @@
+{
+  "recorded_utc": "2026-11-02T14:46:15.991685+00:00",
+  "root_original_postcapture_owned_guest_lifecycle_actual_qualification_GO": true,
+  "source": "0056b4c8ecb85e8b40c433e63af442133a21f3cc",
+  "run": 41464411920,
+  "artifact": 13150063491,
+  "artifact_digest": "sha256:e382caa9a95b9245101f2c6fa445f892a21f6a5537b635061caeccc3c12c1751",
+  "qualification_metadata_SHA256": "c676d1356b6a881ca627269c7849127b613c06022f3f6a34ad53c6b9345cb016",
+  "release_metadata_SHA256": "843e83b579e801cc24ff45fce97474a96dc55099d09b96af1a37126b42661ca4",
+  "two_actual_guest_kernels_owned_pidfd_TERM_and_confirmed_exit": true,
+  "only_two_owned_ephemeral_overlays_unlinked_after_exit": true,
+  "diagnostics_retained_and_reused_without_overwrite": true,
+  "closed_control_SHA256_before_and_after": {
+    "identity_projection_v5.py": "b251ca8392f8327330e17e2ac1e0e446ed6b38dd33f338f7a28273deeed5b21d",
+    "store_v5.py": "4202e788d0e032e9d392b48b69dd7313ed270f91267cfef0c575635e9e4869f7"
+  },
+  "control_scope": "Two copied source files, explicitly not scientific observations or completefullcase input equivalence. ActualS/C/T/U/V scientificinput proofs remain inherited atactualtestedheads.",
+  "release_elapsed_seconds": 1.320364111,
+  "observed_disk_free_before": 88860659712,
+  "observed_disk_free_after": 90572128256,
+  "no_full_case_memory_disk_or_sixhour_cure_claim": true,
+  "original_main81_and_all73_successful_cases_preserved": true,
+  "costs": "Retain failed08dqual41462775370/91sjob/0.6816srelease, corrected0056boot/qualify/controlcapture/hashes/stop/unlink, bothCIrevisions and ceaNO-GO, alloldcapture/worker/profile/observer/retention/reporttails; humanunknown/APIwallnotCPUorBilling.",
+  "scientific_case_admission_or_completed81_claim": false,
+  "independent_actual_qualification_review_pending_at_root_time": true,
+  "subsequent_independent_concurrence": {
+    "file": "clean-study-postcapture-lifecycle-independent-actual-review-20261102.json",
+    "original_work_SHA256": "54a6f4b5799988cf8970f322505ec29c336da84ee824c81a296b523a09d78324",
+    "original_root_work_SHA256": "de29ff3f2798479ee892a709914ab1d119d70c72d24f1cd3d6bedd062e71328b",
+    "historical_pending_field_describes_original_root_record_time": true
+  }
+}

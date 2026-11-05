@@ -1,0 +1,30 @@
+{
+  "recorded_before_POST_utc": "2026-10-31T22:12:07.424484+00:00",
+  "source": "bdd5ae1f498cef2c8cbe0c9684100202cacd4f8f",
+  "CI_success_run": 41246965953,
+  "request": {
+    "ref": "fix/immutable-path-preparation",
+    "inputs": {
+      "saved_full7_equivalence": true
+    },
+    "return_run_details": true
+  },
+  "original_criterion": "Feasibility of actual eBPF observations -> Bering -> Sheaft -> independent outcomes under absent/partial SDK traces, complete81 cells and10 operations. Cost superiority not required.",
+  "strongest_baseline": "Actual old successful full7 worker41219370499 on exact immutable training artifact13047984145; no old recomputation or synthetic data.",
+  "causal_repair": "Only bounded path-resolution reuse inside validated immutable worker preparation; raw bytes/hashes/validation/order unchanged. No ML or deadline/trial/count changes.",
+  "root_original_GO": "Explicit actual-code ORIGINAL-feasibility GO for exactly one fixed offline unprofiled comparison at bdd5ae1 after exact CI. Entire input census/wire hashes/18entry proofs, strict clocks-only metadata and physical child binding required; unchanged checkpoint/index/binaries/downstream. No fresh capture GO.",
+  "skeptic_original_GO": "Explicit actual-code ORIGINAL-feasibility GO from ebpf_audit_skeptic for bdd5ae1, exact Linux CI prerequisite now satisfied;8 comparison fixtures independently passed. No fresh capture/retry or study success approval.",
+  "costs": "Retain original captures/workers/failures, two failed profiling attempts, all CI/preparation/transfer/comparison/archive costs. API elapsed intervals are not billed/CPU usage; human effort unknown.",
+  "no_healthy_capture_cancelled": true,
+  "no_new_traffic_or_models": true,
+  "single_POST_only": true,
+  "status": "dispatched_verified",
+  "response": {
+    "workflow_run_id": 41247102582,
+    "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41247102582",
+    "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41247102582"
+  },
+  "run_id": 41247102582,
+  "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41247102582",
+  "actual_head_sha": "bdd5ae1f498cef2c8cbe0c9684100202cacd4f8f"
+}

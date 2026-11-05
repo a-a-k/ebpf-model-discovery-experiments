@@ -1,0 +1,296 @@
+{
+  "observed_utc": "2026-10-31T15:40:40.424394+00:00",
+  "assigned_capacity_lower_bound": 31,
+  "witness_utc": "2026-10-31T15:39:53+00:00",
+  "method": "Distinct nonzero assigned runners with REAL Set up job start. Completed interval ends conservatively at last completed step, right-censored jobs at individual fresh API read. End processed before start at equal timestamps. No queued started_at treated as an assigned runner.",
+  "interpretation": "An observed overlap is only a lower bound on available concurrent jobs. It does not prove a hard quota or authorize reshard/cancellation.",
+  "all16probe_jobs_success_before_budget": true,
+  "actual_last_probe_job_completed_utc": "2026-10-31T15:40:51Z",
+  "probe_cancellations": 0,
+  "witness_common_overlap_start_utc": "2026-10-31T15:39:53+00:00",
+  "witness_common_overlap_end_utc": "2026-10-31T15:40:01+00:00",
+  "witness_common_overlap_seconds": 8.0,
+  "independent_review": "work/skeptic-main-v5-observer/CI-capacity-probe-20261031/independent-overlap-review.json",
+  "scope": "Operational lowerbound only; no authorization to cancel healthycaptures or scientific success claim.",
+  "witness_jobs": [
+    {
+      "run_id": 41164821492,
+      "job_id": 124430026307,
+      "runner_id": 1000029773,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.167000+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164821492,
+      "job_id": 124430026314,
+      "runner_id": 1000029771,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.167000+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164821492,
+      "job_id": 124430026384,
+      "runner_id": 1000029770,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.167000+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164824120,
+      "job_id": 124430030929,
+      "runner_id": 1000029769,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:38.879827+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164824120,
+      "job_id": 124430030946,
+      "runner_id": 1000029785,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:38.879827+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164824120,
+      "job_id": 124430030958,
+      "runner_id": 1000029778,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:38.879827+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164826834,
+      "job_id": 124430039305,
+      "runner_id": 1000029798,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.259025+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164826834,
+      "job_id": 124430039353,
+      "runner_id": 1000029841,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.259025+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41164826834,
+      "job_id": 124430039358,
+      "runner_id": 1000029799,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.259025+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41209667348,
+      "job_id": 124561830839,
+      "runner_id": 1000029789,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:38.633522+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41209827036,
+      "job_id": 124562364930,
+      "runner_id": 1000029793,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:38.668457+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41211541665,
+      "job_id": 124567436995,
+      "runner_id": 1000029822,
+      "role": "study_parent",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.508551+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41213193564,
+      "job_id": 124572265784,
+      "runner_id": 1000029835,
+      "role": "model_worker",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.509244+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41213332770,
+      "job_id": 124572673452,
+      "runner_id": 1000029836,
+      "role": "model_worker",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.576822+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41213911408,
+      "job_id": 124574366961,
+      "runner_id": 1000029842,
+      "role": "model_worker",
+      "start_utc": "2026-10-31T15:39:32.550851+00:00",
+      "end_utc": "2026-10-31T15:40:39.551099+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215900225,
+      "job_id": 124580240077,
+      "runner_id": 1000029845,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:38+00:00",
+      "end_utc": "2026-10-31T15:40:22+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215900225,
+      "job_id": 124580240391,
+      "runner_id": 1000029846,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:39+00:00",
+      "end_utc": "2026-10-31T15:40:01+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215902725,
+      "job_id": 124580248377,
+      "runner_id": 1000029847,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:40+00:00",
+      "end_utc": "2026-10-31T15:40:39.713039+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215902725,
+      "job_id": 124580248614,
+      "runner_id": 1000029848,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:40+00:00",
+      "end_utc": "2026-10-31T15:40:01+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215905337,
+      "job_id": 124580256787,
+      "runner_id": 1000029849,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:42+00:00",
+      "end_utc": "2026-10-31T15:40:04+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215905337,
+      "job_id": 124580256605,
+      "runner_id": 1000029850,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:43+00:00",
+      "end_utc": "2026-10-31T15:40:40.122279+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215907884,
+      "job_id": 124580264388,
+      "runner_id": 1000029851,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:44+00:00",
+      "end_utc": "2026-10-31T15:40:40.119399+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215907884,
+      "job_id": 124580264680,
+      "runner_id": 1000029852,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:45+00:00",
+      "end_utc": "2026-10-31T15:40:06+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215910479,
+      "job_id": 124580272979,
+      "runner_id": 1000029854,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:46+00:00",
+      "end_utc": "2026-10-31T15:40:07+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215910479,
+      "job_id": 124580272817,
+      "runner_id": 1000029853,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:47+00:00",
+      "end_utc": "2026-10-31T15:40:40.390270+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215913103,
+      "job_id": 124580280760,
+      "runner_id": 1000029855,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:48+00:00",
+      "end_utc": "2026-10-31T15:40:06+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215913103,
+      "job_id": 124580280915,
+      "runner_id": 1000029856,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:48+00:00",
+      "end_utc": "2026-10-31T15:40:40.407649+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215915884,
+      "job_id": 124580289817,
+      "runner_id": 1000029857,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:51+00:00",
+      "end_utc": "2026-10-31T15:40:15+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215915884,
+      "job_id": 124580290000,
+      "runner_id": 1000029858,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:51+00:00",
+      "end_utc": "2026-10-31T15:40:40.423713+00:00",
+      "end_right_censored_at_API_observation": true
+    },
+    {
+      "run_id": 41215918555,
+      "job_id": 124580297005,
+      "runner_id": 1000029859,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:53+00:00",
+      "end_utc": "2026-10-31T15:40:17+00:00",
+      "end_right_censored_at_API_observation": false
+    },
+    {
+      "run_id": 41215918555,
+      "job_id": 124580297198,
+      "runner_id": 1000029860,
+      "role": "probe_CI",
+      "start_utc": "2026-10-31T15:39:53+00:00",
+      "end_utc": "2026-10-31T15:40:40.409210+00:00",
+      "end_right_censored_at_API_observation": true
+    }
+  ]
+}

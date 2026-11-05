@@ -1,0 +1,217 @@
+{
+  "checked_utc": "2026-11-01T02:10:22.438676+00:00",
+  "exact_authorized_batch2_dispatch_verified": true,
+  "run": 41263818898,
+  "head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+  "CI": 41263703300,
+  "manifest_GitLF_sha256": "deaf84a82dbd08142bc7346d247a5637bb12a4d2281047c63cfd4cbf9404828c",
+  "manifest_git_blob": "d6c01c409441467088a8bdf78d4a9731e89d163c",
+  "same_preapproved_one_case": {
+    "system": "otel_demo",
+    "mode": "partial",
+    "seed": 8,
+    "collector": "obi",
+    "run_id": 41239167446,
+    "stage": "main",
+    "runner": "study",
+    "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+    "compact_scope": "retrieve_selected_nonjournal",
+    "full_scope": "retrieve_family_selected",
+    "compact_artifact_id": 13062912116,
+    "compact_artifact_name": "v5-summary-obi-main-otel_demo-partial-8-41239167446",
+    "compact_artifact_bytes": 51058271,
+    "compact_artifact_digest": "sha256:595959de2fbb30acc5e725c87f0cd693de4fa52734f3dab46fc7ef8e20ecd5fe",
+    "full_artifact_id": 13063560730,
+    "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-8-41239167446",
+    "full_artifact_bytes": 3648655232,
+    "full_artifact_digest": "sha256:90fbfbf47874d2ec437bfe3f90718010038e55f45a8343ead84c62912f3fd9ee"
+  },
+  "jobs": [
+    {
+      "id": 124722326893,
+      "run_id": 41263818898,
+      "workflow_name": "Review pending main saved evidence v5",
+      "head_branch": "analysis/clean-study-results",
+      "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41263818898",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVX6K988AAAAdCgetbQ",
+      "head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124722326893",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41263818898/job/124722326893",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-01T02:06:44Z",
+      "started_at": "2026-11-01T02:06:46Z",
+      "completed_at": "2026-11-01T02:06:54Z",
+      "name": "declare",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-01T02:06:47Z",
+          "completed_at": "2026-11-01T02:06:48Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-01T02:06:48Z",
+          "completed_at": "2026-11-01T02:06:51Z"
+        },
+        {
+          "name": "Run python - <<'PY'",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-01T02:06:51Z",
+          "completed_at": "2026-11-01T02:06:51Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-01T02:06:51Z",
+          "completed_at": "2026-11-01T02:06:51Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-01T02:06:51Z",
+          "completed_at": "2026-11-01T02:06:51Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124722326893",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000030161,
+      "runner_name": "GitHub Actions 1000030161",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 124722357306,
+      "run_id": 41263818898,
+      "workflow_name": "Review pending main saved evidence v5",
+      "head_branch": "analysis/clean-study-results",
+      "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41263818898",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVX6K988AAAAdCggkOg",
+      "head_sha": "4922d5cf56dacad6ca49a2710550f09c91d00787",
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124722357306",
+      "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41263818898/job/124722357306",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-01T02:06:54Z",
+      "started_at": "2026-11-01T02:06:56Z",
+      "completed_at": null,
+      "name": "review (otel_demo, partial, 8, obi, 41239167446, main, study, 1d646f907d0241f25445fcfb4d07d4e0ba8...",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-01T02:06:57Z",
+          "completed_at": "2026-11-01T02:06:58Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-01T02:06:58Z",
+          "completed_at": "2026-11-01T02:07:01Z"
+        },
+        {
+          "name": "Run actions/setup-python@v5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-01T02:07:01Z",
+          "completed_at": "2026-11-01T02:07:01Z"
+        },
+        {
+          "name": "Install evidence-transport dependency",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-01T02:07:01Z",
+          "completed_at": "2026-11-01T02:07:10Z"
+        },
+        {
+          "name": "Resolve exact declared artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-01T02:07:10Z",
+          "completed_at": "2026-11-01T02:07:10Z"
+        },
+        {
+          "name": "Retrieve only missing selected evidence",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 6,
+          "started_at": "2026-11-01T02:07:10Z",
+          "completed_at": null
+        },
+        {
+          "name": "Verify saved facts where the family packet is present",
+          "status": "pending",
+          "conclusion": null,
+          "number": 7,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Remove verified typed-package working bodies",
+          "status": "pending",
+          "conclusion": null,
+          "number": 8,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Upload bounded evidence facts",
+          "status": "pending",
+          "conclusion": null,
+          "number": 9,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/setup-python@v5",
+          "status": "pending",
+          "conclusion": null,
+          "number": 17,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "pending",
+          "conclusion": null,
+          "number": 18,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124722357306",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000030162,
+      "runner_name": "GitHub Actions 1000030162",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "scientific_success_or_final81_admission": false,
+  "scope": "One already authorized read-only saved-evidence job; no new capture/tool replay/scoring or dispatch performed by this check."
+}

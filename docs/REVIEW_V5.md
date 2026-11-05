@@ -758,3 +758,14 @@ qualification independent-review confirmation; it is not the implicit/default
 qualification run. Typed package working bodies are called verified before
 removal only when the corresponding toolchain or handoff domain proof exists in
 the saved-facts output.
+
+## Fresh study: actual fixed-main reader qualification
+
+The uniform saved-reader run41240585632 at `e6dff1d` passed root and independent
+ORIGINAL-criterion actual-output qualification on the three fixed main packets:
+DeepFlow/DeathStarBench/absent/6, Coroot/OTel/full/6 and OBI/Petclinic/partial/6.
+All32 available primary model/input/Sheaft/report chains,28 primary unknowns and
+original external outcomes are preserved. This is reader qualification for those
+packets, not final81-cell admission or study success. Concrete OTel runtime
+restarts and business-call failures are retained with their causal limits in
+[the fixed-main review](MAIN_FIXED3_AND_OTEL_RUNTIME_V5.md).

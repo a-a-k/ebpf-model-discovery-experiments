@@ -1,0 +1,148 @@
+{
+  "checked_utc": "2026-11-01T06:46:08.682839+00:00",
+  "original_actual_four_POST_source_scope_GO": true,
+  "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "consumer": "23dc6d2b80b8bf79522ad7d79a73b709844f8ce3",
+  "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+  "dispatch_record_sha256": "08554862fc42c10b8496785ba5b2bb0909008dd8513147483de18d463900195e",
+  "original_preexecution_GO_path": "work\\skeptic-main-v5-observer\\disk-duplicate-lifetimes-T\\independent-U-four-additional-failures-original-execution-go.json",
+  "original_preexecution_GO_SHA256": "e5f8d41525ce90ed06f984fcbd161aabf5d0df711a88b9be8ec9381a79fb588b",
+  "all_four": [
+    {
+      "run_id": 41281970201,
+      "case": {
+        "collector": "deepflow",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 6
+      },
+      "actual_source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "actual_ref": "capture-20261101-uploaded-checkpoint-release-v5",
+      "actual_workflow": ".github/workflows/series-v5.yml",
+      "exact_inputs": {
+        "collector": "deepflow",
+        "stage": "main",
+        "runner": "study",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": "6"
+      },
+      "exact_actual_campaign_job": {
+        "id": 124775557358,
+        "name": "campaign (deathstarbench, partial, 6)",
+        "status": "in_progress"
+      },
+      "recorded_before_POST_utc": "2026-11-01T06:43:30.002836+00:00",
+      "fresh_owner_age_seconds_at_POST": 202.719543,
+      "capture_reservations_before_POST": 12,
+      "request_SHA256": "33b0fc9dcae955b82c181ba4f4e9f126236a923c3c927d2eb795bae4ed63299c",
+      "response_SHA256": "86e0fce5cc349477c81fd8eb02c7df2ce0bf3192fccd0b420101620e2e8a99b5",
+      "one_POST_response_matches_actual_run": true
+    },
+    {
+      "run_id": 41281980516,
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 8
+      },
+      "actual_source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "actual_ref": "capture-20261101-uploaded-checkpoint-release-v5",
+      "actual_workflow": ".github/workflows/series-v5.yml",
+      "exact_inputs": {
+        "collector": "deepflow",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": "8"
+      },
+      "exact_actual_campaign_job": {
+        "id": 124775587735,
+        "name": "campaign (otel_demo, partial, 8)",
+        "status": "in_progress"
+      },
+      "recorded_before_POST_utc": "2026-11-01T06:43:40.349235+00:00",
+      "fresh_owner_age_seconds_at_POST": 213.065942,
+      "capture_reservations_before_POST": 13,
+      "request_SHA256": "b932c6a16b2ffb38b26080306d027e93d0c70f1765ec00629d7cb3d1c7e45222",
+      "response_SHA256": "b32bfbea3d3eef18c903b1700ec6464ee1c860e2de46236efe53c4da8fbaf81a",
+      "one_POST_response_matches_actual_run": true
+    },
+    {
+      "run_id": 41281990704,
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7
+      },
+      "actual_source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "actual_ref": "capture-20261101-uploaded-checkpoint-release-v5",
+      "actual_workflow": ".github/workflows/series-v5.yml",
+      "exact_inputs": {
+        "collector": "deepflow",
+        "stage": "main",
+        "runner": "study",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": "7"
+      },
+      "exact_actual_campaign_job": {
+        "id": 124775624969,
+        "name": "campaign (otel_demo, absent, 7)",
+        "status": "in_progress"
+      },
+      "recorded_before_POST_utc": "2026-11-01T06:43:50.552419+00:00",
+      "fresh_owner_age_seconds_at_POST": 223.269126,
+      "capture_reservations_before_POST": 14,
+      "request_SHA256": "9e542125d13d326406d45dd2ad89f35b3cdeac26a8f4f8e18327d192e316058a",
+      "response_SHA256": "c5371d7155e20e1165386a3cc7219faf5f0c4ee3d20ea3c095f578548438dcd6",
+      "one_POST_response_matches_actual_run": true
+    },
+    {
+      "run_id": 41282001013,
+      "case": {
+        "collector": "deepflow",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 7
+      },
+      "actual_source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "actual_ref": "capture-20261101-uploaded-checkpoint-release-v5",
+      "actual_workflow": ".github/workflows/series-v5.yml",
+      "exact_inputs": {
+        "collector": "deepflow",
+        "stage": "main",
+        "runner": "study",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": "7"
+      },
+      "exact_actual_campaign_job": {
+        "id": 124775652096,
+        "name": "campaign (deathstarbench, partial, 7)",
+        "status": "in_progress"
+      },
+      "recorded_before_POST_utc": "2026-11-01T06:44:01.229177+00:00",
+      "fresh_owner_age_seconds_at_POST": 233.945884,
+      "capture_reservations_before_POST": 15,
+      "request_SHA256": "bc1af70276cc09a2fd4b6bf1ec47dbe3ff1363d67ced850f01983ff1bb28438f",
+      "response_SHA256": "3f2c9b0255484c852c5569bb816b9f17a36458889853e30e4212da78b858366b",
+      "one_POST_response_matches_actual_run": true
+    }
+  ],
+  "capacity": {
+    "owner_snapshot": "work\\owner-actions-capacity-20261101T064007Z.json",
+    "owner43_no_errors_no_outside": true,
+    "conservative_slots": 39,
+    "capture_before": 12,
+    "capture_worst_after": 16,
+    "before_each_POST_capture_rechecked": true
+  },
+  "full_protocol": "ActualscienceU seriesworkflow byteidenticalT; each requestmain/study with exactsinglemode/system/seed hence unchanged34800primary/9600target/100000trials/all4methods/2views/guestkernels. Currentjobname checked, actualstatus/outcome/fullsource proofstillpending.",
+  "no_healthy_cancellation": "Dispatchercontains no cancellation call; scopecontains only4actualterminalfailures. Existinghealthy/unboundworkerstopnotauthorized. Prior2Ucalls41280950428/41280961352 excludedfromthese4 and not repeated.",
+  "limits": "Identity/scope/capacity and exactlyonce request-response proof only; not completecapture/fullcaseadmission/model/targets/endtoendspace/deadlinecure or scientific/all81success. No scientificpacket/rawpayload/trace/journal/tar downloaded.",
+  "costs": "Keep allold/newpartialtargets, compact/retention/prefix/worker andCI/cleanup/review/transfer/archives; APIelapsednotCPU/billing/humanunknown."
+}

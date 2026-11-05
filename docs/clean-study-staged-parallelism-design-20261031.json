@@ -1,0 +1,234 @@
+{
+  "recorded_before_any_conversion_utc": "2026-10-31T16:00:32.517279+00:00",
+  "status": "STAGED preservation design; original current9 protected. No cancellation or new study dispatch yet; immediate9-cancel option not selected.",
+  "original_criterion": "Sameoriginal81unique cells/3collectors/10operations/4methods/equal-information directbaseline, actualBering\u2192Sheaft\u2192independentoutcomes. No cost-superiority or guaranteed walltime claim.",
+  "capacity": "Root and skeptic observed31 simultaneous distinctassignedrunners. Conservative max20nonterminalcaptureparents leaves at least11knownslots forworkers/CI/review; nominalquota40notassumed for safety.",
+  "strong_simple_baseline": "Continuecurrent12live unchanged. Immediate fullreshard couldlose14.36recordedjobhours; stagedconversion instead preserves9currentlyactivecarrierjobs.",
+  "protected_job_sets": {
+    "41164821492": [
+      {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430026384,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T13:39:16Z",
+        "elapsed_job_seconds_at_snapshot": 7948.181991,
+        "active_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430026314,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T13:39:32Z",
+        "elapsed_job_seconds_at_snapshot": 7932.181991,
+        "active_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430026307,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T13:50:32Z",
+        "elapsed_job_seconds_at_snapshot": 7272.181991,
+        "active_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      }
+    ],
+    "41164824120": [
+      {
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 6,
+        "collector": "deepflow",
+        "run_id": 41164824120,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430030929,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T13:23:27Z",
+        "elapsed_job_seconds_at_snapshot": 8897.181991,
+        "active_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      },
+      {
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7,
+        "collector": "deepflow",
+        "run_id": 41164824120,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430030958,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T13:57:21Z",
+        "elapsed_job_seconds_at_snapshot": 6863.181991,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      },
+      {
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 8,
+        "collector": "deepflow",
+        "run_id": 41164824120,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430030946,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T14:17:46Z",
+        "elapsed_job_seconds_at_snapshot": 5638.181991,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    ],
+    "41164826834": [
+      {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "coroot",
+        "run_id": 41164826834,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430039358,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T14:33:49Z",
+        "elapsed_job_seconds_at_snapshot": 4675.181991,
+        "active_steps": [
+          "Continue discovery and validation on the same live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 6,
+        "collector": "coroot",
+        "run_id": 41164826834,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430039353,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T15:13:06Z",
+        "elapsed_job_seconds_at_snapshot": 2318.181991,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "coroot",
+        "run_id": 41164826834,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "old_job_id": 124430040624,
+        "old_job_status": "in_progress",
+        "new_capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+        "new_capture_ref": "capture-20261031-parent-disk-port-v2",
+        "started_at": "2026-10-31T15:49:08Z",
+        "elapsed_job_seconds_at_snapshot": 156.181991,
+        "active_steps": [
+          "Acquire and close the training prefix on the live guests"
+        ]
+      }
+    ]
+  },
+  "protected_standalones": [
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41211541665,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "13c017bf72a86a6853f93a5b8f503de199bf7865"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41209827036,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41209667348,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "fbbda015cefc4f11ee73f32be6ed661c70375f18"
+    }
+  ],
+  "capture_source": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+  "capture_ref": "capture-20261031-parent-disk-port-v2",
+  "source_equivalence": "Exact2126nonoperationalGitentries/modes identical0c98; exact3reviewedworkflow/documentblobs, unchangedscience/deps/fixtures. Producer+consumerCI and bothactualcodeGO complete.",
+  "rules": [
+    "Never cancel a carrier while anyofits3frozenprotectedjobs remainsnonterminal. Successfulones retained; actualfailures independentlydiagnosed/repeatedunderexistingtechnical-onlypolicy.",
+    "At eachcarrierbarrier, refreshallAPIjobs/artifacts, promoteallnewcompletevalidpackets regardlessaccuracy/unknown, snapshotactivebacklog phase/elapsed andavailablepartialdata.",
+    "Cancel onlythatcarrier afterbarrier. If newbacklog containsalready-startedscientificcapture, first obtain informeduserapproval using concretecurrenttail IDs/times; neverinferthatapprovalfromPro/parallelismquestion.",
+    "If onlyqueued or pre-acquisition setup remains, reversiblequeuehand-off falls within authorizedparallelization; logsetuptime andensure nofrozenprotectedcaptureisactive beforeaction.",
+    "AwaitterminalALLjobs ofthatcarrier, closepossiblevalidretentiontails andneverfresh-repeateligiblecompletepacket. Missingdata remainunrecovered, not fabricated. No source-exclusion waiver.",
+    "DispatchONLYthatcollector uncompletedMcaseIDs usingexistingonecaseworkflow, boundedglobalcap20 includingotheroriginalcarriersand3standalonesandpendingprepares. Prioritizeunchangedfixed3readerqualification cells andthen deterministicqueuedorder.",
+    "Othercarriers and N7/N8/M6continue. No blindworker cancellation; keepallmodel/prefix/cancelled/timing/artifact costs, preserveworkerheadroom.",
+    "On originalprotectedtechnicalfailure, exactnewMrepeatonlyaftercase-specificevidence/preexec/GO; totalglobalparentcap20stillholds. No accuracy-triggeredrerun or response deadline."
+  ],
+  "root_verdict": "ORIGINAL-feasibility DESIGN GO for preservation-based stagedsame81orchestration, no scientific source/criterion change. No currenthealthydata sacrificed merely to fill more slots.",
+  "skeptic_verdict": "Explicit ORIGINAL-feasibility DESIGN GO received for staged all81conversion. Protect exact9untilnaturalterminal; reuseallcomplete/adverse/unknown, holdcompletecandidatespendingstrictadmissionwithoutduplicates. Concretefuturetailapproval required beforelosingstartedscientificcapture. This is not blanket cancellation approval.",
+  "case_slot_accounting": "Reserve3case slots for EACH nonterminaloriginalcarrier whileitcanlaunchbacklog, NOToneperworkflowrun. EverynonterminalsinglecaseMdispatch(includingpendingprepare) reserves1; N7/N8/M6reserve1each. Totalreservedcapturecase slots<=20; verifiedcapacity31 leaves11 forworkers/CI/review."
+}

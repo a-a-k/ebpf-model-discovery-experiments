@@ -1,0 +1,585 @@
+{
+  "schema": "clean-study-original-actual-scientific-review-v1",
+  "recorded_utc": "2026-11-05T11:17:04.288105+00:00",
+  "cell": [
+    "deepflow",
+    "otel_demo",
+    "absent",
+    7
+  ],
+  "both_original_case_scientific_review_GO": true,
+  "verdict": "Valid negative/UNKNOWN; external outcomes and strongest same-information baselines interpreted, no positive utility claim.",
+  "root_proof": {
+    "path": "work\\root-original-controlled-absent7-actual-scientific-review-20261105.json",
+    "sha256": "4061f0a3e2419678a6b2a98aee744bf92582d0a79addc9955a4e1974775f046f",
+    "review": {
+      "schema": "root-original-actual-controlled-DF-OTel-absent7-scientific-review-v1",
+      "recorded_utc": "2026-11-05T10:33:37.937907+00:00",
+      "root_original_case_scientific_review_GO": true,
+      "cell": [
+        "deepflow",
+        "otel_demo",
+        "absent",
+        7
+      ],
+      "original_criterion": "eBPF feasibility for operation models/actualBering->Sheaft predictions without/withinsufficientSDKtraces judgedagainst independentexternaloutcomes, notcostsuperiority/ML/novelty orinternalmetrics.",
+      "strongest_simple_baselines": "Samepredeclaredsemanticinformation direct A OR B conditionalprediction andobservededgeunion/context. NoHTTPoutcome fitting or new sourceknowledge to eBPF.",
+      "verdict": "Valid negative/UNKNOWN review. Tested DeepFlow export/normalization/Bering operation-model pipeline didnotrecover sufficientrequired operation evidence: all24pointforecasts unavailable, primaryinterval[0,1] preserved. Actualexternaloutcomescompleteandmatchcheapdirectconditionalbaseline .875. No positiveforecastingutility/costadvantage/universalDeepFlow/eBPF failure claimed.",
+      "facts": {
+        "path": "work\\controlled7-reader42008468607-exact-facts-20261105\\13405783261\\facts\\saved-evidence-facts.json",
+        "bytes": 28009876,
+        "sha256": "b555e42745b9d483dfdfced062ce9fdde149932bdaf5dfd68feb29a601f56281",
+        "member_CRC32": "8c1ba8f6",
+        "body_read_once_shared": true
+      },
+      "processing_run": 41991292539,
+      "processing_source": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b",
+      "scientific_capture_run": 41781475751,
+      "scientific_capture_source": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070",
+      "reader": 42008468607,
+      "reader_source": "e88215da4ef5364afbcb86bf0bfc7c2408853f92",
+      "counts": {
+        "all_records": 34951,
+        "blocks": 19,
+        "expected_primary": 34800,
+        "primary": 34800,
+        "primary_count_matches": true,
+        "target": 9600,
+        "target_state_counts": {
+          "00": 1200,
+          "01": 1200,
+          "10": 2400,
+          "11": 4800
+        }
+      },
+      "actual_primary_target_outcomes_by_operation_once": {
+        "add_to_cart": {
+          "success": 2800,
+          "failure": 400,
+          "total": 3200,
+          "actual_fraction": 0.875,
+          "direct_conditional_forecast": 0.875
+        },
+        "browse_product": {
+          "success": 2800,
+          "failure": 400,
+          "total": 3200,
+          "actual_fraction": 0.875,
+          "direct_conditional_forecast": 0.875
+        },
+        "checkout": {
+          "success": 2800,
+          "failure": 400,
+          "total": 3200,
+          "actual_fraction": 0.875,
+          "direct_conditional_forecast": 0.875
+        }
+      },
+      "actual_Bering": [
+        {
+          "accepted_inputs": 3332,
+          "ingest": {
+            "dropped_spans": 0,
+            "late_spans": 0,
+            "spans": 852346,
+            "traces": 0
+          },
+          "observed_model_sha256": "a723c579747854e51eae2402a6cd2f776811422ece21f55be44ff714f1618e70",
+          "ordinary_requests": 0,
+          "sequence_sha256": "e0bc9a792dde6b60ffbbbd648a040a5556bdb9203ee073954d29d2dce5d76788",
+          "snapshot_sha256": "9de483081a95280c417d7d43d21a4bfcc5312912a08c9f7d6c8437eedad530d1",
+          "source": "ebpf",
+          "source_domain": "otel_demo-deployment",
+          "source_profile": {
+            "input_type": "ebpf-otlp",
+            "source_id": "ebpf"
+          },
+          "streamed_requests": 3332,
+          "unselected_wire_payloads_independently_rehashed": false,
+          "variant": "network_scope"
+        },
+        {
+          "accepted_inputs": 3332,
+          "ingest": {
+            "dropped_spans": 0,
+            "late_spans": 0,
+            "spans": 852346,
+            "traces": 0
+          },
+          "observed_model_sha256": "e111108c6c69194d44d117a004cc1021ed1acc645ba794fa049a1777b710c0ea",
+          "ordinary_requests": 0,
+          "sequence_sha256": "decb69e878dc966d02b0efa25cba9b04dc38fd4a1c294779e429155ede623916",
+          "snapshot_sha256": "77b820c77e23347e4cfbb51d32680a320cb44925ed93d692aa294d685f367b44",
+          "source": "ebpf",
+          "source_domain": "otel_demo-deployment",
+          "source_profile": {
+            "input_type": "ebpf-otlp",
+            "source_id": "ebpf"
+          },
+          "streamed_requests": 3332,
+          "unselected_wire_payloads_independently_rehashed": false,
+          "variant": "raw"
+        }
+      ],
+      "logical_combined_views": "Two frozen identical-input references to the twoactualeBPFcalls; exactemptyNative, fourlogicalcoveredviews, nofourphysicalBeringcalls.",
+      "graph_counts": {
+        "raw": {
+          "services": 48,
+          "edges": 44,
+          "endpoints": 28
+        },
+        "network_scope": {
+          "services": 39,
+          "edges": 42,
+          "endpoints": 28
+        }
+      },
+      "native": "All19resolvedSDKdisabledtrue, trainingandfinalexactzeroexporterrecords/spans.",
+      "methods_views_forecasts": {
+        "methods": 4,
+        "views": 2,
+        "operations": 3,
+        "rows": 24,
+        "available_points": 0,
+        "original_branches": 18,
+        "procrustes_preflights": 6,
+        "actual_Sheaft_commands": 0
+      },
+      "forecast_freeze_lead_seconds": 4.601198863,
+      "database": "Down:0/20success, up:20/20success, splitbrowse7/cart7/checkout6; modelDBimpactunknown/null, suppliedmanualDBdown0baseline matches.",
+      "async": "Normal/resumed/recovered each20persisted_exact; paused20pending notfailure. Actualmessagecausalityunproved/UNKNOWN; repeatedsourceviewverdicts notindependentexternalattempts.",
+      "classes": "HierarchicaleBPF+combined ARI1 over600 each is explicitlyequivalent to cheapbasefamilyassignment; no externalutilitygain/fitduringevaluation.",
+      "worker_SQL": "Original816 parent_before_dispatch/training_SQL/checkpoint/parent_after_worker equal; typedoriginalworkerinput/frozenoutputs/sourcepins and fullinput namespace bound.",
+      "closed_inventory": {
+        "rows": 94032,
+        "logical_bytes": 63496892082,
+        "selected_immutable_payloads": 161,
+        "frozen_claims": 7019
+      },
+      "costs": "Keepall882declaredcostkeys/fixed859snapshot+freshfinite tail, original4genuinefailed34048s (noaliasdeduction), capture/workers/inputprep/construct/2Bering/0Sheaft/originaltargets/close/hash/restore/processing5371s/swap/sampling/CI/readers/archive/failedfullupload/review/finiteclosing plusunknownhuman. APIjobelapsed isnotCPU/billed/campaignwall andlogicalshare isnotextracalls.",
+      "threats": [
+        "Boundtestedpinnedcollector/export/normalization/modelpipeline; nouniversalcollectorincapability orallprotocoldecodingclaim.",
+        "No severeprimarycheckoutsuccessdrop relativedeclared.875 target here; no oldfull6/7OOM20MiB causetransfer, andno newownzeroOOMclaim.",
+        "ZeroBeringreportedlate/dropped doesnotprove zeroagent/kernel/flush loss.",
+        "Twoindependentguestboots sharephysicalhost; imagebytes notindependentlyrehashedhere.",
+        "Onlyfullupload12failed; namedunion explicitlylacksprocessedfull/finalmutableSQL. ExactoriginalZIPverifiedonActions, selectedpayloads/bodyrehash+completeinventoryscope preserved; noallunselectedpayloadbody rehashclaim."
+      ],
+      "independent_actual_review": "work/independent-actual-DF-OTel-absent7-controlled-original-scientific-review-20261105.json",
+      "independent_actual_review_sha256": "a290db4d95963dd1bd2ffaa943e3272823e7d44f72e429c8b509fe32bbaee1e4",
+      "new_total_scientific_cases_after_BOTH": 80,
+      "no_final81_or_new8_interpretation": true
+    }
+  },
+  "independent_proof": {
+    "path": "work\\independent-actual-DF-OTel-absent7-controlled-original-scientific-review-20261105.json",
+    "sha256": "a290db4d95963dd1bd2ffaa943e3272823e7d44f72e429c8b509fe32bbaee1e4",
+    "review": {
+      "schema_version": "independent-original-case-scientific-review-v1",
+      "reviewer": "/root/ebpf_actual7_skeptic",
+      "review_date": "2026-11-05",
+      "original_case_scientific_review_GO": true,
+      "verdict": "GO for the ORIGINAL scientific review as a valid negative/UNKNOWN cell; no positive forecasting utility established",
+      "positive_forecasting_feasibility_established": false,
+      "engineering_or_reader_success_counted_as_scientific_utility": false,
+      "original_criterion": "Determine the feasibility of eBPF evidence for operation models and actual Bering-to-Sheaft forecasts when SDK tracing is absent or partial, judged against independent external outcomes. This is not an ML, novelty, or cost-superiority claim.",
+      "cell": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7,
+        "stage": "main"
+      },
+      "scope": {
+        "one_new_fixed81_cell_only": true,
+        "existing_original79_verdicts_unchanged": true,
+        "final_seed8_not_reviewed_here": true,
+        "facts_path": "work/controlled7-reader42008468607-exact-facts-20261105/13405783261/facts/saved-evidence-facts.json",
+        "facts_bytes": 28009876,
+        "facts_sha256_verified_locally": "b555e42745b9d483dfdfced062ce9fdde149932bdaf5dfd68feb29a601f56281",
+        "facts_zip_member_crc32_parent_supplied": "8c1ba8f6",
+        "facts_only_exception": "Exact 28 MB puremetadata member previously approved by ROOT and independent reviewer; default 4 MiB bound remains unchanged elsewhere.",
+        "before_body_ROOT_scope_review": "work/controlled7-reader42008468607-facts-root-before-body-scope-shape-20261105.json",
+        "before_body_ROOT_scope_review_sha256_parent_supplied": "9a7c75f0f97648c181708e81b26aae80199ee1471e09976625e820c74520cf51",
+        "before_body_independent_scope_GO": "work/controlled7-reader42008468607-facts-independent-before-body-scope-shape-GO-20261105.json",
+        "before_body_independent_scope_GO_sha256_parent_supplied": "5b8a1d9008ae893700279d1808736d572ec394736bed2a6cef17387842e51ad7",
+        "activities": "Bounded local reading, metadata parsing and exact facts hashing, then writing this review. No capture, replay, model/refit/Sheaft, SQL/raw/model-body processing, network, GET or POST. No implementation edits. No external communication.",
+        "scientific_packet_layout": "closed_capture_compact_union_v1",
+        "unavailable_processed_full_components": [
+          "processed_full_snapshot",
+          "final_mutable_SQL",
+          "retained_processing_json"
+        ],
+        "rehash_limit": "Selected immutable bodies and complete claims are retained in the qualified reader; this review did not independently reread all original scientific bodies, unselected wire payloads, or guest-image bytes."
+      },
+      "origins": {
+        "original_capture": {
+          "run_id": 41781475751,
+          "head_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070",
+          "successful_job_id_parent_supplied": 126413805627,
+          "capsule_artifact_id": 13315023235,
+          "capsule_bytes": 5725603997,
+          "capsule_sha256": "c91fafafbfaf8a752a19083c882ae29552fb46c5eb916822fbce9568a3683169"
+        },
+        "new_processing": {
+          "run_id": 41991292539,
+          "head_sha": "67c5dd27a2ea4538ffb3ceb9fc71263cbc03136b",
+          "job_id": 127123892184,
+          "scientific_step_chain_complete": true,
+          "additional_processed_full_upload_step12_failed": true,
+          "processing_rerun": false
+        },
+        "compact": {
+          "artifact_id": 13404526182,
+          "bytes": 58628004,
+          "sha256": "a1a5a8f7b88f0f9c1ddd0c1d47fcdaffcd6e430a548965317d8d8549313774a3"
+        },
+        "restore": {
+          "artifact_id": 13404705385,
+          "bytes": 49257,
+          "sha256": "231f07bb9f8d333d5e18e0677f20fe87e3293b40a31bfc1cec207a522355a175"
+        },
+        "reader": {
+          "run_id": 42008468607,
+          "head_sha": "e88215da4ef5364afbcb86bf0bfc7c2408853f92",
+          "jobs_parent_supplied": [
+            127181124791,
+            127181208499
+          ],
+          "jobs_success_parent_supplied": true
+        },
+        "scientific_tool_pins": {
+          "bering": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+          "procrustes": "9648ae3fe9ef24725e665d008c79d0681ce40f85",
+          "sheaft": "686a602f4e7b71f3612f1810885e29dd66c8733a"
+        },
+        "worker": {
+          "run_id": 41800150941,
+          "workflow_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "scientific_and_implementation_sha": "8166f7d5ed3ef1e5c505cd22aea6745d5ad81070",
+          "checkpoint_unchanged": true,
+          "new_application_traffic": false,
+          "completed_campaign_cell": false,
+          "parent_SQL_phase_required_for_this_seed": "parent_before_dispatch"
+        }
+      },
+      "intended_contribution_and_causal_check": {
+        "intended_contribution": "Recover useful operation requirements from eBPF observations when Native SDK spans are absent, then make externally assessable frozen Bering-to-Sheaft forecasts.",
+        "causal_source_proposed": "eBPF supplies otherwise missing observed structure and, where supported, correlation; equally supplied aliases and semantic obligations must not be credited as eBPF discovery.",
+        "actual_finding": "SDK absence is verified, and eBPF produces nonempty observed graphs. Required operation calls remain missing or ambiguous, so the frozen pipeline produces no usable point forecast. Nonempty graphs, compliant SDK configuration and successful processing do not establish external utility.",
+        "known_equivalence": "With identical empty Native input, combined raw/network_scope reuse the corresponding eBPF origins. The context observed-server-edge-union baseline is recorded as reuse_single_source_equivalence. These are logical views, not independent Bering runs or independent evidence."
+      },
+      "strongest_simple_baselines_and_fairness": {
+        "semantic_information_parity_required": true,
+        "direct_conditional_baseline": {
+          "basis": "Declared source contract plus the same two-slot controlled inventory; A OR B, conditional on nonintervened requirements being fulfilled. No HTTP outcomes or recovered graph fitted into the baseline.",
+          "per_operation_prediction": 0.875,
+          "state_predictions": {
+            "00": 0,
+            "01": 1,
+            "10": 1,
+            "11": 1
+          },
+          "declared_selected_database_down_prediction": 0,
+          "external_result": "Matches the .875 observed target success rate and deterministic per-state outcomes in all three operations; predicts the observed selected-DB failure direction."
+        },
+        "observed_edge_union_context_baseline": {
+          "policy_id": "observed_server_edge_union_v1",
+          "raw_and_network_scope_status": "reuse_single_source_equivalence",
+          "all_6_context_forecasts": "unavailable; required_graph_evidence_unavailable",
+          "frozen_branch_hashes_match": true,
+          "original_forecasts_overwritten": false,
+          "external_outcomes_recomputed": false
+        },
+        "tree_or_branch_and_cheap_combinations": "Must receive the same source contract, aliases, service inventory and observed structure. Cheap family assignment already equals the reported hierarchical class result. Empty Native adds no independent evidence to a cheap combination; this cell demonstrates no forecast benefit over the direct conditional baseline or the context equivalent.",
+        "no_positive_baseline_cost_or_accuracy_superiority_claim": true
+      },
+      "actual_external_results": {
+        "primary_records": 34800,
+        "blocks": 19,
+        "target_total": 9600,
+        "per_operation": {
+          "browse_product": {
+            "success": 2800,
+            "failure": 400,
+            "invalid": 0,
+            "unknown": 0,
+            "total": 3200,
+            "empirical_success": 0.875
+          },
+          "add_to_cart": {
+            "success": 2800,
+            "failure": 400,
+            "invalid": 0,
+            "unknown": 0,
+            "total": 3200,
+            "empirical_success": 0.875
+          },
+          "checkout": {
+            "success": 2800,
+            "failure": 400,
+            "invalid": 0,
+            "unknown": 0,
+            "total": 3200,
+            "empirical_success": 0.875
+          }
+        },
+        "per_operation_state_outcomes": {
+          "00": {
+            "success": 0,
+            "failure": 400
+          },
+          "01": {
+            "success": 400,
+            "failure": 0
+          },
+          "10": {
+            "success": 800,
+            "failure": 0
+          },
+          "11": {
+            "success": 1600,
+            "failure": 0
+          }
+        },
+        "saved_forecast_comparisons": {
+          "total": 24,
+          "methods": [
+            "ebpf",
+            "native",
+            "combined",
+            "context-baseline"
+          ],
+          "views": [
+            "raw",
+            "network_scope"
+          ],
+          "available": 0,
+          "point_predictions": 0,
+          "retained_interval_each": [
+            0,
+            1
+          ],
+          "reason_counts": {
+            "required_graph_evidence_unavailable": 18,
+            "no_frozen_source_observations": 6
+          },
+          "interpretation": "All are UNKNOWN/unavailable, not correct forecasts. Repetition across methods and views does not multiply the 9600 external attempts."
+        },
+        "database": {
+          "down": {
+            "browse_product_failures": 7,
+            "add_to_cart_failures": 7,
+            "checkout_failures": 6,
+            "successes": 0
+          },
+          "restored_up": {
+            "browse_product_successes": 7,
+            "add_to_cart_successes": 7,
+            "checkout_successes": 6,
+            "failures": 0
+          },
+          "all_24_saved_forecast_impact_rows": "Healthy and down predictions null; graph prognostic impact UNKNOWN. Logical database endpoint mapping in network_scope does not turn this into a demonstrated forecasting benefit."
+        },
+        "async_durability": {
+          "normal": {
+            "persisted_exact": 20
+          },
+          "paused_snapshot": {
+            "pending": 20
+          },
+          "paused_after_resume": {
+            "persisted_exact": 20
+          },
+          "recovered": {
+            "persisted_exact": 20
+          },
+          "paused_absence_is_failure": false
+        },
+        "async_correlation": {
+          "causal_source_rows": 120,
+          "all_four_stage_causal_chain": "unknown",
+          "rows_per_source_phase": 20,
+          "sources": [
+            "ebpf",
+            "native"
+          ],
+          "phases": [
+            "async_normal",
+            "async_paused",
+            "async_recovered"
+          ],
+          "only_true_marker": "external_order_id",
+          "trace_message_spanlink_database_write_markers": false,
+          "interpretation": "External durability is demonstrated in these checks; exact message-level causal recovery is not. Source-duplicated rows do not create independent external orders."
+        },
+        "recognition": {
+          "ebpf_and_combined_hierarchical_known_labels": 600,
+          "ebpf_and_combined_hierarchical_ARI": 1,
+          "pattern_status": "no_positive_evidence",
+          "equivalent_to_base_family_assignment": true,
+          "native_known_labels": 0,
+          "native_unknown_labels": 600,
+          "utility_interpretation": "ARI is not an external forecast gain and does not exceed cheap family assignment."
+        }
+      },
+      "actual_discovery_and_prospective_binding": {
+        "genuine_Bering_executions": 2,
+        "source": "ebpf",
+        "source_profile": {
+          "input_type": "ebpf-otlp",
+          "source_id": "ebpf"
+        },
+        "logical_nonempty_views": 4,
+        "each_genuine_execution": {
+          "input_observations": 852346,
+          "accepted_streamed_requests": 3332,
+          "ordinary_requests": 0,
+          "ingest_traces": 0,
+          "ingest_dropped_spans": 0,
+          "ingest_late_spans": 0
+        },
+        "observed_models": {
+          "network_scope": "a723c579747854e51eae2402a6cd2f776811422ece21f55be44ff714f1618e70",
+          "raw": "e111108c6c69194d44d117a004cc1021ed1acc645ba794fa049a1777b710c0ea"
+        },
+        "observed_snapshots": {
+          "network_scope": "9de483081a95280c417d7d43d21a4bfcc5312912a08c9f7d6c8437eedad530d1",
+          "raw": "77b820c77e23347e4cfbb51d32680a320cb44925ed93d692aa294d685f367b44"
+        },
+        "graph_counts": {
+          "network_scope": {
+            "services": 39,
+            "endpoints": 28,
+            "edges": 42,
+            "incomplete_database_alias_count": 0
+          },
+          "raw": {
+            "services": 48,
+            "endpoints": 28,
+            "edges": 44,
+            "incomplete_database_alias_count": 15
+          }
+        },
+        "observed_models_not_final_operation_models": true,
+        "original_branch_count": 18,
+        "actual_Sheaft_commands_or_models_present": 0,
+        "no_fabricated_100000_iteration_Sheaft_run_for_unavailable_forecasts": true,
+        "forecast_saved_ns": 1793787228598424059,
+        "first_target_started_ns": 1793787233199622922,
+        "forecast_saved_before_targets": true,
+        "rendered_SDK_disabled_values": {
+          "count": 19,
+          "all": "true"
+        },
+        "training_and_final_Native_census": {
+          "exporter_records": 0,
+          "span_markers": 0,
+          "bytes": 0,
+          "malformed_records": 0,
+          "empty_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "training_SQL_proof": "Retained logical row-and-all-columns proof contains checkpoint, parent_before_dispatch and parent_after_worker; mutable SQLite/WAL byte identity is not substituted for the logical proof.",
+        "guest_platform": {
+          "independent_guest_boots": true,
+          "boot_ids": [
+            "de4bb785-bada-4f6b-8b47-5d342cfb1ca1",
+            "1d85660a-3af0-44d5-8842-0682a81dac76"
+          ],
+          "kernel_release_each": "6.8.0-147-generic",
+          "guest_memory_mib_each": 6144,
+          "shared_physical_runner": true,
+          "separate_physical_hosts": false
+        }
+      },
+      "engineering_integrity_and_health_limits": {
+        "acquisition_valid": true,
+        "acquisition_problems": [],
+        "selected_immutable_payloads_bound_to_inventory": 161,
+        "sealed_inventory": {
+          "files": 94032,
+          "logical_bytes": 63496892082,
+          "training_index_bytes": 14854103040,
+          "file_inventory_sha256": "6a9153371e6da254f2e860d14555e1e07efe6cab905f5e178b2430f5ff4805e1"
+        },
+        "owned_ZIP_restore": {
+          "all_original_members_EOF_and_CRC_checked": true,
+          "members": 94035,
+          "archive_sha256": "c91fafafbfaf8a752a19083c882ae29552fb46c5eb916822fbce9568a3683169",
+          "elapsed_seconds": 397.420083088
+        },
+        "full_staged_SQL_growth_reserve_bytes": 59416412160,
+        "processing_resource_receipt": {
+          "sample_rows": 179,
+          "owned_process_observations": 179,
+          "child_returncode": 0,
+          "final_child_returncode": 0,
+          "child_maxrss_kib": 15378512,
+          "owned_added_swap_bytes": 2147483648,
+          "host_MemTotal_bytes": 16760344576,
+          "new_application_traffic": false,
+          "model_refit": false
+        },
+        "Native_receiver": {
+          "listening_socket_closed": true,
+          "in_flight_handlers_joined": true,
+          "saved_bytes_valid": true,
+          "parse_read_failures": 0,
+          "wrapper_json_decode_errors": 0,
+          "errors_json_decode_errors": 0
+        },
+        "final_drain_technical_complete_and_valid": true,
+        "zero_kernel_producer_or_ignored_flush_loss_proven": false,
+        "whole_case_memory_disk_headroom_or_six_hour_cure_proven": false,
+        "lost_communication_root_cause_proven": false,
+        "old_full6_or_full7_checkout_OOM_transferred_to_this_cell": false,
+        "interpretation": "The new own child-zero and 179-row health receipt establish this suffix completion. They do not prove universal agent-loss absence, whole-case resource sufficiency, or the cause of older lost communications."
+      },
+      "cost_check": {
+        "no_cost_dominance_claim": true,
+        "saved_not_recomputed": true,
+        "case_campaign_elapsed_seconds": 100149.492675154,
+        "shared_input_preparation_seconds": 2918.599646679,
+        "genuine_Bering_command_count": 2,
+        "genuine_Bering_command_seconds": 1118.327509143,
+        "Bering_child_peak_rss_kib": 12561816,
+        "checkpoint_creation_seconds": 1297.189991172,
+        "checkpoint_upload_hold_seconds": 287.116952156,
+        "parent_worker_wait_seconds": 5790.182264465,
+        "parent_worker_wait_contains_worker_compute": true,
+        "restore_seconds": 397.420083088,
+        "new_processing_workflow_suffix_seconds_parent_supplied": 5371,
+        "new_processing_child_wall_seconds_approximately": 5370,
+        "new_processing_child_user_seconds": 3070.644957,
+        "new_processing_child_system_seconds": 304.609321,
+        "reader_selected_transport_seconds": 124.674770251,
+        "reader_selected_transport_received_bytes": 330393795,
+        "campaign_cost_context_parent_supplied": {
+          "declared_keys": 882,
+          "retained_fixed_snapshot_keys": 859,
+          "genuine_failed_processing_runs": 4,
+          "genuine_failed_processing_seconds_retained": 34048,
+          "finite_fresh_tail_required": true
+        },
+        "complete_comparable_boundary": "Retain capture, deployment and worker preparation; frozen/shared cached inputs and both genuine executions; checkpoint and capsule creation, hash, upload, transfer and restore; processing and paging; CI and reader transport; the failed additional full upload; archive/review and finite closing tail. Retain direct/context/tree or cheap-combination preparation and supplied semantics on the same basis, with early stopping and sharing stated equally.",
+        "overlap_and_units": "Checkpoint creation/upload/hold and remote wait overlap campaign elapsed; worker compute overlaps parent wait. Recorded Actions/API elapsed is not CPU, billing, or campaign wall, and rows must not be blindly summed.",
+        "human_preparation_and_review_effort_seconds": null,
+        "complete_full_cost_advantage_identifiable": false
+      },
+      "threats_and_claim_boundary": [
+        "One fixed81 cell does not imply a generalized winner or universal eBPF inability; all original79 verdicts remain unchanged and seed8 needs its own actual reader and interpretation.",
+        "The strict named original capsule plus new compact plus restore/API union is the evidence boundary. The missing additional processed-full/final mutable SQL/processing JSON remains explicit.",
+        "Observed graph availability, SDK compliance, zero ingest drops, ARI=1, internal validity or reader/engineering success cannot substitute for external usefulness.",
+        "All methods must receive the same declared semantic knowledge. Logical aliases or direct controlled A OR B knowledge do not count as recovered causal evidence.",
+        "The .875 direct conditional baseline matches the held-fixed nonintervened requirements in this cell; this does not prove unconditional application reliability.",
+        "Async persistence outcomes do not establish exact message correlation or checkout-to-accounting causal ancestry. Cross-guest exact parent links remain zero, with no recovered causal proof.",
+        "The two guests have independent kernels on one physical runner. This does not establish independence across physical hosts.",
+        "Nominal IID envelopes, repeated source/view rows and internal class metrics do not create additional external replicates or a new success criterion."
+      ],
+      "independent_final_decision": "Explicit GO for the ORIGINAL criterion's actual-result scientific review: count this one case as a completed valid negative/UNKNOWN observation only after ROOT independently agrees. eBPF observed structures exist but no actual operation forecast utility is demonstrated; all 24 saved forecasts are unavailable, while the strongest direct conditional baseline matches the independent outcomes. No substitute task, positive success claim, novelty claim, or cost advantage is approved."
+    }
+  },
+  "main_matrix_size": 81,
+  "external_human_peer_review_claimed": false,
+  "unavailable_or_adverse_cases_retained": true,
+  "target_sampling_scope": "Independent external outcome ascertainment doesnot establish statistical independence/IID of repeated attempts; descriptive ratios and saved conditional forecasts only."
+}

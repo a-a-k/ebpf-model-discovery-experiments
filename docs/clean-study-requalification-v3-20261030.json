@@ -1,0 +1,64 @@
+{
+  "decision_at_utc": "2026-10-30T21:34:15.998975+00:00",
+  "criterion": "Feasibility of eBPF graph discovery and useful externally checked simulation with absent or incomplete native traces; no original cost-superiority hypothesis.",
+  "strongest_simple_baselines": [
+    "Native-only discovery on the same frozen provided information and raw prefix, including the full instrumentation control.",
+    "Direct exact provided Compose/SDK role lookup; the identical declaration rows and semantic knowledge are supplied to all source arms and the direct baseline."
+  ],
+  "causal_repairs": [
+    "Literal protobuf empty-key decoding removes an engineering crash without supplying a missing attribute name.",
+    "Consistent verified runtime carrier and provided role aliases remove SDK/Compose ambiguity without new calls, parents or endpoints.",
+    "The existing deterministic DeepFlow codec/raw validator proves its derived JSON source; wire receiver validation remains unchanged."
+  ],
+  "source": {
+    "commit": "6ef079a7a7eac91e464a87a97881a56bc4449e5c",
+    "ref": "study-20261030-v3",
+    "tree": "eb9af4a28ef886e5fe6909f95b725365a45e46a1",
+    "reviewed_parent": "9c643ba46a0d55f0b9d541bd4f0103927ff6c3a6",
+    "tree_identical_to_reviewed_source": true
+  },
+  "evidence": {
+    "otlp_wire_audit": 41124381843,
+    "provided_roles_audit": 41131463192,
+    "native_shipping_prefix_audit": 41131445587,
+    "provided_alias_models_checked": 18,
+    "old_forecasts_untouched": true
+  },
+  "main_agent_verdict": "ORIGINAL GO for the fixed qualification27 only after source/code and actual saved-input review; no positive research verdict.",
+  "skeptic_verdict": "Explicit ORIGINAL feasibility GO for PR7 merge and next fixed common qualification27; no main81 GO.",
+  "qualification": {
+    "workflow": "series-v5.yml",
+    "runner": "study",
+    "stage": "smoke",
+    "collectors": [
+      "obi",
+      "deepflow",
+      "coroot"
+    ],
+    "systems": [
+      "deathstarbench",
+      "otel_demo",
+      "petclinic"
+    ],
+    "modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "seed": 6,
+    "cells": 27,
+    "unchanged_workload_and_controls": true,
+    "runs": {
+      "obi": 41132051267,
+      "deepflow": 41132056183,
+      "coroot": 41132061981
+    },
+    "dispatched_at_utc": "2026-10-30T21:34:27Z"
+  },
+  "review_rule": "Inspect actual failures and each distinct primary unknown from contract through source/input graph and binding. Real unsupported source/protocol/identity paths remain valid adverse results; no numeric accuracy or availability admission threshold.",
+  "cost_boundary": "Retain all preparation, failed diagnostics and qualifications, cancelled series and early stopping. Actions elapsed is not CPU/billed usage; human preparation time remains unmeasured.",
+  "remaining_main": "All81 fresh main cells still required at one common final immutable source after actual qualification review.",
+  "saved_main_guest_proof_review": "Before reader implementation, both agents give ORIGINAL feasibility GO for selecting the four existing infrastructure/check/image files and directly checking the already-required two distinct guest boot IDs and fixed image provenance, only for fresh6ef. Actual nine DSB packets confirm the file shape. Report shared runner host and guest memory; no independent physical-host or rehashed image-byte claim. This changes only independent saved-fact inspection, not captures, metrics or historical defaults.",
+  "native_shipping_caution": "1382 original SDK spans in118 closed records equal the full frozen Bering input. Native shipping SERVER parents are absent from the native prefix despite typed calls being present; possible collector context interaction is under a separate saved-ID check, not presumed SDK or normalizer loss.",
+  "native_baseline_scope": "SDK-only input while the selected collector co-runs. Full means all SDKs enabled, not guaranteed complete ancestry; this is not an agent-free tracing baseline. Partial/absent declarations and external checks remain identical across collectors."
+}

@@ -1,0 +1,476 @@
+{
+  "recorded_before_any_POST_utc": "2026-11-01T05:00:19.354943+00:00",
+  "state": "one_exact_case_dispatched_verified",
+  "plan": {
+    "source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+    "ref": "capture-20261101-immutable-prefix-v4",
+    "consumer_source": "d3e31e0a9bf31192010c84f9a601a03f9a32f707",
+    "producer_CI_success": 41258526474,
+    "consumer_CI_success": 41259234164,
+    "original_criterion": "All81/10operations actual eBPF to Bering to Sheaft to independent application outcomes under absent/partial SDK tracing, same provided semantics/information/direct equivalent predicate and cheap combination baseline. No cost-superiority hypothesis.",
+    "causal_engineering_repair": "Bound immutable path resolution and avoid copying discarded JSON spans; actual old/new observational input bytes, metadata/roles/order/indexes/18entry proofs identical on complete saved full7 prefix. No protocol/semantics/model/trial/fault/count change.",
+    "outcome_policy": "Retain all unknown/adverse forecasts and all independently observed target outcomes. Completed cases never rerun for favorable results. SourceT and shorter pretarget idle age remain visible; no randomized causal collector comparison.",
+    "costs": "Retain all old/replacement attempts and early stops, original prefixes/workers, two failed profiling attempts, both complete offline comparisons, all CI/setup/capture/worker/discovery/simulation/wait/reader/transfer/storage/archive costs. API elapsed is not CPU or billed usage; human effort unknown.",
+    "recorded_before_any_new_case_traffic_utc": "2026-11-01T04:58:15.353160+00:00",
+    "cases": [
+      {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 6,
+        "old_parent": 41164824120,
+        "old_job": 124430032035,
+        "actual_old_job": {
+          "id": 124430032035,
+          "run_id": 41164824120,
+          "workflow_name": "Iteration 5 collector smoke and matched series",
+          "head_branch": "study-20261031-v5",
+          "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVX6K988AAAAc-Jucow",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124430032035",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120/job/124430032035",
+          "status": "completed",
+          "conclusion": "failure",
+          "created_at": "2026-10-31T03:32:45Z",
+          "started_at": "2026-11-01T04:26:17Z",
+          "completed_at": "2026-11-01T04:43:54Z",
+          "name": "campaign (otel_demo, full, 6)",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-01T04:26:18Z",
+              "completed_at": "2026-11-01T04:26:19Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-01T04:26:19Z",
+              "completed_at": "2026-11-01T04:26:23Z"
+            },
+            {
+              "name": "Record fixed cell identity before setup",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-01T04:26:23Z",
+              "completed_at": "2026-11-01T04:26:23Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-01T04:26:23Z",
+              "completed_at": "2026-11-01T04:26:23Z"
+            },
+            {
+              "name": "Install experiment package",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-01T04:26:23Z",
+              "completed_at": "2026-11-01T04:26:30Z"
+            },
+            {
+              "name": "Initialize retained evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-01T04:26:30Z",
+              "completed_at": "2026-11-01T04:26:30Z"
+            },
+            {
+              "name": "Build exact source-pinned toolchain",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-01T04:26:30Z",
+              "completed_at": "2026-11-01T04:27:00Z"
+            },
+            {
+              "name": "Allocate measured swap on the standard runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-01T04:27:00Z",
+              "completed_at": "2026-11-01T04:27:00Z"
+            },
+            {
+              "name": "Boot two independent guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-11-01T04:27:00Z",
+              "completed_at": "2026-11-01T04:28:12Z"
+            },
+            {
+              "name": "Acquire and close the training prefix on the live guests",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 10,
+              "started_at": "2026-11-01T04:28:12Z",
+              "completed_at": "2026-11-01T04:43:37Z"
+            },
+            {
+              "name": "Persist the closed training checkpoint before discovery",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11,
+              "started_at": "2026-11-01T04:43:37Z",
+              "completed_at": "2026-11-01T04:43:37Z"
+            },
+            {
+              "name": "Bind upload outcome to the same live campaign",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 12,
+              "started_at": "2026-11-01T04:43:37Z",
+              "completed_at": "2026-11-01T04:43:37Z"
+            },
+            {
+              "name": "Continue discovery and validation on the same live guests",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13,
+              "started_at": "2026-11-01T04:43:37Z",
+              "completed_at": "2026-11-01T04:43:37Z"
+            },
+            {
+              "name": "Stop only the owned campaign processes before retention",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-01T04:43:37Z",
+              "completed_at": "2026-11-01T04:43:37Z"
+            },
+            {
+              "name": "Retain environment, status and cost evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-01T04:43:37Z",
+              "completed_at": "2026-11-01T04:43:39Z"
+            },
+            {
+              "name": "Stop guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16,
+              "started_at": "2026-11-01T04:43:39Z",
+              "completed_at": "2026-11-01T04:43:39Z"
+            },
+            {
+              "name": "Evaluate retained full campaign evidence",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 17,
+              "started_at": "2026-11-01T04:43:39Z",
+              "completed_at": "2026-11-01T04:43:40Z"
+            },
+            {
+              "name": "Record compact evaluation provenance",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18,
+              "started_at": "2026-11-01T04:43:40Z",
+              "completed_at": "2026-11-01T04:43:40Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19,
+              "started_at": "2026-11-01T04:43:40Z",
+              "completed_at": "2026-11-01T04:43:43Z"
+            },
+            {
+              "name": "Package the complete DSB toolchain subtree without changing its files",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 20,
+              "started_at": "2026-11-01T04:43:43Z",
+              "completed_at": "2026-11-01T04:43:43Z"
+            },
+            {
+              "name": "Package the closed DSB remote handoff evidence without changing its files",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 21,
+              "started_at": "2026-11-01T04:43:43Z",
+              "completed_at": "2026-11-01T04:43:43Z"
+            },
+            {
+              "name": "Record DSB full artifact restore layout",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 22,
+              "started_at": "2026-11-01T04:43:43Z",
+              "completed_at": "2026-11-01T04:43:43Z"
+            },
+            {
+              "name": "Retain DSB packaging status independently of full upload",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 23,
+              "started_at": "2026-11-01T04:43:43Z",
+              "completed_at": "2026-11-01T04:43:43Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24,
+              "started_at": "2026-11-01T04:43:43Z",
+              "completed_at": "2026-11-01T04:43:52Z"
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 25,
+              "started_at": "2026-11-01T04:43:52Z",
+              "completed_at": "2026-11-01T04:43:52Z"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 49,
+              "started_at": "2026-11-01T04:43:52Z",
+              "completed_at": "2026-11-01T04:43:52Z"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 50,
+              "started_at": "2026-11-01T04:43:52Z",
+              "completed_at": "2026-11-01T04:43:52Z"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 51,
+              "started_at": "2026-11-01T04:43:52Z",
+              "completed_at": "2026-11-01T04:43:52Z"
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124430032035",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_id": 1000030180,
+          "runner_name": "GitHub Actions 1000030180",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        }
+      }
+    ],
+    "parallel_cases": 1,
+    "actual_incomplete_artifacts": [
+      {
+        "id": 13071060525,
+        "node_id": "MDg6QXJ0aWZhY3QxMzA3MTA2MDUyNQ==",
+        "name": "campaign-v5-deepflow-main-otel_demo-full-6-41164824120",
+        "size_in_bytes": 111237013,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13071060525",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13071060525/zip",
+        "expired": false,
+        "digest": "sha256:eafacd93d6211998872e4171e7c4351158f3c6b500842d291c27cde39092ca55",
+        "created_at": "2026-11-01T04:43:51Z",
+        "updated_at": "2026-11-01T04:43:51Z",
+        "expires_at": "2027-01-29T03:32:40Z",
+        "workflow_run": {
+          "id": 41164824120,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "study-20261031-v5",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+        }
+      },
+      {
+        "id": 13070855924,
+        "node_id": "MDg6QXJ0aWZhY3QxMzA3MDg1NTkyNA==",
+        "name": "v5-summary-deepflow-main-otel_demo-full-6-41164824120",
+        "size_in_bytes": 4960307,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13070855924",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13070855924/zip",
+        "expired": false,
+        "digest": "sha256:d126e3cc07283a87c2679e76cefff2594ade5bbde200d5206082c5cbf3ff203b",
+        "created_at": "2026-11-01T04:43:43Z",
+        "updated_at": "2026-11-01T04:43:43Z",
+        "expires_at": "2027-01-29T03:32:40Z",
+        "workflow_run": {
+          "id": 41164824120,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "study-20261031-v5",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+        }
+      }
+    ],
+    "actual_status": {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "smoke": false,
+      "controller": "clean-study",
+      "workload_counts": {
+        "class_train": 600,
+        "calibration": 6000,
+        "target": 1200,
+        "class_test": 600,
+        "database": 20,
+        "async": 20
+      },
+      "protocol_version": "graph-v5",
+      "run_id": "41164824120",
+      "toolchain_execution": "worker",
+      "commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "started_ns": 1793507292784889668,
+      "status": "technical_failure",
+      "error": "RuntimeError(\"Command failed (137): ssh\\nWarning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.\\n\\n\")",
+      "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/src/ebpf_discovery/study.py\", line 107, in run\n    self.block(\"calibration\", state, counts[\"calibration\"], names)\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/src/ebpf_discovery/study.py\", line 175, in block\n    self.adapter.reset()\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/systems/otel_demo/adapter.py\", line 332, in reset\n    self._psql_admin(\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/systems/otel_demo/adapter.py\", line 1723, in _psql_admin\n    return self._stdout(self.ctx.node_exec(\"a\", command, timeout=30))\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/src/ebpf_discovery/runtime.py\", line 40, in node_exec\n    return self.run(['ssh',*self.ssh_args(),f'ubuntu@{self.node_ip(node)}','bash -lc '+shlex.quote(command)],timeout=timeout,check=check)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/ebpf-model-discovery-experiments/ebpf-model-discovery-experiments/src/ebpf_discovery/runtime.py\", line 33, in run\n    raise RuntimeError(f'Command failed ({result.returncode}): {command_list[0]}\\n{result.stderr[-4000:]}\\n{result.stdout[-2000:]}')\nRuntimeError: Command failed (137): ssh\nWarning: Permanently added '192.168.76.11' (ED25519) to the list of known hosts.\n\n\n",
+      "ended_ns": 1793508216609509707,
+      "observed_operations": 6606,
+      "elapsed_seconds": 923.824620039
+    },
+    "actual_manifest": {
+      "schema_version": "v5-cell-summary-manifest",
+      "run_id": "41164824120",
+      "commit": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "smoke": false,
+      "full_artifact_name": "campaign-v5-deepflow-main-otel_demo-full-6-41164824120",
+      "files_sha256": {
+        "evaluation-v5.json": "bb6b765d0684e07b649eee5ee612c667695bd2c8e958cd311e4d64f6a3b984bf",
+        "status.json": "6db0521eb317bf8aea3e911e344d1360864ca76b483f0fa38b580ef63410662b",
+        "plans.json": "3b3270ed9315c571680f72dcab08759a097317f192a4b4d6cf35e526d902ac40",
+        "census.json": "9934172005f7bf87e038b99d5ed1b50f37ffc1fe32f2beb4c31a7d4625a9c2a8",
+        "blocks.json": "3c8a28c21d7c4364b8ce7e89302b7bebf18da0fa93be26a91015d14f2083dec7",
+        "freeze-integrity.json": null,
+        "toolchain/forecasts.json": null,
+        "evidence-v4.json": null,
+        "attempt-journal.jsonl": "2d29931477a1648d4ae081418f227a0165b1fc7fd07aa9be1a097580cde410ae"
+      },
+      "full_artifact_transport": "original-file-tree",
+      "original_evidence_reverified_by_compact_report": false
+    },
+    "actual_evaluation_completeness": {
+      "valid": false,
+      "problems": [
+        "primary_phase_counts_mismatch",
+        "target_state_counts_mismatch"
+      ],
+      "phase_counts": {
+        "class_train": 600,
+        "calibration": 6000,
+        "target": 0,
+        "class_test": 0
+      },
+      "expected_phase_counts": {
+        "class_train": 600,
+        "calibration": 24000,
+        "target": 9600,
+        "class_test": 600
+      },
+      "target_state_counts": {
+        "11": 0,
+        "10": 0,
+        "01": 0,
+        "00": 0
+      },
+      "expected_target_state_counts": {
+        "11": 4800,
+        "10": 2400,
+        "01": 1200,
+        "00": 1200
+      },
+      "primary_records": 6600,
+      "primary_plans": 6600,
+      "primary_census": 6600,
+      "invalid_success_attempt_ids": [],
+      "rule": "fixed phase/state counts, unique attempt identities, and matching records/plans/census"
+    },
+    "actual_evaluation_counts": {
+      "all_records": 6606,
+      "primary": 6600,
+      "target": 0,
+      "expected_primary": 34800,
+      "primary_count_matches": false,
+      "target_state_counts": {
+        "11": 0,
+        "10": 0,
+        "01": 0,
+        "00": 0
+      },
+      "blocks": 2
+    },
+    "root_original_execution_GO": true,
+    "skeptic_original_execution_GO": true,
+    "root_verdict": "EXPLICIT ORIGINAL one exact T full-main DF/OTel/full6 fresh-host technical replacement GO. Actual prior acquisition failed during SQL reset before checkpoint/models/freeze/targetvalidation; its two uploaded packets are incomplete. No healthy cancellation or outcome-based replacement.",
+    "capture_workload": "Same main34800primary/9600target/all3OTeloperations/all4methods/2views/100000Sheafttrials/two independent guests; no shortened or diagnostic-only replacement.",
+    "strongest_simple_baseline": "One complete fresh-host repetition with identical inputs and application resource limits, explicitly authorized for technical acquisition failures; underlying exit137 is not proven repaired. Use the already qualified T source rather than revive older acquisition/preparation code.",
+    "causal_scope": "The observed stopping boundary is guest-a docker exec psql admin TRUNCATE during reset, SSH exit137. Exact killed process and cause unproven; do not infer OOM or six-hour timeout. T path/copy repair happens later and is NOT a causal fix for this failure. Richer retained guest/kernel evidence can identify a repeat; actual full outcome remains required.",
+    "capacity": {
+      "capture_cap": 20,
+      "fresh_recheck_before_POST": true,
+      "expected_capture_reserved_before": 13,
+      "expected_after": 14,
+      "conservative_slots": "14captures+14futureworkers+all current up to9existingworkers+oneCI<=38under40; fresh owner and current capture reservation checked before POST; no new reader/archive dispatch."
+    },
+    "no_healthy_cancellation": true,
+    "study_success_claimed": false,
+    "if_technical_failure_repeats": "Inspect actual new sourceT phase/guest logs before any further same-case repetition; no unchanged endless retry or resource/count/source-arm changes.",
+    "authorization": "User explicitly requires restarting technical failures; unanswered healthy DF queue cutover not used.",
+    "skeptic_record": "work\\skeptic-main-v5-observer\\parent-failure-124430032035\\independent-original-exact-T-repeat-go.json",
+    "preapproval_plan_sha256": "47cdadacb9952c4a341116347f749a5625ad444e38d27b8d832b8b678d3b38ac",
+    "fresh_owner_snapshot": "work\\owner-actions-capacity-20261101T045934Z.json",
+    "fresh_owner_observed_utc": "2026-11-01T04:59:34.065803+00:00"
+  },
+  "reserved_before": 13,
+  "reserved_worst_after": 14,
+  "cases": [
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 6
+      },
+      "old_parent": 41164824120,
+      "old_job": 124430032035,
+      "source": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+      "recorded_before_POST_utc": "2026-11-01T05:00:28.657717+00:00",
+      "fresh_capture_reservations_before_this_POST": 13,
+      "request": {
+        "ref": "capture-20261101-immutable-prefix-v4",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "otel_demo",
+          "mode": "full",
+          "seed": "6"
+        },
+        "return_run_details": true
+      },
+      "state": "dispatched_verified",
+      "run_id": 41275223991,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41275223991"
+    }
+  ],
+  "no_healthy_cancelled": true
+}

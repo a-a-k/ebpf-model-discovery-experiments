@@ -1,0 +1,166 @@
+{
+  "recorded_before_any_additional_four_U_POST_utc": "2026-11-01T06:42:33.739596+00:00",
+  "original_four_failure_only_U_parallel_execution_GO": true,
+  "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "consumer": "23dc6d2b80b8bf79522ad7d79a73b709844f8ce3",
+  "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+  "scope": [
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7
+    }
+  ],
+  "root_plan_sha256_before_GO": "1d65555187adeb3488fffc8eec6e216e9086f54089a24e416ae20bcda6d89221",
+  "actual_dispatch_wrapper_sha256": "37c0e225f4b47e82d62dbf854aec4ab9d0b75e6de37c31c1c21528d1cea132cd",
+  "reviewed_base_dispatcher_sha256": "124d9bbfe1b3494cbdbe31b62d3729eabf824003f8d0bb0edcd060d461d4084d",
+  "actual_dispatch_code_GO": true,
+  "actual_four_failures_independently_verified": [
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "old_parent": 41259904200,
+      "old_job": 124710864475,
+      "actual_job_conclusion": "failure",
+      "actual_job_completed_at": "2026-11-01T06:15:19Z",
+      "actual_annotation_messages": [
+        "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "Process completed with exit code 1."
+      ],
+      "retained_artifact_identities": [
+        {
+          "id": 13073185961,
+          "name": "v5-summary-deepflow-main-deathstarbench-partial-6-41259904200",
+          "digest": "sha256:eb0c66f7f5bda127325daad7112b42a25ad867a996154f935d6ea959c6f84d99",
+          "bytes": 2609758995
+        },
+        {
+          "id": 13072891969,
+          "name": "retention-v4-deathstarbench-partial-6-41259904200",
+          "digest": "sha256:1e8eef285ae4122efc0cdfac47a92a05811c7d25dc17eacc2faad1add23e2a0a",
+          "bytes": 2348
+        },
+        {
+          "id": 13068279254,
+          "name": "training-v4-deathstarbench-partial-6-41259904200",
+          "digest": "sha256:44e9271a45df2dbfa478563352d61d663669d73bbec430810ea4d59b94d5a40d",
+          "bytes": 3210369752
+        }
+      ]
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "old_parent": 41164824120,
+      "old_job": 124430031948,
+      "actual_job_conclusion": "cancelled",
+      "actual_job_completed_at": "2026-11-01T06:21:08Z",
+      "actual_annotation_messages": [
+        "The job has exceeded the maximum execution time of 6h0m0s"
+      ],
+      "retained_artifact_identities": [
+        {
+          "id": 13068145413,
+          "name": "training-v4-otel_demo-partial-8-41164824120",
+          "digest": "sha256:88a581b5b1d85f9705924d50f39d4676dd44d250918c8e0bfd565fd9d976b706",
+          "bytes": 2538393705
+        }
+      ]
+    },
+    {
+      "collector": "deepflow",
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "old_parent": 41256202754,
+      "old_job": 124699801063,
+      "actual_job_conclusion": "cancelled",
+      "actual_job_completed_at": "2026-11-01T06:24:05Z",
+      "actual_annotation_messages": [
+        "The job has exceeded the maximum execution time of 6h0m0s"
+      ],
+      "retained_artifact_identities": [
+        {
+          "id": 13068951152,
+          "name": "training-v4-otel_demo-absent-7-41256202754",
+          "digest": "sha256:955320d4fb8bb4157ff4fe5f97a3c9d36da9211bf886041534b0f4255994caaa",
+          "bytes": 3191522593
+        }
+      ]
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "old_parent": 41259915749,
+      "old_job": 124710889139,
+      "actual_job_conclusion": "failure",
+      "actual_job_completed_at": "2026-11-01T06:37:09Z",
+      "actual_annotation_messages": [
+        "Unhandled exception. System.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011012-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at System.Diagnostics.TraceSource.Flush()\n   at GitHub.Runner.Common.Tracing.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.Tracing.Dispose()\n   at GitHub.Runner.Common.TraceManager.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.TraceManager.Dispose()\n   at GitHub.Runner.Common.HostContext.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.HostContext.Dispose()\n   at GitHub.Runner.Worker.Program.Main(String[] args)\nSystem.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011012-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at GitHub.Runner.Common.HostTraceListener.WriteHeader(String source, TraceEventType eventType, Int32 id)\n   at System.Diagnostics.TraceSource.TraceEvent(TraceEventType eventType, Int32 id, String message)\n   at GitHub.Runner.Worker.Worker.RunAsync(String pipeIn, String pipeOut)\n   at GitHub.Runner.Worker.Worker.RunAsync(String pipeIn, String pipeOut)\n   at GitHub.Runner.Worker.Program.MainAsync(IHostContext context, String[] args)\nSystem.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011012-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at GitHub.Runner.Common.HostTraceListener.WriteHeader(String source, TraceEventType eventType, Int32 id)\n   at System.Diagnostics.TraceSource.TraceEvent(TraceEventType eventType, Int32 id, String message)\n   at GitHub.Runner.Common.Tracing.Error(Exception exception)\n   at GitHub.Runner.Worker.Program.MainAsync(IHostContext context, String[] args)"
+      ],
+      "retained_artifact_identities": [
+        {
+          "id": 13068557284,
+          "name": "training-v4-deathstarbench-partial-7-41259915749",
+          "digest": "sha256:3e2922fe1921cc5d4b0511375adc0dc15b596a3d4d8fa11b22c90d79b67d83fa",
+          "bytes": 3207906043
+        }
+      ]
+    }
+  ],
+  "partial6_original_console": {
+    "path": "work\\parent-failure-124710864475\\job.log",
+    "bytes": 1689903,
+    "sha256": "875311c4cb9662c56a90bfd30a3fdbc7252b568a7f2e2fa76d122363e2fe9a25",
+    "literal_cause": "DIAGNOSTIC_PACKAGING/ARTIFACT_PACKAGING OSError28, free133922816Bbefore\u21920after, actual1072files/2033982202uncompressedbytes attempted, source_deleted_or_trimmed=false. Continue/Evaluate success retained; not sixhourfailure."
+  },
+  "retention_and_strongest_baseline": "Preserve oldpartial6compact/retention/prefix+actualtargetoutcomes and oldworker; reusealreadycompleteeligiblecaseifany. Missingoriginalfull leaves mandatoryfullsource/runtime/guest evidence unavailable; compact+pretargetworker/prefix cannot recreate lostposttarget originalfiles truthfully. Reporter alreadyhasfull_available check495-498/coverage651, so oldselfreportedcomplete remainsliteral butfull_artifact_missing eligibilityfalse withoutweakening/addinga gate. No favorable-outcome selection, no fakeoriginalsource reconstruction; exactUtechnicalretentionreplacement while oldresults/costs stayvisible.",
+  "source_and_consumer_qualified": "Exact8fa immutabletag, producerCI41278220942, consumer23dc/CI41280276240SUCCESS and6matchingreviewedblobs checkedinprecedingexacttwo-case review. Uactual25180copyhash/3metadata/21GB proof andbothGOs, fullactualGit16changed/6added/2119remaining. Sameparent-onlycleanup, worker/model/inputscientific paths preserved; T655baseproof separatelyattributed7df/06d7.",
+  "bound_prior_go_sha256": {
+    "work\\skeptic-main-v5-observer\\disk-duplicate-lifetimes-T\\independent-named-U-consumer-actual-code-original-go.json": "5134f9d6d7c346a10e75c2418ac1274eafdd2ec6305622064ac55671495807c3",
+    "work\\skeptic-main-v5-observer\\disk-duplicate-lifetimes-T\\independent-U-41278513379-actual-output-original-engineering-go.json": "33d942706ff43c64f95b3621c4e4471bdb75dd769d022a4f30fb45a129af8055"
+  },
+  "original_criterion": "Completeall81/10operations actualcollectorobservations->Bering->Sheaft->independentapplicationoutcomes underabsent/partialSDK, sameprovidedsemantics/information/directequivalent/cheapcombinedbaselines. No cost-superiority substitution or smallerdemonstration.",
+  "full_workload": "Eachsamefullmain34800primary/9600target/3appoperations/2independentguests/4methods/2views/100000realSheafttrials; sameappcaps/faults/seed/nativeSDKmode, no shortening/ML/accuracygate.",
+  "same_information_semantics_counts_faults_trials": true,
+  "causal_claim_limits": "ActualENOSPC with existinguploadedduplicates plus realUcopyreclamation supportsdiskrelief; doesnotproveallsufficientfutureheadroom, exactlosthostvolume or6hcure. OldA/SOTel6hsubphaseunknown, T6473\u21921142s onlyoneDSBsavedprefix, noOTel-specificspeed orcollector causalaccuracyclaim.",
+  "actual_wrapper_checks": "Fresh43repoowner<300s/noerrors/nooutsidejobs; countallactiveparents/workers/other andfuturechildren exceptactualcompletedchildparents; +8newparent/childslots+1CI+4readers<=40 andcapture+4<=20. Oldjobterminal+exactallartifactsetsagain; baseexacttag/bothCI/currentcandidateabsence, BEFORE EACHPOSTcurrentreservations, scope/cases4, actualmixedsystem cell.system inBOTHrequest/declarations, UTF8preservation, explicitresponseunknownrecordandonePOST/no blindretry.",
+  "capacity_boundary": "Rootfresh064007 snapshot39conservativeslots/16captures; refreshbeforeexecutionif>300s, retain allfuture/CI/worker reservation and no archivewave. No nominalquota guarantee or outsideactivitypromise.",
+  "prior_two_U_POSTs_excluded": [
+    41280950428,
+    41280961352
+  ],
+  "no_healthy_cancellation": true,
+  "unbound_workers_not_cancelled": true,
+  "costs": "No validcompletecase reruns, no favorable/adverse outcome selection. Preservealloldunknown/adverse/partialtargetsandallsourceIDs, failures, prefixes, workers, twofailedprofilingruns, allpreparation/qualification/cleanuphash+GET/CI/download/storage/review/report/archivecosts. Unmeasuredhuman effortunknown, APIintervalnotCPU/billed.",
+  "if_new_failure": "Inspectactualphase/cause/retentionbeforefurtherrepeat, no unmodifiedendlessretry.",
+  "original81_or_scientific_success_GO": false,
+  "root_plan_sha256_after_baseline_prose_correction": "1d65555187adeb3488fffc8eec6e216e9086f54089a24e416ae20bcda6d89221",
+  "plan_baseline_prose_rechecked_utc": "2026-11-01T06:42:50.291919+00:00",
+  "plan_baseline_prose_actual": "Retain unchanged T and the current saved packets, or recover directly from preserved originals without new traffic. Actual DSB partial6 compact preserves target outcomes but lacks the original full post-target source/runtime evidence required by the unchanged gate; pre-target prefix and worker cannot truthfully reconstruct lost files. Other three have only pre-target prefixes. Exact qualified U removes the verified recoverable parent copy. A partial8 and S absent7 also receive inherited T preparation; no OTel-specific speed cure is assumed. Native, combined, context and direct contract baselines retain equal supplied semantic information."
+}

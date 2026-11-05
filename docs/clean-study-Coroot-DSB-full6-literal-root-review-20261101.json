@@ -1,0 +1,40 @@
+{
+  "checked_utc": "2026-11-01T02:10:09.322367+00:00",
+  "root_original_representative_literal_chain_GO": true,
+  "members_CRC_SHA_old_worker_manifest_and_prefreeze_rechecked": 32,
+  "positive_chains": [
+    {
+      "artifact_id": 13065181135,
+      "source": "native",
+      "view": "raw",
+      "operation": "compose_post",
+      "model_sha256": "e31a7b662836c1ed5831de1161deafa4182220c85d7c14a7e26f17da1bd59049",
+      "report_sha256": "ad38dec8b93572bba37119603c0da779a699e5f577654497ca4eaa07ca6d9568",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13065181135,
+      "source": "native",
+      "view": "raw",
+      "operation": "read_user_timeline",
+      "model_sha256": "74fb81312705e53874d7e8d80d06ac2f7c84dd56194668886b5288d1c2337166",
+      "report_sha256": "502f6961a26200a86a5cf44f1eb8c8b0a86d5ab8cdce232554b59aa2ade8b1cb",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13065181135,
+      "source": "native",
+      "view": "raw",
+      "operation": "read_home_timeline",
+      "model_sha256": "fb9eddb71510c8ffa712bfb5f54c17fa81d2990b62e5b4e34ba74fbd06d40d77",
+      "report_sha256": "fbc9c538d9ac621d01935634fcf5a067291e5faaed9be994c16f20f7636e7cf3",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    }
+  ],
+  "replay_refit_simulation_rescore": false,
+  "limits": "Three explicit Corootfull6 native/raw positive literal chains supplement qualified Actions full checks and both first9 metadata reviews. No large binding/raw journal/wire read; no full81 admission or utility claim.",
+  "original_criterion": "Actual eBPF to Bering to Sheaft to independent outcomes for missing/partial SDK traces, same full81/10operations and direct baseline; no cost superiority."
+}

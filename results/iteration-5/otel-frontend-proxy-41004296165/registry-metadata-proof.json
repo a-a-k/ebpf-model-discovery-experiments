@@ -1,0 +1,37 @@
+{
+  "observed_utc": "2026-10-31T09:16:43.305452+00:00",
+  "repository": "open-telemetry/demo",
+  "requested_digest": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+  "scope": "Public registry image config and manifest JSON only. ZERO filesystem/image layers, image pulls, runtime/capture/scoring changes.",
+  "responses": [
+    {
+      "kind": "manifest",
+      "requested_digest": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+      "status": 200,
+      "content_type": "application/vnd.oci.image.index.v1+json",
+      "docker_content_digest": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+      "bytes": 1609,
+      "sha256": "1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841"
+    },
+    {
+      "kind": "manifest",
+      "requested_digest": "sha256:4620f82e4f38a21fadfe0d1e72b183f8fc0d7151bc91a5f01954df103177a608",
+      "status": 200,
+      "content_type": "application/vnd.oci.image.manifest.v1+json",
+      "docker_content_digest": "sha256:4620f82e4f38a21fadfe0d1e72b183f8fc0d7151bc91a5f01954df103177a608",
+      "bytes": 2563,
+      "sha256": "4620f82e4f38a21fadfe0d1e72b183f8fc0d7151bc91a5f01954df103177a608"
+    },
+    {
+      "kind": "config",
+      "requested_digest": "sha256:47e1602d9d2769d8a2f90ffc15d850d82e072e3cfbaed6d65a56912740cf8301",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "docker_content_digest": null,
+      "bytes": 5577,
+      "sha256": "47e1602d9d2769d8a2f90ffc15d850d82e072e3cfbaed6d65a56912740cf8301"
+    }
+  ],
+  "human_effort_seconds": null,
+  "complete": true
+}

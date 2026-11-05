@@ -8,6 +8,8 @@ from pathlib import Path
 import re
 import sqlite3
 import time
+from collections.abc import Iterator
+from contextlib import closing
 
 from .toolchain_v4 import PINS as V4_PINS
 
@@ -17,6 +19,7 @@ CORE_FILES = (
     'preparation-operations.json', 'deployment.json', 'index-training.json',
 )
 EXCLUDED_DEPLOYMENT_PARTS = {'source', 'upstream', 'image-context'}
+RUNTIME_DEPENDENCIES_FILE = 'runtime-observation-dependencies.jsonl'
 
 
 def _sha(path: Path) -> str:
@@ -89,7 +92,7 @@ def _copy(path: Path, live_root: Path, checkpoint: Path, copied: dict,
 
 
 def _backup(connection: sqlite3.Connection, destination: Path) -> dict:
-    with sqlite3.connect(destination) as target:
+    with closing(sqlite3.connect(destination)) as target, target:
         connection.backup(target)
         if target.execute('PRAGMA quick_check').fetchone()[0] != 'ok':
             raise ValueError(f'checkpoint SQLite backup failed quick_check: {destination}')
@@ -99,7 +102,7 @@ def _backup(connection: sqlite3.Connection, destination: Path) -> dict:
 
 def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dict], list[dict], list[dict], list[dict]]:
     live_root = campaign.ctx.out.resolve()
-    with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
+    with closing(sqlite3.connect(checkpoint/'observation-index.sqlite')) as frozen_index:
         indexed = list(frozen_index.execute('SELECT path,consumed FROM files ORDER BY path'))
     source_records, wire_records, metadata_records, absent_metadata = [], [], [], []
     for name, consumed in indexed:
@@ -161,14 +164,14 @@ def _indexed_sources(campaign, checkpoint: Path, copied: dict) -> tuple[list[dic
     return source_records, wire_records, metadata_records, absent_metadata
 
 
-def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
-                                      copied: dict) -> list[dict]:
+def _iter_runtime_observation_dependencies(live_root: Path, checkpoint: Path,
+                                         copied: dict) -> Iterator[dict]:
     """Copy exact raw-locator inputs that normalized OTLP wrappers do not reference."""
     from .identity_projection_v5 import _runtime
     from .runtime_identity_v5 import _locator
 
     locators = {}
-    with sqlite3.connect(checkpoint/'observation-index.sqlite') as frozen_index:
+    with closing(sqlite3.connect(checkpoint/'observation-index.sqlite')) as frozen_index:
         for (encoded,) in frozen_index.execute('SELECT data FROM spans ORDER BY digest'):
             runtime = _runtime(json.loads(encoded))
             canonical = _locator((runtime or {}).get('locator'))
@@ -177,11 +180,11 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
                     'source_file', 'retained_file', 'offset', 'length', 'sha256'))
                 locators[key] = canonical
     if not locators:
-        return []
+        return
 
     accounting_path = live_root/'observations'/'deepflow-codec-accounting.jsonl'
     accounting_counts = _deepflow_accounting_counts(accounting_path, locators)
-    records, snapshot_cache, deepflow_file_proofs = [], {}, {}
+    snapshot_cache, deepflow_file_proofs = {}, {}
     for canonical in locators.values():
         retained = Path(canonical['retained_file'])
         if retained.is_absolute():
@@ -242,8 +245,40 @@ def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
             if raw_key not in copied:
                 _copy(raw_source, live_root, checkpoint, copied)
             proof = {'locator': canonical, 'raw_file': copied[raw_key]}
-        records.append(proof)
-    return records
+        yield proof
+
+
+def _runtime_observation_dependencies(live_root: Path, checkpoint: Path,
+                                      copied: dict) -> list[dict]:
+    """Legacy list API for saved-input comparisons and existing callers."""
+    return list(_iter_runtime_observation_dependencies(live_root, checkpoint, copied))
+
+
+def _write_runtime_observation_dependencies(live_root: Path, checkpoint: Path,
+                                           copied: dict) -> dict | None:
+    """Keep every ordered proof, without embedding its whole list in the manifest."""
+    path = checkpoint / RUNTIME_DEPENDENCIES_FILE
+    temporary = path.with_name('.' + path.name + '.tmp')
+    count = 0
+    try:
+        with temporary.open('w', encoding='utf-8', newline='\n') as stream:
+            for proof in _iter_runtime_observation_dependencies(live_root, checkpoint, copied):
+                json.dump(proof, stream, ensure_ascii=False, separators=(',', ':'))
+                stream.write('\n')
+                count += 1
+            stream.flush()
+            os.fsync(stream.fileno())
+        if not count:
+            temporary.unlink()
+            return None
+        os.replace(temporary, path)
+    except BaseException:
+        temporary.unlink(missing_ok=True)
+        raise
+    record = {'relative_path': RUNTIME_DEPENDENCIES_FILE,
+              'bytes': path.stat().st_size, 'sha256': _sha(path)}
+    copied[RUNTIME_DEPENDENCIES_FILE] = record
+    return {**record, 'records': count, 'encoding': 'utf-8-jsonl'}
 
 
 def _deepflow_accounting_counts(accounting_path: Path, required_locators) -> dict:
@@ -353,7 +388,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
     copied[index['relative_path']] = index
     copied[journal['relative_path']] = journal
     sources, wires, wire_metadata, absent_metadata = _indexed_sources(campaign, folder, copied)
-    runtime_observation_dependencies = _runtime_observation_dependencies(live_root, folder, copied)
+    runtime_observation_dependencies = _write_runtime_observation_dependencies(live_root, folder, copied)
     deployment = live_root/'deployment'
     if deployment.is_dir():
         for path in sorted(deployment.rglob('*')):
@@ -374,7 +409,7 @@ def create_checkpoint(campaign, folder: Path) -> dict:
                 'toolchain': binaries,
                 **({'runtime_identity_dependencies': runtime_identity_dependencies}
                    if runtime_identity_dependencies else {}),
-                **({'runtime_observation_dependencies': runtime_observation_dependencies}
+                **({'runtime_observation_dependencies_jsonl': runtime_observation_dependencies}
                    if runtime_observation_dependencies else {}),
                 **({'collector_provenance': collector} if collector is not None else {}),
                 'files': copied, 'created_ns': time.time_ns(),
@@ -403,7 +438,7 @@ def wait_for_release(campaign, folder: Path, ready: dict) -> dict:
     return release
 
 
-def checkpoint_and_wait(campaign, folder: Path) -> dict:
+def checkpoint_and_wait(campaign, folder: Path, *, ready_callback=None) -> dict:
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('live v4 training checkpoint is permitted only in GitHub Actions')
     started_ns = time.time_ns()
@@ -411,10 +446,17 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
     ready = None
     ready_mono = None
     release = None
+    callback_started_ns = callback_ended_ns = None
     try:
         ready = create_checkpoint(campaign, folder)
         ready_mono = time.monotonic_ns()
         campaign.ctx.journal.append('training_checkpoint_ready', ready)
+        if ready_callback is not None:
+            callback_started_ns = time.time_ns()
+            try:
+                ready_callback(ready)
+            finally:
+                callback_ended_ns = time.time_ns()
         release = wait_for_release(campaign, folder, ready)
         return release
     finally:
@@ -437,5 +479,10 @@ def checkpoint_and_wait(campaign, folder: Path) -> dict:
             'upload_hold_wall_seconds': (ended_mono-ready_mono)/1e9 if ready_mono else None,
             'ready': ready is not None, 'upload_success': release.get('upload_success') if release else None,
             'checkpoint_path': str(Path(folder).resolve()),
+            'ready_callback_started_ns': callback_started_ns,
+            'ready_callback_ended_ns': callback_ended_ns,
+            'ready_callback_seconds': ((callback_ended_ns-callback_started_ns)/1e9
+                                       if callback_ended_ns is not None else None),
+            'ready_callback_nesting': 'read-only work inside upload hold; uploader is a separate workflow process',
             'scope': 'checkpoint creation and upload hold on same live runner and guests; toolchain setup and earlier campaign are recorded separately',
         })

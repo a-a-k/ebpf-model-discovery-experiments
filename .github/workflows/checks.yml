@@ -29,3 +29,29 @@ jobs:
         env:
           PYTHONPATH: .
           RUN_DOCKER_CONTROL_FIXTURE: '1'
+  identical-input-discovery-fixture:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: src:.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest opentelemetry-proto
+      - name: Build the existing exact graph-v5 product pins
+        run: bash scripts/setup-toolchain-v4.sh work/toolchain-build v5
+      - name: Check two genuine discoveries and four logical input views
+        run: python scripts/check-identical-input-discovery-v5.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: identical-input-discovery-${{ github.run_id }}
+          path: |
+            work/identical-input-discovery-fixture/
+            work/toolchain-build/toolchain-build.json
+            work/toolchain-build/builds.tsv
+            work/toolchain-build/logs/
+          retention-days: 90
+          if-no-files-found: error

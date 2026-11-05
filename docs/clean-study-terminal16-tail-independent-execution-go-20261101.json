@@ -1,0 +1,22 @@
+{
+  "checked_utc": "2026-11-01T03:23:26.084509+00:00",
+  "original_exact_tail16_execution_rebind_GO": true,
+  "source": "debe113a7a84d818e537277e39dc3175269adb4a",
+  "CI": 41266444651,
+  "approved_archiver_blobs": {
+    "scripts/archive-runs.sh": "7e9d4a1e29829c86b6a738d47e8260b6f6d4b9d6",
+    ".github/workflows/archive.yml": "d68b536b577b55bf82e4881173c8eddd5298875c"
+  },
+  "frozen_original_scope_plan_sha256": "1baec4fbe5945c46ef8003ad2003330e1af37c0665b97639c0ca6a4c5771eaa3",
+  "same16_sources_62_originals_15376925234B": true,
+  "both_previous_archive_output_GO_proofs": {
+    "work\\skeptic-main-v5-observer\\archive-41256152140\\independent-all105-disk-guard-and-scope-review.json": "bb770c61d6cf83d179bfbc45ba6e1795c55ff18653f9c2adb83e86f76af80da2",
+    "work\\archive-41256152140\\root-actual-105-original-retention-review.json": "d6de0a77694057b9a84d03d7e2c52feeea1b19ee94880fe0283abaaec5ece3e2"
+  },
+  "scope": "ONE existing lossless archive execution for exactly the already approved16 sources/62 originals. Only execution head moves from f4 to reviewed debe; qualified archive code and scientific data/selection/outcomes unchanged.",
+  "before_POST": "Root must complete and record fresh all16source status/head/conclusion and all62ID/name/size/digest/expiry checks, exact current source/CI/blob binding and actual owner/capture/worker capacity. Reject scope drift or extra sources; no duplicate upload/retry/capture.",
+  "original_criterion": "Complete81 external-outcome eBPF/Bering/Sheaft feasibility, equal information/semantic knowledge and full preparation/failure costs; publication is retention, not scientific success.",
+  "strongest_baseline": "Run the same already qualified byte-preserving archiver after81; overlap only removes final retention waiting and preserves the same full source objects.",
+  "costs": "Retain all failed/stopped/preparation/capture/worker/model/CI/reader/transfer/hash/chunk/upload/storage/archive/tail costs, with humanunknown and API intervals distinct from CPU/billing.",
+  "limitations": "Fresh runtime disk guard remains mandatory before each original. Current capture/model protocol and final81admission unchanged. Later batch2/current worker/capture/report artifacts remain future retention tails."
+}

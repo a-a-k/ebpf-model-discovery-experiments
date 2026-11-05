@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-11-01T07:03:05.537573+00:00",
+  "original_actual_one_POST_source_scope_GO": true,
+  "actual_run": 41283135027,
+  "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+  "consumer": "23dc6d2b80b8bf79522ad7d79a73b709844f8ce3",
+  "scope": {
+    "collector": "deepflow",
+    "system": "deathstarbench",
+    "mode": "full",
+    "seed": 7
+  },
+  "actual_campaign_job": {
+    "id": 124778979250,
+    "name": "campaign (deathstarbench, full, 7)",
+    "status": "in_progress"
+  },
+  "request_SHA256": "e92b19cca070d5a76e70bdf8300e523bd666a18b8a81a0720b83a5352d7875f8",
+  "response_SHA256": "cc56849e902479f955e5b938d1300a0f3e2011e4fee975c759e74b536b8b5ac0",
+  "dispatch_record_SHA256": "0ccc63cf571a03e0b7cb65c598a309d799682dfa444c49e7a724f642715c1f8e",
+  "POSTrecorded_utc": "2026-11-01T07:01:49.906545+00:00",
+  "owner43_clean": true,
+  "owner_age_seconds_at_POST": 110.343963,
+  "capture_worst_after": 16,
+  "conservative_total_slots": 40,
+  "earlier_eight_POSTs_not_redispatched": true,
+  "no_healthy_cancellation": true,
+  "old_failure": "Verified Tfull7 ENOSPC, oldAPI completed06:55:40. Thisrecord doesnotestablisholdphaseorpartialtargets, no6hinference.",
+  "protocol": "Actualexactmain/study/full7 request andUseriesbyteidenticalT => full34800/9600/100000/all4methods/2views preserved. Actualcaptures/sourcefull/freeze/model/targets/cleanupdiskproofpending.",
+  "limits": "ExactlyoncePOST identity/source/scope/capacity only; not parentcasecompletion/sufficientheadroom/deadlinecure/scientific/all81GO. No payload/trace/journal/tar read. OldhealthyTpartial8/full8 untouched.",
+  "costs": "Preserve allold/new/failure/prefix/worker/qualification/cleanup/CI/transfer/reader/report/archive; APIelapsednotCPU/billing/humanunknown."
+}

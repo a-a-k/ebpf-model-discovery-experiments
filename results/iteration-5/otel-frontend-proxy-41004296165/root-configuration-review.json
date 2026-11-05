@@ -1,0 +1,46 @@
+{
+  "observed_utc": "2026-10-31T09:22:40.335838+00:00",
+  "reviewer": "root",
+  "scope": "Read-only source/configuration diagnosis of historical completed OTel outcomes; no experiment/hypothesis/score/admission change",
+  "checks": {
+    "manifest-root.json": true,
+    "manifest-linux-amd64.json": true,
+    "config-linux-amd64.json": true,
+    "index_selects_exact_amd64": true,
+    "manifest_config_exact": true,
+    "selected_template_sha256": true,
+    "copy_history_exact": true,
+    "copy_is_last_filesystem_layer": true,
+    "manifest_copy_exact": true,
+    "copy_diffid_exact": true,
+    "selected_campaign_config_hashes": true,
+    "no_proxy_mount_command_override": true,
+    "actual_port_mapping": true,
+    "actual_frontend_route_omits_timeout": true
+  },
+  "captured_frontend_proxy_image": "ghcr.io/open-telemetry/demo:3.0.0-frontend-proxy",
+  "captured_oci_index_sha256": "sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841",
+  "config_entrypoint": [
+    "/bin/sh",
+    "-c",
+    "envsubst < envoy.tmpl.yaml > envoy.yaml && envoy -c envoy.yaml;"
+  ],
+  "config_workdir": "/home/envoy",
+  "actual_template_sha256": "e39bb0479ad16086db393df37bded2f4aa72ff4ad98fc75b2d320f58c26908c0",
+  "actual_frontend_route": {
+    "match": {
+      "prefix": "/"
+    },
+    "route": {
+      "cluster": "frontend"
+    }
+  },
+  "catalog_route_timeout_from_selected_configuration": "0s",
+  "experiment_http_timeout_from_exact_source": null,
+  "envoy_documented_default_route_timeout_seconds": 15,
+  "documentation_url": "https://www.envoyproxy.io/docs/envoy/v1.39.1/faq/configuration/timeouts",
+  "interpretation": "Actual deployed image template exposes the native frontend proxy default route timer; this is consistent with the observed approximately15-second latency concentration. Per-attempt timeout causality, allfailure attribution, actualEnvoybinaryversion, saturationrootcause and collectorcausality are not established.",
+  "verification_boundary": "Root independently verifies saved immutable metadata chain, template, actualdeployment hashes and literalconfiguration. Remote2445B layer transport and tar diffID verification were performed independently by skeptic; root did not refetch layer.",
+  "root_verdict": "Accept static native-frontend route-timer exposure; reject allfailure/collector-causality attribution and do not mark main research complete.",
+  "skeptic_verdict": "Independent actualimage COPY-layer proof and deployment review accept omitted route timeout only; per-outcome cause remains unproved."
+}

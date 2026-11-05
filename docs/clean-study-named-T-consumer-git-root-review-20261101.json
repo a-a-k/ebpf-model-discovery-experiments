@@ -1,0 +1,44 @@
+{
+  "checked_utc": "2026-11-01T00:58:05.550145+00:00",
+  "root_actual_named_source_consumer_Git_GO": true,
+  "facts": {
+    "anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "revision": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+    "anchor_tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+    "revision_tree": "cbdf25b1277ec47e573d95f716e7cc366af49860",
+    "evidence_kind": "actual_immutable_prefix_input_equivalence",
+    "tested_source": "7df056aee51ae0113626fac9e72ca673e2515d96",
+    "reviewed_changed_blobs": {
+      ".github/workflows/diagnose-dsb-training-checkpoint-v4.yml": "7fa61ce470cc4a8ff6346dafb402ebabdb3b9d37",
+      ".github/workflows/series-v5.yml": "5546ce9214eead4e07dae0e8ed50828153f6e6e4",
+      ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+      "docs/IMMUTABLE_PATH_PREPARATION_V5.md": "04d2c2ce314b4547723746019cf962a7837452d1",
+      "docs/WORKER_PACKAGING_V5.md": "c270e8e4a2fb48f6d17c4dc0a334b99743d50f94",
+      "scripts/check-fixed-dsb-path-preparation-v5.py": "c0422ee45523be1954cc38422bb64d35083e8b18",
+      "src/ebpf_discovery/raw_v4.py": "8d964d7dc969a922f9ab1701f371eed5ea190321",
+      "src/ebpf_discovery/remote_toolchain_v4.py": "627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89",
+      "src/ebpf_discovery/store_v5.py": "6569299a8a0a31f2ded3781433045ba303ae097a",
+      "src/ebpf_discovery/toolchain_v4.py": "b8b4c635952b5d0e72d436951df2463b38f28105",
+      "tests/test_fixed_path_preparation_comparison_v5.py": "cad466c8affd8f72d1611c93d6784fcb9585b079",
+      "tests/test_identity_projection_v5.py": "40227ccf66fe6e118e7dd74f87f97ddbfb037c66",
+      "tests/test_remote_toolchain_v4.py": "a14d76277d9179123a912c4106cee317803c77b2"
+    },
+    "changed_core_blobs": {
+      "src/ebpf_discovery/raw_v4.py": "8d964d7dc969a922f9ab1701f371eed5ea190321",
+      "src/ebpf_discovery/remote_toolchain_v4.py": "627d0fc8d4dc466c7bf2ec3d7b403a8616e0fe89",
+      "src/ebpf_discovery/store_v5.py": "6569299a8a0a31f2ded3781433045ba303ae097a",
+      "src/ebpf_discovery/toolchain_v4.py": "b8b4c635952b5d0e72d436951df2463b38f28105"
+    },
+    "input_equivalence": {
+      "run_id": 41255795362,
+      "artifact_id": 13063339858,
+      "artifact_digest": "sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c",
+      "input_files": 655,
+      "byte_exact_files": 647,
+      "entry_evidence_hashes": 18,
+      "root_and_independent_actual_original_GO": true
+    },
+    "identical_remaining_entries": 2119
+  },
+  "no_capture_or_scientific_admission": true
+}

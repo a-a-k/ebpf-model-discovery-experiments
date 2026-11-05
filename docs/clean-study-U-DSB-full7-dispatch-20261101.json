@@ -1,0 +1,387 @@
+{
+  "recorded_before_any_POST_utc": "2026-11-01T07:01:41.328955+00:00",
+  "state": "one_case_dispatched_verified",
+  "plan": {
+    "recorded_before_any_U_case_POST_utc": "2026-11-01T06:59:26.534649+00:00",
+    "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+    "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+    "consumer_source": "23dc6d2b80b8bf79522ad7d79a73b709844f8ce3",
+    "producer_CI_success": 41278220942,
+    "consumer_CI_success": 41280276240,
+    "cases": [
+      {
+        "collector": "deepflow",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7,
+        "old_parent": 41259938855,
+        "old_job": 124710961093,
+        "actual_old_job": {
+          "id": 124710961093,
+          "run_id": 41259938855,
+          "workflow_name": "Iteration 5 collector smoke and matched series",
+          "head_branch": "capture-20261101-immutable-prefix-v4",
+          "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41259938855",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVX6K988AAAAdCVo_xQ",
+          "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124710961093",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41259938855/job/124710961093",
+          "status": "completed",
+          "conclusion": "failure",
+          "created_at": "2026-11-01T01:10:28Z",
+          "started_at": "2026-11-01T01:10:30Z",
+          "completed_at": "2026-11-01T06:55:40Z",
+          "name": "campaign (deathstarbench, full, 7)",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-01T01:10:30Z",
+              "completed_at": "2026-11-01T01:10:31Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-01T01:10:31Z",
+              "completed_at": "2026-11-01T01:10:35Z"
+            },
+            {
+              "name": "Record fixed cell identity before setup",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-01T01:10:35Z",
+              "completed_at": "2026-11-01T01:10:35Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-01T01:10:35Z",
+              "completed_at": "2026-11-01T01:10:35Z"
+            },
+            {
+              "name": "Install experiment package",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-01T01:10:35Z",
+              "completed_at": "2026-11-01T01:10:44Z"
+            },
+            {
+              "name": "Initialize retained evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-01T01:10:44Z",
+              "completed_at": "2026-11-01T01:10:44Z"
+            },
+            {
+              "name": "Free unused hosted SDK disk before capture",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-01T01:10:44Z",
+              "completed_at": "2026-11-01T01:12:17Z"
+            },
+            {
+              "name": "Build exact source-pinned toolchain",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-01T01:12:17Z",
+              "completed_at": "2026-11-01T01:12:51Z"
+            },
+            {
+              "name": "Allocate measured swap on the standard runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-11-01T01:12:51Z",
+              "completed_at": "2026-11-01T01:12:51Z"
+            },
+            {
+              "name": "Boot two independent guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-01T01:12:51Z",
+              "completed_at": "2026-11-01T01:17:11Z"
+            },
+            {
+              "name": "Reserve the fixed DSB published port before application deployment",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11,
+              "started_at": "2026-11-01T01:17:11Z",
+              "completed_at": "2026-11-01T01:17:12Z"
+            },
+            {
+              "name": "Acquire and close the training prefix on the live guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-01T01:17:12Z",
+              "completed_at": "2026-11-01T03:35:14Z"
+            },
+            {
+              "name": "Retain DSB port state after a failed acquisition and application cleanup",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13,
+              "started_at": "2026-11-01T03:35:14Z",
+              "completed_at": "2026-11-01T03:35:14Z"
+            },
+            {
+              "name": "Persist the closed training checkpoint before discovery",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-01T03:35:14Z",
+              "completed_at": "2026-11-01T03:40:04Z"
+            },
+            {
+              "name": "Bind upload outcome to the same live campaign",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-01T03:40:04Z",
+              "completed_at": "2026-11-01T03:40:04Z"
+            },
+            {
+              "name": "Continue discovery and validation on the same live guests",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 16,
+              "started_at": "2026-11-01T03:40:04Z",
+              "completed_at": null
+            },
+            {
+              "name": "Stop only the owned campaign processes before retention",
+              "status": "pending",
+              "conclusion": null,
+              "number": 17,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Retain environment, status and cost evidence",
+              "status": "pending",
+              "conclusion": null,
+              "number": 18,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Stop guests",
+              "status": "pending",
+              "conclusion": null,
+              "number": 19,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Evaluate retained full campaign evidence",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Record compact evaluation provenance",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Package the complete DSB toolchain subtree without changing its files",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Package the closed DSB remote handoff evidence without changing its files",
+              "status": "pending",
+              "conclusion": null,
+              "number": 24,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Record DSB full artifact restore layout",
+              "status": "pending",
+              "conclusion": null,
+              "number": 25,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Retain DSB packaging status independently of full upload",
+              "status": "pending",
+              "conclusion": null,
+              "number": 26,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 27,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 28,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "pending",
+              "conclusion": null,
+              "number": 55,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 56,
+              "started_at": null,
+              "completed_at": null
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124710961093",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_id": 1000030136,
+          "runner_name": "GitHub Actions 1000030136",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        "actual_old_annotations": [
+          {
+            "path": ".github",
+            "blob_href": "https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/06d7d52bfa4b7768a4cabf02f4e66f109b3a9492/.github",
+            "start_line": 0,
+            "start_column": null,
+            "end_line": 0,
+            "end_column": null,
+            "annotation_level": "failure",
+            "title": "",
+            "message": "Unhandled exception. System.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011030-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at System.Diagnostics.TraceSource.Flush()\n   at GitHub.Runner.Common.Tracing.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.Tracing.Dispose()\n   at GitHub.Runner.Common.TraceManager.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.TraceManager.Dispose()\n   at GitHub.Runner.Common.HostContext.Dispose(Boolean disposing)\n   at GitHub.Runner.Common.HostContext.Dispose()\n   at GitHub.Runner.Worker.Program.Main(String[] args)\nSystem.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011030-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at GitHub.Runner.Common.HostTraceListener.WriteHeader(String source, TraceEventType eventType, Int32 id)\n   at System.Diagnostics.TraceSource.TraceEvent(TraceEventType eventType, Int32 id, String message)\n   at GitHub.Runner.Worker.Worker.RunAsync(String pipeIn, String pipeOut)\n   at GitHub.Runner.Worker.Worker.RunAsync(String pipeIn, String pipeOut)\n   at GitHub.Runner.Worker.Program.MainAsync(IHostContext context, String[] args)\nSystem.IO.IOException: No space left on device : '/home/runner/actions-runner/cached/2.338.2/_diag/Worker_20261101-011030-utc.log'\n   at System.IO.RandomAccess.WriteAtOffset(SafeFileHandle handle, ReadOnlySpan`1 buffer, Int64 fileOffset)\n   at System.IO.StreamWriter.Flush(Boolean flushStream, Boolean flushEncoder)\n   at System.Diagnostics.TextWriterTraceListener.Flush()\n   at GitHub.Runner.Common.HostTraceListener.WriteHeader(String source, TraceEventType eventType, Int32 id)\n   at System.Diagnostics.TraceSource.TraceEvent(TraceEventType eventType, Int32 id, String message)\n   at GitHub.Runner.Common.Tracing.Error(Exception exception)\n   at GitHub.Runner.Worker.Program.MainAsync(IHostContext context, String[] args)",
+            "raw_details": ""
+          }
+        ],
+        "retained_artifacts": [
+          {
+            "id": 13069280204,
+            "node_id": "MDg6QXJ0aWZhY3QxMzA2OTI4MDIwNA==",
+            "name": "training-v4-deathstarbench-full-7-41259938855",
+            "size_in_bytes": 3360241721,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13069280204",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13069280204/zip",
+            "expired": false,
+            "digest": "sha256:59364cb80f0604187ad4848f032f6f755a7bc3d5ac12e46df1c4893e8245b8ae",
+            "created_at": "2026-11-01T03:40:04Z",
+            "updated_at": "2026-11-01T03:40:04Z",
+            "expires_at": "2027-01-30T01:10:21Z",
+            "workflow_run": {
+              "id": 41259938855,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "capture-20261101-immutable-prefix-v4",
+              "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+            }
+          }
+        ],
+        "actual_technical_cause": "actual_host_ENOSPC_exact_subphase_unknown"
+      }
+    ],
+    "parallel_cases": 1,
+    "root_original_parallel_execution_GO": true,
+    "skeptic_original_parallel_execution_GO": true,
+    "original_criterion": "Completeall81/10operations actualcollectorobservations->Bering->Sheaft->independentapplicationoutcomes underabsent/partialSDK, sameprovidedsemantics/information/directequivalent/cheapcombinedbaselines. No cost-superiority substitution or smallerdemonstration.",
+    "capture_workload": "Eachsamefullmain34800primary/9600target/3appoperations/2independentguests/4methods/2views/100000realSheafttrials; sameappcaps/faults/seed/nativeSDKmode, no shortening/ML/accuracygate.",
+    "strongest_simple_baseline": "Directly reuse retained original complete evidence when available. Actual T DSB full7 retains only the pre-target prefix, no original complete post-target full/compact source; no truthful source reconstruction is available. An unchanged T repeat keeps its redundant parent checkpoint copy. Exact U releases only the already verified recoverable copy. All native/combined/context/direct baselines retain equal supplied semantics.",
+    "causal_mechanism": "Uparentonlylast-usecopyreleaseactualproof25180filehashes+3metadataequal, logical21031649232Bremoved, netfree+21094756352B,cleanup71.2s. No observation/model/scoring changes; sourceTpreparation proof remainsattributedTtested7df. Actualpercase timing/resources/idleagevisible; no e2eheadroombound.",
+    "root_verdict": "Explicit ORIGINAL one exact full-main failure-only U replacement GO after actual terminal T host ENOSPC. Exact already qualified U and consumer, all original counts and gates retained, fresh capacity before POST. No original81 success/headroom/six-hour cure claim.",
+    "source_profile": "ActualU16changedGitpaths/6added/2119remainingAentriesunchanged,4corepaths includesinheritedT;onlyonecorefilewithhelper+2callstatements vsT; worker/seriesYAMLidenticalT. Only8faadmitted, no automaticfuturemergeallowance.",
+    "capacity": {
+      "capture_cap": 20,
+      "total_job_cap": 40,
+      "fresh_owner_before_POST": true,
+      "reserve": "All current captures/workers/other and future children except actual completed-child parents; two new parent/worker slots, one CI and four readers. No archive in this wave."
+    },
+    "outcome_policy": "Preserve failed T full7, prefix, already completed bound worker41270783460 and all earlier seven U dispatches with all costs. Same full 34800/9600 counts, 100000 trials, all four methods/two views/operations and independent outcomes. No healthy or unbound-worker cancellation and no favorable outcome selection. Human effort unknown; API intervals not CPU/billing.",
+    "no_healthy_cancellation": true,
+    "unbound_old_workers_not_cancelled": true,
+    "if_U_technical_failure_repeats": "Inspectactualcause/subphasebeforeanotherrepetition; no unchangedendlessloop.",
+    "study_success_claimed": false,
+    "skeptic_record": "work\\skeptic-main-v5-observer\\disk-duplicate-lifetimes-T\\independent-U-DSB-full7-original-execution-go.json",
+    "before_case_POST_plan_sha256": "5446160109994bc05a2a5ec86b857e9669938955dc5682ca1129844f2f1d33ed",
+    "fresh_owner_snapshot": "work\\owner-actions-capacity-20261101T065959Z.json",
+    "fresh_owner_observed_utc": "2026-11-01T06:59:59.562582+00:00",
+    "actual_reserved_before": 15,
+    "actual_worker_jobs": 5,
+    "conservative_total_slots": 40
+  },
+  "reserved_before": 15,
+  "reserved_worst_after": 16,
+  "cases": [
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7
+      },
+      "old_parent": 41259938855,
+      "old_job": 124710961093,
+      "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "recorded_before_POST_utc": "2026-11-01T07:01:49.906545+00:00",
+      "fresh_capture_reservations_before_this_POST": 15,
+      "request": {
+        "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "deathstarbench",
+          "mode": "full",
+          "seed": "7"
+        },
+        "return_run_details": true
+      },
+      "state": "dispatched_verified",
+      "run_id": 41283135027,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41283135027"
+    }
+  ],
+  "no_healthy_cancelled": true
+}

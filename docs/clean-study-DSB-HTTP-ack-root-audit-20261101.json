@@ -1,0 +1,113 @@
+{
+  "recorded_utc": "2026-11-01T20:41:49.903810+00:00",
+  "root_original_DSB_HTTP_ack_boundary_and_one_case_state_audit_GO": true,
+  "independent_original_file_sha256": "15348b6673cb27aef17f02a5f1768015550620fa73ff3ad1b30af2a54632c7e1",
+  "root_rehashed_pinned_source_files": [
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/ComposePostService/ComposePostHandler.h",
+      "decoded_text_sha256": "e9b43f64e112f69be6fd4bfd9f59ed304fdc620c4c2f823e90a5bc8f81d879c7"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/UserTimelineService/UserTimelineHandler.h",
+      "decoded_text_sha256": "90c139e8b671d129c19a9cf73911d5a799d9ff8b70272019bd95dd0f464071d6"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/PostStorageService/PostStorageHandler.h",
+      "decoded_text_sha256": "120aa4f8b45f05345ddf691f176cb345c0f34635df73e6065839740fffb853d0"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/HomeTimelineService/HomeTimelineHandler.h",
+      "decoded_text_sha256": "d70eaefb49a62e3fc30148b7326972fcc0ed68805758e8885b2f14b224db8272"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/nginx-web-server/lua-scripts/wrk2-api/post/compose.lua",
+      "decoded_text_sha256": "446f9cbe26c32ab5f6723d2d4893fb8db3e22a3be41a1121b2a930ccc97b6165"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/gen-lua/social_network_ComposePostService.lua",
+      "decoded_text_sha256": "526d0148b971818d382cc517484ca9dca4e9459f5f8e2ac6d108263b2c28a352"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/social_network.thrift",
+      "decoded_text_sha256": "c22ed28cf88636f421a9ebe54f6988ec335c08099caf180003b6b624b635b268"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/docker-compose.yml",
+      "decoded_text_sha256": "bf6ae05a4b592d18932717a1932ed75c1f22317fdc22285329f18a0e65dab8da"
+    },
+    {
+      "URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/nginx-web-server/conf/nginx.conf",
+      "decoded_text_sha256": "605747aad31b3b3b4beac8264afeb189ef4aeee771aebc93413366714e2aed1e"
+    }
+  ],
+  "root_rehashed_selected_original_member": {
+    "member": "runtime-identity-v5/sample-after-db_down-15-a.json",
+    "bytes": 258349,
+    "sha256": "b89246d36ea8ac3327245d02ef26589ec65122accf471dcac1c0f03a34a04de5",
+    "crc32": "03af320b"
+  },
+  "root_direct_code_review": "Result parser stores declared ServiceException in self.se; recv_ComposePost checks application exception only and returns after parsing without result.se inspection. compose.lua uses pcall status for HTTP acknowledgement. Study.block completes requests and verification before after_workload_block; DBdown uses reset=False and restore follows the returned block.",
+  "actual_case": {
+    "collector": "deepflow",
+    "compact_artifact_bytes": 2602621501,
+    "compact_artifact_digest": "sha256:51a7d2ea7ca612d21fe05d67d64cf0ca17101543ab635b0c2ab89eff015c23dd",
+    "compact_artifact_id": 13082500813,
+    "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-full-6-41280950428",
+    "compact_scope": "retrieve_selected_nonjournal",
+    "full_artifact_bytes": 9574264895,
+    "full_artifact_digest": "sha256:14ed64dbccb799bb7c815e66b7b1153395255245e9bea2460b75bef9e24229eb",
+    "full_artifact_id": 13082563196,
+    "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-full-6-41280950428",
+    "full_scope": "retrieve_family_selected",
+    "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+    "mode": "full",
+    "run_id": 41280950428,
+    "runner": "study",
+    "seed": 6,
+    "stage": "main",
+    "system": "deathstarbench"
+  },
+  "interpretation": "One full6 selected user-timeline MongoDB is observed stopped after DBdown calls and before restore. Pinned frontend can mask declared backend errors. HTTP acknowledgement is not a durable-write witness.",
+  "limits": "Pinned adapter copies gen-lua and frontend Lua/config from6ecb; pinned compose mounts gen-lua at/gen-lua and Lua scripts at the configured script root. The exact per-request reply structs were not read, so this does not prove that all seven actual replies carried ServiceException. The prebuilt C++ microservices image is digest-pinned a845266e...; selected actual compose container matches that image, but a build-source attestation tying its binary to6ecb is not established. Exact loaded Lua module/runtime reply behavior is not independently byte-instrumented here; the code-supported error-masking mechanism is not relabeled a complete observed causal trace.",
+  "unchanged_original_prediction_and_outcome": {
+    "db_up_compose": {
+      "counts": {
+        "failure": 0,
+        "invalid": 0,
+        "success": 7,
+        "total": 7,
+        "unknown": 0
+      }
+    },
+    "db_down_compose": {
+      "counts": {
+        "failure": 0,
+        "invalid": 0,
+        "success": 7,
+        "total": 7,
+        "unknown": 0
+      }
+    },
+    "original_declared_direct_database_prediction": {
+      "available": true,
+      "basis": "declared unconditional selected database requirement",
+      "database_down_prediction": 0.0
+    }
+  },
+  "no_new_capture_model_refit_rescore_or_case_count_change": true,
+  "all81_actual_scientific_reviews_still_required": true,
+  "observer_costs": {
+    "source_GitHub_GETs_successful": 9,
+    "source_Dockerfile_path_GET_not_found": 1,
+    "exact_original_artifact_index_GETs": 1,
+    "selected_original_metadata_members": 1,
+    "selected_member_bytes": 258349,
+    "range_verified_received_bytes": 6511717,
+    "range_attempted_received_bytes": 6511717,
+    "range_elapsed_seconds": 29.924085300182924,
+    "range_failures": [],
+    "no_entire_archive_or_raw_models_attempt_wire_journals_SQLite_read": true,
+    "original_compile_or_newmodel_computation": false,
+    "human_effort_unknown": true
+  }
+}

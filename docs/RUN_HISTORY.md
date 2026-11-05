@@ -160,3 +160,37 @@ the previous qualification cannot alone authorize the fresh acquisition. Both
 qualifications and all read-only replay/audit costs remain preparation costs.
 
 The first scheduled acquisition, [Petclinic, absent, seed 0](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/40333270035), is retained as a **superseded protocol pilot**. Before its accuracy was inspected, review approved a fixed warmup and drain guard for every block to reduce stale-connection effects after replica changes. All 27 scored campaigns use `fixed-warmup-v2`; this earlier run is rerun by protocol version, regardless of accuracy. Its costs and data remain part of the history.
+
+## Fresh matched v5 technical replacements, 2026-10-31
+
+The active study has 81 unique cells at scientific source `0c98bf4`, immutable
+tag `study-20261031-v5`. The older 27-cell protocols above remain historical.
+Technical replacement does not add a scientific repetition or change the
+information, semantic contracts, prediction methods or outcome rules.
+
+| Failed case | Proven technical cause | Exact replacement and boundary |
+|---|---|---|
+| OBI / DSB / absent / seed 6, parent `41164821492`, worker `41171880804` | Worker checkpoint extraction raised `OSError: [Errno 28] No space left on device` before graph construction, forecasts or targets | [41173230022](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41173230022) completed successfully. Common worker preparation removes unused hosted SDK directories before download; measured reclaimed capacity is about 16.77 GiB. Scientific source and inputs remain unchanged; [details](WORKER_PACKAGING_V5.md). |
+| OBI / DSB / full / seed 7, parent `41164821492`, job `124430026324` | During deployment, Docker could not bind guest port `0.0.0.0:37020/tcp` for `dsb-user-timeline-mongodb`: address already in use. No workload or toolchain had run; the occupying process is unproved | One [same-source repeat 41189048917](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41189048917), predeclared before dispatch at 09:31:38 UTC, completed successfully at 13:36:48 UTC. Fresh guests used the same port and code; worker `41196742848` retained the canonical seed7 plan. Full `13043399462` and compact `13043752982` await independent scientific admission. The original failed packet and costs remain retained. |
+| DeepFlow / DSB / partial / seeds 6, 7, 8, parent `41164824120`, jobs `124430030952`, `124430030942`, `124430030947` | Each parent runner failed with `System.IO.IOException: No space left on device` writing its own Actions diagnostic log, before final retention. Elapsed intervals were approximately 5h29, 5h49 and 4h49; no final campaign packet was recovered. This is separate from the earlier worker extraction failure | After exact operational-code/source-equivalence review and successful CI, [seed6 `41209663599`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209663599), [seed7 `41209827036`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209827036) and [seed8 `41209667348`](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41209667348) were dispatched individually at 14:20–14:22 UTC on `fbbda015`. Both original-criterion GO verdicts and separate pre-execution records precede dispatch. Only parent SDK disk preparation changes; actual source remains visible. Recovery and strict independent admission remain pending; all original available prefixes, worker outputs and costs are retained. |
+
+The new DeepFlow partial6 attempt `41209663599` subsequently failed at14:25:27UTC,
+before any training or targets, with the same Docker port37020 bind error.
+Parent disk preparation passed; this failure is not ENOSPC. Its full
+`13045713018`, compact `13045643140` and retention `13045283661` are retained.
+Small retained deployment files exclude a duplicate publisher; the historical
+socket owner was not retained and remains unknown. Both reviewers approved the
+preventive preparation at `13c017bf` before one fresh partial6 replacement
+[41211541665](https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41211541665),
+dispatched14:44:43UTC after pre-execution commit `bb20b60`. The unchanged published
+port37020 is reserved against automatic allocation while preserving existing
+reservations. The actual preparation/readback step passed14:47:42UTC; capture and
+scientific admission remain pending. This does not prove the historical cause or
+guarantee recovery. The other two isolated replacements continue.
+
+The second failed case's full artifact is `13038151640`, summary is `13037762162`,
+and retention artifact is `13037737273`; retention is not the compact summary.
+All failed-attempt, preparation, repeat, worker, waiting, transfer and publication
+costs remain in the declarations. Human preparation is unmeasured. Unknown or
+unfavorable completed application outcomes are retained without accuracy-based
+reruns. Full independent saved-facts review remains required for the fresh matrix.

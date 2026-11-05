@@ -115,9 +115,11 @@ class ArchiveRunsTests(unittest.TestCase):
                 artifacts = ([] if scenario in ("metadata_only", "live", "auth_failure", "server_failure",
                                               "network_failure", "gone_logs", "workflow_only",
                                               "workflow_corrupt", "ansi_logs")
-                             else [{"id":42,"name":"capture","digest":"sha256:"+digest}])
+                             else [{"id":42,"name":"capture","digest":"sha256:"+digest,
+                                    "size_in_bytes":2**60 if scenario=='insufficient_disk' else len(artifact)}])
                 if scenario == 'incremental_two':
-                    artifacts.append({'id':43,'name':'capture2','digest':'sha256:'+digest})
+                    artifacts.append({'id':43,'name':'capture2','digest':'sha256:'+digest,
+                                      'size_in_bytes':len(artifact)})
                 value = {"total_count":len(artifacts), "artifacts":artifacts}
             elif endpoint.endswith("/jobs?filter=all&per_page=100"):
                 value = [{"total_count":1,"jobs":[{"id":11,"name":"campaign",
@@ -178,6 +180,21 @@ class ArchiveRunsTests(unittest.TestCase):
                          b"synthetic job log\n")
         self.assertIn(hashlib.sha256(ARTIFACT).hexdigest(),
                       (self.archive / "SHA256SUMS.txt").read_text())
+        with tarfile.open(self.archive / 'provenance.tar.gz', 'r:gz') as archive:
+            proof = json.load(archive.extractfile('./7-artifact-42-disk-before.json'))
+        self.assertEqual(proof['api_size_bytes'], len(ARTIFACT))
+        self.assertEqual(proof['action'], 'download')
+        self.assertEqual(proof['simultaneous_working_copies'], 1)
+
+    def test_insufficient_disk_stops_before_downloading_original(self):
+        completed = self.run_archive('insufficient_disk')
+        self.assertNotEqual(completed.returncode, 0)
+        self.assertIn('Insufficient archival disk headroom', completed.stderr)
+        self.assertFalse((self.archive / '7-artifact-42-capture.zip').exists())
+        proof = json.loads((self.archive / '7-artifact-42-disk-before.json').read_text())
+        self.assertEqual(proof['action'], 'stop_before_download')
+        self.assertLess(proof['available_bytes_before_download'], proof['required_bytes'])
+        self.assertFalse((self.archive / 'provenance.tar.gz').exists())
 
     def test_whole_zip_does_not_claim_missing_job_log(self):
         completed = self.run_archive("workflow_only")
@@ -213,6 +230,10 @@ class ArchiveRunsTests(unittest.TestCase):
         self.assertEqual(manifest["original_size_bytes"], len(ARTIFACT))
         self.assertEqual(manifest["original_sha256"], hashlib.sha256(ARTIFACT).hexdigest())
         self.assertEqual(manifest["source_api_digest"], "sha256:" + hashlib.sha256(ARTIFACT).hexdigest())
+        disk = json.loads((self.archive / '7-artifact-42-disk-before.json').read_text())
+        self.assertEqual(disk['simultaneous_working_copies'], 2)
+        self.assertEqual(disk['required_bytes'],
+                         2 * len(ARTIFACT) + disk['filesystem_metadata_reserve_bytes'])
         parts = manifest["parts"]
         self.assertEqual([part["filename"] for part in parts],
                          [f"{original}.part{index:04d}" for index in range(len(parts))])

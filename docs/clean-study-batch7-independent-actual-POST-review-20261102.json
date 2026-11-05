@@ -1,0 +1,169 @@
+{
+  "recorded_utc": "2026-11-02T04:13:11.933019+00:00",
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "original_batch7_actual_one_POST_four_saved_packets_source_scope_GO": true,
+  "run_id": 41386739556,
+  "source": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+  "scope": [
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41331878803,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13105935887,
+      "compact_artifact_name": "v5-summary-deepflow-main-otel_demo-full-7-41331878803",
+      "compact_artifact_bytes": 50117334,
+      "compact_artifact_digest": "sha256:43668e4f9bdd4629b25286790ebddd95f193fb28551601d2cd08c8299aff8071",
+      "full_artifact_id": 13105593437,
+      "full_artifact_name": "campaign-v5-deepflow-main-otel_demo-full-7-41331878803",
+      "full_artifact_bytes": 5536654728,
+      "full_artifact_digest": "sha256:8d6862f0891372194b3fe4d40ac6c7630b660ada25a8ea9f1121133cbb46acec"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41349757716,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13108419474,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-6-41349757716",
+      "compact_artifact_bytes": 43036684,
+      "compact_artifact_digest": "sha256:66bcc5fda3bfdcf33c806b72022aaeaa7a8d4837c2a7e03265f44f67a8060883",
+      "full_artifact_id": 13109376475,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-6-41349757716",
+      "full_artifact_bytes": 3893791860,
+      "full_artifact_digest": "sha256:1f92b656958d958300f6a7307afbe5011b07881cc6fade60dd385b4d9cf2f3af"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41348999127,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13109324655,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-7-41348999127",
+      "compact_artifact_bytes": 43148129,
+      "compact_artifact_digest": "sha256:2d2808f2481292a29481b662b26ab0bb761bb2e669e1f14b5b534d3c1cf656f6",
+      "full_artifact_id": 13110051976,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-7-41348999127",
+      "full_artifact_bytes": 3910545465,
+      "full_artifact_digest": "sha256:b6a12896ba2351a41b2de9b4a326972206f0d980fd7206aceec721176a228791"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41342083079,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "compact_artifact_id": 13107244130,
+      "compact_artifact_name": "v5-summary-deepflow-main-petclinic-partial-8-41342083079",
+      "compact_artifact_bytes": 43156810,
+      "compact_artifact_digest": "sha256:e585083139136d804bef0b3d49f46ae395c9f4c3188c135caf1b09f23f32a2a2",
+      "full_artifact_id": 13108040513,
+      "full_artifact_name": "campaign-v5-deepflow-main-petclinic-partial-8-41342083079",
+      "full_artifact_bytes": 3926682519,
+      "full_artifact_digest": "sha256:e8e9bc55f43920e7d3ab0c78f81b178622be44aadcc05218c45dbcb9b3cb23da"
+    }
+  ],
+  "manifest_GitLF_sha256": "f70c696d0d4afebff2dcb66b6fbb0f4af03fe262c180ea725cf0c9ce25859270",
+  "exact_execution_GO_SHA256": "84c52d58772431619d196b6f5851266b6fb871316a994d941e76f93103f85fe4",
+  "receipt": {
+    "path": "work\\main-review-batch7-dispatch-20261102.json",
+    "SHA256": "dd59b3a1090777351b1c45c748278f476046d65b099f445e021547ca9e89332e"
+  },
+  "raw_POST_response": {
+    "path": "work\\main-review-batch7-response-20261102.json",
+    "SHA256": "cfb51f79f4b3f46d9d7bc6dd0a9e86b7eea088f1909caa582e54ff4e939a7db5"
+  },
+  "fresh_independent_API": {
+    "run": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\batch7-41386739556-run-independent.json",
+    "jobs": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\batch7-41386739556-jobs-independent.json",
+    "observed_state": "in_progress",
+    "conclusion": null,
+    "exact_actual_jobs": [
+      {
+        "id": 125089132559,
+        "name": "declare",
+        "head_sha": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+        "run_id": 41386739556,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 125089179801,
+        "name": "review (petclinic, partial, 8, deepflow, 41342083079, main, study, 0565115511b24db1d6bbe71e98784b...",
+        "head_sha": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+        "run_id": 41386739556,
+        "run_attempt": 1,
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 125089179806,
+        "name": "review (petclinic, partial, 7, deepflow, 41348999127, main, study, 0565115511b24db1d6bbe71e98784b...",
+        "head_sha": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+        "run_id": 41386739556,
+        "run_attempt": 1,
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 125089179812,
+        "name": "review (petclinic, partial, 6, deepflow, 41349757716, main, study, 0565115511b24db1d6bbe71e98784b...",
+        "head_sha": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+        "run_id": 41386739556,
+        "run_attempt": 1,
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 125089179903,
+        "name": "review (otel_demo, full, 7, deepflow, 41331878803, main, study, f7ba801d70f9d2327031efc6dd0c00b90...",
+        "head_sha": "a82191f8d3b5b868a206f786eeba71f8da2ae8c6",
+        "run_id": 41386739556,
+        "run_attempt": 1,
+        "status": "in_progress",
+        "conclusion": null
+      }
+    ]
+  },
+  "capacity_at_dispatch": {
+    "owner_path": "work\\owner-actions-capacity-20261102T040653Z.json",
+    "owner_age_seconds": 64.59003,
+    "workflow_POSTs": 1,
+    "declare_jobs": 1,
+    "actual_review_jobs": 4,
+    "max_parallel_review_jobs": 4,
+    "total_jobs_reserved": 5,
+    "conservative_total_slots": 5
+  },
+  "one_evidence_cost_row_verified": true,
+  "first66_replayed": false,
+  "new_capture_refit_rescore_model_or_sci_admission": false,
+  "original_criterion_and_costs": "All81/10ops/3collectors/SDKmodes/seeds/34800primary+9600targets/4methods/2views/100000trials/two guestkernels/equalinformation/actualBering+Sheaftwhereavailable/externaloutcomes preserved. Reader onlyverifies savedoriginals; allunknown/adverse/failures/previousandcurrentCIattempts/preparation/worker/wait/transfer/hash/storage/archive/reader/observer/closing costs retained,humanunknown.",
+  "actual_case_interpretation_still_pending": true,
+  "full81_scientific_success_GO": false,
+  "observer_actions": "Two small independent run/jobs API GETs and localreceipt/source/cost metadata checks; no newpayloads/POST/cancel/Telegram."
+}

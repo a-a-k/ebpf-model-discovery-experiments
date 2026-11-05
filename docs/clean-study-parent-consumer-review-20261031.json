@@ -1,0 +1,30 @@
+{
+  "anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "revision": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "anchor_tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+  "revision_tree": "de3083b41c6b398afc4cfd98dab6358ca535e4bf",
+  "approved_operational_blobs": {
+    ".github/workflows/series-v5.yml": "8eed6cc872652a8c13125a980a9fa5eedee2311d",
+    ".github/workflows/toolchain-worker-v4.yml": "4b833fed808c6701426d758bb3b9feb84e81cfa1",
+    "docs/WORKER_PACKAGING_V5.md": "48c220fcb158379a3cf6216da939eafe4a153a0b"
+  },
+  "identical_remaining_entries": 2126,
+  "observed_utc": "2026-10-31T14:27:40.528169+00:00",
+  "actual_consumer_commit": "a07529404d1588f6881f35518c7346fdc0699b8a",
+  "actual_consumer_CI_success": 41209952987,
+  "recorded_utc": "2026-10-31T14:32:31.612599+00:00",
+  "focused_tests": {
+    "command": "PYTHONPATH=src python -m pytest --import-mode=importlib tests/test_report_v5.py tests/test_main_review_saved_facts_v5.py -q",
+    "passed": 133,
+    "elapsed_seconds": 13.04
+  },
+  "workflow_static_checks": {
+    "yaml_documents": 2,
+    "inline_python_AST_blocks": 7,
+    "diff_check": "pass"
+  },
+  "root_verdict": "ORIGINAL-feasibility actual-code GO; all strict saved-facts/source bindings preserved. Not a result-admission or research-success claim.",
+  "skeptic_verdict": "Explicit ORIGINAL-feasibility actual-code GO for actual6-file a075294 commit: all4strictreaderprofiles, honestactualheads, exactapprovedGitblobs/entrymodes, unchangedpayloads/costs and samecell2eligibleambiguity. Fixed81scope and equalinformation unchanged.",
+  "actual_CI_status": "success",
+  "remaining": "Independent saved-facts fixed3qualification and all81review still required; consumer code approval does not admit captured outputs."
+}

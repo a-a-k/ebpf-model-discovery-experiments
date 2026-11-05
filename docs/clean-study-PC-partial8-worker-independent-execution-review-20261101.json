@@ -1,0 +1,109 @@
+{
+  "recorded_utc": "2026-11-01T19:29:46.603540+00:00",
+  "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+  "original_W_failed_PC_partial8_existing_worker_execution_GO": true,
+  "transport_sha256": "19efe0d39b78b6fb8670f939fc83b2bb3aa9ee7b1df52050742d0ecfda07c6ac",
+  "plan_sha256": "a08262029a5a4de0f1fa7b9d3622bfab4b09f57b5c1cceced197103da4ceb5f8",
+  "producer_source": "0565115511b24db1d6bbe71e98784baded772144",
+  "consumer_source": "319321aa85ce1bc419dc874f90bcd61018d53f26",
+  "scope": [
+    {
+      "collector": "deepflow",
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "old_parent": 41164824120,
+      "old_job": 124430032803,
+      "old_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "original_prefix": {
+        "id": 13091383992,
+        "node_id": "MDg6QXJ0aWZhY3QxMzA5MTM4Mzk5Mg==",
+        "name": "training-v4-petclinic-partial-8-41164824120",
+        "size_in_bytes": 1572523929,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13091383992",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13091383992/zip",
+        "expired": false,
+        "digest": "sha256:be8e6af70c7170ab5e64197d6a0bc9c862b00cd87dab92abca3c6c90ca31a704",
+        "created_at": "2026-11-01T16:39:48Z",
+        "updated_at": "2026-11-01T16:39:48Z",
+        "expires_at": "2027-01-29T03:32:40Z",
+        "workflow_run": {
+          "id": 41164824120,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "study-20261031-v5",
+          "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+        }
+      },
+      "salvage_verdict": "Only originaltrainingprefix retained; nofull/compact/finalsource/independenttargets to salvage.",
+      "diagnosis": "Actual143 andrunner shutdownsignal; precedingBering~7.7GiB+QEMU~6.7GiB, availableRAM~240MiB/swapfree~816MiB. Severe coallocationpressure demonstrated, physicalSIGTERMcauseNOTprovenOOM. Existingworker placement separates heavytools, no entirecureclaim.",
+      "request": {
+        "ref": "fix/petclinic-existing-worker",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "petclinic",
+          "mode": "partial",
+          "seed": "8"
+        },
+        "return_run_details": true
+      },
+      "old_conclusion": "failure"
+    }
+  ],
+  "root_preexecution": "work\\W-PC-partial8-worker-replacement-preexecution-20261101.json",
+  "root_preexecution_sha256": "0dd0f45b335b80eac4c9dafccc40d41809008f2ad8e03da704eab20bed724da3",
+  "actual_code_source_admission_GO": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\independent-319321a-strict-W-consumer-source-admission-actual-code-original-GO.json",
+  "actual_code_source_admission_GO_sha256": "bc130fef9636cfd1c6120f6210a0c2791c68a5430f5f53d65aa2e62914b5a66e",
+  "old_failure_evidence": {
+    "work\\A-PC-partial8-actual-failure-20261101\\annotations-api.json": "723e7620cb7659fc3d04389641ee0f00596f0657e63a601d818146353a112144",
+    "work\\A-PC-partial8-actual-failure-20261101\\connector-selected-last200-log-lines.txt": "bde59f1ef13cca54b58dff992dd07a4c5e0523e2d96ca2d780725d32a0235e5e",
+    "work\\A-PC-partial8-actual-failure-20261101\\job-api.json": "7f1ab1a808f2d7b27cbf0ad60392b28ba6fcf5f3fde21839adb15f10ea530a32",
+    "work\\A-PC-partial8-actual-failure-20261101\\selected-original-artifacts-api.json": "5c5cf8ce6cf77598a1177182b3e0e92ac0c7b69cbb4bdbb448de2ef64f3e5219"
+  },
+  "original_criterion": "Same original81/all10operations/3collectors/allSDKmodes/seeds6,7,8/4methods/2views/34800primary incl9600targets/100000Sheafttrials/two independent guest kernels. Actual source->Bering->Sheaft where supported->independent app outcomes; no ML/cost-superiority or smaller demonstration.",
+  "intended_contribution": "Acquire the one incomplete failed original PCpartial8 cell under unchanged full81 scientific scope, using the existing same-program worker to remove measured parent Bering/VM co-residence. No new inference hypothesis or weaker demonstration.",
+  "strongest_simple_baseline": "Existing supported worker withidenticalToolchainV5/StoreV5/PCexperiment_v4, sameclosedcheckpoint/plans/inputfiles/binaries/scientificparameters. Noextra expensive full-modelqualifier needed peroriginaldesign/codeGO; sameprogram/input equivalence addressed beforeexecution. Actualcaseworkerimport+independentoutcomes required; never replaycompletenegative/adverse cases.",
+  "causal_change_and_known_equivalence": "One existing workflow executionroute usesworker forPC instead ofco-residentlocalBering+twoVMs. AllproductionPython/app/model/binarycode identicalalreadyqualifiedS; existingimmutableprepare and12GiBGC workerpaths retained. SJSONL/Cstorage/TUV proofs remainat ACTUALS/C/T/U/Vtestedheads, not falselyW. Additional sourceWliteralfullGit/strictconsumer+43producerimportfixtures/460consumerfixturetests+actualLinuxCIs reviewed. No wholecase speedup/SIGTERMcausation/zeroloss claim.",
+  "complete_comparable_costs": "All old prefixes/parents/children/waits/technical failures/qualifications/CI/reads/hashes/copies/archives and new actual outcomes retained. Known API intervals not CPU/billed/criticalpath sums, paired rows not independentN; humanunknown. Local stopped broad metadata helper network costunknownnot0. Qualification fixed order/pagecache/extra legacyvalidation/outercleanup limits retained. Include the extra worker allocation/queue/download/hash/restore/inputprep/compute/upload/parentverification/import and retained old local Bering costs; parentwait overlaps child work and is not summed as independentCPU.",
+  "same_information_and_semantics_across_direct_ANDOR_context": true,
+  "salvage_and_cause_verdict": "Exact originalA job124430032803 is terminalfailure with shutdown143 and sole pretarget prefix13091383992. No complete full/compact/finalsource/independent targets can be salvaged. Retained tail demonstrates severe available-memory/swap pressure with Bering and two QEMU processes; physical shutdown cause is not proved OOM, ENOSPC or provider event. Worker placement is supported by known same-program/input reuse, not by asserting a complete cure or performance advantage.",
+  "actual_transport_review": {
+    "literal_AST_PASS": true,
+    "correct_own_GO_path_and_one_case_one_unique_cardinality": true,
+    "exact_W_producer_and319_consumer_branches_sourceCI_both_consumerCIs": true,
+    "hashbound_Wconsumer_codeGO_matches_producer_consumer_fields": true,
+    "inherited_JSONL_qualification_checks_actual_f7_head_not_W": true,
+    "qual_artifact_ID_digest_and_nonexpiry_checked": true,
+    "fresh_exact_oldfailure_job_name_source_and_paginated_soleprefix_API_metadata_checked": true,
+    "planned_oldsource_identity_and_no_complete_selected_packet_checked": true,
+    "all43repository_fresh_owner_no_foreign_or_unbudgeted_jobs": true,
+    "every_capture_futureworker_plus_newparent_worker2_and_reader4_reserved_le40_aftercaptures_le20": true,
+    "owner_age_under300s_recomputed_immediately_before_POST": true,
+    "receipt_response_unknown_before_exactly_one_POST_no_blind_retry": true,
+    "actual_response_source_verified_then_one_attempt_plannedcell_and_atomic_monitor_update": true,
+    "no_healthy_cancellation_or_matrix_queue_change": true
+  },
+  "protected_scope": {
+    "oldA_carrier": 41164824120,
+    "ten_existing_S_capture_runs": [
+      41329450264,
+      41329454436,
+      41329458921,
+      41329463221,
+      41329467500,
+      41331875002,
+      41331878803,
+      41336179872,
+      41336793680,
+      41336799720
+    ],
+    "other_oldA_cases": "unchanged natural matrix schedule; no cancellation or cutover"
+  },
+  "strict_evidence_limits": "W code/CI and exactsourceconsumer admission are already separately reviewed. Actual SJSONL/C/T/U/V qualifications retain original tested sources, not W. No extra duplicate model qualifier is needed. This execution GO does not admit an actual W scientific case: retained bound worker import/file/SQL/output/freeze proof, real partial tracing, two kernels, complete original counts/closed final evidence and independent outcomes still required. All negative/unknown/adverse complete results remain valid without favorable repeats.",
+  "execution_boundary": "Only one literal failedPCpartial8 POST via this frozen transport after all mandatory fresh guards. No changed hardware/guest allocation/workload/capturewindow/asyncwait/methods/views/trials/counts, newcache/framework/schema/profiler, or new source beyond exact W. Consumer319 is not a capture source.",
+  "actual_W_case_or_full81_scientific_success_GO": false,
+  "full81_still_required": true,
+  "POST_cancel_sourceedit_heavyprocessing_or_Telegram_by_reviewer": false
+}

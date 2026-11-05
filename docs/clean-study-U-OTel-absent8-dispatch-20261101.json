@@ -1,0 +1,387 @@
+{
+  "recorded_before_any_POST_utc": "2026-11-01T06:52:02.938382+00:00",
+  "state": "one_case_dispatched_verified",
+  "plan": {
+    "recorded_before_any_U_case_POST_utc": "2026-11-01T06:50:20.511669+00:00",
+    "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+    "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+    "consumer_source": "23dc6d2b80b8bf79522ad7d79a73b709844f8ce3",
+    "producer_CI_success": 41278220942,
+    "consumer_CI_success": 41280276240,
+    "cases": [
+      {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8,
+        "old_parent": 41258000031,
+        "old_job": 124705195734,
+        "actual_old_job": {
+          "id": 124705195734,
+          "run_id": 41258000031,
+          "workflow_name": "Iteration 5 collector smoke and matched series",
+          "head_branch": "capture-20261031-guest-logs-v3",
+          "run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/runs/41258000031",
+          "run_attempt": 1,
+          "node_id": "CR_kwDOVX6K988AAAAdCQJG1g",
+          "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/jobs/124705195734",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41258000031/job/124705195734",
+          "status": "completed",
+          "conclusion": "cancelled",
+          "created_at": "2026-11-01T00:43:41Z",
+          "started_at": "2026-11-01T00:43:43Z",
+          "completed_at": "2026-11-01T06:48:44Z",
+          "name": "campaign (otel_demo, absent, 8)",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1,
+              "started_at": "2026-11-01T00:43:44Z",
+              "completed_at": "2026-11-01T00:43:45Z"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2,
+              "started_at": "2026-11-01T00:43:45Z",
+              "completed_at": "2026-11-01T00:43:48Z"
+            },
+            {
+              "name": "Record fixed cell identity before setup",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3,
+              "started_at": "2026-11-01T00:43:48Z",
+              "completed_at": "2026-11-01T00:43:48Z"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4,
+              "started_at": "2026-11-01T00:43:48Z",
+              "completed_at": "2026-11-01T00:43:48Z"
+            },
+            {
+              "name": "Install experiment package",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5,
+              "started_at": "2026-11-01T00:43:48Z",
+              "completed_at": "2026-11-01T00:43:58Z"
+            },
+            {
+              "name": "Initialize retained evidence",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6,
+              "started_at": "2026-11-01T00:43:58Z",
+              "completed_at": "2026-11-01T00:43:58Z"
+            },
+            {
+              "name": "Free unused hosted SDK disk before capture",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7,
+              "started_at": "2026-11-01T00:43:58Z",
+              "completed_at": "2026-11-01T00:45:48Z"
+            },
+            {
+              "name": "Build exact source-pinned toolchain",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8,
+              "started_at": "2026-11-01T00:45:48Z",
+              "completed_at": "2026-11-01T00:46:17Z"
+            },
+            {
+              "name": "Allocate measured swap on the standard runner",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9,
+              "started_at": "2026-11-01T00:46:17Z",
+              "completed_at": "2026-11-01T00:46:18Z"
+            },
+            {
+              "name": "Boot two independent guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10,
+              "started_at": "2026-11-01T00:46:18Z",
+              "completed_at": "2026-11-01T00:47:40Z"
+            },
+            {
+              "name": "Reserve the fixed DSB published port before application deployment",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 11,
+              "started_at": "2026-11-01T00:47:40Z",
+              "completed_at": "2026-11-01T00:47:40Z"
+            },
+            {
+              "name": "Acquire and close the training prefix on the live guests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12,
+              "started_at": "2026-11-01T00:47:40Z",
+              "completed_at": "2026-11-01T03:19:52Z"
+            },
+            {
+              "name": "Retain DSB port state after a failed acquisition and application cleanup",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 13,
+              "started_at": "2026-11-01T03:19:52Z",
+              "completed_at": "2026-11-01T03:19:52Z"
+            },
+            {
+              "name": "Persist the closed training checkpoint before discovery",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14,
+              "started_at": "2026-11-01T03:19:52Z",
+              "completed_at": "2026-11-01T03:25:19Z"
+            },
+            {
+              "name": "Bind upload outcome to the same live campaign",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15,
+              "started_at": "2026-11-01T03:25:19Z",
+              "completed_at": "2026-11-01T03:25:19Z"
+            },
+            {
+              "name": "Continue discovery and validation on the same live guests",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 16,
+              "started_at": "2026-11-01T03:25:19Z",
+              "completed_at": null
+            },
+            {
+              "name": "Stop only the owned campaign processes before retention",
+              "status": "pending",
+              "conclusion": null,
+              "number": 17,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Retain environment, status and cost evidence",
+              "status": "pending",
+              "conclusion": null,
+              "number": 18,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Stop guests",
+              "status": "pending",
+              "conclusion": null,
+              "number": 19,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Evaluate retained full campaign evidence",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Record compact evaluation provenance",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Package the complete DSB toolchain subtree without changing its files",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Package the closed DSB remote handoff evidence without changing its files",
+              "status": "pending",
+              "conclusion": null,
+              "number": 24,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Record DSB full artifact restore layout",
+              "status": "pending",
+              "conclusion": null,
+              "number": 25,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Retain DSB packaging status independently of full upload",
+              "status": "pending",
+              "conclusion": null,
+              "number": 26,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 27,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 28,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "pending",
+              "conclusion": null,
+              "number": 55,
+              "started_at": null,
+              "completed_at": null
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 56,
+              "started_at": null,
+              "completed_at": null
+            }
+          ],
+          "check_run_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/check-runs/124705195734",
+          "labels": [
+            "ubuntu-24.04"
+          ],
+          "runner_id": 1000030100,
+          "runner_name": "GitHub Actions 1000030100",
+          "runner_group_id": 0,
+          "runner_group_name": "GitHub Actions"
+        },
+        "actual_old_annotations": [
+          {
+            "path": ".github",
+            "blob_href": "https://github.com/a-a-k/ebpf-model-discovery-experiments/blob/1d646f907d0241f25445fcfb4d07d4e0ba89d88b/.github",
+            "start_line": 1,
+            "start_column": null,
+            "end_line": 1,
+            "end_column": null,
+            "annotation_level": "failure",
+            "title": "",
+            "message": "The job has exceeded the maximum execution time of 6h0m0s",
+            "raw_details": ""
+          }
+        ],
+        "retained_artifacts": [
+          {
+            "id": 13068123220,
+            "node_id": "MDg6QXJ0aWZhY3QxMzA2ODEyMzIyMA==",
+            "name": "training-v4-otel_demo-absent-8-41258000031",
+            "size_in_bytes": 3019649423,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13068123220",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13068123220/zip",
+            "expired": false,
+            "digest": "sha256:10c25dad8cfe7d2966d1ce19c78384312b0c14714782fbdfc898f29ac4275789",
+            "created_at": "2026-11-01T03:25:19Z",
+            "updated_at": "2026-11-01T03:25:19Z",
+            "expires_at": "2027-01-30T00:43:37Z",
+            "workflow_run": {
+              "id": 41258000031,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "capture-20261031-guest-logs-v3",
+              "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+            }
+          }
+        ],
+        "actual_technical_cause": "actual_six_hour_parent_stop"
+      }
+    ],
+    "parallel_cases": 1,
+    "root_original_parallel_execution_GO": true,
+    "skeptic_original_parallel_execution_GO": true,
+    "original_criterion": "Completeall81/10operations actualcollectorobservations->Bering->Sheaft->independentapplicationoutcomes underabsent/partialSDK, sameprovidedsemantics/information/directequivalent/cheapcombinedbaselines. No cost-superiority substitution or smallerdemonstration.",
+    "capture_workload": "Eachsamefullmain34800primary/9600target/3appoperations/2independentguests/4methods/2views/100000realSheafttrials; sameappcaps/faults/seed/nativeSDKmode, no shortening/ML/accuracygate.",
+    "strongest_simple_baseline": "Reuse retained complete original evidence directly if available. This S OTel absent8 case retains only its pre-target prefix, not the original complete post-target full/compact evidence. Exact already qualified U supplies inherited T preparation and verified parent-copy disk relief; no OTel-specific speed cure is measured. All native/combined/context/direct baselines receive the same supplied semantics.",
+    "causal_mechanism": "Uparentonlylast-usecopyreleaseactualproof25180filehashes+3metadataequal, logical21031649232Bremoved, netfree+21094756352B,cleanup71.2s. No observation/model/scoring changes; sourceTpreparation proof remainsattributedTtested7df. Actualpercase timing/resources/idleagevisible; no e2eheadroombound.",
+    "root_verdict": "Explicit ORIGINAL one exact full-main failure-only U replacement GO after the actual six-hour stop, exact already qualified source/consumer and fresh capacity checks. No 81-cell success or six-hour cure claim.",
+    "source_profile": "ActualU16changedGitpaths/6added/2119remainingAentriesunchanged,4corepaths includesinheritedT;onlyonecorefilewithhelper+2callstatements vsT; worker/seriesYAMLidenticalT. Only8faadmitted, no automaticfuturemergeallowance.",
+    "capacity": {
+      "capture_cap": 20,
+      "total_job_cap": 40,
+      "fresh_owner_before_POST": true,
+      "reserve": "All current captures/workers/other and future children except actual completed-child parents; two new parent/worker slots, one CI and four readers. No archive in this wave."
+    },
+    "outcome_policy": "Preserve the original failed S case, prefix and workers, all six earlier U dispatches and their costs. Full 34800/9600 protocol, 100000 trials, all four methods/two views/operations/independent outcomes remain unchanged. No healthy cancellation or favorable outcome selection. Human effort unknown, API intervals not CPU or billing.",
+    "no_healthy_cancellation": true,
+    "unbound_old_workers_not_cancelled": true,
+    "if_U_technical_failure_repeats": "Inspectactualcause/subphasebeforeanotherrepetition; no unchangedendlessloop.",
+    "study_success_claimed": false,
+    "skeptic_record": "work\\skeptic-main-v5-observer\\disk-duplicate-lifetimes-T\\independent-U-OTel-absent8-original-execution-go.json",
+    "before_case_POST_plan_sha256": "d1161f6e59c997bc25d5bbd46106756f00b1e75084f236882c5697aafe90e0d0",
+    "fresh_owner_snapshot": "work\\owner-actions-capacity-20261101T065044Z.json",
+    "fresh_owner_observed_utc": "2026-11-01T06:50:44.228862+00:00",
+    "actual_reserved_before": 15,
+    "actual_worker_jobs": 5,
+    "conservative_total_slots": 39
+  },
+  "reserved_before": 15,
+  "reserved_worst_after": 16,
+  "cases": [
+    {
+      "case": {
+        "collector": "deepflow",
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8
+      },
+      "old_parent": 41258000031,
+      "old_job": 124705195734,
+      "source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "recorded_before_POST_utc": "2026-11-01T06:52:10.489393+00:00",
+      "fresh_capture_reservations_before_this_POST": 15,
+      "request": {
+        "ref": "capture-20261101-uploaded-checkpoint-release-v5",
+        "inputs": {
+          "collector": "deepflow",
+          "stage": "main",
+          "runner": "study",
+          "system": "otel_demo",
+          "mode": "absent",
+          "seed": "8"
+        },
+        "return_run_details": true
+      },
+      "state": "dispatched_verified",
+      "run_id": 41282528449,
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41282528449"
+    }
+  ],
+  "no_healthy_cancelled": true
+}

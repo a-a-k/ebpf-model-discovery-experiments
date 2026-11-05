@@ -1,0 +1,853 @@
+{
+  "checked_utc": "2026-11-01T00:33:00.717468+00:00",
+  "run": 41254802097,
+  "records": [
+    {
+      "artifact_id": 13063390956,
+      "case": {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 8,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_scope": "retrieve_family_selected",
+        "compact_artifact_id": 13051270662,
+        "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-8-41164821492",
+        "compact_artifact_bytes": 51827429,
+        "compact_artifact_digest": "sha256:5c504c819a2f7e0f0057cad243471648b5e5a9cc576972893a2928f2fb78c85e",
+        "full_artifact_id": 13051810565,
+        "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-8-41164821492",
+        "full_artifact_bytes": 2691377621,
+        "full_artifact_digest": "sha256:4b00a3a7092dec1b411de771811afc8b88f9624dfe13d828da5c4bf9ff55304c"
+      },
+      "facts_sha256": "d11044ffb28bde18bfe353af6acfe9d24ffb87f3c3e98b3eb4fb0732824ea8d9",
+      "all6_CRC_SHA_descriptor_source_counts_freeze_API_rechecked": true,
+      "actual_report_SHA_matches_selected_original_full_member": [
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/browse_product/simulation/report.json",
+          "sha256": "4865789ece1ff719d36ffa93aa5a515305d955644c8b9070274be9621773b1a7"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/add_to_cart/simulation/report.json",
+          "sha256": "3c708d99edef75af12a93a506edb286050405ce87ade108d64ddfa8e3dc1aeda"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/checkout/simulation/report.json",
+          "sha256": "2e69a3bdd48ee144332233f84d19d9056ed1f35f9dc6c96df8f22a7f3393be54"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/browse_product/simulation/report.json",
+          "sha256": "650e597078bedbf17ac5f5d3b98d3aa04eeca8f162c36112273d7b5b99c7c168"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "322080b05a1e73e4ce659fd757a66457242d904dbf276a4a693687f7fb4316f4"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/checkout/simulation/report.json",
+          "sha256": "bc6845c4f8809e93992e726f8494ea6e9eec4d123bf6dc7a952059d0fd3b6a04"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/browse_product/simulation/report.json",
+          "sha256": "3e5d5e87df1fa16700db5ced2a6716aa76548ec225dac7042b3e83335eda6ed6"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/add_to_cart/simulation/report.json",
+          "sha256": "d024c50bd3da637cdda468a78a3ceff4eafed787bf73f7fe0dae0a3d97dfd944"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/checkout/simulation/report.json",
+          "sha256": "fd1971f40527c1bdfcfcddb6b799d2d4847853dcf252ea2764c13466f3a1d4cd"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/browse_product/simulation/report.json",
+          "sha256": "625751c38b355d32f4f5b139a043519ddda4ead9716fbf2141f4880786dea9fe"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "91a58f99941f1b1559e4f3c4832bb042f1080295ccd1e9ff5ed98b899762de2d"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/checkout/simulation/report.json",
+          "sha256": "1ca32b1194320c4cf82fe18cf5fcd7a8b90cc62bde9fac28258148d910732f7a"
+        }
+      ],
+      "same_external_outcomes_all4methods_views": true,
+      "saved_outcomes_not_rescored": [
+        {
+          "source": "ebpf",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 401,
+            "invalid": 0,
+            "success": 2799,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.00031250000000004885,
+              0.00031250000000004885
+            ],
+            "worst_end_error": 0.00031250000000004885
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 401,
+            "invalid": 0,
+            "success": 2799,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.00031250000000004885,
+              0.00031250000000004885
+            ],
+            "worst_end_error": 0.00031250000000004885
+          }
+        }
+      ]
+    },
+    {
+      "artifact_id": 13063251392,
+      "case": {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 6,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_scope": "retrieve_family_selected",
+        "compact_artifact_id": 13044637241,
+        "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-6-41164821492",
+        "compact_artifact_bytes": 50719208,
+        "compact_artifact_digest": "sha256:6b4c03adc491335283e4ff5b2d145a7c29ad34733f897f8614b9d7a6715b10e2",
+        "full_artifact_id": 13044996436,
+        "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-6-41164821492",
+        "full_artifact_bytes": 2689804502,
+        "full_artifact_digest": "sha256:7afb3e8a49fb48c0824fe2f60d3777ebec2b378fd8163fcfa4040c9f07c984e7"
+      },
+      "facts_sha256": "94a1836119d05802118830e95f7874ed946008a56091a654fcb5035eea96b1c4",
+      "all6_CRC_SHA_descriptor_source_counts_freeze_API_rechecked": true,
+      "actual_report_SHA_matches_selected_original_full_member": [
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/browse_product/simulation/report.json",
+          "sha256": "478728795f969b9273c05994acf82c1cd015425332a9fda5acb928fbcb226487"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/add_to_cart/simulation/report.json",
+          "sha256": "ea837732fbf90842759790499d92624e44b96a40978d578cfe863bed2b58bc44"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/checkout/simulation/report.json",
+          "sha256": "9efe3b26586e21ff4a1849a4da7c8f1a5355bdae57c4b1ae61abe66b8f2b24b4"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/browse_product/simulation/report.json",
+          "sha256": "2899ea359bfd132bb36a95b855fc2f7c1a04b1e4cffbdf45d89d371757382d7c"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "5f2b3e136753a4f835bd3684237b7953cb56df7e4f43189d07055802ced0830e"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/checkout/simulation/report.json",
+          "sha256": "c4f2fe57a25a6d4995d8d708db172a3da2ca4e8326e1edae73f36ed7ab197f88"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/browse_product/simulation/report.json",
+          "sha256": "3ea2c77e13747fabd0c04ca2347c063b23ecf9d6560c1d540f0e4323553f3293"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/add_to_cart/simulation/report.json",
+          "sha256": "682dc09e3a4460bac452bae97b3988b387351bb24179a62cba0cbf235dd12dcb"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/checkout/simulation/report.json",
+          "sha256": "5f6b0eb4b3deb3308afeaccda2d9d29aab66be3ab18222ff178f23735e035b92"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/browse_product/simulation/report.json",
+          "sha256": "e89400cbc5b68417fd28f38e496b01cffd46162ced372a56333bb59cbd8ed00e"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "f32d992e85f79d6cfaa754c0b4b684eb47155f3bd30a5f231c3962b2e1a5ffb5"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/checkout/simulation/report.json",
+          "sha256": "4529b2d1ed489946682a97f4d6c128ff670fc3f359b2a74651238d6fb3dcb4d0"
+        }
+      ],
+      "same_external_outcomes_all4methods_views": true,
+      "saved_outcomes_not_rescored": [
+        {
+          "source": "ebpf",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "artifact_id": 13063176598,
+      "case": {
+        "system": "otel_demo",
+        "mode": "partial",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41227089066,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_scope": "retrieve_family_selected",
+        "compact_artifact_id": 13058538611,
+        "compact_artifact_name": "v5-summary-obi-main-otel_demo-partial-7-41227089066",
+        "compact_artifact_bytes": 51836299,
+        "compact_artifact_digest": "sha256:84d90952ed88187930d4115c70d8c71af8075a45299513102830b6d6978a7171",
+        "full_artifact_id": 13059209343,
+        "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-7-41227089066",
+        "full_artifact_bytes": 3604226789,
+        "full_artifact_digest": "sha256:e3027c6989586ecc91a366659b8501e2df7c9ea6a31f6e6e68ecd63d4eb490e9"
+      },
+      "facts_sha256": "508171c59b9b5724a6ff0598e6345998685ab91cc889af2b9ced3fdbbb6e4473",
+      "all6_CRC_SHA_descriptor_source_counts_freeze_API_rechecked": true,
+      "actual_report_SHA_matches_selected_original_full_member": [
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/network_scope/operations/browse_product/simulation/report.json",
+          "sha256": "93de874b9f71ae3c9e1ce1deaaa7a2030129907fc7c6e9981c05d077ed42483a"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/network_scope/operations/add_to_cart/simulation/report.json",
+          "sha256": "f009f64e4057630fd5ba6b52252ef3114446ecdab2a928d9180926b8444e2fa3"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/network_scope/operations/checkout/simulation/report.json",
+          "sha256": "3391f9694b93cd2c664753fae5b0c18e376c27c70ce9ef0e64f5d8e1a01324a7"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/raw/operations/browse_product/simulation/report.json",
+          "sha256": "6d477687e7160e06226aec75bb422b527fc210569929d85b847b8410acd4ec1a"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/raw/operations/add_to_cart/simulation/report.json",
+          "sha256": "62d2eb70d30bafa59b8b2c33af5cad92b22e66e3bc36b47335cbe4e2864483be"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/context-baseline/raw/operations/checkout/simulation/report.json",
+          "sha256": "b7b6b2b6d73e91aa6e28aa310a1cb71c9e66e589b778d951d9305286cc708a41"
+        }
+      ],
+      "same_external_outcomes_all4methods_views": true,
+      "saved_outcomes_not_rescored": [
+        {
+          "source": "ebpf",
+          "operation": "add_to_cart",
+          "available": false,
+          "prediction": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": null,
+            "worst_end_error": null
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "browse_product",
+          "available": false,
+          "prediction": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": null,
+            "worst_end_error": null
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "checkout",
+          "available": false,
+          "prediction": null,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": null,
+            "worst_end_error": null
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        }
+      ]
+    },
+    {
+      "artifact_id": 13062809746,
+      "case": {
+        "system": "otel_demo",
+        "mode": "absent",
+        "seed": 7,
+        "collector": "obi",
+        "run_id": 41164821492,
+        "stage": "main",
+        "runner": "study",
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+        "compact_scope": "retrieve_selected_nonjournal",
+        "full_scope": "retrieve_family_selected",
+        "compact_artifact_id": 13050697068,
+        "compact_artifact_name": "v5-summary-obi-main-otel_demo-absent-7-41164821492",
+        "compact_artifact_bytes": 51120445,
+        "compact_artifact_digest": "sha256:847b091a09bcf9c6b38c0aecf495710aee517286ab587848946a1832da6e9a25",
+        "full_artifact_id": 13050687442,
+        "full_artifact_name": "campaign-v5-obi-main-otel_demo-absent-7-41164821492",
+        "full_artifact_bytes": 2677225693,
+        "full_artifact_digest": "sha256:02f461fb36ac5903d1571211b2393dba237b3c16664ed52ec054061e43a8d238"
+      },
+      "facts_sha256": "5eed13d8c488d6fcd78bf8dca434447907bbcebfecd6f990faf9a48208b1bd75",
+      "all6_CRC_SHA_descriptor_source_counts_freeze_API_rechecked": true,
+      "actual_report_SHA_matches_selected_original_full_member": [
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/browse_product/simulation/report.json",
+          "sha256": "ed358ee48b031b2848d445a8c9c93a9952d929dcac25471d581baff9d9e988fe"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/add_to_cart/simulation/report.json",
+          "sha256": "5ad5ecbc46a59b6031ec3d04014ed193eea9b332f8f98d611207d0a9f6095fba"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/raw/checkout/simulation/report.json",
+          "sha256": "9a980246f9d88469c0dd5e77d12d30083b0a3f77bc6f583c866b6842fd254ed5"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/browse_product/simulation/report.json",
+          "sha256": "6416f0df922809e750ac490a6ffc15c4cc7746a5b8549e96b6e63742d7600e25"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "12e30e3d623d58448c294c693501deac947851885aece459933594f54fe89ca9"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/ebpf/network_scope/checkout/simulation/report.json",
+          "sha256": "394eaa142a9c5723e0480028422858812da67389daa4f20c3f54ef333ab2d918"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/browse_product/simulation/report.json",
+          "sha256": "7f2c226f79546728d82e446f25abb1267d651662b8721b2608fb2c846d2465ae"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/add_to_cart/simulation/report.json",
+          "sha256": "2f622ff99b207fe48aa45efc46365fb45dbdc908b1d1571e12b40fbecea8ef35"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/raw/checkout/simulation/report.json",
+          "sha256": "0daf9a28b8320a0f74e4ea09094e67f73e28f12e0501fc7bce42f058ff81ba85"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/browse_product/simulation/report.json",
+          "sha256": "6e6c51fad3165a31d83972b65e0ea7dce52bedc2776f75fa0ea04d6d5ab1d943"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/add_to_cart/simulation/report.json",
+          "sha256": "3de24cfad6eca85665a8549d7e2d8174f3505db2e3572d5bfcfebc45eb1292de"
+        },
+        {
+          "database_down_prediction_bound_if_present": false,
+          "model_digest_and_all_operation_endpoint_state_values_match": true,
+          "path": "toolchain/combined/network_scope/checkout/simulation/report.json",
+          "sha256": "d2a1116c78499670ee3dc724a8778837cb2f1004f8854f2a4d1bcf5c1b0cba17"
+        }
+      ],
+      "same_external_outcomes_all4methods_views": true,
+      "saved_outcomes_not_rescored": [
+        {
+          "source": "ebpf",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "add_to_cart",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "browse_product",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "ebpf",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        },
+        {
+          "source": "context-baseline",
+          "operation": "checkout",
+          "available": true,
+          "prediction": 0.875,
+          "actual_counts": {
+            "failure": 400,
+            "invalid": 0,
+            "success": 2800,
+            "total": 3200,
+            "unknown": 0
+          },
+          "error": {
+            "range": [
+              0.0,
+              0.0
+            ],
+            "worst_end_error": 0.0
+          }
+        }
+      ]
+    }
+  ],
+  "root_verdict": "Derived metadata/source/report chain inspection PASS for four OBI OTel packets. Original representative literals and final81 review remain separate.",
+  "interpretation": "Without SDK traces in all3seeds, eBPF/combined supports all3operations and predicts.875; observed success2800/3200 except absent8checkout2799. Partial7 all3original source arms unknown, while actualcontext union adds18observed edges/view and supports all3operations with.875 and2800/3200. This context derivation is not a pureBering-emitted graph or scientific novelty claim.",
+  "limits": "No original traces/raw journals/wire/bulk ZIP or huge binding body inspected locally, no refit/simulation/rescore. Do not transfer other full6 OOM to these captures; all adverse/unknown results remain. No whole81 success or collector ranking.",
+  "costs": "Retain all source/preparation/failed/cancelled/reader/transfer/context-joint-Bering/union/Sheaft/retention costs. Human effort unknown."
+}

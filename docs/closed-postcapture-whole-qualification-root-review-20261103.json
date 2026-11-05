@@ -1,0 +1,43 @@
+{
+  "observed_utc": "2026-11-03T12:34:01.857794+00:00",
+  "root_original_whole_postcapture_actual_qualification_GO": true,
+  "original_criterion": "Complete unchanged matched81 eBPF feasibility with absent/partial SDK tracing, actual Bering/Sheaft where supported and independent external outcomes. Preserve all74 negative/adverse/unknown cases;7 technically incomplete cases remain required. No cost-superiority or smaller demonstration.",
+  "strongest_simple_baseline": "Same complete saved full6 closed scientific readset and unchanged offline suffix, transferred between two jobs. Known operation and semantic information identical; exact full equality covers the original baseline.",
+  "causal_source": "Execution placement and durable handoff, plus separately qualified closed discovery storage sharing at source682; no numerical algorithm change or claimed processing speedup.",
+  "actual_qualification_run": 41615267517,
+  "source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+  "root_component_reviews": {
+    "work/root-41615267517-closed-capture-prepare-actual-review-20261103.json": "e65a76a95ac4313ce7f74f4482a62e030b3cc758923b451b80c5bfb386bbd078",
+    "work/root-41615267517-actual-whole-equality-critical-review-20261103.json": "3f2ac2ca3829fe56e703e1731f2d40b9afa1bd316508b7e8c0d5512edf3f56db",
+    "work/root-41615267517-actual-publication-and-chain-review-20261103.json": "b4d3a3b65adb9c6845418520fb57ab58edc22233496e0d7f66a578fe00f211b7"
+  },
+  "both_actual_jobs": [
+    {
+      "id": 125847044031,
+      "name": "prepare",
+      "conclusion": "success",
+      "started_at": "2026-11-03T09:57:56Z",
+      "completed_at": "2026-11-03T10:34:16Z"
+    },
+    {
+      "id": 125864222442,
+      "name": "compare",
+      "conclusion": "success",
+      "started_at": "2026-11-03T10:34:18Z",
+      "completed_at": "2026-11-03T12:18:26Z"
+    }
+  ],
+  "all_original_SQL_journal_input_frozen_model_scientific_output_equality_and_production_publication": "PASS under exact preapproved JSON formatting and measured cost-field exclusions",
+  "equality_metadata_SHA256": "29563572d1d17323ec081fd60506170c7b8df8f568cf01f51094fde0e51d1bb4",
+  "closed_artifact": 13223167765,
+  "compact_artifact": 13229222064,
+  "full_artifact": 13229083043,
+  "proof_artifact": 13230510106,
+  "processing_elapsed_seconds": 4555.127210296,
+  "complete_costs": "All build1511.140s/seal252.344s/upload/queue/restore187.499s/full verification/processing4555.127s/equality803s/publication plus CI, failed qualifiers41608528466/41613040494, unfinished five-hour profile41581377543, observer and finite retention costs retained. Costs not compared as CPU or billed minutes; human effort unknown.",
+  "scientific_capture_identity_remains": "Original0056/full6 run41470575905; this is not a new main cell",
+  "local_verification_scope": "Shared selected metadata CRC/SHA/API and all directory path/size envelopes only; all scientific payload/SQLite/model/whole-ZIP processing remained in Actions. No unselected payload local rehash claim.",
+  "whole_all_seven_or_smallhost_time_disk_cure_proven": false,
+  "independent_whole_actual_concurrence_still_required_before_consumer_implementation": true,
+  "source_admission_or_primary_restart_or_final81_success_GO": false
+}

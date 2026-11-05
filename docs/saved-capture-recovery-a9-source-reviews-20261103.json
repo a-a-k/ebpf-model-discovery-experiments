@@ -1,0 +1,367 @@
+{
+  "scope": "Originalcriterion design, actualcode/CI and actualoncePOST reviews only; NOTactualscientificcase admission. OriginalrawSHA versusGitLFcopy encoding explicitly distinguished.",
+  "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+  "original_capture_run": 41642796796,
+  "processing_run": 41706823165,
+  "reviews": [
+    {
+      "original_name": "full8-saved-capture-capacity-recovery-root-design-20261103.json",
+      "original_raw_sha256": "4e4979a4e93d374120dd89da5cbc60f682dea71208e77dba5efe2a625ce97763",
+      "record": {
+        "recorded_utc": "2026-11-03T19:08:24.539405+00:00",
+        "root_original_recovery_design_GO": true,
+        "original_scientific_criterion": "Finish identical81-cell OBI/Coroot/DeepFlow feasibility matrix for absent/partial SDK traces with actual Bering->Sheaft where supported and independent external outcomes. No ML or cost-superiority hypothesis. All74 admitted positive/negative/unknown cases protected.",
+        "scope": "Recover ONLY failed postcapture delivery/processing of alreadycompleted DeepFlow OTel full8; no capture, model fit, changedRAM, traffic or result selection. Healthy other six executions remain untouched.",
+        "actual_failed_job": 126135848921,
+        "original_run": 41642796796,
+        "capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "capture_job": 125940346422,
+        "capture_job_conclusion": "success",
+        "closed_artifact_id": 13261622894,
+        "closed_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+        "archive_bytes": 6429750292,
+        "scientific_file_bytes": 69977528106,
+        "proof_bytes": 22175613,
+        "index_bytes": 13696827392,
+        "existing_SQL_WAL_growth_reserve_bytes": 54787309568,
+        "required_bytes": 132290505403,
+        "actual_free_after_current_cleanup": 127626776576,
+        "actual_deficit_bytes": 4664134331,
+        "closed_marker_sha256": "9d72a5bed6f598e0ee14abfd7ab29c2bce300f604de812bfac6c243e7e27e498",
+        "first_failure": "Actual guard refused BEFORE large body download; later missingcampaign eval/manifest errors secondary. No ENOSPC or loss of original closed capture.",
+        "strongest_simple_baseline": "Retain identical restored complete scientific input and every SHA/EOF/CRC/closed-manifest validation. Release ONLY the fully verified owned delivery ZIP after restoration; original closed artifact remains unchanged in GitHub. Download/extraction and future SQL/WAL growth never need that ZIP simultaneously. Existing full4*SQL reserve remains in force.",
+        "causal_source": "Nonoverlapping lifetime of verified temporary delivery ZIP and later SQL/WAL growth; no scientific data, reserve or algorithm reduction. No speculative extra SDK deletion required.",
+        "proposed_minimum": "One bounded saved-capsule recovery Actions workflow with exactoriginalcapture/API/closedmarker vsactualprocessingrun/source. Reuse currentrestore helper with narrow explicitcapture identity arguments and two sequential diskguards; remove verified temporary archive onlyafter allrestore checks, beforeunchanged finalize --capture-run-id/--capture-source. Keep existing evaluation/full+compact publication. No GITHUBspoof, genericframework orrecapture.",
+        "cleanup_design": "Existing SDK cleanup unchanged. More unusedSDK removal is not selected; deterministic verified temporary ZIP release is the stronger simple baseline.",
+        "candidate_unused_directories_not_measured": "/usr/lib/google-cloud-sdk, /opt/pipx, /usr/local/share/vcpkg, /usr/local/lib/node_modules, unused toolcache language/Python versions except active interpreter, /usr/share/miniconda; exact safe scope requires source review.",
+        "source_and_admission": "Newrecovery source requires actualCI+root/ind code review and scientificengineblob equality. Full/compact artifact APIs belong to actualrecoveryrun; originalf045/full8 capture identity remainsseparate and explicitly bound by closedmarker/currentcapsuleAPI/restoration/processing records. Narrow namedconsumer profile must validateboth identities+new phaseguards/ownedarchive disposition while alloldprofiles retainoldchecks. Exact81 key/seed/workload stillone full8 case, allfailed/old attempts/costsvisible. Existing actualsavedreader+root+ind originalcaseGO mandatory; no selfadmission from executionstatus.",
+        "costs": "Preserve all previous capture/worker/failedguard/cleanup/CI/check/metadata/review/delivery/recovery/wait/validation/publication/retention costs. Human unknown; API intervals not CPU/billing; no early-stopping or dropped history.",
+        "falsifiers": "Any scientific-input/output modification, lost source identity, weakened guard, unbound metadata/source/API, changed denominator/RAM/workload or admission from jobstatus alone rejects recovery. Actual insufficient cleanup stops before largebody; retain original and revise actual resource plan instead of infinite reruns.",
+        "independent_explicit_original_design_GO_REQUIRED_before_implementation": true,
+        "implementation_started": false,
+        "root_log_evidence": "work/full8-postcapture-126135848921-selected-capacity-log-20261103.txt",
+        "fresh_artifact_API": "work/full8-13261622894-closed-capture-api-after-postcapture-capacity-failure-20261103.json",
+        "revised_before_implementation_utc": "2026-11-03T19:10:49.397745+00:00",
+        "phase_budget": {
+          "download_and_restore_bytes": 77503195835,
+          "restored_processing_peak_bytes": 125860755111,
+          "actual_peak_required_bytes": 125860755111,
+          "actual_previous_host_free_bytes": 127626371072,
+          "previous_host_margin_bytes": 1765615961,
+          "second_pre_suffix_actual_free_guard_bytes": 55861051392,
+          "release_only_after": "APIidentity/digest/size, wholeZIP SHA, safe complete extraction/allEOF CRC, exactmarkerSHA and captureidentity checks pass. Owned absolutework/closed-postcapture.zip only, record priorSHA/size+removal+actualfree/time.",
+          "future_host_capacity_not_guaranteed": "Both actual predownload and presuffix free guards remainmandatory; no actual output success claimed.",
+          "previous_cleanup_free_after_bytes": 127626776576,
+          "free_measurement_difference_bytes": 405504
+        },
+        "actual_free_at_guard": 127626371072,
+        "actual_selected_guard_SHA256": "15d280692bd547bd58bcd9f2c68ffe4c666fc0cf7fd957dbeb5db99d0d2190ee",
+        "actual_selected_cleanup_SHA256": "7cd7e2efbea31426324e10c36908ab7c22222d45ea806718d0407fa6bf405952"
+      }
+    },
+    {
+      "original_name": "independent-full8-saved-capture-capacity-recovery-design-original-GO-20261103.json",
+      "original_raw_sha256": "1e22670fec6d2113f8ef94e7da730b482fa58ed8c9ea80da17d7c076ed5f6b11",
+      "record": {
+        "recorded_utc": "2026-11-03T19:20:57.769378+00:00",
+        "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+        "original_full81_saved_capture_recovery_design_GO": true,
+        "original_recovery_design_GO": true,
+        "root_design": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\full8-saved-capture-capacity-recovery-root-design-20261103.json",
+        "root_design_sha256": "4e4979a4e93d374120dd89da5cbc60f682dea71208e77dba5efe2a625ce97763",
+        "actual_failure_review": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-full8-postcapture-actual-capacity-failure-original-review-20261103.json",
+        "actual_failure_review_sha256": "38a5187d1d1ca659ba947841fdd5fa7e242c631b9952b34e53d962e37525fcf2",
+        "original_success_criterion": "Complete the unchanged matched81 collector/app/SDK/seed study: actual observed eBPF, actual Bering and Sheaft where supported, and independent application outcomes; all10 operations,4 methods,2 views,34800 primary including9600 targets,100000 trials and two independent guest kernels. No ML, cheaper-method substitute, reduced matrix or model-metric-only utility.",
+        "intended_contribution": "Recover transport/host processing of the exact already completed DeepFlow OTel full8 capture to permit the original scientific assessment. All74 admitted valid/adverse/unknown cases and healthy executions stay protected.",
+        "scope": {
+          "capture_run": 41642796796,
+          "capture_job": 125940346422,
+          "capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "artifact_id": 13261622894,
+          "artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "marker_sha256": "9d72a5bed6f598e0ee14abfd7ab29c2bce300f604de812bfac6c243e7e27e498",
+          "no_reacquisition": true
+        },
+        "strongest_simple_reasonable_baseline": "Use the identical closed capture, unchanged offline algorithms, complete scientific file tree and existing validation. Release only the owned verified temporary delivery ZIP after restore, since later SQL/WAL growth does not consume that ZIP. This ordinary equivalent lifetime change is stronger than speculative extra SDK deletion, arbitrary reserve reduction, new storage framework or repeated acquisition.",
+        "known_equivalence_addressed": "The ZIP is a recoverable transport cache outside the restored scientific input. Existing finalize/evaluation/publication consume the restored campaign/proof tree, not that cache. Exact whole ZIP SHA/size, all-member EOF/CRC, safe extraction, original capture identity and marker checks precede removal; scientific manifest validation still precedes mutation. No scientific byte, field, ordering, model, observation or outcome is intentionally changed.",
+        "causal_source": "Remove overlap of delivery ZIP allocation with later SQL/WAL reserve; retain complete input and the full existing4*index_bytes reserve plus1GiB. No unmeasured SDK cleanup or CPU/six-hour cure claim.",
+        "phase_budget": {
+          "old_additive_required_bytes": 132290505403,
+          "actual_previous_guard_free_bytes": 127626371072,
+          "actual_previous_cleanup_free_after_bytes": 127626776576,
+          "download_restore_required_bytes": 77503195835,
+          "restored_processing_required_total_bytes": 125860755111,
+          "staged_peak_required_bytes": 125860755111,
+          "previous_guard_margin_bytes": 1765615961,
+          "actual_pre_suffix_free_required_bytes": 55861051392,
+          "full_SQL_WAL_reserve_bytes": 54787309568,
+          "future_host_capacity_guaranteed": false
+        },
+        "necessary_implementation_boundaries": [
+          "Only the exact owned regular delivery ZIP, with path/inode/size/hash ownership checks, may be released after all restore validations and original artifact availability checks. Preserve original artifact, scientific tree and all evidence/proofs.",
+          "Check actual staged peak free space before delivery and actual4I+1GiB free space after ZIP release before unchanged offline suffix. Insufficient actual capacity stops safely; no reserve reduction, filters, caps or blind retry.",
+          "Explicit original capture run/source/API/marker remain distinct from actual new processing run/source. No GITHUB identity spoof. Default same-run behavior and all old source guards remain unchanged.",
+          "Recovery full/compact API artifacts belong to actual new processing run and must be bound by a strict named consumer profile to original full8 capture and unchanged case key/denominators. All existing source/input/SQL/closure/worker/freeze/external-outcome gates remain.",
+          "Exact code/CI and oncePOST transport require separate review; actual final publication, qualified saved-reader and root plus independent original scientific case review remain necessary. No additional model or whole-suffix qualifier requested for this design."
+        ],
+        "equal_information_semantics": "All methods, direct/ANDOR/context baselines and original outcome evaluation receive the same complete retained information and semantic knowledge. Engineering metadata/source identity changes cannot supply target knowledge or alter forecasts.",
+        "complete_comparable_costs": "Keep original capture, worker, failed guard, cleanup, CI, checks, hashing, metadata/API transfer, restore, wait, processing, publication and retention attempts and costs. Human effort remains unknown; API wallclock is not CPU/billing. No favorable early stopping or historical omission.",
+        "falsifiers": "Any scientific-input/output modification, lost source identity, weakened guard, unbound metadata/source/API, changed denominator/RAM/workload or admission from jobstatus alone rejects recovery. Actual insufficient cleanup stops before largebody; retain original and revise actual resource plan instead of infinite reruns.",
+        "verdict": "Explicit ORIGINAL design GO for this concrete equivalent saved-capture recovery route supporting the full81 criterion. This is not actual recovery success, source admission, scientific case GO, a general capacity guarantee or authorization for reviewer POST.",
+        "no_code_or_POST_by_reviewer": true,
+        "implementation_observed_started": false
+      }
+    },
+    {
+      "original_name": "independent-a9c5785-full8-saved-capture-recovery-actual-code-CI-original-GO-20261103.json",
+      "original_raw_sha256": "23785859d28f985761a7ed5a3b3a09331a0fb7f747c0e8fc8d2e3d2091a8d683",
+      "record": {
+        "recorded_utc": "2026-11-03T19:45:29.011291+00:00",
+        "original_closed_capture_capacity_recovery_actual_static_code_GO": true,
+        "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "ref": "fix/closed-capture-capacity-recovery",
+        "base_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "actual_CI_GO": true,
+        "actual_CI_status": "Actual independent GitHub run and both jobs SUCCESS, attempt1, ubuntu24.04 exacta9.",
+        "original_design_GO": "work/independent-full8-saved-capture-capacity-recovery-design-original-GO-20261103.json",
+        "original_design_GO_sha256": "1e22670fec6d2113f8ef94e7da730b482fa58ed8c9ea80da17d7c076ed5f6b11",
+        "supersedes_only_fixed_static_finding": "work/independent-f74cdae-full8-saved-capture-recovery-static-original-NO-GO-20261103.json",
+        "actual_full_Git_profile": {
+          "changed_or_added_paths": [
+            ".github/workflows/infrastructure.yml",
+            "scripts/restore-closed-postcapture-v5.py",
+            "tests/test_closed_capture_restore_v5.py"
+          ],
+          "unlisted_unchanged_paths": 2149,
+          "deleted_paths": [],
+          "scientific_src_systems_all_modes_types_blobs_unchanged": true,
+          "exact_path_modes_types_blobs": {
+            ".github/workflows/infrastructure.yml": {
+              "base": "100644 blob c367b847069276c38f2af87879e6f6b1930a2307",
+              "candidate": "100644 blob 0372928417f5ed0079bcec329ee7b8ddd1b017bc"
+            },
+            "scripts/restore-closed-postcapture-v5.py": {
+              "base": "100644 blob 9458123cc56a3b8341f9233f9b48fc963db8793b",
+              "candidate": "100644 blob 8213610b9fb0e187a3a4e2a6bab2c38465fef1ea"
+            },
+            "tests/test_closed_capture_restore_v5.py": {
+              "base": null,
+              "candidate": "100644 blob 5e7ca8d6a09b2895291c43e2d4e80eec5ee46979"
+            }
+          }
+        },
+        "resolved_finding": "Initial lexists rejects any prior delivery including dangling links; downloaded SHA/size-verified delivery is lstat-bound as regular non-symlink device/inode/type/size. Exact identity and owned absolute work/name rechecked before unlink; receipt retains that identity. Wrong replacement inode remains on disk and aborts before release.",
+        "independent_focused_checks": {
+          "command": "PYTHONPATH=src python -m pytest tests/test_closed_capture_restore_v5.py -q",
+          "actual_exit_code": 0,
+          "passed": 12,
+          "skipped": 1,
+          "skip": "Windows symlink privilege fixture; actual Linux CI must exercise it.",
+          "meaningful_cases": "Correct staged/default behavior, initial/no-download refusal, wrong API id/digest/expiry/original identity, wrong marker keeps ZIP, actual second headroom refusal preserves scientific tree, incomplete explicit identity rejected, dangling symlink rejected, real replacement inode not removed.",
+          "Linux_CI_scope": "Pinned checks workflow executes python -m pytest --import-mode=importlib tests systems on ubuntu24.04; the new symlink fixture is included in that source suite. Job API proves suite success, not a separately fetched per-test log. No new full model qualifier requested."
+        },
+        "checked_original_invariants": [
+          "Exact original full8 closed artifact13261622894/run41642796796/f045/digest/marker/file/proof/index constants remain fixed.",
+          "No acquisition, guest, model fit, engine, app, workload, trials, method or view change. Whole scientific code exact qualified f045; all74 positive/adverse/unknown admitted cases and healthy jobs protected.",
+          "Two staged actual disk guards preserve full4I+1GiB; no scientific limits/filter, old additive budget and retained delivery still default.",
+          "All archive SHA/size/member namespace/total/safe extraction/EOF/CRC/marker/capture identity checks precede owned cache removal; unchanged finalize still validates complete scientific inventory before mutation.",
+          "Explicit capture run/source separate from actual processing GITHUB identity; no spoof. New manifest contains both identity scopes.",
+          "One existing infrastructure job; compact22/full7 publication path lists are exactly existing production postcapture lists. Failure diagnostic upload remains always, original capsule retained."
+        ],
+        "same_information_and_baseline": "Exact restored input tree and original observations/frozen models/external outcome records remain identical for all methods/direct/ANDOR/context semantics. Transport ZIP lifetime equivalence addressed explicitly; no selective observations or science result selection.",
+        "costs_and_limits": "Retain original capture/worker/failed guard/SDK cleanup/static+CI/check/API/hash/restore/wait/suffix/publication/retention costs including failures; human unknown. Actual future capacity, successful suffix, complete outputs and six-hour cure are not established. No new model/whole-suffix qualifier requested.",
+        "remaining_exact_gates": [
+          "Strict named consumer profile preserving old guards and validating original capture versus new processing/full+compact API identity plus both actual phase guards and delivery ownership disposition.",
+          "Exact oncePOST plan/transport/source/current capsule/owner-capacity review before root dispatch.",
+          "Actual restore/suffix/publication and existing qualified saved-reader root+independent original scientific case assessment before caseGO."
+        ],
+        "scientific_case_or_primary_success_GO": false,
+        "reviewer_POST_or_production_mutation": false,
+        "original_closed_capture_capacity_recovery_actual_code_CI_GO": true,
+        "CI_run": 41705252206,
+        "actual_CI_jobs": [
+          {
+            "id": 126158723277,
+            "name": "checks",
+            "status": "completed",
+            "conclusion": "success",
+            "labels": [
+              "ubuntu-24.04"
+            ]
+          },
+          {
+            "id": 126158723904,
+            "name": "control-fixture-v5",
+            "status": "completed",
+            "conclusion": "success",
+            "labels": [
+              "ubuntu-24.04"
+            ]
+          }
+        ],
+        "actual_CI_metadata": {
+          "run-api.json": {
+            "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-a9c5785-recovery-CI-41705252206\\run-api.json",
+            "sha256": "18c58b573f6d9777f689fcf920fa4470837ee530b05262b66b10ad4c38876d53"
+          },
+          "jobs-api.json": {
+            "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-a9c5785-recovery-CI-41705252206\\jobs-api.json",
+            "sha256": "8ef16ac2914105c723dcf5f00f583c63f08034ca3a882ff9b9eccecde69b9f1c"
+          }
+        },
+        "static_code_review": {
+          "path": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-a9c5785-full8-saved-capture-recovery-actual-static-code-original-GO-20261103.json",
+          "sha256": "993b8df6617d2c55860585fbe4ec18c8b530aa661c11ad47045ead5b860795fd"
+        },
+        "scientific_source_admission_or_execution_GO": false
+      }
+    },
+    {
+      "original_name": "full8-saved-closed-capture-recovery-root-preexecution-20261103.json",
+      "original_raw_sha256": "da2c198c2e97fe86ee0223bc345b5d4b8f82a7bc44e52edde0c17252407e43dc",
+      "record": {
+        "recorded_before_POST_utc": "2026-11-03T19:46:32.136992+00:00",
+        "original_saved_capture_recovery_execution_GO": true,
+        "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "actual_transport_sha256": "a705a6fc2b183e4d995795276fe88b9e87867f29e07e7cc467d54288db1c01b0",
+        "request": {
+          "ref": "fix/closed-capture-capacity-recovery",
+          "return_run_details": true
+        },
+        "design_plan": "work\\full8-saved-capture-capacity-recovery-root-design-20261103.json",
+        "design_plan_SHA256": "4e4979a4e93d374120dd89da5cbc60f682dea71208e77dba5efe2a625ce97763",
+        "original_criterion": "Complete matched81-cell eBPF feasibility with absent/partialSDK traces and actual independent outcomes; no cost-superiority or ML. All74 admitted cases protected.",
+        "strongest_baseline": "Same original full8 complete closed capture and unchanged whole suffix; verify and release only owned temporary delivery ZIP between nonoverlapping phases. Every scientific byte, original artifact, allSHA/CRC/marker checks, full4*SQLreserve+1GiB andtwo actualfree guards retained.",
+        "source_actual_checks": "Exact3paths vsf045; allsrc/systems scientificblobsunchanged. Root12PASS1Windows symlinkskip; independent same. ActualLinux CI41705252206 checks126158723277+control126158723904bothSUCCESS includesalltests/systems.",
+        "independent_actual_code_CI_original_GO": "work\\independent-a9c5785-full8-saved-capture-recovery-actual-code-CI-original-GO-20261103.json",
+        "independent_actual_code_CI_SHA256": "23785859d28f985761a7ed5a3b3a09331a0fb7f747c0e8fc8d2e3d2091a8d683",
+        "scope": "ONE infrastructure.yml recoveryjob; ONLYoriginalfull8/run41642796796/capsule13261622894. No capture/model/traffic/replay/cancellation/changedRAM or82nd case. Originalscientificidentity f045 separate actualprocessingidentitya9.",
+        "guards": "OriginalcaptureAPI/digest/size/source+capturejobSUCCESS/postjobFAIL/noexistingfull+compact allrechecked beforePOST; sourceexactref+actualCIbothjobs+freshowner43/error0<300; responseunknownreceipt beforeoncePOST, retainresponse/reconcile no blindrepeat.",
+        "complete_costs": "Allfailedguard/capture/worker/preparation/CI/review/transfer/metadata/processing/wait/publication/retention/tail retained. Human unknown; API notCPU/billing. Newrun mustbeincluded in finalattempt/cost declarations.",
+        "actual_admission_not_performed": "Recoveryconsumer strictnamedsource+originalcapture/API/marker/restoration/processing/newpublication identity andphaseguards mustbeimplemented andactuallytested whileprocessingruns; qualifiedsavedreader+root+ind actualcase review required before admission/count changes. All81 completion/report/retention/finaloriginalskepticGO remain required.",
+        "original_full81_success_claim": false
+      }
+    },
+    {
+      "original_name": "full8-saved-closed-capture-recovery-independent-execution-GO-20261103.json",
+      "original_raw_sha256": "d6fdcc6025b1b948d8bdae9429c214d502896d3765da3f98a1f23e4d490bd08e",
+      "record": {
+        "recorded_before_POST_utc": "2026-11-03T19:48:29.782171+00:00",
+        "original_saved_capture_recovery_execution_GO": true,
+        "source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "actual_transport_sha256": "a705a6fc2b183e4d995795276fe88b9e87867f29e07e7cc467d54288db1c01b0",
+        "request": {
+          "ref": "fix/closed-capture-capacity-recovery",
+          "return_run_details": true
+        },
+        "root_preexecution": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\full8-saved-closed-capture-recovery-root-preexecution-20261103.json",
+        "root_preexecution_sha256": "da2c198c2e97fe86ee0223bc345b5d4b8f82a7bc44e52edde0c17252407e43dc",
+        "design_plan": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\full8-saved-capture-capacity-recovery-root-design-20261103.json",
+        "design_plan_sha256": "4e4979a4e93d374120dd89da5cbc60f682dea71208e77dba5efe2a625ce97763",
+        "code_CI_review": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\work\\independent-a9c5785-full8-saved-capture-recovery-actual-code-CI-original-GO-20261103.json",
+        "code_CI_review_sha256": "23785859d28f985761a7ed5a3b3a09331a0fb7f747c0e8fc8d2e3d2091a8d683",
+        "reviewer": "separate ORIGINAL criterion skeptic /root/ebpf_audit_skeptic_recovery",
+        "original_criterion": "Unchanged full81 matched collector/app/SDK/seed study with actual eBPF->Bering->Sheaft where supported, original fourmethods/twoviews/34800primary including9600targets/100000trials/two independent guest kernels and external outcomes. Preserve all74 valid/adverse/unknown cases; no cost-superiority/ML/demo substitute.",
+        "scope": {
+          "executing_jobs": 1,
+          "workflow": ".github/workflows/infrastructure.yml",
+          "original_capture_run": 41642796796,
+          "original_capture_job": 125940346422,
+          "original_capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+          "closed_artifact_id": 13261622894,
+          "closed_artifact_digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "mode": "full",
+          "seed": 8,
+          "new_capture_model_fit_traffic_or_case": false
+        },
+        "actual_code_CI": "Own API verifies exacthead/attempt1 CI41705252206 and both required Linux jobs126158723277/126158723904 SUCCESS; scientific src/systems unchanged, exact3paths reviewed and12 local focusedPASS1Windows symlinkskip.",
+        "literal_transport_review": [
+          "One existing workflow POST outside loops, fixed exactref/head and one savedcapsule scope. Reconciles existing receipt instead of retrying uncertainty.",
+          "Rechecks current exactbranch,CIhead/status/bothjobIDs/success, originalcapturejobSUCCESS/postcapturejobFAIL and no original full/compact, exact unexpired capsule API id/name/size/digest/run/source before POST.",
+          "Fresh all43 owner scan/error0/no foreign or unlisted active runs; allowed only exact3healthy partialparents/last knownworker; conservative2*active+1<=20. Age computed after dependent GETs immediately before receipt/POST and must be<300s.",
+          "Persists POST_started_response_unknown before one POST; retains response/stdout/stderr, stops on error or invalid returned identity; actual returned source/workflow validated, no silent retry or cancellation.",
+          "Request does not acquire traffic or refit scientific models, source engines/all scientific inputs and complete4I+1GiB reserve remain unchanged."
+        ],
+        "strongest_baseline_and_equivalence": "Use original fully closed saved capture; verified owned temporary delivery ZIP is unnecessary once allbytes have been safely restored. Two actual staged free-space guards remove only allocation overlap, preserving every scientific file/hash/CRC/marker/source identity and full SQL reserve. No speculative SDK removal or reduced counts.",
+        "same_information_semantics": "Unchanged complete restored scientific input, original frozen models and independent outcomes for every method/direct/ANDOR/context arm. New actual processing identity remains separate from original capture identity, not spoofed.",
+        "costs": "Retain original capture/worker/failedcapacity guard, cleanup, checks/CI/review/API/restore/hash/transfer/wait/suffix/publication/retention and technical failures. Human unknown; API wallclock is notCPU/billing. Append actual newrun to fullcost declarations.",
+        "actual_admission_boundary": "Strict new named consumer dual-capture/processing/API/marker/phaseguard/owned-cache proof validation may be implemented while this unchanged processing runs but is mandatory before scientific admission. Existing qualified saved-reader plus root and independent original actual case/outcome review still required. No current case GO, seven-case cure, all-host capacity or full81 success claim.",
+        "no_POST_or_production_change_by_reviewer": true
+      }
+    },
+    {
+      "original_name": "independent-full8-saved-closed-capture-recovery-actual-POST-original-GO-20261103.json",
+      "original_raw_sha256": "da98556307e6e8c304d547bba93b4ef60d6c0ae2f0634762741a175f339cfc7d",
+      "record": {
+        "recorded_utc": "2026-11-03T19:50:34.402946+00:00",
+        "original_saved_capture_recovery_actual_POST_GO": true,
+        "actual_processing_run": 41706823165,
+        "actual_processing_job": 126164235460,
+        "processing_source": "a9c5785516550b45ed39df8ada37749c061a9f5d",
+        "original_capture_run": 41642796796,
+        "original_capture_source": "f045cc0adec187ec00443da0bea72b4ec4d2082e",
+        "closed_artifact": {
+          "id": 13261622894,
+          "node_id": "MDg6QXJ0aWZhY3QxMzI2MTYyMjg5NA==",
+          "name": "postcapture-v5-deepflow-main-otel_demo-full-8-41642796796",
+          "size_in_bytes": 6429750292,
+          "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13261622894",
+          "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13261622894/zip",
+          "expired": false,
+          "digest": "sha256:9a0448b0a30c494accd7aefe29dd66c0df1d0679945e3e33edc80fb67bf60a2f",
+          "created_at": "2026-11-03T18:57:08Z",
+          "updated_at": "2026-11-03T18:57:08Z",
+          "expires_at": "2027-02-01T13:15:58Z",
+          "workflow_run": {
+            "id": 41642796796,
+            "repository_id": 1434356471,
+            "head_repository_id": 1434356471,
+            "head_branch": "fix/otel-postcapture-job",
+            "head_sha": "f045cc0adec187ec00443da0bea72b4ec4d2082e"
+          }
+        },
+        "actual_request": {
+          "ref": "fix/closed-capture-capacity-recovery",
+          "return_run_details": true
+        },
+        "workflow": ".github/workflows/infrastructure.yml",
+        "event": "workflow_dispatch",
+        "attempt": 1,
+        "actual_API_run_status": "in_progress",
+        "single_actual_job": {
+          "id": 126164235460,
+          "name": "Recover the saved closed OTel full8 capture",
+          "status": "in_progress",
+          "conclusion": null,
+          "head_sha": "a9c5785516550b45ed39df8ada37749c061a9f5d"
+        },
+        "retained_owner": {
+          "repositories_checked": 43,
+          "errors": 0,
+          "active_original_partial_parents": [
+            41642789738,
+            41642781338,
+            41642775376
+          ],
+          "age_immediately_before_POST_seconds": 80.620363,
+          "conservative_slots": 7
+        },
+        "once_only_scope": "Literal reviewed transport had no prior receipt, recorded POST unknown before its one POST, retained response and then verified returned API source/path. Actual attempt1/onejob/request/source/capsule identities match. No second POST or acquisition by reviewer.",
+        "actual_scientific_case_GO": false,
+        "all74_prior_cases_protected": true,
+        "cost_boundary": "New actual processing/check/restore/hash/transfer/suffix/wait/publication costs must remain in declarations with original capture/worker/failedguard/CI/review costs and humanunknown. API status is not empirical success or pureCPU/billing.",
+        "remaining": "Watch actual initial and post-release disk guards, restore/source/closure, suffix/evaluation/full+compact publication. Require exact named dualidentity consumer code+CI and existing qualified saved-reader root+ind original scientific assessment before admitting full8. No additional model qualifier requested.",
+        "metadata_hashes": {
+          "work\\full8-saved-closed-capture-recovery-dispatch-20261103.json": "f05fce0f03a3aa213fc1193fb33bb62674b281bf66a3b49eb9e6c8caec6b36d9",
+          "work\\full8-saved-closed-capture-recovery-request-20261103.json": "2cd4225972a1b9d0674b78d60008859e792c80dee399294d7066889ecf3432c8",
+          "work\\full8-saved-closed-capture-recovery-response-20261103.json": "efc1a3e70e043365c06e2289f4ea9c75ed5bfefd8139677046997ee9bcea7686",
+          "work\\full8-saved-closed-capture-recovery-stderr-20261103.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "work\\owner-actions-capacity-20261103T194756Z.json": "69f0a2a8694202317a1f4815b4a5dc9f68a1fc91e374316a6946883442cbfb0d",
+          "work\\independent-full8-recovery-41706823165-actual-POST\\run-api.json": "75b541fd8d7ea3b6b92f71a3a2a3470adbf45f98342737b044ade7cc546c36fd",
+          "work\\independent-full8-recovery-41706823165-actual-POST\\jobs-api.json": "298f9cf4a655a07c57bc2c9e60cea076f25ff52cebd9ae021a507c0169876966"
+        },
+        "no_new_POST_cancel_refit_Telegram_by_reviewer": true
+      }
+    }
+  ]
+}

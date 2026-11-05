@@ -1,0 +1,39 @@
+{
+  "recorded_utc": "2026-11-01T00:59:41.863651+00:00",
+  "original_actual_code_consumer_GO": true,
+  "scope": "Exact named T source consumer/report admission and unchanged strict saved-reader profiles; not fresh capture execution or scientific success.",
+  "source_T": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492",
+  "reviewed_worktree_git_blobs": {
+    "src/ebpf_discovery/report_v5.py": "f0e47f0bbd257f579df66825377e63074c026ddd",
+    ".github/workflows/report-v5.yml": "75a0120aa981630f190acdea991f4eb933de9444",
+    "scripts/review-main-saved-facts-v5.py": "824cae42806f2f71e27fdaed9673713b8f8ef0ff",
+    ".github/workflows/review-pending-main-evidence-v5.yml": "32bb442976cd817892cbf59e266f573fcca42377",
+    "tests/test_report_v5.py": "edc29df69c3555009d3e029b509e653964d0e5f7",
+    "tests/test_main_review_saved_facts_v5.py": "a66bf29f2bff676fa21dbb9d3589f34bcfaca45f"
+  },
+  "mandatory_workflow_commit_and_tree_identity_fetch": true,
+  "exact13_entries_modes_3added_4core_and_remaining2119": true,
+  "actual_Git_T_consumer_function_verified": true,
+  "N_M_S_operational_registry_unchanged": true,
+  "input_equivalence_run": 41255795362,
+  "input_equivalence_artifact": 13063339858,
+  "input_equivalence_digest": "sha256:76509b2c059e482db522b8aef5d1a7cf3a948449fb417931dc818c68118a7f2c",
+  "counts_models_analysis_reports_freeze_outcomes_and_duplicate_selection_unchanged": true,
+  "independent_tests": {
+    "files": [
+      "tests/test_report_v5.py",
+      "tests/test_main_review_saved_facts_v5.py"
+    ],
+    "passed": 179,
+    "elapsed_seconds": 13.31
+  },
+  "report_render_nonblocking_precision": "source-equivalence.json binds complete proof artifact ID/digest, does not embed whole655-file proof body.",
+  "original_criterion": "Actual eBPF/Bering/Sheaft absent/partial native tracing and independent outcomes all81/all10ops with same semantics/info/direct and cheapcombination baselines, no cost superiority condition.",
+  "costs": "Preserve all prep/failures/stops/CI/replay/workers/readers/transfer/retention costs, actual source and idleage. APIintervalnotCPU/billed;humanunknown.",
+  "fresh_execution_GO": false,
+  "render_precision_patch": {
+    "old_reviewed_blob": "f0e47f0bbd257f579df66825377e63074c026ddd",
+    "current_reviewed_blob": "f0e47f0bbd257f579df66825377e63074c026ddd",
+    "scope": "Only complete-proof reference wording precise; same named-source logic already reviewed."
+  }
+}

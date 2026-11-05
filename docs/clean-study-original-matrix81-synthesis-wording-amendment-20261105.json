@@ -1,0 +1,41 @@
+{
+  "schema": "immutable-original-matrix81-synthesis-wording-amendment-v1",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "review_date": "2026-11-05",
+  "original_user_criterion_synthesis_GO": true,
+  "wording_amendment_GO": true,
+  "amends_without_rewriting": {
+    "path": "work/independent-original-matrix81-scientific-synthesis-document-GO-20261105.json",
+    "bytes": 9681,
+    "sha256_verified_unchanged": "97409e7417d2dbf827ba90127f6f919043752f4ebe94151a078df2c2327dbfc4"
+  },
+  "changed_readset_member": {
+    "path": ".worktrees/controlled-capture-consumer/docs/MAIN_DEEPFLOW_FINDINGS_V5.md",
+    "previous_bytes": 29737,
+    "previous_sha256": "890a0468e6f77703f0a90be783888ff751143da69c455a411e3d7aea1cb9bd1f",
+    "current_bytes": 29776,
+    "current_sha256_verified": "321faf505c0da997697d70a271e6e7d8d6c3bca8eb8e5841ecd3ffc6a9325ef1",
+    "read_scope": "Corrected paragraph at lines77-87 and whole-document hashing only.",
+    "exact_delta_check": "Replacing the single new three-line subprocess/workflow-status phrase with the previous two-line phrase IN MEMORY reproduces the previous sealed29737-byte document and its exact890a0468 SHA256. No document write was performed by this reviewer.",
+    "only_one_wording_change_verified": true,
+    "clarification": "The unchanged offline suffix subprocesses exit successfully and retain179/249 resource samples. The GitHub workflow jobs fail only at the additional processed-full upload. Child exit0 is not job SUCCESS."
+  },
+  "other_five_readset_members_rehashed_unchanged": [
+    {"path": ".worktrees/controlled-capture-consumer/README.md", "bytes": 72588, "sha256": "e39788eb8d960e05f55086c11bad3e396f0297c175f42856eda11b0033af3eff"},
+    {"path": ".worktrees/controlled-capture-consumer/docs/CURRENT_FEASIBILITY_FINDINGS_V5.md", "bytes": 6018, "sha256": "e328eb2af7c4bb59c980e0cc8baa38df9d4c5df2dc8b20335b88b90f787caf1b"},
+    {"path": ".worktrees/controlled-capture-consumer/docs/clean-study-original-matrix81-scientific-closure-20261105.json", "bytes": 4227, "sha256": "0400da34680085130e33eb3e48f9cefdb6a20a9caf69d3c3a7cf35365f786393"},
+    {"path": ".worktrees/controlled-capture-consumer/docs/clean-study-otel-absent7-controlled-actual-review-20261105.json", "bytes": 30119, "sha256": "92cda8adb2483a9525d77995ad67f095f66041b2997063a725e2e603904224e6"},
+    {"path": ".worktrees/controlled-capture-consumer/docs/clean-study-otel-absent8-controlled-actual-review-20261105.json", "bytes": 34169, "sha256": "2393a6492bfac1b80a253a66f3a93ea9b489c3770d11c07fd7a69d6492bf9513"}
+  ],
+  "original_criterion_and_verdict_unchanged": {
+    "criterion": "Feasibility of eBPF evidence for operation models and actual Bering-to-Sheaft forecasts with absent/partial SDK tracing, judged against independent external outcome ascertainment; no statistical IID claim.",
+    "scientific_synthesis": "81 reviewed fixed cases include supported conditional applicability plus adverse/negative/UNKNOWN observations, not81 positive or accurate forecasts. Pinned pipeline and own-case causal limits remain unchanged.",
+    "strongest_baselines": "Same semantic contracts/inventory for direct conditional A OR B, observed SERVER-edge union/context, native where present and reasonable cheap context/tree/family combinations. Direct.875 equivalence and lack of prediction/cost superiority remain explicit.",
+    "external_utility": "Internal validity, graph availability and child success do not establish usefulness. Final7/8 still have all24 forecasts unavailable while each operation has2800success/400failure/3200. No positive forecast utility is added by this wording clarification.",
+    "complete_costs": "All original/failed work, actual failed GitHub job statuses, genuine34048s failed processing, preparation, early stopping, shared/cached work, overlapping waits, hash/transfer/restore, paging/resources, CI/readers, failed full uploads, review and finite report/archive/closing tail remain attributable. Human effort unknown; API/job elapsed is not CPU/billing/campaign wall. No cost-dominance claim.",
+    "separate_remaining_work": "Final report/figures, actual output review, publication/finite cost closure and PR completion remain separate.",
+    "no_weaker_substitute_criterion": true
+  },
+  "scope": "Bounded local document/proof hashes, one corrected paragraph read, exact in-memory text-delta verification, then writing this immutable amendment. No original payload/facts reread, GET/network, tests, capture, model/science processing, source editing or broad requalification.",
+  "verdict": "Explicit ORIGINAL synthesis GO continues for the amended readset. The clarified wording correctly separates scientific subprocess completion from failed additional publication at workflow-job level; every original scientific, baseline, external-utility and cost verdict remains unchanged."
+}

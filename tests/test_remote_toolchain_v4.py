@@ -105,6 +105,50 @@ def test_safe_extract_rejects_traversal_and_symlink(tmp_path):
         remote._safe_extract(archive2, tmp_path / "out2")
 
 
+@pytest.mark.parametrize('change', [None, 'legacy', 'conflict', 'path', 'hash', 'count',
+                                  'count_bool', 'encoding', 'unlisted', 'truncated', 'not_object'])
+def test_runtime_dependency_file_is_bound_and_legacy_array_remains_readable(tmp_path, change):
+    root = tmp_path/'checkpoint'
+    manifest = checkpoint(root, identity())
+    relative = 'runtime-observation-dependencies.jsonl'
+    payload = root/relative
+    payload.write_text('{"locator":{"text":"a\\nb"}}\n{"locator":{}}\n', encoding='utf-8')
+    if change == 'truncated':
+        payload.write_bytes(payload.read_bytes().rstrip(b'\n'))
+    if change == 'not_object':
+        payload.write_text('[]\n{}\n', encoding='utf-8')
+    proof = {'relative_path': relative, 'bytes': payload.stat().st_size, 'sha256': remote._sha(payload)}
+    manifest['files'][relative] = proof
+    reference = {**proof, 'records': 2, 'encoding': 'utf-8-jsonl'}
+    manifest['runtime_observation_dependencies_jsonl'] = reference
+    if change == 'legacy':
+        manifest.pop('runtime_observation_dependencies_jsonl')
+        manifest['runtime_observation_dependencies'] = [{'legacy': 'preserved'}]
+    elif change == 'conflict':
+        manifest['runtime_observation_dependencies'] = []
+    elif change == 'path':
+        reference['relative_path'] = '../' + relative
+    elif change == 'hash':
+        reference['sha256'] = '0' * 64
+    elif change == 'count':
+        reference['records'] = 3
+    elif change == 'count_bool':
+        reference['records'] = True
+    elif change == 'encoding':
+        reference['encoding'] = 'json'
+    elif change == 'unlisted':
+        manifest['files'].pop(relative)
+    write_json(root/'manifest.json', manifest)
+    expected = {**identity(), 'manifest_sha256': remote._sha(root/'manifest.json')}
+    write_json(root/'ready.json', {**expected, 'status': 'training_checkpoint_ready'})
+    if change in (None, 'legacy'):
+        actual, _ = remote._validate_checkpoint(root, expected)
+        assert actual == manifest
+    else:
+        with pytest.raises(ValueError):
+            remote._validate_checkpoint(root, expected)
+
+
 def worker_bundle(root, expected, worker_run_id=91):
     toolchain = root / "toolchain"
     write_json(toolchain / "forecasts.json", {"ebpf": {"raw": {"browse": {"available": False}}}})
@@ -204,7 +248,8 @@ def test_dispatch_transport_ambiguity_is_persisted_without_retry(tmp_path, monke
     monkeypatch.setenv("GITHUB_RUN_ATTEMPT", "3")
     monkeypatch.setattr(remote, "_verify_binaries", lambda *_args, **_kwargs: {})
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
-    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
+    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_, **__: {"spans": "same"})
+    monkeypatch.setattr(remote, "_checkpoint_index_reference", lambda *_: {"logical_proof": {"spans": "same"}})
     session = AmbiguousSession()
     monkeypatch.setattr(remote.requests, "Session", lambda: session)
     with pytest.raises(RuntimeError, match="ambiguous"):
@@ -324,7 +369,8 @@ def test_artifact_get_retries_headers_but_never_partial_body(tmp_path, monkeypat
 
 @pytest.mark.parametrize("system,fail_import,collector", [("otel_demo", False, None),
     ("deathstarbench", False, None), ("deathstarbench", True, None),
-    ("deathstarbench", False, "obi")])
+    ("deathstarbench", False, "obi"),
+    ("petclinic", False, "deepflow"), ("petclinic", True, "deepflow")])
 def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, monkeypatch, system, fail_import, collector):
     class Ctx:
         out = tmp_path / "campaign"
@@ -398,14 +444,17 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
                      if key not in ("request_id", "worker_workflow_sha", "worker_run_attempt")}
     monkeypatch.setattr(remote, "_expected", lambda *_: (dict(base_expected), {"files": {}}))
     monkeypatch.setattr(remote, "_index_table_proof", lambda *_: {"spans": "same"})
-    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_: {"spans": "same"})
+    monkeypatch.setattr(remote, "_consistent_live_index_proof", lambda *_, **__: {"spans": "same"})
+    monkeypatch.setattr(remote, "_checkpoint_index_reference", lambda *_: {"logical_proof": {"spans": "same"}})
     monkeypatch.setattr(remote.requests, "Session", Session)
     sleeps = []
     monkeypatch.setattr(remote.time, "sleep", sleeps.append)
     if fail_import:
         original_replace = os.replace
+        staged_name = ("staged-worker-output-unpacked" if system == "deathstarbench"
+                       else "staged-worker-output")
         def fail_final_import(source, destination):
-            if Path(source).name == "staged-worker-output-unpacked" and Path(destination).name == "worker":
+            if Path(source).name == staged_name and Path(destination).name == "worker":
                 raise OSError("injected import rename failure")
             return original_replace(source, destination)
         monkeypatch.setattr(remote.os, "replace", fail_final_import)
@@ -413,7 +462,10 @@ def test_successful_worker_return_is_verified_and_atomically_imported(tmp_path, 
             remote.forecast_on_worker(Campaign(), tmp_path / "checkpoint", {}, [])
         evidence = Ctx.out / "infrastructure/remote-toolchain-v4"
         assert (evidence / "worker-output.zip").is_file()
-        assert (evidence / "staged-worker-output/payload.tar.gz").is_file()
+        if system == "deathstarbench":
+            assert (evidence / "staged-worker-output/payload.tar.gz").is_file()
+        else:
+            assert (evidence / staged_name / "output-manifest.json").is_file()
         assert not (Ctx.out / "toolchain").exists()
         assert not (evidence / "parent-import.json").exists()
         return

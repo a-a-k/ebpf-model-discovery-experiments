@@ -1,0 +1,247 @@
+{
+  "recorded_utc": "2026-11-01T20:34:49.472900+00:00",
+  "reviewer": "independent skeptic /root/ebpf_audit_skeptic_recovery",
+  "original_DSB_pinned_source_DB_HTTP_ack_boundary_and_one_case_state_interpretation_GO": true,
+  "audit_scope": "Read-only pinned source and previously admitted full6 puremetadata clarification; original predictions, outcomes, models and caseadmission unchanged.",
+  "case": {
+    "collector": "deepflow",
+    "compact_artifact_bytes": 2602621501,
+    "compact_artifact_digest": "sha256:51a7d2ea7ca612d21fe05d67d64cf0ca17101543ab635b0c2ab89eff015c23dd",
+    "compact_artifact_id": 13082500813,
+    "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-full-6-41280950428",
+    "compact_scope": "retrieve_selected_nonjournal",
+    "full_artifact_bytes": 9574264895,
+    "full_artifact_digest": "sha256:14ed64dbccb799bb7c815e66b7b1153395255245e9bea2460b75bef9e24229eb",
+    "full_artifact_id": 13082563196,
+    "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-full-6-41280950428",
+    "full_scope": "retrieve_family_selected",
+    "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+    "mode": "full",
+    "run_id": 41280950428,
+    "runner": "study",
+    "seed": 6,
+    "stage": "main",
+    "system": "deathstarbench"
+  },
+  "observed_original_DB_comparison": {
+    "db_up_compose": {
+      "counts": {
+        "failure": 0,
+        "invalid": 0,
+        "success": 7,
+        "total": 7,
+        "unknown": 0
+      }
+    },
+    "db_down_compose": {
+      "counts": {
+        "failure": 0,
+        "invalid": 0,
+        "success": 7,
+        "total": 7,
+        "unknown": 0
+      }
+    },
+    "original_declared_direct_database_prediction": {
+      "available": true,
+      "basis": "declared unconditional selected database requirement",
+      "database_down_prediction": 0.0
+    }
+  },
+  "pinned_source_repository": "https://github.com/delimitrou/DeathStarBench",
+  "pinned_source_commit": "6ecb09706140f8730b5385c08f1386c654c3c526",
+  "source_files": [
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\ComposePostHandler.h",
+      "decoded_source_text_sha256": "e9b43f64e112f69be6fd4bfd9f59ed304fdc620c4c2f823e90a5bc8f81d879c7",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/ComposePostService/ComposePostHandler.h"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\UserTimelineHandler.h",
+      "decoded_source_text_sha256": "90c139e8b671d129c19a9cf73911d5a799d9ff8b70272019bd95dd0f464071d6",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/UserTimelineService/UserTimelineHandler.h"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\PostStorageHandler.h",
+      "decoded_source_text_sha256": "120aa4f8b45f05345ddf691f176cb345c0f34635df73e6065839740fffb853d0",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/PostStorageService/PostStorageHandler.h"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\HomeTimelineHandler.h",
+      "decoded_source_text_sha256": "d70eaefb49a62e3fc30148b7326972fcc0ed68805758e8885b2f14b224db8272",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/src/HomeTimelineService/HomeTimelineHandler.h"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\compose.lua",
+      "decoded_source_text_sha256": "446f9cbe26c32ab5f6723d2d4893fb8db3e22a3be41a1121b2a930ccc97b6165",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/nginx-web-server/lua-scripts/wrk2-api/post/compose.lua"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\social_network_ComposePostService.lua",
+      "decoded_source_text_sha256": "526d0148b971818d382cc517484ca9dca4e9459f5f8e2ac6d108263b2c28a352",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/gen-lua/social_network_ComposePostService.lua"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\social_network.thrift",
+      "decoded_source_text_sha256": "c22ed28cf88636f421a9ebe54f6988ec335c08099caf180003b6b624b635b268",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/social_network.thrift"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\docker-compose.yml",
+      "decoded_source_text_sha256": "bf6ae05a4b592d18932717a1932ed75c1f22317fdc22285329f18a0e65dab8da",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/docker-compose.yml"
+    },
+    {
+      "local_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\nginx.conf",
+      "decoded_source_text_sha256": "605747aad31b3b3b4beac8264afeb189ef4aeee771aebc93413366714e2aed1e",
+      "pinned_primary_URL": "https://github.com/delimitrou/DeathStarBench/blob/6ecb09706140f8730b5385c08f1386c654c3c526/socialNetwork/nginx-web-server/conf/nginx.conf"
+    }
+  ],
+  "source_snapshot_boundary": [
+    {
+      "path": "systems/deathstarbench/adapter.py",
+      "actual_case_producer_Git_blob": "2b00dbf85a1756e66326458e6a583f20f29fab81",
+      "same_current_reviewed_source": true
+    },
+    {
+      "path": "systems/deathstarbench/experiment_v4.py",
+      "actual_case_producer_Git_blob": "8ca4e1a82cb9f6b6135a74ae76527cc62fe37469",
+      "same_current_reviewed_source": true
+    },
+    {
+      "path": "src/ebpf_discovery/study.py",
+      "actual_case_producer_Git_blob": "52f13a0645d0965ad28b0e6911d0713731cfcc4f",
+      "same_current_reviewed_source": true
+    },
+    {
+      "path": "scripts/runtime-identity-v5-guest.py",
+      "actual_case_producer_Git_blob": "ecdc971da7f1c6321fec235621d3070c3e314a8f",
+      "same_current_reviewed_source": true
+    },
+    {
+      "path": "src/ebpf_discovery/runtime_identity_v5.py",
+      "actual_case_producer_Git_blob": "5fd1bd1efb427bed2dcb1e62130cc6d1f15a9cf0",
+      "same_current_reviewed_source": true
+    }
+  ],
+  "selected_database_identity": {
+    "adapter_DB_SERVICE": "user-timeline-mongodb",
+    "adapter_DB_CONTAINER": "dsb-user-timeline-mongodb",
+    "declaration_role": "user-timeline",
+    "node": "a",
+    "observed_container": {
+      "id": "0e5957daf23a1028f33085145cc532a48de1dfad9d98cf2bba3626a5377b42e5",
+      "name": "dsb-user-timeline-mongodb",
+      "image": "sha256:6efa052039903e731e4a5550c68a13c4869ddc93742c716332883fd9c77eb79b",
+      "config_image": "mongo:4.4.6@sha256:6efa052039903e731e4a5550c68a13c4869ddc93742c716332883fd9c77eb79b",
+      "compose": {
+        "config_hash": "3d1a5a1e6ad48490f2766666453f365adac7304cb4788feb8e8dbdb5be7a0fef",
+        "container_number": "1",
+        "oneoff": "False",
+        "project": "dsb-ebpf-study",
+        "service": "user-timeline-mongodb"
+      },
+      "state": {
+        "ExitCode": 0,
+        "FinishedAt": "2026-11-01T10:49:31.72938441Z",
+        "Pid": 0,
+        "Running": false,
+        "StartedAt": "2026-11-01T06:32:27.690349422Z",
+        "Status": "exited"
+      }
+    },
+    "different_post_storage_MongoDB": {
+      "id": "66eeec81deceaeb3f5cc320d137fd7a24c0731209606fce2dbf03cfc5cb072b7",
+      "name": "dsb-post-storage-mongodb",
+      "compose": {
+        "config_hash": "2d87797079592b641a716c339eddc0d84ed0ae2c95a8ec92fb9e90293ec799d8",
+        "container_number": "1",
+        "oneoff": "False",
+        "project": "dsb-ebpf-study",
+        "service": "post-storage-mongodb"
+      },
+      "state": {
+        "ExitCode": 0,
+        "FinishedAt": "0001-01-01T00:00:00Z",
+        "Pid": 6897,
+        "Running": true,
+        "StartedAt": "2026-11-01T06:32:27.716811486Z",
+        "Status": "running"
+      }
+    },
+    "not_post_storage_selected": "Actual adapter constants and post-phase Docker sample identify the user-timeline Mongo container as stopped; post-storage Mongo remained running. Do not substitute the other MongoDB write path."
+  },
+  "physical_state_evidence": {
+    "exact_original_member": "runtime-identity-v5/sample-after-db_down-15-a.json",
+    "local_selected_file": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\sample-after-db_down-15-a.json",
+    "selected_CRC_SHA_bytes": {
+      "bytes": 258349,
+      "sha256": "b89246d36ea8ac3327245d02ef26589ec65122accf471dcac1c0f03a34a04de5",
+      "crc32": "03af320b"
+    },
+    "transport_proof": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\DSB-pinned-MongoDB-ack-audit\\DB-phase-selected-transport-proof.json",
+    "transport_proof_sha256": "7eee3253168a7bdcef1b8d0e873465cefc1c913f931622a5fcff79ccf61079a8",
+    "docker_list_and_inspect_returncodes_zero": true,
+    "sample_node_stage_boot": {
+      "node": "a",
+      "stage": "after-db_down-15",
+      "boot_id": "f759a0aa-ef62-4d96-986f-cacfbd6daef9",
+      "clocks": {
+        "ended": {
+          "boottime_ns": 15585228779311,
+          "monotonic_ns": 15585228779121,
+          "realtime_unix_ns": 1793530195662684231
+        },
+        "started": {
+          "boottime_ns": 15584006651818,
+          "monotonic_ns": 15584006651497,
+          "realtime_unix_ns": 1793530194440556217
+        }
+      }
+    },
+    "scope": "One original full6 U-source packet. Container Runningfalse,Status exited,Pid0,FinishedAt10:49:31.72938441Z, original StartedAt06:32:27.690349422Z; selected after-phase sample clock is10:49:54-55Z. Source hooks bind phase and restore ordering; not just a filename label. This is not a new per-request continuous monitor and is not extrapolated to other cases."
+  },
+  "hook_control_restore_binding": "Actual U-source Study.run resets, sets_database(False) via checked synchronous docker stop dsb-user-timeline-mongodb onnodea, then block(db_down,11,reset=False). state_barrier only checks replica TCP accepting state. Block completes all HTTP futures/transports and auxiliary verification before after_workload_block captures this exact after-db_down-15 sample. No reset occurs inside this block; subsequent Study.adapter.reset (starts selected DB) occurs only after block returns. Therefore sample is after the recorded DBdown requests and before the designed restore.",
+  "measured_success_boundary": "experiment_v4.execute defines compose success as response.ok plus exact Successfully-upload-post acknowledgement substring. It does not require a MongoDB durable-write/readback witness. verify adds separate positive/unknown user/home timeline fanout witnesses and does not rewrite the primary HTTP success; bounded page absence stays unknown.",
+  "backend_helper_audit": {
+    "ComposePostHandler": "At361-441 it awaits creator/text/media/uniqueID and then post,userTimeline,homeTimeline futures; first four direct helper RPC catches rethrow, all three upload helper catches rethrow. Futures prove waiting, not business success if a callee returns normally.",
+    "selected_UserTimeline": "WriteUserTimeline90-184 acquires Mongo pool/collection, tries find_and_modify twice, throws declared SE_MONGODB_ERROR if both fail, and updates Redis only after that path succeeds. This source does not make the selected Mongo write fire-and-forget or cache-optional for compose.",
+    "different_PostStorage": "StorePost142-154 checks inserted from mongoc_collection_insert_one and throws SE_MONGODB_ERROR onfalse aftercleanup. It is not merely log-and-return. Its database is the separately running post-storage Mongo, not this selected intervention.",
+    "HomeTimeline": "Direct helper rethrows WriteHomeTimeline RPC errors. Handler awaits GetFollowers, rethrows errors, executes Redis writes/pipelines with propagating errors; this path does not establish a selected user-timeline Mongo success witness."
+  },
+  "decisive_frontend_code_finding": {
+    "IDL": "social_network.thrift138-148 declares ComposePost void with ServiceException se.",
+    "result_parser": "Generated social_network_ComposePostService.lua178-196 reads declared ServiceException into result.se.",
+    "receiver_gap": "recv_ComposePost235-246 raises only TMessageType.EXCEPTION/TApplicationException. For a normal reply carrying declared ServiceException it parses result then returns without inspecting result.se.",
+    "HTTP_mapping": "compose.lua49-73 uses pcall status; when generated client returns normally, it unconditionally sets HTTP200 and success acknowledgement. Therefore this pinned frontend can acknowledge a declared backend error even while backend C++ correctly waits and throws.",
+    "meaning": "The unconditional MongoDB dependency matches intended successful backend completion in pinnedC++, but is too strong as a necessary condition for the measured HTTP acknowledgement through this generated receiver. Do not infer successful writes from acknowledgement or infer async/cache behavior from the seven successes.",
+    "initial_trace_correction": "The initial C++-only future/get trace was incomplete. The final conclusion includes the generated Lua receiver that masks declared errors; waiting by itself did not prove frontend propagation."
+  },
+  "actual_runtime_causality_limits": "Pinned adapter copies gen-lua and frontend Lua/config from6ecb; pinned compose mounts gen-lua at/gen-lua and Lua scripts at the configured script root. The exact per-request reply structs were not read, so this does not prove that all seven actual replies carried ServiceException. The prebuilt C++ microservices image is digest-pinned a845266e...; selected actual compose container matches that image, but a build-source attestation tying its binary to6ecb is not established. Exact loaded Lua module/runtime reply behavior is not independently byte-instrumented here; the code-supported error-masking mechanism is not relabeled a complete observed causal trace.",
+  "backend_actual_image": {
+    "id": "57d2b8acec71ffc415b66caefbf93b4e2e6c44cc55c608b65a43f9ad246ca55f",
+    "name": "dsb-compose-post-service",
+    "image": "sha256:a845266e98ce15d204ee7b98d41a2a95820af525013ce70f14104f5b9b5e92b6",
+    "config_image": "deathstarbench/social-network-microservices:latest@sha256:a845266e98ce15d204ee7b98d41a2a95820af525013ce70f14104f5b9b5e92b6"
+  },
+  "original_criterion_and_fairness": "Full81 observed source/Bering/Sheaft where supported/external outcomes and all original counts/methods/views/trials/kernels remain. Keep original directDB0, recorded7/7ACK successes and all unknown/adverse forecasts unchanged. This audit explains a source-level outcome-boundary mismatch, supplies no new predictive features to any arm, does not retroactively repair contracts/rescore/refit/relabel outcomes, and does not justify rerunning valid negatives.",
+  "public_interpretation_update": "It remains wrong to assert a universal DeepFlow failure, cache/async cause, missing HTTP visibility, or a proven successful Mongo write. Earlier selected-facts-only limitation is narrowed for full6: one additional phase-specific Docker sample now observes the selected DB stopped after DBdown requests and before restore. Other cases retain their prior physical-state limits. Raw/network scope and actual Sheaft availability distinctions remain unchanged.",
+  "observer_costs": {
+    "source_GitHub_GETs_successful": 9,
+    "source_Dockerfile_path_GET_not_found": 1,
+    "exact_original_artifact_index_GETs": 1,
+    "selected_original_metadata_members": 1,
+    "selected_member_bytes": 258349,
+    "range_verified_received_bytes": 6511717,
+    "range_attempted_received_bytes": 6511717,
+    "range_elapsed_seconds": 29.924085300182924,
+    "range_failures": [],
+    "no_entire_archive_or_raw_models_attempt_wire_journals_SQLite_read": true,
+    "original_compile_or_newmodel_computation": false,
+    "human_effort_unknown": true
+  },
+  "new_code_profile_capture_or_source_admission_GO": false,
+  "case_count_or_full81_scientific_success_changed": false,
+  "full81_still_required": true,
+  "POST_cancel_or_Telegram_by_reviewer": false
+}

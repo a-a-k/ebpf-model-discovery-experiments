@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import zipfile
+from types import SimpleNamespace
 
 import pytest
 
@@ -11,6 +12,9 @@ from ebpf_discovery.compact_transport_v5 import (
     extract_verified_compact,
     remove_verified_working_copy,
     verified_nonmaterialized_files,
+    REPORT_DISK_RESERVE_BYTES,
+    ReportDiskSpaceError,
+    require_report_disk_space,
 )
 
 
@@ -114,3 +118,56 @@ def test_reader_rejects_tampered_or_nonjournal_skip_proof(tmp_path: Path) -> Non
         verified_nonmaterialized_files(
             proof, destination / "evaluation-manifest.json", expected
         )
+
+
+def test_extract_capacity_counts_unclaimed_members_and_excludes_streamed_journal(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "compact.zip"
+    _archive(archive)
+    with zipfile.ZipFile(archive, "a") as bundle:
+        bundle.writestr("unclaimed.bin", b"x" * 4096)
+    expected = "sha256:" + hashlib.sha256(archive.read_bytes()).hexdigest()
+    with zipfile.ZipFile(archive) as bundle:
+        materialized = sum(m.file_size for m in bundle.infolist()
+                           if m.filename != "attempt-journal.jsonl")
+    free = REPORT_DISK_RESERVE_BYTES + materialized
+    monkeypatch.setattr("ebpf_discovery.compact_transport_v5.shutil.disk_usage",
+                        lambda _: SimpleNamespace(free=free))
+    proof = extract_verified_compact(archive, tmp_path / "out", expected_digest=expected)
+    assert proof["disk_before_extract"]["incoming_bytes"] == materialized
+    assert (tmp_path / "out/unclaimed.bin").stat().st_size == 4096
+    assert not (tmp_path / "out/attempt-journal.jsonl").exists()
+
+
+def test_extract_low_space_stops_before_opening_any_member(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    archive = tmp_path / "compact.zip"
+    expected, _ = _archive(archive)
+    with zipfile.ZipFile(archive) as bundle:
+        materialized = sum(m.file_size for m in bundle.infolist()
+                           if m.filename != "attempt-journal.jsonl")
+    monkeypatch.setattr("ebpf_discovery.compact_transport_v5.shutil.disk_usage",
+                        lambda _: SimpleNamespace(free=REPORT_DISK_RESERVE_BYTES + materialized - 1))
+    opened = []
+    original = zipfile.ZipFile.open
+    def observe(self, *args, **kwargs):
+        opened.append(args[0])
+        return original(self, *args, **kwargs)
+    monkeypatch.setattr(zipfile.ZipFile, "open", observe)
+    with pytest.raises(ReportDiskSpaceError, match="insufficient report disk space"):
+        extract_verified_compact(archive, tmp_path / "out", expected_digest=expected)
+    assert opened == []
+    assert not list((tmp_path / "out").iterdir())
+    assert archive.exists()
+
+
+def test_download_capacity_boundary_preserves_report_reserve(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr("ebpf_discovery.compact_transport_v5.shutil.disk_usage",
+                        lambda _: SimpleNamespace(free=REPORT_DISK_RESERVE_BYTES + 100))
+    assert require_report_disk_space(tmp_path, 100)["required_bytes"] == REPORT_DISK_RESERVE_BYTES + 100
+    with pytest.raises(ReportDiskSpaceError):
+        require_report_disk_space(tmp_path, 101)

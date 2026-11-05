@@ -502,14 +502,19 @@ class _DeepFlowRequestArchive:
         self.shard = self.shard_pending = self.shard_digest = None
 
     def append(self, body: bytes, entry: dict, transformations: list):
+        refs = ([self.projections.value_reference(value) for value in transformations]
+                if transformations and self.projections is not None else [])
+        self._append_references(body, entry, refs)
+
+    def _append_references(self, body: bytes, entry: dict, refs: list):
+        # Called either with freshly validated projections or references from
+        # the completely verified same-call raw archive below.
         if self.shard is None:
             self._open_shard()
         if self.shard_bytes and self.shard_bytes + len(body) > self.MAX_SHARD_BYTES:
             self._close_shard(); self._open_shard()
         offset = self.shard_bytes
         self.shard.write(body); self.shard_digest.update(body); self.shard_bytes += len(body)
-        refs = ([self.projections.value_reference(value) for value in transformations]
-                if transformations and self.projections is not None else [])
         record = {**entry, 'shard': len(self.shards), 'offset': offset,
                   'length': len(body), 'sha256': hashlib.sha256(body).hexdigest(),
                   'runtime_identity_transformation_refs': refs}
@@ -809,3 +814,95 @@ def export_selection(store, selected: dict[str, set[tuple[str, str]] | None], ou
             source: ("all_frozen_source_records" if ids is None
                      else "exact_selected_source_identities") for source, ids in selected.items()}
     return result
+
+
+def _scope_validated_deepflow_export(manifest_path, expected_sha256, out,
+                                     network_scope, projections):
+    """Compose the existing final scope append with the same-call verified raw export."""
+    from .bering_v4 import _verified_stream_requests
+
+    started = time.time_ns()
+    out, manifest_path = Path(out).resolve(), Path(manifest_path)
+    raw_folder = out.parent.parent / 'raw'
+    if (manifest_path.is_symlink()
+            or manifest_path.resolve() != raw_folder / 'observations.json'
+            or not isinstance(network_scope, str) or not network_scope):
+        raise ValueError('scoped export requires its own prepared raw manifest')
+    original = manifest_path.read_bytes()
+    if hashlib.sha256(original).hexdigest() != expected_sha256:
+        raise ValueError('prepared raw manifest changed')
+    manifest = json.loads(original)
+    streams = manifest.get('stream_exports', [])
+    if (manifest.get('exports') or len(streams) != 1
+            or manifest.get('selection_by_source') != {'ebpf': 'all_frozen_source_records'}
+            or streams[0].get('schema_version') != 'deepflow-request-archive-v5'
+            or streams[0].get('source') != 'ebpf'):
+        raise ValueError('scope composition requires one complete DeepFlow raw stream')
+    descriptor = streams[0]
+    values = descriptor.get('runtime_identity_values') or {}
+    if (not projections or json.dumps(values, sort_keys=True) != json.dumps(
+            projections.value_store_proof, sort_keys=True)):
+        raise ValueError('prepared raw value authority differs from the current resolver')
+    claims = [descriptor['request_index'], *descriptor['shards'], values]
+    if (Path(claims[0]['path']) != raw_folder / 'exports' / 'ebpf-request-index.jsonl'
+            or Path(values['path']) != raw_folder.parent.parent / 'runtime-identity-values.jsonl'
+            or any(Path(p['path']).parent != raw_folder / 'exports'
+                   for p in descriptor['shards'])):
+        raise ValueError('prepared raw files belong to a different export')
+    if any(Path(p['path']).is_symlink() for p in claims):
+        raise ValueError('prepared raw dependency is a symbolic link')
+    out.mkdir(parents=True, exist_ok=True)
+    archive = _DeepFlowRequestArchive(out, 'ebpf', projections)
+    try:
+        for ordinal, (entry, body) in enumerate(_verified_stream_requests(manifest), 1):
+            if (entry.get('request_order') != ordinal
+                    or entry.get('source_representation') != 'derived_otlp_json'
+                    or entry.get('original_agent_wire') is not False
+                    or entry.get('network_scope') is not None
+                    or 'network_scope_provenance' in entry
+                    or entry.get('derived_otlp_proof', {}).get('deterministic_envelope_equal') is not True):
+                raise ValueError('prepared raw request is not a validated unscoped source record')
+            payload = json.loads(body)
+            if (json.dumps(payload, separators=(',', ':')) + '\n').encode() != body:
+                raise ValueError('prepared raw request does not preserve its JSON representation')
+            _add_network_scope_json(payload, network_scope)
+            scoped = (json.dumps(payload, separators=(',', ':')) + '\n').encode()
+            copied = {key: value for key, value in entry.items()
+                      if key not in {'shard', 'offset', 'length', 'sha256',
+                                     'runtime_identity_transformation_refs'}}
+            copied.update(network_scope=network_scope,
+                          network_scope_provenance='explicit experiment inventory enrichment')
+            archive._append_references(scoped, copied,
+                                       entry['runtime_identity_transformation_refs'])
+        result = archive.finish()
+        # The existing reader verifies complete index/shards/value authority and
+        # every request/ref. Rehash after consumption to reject changed sources.
+        for claim in claims:
+            path = Path(claim['path'])
+            with path.open('rb') as stream:
+                actual = hashlib.file_digest(stream, 'sha256').hexdigest()
+            if (path.is_symlink() or path.stat().st_size != claim['bytes']
+                    or actual != claim['sha256']):
+                raise ValueError('prepared raw source changed during scope composition')
+        if manifest_path.read_bytes() != original:
+            raise ValueError('prepared raw manifest changed during scope composition')
+    except BaseException:
+        archive.abort()
+        raise
+    derived = copy.deepcopy(manifest)
+    derived['stream_exports'] = [result]
+    # This receipt is outside the historical request index. Its source cost is
+    # reused once; it never reports a second independent codec traversal.
+    receipt = {'schema_version': 'validated-raw-to-scope-composition-v1',
+               'started_ns': started, 'ended_ns': time.time_ns(),
+               'raw_manifest': str(manifest_path), 'raw_manifest_sha256': expected_sha256,
+               'raw_request_index': descriptor['request_index'],
+               'scoped_request_index': result['request_index'],
+               'requests': result['requests'], 'observations': result['observations'],
+               'source_codec_and_projection_validation': 'reused from the same immutable raw export',
+               'second_source_codec_traversal_executed': False,
+               'prepared_source_verification': 'existing full index/shard/value-store/request/reference reader plus final rehash',
+               'original_source_cost_counted_once': True}
+    (out.parent / 'network-scope-derivation.json').write_text(
+        json.dumps(receipt, indent=2) + '\n', encoding='utf-8')
+    return derived

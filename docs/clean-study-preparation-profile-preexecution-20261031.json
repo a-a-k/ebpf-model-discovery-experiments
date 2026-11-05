@@ -1,0 +1,32 @@
+{
+  "recorded_before_dispatch_utc": "2026-10-31T20:48:40.620028+00:00",
+  "status": "READY one fixed Actions-only preparation profile; no profile POST yet",
+  "original_criterion": "eBPF observations to actual Bering graph and actual Sheaft with independent external application outcomes under absent/incomplete native SDK traces, equal semantic knowledge/all81 cells. No comparative-cost-superiority hypothesis.",
+  "diagnostic_question": "Which unchanged preparation functions account for the measured6473.154799267seconds before Bering? Source inspection alone has not established a cache benefit.",
+  "strongest_baseline": "Actual original successful full7 worker41219370499 and same immutable prefix13047984145, original inputprep cost6473.154799267s. Do not rerun old tools just to produce a baseline.",
+  "causal_source_of_improvement": "Not established. Profiling locates execution work before selecting a repair; memoization has not been implemented. cProfile adds overhead, so its duration is not a speed benchmark.",
+  "source_prefix": {
+    "artifact_id": 13047984145,
+    "bytes": 3356747245,
+    "digest": "sha256:a36d286a30830b93e2958f22da6f6e5ad735ad4f32bfe1dcc6b5a0a2abe1ddac",
+    "run_id": 41164824120,
+    "scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+    "system": "deathstarbench",
+    "mode": "full",
+    "seed": 7
+  },
+  "workflow": "diagnose-dsb-training-checkpoint-v4.yml",
+  "inputs": {
+    "profile_full7_preparation": true,
+    "saved_full7_timing": false
+  },
+  "root_original_GO": "Explicit ORIGINAL feasibility scope and actual-code execution GO for one fixed offline full-prefix prepare_inputs profile; source core unchanged, no application traffic/Procrustes/Bering/Sheaft/scoring. Strong baseline/current data same. No main admission or success claim.",
+  "skeptic_original_GO": "Explicit FINAL ACTUAL-CODE ORIGINAL GO: exact8 identity constants vsactualoldworker, exclusive defaultfalse modes, root+src import environment, fullbefore/after prefix verification, readonlyindex, cProfile onlyprepare_inputs, bounded diagnostic30min +finally pstats/top100/status/stacks; initial failure and partial budget status truthful. Commit/exactCI/preexec thenONE explicitprofile true/savedfalse POST; actualoutputs reviewed separately.",
+  "diagnostic_budget_seconds": 1800,
+  "budget_scope": "One diagnostic-only30minute budget for the first actual function hotspot, below hosted6h; not an experiment response deadline or scientific eligibility gate. Whole original prefix supplied without filtering; interrupted execution is explicitly PARTIAL and does not establish complete-stage attribution or full-prefix equivalence.",
+  "source_rule": "Every src/systems path equals originalA except exact reviewed standalone reporting-only report_v5.py blob f83502ac44c1dcfd7a7314cda99a2a7bd5248e8c; this diagnostic asserts that module is not imported before/after preparation. This diagnostic-only source binding does not admit a new capture cohort. Actual diagnostic commit/CI recorded at dispatch; no GITHUB_SHA override.",
+  "same_inputs_and_costs": "Exact original archived input, before/after full SHA closure and original rowid/table proof; no count/trial/semantic/fault-law changes. Retain original failed/stopped capture/worker/preparation and diagnostic download/restore/profile/verification/CI/archival/closing costs. Human effort unknown.",
+  "local_validation": "YAML/AST and safe direct-script namespace fixture;46 focused checkpoint/remote tests PASS,1 skip. No local research data processing.",
+  "future_timeout_retries": "Require actual bottleneck repair and saved equivalence/observed headroom review; this profile GO does not authorize an unchanged blind repeat.",
+  "superseded_before_ANY_profile_POST": "Initial4hdiagnosticbudget replaced by cheaper30min partialprofile with explicit ORIGINAL skepticGO; no profile had run. Fullprefixequivalence and full runtime effect of future repair still require actualproof."
+}

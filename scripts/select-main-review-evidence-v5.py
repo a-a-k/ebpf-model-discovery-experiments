@@ -24,6 +24,14 @@ except ImportError:  # pragma: no cover - Actions qualification is Linux.
     resource = None
 
 
+RESTORE_DIAGNOSTIC_FIXED = {
+    'restore.json', 'artifact-api.json', 'disk-before-download.json', 'diagnostic-sdk-cleanup.json',
+    'host-disk-before.txt', 'host-disk-after.txt', 'disk-final.txt', 'memory-final.txt',
+    'python-environment.txt', 'disk-before-processing.json',
+    'resource-prepare.json', 'processing-child-result.json', 'processing-resource-samples.jsonl',
+    'kernel-final.txt', 'kernel-final.err',
+}
+
 COMPACT_FIXED = {
     "blocks.json", "census.json", "classes-v4.json", "classes-v5.json",
     "evaluation-manifest.json", "evaluation-v5.json", "evidence-v4.json",
@@ -38,6 +46,27 @@ INPUT_SUPPLEMENT = {
     },
 }
 FULL_FIXED = {
+    "status.json", "evaluation-manifest.json",
+    *{f"infrastructure/postcapture/{name}" for name in
+      ("closed.json", "capture-status.json", "files.jsonl", "artifact-api.json", "processing.json")},
+    "infrastructure/remote-toolchain-v4/closed-discovery-import-hardlinks.json",
+    *{f"infrastructure/postcapture-host/{name}" for name in
+      ("restore.json", "disk-before-download.json", "disk-before-processing.json", "diagnostic-sdk-cleanup.json",
+       "host-disk-before.txt", "host-disk-after.txt", "disk-final.txt", "memory-final.txt",
+       "python-environment.txt", "transport-retries.jsonl", "resource-prepare.json",
+        "processing-child-result.json", "processing-resource-samples.jsonl", "kernel-final.txt", "kernel-final.err")},
+    "infrastructure/postcapture-guest-release.json", "infrastructure/guest-evidence-capture.json",
+    "infrastructure/a/check-copy.err", "infrastructure/b/check-copy.err",
+    "infrastructure/infrastructure.json", "infrastructure/image-provenance.json",
+    "infrastructure/a/check.txt", "infrastructure/b/check.txt",
+    "infrastructure/parent-disk-preparation.json",
+    "infrastructure/parent-disk-before.txt", "infrastructure/parent-disk-after.txt",
+    "infrastructure/guest-a-port-preparation.json", "infrastructure/guest-b-port-preparation.json",
+    "infrastructure/runner-final.txt",
+    *{f"infrastructure/{node}/{name}" for node in ("a", "b") for name in (
+        "serial.log", "serial-stat.txt", "serial-stat.err", "serial-copy.err",
+        "serial-copy.returncode", "serial-copy.status", "serial-test.err", "serial-test.returncode",
+        "guest-kernel-final.txt", "guest-kernel-final.err", "guest-kernel-final.returncode")},
     "forecast-saved.json", "toolchain/forecasts.json", "toolchain/static-inputs.json",
     "toolchain/execution-summary.json", "toolchain-build/toolchain-build.json",
     "toolchain/classes/classes-family-model.json", "toolchain/classes/classes-model.json",
@@ -46,6 +75,7 @@ FULL_FIXED = {
     "runtime-identity-v5/supplied-alias-scope-final.json",
     "observations/collector.json", "observations/technical-positive-control.json",
     "observations/drain-evidence.json", "observations/receiver-closed-a.json",
+    "observations/deepflow-retention-manifest.json",
     "observations/receiver-closed-b.json", "observations/receiver-closed-native.json",
     "infrastructure/training-checkpoint/manifest.json",
     "infrastructure/training-checkpoint/ready.json",
@@ -54,6 +84,9 @@ FULL_FIXED = {
     "infrastructure/remote-toolchain-v4/parent-import.json",
     "infrastructure/remote-toolchain-v4/cost.json",
     "infrastructure/remote-toolchain-v4/training-index-proof.json",
+    "infrastructure/remote-toolchain-v4/upload-hold-preflight.json",
+    "infrastructure/remote-toolchain-v4/parent-proof-schedule.json",
+    "training-checkpoint-cost.json",
     "infrastructure/remote-toolchain-v4/worker/output-manifest.json",
     "infrastructure/remote-toolchain-v4/worker/worker-provenance.json",
     "infrastructure/remote-toolchain-v4/worker/worker-status.json",
@@ -78,6 +111,10 @@ FULL_FIXED = {
 
 
 def wanted_member(name: str, scope: str) -> bool:
+    if scope == 'restore-diagnostics':
+        return name in RESTORE_DIAGNOSTIC_FIXED
+    if scope == 'closed-capture':
+        scope = 'full'
     if scope == "compact":
         return name in COMPACT_FIXED
     if scope == "input-supplement":
@@ -86,18 +123,46 @@ def wanted_member(name: str, scope: str) -> bool:
         raise ValueError(f"unknown evidence scope: {scope}")
     if name in FULL_FIXED or name in INPUT_SUPPLEMENT:
         return True
+    if name.startswith("observations/deepflow-raw/") and name.endswith("/snapshot.json"):
+        return True
+    if name.startswith("observations/final-") and name.endswith(("-stop.txt", "-inspect.txt", "-events.txt")):
+        return True
+    if name.startswith("toolchain/inputs/") and name.endswith("-request-index.jsonl"):
+        return True
     parts = name.split("/")
+    if name.startswith('toolchain/context-baseline/'):
+        if name.endswith('/simulation/report.json'):
+            return True
+        return parts[-1] in {
+            'forecasts.json', 'manifest.json', 'provenance.json', 'union-model.json', 'union-proof.json',
+            'observed.json', 'observed.snapshot.json', 'observed.signal-quality.json',
+            'canonical.json', 'canonical.signal-quality.json', 'supplied-aliases.json',
+            'replay-command.json', 'serve.yaml', 'accepted-request-sequence.jsonl',
+            'accepted-stream-requests.jsonl', 'binding.json', 'forecast.json', 'overlay.json',
+            'model.json', 'model.signal-quality.json', 'analysis.json', 'predicates.json', 'faults.json', 'simulation.command.json',
+            'provided-metadata-attachment.json', 'provided-metadata-validation.command.json'}
     if name.startswith("toolchain/discovery/"):
         return name.endswith(("observed.json", "observed.snapshot.json",
                               "observed.supplied-aliases.json", "observed.bering-raw.json",
-                              "observations.json", "replay-command.json", "bering.log"))
+                              "observed.signal-quality.json",
+                              "observations.json", "replay-command.json", "bering.log",
+                              "accepted-request-sequence.jsonl", "accepted-stream-requests.jsonl",
+                              "shared-observed-reference.json"))
     if name.startswith("toolchain/procrustes/") and "/0/" in name:
         return parts[-1] in ("preflight.command.json", "report.json")
     if (len(parts) == 5 and parts[0] == "toolchain"
             and parts[1] in ("ebpf", "native", "combined")
             and parts[2] in ("raw", "network_scope")):
         return parts[-1] in ("binding.json", "forecast.json",
-                             "simulation.command.json", "model.json")
+                             "analysis.json", "predicates.json", "faults.json",
+                             "simulation.command.json", "model.json", "overlay.json",
+                             "model.signal-quality.json", "provided-metadata-attachment.json",
+                             "provided-metadata-validation.command.json", "observed-reference.json")
+    if (len(parts) == 6 and parts[0] == 'toolchain'
+            and parts[1] in ('ebpf', 'native', 'combined')
+            and parts[2] in ('raw', 'network_scope')
+            and parts[4:] == ['simulation', 'report.json']):
+        return True
     return False
 
 
@@ -227,14 +292,44 @@ def select(metadata: dict, expected: dict, scope: str, out: Path) -> dict:
             names = [row.filename for row in infos]
             if len(names) != len(set(names)) or not all(_safe(name) for name in names):
                 raise ValueError("duplicate or unsafe ZIP member")
-            selected = sorted(name for name in names if wanted_member(name, scope))
+            member_names = {name: name for name in names}
+            if scope == 'closed-capture':
+                member_names = {}
+                scientific_bytes = proof_bytes = scientific_files = 0
+                for info in infos:
+                    if info.is_dir():
+                        continue
+                    if info.filename.startswith('campaign/'):
+                        logical = info.filename[len('campaign/'):]
+                        scientific_bytes += info.file_size
+                        scientific_files += 1
+                    elif info.filename.startswith('postcapture-proof/'):
+                        logical = 'infrastructure/postcapture/'+info.filename[len('postcapture-proof/'):]
+                        proof_bytes += info.file_size
+                    else:
+                        raise ValueError('closed capture has an unrelated ZIP namespace')
+                    if (not _safe(logical) or str(PurePosixPath(logical)) != logical
+                            or logical in member_names):
+                        raise ValueError('duplicate or unsafe closed capture logical member')
+                    member_names[logical] = info.filename
+                proof['closed_capture_namespace'] = {'scientific_file_bytes': scientific_bytes,
+                    'scientific_files': scientific_files, 'proof_bytes': proof_bytes,
+                    'processed_full_snapshot': False}
+            selected = sorted(name for name in member_names if wanted_member(name, scope))
+            if scope == 'closed-capture' and not {
+                    'infrastructure/postcapture/closed.json', 'infrastructure/postcapture/capture-status.json',
+                    'infrastructure/postcapture/files.jsonl'} <= set(selected):
+                raise ValueError('closed capture lacks its sealed inventory or original status')
+            if scope == 'restore-diagnostics' and not {
+                    'restore.json', 'artifact-api.json', 'disk-before-download.json'} <= set(selected):
+                raise ValueError('restore diagnostics lack original restore/API/capacity records')
             if scope == "compact" and not COMPACT_FIXED.issubset(selected):
                 raise ValueError("compact is missing a required selected non-journal member")
             if scope == "input-supplement" and not INPUT_SUPPLEMENT.issubset(selected):
                 raise ValueError("full artifact is missing the exact input supplement")
 
             def fetch(name: str) -> None:
-                info = archive.getinfo(name)
+                info = archive.getinfo(member_names[name])
                 if info.is_dir():
                     raise ValueError(f"selected evidence is a directory: {name}")
                 target = out / PurePosixPath(name)
@@ -252,20 +347,34 @@ def select(metadata: dict, expected: dict, scope: str, out: Path) -> dict:
                     "bytes": size, "sha256": digest.hexdigest(),
                     "zip_crc32": f"{info.CRC:08x}", "zip_compressed_bytes": info.compress_size,
                 }
+                if scope == 'closed-capture':
+                    proof['files'][name]['archive_member_name'] = info.filename
                 save()
 
             for name in selected:
                 fetch(name)
-            if scope == "full":
+            if scope in ("full", "closed-capture"):
                 control_path = out / "observations/technical-positive-control.json"
                 if not control_path.is_file():
                     raise ValueError("full evidence lacks technical-positive-control.json")
                 control = json.loads(control_path.read_text(encoding="utf-8"))
                 for claim in (control.get("proofs") or {}).values():
-                    name = "observations/" + claim["raw_ref"]
+                    deepflow = control.get("collector") == "deepflow"
+                    if deepflow:
+                        name = "observations/" + claim["raw_file"].split("/observations/", 1)[1]
+                    else:
+                        name = "observations/" + claim["raw_ref"]
+                    if not _safe(name):
+                        raise ValueError("unsafe raw selected-agent control reference")
                     if name not in proof["files"]:
                         fetch(name)
-                    if proof["files"][name]["sha256"] != claim["raw_sha256"]:
+                    if deepflow:
+                        with (out / name).open("rb") as source:
+                            source.seek(claim["raw_offset"])
+                            body = source.read(claim["raw_length"])
+                        if len(body) != claim["raw_length"] or hashlib.sha256(body).hexdigest() != claim["raw_sha256"]:
+                            raise ValueError("raw selected-agent control slice differs")
+                    elif proof["files"][name]["sha256"] != claim["raw_sha256"]:
                         raise ValueError("raw selected-agent control hash differs")
     except BaseException as exc:
         failure = {"phase": "selected_member_transport",
@@ -305,7 +414,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--artifact", type=int, required=True)
     parser.add_argument("--expected", type=Path, required=True)
-    parser.add_argument("--scope", choices=("compact", "full", "input-supplement"), required=True)
+    parser.add_argument("--scope", choices=("compact", "full", "input-supplement", "closed-capture", "restore-diagnostics"), required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--repository", default="a-a-k/ebpf-model-discovery-experiments")
     args = parser.parse_args()

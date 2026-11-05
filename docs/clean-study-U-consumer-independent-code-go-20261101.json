@@ -1,0 +1,58 @@
+{
+  "recorded_utc": "2026-11-01T06:14:40.467379+00:00",
+  "original_named_U_consumer_actual_code_GO": true,
+  "actual_consumer_commit_or_CI_available": false,
+  "fresh_capture_execution_GO": false,
+  "actual_scientific_source": "8fa2a454db58af487451c9aead6477adc0ca0485",
+  "reviewed_actual_consumer_files": {
+    "src/ebpf_discovery/report_v5.py": {
+      "git_blob": "aadfffc53186a9566a17ba98a6f0f7b8e6089f6b",
+      "worktree_sha256": "9e2e44bfc94324f195538fec7f881c695900a464bde137d39ca097f33b00e2e9"
+    },
+    ".github/workflows/report-v5.yml": {
+      "git_blob": "5d6e61ab2977c610248facf0435f6797e07561be",
+      "worktree_sha256": "6de9ad15f59207edce98b6dab434f16cfe70b0f52762a64f3026a15355d7c590"
+    },
+    "scripts/review-main-saved-facts-v5.py": {
+      "git_blob": "a1b795e20b99fa454643e604b3e83a102bb39a98",
+      "worktree_sha256": "124de24f24ef4d2f1dc08ae521e5e9ecfbe6769514f2444697e08f0c78e2a27d"
+    },
+    ".github/workflows/review-pending-main-evidence-v5.yml": {
+      "git_blob": "0df924283f67e8674771dd548a070ac9a9efa689",
+      "worktree_sha256": "57afe37ebaf9a2a0243ed1c1ceb257c5f4212badf5ea8a66635843e32157c3a7"
+    },
+    "tests/test_report_v5.py": {
+      "git_blob": "f41e9bbd39f78e0fe63a3076809da3a334f846bf",
+      "worktree_sha256": "63edb78260cbb0a807087f38a6791a44ea675157c7634f0e6bba2736cc85da2c"
+    },
+    "tests/test_main_review_saved_facts_v5.py": {
+      "git_blob": "9eb816587ed6060998561c926373f25cc3733f9f",
+      "worktree_sha256": "8554143f8807741f36d7bcab66fc4bd0dde79ea4238886c5879b5db137e84b80"
+    }
+  },
+  "independent_full_actual_Git_source_profile": {
+    "Aentries": 2129,
+    "Uentries": 2135,
+    "approved_changed_paths": 16,
+    "added_paths": 6,
+    "identical_remaining": 2119,
+    "A_tree": "d58179a55650ab8907b13a05c67c976fc63a9037",
+    "T_tree": "cbdf25b1277ec47e573d95f716e7cc366af49860",
+    "U_tree": "8061d8e546e1505982d7afda6196346186a7b155",
+    "actual_current_checker_on_real_trees_passed": true
+  },
+  "source_evidence_separation": "U exact8fa/helper eeb is separatelyidentified actualcopiedcheckpoint release qualifier41278513379/artifact13072487567/f732 andbothactualGO. ParentT655/647/18 proof remains attributed7df/06d7; U does notclaimthat655rerun or sixhourcure. N/M/S/Tprovenance sourceidentities remainliteral.",
+  "checks_unchanged": "4existingstrictreaderHEADsets andfreshworkflowliteral addonly8fa. Default34800/9600/100000, controllerstudy/non-smoke/full81/plannedgrid, sourcepins, guestproof, pretargetfreeze, model/analysis/report/commands, fourmethods/sharedoutcomes andexactly1eligiblecomplete selection untouched. ReportGitbootstrapreusesfullsamechecker with16exactUblobs/modes/additions/allotherAentries. No broadfutureheadadmission.",
+  "independently_run_tests": {
+    "command": "PYTHONPATH=src python -m pytest -q tests/test_report_v5.py tests/test_main_review_saved_facts_v5.py",
+    "passed": 201,
+    "skipped": 1,
+    "elapsed_seconds": 19.42,
+    "coverage": "TandU fulltree extra-science/changedcore/coremode/missingaddition/truncated; actualU sourcegroup selection/duplicate-complete refusal/controller-smoke/final81 andnewfreshworkflowliteral tests. Windowssymlinkskip in existingreporttransportfixture, already passedLinux producer/debeCI elsewhere."
+  },
+  "local_observer_note": "Initial separateGitcheckcommand omittedPYTHONPATHsrc and failedimport before anycode/datawork; rerunwithcorrectsrc usedsamepreservedlocalGitobjects/noHTTP. Not experimentfailure.",
+  "bound_cleanup_actual_output_GO_sha256": "33d942706ff43c64f95b3621c4e4471bdb75dd769d022a4f30fb45a129af8055",
+  "original_criterion": "Same81/all10ops eBPF/Bering/Sheaft/externaloutcome feasibility, equalprovidedsemantics/information/directpredicate/cheapcontextbaseline andallcost/negative/unknown retention; no new contribution orcost-superiorityclaim.",
+  "scientific_success_or_81_complete_claimed": false,
+  "still_required": "Commitexactconsumerblobs+actualCI, exactUimmutabletag/sourcechecks and case-specific actualtechnicalfailure/incompletepacket/capacity/preexecutionGOs before anyUcapture. HealthyT5/othercasescontinue unchanged; noparentcancel."
+}

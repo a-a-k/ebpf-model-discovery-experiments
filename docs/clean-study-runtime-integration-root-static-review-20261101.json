@@ -1,0 +1,77 @@
+{
+  "recorded_utc": "2026-11-01T17:54:25.523270+00:00",
+  "root_static_exact_qualified_runtime_integration_checks_pass": true,
+  "source": "f7ba801d70f9d2327031efc6dd0c00b90d252708",
+  "consumer_base": "5e3baddf15c1d62c0d4df60ae286650ba68328c0",
+  "exact_S_blobs": {
+    ".github/workflows/series-v5.yml": "5546ce9214eead4e07dae0e8ed50828153f6e6e4",
+    "docs/IMMUTABLE_PATH_PREPARATION_V5.md": "04d2c2ce314b4547723746019cf962a7837452d1",
+    "docs/UPLOADED_CHECKPOINT_COPY_RELEASE_V5.md": "83f08a45f9bd5866eb126315db7b0cc8c2489dc3",
+    "scripts/check-fixed-deepflow-final-links-v5.py": "5560fc0ac9212a5e87e8fda752f83f98ad128f02",
+    "scripts/check-fixed-dsb-path-preparation-v5.py": "c0422ee45523be1954cc38422bb64d35083e8b18",
+    "scripts/check-fixed-early-checkpoint-release-v5.py": "4a2eea6d8d99027ed082f48527bc66a004b1fc01",
+    "scripts/check-fixed-guest-prefix-release-v5.py": "5444be2c8232a51e7461cc8109f69c30ab9f2aa7",
+    "scripts/check-fixed-runtime-proof-jsonl-v5.py": "7b6e494de4b78b144790f281573e22d0b4c1f1d0",
+    "scripts/check-fixed-uploaded-checkpoint-copy-release-v5.py": "102825a665b8dad9f63b014181beeaa95484c208",
+    "src/ebpf_discovery/checkpoint_v4.py": "50d7db510f5ee75c3485133b046df223b77baa74",
+    "src/ebpf_discovery/deepflow_snapshot_v5.py": "bc645c0b924f093740de819f51c33470e145afe6",
+    "src/ebpf_discovery/deepflow_v5.py": "b8bf9e39c0969da18a39e39522e0b3293db24526",
+    "src/ebpf_discovery/raw_v4.py": "8d964d7dc969a922f9ab1701f371eed5ea190321",
+    "src/ebpf_discovery/remote_toolchain_v4.py": "612948d7f7926357d1b77404d5191230ac1e8865",
+    "src/ebpf_discovery/store_v5.py": "6569299a8a0a31f2ded3781433045ba303ae097a",
+    "src/ebpf_discovery/toolchain_v4.py": "b8b4c635952b5d0e72d436951df2463b38f28105",
+    "tests/test_checkpoint_v4.py": "1f934e29aaa88cc42f57f20c87623cfb402e143a",
+    "tests/test_deepflow_snapshot_v5.py": "d205c350ecde2035f2d4afcfd488bd48ffb17318",
+    "tests/test_deepflow_v5.py": "8963e26c652e0def46d32306bcd87447bbbf8ecc",
+    "tests/test_fixed_path_preparation_comparison_v5.py": "cad466c8affd8f72d1611c93d6784fcb9585b079",
+    "tests/test_identity_projection_v5.py": "40227ccf66fe6e118e7dd74f87f97ddbfb037c66",
+    "tests/test_remote_toolchain_v4.py": "513ff85dc91f8915ed61f2fde348fcbc16387c10",
+    "tests/test_uploaded_checkpoint_copy_release.py": "cde25145c6ad39ecc7136d909fbac45156812348"
+  },
+  "count": 23,
+  "production_core_blobs": [
+    "src/ebpf_discovery/checkpoint_v4.py",
+    "src/ebpf_discovery/deepflow_snapshot_v5.py",
+    "src/ebpf_discovery/deepflow_v5.py",
+    "src/ebpf_discovery/raw_v4.py",
+    "src/ebpf_discovery/remote_toolchain_v4.py",
+    "src/ebpf_discovery/store_v5.py",
+    "src/ebpf_discovery/toolchain_v4.py"
+  ],
+  "unchanged_consumer_blobs": {
+    "src/ebpf_discovery/report_v5.py": "836f0ccd5dfcfcd5a362d16606c34e1e222692aa",
+    "scripts/review-main-saved-facts-v5.py": "9a095331c40e5c7768beabd7728e354e7646d1e0",
+    "scripts/select-main-review-evidence-v5.py": "4c0bb8d9d4abe422838d46f89ae49e6635aba53c",
+    ".github/workflows/review-pending-main-evidence-v5.yml": "905960e3ad147e3b6d2c085fedf654a073165f40",
+    ".github/workflows/report-v5.yml": "9c87c3feb05dc5f56db6b9e9ce8ca2719ab4cda4"
+  },
+  "all_system_adapters_unchanged": true,
+  "files_deleted": false,
+  "workflow_resolution": "All9 existing parsed job bodies equal their original source excluding explicitly approved cross-family if guards; all7 original input definitions equal. Checked by fixed merge resolver.",
+  "focused_unit_tests": {
+    "passed": 449,
+    "skipped": 4,
+    "elapsed_seconds": 28.85,
+    "scope": "Focused checkpoint,collector,remote,identity,report,reader unit fixtures; no real application or authoritative results processing locally"
+  },
+  "actual_Linux_CI": {
+    "source": "aecbc8ce85082ebe5122ff8879555f1d15e47d78",
+    "runs": [
+      {
+        "id": 41333867788,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 41333873213,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "both_push_and_PR_costs_retained": true
+  },
+  "original_final_study_GO": false,
+  "scientific_capture_admission_for_merge_head": false,
+  "independent_actual_code_and_CI_review": "clean-study-runtime-integration-independent-actual-review-20261101.json",
+  "independent_actual_review_original_bytes_sha256": "4aa08c07985a5329e6e3bd80e4b056948e7b77a814186f29613a275e64af0362"
+}

@@ -23,10 +23,40 @@ At the actual campaign source `c5df32ffc3039136c184b7915337836c39db811f`, the v5
 adapter resolves operations to the uncapped v4 implementation, which rejects a
 supplied operation deadline and calls the transport with `timeout=None`. The
 transport waits for the response body. The legacy capped adapter method is not
-the method used by this campaign. The source of the observed latency concentration
-within the application/proxy stack remains unresolved. Completed evaluated
-failures are not automatically all HTTP-negative responses: payload and
-postcondition checks can also reject an HTTP 200 response.
+the method used by this campaign. Completed evaluated failures are not
+automatically all HTTP-negative responses: payload and postcondition checks can
+also reject an HTTP 200 response.
+
+The two Envoy proxies have different configurations. The selected deployed
+product-catalog router explicitly sets its route timeout to `0s`. The external
+entry instead publishes port 18080 to the application's `frontend-proxy:8080`.
+Its captured image, `ghcr.io/open-telemetry/demo:3.0.0-frontend-proxy`, resolves to
+OCI index `sha256:1c53bfb596970a014682925f804c686762c0c593949ce58a90ac38563f317841`.
+The actual partial-mode service has no configuration mount, command override or
+entrypoint override. The image runs `envsubst` on its embedded template and then
+starts Envoy. The exact embedded catch-all route selects `frontend` and omits
+`timeout`; its connection-manager timeout fields are also absent.
+
+Envoy documents a 15-second default for the
+[route timeout](https://www.envoyproxy.io/docs/envoy/v1.39.1/faq/configuration/timeouts).
+The deployed frontend configuration therefore exposes a native proxy timer that
+is consistent with the approximately 15-second concentration. The catalog
+router's `0s` setting does not disable this separate timer. This configuration
+evidence does not attribute every failed checkout to that timer, establish an
+individual timeout response, or identify the cause of the upstream delays.
+Per-attempt response correlation and any collector contribution remain unproved.
+
+Both reviewers checked the [selected configuration and immutable image evidence](../results/iteration-5/otel-frontend-proxy-41004296165/root-configuration-review.json).
+The image proof uses 9,749 bytes of public registry JSON and the single
+2,445-byte static-template COPY layer; a separate base-image metadata comparison
+used another 6,620 bytes of JSON. No complete image, base or binary layer was pulled.
+The selected template has SHA-256
+`e39bb0479ad16086db393df37bded2f4aa72ff4ad98fc75b2d320f58c26908c0`.
+It differs from the later pinned upstream checkout's template, so that checkout
+alone cannot establish the prebuilt image's configuration or exact Envoy binary
+version. The actual template and complete index/manifest/config chain are
+retained with the review. This is a diagnosis of existing historical evidence;
+the fresh matched matrix and its outcome rules are unchanged.
 
 This runtime diagnosis is separate from graph coverage. A graph without the
 required entry/dependency evidence does not yield a supported forecast in this

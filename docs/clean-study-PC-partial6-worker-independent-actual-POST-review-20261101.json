@@ -1,0 +1,96 @@
+{
+  "recorded_utc": "2026-11-01T21:01:55.903061+00:00",
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "original_W_PC_partial6_actual_one_POST_source_scope_cost_GO": true,
+  "run_id": 41349757716,
+  "producer_source": "0565115511b24db1d6bbe71e98784baded772144",
+  "consumer_source": "9b877c06544659f9a6d0d7380ca0694cc7912471",
+  "scope": {
+    "collector": "deepflow",
+    "system": "petclinic",
+    "mode": "partial",
+    "seed": 6
+  },
+  "original_exact_execution_GO_SHA256": "5a49877bd83ec5eea6d9b7e3b4275b23fe10664b987fd0110a9c51b18127d0df",
+  "plan_SHA256": "990cc5038aa504f0c07e1743c10a2342af48abad27271b8a81b8147ff7a2b19d",
+  "outer_receipt": {
+    "path": "work\\W-PC-partial6-worker-replacement-dispatch-20261101.json",
+    "sha256": "40d8cccef8123fcc1f1e5425b730f1a37d77ca9394ee5b6cba9f3cb41e50d530"
+  },
+  "one_case_receipt": {
+    "path": "work\\W-PC-partial6-worker-repeat-partial-6-20261101.dispatch.json",
+    "sha256": "2d0a01c39814b3c65f01e6421420f58f022876506365c655a2599488be5cd636"
+  },
+  "actual_POST_response": {
+    "path": "work\\W-PC-partial6-worker-repeat-partial-6-20261101.dispatch.response.json",
+    "sha256": "d3c1d25fbb98ca24e00f805819c3770b75bfcf59ca81bab5bece7797e0543e5e",
+    "workflow_run_id": 41349757716
+  },
+  "independent_actual_API": {
+    "run_path": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\W-PCpartial6-41349757716-run-independent.json",
+    "jobs_path": "work\\skeptic-main-v5-observer\\deepflow-final-links-b074853-review\\W-PCpartial6-41349757716-jobs-independent.json",
+    "run": {
+      "id": 41349757716,
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "event": "workflow_dispatch",
+      "path": ".github/workflows/series-v5.yml",
+      "run_attempt": 1,
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-11-01T21:00:49Z"
+    },
+    "exact_campaign_job": {
+      "id": 124977218013,
+      "run_id": 41349757716,
+      "name": "campaign (petclinic, partial, 6)",
+      "head_sha": "0565115511b24db1d6bbe71e98784baded772144",
+      "run_attempt": 1,
+      "status": "in_progress",
+      "conclusion": null
+    }
+  },
+  "fresh_perPOST_owner_age_seconds": 94.758462,
+  "all_unbound_actual_workers_still_separately_counted": true,
+  "capacity": {
+    "owner": "work\\owner-actions-capacity-20261101T205913Z.json",
+    "captures": 14,
+    "future_existing_workers": 14,
+    "workers": 4,
+    "archives": 0,
+    "new_capture_plus_worker_slots": 2,
+    "reader_reserved": 2,
+    "conservative_total_slots": 36
+  },
+  "append_and_protection_checks": {
+    "one_declaration_attempt": true,
+    "one_planned_identity": true,
+    "one_technical_replacement": true,
+    "one_monitor_identity": true,
+    "all81planned_retained": true,
+    "oldS_failed_parent_and_originalA_attempts_retained": true,
+    "all_otherS9_WPC7_WPC8_planned_IDs_preserved": [
+      41329450264,
+      41329454436,
+      41329458921,
+      41329463221,
+      41329467500,
+      41331875002,
+      41331878803,
+      41336793680,
+      41336799720,
+      41342083079,
+      41348999127
+    ],
+    "oldAfull6_full7_full8_IDs_preserved": true,
+    "newcase_not_in_complete_candidates": true
+  },
+  "original_scope_and_cost_boundary": "Only alreadyterminal S-PCpartial6 acquired again under the qualified same-program W worker placement. Same34800primary/9600targets/10ops/full81/4methods/2views/100000trials/SDKmodes/seeds/two independentguestkernels; actualclosedprefix/workerimport/freeze/outcomes stillrequired. All earlier sources/prefixes/failures/parent+workerwaits/preparation/CI/qual/hash/transfer/storage/reader/archive and newactualcosts retained; humanunknown. No physicalSIGTERM/OOM/disk/cure inference and no APIwalltimeCPU/billing claim.",
+  "no_completed_negative_or_adverse_replay": true,
+  "no_healthy_cancellation_or_queue_change": true,
+  "scientific_case_or_full81_success_GO": false,
+  "reviewer_actions": {
+    "only_two_small_API_GETs_and_local_metadata": true,
+    "POST_cancel_retry_Telegram": false,
+    "runtime_or_scientific_processing": false
+  }
+}

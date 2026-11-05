@@ -47,7 +47,7 @@ def workload_counts(operation_count, smoke):
 
 class Study:
     def __init__(self, system, mode, seed, out, *, collector, smoke=False,
-                 training_checkpoint=None, toolchain_execution="local"):
+                 training_checkpoint=None, toolchain_execution="local", defer_postcapture=False):
         if system not in SYSTEMS or mode not in MODES or seed not in (6, 7, 8):
             raise ValueError("cell is outside the fixed study")
         if collector not in COLLECTORS:
@@ -58,6 +58,8 @@ class Study:
             raise ValueError("toolchain_execution must be local or worker")
         if toolchain_execution == "worker" and training_checkpoint is None:
             raise ValueError("worker execution requires a closed training checkpoint")
+        if defer_postcapture and (system != "otel_demo" or collector != "deepflow" or smoke):
+            raise ValueError("postcapture handoff is restricted to the matched DeepFlow OTel main cells")
 
         self.ctx = Context(out, mode, seed)
         self.ctx.observation_policy = "uncapped-v5"
@@ -81,6 +83,9 @@ class Study:
         self.training_checkpoint = Path(training_checkpoint) if training_checkpoint else None
         self.training_release = None
         self.toolchain_execution = toolchain_execution
+        self._application_close_attempted = False
+        self.defer_postcapture = defer_postcapture
+        self.finalization_deferred = False
 
     def run(self):
         counts = workload_counts(len(self.declaration.CONTRACTS), self.smoke)
@@ -109,7 +114,16 @@ class Study:
             if self.training_checkpoint is not None:
                 from .checkpoint_v4 import checkpoint_and_wait
                 self.require_completed_transports()
-                self.training_release = checkpoint_and_wait(self, self.training_checkpoint)
+                callback = None
+                if (self.toolchain_execution == 'worker' and self.collector == 'deepflow'
+                        and self.system == 'otel_demo' and self.ctx.mode == 'absent'
+                        and self.ctx.seed in (6, 8) and not self.smoke):
+                    from .remote_toolchain_v4 import prepare_parent_checkpoint
+                    plans = [p for p in self.plans if p['phase'] in ('class_train', 'calibration')]
+                    callback = lambda ready: prepare_parent_checkpoint(
+                        self, self.training_checkpoint, ready, plans)
+                self.training_release = checkpoint_and_wait(
+                    self, self.training_checkpoint, ready_callback=callback)
             self.freeze()
             states = ["11"] * 4 + ["10"] * 2 + ["01", "00"]
             self.rng.shuffle(states)
@@ -135,6 +149,9 @@ class Study:
                 self.verify_async_until_terminal(recovered, "async-recovered-persistence")
             self.collectors.final_drain()
             self.snapshot("final")
+            if getattr(self, "finalization_deferred", False):
+                status["status"] = "postcapture_complete"
+                return
             evaluate_classes(self.store, self.plans, self.records, self.declaration,
                              self.ctx.out / "toolchain" / "classes" / "classes-family-model.json", self.ctx.out)
             evaluate_evidence(self.ctx, self.system, self.store, self.plans, self.records)
@@ -149,7 +166,7 @@ class Study:
             raise
         finally:
             cleanup_errors = []
-            for name, action in [("collectors", self.collectors.close), ("application", self.adapter.close),
+            for name, action in [("collectors", self.collectors.close), ("application", self.close_application),
                                  ("index", self.store.close)]:
                 try:
                     action()
@@ -277,9 +294,24 @@ class Study:
 
         self.collectors.snapshot()
         self.adapter.collect_native(self.ctx.out / "native" / stage)
+        if stage == "final" and self.collector == "deepflow" and self.system == "otel_demo":
+            from .guest_release_v5 import release
+
+            self.collectors.close()
+            self.close_application()
+            release(self.ctx)
+            if getattr(self, "defer_postcapture", False):
+                self.require_completed_transports()
+                self.finalization_deferred = True
+                return
         write_json(self.ctx.out / f"index-{stage}.json",
                    self.store.ingest(self.collectors.root, self.ctx.out / "native"))
         refresh(self, stage)
+
+    def close_application(self):
+        if not self._application_close_attempted:
+            self._application_close_attempted = True
+            self.adapter.close()
 
     def before_workload_block(self, block_id, phase, state):
         from .runtime_identity_v5 import capture
@@ -358,10 +390,12 @@ def main():
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--training-checkpoint", type=Path)
     parser.add_argument("--toolchain-execution", choices=("local", "worker"), default="local")
+    parser.add_argument("--defer-postcapture", action="store_true")
     args = parser.parse_args()
     Study(args.system, args.mode, args.seed, args.out, collector=args.collector,
           smoke=args.smoke, training_checkpoint=args.training_checkpoint,
-          toolchain_execution=args.toolchain_execution).run()
+          toolchain_execution=args.toolchain_execution,
+          defer_postcapture=args.defer_postcapture).run()
 
 
 if __name__ == "__main__":

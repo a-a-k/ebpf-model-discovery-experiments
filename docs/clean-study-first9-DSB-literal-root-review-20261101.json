@@ -1,0 +1,80 @@
+{
+  "checked_utc": "2026-11-01T00:31:01.543442+00:00",
+  "root_original_representative_literal_chain_GO": true,
+  "members_CRC_SHA_old_worker_manifest_and_prefreeze_rechecked": 91,
+  "positive_chains": [
+    {
+      "artifact_id": 13063205357,
+      "source": "combined",
+      "view": "raw",
+      "operation": "read_home_timeline",
+      "model_sha256": "1b9402a5dde2310be9390458e3f1c380114855f2ef826e4863e8864776f98184",
+      "report_sha256": "1c1e113dfffbd57b800cb056d76e0348f9b404f278f02ead2fa2d4f1d3a02a16",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062719789,
+      "source": "native",
+      "view": "raw",
+      "operation": "compose_post",
+      "model_sha256": "6477a9d11fdf662ea2d885a458be357955fdc5d55efacaed67307c96066b0110",
+      "report_sha256": "0cfdefaa0a5cac11a653218ee8896460f81e684dcf0b69e00ccbb55d03e21378",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062719789,
+      "source": "native",
+      "view": "raw",
+      "operation": "read_user_timeline",
+      "model_sha256": "ecffe39e59ec6b328f33960b43fb3853cc085918637ee6392bb055b44caaac54",
+      "report_sha256": "dbe09a99d566ad4578562df3a25c03152c9488ed183bfd30983d7f28beff5e04",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062719789,
+      "source": "native",
+      "view": "raw",
+      "operation": "read_home_timeline",
+      "model_sha256": "f88662b511c311bb4869cc44e91ce5972b37deaed952084a49a438f44a17b22d",
+      "report_sha256": "6e4800c261cfeee7869ec1d6537772439ca6597816774b583dbd81a2de4200af",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062837480,
+      "source": "combined",
+      "view": "network_scope",
+      "operation": "compose_post",
+      "model_sha256": "e997241557dac8fca98da24464680d7ccc098677386764c6ca3acb4150674d56",
+      "report_sha256": "25142d69cee968335d80165a6b8e97b14edb0b27cee2abe78ec489c3519777dd",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062837480,
+      "source": "combined",
+      "view": "network_scope",
+      "operation": "read_user_timeline",
+      "model_sha256": "b9bb43db0e98ca4c1cb19241e5d7f0b63c6b0f96898c4a76f9ee7debb05334db",
+      "report_sha256": "3fc2317ee0e5abe34e45d618405bda0125385b88e7ca931df0e1c41f50aacd81",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    },
+    {
+      "artifact_id": 13062837480,
+      "source": "combined",
+      "view": "network_scope",
+      "operation": "read_home_timeline",
+      "model_sha256": "e3be550d279d6b005ccaddf544469730302cd33f046bee77bf755aec9eb3cf5c",
+      "report_sha256": "d0c72df7a364acf78f2d208d36160b07ec08f2e5d4f0591b06a0bfff1d4a1ad5",
+      "exact_full_model_reconstructed_with_only_supplied_metadata": true,
+      "all_saved_operation_endpoint_state_values_match": true
+    }
+  ],
+  "replay_refit_simulation_rescore": false,
+  "limits": "Seven explicit positive literal chains and18observed graphs supplement qualified Actions full checks and both first9 metadata reviews. No large binding/raw journal/wire read; no full81 admission or utility claim.",
+  "original_criterion": "Actual eBPF to Bering to Sheaft to independent outcomes for missing/partial SDK traces, same full81/10operations and direct baseline; no cost superiority."
+}

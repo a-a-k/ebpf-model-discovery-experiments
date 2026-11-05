@@ -201,9 +201,36 @@ if bad is not None:
     publish_verified_working_copy "$archive_dir/$run_id-job-$job_id.log"
   done
 
-  while IFS=$'\t' read -r artifact_id artifact_name artifact_digest; do
+  while IFS=$'\t' read -r artifact_id artifact_name artifact_digest artifact_bytes; do
     [[ "$artifact_id" =~ ^[0-9]+$ && "$artifact_name" =~ ^[a-zA-Z0-9._-]+$ ]] || exit 2
     destination="$archive_dir/$run_id-artifact-$artifact_id-$artifact_name.zip"
+    python3 - "$archive_dir" "$run_id" "$artifact_id" "$artifact_bytes" "$max_asset_bytes" "$chunk_bytes" <<'PY'
+import datetime
+import json
+from pathlib import Path
+import shutil
+import sys
+root, run_id, artifact_id = Path(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+size, maximum, chunk_bytes = map(int, sys.argv[4:])
+if size < 0:
+    raise SystemExit('Negative API artifact size')
+free = shutil.disk_usage(root).free
+reserve = 64 * 1024 * 1024  # Filesystem rounding and small provenance/log files.
+working_copies = 2 if size >= maximum else 1
+required = working_copies * size + reserve
+enough = free >= required
+(root / f'{run_id}-artifact-{artifact_id}-disk-before.json').write_text(json.dumps({
+    'observed_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    'run_id': run_id, 'artifact_id': artifact_id, 'api_size_bytes': size,
+    'available_bytes_before_download': free, 'max_asset_bytes': maximum,
+    'chunk_bytes': chunk_bytes, 'simultaneous_working_copies': working_copies,
+    'filesystem_metadata_reserve_bytes': reserve, 'required_bytes': required,
+    'action': 'download' if enough else 'stop_before_download',
+    'scope': 'Archival headroom at this instant; later free space can change.',
+}, indent=2) + '\n')
+if not enough:
+    raise SystemExit('Insufficient archival disk headroom before artifact download')
+PY
     gh_api_to_file "$destination" "repos/${GITHUB_REPOSITORY}/actions/artifacts/$artifact_id/zip"
     if [[ "$artifact_digest" != null && -n "$artifact_digest" ]]; then
       [[ "$artifact_digest" =~ ^sha256:[a-fA-F0-9]{64}$ ]] || {
@@ -217,7 +244,7 @@ if bad is not None:
     fi
     maybe_chunk_asset "$destination" artifact "$artifact_digest"
     publish_verified_working_copy "$destination"
-  done < <(jq -r '.artifacts[] | [.id, .name, (.digest // "null")] | @tsv' \
+  done < <(jq -r '.artifacts[] | [.id, .name, (.digest // "null"), .size_in_bytes] | @tsv' \
     "$archive_dir/$run_id-artifact-index.json")
 done
 
@@ -233,7 +260,7 @@ done
   done
   provenance=(./*-artifact-index.json ./*-run.json ./*-jobs-pages.json
               ./*-check-run.json ./*-annotations.json ./*-logs-status.json
-              ./*.chunks.json
+              ./*.chunks.json ./*-disk-before.json
               ./published-* ./release-*.json
               SHA256SUMS.txt)
   tar -czf provenance.tar.gz "${provenance[@]}"

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-05T10:57:19.412362+00:00",
+  "old247_compact_API_identity_tuples_exactly_unchanged": true,
+  "old247_basis": "246 compacts in old117 API snapshot plus alreadyretained actualabsent6 packet13328831922, matchingearlier247header-budget input.",
+  "old246_inventory": "work\\current117-final-report-technical-artifact-inventory-20261104.json",
+  "old246_inventory_sha256": "0657d0c4c17a81dc946290b17809f5e064c3565c77dec423efb71d5961ac5247",
+  "supplemental_actual6_API": "work\\absent6-new-only-reader-dispatch-20261104.json",
+  "supplemental_actual6_API_sha256": "f7a621fab51ebf7ed7a00848de779897b1a59de813fe455aa05af5924b2940c0",
+  "new2_only": [
+    13404526182,
+    13405832633
+  ],
+  "tuple_keys": [
+    "name",
+    "bytes",
+    "digest",
+    "run_id",
+    "head_sha",
+    "expired"
+  ],
+  "new_inventory": "work\\current119-final-report-technical-artifact-inventory-20261105.json",
+  "new_inventory_sha256": "9f25afba80a6fbf19a77aae7c626de6782ad4c0e0a81668912e2a993f8fbb75f",
+  "technical_selection": "work\\current81-final-technical-selection-DRAFT-20261105.json",
+  "technical_selection_sha256": "0d19592c5f4f1d74b70ce47b5b78cb0bbb34d4ee6b4d9bfee5aa48fea2619158",
+  "old79_canonical_selected_pairs_exactly_unchanged": true,
+  "selected81_all119_attempt_candidates_included": true,
+  "selection_uses_only_API_and_fixed_canonical_metadata": true,
+  "no_outcome_forecast_accuracy_availability_selection": true,
+  "no_scientific_or_originalZIP_bodies": true,
+  "old247_zero_recovery_and_bytebudget_proofs_reused": "work/report-existing247-header-only-disk-byte-bound-20261104.json +work/independent-existing247-recovery-zero-and-disk-bound-supplement-20261104.json",
+  "new2_actualCD_manifest_scope": "work/report-final-two-compact-header-deltas-20261105",
+  "new249_disk_bound": "work/report-all249-current119-header-only-disk-byte-bound-20261105.json",
+  "new249_disk_bound_sha256": "77f62184e375effb2e52e7408e7945aa2706652ed1dfe4ce15999917196d7adb",
+  "not_scientific81_or_report_POST_GO": true
+}

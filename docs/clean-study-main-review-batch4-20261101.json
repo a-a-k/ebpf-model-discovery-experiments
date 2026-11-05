@@ -1,0 +1,1007 @@
+{
+  "schema_version": "main-review-candidates-v5",
+  "purpose": "Fourth saved review batch: only technically completed DeepFlow DeathStarBench partial7 and full6. No first58 replay, traffic, refit, rescore or accuracy-based selection; scientific interpretation pending.",
+  "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "planned_cells": [
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41173230022,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41189048917,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41164821492,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41227089066,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41239167446,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41227096018,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41226695588,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41226698796,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41226702306,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41226705392,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41226708635,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41226692036,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41226712664,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41226716530,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "obi",
+      "run_id": 41232316943,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "obi",
+      "run_id": 41233220186,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "obi",
+      "run_id": 41233223018,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41281970201,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41282001013,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41284552140,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41280950428,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41283135027,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41284561833,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41273870033,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41281990704,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41282528449,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41299248544,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41305885228,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41305889879,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41275223991,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "06d7d52bfa4b7768a4cabf02f4e66f109b3a9492"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41299253111,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "6eaa441c40253a18f18af76e4e599496927c1739"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "deepflow",
+      "run_id": 41164824120,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "otel_demo",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "absent",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "partial",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 6,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 7,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    },
+    {
+      "system": "petclinic",
+      "mode": "full",
+      "seed": 8,
+      "collector": "coroot",
+      "run_id": 41164826834,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    }
+  ],
+  "qualification_keys": [
+    [
+      "deepflow",
+      "deathstarbench",
+      "absent",
+      6
+    ],
+    [
+      "coroot",
+      "otel_demo",
+      "full",
+      6
+    ],
+    [
+      "obi",
+      "petclinic",
+      "partial",
+      6
+    ]
+  ],
+  "qualification_selection": "Fixed before main result review; covers streamed/typed DSB input, Coroot alias/PB OTel input and OBI Petclinic local toolchain. Availability and accuracy are not selection criteria.",
+  "pending_artifact_cells": 23,
+  "cells": [
+    {
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "collector": "deepflow",
+      "run_id": 41282001013,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "full_artifact_id": 13082224454,
+      "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-partial-7-41282001013",
+      "full_artifact_bytes": 9164225611,
+      "full_artifact_digest": "sha256:21ad74e3e8a4ce5259e123e4251811fbd1901a3f5e92c46c8c2c98350b24724d",
+      "compact_artifact_id": 13082022381,
+      "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-partial-7-41282001013",
+      "compact_artifact_bytes": 2603012037,
+      "compact_artifact_digest": "sha256:4ae36bf30e77350f46a5a5da562ba3ce69c4966e5253d4ed6689504ab817847b"
+    },
+    {
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "collector": "deepflow",
+      "run_id": 41280950428,
+      "stage": "main",
+      "runner": "study",
+      "head_sha": "8fa2a454db58af487451c9aead6477adc0ca0485",
+      "compact_scope": "retrieve_selected_nonjournal",
+      "full_scope": "retrieve_family_selected",
+      "full_artifact_id": 13082563196,
+      "full_artifact_name": "campaign-v5-deepflow-main-deathstarbench-full-6-41280950428",
+      "full_artifact_bytes": 9574264895,
+      "full_artifact_digest": "sha256:14ed64dbccb799bb7c815e66b7b1153395255245e9bea2460b75bef9e24229eb",
+      "compact_artifact_id": 13082500813,
+      "compact_artifact_name": "v5-summary-deepflow-main-deathstarbench-full-6-41280950428",
+      "compact_artifact_bytes": 2602621501,
+      "compact_artifact_digest": "sha256:51a7d2ea7ca612d21fe05d67d64cf0ca17101543ab635b0c2ab89eff015c23dd"
+    }
+  ],
+  "superseded_planned_source": {
+    "head_sha": "bf49d464816aa71b7c820a02778117d3e6a0ba9d",
+    "plan_git_commit": "29eddf44d1a784a0df955ee96d14ec319fbb9820",
+    "run_ids": [
+      41099986985,
+      41099992213,
+      41099997831
+    ],
+    "reason": "Entire source version technically replaced for demonstrated native baseline route-binding regression."
+  },
+  "status": "Direct paginated API 2026-11-01T11:14:04.078370+00:00: 58 technically successful planned MAIN jobs with exact full/compact pairs. Fixed81 cells, predeclared technical replacements and actual reviewed A/N/M/S/T/U source identities retained. Technical packet completion and independent saved-facts review are separate; this inventory does not grant scientific admission. Failed or missing-full packets do not count as completed captures.",
+  "source_qualification": "docs/clean-study-declarations-20261030.json",
+  "technical_replacements": [
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "seed": 6,
+      "original_run_id": 41164821492,
+      "original_worker_id": 41171880804,
+      "original_compact_artifact_id": 13031955460,
+      "replacement_run_id": 41173230022,
+      "same_scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "technical_disk_exhaustion_during_checkpoint_extraction_beforeforecastandtargets",
+      "pre_execution_record": "work/worker-disk-technical-repeat-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true
+    },
+    {
+      "collector": "obi",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 7,
+      "original_run_id": 41164821492,
+      "original_job_id": 124430026324,
+      "original_compact_artifact_id": 13037762162,
+      "original_full_artifact_id": 13038151640,
+      "original_retention_artifact_id": 13037737273,
+      "replacement_run_id": 41189048917,
+      "same_scientific_source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "technical_docker_host_port37020_already_in_use_duringdeployment_beforeworkload_toolchain_or_targets",
+      "pre_execution_record": "work/dsb-full7-port-bind-technical-repeat-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true,
+      "no_port_or_source_change": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430030952,
+      "replacement_run_id": 41209663599,
+      "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "parent_Actions_runner_ENOSPC_while_continuing_before_final_retention",
+      "pre_execution_record": "docs/clean-study-parent-preparation-preexecution-20261031.json",
+      "original_final_campaign_packet_recovered": false,
+      "original_costs_and_available_prefix_worker_evidence_retained": true,
+      "replacement_technical_outcome": "Failed deployment with guest Docker port37020 alreadyinuse; owner diagnosis required, no fresh repeat authorized."
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 7,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430030942,
+      "replacement_run_id": 41209827036,
+      "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "parent_Actions_runner_ENOSPC_while_continuing_before_final_retention",
+      "pre_execution_record": "docs/clean-study-parent-partial7-preexecution-20261031.json",
+      "original_final_campaign_packet_recovered": false,
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 8,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430030947,
+      "replacement_run_id": 41209667348,
+      "actual_capture_commit": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "parent_Actions_runner_ENOSPC_while_continuing_before_final_retention",
+      "pre_execution_record": "docs/clean-study-parent-preparation-preexecution-20261031.json",
+      "original_final_campaign_packet_recovered": false,
+      "original_costs_and_available_prefix_worker_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "seed": 6,
+      "original_run_id": 41209663599,
+      "original_job_id": 124561828717,
+      "original_compact_artifact_id": 13045643140,
+      "original_full_artifact_id": 13045713018,
+      "replacement_run_id": 41211541665,
+      "actual_capture_commit": "13c017bf72a86a6853f93a5b8f503de199bf7865",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "recurring_Docker_published_port37020_bind_failure_before_training; preventive_guest_reservation_with_exact_same_ports_configs_science",
+      "pre_execution_record": "docs/clean-study-guest-port-preexecution-20261031.json",
+      "original_costs_and_failed_evidence_retained": true
+    },
+    {
+      "collector": "deepflow",
+      "system": "deathstarbench",
+      "mode": "full",
+      "seed": 6,
+      "original_run_id": 41164824120,
+      "original_job_id": 124430030929,
+      "original_compact_artifact_id": null,
+      "original_full_artifact_id": null,
+      "retained_original_training_artifact_id": 13048740971,
+      "retained_successful_worker_run_id": 41217056185,
+      "replacement_run_id": 41233204064,
+      "actual_capture_commit": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+      "qualified_scientific_anchor": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+      "reason": "actual_original_parent_ENOSPC19:01:04_before6h/no_finalfullcompact; qualifiedsame-scienceS addsreviewedparentdiskpreparation",
+      "pre_execution_record": "docs/clean-study-parent-full6-preexecution-20261031.json",
+      "original_costs_and_available_failed_evidence_retained": true,
+      "final_parent_data_not_recovered": true
+    }
+  ]
+}

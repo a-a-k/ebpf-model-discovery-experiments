@@ -226,3 +226,125 @@ the existing source-aware reader; parent-field counts do not establish ancestry.
 Conflicting resource identity remains ambiguous. This audit can locate losses
 in saved observations, but cannot prove that interception is impossible when a
 collector emitted no record. It is diagnostic evidence, not a main measurement.
+
+## Full matched main execution decision
+
+Before dispatch, the main agent and independent skeptic both give explicit
+ORIGINAL-feasibility GO for all 81 main cells at immutable study-20261030,
+commit bf49d464816aa71b7c820a02778117d3e6a0ba9d. All 27 original clean-controller
+smoke settings passed. The additional nine final-controller regressions passed;
+the three DeepFlow paths were then repeated for the corrected parser/codec.
+All costs and intermediate unknown/adverse results remain retained.
+
+The reviewer independently checked compact hashes, pre-target forecast hashes,
+integrity, completeness, acquisition, raw-origin positive controls and cleanup,
+actual completed Bering replays and zero toolchain failures for all nine final
+integration paths. The actual enabled parsers were checked on both guests in
+every corrected DeepFlow case. OBI/Coroot carry forward from fcef724 because
+the bf49d46 capture change affects DeepFlow only.
+
+Hypothesis remains feasibility with absent/incomplete native tracing. Native,
+eBPF, combined and the equally informed direct contract/inventory calculation
+retain the same supplied semantics, workload, fault states, rates and resources.
+No cost superiority or positive result is presumed. The same final source and
+product pins apply to every collector; all systems/modes/seeds and ten operations
+remain mandatory. This GO authorizes execution, not a success declaration.
+
+## Fresh saved-evidence review compatibility
+
+Before editing the existing selector/reviewer, both agents give explicit
+ORIGINAL-feasibility GO for format compatibility with the fixed bf49d464 main
+series. The contribution is independently inspectable evidence for the original
+feasibility question. The baseline is direct inspection of the same preserved
+files, with the same supplied semantics. No new inference, replay, fitting,
+scoring or scientific admission is introduced. Historical source pins remain
+unchanged; only the exact fresh source selects Bering 1.3.1.
+
+DeepFlow requires exact located JSON control records and standalone file closure
+facts, rather than nonexistent OTLP eBPF receiver closures. Its indexed requests
+must match the saved accepted sequence in original source-group order; storage
+shards are not HTTP batches. Selected metadata hashes do not claim that unselected
+wire payloads were rehashed. Actions transport/verification and failed attempts
+are retained as additional costs; human preparation remains unmeasured.
+
+## Route-binding technical stop and common replacement
+
+The main agent launched bf49 before resolving the native baseline's unknowns.
+Saved Petclinic partial/seed6 evidence then demonstrated a regression: each
+owners/vets entry has seven exact SERVER roots and resolved required channels,
+but v5 had lost v4's binding of a concrete URL to a framework route in that same
+observation. Both agents gave ORIGINAL-feasibility GO to restore only this rule
+and replace all 81 primary cells at one common source, with all costs retained.
+Normal cancellation was requested at 2026-10-30 19:05 UTC for all three parent
+runs. Their immutable source and every available packet remain; this is a
+technical version replacement independent of accuracy.
+
+PR6 restores the existing same-root alias baseline through v5 observation
+digests, preserving roots without genuine ancestry. Graphs, IDs, contracts,
+roles, workload and outcomes are unchanged. CI41113741926/41113823393 passed.
+Actual audit41114279637 passed on a8f7eaca after an original HTTP503 retrieval
+failure in41113996544. The reviewer independently verified all three compact
+ZIPs, original artifact identities, 106/106/104 frozen-file maps and all24 paired
+binding comparisons. These variants are repeated views of the same requests.
+Raw same-root attributes support owners/vets/visits aliases; details binding is
+unchanged. Missing visits channels and original forecasts remain. No simulation,
+rescoring or post-target forecast replacement was performed.
+
+Explicit actual-output GO covers merge and repeat qualification27. Merge
+a43404ec02c77e9414878632ec6248835cf7a260 has the same tree as reviewed a8f7eaca;
+mergeCI41114694256 and tagCI41114755102 passed. Immutable study-20261030-v2 uses
+the same Bering66, Sheaft686a and collector pins. Fixed nine system/mode settings
+per collector were dispatched in41115050998 (OBI),41115056375 (DeepFlow) and
+41115062402 (Coroot), all with runner=study and seed6.
+
+Before a new main GO, every distinct primary unknown must have a concrete
+contract-to-observation-to-graph-to-binding explanation across all ten operations
+and source arms. Technical pass alone does not excuse an adapter regression.
+Availability and accuracy remain observations, not admission thresholds. The
+original absent/incomplete-tracing feasibility criterion and full81 scope remain.
+
+## Saved operation metadata review, before the next common capture head
+
+Both the main agent and independent skeptic give ORIGINAL-feasibility design GO
+to extending the existing saved reader with exact metadata derivation checks.
+The criterion remains graph discovery and simulation with absent/incomplete
+tracing; the strongest simple baseline is the actual observed graph with the
+same supplied operation, replica and placement knowledge. The mechanism fixes
+application of known metadata after logical naming; it supplies no graph edges
+or independent evidence of scientific success. Preparation, failed attempts,
+Actions builds and evidence processing remain in costs; human time is unknown.
+
+The reader independently reconstructs the restricted metadata operation from the
+frozen observed model and literal overlay, compares the complete final JSON,
+checks six exact locator/hash/freeze links, preserves the first publication's
+provenance, and checks unchanged signal-quality bytes and the actual successful
+pinned Bering validation command. It performs no replay, fit or scoring. Genuine
+unknown branches do not require a successful attachment. Historical profiles
+retain their existing boundaries. The new check is mandatory for immutable
+capture head `f60cbfe5e19ca88b40e196d8e793ef0e2aac5d5c`, together with its tool
+pins, guest proofs and exact workflow declaration. Actual code and output review
+remain required before the complete main evidence review.
+
+The first saved metadata comparison, audit41142624898, correctly failed all
+eight pairs because the prototype materialized empty service metadata that Go's
+final output normalization omits. Both original failure diagnostics validated
+and simulated, but that alone did not pass equivalence. Both agents checked
+pinned model.go:361–370/412–420 and gave GO to allocating metadata only when
+writing actual metadata fields. The reader follows this output rule; no new
+comparison exception or general normalization is admitted.
+
+PR8 merged as f60cbfe, tree-identical to reviewed45f4aab; common-head checks
+41143473196/41143478078 and merge check41143629291 passed. Both agents actually
+reviewed audit41143119808: all eight original Go model pairs match, apart from
+the two individually proven publication fields, and both original failure copies
+validate and simulate without changing observed edges or IDs. The original
+pre-target failures remain failures. Immutable study-20261030-v4 qualification
+runs41143808524/41143812257/41143815710 cover all27 system/mode settings. Main81
+remains held for their actual review and the saved OTel catalog ancestry audit.
+
+Cost declarations now use the report's existing role vocabulary, preserving each
+original descriptive role and all run IDs. Earlier free-form role values were
+invalid for the existing report parser. No report schema is extended. Additional
+CI, workers, diagnostics and the failed HTTP504 archive attempt41142560426 are
+included; a new archive attempt41143725458 retains the original sources and the
+failed archive's proof. A partial draft release is not a complete archive.

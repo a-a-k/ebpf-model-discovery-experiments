@@ -1,0 +1,2408 @@
+{
+  "checked_utc": "2026-11-01T00:23:15.546655+00:00",
+  "run": 41254802097,
+  "artifact_count": 9,
+  "cases": [
+    {
+      "artifact": 13063205357,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 6,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 4,
+        "native:True": 2,
+        "combined:False": 4,
+        "combined:True": 2
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "b4d389ce28b963ad8439b4cf1334233714441e5f8ec158696aef20fb6b5040f7"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "6fdb09e17c18cd7ecaa88600976b379ad303da86af9d565b050d639facc2acb3"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "1c1e113dfffbd57b800cb056d76e0348f9b404f278f02ead2fa2d4f1d3a02a16"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "74a1e612aa111c76ccdd95cd8bedda6aa7f83664bd5b3ae8d0fdc6bc181a93d9"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 612836
+    },
+    {
+      "artifact": 13063081324,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 8,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 4,
+        "native:True": 2,
+        "combined:False": 4,
+        "combined:True": 2
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "13021025439bc4b13963c196fbd09aec861cc2d3009bebddfae5a01087177c04"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "24c8ed531ec569718a80925beb2e72f9baf52b42fd458f3245af254d4e8566e4"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "d165f80457b6921efc46f39167f8580eb00776ba1218f613651143240a824240"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "46ad3b667a541299fece7439b26966c3b7f8131432d252bf0806c56303fc029b"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 555386
+    },
+    {
+      "artifact": 13063000849,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 8,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:True": 6,
+        "combined:True": 6
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "becd54556b22f175dda31706597643d484160fa917ef572116eb3ae897911832"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "92b236dd7c12cebfb3d934ff437950ed9d9842b1684b5bd30253ca9e6eb5e6b0"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "88bbf5bb463853830f3c32819125788fc3ca2b352b352fd961a5458cae114b01"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "d7fc161700981ba41668bd66e33f2b32d4e23388fe137f2a6f27485966195e1a"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "82faf492463fcd3cc4f4c2ebf24f4167882b2f2a89ccbd23b1f2d7e48249b36c"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "0265d940ff233055486b8eb3ffa26d8f2641ab2ab9abe83f48c065436c3691de"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "6442a1595b6a2d69e9158dd5df27befe853ab2c293be6891e69fd7c5455ae0e1"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "893c6aec856c5388b311356437e334f37c171d3bfe4f7652a7cc352877b7514b"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "a4875bb4ef21db7dc61c4a46319b83132cb4221bdde71e4fe498fe7fd4e6cfd0"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "eb5683ce34bc0b2257ee0f7864e226e9c28c792b49ce40bf3b86d321e64e32b1"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "096c3cc4867b7e2ee9a465033131727999ed22710b8cb190d35a056c5d5d4a4d"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "4275124d9d5822690f6bccee8791a508ec1f643119e346b0e980144e87ba56d6"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 560482
+    },
+    {
+      "artifact": 13062837480,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 7,
+        "run_id": 41189048917,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:True": 6,
+        "combined:True": 6
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "adf64a57abb4b5358ef0a550b506b7ffd13c2381bb8d378568185d831fd0ac95"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "230c169f490603bb9586e4a89e6839ae7fcc95218e73d8312f34b5f4fcf25280"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "ffa6a98f1a3882a959c39b16c231b0d809e5d9739c05634e6a4897169fac62a4"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "f45626c372db2fd71837519f6534623b665c4892794e1591fc67c8b10267b786"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "d6e80f658aff00988407441299053537edee26cf435a4fdf4ffb7de2d1f0504f"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "a37aedcd543b56f7cf009e5ba20239342f3018b8c616c7f5adf5c3f05a11af4c"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "d208bbae951913959c0c19e57d066c37819a8ed596a6ec4396bd79b77d75e135"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "791e34928d4fc0705c2e61030ba07c1d42614ef1a08c2de30c88432f18a433c1"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "15eecd9d20421564a7f72da348048ee1609baf4c6c8cb24797bbb3923f8bdf2c"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "25142d69cee968335d80165a6b8e97b14edb0b27cee2abe78ec489c3519777dd"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "d0c72df7a364acf78f2d208d36160b07ec08f2e5d4f0591b06a0bfff1d4a1ad5"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "3fc2317ee0e5abe34e45d618405bda0125385b88e7ca931df0e1c41f50aacd81"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 534100
+    },
+    {
+      "artifact": 13062719789,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 6,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:True": 6,
+        "combined:True": 6
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "0cfdefaa0a5cac11a653218ee8896460f81e684dcf0b69e00ccbb55d03e21378"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "6e4800c261cfeee7869ec1d6537772439ca6597816774b583dbd81a2de4200af"
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "dbe09a99d566ad4578562df3a25c03152c9488ed183bfd30983d7f28beff5e04"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "a2f868a73150b62f042e26033e4fdebaedc7cdc3a96058acecbb318fad89b953"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "a301f83a769c652b6495d4744dd9115465538af94aab3001fdc3689f5bd309f9"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "cfce3480bf75b37516270ecc906f5b718de5622539b331781a4e7ca30b24bcca"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "dac6976f198a2b68acb20496e425bcd4d6507592c0e1883c4641a6d68de492a5"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "52f3faa24037ddb69d5fb7ad3f1eb59e3dff0af38a1c5ba6ba48dc6b970f3e31"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "3e7e179a8b6291436ee8b0aa4eb228e116ba90aca115bccff8bba61515a5c9ec"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "prediction": 0.875,
+          "report_sha256": "3801a8ab38d771ad5d3196cf08267f6fb4045874e0277c5918e9dd301d022ba6"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "763073173a84de99e1249e25d249ccc7b4bdbb9ab9e67848b7c23d14af787dc3"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "prediction": 0.875,
+          "report_sha256": "5bf74bb9afe90fdf59af9669ba54e951f42ad0b80f6bcc2277d5791155a1421c"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 566333
+    },
+    {
+      "artifact": 13062469492,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 7,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 6,
+        "combined:False": 6
+      },
+      "available_chains": [],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        },
+        "raw": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 435399
+    },
+    {
+      "artifact": 13062384498,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 8,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 6,
+        "combined:False": 6
+      },
+      "available_chains": [],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        },
+        "raw": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 297608
+    },
+    {
+      "artifact": 13062284906,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "absent",
+        "seed": 6,
+        "run_id": 41173230022,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 6,
+        "combined:False": 6
+      },
+      "available_chains": [],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "no_frozen_source_observations"
+          ],
+          "binding_present": false
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        },
+        "raw": {
+          "status": "reuse_single_source_equivalence",
+          "added_edge_ids": null
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 444527
+    },
+    {
+      "artifact": 13061959641,
+      "case": {
+        "collector": "obi",
+        "system": "deathstarbench",
+        "mode": "partial",
+        "seed": 7,
+        "run_id": 41164821492,
+        "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+      },
+      "all_six_metadata_CRC_SHA_rechecked": true,
+      "candidate_descriptor_bound_to_actual_GitLF_and_fixed_cell": true,
+      "primary_counts": {
+        "ebpf:False": 6,
+        "native:False": 4,
+        "native:True": 2,
+        "combined:False": 4,
+        "combined:True": 2
+      },
+      "available_chains": [
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "fb53cac53681bf87bfbfac0bd142e8f3be4b688d9ae459df589ee700d1a0d275"
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "b5170ee5ca93d1fe67e5877073eb0d8a694c8fcb2412a8e1dc2cb1224fd7c9eb"
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "446949719fad8f0bd2ab1cb048fa5d7b870d813684be75b35e0676543de3b629"
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "prediction": 1.0,
+          "report_sha256": "4ad9a3a8d0f1ec99db5b092cbbca3f06100649f2fb39852e7d1fc3978a83c869"
+        }
+      ],
+      "unknown_causes": [
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_home_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "ebpf",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "native",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "controlled_service_missing_or_ambiguous"
+          ],
+          "candidate_entries": null,
+          "all_supported_vectors_agree": null
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "raw",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "compose_post",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_caller_not_uniquely_reachable",
+            "required_caller_not_uniquely_reachable",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        },
+        {
+          "source": "combined",
+          "variant": "network_scope",
+          "operation": "read_user_timeline",
+          "reasons": [
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "required_call_missing_or_ambiguous",
+            "proven_entry_representations_unsupported_or_disagree"
+          ],
+          "candidate_entries": [
+            {
+              "entry": "nginx-thrift",
+              "available": false,
+              "vector": null
+            },
+            {
+              "entry": "nginx-web-server",
+              "available": false,
+              "vector": null
+            }
+          ],
+          "all_supported_vectors_agree": true
+        }
+      ],
+      "context": {
+        "network_scope": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        },
+        "raw": {
+          "status": "reuse_unchanged_union",
+          "added_edge_ids": []
+        }
+      },
+      "external_outcomes_shared_exact_all_four_methods": true,
+      "pretarget_pins_guest_facts_checked": true,
+      "range_received_bytes": 535766
+    }
+  ],
+  "primary_available": 48,
+  "primary_unknown": 114,
+  "verdict": "ORIGINAL saved-derived-metadata review passed for these9 cases; no all81 admission or scientific success. Actual original literal graph/model/body checks remain Actions-delegated and representative source inspection follows.",
+  "interpretation": "DSB absent: all primary unknown; partial: only SDK/combined read_home_timeline supported, compose/read_user both candidate entry representations unsupported (not disagreeing known vectors); full: SDK/combined3 operations supported. eBPF all9 settings unsupported required Thrift call paths. Context adds0 SERVER edges and exactly reuses combined across all9; no improvement claim.",
+  "limits": "Pipeline unknown does not prove eBPF/OBI fundamentally unusable. Missing DB channels remain conditional fixed-fulfilled requirements; absent/partial semantics and co-running collector limit retained.",
+  "costs": "All observed prep/failure/reader/repeated-fixed3/transfer/replay/archive cost retained; APIinterval not CPU/billed, humanunknown.",
+  "local_transport": "Only6 named pure metadata JSON per artifact, explicit caprecord beforebody, no originalZIP/trace/rawjournal/plans/SQLite/typedpayload or local rescoring."
+}

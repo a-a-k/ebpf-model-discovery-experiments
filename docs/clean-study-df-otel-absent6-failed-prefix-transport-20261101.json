@@ -1,0 +1,59 @@
+{
+  "observed_utc": "2026-10-31T22:24:56.764180+00:00",
+  "artifact": {
+    "id": 13059244626,
+    "node_id": "MDg6QXJ0aWZhY3QxMzA1OTI0NDYyNg==",
+    "name": "training-v4-otel_demo-absent-6-41164824120",
+    "size_in_bytes": 2924583612,
+    "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13059244626",
+    "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13059244626/zip",
+    "expired": false,
+    "digest": "sha256:9efffb9fc76f46508e12a520a4b3b79fc515955e645d6ae78f4c3fd897c78de8",
+    "created_at": "2026-10-31T22:07:10Z",
+    "updated_at": "2026-10-31T22:07:10Z",
+    "expires_at": "2027-01-29T03:32:40Z",
+    "workflow_run": {
+      "id": 41164824120,
+      "repository_id": 1434356471,
+      "head_repository_id": 1434356471,
+      "head_branch": "study-20261031-v5",
+      "head_sha": "0c98bf4520e863ab021b60d00517ee2aa49ab38e"
+    }
+  },
+  "whole_archive_downloaded_or_rehashed": false,
+  "selected": {
+    "ready.json": {
+      "bytes": 370,
+      "sha256": "249f4d93d6302d86e2c091624fb9c4a1b84ff75613371e3def234e900547d2da",
+      "crc32": "188be222"
+    },
+    "status.json": {
+      "bytes": 505,
+      "sha256": "fb68b05ec8a9c1355ff5e0edda3281cda816a582604a2dfa9d5b91b238b82348",
+      "crc32": "d9e28d2f"
+    },
+    "observations/collector.json": {
+      "bytes": 7854,
+      "sha256": "0248c07c4233c82dacaa8725cc9324b2be2ff36999f552663ac9fb553e54d50d",
+      "crc32": "f85f1aea"
+    },
+    "blocks.json": {
+      "bytes": 7906,
+      "sha256": "27740a775373f8f41cffebf052ab19fac1479a571de020781a8850be0e661d18",
+      "crc32": "b328aedc"
+    }
+  },
+  "skipped_large": {
+    "manifest.json": {
+      "bytes": 972730330,
+      "body_read": false
+    }
+  },
+  "no_plans_census_wire_journals_or_SQLite_read": true,
+  "central_directory_member_count": 86530,
+  "toolchain_forecast_or_handoff_entries": [],
+  "verified_received_bytes": 12631116,
+  "attempted_received_bytes": 12631116,
+  "range_failures": [],
+  "elapsed_seconds": 49.57678409991786
+}

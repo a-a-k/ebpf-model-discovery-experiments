@@ -1,0 +1,2354 @@
+{
+  "checked_utc": "2026-11-01T02:33:02.087201+00:00",
+  "original_actual_batch2_saved_packet_review_GO": true,
+  "run": 41263818898,
+  "artifact": 13066774184,
+  "case": {
+    "system": "otel_demo",
+    "mode": "partial",
+    "seed": 8,
+    "collector": "obi",
+    "run_id": 41239167446,
+    "stage": "main",
+    "runner": "study",
+    "head_sha": "1d646f907d0241f25445fcfb4d07d4e0ba89d88b",
+    "compact_scope": "retrieve_selected_nonjournal",
+    "full_scope": "retrieve_family_selected",
+    "compact_artifact_id": 13062912116,
+    "compact_artifact_name": "v5-summary-obi-main-otel_demo-partial-8-41239167446",
+    "compact_artifact_bytes": 51058271,
+    "compact_artifact_digest": "sha256:595959de2fbb30acc5e725c87f0cd693de4fa52734f3dab46fc7ef8e20ecd5fe",
+    "full_artifact_id": 13063560730,
+    "full_artifact_name": "campaign-v5-obi-main-otel_demo-partial-8-41239167446",
+    "full_artifact_bytes": 3648655232,
+    "full_artifact_digest": "sha256:90fbfbf47874d2ec437bfe3f90718010038e55f45a8343ead84c62912f3fd9ee"
+  },
+  "all_six_metadata_CRC_SHA_Git_fixed_cell_API_pins_counts_guest_and_prefreeze_checked": true,
+  "facts_sha256": "89d7397165ec4b78388f059fd224de966246baad01699844d0ece463c45f6101",
+  "primary_available": 0,
+  "primary_unknown": 18,
+  "paired_available": 6,
+  "unknown_obligations_copied": [
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.add_item",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/AddItem",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.add_item",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "AddItem"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "cart"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "cart"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "ebpf",
+      "variant": "raw",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.add_item",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/AddItem",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.add_item",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "AddItem"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "cart"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "cart"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.checkout.place_order",
+            "callee": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CheckoutService/PlaceOrder",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "checkout",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart during PlaceOrder"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "cart"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.currency.convert_item",
+            "callee": [
+              "currency",
+              "currency-service",
+              "oteldemo.CurrencyService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CurrencyService/Convert",
+            "protocol": "grpc",
+            "purpose": "item price"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "currency",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.shipping.quote",
+            "callee": [
+              "shipping",
+              "shipping-service"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "POST /get-quote",
+            "protocol": "http"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.currency.convert_shipping",
+            "callee": [
+              "currency",
+              "currency-service",
+              "oteldemo.CurrencyService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CurrencyService/Convert",
+            "protocol": "grpc",
+            "purpose": "shipping price"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "currency",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.payment.charge",
+            "callee": [
+              "payment",
+              "payment-service",
+              "oteldemo.PaymentService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "PaymentService/Charge",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "payment",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.shipping.ship",
+            "callee": [
+              "shipping",
+              "shipping-service"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "POST /ship-order",
+            "protocol": "http"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.add_item",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/AddItem",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.add_item",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "AddItem"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "ebpf",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.add_item",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/AddItem",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.add_item",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "AddItem"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "add.frontend.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "add.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.checkout.place_order",
+            "callee": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "CheckoutService/PlaceOrder",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "checkout",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.cart.get_cart",
+            "callee": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CartService/GetCart",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "cart",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.cart.redis.get_cart",
+            "caller": [
+              "cart",
+              "cart-service",
+              "oteldemo.CartService"
+            ],
+            "db_role": "cart",
+            "db_system": "redis",
+            "operation_hint": "GetCart during PlaceOrder"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.currency.convert_item",
+            "callee": [
+              "currency",
+              "currency-service",
+              "oteldemo.CurrencyService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CurrencyService/Convert",
+            "protocol": "grpc",
+            "purpose": "item price"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "currency",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.shipping.quote",
+            "callee": [
+              "shipping",
+              "shipping-service"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "POST /get-quote",
+            "protocol": "http"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.currency.convert_shipping",
+            "callee": [
+              "currency",
+              "currency-service",
+              "oteldemo.CurrencyService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "CurrencyService/Convert",
+            "protocol": "grpc",
+            "purpose": "shipping price"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "currency",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.payment.charge",
+            "callee": [
+              "payment",
+              "payment-service",
+              "oteldemo.PaymentService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "PaymentService/Charge",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "payment",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.shipping.ship",
+            "callee": [
+              "shipping",
+              "shipping-service"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "POST /ship-order",
+            "protocol": "http"
+          },
+          "reason": "required_caller_not_uniquely_reachable"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "raw",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "native",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": null
+        },
+        {
+          "reason": "controlled_service_missing_or_ambiguous"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "raw",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "browse_product",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "add_to_cart",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    },
+    {
+      "source": "combined",
+      "variant": "network_scope",
+      "operation": "checkout",
+      "unknown": [
+        {
+          "obligation": {
+            "call_id": "browse.frontend.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "browse.catalog.postgresql.get_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.checkout.catalog.get_product",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "checkout",
+              "checkout-service",
+              "oteldemo.CheckoutService"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "checkout"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.price_product",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.frontend.catalog.enrich_response",
+            "callee": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "caller": [
+              "frontend",
+              "frontend-service"
+            ],
+            "operation_hint": "ProductCatalogService/GetProduct",
+            "protocol": "grpc"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": "product-catalog",
+          "resolved_caller": "frontend"
+        },
+        {
+          "obligation": {
+            "call_id": "checkout.catalog.postgresql.enrich_response",
+            "caller": [
+              "product-catalog",
+              "product_catalog",
+              "oteldemo.ProductCatalogService"
+            ],
+            "db_role": "catalog",
+            "db_system": "postgresql",
+            "operation_hint": "SELECT catalog.products by product id"
+          },
+          "reason": "required_call_missing_or_ambiguous",
+          "resolved_callee": null,
+          "resolved_caller": "product-catalog"
+        }
+      ],
+      "candidate_entries": null
+    }
+  ],
+  "context": {
+    "network_scope": {
+      "status": "forecast_from_observed_context_union",
+      "union": {
+        "accepted_sequence": {
+          "accepted_inputs": 2377,
+          "ordinary_requests": 2377,
+          "sequence_sha256": "56902d3f4dad2a4af342c766c1a2961b2c3df7dcd92221874b912b8eacf30600",
+          "streamed_requests": 0,
+          "unselected_wire_payloads_independently_rehashed": false
+        },
+        "added_edge_ids": [
+          "checkout|cart|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FEmptyCart|span_kind=server",
+          "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+          "checkout|currency|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|currency|sync|true|protocol=grpc|operation=oteldemo.CurrencyService%2FConvert|span_kind=server",
+          "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+          "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveInt|span_kind=server",
+          "checkout|payment|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|payment|sync|true|protocol=grpc|operation=oteldemo.PaymentService%2FCharge|span_kind=server",
+          "checkout|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+          "email|flagd|sync|true|protocol=grpc|operation=ResolveInt|span_kind=server",
+          "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FAddItem|span_kind=server",
+          "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+          "frontend|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+          "payment|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server",
+          "product-catalog|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+          "recommendation|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server"
+        ],
+        "exact_base_and_all_added_fields": true,
+        "joint_alias_metadata_collisions": [],
+        "semantic_identity_conflicts": []
+      },
+      "available_branches": [
+        {
+          "operation": "browse_product",
+          "available_copied": true,
+          "prediction_copied": null
+        },
+        {
+          "operation": "add_to_cart",
+          "available_copied": true,
+          "prediction_copied": null
+        },
+        {
+          "operation": "checkout",
+          "available_copied": true,
+          "prediction_copied": null
+        }
+      ]
+    },
+    "raw": {
+      "status": "forecast_from_observed_context_union",
+      "union": {
+        "accepted_sequence": {
+          "accepted_inputs": 2377,
+          "ordinary_requests": 2377,
+          "sequence_sha256": "5150c7392f92eda354a16fcfb235a641fe553e675d34e3027239b66616f51b24",
+          "streamed_requests": 0,
+          "unselected_wire_payloads_independently_rehashed": false
+        },
+        "added_edge_ids": [
+          "checkout|cart|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FEmptyCart|span_kind=server",
+          "checkout|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+          "checkout|currency|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|currency|sync|true|protocol=grpc|operation=oteldemo.CurrencyService%2FConvert|span_kind=server",
+          "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+          "checkout|flagd|sync|true|protocol=connect_rpc|operation=ResolveInt|span_kind=server",
+          "checkout|payment|sync|true|protocol=grpc|operation=_OTHER|span_kind=server",
+          "checkout|payment|sync|true|protocol=grpc|operation=oteldemo.PaymentService%2FCharge|span_kind=server",
+          "checkout|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+          "email|flagd|sync|true|protocol=grpc|operation=ResolveInt|span_kind=server",
+          "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FAddItem|span_kind=server",
+          "frontend|cart|sync|true|protocol=grpc|operation=oteldemo.CartService%2FGetCart|span_kind=server",
+          "frontend|product-catalog|sync|true|protocol=grpc|operation=oteldemo.ProductCatalogService%2FGetProduct|span_kind=server",
+          "payment|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server",
+          "product-catalog|flagd|sync|true|protocol=connect_rpc|operation=ResolveBoolean|span_kind=server",
+          "recommendation|flagd|sync|true|protocol=http|operation=_OTHER|span_kind=server"
+        ],
+        "exact_base_and_all_added_fields": true,
+        "joint_alias_metadata_collisions": [],
+        "semantic_identity_conflicts": []
+      },
+      "available_branches": [
+        {
+          "operation": "browse_product",
+          "available_copied": true,
+          "prediction_copied": null
+        },
+        {
+          "operation": "add_to_cart",
+          "available_copied": true,
+          "prediction_copied": null
+        },
+        {
+          "operation": "checkout",
+          "available_copied": true,
+          "prediction_copied": null
+        }
+      ]
+    }
+  },
+  "all_available_report_hashes_original_full_and_actual_worker": [
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/network_scope/operations/browse_product/simulation/report.json",
+      "sha256": "f25c4c705d6fd237bac1329a913855ec1b95059bb7dc8aecc854c9dff865b9e3"
+    },
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/network_scope/operations/add_to_cart/simulation/report.json",
+      "sha256": "f88f127c158377bce2367b3c7ab6822f0dbb0991aa8980beda1b4281d61f3fc7"
+    },
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/network_scope/operations/checkout/simulation/report.json",
+      "sha256": "de2dcae0286682c03f6d5f61d2f8d2db811065c614a9acfda46f1b52361d6841"
+    },
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/raw/operations/browse_product/simulation/report.json",
+      "sha256": "596395f966c0dc569fd801f73273ea7d8f72137f3e2486b66e731867ca49324a"
+    },
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/raw/operations/add_to_cart/simulation/report.json",
+      "sha256": "46a268581e243e08c63475253fbebbc5739e575ff2d24be408cf6200d8bea000"
+    },
+    {
+      "database_down_prediction_bound_if_present": false,
+      "model_digest_and_all_operation_endpoint_state_values_match": true,
+      "path": "toolchain/context-baseline/raw/operations/checkout/simulation/report.json",
+      "sha256": "fab420cf6a806741e3c9563bf1261937800d0fe9903043cc6b09451565c20de0"
+    }
+  ],
+  "admission_rejections_retained": [
+    {
+      "carrier": "accounting",
+      "logical_services": [
+        "accounting"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "ad",
+      "logical_services": [
+        "ad"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "astronomy-db",
+      "logical_services": [
+        "astronomy-db"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "cart",
+      "logical_services": [
+        "cart"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "checkout",
+      "logical_services": [
+        "checkout"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "currency",
+      "logical_services": [
+        "currency"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "email",
+      "logical_services": [
+        "email"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "flagd",
+      "logical_services": [
+        "flagd"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "frontend",
+      "logical_services": [
+        "frontend"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "frontend-proxy",
+      "logical_services": [
+        "frontend-proxy"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "image-provider",
+      "logical_services": [
+        "image-provider"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "kafka",
+      "logical_services": [
+        "kafka"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "payment",
+      "logical_services": [
+        "payment"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "quote",
+      "logical_services": [
+        "quote"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "recommendation",
+      "logical_services": [
+        "recommendation"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "shipping",
+      "logical_services": [
+        "shipping"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    },
+    {
+      "carrier": "valkey-cart",
+      "logical_services": [
+        "valkey-cart"
+      ],
+      "nodes": [
+        "a"
+      ],
+      "reason": "receiver_scope_missing_ambiguous_or_conflicting"
+    }
+  ],
+  "raw_outcomes_copied_not_recomputed": [
+    {
+      "source": "ebpf",
+      "operation": "add_to_cart",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "native",
+      "operation": "add_to_cart",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "combined",
+      "operation": "add_to_cart",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "context-baseline",
+      "operation": "add_to_cart",
+      "available": true,
+      "prediction": 0.875,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": [
+          0.0,
+          0.0
+        ],
+        "worst_end_error": 0.0
+      }
+    },
+    {
+      "source": "ebpf",
+      "operation": "browse_product",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "native",
+      "operation": "browse_product",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "combined",
+      "operation": "browse_product",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "context-baseline",
+      "operation": "browse_product",
+      "available": true,
+      "prediction": 0.875,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": [
+          0.0,
+          0.0
+        ],
+        "worst_end_error": 0.0
+      }
+    },
+    {
+      "source": "ebpf",
+      "operation": "checkout",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "native",
+      "operation": "checkout",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "combined",
+      "operation": "checkout",
+      "available": false,
+      "prediction": null,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": null,
+        "worst_end_error": null
+      }
+    },
+    {
+      "source": "context-baseline",
+      "operation": "checkout",
+      "available": true,
+      "prediction": 0.875,
+      "actual_counts": {
+        "failure": 400,
+        "invalid": 0,
+        "success": 2800,
+        "total": 3200,
+        "unknown": 0
+      },
+      "error": {
+        "range": [
+          0.0,
+          0.0
+        ],
+        "worst_end_error": 0.0
+      }
+    }
+  ],
+  "costs": "All original/failed/replacement/preparation/worker/model/joint/Sheaft/CI/reader/transfer/archive costs retained, API elapsed not CPU/billed and human effort unknown.",
+  "limits": "One additional actual saved packet; representative mechanism literals were separately inspected in first56. No raw journals/SQLite/wire/whole ZIP or local rescoring. Not complete81 or general collector/novelty/cost superiority."
+}

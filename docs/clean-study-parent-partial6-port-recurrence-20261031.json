@@ -1,0 +1,17 @@
+{
+  "observed_utc": "2026-10-31T14:30:59.146576+00:00",
+  "run_id": 41209663599,
+  "job_id": 124561828717,
+  "actual_source": "fbbda015cefc4f11ee73f32be6ed661c70375f18",
+  "completed_at": "2026-10-31T14:25:27Z",
+  "failed_stage": "deployment_before_any_training_or_targets",
+  "literal_error": "failed to bind host port 0.0.0.0:37020/tcp: address already in use",
+  "parent_cleanup_step": "success; not an ENOSPC in this attempt",
+  "compact_artifact_id": 13045643140,
+  "full_artifact_id": 13045713018,
+  "retention_artifact_id": 13045283661,
+  "next_action": "Actual port-owner/config diagnosis required after recurrence. No blind technical repeat GO. Other two isolated exactN replacements continue.",
+  "scientific_admission": false,
+  "root_small_log_proof": "work\\skeptic-main-v5-observer\\parent-failure-124561828717\\completed-job-log.txt",
+  "skeptic_small_log_proof": "work/skeptic-main-v5-observer/parent-failure-124561828717/bounded-failure-log-review.json"
+}

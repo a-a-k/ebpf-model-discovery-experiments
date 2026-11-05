@@ -1,0 +1,83 @@
+{
+  "schema": "clean-study-original-matrix81-scientific-closure-v1",
+  "recorded_utc": "2026-11-05T11:17:04.299293+00:00",
+  "original_user_criterion": "Determine feasibility of eBPF observations for operation models and Bering->Sheaft forecasts when SDK tracing is absent or incomplete, judged against independent external outcomes. Not an ML, novelty or cost-superiority hypothesis.",
+  "matrix": {
+    "collectors": [
+      "obi",
+      "coroot",
+      "deepflow"
+    ],
+    "applications": [
+      "petclinic",
+      "otel_demo",
+      "deathstarbench"
+    ],
+    "SDK_modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "seeds": [
+      6,
+      7,
+      8
+    ],
+    "main_cases": 81,
+    "reviewed_by_both_original_criterion_agents": 81,
+    "per_collector_reviewed": {
+      "obi": 27,
+      "coroot": 27,
+      "deepflow": 27
+    },
+    "original27_common_smoke_settings_reviewed": 27
+  },
+  "success_count_warning": "Reviewed means valid positive/adverse/negative/UNKNOWN evidence, not81 available or accurate models. Automatedtechnical/source flags do not substitute for externalutility.",
+  "strongest_baselines": "Equal predeclared operation contracts/deployment/replica semantics for all source arms, direct conditional A OR B baseline, prespecified observed SERVER-edge union/context and native SDK where present. No extra semantic information or post-outcome fitting for eBPF.",
+  "earlier79_retained": "Earlier jointlyreviewed79 canonicalpairs unchanged, including runtimeadverse/UNKNOWN cases and actualabsent6. New7/8 consume SAMEoriginalsealedcaptures; no new workload/modelrefit/Sheaft rerun.",
+  "last_two_joint_reviews": [
+    "clean-study-otel-absent7-controlled-actual-review-20261105.json",
+    "clean-study-otel-absent8-controlled-actual-review-20261105.json"
+  ],
+  "last_two_summary": {
+    "all24_forecasts_per_case": "unavailable, pointnull, interval[0,1]",
+    "each_operation_each_case": "2800success400failure/3200, direct.875",
+    "raw_graph_counts": {
+      "7": {
+        "raw": {
+          "services": 48,
+          "edges": 44,
+          "endpoints": 28
+        },
+        "network_scope": {
+          "services": 39,
+          "edges": 42,
+          "endpoints": 28
+        }
+      },
+      "8": {
+        "raw": {
+          "services": 50,
+          "edges": 47,
+          "endpoints": 30
+        },
+        "network_scope": {
+          "services": 39,
+          "edges": 43,
+          "endpoints": 30
+        }
+      }
+    },
+    "genuine_Bering_per_case": 2,
+    "logical_covered_views_per_case": 4,
+    "Sheaft_commands_per_case": 0,
+    "DB_external": "0/20success down,20/20restored percase; graph DBforecastnull",
+    "async_external": "Normal/resumed/recovered20persist each,paused20pending; explicit sharedcausal messageID unproved",
+    "source_and_full_snapshot_limits": "Originalscientific capture/source differs from newprocessing source/run. Onlyadditionalfullupload failed; no fabricatedprocessedfull/finalmutableSQL. Completeinputinventory+selectedbody/frozen/worker/SQL/SDK/source/runtime proofs retained."
+  },
+  "costs": "All884 current repository/run keys, fixed859 retainedcostsnapshot plusfinitefresh tail, allgenuinefailed34048s/capture/worker/inputprep/earlystop/overlap/restore/hash/processing/swap/sampling/CI/reader/failedfullupload/transfer/retention/review costs remain; unknownhuman explicit. Recordedrunnerelapsed isnotCPU/billing/campaignwall. Finalreport/closingCI/finiteownarchivecostmetadata follows, no recursivearchive chain.",
+  "permanent_retention_scope": "755unique earlier source runs jointlypublished; newprocessing/readers/report/CI and lastarchiveownproof finiteclosingtail separate.",
+  "aggregate_report_figures_and_final_publication_pending": true,
+  "independent_final_aggregate_interpretation_still_required": true,
+  "target_sampling_scope": "External outcomes are ascertained independently of saved model predictions. Repeated target attempts are not established as IID or statistically independent; no such independence or general population accuracy is inferred. Saved nominal IID Wilson descriptions are not admission thresholds."
+}

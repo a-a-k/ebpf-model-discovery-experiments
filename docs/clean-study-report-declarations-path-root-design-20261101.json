@@ -1,0 +1,14 @@
+{
+  "state": "design_only_no_implementation_yet",
+  "root_original_criterion_design_GO": true,
+  "criterion": "Complete actual81 eBPF/Bering/Sheaft/external-outcome feasibility study under missing/partial SDK coverage; no cost superiority hypothesis.",
+  "actual_problem": "The complete committed cost/attempt declarations are187261bytes and147276characters even minified (64attempt runs,396related runs). Current report-v5 passes this entire JSON through workflow_dispatch inputs and then an env var. Official GitHub maximum inputspayload65535characters, so finaldispatch cannot carry this record.",
+  "official_source": "https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#onworkflow_dispatchinputs",
+  "proposed_minimal_change": "Existing report-v5 declarations string accepts an existing normalized tracked docs/*.json path as alternative to legacy inlineJSON. Workflow reads that exact checked-out file, then the same json.loads/materialization and unchanged _declarations/defaultmain/sourceeq/report/plot pipeline. No newCLI/helper/schema/validator/retry, no captures/refit/rescore.",
+  "strongest_simple_baseline": "Send a reduced inlineJSON with all scientific fields/runIDs/roles but stripped explanatory cost/provenance notes until it fits65535. A committed-file reference is simpler and preserves the entire exact object/annotations without payload growth. Inline behavior remains unchanged.",
+  "causal_improvement": "Remove transport payload constraint before the final savedreport. It changes no data, predicates, models, forecasts, selection or scientific eligibility.",
+  "same_information_and_semantics": true,
+  "before_implementation": "Require separate explicit originalcriterion skeptic GO for this exact transport-only scope. Then actual code review and a focused actual-bootstrap fixture comparing entire materialized declarations for inline vs path, including complete >65535char record and invalid/untracked paths. No traffic/model/score tests locally.",
+  "costs": "Preserve all preparation/failed/stopped/worker/capture/CI/reader/transport/storage/report/retention costs and notes. No dataset replay or all57 rereview. Actual CI/fixture preparation costs retained; unmeasured humanunknown.",
+  "success_limit": "Technical report transport fix only. Main81 acquisition and full actual review/report/plots/costs/archives/README/finalskepticGO still required. No finalreport run yet."
+}

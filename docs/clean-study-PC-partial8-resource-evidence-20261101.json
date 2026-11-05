@@ -1,0 +1,26 @@
+{
+  "failed_job": 124430032803,
+  "parent": 41164824120,
+  "source": "0c98bf4520e863ab021b60d00517ee2aa49ab38e",
+  "end": "2026-11-01T18:46:22Z",
+  "step_exit": 143,
+  "exact_log_error": "The runner has received a shutdown signal. This can happen when the runner service is stopped, or a manually started runner is canceled.",
+  "resource_sample": "2026-11-01T18:46:07.500854585Z",
+  "mem_available_KiB": 247472,
+  "mem_total_KiB": 16367524,
+  "swap_total_KiB": 11534328,
+  "swap_free_KiB": 835784,
+  "bering_RSS_KiB": 8069868,
+  "qemu_RSS_KiB": [
+    4689296,
+    2369892
+  ],
+  "oom_kill_counter": 0,
+  "interpretation": "Observed severe RAM/swap contention and Bering+liveQEMUco-residence. SIGTERMphysicalcause NOTprovenOOM. One selected sample, not a globalmaximum.",
+  "selected_connector_log_tail": "work\\A-PC-partial8-actual-failure-20261101\\connector-selected-last200-log-lines.txt",
+  "selected_tail_sha256": "bde59f1ef13cca54b58dff992dd07a4c5e0523e2d96ca2d780725d32a0235e5e",
+  "connector_full_decoded_log_characters": 1133702,
+  "full_original_log_octets_or_archive_SHA_locally_verified": false,
+  "source_job_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/41164824120/job/124430032803",
+  "recorded_utc": "2026-11-01T19:19:29.538597+00:00"
+}
