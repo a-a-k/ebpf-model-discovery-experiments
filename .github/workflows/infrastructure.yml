@@ -1,39 +1,173 @@
-name: Fixed original prefix frozen training admission comparison
+name: Recover the saved closed OTel absent8 capture
 on:
   workflow_dispatch:
 permissions:
   contents: read
   actions: read
 jobs:
-  compare:
+  recover:
+    name: Recover the saved closed OTel absent8 capture
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
-      GH_TOKEN: ${{ github.token }}
       PYTHONPATH: src:.
+      GH_TOKEN: ${{ github.token }}
+      CAPTURE_ARTIFACT_ID: '13340037317'
+      CAPTURE_ARTIFACT_DIGEST: '0bf83d762319dbc6037c9d0d4be42c5e0aea91f90616366961d0505a37a9a639'
+      CAPTURE_FILE_BYTES: '62441989204'
+      CAPTURE_PROOF_BYTES: '20396308'
+      CAPTURE_INDEX_BYTES: '14342156288'
+      CAPTURE_MANIFEST_SHA256: 'e62f21be661aa4e68e857fa3056cb81fe573747cc12e62d8fb708b9c57dd0b42'
+      CAPTURE_MODE: 'absent'
+      CAPTURE_SEED: '8'
+      CAPTURE_ARCHIVE_BYTES: '5628481016'
+      SCIENTIFIC_CAPTURE_RUN_ID: '41816827576'
+      SCIENTIFIC_CAPTURE_SOURCE: '2fae9a6bdc8519444bb84dcfa74a8fd4f3705932'
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch only the original producer source for exact algorithm comparison
-        run: git fetch --no-tags --depth=1 origin f045cc0adec187ec00443da0bea72b4ec4d2082e
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -e . pytest opentelemetry-proto
-      - name: Free only the existing unused hosted SDK directories
+      - name: Install the unchanged scientific processing dependencies
+        run: python -m pip install -e . opentelemetry-proto
+      - name: Free unused hosted SDK copies before restoring the closed capture
         run: |
-          mkdir -p work/frozen-admission-host
-          df -B1 . > work/frozen-admission-host/disk-before.txt
-          sudo rm -rf -- /usr/local/lib/android /usr/share/dotnet /opt/ghc
-          df -B1 . > work/frozen-admission-host/disk-after.txt
-      - name: Check original prefix construction and every complete prepared request
-        run: python scripts/validate-frozen-training-admission-reference-v5.py
-      - name: Retain exact request equality and complete preparation costs
+          mkdir -p work/offline-host
+          df -B1 . > work/offline-host/host-disk-before.txt
+          python - <<'PY'
+          import json,pathlib,shutil,subprocess,sys,time
+          out=pathlib.Path('work/offline-host')
+          protected=[pathlib.Path.cwd().resolve(),pathlib.Path(sys.executable).resolve()]
+          for tool in ('gh','git','node'):
+              binary=shutil.which(tool)
+              if binary: protected.append(pathlib.Path(binary).resolve())
+          paths=['/usr/local/lib/android','/usr/share/dotnet','/opt/ghc',
+                 '/usr/local/.ghcup','/usr/share/swift','/usr/lib/jvm',
+                 '/opt/hostedtoolcache/CodeQL','/opt/hostedtoolcache/go',
+                 '/opt/hostedtoolcache/Ruby','/opt/az','/opt/google',
+                 '/opt/microsoft','/usr/local/share/powershell','/usr/local/share/boost']
+          proof={'scope':'Offline postcapture unused hosted SDK/images; no scientific payload deletion',
+                 'started_ns':time.time_ns(),'free_before':shutil.disk_usage('.').free,
+                 'protected_runtime_paths':[str(p) for p in protected],'paths':[],'docker_cleanup':[]}
+          for name in paths:
+              path=pathlib.Path(name)
+              assert not any(p.is_relative_to(path.resolve()) for p in protected)
+              before=shutil.disk_usage('.').free
+              size=subprocess.run(['sudo','du','-sx','-B1','--',name],capture_output=True,text=True)
+              subprocess.run(['sudo','rm','-rf','--',name],check=True)
+              proof['paths'].append({'path':name,'du_returncode':size.returncode,'du_stdout':size.stdout,
+                                     'du_stderr':size.stderr,'free_before':before,'free_after':shutil.disk_usage('.').free})
+              (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          for command in (['sudo','docker','image','prune','--all','--force'],
+                          ['sudo','docker','builder','prune','--all','--force']):
+              result=subprocess.run(command,capture_output=True,text=True)
+              proof['docker_cleanup'].append({'command':command,'returncode':result.returncode,
+                                              'stdout':result.stdout,'stderr':result.stderr})
+          proof.update(ended_ns=time.time_ns(),free_after=shutil.disk_usage('.').free)
+          (out/'diagnostic-sdk-cleanup.json').write_text(json.dumps(proof,indent=2)+'\n')
+          print(json.dumps({'free_before':proof['free_before'],'free_after':proof['free_after'],
+                            'scope':proof['scope']}))
+          PY
+          df -B1 . > work/offline-host/host-disk-after.txt
+          python scripts/control-closed-offline-resources-v5.py prepare
+      - name: Restore the exact closed capture after the actual disk guard
+        run: python scripts/restore-closed-postcapture-v5.py --capture-run-id 41816827576 --capture-source 2fae9a6bdc8519444bb84dcfa74a8fd4f3705932 --release-verified-delivery
+      - name: Verify all closed inputs and run the unchanged offline suffix
+        run: python scripts/control-closed-offline-resources-v5.py run
+      - name: Retain offline host and restore costs after either outcome
+        if: always()
+        run: |
+          mkdir -p work/offline-host
+          df -B1 . > work/offline-host/disk-final.txt
+          free -b > work/offline-host/memory-final.txt
+          sudo dmesg --ctime > work/offline-host/kernel-final.txt 2> work/offline-host/kernel-final.err || true
+          python -m pip freeze > work/offline-host/python-environment.txt
+          if [[ -d work/campaign ]]; then
+            mkdir -p work/campaign/infrastructure/postcapture-host
+            cp -a work/offline-host/. work/campaign/infrastructure/postcapture-host/
+          fi
+      - name: Evaluate retained full campaign evidence
+        if: success()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.evaluate_v5 --campaign work/campaign \
+            --out work/campaign/evaluation-v5.json
+      - name: Record compact evaluation provenance
+        if: success()
+        env:
+          PYTHONPATH: src
+        run: |
+          python -m ebpf_discovery.summary_manifest_v5 --campaign work/campaign \
+            --system 'otel_demo' --mode 'absent' --seed '8' \
+            --collector 'deepflow' --stage 'main'
+          python - <<'PY'
+          import json,os,pathlib
+          root=pathlib.Path('work/campaign')
+          status=json.loads((root/'status.json').read_text())
+          path=root/'evaluation-manifest.json'
+          manifest=json.loads(path.read_text())
+          manifest['scientific_capture_identity']={key:status[key] for key in
+              ('run_id','commit','system','collector','mode','seed')}
+          manifest['closed_capture_recovery']={
+              'capture_run_id':'41816827576','capture_source':'2fae9a6bdc8519444bb84dcfa74a8fd4f3705932',
+              'capture_artifact_id':13340037317,
+              'capture_artifact_digest':'sha256:'+os.environ['CAPTURE_ARTIFACT_DIGEST'],
+              'processing_run_id':os.environ['GITHUB_RUN_ID'],'processing_source':os.environ['GITHUB_SHA'],
+              'new_application_traffic':False,'refit_models':False}
+          assert status['run_id']=='41816827576' and status['commit']=='2fae9a6bdc8519444bb84dcfa74a8fd4f3705932'
+          path.write_text(json.dumps(manifest,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: v5-summary-deepflow-main-otel_demo-absent-8-${{ github.run_id }}
+          path: |
+            work/campaign/evaluation-v5.json
+            work/campaign/evaluation-manifest.json
+            work/campaign/status.json
+            work/campaign/plans.json
+            work/campaign/census.json
+            work/campaign/blocks.json
+            work/campaign/freeze-integrity.json
+            work/campaign/toolchain/forecasts.json
+            work/campaign/evidence-v4.json
+            work/campaign/attempt-journal.jsonl
+            work/campaign/classes-v5.json
+            work/campaign/classes-v4.json
+            work/campaign/observations/collector.json
+            work/campaign/observations/drain-evidence.json
+            work/campaign/observations/technical-positive-control.json
+            work/campaign/observations/control-prestart*.json
+            work/campaign/observations/startup-*.json
+            work/campaign/observations/startup-*.log
+            work/campaign/observations/readiness.json
+            work/campaign/observations/receiver-*.log
+            work/campaign/observations/pre-drain-*-logs.log
+            work/campaign/observations/final-*-collector.log
+          retention-days: 90
+          if-no-files-found: warn
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: campaign-v5-deepflow-main-otel_demo-absent-8-${{ github.run_id }}
+          path: |
+            work/campaign/
+            !work/campaign/**/source/**
+            !work/campaign/**/upstream/**
+            !work/campaign/**/image-context/**
+            !work/campaign/**/petclinic-image.tar
+            !work/campaign/toolchain-build/checkouts/**
+            !work/campaign/toolchain-build/go/**
+          compression-level: 1
+          include-hidden-files: true
+          retention-days: 90
+          if-no-files-found: error
+      - name: Retain the compact postcapture processing diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: exact-frozen-admission-${{ github.run_id }}
-          path: |
-            work/frozen-admission-qualification/
-            work/frozen-admission-host/
-          if-no-files-found: error
+          name: postcapture-processing-absent-8-${{ github.run_id }}
+          path: work/offline-host/
           retention-days: 90
+          if-no-files-found: warn
