@@ -1201,5 +1201,17 @@
   "main_gate": "Remaining24blocks96cells stay blocked until actual full-size/source/resource review and both ORIGINAL executionGOs. These12 are not completed or successful by registration; actual capture, forecasts and independent targets remain required.",
   "approved_utc": "2026-11-06T20:03:34.104568+00:00",
   "public_pre_forecast_draft_commit": "890d5847ce7d84d27841928256d511ca26a7addf",
-  "independent_actual_verdict": "FINAL ORIGINAL actual source/state scientific-inclusion GO by /root/ebpf_actual7_skeptic for exact candidate SHA99848e38dcd2f86151cef59f2642705d0a3c41306cd642365c0900e18e512f26. Fresh GitHub API independently showed ONLY training/no model/no validation in all3runs; independently matched all169original source blobs and primaryworkflow pin-only delta. No scope reduction, output selection, completed-cell or remaining-dispatch approval."
+  "independent_actual_verdict": "FINAL ORIGINAL actual source/state scientific-inclusion GO by /root/ebpf_actual7_skeptic for exact candidate SHA99848e38dcd2f86151cef59f2642705d0a3c41306cd642365c0900e18e512f26. Fresh GitHub API independently showed ONLY training/no model/no validation in all3runs; independently matched all169original source blobs and primaryworkflow pin-only delta. No scope reduction, output selection, completed-cell or remaining-dispatch approval.",
+  "independent_actual_review_receipts": {
+    "independent-v6-full3-prospective-inclusion-actual-original-GO-20261106.json": {
+      "path": "docs/independent-v6-full3-prospective-inclusion-actual-original-GO-20261106.json",
+      "published_GitLF_sha256": "376cf2044a4ab46b3126862d962b7d312e53fd9c13fe0d9b49c3bdd81d9326a7",
+      "original_work_sha256": "376cf2044a4ab46b3126862d962b7d312e53fd9c13fe0d9b49c3bdd81d9326a7"
+    },
+    "independent-v6-full3-fresh-training-only-API-state-20261106.json": {
+      "path": "docs/independent-v6-full3-fresh-training-only-API-state-20261106.json",
+      "published_GitLF_sha256": "2726a977edb5eb9e1630b8c76987ab24feab916c213f39b1ca63a820b65f6af8",
+      "original_work_sha256": "e20a75a604efe5ecaf2c8469c6ea5ac4a1b33ff7502f8995ce5f273405165ee2"
+    }
+  }
 }
