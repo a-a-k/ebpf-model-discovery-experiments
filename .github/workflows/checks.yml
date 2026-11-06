@@ -31,6 +31,11 @@ jobs:
         env:
           PYTHONPATH: .
           RUN_DOCKER_CONTROL_FIXTURE: '1'
+      - name: Validate fresh deployment settings with the actual Compose parser
+        run: python -m pytest --import-mode=importlib tests/test_deployment_v6.py
+        env:
+          PYTHONPATH: .
+          RUN_DOCKER_CONTROL_FIXTURE: '1'
   identical-input-discovery-fixture:
     runs-on: ubuntu-24.04
     timeout-minutes: 360

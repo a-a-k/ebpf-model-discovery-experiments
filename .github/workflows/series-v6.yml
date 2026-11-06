@@ -29,6 +29,14 @@ jobs:
     - run: python -m pip install -e . opentelemetry-proto
     - name: Prepare full worker resources and retain the platform envelope
       run: python -m ebpf_discovery.resources_v6 --report work/training-host-resources.json
+    - name: Publish actual training worker resources before long work
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-worker-training-${{ github.run_id }}
+        path: work/training-host-resources.json
+        if-no-files-found: warn
+        compression-level: 6
     - name: Capture fresh training slot 0
       id: train0
       run: python -m ebpf_discovery.block_v6 training --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 0
@@ -134,6 +142,7 @@ jobs:
           work/blueprint-preparation/v6-blueprint-preparation.json
           work/vms/events/
           work/vms/history/
+          work/vms/serial-log-access.jsonl
           work/block-controller-cost.jsonl
           work/blueprint-preparation/commands.jsonl
           work/vms/preparation/infrastructure.json
@@ -176,6 +185,14 @@ jobs:
     - run: python -m pip install -e . opentelemetry-proto
     - name: Prepare full worker resources
       run: python -m ebpf_discovery.resources_v6 --report work/model-host-resources.json
+    - name: Publish actual model worker resources before long work
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-worker-model-${{ matrix.collector }}-${{ github.run_id }}
+        path: work/model-host-resources.json
+        if-no-files-found: warn
+        compression-level: 6
     - uses: actions/download-artifact@v4
       with:
         name: v6-training-${{ matrix.collector }}-${{ github.run_id }}
@@ -245,6 +262,14 @@ jobs:
     - run: python -m pip install -e . opentelemetry-proto
     - name: Prepare full worker resources
       run: python -m ebpf_discovery.resources_v6 --report work/validation-host-resources.json
+    - name: Publish actual validation worker resources before long work
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-worker-validation-${{ github.run_id }}
+        path: work/validation-host-resources.json
+        if-no-files-found: warn
+        compression-level: 6
     - uses: actions/download-artifact@v4
       with:
         name: v6-shared-blueprint-${{ github.run_id }}
@@ -357,6 +382,7 @@ jobs:
           work/publications/validation/
           work/vms/events/
           work/vms/history/
+          work/vms/serial-log-access.jsonl
           work/block-controller-cost.jsonl
           work/shared-restored.json
           work/model-package-imports.json

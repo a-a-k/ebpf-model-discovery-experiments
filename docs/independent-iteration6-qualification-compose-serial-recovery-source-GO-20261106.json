@@ -1,0 +1,47 @@
+{
+  "review": "Independent ORIGINAL-criterion bounded technical qualification source continuation",
+  "date": "2026-11-06",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "base_head": "a79d46d689e9f4cb381c2419079da4bf94a0e208",
+  "original_criterion_qualification_source_continuation_GO": true,
+  "original_main_execution_GO": false,
+  "actual_actions_execution_qualified": false,
+  "actual_scientific_success_claim": false,
+  "prior_source_review": {
+    "path": "work/independent-iteration6-clean108-qualification-source-GO-20261106.json",
+    "sha256": "ede6472690fd0fc3bd9540a1a3f29bc0e47d1c81de5390d34e3d1f876d36c6bc"
+  },
+  "scope": "Bounded recovery after OTel/full9 technical qualification run42239885916 failed before scientific workload. Ready for source commit/CI and another same-cell technical qualification. This is not MAIN approval.",
+  "findings": [
+    "Compose service mem_limit and deploy.resources.limits.memory now use decimal byte strings with unchanged 134217728-byte semantics. Existing actual Docker HostConfig Memory checks and uniform all-arm/all-mode/all-epoch scope remain.",
+    "Only the two owned fresh serial.log files are pre-created before privileged QEMU. After owned stop and wait, permission normalization opens exact regular non-symlink files, verifies named/open inode identity, preserves inode and size, changes only uid/gid/mode and retains a receipt. Existing discard allowlists and owned workspace bounds remain.",
+    "Early small resource uploads preserve available worker envelopes before long work; model matrix artifact names include collector and run ID, preventing immutable artifact name collision. Serial access receipts are added to retained job artifacts.",
+    "Focused tests include actual Compose parser and Linux root-owned-log regressions. GitHub control fixture explicitly enables RUN_DOCKER_CONTROL_FIXTURE=1; their actual Linux result is still a CI responsibility."
+  ],
+  "original_criterion_unchanged": "Feasibility of operation models and prospectively frozen Bering-to-Sheaft forecasts with absent/partial SDK tracing is assessed against independent external outcomes and equal-information direct/native/observed-edge/context union baselines. Negative, UNKNOWN and adverse outcomes remain valid findings. No new novelty, accuracy, observer-causality or cost-superiority result is claimed.",
+  "causal_prospective_and_cost_boundary": "The bounded source delta does not change the108 fresh matched cells, arm order, workloads, SDK treatments, blueprint equality, model-freeze-before-target rule or external scoring. Failed first qualification and its preparation/control/CI/transfer/cleanup costs remain in comparable costs. Reported CPU/RAM/disk/unlimited rlimits are an envelope, not proof of full-size runtime sufficiency.",
+  "qualification_boundary": "Committed source must pass CI and actual technical qualification; existing full-size phase resource/budget proof and reviewed MAIN gate remain required. No execution was performed by this reviewer.",
+  "root_reported_checks": "33 focused passed,4 platform-specific skipped locally; actionlint both workflows, bash syntax and diff checks passed. Reviewer did not rerun tests.",
+  "readset_sha256": {
+    "src/ebpf_discovery/deployment_v6.py": {
+      "bytes": 21046,
+      "sha256": "c0f9f308cc88efeecf3eba9e23c93559c12229f6ef28fae5ba17024280530a5f"
+    },
+    "scripts/vms-v6.sh": {
+      "bytes": 17581,
+      "sha256": "01991a2b0c0f01831a8f15fcff55ec1b4a65ee4929ff06ab2d12608ac2a2826e"
+    },
+    ".github/workflows/series-v6.yml": {
+      "bytes": 21081,
+      "sha256": "9fb4c8438a0d932e13298802f8632d6062a6f2446d61719e34dc07f479aa0366"
+    },
+    ".github/workflows/checks.yml": {
+      "bytes": 2384,
+      "sha256": "ec4a9744f342f55f53d4712cc8dfd0b4745c7eef65282d9890f67fec7dccc404"
+    },
+    "tests/test_deployment_v6.py": {
+      "bytes": 15824,
+      "sha256": "16a5bee40b592d4c73b5705f6e790c7233a58ddfff6a888260337ddc07c8d850"
+    }
+  }
+}
