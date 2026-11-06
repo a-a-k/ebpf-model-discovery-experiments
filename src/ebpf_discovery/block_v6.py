@@ -29,6 +29,7 @@ def implementation_hashes():
     listed = subprocess.check_output([
         'git', 'ls-files', '-z', '--', 'src', 'systems', 'scripts',
         '.github/workflows/series-v6.yml', '.github/workflows/checks.yml',
+        '.github/workflows/qualification-replay-v6.yml',
         'docs/PROTOCOL_V6.md', 'pyproject.toml'], cwd=repo())
     names = sorted(set(listed.decode('utf8').split('\0')) - {''})
     return {name: sha(repo() / name) for name in names}
@@ -272,13 +273,18 @@ def import_validation(root, plan):
     return frozen_plan
 
 
-def capture_slot(args):
+def capture_slot(args, *, prepared_plan=False):
     gate(args.stage)
     root = owned_root(args.root)
+    if prepared_plan:
+        if args.stage != 'qualification' or args.phase != 'validation':
+            raise ValueError('prepared parent imports are qualification-validation only')
+        from .qualification_replay_v6 import require_prepared_validation
+        require_prepared_validation(root)
     planned = block(args.system, args.mode, args.repetition)
     planned.update(stage=args.stage,
                    smoke=args.stage == 'qualification' and not args.full_size_qualification)
-    if args.slot == 0:
+    if args.slot == 0 and not prepared_plan:
         if (root / 'block-plan.json').exists():
             raise FileExistsError('a block phase cannot start twice')
         if args.phase == 'training':
@@ -485,6 +491,7 @@ def package_processing(args):
     paths.update(name for name in ('observation-index.sqlite', 'observation-index.sqlite-wal',
                  'observation-index.sqlite-shm', 'index-training.json',
                  'model-worker-resources.json', 'commands.jsonl', 'v6-block-reference.json',
+                 'processing-execution.json',
                  'v6-training-publication-restored.json')
                  if (root / name).is_file())
     if not paths:

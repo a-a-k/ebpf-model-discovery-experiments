@@ -198,6 +198,11 @@ def model(root):
     root = Path(root).resolve()
     if (root / 'forecast-saved.json').exists():
         raise ValueError('a frozen model must not be recomputed')
+    processing = {'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
+                  'runner_boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+                  'started_ns': time.time_ns(),
+                  'scope': 'Actual offline processing execution; original capture identity remains unchanged'}
+    write_json(root / 'processing-execution.json', processing)
     from .resources_v6 import prepare
     prepare(root / 'model-worker-resources.json')
     from .capture_checks_v6 import verify_capture
@@ -213,7 +218,7 @@ def model(root):
     ctx = Context(root, status['mode'], status['seed'])
     ctx.collector = status['collector']
     # Read the exact closed journal without turning model work into capture.
-    connection = sqlite3.connect((root / 'attempt-journal.sqlite').as_uri() + '?mode=ro', uri=True)
+    connection = sqlite3.connect((root / 'attempt-journal.sqlite').as_uri() + '?mode=ro&immutable=1', uri=True)
     ctx.journal = SimpleNamespace(db=connection, lock=threading.Lock(), path=root / 'attempt-journal.sqlite')
     store = ObservationStoreV5(root / 'observation-index.sqlite', same_trace_parents=True)
     plans = json.loads((root / 'plans.json').read_text(encoding='utf8'))
@@ -238,6 +243,7 @@ def model(root):
                    _manual_baselines(status['system'], list(declared.CONTRACTS)))
         complete_processing = file_hashes(root, ('toolchain',))
         frozen = portable_outputs(root, complete_processing)
+        frozen['processing-execution.json'] = digest(root / 'processing-execution.json')
         for name in ('supplied-service-aliases-training.json',
                      'supplied-service-alias-admission-training.json'):
             relative = 'runtime-identity-v5/' + name
@@ -245,6 +251,7 @@ def model(root):
         verify_files(root, closed['files'])
         write_json(root / 'forecast-saved.json', {
             'study': STUDY, 'saved_ns': time.time_ns(), 'case': status,
+            'processing_execution': processing,
             'training_closed_input_sha256': digest(root / 'closed-input.json'),
             'sha256_by_path': frozen, 'uses_actual_graph_simulator': True,
             'complete_processing_sha256_by_path': complete_processing,

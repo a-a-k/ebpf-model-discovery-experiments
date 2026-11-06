@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-06T16:51:09.924386+00:00",
+  "root_original_inspection_source_GO": true,
+  "independent_original_inspection_source_GO": true,
+  "replay_GO": false,
+  "MAIN_GO": false,
+  "criterion_and_baselines": "Unchanged full108 design; equally informed direct/native/cheap-union methods and independent external outcomes. No historical81 input reused.",
+  "preparation_fix": "Original warmups remain unscored and intact; unique intents/observations in sealed journal, exact original count and outcomes, disjoint scored IDs. Completeness/balance rules for scored operations unchanged.",
+  "allowed_execution": "Metadata inspection of exact DSB42245728196 andPC42245722271 qualification packages only; no VM/model/target in inspection. Review actual innerseals before replay.",
+  "source_review": {
+    "path": "docs/independent-iteration6-qualification-parent-inspection-source-original-GO-20261106.json",
+    "sha256": "3799d9a7b0f17fa2f2b39d08a5080fbacdee16459dec7e7aae721ef35a911352"
+  },
+  "verification": {
+    "focused_passed": 46,
+    "platform_specific_skipped": 6,
+    "actionlint": "pass",
+    "compileall": "pass",
+    "whitespace": "pass"
+  },
+  "costs": "All original4+4 failed modeljobs, training/prep/CI/inspection/transfer costs retained; no accuracy-driven reruns or claim of scientific success."
+}
