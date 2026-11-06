@@ -65,7 +65,9 @@ The observer records the actual installed HTTP package version and its own
 runtime source SHA. Missing version/source/sequence evidence is UNKNOWN.
 
 Guest packet capture begins before collectors or applications create relevant
-connections. Actions extracts TCP payloads with tshark and decodes HTTP2 header
+connections. The identical filter `tcp and not port 22` excludes only
+infrastructure SSH/SCP traffic, including application image transfers; planned
+HTTP/RPC edges do not use that port. Actions extracts TCP payloads with tshark and decodes HTTP2 header
 blocks with pinned hpack 4.1.0. Both TCP prefixes and the peer's initial SETTINGS
 are required: the peer constrains client header encoding. SYN/preface absence, conflicting or missing TCP
 bytes, incomplete frame/header blocks, unsupported table settings, TLS, packet

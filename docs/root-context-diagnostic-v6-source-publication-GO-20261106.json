@@ -21,5 +21,21 @@
     "path": "work/independent-context-diagnostic-v6-source-publication-observer-qualification-original-GO-20261106.json",
     "sha256": "0abb3ab0527280bf7b3a57325b942b46e1483f8d3490e5c2a122e00ec25abd9c",
     "publication_difference": "Git normalized CRLF to LF in this review metadata only; reviewed five source-file bytes unchanged."
+  },
+  "capture_filter_amendment": {
+    "root_original_source_GO": true,
+    "independent_original_source_design_GO": true,
+    "previous_source": "433a2d967cfd4cb8090f7755cf76b3b2dea7c040",
+    "reason": "Capture starts before Docker image SCP delivery. Capturing infrastructure port22 would retain gigabytes of irrelevant encrypted transfers per arm.",
+    "filter": "tcp and not port 22",
+    "source_change": "Only start tcpdump filter and its exact owned-process argv check; unchanged start timing, intended app HTTP/RPC edges, evidence/UNKNOWN guards, same three arms. Documentation states the scope.",
+    "actual_observer_qualified": false,
+    "MAIN_GO": false,
+    "independent_message": "/root/ebpf_actual7_skeptic explicitly approved this minimal equivalent filter before implementation; exact-parent traffic remains blocked until new source CI and execution review.",
+    "independent_review": {
+      "path": "docs/independent-context-diagnostic-v6-filter-source-and-full-parent-metadata-original-GO-20261106.json",
+      "sha256": "b4f006e4cb2a1579ed0892f7842ff951e16f584351baa7423988ee0a81332039",
+      "original_work_receipt_sha256": "87a66f093e21e2fa2efd990024d8edc624f1f9f22b658901fd9cfadf1d316964"
+    }
   }
 }
