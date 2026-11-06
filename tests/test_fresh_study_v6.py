@@ -13,6 +13,7 @@ from ebpf_discovery.toolchain_v4 import digest
 from ebpf_discovery.validation_v6 import require_block_freeze, require_forecast, graph_origin
 from ebpf_discovery.resources_v6 import clear_go_overrides
 from ebpf_discovery.capture_checks_v6 import verify_capture
+from ebpf_discovery.transport_v4 import Journal
 
 
 def frozen(root, collector, *, seed=9, system='otel_demo', mode='full'):
@@ -173,11 +174,23 @@ def closed_training(root):
     census = [{'attempt_key': hashlib.sha256(row['attempt_id'].encode()).hexdigest(),
                'phase': row['phase'], 'state': row['state'],
                'step_ids': [s['request_id'] for s in row['http_steps']]} for row in records]
+    journal = Journal(root / 'attempt-journal.sqlite')
+    for block, state in enumerate(('11', '11', '10', '01', '00')):
+        for operation in operations:
+            identity = f'warmup-{block}-{operation}'
+            row = {'attempt_id': identity, 'phase': 'preparation', 'state': state,
+                   'operation': operation, 'success': False,
+                   'http_steps': [{'request_id': 'request-' + identity}]}
+            journal.append('attempt_intent', {k: v for k, v in row.items() if k != 'success'})
+            journal.append('attempt_observed', row)
+            records.append(row)
+    journal.close()
     values = {'status.json': status, 'plans.json': plans, 'external.json': records, 'census.json': census}
     for name, value in values.items():
         (root / name).write_text(json.dumps(value), encoding='utf8')
     manifest = {'study': 'clean-restart-v6', 'phase': 'training', 'status': status,
                 'files': {name: digest(root / name) for name in values}}
+    manifest['files']['attempt-journal.sqlite'] = digest(root / 'attempt-journal.sqlite')
     (root / 'closed-input.json').write_text(json.dumps(manifest), encoding='utf8')
     return manifest
 
@@ -191,6 +204,25 @@ def test_postcapture_outcome_change_cannot_be_scored(tmp_path):
     closed_training(tmp_path)
     (tmp_path / 'external.json').write_text('[]', encoding='utf8')
     with pytest.raises(ValueError, match='frozen evidence changed'):
+        verify_capture(tmp_path, 'training')
+
+
+@pytest.mark.parametrize('change', ['forge_outcome', 'drop_warmup', 'relabel_scored'])
+def test_unscored_preparation_cannot_hide_or_rewrite_observations(tmp_path, change):
+    manifest = closed_training(tmp_path)
+    path = tmp_path / 'external.json'
+    rows = json.loads(path.read_text(encoding='utf8'))
+    warmup = next(i for i, row in enumerate(rows) if row['phase'] == 'preparation')
+    if change == 'forge_outcome':
+        rows[warmup]['success'] = True
+    elif change == 'drop_warmup':
+        rows.pop(warmup)
+    else:
+        rows[0]['phase'] = 'preparation'
+    path.write_text(json.dumps(rows), encoding='utf8')
+    manifest['files']['external.json'] = digest(path)
+    (tmp_path / 'closed-input.json').write_text(json.dumps(manifest), encoding='utf8')
+    with pytest.raises(ValueError, match='preparation'):
         verify_capture(tmp_path, 'training')
 
 

@@ -1,0 +1,48 @@
+{
+  "schema": "v6-qualification-parent-v1",
+  "study": "clean-restart-v6",
+  "stage": "qualification",
+  "system": "deathstarbench",
+  "mode": "full",
+  "repetition": 9,
+  "smoke": true,
+  "parent_run_id": 42245728196,
+  "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+  "shared_artifact": {
+    "id": 13520586774,
+    "name": "v6-shared-blueprint-42245728196",
+    "size_in_bytes": 3064876762,
+    "digest": "sha256:c9ce7752459306b7bf16a843e67aaac05944e47c329ce45f2ea576c0d330650d"
+  },
+  "training_artifacts": {
+    "none": {
+      "id": 13518437846,
+      "name": "v6-training-none-42245728196",
+      "size_in_bytes": 219516016,
+      "digest": "sha256:25bccc2dac6ca1a349a4cbd0e4b128f5ee852892d9f9ba753a60122420c02074"
+    },
+    "obi": {
+      "id": 13519153746,
+      "name": "v6-training-obi-42245728196",
+      "size_in_bytes": 219098785,
+      "digest": "sha256:cfc7606afeb8b07e7d21cb46a90a043bdec7bd6926495544af0ef0ed8b7811b7"
+    },
+    "coroot": {
+      "id": 13520070760,
+      "name": "v6-training-coroot-42245728196",
+      "size_in_bytes": 219546712,
+      "digest": "sha256:49d4ea61a7f083de2954b4d8e32ae35dcbc0361bf436c9e38e16d865d167f115"
+    },
+    "deepflow": {
+      "id": 13521246087,
+      "name": "v6-training-deepflow-42245728196",
+      "size_in_bytes": 225935940,
+      "digest": "sha256:7dceffdf3f2e3133a7b9f683a637ffaeccc0c2845ff8d868f223d245e24a69ca"
+    }
+  },
+  "root_inspection_GO": true,
+  "independent_inspection_GO": true,
+  "root_replay_GO": false,
+  "independent_replay_GO": false,
+  "scope": "Approved metadata/source inspection only, in Actions. Actual inner hashes still require separate review before model/validation replay. MAIN remains closed."
+}

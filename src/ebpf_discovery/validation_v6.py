@@ -95,7 +95,7 @@ def classify(frozen, validation, saved):
     status = read(validation / 'status.json')
     ctx = Context(validation, status['mode'], status['seed'])
     ctx.collector = status['collector']
-    connection = sqlite3.connect((validation / 'attempt-journal.sqlite').as_uri() + '?mode=ro', uri=True)
+    connection = sqlite3.connect((validation / 'attempt-journal.sqlite').as_uri() + '?mode=ro&immutable=1', uri=True)
     ctx.journal = SimpleNamespace(db=connection, lock=threading.Lock(),
                                  path=validation / 'attempt-journal.sqlite')
     # Only frozen logical alias definitions and their inventory proof cross epochs.
