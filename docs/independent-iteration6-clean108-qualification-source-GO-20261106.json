@@ -1,0 +1,111 @@
+{
+  "review": "Independent ORIGINAL-criterion iteration6 clean108 qualification-source review",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "date": "2026-11-06",
+  "worktree": "C:\\Users\\aakra\\Desktop\\PhD\\My papers\\WIP\\ebpf\\ebpf-model-discovery-experiments\\.worktrees\\clean-restart-v6",
+  "base_head": "33cf0a34ddfb0e926cc0eeea36a9d90ffcf2ba40",
+  "original_criterion_qualification_source_GO": true,
+  "qualification_source_GO": true,
+  "original_main_execution_GO": false,
+  "actual_actions_execution_qualified": false,
+  "actual_scientific_success_claim": false,
+  "scope": "Integrated source review plus bounded recheck of the two identified source blockers and no-agent validation guard. Source is ready to commit and qualify in actual Actions; this does not approve MAIN or claim research results.",
+  "original_criterion": "Fresh matched evidence for feasibility of operation models and prospective Bering-to-Sheaft forecasts with absent/partial SDK tracing, judged against independent external outcomes and equal-information strongest simple baselines. Scientific success is not admission, graph availability or internal model accuracy alone.",
+  "design": "108 fresh cells: 3 applications x 3 SDK modes x 4 collector states (none/OBI/Coroot/DeepFlow) x 3 new repetitions; 27 randomized paired blocks; fresh guest resets, common pinned blueprint, separate training and validation epochs; all four real model/forecast bundles frozen before any validation target. Prior81 remains immutable historical evidence.",
+  "bounded_fix_findings": [
+    {
+      "location": "validation_v6.graph_origin",
+      "verdict": "GO",
+      "evidence": "Both reuse_single_source_equivalence and reuse_unchanged_union resolve to the frozen combined graph only after equality with the frozen combined forecast. Actual new context unions resolve to their own operations graph. Available forecasts retain simulator=Sheaft and executed graph SHA checks."
+    },
+    {
+      "location": "block_v6.implementation_hashes",
+      "verdict": "GO",
+      "evidence": "Full git ls-files census covers src, systems and scripts plus series-v6/checks workflows, PROTOCOL_V6 and pyproject, replacing the partial implementation list. MAIN compares the entire resulting map. The qualification approval document alone is outside the source census to avoid self-reference."
+    },
+    {
+      "location": "evaluate_v5.acquisition_checks and validation_v6.classify",
+      "verdict": "GO",
+      "evidence": "No-agent indexed eBPF span count is checked by common acquisition validation, which runs after fresh validation ingestion as well as training ingestion. Any ebpf-* source in none invalidates technical acquisition."
+    }
+  ],
+  "causal_and_prospective_boundary": "Observer effects require contemporaneous randomized matched runtime arms. No-agent is an actual runtime state, not a projection. SDK tracing disabled does not mean libraries removed. OBI propagation remains an explicit active treatment. New-boot identity supports only frozen blueprint aliases and classification; validation does not refit or repair models from target labels.",
+  "baselines": "Same semantic contracts, native information and supplied alias knowledge go to direct conditional arithmetic, native-only and observed SERVER-edge/context union baselines. Equality, UNKNOWN, negative and adverse outcomes remain admissible final findings; no assumed novel predictor or superiority.",
+  "costs": "Comparable preparation, clean controls, capture, failed work, model execution, transfer/hash/retention, overlap, paging, CI/review and early-stop costs must all remain counted; human and unmeasured costs remain unknown. No cost-dominance conclusion is authorized by source review.",
+  "qualification_boundary": "Actual full-size runtime/disk/RAM/six-hour and publication/restore qualification remains required by the existing design and MAIN gate. Source CI and actual qualification must use committed source: git ls-files intentionally sees tracked paths; new v6 files are still untracked at this local review. No additional execution or scientific result is certified here.",
+  "validation_evidence": "Read-only source inspection only; no tests, capture, model fitting, replay, network or Actions performed by this reviewer. Root separately reports 32 focused tests, actionlint, bash syntax, compileall and diff checks passing; full pytest still pending at review.",
+  "readset_sha256": {
+    "docs/PROTOCOL_V6.md": {
+      "bytes": 6551,
+      "sha256": "14f021147547a97fff6cc5c9b65fe4511fe71f1f9a0a07dd24680d5ed53d7589"
+    },
+    "src/ebpf_discovery/plan_v6.py": {
+      "bytes": 2135,
+      "sha256": "735efd240f4044298f68f413583ef4bcc4d0e0630894f1ac9c6f11bf8dc1aad6"
+    },
+    "src/ebpf_discovery/collectors_v6.py": {
+      "bytes": 4717,
+      "sha256": "dab28dcafbad7b347c8f62f0c7bd43f39f402336b29907a0d70aa5f4c3c17e7d"
+    },
+    "src/ebpf_discovery/study_v6.py": {
+      "bytes": 15678,
+      "sha256": "d7402fcd88e98a7060260c9806aef893e3e56b0d7a9c00c6b88c9ebf3233cb47"
+    },
+    "src/ebpf_discovery/validation_v6.py": {
+      "bytes": 14377,
+      "sha256": "5a6cd86dfb814cfc5e66c062321543e9f4d463cbfaac6b5c8f3b2336cf343482"
+    },
+    "src/ebpf_discovery/capture_checks_v6.py": {
+      "bytes": 4458,
+      "sha256": "3097c720922d03c0f5fe0d1d1847e657a06d95155727ad2b4240321d17c9621d"
+    },
+    "src/ebpf_discovery/block_v6.py": {
+      "bytes": 29402,
+      "sha256": "42be03758d0a3aa075592d7bd35b67c24b65eac1f76b3573b3681cc649a63a45"
+    },
+    "src/ebpf_discovery/deployment_v6.py": {
+      "bytes": 20882,
+      "sha256": "9e137ca035b2ea41689de5c59613ac705c3f9eeb3cf1e8bd7c74a0a94e73910e"
+    },
+    "src/ebpf_discovery/resources_v6.py": {
+      "bytes": 3790,
+      "sha256": "04488004ec6381e02a2de408a290b342b30904b2b3a8f9c54ec69b40320b6e0e"
+    },
+    "src/ebpf_discovery/evaluate_v5.py": {
+      "bytes": 11130,
+      "sha256": "1b702ad97010f7b03a3f79b8321832d56b831c4683ba8b06b6ea652ee4a57f1c"
+    },
+    "src/ebpf_discovery/collectors_v5.py": {
+      "bytes": 74103,
+      "sha256": "9dbbd278594d6648ccf6a8297add1d26915608ca5cb4d791d2e7acdd00c68331"
+    },
+    "src/ebpf_discovery/evaluate_v4.py": {
+      "bytes": 47733,
+      "sha256": "7963414a1468e508e9e566802793c5b9c891030ccada02bda57a3d5216b1bb0a"
+    },
+    "src/ebpf_discovery/toolchain_v5.py": {
+      "bytes": 31837,
+      "sha256": "dfa3b781244de30c6270aef56791a3edd9ccd0d2345c3d701fb661613426cbd8"
+    },
+    "systems/otel_demo/adapter.py": {
+      "bytes": 103764,
+      "sha256": "40a6f6d1e0f7f3afbc80ba812555d2b95047962caa9bc10d98b4d5e8d619f8e2"
+    },
+    "scripts/vms-v6.sh": {
+      "bytes": 14558,
+      "sha256": "7eaca2a5b6c7d29a036bef10c9bc558ae838a54ac6d41a939f2e5f9f259fa0b4"
+    },
+    ".github/workflows/series-v6.yml": {
+      "bytes": 19637,
+      "sha256": "57a81269a1a9eed1eef4410b0955f439891e26c7cd89a776c83c8d351c578567"
+    },
+    ".github/workflows/checks.yml": {
+      "bytes": 2143,
+      "sha256": "6956a09704c140a98b6dd16ed78c481af75ed0d322729187ffba59e9d949d66f"
+    },
+    "pyproject.toml": {
+      "bytes": 400,
+      "sha256": "c7e8aec5925cb12ab7a5cee25552967fb598cf451900941f73009937fa81d5da"
+    }
+  }
+}

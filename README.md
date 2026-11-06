@@ -1,5 +1,16 @@
 # Graph discovery from eBPF observations and external outcome prediction
 
+The user authorized a **new controlled 108-cell study** on 6 November 2026.
+The [v6 protocol](docs/PROTOCOL_V6.md) adds actual no-agent runtime controls and
+fresh, separate training and prospective validation deployments. No historical
+measurements fill the new matrix. The new `series-v6.yml` workflow first runs
+technical qualification; main execution is blocked until actual full-size
+resource and evidence-transfer qualification is independently reviewed.
+
+The completed 81-cell study below is historical. Its SDK-only input was a source
+projection collected while an eBPF agent also ran; it was not a clean SDK-only
+runtime control. Its results and costs remain preserved.
+
 **Completed matched scientific review: 81 of 81 main cases.**
 
 All 27 OBI, 27 Coroot and 27 DeepFlow cases have passed both original-criterion

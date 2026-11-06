@@ -142,13 +142,14 @@ def _integrity(root: Path, frozen: dict, forecasts: dict, *, paired_context_base
 
 
 def _completeness(records: list[dict], plans: list[dict], census: list[dict], *,
-                  expected_phases=None, expected_states=None) -> dict:
+                  expected_phases=None, expected_states=None, included_phases=None) -> dict:
     """Validate the fixed primary acquisition and its three durable identity views."""
     expected_phases = EXPECTED_PHASE_COUNTS if expected_phases is None else expected_phases
     expected_states = EXPECTED_TARGET_STATES if expected_states is None else expected_states
-    primary = [row for row in records if row.get("phase") in PRIMARY_PHASES]
-    primary_plans = [row for row in plans if row.get("phase") in PRIMARY_PHASES]
-    primary_census = [row for row in census if row.get("phase") in PRIMARY_PHASES]
+    included_phases = PRIMARY_PHASES if included_phases is None else included_phases
+    primary = [row for row in records if row.get("phase") in included_phases]
+    primary_plans = [row for row in plans if row.get("phase") in included_phases]
+    primary_census = [row for row in census if row.get("phase") in included_phases]
     phase_counts = {phase: sum(row.get("phase") == phase for row in primary)
                     for phase in expected_phases}
     target = [row for row in primary if row.get("phase") == "target"]

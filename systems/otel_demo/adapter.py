@@ -192,7 +192,7 @@ class Adapter:
         # Services with direct SDK/exporter construction are built from the
         # pinned, recorded source patch. Builds happen only in Actions guests.
         build_services = "checkout email product-catalog-a"
-        if self.mode == "absent":
+        if self.mode == "absent" or getattr(self.ctx, 'v6_build_all_native_guards', False):
             build_services += " currency shipping"
         self._compose("a", f"build {build_services}", timeout=2400)
         self._compose("b", "build product-catalog-b", timeout=1800)
@@ -867,13 +867,14 @@ class Adapter:
             if name in DROP_SERVICES:
                 services.pop(name)
         source_builds = {"checkout", "email", "product-catalog"}
-        if self.mode == "absent":
+        if self.mode == "absent" or getattr(self.ctx, 'v6_build_all_native_guards', False):
             source_builds.update({"currency", "shipping"})
         for name, service in services.items():
             if name in source_builds:
                 self._prefix_source_build(service)
                 service["image"] = (
-                    f"ebpf-study/otel-demo-{name}:{UPSTREAM_COMMIT[:12]}-{self.mode}"
+                    f"ebpf-study/otel-demo-{name}:{UPSTREAM_COMMIT[:12]}-"
+                    + ('guarded' if getattr(self.ctx, 'v6_build_all_native_guards', False) else self.mode)
                 )
             else:
                 service.pop("build", None)

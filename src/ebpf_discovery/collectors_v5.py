@@ -454,7 +454,8 @@ class CollectorsV5:
         if _returncode(server_start):
             raise RuntimeError(f"technical control server failed to start on {node}")
 
-    def positive_control(self, timeout: float = 60.0) -> dict[str, Any]:
+    def positive_control(self, timeout: float = 60.0, *, expect_ebpf: bool = True,
+                         fixed_window: bool = False) -> dict[str, Any]:
         """Prove selected eBPF origin with a non-SDK container HTTP exchange."""
         marker = f"collector-control-v5-{self.collector}-{time.time_ns()}"
         nodes: dict[str, Any] = self._control_nodes()
@@ -616,15 +617,16 @@ class CollectorsV5:
 
             deadline = time.monotonic() + timeout
             while time.monotonic() < deadline:
-                self._before_control_proof_poll(marker)
-                proofs = {
-                    node: self._control_proof(node, marker) for node in ("a", "b")
-                }
-                if all(value["proven"] for value in proofs.values()):
+                if expect_ebpf:
+                    self._before_control_proof_poll(marker)
+                    proofs = {
+                        node: self._control_proof(node, marker) for node in ("a", "b")
+                    }
+                if expect_ebpf and not fixed_window and all(value["proven"] for value in proofs.values()):
                     break
                 self.health()
                 time.sleep(0.5)
-            if not proofs or not all(value["proven"] for value in proofs.values()):
+            if expect_ebpf and (not proofs or not all(value["proven"] for value in proofs.values())):
                 raise RuntimeError(f"{self.collector} eBPF positive control was not observed")
         except Exception as exc:
             failure = exc
@@ -766,12 +768,17 @@ class CollectorsV5:
                 "cleanup_failures": cleanup_failures,
                 "technical_failure": str(failure) if failure is not None else None,
             }
-            _write_json(self.root / "technical-positive-control.json", evidence)
+            if not expect_ebpf:
+                evidence.update(schema='no-agent-control-v6', expected_ebpf=False,
+                                absence_is_intentional_not_capture_failure=True,
+                                final_agent_absence=self.health())
+            _write_json(self.root / ("technical-positive-control.json" if expect_ebpf
+                                    else "technical-negative-control.json"), evidence)
             self.positive_control_evidence = evidence
 
         if failure is not None:
             raise failure
-        if not evidence["selected_ebpf_origin_proven"]:
+        if expect_ebpf and not evidence["selected_ebpf_origin_proven"]:
             raise RuntimeError(f"{self.collector} eBPF positive control was not observed")
         return evidence
 
