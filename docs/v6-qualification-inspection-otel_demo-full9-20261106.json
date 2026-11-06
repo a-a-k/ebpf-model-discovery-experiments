@@ -1,0 +1,285 @@
+{
+  "study": "clean-restart-v6",
+  "stage": "qualification",
+  "parent_record_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+  "parent_run_id": 42247350498,
+  "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+  "inspection_execution": {
+    "run_id": 42258796326,
+    "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+  },
+  "parent_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+  "shared_sha256": "482d9f1d7f057b1f165bb8241170c1f69a5e3cc93fd2847d16de8d91448833b5",
+  "golden_sha256": "b2e2d9edf12fa5ef82b28661966023e1b5fe08610691d8fe0d847269f7b3fd7a",
+  "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+  "closed_input_sha256_by_collector": {
+    "none": "e57795997d4692f396e3a5751072dcc7fd8537aba140e513c7e105e194c1119e",
+    "obi": "5c395c6684578bb48014269105862dbc5b4de3328058ad0df4e2b5465fcc1847",
+    "coroot": "1b1c3568c9639727c24ed6b8634b828984e10fed80e62c4b3b8c52841006f50f",
+    "deepflow": "4f2bb64293a1000e36dfd7984dc4401e1ac17d0b42b65567f8e6172d95900179"
+  },
+  "captures": [
+    {
+      "collector": "none",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 9,
+        "collector": "none",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42247350498",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "a1469559-2a6a-4d83-be3d-476555f1812a",
+        "started_ns": 1793982959976775941,
+        "status": "capture_complete",
+        "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+        "ended_ns": 1793983427309364119,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "e57795997d4692f396e3a5751072dcc7fd8537aba140e513c7e105e194c1119e",
+      "block_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13521334764,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMTMzNDc2NA==",
+        "name": "v6-training-none-42247350498",
+        "size_in_bytes": 13632372,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521334764",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521334764/zip",
+        "expired": false,
+        "digest": "sha256:333cc639fa0f0e1c0347aa4b7ede93b18bfa0849c042ef13c2c15aca3f853cbb",
+        "created_at": "2026-11-06T16:43:51Z",
+        "updated_at": "2026-11-06T16:43:51Z",
+        "expires_at": "2027-02-04T15:54:16Z",
+        "workflow_run": {
+          "id": 42247350498,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "af2f3b3755d603f4504e1c3ff2f7ea8f83c50dc24e508afad4efb6e943ad3c9d",
+      "inventory_sha256": "32184bba1756e6efe03e5cae4080eaff068a8fdc6f7cb4dea46bfb52cb1bd519",
+      "parent_record_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+      "processing_execution": {
+        "run_id": 42258796326,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985049538120006,
+        "free_bytes": 106251530240,
+        "incoming_bytes": 37201810,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "obi",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 9,
+        "collector": "obi",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42247350498",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "a1469559-2a6a-4d83-be3d-476555f1812a",
+        "started_ns": 1793982422324812207,
+        "status": "capture_complete",
+        "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+        "ended_ns": 1793982922475108920,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "5c395c6684578bb48014269105862dbc5b4de3328058ad0df4e2b5465fcc1847",
+      "block_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13521058689,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMTA1ODY4OQ==",
+        "name": "v6-training-obi-42247350498",
+        "size_in_bytes": 13919935,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521058689",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521058689/zip",
+        "expired": false,
+        "digest": "sha256:9f222de9a4643d72e3802093e636c2d0a42e5ef1eeafe192ff26f140c9c04fd5",
+        "created_at": "2026-11-06T16:35:26Z",
+        "updated_at": "2026-11-06T16:35:26Z",
+        "expires_at": "2027-02-04T15:54:16Z",
+        "workflow_run": {
+          "id": 42247350498,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "acdbb0ea93afbf6752bb842a326ebcc5b46e76ae6865ca94c37bf641be96c3bb",
+      "inventory_sha256": "9fa34803b8a4fa712bf50424fc7ed67e83d597f4c2b605d104071020886eaca4",
+      "parent_record_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+      "processing_execution": {
+        "run_id": 42258796326,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985051705379008,
+        "free_bytes": 106250833920,
+        "incoming_bytes": 42628490,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "coroot",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 9,
+        "collector": "coroot",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42247350498",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "a1469559-2a6a-4d83-be3d-476555f1812a",
+        "started_ns": 1793983464293304502,
+        "status": "capture_complete",
+        "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+        "ended_ns": 1793983978813812665,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "1b1c3568c9639727c24ed6b8634b828984e10fed80e62c4b3b8c52841006f50f",
+      "block_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13521809796,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMTgwOTc5Ng==",
+        "name": "v6-training-coroot-42247350498",
+        "size_in_bytes": 13928296,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521809796",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521809796/zip",
+        "expired": false,
+        "digest": "sha256:9c6eeade43d831a416449f62775477316c2b84ecd838ada477cf2535199768bb",
+        "created_at": "2026-11-06T16:53:02Z",
+        "updated_at": "2026-11-06T16:53:02Z",
+        "expires_at": "2027-02-04T15:54:16Z",
+        "workflow_run": {
+          "id": 42247350498,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "c324679cb14751138fda0b30c5fe45545e7652670f324739a89c668d9d194faa",
+      "inventory_sha256": "488fe32db6fbfeb24bf1278721186affd0e097606445634344c457ab5405ad30",
+      "parent_record_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+      "processing_execution": {
+        "run_id": 42258796326,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985054206902231,
+        "free_bytes": 106250579968,
+        "incoming_bytes": 40862184,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "deepflow",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "otel_demo",
+        "mode": "full",
+        "seed": 9,
+        "collector": "deepflow",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42247350498",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "a1469559-2a6a-4d83-be3d-476555f1812a",
+        "started_ns": 1793981837361989155,
+        "status": "capture_complete",
+        "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+        "ended_ns": 1793982383507916135,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "4f2bb64293a1000e36dfd7984dc4401e1ac17d0b42b65567f8e6172d95900179",
+      "block_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13521227146,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMTIyNzE0Ng==",
+        "name": "v6-training-deepflow-42247350498",
+        "size_in_bytes": 29783611,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521227146",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521227146/zip",
+        "expired": false,
+        "digest": "sha256:5648d08497d9a0df9b7d65e477261e022393d9545f5f770d53d9a449e9043fb0",
+        "created_at": "2026-11-06T16:26:29Z",
+        "updated_at": "2026-11-06T16:26:29Z",
+        "expires_at": "2027-02-04T15:54:16Z",
+        "workflow_run": {
+          "id": 42247350498,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "6bc9f55ad948ac9e81d435dec026348fec7a710e445ab2633f1bb91b5b1b05cc",
+      "inventory_sha256": "9687d1c3208110c8fdd4647f75d8384f9e2da5e4494cd8217f7be4643a54518e",
+      "parent_record_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+      "processing_execution": {
+        "run_id": 42258796326,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985057086898939,
+        "free_bytes": 106234429440,
+        "incoming_bytes": 222595691,
+        "reserve_bytes": 2147483648
+      }
+    }
+  ],
+  "models_or_VMs_or_targets_executed": false,
+  "scope": "Original immutable qualification training only; manual review required before replay"
+}

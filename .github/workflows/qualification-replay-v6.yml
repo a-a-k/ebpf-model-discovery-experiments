@@ -59,6 +59,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.shared_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/shared-input
@@ -69,6 +70,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.none_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/capture-input/none
@@ -79,6 +81,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.obi_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/capture-input/obi
@@ -89,6 +92,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.coroot_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/capture-input/coroot
@@ -99,6 +103,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.deepflow_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/capture-input/deepflow
@@ -167,6 +172,7 @@ jobs:
     - uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs[format('{0}_artifact_id', matrix.collector)] }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/capture-input/${{ matrix.collector }}
@@ -265,6 +271,7 @@ jobs:
     - uses: actions/download-artifact@v4
       with:
         artifact-ids: ${{ steps.parent.outputs.shared_artifact_id }}
+        merge-multiple: true
         run-id: ${{ steps.parent.outputs.parent_run_id }}
         github-token: ${{ github.token }}
         path: work/shared-input

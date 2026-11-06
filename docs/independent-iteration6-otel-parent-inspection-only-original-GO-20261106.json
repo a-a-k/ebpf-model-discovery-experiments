@@ -1,0 +1,145 @@
+{
+  "review": "Independent ORIGINAL exact OTel parent metadata INSPECTION-only GO",
+  "date": "2026-11-06",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "original_criterion_inspection_source_GO": true,
+  "independent_parent_metadata_inspection_GO": true,
+  "actual_inner_seals_reviewed": false,
+  "independent_replay_GO": false,
+  "original_main_execution_GO": false,
+  "actual_scientific_success_claim": false,
+  "prior_source_review": {
+    "path": "work/independent-iteration6-qualification-parent-inspection-source-original-GO-20261106.json",
+    "sha256": "3799d9a7b0f17fa2f2b39d08a5080fbacdee16459dec7e7aae721ef35a911352"
+  },
+  "current_source": "e09d9555e48bba37c88bb2726f9dcb2515830214",
+  "inspector_and_scientific_source_LF_identical_to_prior_review": true,
+  "official_API_metadata": {
+    "path": "work/v6-replay-otel-parent-API-metadata-20261106.json",
+    "bytes": 66325,
+    "sha256": "26784c3f0cb1e42802128826fc8b082e55c26ec70a9ed0bcf2a567ead1674b73"
+  },
+  "parent_tuple": {
+    "system": "otel_demo",
+    "mode": "full",
+    "repetition": 9,
+    "smoke": true,
+    "parent_run_id": 42247350498,
+    "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+    "shared_artifact": {
+      "id": 13522283164,
+      "name": "v6-shared-blueprint-42247350498",
+      "size_in_bytes": 3711644236,
+      "digest": "sha256:c9488e94482805397186b6ea1287a0ea6dcc0d13c529cecf83e5688f0404a305"
+    },
+    "training_artifacts": {
+      "none": {
+        "id": 13521334764,
+        "name": "v6-training-none-42247350498",
+        "size_in_bytes": 13632372,
+        "digest": "sha256:333cc639fa0f0e1c0347aa4b7ede93b18bfa0849c042ef13c2c15aca3f853cbb"
+      },
+      "obi": {
+        "id": 13521058689,
+        "name": "v6-training-obi-42247350498",
+        "size_in_bytes": 13919935,
+        "digest": "sha256:9f222de9a4643d72e3802093e636c2d0a42e5ef1eeafe192ff26f140c9c04fd5"
+      },
+      "coroot": {
+        "id": 13521809796,
+        "name": "v6-training-coroot-42247350498",
+        "size_in_bytes": 13928296,
+        "digest": "sha256:9c6eeade43d831a416449f62775477316c2b84ecd838ada477cf2535199768bb"
+      },
+      "deepflow": {
+        "id": 13521227146,
+        "name": "v6-training-deepflow-42247350498",
+        "size_in_bytes": 29783611,
+        "digest": "sha256:5648d08497d9a0df9b7d65e477261e022393d9545f5f770d53d9a449e9043fb0"
+      }
+    }
+  },
+  "exact_five_artifacts_match_official_API": true,
+  "actual_jobs": {
+    "training": {
+      "id": 127992948815,
+      "conclusion": "success",
+      "compute_step_conclusions": []
+    },
+    "model (deepflow)": {
+      "id": 128025132776,
+      "conclusion": "cancelled",
+      "compute_step_conclusions": [
+        "skipped"
+      ]
+    },
+    "model (obi)": {
+      "id": 128025132844,
+      "conclusion": "cancelled",
+      "compute_step_conclusions": [
+        "skipped"
+      ]
+    },
+    "model (none)": {
+      "id": 128025132887,
+      "conclusion": "cancelled",
+      "compute_step_conclusions": [
+        "skipped"
+      ]
+    },
+    "model (coroot)": {
+      "id": 128025132916,
+      "conclusion": "cancelled",
+      "compute_step_conclusions": [
+        "skipped"
+      ]
+    },
+    "validation": {
+      "id": 128025980201,
+      "conclusion": "cancelled",
+      "compute_step_conclusions": []
+    }
+  },
+  "actual_metadata_findings": "Original training SUCCESS with all five reviewed publications. Parent run CANCELLED after the four model jobs were cancelled in resource preparation; all four compute/forecast steps are SKIPPED. Validation job is CANCELLED. Cancellation does not invalidate the immutable published capture tuple and supplies no scientific outcome.",
+  "authorization": "Permit only root_inspection_GO=true and independent_inspection_GO=true for this exact draft tuple, with replay flags false, followed by source CI and Actions inspect-only metadata/journal-integrity checks. Supply new record hash after flag update. No VM/model/target/local raw download authorized by this proof.",
+  "original_criterion_baselines_and_costs": "Prior ORIGINAL108 criterion and source-review limits remain: prospective Bering/Sheaft operation-model feasibility with missing/partial SDK tracing, independent external outcomes, equal-information strongest direct/native/observed-edge/context union baselines, and complete preparation/failed/cancelled/inspection/replay/transfer/CI costs. Preserve adverse/negative/UNKNOWN. No cost-superiority, novelty or weaker-demo substitution.",
+  "limits": "Smoke technical qualification, not full-size phase-budget proof; full is SDK mode. Inner closed-input hashes, blueprint/golden seals and capture completeness await actual inspection. No replay, MAIN or scientific-success claim.",
+  "work_performed": "Read-only local saved API metadata and source-hash comparison; no network, tests, scientific processing, model or VM execution.",
+  "readset_sha256": {
+    "src/ebpf_discovery/qualification_replay_v6.py": {
+      "bytes": 25551,
+      "sha256": "aa022368835815b575842cea16eb5b96d4ba4560ebd8a8df3cdf2f68771ae7b4",
+      "LF_sha256": "aa022368835815b575842cea16eb5b96d4ba4560ebd8a8df3cdf2f68771ae7b4"
+    },
+    "src/ebpf_discovery/capture_checks_v6.py": {
+      "bytes": 6737,
+      "sha256": "f35dfb8998be9bf7944c2200de59b320d643af29c698015fba5e722befb9364a",
+      "LF_sha256": "f35dfb8998be9bf7944c2200de59b320d643af29c698015fba5e722befb9364a"
+    },
+    "src/ebpf_discovery/study_v6.py": {
+      "bytes": 16239,
+      "sha256": "a91572a12db37b8334c2038ececdfcfead3dfa462e795b4d5fea107787e85fe7",
+      "LF_sha256": "a91572a12db37b8334c2038ececdfcfead3dfa462e795b4d5fea107787e85fe7"
+    },
+    "src/ebpf_discovery/validation_v6.py": {
+      "bytes": 14389,
+      "sha256": "e7f48106d5359f57e423dbf73e2c639229d09dd2e670ef4807b15c13ca75061d",
+      "LF_sha256": "e7f48106d5359f57e423dbf73e2c639229d09dd2e670ef4807b15c13ca75061d"
+    },
+    "src/ebpf_discovery/block_v6.py": {
+      "bytes": 29857,
+      "sha256": "d77c4f1714d90a25d2864ecc0264a57b2e2bb1cdbf540030aef456b7ebfa0ca7",
+      "LF_sha256": "47dc674736a7ddd64891581fe1d465b2dff5be9b7a1110d921ebb601b6275fc5"
+    },
+    ".github/workflows/qualification-replay-v6.yml": {
+      "bytes": 19761,
+      "sha256": "6bd4f0d7c8e2c81a0d6992685e2ddc38a37098a5117b3ad056b485f3ccb0e208",
+      "LF_sha256": "7bce34a2706d8db81b98e9c2d8fff8db2a4483c715b99e7df8bf04b44a1fea80"
+    },
+    "docs/v6-qualification-parent-otel_demo-full9-inspection-20261106.json": {
+      "bytes": 1698,
+      "sha256": "bd1f1cc888d11f45989b128c08d5f302e821aed78bd0e6a4772ab0a40c3a749f",
+      "LF_sha256": "bd1f1cc888d11f45989b128c08d5f302e821aed78bd0e6a4772ab0a40c3a749f"
+    }
+  }
+}

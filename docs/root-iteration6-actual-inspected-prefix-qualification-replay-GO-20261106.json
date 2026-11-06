@@ -1,0 +1,27 @@
+{
+  "utc": "2026-11-06T17:23:02.334974+00:00",
+  "root_original_qualification_replay_GO": true,
+  "independent_original_qualification_replay_GO": true,
+  "MAIN_GO": false,
+  "full_size_phase_budgets_qualified": false,
+  "scientific_success_claimed": false,
+  "criterion_and_strongest_baselines": "Full108 original design unchanged. Same-information direct/native/cheap edge-union baselines and independent prospective external outcomes remain required.",
+  "scope": "Exact inspected DSB42245728196 andOTel42247350498 qualification prefixes only; all4 original closures and same original blueprint retained. New4 offline models perapp, all4 frozen before any fresh4-arm validation target. No training traffic replay or historical81 substitution.",
+  "inspection_records": [
+    {
+      "system": "deathstarbench",
+      "path": "docs/v6-qualification-inspection-deathstarbench-full9-20261106.json",
+      "sha256": "4aee6842db1f8a34818499ac8b6b5881253b11ec289a932b2c42289ae8d3d4bc"
+    },
+    {
+      "system": "otel_demo",
+      "path": "docs/v6-qualification-inspection-otel_demo-full9-20261106.json",
+      "sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e"
+    }
+  ],
+  "independent_review": {
+    "path": "docs/independent-iteration6-DSB-OTel-actual-inspected-prefix-qualification-replay-original-GO-20261106.json",
+    "sha256": "b9dfa66b98ed9b0264461f6f75d7894acc5879723b977c0c231979e9e0973343"
+  },
+  "costs": "All original failed model/preparation/CI/inspection/transfer work and new replay/validation/retention remain charged. These smoke completeness counts are not model utility or full-size feasibility."
+}

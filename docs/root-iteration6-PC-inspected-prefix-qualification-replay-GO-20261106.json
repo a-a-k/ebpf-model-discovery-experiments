@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-06T17:29:36.568076+00:00",
+  "root_original_qualification_replay_GO": true,
+  "independent_original_qualification_replay_GO": true,
+  "MAIN_GO": false,
+  "full_size_phase_budgets_qualified": false,
+  "scientific_success_claimed": false,
+  "criterion_and_baselines": "Unchanged full108 feasibility study, equally informed direct/native/cheap-union baseline and actual independent prospective outcomes.",
+  "scope": "Exact original4 Petclinic42245722271 qualification captures and blueprint; actualinspection42258789780 verifiesallsource bytes and20unscoredpreparations+12class_train+16calibration perarm. New4offline models, all4frozen beforefresh4-armvalidation; no newtraining/old81substitution.",
+  "report_sha256": "c3dad84f88f7a8ab478ba859d768b1ef87f61633b2c9673f54d16755a9978d46",
+  "independent_review": {
+    "path": "docs/independent-iteration6-PC-actual-inspected-prefix-qualification-replay-original-GO-20261106.json",
+    "sha256": "7498fc250cd018b91c9932c596c23040622cfa426af25e2118c95e9f7528fa11"
+  },
+  "costs": "All original failed preparation/model/CI/inspection/transfer work plus allreplay/validation/retention retained, no retry-until-positive."
+}
