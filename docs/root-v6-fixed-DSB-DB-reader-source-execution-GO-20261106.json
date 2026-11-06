@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-06",
+  "root_original_fixed_reader_source_GO": true,
+  "root_fixed_execution_GO_after_CI": true,
+  "MAIN_GO": false,
+  "actual_DB_fault_or_cause_claimed": false,
+  "scope": "One Actions-only read of the four exact preserved DSB/full/rep9 smoke validation publications. No application, VM, model, target, refit, repair or positive-result rerun.",
+  "original_criterion": "Truthful missing/partial-SDK model feasibility and external-outcome evaluation remains unchanged. An adverse compose DB baseline result is preserved; inspect factual intervention evidence before interpreting it.",
+  "baseline": "Direct preserved-file inspection; no model or inference replaces original evidence. Same original bytes/semantic knowledge, body-free literal selected facts and UNKNOWN where evidence is missing.",
+  "root_review": "Read complete processing code, source profile and workflow. API and whole ZIP bytes/digest, CRC, whole tar and every member bytes/SHA/mode/census plus original closed-input identity are checked. Parse only fixed metadata paths, whitelist selected DB state/clock/control/config/outcome fields and preserve absence as UNKNOWN. Sequential exact cloud delivery release; no local original data.",
+  "engineering_validation": {
+    "embedded_integrity_and_projection_fixtures": 8,
+    "compile": "PASS",
+    "actionlint": "PASS",
+    "diff_check": "PASS"
+  },
+  "implementation_sha256": {
+    "scripts/inspect-v6-DSB-db-control.py": "8365f84457f6a94acf914fc377bfdbf6c2f142a61f7fe1a933abaf7bfa736b91",
+    ".github/workflows/inspect-v6-dsb-db-control.yml": "02cf9ef9a46aa5844d618d2f7e176e1bd4a0261a92077c58a02d342900683b78",
+    "docs/v6-DSB-db-control-fixed-source-20261106.json": "9e4da5cdaa94dbaf857810448a2f9e94294e43cf9cfdf8862cae2a4a0c37b63f"
+  },
+  "independent_original_review": {
+    "original_work_path": "work/independent-v6-DSB-fixed-DB-reader-source-execution-original-GO-20261106.json",
+    "original_work_sha256": "7399e4e96edb3a8fa941a14418fbee0acb421875ed2767e54a4ae3091e433016",
+    "published_path": "docs/independent-v6-DSB-fixed-DB-reader-source-execution-original-GO-20261106.json",
+    "published_sha256": "0d00ee8d3a5cdb6997b34c5a7f658f81c7c0dbd3869f6fcf9a241758eafaaf0e"
+  },
+  "costs": "Retain all download/decompression/hash/selection/CI/control/review/failure/retention costs. No ordinary wall-time intervals relabelled CPU/billing. This reader's result does not open MAIN or certify continuous downtime, cache behaviour or durability."
+}
