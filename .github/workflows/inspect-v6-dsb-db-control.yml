@@ -1,0 +1,45 @@
+name: Fixed preserved DSB DB-control metadata inspection v6
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src:.
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            docs
+            scripts
+            src
+            systems
+            pyproject.toml
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: Record full standard worker resources
+        run: python -m ebpf_discovery.resources_v6 --report work/v6-DSB-db-control/host-resources.json
+      - name: Check fixed metadata projection and rejection boundaries
+        run: python scripts/inspect-v6-DSB-db-control.py --self-test
+      - name: Inspect exactly four preserved publications sequentially
+        run: python scripts/inspect-v6-DSB-db-control.py
+      - name: Retain small derived metadata and actual failure costs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-DSB-fixed-DB-control-inspection-${{ github.run_id }}
+          path: |
+            work/v6-DSB-db-control/inspection.json
+            work/v6-DSB-db-control/host-resources.json
+          if-no-files-found: warn
+          compression-level: 6

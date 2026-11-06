@@ -1,0 +1,67 @@
+{
+  "schema": "v6-DSB-db-control-fixed-source-v1",
+  "study": "clean-restart-v6",
+  "system": "deathstarbench",
+  "mode": "full",
+  "seed": 9,
+  "stage": "qualification",
+  "smoke": true,
+  "scope": "Sequential read-only inspection of these four preserved validation publications; no VM, workload, model or replay. Body-free DB-control metadata only.",
+  "original_design_path": "work/independent-v6-DSB-preserved-DB-fault-fixed-artifact-inspection-design-GO-20261106.json",
+  "original_design_sha256": "5d709b8abf95bfbd03b2d96f98deb2fd296f4e1d7035f0dddd8fb38faf46f1fe",
+  "inputs": [
+    {
+      "collector": "none",
+      "id": 13526444496,
+      "name": "v6-validation-none-42261604262",
+      "size_in_bytes": 224838728,
+      "digest": "sha256:a1f1432589f9ad29bf9db13df75475f7f5bc46521c53c7c28a2dd5fcc9c50097",
+      "closed_input_sha256": "fef9e83ca6863fd329107599e3890f5036af1c0343aaa81a7773928dca8c2c0e",
+      "run_id": 42261604262,
+      "source": "fb8ca39df2d302baf11301cb09b65c32991cb567"
+    },
+    {
+      "collector": "obi",
+      "id": 13526507674,
+      "name": "v6-validation-obi-42261604262",
+      "size_in_bytes": 225631286,
+      "digest": "sha256:c0b98fd797cb54556fdb574f0f6b04e74dd33048b1babc1cd4c46b9c004e40c5",
+      "closed_input_sha256": "03fab8a45b6ac13e197865088ad44e0334c11114d7898f0aeeb5b11e2cf5677b",
+      "run_id": 42261604262,
+      "source": "fb8ca39df2d302baf11301cb09b65c32991cb567"
+    },
+    {
+      "collector": "coroot",
+      "id": 13528141536,
+      "name": "v6-validation-coroot-42261604262",
+      "size_in_bytes": 225856400,
+      "digest": "sha256:09f09c02978f492dcefad1952921ebf3a2119724650b2243fdb9ab8c0706644a",
+      "closed_input_sha256": "8ca22787a45bf4e6e66e1501c24f1a7823d3ef721be2de01c94e4748e12519d7",
+      "run_id": 42261604262,
+      "source": "fb8ca39df2d302baf11301cb09b65c32991cb567"
+    },
+    {
+      "collector": "deepflow",
+      "id": 13527558332,
+      "name": "v6-validation-deepflow-42261604262",
+      "size_in_bytes": 236479760,
+      "digest": "sha256:a74cc44b7cd7a2a8eceebb3201f4aeae7f7bd42b914602dee6cb5014f52f7e7a",
+      "closed_input_sha256": "03e1f844ae2a747e4c8479abf8bf2b2830a1928b716b0f767b6b4cad9e12e43a",
+      "run_id": 42261604262,
+      "source": "fb8ca39df2d302baf11301cb09b65c32991cb567"
+    }
+  ],
+  "selected_database": {
+    "guest": "a",
+    "service": "user-timeline-mongodb",
+    "container": "dsb-user-timeline-mongodb"
+  },
+  "limitations": [
+    "Before/after snapshots do not prove continuous downtime.",
+    "HTTP compose acknowledgement is not Mongo durable-write evidence.",
+    "No inferred cache, async or lost-write mechanism; missing evidence is UNKNOWN.",
+    "All old and new failures and costs remain; MAIN not authorized."
+  ],
+  "MAIN_GO": false,
+  "scientific_success_claimed": false
+}
