@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-06",
+  "root_original_fixed_pair_source_GO": true,
+  "independent_original_fixed_pair_source_GO": true,
+  "fixed_pair_execution_GO_after_source_CI": true,
+  "MAIN_GO": false,
+  "actual_observers_qualified": false,
+  "scope": "One fixed-pair Actions-only preserved-file metadata read of completed full42270204944 and partial42271828792 context diagnostics. No new observer, VM, traffic, model, target or refit.",
+  "original_criterion_and_baseline": "Original full108 feasibility/external-outcome criterion unchanged. Inspect direct literal SDK/span/header/wire/config/driver evidence with the same information; global technical success does not certify actual observer behaviour. Missing/adverse/UNKNOWN are retained, not positive-result reruns.",
+  "workflow": {
+    "path": ".github/workflows/inspect-v6-context-witnesses.yml",
+    "bytes": 20299,
+    "sha256": "c0ae47b968aeb3fe05f41492ca212473c1e4ad2f6490cc5b51332dd967731b00"
+  },
+  "root_review": "Read complete fixed workflow, whitelist projection, provenance and stream-integrity code. Exact API+whole ZIP/CRC, whole tar and every member bytes/SHA/mode/census and diagnostic-plan origin checked before metadata use. No original pcap/native/journal/model/image archive is exported locally. Body-free operation/driver projection and original body-free SDK/HTTP2 events retain all three arms/conditions. Input paths and both source/digest tuples match approved design.",
+  "independent_review": "/root/ebpf_actual7_skeptic explicitly granted ORIGINAL source+fixed-pair execution GO after reading the exact20299-byte file and confirming its hash, both exact publication tuples, complete stream integrity, sealed origin, body-free whitelist, UNKNOWN handling and absence of new runtime execution or generic framework.",
+  "validation": {
+    "inline_compile": "PASS",
+    "actionlint": "PASS",
+    "synthetic_corruption_and_body_free_checks": "PASS per implementer; engineering fixtures, not actual original observations"
+  },
+  "costs": "Count cloud downloads, decompression, hashing, selected metadata projection, sourceCI/review, failures and retention. Sequential two original publications only; ephemeral copies released after verified integrity, originals unchanged.",
+  "qualification_boundary": "Actual observer qualification still requires review of pinned hook/source/version, natural/sampled/unsampled SpanContext/IsRecording and the intended HTTP2 edge. No causal header-writer attribution is supplied by identifier matches."
+}

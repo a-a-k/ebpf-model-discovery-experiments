@@ -194,7 +194,7 @@ jobs:
         path: work/model-host-resources.json
         if-no-files-found: warn
         compression-level: 6
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         name: v6-training-${{ matrix.collector }}-${{ github.run_id }}
         path: work/capture-input
@@ -271,11 +271,11 @@ jobs:
         path: work/validation-host-resources.json
         if-no-files-found: warn
         compression-level: 6
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         name: v6-shared-blueprint-${{ github.run_id }}
         path: work/shared-input
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         pattern: v6-model-*-${{ github.run_id }}
         path: work/model-input

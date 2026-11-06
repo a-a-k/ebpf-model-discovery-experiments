@@ -1,0 +1,307 @@
+name: Fixed preserved context-witness metadata v6
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src:.
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            docs
+            scripts
+            src
+            systems
+            pyproject.toml
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retain the full standard worker envelope
+        run: python -m ebpf_discovery.resources_v6 --report work/context-inspection/host-resources.json
+      - name: Read exactly the two preserved diagnostic publications
+        run: |
+          python - <<'PY'
+          import hashlib, io, json, os, pathlib, re, shutil, stat, tarfile, time
+          import urllib.error, urllib.parse, urllib.request, zipfile
+
+          # Fixed ORIGINAL saved-file design: no input selector, VM, model or repeat.
+          REPO = 'a-a-k/ebpf-model-discovery-experiments'
+          INPUTS = [
+              dict(mode='full', run_id=42270204944, source='bcd54be4cd46804bb1f212716bc9615275e1aa24',
+                   artifact_id=13532667081, bytes=746652659,
+                   digest='sha256:9b84d8339888189ae720e5cf53c0101edff890600ab09393af66c31194443cec'),
+              dict(mode='partial', run_id=42271828792, source='6dd0f34c32905753c8fb9d0bedb1d6ef7eb9e0ee',
+                   artifact_id=13533550170, bytes=760508155,
+                   digest='sha256:b7da56d3e803cda1187559e391f01ed73e3b7398401fb3b56135f9c564078966')]
+          ARMS = ('none', 'obi-all', 'obi-off')
+          RESERVE = 2 * 1024**3
+          CHUNK = 1024**2
+
+          def sha(path):
+              with path.open('rb') as stream:
+                  return hashlib.file_digest(stream, 'sha256').hexdigest()
+
+          def keep(value, names):
+              return {name:value[name] for name in names if name in value}
+
+          def guard(root, incoming):
+              value = dict(at_ns=time.time_ns(), free_bytes=shutil.disk_usage(root).free,
+                           incoming_bytes=incoming, reserve_bytes=RESERVE)
+              if value['free_bytes'] < incoming + RESERVE:
+                  raise OSError('actual free bytes cannot hold this single fixed publication')
+              return value
+
+          def safe(name):
+              path = pathlib.PurePosixPath(name)
+              if (not name or path.is_absolute() or '..' in path.parts or '\\' in name
+                      or ':' in name or path.as_posix() != name):
+                  raise ValueError('unsafe original member name')
+              return name
+
+          def api_request(path):
+              return urllib.request.Request('https://api.github.com/repos/'+REPO+'/'+path,
+                  headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],
+                           'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2026-03-10'})
+
+          class NoRedirect(urllib.request.HTTPRedirectHandler):
+              def redirect_request(self, request, fp, code, msg, headers, newurl):
+                  return None
+
+          def download(fixed, destination):
+              try:
+                  response = urllib.request.build_opener(NoRedirect).open(
+                      api_request(f"actions/artifacts/{fixed['artifact_id']}/zip"), timeout=60)
+              except urllib.error.HTTPError as error:
+                  if error.code != 302: raise
+                  target = error.headers.get('Location', '')
+                  parsed = urllib.parse.urlsplit(target)
+                  if parsed.scheme != 'https' or not parsed.hostname or not any(parsed.hostname.endswith(suffix)
+                          for suffix in ('.blob.core.windows.net','.githubusercontent.com','.actions.githubusercontent.com')):
+                      raise ValueError('unexpected signed delivery host')
+                  response = urllib.request.urlopen(urllib.request.Request(target), timeout=60)
+              digest, total = hashlib.sha256(), 0
+              with response, destination.open('xb') as output:
+                  while chunk := response.read(CHUNK):
+                      total += len(chunk)
+                      if total > fixed['bytes']: raise ValueError('ZIP exceeds approved exact size')
+                      digest.update(chunk); output.write(chunk)
+              if total != fixed['bytes'] or 'sha256:'+digest.hexdigest() != fixed['digest']:
+                  raise ValueError('whole original ZIP bytes/SHA differ')
+              return dict(bytes=total, sha256=digest.hexdigest())
+
+          def selected(name):
+              top = ('diagnostic-plan.json','diagnostic-summary.json','parent-import-receipt.json',
+                     'parent-block-plan.json','diagnostic-parent-record.json','context-controller-cost.jsonl',
+                     'context-preflight-status.json','context-run-status.json','host-resources.json')
+              if name in top: return True
+              return any(name == arm+'/'+leaf for arm in ARMS for leaf in
+                  ('sdk-summary.json','sdk-witness.jsonl','runtime-context-configuration.json',
+                   'driver-transports.json','operations.json','diagnostic-status.json',
+                   'wire/a/http2-witness.json','wire/b/http2-witness.json',
+                   'wire/a/capture-proof.json','wire/b/capture-proof.json',
+                   'wire/a/decode-command.json','wire/b/decode-command.json',
+                   'observations/collector.json'))
+
+          def headers(value):
+              return {name:item for name,item in (value or {}).items() if name.lower() in
+                  ('traceparent','tracestate','baggage','x-experiment-request-id','content-type','content-length')}
+
+          def container(value):
+              config = value.get('Config') or {}
+              return {**keep(value,('Id','Name','Image')),
+                  'SDK_OBI_environment':[item for item in config.get('Env',[]) if '=' in item and (
+                      item.split('=',1)[0].startswith('OTEL_') or item.split('=',1)[0] in
+                      ('NODE_OPTIONS','CONTEXT_WITNESS_V6_OUT'))],
+                  'mounts':[keep(row,('Type','Source','Destination','Mode','RW')) for row in value.get('Mounts',[])]}
+
+          def project(name, body):
+              if name.endswith('.jsonl'):
+                  value = [json.loads(line) for line in body.decode('utf8').splitlines() if line.strip()]
+              else:
+                  value = json.loads(body)
+              if name.endswith('/runtime-context-configuration.json'):
+                  agent = value.get('agent') or {}
+                  result = {**keep(value,('actual_source_sha256','observer_sha256','SDK_mode_preserved')),
+                            'frontend_container':container(value.get('frontend_container') or {}),
+                            'agent':keep(agent,('collector','context_propagation'))}
+                  result['agent']['nodes'] = {node:{**keep(row,('config_sha256',)),
+                      'container':container(row.get('container') or {})} for node,row in (agent.get('nodes') or {}).items()}
+                  return result
+              if name.endswith('/observations/collector.json'):
+                  return keep(value,('schema','collector','source_domain','source_version','source_commit',
+                      'image','config_summary','configs','resource_envelope','started_ns','lifecycle',
+                      'closed_checkpoint','technical_valid'))
+              if name.endswith('/driver-transports.json'):
+                  return [{**keep(row,('request_id','condition','method','url','started_ns','ended_ns','status')),
+                      'prespecified_headers':headers(row.get('prespecified_headers')),
+                      'actual_sent_headers':headers(row.get('actual_sent_headers'))} for row in value]
+              if name.endswith('/operations.json'):
+                  result = []
+                  for row in value:
+                      item = keep(row,('condition','operation','index','namespace','plan','status','started_ns','ended_ns'))
+                      plan = row.get('plan') or {}
+                      item['plan'] = {**keep(plan,('attempt_id','operation')),
+                          'http_steps':[keep(step,('request_id','method','path')) for step in plan.get('http_steps',[])]}
+                      actual = row.get('actual')
+                      if actual is None: item['actual'] = None
+                      else:
+                          item['actual'] = keep(actual,('operation','attempt_id','started_ns','ended_ns','success'))
+                          item['actual']['observation'] = keep(actual.get('observation') or {},
+                              ('policy','deadline_seconds','timestamp_eligibility_gate','termination'))
+                          item['actual']['http_steps'] = [keep(step,('ordinal','request_id','method','path','state',
+                              'status','started_ns','ended_ns','body_completed_ns','elapsed_ns','response_sha256'))
+                              for step in actual.get('http_steps',[])]
+                          item['actual']['not_attempted_steps'] = [keep(step,('ordinal','request_id','method','path','state'))
+                              for step in actual.get('not_attempted_steps',[])]
+                      result.append(item)
+                  return result
+              # These exact generated files contain span/header/runtime/cost metadata,
+              # never original HTTP bodies: SDK events/summary and decoded HTTP2 witness.
+              return value
+
+          def inspect_tar(path, package):
+              if path.stat().st_size != package['bytes'] or sha(path) != package['sha256']:
+                  raise ValueError('whole original tar differs from its inventory')
+              files, directories, seen, facts, claims = {}, set(), set(), {}, {}
+              with tarfile.open(path,'r|gz') as archive:
+                  for member in archive:
+                      name = safe(member.name)
+                      if name in seen or not (member.isfile() or member.isdir()) or member.mode & 0o7000:
+                          raise ValueError('duplicate/link/special original tar member')
+                      seen.add(name)
+                      if member.isdir(): directories.add(name); continue
+                      expected = package['files'].get(name)
+                      if expected is None or member.size != expected['bytes'] or stat.S_IMODE(member.mode) != expected['mode']:
+                          raise ValueError('original tar member size/mode differs')
+                      digest, total = hashlib.sha256(), 0
+                      output = io.BytesIO() if selected(name) else None
+                      stream = archive.extractfile(member)
+                      while chunk := stream.read(CHUNK):
+                          digest.update(chunk); total += len(chunk)
+                          if output is not None: output.write(chunk)
+                      claim = dict(bytes=total, sha256=digest.hexdigest(), mode=stat.S_IMODE(member.mode))
+                      if claim != expected: raise ValueError('original tar member bytes/SHA/mode differs')
+                      files[name] = claim
+                      if output is not None:
+                          claims[name] = claim
+                          try: facts[name] = project(name,output.getvalue())
+                          except (ValueError,TypeError,KeyError) as error:
+                              facts[name] = dict(verdict='UNKNOWN',reason='saved metadata cannot be interpreted: '+str(error))
+              if files != package['files'] or directories != set(package.get('directories',[])):
+                  raise ValueError('complete original tar member census differs')
+              for arm in ARMS:
+                  for leaf in ('sdk-summary.json','sdk-witness.jsonl','runtime-context-configuration.json',
+                               'driver-transports.json','operations.json','diagnostic-status.json',
+                               'wire/a/http2-witness.json','wire/b/http2-witness.json'):
+                      facts.setdefault(arm+'/'+leaf,dict(verdict='UNKNOWN',reason='member absent in preserved publication'))
+              return dict(facts=facts, selected_member_hashes=claims, verified_files=len(files),
+                  verified_uncompressed_file_bytes=sum(row['bytes'] for row in files.values()),
+                  complete_verified_inventory_sha256=hashlib.sha256(json.dumps(files,sort_keys=True,separators=(',',':')).encode()).hexdigest(),
+                  full_member_bytes_SHA_modes_and_census_verified=True)
+
+          if os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('GITHUB_REPOSITORY') != REPO:
+              raise RuntimeError('fixed preserved-file inspection is repository Actions only')
+          root = pathlib.Path('work/context-inspection').absolute()
+          if any(p.is_symlink() for p in (root,*root.parents)): raise ValueError('owned output path required')
+          root.mkdir(parents=True,exist_ok=True)
+          report = root/'context-witness-metadata.json'
+          if report.exists(): raise FileExistsError('never overwrite a previous inspection attempt')
+          result = dict(scope='Fixed saved-file inspection only; no observer qualification, model, VM or traffic',
+              MAIN_GO=False, actual_observers_qualified=False, started_ns=time.time_ns(), status='started', inputs=[])
+          result['execution'] = dict(run_id=os.environ['GITHUB_RUN_ID'],source=os.environ['GITHUB_SHA'])
+          def save():
+              pending = report.with_suffix('.pending')
+              pending.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8')
+              os.replace(pending,report)
+          save()
+          try:
+              for fixed in INPUTS:
+                  row = dict(fixed_input=fixed,started_ns=time.time_ns(),status='started')
+                  result['inputs'].append(row); save()
+                  folder = root/fixed['mode']; folder.mkdir()
+                  cpu = os.times()
+                  try:
+                      with urllib.request.urlopen(api_request(f"actions/artifacts/{fixed['artifact_id']}"),timeout=60) as response:
+                          actual = json.load(response)
+                      origin = actual.get('workflow_run') or {}
+                      if ((actual.get('id'),actual.get('name'),actual.get('size_in_bytes'),actual.get('digest'),
+                           actual.get('expired'),origin.get('id'),origin.get('head_sha')) != (
+                           fixed['artifact_id'],f"separate-context-v6-{fixed['mode']}-{fixed['run_id']}",fixed['bytes'],
+                           fixed['digest'],False,fixed['run_id'],fixed['source'])):
+                          raise ValueError('actual immutable publication API identity differs')
+                      row['actual_artifact_API'] = keep(actual,('id','name','size_in_bytes','digest','expired','workflow_run'))
+                      row['predownload_guard'] = guard(root,fixed['bytes'])
+                      original = folder/'original.zip'; row['whole_ZIP'] = download(fixed,original)
+                      with zipfile.ZipFile(original) as archive:
+                          members = archive.infolist()
+                          allowed = {'context-diagnostic.tar.gz','context-diagnostic.tar.gz.json',
+                              'context-diagnostic/diagnostic-summary.json','context-diagnostic/host-resources.json',
+                              'context-diagnostic/context-controller-cost.jsonl'}
+                          names = [safe(member.filename) for member in members]
+                          if len(set(names)) != len(names) or not set(names).issubset(allowed) or not {
+                                  'context-diagnostic.tar.gz','context-diagnostic.tar.gz.json'}.issubset(names):
+                              raise ValueError('unexpected original fixed ZIP layout')
+                          row['preunwrap_guard'] = guard(root,sum(member.file_size for member in members))
+                          zipped, outer = {}, {}
+                          for member in members:
+                              if member.is_dir() or stat.S_IFMT(member.external_attr>>16) not in (0,stat.S_IFREG) or member.flag_bits&1:
+                                  raise ValueError('ZIP must contain ordinary unencrypted files')
+                              digest, total = hashlib.sha256(), 0
+                              destination = folder/member.filename if '/' not in member.filename else None
+                              output = destination.open('xb') if destination else io.BytesIO()
+                              with archive.open(member) as stream:
+                                  while chunk := stream.read(CHUNK):
+                                      digest.update(chunk); total += len(chunk); output.write(chunk)
+                              if destination: output.close()
+                              else: outer[member.filename] = project(member.filename.split('/',1)[1],output.getvalue())
+                              if total != member.file_size: raise ValueError('incomplete original ZIP member')
+                              zipped[member.filename] = dict(bytes=total,sha256=digest.hexdigest(),ZIP_CRC32=f'{member.CRC:08x}')
+                      row.update(ZIP_members=zipped,all_ZIP_members_EOF_CRC_verified=True,outer_metadata=outer)
+                      tar = folder/'context-diagnostic.tar.gz'
+                      package_file = folder/'context-diagnostic.tar.gz.json'
+                      package = json.loads(package_file.read_text(encoding='utf8'))
+                      row['derived'] = inspect_tar(tar,package)
+                      plan = row['derived']['facts'].get('diagnostic-plan.json') or {}
+                      if (plan.get('schema'),plan.get('mode'),str(plan.get('execution_run_id')),plan.get('execution_source')) != (
+                              'separate-context-diagnostic-v6',fixed['mode'],str(fixed['run_id']),fixed['source']):
+                          raise ValueError('sealed diagnostic plan origin differs from fixed publication')
+                      for path in (original,tar,package_file):
+                          if path.is_symlink() or path.parent != folder: raise ValueError('foreign delivery release')
+                      if sha(original) != row['whole_ZIP']['sha256'] or sha(tar) != package['sha256'] or sha(package_file) != zipped[package_file.name]['sha256']:
+                          raise ValueError('verified delivery changed before release')
+                      for path in (original,tar,package_file): path.unlink()
+                      row.update(status='complete',verified_ephemeral_deliveries_released=True,cloud_original_untouched=True)
+                  except BaseException as error:
+                      row.update(status='failed',error=repr(error)); raise
+                  finally:
+                      ended = os.times()
+                      row.update(ended_ns=time.time_ns(),CPU_seconds={key:getattr(ended,key)-getattr(cpu,key)
+                          for key in ('user','system','children_user','children_system')},free_bytes_after=shutil.disk_usage(root).free)
+                      save()
+              result['status'] = 'complete'
+          except BaseException as error:
+              result.update(status='failed',error=repr(error)); raise
+          finally:
+              result['ended_ns'] = time.time_ns(); save()
+              print(json.dumps(dict(output=str(report),bytes=report.stat().st_size,sha256=sha(report),status=result['status'])))
+          PY
+      - name: Retain only derived metadata and actual inspection resources
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-fixed-context-witness-metadata-${{ github.run_id }}
+          path: |
+            work/context-inspection/context-witness-metadata.json
+            work/context-inspection/host-resources.json
+          if-no-files-found: warn
+          compression-level: 6
