@@ -73,6 +73,23 @@ implementation. Exact source, none-mode, source transfer, fixture/blueprint
 equivalence and actual full-size resource qualification precede main dispatch.
 Short qualification traffic establishes mechanics, never empirical success.
 
+A prospective amendment registered on 6 November 2026, before any full-count
+forecast or validation target existed, reserves three exact new full-count runs
+for the scheduled full-SDK repetition 9: Petclinic 42267236483, OTel Demo
+42267248120 and DeathStarBench 42267262342. Their twelve scientific cells keep
+their original sealed `stage=qualification`, source, bytes and costs. The separate
+`v6-full3-prospective-inclusion-registration-20261106.json` records this scientific
+role and the pre-forecast public commit. This explicitly replaces the earlier
+blanket qualification-exclusion rule only for these three registered runs.
+
+All three are selected before their results, irrespective of future availability,
+accuracy or adverse/UNKNOWN outcomes. Original technical completeness and failure
+rules remain; registration alone completes no cell or establishes success. No
+historical, short-smoke or auxiliary observation is substituted. Workloads,
+controls, pairing, baselines and prospective freezing remain identical. Count a
+dual-use run once in cumulative costs. The remaining 24 blocks / 96 cells still
+require the actual full-size resource and source review before dispatch.
+
 Each training, model and validation job must fit its actual hosted six-hour
 limit with retained evidence and publication reserve. Measure worst-size
 inputs, memory, disk, image restore and processing before opening the matrix.

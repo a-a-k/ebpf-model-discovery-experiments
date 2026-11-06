@@ -25,7 +25,7 @@
   "root_original_design_GO": true,
   "independent_original_design_GO": true,
   "root_actual_source_state_GO": true,
-  "independent_actual_source_state_GO": false,
+  "independent_actual_source_state_GO": true,
   "completed_scientific_cells": 0,
   "remaining24_MAIN_dispatch_GO": false,
   "full_size_phase_budgets_qualified": false,
@@ -1198,5 +1198,8 @@
     }
   ],
   "cost_policy": "Count each dual-use actual run once while assigning budget/scientific roles explicitly. Retain every old/new preparation, failure, early stop, control, transfer, CI/review/retention cost; human/unmetered costs unknown. No invented saving or CPU/billing interpretation.",
-  "main_gate": "Remaining24blocks96cells stay blocked until actual full-size/source/resource review and both ORIGINAL executionGOs. These12 are not completed or successful by registration; actual capture, forecasts and independent targets remain required."
+  "main_gate": "Remaining24blocks96cells stay blocked until actual full-size/source/resource review and both ORIGINAL executionGOs. These12 are not completed or successful by registration; actual capture, forecasts and independent targets remain required.",
+  "approved_utc": "2026-11-06T20:03:34.104568+00:00",
+  "public_pre_forecast_draft_commit": "890d5847ce7d84d27841928256d511ca26a7addf",
+  "independent_actual_verdict": "FINAL ORIGINAL actual source/state scientific-inclusion GO by /root/ebpf_actual7_skeptic for exact candidate SHA99848e38dcd2f86151cef59f2642705d0a3c41306cd642365c0900e18e512f26. Fresh GitHub API independently showed ONLY training/no model/no validation in all3runs; independently matched all169original source blobs and primaryworkflow pin-only delta. No scope reduction, output selection, completed-cell or remaining-dispatch approval."
 }
