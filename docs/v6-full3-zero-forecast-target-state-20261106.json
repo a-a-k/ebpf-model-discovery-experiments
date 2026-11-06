@@ -1,0 +1,545 @@
+{
+  "observed_utc": "2026-11-06 19:53:15 UTC",
+  "all_three_full_runs_still_training": true,
+  "no_full_forecasts_or_validation_targets_yet": true,
+  "completed_scientific_cells": 0,
+  "runs": [
+    {
+      "run": {
+        "conclusion": null,
+        "created_at": "2026-11-06T18:03:37Z",
+        "display_title": "v6 qualification petclinic/full r9 full",
+        "event": "workflow_dispatch",
+        "head_sha": "9d6414e8824331d368d1732a15200cdad691350b",
+        "id": 42267236483,
+        "run_attempt": 1,
+        "run_started_at": "2026-11-06T18:03:37Z",
+        "status": "in_progress",
+        "workflow_id": 409455730
+      },
+      "jobs": [
+        {
+          "id": 128062224596,
+          "name": "training",
+          "status": "in_progress",
+          "conclusion": null,
+          "run_id": 42267236483,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e . opentelemetry-proto",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare full worker resources and retain the platform envelope",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Publish actual training worker resources before long work",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Capture fresh training slot 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Package lossless complete or partial training capture 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Publish complete or partial training slot 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Release verified training working copy 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Capture fresh training slot 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Package lossless complete or partial training capture 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Publish complete or partial training slot 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Release verified training working copy 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Capture fresh training slot 2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Package lossless complete or partial training capture 2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Publish complete or partial training slot 2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Release verified training working copy 2",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Capture fresh training slot 3",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 19
+            },
+            {
+              "name": "Package lossless complete or partial training capture 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20
+            },
+            {
+              "name": "Publish complete or partial training slot 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21
+            },
+            {
+              "name": "Release verified training working copy 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "pending",
+              "conclusion": null,
+              "number": 45
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 46
+            }
+          ]
+        }
+      ],
+      "full_forecast_jobs_exist": false,
+      "full_validation_jobs_exist": false,
+      "observation_boundary": "Training capture only; stage workflow source makes forecasting and target validation separate downstream jobs."
+    },
+    {
+      "run": {
+        "conclusion": null,
+        "created_at": "2026-11-06T18:03:42Z",
+        "display_title": "v6 qualification otel_demo/full r9 full",
+        "event": "workflow_dispatch",
+        "head_sha": "9d6414e8824331d368d1732a15200cdad691350b",
+        "id": 42267248120,
+        "run_attempt": 1,
+        "run_started_at": "2026-11-06T18:03:42Z",
+        "status": "in_progress",
+        "workflow_id": 409455730
+      },
+      "jobs": [
+        {
+          "id": 128062263330,
+          "name": "training",
+          "status": "in_progress",
+          "conclusion": null,
+          "run_id": 42267248120,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e . opentelemetry-proto",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare full worker resources and retain the platform envelope",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Publish actual training worker resources before long work",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Capture fresh training slot 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Package lossless complete or partial training capture 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Publish complete or partial training slot 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Release verified training working copy 0",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Capture fresh training slot 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Package lossless complete or partial training capture 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Publish complete or partial training slot 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Release verified training working copy 1",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Capture fresh training slot 2",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 15
+            },
+            {
+              "name": "Package lossless complete or partial training capture 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 16
+            },
+            {
+              "name": "Publish complete or partial training slot 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 17
+            },
+            {
+              "name": "Release verified training working copy 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 18
+            },
+            {
+              "name": "Capture fresh training slot 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 19
+            },
+            {
+              "name": "Package lossless complete or partial training capture 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20
+            },
+            {
+              "name": "Publish complete or partial training slot 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21
+            },
+            {
+              "name": "Release verified training working copy 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "pending",
+              "conclusion": null,
+              "number": 45
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 46
+            }
+          ]
+        }
+      ],
+      "full_forecast_jobs_exist": false,
+      "full_validation_jobs_exist": false,
+      "observation_boundary": "Training capture only; stage workflow source makes forecasting and target validation separate downstream jobs."
+    },
+    {
+      "run": {
+        "conclusion": null,
+        "created_at": "2026-11-06T18:03:48Z",
+        "display_title": "v6 qualification deathstarbench/full r9 full",
+        "event": "workflow_dispatch",
+        "head_sha": "9d6414e8824331d368d1732a15200cdad691350b",
+        "id": 42267262342,
+        "run_attempt": 1,
+        "run_started_at": "2026-11-06T18:03:48Z",
+        "status": "in_progress",
+        "workflow_id": 409455730
+      },
+      "jobs": [
+        {
+          "id": 128062315256,
+          "name": "training",
+          "status": "in_progress",
+          "conclusion": null,
+          "run_id": 42267262342,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Run python -m pip install -e . opentelemetry-proto",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Prepare full worker resources and retain the platform envelope",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Publish actual training worker resources before long work",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Capture fresh training slot 0",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 7
+            },
+            {
+              "name": "Package lossless complete or partial training capture 0",
+              "status": "pending",
+              "conclusion": null,
+              "number": 8
+            },
+            {
+              "name": "Publish complete or partial training slot 0",
+              "status": "pending",
+              "conclusion": null,
+              "number": 9
+            },
+            {
+              "name": "Release verified training working copy 0",
+              "status": "pending",
+              "conclusion": null,
+              "number": 10
+            },
+            {
+              "name": "Capture fresh training slot 1",
+              "status": "pending",
+              "conclusion": null,
+              "number": 11
+            },
+            {
+              "name": "Package lossless complete or partial training capture 1",
+              "status": "pending",
+              "conclusion": null,
+              "number": 12
+            },
+            {
+              "name": "Publish complete or partial training slot 1",
+              "status": "pending",
+              "conclusion": null,
+              "number": 13
+            },
+            {
+              "name": "Release verified training working copy 1",
+              "status": "pending",
+              "conclusion": null,
+              "number": 14
+            },
+            {
+              "name": "Capture fresh training slot 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 15
+            },
+            {
+              "name": "Package lossless complete or partial training capture 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 16
+            },
+            {
+              "name": "Publish complete or partial training slot 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 17
+            },
+            {
+              "name": "Release verified training working copy 2",
+              "status": "pending",
+              "conclusion": null,
+              "number": 18
+            },
+            {
+              "name": "Capture fresh training slot 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 19
+            },
+            {
+              "name": "Package lossless complete or partial training capture 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20
+            },
+            {
+              "name": "Publish complete or partial training slot 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21
+            },
+            {
+              "name": "Release verified training working copy 3",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22
+            },
+            {
+              "name": "Run actions/upload-artifact@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "pending",
+              "conclusion": null,
+              "number": 45
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "pending",
+              "conclusion": null,
+              "number": 46
+            }
+          ]
+        }
+      ],
+      "full_forecast_jobs_exist": false,
+      "full_validation_jobs_exist": false,
+      "observation_boundary": "Training capture only; stage workflow source makes forecasting and target validation separate downstream jobs."
+    }
+  ]
+}

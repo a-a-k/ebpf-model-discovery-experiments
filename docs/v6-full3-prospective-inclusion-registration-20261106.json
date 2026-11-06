@@ -1,0 +1,1217 @@
+{
+  "registered_utc": "2026-11-06T19:59:03.268558+00:00",
+  "original_scope": {
+    "scientific_cells": 108,
+    "blocks": 27,
+    "repetitions": [
+      9,
+      10,
+      11
+    ],
+    "SDK_modes": [
+      "absent",
+      "partial",
+      "full"
+    ],
+    "runtime_arms": [
+      "none",
+      "obi",
+      "coroot",
+      "deepflow"
+    ],
+    "all_operations": 10,
+    "historical81_or_short_smoke_substitution": false
+  },
+  "root_original_design_GO": true,
+  "independent_original_design_GO": true,
+  "root_actual_source_state_GO": true,
+  "independent_actual_source_state_GO": true,
+  "completed_scientific_cells": 0,
+  "remaining24_MAIN_dispatch_GO": false,
+  "full_size_phase_budgets_qualified": false,
+  "selection_rule": "Reserve ALL EXACT THREE listed fresh full-count runs for scheduled SDK-full repetition9 before any full forecast or validation target exists. Keep every adverse/UNKNOWN result; no selection by future support, accuracy, health or outcome. Existing technical completeness/invalidation and retry rules remain; keep every failed attempt and cost.",
+  "protocol_amendment": "Prospectively supersede the prior qualification-exclusion rule ONLY for these three pre-target registered runs. Do not reinterpret earlier approvals or rewrite sealed stage/source/bytes, shorten workloads, weaken external outcomes or claim success. Old81, short-smokes and auxiliary diagnostics never fill108.",
+  "zero_forecast_target_evidence": {
+    "path": "docs/v6-full3-zero-forecast-target-state-20261106.json",
+    "sha256": "522791cfb2ec6a06004691ab274feda28686dcd715277ad35238bae0243a2b10",
+    "observed_utc": "2026-11-06 19:53:15 UTC"
+  },
+  "scientific_methods": "Same full counts, all10 operations, four real runtime treatments including actual SDK-only control, same two fresh guest epochs and within-phase host, same-information direct/native/cheap-union baselines, allfour forecasts frozen before targets, independent outcomes, no target refit or accuracy admission. Known equivalence/no new predictor or cost-superiority claim retained.",
+  "source_equivalence": {
+    "original_primary_source": "9d6414e8824331d368d1732a15200cdad691350b",
+    "candidate_source": "cca23bb9d8479f6f5114c6abcd7c65bc2b763ea3",
+    "all_original_src_systems_scripts_committed_GitLF_bytes_unchanged": true,
+    "checked_original_paths": 169,
+    "added_auxiliary_paths": [
+      "scripts/context-witness-v6.cjs",
+      "scripts/inspect-v6-DSB-db-control.py",
+      "src/ebpf_discovery/context_diagnostic_v6.py"
+    ],
+    "primary_workflow_delta": "Only official download-action pin; all inputs, paths and independent full-data guards unchanged. No workload/SDK/agent/model/forecast/oracle/physical-host pairing change.",
+    "counts": "Full-size qualification and MAIN both pass smoke=false to the same workload_counts/RNG methods; immutable stage remains provenance/governance metadata."
+  },
+  "pilots": [
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "full",
+      "repetition": 9,
+      "block_id": "petclinic-full-9",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "none",
+          "obi"
+        ],
+        "validation": [
+          "coroot",
+          "none",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-full-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-full-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-full-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-full-9-deepflow"
+        }
+      ],
+      "original_run_id": 42267236483,
+      "original_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "immutable_recorded_stage": "qualification",
+      "smoke": false,
+      "scientific_role": "prospectively_registered_full_count_pilot",
+      "selection_independent_of_results": true
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "full",
+      "repetition": 9,
+      "block_id": "otel_demo-full-9",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "obi",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "obi",
+          "coroot",
+          "none",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-full-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-full-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-full-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-full-9-deepflow"
+        }
+      ],
+      "original_run_id": 42267248120,
+      "original_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "immutable_recorded_stage": "qualification",
+      "smoke": false,
+      "scientific_role": "prospectively_registered_full_count_pilot",
+      "selection_independent_of_results": true
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "full",
+      "repetition": 9,
+      "block_id": "deathstarbench-full-9",
+      "arm_orders": {
+        "training": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-full-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-full-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-full-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-full-9-deepflow"
+        }
+      ],
+      "original_run_id": 42267262342,
+      "original_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "immutable_recorded_stage": "qualification",
+      "smoke": false,
+      "scientific_role": "prospectively_registered_full_count_pilot",
+      "selection_independent_of_results": true
+    }
+  ],
+  "remaining_blocks": [
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "absent",
+      "repetition": 9,
+      "block_id": "petclinic-absent-9",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "none",
+          "coroot",
+          "obi"
+        ],
+        "validation": [
+          "deepflow",
+          "obi",
+          "none",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-absent-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-absent-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-absent-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-absent-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "absent",
+      "repetition": 10,
+      "block_id": "petclinic-absent-10",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "obi",
+          "deepflow",
+          "coroot",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-absent-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-absent-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-absent-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-absent-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "absent",
+      "repetition": 11,
+      "block_id": "petclinic-absent-11",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "deepflow",
+          "coroot",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-absent-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-absent-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-absent-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-absent-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "partial",
+      "repetition": 9,
+      "block_id": "petclinic-partial-9",
+      "arm_orders": {
+        "training": [
+          "none",
+          "coroot",
+          "deepflow",
+          "obi"
+        ],
+        "validation": [
+          "none",
+          "deepflow",
+          "obi",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-partial-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-partial-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-partial-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-partial-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "partial",
+      "repetition": 10,
+      "block_id": "petclinic-partial-10",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "none",
+          "obi",
+          "deepflow"
+        ],
+        "validation": [
+          "coroot",
+          "deepflow",
+          "obi",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-partial-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-partial-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-partial-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-partial-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "partial",
+      "repetition": 11,
+      "block_id": "petclinic-partial-11",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "none",
+          "obi",
+          "coroot"
+        ],
+        "validation": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-partial-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-partial-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-partial-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-partial-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "full",
+      "repetition": 10,
+      "block_id": "petclinic-full-10",
+      "arm_orders": {
+        "training": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ],
+        "validation": [
+          "none",
+          "coroot",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-full-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-full-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-full-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-full-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "petclinic",
+      "mode": "full",
+      "repetition": 11,
+      "block_id": "petclinic-full-11",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "coroot",
+          "none",
+          "deepflow"
+        ],
+        "validation": [
+          "coroot",
+          "obi",
+          "deepflow",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "petclinic-full-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "petclinic-full-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "petclinic-full-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "petclinic-full-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "absent",
+      "repetition": 9,
+      "block_id": "otel_demo-absent-9",
+      "arm_orders": {
+        "training": [
+          "none",
+          "coroot",
+          "deepflow",
+          "obi"
+        ],
+        "validation": [
+          "deepflow",
+          "coroot",
+          "none",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-absent-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-absent-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-absent-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-absent-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "absent",
+      "repetition": 10,
+      "block_id": "otel_demo-absent-10",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "none",
+          "deepflow",
+          "obi"
+        ],
+        "validation": [
+          "coroot",
+          "none",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-absent-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-absent-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-absent-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-absent-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "absent",
+      "repetition": 11,
+      "block_id": "otel_demo-absent-11",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "none",
+          "coroot",
+          "obi",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-absent-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-absent-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-absent-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-absent-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "partial",
+      "repetition": 9,
+      "block_id": "otel_demo-partial-9",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "coroot",
+          "deepflow",
+          "none"
+        ],
+        "validation": [
+          "none",
+          "coroot",
+          "obi",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-partial-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-partial-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-partial-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-partial-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "partial",
+      "repetition": 10,
+      "block_id": "otel_demo-partial-10",
+      "arm_orders": {
+        "training": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ],
+        "validation": [
+          "deepflow",
+          "obi",
+          "none",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-partial-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-partial-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-partial-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-partial-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "partial",
+      "repetition": 11,
+      "block_id": "otel_demo-partial-11",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "none",
+          "obi"
+        ],
+        "validation": [
+          "deepflow",
+          "coroot",
+          "none",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-partial-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-partial-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-partial-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-partial-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "full",
+      "repetition": 10,
+      "block_id": "otel_demo-full-10",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "coroot",
+          "obi",
+          "deepflow",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-full-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-full-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-full-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-full-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "otel_demo",
+      "mode": "full",
+      "repetition": 11,
+      "block_id": "otel_demo-full-11",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "coroot",
+          "none",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "otel_demo-full-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "otel_demo-full-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "otel_demo-full-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "otel_demo-full-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "repetition": 9,
+      "block_id": "deathstarbench-absent-9",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "none",
+          "obi"
+        ],
+        "validation": [
+          "none",
+          "coroot",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-absent-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-absent-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-absent-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-absent-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "repetition": 10,
+      "block_id": "deathstarbench-absent-10",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "none",
+          "coroot",
+          "obi"
+        ],
+        "validation": [
+          "coroot",
+          "none",
+          "obi",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-absent-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-absent-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-absent-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-absent-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "absent",
+      "repetition": 11,
+      "block_id": "deathstarbench-absent-11",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "deepflow",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-absent-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-absent-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-absent-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-absent-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "repetition": 9,
+      "block_id": "deathstarbench-partial-9",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "coroot",
+          "obi",
+          "none",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-partial-9-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-partial-9-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-partial-9-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-partial-9-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "repetition": 10,
+      "block_id": "deathstarbench-partial-10",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "coroot",
+          "none"
+        ],
+        "validation": [
+          "deepflow",
+          "none",
+          "obi",
+          "coroot"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-partial-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-partial-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-partial-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-partial-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "partial",
+      "repetition": 11,
+      "block_id": "deathstarbench-partial-11",
+      "arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "coroot",
+          "deepflow",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-partial-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-partial-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-partial-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-partial-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "full",
+      "repetition": 10,
+      "block_id": "deathstarbench-full-10",
+      "arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-full-10-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-full-10-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-full-10-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-full-10-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    },
+    {
+      "study": "clean-restart-v6",
+      "system": "deathstarbench",
+      "mode": "full",
+      "repetition": 11,
+      "block_id": "deathstarbench-full-11",
+      "arm_orders": {
+        "training": [
+          "coroot",
+          "obi",
+          "deepflow",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "coroot",
+          "deepflow",
+          "none"
+        ]
+      },
+      "cells": [
+        {
+          "collector": "none",
+          "cell_id": "deathstarbench-full-11-none"
+        },
+        {
+          "collector": "obi",
+          "cell_id": "deathstarbench-full-11-obi"
+        },
+        {
+          "collector": "coroot",
+          "cell_id": "deathstarbench-full-11-coroot"
+        },
+        {
+          "collector": "deepflow",
+          "cell_id": "deathstarbench-full-11-deepflow"
+        }
+      ],
+      "stage": "main",
+      "smoke": false,
+      "dispatch_authorized": false
+    }
+  ],
+  "cost_policy": "Count each dual-use actual run once while assigning budget/scientific roles explicitly. Retain every old/new preparation, failure, early stop, control, transfer, CI/review/retention cost; human/unmetered costs unknown. No invented saving or CPU/billing interpretation.",
+  "main_gate": "Remaining24blocks96cells stay blocked until actual full-size/source/resource review and both ORIGINAL executionGOs. These12 are not completed or successful by registration; actual capture, forecasts and independent targets remain required.",
+  "approved_utc": "2026-11-06T20:03:34.104568+00:00",
+  "public_pre_forecast_draft_commit": "890d5847ce7d84d27841928256d511ca26a7addf",
+  "independent_actual_verdict": "FINAL ORIGINAL actual source/state scientific-inclusion GO by /root/ebpf_actual7_skeptic for exact candidate SHA99848e38dcd2f86151cef59f2642705d0a3c41306cd642365c0900e18e512f26. Fresh GitHub API independently showed ONLY training/no model/no validation in all3runs; independently matched all169original source blobs and primaryworkflow pin-only delta. No scope reduction, output selection, completed-cell or remaining-dispatch approval.",
+  "independent_actual_review_receipts": {
+    "independent-v6-full3-prospective-inclusion-actual-original-GO-20261106.json": {
+      "path": "docs/independent-v6-full3-prospective-inclusion-actual-original-GO-20261106.json",
+      "published_GitLF_sha256": "376cf2044a4ab46b3126862d962b7d312e53fd9c13fe0d9b49c3bdd81d9326a7",
+      "original_work_sha256": "376cf2044a4ab46b3126862d962b7d312e53fd9c13fe0d9b49c3bdd81d9326a7"
+    },
+    "independent-v6-full3-fresh-training-only-API-state-20261106.json": {
+      "path": "docs/independent-v6-full3-fresh-training-only-API-state-20261106.json",
+      "published_GitLF_sha256": "2726a977edb5eb9e1630b8c76987ab24feab916c213f39b1ca63a820b65f6af8",
+      "original_work_sha256": "e20a75a604efe5ecaf2c8469c6ea5ac4a1b33ff7502f8995ce5f273405165ee2"
+    }
+  }
+}

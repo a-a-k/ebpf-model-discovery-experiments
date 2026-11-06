@@ -6,8 +6,13 @@ The user's 6 November 2026 instruction supersedes the historical 81-cell
 execution scope below. The active design is docs/PROTOCOL_V6.md: 108 fresh cells,
 including the real no-agent runtime control, with repetitions 9/10/11 and all ten
 operations. Preserve the old study and its costs; do not substitute its data.
-Source qualification permits technical Actions checks only. Main dispatch needs
-the separately reviewed actual full-size execution qualification bound to source.
+A prospective amendment in docs/v6-full3-prospective-inclusion-registration-20261106.json
+reserves the three exact fresh full-count full-SDK repetition-9 qualification runs
+as the first twelve scientific cells, before any forecast or target. Their sealed
+qualification labels remain unchanged; all future adverse/UNKNOWN outcomes and
+failures/costs remain. No historical, short-smoke or auxiliary data fills a cell.
+The remaining 24 Main blocks / 96 cells still require separately reviewed actual
+full-size execution qualification bound to source before dispatch.
 The orchestrator owns this common implementation and dispatch; assigned workers
 must not merge or dispatch independently. Communication stays in this dialog:
 the user's explicit prohibition on Telegram overrides any bridge instructions.
