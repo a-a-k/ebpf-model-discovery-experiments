@@ -56,7 +56,7 @@ jobs:
       run: python -m ebpf_discovery.qualification_replay_v6 preflight --operation "${{ inputs.operation }}" --parent-record "$V6_PARENT_RECORD" --parent-sha256 "$V6_PARENT_SHA256"
         --root work
     - name: Download only the allowlisted original common publication
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.shared_artifact_id }}
         merge-multiple: true
@@ -67,7 +67,7 @@ jobs:
       run: python -m ebpf_discovery.qualification_replay_v6 inspect-shared --operation "${{ inputs.operation }}" --parent-record "$V6_PARENT_RECORD" --parent-sha256
         "$V6_PARENT_SHA256" --root work
     - name: Download original none training publication
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.none_artifact_id }}
         merge-multiple: true
@@ -78,7 +78,7 @@ jobs:
       run: python -m ebpf_discovery.qualification_replay_v6 inspect-capture --operation "${{ inputs.operation }}" --parent-record "$V6_PARENT_RECORD" --parent-sha256
         "$V6_PARENT_SHA256" --root work --collector none
     - name: Download original obi training publication
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.obi_artifact_id }}
         merge-multiple: true
@@ -89,7 +89,7 @@ jobs:
       run: python -m ebpf_discovery.qualification_replay_v6 inspect-capture --operation "${{ inputs.operation }}" --parent-record "$V6_PARENT_RECORD" --parent-sha256
         "$V6_PARENT_SHA256" --root work --collector obi
     - name: Download original coroot training publication
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.coroot_artifact_id }}
         merge-multiple: true
@@ -100,7 +100,7 @@ jobs:
       run: python -m ebpf_discovery.qualification_replay_v6 inspect-capture --operation "${{ inputs.operation }}" --parent-record "$V6_PARENT_RECORD" --parent-sha256
         "$V6_PARENT_SHA256" --root work --collector coroot
     - name: Download original deepflow training publication
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.deepflow_artifact_id }}
         merge-multiple: true
@@ -169,7 +169,7 @@ jobs:
         path: work/model-host-resources.json
         if-no-files-found: warn
         compression-level: 6
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs[format('{0}_artifact_id', matrix.collector)] }}
         merge-multiple: true
@@ -268,7 +268,7 @@ jobs:
         path: work/validation-host-resources.json
         if-no-files-found: warn
         compression-level: 6
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         artifact-ids: ${{ steps.parent.outputs.shared_artifact_id }}
         merge-multiple: true
@@ -276,7 +276,7 @@ jobs:
         github-token: ${{ github.token }}
         path: work/shared-input
       name: Download only the allowlisted original common publication
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
       with:
         pattern: v6-model-*-${{ github.run_id }}
         path: work/model-input
