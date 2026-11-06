@@ -1,0 +1,402 @@
+name: Fresh controlled study v6
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  training:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: |-
+          .github
+          docs
+          scripts
+          src
+          systems
+          tests
+          pyproject.toml
+          README.md
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - run: python -m pip install -e . opentelemetry-proto
+    - name: Prepare full worker resources and retain the platform envelope
+      run: python -m ebpf_discovery.resources_v6 --report work/training-host-resources.json
+    - name: Capture fresh training slot 0
+      id: train0
+      run: python -m ebpf_discovery.block_v6 training --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 0
+    - name: Package lossless complete or partial training capture 0
+      id: trainingpackage0
+      if: ${{ always() && steps.train0.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase training --slot 0
+    - if: ${{ always() && steps.trainingpackage0.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-training-${{ steps.train0.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.trainingpackage0.outputs.archive_path }}
+          ${{ steps.trainingpackage0.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial training slot 0
+      id: trainingupload0
+    - name: Release verified training working copy 0
+      if: ${{ steps.train0.outcome == 'success' && steps.trainingupload0.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase training --slot 0 --artifact-id '${{ steps.trainingupload0.outputs.artifact-id }}' --artifact-digest '${{ steps.trainingupload0.outputs.artifact-digest }}'
+    - name: Capture fresh training slot 1
+      id: train1
+      run: python -m ebpf_discovery.block_v6 training --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 1
+    - name: Package lossless complete or partial training capture 1
+      id: trainingpackage1
+      if: ${{ always() && steps.train1.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase training --slot 1
+    - if: ${{ always() && steps.trainingpackage1.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-training-${{ steps.train1.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.trainingpackage1.outputs.archive_path }}
+          ${{ steps.trainingpackage1.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial training slot 1
+      id: trainingupload1
+    - name: Release verified training working copy 1
+      if: ${{ steps.train1.outcome == 'success' && steps.trainingupload1.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase training --slot 1 --artifact-id '${{ steps.trainingupload1.outputs.artifact-id }}' --artifact-digest '${{ steps.trainingupload1.outputs.artifact-digest }}'
+    - name: Capture fresh training slot 2
+      id: train2
+      run: python -m ebpf_discovery.block_v6 training --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 2
+    - name: Package lossless complete or partial training capture 2
+      id: trainingpackage2
+      if: ${{ always() && steps.train2.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase training --slot 2
+    - if: ${{ always() && steps.trainingpackage2.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-training-${{ steps.train2.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.trainingpackage2.outputs.archive_path }}
+          ${{ steps.trainingpackage2.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial training slot 2
+      id: trainingupload2
+    - name: Release verified training working copy 2
+      if: ${{ steps.train2.outcome == 'success' && steps.trainingupload2.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase training --slot 2 --artifact-id '${{ steps.trainingupload2.outputs.artifact-id }}' --artifact-digest '${{ steps.trainingupload2.outputs.artifact-digest }}'
+    - name: Capture fresh training slot 3
+      id: train3
+      run: python -m ebpf_discovery.block_v6 training --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 3
+    - name: Package lossless complete or partial training capture 3
+      id: trainingpackage3
+      if: ${{ always() && steps.train3.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase training --slot 3
+    - if: ${{ always() && steps.trainingpackage3.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-training-${{ steps.train3.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.trainingpackage3.outputs.archive_path }}
+          ${{ steps.trainingpackage3.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial training slot 3
+      id: trainingupload3
+    - name: Release verified training working copy 3
+      if: ${{ steps.train3.outcome == 'success' && steps.trainingupload3.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase training --slot 3 --artifact-id '${{ steps.trainingupload3.outputs.artifact-id }}' --artifact-digest '${{ steps.trainingupload3.outputs.artifact-digest }}'
+    - if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-shared-blueprint-${{ github.run_id }}
+        path: |-
+          work/shared.tar.gz
+          work/shared.tar.gz.json
+          work/shared-seal.json
+          work/training-host-resources.json
+          work/block-plan.json
+          work/block-training-slot*-status.json
+          work/block-disk-guards.jsonl
+          work/block-vm-commands.jsonl
+          work/publications/training/
+          work/blueprint-preparation/v6-blueprint-preparation.json
+          work/vms/events/
+          work/vms/history/
+          work/block-controller-cost.jsonl
+          work/blueprint-preparation/commands.jsonl
+          work/vms/preparation/infrastructure.json
+          work/vms/preparation/*/check.txt
+          work/vms/preparation/*/serial.log
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+    outputs:
+      block_plan_sha256: ${{ steps.train0.outputs.block_plan_sha256 }}
+      shared_sha256: ${{ steps.train0.outputs.shared_sha256 }}
+  model:
+    needs: training
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        collector:
+        - none
+        - obi
+        - coroot
+        - deepflow
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: |-
+          .github
+          docs
+          scripts
+          src
+          systems
+          tests
+          pyproject.toml
+          README.md
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - run: python -m pip install -e . opentelemetry-proto
+    - name: Prepare full worker resources
+      run: python -m ebpf_discovery.resources_v6 --report work/model-host-resources.json
+    - uses: actions/download-artifact@v4
+      with:
+        name: v6-training-${{ matrix.collector }}-${{ github.run_id }}
+        path: work/capture-input
+    - name: Restore one exact lossless current training capture; release only its verified local tar
+      run: python -m ebpf_discovery.block_v6 restore-capture --root work/case --archive work/capture-input/capture.tar.gz --inventory work/capture-input/capture.tar.gz.json --collector '${{ matrix.collector }}'
+    - name: Build the unchanged pinned Bering and Sheaft tools
+      run: |
+        bash scripts/setup-toolchain-v4.sh work/tools v5
+        echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
+    - name: Compute and freeze forecasts without live application guests
+      run: python -m ebpf_discovery.study_v6 model --root work/case
+    - name: Package immutable models and training provenance
+      run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
+    - name: Retain complete or partial processing files as one delivery
+      if: always()
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-model-${{ matrix.collector }}-${{ github.run_id }}
+        path: |-
+          work/model.tar.gz
+          work/model.tar.gz.json
+          work/model-host-resources.json
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+    - if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-processing-full-${{ matrix.collector }}-${{ github.run_id }}
+        path: |-
+          work/processing.tar.gz
+          work/processing.tar.gz.json
+          work/case/model-worker-resources.json
+          work/case/forecast-saved.json
+          work/tools/builds.tsv
+          work/tools/pins.tsv
+          work/tools/logs/
+          work/case/block-controller-cost.jsonl
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+  validation:
+    needs:
+    - training
+    - model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: |-
+          .github
+          docs
+          scripts
+          src
+          systems
+          tests
+          pyproject.toml
+          README.md
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - run: python -m pip install -e . opentelemetry-proto
+    - name: Prepare full worker resources
+      run: python -m ebpf_discovery.resources_v6 --report work/validation-host-resources.json
+    - uses: actions/download-artifact@v4
+      with:
+        name: v6-shared-blueprint-${{ github.run_id }}
+        path: work/shared-input
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: v6-model-*-${{ github.run_id }}
+        path: work/model-input
+    - name: Capture fresh validation slot 0
+      id: validate0
+      run: python -m ebpf_discovery.block_v6 validation --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 0
+    - name: Package lossless complete or partial validation capture 0
+      id: validationpackage0
+      if: ${{ always() && steps.validate0.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase validation --slot 0
+    - if: ${{ always() && steps.validationpackage0.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-validation-${{ steps.validate0.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.validationpackage0.outputs.archive_path }}
+          ${{ steps.validationpackage0.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial validation slot 0
+      id: validationupload0
+    - name: Release verified validation working copy 0
+      if: ${{ steps.validate0.outcome == 'success' && steps.validationupload0.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase validation --slot 0 --artifact-id '${{ steps.validationupload0.outputs.artifact-id }}' --artifact-digest '${{ steps.validationupload0.outputs.artifact-digest }}'
+    - name: Capture fresh validation slot 1
+      id: validate1
+      run: python -m ebpf_discovery.block_v6 validation --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 1
+    - name: Package lossless complete or partial validation capture 1
+      id: validationpackage1
+      if: ${{ always() && steps.validate1.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase validation --slot 1
+    - if: ${{ always() && steps.validationpackage1.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-validation-${{ steps.validate1.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.validationpackage1.outputs.archive_path }}
+          ${{ steps.validationpackage1.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial validation slot 1
+      id: validationupload1
+    - name: Release verified validation working copy 1
+      if: ${{ steps.validate1.outcome == 'success' && steps.validationupload1.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase validation --slot 1 --artifact-id '${{ steps.validationupload1.outputs.artifact-id }}' --artifact-digest '${{ steps.validationupload1.outputs.artifact-digest }}'
+    - name: Capture fresh validation slot 2
+      id: validate2
+      run: python -m ebpf_discovery.block_v6 validation --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 2
+    - name: Package lossless complete or partial validation capture 2
+      id: validationpackage2
+      if: ${{ always() && steps.validate2.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase validation --slot 2
+    - if: ${{ always() && steps.validationpackage2.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-validation-${{ steps.validate2.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.validationpackage2.outputs.archive_path }}
+          ${{ steps.validationpackage2.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial validation slot 2
+      id: validationupload2
+    - name: Release verified validation working copy 2
+      if: ${{ steps.validate2.outcome == 'success' && steps.validationupload2.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase validation --slot 2 --artifact-id '${{ steps.validationupload2.outputs.artifact-id }}' --artifact-digest '${{ steps.validationupload2.outputs.artifact-digest }}'
+    - name: Capture fresh validation slot 3
+      id: validate3
+      run: python -m ebpf_discovery.block_v6 validation --system '${{ inputs.system }}' --mode '${{ inputs.mode }}' --repetition '${{ inputs.repetition }}' --stage '${{ inputs.stage }}' ${{ inputs.full_size_qualification && '--full-size-qualification' || '' }} --root work --slot 3
+    - name: Package lossless complete or partial validation capture 3
+      id: validationpackage3
+      if: ${{ always() && steps.validate3.outputs.collector != '' }}
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase validation --slot 3
+    - if: ${{ always() && steps.validationpackage3.outcome == 'success' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-validation-${{ steps.validate3.outputs.collector }}-${{ github.run_id }}
+        path: |-
+          ${{ steps.validationpackage3.outputs.archive_path }}
+          ${{ steps.validationpackage3.outputs.manifest_path }}
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 0
+      name: Publish complete or partial validation slot 3
+      id: validationupload3
+    - name: Release verified validation working copy 3
+      if: ${{ steps.validate3.outcome == 'success' && steps.validationupload3.outcome == 'success' }}
+      run: python -m ebpf_discovery.block_v6 release --root work --capture-phase validation --slot 3 --artifact-id '${{ steps.validationupload3.outputs.artifact-id }}' --artifact-digest '${{ steps.validationupload3.outputs.artifact-digest }}'
+    - if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-validation-summary-${{ github.run_id }}
+        path: |-
+          work/summaries/
+          work/validation-host-resources.json
+          work/block-plan.json
+          work/block-validation-slot*-status.json
+          work/block-all-forecasts-frozen.json
+          work/block-disk-guards.jsonl
+          work/block-vm-commands.jsonl
+          work/validation-current-run-artifact-API.json
+          work/publications/validation/
+          work/vms/events/
+          work/vms/history/
+          work/block-controller-cost.jsonl
+          work/shared-restored.json
+          work/model-package-imports.json
+        if-no-files-found: warn
+        include-hidden-files: true
+        compression-level: 6
+    env:
+      V6_BLOCK_PLAN_SHA256: ${{ needs.training.outputs.block_plan_sha256 }}
+      V6_SHARED_SHA256: ${{ needs.training.outputs.shared_sha256 }}
+'on':
+  workflow_dispatch:
+    inputs:
+      system:
+        type: choice
+        options:
+        - petclinic
+        - otel_demo
+        - deathstarbench
+        required: true
+      mode:
+        type: choice
+        options:
+        - absent
+        - partial
+        - full
+        required: true
+      repetition:
+        type: choice
+        options:
+        - '9'
+        - '10'
+        - '11'
+        default: '9'
+      stage:
+        type: choice
+        options:
+        - qualification
+        - main
+        default: qualification
+      full_size_qualification:
+        type: boolean
+        default: false
+        description: Full counts for qualification; never fills the main matrix

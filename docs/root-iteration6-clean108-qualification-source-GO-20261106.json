@@ -1,0 +1,27 @@
+{
+  "utc": "2026-11-06T15:03:06.394266+00:00",
+  "root_original_qualification_source_GO": true,
+  "main_execution_GO": false,
+  "scientific_success_claimed": false,
+  "scope": "Technical Actions qualification of the ORIGINAL complete fresh108 design; no main cell claimed complete.",
+  "independent_record": {
+    "path": "docs/independent-iteration6-clean108-qualification-source-GO-20261106.json",
+    "sha256": "ede6472690fd0fc3bd9540a1a3f29bc0e47d1c81de5390d34e3d1f876d36c6bc"
+  },
+  "checks": {
+    "focused_v6_unit_tests": 32,
+    "actionlint": "pass",
+    "bash_syntax": "pass",
+    "compileall": "pass",
+    "full_local_suite": "running; remote checks remain required"
+  },
+  "first_actual_qualification": {
+    "system": "otel_demo",
+    "mode": "full",
+    "repetition": 9,
+    "stage": "qualification",
+    "full_size_qualification": false
+  },
+  "source_binding": "Qualification must use committed source, not the pre-commit Git tracked census. MAIN remains gated on actual full-size evidence and both original-criterion reviews.",
+  "actual_main_cells_completed": 0
+}

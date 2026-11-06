@@ -22,21 +22,29 @@ def expected_counts(system, smoke):
     return declaration, counts, phases, states
 
 
-def acquisition_checks(root, status, declaration):
+def acquisition_checks(root, status, declaration, *, agent_expected=True):
     problems = []
     try:
         provenance = collector_provenance(root, status)
     except (OSError, ValueError) as exc:
         provenance = None
         problems.append("collector_provenance_invalid:" + str(exc))
-    if status.get("collector") not in COLLECTORS:
+    if status.get("collector") not in COLLECTORS and not (
+            agent_expected is False and status.get('collector') == 'none'):
         problems.append("collector_outside_fixed_four")
-    control = legacy._read(root / "observations/technical-positive-control.json", {})
-    if (control.get("collector") != status.get("collector")
+    control = legacy._read(root / ('observations/technical-positive-control.json' if agent_expected
+                                  else 'observations/technical-negative-control.json'), {})
+    if agent_expected and (control.get("collector") != status.get("collector")
             or control.get("selected_ebpf_origin_proven") is not True
             or set(control.get("proofs", {})) != {"a", "b"}
             or not all(item.get("proven") is True for item in control.get("proofs", {}).values())):
         problems.append("two_guest_ebpf_origin_control_missing_or_failed")
+    if not agent_expected and (control.get('collector') != 'none'
+            or control.get('expected_ebpf') is not False
+            or control.get('selected_ebpf_origin_proven') is not False
+            or control.get('cleanup_verified') is not True
+            or set(control.get('final_agent_absence') or {}) != {'a', 'b'}):
+        problems.append('actual_agent_free_control_missing_or_failed')
     drain = legacy._read(root / "observations/drain-evidence.json", {})
     if (drain.get("collector") != status.get("collector")
             or drain.get("technical_complete") is not True
@@ -46,14 +54,20 @@ def acquisition_checks(root, status, declaration):
     audit_services = dict(getattr(declaration, "NATIVE_AUDIT_SERVICES", {}))
     native_audit_counts = {}
     native_application_counts = {}
+    unexpected_none_ebpf = 0
     index = root / "observation-index.sqlite"
     if index.is_file():
         connection = sqlite3.connect(index.resolve().as_uri() + "?mode=ro", uri=True)
         try:
+            if not agent_expected:
+                unexpected_none_ebpf = connection.execute(
+                    "SELECT COUNT(*) FROM spans WHERE source LIKE 'ebpf-%'").fetchone()[0]
             native_counts = dict(connection.execute(
                 "SELECT service, COUNT(*) FROM spans WHERE source='native' GROUP BY service"))
         finally:
             connection.close()
+        if unexpected_none_ebpf:
+            problems.append('ebpf_observations_present_in_no_agent_arm')
         native_audit_counts = {service: count for service, count in native_counts.items()
                                if service in audit_services}
         native_application_counts = {service: count for service, count in native_counts.items()
@@ -67,6 +81,7 @@ def acquisition_checks(root, status, declaration):
         problems.append("observation_index_missing")
     return {"valid": not problems, "problems": problems, "provenance": provenance,
             "native_observations_by_service": native_counts,
+            "unexpected_none_ebpf_observations": unexpected_none_ebpf,
             "native_application_observations_by_service": native_application_counts,
             "native_audit_observations_by_service": native_audit_counts,
             "native_audit_service_declarations": audit_services,

@@ -1,5 +1,19 @@
 # Experiment collaboration
 
+## Current authorization: fresh controlled v6 study
+
+The user's 6 November 2026 instruction supersedes the historical 81-cell
+execution scope below. The active design is docs/PROTOCOL_V6.md: 108 fresh cells,
+including the real no-agent runtime control, with repetitions 9/10/11 and all ten
+operations. Preserve the old study and its costs; do not substitute its data.
+Source qualification permits technical Actions checks only. Main dispatch needs
+the separately reviewed actual full-size execution qualification bound to source.
+The orchestrator owns this common implementation and dispatch; assigned workers
+must not merge or dispatch independently. Communication stays in this dialog:
+the user's explicit prohibition on Telegram overrides any bridge instructions.
+
+## Historical study instructions and continuing engineering constraints
+
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 
 The user reiterated on 2026-10-30: reuse the existing collector -> Bering -> Sheaft
