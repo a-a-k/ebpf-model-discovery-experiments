@@ -1,0 +1,40 @@
+{
+  "review": "Independent ORIGINAL-criterion bounded image-transfer source continuation",
+  "date": "2026-11-06",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "base_head": "7283d950a927b66bf80291304c246fe63d42aa85",
+  "original_criterion_qualification_source_continuation_GO": true,
+  "original_main_execution_GO": false,
+  "actual_actions_execution_qualified": false,
+  "actual_scientific_success_claim": false,
+  "scope": "Path-only recovery for pre-workload Petclinic42242969982 and DeathStarBench42242975764 qualification failures. Ready to commit/CI and repeat those technical qualifications; active OTel42241971035 is outside this amendment.",
+  "bounded_findings": [
+    "_image_delivery_path validates fixed system/node and exact Docker image ID, and returns only the existing adapter-owned /opt/ebpf-study/<system>/v6-image-<sha>.tar. Both preparation and restore now use that same helper.",
+    "Preparation retains no-existing-file/no-symlink guards, actual docker save, guest archive bytes/SHA256, host transfer size/SHA256 equality, owned temporary removal, and frozen actual image identity.",
+    "Restore retains frozen host archive size/SHA256 checks, no-existing-file/no-symlink delivery guard, actual Docker load, restored exact image ID check, same frozen compose, and no-build/no-pull deployment. Shared parent ownership is not broadened.",
+    "New CI-gated ordinary-runner tests exercise actual Docker save/copy/load for both affected systems beneath nonwritable parents and writable app children, verify copied archive size/SHA and inspect image ID, and retain nonwritable parent modes. Path validation tests cover all systems/nodes and invalid identities.",
+    "Workflow delta adds only descriptive run-name input identity; treatment, source selection, seeds, arm order and captures do not change."
+  ],
+  "original_criterion_unchanged": "108 fresh matched cells assess missing/partial SDK operation-model and prospectively frozen Bering-to-Sheaft forecast feasibility against independent external outcomes and equal-information direct/native/observed-edge/context baselines. No inference of new scientific support from a technical path repair. All negative, adverse and UNKNOWN findings remain eligible.",
+  "costs_and_causal_limits": "Keep failed preparation/transfer/CI/cleanup and all subsequent control/capture/model/retention costs; no costs are removed by relabeling these runs. This repair supplies no new causal, novelty, resource-sufficiency or cost-superiority result.",
+  "qualification_boundary": "CI and actual technical qualification remain required on committed source; MAIN and scientific completion are not approved. Current OTel qualification remains untouched.",
+  "checks": "Reviewer performed read-only diff/source/test inspection, no tests, execution, download, network or model processing. Engineer reports25 local passed/6 platform-specific skipped; real Docker regressions require CI.",
+  "readset_sha256": {
+    "src/ebpf_discovery/deployment_v6.py": {
+      "bytes": 21415,
+      "sha256": "b345dc9b14fd79fc133bb4bde5c5ed12fb842514df451410cd48d56ba2f50b44"
+    },
+    "tests/test_deployment_v6.py": {
+      "bytes": 18849,
+      "sha256": "e4a6bba033f4d16e6ecf1789c6d5afdf7b22d0e78396c659ddae2989c13aa5f1"
+    },
+    ".github/workflows/series-v6.yml": {
+      "bytes": 21268,
+      "sha256": "d39e73e946dbbe81ca1b1fc9f8421a32684064353cda593d18476775ad392b08"
+    },
+    ".github/workflows/checks.yml": {
+      "bytes": 2384,
+      "sha256": "ec4a9744f342f55f53d4712cc8dfd0b4745c7eef65282d9890f67fec7dccc404"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "utc": "2026-11-06T15:41:25.719306+00:00",
+  "root_original_source_continuation_GO": true,
+  "main_execution_GO": false,
+  "scientific_success_claimed": false,
+  "hypothesis_and_strongest_equal_information_baselines": "Unchanged from docs/PROTOCOL_V6.md and original-design reviews. Only technical image delivery paths change.",
+  "original_failed_attempts": [
+    {
+      "system": "petclinic",
+      "run_id": 42242969982,
+      "job_id": 127977735220,
+      "job_started_at": "2026-11-06T15:25:55Z",
+      "job_completed_at": "2026-11-06T15:31:36Z",
+      "job_elapsed_seconds": 341,
+      "failure": "save-image permission denied in root-owned common parent, before workloads"
+    },
+    {
+      "system": "deathstarbench",
+      "run_id": 42242975764,
+      "job_id": 127977754374,
+      "job_started_at": "2026-11-06T15:25:57Z",
+      "job_completed_at": "2026-11-06T15:34:07Z",
+      "job_elapsed_seconds": 490,
+      "failure": "same save-image permission denied before workloads",
+      "cancellation_attempt": "no-op: run already completed"
+    }
+  ],
+  "costs": "Retain these831 recorded job seconds, all original prep/CI/upload costs and every following technical replacement. These elapsed intervals are not CPU time, billing or campaign wall time.",
+  "fix": "Both save and restore use the already adapter-owned application child. Archive bytes/SHA, image IDs, resource settings, fixtures, SDK controls, workload and model/scientific semantics are unchanged. No broad parent chown.",
+  "independent_reviews": [
+    {
+      "path": "docs/independent-iteration6-qualification-owned-image-transfer-source-GO-20261106.json",
+      "sha256": "a5ce856b840b03cab24efc2fc9aaad58cc930992b28cd0151db10b7bdc087825"
+    },
+    {
+      "path": "docs/independent-iteration6-qualification-owned-image-transfer-test-readset-amendment-GO-20261106.json",
+      "sha256": "5a49cc832eb4c1be0143c39031c9596fb947d06f8923749eba6497b4d6921b9e"
+    }
+  ],
+  "verification": {
+    "local_focused_passed": 36,
+    "platform_specific_skipped": 6,
+    "actionlint": "pass",
+    "git_diff_check": "pass",
+    "actual_Docker_save_load_permission_CI": "required before redispatch"
+  },
+  "next": "Repeat Petclinic/full9 and DeathstarBench/full9 technical qualification after passing CI. Leave active OTel42241971035 unchanged."
+}
