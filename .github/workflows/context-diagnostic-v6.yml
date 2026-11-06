@@ -1,0 +1,103 @@
+name: Separate OTel context diagnostic v6
+run-name: context-v6 ${{ inputs.mode }} parent-record ${{ inputs.parent_record }}
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [full, partial]
+        required: true
+      parent_record:
+        type: string
+        description: Reviewed tracked JSON; must contain explicit diagnostic execution GO
+        required: true
+      parent_record_sha256:
+        type: string
+        required: true
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src:.
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  diagnostic:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .github
+            docs
+            scripts
+            src
+            systems
+            tests
+            pyproject.toml
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -e . pytest opentelemetry-proto hpack==4.1.0
+      - name: Record full standard worker resources
+        run: python -m ebpf_discovery.resources_v6 --report work/context-diagnostic/host-resources.json
+      - name: Check observer preservation and HPACK rejection fixtures
+        run: python -m pytest --import-mode=importlib -q tests/test_context_diagnostic_v6.py
+      - name: Prepare Actions-only packet decoding
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends tshark
+          tshark --version > work/context-diagnostic/tshark-version.txt
+      - name: Verify the exact reviewed parent publication before download
+        id: parent
+        env:
+          PARENT_RECORD: ${{ inputs.parent_record }}
+          PARENT_SHA: ${{ inputs.parent_record_sha256 }}
+          SDK_MODE: ${{ inputs.mode }}
+        run: >-
+          python -m ebpf_discovery.context_diagnostic_v6 preflight
+          --mode "$SDK_MODE" --parent-record "$PARENT_RECORD" --parent-record-sha256 "$PARENT_SHA"
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ steps.parent.outputs.artifact_id }}
+          run-id: ${{ steps.parent.outputs.parent_run_id }}
+          github-token: ${{ github.token }}
+          merge-multiple: true
+          path: work/context-diagnostic/parent
+      - name: Run exactly the separate three-arm diagnostic
+        env:
+          PARENT_RECORD: ${{ inputs.parent_record }}
+          PARENT_SHA: ${{ inputs.parent_record_sha256 }}
+          SDK_MODE: ${{ inputs.mode }}
+        run: >-
+          python -m ebpf_discovery.context_diagnostic_v6 run
+          --mode "$SDK_MODE" --parent-record "$PARENT_RECORD" --parent-record-sha256 "$PARENT_SHA"
+      - name: Package complete or partial diagnostic evidence without duplicating parent images
+        if: always()
+        env:
+          PARENT_RECORD: ${{ inputs.parent_record }}
+          PARENT_SHA: ${{ inputs.parent_record_sha256 }}
+          SDK_MODE: ${{ inputs.mode }}
+        run: >-
+          python -m ebpf_discovery.context_diagnostic_v6 package
+          --mode "$SDK_MODE" --parent-record "$PARENT_RECORD" --parent-record-sha256 "$PARENT_SHA"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: separate-context-v6-${{ inputs.mode }}-${{ github.run_id }}
+          path: |
+            work/context-diagnostic.tar.gz
+            work/context-diagnostic.tar.gz.json
+            work/context-diagnostic/diagnostic-summary.json
+            work/context-diagnostic/host-resources.json
+            work/context-diagnostic/context-controller-cost.jsonl
+          if-no-files-found: warn
+          include-hidden-files: true
+          compression-level: 0
