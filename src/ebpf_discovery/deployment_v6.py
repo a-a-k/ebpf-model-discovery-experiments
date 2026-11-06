@@ -77,6 +77,13 @@ def _layout(system: str, node: str) -> tuple[str, str, str]:
     return remote, f"{remote}/node-{node}/compose.yml", f"petclinic-{node}"
 
 
+def _image_delivery_path(system: str, node: str, image_id: str) -> str:
+    """Only the adapter-owned app directory is writable for every system."""
+    if system not in SYSTEMS or node not in NODES or not IMAGE_ID.fullmatch(image_id):
+        raise ValueError("invalid owned image delivery identity")
+    return f"{_layout(system, node)[0]}/v6-image-{image_id[7:]}.tar"
+
+
 def _compose(system: str, node: str, arguments: str, *, frozen: bool = True) -> str:
     remote, compose, project = _layout(system, node)
     override = f" -f {remote}/v6-images-{node}.json" if frozen else ""
@@ -239,7 +246,7 @@ def _prepare_blueprint(ctx: Any, system: str, cache_dir: Path | str, started: in
             override["services"][service] = {"image": tag, "pull_policy": "never"}
             if image_id in images:
                 continue
-            temporary = f"/opt/ebpf-study/v6-image-{image_id[7:]}.tar"
+            temporary = _image_delivery_path(system, node, image_id)
             guard = _guest_space(ctx, node, 2 * info["Size"])
             ctx.node_exec(node, f"test ! -e {temporary} && test ! -L {temporary} && "
                           f"docker image save -o {temporary} {image_id}", timeout=1800)
@@ -349,7 +356,7 @@ def _deploy_blueprint(ctx: Any, system: str, cache_dir: Path | str, expected_sha
                     or not archive.resolve().is_relative_to(cache)
                     or archive.stat().st_size != row["bytes"] or _sha(archive) != row["sha256"]):
                 raise ValueError("frozen image archive changed")
-            remote = f"/opt/ebpf-study/v6-image-{image_id[7:]}.tar"
+            remote = _image_delivery_path(system, node, image_id)
             _guest_space(ctx, node, row["bytes"] + row["image_size_bytes"])
             ctx.node_exec(node, f"test ! -e {remote} && test ! -L {remote}")
             ctx.node_put(node, archive, remote)

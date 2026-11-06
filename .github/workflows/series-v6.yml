@@ -1,4 +1,5 @@
 name: Fresh controlled study v6
+run-name: v6 ${{ inputs.stage }} ${{ inputs.system }}/${{ inputs.mode }} r${{ inputs.repetition }} ${{ (inputs.stage == 'main' || inputs.full_size_qualification) && 'full' || 'smoke' }}
 permissions:
   contents: read
   actions: read

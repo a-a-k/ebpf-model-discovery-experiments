@@ -331,3 +331,49 @@ def test_root_owned_stopped_serial_logs_become_runner_readable_without_changing_
     after_other = other.stat()
     assert (after_other.st_ino,after_other.st_mode,after_other.st_mtime_ns) == (
         before_other.st_ino,before_other.st_mode,before_other.st_mtime_ns)
+
+
+@pytest.mark.parametrize('system,node,image', [
+    ('unknown', 'a', IDS['a']), ('petclinic', '../a', IDS['a']),
+    ('deathstarbench', 'a', '../bad-image')])
+def test_image_delivery_rejects_foreign_names(system, node, image):
+    with pytest.raises(ValueError):
+        d._image_delivery_path(system, node, image)
+
+
+@pytest.mark.skipif(os.name != 'posix' or os.environ.get('RUN_DOCKER_CONTROL_FIXTURE') != '1',
+                    reason='actual Docker archive regression runs only in the enabled Linux CI fixture')
+@pytest.mark.parametrize('system', ['petclinic', 'deathstarbench'])
+def test_actual_image_save_restore_uses_writable_app_child_of_nonwritable_parent(tmp_path, system):
+    from ebpf_discovery.collectors_v5 import CONTROL_IMAGE
+    image_id = subprocess.run(['docker', 'image', 'inspect', '--format', '{{.Id}}', CONTROL_IMAGE],
+                              capture_output=True, text=True, check=True, timeout=30).stdout.strip()
+    assert d.IMAGE_ID.fullmatch(image_id)
+    relative = Path(d._image_delivery_path(system, 'a', image_id)).relative_to('/opt/ebpf-study')
+    parents = [tmp_path / phase / 'shared-parent' for phase in ('preparation', 'restore')]
+    for parent in parents:
+        (parent / system).mkdir(parents=True)
+        (parent / system).chmod(0o700)
+        parent.chmod(0o555)
+    try:
+        assert os.geteuid() != 0, 'permission regression must run as the ordinary hosted runner'
+        saved, restored = [p / relative for p in parents]
+        assert not saved.exists() and not saved.is_symlink()
+        subprocess.run(['docker', 'image', 'save', '-o', str(saved), image_id], check=True, timeout=120)
+        assert saved.stat().st_size > 0
+        saved_sha = d._sha(saved)
+        assert not restored.exists() and not restored.is_symlink()
+        shutil.copy2(saved, restored)
+        assert restored.stat().st_size == saved.stat().st_size and d._sha(restored) == saved_sha
+        subprocess.run(['docker', 'load', '-i', str(restored)], check=True, timeout=120,
+                       capture_output=True, text=True)
+        observed = subprocess.run(['docker', 'image', 'inspect', '--format', '{{.Id}}', image_id],
+                                  capture_output=True, text=True, check=True, timeout=30).stdout.strip()
+        assert observed == image_id
+        assert d._sha(restored) == saved_sha
+        assert all(stat.S_IMODE(p.stat().st_mode) == 0o555 for p in parents)
+        assert all({x.name for x in p.iterdir()} == {system} for p in parents)
+    finally:
+        # Only fixture-owned parents; let pytest remove its temporary tree.
+        for parent in parents:
+            parent.chmod(0o755)
