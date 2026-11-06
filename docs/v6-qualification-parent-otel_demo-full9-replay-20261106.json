@@ -1,0 +1,68 @@
+{
+  "schema": "v6-qualification-parent-v1",
+  "study": "clean-restart-v6",
+  "stage": "qualification",
+  "system": "otel_demo",
+  "mode": "full",
+  "repetition": 9,
+  "smoke": true,
+  "parent_run_id": 42247350498,
+  "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+  "shared_artifact": {
+    "id": 13522283164,
+    "name": "v6-shared-blueprint-42247350498",
+    "size_in_bytes": 3711644236,
+    "digest": "sha256:c9488e94482805397186b6ea1287a0ea6dcc0d13c529cecf83e5688f0404a305"
+  },
+  "training_artifacts": {
+    "none": {
+      "id": 13521334764,
+      "name": "v6-training-none-42247350498",
+      "size_in_bytes": 13632372,
+      "digest": "sha256:333cc639fa0f0e1c0347aa4b7ede93b18bfa0849c042ef13c2c15aca3f853cbb"
+    },
+    "obi": {
+      "id": 13521058689,
+      "name": "v6-training-obi-42247350498",
+      "size_in_bytes": 13919935,
+      "digest": "sha256:9f222de9a4643d72e3802093e636c2d0a42e5ef1eeafe192ff26f140c9c04fd5"
+    },
+    "coroot": {
+      "id": 13521809796,
+      "name": "v6-training-coroot-42247350498",
+      "size_in_bytes": 13928296,
+      "digest": "sha256:9c6eeade43d831a416449f62775477316c2b84ecd838ada477cf2535199768bb"
+    },
+    "deepflow": {
+      "id": 13521227146,
+      "name": "v6-training-deepflow-42247350498",
+      "size_in_bytes": 29783611,
+      "digest": "sha256:5648d08497d9a0df9b7d65e477261e022393d9545f5f770d53d9a449e9043fb0"
+    }
+  },
+  "root_inspection_GO": true,
+  "independent_inspection_GO": true,
+  "root_replay_GO": true,
+  "independent_replay_GO": true,
+  "scope": "Draft original qualification continuation with actual inspected innerseals. Replay blocked until independent and root review; MAIN remains closed.",
+  "parent_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+  "shared_sha256": "482d9f1d7f057b1f165bb8241170c1f69a5e3cc93fd2847d16de8d91448833b5",
+  "golden_sha256": "b2e2d9edf12fa5ef82b28661966023e1b5fe08610691d8fe0d847269f7b3fd7a",
+  "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+  "closed_input_sha256_by_collector": {
+    "none": "e57795997d4692f396e3a5751072dcc7fd8537aba140e513c7e105e194c1119e",
+    "obi": "5c395c6684578bb48014269105862dbc5b4de3328058ad0df4e2b5465fcc1847",
+    "coroot": "1b1c3568c9639727c24ed6b8634b828984e10fed80e62c4b3b8c52841006f50f",
+    "deepflow": "4f2bb64293a1000e36dfd7984dc4401e1ac17d0b42b65567f8e6172d95900179"
+  },
+  "inspection_report_sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e",
+  "inspection_execution": {
+    "run_id": 42258796326,
+    "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+  },
+  "inspection_artifact": {
+    "id": 13524131506,
+    "name": "v6-qualification-parent-inspection-42258796326",
+    "digest": "sha256:aabb410e71803756d496a63acc5c5af476877046b30d4b16a7fcc8eb97b4ba64"
+  }
+}

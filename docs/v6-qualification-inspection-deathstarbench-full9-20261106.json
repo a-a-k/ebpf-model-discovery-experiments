@@ -1,0 +1,285 @@
+{
+  "study": "clean-restart-v6",
+  "stage": "qualification",
+  "parent_record_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+  "parent_run_id": 42245728196,
+  "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+  "inspection_execution": {
+    "run_id": 42258782609,
+    "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+  },
+  "parent_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+  "shared_sha256": "7d4d067c5087548174f5e3f93b72d78c9df9f8c73b763b0553535a9a95afb7af",
+  "golden_sha256": "0cbce096858baf2f2f018d1ff9bff2010776ff0f01b360cc412181d321158f8e",
+  "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+  "closed_input_sha256_by_collector": {
+    "none": "6a5dc6902773a0b63b37ee6d737d56a9914f684d46e28409dd1d8fb740cfb62c",
+    "obi": "af5d3781f2511e5d7a075bbeaa73e77bf0786af88da2ac266f917048a2cf36ac",
+    "coroot": "79eea3fdb1f8c6e7a3a1b4ab239102c94861c8eb59330b502698a62609659c3b",
+    "deepflow": "f0b332d6e964d92036ce2a977d60ce0d7f4857b14ddfe3f4e15c6eddf1ebcafc"
+  },
+  "captures": [
+    {
+      "collector": "none",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 9,
+        "collector": "none",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42245728196",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "986955d4-9d9e-41ff-8c38-535be8878957",
+        "started_ns": 1793980328469744169,
+        "status": "capture_complete",
+        "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+        "ended_ns": 1793980679658843290,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "6a5dc6902773a0b63b37ee6d737d56a9914f684d46e28409dd1d8fb740cfb62c",
+      "block_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13518437846,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUxODQzNzg0Ng==",
+        "name": "v6-training-none-42245728196",
+        "size_in_bytes": 219516016,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13518437846",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13518437846/zip",
+        "expired": false,
+        "digest": "sha256:25bccc2dac6ca1a349a4cbd0e4b128f5ee852892d9f9ba753a60122420c02074",
+        "created_at": "2026-11-06T15:58:15Z",
+        "updated_at": "2026-11-06T15:58:15Z",
+        "expires_at": "2027-02-04T15:43:44Z",
+        "workflow_run": {
+          "id": 42245728196,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "7127c2b4177a169cddbb5a7e97038ec49377c4d480bc18cf14a3f5153963afb6",
+      "inventory_sha256": "63976df9b2353c1af6860644fd15226ecd32e31ebb53abe8afc1d9f2d412cb18",
+      "parent_record_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+      "processing_execution": {
+        "run_id": 42258782609,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985067174532177,
+        "free_bytes": 106692427776,
+        "incoming_bytes": 338445940,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "obi",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 9,
+        "collector": "obi",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42245728196",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "986955d4-9d9e-41ff-8c38-535be8878957",
+        "started_ns": 1793980726100753603,
+        "status": "capture_complete",
+        "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+        "ended_ns": 1793981090382041755,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "af5d3781f2511e5d7a075bbeaa73e77bf0786af88da2ac266f917048a2cf36ac",
+      "block_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13519153746,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUxOTE1Mzc0Ng==",
+        "name": "v6-training-obi-42245728196",
+        "size_in_bytes": 219098785,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13519153746",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13519153746/zip",
+        "expired": false,
+        "digest": "sha256:cfc7606afeb8b07e7d21cb46a90a043bdec7bd6926495544af0ef0ed8b7811b7",
+        "created_at": "2026-11-06T16:05:05Z",
+        "updated_at": "2026-11-06T16:05:05Z",
+        "expires_at": "2027-02-04T15:43:44Z",
+        "workflow_run": {
+          "id": 42245728196,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "bfbaf519f529df92ab04ce312ae22d8462ed7721758925f16a2eea59e12de2b1",
+      "inventory_sha256": "8b36b16f85783dc1a5dbe5e11bd1eb3103605661ebc299460373f45301788914",
+      "parent_record_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+      "processing_execution": {
+        "run_id": 42258782609,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985078283484742,
+        "free_bytes": 106691604480,
+        "incoming_bytes": 336690172,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "coroot",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 9,
+        "collector": "coroot",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42245728196",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "986955d4-9d9e-41ff-8c38-535be8878957",
+        "started_ns": 1793981139073296593,
+        "status": "capture_complete",
+        "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+        "ended_ns": 1793981522713173121,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "79eea3fdb1f8c6e7a3a1b4ab239102c94861c8eb59330b502698a62609659c3b",
+      "block_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13520070760,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMDA3MDc2MA==",
+        "name": "v6-training-coroot-42245728196",
+        "size_in_bytes": 219546712,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13520070760",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13520070760/zip",
+        "expired": false,
+        "digest": "sha256:49d4ea61a7f083de2954b4d8e32ae35dcbc0361bf436c9e38e16d865d167f115",
+        "created_at": "2026-11-06T16:12:17Z",
+        "updated_at": "2026-11-06T16:12:17Z",
+        "expires_at": "2027-02-04T15:43:44Z",
+        "workflow_run": {
+          "id": 42245728196,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "7d3c0c0aad9ac1b1a520c971ac0808003f7bada11d410ded2470711e8c87623c",
+      "inventory_sha256": "ef5ccec2784b8a89c4d398ab9e9b5cece861bcc5e81257f96189261559bfc537",
+      "parent_record_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+      "processing_execution": {
+        "run_id": 42258782609,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985089180400411,
+        "free_bytes": 106690023424,
+        "incoming_bytes": 339244640,
+        "reserve_bytes": 2147483648
+      }
+    },
+    {
+      "collector": "deepflow",
+      "original_capture_identity": {
+        "study": "clean-restart-v6",
+        "protocol_version": "graph-v5",
+        "system": "deathstarbench",
+        "mode": "full",
+        "seed": 9,
+        "collector": "deepflow",
+        "phase": "training",
+        "smoke": true,
+        "stage": "qualification",
+        "run_id": "42245728196",
+        "commit": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+        "runner_boot_id": "986955d4-9d9e-41ff-8c38-535be8878957",
+        "started_ns": 1793981571853428807,
+        "status": "capture_complete",
+        "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+        "ended_ns": 1793981986704690599,
+        "cleanup_errors": []
+      },
+      "closed_input_sha256": "f0b332d6e964d92036ce2a977d60ce0d7f4857b14ddfe3f4e15c6eddf1ebcafc",
+      "block_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+      "phase_counts": {
+        "preparation": 15,
+        "class_train": 9,
+        "calibration": 12
+      },
+      "preparation_count": 15,
+      "all_original_files_bytes_SHA_modes_verified": true,
+      "sealed_journal_preparation_verified": true,
+      "artifact_API": {
+        "id": 13521246087,
+        "node_id": "MDg6QXJ0aWZhY3QxMzUyMTI0NjA4Nw==",
+        "name": "v6-training-deepflow-42245728196",
+        "size_in_bytes": 225935940,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521246087",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13521246087/zip",
+        "expired": false,
+        "digest": "sha256:7dceffdf3f2e3133a7b9f683a637ffaeccc0c2845ff8d868f223d245e24a69ca",
+        "created_at": "2026-11-06T16:20:02Z",
+        "updated_at": "2026-11-06T16:20:02Z",
+        "expires_at": "2027-02-04T15:43:44Z",
+        "workflow_run": {
+          "id": 42245728196,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9"
+        }
+      },
+      "archive_sha256": "9101a440f01939a8cdf722c3b33214a5a17a293195f3f1386df9a8985e213a17",
+      "inventory_sha256": "5a17e5931d53e6ef5546e8c66c51c4b36f69008d5c16d6adcf263d42caf8cab6",
+      "parent_record_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+      "processing_execution": {
+        "run_id": 42258782609,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "preextract_actual_disk_guard": {
+        "at_ns": 1793985100825544763,
+        "free_bytes": 106682454016,
+        "incoming_bytes": 419824373,
+        "reserve_bytes": 2147483648
+      }
+    }
+  ],
+  "models_or_VMs_or_targets_executed": false,
+  "scope": "Original immutable qualification training only; manual review required before replay"
+}

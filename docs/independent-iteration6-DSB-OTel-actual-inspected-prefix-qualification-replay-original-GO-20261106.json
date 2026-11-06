@@ -1,0 +1,215 @@
+{
+  "review": "Independent ORIGINAL actual inspected-parent qualification replay GO for DSB and OTel only",
+  "date": "2026-11-06",
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "original_criterion_qualification_replay_GO": true,
+  "independent_replay_GO": true,
+  "original_main_execution_GO": false,
+  "actual_model_forecast_success_claim": false,
+  "full_size_execution_qualified": false,
+  "current_source": "4174c5541f8e06252bd6348237fbe08f803f4720",
+  "official_inspection_API_metadata": {
+    "path": "work/v6-successful-inspection-API-metadata-20261106.json",
+    "bytes": 58334,
+    "sha256": "7207552cad7db7a4bd71b44b62cc26d711d5267dbf0475f072c3958873939ca5"
+  },
+  "cases": {
+    "deathstarbench": {
+      "original_run": 42245728196,
+      "original_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+      "mode": "full",
+      "repetition": 9,
+      "smoke": true,
+      "inspection_execution": {
+        "run_id": 42258782609,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "inspection_artifact": {
+        "id": 13524241550,
+        "name": "v6-qualification-parent-inspection-42258782609",
+        "size_in_bytes": 13507,
+        "digest": "sha256:e93fe3a9c635a0f8eedd6a6b531bffab97185039404bd1836b98eb1dc517bbef"
+      },
+      "report_sha256": "4aee6842db1f8a34818499ac8b6b5881253b11ec289a932b2c42289ae8d3d4bc",
+      "inner_seals": {
+        "parent_plan_sha256": "dae5b2a59f36654ccd9ea037e31ab4df286d804a04fe2664b7e5a78a8df9b5f1",
+        "shared_sha256": "7d4d067c5087548174f5e3f93b72d78c9df9f8c73b763b0553535a9a95afb7af",
+        "golden_sha256": "0cbce096858baf2f2f018d1ff9bff2010776ff0f01b360cc412181d321158f8e",
+        "blueprint_sha256": "5fd22aa2f5586b5984d8963878f4468bf92a65786324bc6e720deeb03b79531d",
+        "closed_input_sha256_by_collector": {
+          "none": "6a5dc6902773a0b63b37ee6d737d56a9914f684d46e28409dd1d8fb740cfb62c",
+          "obi": "af5d3781f2511e5d7a075bbeaa73e77bf0786af88da2ac266f917048a2cf36ac",
+          "coroot": "79eea3fdb1f8c6e7a3a1b4ab239102c94861c8eb59330b502698a62609659c3b",
+          "deepflow": "f0b332d6e964d92036ce2a977d60ce0d7f4857b14ddfe3f4e15c6eddf1ebcafc"
+        }
+      },
+      "same_original_training_host": "986955d4-9d9e-41ff-8c38-535be8878957",
+      "four_captures_verified": true,
+      "phase_counts_each_arm": {
+        "class_train": 9,
+        "calibration": 12,
+        "preparation": 15
+      },
+      "inspection_jobs": {
+        "inspect": "success",
+        "model": "skipped",
+        "validation": "skipped"
+      },
+      "draft_record_sha256": "28b200ec335d83b60b61707d4cea9fafe5667fa3157caadb039bcfcbcf82d84a"
+    },
+    "otel_demo": {
+      "original_run": 42247350498,
+      "original_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
+      "mode": "full",
+      "repetition": 9,
+      "smoke": true,
+      "inspection_execution": {
+        "run_id": 42258796326,
+        "source": "4174c5541f8e06252bd6348237fbe08f803f4720"
+      },
+      "inspection_artifact": {
+        "id": 13524131506,
+        "name": "v6-qualification-parent-inspection-42258796326",
+        "size_in_bytes": 13441,
+        "digest": "sha256:aabb410e71803756d496a63acc5c5af476877046b30d4b16a7fcc8eb97b4ba64"
+      },
+      "report_sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e",
+      "inner_seals": {
+        "parent_plan_sha256": "830a3623c11cd6fdf05b8c777b09eea184ce701357c4e86ea3169bc1e201a2f3",
+        "shared_sha256": "482d9f1d7f057b1f165bb8241170c1f69a5e3cc93fd2847d16de8d91448833b5",
+        "golden_sha256": "b2e2d9edf12fa5ef82b28661966023e1b5fe08610691d8fe0d847269f7b3fd7a",
+        "blueprint_sha256": "edf36370fb492baba0daa56e2f16db52c240ab8ad955cfb1dad0182200e4ca8a",
+        "closed_input_sha256_by_collector": {
+          "none": "e57795997d4692f396e3a5751072dcc7fd8537aba140e513c7e105e194c1119e",
+          "obi": "5c395c6684578bb48014269105862dbc5b4de3328058ad0df4e2b5465fcc1847",
+          "coroot": "1b1c3568c9639727c24ed6b8634b828984e10fed80e62c4b3b8c52841006f50f",
+          "deepflow": "4f2bb64293a1000e36dfd7984dc4401e1ac17d0b42b65567f8e6172d95900179"
+        }
+      },
+      "same_original_training_host": "a1469559-2a6a-4d83-be3d-476555f1812a",
+      "four_captures_verified": true,
+      "phase_counts_each_arm": {
+        "class_train": 9,
+        "calibration": 12,
+        "preparation": 15
+      },
+      "inspection_jobs": {
+        "inspect": "success",
+        "model": "skipped",
+        "validation": "skipped"
+      },
+      "draft_record_sha256": "d73a12c46995e305f694d155738f6b3902467480a2096908080a22e8c581337c"
+    }
+  },
+  "actual_review_findings": "Both official inspection runs succeeded at reviewed source4174c5541f8e06252bd6348237fbe08f803f4720; inspect succeeded and model/validation jobs were skipped. Actual inspection artifact IDs/names/sizes/digests and source/run identities match proposed records. Published report copies are byte-identical to saved metadata copies. All original capture artifact tuples, original approved parent-record hashes, closed-input hashes and plan/shared/golden/blueprint seals match. Each four-arm set has one original training host, separate sequential capture timestamps, complete original source-byte/mode hashes, sealed-journal preparation proof and capture_complete with no cleanup errors.",
+  "authorized_next_step": "For ONLY these two exact smoke qualification prefixes, permit ROOT to set root_replay_GO and independent_replay_GO true in the proposed records without changing their tuples/seals; provide their new Git-LF record SHA to replay dispatch after source CI. Restore the exact existing four training captures without recapture, run four offline models/forecasts with actual separate processing run/source/host provenance, freeze and hash ALL four bundles, then fresh four-arm validation on one per-phase host using the same sealed blueprint, declared order/seeds and current replay workflow. Petclinic is not included.",
+  "source_gate_and_prospective_findings": "Reviewed replay helper, checker, study/model and validation code match prior reviewed LF source. Restore requires all original files and closed hashes, and validates warmups against the immutable sealed journal. Actual processing_execution is frozen/packaged independently of capture identity. Validation imports exact current-run model publications, checks original capture/seals and actual processing source, verifies all four frozen bundles before capture and before evaluation, and forbids qualification prepared-plan path for MAIN. Default MAIN gates remain unchanged. No target outcomes exist in these inspected training-only prefixes; models/targets were not executed by inspection.",
+  "original_criterion_and_strong_baselines": "Continue the ORIGINAL108 matched feasibility design for operation models and actual prospective Bering-to-Sheaft forecasts with missing/partial SDK traces, judged against independent external outcomes. Preserve equal semantic information for direct conditional arithmetic, native-only and cheap observed-edge/context union baselines. Useful graphs, source validity, internal metrics and availability flags do not establish utility. Equality, UNKNOWN, negative and adverse outcomes remain valid and must not trigger retries until positive. No novelty or cost-dominance hypothesis is added.",
+  "complete_costs": "Retain all original preparation/capture/control/model failures and cancellations, failed/successful inspection, CI, hash/transfer/archive, replay model/validation and early-stop costs, with overlap distinguished. Saved inspection-cost/resource metadata are hash-bound below. Human and other unmeasured costs remain unknown; API elapsed is not CPU/billing. This review does not certify a final complete cost ledger.",
+  "limits": "Smoke full-SDK qualification only; not full-size phase-budget qualification or main108 scientific cells. No historical81 input/result substitution. No conclusion yet about forecast utility, observer effects, context writer, zero OOM/agent loss or general product capability. Actual new model and validation results require independent original-criterion review before any success claim; MAIN remains closed.",
+  "work_performed": "Read-only saved puremetadata and bounded source/hash checks only. No GET/download, local raw/journal/SQL body read, model fitting/replay, VM, traffic, tests or source edits performed by reviewer.",
+  "readset_sha256": {
+    "src/ebpf_discovery/qualification_replay_v6.py": {
+      "bytes": 25551,
+      "sha256": "aa022368835815b575842cea16eb5b96d4ba4560ebd8a8df3cdf2f68771ae7b4",
+      "LF_sha256": "aa022368835815b575842cea16eb5b96d4ba4560ebd8a8df3cdf2f68771ae7b4"
+    },
+    "src/ebpf_discovery/capture_checks_v6.py": {
+      "bytes": 6737,
+      "sha256": "f35dfb8998be9bf7944c2200de59b320d643af29c698015fba5e722befb9364a",
+      "LF_sha256": "f35dfb8998be9bf7944c2200de59b320d643af29c698015fba5e722befb9364a"
+    },
+    "src/ebpf_discovery/study_v6.py": {
+      "bytes": 16239,
+      "sha256": "a91572a12db37b8334c2038ececdfcfead3dfa462e795b4d5fea107787e85fe7",
+      "LF_sha256": "a91572a12db37b8334c2038ececdfcfead3dfa462e795b4d5fea107787e85fe7"
+    },
+    "src/ebpf_discovery/validation_v6.py": {
+      "bytes": 14389,
+      "sha256": "e7f48106d5359f57e423dbf73e2c639229d09dd2e670ef4807b15c13ca75061d",
+      "LF_sha256": "e7f48106d5359f57e423dbf73e2c639229d09dd2e670ef4807b15c13ca75061d"
+    },
+    "src/ebpf_discovery/block_v6.py": {
+      "bytes": 29857,
+      "sha256": "d77c4f1714d90a25d2864ecc0264a57b2e2bb1cdbf540030aef456b7ebfa0ca7",
+      "LF_sha256": "47dc674736a7ddd64891581fe1d465b2dff5be9b7a1110d921ebb601b6275fc5"
+    },
+    ".github/workflows/qualification-replay-v6.yml": {
+      "bytes": 19551,
+      "sha256": "3e4c9672d422ea38fcd08a5cde5b767505aa78debcb16ec38eaa570811490aba",
+      "LF_sha256": "3e4c9672d422ea38fcd08a5cde5b767505aa78debcb16ec38eaa570811490aba"
+    },
+    "docs/v6-qualification-parent-deathstarbench-full9-replay-20261106.json": {
+      "bytes": 2840,
+      "sha256": "28b200ec335d83b60b61707d4cea9fafe5667fa3157caadb039bcfcbcf82d84a",
+      "LF_sha256": "28b200ec335d83b60b61707d4cea9fafe5667fa3157caadb039bcfcbcf82d84a"
+    },
+    "docs/v6-qualification-inspection-deathstarbench-full9-20261106.json": {
+      "bytes": 12381,
+      "sha256": "4aee6842db1f8a34818499ac8b6b5881253b11ec289a932b2c42289ae8d3d4bc",
+      "LF_sha256": "4aee6842db1f8a34818499ac8b6b5881253b11ec289a932b2c42289ae8d3d4bc"
+    },
+    "docs/v6-qualification-parent-deathstarbench-full9-inspection-20261106.json": {
+      "bytes": 1705,
+      "sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102",
+      "LF_sha256": "83e22bc0411ec14ef0c8132a6f374aa58972ca7610e02030ffbcf19627660102"
+    },
+    "docs/v6-qualification-parent-otel_demo-full9-replay-20261106.json": {
+      "bytes": 2831,
+      "sha256": "d73a12c46995e305f694d155738f6b3902467480a2096908080a22e8c581337c",
+      "LF_sha256": "d73a12c46995e305f694d155738f6b3902467480a2096908080a22e8c581337c"
+    },
+    "docs/v6-qualification-inspection-otel_demo-full9-20261106.json": {
+      "bytes": 12354,
+      "sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e",
+      "LF_sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e"
+    },
+    "docs/v6-qualification-parent-otel_demo-full9-inspection-20261106.json": {
+      "bytes": 1798,
+      "sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0",
+      "LF_sha256": "511c6a0928dfc1559c1ac14a1bc40663adbed78998ac9ba168fdcbd929acd1b0"
+    }
+  },
+  "retained_small_metadata": [
+    {
+      "path": "work/v6-qualification-inspection-42258782609/parent-publication-API.json",
+      "bytes": 20215,
+      "sha256": "7a1df4fc7e01faedf17ebf170c30b223e6e557b54ed01f42724e13e000b366a0"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258782609/qualification-inspection-report.json",
+      "bytes": 12381,
+      "sha256": "4aee6842db1f8a34818499ac8b6b5881253b11ec289a932b2c42289ae8d3d4bc"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258782609/qualification-replay-cost.jsonl",
+      "bytes": 3249,
+      "sha256": "279673e023520fb928a51e2c69ddc0b00c0f3f589414be696afea1e1cd80d5a4"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258782609/inspection-host-resources.json",
+      "bytes": 3232,
+      "sha256": "9ed591938ff91477f83f07d227d8694ee79c455941785d1f45e997c52a958f70"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258796326/parent-publication-API.json",
+      "bytes": 20203,
+      "sha256": "6ba891c48575b9ee2e349ded2ca1a0e163340643a3eeb99dd8fd34f595e47939"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258796326/qualification-inspection-report.json",
+      "bytes": 12354,
+      "sha256": "22c75c93f3c103bdb774d4448aff186fc8c13f662bf049e6fa0ed65be248321e"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258796326/qualification-replay-cost.jsonl",
+      "bytes": 3247,
+      "sha256": "48002a43896fcb8d204623f52aba1725273f4e213d08bbade8c172da90dee6fd"
+    },
+    {
+      "path": "work/v6-qualification-inspection-42258796326/inspection-host-resources.json",
+      "bytes": 3232,
+      "sha256": "f613948c6bf811379d97c35c45a8a4473a2fb9c1d34edc4a04cbffbd9a8719e5"
+    }
+  ]
+}
