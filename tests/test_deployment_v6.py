@@ -1,9 +1,13 @@
-"""Tiny fake-guest checks: no VM, application build, network, or traffic."""
+"""Fake guests, plus explicitly enabled CI-only Compose/owned-log checks."""
 import hashlib
 import json
+import os
 from pathlib import Path
+import re
 import shlex
 import shutil
+import stat
+import subprocess
 from types import SimpleNamespace
 
 import pytest
@@ -226,3 +230,104 @@ def test_only_known_native_export_dirs_are_empty_but_config_and_fixture_remain(t
     for node in d.NODES:
         assert not list((target / f"node-{node}" / "native").iterdir())
         assert (target / f"node-{node}" / "fixture.json").read_text() == "retain"
+
+
+def checkout_compose(tmp_path):
+    path = tmp_path / 'node-a.yaml'
+    service = {
+        'image': 'busybox:1.36.1', 'mem_limit': '20M',
+        'deploy': {'resources': {'limits': {'memory': '20M'}}}}
+    path.write_text(yaml.safe_dump({'services': {'checkout': service}}), encoding='utf8')
+    d._healthy_checkout(tmp_path)
+    return path
+
+
+def test_checkout_budget_has_consistent_compose_byte_value_strings(tmp_path):
+    value = yaml.safe_load(checkout_compose(tmp_path).read_text())['services']['checkout']
+    assert type(value['mem_limit']) is str
+    assert type(value['deploy']['resources']['limits']['memory']) is str
+    assert int(value['mem_limit']) == int(value['deploy']['resources']['limits']['memory']) == 128 * 1024**2
+
+
+@pytest.mark.skipif(os.environ.get('RUN_DOCKER_CONTROL_FIXTURE') != '1',
+                    reason='actual Compose parser runs only in the enabled CI control fixture')
+def test_checkout_budget_is_accepted_by_actual_compose_parser(tmp_path):
+    result = subprocess.run(['docker', 'compose', '-p', 'v6-checkout-budget-parser',
+                             '-f', str(checkout_compose(tmp_path)), 'config', '--format', 'json'],
+                            capture_output=True, text=True, check=True, timeout=60)
+    value = json.loads(result.stdout)['services']['checkout']
+    assert int(value['mem_limit']) == 128 * 1024**2
+    assert int(value['deploy']['resources']['limits']['memory']) == 128 * 1024**2
+
+
+def vm_log_payload(label):
+    text = (Path(__file__).resolve().parents[1] / 'scripts/vms-v6.sh').read_text()
+    matches = re.findall(r"<<'" + label + r"'\n(.*?)\n" + label + r"(?:\n|$)", text, re.S)
+    assert len(matches) == 1
+    return matches[0]
+
+
+@pytest.mark.skipif(os.name != 'posix', reason='Linux O_NOFOLLOW file descriptors')
+def test_owned_serial_log_creation_never_replaces_existing_diagnostics(tmp_path, monkeypatch):
+    pair = tmp_path / 'active'
+    payload = vm_log_payload('PY_SERIAL_CREATE')
+    monkeypatch.setattr('sys.argv', ['owned-serial-create', str(tmp_path), str(pair)])
+    exec(compile(payload, 'vms-v6.sh:serial-create', 'exec'), {})
+    assert all(stat.S_IMODE((pair / n / 'serial.log').stat().st_mode) == 0o600 for n in d.NODES)
+    log = pair / 'a/serial.log'
+    log.write_bytes(b'KEEP earlier diagnostics')
+    before = log.stat()
+    with pytest.raises(FileExistsError):
+        exec(compile(payload, 'vms-v6.sh:serial-create', 'exec'), {})
+    assert log.read_bytes() == b'KEEP earlier diagnostics'
+    assert log.stat().st_ino == before.st_ino
+
+
+@pytest.mark.skipif(os.name != 'posix', reason='Linux O_NOFOLLOW file descriptors')
+def test_serial_log_permission_fix_rejects_foreign_symlink_before_any_mode_change(tmp_path, monkeypatch):
+    pair = tmp_path / 'active'
+    for node in d.NODES:
+        (pair / node).mkdir(parents=True)
+    (pair / 'owned-stop.json').write_text('[]')
+    first = pair / 'a/serial.log'
+    first.write_bytes(b'first');first.chmod(0o400)
+    foreign = tmp_path / 'foreign.log'
+    foreign.write_bytes(b'foreign');foreign.chmod(0o640)
+    (pair / 'b/serial.log').symlink_to(foreign)
+    monkeypatch.setattr('sys.argv', ['owned-serial-access', str(tmp_path), str(pair),
+                                   str(os.getuid()), str(os.getgid())])
+    with pytest.raises(OSError):
+        exec(compile(vm_log_payload('PY_SERIAL_ACCESS'), 'vms-v6.sh:serial-access', 'exec'), {})
+    assert stat.S_IMODE(first.stat().st_mode) == 0o400
+    assert stat.S_IMODE(foreign.stat().st_mode) == 0o640
+    assert foreign.read_bytes() == b'foreign'
+
+
+@pytest.mark.skipif(os.name != 'posix' or os.environ.get('RUN_DOCKER_CONTROL_FIXTURE') != '1',
+                    reason='root-owned QEMU log regression runs only in the enabled Linux CI fixture')
+def test_root_owned_stopped_serial_logs_become_runner_readable_without_changing_bytes(tmp_path):
+    pair = tmp_path / 'preparation'
+    for node in d.NODES:
+        (pair / node).mkdir(parents=True)
+    (pair / 'owned-stop.json').write_text(json.dumps([
+        {'node': n, 'status': 'already_exited_without_signal'} for n in d.NODES]))
+    other = tmp_path / 'not-a-qemu-log'
+    other.write_bytes(b'do not touch');other.chmod(0o640)
+    before_other = other.stat()
+    subprocess.run(['sudo', 'python3', '-c',
+        "import os,pathlib,sys;p=pathlib.Path(sys.argv[1]);"
+        "[(q.write_bytes(b'ROOT QEMU LOG '+n.encode()),q.chmod(0o600)) for n in ('a','b') for q in [p/n/'serial.log']]",
+        str(pair)], check=True, timeout=30)
+    subprocess.run(['sudo', 'python3', '-c', vm_log_payload('PY_SERIAL_ACCESS'),
+                    str(tmp_path), str(pair), str(os.getuid()), str(os.getgid())], check=True, timeout=30)
+    for node in d.NODES:
+        path = pair / node / 'serial.log'
+        assert path.read_bytes() == b'ROOT QEMU LOG ' + node.encode()
+        assert path.stat().st_uid == os.getuid()
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+    receipt = json.loads((tmp_path / 'serial-log-access.jsonl').read_text())
+    assert len(receipt['files']) == 2 and receipt['confirmed_stopped'] is True
+    assert all(row['before']['uid'] == 0 for row in receipt['files'])
+    after_other = other.stat()
+    assert (after_other.st_ino,after_other.st_mode,after_other.st_mtime_ns) == (
+        before_other.st_ino,before_other.st_mode,before_other.st_mtime_ns)

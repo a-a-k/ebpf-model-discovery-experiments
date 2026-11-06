@@ -145,10 +145,12 @@ def _healthy_checkout(bundle: Path) -> None:
     path = bundle / "node-a.yaml"
     value = yaml.safe_load(path.read_text(encoding="utf-8"))
     service = value["services"]["checkout"]
-    service["mem_limit"] = CHECKOUT_MEMORY_BYTES
+    # Compose deploy.resources.limits.memory requires a byte-value string.
+    # Decimal bytes also keep the service-level and deploy-level limits equal.
+    service["mem_limit"] = str(CHECKOUT_MEMORY_BYTES)
     limits = service.get("deploy", {}).get("resources", {}).get("limits")
     if limits is not None:
-        limits["memory"] = CHECKOUT_MEMORY_BYTES
+        limits["memory"] = str(CHECKOUT_MEMORY_BYTES)
     path.write_text(yaml.safe_dump(value, sort_keys=False), encoding="utf-8")
     _json(bundle / "v6-uniform-checkout-budget.json", {
         "bytes": CHECKOUT_MEMORY_BYTES, "scope": "all four arms, both epochs, every SDK mode",

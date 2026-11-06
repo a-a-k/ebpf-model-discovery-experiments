@@ -57,6 +57,59 @@ while True:
     time.sleep(.25)
 PY
 }
+prepare_serial_logs() {
+  python3 - "$root" "$1" <<'PY_SERIAL_CREATE'
+import os,pathlib,stat,sys
+root,p=map(pathlib.Path,sys.argv[1:])
+assert p in (root/'active',root/'preparation') and p.resolve()==p
+assert not any(q.is_symlink() for q in (p,*p.parents))
+for node in ('a','b'):
+    directory=p/node
+    directory.mkdir(parents=True,exist_ok=True)
+    assert directory.resolve()==directory and not directory.is_symlink()
+    log=directory/'serial.log'
+    # Do not truncate or replace an earlier diagnostic log.
+    fd=os.open(log,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+    try:assert stat.S_ISREG(os.fstat(fd).st_mode)
+    finally:os.close(fd)
+PY_SERIAL_CREATE
+}
+serial_logs_readable_after_stop() {
+  sudo python3 - "$root" "$1" "$(id -u)" "$(id -g)" <<'PY_SERIAL_ACCESS'
+import json,os,pathlib,stat,sys,time
+root,p=map(pathlib.Path,sys.argv[1:3]);uid,gid=map(int,sys.argv[3:])
+assert p in (root/'active',root/'preparation') and p.resolve()==p
+assert not any(q.is_symlink() for q in (p,*p.parents))
+stopped=json.loads((p/'owned-stop.json').read_text())
+assert all(row['status'] in {'TERM_sent_through_verified_pidfd','already_exited_without_signal','exited_before_signal'} for row in stopped)
+handles=[];rows=[]
+try:
+    # Verify both paths before changing either file. No recursion or globbing.
+    for node in ('a','b'):
+        directory=p/node
+        assert directory.resolve()==directory and not directory.is_symlink()
+        log=directory/'serial.log'
+        if not os.path.lexists(log):continue
+        fd=os.open(log,os.O_RDONLY|os.O_NOFOLLOW);handles.append(fd)
+        before=os.fstat(fd);named=log.lstat()
+        assert stat.S_ISREG(before.st_mode) and (before.st_dev,before.st_ino)==(named.st_dev,named.st_ino)
+        rows.append((fd,log,before))
+    receipt=[]
+    for fd,log,before in rows:
+        os.fchown(fd,uid,gid);os.fchmod(fd,0o600)
+        after=os.fstat(fd);named=log.lstat()
+        assert (after.st_dev,after.st_ino,after.st_size)==(before.st_dev,before.st_ino,before.st_size)
+        assert (after.st_dev,after.st_ino)==(named.st_dev,named.st_ino)
+        assert (after.st_uid,after.st_gid,stat.S_IMODE(after.st_mode))==(uid,gid,0o600)
+        receipt.append({'path':str(log),'device':after.st_dev,'inode':after.st_ino,'bytes':after.st_size,
+                        'before':{'uid':before.st_uid,'gid':before.st_gid,'mode':stat.S_IMODE(before.st_mode)},
+                        'after':{'uid':after.st_uid,'gid':after.st_gid,'mode':stat.S_IMODE(after.st_mode)}})
+    with (root/'serial-log-access.jsonl').open('a') as stream:
+        stream.write(json.dumps({'at_ns':time.time_ns(),'pair':str(p),'confirmed_stopped':True,'files':receipt})+'\n')
+finally:
+    for fd in handles:os.close(fd)
+PY_SERIAL_ACCESS
+}
 verify_golden() {
   python3 - "$root/golden" "${V6_GOLDEN_SHA256:-}" <<'PY'
 import hashlib,json,pathlib,sys
@@ -76,6 +129,7 @@ if [[ $action == provision ]]; then
   [[ ! -e "$root/golden" && ! -e "$root/preparation" && ! -e "$root/active" ]] || { echo 'provision requires an unused root' >&2; exit 3; }
   [[ -e /dev/kvm ]] || exit 3
   space $((2*24*1024*1024*1024))
+  prepare_serial_logs "$root/preparation"
   bash "$script_root/vms.sh" start "$root/preparation"
   for node in a b; do
     [[ $node == a ]] && suffix=11 || suffix=12
@@ -95,6 +149,7 @@ GUEST
   done
   bash "$script_root/vms.sh" stop "$root/preparation" > "$root/preparation/owned-stop.json"
   wait_stopped "$root/preparation"
+  serial_logs_readable_after_stop "$root/preparation"
   mkdir "$root/golden"
   for node in a b; do
     needed=$(qemu-img measure --output=json -O qcow2 "$root/preparation/$node/root.qcow2" | python3 -c 'import json,sys;print(json.load(sys.stdin)["required"])')
@@ -129,12 +184,14 @@ PY
   if [[ $action == stop ]]; then
     bash "$script_root/vms.sh" stop "$active" > "$active/owned-stop.json"
     wait_stopped "$active"
+    serial_logs_readable_after_stop "$active"
     python3 - "$active/owner.json" <<'PY'
 import json,pathlib,sys,time
 p=pathlib.Path(sys.argv[1]);v=json.loads(p.read_text());v.update(status='stopped',stopped_ns=time.time_ns());p.write_text(json.dumps(v,indent=2)+'\n')
 PY
   else
     wait_stopped "$active"
+    serial_logs_readable_after_stop "$active"
     python3 - "$active" "$root/history/$label" <<'PY'
 import json,pathlib,shutil,sys
 p,h=map(pathlib.Path,sys.argv[1:]);v=json.loads((p/'owner.json').read_text());assert v['status']=='stopped'
@@ -184,6 +241,7 @@ sudo iptables -t nat -C POSTROUTING -s 192.168.76.0/24 -o "$iface" -j MASQUERADE
 sudo iptables -C FORWARD -i br-ebpf -j ACCEPT 2>/dev/null || sudo iptables -A FORWARD -i br-ebpf -j ACCEPT
 sudo iptables -C FORWARD -o br-ebpf -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT 2>/dev/null || sudo iptables -A FORWARD -o br-ebpf -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 mkdir "$active"
+prepare_serial_logs "$active"
 cp "$root/golden/id_ed25519" "$root/golden/id_ed25519.pub" "$active/"
 chmod 600 "$active/id_ed25519"
 python3 - "$active/owner.json" "$label" "$golden_sha" <<'PY'
@@ -194,7 +252,7 @@ pubkey=$(cat "$active/id_ed25519.pub")
 nonce=$(python3 -c 'import uuid;print(uuid.uuid4())')
 for node in a b; do
   if [[ $node == a ]]; then suffix=11; peer=12; mac=52:54:00:76:00:11; else suffix=12; peer=11; mac=52:54:00:76:00:12; fi
-  mkdir "$active/$node"
+  # The owned node directories/logs were created before privileged QEMU.
   qemu-img create -f qcow2 -F qcow2 -b "$root/golden/$node.qcow2" "$active/$node/root.qcow2"
   cat > "$active/$node/user-data" <<EOF
 #cloud-config
