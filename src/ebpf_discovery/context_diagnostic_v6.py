@@ -338,7 +338,7 @@ p=pathlib.Path('/opt/ebpf-study/context-diagnostic-v6');log=p/'tcpdump.log'
 assert not log.exists() and not (p/'wire.pcap').exists()
 os.umask(0o022)
 with log.open('wb') as stream:
- argv=['tcpdump','-i','any','-s','0','-U','-Z','root','-w',str(p/'wire.pcap'),'tcp']
+ argv=['tcpdump','-i','any','-s','0','-U','-Z','root','-w',str(p/'wire.pcap'),'tcp and not port 22']
  child=subprocess.Popen(argv,stdout=stream,stderr=stream,start_new_session=True)
  deadline=time.monotonic()+15
  while True:
@@ -362,7 +362,7 @@ e=json.loads(sys.argv[1]);p=pathlib.Path('/proc')/str(e['pid']);fd=os.pidfd_open
 try:
  assert p.joinpath('stat').read_text().rsplit(') ',1)[1].split()[19]==e['start_ticks']
  assert [os.fsdecode(v) for v in p.joinpath('cmdline').read_bytes().rstrip(b'\\0').split(b'\\0')]==e['argv']
- assert pathlib.Path(e['argv'][0]).name=='tcpdump' and e['argv'][-1]=='tcp'
+ assert pathlib.Path(e['argv'][0]).name=='tcpdump' and e['argv'][-1]=='tcp and not port 22'
  signal.pidfd_send_signal(fd,signal.SIGINT)
 finally:os.close(fd)
 deadline=time.monotonic()+30
