@@ -2,9 +2,9 @@
   "schema": "separate-context-diagnostic-v6",
   "system": "otel_demo",
   "mode": "full",
-  "diagnostic_execution_GO": false,
+  "diagnostic_execution_GO": true,
   "root_diagnostic_execution_GO": true,
-  "independent_diagnostic_execution_GO": false,
+  "independent_diagnostic_execution_GO": true,
   "parent_run_id": 42247350498,
   "parent_source": "1b215387b053cbf7e1da6e79f0bee86cb92f27f9",
   "artifact_id": 13522283164,
@@ -22,5 +22,8 @@
   "scope": "Separate full-SDK diagnostic only: fixed27 operations/54HTTP intentions across none/OBI-all/OBI-disabled. Same pinned parent image IDs, diagnostic observer derivative, no primary input or MAIN cell. Actual observer behaviour unqualified until reviewed.",
   "parent_inspection": "docs/v6-qualification-inspection-otel_demo-full9-20261106.json",
   "source_qualification": "docs/independent-context-diagnostic-v6-source-publication-observer-qualification-original-GO-20261106.json",
-  "root_verdict": "GO exact-parent diagnostic observer qualification only. Compare direct literal SDK/API/wire evidence with the same information; retain adverse/UNKNOWN, all controls/preparation/restore/capture/transfer/decoding/failure/CI/costs. No writer inference or positive-outcome repeat."
+  "root_verdict": "GO exact-parent diagnostic observer qualification only. Compare direct literal SDK/API/wire evidence with the same information; retain adverse/UNKNOWN, all controls/preparation/restore/capture/transfer/decoding/failure/CI/costs. No writer inference or positive-outcome repeat.",
+  "reviewed_diagnostic_source_commit": "b10cb4fe4b2301dafd79816952db53310251833d",
+  "actual_observer_qualified": false,
+  "MAIN_GO": false
 }
