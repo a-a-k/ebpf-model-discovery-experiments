@@ -244,7 +244,8 @@
     "systems/petclinic/test_contracts_v3.py": "e13b2ecda1c520753c3be39fb2231a58bb486b952c94b03d3b363c39fb9a7c0f",
     "systems/petclinic/test_database_v3.py": "442981ca3bb8a7b97668e8967205134b7f9f791f4dba9f311b87bf56f0c1f6ec",
     "systems/petclinic/test_experiment_v4.py": "60d63434b9763a0f9cff223ecd4dff822afae9cd304fd572c15de31954a47835",
-    "systems/petclinic/test_semantic_audit.py": "9f44ba3b63b159ab466d852fe47e24de2cb93b54fc40a6ab6f2692fa60573e2d"
+    "systems/petclinic/test_semantic_audit.py": "9f44ba3b63b159ab466d852fe47e24de2cb93b54fc40a6ab6f2692fa60573e2d",
+    "AGENTS.md": "3e8ed22c4b909eb6c58e66f3e9e1c6cd15880305de6312159976b206ad8fd227"
   },
   "census_method": "SHA256 of Git LF blobs; exact worker checkout bytes, not Windows CRLF files",
   "original_criterion": "Feasibility of operationmodels and prospective external-outcome forecasts from eBPF when SDK traces are absent/incomplete; unchanged108cells27blocks all10operations; no ML or new predictor/cost superiority criterion",
@@ -266,6 +267,7 @@
     "explicit_pre_execution_message": "Explicit ORIGINAL exact-source/execution GO for final4031d59824f1f16e94a6b3cd8fdfa949259e64a0, bounded to four staged scientific blocks only, after normal CI +separate exact approval record. Independently verified3f3f350 and073dbdb trees identical;4031 changes only corrected publication-limit prose. Final8 GitLF hashes bound,13jobs/DAG/all4model barrier/exactID+builtinretry/source+attempt lineage/no positivity admission checked. Actual full-size budget fit/scientificsuccess false; other21/84 dispatch held.",
     "source_GO_given_before_activation": true,
     "CI_condition": "Dispatch only after exact finalhead normal CI PASS",
-    "signed_companion_record": "Published separately when ready; the explicit source GO above already authorizes this scoped execution record"
+    "signed_companion_record": "docs/independent-v6-isolated-four-blocks-source-original-GO-BRIEF-20261107.json",
+    "signed_companion_original_sha256": "c5346f2c6f18f228161e34702b322017d61c99500ebf0f54fabd767966167e8c"
   }
 }
