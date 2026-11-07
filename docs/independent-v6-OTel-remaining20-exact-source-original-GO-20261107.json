@@ -1,0 +1,92 @@
+{
+  "schema": "independent-v6-OTel-remaining20-exact-source-original-review-v1",
+  "reviewed_utc": "2026-11-07T18:27:23.198Z",
+  "source": "4d613579ebd3a0fd7db93f08b20c29666ddc6890",
+  "original_exact_source_GO": true,
+  "original_source_engineering_GO": true,
+  "dispatch_GO": false,
+  "scientific_success_GO": false,
+  "global_full_size_budget_fit_GO": false,
+  "OTel_remaining_full8_dispatch_GO": false,
+  "exact_blocks": [
+    "otel_demo-absent-10",
+    "otel_demo-absent-11",
+    "otel_demo-partial-9",
+    "otel_demo-partial-10",
+    "otel_demo-partial-11"
+  ],
+  "scope": "Exactly20 scheduled cells within original108/all10 operations; no new scientific cells or changed predictor.",
+  "designs": [
+    {
+      "path": "work/independent-v6-OTel-remaining20-absent-partial-staged-original-design-GO-20261107.json",
+      "sha256": "8d6a18af535bb05ae3bfda3aa26b7f5927cfd6f7475d9a6f07cbe8b1991b0970"
+    },
+    {
+      "path": "work/root-v6-OTel-remaining20-absent-partial-design-20261107.json",
+      "sha256": "fdb419ff72511e3c08c63a92a3246c8eecdc19609cb430c20a11f57b9f50e746"
+    }
+  ],
+  "census": {
+    "path": "work/independent-v6-OTel-remaining20-182-source-census-20261107.json",
+    "sha256": "0f9a54b2aae11c8534a55363e8e042d6d874818cf2f9220f64e64998578eb510",
+    "entries": 182,
+    "canonical_map_SHA256": "1fe25045c5fe47bdb205892f584b2901571d116397118fe7e2a8d899f0a6f70e"
+  },
+  "reviewed_changes": [
+    {
+      "path": "src/ebpf_discovery/isolated_arm_v6.py",
+      "GitLF_sha256": "3293ba839be0b2d74159c0f7d722263da2e796df0b5fcab60567007e080e01c5",
+      "finding": "Literal five identities only; distinct own approval requires ROOT+IND ORIGINAL flags, exact182 implementation map, actual absent9 resource run42347357851; partial budgets and global fit explicitly false, full8 held."
+    },
+    {
+      "path": ".github/workflows/series-isolated-v6.yml",
+      "GitLF_sha256": "1613eeaa0ed45725272e8f96cd248847f98e2f86ecec604d0bf33421ab65e9d5",
+      "finding": "Exactly four equivalent model commands wrapped by unchanged approved observer; actual model command/env/RNG/caps/exitstatus unchanged; four actual REPORT paths correctly retained."
+    },
+    {
+      "path": "AGENTS.md",
+      "GitLF_sha256": "f4f06f8789a01df134f586ee3e22f8413681dc71fc070912059508484a080801",
+      "finding": "Prospective exact-five staged amendment; old source/executions untouched, unknown partial resource fit disclosed."
+    },
+    {
+      "path": "tests/test_isolated_arm_v6.py",
+      "GitLF_sha256": "9165b36c708545d44aa294dc756f559d40d3543e3c4d09b06743de928b9b363b",
+      "finding": "Narrow scope/source/reviewer/risk/false-fit mutants and full10/11 fallback rejection, prior assertions updated to require the new distinct gate."
+    }
+  ],
+  "observer": {
+    "path": "scripts/observe-v6-model-host.py",
+    "GitLF_sha256": "e9c40b1671b554af2f7d4dbb905d16d3ba5049b444be6866ceb983eb3ca7c162",
+    "byte_unchanged": true,
+    "actual_REPORT": "work/model-host-observer.jsonl",
+    "same_all_four_arms": true,
+    "cost_nonzero": true
+  },
+  "checks": {
+    "initial_wrong_four_paths_concrete_blocker_fixed": true,
+    "all_13_jobs_timeout360_no_new_compute_limits": true,
+    "existing_direct_ID_attempt_lineage_and_four_forecast_barrier_unchanged": true,
+    "all_108_all_10_methods_external_outcomes_and_same_information_baselines_unchanged": true,
+    "negative_adverse_UNKNOWN_and_all_failures_retained": true,
+    "old_active_sources_pinned_untouched": true,
+    "new_approval_document_absent_so_dispatch_closed": true,
+    "git_worktree_clean_at_review": true,
+    "source_checks_only_by_this_reviewer": true
+  },
+  "original_criterion": {
+    "contribution": "Original operation-model/prospective-forecast feasibility under missing/partial SDK against external outcomes, not technical flag or model self-metric success.",
+    "strongest_baseline": "Same Native/no-agent/direct implementation and cheap observed context-edge unions with identical supplied contracts and inventory.",
+    "causal_change": "Execution-order gate and same body-free host observer; no claimed predictive improvement or resource cure.",
+    "complete_costs": "Every prior failure/repeated model/preparation/build/CI/capture/model/validation/transfer/hash/observer/inspection/report cost retained; unknown human/unmetered never zero; aliases not extra executions.",
+    "verdict": "Explicit ORIGINAL exact-source GO; accepted unobserved partial budget risk does not become global fit or scientific success."
+  },
+  "validation_evidence": {
+    "root_reported_focused_tests": "46PASS; no scientific computation",
+    "reviewer_actions": "Read exact source/diff/test boundaries and signed design; independently recomputed all182 committed Git-LF hashes; no extra model/test/job execution"
+  },
+  "limitations": [
+    "Normal source CI and separate sealed ROOT+IND execution record are still required before dispatch.",
+    "Actual partial full-count resource fit is unobserved; no runtime success guarantee.",
+    "OTel full10/full11 eight cells remain held; old full9 replay remains separate and unchanged."
+  ]
+}

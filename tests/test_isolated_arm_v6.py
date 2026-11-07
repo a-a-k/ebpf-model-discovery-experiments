@@ -149,7 +149,7 @@ def test_staged_gate_cannot_enlarge_blocks_or_claim_resource_fit(monkeypatch):
     monkeypatch.setattr(b,'gate',lambda *_:(_ for _ in ()).throw(ValueError('ordinary full-size gate retained')))
     args.mode='partial'
     args.system='otel_demo'
-    with pytest.raises(ValueError,match='ordinary'): isolated.gate(args)
+    with pytest.raises(ValueError,match='remaining20'): isolated.gate(args)
 
 
 def test_PC_DSB_scope_preserves_OTel_hold_and_rejects_false_fit(monkeypatch):
@@ -178,7 +178,8 @@ def test_PC_DSB_scope_preserves_OTel_hold_and_rejects_false_fit(monkeypatch):
         with pytest.raises(ValueError,match='remaining56'): isolated.gate(args)
         approval[key]=old
     for mode,repetition in [('partial',9),('absent',10),('full',11)]:
-        with pytest.raises(ValueError,match='ordinary'):
+        expected = 'ordinary' if mode == 'full' else 'remaining20'
+        with pytest.raises(ValueError,match=expected):
             isolated.gate(SimpleNamespace(system='otel_demo',mode=mode,repetition=repetition,stage='main'))
 
 
@@ -239,3 +240,33 @@ def test_workflow_direct_ids_all_four_model_dependencies_and_unlimited_standard_
         if key!='prepare':
             assert 'artifact-id' in job['outputs']['artifact_id']
     assert 'series-isolated-v6.yml' in (workflow.parents[2]/'src/ebpf_discovery/block_v6.py').read_text(encoding='utf8')
+
+
+def test_OTel_twenty_require_their_own_source_approval_and_hold_full(monkeypatch):
+    monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+    hashes = {'exact_source': 'bound'}
+    approval = {k: True for k in ('original_source_execution_GO', 'root_original_GO',
+        'independent_original_GO', 'original_scientific_rollout_GO',
+        'original108_scope_retained', 'partial_unknown_budget_risk_accepted')}
+    approval.update(blocks=list(isolated.OTEL_STAGED_BLOCKS), allocation_regime=isolated.REGIME,
+        full_size_phase_budgets_qualified=False, partial_full_count_budget_observed=False,
+        OTel_remaining_full8_dispatch_GO=False, rollout_design_GO_sha256=isolated.OTEL_STAGED_DESIGN_SHA256,
+        actual_resource_runs=[42347357851], implementation_sha256=hashes)
+    monkeypatch.setattr(b, 'read', lambda *_: approval)
+    monkeypatch.setattr(b, 'implementation_hashes', lambda: hashes)
+    monkeypatch.setattr(b, 'gate', lambda *_: (_ for _ in ()).throw(ValueError('ordinary gate remains closed')))
+    for identity in isolated.OTEL_STAGED_BLOCKS:
+        system, mode, repetition = identity.rsplit('-', 2)
+        isolated.gate(SimpleNamespace(system=system, mode=mode, repetition=int(repetition), stage='main'))
+    args = SimpleNamespace(system='otel_demo', mode='partial', repetition=9, stage='main')
+    for key, value in [('blocks', approval['blocks'] + ['otel_demo-full-10']),
+            ('full_size_phase_budgets_qualified', True), ('OTel_remaining_full8_dispatch_GO', True),
+            ('partial_full_count_budget_observed', True), ('partial_unknown_budget_risk_accepted', False),
+            ('implementation_sha256', {}), ('independent_original_GO', False), ('actual_resource_runs', [])]:
+        old = approval[key]; approval[key] = value
+        with pytest.raises(ValueError, match='remaining20'):
+            isolated.gate(args)
+        approval[key] = old
+    for repetition in (10, 11):
+        with pytest.raises(ValueError, match='ordinary'):
+            isolated.gate(SimpleNamespace(system='otel_demo', mode='full', repetition=repetition, stage='main'))

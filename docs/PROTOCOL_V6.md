@@ -128,3 +128,29 @@ are not CPU time, billing or sequential campaign wall time.
 New evidence is acquired and processed only in GitHub Actions. No raw scientific
 archives or journals are downloaded to the local workstation. Communication stays
 in this dialog; Telegram is prohibited. No paid runner/account is provisioned.
+
+
+## 7 November offline Bering garbage-collection amendment
+
+The observed OTel full/9 continuation reached severe host memory pressure:
+Bering sampled RSS reached 15.9 GB, with sampled available host memory near
+86 MiB. The shutdown initiator and a kernel OOM kill remain unproved. This is
+an engineering failure, not a negative scientific forecast.
+
+Subsequent processing uses the existing child-only Go environment hook with
+fixed GOGC=25 identically for all four runtime arms. GOMEMLIMIT and GOMAXPROCS
+remain unset; the standard worker RAM/CPU and six-hour deadline stay unchanged.
+This collects unreachable allocations earlier without truncating observations,
+changing batching, replacing the pinned Bering, or limiting its live heap. The
+original closed inputs, accepted counts, graph/forecast semantics, ten operations,
+external outcomes and equal-information baselines remain required. Runtime
+metadata, snapshot timestamps/names and their byte hashes may naturally differ.
+The actual child environment is retained in processing and Bering provenance.
+
+Lower memory overhead can cost additional GC CPU and wall time; it does not
+prove that the full live heap fits. Preserve every original failed/repeated
+attempt and all preparation, observer, transfer, computation and review costs.
+Existing pinned executions are untouched. A separate exact-source approved
+continuation and prospective binding are required before recomputing from the
+same four sealed inputs; all four current forecasts must freeze before the
+first new validation target. No input is selected using scientific outcomes.
