@@ -36,6 +36,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         sparse-checkout: |-
+          AGENTS.md
           .github
           docs
           scripts
@@ -142,6 +143,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         sparse-checkout: |-
+          AGENTS.md
           .github
           docs
           scripts
@@ -185,7 +187,15 @@ jobs:
         bash scripts/setup-toolchain-v4.sh work/tools v5
         echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
     - name: Compute and freeze forecasts without live application guests
-      run: python -m ebpf_discovery.study_v6 model --root work/case
+      run: python scripts/observe-v6-model-host.py
+    - name: Retain body-free host samples from the actual model computation
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-model-host-observer-${{ matrix.collector }}-${{ github.run_id }}
+        path: work/model-host-observer.jsonl
+        if-no-files-found: warn
+        compression-level: 6
     - name: Package immutable models and training provenance
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
     - name: Retain complete or partial processing files as one delivery
@@ -241,6 +251,7 @@ jobs:
     - uses: actions/checkout@v4
       with:
         sparse-checkout: |-
+          AGENTS.md
           .github
           docs
           scripts
@@ -396,6 +407,14 @@ jobs:
           work/block-controller-cost.jsonl
           work/shared-restored.json
           work/model-package-imports.json
+          work/models/none/forecast-saved.json
+          work/models/obi/forecast-saved.json
+          work/models/coroot/forecast-saved.json
+          work/models/deepflow/forecast-saved.json
+          work/models/none/v6-training-publication-restored.json
+          work/models/obi/v6-training-publication-restored.json
+          work/models/coroot/v6-training-publication-restored.json
+          work/models/deepflow/v6-training-publication-restored.json
           work/qualification-parent-block-plan.json
           work/qualification-replay-import.json
           work/qualification-replay-cost.jsonl
