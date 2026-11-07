@@ -1,0 +1,56 @@
+{
+  "selected_utc": "2026-11-07T18:37:11.678498+00:00",
+  "selected_ns": 1794076631678493900,
+  "workflow_run": {
+    "createdAt": "2026-11-07T18:37:09Z",
+    "databaseId": 42402184737,
+    "displayTitle": "v6 qualification replay parent record docs/v6-qualification-parent-otel_demo-full9-gc25-replay-20261107.json",
+    "headSha": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+    "status": "queued",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42402184737"
+  },
+  "source": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+  "parent_record": "docs/v6-qualification-parent-otel_demo-full9-gc25-replay-20261107.json",
+  "parent_record_sha256": "c9875d135a5fffdc777b265db82a721082a849c017d7fd2ba9f9dba7c44c5599",
+  "prospective_registration": "docs/v6-OTel-full9-gc25-prospective-registration-20261107.json",
+  "prospective_registration_sha256": "ef4988bb385ddc87c248b46a8be53e3962e49aa0076b6ecfa2b62a52def96728",
+  "cell_keys": [
+    [
+      "otel_demo",
+      "full",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "deepflow"
+    ]
+  ],
+  "original_training_run_id": 42267248120,
+  "original_training_source": "9d6414e8824331d368d1732a15200cdad691350b",
+  "closure_sha256_by_collector": {
+    "none": "2351f563f553abed4f1affe7e6b17879770d711810506d5af4623a4654ce7453",
+    "obi": "74376c91aa6c51c2098c34a8fb84d4d8224f03e36010ffbfb8bd480c2cfeb828",
+    "coroot": "f6cca913760edf874d7d3b7ba0c352c300aec21f30e71f2382b80ad2f53221ac",
+    "deepflow": "0ed7599481ee1ab525c05c7b905310e44111cefbea031e1835b98bfc9a5bbec0"
+  },
+  "selection_reason": "Required technical replacement after observed OBI failure, fixed before all new forecasts/targets; no outcomes used.",
+  "four_current_models_required": true,
+  "no_old_model_mix": true,
+  "all_previous_attempts_and_costs_retained": true,
+  "fit_or_scientific_success_GO": false
+}

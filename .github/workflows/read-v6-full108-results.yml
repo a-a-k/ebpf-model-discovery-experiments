@@ -44,15 +44,16 @@ jobs:
               'deathstarbench':('compose_post','read_home_timeline','read_user_timeline')}
           ARMS=('none','obi','coroot','deepflow');MODES=('absent','partial','full');REPS=(9,10,11)
           SOURCES=('ebpf','native','combined','context-baseline');VIEWS=('raw','network_scope')
-          PAIRED={'petclinic':42267236483,'otel_demo':42396800647}
+          PAIRED={'petclinic':42267236483,'otel_demo':42402184737}
           ORIGINAL='9d6414e8824331d368d1732a15200cdad691350b'
-          REPLAY_RUN=42396800647;REPLAY_SOURCE='341e92d82d2e1839cf98d0a57f11c90df4ce8bd9'
-          REPLAY_PARENT='docs/v6-qualification-parent-otel_demo-full9-fullcounts-replay-20261107.json'
-          REPLAY_PARENT_SHA='3789f32e0ca53af180533cca952aadcd356cc07464756a682e7bc7571770419d'
-          REPLAY_BINDING='docs/v6-OTel-full9-observed-replay-actual-execution-binding-20261107.json'
-          REPLAY_BINDING_SHA='a14aafef2aa20946bc70921e250a2789b1e59fa91dfcdf2f2a88818dacd9dd83'
-          REPLAY_ORDER='docs/v6-OTel-full9-bound-before-model-step-proof-20261107.json'
-          REPLAY_ORDER_SHA='fcd5687f3d01b0579fe9755911ad28f86e49b0794d039662d44fdd0fc779bbb6'
+          REPLAY_RUN=42402184737;REPLAY_SOURCE='803bf539b1eee06180cb13b2ed40b4f92a2462c9'
+          REPLAY_PARENT='docs/v6-qualification-parent-otel_demo-full9-gc25-replay-20261107.json'
+          REPLAY_PARENT_SHA='c9875d135a5fffdc777b265db82a721082a849c017d7fd2ba9f9dba7c44c5599'
+          REPLAY_BINDING='docs/v6-OTel-full9-gc25-actual-execution-binding-20261107.json'
+          REPLAY_BINDING_SHA='d16a1683ac9abf977d0faf822e82cd83755c37c5c68908afb32b1081fe612d58'
+          REPLAY_BINDING_ORIGINAL_SHA='cb967a744a49c53c7c09a835cacdf923100a0f2db2cae4b9d4765a5c4f815c67'
+          REPLAY_ORDER='docs/independent-v6-OTel-full9-gc25-all-four-actual-compute-starts-supplement-20261107.json'
+          REPLAY_ORDER_SHA='e5f7d54ab889ede876b41b2a5f776fa5508ed566d0437b75fc3b6aae1a433a99'
           OMIT=('class_test_assignments','target_descriptive_assignments');RESERVE=2*1024**3
           if os.environ.get('GITHUB_ACTIONS')!='true' or os.environ.get('GITHUB_REPOSITORY')!=REPO:
               raise RuntimeError('fixed completed-result projection is repository Actions only')
@@ -108,13 +109,17 @@ jobs:
               check(sha(parent_bytes)==REPLAY_PARENT_SHA and sha(binding_bytes)==REPLAY_BINDING_SHA
                   and sha(order_bytes)==REPLAY_ORDER_SHA,'fixed replay parent/selection/order record differs')
               replay_parent=json.loads(parent_bytes);binding=json.loads(binding_bytes);order=json.loads(order_bytes)
-              check((binding['new_run_id'],binding['new_processing_validation_source'],binding['original_capture_run_id'],
-                  binding['original_capture_source'],binding['parent_record_SHA256'])==(REPLAY_RUN,REPLAY_SOURCE,42267248120,ORIGINAL,REPLAY_PARENT_SHA)
-                  and binding['registered_before_any_current_model_completed'] is True
-                  and binding['case_keys']==[['otel_demo','full',9,c] for c in ARMS]
-                  and order['selection_SHA256']==REPLAY_BINDING_SHA and order['all_actual_compute_step_starts_after_selection'] is True,
+              check(sha(binding_bytes.replace(b'\n',b'\r\n'))==REPLAY_BINDING_ORIGINAL_SHA,
+                  'published LF binding differs from preserved original CRLF record')
+              check((binding['workflow_run']['databaseId'],binding['source'],binding['original_training_run_id'],
+                  binding['original_training_source'],binding['parent_record_sha256'])==(REPLAY_RUN,REPLAY_SOURCE,42267248120,ORIGINAL,REPLAY_PARENT_SHA)
+                  and binding['workflow_run']['status']=='queued'
+                  and binding['cell_keys']==[['otel_demo','full',9,c] for c in ARMS]
+                  and order['selection_SHA256']==REPLAY_BINDING_ORIGINAL_SHA and order['all_actual_compute_step_starts_after_selection'] is True
+                  and order['all_four_actual_compute_step_start_times_observed'] is True,
                   'fixed dual-origin selection differs')
-              selection_ns=int(datetime.datetime.fromisoformat(binding['registered_utc']).timestamp()*10**9)
+              selection_ns=binding['selected_ns']
+              check(selection_ns==order['actualselected_ns'],'actual selection timestamp differs')
               result['fixed_replay_profile']={'parent_path':REPLAY_PARENT,'parent_sha256':REPLAY_PARENT_SHA,
                   'selection_path':REPLAY_BINDING,'selection_sha256':REPLAY_BINDING_SHA,'literal_selection':binding}
               manifest_bytes=blob(MANIFEST);manifest=json.loads(manifest_bytes)
@@ -195,6 +200,7 @@ jobs:
                                   and restored['original_capture_identity']==saved['case'] and saved['training_closed_input_sha256']==restored['closed_input_sha256']==closed
                                   and restored['block_plan_sha256']==replay_parent['parent_plan_sha256'] and restored['parent_record_sha256']==REPLAY_PARENT_SHA
                                   and (str(saved['processing_execution']['run_id']),saved['processing_execution']['commit'])==(str(REPLAY_RUN),REPLAY_SOURCE)
+                                  and saved['processing_execution']['bering_child_go_environment']=={'GOGC':'25'}
                                   and selection_ns<saved['processing_execution']['started_ns']<saved['saved_ns']<freeze['verified_ns']
                                   and restored['processing_execution']=={'run_id':REPLAY_RUN,'source':REPLAY_SOURCE},'old capture/current model binding differs')
                               check(all(capture[k]==v for k,v in replay_parent['training_artifacts'][c].items())

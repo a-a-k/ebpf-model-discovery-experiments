@@ -1,0 +1,90 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "observed_utc": "2026-11-07 18:40:57 UTC",
+  "current_run_id": 42402184737,
+  "current_source": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+  "selection_SHA256": "cb967a744a49c53c7c09a835cacdf923100a0f2db2cae4b9d4765a5c4f815c67",
+  "actualselected_ns": 1794076631678493900,
+  "prior_pending_state_proof_sha256": "b09fcf2c4b5386d7cea846f037f13dbb153f2f111f924343ed1ba7808969c356",
+  "all_actual_compute_step_starts_after_selection": true,
+  "all_four_actual_compute_step_start_times_observed": true,
+  "jobs": [
+    {
+      "job_id": 128492153909,
+      "collector": "coroot",
+      "run_attempt": 1,
+      "head_sha": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T18:37:13Z",
+      "compute_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T18:39:19Z",
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128492154069,
+      "collector": "none",
+      "run_attempt": 1,
+      "head_sha": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T18:37:13Z",
+      "compute_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T18:39:50Z",
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128492154071,
+      "collector": "deepflow",
+      "run_attempt": 1,
+      "head_sha": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T18:37:12Z",
+      "compute_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T18:40:52Z",
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128492154109,
+      "collector": "obi",
+      "run_attempt": 1,
+      "head_sha": "803bf539b1eee06180cb13b2ed40b4f92a2462c9",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T18:37:12Z",
+      "compute_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T18:39:15Z",
+        "completed_at": null
+      }
+    }
+  ],
+  "scientific_success_GO": false,
+  "resource_fit_GO": false,
+  "scope": "Read-only official metadata supplement; original pending-state proof remains unchanged. Actual computation has begun; no completion, graph utility or model/target outcome is inferred. Exact original input/processing dual origin and costs remain as previously reviewed.",
+  "numeric_copy_correction": {
+    "superseded_proof_sha256": "2ff8e728331c105ad150dcd15fce42646307d0329268a83e51e998cc96c2cefc",
+    "superseded_bytes_retained_at": "work/independent-v6-OTel-full9-gc25-all-four-actual-compute-starts-supplement-20261107-superseded-js-number.json",
+    "reason": "Prior JavaScript Number round-trip rounded this copied integer by100ns. Corrected with Python integer read directly from unchanged original binding. Ordering conclusions and exact actual API timestamps are unchanged.",
+    "original_binding_sha256": "cb967a744a49c53c7c09a835cacdf923100a0f2db2cae4b9d4765a5c4f815c67"
+  }
+}
