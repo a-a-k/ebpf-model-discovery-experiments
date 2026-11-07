@@ -1,0 +1,49 @@
+{
+  "reviewed_utc": "2026-11-07T14:12:37.063935+00:00",
+  "reviewer": "independent ORIGINAL-criterion skeptic /root/ebpf_actual7_skeptic",
+  "original_criterion_PC_DSB56_exact_source_GO": true,
+  "source_execution_GO": true,
+  "dispatch_authorized_by_this_file_alone": false,
+  "source_commit": "b9d7fad60fab321a264b8e182ae479a54a789873",
+  "four_path_readset": {
+    "docs/PROTOCOL_V6_ISOLATED_ARMS.md": {
+      "GitLF_bytes": 9511,
+      "GitLF_SHA256": "8a8e75b2a9e688623c9d3ec0aa8f0a2d19c22997de2d34fcc4439442573defad"
+    },
+    "docs/independent-v6-PCDSB-remaining56-staged-original-design-GO-20261107.json": {
+      "GitLF_bytes": 6086,
+      "GitLF_SHA256": "e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755"
+    },
+    "src/ebpf_discovery/isolated_arm_v6.py": {
+      "GitLF_bytes": 29903,
+      "GitLF_SHA256": "208dbc07f1b20cd657aa226be67e90181219023ee11a2f7ae27cd1fb2b74b12b"
+    },
+    "tests/test_isolated_arm_v6.py": {
+      "GitLF_bytes": 14400,
+      "GitLF_SHA256": "535b10ab680f6edc2021db43772f1130e2de2fd5e75b6924f802265d2947abca"
+    }
+  },
+  "design_reference": {
+    "path": "work/independent-v6-PCDSB-remaining56-staged-original-design-GO-20261107.json",
+    "original_SHA256": "e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755",
+    "published_design_copy_GitLF_SHA256": "e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755"
+  },
+  "scope": "Exact14PC/DSB remainingblocks56cells only. ROOT may seal scopedapproval and submit normalCI; dispatch requires that exactapproval/census and all requiredCI first. No new scientific data or execution by reviewer.",
+  "gate_checks": "Literal14keys equal PC/DSB3modes×3reps minus alreadyabs9/full9, disjoint from old4. Newfixedbranch requires ROOT+IND/108retained/partial-risk-accepted flags, exact14list/regime/designhash/resource-runs and full181census. Full-size-qualified and partial-fullcount-observed must remainfalse; OTelremaining28dispatchfalse. Old4approval/gate/source lineages unchanged; remainingOTel keys fall to ordinaryclosedgate. No new genericframework.",
+  "checkout_census_checks": "181selector pathnames exactly unchanged from priorapproval; all13existing sparsecheckouts select every181sourcepath, AGENTS.md and newapproval via docs. Only isolated_arm_v6.py and PROTOCOL_V6_ISOLATED_ARMS.md change among censuspaths; workflow/geometry/collectors/VMs/workload/model/oracles unchanged. Newapproval file absent in reviewedcommit=>failclosed.",
+  "actual_resource_basis": "Exact4resource-runrefs42267236483/42347353371/42347362261/42347366203 bound. Priorindependentreview confirmed PCfullactual4controlcells plus PCabs/DSBabs/DSBfull all13jobsSUCCESS and36existing4CPU/~16GB/360minhostreceipts. This is observedphasefit, not favorableforecast selection or universal worst-case.",
+  "original_criterion_baselines": "Same108fresh/all10operations/allSDKmodes/none+3collectors/reps9..11; actual prospective Bering-Sheaft operationmodels against independent external outcomes. Same suppliedknowledge for directconditional(.875/1), Native/no-agent and ordinary cheap context-edge union. No internalflag/ARI/availability/accuracy admission, refit, newpredictor or cost-superiority substitute. Fourmodel barrier and negative/adverse/UNKNOWN preservation unchanged.",
+  "remaining_limits": "PartialSDKfullcountfit unobserved and prospectivelyaccepted engineeringrisk. Globalfullstudyfit remainsfalse; OTel28heldtemporarily for technicalpathfit and remainsin108, never excluded or assignednegativeprediction forshutdown. Allocation8paired100isolated disclosure and actualsamehostvariance limits retained. Technicalcycles alone do not establish scientificusefulness; finalactualresult review stillrequired.",
+  "complete_costs": "Preserve all prep/control/build/capture/model/forecast/transfer/hash/restore/paging/failed/early-stop/CI/reader/report/review/archive costs, all failedOTelattempts and originalDSB3prefixcaptures repeated. Successfuljobaliases notextraexecutions; human/unmeteredUNKNOWN and elapsednotCPU/billing. No costadvantage claimed.",
+  "normal_execution_requirements": [
+    "Separate sealed docs/v6-PCDSB-remaining56-original-execution-GO-20261107.json with exact181committedGitLF hashes and ROOT+IND originalverdicts.",
+    "NormalrequiredCI allpass before ROOTdispatch; this sourceGO is not itself a dispatch.",
+    "Preserve previoussealed approvals/bytes and currentold-sourceOTelattempts; no actualpartial/globalfit or scientificsuccess claim."
+  ],
+  "global_full_size_phase_budgets_qualified": false,
+  "partial_full_count_budget_observed": false,
+  "OTel_remaining28_dispatch_GO": false,
+  "scientific_success_GO": false,
+  "verification": "Reviewer read exactdiff/newgate/protocol/tests and statically verified exact14scope, copieddesignJSON, censusnames and13checkoutcoverage. ROOTreports18focusedPASS/compile/diffcheck; no tests/traffic/models/probes/VMs/network/raw by reviewer.",
+  "reviewer_changes": "Only this brief signed sourceproof; no source/profile/flags edits, merge or dispatch."
+}

@@ -148,7 +148,38 @@ def test_staged_gate_cannot_enlarge_blocks_or_claim_resource_fit(monkeypatch):
         approval[key]=old
     monkeypatch.setattr(b,'gate',lambda *_:(_ for _ in ()).throw(ValueError('ordinary full-size gate retained')))
     args.mode='partial'
+    args.system='otel_demo'
     with pytest.raises(ValueError,match='ordinary'): isolated.gate(args)
+
+
+def test_PC_DSB_scope_preserves_OTel_hold_and_rejects_false_fit(monkeypatch):
+    monkeypatch.setenv('GITHUB_ACTIONS','true')
+    hashes={'unchanged_method':'bound'}
+    approval={k:True for k in ('original_source_execution_GO','root_original_GO',
+        'independent_original_GO','original_scientific_rollout_GO',
+        'original108_scope_retained','partial_unknown_budget_risk_accepted')}
+    approval.update(blocks=list(isolated.PCDSB_BLOCKS),allocation_regime=isolated.REGIME,
+        full_size_phase_budgets_qualified=False,partial_full_count_budget_observed=False,
+        OTel_remaining28_dispatch_GO=False,rollout_design_GO_sha256=isolated.PCDSB_DESIGN_SHA256,
+        actual_resource_runs=[42267236483,42347353371,42347362261,42347366203],
+        implementation_sha256=hashes)
+    monkeypatch.setattr(b,'read',lambda *_:approval)
+    monkeypatch.setattr(b,'implementation_hashes',lambda:hashes)
+    monkeypatch.setattr(b,'gate',lambda *_:(_ for _ in ()).throw(ValueError('ordinary gate still closed')))
+    for identity in isolated.PCDSB_BLOCKS:
+        system,mode,repetition=identity.rsplit('-',2)
+        isolated.gate(SimpleNamespace(system=system,mode=mode,repetition=int(repetition),stage='main'))
+    args=SimpleNamespace(system='petclinic',mode='partial',repetition=9,stage='main')
+    for key,value in [('blocks',approval['blocks']+['otel_demo-partial-9']),
+            ('full_size_phase_budgets_qualified',True),('OTel_remaining28_dispatch_GO',True),
+            ('partial_full_count_budget_observed',True),('partial_unknown_budget_risk_accepted',False),
+            ('implementation_sha256',{}),('independent_original_GO',False),('actual_resource_runs',[])]:
+        old=approval[key];approval[key]=value
+        with pytest.raises(ValueError,match='remaining56'): isolated.gate(args)
+        approval[key]=old
+    for mode,repetition in [('partial',9),('absent',10),('full',11)]:
+        with pytest.raises(ValueError,match='ordinary'):
+            isolated.gate(SimpleNamespace(system='otel_demo',mode=mode,repetition=repetition,stage='main'))
 
 
 def test_complete_tar_census_checked_before_any_extraction(tmp_path):
