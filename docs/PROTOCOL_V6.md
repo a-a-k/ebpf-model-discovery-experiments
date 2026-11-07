@@ -1,5 +1,12 @@
 # Fresh controlled eBPF model-acquisition study
 
+The prospective [remaining-24-block allocation amendment](PROTOCOL_V6_ISOLATED_ARMS.md)
+changes only the unstarted 96 cells to separate randomized hosts per arm and
+defines the exact staged scientific source gate plus the separately registered
+whole failed DSB/full/9 technical replacement. The original PC/OTel physically
+paired attempts and existing workflows remain unchanged; all interrupted DSB
+prefixes and their costs remain retained.
+
 The user's instruction on 6 November 2026 authorizes a complete new study.
 It supersedes the old 81-cell execution scope, not its evidence or cost history.
 No historical capture, model, forecast or target outcome fills a new cell.

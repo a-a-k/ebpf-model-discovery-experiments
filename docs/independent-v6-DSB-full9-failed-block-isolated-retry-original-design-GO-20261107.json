@@ -1,0 +1,100 @@
+{
+  "reviewed_utc": "2026-11-07T06:13:51.916153+00:00",
+  "reviewer": "independent ORIGINAL-criterion scientific skeptic /root/ebpf_actual7_skeptic",
+  "original_criterion_exact_DSB_full9_whole_failed_block_retry_design_GO": true,
+  "source_execution_GO": false,
+  "dispatch_GO": false,
+  "actual_full_size_phase_budgets_qualified": false,
+  "scientific_success_GO": false,
+  "decision": "Prefer one explicit ordinary whole-block isolated-arm retry of only deathstarbench/full/repetition9. Preserve the interrupted registered attempt and all its valid prefix captures/costs; no mixed-origin recovery framework.",
+  "original_scope": "Unchanged fresh108 unique scientific cells/27blocks, all10operations, threeSDKmodes/three repetitions/four real runtime treatments. Operation models and actual prospective Bering-to-Sheaft forecasts are judged against independent external outcomes with no positivity/accuracy admission. No historical81, short smoke or auxiliary data fill a scientific cell.",
+  "failed_original_attempt": {
+    "run_id": 42267262342,
+    "source": "9d6414e8824331d368d1732a15200cdad691350b",
+    "training_job_id": 128062315256,
+    "source_failure_evidence": {
+      "path": "work/v6-full3-overnight-technical-failure-selected-logs-20261107.json",
+      "bytes": 2670,
+      "sha256": "10ceae072a6e3098f037d87f7885ae88871be5aaa0b813538c2332d523fe0664",
+      "selected_errors": [
+        "2026-11-07T00:04:05.4039836Z ##[error]The operation was canceled.",
+        "2026-11-07T00:04:16.2568913Z Traceback (most recent call last):",
+        "2026-11-07T00:04:16.2610104Z ##[error]    raise ValueError('capture changed while creating its lossless delivery')",
+        "2026-11-07T00:04:16.2611496Z ValueError: capture changed while creating its lossless delivery",
+        "2026-11-07T00:04:16.2922539Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    "state": "Serial four-arm training attempt interrupted around its6h deadline; three captures published, fourth DeepFlow interrupted and lossless packaging guard rejected capture changes. No original DSB model/forecast or validation targets ever existed, per ROOT official run/DAG review.",
+    "no_forecasts_or_targets_at_design_decision": true,
+    "OOM_ENOSPC_or_specific_host_cause_proved": false,
+    "retained_valid_training_prefixes": [
+      {
+        "collector": "none",
+        "artifact_id": 13536919189,
+        "bytes": 4388197895,
+        "sha256": "355c2eca79c63a80d5dd7ad2cc4b27f654a1074688a4ebf25fa6376046bfe21e"
+      },
+      {
+        "collector": "obi",
+        "artifact_id": 13543313932,
+        "bytes": 4422519367,
+        "sha256": "a65cd16116a5715415e83c36d8a106779af8d2b311a29e8b932ca8a4a9786c52"
+      },
+      {
+        "collector": "coroot",
+        "artifact_id": 13550356049,
+        "bytes": 4399502468,
+        "sha256": "07bff995b223ba742b6b8bca1846b139b78f6f97a48173c42438366d915f8977"
+      }
+    ],
+    "retained_shared_artifact": {
+      "artifact_id": 13550562409,
+      "bytes": 3173706949,
+      "sha256": "2946f87a9c8d23409c16dbd5495502440962e72a2d405d2b45098ae58bdce26e"
+    },
+    "artifact_tuple_provenance": "Full official API artifact tuples supplied by ROOT from saved pluginAPI state v6art42267262342 at06:04; no additional network/raw query by this reviewer.",
+    "scientific_interpretation": "These are genuine valid training prefixes of an incomplete scientific block, not negative/invalid observations. Preserve their original bytes, identities, source, registration and costs. Do not discard them on scientific support/accuracy grounds."
+  },
+  "replacement_attempt": {
+    "logical_block_id": "deathstarbench-full-9",
+    "runtime_arms": [
+      "none",
+      "obi",
+      "coroot",
+      "deepflow"
+    ],
+    "same_scientific_cells": 4,
+    "allocation_regime": "standardized isolated randomly assigned runners, one arm per runner",
+    "all_four_training_captures_new": true,
+    "old_three_training_captures_mixed_into_new_attempt": false,
+    "valid_training_capture_work_repeated_explicitly": 3,
+    "retained_paired_cells": 8,
+    "isolated_cells_after_replacement": 100,
+    "total_unique_scientific_cells": 108,
+    "existing_PC_OTel_full9_attempts_untouched": true
+  },
+  "required_before_replacement_forecasts_or_targets": [
+    "Immutable prospective failed-attempt/replacement registration naming exact original run, source and all retained prefixes; explicit amendment of prior exact-three inclusion rule, preserving old proofs rather than silently editing history.",
+    "Separate exact-source ROOT and independent ORIGINAL source/execution approval before dispatch.",
+    "Same full counts, workload seeds, semantics, deadlines, model/forecast/oracle methods and common frozen blueprint/image/guest CPU/RAM/kernel settings; new allocation receipt and preregistered opaque slot mapping.",
+    "All four fresh training closures and all four actual frozen forecast/model bundles before every new validation target; no target refit.",
+    "All four runtime arms included irrespective of support, accuracy, health or outcomes. Predeclared technical-failure rules only; no retry-until-positive or exclusion of valid negative scientific results."
+  ],
+  "staged_gate": {
+    "allowed_exact_blocks": [
+      "petclinic-absent-9",
+      "otel_demo-absent-9",
+      "deathstarbench-absent-9",
+      "deathstarbench-full-9"
+    ],
+    "DSB_full9_only_replacement_exception": true,
+    "PC_OTel_full9_exclusion_retained": true,
+    "other21_blocks84_cells_dispatch_GO": false,
+    "budget_fit_unknown_not_marked_true": true
+  },
+  "strongest_equal_information_baselines": "Direct conditional implementation (known healthy .875/1), actual Native/SDK-only runtime control, and ordinary observed SERVER-edge/context union or other cheap combinations receive the same semantic contracts and metadata. Equal forecasts, ARI, availability or source flags are not incremental external benefit or a novel predictor.",
+  "causal_and_host_limit": "The original8 PC/OTel cells retain physical-host pairing; the other100 now use standardized randomized independent hosts. Report this allocation change and hardware covariates explicitly; three repetitions leave finite-host imbalance risk. Do not pool all108 as physically paired or claim precise overhead/cost superiority.",
+  "strongest_simple_completion_alternative_and_cost": "AlternativeA reuses the three existing captures and saves capture compute, but requires new mixed-origin/source/host model-freeze-provenance exceptions and their implementation/qualification/review/failure costs. B uses the ordinary already-required isolated-arm workflow and repeats one bounded block. It is the simplest defensible completion; financial cheapestness is unproved. Count the failed~6h runner and all three valid captures/interruptedDF/finalization/upload/preparation/transfer/hash/restore/model/CI/review/archive costs plus the replacement once each. Human and unmetered engineering costs remain unknown; parallel wall time is not CPU/billing/cost savings.",
+  "authorization": "A disclosed technical retry of an incomplete four-arm block, before scientific forecasts/targets and without scientific-result screening, is within the authorized full clean restart. It does not weaken the original criterion or require separate user consent. It does require explicit protocol/source gate amendment and separate execution review.",
+  "changes_by_reviewer": "This brief independent design verdict only; no source exclusion/profile/registry flags edited, no jobs or raw download."
+}

@@ -11,8 +11,31 @@ reserves the three exact fresh full-count full-SDK repetition-9 qualification ru
 as the first twelve scientific cells, before any forecast or target. Their sealed
 qualification labels remain unchanged; all future adverse/UNKNOWN outcomes and
 failures/costs remain. No historical, short-smoke or auxiliary data fills a cell.
-The remaining 24 Main blocks / 96 cells still require separately reviewed actual
-full-size execution qualification bound to source before dispatch.
+The prospective allocation amendment in docs/PROTOCOL_V6_ISOLATED_ARMS.md now
+assigns one arm per standard runner for the remaining 24 blocks / 96 cells.
+The original physically paired PC/OTel full/9 attempts remain untouched.
+The interrupted DSB full/9 attempt retains its three valid training prefixes,
+partial fourth arm, original registration and every cost. A separately approved
+whole-block technical replacement uses four new captures/models/validation
+arms, with none of the old prefixes imported. The current analysis therefore
+has eight physically paired and 100 randomized between-host cells: still 108
+unique scientific cells / 27 blocks and all ten operations. No valid negative,
+unavailable or UNKNOWN result is repeated until positive.
+
+Only the three scheduled absent/9 blocks (Petclinic, OTel Demo, DeathStarBench)
+plus the exact DSB full/9 failed-block replacement may use the staged scientific
+source gate, after exact-source ROOT and independent ORIGINAL execution review.
+Their actual full-size phase budgets remain explicitly unqualified until
+observed; they are scientific cells, not duplicate qualification traffic.
+The other 21 blocks / 84 cells remain behind separately reviewed actual
+full-size execution qualification bound to the complete implementation census.
+The original staged-three design proof SHA256 is
+e165146a357451831da40319c2581aba3a278b2f54c7b7b39cb5e3bd7ee1a400;
+the DSB replacement design proof SHA256 is
+f1b20784d65ec028555c37ca02426de48db6099106e40a72499a5a6d9ba19c0b.
+These are design verdicts, not source/dispatch approval. No true execution
+approval file is supplied by the implementation. Preserve all prior sealed
+registration/review records rather than rewriting their historical claims.
 The orchestrator owns this common implementation and dispatch; assigned workers
 must not merge or dispatch independently. Communication stays in this dialog:
 the user's explicit prohibition on Telegram overrides any bridge instructions.

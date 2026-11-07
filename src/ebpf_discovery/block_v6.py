@@ -30,7 +30,8 @@ def implementation_hashes():
         'git', 'ls-files', '-z', '--', 'src', 'systems', 'scripts',
         '.github/workflows/series-v6.yml', '.github/workflows/checks.yml',
         '.github/workflows/qualification-replay-v6.yml',
-        'docs/PROTOCOL_V6.md', 'pyproject.toml'], cwd=repo())
+        '.github/workflows/series-isolated-v6.yml',
+        'docs/PROTOCOL_V6.md', 'docs/PROTOCOL_V6_ISOLATED_ARMS.md', 'AGENTS.md', 'pyproject.toml'], cwd=repo())
     names = sorted(set(listed.decode('utf8').split('\0')) - {''})
     return {name: sha(repo() / name) for name in names}
 
@@ -163,9 +164,12 @@ def pack(root, destination, files, directories=()):
                       'mode': stat.S_IMODE((root/n).stat().st_mode)} for n in files}})
 
 
-def unpack(archive, destination, expected_sha, *, guard_root=None):
+def unpack(archive, destination, expected_sha, *, guard_root=None, expected_inventory=None):
     if sha(archive) != expected_sha:
         raise ValueError('parent-bound package SHA differs')
+    if expected_inventory is not None and (archive.stat().st_size != expected_inventory['bytes']
+            or expected_inventory['sha256'] != expected_sha):
+        raise ValueError('complete package bytes/SHA differ from inventory')
     with tarfile.open(archive, 'r:gz') as tar:
         members = tar.getmembers()
         names = [m.name for m in members]
@@ -177,12 +181,23 @@ def unpack(archive, destination, expected_sha, *, guard_root=None):
                 raise ValueError('package can contain only owned relative regular files')
             if member.mode & 0o7000:
                 raise ValueError('package cannot request special permission bits')
+        if expected_inventory is not None:
+            expected_names = set(expected_inventory['files']) | set(expected_inventory.get('directories', []))
+            if set(names) != expected_names or any(
+                    m.isfile() != (m.name in expected_inventory['files']) for m in members):
+                raise ValueError('complete package member census differs from inventory')
         guard = capacity(guard_root or destination.parent, sum(m.size for m in members))
         tar.extractall(destination, filter='data')
         # The safe data filter strips dangerous special bits. Restore only the
         # original ordinary permission bits, including readonly golden disks.
         for member in members:
             (destination / member.name).chmod(member.mode & 0o777)
+        if expected_inventory is not None:
+            for name, expected in expected_inventory['files'].items():
+                path = destination / name
+                if (path.stat().st_size, sha(path), stat.S_IMODE(path.stat().st_mode)) != (
+                        expected['bytes'], expected['sha256'], expected['mode']):
+                    raise ValueError('restored complete package bytes/SHA/modes differ')
     return guard
 
 
@@ -464,7 +479,7 @@ def package_model(args):
     for name in ('forecast-saved.json', 'closed-input.json', 'status.json', 'plans.json',
                  'deployment.json', 'external.json', 'census.json', 'blocks.json',
                  'v6-block-reference.json', 'model-worker-resources.json',
-                 'v6-training-publication-restored.json'):
+                 'v6-training-publication-restored.json', 'capture-host-resources.json'):
         if (root / name).is_file(): paths.add(name)
     for folder in ('deployment', 'runtime-identity-v5'):
         for p in (root / folder).rglob('*'):
