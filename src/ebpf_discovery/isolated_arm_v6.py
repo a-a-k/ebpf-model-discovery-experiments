@@ -73,6 +73,9 @@ def gate(args):
                 or approved.get('rollout_design_GO_sha256') != OTEL_FINAL_DESIGN_SHA256
                 or approved.get('actual_resource_runs') != [42402184737]
                 or approved.get('bering_child_go_environment') != {'GOGC': '25'}
+                or approved.get('additional_model_swap_file_bytes') != 16 * 1024**3
+                or approved.get('model_swap_design_GO_sha256') !=
+                    '3d91a5c64cc8a74a2c0cb71409094e339d7fa577bd0ef46835e6058d010c1c33'
                 or approved.get('implementation_sha256') != b.implementation_hashes()):
             raise ValueError('exact OTel full remaining8 actual-model and prospective source approval required')
         return

@@ -59,6 +59,14 @@ first fresh full/9 validation must proceed after its barrier and remain included
 the final eight may overlap it. Full-size full-SDK validation budgets remain an
 explicit unobserved engineering risk, never a universal qualification claim.
 Retain all 108 cells, ten operations, equal-information baselines and every cost.
+The OBI GC25 run completed with only about 87 MiB sampled available RAM at one
+point, so do not describe reliable physical headroom. The final eight provision
+one additional owned 16 GiB swap file in model jobs only, identically for all
+four arms, retaining platform swap, physical RAM/CPU/deadline and complete data.
+Check actual free disk plus existing archive/staging reserve before exclusive
+no-symlink creation; record before/after swap/disk and setup CPU/wall costs.
+The changed virtual-memory profile and paging/time risks remain explicit; no
+new qualification traffic or universal resource-fit claim follows from this.
 
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 

@@ -666,6 +666,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -785,6 +786,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -904,6 +906,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -1023,6 +1026,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
