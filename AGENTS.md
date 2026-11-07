@@ -51,6 +51,15 @@ observer identically in all four new model steps, with its nonzero costs retaine
 This is execution ordering within the original 108, not a scientific success or
 a universal resource-fit claim. Existing executions remain pinned and untouched.
 
+The final two OTel full/10 and full/11 blocks require their own exact-source
+approval after all four GC25 full/9 model computations and immutable publications
+succeed and their actual resource/closure/freeze evidence is reviewed. They use
+the same child-only GOGC=25 policy and existing observer in all four arms. The
+first fresh full/9 validation must proceed after its barrier and remain included;
+the final eight may overlap it. Full-size full-SDK validation budgets remain an
+explicit unobserved engineering risk, never a universal qualification claim.
+Retain all 108 cells, ten operations, equal-information baselines and every cost.
+
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 
 The user reiterated on 2026-10-30: reuse the existing collector -> Bering -> Sheaft
