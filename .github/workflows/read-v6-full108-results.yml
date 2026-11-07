@@ -1,0 +1,226 @@
+# Fixed contract, supplied only after ORIGINAL final selection review (not created here):
+# docs/v6-full108-completed-result-manifest.json:
+# {study:"clean-restart-v6", original_fixed108_selection_GO:true,
+#  root_original_GO:true, independent_original_GO:true,
+#  cost_ledger:{path:"docs/v6-full108-completed-cost-ledger.json",sha256:GitLF_SHA256},
+#  cells:[{key:[system,mode,repetition,collector],
+#    artifact:{id,name,run_id,source,job_id,job_attempt,bytes,sha256},
+#    paths:{evaluation:"summaries/COLLECTOR.json",plan:"block-plan.json",
+#      freeze:"block-all-forecasts-frozen.json",
+#      before:"publications/validation/COLLECTOR-before-upload.json",
+#      publication:"publications/validation/COLLECTOR.json"}}]}
+# Exactly 108 actual cells; no empty/fake entries, outcome-selected replacement or inputs.
+name: Read the fixed completed 108-cell study v6
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  read:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: docs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify and project the exact completed result publications
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import csv, hashlib, itertools, json, os, pathlib, re, shutil, stat, subprocess, time
+          import urllib.error, urllib.parse, urllib.request, zipfile
+
+          REPO='a-a-k/ebpf-model-discovery-experiments'
+          MANIFEST='docs/v6-full108-completed-result-manifest.json'
+          LEDGER='docs/v6-full108-completed-cost-ledger.json'
+          SYSTEMS={'petclinic':('list_owners','owner_details_with_visits','create_visit','list_vets'),
+              'otel_demo':('browse_product','add_to_cart','checkout'),
+              'deathstarbench':('compose_post','read_home_timeline','read_user_timeline')}
+          ARMS=('none','obi','coroot','deepflow');MODES=('absent','partial','full');REPS=(9,10,11)
+          SOURCES=('ebpf','native','combined','context-baseline');VIEWS=('raw','network_scope')
+          PAIRED={'petclinic':42267236483,'otel_demo':42267248120}
+          ORIGINAL='9d6414e8824331d368d1732a15200cdad691350b'
+          OMIT=('class_test_assignments','target_descriptive_assignments');RESERVE=2*1024**3
+          if os.environ.get('GITHUB_ACTIONS')!='true' or os.environ.get('GITHUB_REPOSITORY')!=REPO:
+              raise RuntimeError('fixed completed-result projection is repository Actions only')
+          root=pathlib.Path('work/full108-results');root.mkdir(parents=True)
+          out=root/'literal-results.json';csvout=root/'literal-rows.csv'
+          started=time.time_ns();cpu=os.times();flat=[]
+          result={'scope':'Literal fixed108 saved results; no model/refit/new scoring or scientific admission',
+              'execution':{'run_id':os.environ['GITHUB_RUN_ID'],'source':os.environ['GITHUB_SHA']},
+              'started_ns':started,'status':'started','cells':[],'publications':[],
+              'only_omitted_paths':['frozen_classification.'+k for k in OMIT],
+              'paired_views_are_not_independent_repetitions':True,'repetitions':[9,10,11],
+              'complete_comparable_cost_comparison':False,
+              'cost_limitation':'Frozen ledger cut and actual reader costs are separate; unknown human/unmetered costs are never zero.',
+              'host':{'cpu_count':os.cpu_count(),'allowed_CPUs':sorted(os.sched_getaffinity(0)),
+                  'memory':pathlib.Path('/proc/meminfo').read_text(),'free_bytes_before':shutil.disk_usage(root).free}}
+          def check(ok,reason):
+              if not ok:raise ValueError(reason)
+          def sha(body):return hashlib.sha256(body).hexdigest()
+          def save():
+              pending=out.with_suffix('.pending');pending.write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n',encoding='utf8');os.replace(pending,out)
+          def blob(path):return subprocess.check_output(['git','show',os.environ['GITHUB_SHA']+':'+path])
+          def api(path):
+              request=urllib.request.Request('https://api.github.com/repos/'+REPO+'/'+path,
+                  headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10'})
+              with urllib.request.urlopen(request,timeout=60) as response:return json.load(response)
+          def paired(key):return key[0] in PAIRED and key[1:3]==('full',9)
+          def origin(cell,key,artifact,phase):
+              return (cell.get('system'),cell.get('mode'),cell.get('seed'),cell.get('collector'),cell.get('phase'),
+                  cell.get('smoke'),cell.get('stage'),str(cell.get('run_id')),cell.get('commit'))==(
+                  *key,phase,False,'qualification' if paired(key) else 'main',str(artifact['run_id']),artifact['source'])
+          def download(artifact,path):
+              class NoRedirect(urllib.request.HTTPRedirectHandler):
+                  def redirect_request(self,req,fp,code,msg,headers,newurl):return None
+              request=urllib.request.Request(f"https://api.github.com/repos/{REPO}/actions/artifacts/{artifact['id']}/zip",
+                  headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2026-03-10'})
+              try:response=urllib.request.build_opener(NoRedirect).open(request,timeout=60)
+              except urllib.error.HTTPError as error:
+                  if error.code!=302:raise
+                  target=error.headers.get('Location','');host=urllib.parse.urlsplit(target)
+                  check(host.scheme=='https' and host.hostname and any(host.hostname.endswith(s) for s in
+                      ('.blob.core.windows.net','.githubusercontent.com','.actions.githubusercontent.com')),'unexpected delivery host')
+                  response=urllib.request.urlopen(target,timeout=60)
+              digest=hashlib.sha256();total=0
+              with response,path.open('xb') as stream:
+                  while data:=response.read(1024**2):
+                      total+=len(data);check(total<=artifact['bytes'],'original ZIP exceeds manifest bytes');digest.update(data);stream.write(data)
+              check(total==artifact['bytes'] and digest.hexdigest()==artifact['sha256'],'whole original ZIP bytes/SHA differ')
+          save()
+          try:
+              manifest_bytes=blob(MANIFEST);manifest=json.loads(manifest_bytes)
+              check(manifest.get('study')=='clean-restart-v6' and all(manifest.get(k) is True for k in
+                  ('original_fixed108_selection_GO','root_original_GO','independent_original_GO')),'reviewed fixed108 manifest required')
+              entries=manifest['cells'];expected=set(itertools.product(SYSTEMS,MODES,REPS,ARMS))
+              check(len(entries)==108 and {tuple(e['key']) for e in entries}==expected,'missing/duplicate/foreign fixed108 key')
+              ledger_ref=manifest['cost_ledger'];ledger_bytes=blob(LEDGER)
+              check(ledger_ref['path']==LEDGER and sha(ledger_bytes)==ledger_ref['sha256'],'fixed cost ledger GitLF identity differs')
+              result.update(manifest={'path':MANIFEST,'GitLF_sha256':sha(manifest_bytes),'committed_source':os.environ['GITHUB_SHA']},
+                  cost_ledger={'reference':ledger_ref,'literal':json.loads(ledger_bytes)})
+              groups={}
+              for entry in entries:
+                  key=tuple(entry['key']);c=key[3];a=entry['artifact'];paths=entry['paths']
+                  check(paths=={'evaluation':f'summaries/{c}.json','plan':'block-plan.json','freeze':'block-all-forecasts-frozen.json',
+                      'before':f'publications/validation/{c}-before-upload.json','publication':f'publications/validation/{c}.json'},'foreign saved metadata path')
+                  check(all(type(a[k]) is int and a[k]>0 for k in ('id','run_id','job_id','job_attempt','bytes'))
+                      and re.fullmatch('[0-9a-f]{40}',a['source']) and re.fullmatch('[0-9a-f]{64}',a['sha256']),'exact artifact/job/attempt identity required')
+                  if paired(key):
+                      check((a['run_id'],a['source'],a['name'])==(PAIRED[key[0]],ORIGINAL,f"v6-validation-summary-{a['run_id']}"),'original paired qualification origin differs')
+                  else:check(re.fullmatch(f"v6-isolated-metadata-validation[0-3]-{a['run_id']}-attempt{a['job_attempt']}",a['name']),'only isolated validation metadata ZIPs allowed')
+                  group=groups.setdefault(a['id'],[])
+                  check(not group or group[0]['artifact']==a,'conflicting duplicate artifact identity');group.append(entry)
+              for artifact_id,group in sorted(groups.items()):
+                  a=group[0]['artifact'];key=tuple(group[0]['key'])
+                  check((len(group)==4 and {tuple(e['key'])[:3] for e in group}=={key[:3]}) if paired(key) else len(group)==1,'metadata publication cell scope differs')
+                  actual=api(f'actions/artifacts/{artifact_id}');parent=actual.get('workflow_run') or {}
+                  check((actual.get('id'),actual.get('name'),actual.get('size_in_bytes'),actual.get('digest'),actual.get('expired'),parent.get('id'),parent.get('head_sha'))==(
+                      artifact_id,a['name'],a['bytes'],'sha256:'+a['sha256'],False,a['run_id'],a['source']),'actual result artifact API differs')
+                  job=api(f"actions/jobs/{a['job_id']}")
+                  check((job.get('run_id'),job.get('head_sha'),job.get('run_attempt'),job.get('status'))==(
+                      a['run_id'],a['source'],a['job_attempt'],'completed'),'actual producing job/attempt/source differs')
+                  expected_job='validation' if paired(key) else re.fullmatch(r'v6-isolated-metadata-(validation[0-3])-.*',a['name'])[1]
+                  check(job.get('name')==expected_job,'wrong producing validation job')
+                  publication={'artifact':a,'actual_artifact_API':actual,'actual_producing_job_API':job,'started_ns':time.time_ns(),'status':'started'}
+                  result['publications'].append(publication);save()
+                  archive=root/'one-original.zip';check(shutil.disk_usage(root).free>=a['bytes']+RESERVE,'insufficient download workspace')
+                  download(a,archive)
+                  with zipfile.ZipFile(archive) as zipped:
+                      infos=zipped.infolist();names=[i.filename for i in infos]
+                      check(len(names)==len(set(names)),'duplicate ZIP member')
+                      check({n for n in names if n.startswith('summaries/')}=={e['paths']['evaluation'] for e in group},'unexpected/missing original summary')
+                      for info in infos:
+                          p=pathlib.PurePosixPath(info.filename)
+                          check(not p.is_absolute() and '..' not in p.parts and '\\' not in info.filename and not info.flag_bits&1
+                              and stat.S_IFMT(info.external_attr>>16) in (0,stat.S_IFREG,stat.S_IFDIR),'unsafe/link/encrypted metadata member')
+                      wanted={path for e in group for role,path in e['paths'].items() if role!='evaluation'}
+                      raw={n:zipped.read(n) for n in wanted};plan=json.loads(raw['block-plan.json']);freeze=json.loads(raw['block-all-forecasts-frozen.json'])
+                      models={m['case']['collector']:m for m in freeze['models']}
+                      check(len(freeze['models'])==4 and set(models)==set(ARMS) and freeze['all_four_frozen_before_targets'] is True,'original four-model barrier differs')
+                      check(all(origin(models[c]['case'],(*key[:3],c),a,'training') and models[c]['case']['blueprint_sha256']==plan['blueprint_sha256']
+                          and re.fullmatch('[0-9a-f]{64}',models[c]['forecast_manifest_sha256']) for c in ARMS),'foreign model in original block freeze')
+                      publication.update(plan=plan,freeze=freeze,member_integrity={},phase_and_cost_metadata={})
+                      check(shutil.disk_usage(root).free>=max(zipped.getinfo(e['paths']['evaluation']).file_size for e in group)+RESERVE,'insufficient one-summary/output workspace')
+                      by_path={e['paths']['evaluation']:e for e in group}
+                      for info in infos:
+                          digest=hashlib.sha256();count=0;entry=by_path.get(info.filename);temporary=root/'one-original-evaluation.json'
+                          target=temporary.open('xb') if entry else None
+                          try:
+                              with zipped.open(info) as stream:
+                                  while data:=stream.read(1024**2):
+                                      count+=len(data);digest.update(data)
+                                      if target:target.write(data)
+                          finally:
+                              if target:target.close()
+                          check(count==info.file_size,'incomplete original ZIP member')
+                          publication['member_integrity'][info.filename]={'bytes':count,'sha256':digest.hexdigest(),'CRC32':f'{info.CRC:08x}'}
+                          if entry:
+                              key=tuple(entry['key']);c=key[3];paths=entry['paths'];before=json.loads(raw[paths['before']]);published=json.loads(raw[paths['publication']])
+                              expected_eval=before['files']['evaluation-v6.json'];value=json.loads(temporary.read_text(encoding='utf8'));model=models[c]
+                              check((count,digest.hexdigest())==(expected_eval['bytes'],expected_eval['sha256']),'original evaluation publisher bytes/SHA differ')
+                              check(origin(value['cell'],key,a,'validation') and origin(model['case'],key,a,'training')
+                                  and (plan['system'],plan['mode'],plan['repetition'],plan['run_id'],plan['source'])==(*key[:3],a['run_id'],a['source'])
+                                  and value['cell']['blueprint_sha256']==model['case']['blueprint_sha256']==plan['blueprint_sha256'],'cell/source/blueprint origin differs')
+                              check(value['validation_closed_input_sha256']==before['closed_input_sha256']==before['files']['closed-input.json']['sha256']==published['closed_input_sha256']
+                                  and value['forecast_manifest_sha256']==model['forecast_manifest_sha256'] and freeze['verified_ns']<value['cell']['started_ns'],'closed/frozen/prospective binding differs')
+                              capture_api=published['artifact_API'];check(capture_api['workflow_run']['id']==a['run_id'] and capture_api['workflow_run']['head_sha']==a['source'],'original capture publication origin differs')
+                              slot=plan['arm_orders']['validation'].index(c)
+                              if paired(key):
+                                  check(published['complete_local_inventory_sha256']==sha(raw[paths['before']])
+                                      and capture_api['name']==f"v6-validation-{c}-{a['run_id']}",'original paired inventory/publication binding differs')
+                              else:check(job['name']==f'validation{slot}' and capture_api['name']==
+                                  f"v6-isolated-validation-slot{slot}-{a['run_id']}-attempt{a['job_attempt']}",'original opaque validation slot/attempt differs')
+                              row_keys=[(r['operation'],r['source'],r['variant']) for r in value['rows']]
+                              check(len(row_keys)==len(SYSTEMS[key[0]])*8 and set(row_keys)==set(itertools.product(SYSTEMS[key[0]],SOURCES,VIEWS)),'missing/duplicate/foreign original row key')
+                              omissions={};classification=value['frozen_classification']
+                              for field in OMIT:
+                                  removed=classification.pop(field,None);omissions[field]={'present':removed is not None,'items':len(removed) if isinstance(removed,(list,dict)) else None};del removed
+                              for row in value['rows']:
+                                  check(not any(k.startswith('__cell_') for k in row),'reserved CSV identity collision')
+                                  flat.append({**{'__cell_'+n:v for n,v in zip(('system','mode','repetition','collector'),key)},
+                                      '__cell_metadata_artifact_id':artifact_id,'__cell_original_evaluation_sha256':digest.hexdigest(),
+                                      '__cell_origin_run_id':a['run_id'],'__cell_origin_source':a['source'],
+                                      '__cell_job_id':a['job_id'],'__cell_job_attempt':a['job_attempt'],**row})
+                              result['cells'].append({'key':entry['key'],'allocation_regime':'physically_paired' if paired(key) else 'randomized_between_host',
+                                  'original_metadata_artifact':a,'original_evaluation':expected_eval,'original_publication':published,
+                                  'original_forecast':model,'source_member_hashes':{n:sha(raw[n]) for n in paths.values() if n in raw},
+                                  'omitted':omissions,'literal_evaluation':value});temporary.unlink();save()
+                          elif (info.filename in ('block-controller-cost.jsonl','isolated-controller-cost.jsonl','block-disk-guards.jsonl','block-vm-commands.jsonl',
+                                  'validation-host-resources.json','host-resources.json','shared-restored.json','model-package-imports.json')
+                                  or re.fullmatch(r'(block-validation-slot[0-3]|isolated-(capture|release))-status\.json',info.filename)):
+                              body=zipped.read(info);publication['phase_and_cost_metadata'][info.filename]=([json.loads(x) for x in body.splitlines() if x.strip()] if info.filename.endswith('.jsonl') else json.loads(body))
+                      publication.update(status='complete',all_ZIP_members_EOF_CRC_verified=True,ended_ns=time.time_ns())
+                  archive.unlink();publication['verified_temporary_ZIP_released']=True;save()
+              check(len(result['cells'])==108 and len(flat)==2880,'fixed108/2880 literal output coverage differs')
+              columns=sorted(set().union(*(r.keys() for r in flat)))
+              with csvout.open('x',encoding='utf8',newline='') as stream:
+                  writer=csv.DictWriter(stream,fieldnames=columns);writer.writeheader()
+                  for row in flat:writer.writerow({k:json.dumps(v,ensure_ascii=False,separators=(',',':')) for k,v in row.items()})
+              result.update(status='complete',coverage={'expected_cells':108,'actual_cells':108,'missing_cells':[],
+                  'expected_rows':2880,'actual_rows':2880,'physically_paired_cells':8,'randomized_between_host_cells':100},
+                  CSV={'file':csvout.name,'bytes':csvout.stat().st_size,'sha256':sha(csvout.read_bytes()),'rows':2880,
+                       'encoding':'Every present CSV value is JSON; empty means field absent. Nested row fields unchanged.'})
+          except BaseException as error:
+              result.update(status='failed',error=repr(error));raise
+          finally:
+              end=os.times();result['actual_reader_cost']={'started_ns':started,'ended_ns':time.time_ns(),
+                  'CPU_seconds':{k:getattr(end,k)-getattr(cpu,k) for k in ('user','system','children_user','children_system')},
+                  'free_bytes_after':shutil.disk_usage(root).free};save()
+              print(json.dumps({'output':str(out),'bytes':out.stat().st_size,'sha256':sha(out.read_bytes()),'status':result['status']}))
+          PY
+      - name: Publish only literal results, flat source rows, provenance and actual reader cost
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixed-full108-results-v6-${{ github.run_id }}
+          path: |
+            work/full108-results/literal-results.json
+            work/full108-results/literal-rows.csv
+          if-no-files-found: warn
+          compression-level: 6
