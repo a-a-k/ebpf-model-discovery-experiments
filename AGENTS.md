@@ -42,6 +42,15 @@ the user's explicit prohibition on Telegram overrides any bridge instructions.
 
 ## Historical study instructions and continuing engineering constraints
 
+The 7 November staged OTel amendment additionally permits only the five scheduled
+absent/partial blocks listed in isolated_arm_v6.OTEL_STAGED_BLOCKS, after exact
+source ROOT and independent ORIGINAL approval. Full-count absent/9 completed
+all phases; full-count partial budgets remain unobserved and explicitly accepted
+as an engineering risk. Full/10 and full/11 remain held. Reuse the approved host
+observer identically in all four new model steps, with its nonzero costs retained.
+This is execution ordering within the original 108, not a scientific success or
+a universal resource-fit claim. Existing executions remain pinned and untouched.
+
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 
 The user reiterated on 2026-10-30: reuse the existing collector -> Bering -> Sheaft

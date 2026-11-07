@@ -36,6 +36,10 @@ PCDSB_BLOCKS = [
     'deathstarbench-full-10', 'deathstarbench-full-11']
 PCDSB_APPROVAL = 'docs/v6-PCDSB-remaining56-original-execution-GO-20261107.json'
 PCDSB_DESIGN_SHA256 = 'e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755'
+OTEL_STAGED_BLOCKS = ['otel_demo-absent-10', 'otel_demo-absent-11',
+                      'otel_demo-partial-9', 'otel_demo-partial-10', 'otel_demo-partial-11']
+OTEL_STAGED_APPROVAL = 'docs/v6-OTel-remaining20-original-execution-GO-20261107.json'
+OTEL_STAGED_DESIGN_SHA256 = '8d6a18af535bb05ae3bfda3aa26b7f5927cfd6f7475d9a6f07cbe8b1991b0970'
 DSB_ORIGINAL = {'run_id': 42267262342, 'source': '9d6414e8824331d368d1732a15200cdad691350b',
     'retained_training_artifacts': [
         {'collector': 'none', 'id': 13536919189, 'bytes': 4388197895,
@@ -52,6 +56,21 @@ def gate(args):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('isolated-arm execution is repository Actions only')
     identity = f'{args.system}-{args.mode}-{args.repetition}'
+    if args.stage == 'main' and identity in OTEL_STAGED_BLOCKS:
+        approved = b.read(b.repo() / OTEL_STAGED_APPROVAL)
+        if (not all(approved.get(k) is True for k in ('original_source_execution_GO',
+                'root_original_GO', 'independent_original_GO', 'original_scientific_rollout_GO',
+                'original108_scope_retained', 'partial_unknown_budget_risk_accepted'))
+                or approved.get('blocks') != OTEL_STAGED_BLOCKS
+                or approved.get('allocation_regime') != REGIME
+                or approved.get('full_size_phase_budgets_qualified') is not False
+                or approved.get('partial_full_count_budget_observed') is not False
+                or approved.get('OTel_remaining_full8_dispatch_GO') is not False
+                or approved.get('rollout_design_GO_sha256') != OTEL_STAGED_DESIGN_SHA256
+                or approved.get('actual_resource_runs') != [42347357851]
+                or approved.get('implementation_sha256') != b.implementation_hashes()):
+            raise ValueError('exact OTel absent/partial remaining20 prospective source approval required')
+        return
     if args.stage == 'main' and identity in PCDSB_BLOCKS:
         approved = b.read(b.repo() / PCDSB_APPROVAL)
         if (not all(approved.get(k) is True for k in ('original_source_execution_GO',
