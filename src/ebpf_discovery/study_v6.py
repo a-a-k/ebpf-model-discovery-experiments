@@ -26,6 +26,9 @@ from .toolchain_v4 import digest
 from .transport_v4 import Journal
 
 
+BERING_CHILD_GO_ENV = {'GOGC': '25'}
+
+
 def declaration(system):
     version = 'experiment_v5' if system == 'otel_demo' else 'experiment_v4'
     return importlib.import_module(f'systems.{system}.{version}')
@@ -195,12 +198,14 @@ def model(root):
     from .identity_projection_v5 import refresh
     from .store_v5 import ObservationStoreV5
     from .toolchain_v5 import Toolchain
+    from .bering_v4 import child_go_environment
     root = Path(root).resolve()
     if (root / 'forecast-saved.json').exists():
         raise ValueError('a frozen model must not be recomputed')
     processing = {'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
                   'runner_boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
                   'started_ns': time.time_ns(),
+                  'bering_child_go_environment': dict(BERING_CHILD_GO_ENV),
                   'scope': 'Actual offline processing execution; original capture identity remains unchanged'}
     write_json(root / 'processing-execution.json', processing)
     from .resources_v6 import prepare
@@ -236,7 +241,10 @@ def model(root):
             if count:
                 raise ValueError('unexpected eBPF observations in the actual no-agent arm')
         refresh(case, 'training')
-        Toolchain(ctx, status['system'], store, declared).forecast(plans)
+        # Collect unreachable Bering allocations earlier without limiting the live
+        # heap, input, processor count or scientific calculation. Apply to all arms.
+        with child_go_environment(BERING_CHILD_GO_ENV):
+            Toolchain(ctx, status['system'], store, declared).forecast(plans)
         fit_classes(store, plans, declared, root / 'toolchain' / 'classes')
         from .evaluate_v4 import _manual_baselines
         write_json(root / 'toolchain' / 'manual-baselines.json',
