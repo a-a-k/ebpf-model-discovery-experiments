@@ -601,7 +601,7 @@ jobs:
         bash scripts/setup-toolchain-v4.sh work/tools v5
         echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
     - name: Compute and freeze from this closed training input only
-      run: python -m ebpf_discovery.study_v6 model --root work/case
+      run: python scripts/observe-v6-model-host.py
     - name: Package the portable actual frozen forecasts
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
     - name: ${{ steps.restore.outputs.artifact_name }}
@@ -666,6 +666,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -719,7 +720,7 @@ jobs:
         bash scripts/setup-toolchain-v4.sh work/tools v5
         echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
     - name: Compute and freeze from this closed training input only
-      run: python -m ebpf_discovery.study_v6 model --root work/case
+      run: python scripts/observe-v6-model-host.py
     - name: Package the portable actual frozen forecasts
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
     - name: ${{ steps.restore.outputs.artifact_name }}
@@ -784,6 +785,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -837,7 +839,7 @@ jobs:
         bash scripts/setup-toolchain-v4.sh work/tools v5
         echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
     - name: Compute and freeze from this closed training input only
-      run: python -m ebpf_discovery.study_v6 model --root work/case
+      run: python scripts/observe-v6-model-host.py
     - name: Package the portable actual frozen forecasts
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
     - name: ${{ steps.restore.outputs.artifact_name }}
@@ -902,6 +904,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -955,7 +958,7 @@ jobs:
         bash scripts/setup-toolchain-v4.sh work/tools v5
         echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"
     - name: Compute and freeze from this closed training input only
-      run: python -m ebpf_discovery.study_v6 model --root work/case
+      run: python scripts/observe-v6-model-host.py
     - name: Package the portable actual frozen forecasts
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
     - name: ${{ steps.restore.outputs.artifact_name }}
@@ -1020,6 +1023,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
