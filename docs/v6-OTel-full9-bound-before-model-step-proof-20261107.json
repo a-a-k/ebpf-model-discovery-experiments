@@ -1,0 +1,66 @@
+{
+  "observed_utc": "2026-11-07T17:35:19.862387+00:00",
+  "selection_record": "work/v6-OTel-full9-observed-replay-actual-execution-binding-20261107.json",
+  "selection_SHA256": "a14aafef2aa20946bc70921e250a2789b1e59fa91dfcdf2f2a88818dacd9dd83",
+  "selection_registered_utc": "2026-11-07T17:32:22.165976+00:00",
+  "all_actual_compute_step_starts_after_selection": true,
+  "scope": "Late API inspection of actual step timestamps proves selection binding was made before any model computation could emit a forecast; pending model steps were stillpending afterselection",
+  "actual_jobs": [
+    {
+      "job_id": 128475804035,
+      "job_name": "model (deepflow)",
+      "run_id": 42396800647,
+      "actual_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+      "model_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "pending",
+        "conclusion": null,
+        "number": 11,
+        "started_at": null,
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128475804205,
+      "job_name": "model (obi)",
+      "run_id": 42396800647,
+      "actual_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+      "model_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "pending",
+        "conclusion": null,
+        "number": 11,
+        "started_at": null,
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128475804237,
+      "job_name": "model (coroot)",
+      "run_id": 42396800647,
+      "actual_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+      "model_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T17:34:13Z",
+        "completed_at": null
+      }
+    },
+    {
+      "job_id": 128475804238,
+      "job_name": "model (none)",
+      "run_id": 42396800647,
+      "actual_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+      "model_step": {
+        "name": "Compute and freeze forecasts without live application guests",
+        "status": "in_progress",
+        "conclusion": null,
+        "number": 11,
+        "started_at": "2026-11-07T17:34:13Z",
+        "completed_at": null
+      }
+    }
+  ]
+}

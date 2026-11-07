@@ -1,0 +1,93 @@
+{
+  "registered_utc": "2026-11-07T17:32:22.165976+00:00",
+  "selection_rule": "This exactfirstapproveddispatch undersealedparent; all4casesincludedregardlessfutureoutcomes; no oldmodelmix or positivityselection",
+  "new_run_id": 42396800647,
+  "new_processing_validation_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+  "actual_run_API": {
+    "conclusion": "",
+    "createdAt": "2026-11-07T17:32:17Z",
+    "databaseId": 42396800647,
+    "displayTitle": "v6 qualification replay parent record docs/v6-qualification-parent-otel_demo-full9-fullcounts-replay-20261107.json",
+    "headSha": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+    "status": "queued",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42396800647"
+  },
+  "parent_record": "docs/v6-qualification-parent-otel_demo-full9-fullcounts-replay-20261107.json",
+  "parent_record_SHA256": "3789f32e0ca53af180533cca952aadcd356cc07464756a682e7bc7571770419d",
+  "prospective_registration_SHA256": "5b571bd2769fead48c55d0033999a33307966148de97ced2f91020de421db659",
+  "original_capture_run_id": 42267248120,
+  "original_capture_source": "9d6414e8824331d368d1732a15200cdad691350b",
+  "case_keys": [
+    [
+      "otel_demo",
+      "full",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "deepflow"
+    ]
+  ],
+  "jobs_at_registration": [
+    {
+      "id": 128475804035,
+      "name": "model (deepflow)",
+      "status": "queued",
+      "conclusion": null,
+      "started_at": "2026-11-07T17:32:18Z",
+      "completed_at": null
+    },
+    {
+      "id": 128475804205,
+      "name": "model (obi)",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T17:32:20Z",
+      "completed_at": null
+    },
+    {
+      "id": 128475804237,
+      "name": "model (coroot)",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T17:32:20Z",
+      "completed_at": null
+    },
+    {
+      "id": 128475804238,
+      "name": "model (none)",
+      "status": "in_progress",
+      "conclusion": null,
+      "started_at": "2026-11-07T17:32:20Z",
+      "completed_at": null
+    },
+    {
+      "id": 128475804881,
+      "name": "inspect",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-11-07T17:32:18Z",
+      "completed_at": "2026-11-07T17:32:18Z"
+    }
+  ],
+  "registered_before_any_current_model_completed": true,
+  "new_training": false,
+  "new_scientific_cells": false,
+  "global_fit": false,
+  "OTel_remaining28_GO": false
+}
