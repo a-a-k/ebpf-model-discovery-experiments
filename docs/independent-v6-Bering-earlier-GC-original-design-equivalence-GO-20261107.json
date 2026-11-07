@@ -1,0 +1,45 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "review_kind": "Independent ORIGINAL-criterion design and source-semantic review before implementation",
+  "reviewed_utc": "2026-11-07T18:30:00Z",
+  "original_design_equivalence_GO": true,
+  "exact_source_execution_GO": false,
+  "resource_fit_proved": false,
+  "scientific_success_GO": false,
+  "root_proposed_design_sha256": "294f25c1a89416a37c6607de2d2de39102db16354108362f22c8a0a65660be98",
+  "proposal": "Reuse existing bering_v4.child_go_environment with fixed GOGC=25 around Toolchain.forecast in future v6 model processing, uniformly across all four runtime arms and all actual Bering discovery branches. GOMEMLIMIT and GOMAXPROCS remain unset; class fitting remains outside this child-only context. No change to captures, input bytes/order/counts, batch boundaries, semantic supply, model algorithms, forecast or external oracle.",
+  "original_criterion": "Complete the fresh 108-cell feasibility study of executable operation models and prospective Bering-to-Sheaft forecasts with absent or incomplete SDK tracing, evaluated against independent external outcomes. Retain unavailable, UNKNOWN, adverse and failed attempts; resource repair is not a scientific benefit or novelty result.",
+  "strongest_baselines_equal_information": "First use the existing Go runtime collection knob rather than introduce new algorithms, remove observations or invent a recovery framework. Scientific comparisons still include direct conditional implementations, actual no-agent Native inputs and cheap ordinary observed-edge/context unions with the same supplied semantic contracts and metadata.",
+  "causal_mechanism_and_limit": "A smaller GC growth target can collect unreachable Go allocations sooner, trading CPU for memory. It does not reclaim the necessary live graph/input heap and does not cap RSS; 4 CPU, 16 GB and 360-minute feasibility is unproved. The observed OBI memory pressure justifies trying this simple runtime setting, but does not prove the initiator of the runner shutdown.",
+  "pinned_Bering_commit": "66ca3af1fe581839e525fb9cc5600a1edd6ca8fb",
+  "pinned_source_readset_sha256": {
+    "go.mod": "bffe1588c43a0e45d76eb3d6a3017ba33e156eeaddf5f1071ed760818a4022b8",
+    "internal/runtime/service.go": "140240a71d33c3aa7ff58b72ebdc85164987a4bae471f1bab43baa7979ac8bc1",
+    "internal/runtime/engine.go": "6d898860f3bd84fb941728b7bd110a4dd032625a71578d7ceb5c301c21f2c4de",
+    "internal/discovery/discovery.go": "804c9304f782bd74a385c8e82799302f0d8c52e2e1d091d932614a230435000e",
+    "internal/runtime/on_shutdown_test.go": "c42668ceedbb14f635eee019f88e902e40581d83c9e1367344709da8a5a10e48",
+    "internal/runtime/ebpf.go": "1ce8fdcb5f425be671a07bdf3ac9b350cc876202c4b3ba9a1ae52328ac29f0e1"
+  },
+  "source_findings": [
+    "Effective wrapper sets publication_mode=on_shutdown, reconciliation disabled and maximum span count above all declared observations; it validates one publication, exact accepted span/source counts and no dropped spans.",
+    "Pinned service.go 116-126 removes HTTP read/write deadlines for on_shutdown; 162-180 excludes the periodic flush ticker; 206-218 finishes active requests and closes the engine without a local finalization deadline.",
+    "Pinned engine.go 128-131 routes on_shutdown directly to atomic retained ingestion; 195-224 accepts the whole request or poisons the batch on capacity failure; 226-229 disables FlushDue. The single close invokes the same discovery code, with no window-admission clock filtering.",
+    "Repository-wide non-test source search found no SetFinalizer, AddCleanup, SetGCPercent, runtime.GC or sync.Pool coupling in Bering. Discovery's observation times and latency come from captured span data; runtime clocks supply descriptive publication metadata. Existing on_shutdown tests were read, not executed.",
+    "Existing Python child_go_environment passes only the scoped Go environment to Bering's child wrapper and binary and resets its context afterward. It does not change Sheaft, Procrustes, Python environment or application runtime treatment. The precise implementation still needs separate source review and CI."
+  ],
+  "equivalence_boundary": "Graph and forecast semantics are intended to be unchanged for identical fully accepted inputs. Do not assert byte-identical snapshots: process/window/discovery timestamps, snapshot IDs, filenames and resulting hashes can naturally differ with runtime. Preserve every actual output and its actual hash; no output normalization, substitution or positivity-based equivalence admission is authorized by this review.",
+  "prospective_and_cost_requirements": "Record the exact processing profile and dual origins before required reprocessing/targets, use the fixed setting for all four arms of the new canonical processing attempt, retain prior outputs and failures, and do not interrupt already running jobs. Actual resource use must be reviewed after completion. Include extra GC CPU/walltime, observer overhead, all repeated successful and failed model work, preparation, build, restore/hash/transfer, CI/readers/review and unknown human costs. Processing profiles differ from earlier completed blocks and must be disclosed as a resource-comparison limitation; no cost dominance is inferred.",
+  "actual_motivation": {
+    "run_id": 42396800647,
+    "OBI_job_id": 128475804205,
+    "sampled_Bering_max_RSS_bytes": 15906029568,
+    "sampled_min_MemAvailable_KiB": 87784,
+    "shutdown_initiator": "UNKNOWN",
+    "evidence_sha256": "f1c6c6d1788e2c0e0bb0713259440c322933f8a6bbaa48a0d47c841279239137"
+  },
+  "primary_runtime_references": [
+    "https://go.dev/doc/gc-guide#GOGC",
+    "https://pkg.go.dev/runtime/debug#SetGCPercent"
+  ],
+  "scope": "No implementation, model/VM/probe execution, scientific data processing, archive download, restart, cancellation, merge or dispatch by this reviewer. Current DeepFlow monitoring continues separately. This is not approval of the remaining full-SDK OTel blocks or scientific completion."
+}
