@@ -1,0 +1,226 @@
+{
+  "reviewed_utc": "2026-11-07 18:10:42 UTC",
+  "reviewer": "independent ORIGINAL-criterion skeptic /root/ebpf_actual7_skeptic",
+  "original_OTel_remaining20_absent_partial_staged_design_GO": true,
+  "source_execution_GO": false,
+  "dispatch_GO": false,
+  "global_full_size_budget_fit_GO": false,
+  "OTel_remaining_full8_dispatch_GO": false,
+  "scientific_success_GO": false,
+  "exact_blocks": [
+    "otel_demo-absent-10",
+    "otel_demo-absent-11",
+    "otel_demo-partial-9",
+    "otel_demo-partial-10",
+    "otel_demo-partial-11"
+  ],
+  "scope": "Only20scheduledcells in fiveblocks, within unchanged fullfresh108/all10ops. OTel full10/full11eightcells remainheld; oldfull9fourcases active and allprior evidence/costs retained. No cell/operation/collector/repetition is excluded or replaced.",
+  "actual_basis": {
+    "observed_utc": "2026-11-07 18:08:03 UTC",
+    "run_id": 42347357851,
+    "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+    "all13jobs_success": true,
+    "jobs": [
+      {
+        "id": 128423393281,
+        "name": "model2",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423393968,
+        "name": "training1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423394225,
+        "name": "model0",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423394506,
+        "name": "training3",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423414363,
+        "name": "prepare",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423415872,
+        "name": "model1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423417689,
+        "name": "training0",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423427324,
+        "name": "model3",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128423429181,
+        "name": "training2",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128464503192,
+        "name": "validation0",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128464503221,
+        "name": "validation2",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128464503237,
+        "name": "validation1",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128464503262,
+        "name": "validation3",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "new_successful_host_log_receipts": [
+      {
+        "job_id": 128423393281,
+        "name": "model2",
+        "source_commits": [
+          "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        ],
+        "CPU_count": 4,
+        "MemTotal": "16367516 kB",
+        "initial_free_bytes": 109984317440,
+        "timeout_minutes": 360,
+        "Go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        }
+      },
+      {
+        "job_id": 128464503192,
+        "name": "validation0",
+        "source_commits": [
+          "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        ],
+        "CPU_count": 4,
+        "MemTotal": "16367524 kB",
+        "initial_free_bytes": 109984382976,
+        "timeout_minutes": 360,
+        "Go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        }
+      },
+      {
+        "job_id": 128464503221,
+        "name": "validation2",
+        "source_commits": [
+          "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        ],
+        "CPU_count": 4,
+        "MemTotal": "16367516 kB",
+        "initial_free_bytes": 109984288768,
+        "timeout_minutes": 360,
+        "Go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        }
+      },
+      {
+        "job_id": 128464503237,
+        "name": "validation1",
+        "source_commits": [
+          "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        ],
+        "CPU_count": 4,
+        "MemTotal": "16367528 kB",
+        "initial_free_bytes": 109984296960,
+        "timeout_minutes": 360,
+        "Go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        }
+      },
+      {
+        "job_id": 128464503262,
+        "name": "validation3",
+        "source_commits": [
+          "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        ],
+        "CPU_count": 4,
+        "MemTotal": "16367524 kB",
+        "initial_free_bytes": 109982900224,
+        "timeout_minutes": 360,
+        "Go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        }
+      }
+    ],
+    "prior_training_and_model_receipts": "Earlier28hostreceipt audit already covers four originalsuccessful fullcountOTelabs captures and firstthree models; currentfive checks add successful failed-onlyDFmodel2 plus fourvalidations. Re-exposed successfuljobaliases are not additional executions."
+  },
+  "design_verdict": "A completed fullcount absent-SDK acquisition/model/validation/package/publication path is a concrete observedresource basis for continuing the scheduled absent/partial blocks. No favorable forecast, support, error or outcome was inspected or used for this execution-order decision. This is originalcriterion-preserving staged execution under existing fullrestart authorization, not a weaker hypothesis or an additional qualification experiment.",
+  "original_criterion_baselines": "Actualoperationmodels/prospective Bering-Sheaft forecasts under missing/incompleteSDK against independent external outcomes. Same suppliedsemantic contracts/inventory for strongest directconditional(.875/1), Native/no-agent and ordinary cheap observed-edge/context unions. Availability/ARI/jobflags/equalforecasts do not become scientificsuccess, a novelpredictor or costadvantage.",
+  "prospective_risk": "FullcountpartialOTel budget remains UNOBSERVED and explicitly acceptedengineeringrisk. Partialcontext/graph complexity is not assumed smaller thanfull. Observedabsent fit is not a universalworst-case/globalfit certificate; fixedcounts/deadlines/resources remain unchanged and failures stay actualfailures, not positive/negative scientific forecasts by fiat.",
+  "host_observer": "Reuse ONLY the alreadyapproved fixed host-only observer identically in allfour newisolated modelsteps, COMMAND samePython -m ebpf_discovery.study_v6 model --root work/case, no env/algorithm/RNG/caps/kills/retries or outputfeedback changes. Preserve actualchild exitstatus including brokenstdout behavior; same best-effort30s metadata/body-freejournal limits and nonzerooverhead. No SSH/VM/probe/newmatrix/framework. Existing56 and current4replay jobs remain pinned and untouched.",
+  "execution_prerequisites": [
+    "Exact literal five-block sourcebranch and separate sealed ROOT+IND ORIGINAL source/execution approval plus normalrequiredCI before ROOTdispatch.",
+    "Allfour closedtraininginputs and allfour currentactual frozenforecasts before anyfresh validationtargets; no target/class refit or positivity/support/accuracy admission.",
+    "Keep full10/11eightcells held until separate actualpath/resource review; no ordinary globalfull-size-qualified flag and no removal of the activeoldfull9cells from108.",
+    "Preserve8paired/100isolated disclosure, actualorigins/attempts and allnegative/adverse/UNKNOWN results. Final108literal actualexternal/baseline/cost review still required; technicalfit alone completes no scientific-success claim."
+  ],
+  "complete_costs": "Retain observer/prep/control/build/capture/model/forecast/transfer/hash/restore/paging/CI/reader/report/review/archive costs and every prior OTel failed/debugattempt, reused-source inspection and repeated validmodel cost. Reusedjobaliases not extraexecutions; unknownhuman/unmetered staysUNKNOWN and walltime is nottotalCPU/billing. No costdominance/financialcheapestness claim.",
+  "critical_full_replay_monitor": {
+    "observed_utc": "2026-11-07 18:10:42 UTC",
+    "jobs": [
+      {
+        "id": 128475804035,
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 128475804205,
+        "status": "in_progress",
+        "conclusion": null
+      },
+      {
+        "id": 128475804237,
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 128475804238,
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Independent monitoring of onlyfour exactcurrentreplayjobs continues; no newfull-mode resourcefit inferred."
+  },
+  "reviewer_changes": "This brief designrecord only; no source/profile/flags, newinspection/outcome reader, data/VM/model/probe, merge or dispatch."
+}
+
