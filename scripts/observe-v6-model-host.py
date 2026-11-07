@@ -82,7 +82,9 @@ def journal(unit, since):
 def emit(value):
     line = json.dumps({'v6_host_observer': value}, separators=(',', ':'))
     try:
-        print(line, flush=True)
+        # An observer-only broken pipe must not leave Python's buffered stdout
+        # failed: its final flush would otherwise replace the model status with 120.
+        os.write(1, (line+'\n').encode('utf-8'))
     except OSError:
         pass
     try:
