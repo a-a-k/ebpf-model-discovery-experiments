@@ -36,9 +36,10 @@ boot IDs, job attempts and phase costs are retained. Failed-job retry outputs
 bind exact artifact IDs/digests from named upstream jobs; names include producing
 attempts and are not used to search for replacement inputs. Every imported
 cloud ZIP and package has complete byte/SHA, CRC and member-inventory checks.
-Only verified owned temporary deliveries are released. Complete or partial
-capture/processing originals and all failures remain published; adverse,
-unavailable and UNKNOWN results never trigger a retry until positive.
+Only verified owned temporary deliveries are released. Preserve every published
+complete or partial original and all failure/cost receipts; attempt publication
+on failure. Bytes not published before interruption remain explicitly unavailable.
+Adverse, unavailable and UNKNOWN results never trigger a retry until positive.
 
 The original scientific design and strongest-baseline review were explicitly
 approved by the independent skeptic before implementation:
