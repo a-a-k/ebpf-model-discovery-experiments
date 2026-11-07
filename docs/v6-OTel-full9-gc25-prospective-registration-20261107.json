@@ -1,0 +1,78 @@
+{
+  "registered_utc": "2026-11-07T18:32:16.036242+00:00",
+  "scope": "Required technical replacement processing and first fresh validation of same four OTel/full9 cells after observed42396800647 OBI memory-pressure failure; not a new scientific cell or outcome-selected attempt",
+  "cell_keys": [
+    [
+      "otel_demo",
+      "full",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "deepflow"
+    ]
+  ],
+  "original_capture_run_id": 42267248120,
+  "original_capture_source": "9d6414e8824331d368d1732a15200cdad691350b",
+  "original_closure_sha256_by_collector": {
+    "none": "2351f563f553abed4f1affe7e6b17879770d711810506d5af4623a4654ce7453",
+    "obi": "74376c91aa6c51c2098c34a8fb84d4d8224f03e36010ffbfb8bd480c2cfeb828",
+    "coroot": "f6cca913760edf874d7d3b7ba0c352c300aec21f30e71f2382b80ad2f53221ac",
+    "deepflow": "0ed7599481ee1ab525c05c7b905310e44111cefbea031e1835b98bfc9a5bbec0"
+  },
+  "original_common_seals": {
+    "parent_plan_sha256": "f8b4332fb6515fe3a1920236db59a9245b715a26d2f1f71fb02f791c642cb998",
+    "shared_sha256": "b32b95a5bcb04226b4cbfa90dc31d854cb28c84308ebbf20775e7da0ffe9e8b5",
+    "golden_sha256": "756af9260d9785d7cdc935e710a91edc5b3810a61bce175f5a2fb0d41f30b029",
+    "blueprint_sha256": "2a7b7841cd3e7492a4b2d75c499cb81f8a2a383b3ff6574a3208811bd13e8556"
+  },
+  "planned_existing_workflow": ".github/workflows/qualification-replay-v6.yml",
+  "planned_operation": "replay",
+  "planned_parent_record": "docs/v6-qualification-parent-otel_demo-full9-gc25-replay-20261107.json",
+  "new_execution_run_id": "Assigned by GitHub only after separately approved dispatch; bind exactAPI immediately, beforeforecasts/targets",
+  "dual_origin_rule": "Training case remains original9d/42267248120. Actualprocessing+modelartifactAPI andvalidation case use genuine NEW workflowrun/source. All4currentmodels, no old2modelmix and no spoofedGITHUB_SHA/APIorigin.",
+  "four_model_barrier": true,
+  "all_four_current_models_included_irrespective_of_support_or_outcomes": true,
+  "technical_failure_retries_only": true,
+  "old_forecasts_outputs_failures_retained": true,
+  "new_training_capture": false,
+  "new_first_validation_required_after_all_four_forecasts": true,
+  "original108_and_all10ops_baselines_retained": true,
+  "allocation": "Original4celltraining pairedhost; fresh4armvalidation pairedhost; whole108still8paired/100isolated",
+  "observer": "Unchanged approved fixed30s host-only observer allfourarms. Same full inputs and scientific semantics; live-heap fit unproved. Runtime metadata/filenames/bytehashes may differ. No truncation/new batching/model fork/caps/kills.",
+  "final108_reader_requirement": "One literal reviewed dual-origin profile binds thisregistration/old5artifact+4closureseals/current4model import+publication receipts andactualnewvalidationrun/source. Preserve all2880rows/missing/null/adverseUNKNOWN. No result reclassification/refit/selectivecase removal.",
+  "design_ORIGINAL_GO": true,
+  "design_proof_sha256": "84f4cc9ac867213efd00e794d63c74e1d4306fe5a24f2f7b8779c1c482484f98",
+  "exact_source_execution_GO": false,
+  "parent_input_execution_GO": false,
+  "normal_CI_passed": false,
+  "OTel_remaining28_dispatch_GO": false,
+  "global_full_size_budget_fit": false,
+  "scientific_success_claimed": false,
+  "preexecution_conditions": "Separate ROOT+IND exactsource/retainedsameparent GO, allnormalCI and mergedsource hash match beforedispatch. NewactualAPIbinding BEFORE firstforecast/target; fourcurrentmodels/firstfreshvalidation. Allpreviousattempts/costs retained. Never select by scientific outcomes.",
+  "previous_observed_processing_run_id": 42396800647,
+  "previous_observed_processing_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+  "previous_failed_OBI_job": 128475804205,
+  "go_policy": {
+    "scope": "Bering children only, allfourarms",
+    "GOGC": "25",
+    "GOMEMLIMIT": null,
+    "GOMAXPROCS": null
+  },
+  "OTel_remaining_full8_dispatch_GO": false
+}
