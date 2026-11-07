@@ -103,3 +103,40 @@ scientific cells. Host variance and three repetitions limit
 causal precision. Do not pool them as physically paired measurements or claim
 overhead/cost superiority from this allocation change. Actual full-size phase
 and publication budgets still require review before the remaining 84 dispatches.
+
+## Prospective PC/DSB continuation after actual phase completion
+
+On 2026-11-07, PC/absent/9 (`42347353371`), DSB/absent/9 (`42347362261`)
+and the registered DSB/full/9 replacement (`42347366203`) each completed all
+thirteen isolated jobs, including all four validation/publication paths. Existing
+logs independently confirm 36 actual 4-CPU, approximately 16-GB, 360-minute host
+receipts. Together with the already reviewed PC/full/9 control, this is a basis
+for continuing the remaining fourteen PC/DSB blocks: absent/10, absent/11,
+partial/9, partial/10, partial/11, full/10 and full/11 for each system.
+
+The separate signed ORIGINAL design verdict is
+`docs/independent-v6-PCDSB-remaining56-staged-original-design-GO-20261107.json`,
+original signed SHA256
+`e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755`.
+Before dispatch, the literal fourteen identities require separate ROOT and
+independent exact-source execution approval in
+`docs/v6-PCDSB-remaining56-original-execution-GO-20261107.json`, with the actual
+resource-run references and complete implementation census. The original
+four-block approval and all original source/attempt lineages remain retained.
+
+Full-count partial-SDK processing has not yet been observed. Its resource risk
+is accepted prospectively for these scheduled 56 cells; neither universal fit
+nor a global full-size qualification is asserted. The remaining seven OTel
+blocks / 28 cells stay held for their unresolved technical model path. Existing
+eight incomplete OTel cells and every failed attempt remain evidence and cost;
+no OTel cell is removed from the final 108 or treated as a scientific negative
+because of runner shutdown. No favorable forecast or outcome was used to
+select this execution order, and the newly completed technical cycles do not
+establish scientific usefulness by themselves.
+
+All ten operations, fixed counts, repetitions, actual native/no-agent and three
+collector arms, equal-information direct and cheap context baselines, four-model
+barrier, two guest kernels, 8-paired/100-isolated disclosure, unavailable/adverse/
+UNKNOWN outcomes and complete preparation/failure/transfer/CI/review costs stay
+unchanged. No extra qualification cells, new predictor or reduced final scope
+are introduced. Unknown human/unmetered costs remain UNKNOWN.

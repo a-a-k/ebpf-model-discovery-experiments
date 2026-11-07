@@ -27,6 +27,15 @@ STAGED_BLOCKS = ['petclinic-absent-9', 'otel_demo-absent-9', 'deathstarbench-abs
 STAGED_APPROVAL = 'docs/v6-isolated-scientific-pilots-original-execution-GO-20261106.json'
 STAGED_DESIGN_SHA256 = 'e165146a357451831da40319c2581aba3a278b2f54c7b7b39cb5e3bd7ee1a400'
 DSB_RETRY_DESIGN_SHA256 = 'f1b20784d65ec028555c37ca02426de48db6099106e40a72499a5a6d9ba19c0b'
+PCDSB_BLOCKS = [
+    'petclinic-absent-10', 'petclinic-absent-11',
+    'petclinic-partial-9', 'petclinic-partial-10', 'petclinic-partial-11',
+    'petclinic-full-10', 'petclinic-full-11',
+    'deathstarbench-absent-10', 'deathstarbench-absent-11',
+    'deathstarbench-partial-9', 'deathstarbench-partial-10', 'deathstarbench-partial-11',
+    'deathstarbench-full-10', 'deathstarbench-full-11']
+PCDSB_APPROVAL = 'docs/v6-PCDSB-remaining56-original-execution-GO-20261107.json'
+PCDSB_DESIGN_SHA256 = 'e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755'
 DSB_ORIGINAL = {'run_id': 42267262342, 'source': '9d6414e8824331d368d1732a15200cdad691350b',
     'retained_training_artifacts': [
         {'collector': 'none', 'id': 13536919189, 'bytes': 4388197895,
@@ -43,6 +52,21 @@ def gate(args):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('isolated-arm execution is repository Actions only')
     identity = f'{args.system}-{args.mode}-{args.repetition}'
+    if args.stage == 'main' and identity in PCDSB_BLOCKS:
+        approved = b.read(b.repo() / PCDSB_APPROVAL)
+        if (not all(approved.get(k) is True for k in ('original_source_execution_GO',
+                'root_original_GO', 'independent_original_GO', 'original_scientific_rollout_GO',
+                'original108_scope_retained', 'partial_unknown_budget_risk_accepted'))
+                or approved.get('blocks') != PCDSB_BLOCKS
+                or approved.get('allocation_regime') != REGIME
+                or approved.get('full_size_phase_budgets_qualified') is not False
+                or approved.get('partial_full_count_budget_observed') is not False
+                or approved.get('OTel_remaining28_dispatch_GO') is not False
+                or approved.get('rollout_design_GO_sha256') != PCDSB_DESIGN_SHA256
+                or approved.get('actual_resource_runs') != [42267236483, 42347353371, 42347362261, 42347366203]
+                or approved.get('implementation_sha256') != b.implementation_hashes()):
+            raise ValueError('exact PC/DSB remaining56 prospective source approval required')
+        return
     if args.stage != 'main' or identity not in STAGED_BLOCKS:
         return b.gate(args.stage)
     approved = b.read(b.repo() / STAGED_APPROVAL)
