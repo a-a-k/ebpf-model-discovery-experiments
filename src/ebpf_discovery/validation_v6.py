@@ -49,7 +49,7 @@ def require_forecast(root, system, mode, repetition, collector, *, smoke=None, s
     return saved
 
 
-def require_block_freeze(roots):
+def require_block_freeze(roots, *, allocation=None):
     """The workflow calls this for ALL four arms before starting validation."""
     saved = []
     for root in roots:
@@ -58,13 +58,17 @@ def require_block_freeze(roots):
                                       metadata['seed'], metadata['collector']))
     if len(saved) != 4 or {s['case']['collector'] for s in saved} != set(COLLECTORS):
         raise ValueError('all four fresh runtime arms must be frozen before targets')
+    if allocation is not None:
+        from .isolated_arm_v6 import verify_allocation
+        verify_allocation(roots, saved, allocation)
     identities = {(s['case']['system'], s['case']['mode'], s['case']['seed'], s['case']['smoke'],
                    s['case'].get('stage'), s['case'].get('blueprint_sha256'),
-                   s['case'].get('run_id'), s['case'].get('runner_boot_id'))
+                   s['case'].get('run_id'), s['case'].get('runner_boot_id') if allocation is None else None)
                   for s in saved}
     if len(identities) != 1:
         raise ValueError('models do not form one fresh paired block')
     return {'study': STUDY, 'all_four_frozen_before_targets': True,
+            **({'allocation': allocation} if allocation is not None else {}),
             'verified_ns': time.time_ns(), 'models': [
                 {'case': s['case'], 'forecast_manifest_sha256': digest(Path(p) / 'forecast-saved.json')}
                 for p, s in zip(roots, saved)]}
@@ -131,7 +135,7 @@ def classify(frozen, validation, saved):
         connection.close()
 
 
-def evaluate(frozen, validation):
+def evaluate(frozen, validation, *, allocation=None):
     frozen, validation = Path(frozen).resolve(), Path(validation).resolve()
     from .capture_checks_v6 import verify_capture
     closed = verify_capture(validation, 'validation')
@@ -143,8 +147,8 @@ def evaluate(frozen, validation):
     if status.get('blueprint_sha256') != saved['case'].get('blueprint_sha256'):
         raise ValueError('training and validation blueprints differ')
     receipt = read(validation / 'block-freeze-verified-before-capture.json')
-    current = require_block_freeze([frozen.parent / collector for collector in COLLECTORS])
-    if (receipt.get('models') != current['models']
+    current = require_block_freeze([frozen.parent / collector for collector in COLLECTORS], allocation=allocation)
+    if (receipt.get('models') != current['models'] or receipt.get('allocation') != current.get('allocation')
             or receipt.get('all_four_frozen_before_targets') is not True
             or receipt.get('verified_ns', status['started_ns']) >= status['started_ns']):
         raise ValueError('missing or inconsistent four-arm freeze before validation capture')
