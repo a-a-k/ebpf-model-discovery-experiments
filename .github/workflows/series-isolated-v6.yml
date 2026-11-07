@@ -666,7 +666,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
-          work/case/model-host-resources.jsonl
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -785,7 +785,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
-          work/case/model-host-resources.jsonl
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -904,7 +904,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
-          work/case/model-host-resources.jsonl
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
@@ -1023,7 +1023,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
-          work/case/model-host-resources.jsonl
+          work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
         include-hidden-files: true
