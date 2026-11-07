@@ -55,6 +55,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -153,6 +154,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -258,6 +260,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -363,6 +366,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -468,6 +472,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -571,6 +576,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -688,6 +694,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -805,6 +812,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -922,6 +930,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -1047,6 +1056,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -1158,6 +1168,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -1269,6 +1280,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
@@ -1380,6 +1392,7 @@ jobs:
           tests
           pyproject.toml
           README.md
+          AGENTS.md
         sparse-checkout-cone-mode: false
     - uses: actions/setup-python@v5
       with:
