@@ -1,0 +1,68 @@
+{
+  "registered_utc": "2026-11-07T17:15:39.381157+00:00",
+  "scope": "Prospective replacement processing and first fresh validation of EXACTfour original OTel/full/9 cells within existing108",
+  "cell_keys": [
+    [
+      "otel_demo",
+      "full",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "deepflow"
+    ]
+  ],
+  "original_capture_run_id": 42267248120,
+  "original_capture_source": "9d6414e8824331d368d1732a15200cdad691350b",
+  "original_closure_sha256_by_collector": {
+    "none": "2351f563f553abed4f1affe7e6b17879770d711810506d5af4623a4654ce7453",
+    "obi": "74376c91aa6c51c2098c34a8fb84d4d8224f03e36010ffbfb8bd480c2cfeb828",
+    "coroot": "f6cca913760edf874d7d3b7ba0c352c300aec21f30e71f2382b80ad2f53221ac",
+    "deepflow": "0ed7599481ee1ab525c05c7b905310e44111cefbea031e1835b98bfc9a5bbec0"
+  },
+  "original_common_seals": {
+    "parent_plan_sha256": "f8b4332fb6515fe3a1920236db59a9245b715a26d2f1f71fb02f791c642cb998",
+    "shared_sha256": "b32b95a5bcb04226b4cbfa90dc31d854cb28c84308ebbf20775e7da0ffe9e8b5",
+    "golden_sha256": "756af9260d9785d7cdc935e710a91edc5b3810a61bce175f5a2fb0d41f30b029",
+    "blueprint_sha256": "2a7b7841cd3e7492a4b2d75c499cb81f8a2a383b3ff6574a3208811bd13e8556"
+  },
+  "planned_existing_workflow": ".github/workflows/qualification-replay-v6.yml",
+  "planned_operation": "replay",
+  "planned_parent_record": "docs/v6-qualification-parent-otel_demo-full9-fullcounts-replay-20261107.json",
+  "new_execution_run_id": "Assigned by GitHub only after separately approved dispatch; bind exactAPI immediately, beforeforecasts/targets",
+  "dual_origin_rule": "Training case remains original9d/42267248120. Actualprocessing+modelartifactAPI andvalidation case use genuine NEW workflowrun/source. All4currentmodels, no old2modelmix and no spoofedGITHUB_SHA/APIorigin.",
+  "four_model_barrier": true,
+  "all_four_current_models_included_irrespective_of_support_or_outcomes": true,
+  "technical_failure_retries_only": true,
+  "old_forecasts_outputs_failures_retained": true,
+  "new_training_capture": false,
+  "new_first_validation_required_after_all_four_forecasts": true,
+  "original108_and_all10ops_baselines_retained": true,
+  "allocation": "Original4celltraining pairedhost; fresh4armvalidation pairedhost; whole108still8paired/100isolated",
+  "observer": "Fixed30s host-only read-only body-free memory/PSI/ownedPID+starttime/RSS/disk andavailablekernel/HCAstopcategory samples tostdout+ownedlog, same all4. No modelargs/input/Go/CPU/RAMcaps/signals/retries changed. Unknowntelemetry/causes remainUNKNOWN. Observer/repeatedprocessing/allprep/CI/transfer/review/failedcosts retained, unknownnot0.",
+  "final108_reader_requirement": "One literal reviewed dual-origin profile binds thisregistration/old5artifact+4closureseals/current4model import+publication receipts andactualnewvalidationrun/source. Preserve all2880rows/missing/null/adverseUNKNOWN. No result reclassification/refit/selectivecase removal.",
+  "design_ORIGINAL_GO": true,
+  "design_proof_sha256": "5f7790513e2e68c5cbec7a98728d6a8fcd62299f014d1212f15ec9a0e0ab912d",
+  "exact_source_execution_GO": false,
+  "parent_input_execution_GO": false,
+  "normal_CI_passed": false,
+  "OTel_remaining28_dispatch_GO": false,
+  "global_full_size_budget_fit": false,
+  "scientific_success_claimed": false,
+  "preexecution_conditions": "Separate ROOT+IND actual retained-parent-input+exactsource GO andnormalCI beforedispatch; literal14PCDSB/currentOTelabsattempts untouched."
+}
