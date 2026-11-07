@@ -199,6 +199,7 @@ def model(root):
     from .store_v5 import ObservationStoreV5
     from .toolchain_v5 import Toolchain
     from .bering_v4 import child_go_environment
+    from .resources_v6 import MODEL_SWAP_BYTES, prepare_model_swap
     root = Path(root).resolve()
     if (root / 'forecast-saved.json').exists():
         raise ValueError('a frozen model must not be recomputed')
@@ -206,10 +207,12 @@ def model(root):
                   'runner_boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
                   'started_ns': time.time_ns(),
                   'bering_child_go_environment': dict(BERING_CHILD_GO_ENV),
+                  'additional_model_swap_file_bytes': MODEL_SWAP_BYTES,
                   'scope': 'Actual offline processing execution; original capture identity remains unchanged'}
     write_json(root / 'processing-execution.json', processing)
     from .resources_v6 import prepare
     prepare(root / 'model-worker-resources.json')
+    prepare_model_swap(root / 'model-swap-resources.json')
     from .capture_checks_v6 import verify_capture
     closed = verify_capture(root, 'training')
     status = closed['status']
@@ -252,6 +255,7 @@ def model(root):
         complete_processing = file_hashes(root, ('toolchain',))
         frozen = portable_outputs(root, complete_processing)
         frozen['processing-execution.json'] = digest(root / 'processing-execution.json')
+        frozen['model-swap-resources.json'] = digest(root / 'model-swap-resources.json')
         for name in ('supplied-service-aliases-training.json',
                      'supplied-service-alias-admission-training.json'):
             relative = 'runtime-identity-v5/' + name
