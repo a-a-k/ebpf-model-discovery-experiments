@@ -407,6 +407,14 @@ jobs:
           work/block-controller-cost.jsonl
           work/shared-restored.json
           work/model-package-imports.json
+          work/models/none/forecast-saved.json
+          work/models/obi/forecast-saved.json
+          work/models/coroot/forecast-saved.json
+          work/models/deepflow/forecast-saved.json
+          work/models/none/v6-training-publication-restored.json
+          work/models/obi/v6-training-publication-restored.json
+          work/models/coroot/v6-training-publication-restored.json
+          work/models/deepflow/v6-training-publication-restored.json
           work/qualification-parent-block-plan.json
           work/qualification-replay-import.json
           work/qualification-replay-cost.jsonl
