@@ -175,10 +175,14 @@ def actual_artifact(value):
     return api
 
 
-def fetch(value, destination, expected_names):
+def fetch(value, destination, expected_names, *, original_parent=None):
     """One exact current-run publication, whole ZIP SHA and every member CRC."""
     value = claim(value)
-    actual = actual_artifact(value)
+    if original_parent is None:
+        actual = actual_artifact(value)
+    else:
+        from .main_continuation_v6 import original_artifact
+        actual = original_artifact(original_parent, value)
     destination.mkdir(parents=True)
     predownload = b.capacity(destination, actual['size_in_bytes'])
     archive = destination / 'delivery.zip'
@@ -248,6 +252,9 @@ def release_package(path, package):
 
 
 def import_shared(root, args):
+    if getattr(args, 'main_parent_record', None):
+        from .main_continuation_v6 import import_shared as original_shared
+        return original_shared(root, args)
     wanted = planned(args)
     folder = root / 'shared-input'
     receipt = fetch(dependency(os.environ['V6_SHARED_ARTIFACT']), folder,
@@ -283,6 +290,9 @@ def import_shared(root, args):
 
 
 def verify_allocation(roots, saved, allocation):
+    if allocation.get('main_closed_input_parent'):
+        from .main_continuation_v6 import verify_allocation as original_allocation
+        return original_allocation(roots, saved, allocation)
     """Explicit alternate allocation; the ordinary paired predicate stays strict."""
     plan = allocation.get('plan') or {}
     expected = block(plan.get('system'), plan.get('mode'), plan.get('repetition'))
@@ -350,6 +360,9 @@ def verify_allocation(roots, saved, allocation):
 
 
 def import_models(root, plan):
+    if plan.get('main_closed_input_parent'):
+        from .main_continuation_v6 import import_models as original_models
+        return original_models(root, plan)
     jobs = json.loads(os.environ['V6_MODEL_ARTIFACTS'])
     upstream = {}
     for slot in range(4):

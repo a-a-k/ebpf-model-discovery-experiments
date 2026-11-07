@@ -31,6 +31,7 @@ def implementation_hashes():
         '.github/workflows/series-v6.yml', '.github/workflows/checks.yml',
         '.github/workflows/qualification-replay-v6.yml',
         '.github/workflows/series-isolated-v6.yml',
+        '.github/workflows/main-continuation-v6.yml',
         'docs/PROTOCOL_V6.md', 'docs/PROTOCOL_V6_ISOLATED_ARMS.md', 'AGENTS.md', 'pyproject.toml'], cwd=repo())
     names = sorted(set(listed.decode('utf8').split('\0')) - {''})
     return {name: sha(repo() / name) for name in names}

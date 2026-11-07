@@ -1,0 +1,299 @@
+{
+  "schema": "v6-main-closed-input-parent-v1",
+  "study": "clean-restart-v6",
+  "system": "otel_demo",
+  "mode": "partial",
+  "repetition": 10,
+  "stage": "main",
+  "smoke": false,
+  "allocation_regime": "randomized-between-host-arms-v6",
+  "parent_run_id": 42401608466,
+  "parent_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+  "parent_plan": {
+    "study": "clean-restart-v6",
+    "system": "otel_demo",
+    "mode": "partial",
+    "repetition": 10,
+    "block_id": "otel_demo-partial-10",
+    "arm_orders": {
+      "training": [
+        "none",
+        "obi",
+        "coroot",
+        "deepflow"
+      ],
+      "validation": [
+        "deepflow",
+        "obi",
+        "none",
+        "coroot"
+      ]
+    },
+    "cells": [
+      {
+        "collector": "none",
+        "cell_id": "otel_demo-partial-10-none"
+      },
+      {
+        "collector": "obi",
+        "cell_id": "otel_demo-partial-10-obi"
+      },
+      {
+        "collector": "coroot",
+        "cell_id": "otel_demo-partial-10-coroot"
+      },
+      {
+        "collector": "deepflow",
+        "cell_id": "otel_demo-partial-10-deepflow"
+      }
+    ],
+    "stage": "main",
+    "smoke": false,
+    "allocation_regime": "randomized-between-host-arms-v6",
+    "golden_sha256": "53227fdf35d9922892932a9fcb51cec9e70c8fe2bfdd6bdf5cfa4959a8bbc37a",
+    "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+    "run_id": 42401608466,
+    "source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+  },
+  "parent_plan_sha256": "fcbdf44a128e814fc7e9b1b317f5fc4fbc5f541a5d41564b2a8037d761c2c3ae",
+  "shared_sha256": "b817c552bca6372006ae047e91d114bdb4a991e71f8f2c68c41c8036e41d802c",
+  "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+  "golden_sha256": "53227fdf35d9922892932a9fcb51cec9e70c8fe2bfdd6bdf5cfa4959a8bbc37a",
+  "shared_artifact": {
+    "id": 13586198325,
+    "name": "v6-isolated-shared-42401608466-attempt1",
+    "size_in_bytes": 3735535455,
+    "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586198325",
+    "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586198325/zip",
+    "expired": false,
+    "created_at": "2026-11-07T18:52:25Z",
+    "expires_at": "2027-02-05T18:30:21Z",
+    "updated_at": "2026-11-07T18:52:25Z",
+    "digest": "sha256:b867f040331eb3ccdc0cb612b375ca4562edf12f3b88be9a652516d297b1c6fa",
+    "workflow_run": {
+      "id": 42401608466,
+      "repository_id": 1434356471,
+      "head_repository_id": 1434356471,
+      "head_branch": "main",
+      "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    }
+  },
+  "training_artifacts": {
+    "none": {
+      "id": 13586939226,
+      "name": "v6-isolated-training-slot0-42401608466-attempt1",
+      "size_in_bytes": 184342128,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586939226",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586939226/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:26:30Z",
+      "expires_at": "2027-02-05T18:30:21Z",
+      "updated_at": "2026-11-07T19:26:30Z",
+      "digest": "sha256:f209ad660abf736d16cbc5bd99838e3f24edb803256080d2c1ad7762dce1b206",
+      "workflow_run": {
+        "id": 42401608466,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "obi": {
+      "id": 13587388281,
+      "name": "v6-isolated-training-slot1-42401608466-attempt1",
+      "size_in_bytes": 384794388,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587388281",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587388281/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:27:12Z",
+      "expires_at": "2027-02-05T18:30:21Z",
+      "updated_at": "2026-11-07T19:27:12Z",
+      "digest": "sha256:e084a360494daf620808ea77cc84f26409aca491fe08f524d0b3683f0643be6f",
+      "workflow_run": {
+        "id": 42401608466,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "coroot": {
+      "id": 13587781594,
+      "name": "v6-isolated-training-slot2-42401608466-attempt1",
+      "size_in_bytes": 229955802,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587781594",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587781594/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:27:41Z",
+      "expires_at": "2027-02-05T18:30:21Z",
+      "updated_at": "2026-11-07T19:27:41Z",
+      "digest": "sha256:0216c9b38455025d5176eec60b5e26f103350eb250366ed6c3398dd13efba872",
+      "workflow_run": {
+        "id": 42401608466,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "deepflow": {
+      "id": 13588141792,
+      "name": "v6-isolated-training-slot3-42401608466-attempt1",
+      "size_in_bytes": 976486074,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13588141792",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13588141792/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:45:18Z",
+      "expires_at": "2027-02-05T18:30:21Z",
+      "updated_at": "2026-11-07T19:45:18Z",
+      "digest": "sha256:df53242e30c00496e38572611d80e2f62a62bfbd73c8ac009052e8007f2dfaae",
+      "workflow_run": {
+        "id": 42401608466,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    }
+  },
+  "closed_input_sha256_by_collector": {
+    "none": "8b5a868f78c882f98c6a34297d1f224d5804dde98b0690a42dba1afde297a73a",
+    "obi": "b102c1d16b223c5e36f155f38f8e9b89162458a01e4eedd0a8c9285bde9ac13c",
+    "coroot": "b97d497bf5ca8e3ddcef5fc30ce4542e7428aeb6de104d3e7760162e487f4c8a",
+    "deepflow": "93d447cee7323f9b9722b97e5863228483b98503498100a08e76a1e8f2c1ba1d"
+  },
+  "capture_case_by_collector": {
+    "none": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 10,
+      "collector": "none",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401608466",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "81f38214-a633-4898-ab05-fd378d42b598",
+      "started_ns": 1794077823640543082,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training0",
+        "attempt": 1,
+        "slot": 0
+      },
+      "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+      "ended_ns": 1794079566618553187,
+      "cleanup_errors": []
+    },
+    "obi": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 10,
+      "collector": "obi",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401608466",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "e02a0e94-2123-48e2-9d62-8eaea3807de1",
+      "started_ns": 1794077905624888052,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training1",
+        "attempt": 1,
+        "slot": 1
+      },
+      "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+      "ended_ns": 1794079602804964745,
+      "cleanup_errors": []
+    },
+    "coroot": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 10,
+      "collector": "coroot",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401608466",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "aeee2cf4-c620-434e-9325-3228d7303ad2",
+      "started_ns": 1794077893790757118,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training2",
+        "attempt": 1,
+        "slot": 2
+      },
+      "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+      "ended_ns": 1794079630974909055,
+      "cleanup_errors": []
+    },
+    "deepflow": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 10,
+      "collector": "deepflow",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401608466",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "aee0307c-5ee0-41cb-adb5-86ca33d5828b",
+      "started_ns": 1794077903389952152,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training3",
+        "attempt": 1,
+        "slot": 3
+      },
+      "blueprint_sha256": "3f82cbf866a06d2a366cf640c56d6706045ab3ee9e9942539d1bfb91bf2a4588",
+      "ended_ns": 1794080557024209075,
+      "cleanup_errors": []
+    }
+  },
+  "capture_archive_sha256_by_collector": {
+    "none": "969c9306253a099a123126ca137d71efc81589cdb1816d508c40ba013e3d5a90",
+    "obi": "c7e0bd4c7113b9d3367a239c147d2a73716e8002c2ab4aac4f96994125dd1555",
+    "coroot": "f8fbc4db93e93c58e1a3d025294dee50f6a55853f641117cf0f2e68743c81049",
+    "deepflow": "d67489e96e88f61858ceb357605b457ac96845089e7e30984fb8ad790e0be1d1"
+  },
+  "capture_inventory_sha256_by_collector": {
+    "none": "c33dca99b373cb88e200f869a8f0b2035c41457d1acb4f81df0d73f19238d67f",
+    "obi": "5f7790cba2fd6359f407f398616d75baaa310a474a704fd3fb3155d9e1ca68c9",
+    "coroot": "45211d511817cb8a4edf6a9f2a148fddcc25908e3d0a57f68261b29b0caf87ea",
+    "deepflow": "6dac82232b01aed56586a05cc5e78606bd9781b572dfa35a4129627c6647f358"
+  },
+  "root_parent_input_GO": true,
+  "independent_parent_input_GO": true,
+  "root_original_execution_GO": false,
+  "independent_original_execution_GO": false,
+  "implementation_sha256": {},
+  "prospective_registration": "docs/v6-OTel-partial3-closed-input-processing-replacement-registration-20261107.json",
+  "design_original_GO_sha256": "38a6db7f01013b3bb4c7a05d8c90a6e49541e15d32a51aba2050a62fdd15e84f",
+  "processing_profile": {
+    "bering_child_go_environment": {
+      "GOGC": "25"
+    },
+    "additional_model_swap_file_bytes": 17179869184
+  },
+  "all_previous_outputs_costs_and_adverse_UNKNOWN_retained": true,
+  "new_training_or_qualification_traffic": false,
+  "whole_ZIP_or_tar_locally_verified": false,
+  "inspection_kind": "Manualretainedpublisherfullarchive/inventoryguards+selectedoriginalJSONCRC/SHAreview; notnewheavyinspection. Mandatorycompletecloudarchive/inventory/closureverificationbeforemodelandtargets remainsrequired.",
+  "registered_before_processing_ns": 1794082337135460000,
+  "independent_parent_input_proof": "docs/independent-v6-OTel-partial3-exact-original-parent-input-reuse-GO-20261107.json",
+  "independent_parent_input_proof_SHA256": "1e37280f8050338f09f2e96e5fc4dbdd553ea1b972964f3e7aa0b3c07a8f5705"
+}

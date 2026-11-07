@@ -68,6 +68,18 @@ no-symlink creation; record before/after swap/disk and setup CPU/wall costs.
 The changed virtual-memory profile and paging/time risks remain explicit; no
 new qualification traffic or universal resource-fit claim follows from this.
 
+The three OTel partial/9, partial/10 and partial/11 MAIN blocks subsequently
+failed model processing under memory pressure on source 5e622. Their twelve
+completed capture publications remain the scientific inputs. The exact-parent
+MAIN continuation reuses those unchanged bytes, computes all four models with
+the same GC25/model-only swap policy, and uses four fresh isolated validation
+runners after the common model barrier. Preserve old case/reference/plan bytes
+and report genuine new processing/validation origins; never cast MAIN inputs as
+qualification or spoof GITHUB_SHA. The literal three-parent gate, actual input
+review, exact source review, CI and prospective run binding are required. Keep
+the default isolated and qualification guards strict, all earlier outputs/costs
+and adverse/UNKNOWN outcomes, and the original 8 paired / 100 isolated allocation.
+
 This repository contains experiments and their research README. Compute, real application traffic, VM launches, model fitting, simulations and results processing run in GitHub Actions. Local work is editing, static checks and focused unit checks only.
 
 The user reiterated on 2026-10-30: reuse the existing collector -> Bering -> Sheaft
