@@ -1,7 +1,7 @@
 {
   "registered_utc": "2026-11-07T06:21:08.543043+00:00",
   "state": "ORIGINAL_EXACT_SOURCE_EXECUTION_GO_EXACT_FOUR_BLOCKS_ONLY",
-  "source_reference": "4031d59824f1f16e94a6b3cd8fdfa949259e64a0",
+  "source_reference": "cc51c9e5bac531f2e8bb27ef478d1c4afac92465",
   "original_source_execution_GO": true,
   "root_original_GO": true,
   "independent_original_GO": true,
@@ -67,7 +67,7 @@
   "implementation_sha256": {
     ".github/workflows/checks.yml": "ec4a9744f342f55f53d4712cc8dfd0b4745c7eef65282d9890f67fec7dccc404",
     ".github/workflows/qualification-replay-v6.yml": "b0c9db9dbea5d58a1b9eec6391f568bc9f946ff01c722e269ad48f20127587fa",
-    ".github/workflows/series-isolated-v6.yml": "fc4e82585f5529994925b72305d469a0d1cc89de13b3a1886c7dde2f50be2670",
+    ".github/workflows/series-isolated-v6.yml": "7195b50f7981a5213e9a7afd74cd1f24b0458e333645740e1939657505a81c75",
     ".github/workflows/series-v6.yml": "437dd5da13b55a45113c43e295e6d52b08d854900bb3bf2f27ce6abb79f7ffc7",
     "docs/PROTOCOL_V6.md": "40b3a9a1b391063daaf9377971c627cae43749d62c91d51b210c0e44c2a13171",
     "docs/PROTOCOL_V6_ISOLATED_ARMS.md": "952d286d533e27068180b12696b7286128881e3cb6fca4f6c94c974d13fe52c6",
@@ -263,11 +263,15 @@
   "activated_utc": "2026-11-07T06:23:01.165158+00:00",
   "independent_source_review": {
     "reviewer": "/root/ebpf_actual7_skeptic",
-    "source": "4031d59824f1f16e94a6b3cd8fdfa949259e64a0",
+    "source": "cc51c9e5bac531f2e8bb27ef478d1c4afac92465",
     "explicit_pre_execution_message": "Explicit ORIGINAL exact-source/execution GO for final4031d59824f1f16e94a6b3cd8fdfa949259e64a0, bounded to four staged scientific blocks only, after normal CI +separate exact approval record. Independently verified3f3f350 and073dbdb trees identical;4031 changes only corrected publication-limit prose. Final8 GitLF hashes bound,13jobs/DAG/all4model barrier/exactID+builtinretry/source+attempt lineage/no positivity admission checked. Actual full-size budget fit/scientificsuccess false; other21/84 dispatch held.",
     "source_GO_given_before_activation": true,
     "CI_condition": "Dispatch only after exact finalhead normal CI PASS",
     "signed_companion_record": "docs/independent-v6-isolated-four-blocks-source-original-GO-BRIEF-20261107.json",
-    "signed_companion_original_sha256": "c5346f2c6f18f228161e34702b322017d61c99500ebf0f54fabd767966167e8c"
-  }
+    "signed_companion_original_sha256": "c5346f2c6f18f228161e34702b322017d61c99500ebf0f54fabd767966167e8c",
+    "base_review_source": "4031d59824f1f16e94a6b3cd8fdfa949259e64a0",
+    "literal_checkout_amendment_original_GO": "Explicit ORIGINAL source amendment GO for cc51c9e5bac531f2e8bb27ef478d1c4afac92465. All13 checkout lists contain exactly one added AGENTS.md, filtering that literal line gives identical parsed YAML in every other field; only committed path is workflow,13insertions/0deletions. No method/DAG/outputs/admission/cost change."
+  },
+  "source_amendment_activated_utc": "2026-11-07T06:28:43.279756+00:00",
+  "checkout_packaging_verified": "All181 actual runtime selector paths are included by every13 worker sparse patterns; first packaging omission caught before any new job dispatch."
 }
