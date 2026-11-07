@@ -27,6 +27,7 @@ def test_model_swap_never_runs_outside_actions(monkeypatch, tmp_path):
 
 def test_existing_owned_name_is_preserved_without_provisioning(monkeypatch, tmp_path):
     work = setup_owned_work(monkeypatch, tmp_path)
+    monkeypatch.setattr(resources, 'model_memory_state', lambda _: {'disk_free_bytes': 64 * 1024**3})
     path = work / 'v6-model.swap'
     path.write_bytes(b'preserve existing bytes')
     with pytest.raises(FileExistsError):
@@ -42,6 +43,12 @@ def test_swap_reserves_disk_for_existing_archives_before_creating_file(monkeypat
     with pytest.raises(OSError, match='archive/staging reserve'):
         resources.prepare_model_swap(tmp_path / 'receipt.json')
     assert not (work / 'v6-model.swap').exists()
+    import json
+    proof = json.loads((tmp_path / 'receipt.json').read_text())
+    assert proof['status'] == 'failed' and proof['error_type'] == 'OSError'
+    assert proof['before']['disk_free_bytes'] == resources.MODEL_SWAP_BYTES + RESERVE - 1
+    assert proof['ended_ns'] >= proof['started_ns']
+    assert proof['setup_parent_CPU_seconds'] >= 0 and proof['commands'] == []
 
 
 @pytest.mark.skipif(sys.platform != 'linux' or os.environ.get('GITHUB_ACTIONS') != 'true',

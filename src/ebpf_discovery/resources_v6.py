@@ -91,18 +91,18 @@ def prepare_model_swap(report):
         raise ValueError('model swap parent must not contain symlinks')
     work.mkdir(exist_ok=True)
     path = work / 'v6-model.swap'
-    if path.exists() or path.is_symlink():
-        raise FileExistsError('model swap path already exists; never overwrite or reuse it')
-    before = model_memory_state(work)
-    if before['disk_free_bytes'] < MODEL_SWAP_BYTES + RESERVE:
-        raise OSError('model swap requires its full size plus the existing archive/staging reserve')
     started, cpu = time.time_ns(), os.times()
+    before = model_memory_state(work)
     proof = {'started_ns': started, 'status': 'preparing', 'path': str(path),
              'additional_swap_file_bytes': MODEL_SWAP_BYTES, 'existing_staging_reserve_bytes': RESERVE,
              'before': before, 'commands': [], 'physical_RAM_CPU_or_model_input_changed': False,
              'scope': 'Model only; identical all four arms; paging and setup costs retained'}
     write_json(report, proof)
     try:
+        if path.exists() or path.is_symlink():
+            raise FileExistsError('model swap path already exists; never overwrite or reuse it')
+        if before['disk_free_bytes'] < MODEL_SWAP_BYTES + RESERVE:
+            raise OSError('model swap requires its full size plus the existing archive/staging reserve')
         # Exclusive creation and actual writes avoid overwriting a file or creating holes.
         fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
         with os.fdopen(fd, 'wb') as stream:
@@ -136,9 +136,9 @@ def prepare_model_swap(report):
         ended_cpu = os.times()
         proof.update(ended_ns=time.time_ns(),
                      wall_seconds=(time.time_ns() - started) / 1e9,
-                     setup_parent_CPU_seconds=ended_cpu.user + ended_cpu.system - cpu.user - cpu.system,
-                     setup_children_CPU_seconds=ended_cpu.children_user + ended_cpu.children_system
-                         - cpu.children_user - cpu.children_system)
+                     setup_parent_CPU_seconds=(ended_cpu.user - cpu.user) + (ended_cpu.system - cpu.system),
+                     setup_children_CPU_seconds=(ended_cpu.children_user - cpu.children_user)
+                         + (ended_cpu.children_system - cpu.children_system))
         write_json(report, proof)
     return proof
 
