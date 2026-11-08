@@ -27,6 +27,9 @@ unavailable forecasts, adverse results and unknown values remain in the results.
 The study does not assume that graph size or model availability demonstrates
 predictive usefulness.
 
+[Reviewed interim findings](docs/FINDINGS_V6.md) cover 80 completed cells; the
+remaining 28 OTel cells are required for the complete 108-cell study.
+
 ## Code and execution
 
 - [Study lifecycle](src/ebpf_discovery/study_v6.py): fresh capture, offline model

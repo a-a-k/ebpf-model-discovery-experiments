@@ -1,8 +1,7 @@
-# Agreed objective and completion criteria
+# Study objective and completion criteria
 
-Recorded at the user's explicit request on 2026-10-28. This document fixes the
-purpose of the work; the active iteration is [PROTOCOL_V5.md](PROTOCOL_V5.md),
-following the completed [iteration 4](PROTOCOL_V4.md).
+The active study follows [PROTOCOL_V6.md](PROTOCOL_V6.md) and its
+[allocation amendment](PROTOCOL_V6_ISOLATED_ARMS.md).
 The study is empirical. Positive results are not assumed.
 
 ## Primary objective
@@ -22,25 +21,30 @@ Native, eBPF and combined arms receive the same declared semantics and inventory
 Use native tracing as a source comparison and retain the strong direct
 contract/inventory baseline where applicable. Known mathematical equivalence is
 explicit; superiority over equivalent arithmetic is not required or claimed.
-Any usefulness or cost-advantage claim needs an external outcome and comparable
-complete costs. Missing human preparation costs are not zero.
+Feasibility and usefulness require checks against external outcomes. A separate
+cost or effort advantage claim requires comparable complete costs. Missing human
+preparation costs are not zero.
 
 ## Required empirical scope
 
 - DeathStarBench, OpenTelemetry Demo and Petclinic; all ten agreed operations.
-- Absent, partial and full native tracing; three repetitions. Iteration 4 completed
-  27 campaigns. Iteration 5 plans the same 27 cells for OBI, DeepFlow and Coroot:
-  81 main cells after 27 fixed smoke settings and repair of operation-class
-  fragmentation. New Relic is excluded by the user's explicit instruction;
-  it is not a blocked arm or a reason to request credentials. Earlier four-arm
-  goal/status descriptions are superseded by this correction.
-- Two Linux guests with separate kernels, replicas and calls across guests;
-  the shared physical Actions runner remains an explicit limitation.
+- Absent, partial and full SDK tracing; repetitions 9/10/11; four runtime
+  treatments: no eBPF agent, OBI, Coroot and DeepFlow. This defines 108 fresh
+  cells in 27 logical blocks. All ten operations are retained. New Relic is
+  outside the study scope. The historical 81-cell study remains separate.
+- The no-agent treatment is a real runtime control. Training and validation
+  use fresh separate deployments; all four forecasts in a logical block must
+  be frozen before any validation target. Eight cells retain physical pairing;
+  the other 100 use the registered allocation across separate workers.
+- Two Linux guests with separate kernels, replicas and calls across guests.
+  Each guest pair shares one physical Actions runner; the registered allocation
+  places most treatment arms on separate hosts.
 - Fresh predictions saved before independent validation traffic. Report each
   operation, source, tracing mode and repeat, including unknown and adverse results.
 - Compare errors, uncertainty, coverage and costs. There are no experimental
-  response deadlines, timestamp eligibility gates or arbitrary accuracy cutoffs.
-  Native application behavior and external platform limits are documented separately.
+  response deadlines, arbitrary time cutoffs or accuracy cutoffs. Mandatory
+  forecast-before-target ordering remains enforced. Native application behavior
+  and external platform limits are documented separately.
 
 ## Additional questions
 
@@ -59,8 +63,8 @@ complete costs. Missing human preparation costs are not zero.
 
 ## Product and repository boundaries
 
-The genuine Bering eBPF source, product releases/charts and related repository
-updates are required deliverables. Current published versions are Bering 1.3.1,
+The Bering eBPF source, product releases/charts and related repository
+updates are required deliverables. Historical published versions include Bering 1.3.1,
 Sheaft 1.3.2, stack 1.5.0 and reproduction 1.3.5; Procrustes and the OTel
 integration were updated. Earlier versions remain attributed to their original
 experiments. Product verification does not replace empirical work.
@@ -78,27 +82,20 @@ The work is complete when the agreed experiments have been executed and assessed
 technical failures have been repaired and retained in the history, and the
 repository contains reproducible code, workflows, captures, actual Bering models,
 Sheaft forecasts, independent outcomes, costs and generated tables/figures.
-An English research README must explain the design, actual results, limitations,
-reproduction and defensible conclusions without relying on this conversation.
+The research documentation must explain the design, actual results, limitations,
+reproduction and defensible conclusions from retained evidence.
 
 An independent reviewer must check implementation and claims against artifacts.
 A negative or unsupported finding is valid; it does not authorize substituting a
 weaker objective or expanding experiments to obtain a positive result. A remaining
 infrastructure blocker must be reported explicitly, not described as completion.
 
-## Working rules
-
-Continue autonomously through implementation, execution, diagnosis, reporting and
-review. A completed PR, passing test suite or queued workflow is an intermediate
-step. Keep the user informed. The current dialog's later personal Telegram
-AGENTS.md instruction supersedes the earlier no-Telegram preference: use its
-context mailbox for milestones and decision questions, keeping ordinary replies
-in the Codex dialog. The user's later instruction on 2026-11-01 prohibits
-Telegram messages for this work and takes precedence: keep communication here.
+## Execution
 
 Real application traffic, discovery, simulation and authoritative empirical
 calculations run in GitHub Actions. Local work is editing, static checks, focused
-unit fixtures and inspection of saved outputs. Preserve original evidence; do not
+unit fixtures and inspection of selected derived outputs and compact metadata.
+Preserve original evidence; do not
 invent missing edges or infer success from elapsed time.
 
 ## Iteration 4 measurement completion and publication
