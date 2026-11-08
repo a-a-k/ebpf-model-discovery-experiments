@@ -145,18 +145,61 @@ def stop_and_discard(root, label):
         vms(root, 'discard', label)
 
 
-def pack(root, destination, files, directories=()):
+class CompressedModelWriter:
+    """Preserve the disk reserve on every compressed portable-model write."""
+    def __init__(self, stream, folder, guard):
+        self.stream, self.folder, self.guard = stream, folder, guard
+
+    def write(self, data):
+        free = shutil.disk_usage(self.folder).free
+        self.guard['minimum_free_before_write_bytes'] = min(self.guard['minimum_free_before_write_bytes'], free)
+        if free < len(data) + RESERVE:
+            raise OSError('compressed model write would cross the actual disk reserve')
+        count = self.stream.write(data)
+        if count != len(data):
+            raise OSError('incomplete compressed model write')
+        self.guard['compressed_bytes_written'] += count
+        return count
+
+    def tell(self):
+        return self.stream.tell()
+
+    def flush(self):
+        self.stream.flush()
+
+
+def pack(root, destination, files, directories=(), *, guard_compressed_writes=False):
     if destination.exists():
         raise FileExistsError('never replace a sealed v6 package')
     total = sum((root / name).stat().st_size for name in files)
-    guard = capacity(destination.parent, total + total // 100 + 8192 * (len(files) + len(directories)) + 10240)
-    with tarfile.open(destination, 'w:gz', compresslevel=1) as tar:
-        for name in sorted(directories):
-            tar.add(root / name, arcname=name, recursive=False)
-        for name in sorted(files):
-            if (root / name).is_symlink() or not (root / name).is_file():
-                raise ValueError('only regular files can enter a model/common package')
-            tar.add(root / name, arcname=name, recursive=False)
+    if guard_compressed_writes:
+        if (destination.name != 'model.tar.gz'
+                or not destination.resolve().is_relative_to((repo() / 'work').resolve())
+                or any(p.is_symlink() for p in (destination, *destination.parents))):
+            raise ValueError('compressed-write guard is only for the owned portable model archive')
+        guard = capacity(destination.parent, 0)
+        guard.update(budget='actual compressed writes', uncompressed_member_bytes=total,
+                     minimum_free_before_write_bytes=guard['free_bytes'], compressed_bytes_written=0)
+        stream = destination.open('xb', buffering=0)
+    else:
+        guard = capacity(destination.parent, total + total // 100 + 8192 * (len(files) + len(directories)) + 10240)
+        stream = None
+    try:
+        writer = CompressedModelWriter(stream, destination.parent, guard) if stream else None
+        with tarfile.open(destination, 'w:gz', fileobj=writer, compresslevel=1) as tar:
+            for name in sorted(directories):
+                tar.add(root / name, arcname=name, recursive=False)
+            for name in sorted(files):
+                if (root / name).is_symlink() or not (root / name).is_file():
+                    raise ValueError('only regular files can enter a model/common package')
+                tar.add(root / name, arcname=name, recursive=False)
+    finally:
+        if stream is not None:
+            stream.close()
+            guard['free_bytes_after_close'] = shutil.disk_usage(destination.parent).free
+            write_json(root / 'portable-model-write-guard.json', guard)
+    if guard_compressed_writes:
+        capacity(destination.parent, 0)
     write_json(destination.with_suffix(destination.suffix + '.json'), {
         'bytes': destination.stat().st_size, 'sha256': sha(destination),
         'prepack_actual_disk_guard': guard,
@@ -490,15 +533,15 @@ def package_model(args):
     paths = {p for p in paths if (root / p).is_file()}
     target = Path(args.out).resolve()
     target.parent.mkdir(parents=True, exist_ok=True)
-    pack(root, target, paths)
+    pack(root, target, paths, guard_compressed_writes=True)
+    verify_files(root, saved['sha256_by_path'])
+    capacity(target.parent, 0)
 
 
-def package_processing(args):
-    root = Path(args.root).resolve()
+def processing_paths(root):
     if (root / 'forecast-saved.json').is_file():
         saved = read(root / 'forecast-saved.json')
         files = saved['complete_processing_sha256_by_path']
-        verify_files(root, files)
         paths = set(files) | {'forecast-saved.json'}
     else:
         paths = {p.relative_to(root).as_posix() for p in (root / 'toolchain').rglob('*') if p.is_file()}
@@ -508,18 +551,106 @@ def package_processing(args):
                  'observation-index.sqlite-shm', 'index-training.json',
                  'model-worker-resources.json', 'commands.jsonl', 'v6-block-reference.json',
                  'processing-execution.json',
+                 'model-swap-resources.json',
                  'v6-training-publication-restored.json')
                  if (root / name).is_file())
+    return paths
+
+
+def publication_path(root, name):
+    relative = Path(name)
+    if (relative.is_absolute() or '..' in relative.parts or not relative.parts
+            or re.search(r'[\\:"<>|*?\r\n]', name)):
+        raise ValueError('processing path is incompatible with the artifact uploader')
+    path = root / relative
+    if any(p.is_symlink() for p in (path, *path.parents)) or not path.is_file():
+        raise ValueError('processing publications require regular files without symlinks')
+    return path
+
+
+def processing_publication_preflight(root):
+    for path in root.rglob('*'):
+        if not path.is_dir():
+            publication_path(root, path.relative_to(root).as_posix())
+
+
+def package_processing(args):
+    """Stage hard links for streaming upload, retaining bytes and reconstruction metadata."""
+    root = Path(args.root).resolve()
+    target = Path(args.out).absolute()
+    work = (repo() / 'work').resolve()
+    if (target.name != 'processing-publication' or target.exists()
+            or any(p.is_symlink() for p in (target, *target.parents))
+            or not target.resolve().is_relative_to(work)
+            or target.resolve().is_relative_to(root) or not target.parent.is_dir()):
+        raise ValueError('processing staging requires a new owned sibling directory')
+    paths = processing_paths(root)
     if not paths:
-        return
-    target = Path(args.out).resolve()
-    target.parent.mkdir(parents=True, exist_ok=True)
-    pack(root, target, paths)
+        raise ValueError('no processing files to publish')
+    capacity(target.parent, 0)
+    if root.stat().st_dev != target.parent.stat().st_dev:
+        raise ValueError('processing hard links require the same filesystem')
+    target.mkdir()
+    records = {}
+    for name in sorted(paths):
+        source = publication_path(root, name)
+        before = source.stat()
+        record = {'bytes': before.st_size, 'sha256': sha(source),
+                  'mode': stat.S_IMODE(before.st_mode), 'mtime_ns': before.st_mtime_ns,
+                  'device': before.st_dev, 'inode': before.st_ino}
+        destination = target / 'files' / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        os.link(source, destination, follow_symlinks=False)
+        records[name] = record
+    write_json(target / 'processing-manifest.json', {
+        'schema': 'v6-direct-processing-publication-v1', 'files': records,
+        'scope': 'COMPLETE_FROZEN' if (root / 'forecast-saved.json').is_file() else 'PARTIAL_UNFROZEN',
+        'source_root': str(root), 'created_ns': time.time_ns(),
+        'storage': 'streamed ZIP of hard links; restore original mode/mtime from this manifest',
+        'execution': {'run_id': os.environ.get('GITHUB_RUN_ID'), 'source': os.environ.get('GITHUB_SHA')}})
+    manifest_sha = sha(target / 'processing-manifest.json')
+    verify_processing_publication(args, manifest_sha=manifest_sha)
+    if os.environ.get('GITHUB_OUTPUT'):
+        with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf8') as stream:
+            stream.write(f'manifest_sha256={manifest_sha}\n')
+
+
+def verify_processing_publication(args, *, manifest_sha=None):
+    root, target = Path(args.root).resolve(), Path(args.out).absolute()
+    manifest_path = target / 'processing-manifest.json'
+    if (any(p.is_symlink() for p in (target, *target.parents))
+            or not target.resolve().is_relative_to((repo() / 'work').resolve())
+            or manifest_path.is_symlink() or sha(manifest_path) != (manifest_sha or args.manifest_sha256)):
+        raise ValueError('processing publication manifest changed')
+    manifest = read(manifest_path)
+    if manifest['source_root'] != str(root) or set(manifest['files']) != processing_paths(root):
+        raise ValueError('processing source census changed')
+    frozen = read(root / 'forecast-saved.json')['complete_processing_sha256_by_path'] if (root / 'forecast-saved.json').is_file() else {}
+    staged = {p.relative_to(target / 'files').as_posix() for p in (target / 'files').rglob('*') if not p.is_dir()}
+    if staged != set(manifest['files']) or set(target.iterdir()) != {target / 'files', manifest_path}:
+        raise ValueError('processing staging census changed')
+    for name, expected in manifest['files'].items():
+        source, linked = publication_path(root, name), publication_path(target / 'files', name)
+        digest = sha(source)
+        if name in frozen and digest != frozen[name]:
+            raise ValueError('processing bytes differ from the frozen model')
+        for path in (source, linked):
+            actual = path.stat()
+            record = {'bytes': actual.st_size, 'sha256': digest,
+                      'mode': stat.S_IMODE(actual.st_mode), 'mtime_ns': actual.st_mtime_ns,
+                      'device': actual.st_dev, 'inode': actual.st_ino}
+            if record != expected:
+                raise ValueError('processing source or hard link changed during publication')
+    capacity(target.parent, 0)
+    write_json(root / 'processing-publication-verification.json', {
+        'verified_ns': time.time_ns(), 'manifest_sha256': sha(manifest_path),
+        'all_bytes_SHA_modes_mtimes_and_source_links_verified': True,
+        'phase': 'before_upload' if manifest_sha else 'after_upload'})
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('phase', choices=('training', 'validation', 'release', 'package-model', 'package-processing',
+    parser.add_argument('phase', choices=('training', 'validation', 'release', 'package-model', 'package-processing', 'verify-processing-publication',
                                          'package-capture', 'restore-capture'))
     parser.add_argument('--system', choices=SYSTEMS)
     parser.add_argument('--mode', choices=MODES)
@@ -535,6 +666,7 @@ def main():
     parser.add_argument('--archive', type=Path)
     parser.add_argument('--inventory', type=Path)
     parser.add_argument('--out', type=Path)
+    parser.add_argument('--manifest-sha256')
     args = parser.parse_args()
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('v6 phase execution is GitHub Actions only')
@@ -550,6 +682,10 @@ def main():
         if args.phase in ('package-model', 'package-processing'):
             if args.out is None: parser.error('--out is required')
             (package_model if args.phase == 'package-model' else package_processing)(args)
+        elif args.phase == 'verify-processing-publication':
+            if args.out is None or not args.manifest_sha256:
+                parser.error('verification requires the exact staging directory and manifest SHA256')
+            verify_processing_publication(args)
         elif args.phase == 'package-capture':
             if args.capture_phase is None or args.slot is None:
                 parser.error('package-capture requires declared phase/slot')

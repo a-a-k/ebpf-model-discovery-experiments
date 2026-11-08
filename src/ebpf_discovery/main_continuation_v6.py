@@ -1,4 +1,4 @@
-"""Exact three failed MAIN blocks: unchanged captures, new models and isolated targets."""
+"""Registered MAIN captures with new uniform processing and isolated validation."""
 from __future__ import annotations
 
 import argparse
@@ -18,8 +18,9 @@ from .runtime import write_json
 from .validation_v6 import require_block_freeze, require_forecast
 
 ORIGINAL_SOURCE = '5e622ed58c340e2cfe85c3c287ba90bc9c610190'
-PARENTS = {f'docs/v6-main-parent-OTel-partial{rep}-20261107.json': (rep, run)
+PARENTS = {f'docs/v6-main-parent-OTel-partial{rep}-20261108.json': ('partial', rep, run)
            for rep, run in ((9, 42401605258), (10, 42401608466), (11, 42401611728))}
+PARENTS['docs/v6-main-parent-OTel-absent10-20261108.json'] = ('absent', 10, 42401597551)
 PROFILE = {'bering_child_go_environment': {'GOGC': '25'},
            'additional_model_swap_file_bytes': 16 * 1024**3}
 
@@ -28,18 +29,18 @@ def parent(path, sha):
     if os.environ.get('GITHUB_ACTIONS') != 'true' or os.environ.get('GITHUB_REPOSITORY') != 'a-a-k/ebpf-model-discovery-experiments':
         raise RuntimeError('registered MAIN continuation is repository Actions only')
     if path not in PARENTS or not re.fullmatch('[0-9a-f]{64}', sha):
-        raise ValueError('only three literal reviewed MAIN parents are allowed')
+        raise ValueError('only four literal reviewed MAIN parents are allowed')
     full = b.repo() / path
     if full.is_symlink() or b.sha(full) != sha:
         raise ValueError('registered MAIN parent bytes differ')
     value = b.read(full)
-    rep, run = PARENTS[path]
+    mode, rep, run = PARENTS[path]
     plan = value['parent_plan']
-    expected = block('otel_demo', 'partial', rep)
+    expected = block('otel_demo', mode, rep)
     if (value.get('schema') != 'v6-main-closed-input-parent-v1' or value.get('study') != 'clean-restart-v6'
             or (value.get('system'), value.get('mode'), value.get('repetition'),
                 value.get('stage'), value.get('smoke'), value.get('parent_run_id'), value.get('parent_source'))
-            != ('otel_demo', 'partial', rep, 'main', False, run, ORIGINAL_SOURCE)
+            != ('otel_demo', mode, rep, 'main', False, run, ORIGINAL_SOURCE)
             or value.get('allocation_regime') != i.REGIME
             or any(value.get(k) is not True for k in ('root_parent_input_GO', 'independent_parent_input_GO',
                    'root_original_execution_GO', 'independent_original_execution_GO'))
@@ -192,7 +193,7 @@ def import_models(root, plan):
         guard = b.unpack(folder / 'model.tar.gz', target, package['sha256'], guard_root=root, expected_inventory=package)
         if b.inventory(target) != package['files']:
             raise ValueError('complete current portable model inventory differs')
-        frozen = require_forecast(target, 'otel_demo', 'partial', value['repetition'], collector, stage='main', smoke=False)
+        frozen = require_forecast(target, 'otel_demo', value['mode'], value['repetition'], collector, stage='main', smoke=False)
         restored = b.read(target / 'v6-training-publication-restored.json')
         allocation['models'][collector] = {'case': frozen['case'], 'forecast_sha256': b.sha(target / 'forecast-saved.json'),
             'training_artifact_API': restored['artifact_API'], 'model_artifact_API': receipt['artifact_API']}
@@ -285,7 +286,7 @@ def main():
         else:
             if args.slot is None:
                 parser.error('isolated target needs its exact slot')
-            args.system, args.mode, args.repetition, args.stage = 'otel_demo', 'partial', value['repetition'], 'main'
+            args.system, args.mode, args.repetition, args.stage = 'otel_demo', value['mode'], value['repetition'], 'main'
             args.capture_phase = 'validation'
             args.main_parent_record, args.main_parent_sha256 = args.parent_record, args.parent_sha256
             if args.command == 'validation':

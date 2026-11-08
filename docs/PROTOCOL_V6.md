@@ -7,7 +7,7 @@ whole failed DSB/full/9 technical replacement. The original PC/OTel physically
 paired attempts and existing workflows remain unchanged; all interrupted DSB
 prefixes and their costs remain retained.
 
-The user's instruction on 6 November 2026 authorizes a complete new study.
+The fresh controlled study was registered on 6 November 2026.
 It supersedes the old 81-cell execution scope, not its evidence or cost history.
 No historical capture, model, forecast or target outcome fills a new cell.
 
@@ -126,8 +126,7 @@ Human and unmetered work remain unknown rather than zero. Job elapsed intervals
 are not CPU time, billing or sequential campaign wall time.
 
 New evidence is acquired and processed only in GitHub Actions. No raw scientific
-archives or journals are downloaded to the local workstation. Communication stays
-in this dialog; Telegram is prohibited. No paid runner/account is provisioned.
+archives or journals are downloaded to the local workstation. Execution uses standard free workers. No paid runner/account is provisioned.
 
 
 ## 7 November offline Bering garbage-collection amendment
@@ -154,3 +153,44 @@ Existing pinned executions are untouched. A separate exact-source approved
 continuation and prospective binding are required before recomputing from the
 same four sealed inputs; all four current forecasts must freeze before the
 first new validation target. No input is selected using scientific outcomes.
+
+
+## 8 November processing resource and publication amendment
+
+OTel full/9 DeepFlow processing failed under severe memory and swap pressure
+both before and after GOGC=25; a kernel OOM kill remains unproved. Absent/10
+model2 lost runner communication, with its final resource measurements unavailable.
+The fixed scientific inputs and operation counts remain unchanged.
+
+The four MAIN blocks partial/9, partial/10, partial/11 and absent/10 reuse their
+four original successful capture publications. Each computes all four models
+with GOGC=25 and an additional owned 16 GiB model-only swap file, then runs four
+fresh isolated validation arms after the common model barrier. Full/9 separately
+reuses its original qualification captures under the same profile and retains
+its first fresh paired validation. Earlier attempts and all costs remain included.
+
+Full processing files are published directly through the streaming artifact
+uploader from same-filesystem hard links. A manifest preserves every selected
+file's bytes, SHA256, mode and modification time; hidden files are included.
+The file census and source/link identity are checked before and after upload.
+No second complete local archive is created; portable model archives are unchanged.
+Unfrozen processing remains explicitly PARTIAL. The existing disk reserve and
+swap-creation guards remain mandatory. The last sampled free disk in the failed
+GC25 DeepFlow job was 37,429,166,080 bytes before the additional 16 GiB swap;
+resource fit and future execution time remain unproved.
+
+The [prospective registration](v6-OTel-closed-input-resource-publication-registration-20261108.json)
+records the literal continuation scope. New source/parent seals, required CI and
+actual-run binding precede processing. All 108 cells, ten operations, allocation,
+equal-information baselines and external outcomes remain required.
+
+
+Portable model tar.gz creation retains the original member census, order,
+content, modes and compression level. Its disk guard checks every actual
+compressed write against the 2 GiB reserve, including gzip header/trailer and
+finalization, rather than reserving the entire uncompressed member sum. Output
+creation is exclusive and unbuffered; short writes or insufficient space fail
+closed. A failed partial archive is not published as a complete model. Capture
+and common-image archive guards retain their original conservative behavior.
+Actual write-guard receipts, all phase costs and final free disk remain recorded;
+this change does not prove future resource fit.

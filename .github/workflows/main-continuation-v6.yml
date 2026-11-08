@@ -1,4 +1,4 @@
-# Only the three registered MAIN parents; no training or qualification traffic.
+# Registered MAIN capture inputs and isolated validation.
 name: Registered MAIN capture continuation v6
 run-name: v6 MAIN same-input continuation ${{ inputs.parent_record }}
 'on':
@@ -7,9 +7,10 @@ run-name: v6 MAIN same-input continuation ${{ inputs.parent_record }}
       parent_record:
         type: choice
         options:
-        - docs/v6-main-parent-OTel-partial9-20261107.json
-        - docs/v6-main-parent-OTel-partial10-20261107.json
-        - docs/v6-main-parent-OTel-partial11-20261107.json
+        - docs/v6-main-parent-OTel-partial9-20261108.json
+        - docs/v6-main-parent-OTel-partial10-20261108.json
+        - docs/v6-main-parent-OTel-partial11-20261108.json
+        - docs/v6-main-parent-OTel-absent10-20261108.json
         required: true
       parent_sha256:
         type: string
@@ -65,6 +66,10 @@ jobs:
       with:
         name: v6-main-continuation-preflight-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
 
           work/main-continuation-*.json
 
@@ -133,26 +138,34 @@ jobs:
         compression-level: 0
       id: modelupload
       if: ${{ success() }}
-    - name: Retain complete or partial original processing bytes
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
       id: processing
       if: ${{ always() && steps.restore.outcome == 'success' }}
     - name: v6-isolated-processing-slot${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-processing-slot${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
-        path: 'work/processing.tar.gz
-
-          work/processing.tar.gz.json'
+        path: work/processing-publication/
         if-no-files-found: error
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
       if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: v6-isolated-metadata-model${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-metadata-model${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
 
           work/block-plan.json
 
@@ -307,6 +320,10 @@ jobs:
       with:
         name: v6-isolated-metadata-validation${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
 
           work/block-plan.json
 

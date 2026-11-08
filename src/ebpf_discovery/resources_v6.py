@@ -1,4 +1,4 @@
-"""Use the complete standard worker; record platform limits instead of lowering them."""
+"""Standard worker resources and owned model-only swap provisioning."""
 from __future__ import annotations
 
 import argparse

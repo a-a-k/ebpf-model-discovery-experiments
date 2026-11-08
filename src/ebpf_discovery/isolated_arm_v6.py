@@ -1,4 +1,4 @@
-"""Unstarted arms and one registered failed-block replacement on isolated workers."""
+"""Capture, model import and validation on isolated workers."""
 from __future__ import annotations
 
 import argparse

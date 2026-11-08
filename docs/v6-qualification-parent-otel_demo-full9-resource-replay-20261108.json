@@ -1,0 +1,102 @@
+{
+  "system": "otel_demo",
+  "mode": "full",
+  "repetition": 9,
+  "stage": "qualification",
+  "smoke": false,
+  "parent_run_id": 42267248120,
+  "parent_source": "9d6414e8824331d368d1732a15200cdad691350b",
+  "parent_plan_sha256": "f8b4332fb6515fe3a1920236db59a9245b715a26d2f1f71fb02f791c642cb998",
+  "shared_sha256": "b32b95a5bcb04226b4cbfa90dc31d854cb28c84308ebbf20775e7da0ffe9e8b5",
+  "golden_sha256": "756af9260d9785d7cdc935e710a91edc5b3810a61bce175f5a2fb0d41f30b029",
+  "blueprint_sha256": "2a7b7841cd3e7492a4b2d75c499cb81f8a2a383b3ff6574a3208811bd13e8556",
+  "closed_input_sha256_by_collector": {
+    "none": "2351f563f553abed4f1affe7e6b17879770d711810506d5af4623a4654ce7453",
+    "obi": "74376c91aa6c51c2098c34a8fb84d4d8224f03e36010ffbfb8bd480c2cfeb828",
+    "coroot": "f6cca913760edf874d7d3b7ba0c352c300aec21f30e71f2382b80ad2f53221ac",
+    "deepflow": "0ed7599481ee1ab525c05c7b905310e44111cefbea031e1835b98bfc9a5bbec0"
+  },
+  "schema": "v6-qualification-parent-v1",
+  "study": "clean-restart-v6",
+  "root_inspection_GO": true,
+  "independent_inspection_GO": true,
+  "root_replay_GO": false,
+  "independent_replay_GO": false,
+  "inspection_report_sha256": "c22e5d97a517d525dec55029d0e18374d37d1ba399652863cdd7bbc150c74847",
+  "inspection_report_kind": "Manual review of retained already-executed full-restore/capture-verification evidence and authentic publisher seals; NOT a fresh Actions inspection",
+  "inspection_report_path": "docs/v6-OTel-full9-reused-parent-review-20261107.json",
+  "shared_artifact": {
+    "id": 13538312997,
+    "name": "v6-shared-blueprint-42267248120",
+    "size_in_bytes": 3812739480,
+    "digest": "sha256:5f02d0b012f6b4219d0c95d62b3d2b14aa13b64bc55b0622f8af659a5a65e556"
+  },
+  "training_artifacts": {
+    "none": {
+      "id": 13536502834,
+      "name": "v6-training-none-42267248120",
+      "size_in_bytes": 191806595,
+      "digest": "sha256:30793b106f0af2934927ccf144736a8a7d7ecfc5bd7901eb081c172559dd12a6"
+    },
+    "obi": {
+      "id": 13534163956,
+      "name": "v6-training-obi-42267248120",
+      "size_in_bytes": 385372552,
+      "digest": "sha256:0658a0dbf1fab363793db7eb36523058d29a189b1b708bd34e304cf1192c1771"
+    },
+    "coroot": {
+      "id": 13538123292,
+      "name": "v6-training-coroot-42267248120",
+      "size_in_bytes": 236996797,
+      "digest": "sha256:1b876b22336f635d975076c903ff6054dc6dec951ed6f5ba2db1948a11aee8bb"
+    },
+    "deepflow": {
+      "id": 13533351182,
+      "name": "v6-training-deepflow-42267248120",
+      "size_in_bytes": 992346076,
+      "digest": "sha256:f2fbd7344a371d1e96b403c2a155b5f7efbb516a27e7845537e684526b2281da"
+    }
+  },
+  "input_reuse_original_GO_proof": {
+    "path": "docs/independent-v6-OTel-full9-reused-parent-input-original-GO-20261107.json",
+    "original_sha256": "4861d50b98e4aa528225e7c27712daa0c421e84f45e84fcbed1d6cd2cd99d205",
+    "published_GitLF_sha256": "4861d50b98e4aa528225e7c27712daa0c421e84f45e84fcbed1d6cd2cd99d205"
+  },
+  "prospective_registration": "docs/v6-OTel-closed-input-resource-publication-registration-20261108.json",
+  "global_full_size_budget_fit": false,
+  "OTel_remaining28_dispatch_GO": false,
+  "scientific_success_claimed": false,
+  "source_execution_GO_pending": true,
+  "approved_replay_source_reference": null,
+  "approved_replay_implementation_sha256": {},
+  "normal_required_CI_before_dispatch": true,
+  "exact_source_GO_proofs": [],
+  "prospective_registration_SHA256": "d04b73843c5437ebb89113f292e1137f050de767c2658f7f75240d9dec063564",
+  "previous_processing_run_id": 42396800647,
+  "previous_processing_source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9",
+  "technical_reason": "Observed OBI memorypressure: BeringRSS15.9GB, sampledavailable86MiB; shutdowninitiator/kernelOOMunproved.",
+  "bering_child_go_environment": {
+    "GOGC": "25"
+  },
+  "GOMEMLIMIT": null,
+  "GOMAXPROCS": null,
+  "OTel_remaining_full8_dispatch_GO": false,
+  "sealed_utc": null,
+  "registered_before_processing_ns": 1794120426013771500,
+  "processing_profile": {
+    "bering_child_go_environment": {
+      "GOGC": "25"
+    },
+    "additional_model_swap_file_bytes": 17179869184
+  },
+  "previous_processing_attempts": [
+    {
+      "run_id": 42396800647,
+      "source": "341e92d82d2e1839cf98d0a57f11c90df4ce8bd9"
+    },
+    {
+      "run_id": 42402184737,
+      "source": "803bf539b1eee06180cb13b2ed40b4f92a2462c9"
+    }
+  ]
+}

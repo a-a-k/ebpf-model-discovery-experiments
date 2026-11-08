@@ -1,0 +1,307 @@
+{
+  "schema": "v6-main-closed-input-parent-v1",
+  "study": "clean-restart-v6",
+  "system": "otel_demo",
+  "mode": "partial",
+  "repetition": 9,
+  "stage": "main",
+  "smoke": false,
+  "allocation_regime": "randomized-between-host-arms-v6",
+  "parent_run_id": 42401605258,
+  "parent_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+  "parent_plan": {
+    "study": "clean-restart-v6",
+    "system": "otel_demo",
+    "mode": "partial",
+    "repetition": 9,
+    "block_id": "otel_demo-partial-9",
+    "arm_orders": {
+      "training": [
+        "obi",
+        "coroot",
+        "deepflow",
+        "none"
+      ],
+      "validation": [
+        "none",
+        "coroot",
+        "obi",
+        "deepflow"
+      ]
+    },
+    "cells": [
+      {
+        "collector": "none",
+        "cell_id": "otel_demo-partial-9-none"
+      },
+      {
+        "collector": "obi",
+        "cell_id": "otel_demo-partial-9-obi"
+      },
+      {
+        "collector": "coroot",
+        "cell_id": "otel_demo-partial-9-coroot"
+      },
+      {
+        "collector": "deepflow",
+        "cell_id": "otel_demo-partial-9-deepflow"
+      }
+    ],
+    "stage": "main",
+    "smoke": false,
+    "allocation_regime": "randomized-between-host-arms-v6",
+    "golden_sha256": "dbeb5821f64a24490cc41be5c6dae9ab5ee7243e021f575ac8de6f9d3908bf5c",
+    "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+    "run_id": 42401605258,
+    "source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+  },
+  "parent_plan_sha256": "456f1b394bd46a734b05c77a6bd15a71497879a805797bc3e2d059e369434941",
+  "shared_sha256": "970e2cd48a478475da3e0fbcfaf6edc2b803799199b84bdf91744ec4fc3df2c5",
+  "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+  "golden_sha256": "dbeb5821f64a24490cc41be5c6dae9ab5ee7243e021f575ac8de6f9d3908bf5c",
+  "shared_artifact": {
+    "id": 13586612163,
+    "name": "v6-isolated-shared-42401605258-attempt1",
+    "size_in_bytes": 3645541871,
+    "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586612163",
+    "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586612163/zip",
+    "expired": false,
+    "created_at": "2026-11-07T18:53:15Z",
+    "expires_at": "2027-02-05T18:30:19Z",
+    "updated_at": "2026-11-07T18:53:15Z",
+    "digest": "sha256:efd13449cf8e1eda54aaec73b2bd684784a1053afaec34140d362860b81e8338",
+    "workflow_run": {
+      "id": 42401605258,
+      "repository_id": 1434356471,
+      "head_repository_id": 1434356471,
+      "head_branch": "main",
+      "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    }
+  },
+  "training_artifacts": {
+    "obi": {
+      "id": 13587602964,
+      "name": "v6-isolated-training-slot0-42401605258-attempt1",
+      "size_in_bytes": 385526341,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587602964",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587602964/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:28:58Z",
+      "expires_at": "2027-02-05T18:30:19Z",
+      "updated_at": "2026-11-07T19:28:58Z",
+      "digest": "sha256:cadef454089e02885cc0141e163bf8f60b7bb55a161c05d34919c3bb043e0eaf",
+      "workflow_run": {
+        "id": 42401605258,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "coroot": {
+      "id": 13587034318,
+      "name": "v6-isolated-training-slot1-42401605258-attempt1",
+      "size_in_bytes": 230314491,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587034318",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587034318/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:28:36Z",
+      "expires_at": "2027-02-05T18:30:19Z",
+      "updated_at": "2026-11-07T19:28:36Z",
+      "digest": "sha256:c60f068b0fb3b11313b8764eb9375856c49080b8909ec1773472396d6065682c",
+      "workflow_run": {
+        "id": 42401605258,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "deepflow": {
+      "id": 13588600623,
+      "name": "v6-isolated-training-slot2-42401605258-attempt1",
+      "size_in_bytes": 969064880,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13588600623",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13588600623/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:46:50Z",
+      "expires_at": "2027-02-05T18:30:19Z",
+      "updated_at": "2026-11-07T19:46:50Z",
+      "digest": "sha256:ad34b3706149c3e31c1f220215b823543dbb1be3fc94f0add2db5b36bfd6752f",
+      "workflow_run": {
+        "id": 42401605258,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    },
+    "none": {
+      "id": 13587333186,
+      "name": "v6-isolated-training-slot3-42401605258-attempt1",
+      "size_in_bytes": 185453920,
+      "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587333186",
+      "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13587333186/zip",
+      "expired": false,
+      "created_at": "2026-11-07T19:26:38Z",
+      "expires_at": "2027-02-05T18:30:19Z",
+      "updated_at": "2026-11-07T19:26:38Z",
+      "digest": "sha256:0e833cea03c9b7a4bd42639815f5a96ff9ea1c0c35b9b384d1777ec97a8cab6a",
+      "workflow_run": {
+        "id": 42401605258,
+        "repository_id": 1434356471,
+        "head_repository_id": 1434356471,
+        "head_branch": "main",
+        "head_sha": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+      }
+    }
+  },
+  "closed_input_sha256_by_collector": {
+    "obi": "15f79df031b523eac4661cfa57b0a58aba1d7b07089f22f92461e03ecd391a9c",
+    "coroot": "a03b7650d039249a61467d8c3edb453d4ac0614494d009ae8f02acbcc79094d4",
+    "deepflow": "a43c2d44cb51029fe79cda147443a37fa5334764e4c91e747c8c9ac34aa04ea1",
+    "none": "98e55d195f2aef668d49d0e2386b740661ce97debc3e225021d60b93b86fb061"
+  },
+  "capture_case_by_collector": {
+    "obi": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 9,
+      "collector": "obi",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401605258",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "68ff134f-d59c-457a-8fea-a6bbb65a6c17",
+      "started_ns": 1794077956138013476,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training0",
+        "attempt": 1,
+        "slot": 0
+      },
+      "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+      "ended_ns": 1794079700611899076,
+      "cleanup_errors": []
+    },
+    "coroot": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 9,
+      "collector": "coroot",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401605258",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "4f06a703-6d55-4dd2-b0d0-49e2b4a0d6f0",
+      "started_ns": 1794077887123309103,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training1",
+        "attempt": 1,
+        "slot": 1
+      },
+      "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+      "ended_ns": 1794079684536096567,
+      "cleanup_errors": []
+    },
+    "deepflow": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 9,
+      "collector": "deepflow",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401605258",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "7f1fe7b6-db48-41a7-b463-0c4d9863fd62",
+      "started_ns": 1794077867974381745,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training2",
+        "attempt": 1,
+        "slot": 2
+      },
+      "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+      "ended_ns": 1794080686068539963,
+      "cleanup_errors": []
+    },
+    "none": {
+      "study": "clean-restart-v6",
+      "protocol_version": "graph-v5",
+      "system": "otel_demo",
+      "mode": "partial",
+      "seed": 9,
+      "collector": "none",
+      "phase": "training",
+      "smoke": false,
+      "stage": "main",
+      "run_id": "42401605258",
+      "commit": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "runner_boot_id": "7d4f7d0f-a21d-446a-b861-23e4b123215d",
+      "started_ns": 1794077877447039728,
+      "status": "capture_complete",
+      "allocation_regime": "randomized-between-host-arms-v6",
+      "producing_job": {
+        "job": "training3",
+        "attempt": 1,
+        "slot": 3
+      },
+      "blueprint_sha256": "ff4f1e1641d7f50f0788ad00170aa9b4635a7686cedc5907521eb9973e1d36df",
+      "ended_ns": 1794079572664086353,
+      "cleanup_errors": []
+    }
+  },
+  "capture_archive_sha256_by_collector": {
+    "obi": "ad508785d2ef4e17b6f30c85258428a1529ab68e0771d6fb7a0fefa2bb57bf3e",
+    "coroot": "654a510b2619261f0bfdfaa6262110a27b4fb3929812f34705111a77508d9b36",
+    "deepflow": "606ca6aa13d6004e3d489184a698f47158c77b9953f43da39404f1609671cc0c",
+    "none": "c09d5f7c146b646267bac52f55cc4d959654125b536a390202330a2e6cdaede0"
+  },
+  "capture_inventory_sha256_by_collector": {
+    "obi": "6196e4735f45e0d95d906abc6366b5212a077457117c9f3fb9740afb8b1b1361",
+    "coroot": "9c67546a1d1f19dbaf056a380692e222e0feb968f0c833ea1f3f3306bd7ea4d1",
+    "deepflow": "84e6c3ffd32b8e366fb508efcfb8a0c4f9a0df677cc76cd79f12257e4a7e20d8",
+    "none": "fe7ec7a1690337e17a510a5264fcaedb39af60b8e6d3abaad8c41c2ac96727af"
+  },
+  "root_parent_input_GO": true,
+  "independent_parent_input_GO": true,
+  "root_original_execution_GO": false,
+  "independent_original_execution_GO": false,
+  "implementation_sha256": {},
+  "prospective_registration": "docs/v6-OTel-closed-input-resource-publication-registration-20261108.json",
+  "design_original_GO_sha256": "ba773b8b72d3a3d01ae77d510601fae50d5c7bf414a604ff22e0337830e45264",
+  "processing_profile": {
+    "bering_child_go_environment": {
+      "GOGC": "25"
+    },
+    "additional_model_swap_file_bytes": 17179869184
+  },
+  "all_previous_outputs_costs_and_adverse_UNKNOWN_retained": true,
+  "new_training_or_qualification_traffic": false,
+  "whole_ZIP_or_tar_locally_verified": false,
+  "inspection_kind": "Manualretainedpublisherfullarchive/inventoryguards+selectedoriginalJSONCRC/SHAreview; notnewheavyinspection. Mandatorycompletecloudarchive/inventory/closureverificationbeforemodelandtargets remainsrequired.",
+  "registered_before_processing_ns": 1794120426013771500,
+  "independent_parent_input_proof": "docs/independent-v6-OTel-partial3-exact-original-parent-input-reuse-GO-20261107.json",
+  "independent_parent_input_proof_SHA256": "1e37280f8050338f09f2e96e5fc4dbdd553ea1b972964f3e7aa0b3c07a8f5705",
+  "approved_source_reference": null,
+  "independent_original_source_GO_sha256": null,
+  "normal_CI_required_before_dispatch": true,
+  "actual_new_run_binding_required_before_processing": true,
+  "all_108_all_10_ops_equal_information_baselines_and_costs_retained": true,
+  "global_full_size_phase_budget_qualified": false,
+  "scientific_success_GO": false,
+  "sealed_utc": null
+}

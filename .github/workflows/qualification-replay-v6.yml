@@ -123,6 +123,9 @@ jobs:
           work/inspection/
           work/qualification-inspection-report.json
           work/qualification-replay-cost.jsonl
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/parent-publication-API.json
           work/block-disk-guards.jsonl
           work/inspection-host-resources.json
@@ -197,11 +200,13 @@ jobs:
         if-no-files-found: warn
         compression-level: 6
     - name: Package immutable models and training provenance
+      id: modelpackage
       run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
-    - name: Retain complete or partial processing files as one delivery
+    - name: Stage complete or partial processing files without a second archive
       if: always()
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
-    - if: ${{ always() }}
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
+      id: processing
+    - if: ${{ always() && steps.modelpackage.outcome == 'success' }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-model-${{ matrix.collector }}-${{ github.run_id }}
@@ -212,22 +217,28 @@ jobs:
         if-no-files-found: warn
         include-hidden-files: true
         compression-level: 0
-    - if: ${{ always() }}
+    - if: ${{ always() && steps.processing.outcome == 'success' }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-processing-full-${{ matrix.collector }}-${{ github.run_id }}
         path: |-
-          work/processing.tar.gz
-          work/processing.tar.gz.json
+          work/processing-publication/
           work/case/model-worker-resources.json
           work/case/forecast-saved.json
           work/tools/builds.tsv
           work/tools/pins.tsv
           work/tools/logs/
           work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
         if-no-files-found: warn
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: Retain small continuation provenance and actual costs
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
@@ -237,6 +248,9 @@ jobs:
           work/inspection/
           work/qualification-inspection-report.json
           work/qualification-replay-cost.jsonl
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/parent-publication-API.json
           work/block-disk-guards.jsonl
         if-no-files-found: warn
@@ -418,6 +432,9 @@ jobs:
           work/qualification-parent-block-plan.json
           work/qualification-replay-import.json
           work/qualification-replay-cost.jsonl
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/inspection/
           work/parent-publication-API.json
         if-no-files-found: warn
@@ -432,6 +449,9 @@ jobs:
           work/inspection/
           work/qualification-inspection-report.json
           work/qualification-replay-cost.jsonl
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/parent-publication-API.json
           work/block-disk-guards.jsonl
         if-no-files-found: warn

@@ -82,6 +82,9 @@ def record(path, expected_sha, *, replay=False):
         hashes = value.get('closed_input_sha256_by_collector', {})
         if set(hashes) != set(COLLECTORS) or any(not HEX.fullmatch(str(x)) for x in hashes.values()):
             raise ValueError('replay requires all four actual inspected training closure hashes')
+        if (value.get('approved_replay_implementation_sha256') is not None
+                and value['approved_replay_implementation_sha256'] != b.implementation_hashes()):
+            raise ValueError('replay source differs from the reviewed implementation census')
     return value
 
 
@@ -324,6 +327,14 @@ def import_validation(args, parent):
                 != (str(execution()['run_id']), execution()['source'])
                 or b.read(target / 'v6-training-publication-restored.json')['parent_record_sha256'] != args.parent_sha256):
             raise ValueError('frozen replay origin/current processing/approval binding differs')
+        if 'processing_profile' in parent:
+            processing = saved['processing_execution']
+            swap = b.read(target / 'model-swap-resources.json')
+            if (any(processing.get(k) != v for k, v in parent['processing_profile'].items())
+                    or swap.get('status') != 'active'
+                    or swap.get('additional_swap_file_bytes') != parent['processing_profile']['additional_model_swap_file_bytes']
+                    or not parent['registered_before_processing_ns'] < processing['started_ns'] < saved['saved_ns']):
+                raise ValueError('replay model resource profile or prospective registration differs')
         imports.append({'collector': collector, 'artifact_API': values[0],
                         'package_sha256': model_package['sha256'], 'preextract_actual_disk_guard': model_guard})
     write_json(root / 'model-package-imports.json', imports)

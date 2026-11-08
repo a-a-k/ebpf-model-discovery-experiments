@@ -15,18 +15,20 @@ from tests.test_fresh_study_v6 import frozen
 
 REAL_PARENT_GATE = continued.parent
 
-@pytest.fixture
-def continued_models(tmp_path, monkeypatch):
+@pytest.fixture(params=['partial', 'absent'])
+def continued_models(tmp_path, monkeypatch, request):
     monkeypatch.setenv('GITHUB_RUN_ID', '900')
     monkeypatch.setenv('GITHUB_SHA', 'a' * 40)
     monkeypatch.setenv('GITHUB_REPOSITORY', 'a-a-k/ebpf-model-discovery-experiments')
-    old = block('otel_demo', 'partial', 9)
-    old.update(stage='main', smoke=False, allocation_regime=isolated.REGIME, run_id=42401605258,
+    mode = request.param
+    rep, run = (9, 42401605258) if mode == 'partial' else (10, 42401597551)
+    old = block('otel_demo', mode, rep)
+    old.update(stage='main', smoke=False, allocation_regime=isolated.REGIME, run_id=run,
                source=continued.ORIGINAL_SOURCE, blueprint_sha256='b' * 64, golden_sha256='c' * 64)
     old_sha = hashlib.sha256((json.dumps(old, indent=2) + '\n').encode()).hexdigest()
-    ref = {'path': next(iter(continued.PARENTS)), 'sha256': 'd' * 64}
+    ref = {'path': next(k for k, v in continued.PARENTS.items() if v == (mode, rep, run)), 'sha256': 'd' * 64}
     plan = {**old, **isolated.execution(), 'main_closed_input_parent': ref}
-    value = {'parent_plan': old, 'parent_plan_sha256': old_sha, 'parent_run_id': old['run_id'],
+    value = {'mode': mode, 'parent_plan': old, 'parent_plan_sha256': old_sha, 'parent_run_id': old['run_id'],
              'blueprint_sha256': old['blueprint_sha256'], 'golden_sha256': old['golden_sha256'],
              'registered_before_processing_ns': 1, 'capture_case_by_collector': {},
              'closed_input_sha256_by_collector': {}, 'training_artifacts': {}}
@@ -35,7 +37,7 @@ def continued_models(tmp_path, monkeypatch):
                   'main_closed_input_parent': ref, 'models': {}}
     roots, jobs = [], {}
     for index, collector in enumerate(COLLECTORS):
-        root = frozen(tmp_path / collector, collector, mode='partial')
+        root = frozen(tmp_path / collector, collector, mode=mode, seed=rep)
         saved = b.read(root / 'forecast-saved.json')
         slot = old['arm_orders']['training'].index(collector)
         saved['case'].update(stage='main', smoke=False, run_id=str(old['run_id']), commit=old['source'],
@@ -142,9 +144,9 @@ def test_main_parent_cannot_be_cast_as_qualification_or_use_unsigned_source(cont
     monkeypatch.setattr(b, 'repo', lambda: tmp_path)
     hashes = {'synthetic_source': 'bound'}
     monkeypatch.setattr(b, 'implementation_hashes', lambda: hashes)
-    ref = next(iter(continued.PARENTS))
+    ref = next(k for k, v in continued.PARENTS.items() if v[2] == base['parent_run_id'])
     doc = {**base, 'schema': 'v6-main-closed-input-parent-v1', 'study': 'clean-restart-v6',
-        'system': 'otel_demo', 'mode': 'partial', 'repetition': 9, 'stage': 'main', 'smoke': False,
+        'system': 'otel_demo', 'mode': base['mode'], 'repetition': base['parent_plan']['repetition'], 'stage': 'main', 'smoke': False,
         'parent_source': continued.ORIGINAL_SOURCE, 'allocation_regime': isolated.REGIME,
         'root_parent_input_GO': True, 'independent_parent_input_GO': True,
         'root_original_execution_GO': True, 'independent_original_execution_GO': True,
@@ -160,5 +162,5 @@ def test_main_parent_cannot_be_cast_as_qualification_or_use_unsigned_source(cont
         write_json(file, broken)
         with pytest.raises(ValueError):
             original_parent(ref, b.sha(file))
-    with pytest.raises(ValueError, match='three literal'):
+    with pytest.raises(ValueError, match='four literal'):
         original_parent('docs/a-qualification-parent.json', '0' * 64)
