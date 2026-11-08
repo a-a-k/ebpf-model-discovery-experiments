@@ -71,7 +71,9 @@ def gate(args):
                 or approved.get('full_size_phase_budgets_qualified') is not False
                 or approved.get('full_validation_budget_observed') is not False
                 or approved.get('rollout_design_GO_sha256') != OTEL_FINAL_DESIGN_SHA256
-                or approved.get('actual_resource_runs') != [42402184737]
+                or approved.get('actual_resource_runs') != [42457632259]
+                or approved.get('actual_resource_source') != '76aebebfc11c68c2c6f4b916f715a833f548d9cc'
+                or approved.get('actual_resource_parent_sha256') != 'd11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4'
                 or approved.get('bering_child_go_environment') != {'GOGC': '25'}
                 or approved.get('additional_model_swap_file_bytes') != 16 * 1024**3
                 or approved.get('model_swap_design_GO_sha256') !=
