@@ -46,7 +46,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import csv, datetime, hashlib, itertools, json, os, pathlib, re, resource, shutil, stat, subprocess, time
+          import csv, datetime, hashlib, itertools, json, os, pathlib, re, shutil, stat, subprocess, time
+          import resource as usage_resource
           import urllib.error, urllib.parse, urllib.request, zipfile
 
           REPO='a-a-k/ebpf-model-discovery-experiments'
@@ -483,7 +484,7 @@ jobs:
           finally:
               end=os.times();result['actual_reader_cost']={'started_ns':started,'ended_ns':time.time_ns(),
                   'CPU_seconds':{k:getattr(end,k)-getattr(cpu,k) for k in ('user','system','children_user','children_system')},
-                  'free_bytes_after':shutil.disk_usage(root).free,'maximum_RSS_KiB':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss};save()
+                  'free_bytes_after':shutil.disk_usage(root).free,'maximum_RSS_KiB':usage_resource.getrusage(usage_resource.RUSAGE_SELF).ru_maxrss};save()
               print(json.dumps({'output':str(out),'bytes':out.stat().st_size,'sha256':sha(out.read_bytes()),'status':result['status']}))
           PY
       - name: Publish only literal results, flat source rows, provenance and actual reader cost
