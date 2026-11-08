@@ -27,7 +27,16 @@ unavailable forecasts, adverse results and unknown values remain in the results.
 The study does not assume that graph size or model availability demonstrates
 predictive usefulness.
 
-See [results and limitations](docs/FINDINGS.md).
+The [results and limitations](docs/FINDINGS.md) cover all 108 completed cases.
+OBI supplies operation models without SDK traces for Petclinic and OTel Demo;
+partial OTel coverage requires the observed-context union. The tested eBPF
+pipelines do not restore the missing Social Network models.
+
+The [generated results](results/literal-results.json),
+[publication manifest](docs/v6-full108-completed-result-manifest.json),
+[cost ledger](docs/v6-full108-completed-cost-ledger.json) and
+[provenance](results/provenance.json) preserve the complete result scope,
+including unavailable predictions and adverse outcomes.
 The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
 generation; the [context baseline](docs/CONTEXT_BASELINE.md) specifies the
 observed-edge union.

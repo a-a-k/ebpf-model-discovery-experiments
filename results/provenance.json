@@ -1,0 +1,266 @@
+{
+  "report": {
+    "path": "results/literal-results.json",
+    "bytes": 24903292,
+    "sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+    "run_id": 42520421400,
+    "job_id": 128852513097,
+    "source_commit": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+    "source_ref": "audit/full108-literal-report-v6",
+    "workflow_path": ".github/workflows/read-v6-full108-results.yml",
+    "workflow_GitLF_sha256": "38eb812a4d87fa269294bb023f45df3bbc49438014ce4a0dc631943b41df8bed",
+    "artifact_id": 13633506704,
+    "original_ZIP_digest": "sha256:410f13552775e427069cd0248fe38e8f764cf5a9fae6c533a9a1dc5d6352bb57",
+    "literal_bytes_modified": false
+  },
+  "inputs": {
+    "manifest": {
+      "path": "docs/v6-full108-completed-result-manifest.json",
+      "GitLF_sha256": "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6"
+    },
+    "pre_reader_cost_ledger": {
+      "path": "docs/v6-full108-completed-cost-ledger.json",
+      "GitLF_sha256": "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e"
+    }
+  },
+  "coverage": {
+    "cells": 108,
+    "source_view_rows": 2880,
+    "distinct_case_operation_outcome_sets": 360,
+    "original_result_publications": 102,
+    "physically_paired_cells": 8,
+    "separate_worker_cells": 100,
+    "whole_original_ZIP_SHA_and_all_member_EOF_CRC_verified_in_Actions": true,
+    "only_omitted_scientific_paths": [
+      "frozen_classification.class_test_assignments",
+      "frozen_classification.target_descriptive_assignments"
+    ]
+  },
+  "cost_scope": {
+    "pre_reader_cut_utc": "2026-11-08T19:43:45.034966+00:00",
+    "pre_reader_unique_known_worker_seconds": 1339757,
+    "pre_reader_unknown_interval_rows": 60,
+    "closing_cut_utc": "2026-11-08T21:01:01.768795+00:00",
+    "closing_workflows": [
+      {
+        "workflow": {
+          "id": 42518287343,
+          "name": "Focused implementation checks",
+          "path": ".github/workflows/checks.yml",
+          "event": "push",
+          "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+          "head_branch": "audit/full108-literal-report-v6",
+          "run_attempt": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-08T20:05:14Z",
+          "run_started_at": "2026-11-08T20:05:14Z",
+          "updated_at": "2026-11-08T20:06:13Z",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42518287343"
+        },
+        "jobs": [
+          {
+            "id": 128846002374,
+            "name": "checks",
+            "run_id": 42518287343,
+            "run_attempt": 1,
+            "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031452,
+            "runner_name": "GitHub Actions 1000031452",
+            "started_at": "2026-11-08T20:05:16Z",
+            "completed_at": "2026-11-08T20:06:12Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 56.0
+          },
+          {
+            "id": 128846002600,
+            "name": "control-fixture-v5",
+            "run_id": 42518287343,
+            "run_attempt": 1,
+            "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031453,
+            "runner_name": "GitHub Actions 1000031453",
+            "started_at": "2026-11-08T20:05:16Z",
+            "completed_at": "2026-11-08T20:05:40Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 24.0
+          },
+          {
+            "id": 128846002602,
+            "name": "identical-input-discovery-fixture",
+            "run_id": 42518287343,
+            "run_attempt": 1,
+            "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031454,
+            "runner_name": "GitHub Actions 1000031454",
+            "started_at": "2026-11-08T20:05:16Z",
+            "completed_at": "2026-11-08T20:06:13Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 57.0
+          }
+        ]
+      },
+      {
+        "workflow": {
+          "id": 42518575853,
+          "name": "Read the fixed completed 108-cell study v6",
+          "path": ".github/workflows/read-v6-full108-results.yml",
+          "event": "workflow_dispatch",
+          "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+          "head_branch": "audit/full108-literal-report-v6",
+          "run_attempt": 1,
+          "status": "completed",
+          "conclusion": "failure",
+          "created_at": "2026-11-08T20:08:27Z",
+          "run_started_at": "2026-11-08T20:08:27Z",
+          "updated_at": "2026-11-08T20:21:45Z",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42518575853"
+        },
+        "jobs": [
+          {
+            "id": 128846874576,
+            "name": "read",
+            "run_id": 42518575853,
+            "run_attempt": 1,
+            "head_sha": "e4591ea42ed7fa1e65acb2f24becbd2fd7a62621",
+            "status": "completed",
+            "conclusion": "failure",
+            "runner_id": 1000031455,
+            "runner_name": "GitHub Actions 1000031455",
+            "started_at": "2026-11-08T20:08:31Z",
+            "completed_at": "2026-11-08T20:21:44Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 793.0
+          }
+        ]
+      },
+      {
+        "workflow": {
+          "id": 42520110541,
+          "name": "Focused implementation checks",
+          "path": ".github/workflows/checks.yml",
+          "event": "push",
+          "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+          "head_branch": "audit/full108-literal-report-v6",
+          "run_attempt": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-08T20:26:14Z",
+          "run_started_at": "2026-11-08T20:26:14Z",
+          "updated_at": "2026-11-08T20:27:17Z",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42520110541"
+        },
+        "jobs": [
+          {
+            "id": 128851538829,
+            "name": "control-fixture-v5",
+            "run_id": 42520110541,
+            "run_attempt": 1,
+            "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031457,
+            "runner_name": "GitHub Actions 1000031457",
+            "started_at": "2026-11-08T20:26:17Z",
+            "completed_at": "2026-11-08T20:26:48Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 31.0
+          },
+          {
+            "id": 128851539040,
+            "name": "checks",
+            "run_id": 42520110541,
+            "run_attempt": 1,
+            "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031458,
+            "runner_name": "GitHub Actions 1000031458",
+            "started_at": "2026-11-08T20:26:17Z",
+            "completed_at": "2026-11-08T20:27:14Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 57.0
+          },
+          {
+            "id": 128851539052,
+            "name": "identical-input-discovery-fixture",
+            "run_id": 42520110541,
+            "run_attempt": 1,
+            "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031456,
+            "runner_name": "GitHub Actions 1000031456",
+            "started_at": "2026-11-08T20:26:17Z",
+            "completed_at": "2026-11-08T20:27:17Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 60.0
+          }
+        ]
+      },
+      {
+        "workflow": {
+          "id": 42520421400,
+          "name": "Read the fixed completed 108-cell study v6",
+          "path": ".github/workflows/read-v6-full108-results.yml",
+          "event": "workflow_dispatch",
+          "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+          "head_branch": "audit/full108-literal-report-v6",
+          "run_attempt": 1,
+          "status": "completed",
+          "conclusion": "success",
+          "created_at": "2026-11-08T20:30:06Z",
+          "run_started_at": "2026-11-08T20:30:06Z",
+          "updated_at": "2026-11-08T20:39:40Z",
+          "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42520421400"
+        },
+        "jobs": [
+          {
+            "id": 128852513097,
+            "name": "read",
+            "run_id": 42520421400,
+            "run_attempt": 1,
+            "head_sha": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+            "status": "completed",
+            "conclusion": "success",
+            "runner_id": 1000031459,
+            "runner_name": "GitHub Actions 1000031459",
+            "started_at": "2026-11-08T20:30:09Z",
+            "completed_at": "2026-11-08T20:39:40Z",
+            "labels": [
+              "ubuntu-24.04"
+            ],
+            "worker_elapsed_seconds": 571.0
+          }
+        ]
+      }
+    ],
+    "closing_unique_known_worker_seconds": 1649.0,
+    "failed_reader_resource_RSS": "UNKNOWN; the failing resource receipt did not persist a measurement",
+    "later_delivery_CI": "Outside this finite closing cut; retained in Actions runs for the publication commit. Not silently included or imputed as zero.",
+    "human_and_unmetered_work": "UNKNOWN",
+    "complete_comparable_cost_comparison": false,
+    "worker_elapsed_is_not_CPU_billing_or_sequential_time": true,
+    "nested_reader_CPU_or_other_telemetry_added_to_worker_intervals": false
+  }
+}
