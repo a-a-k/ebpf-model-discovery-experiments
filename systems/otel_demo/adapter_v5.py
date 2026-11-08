@@ -1,10 +1,7 @@
-"""Iteration-5 OTel Demo adapter with provider-neutral disabled tracing.
+"""OpenTelemetry Demo deployment and SDK controls.
 
-The v4 adapter is intentionally left executable and unchanged.  This subclass
-keeps its deployment, workload, and native-enabled behavior, but makes the v5
-meaning of a disabled tracing component precise: it installs no trace SDK
-provider and no trace-context propagator.
-"""
+Provider-level tracing settings apply the selected SDK mode while retaining
+the pinned deployment, application workload and native observations."""
 
 from __future__ import annotations
 
@@ -16,7 +13,7 @@ from .adapter import Adapter as AdapterV4
 
 
 class Adapter(AdapterV4):
-    """OTel Demo adapter for the iteration-5 tracing-mode semantics."""
+    """OpenTelemetry Demo deployment with provider-level tracing controls."""
 
     EXPERIMENT_PROTOCOL = "iteration-5"
 

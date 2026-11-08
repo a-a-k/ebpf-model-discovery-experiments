@@ -24,7 +24,8 @@ records both container identity and reachable transport host/port.
 
 ## Native tracing modes
 
-`full` retains native spans from every service. `partial` disables native SDK
+`full` enables native tracing in the configured services; actual span coverage
+is recorded. `partial` disables native SDK
 export in both controlled product-catalog replicas. `absent` applies that setting
 to every application service. Disabled containers receive
 `OTEL_SDK_DISABLED=true`. Checkout and product-catalog construct Go providers
@@ -38,8 +39,7 @@ contains forbidden native spans. This also audits that the standard disable
 flag worked in the other language SDKs. OTel logs, metrics, Docker application logs,
 and common eBPF evidence remain separate artifacts.
 
-Qualification run 40336717147 showed that five nonstandard emitters ignored the
-master switch. In `absent` mode, currency and shipping are therefore rebuilt with
+In `absent` mode, currency and shipping are rebuilt with
 explicit source guards around their direct trace exporters; the mounted Envoy
 template has its tracing provider removed; nginx receives `otel_trace off`; and
 flagd receives no collector URI (its documented opt-in for trace export). These
@@ -115,15 +115,12 @@ Each recovery writes `kafka-admin-drain.json`, retaining the image ID, helper
 name, deadline, commands' timings and results, parsed partition lags, broker
 start timestamps, cleanup outcomes, and any technical failure. Common OBI
 configuration excludes only containers named `study-kafka-admin-*`; it does not
-exclude the broker or application Java processes. Technical qualification run
-`40454954706` observed lag 3 followed by lag 0, an unchanged broker start time,
-and verified helper cleanup in 19.55 seconds. This qualifies the lifecycle, not
-Kafka delivery semantics or application durability. The database schema and
+exclude the broker or application Java processes. The database schema and
 catalog fixture come from the pinned upstream PostgreSQL initializer.
 
 ## Limitations
 
-The Envoy endpoint is experiment deployment metadata, not learner input or an
+The Envoy endpoint is experiment deployment metadata, not discovery input or an
 expected dependency graph. SQL census is evaluator-only evidence. This adapter
 does not invent Kafka message identity links: absence of a confirmed identity
 chain remains unknown to the common inference code. The isolated Kafka admin

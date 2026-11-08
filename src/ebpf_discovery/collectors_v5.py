@@ -1,4 +1,4 @@
-"""Iteration-5 OBI and Coroot acquisition with collector-true provenance.
+"""OBI and Coroot acquisition with collector provenance.
 
 Operational liveness, selected-collector eBPF proof, application coverage, and
 exporter drain are deliberately separate facts.  Nothing in this module turns a

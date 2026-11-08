@@ -11,8 +11,7 @@ Node A runs the upstream application, its data stores, Jaeger, replica A and a
 TCP HAProxy retaining the original `user-timeline-service:9090` identity. Node B
 runs replica B. They have static container addresses `172.28.11.41` and
 `172.28.12.41`; the proxy is `172.28.11.40`. Cross-guest Docker bridge routing
-is not assumed: Docker 29 blocked it in qualification run 40328775069, where
-replica B repeatedly timed out creating its MongoDB index and never listened.
+uses explicit guest-published ports.
 
 The required cross-node edges therefore use bounded guest-published ports.
 Both replicas expose the same per-guest transport port 19090 (the proxy still
@@ -53,7 +52,7 @@ returned status, and full HTTP duration, including failures; no Lua span or
 outcome is synthesized. This is native configuration preparation cost, applies
 only to already-enabled instrumentation, and neither creates a trace context
 nor overrides the SDK-disabled absent mode. This adapter makes no claim that a
-generic OBI collector understands Thrift; eBPF collection/fallback belongs to
+generic OBI collector understands Thrift; eBPF collection belongs to
 the common orchestrator.
 
 The version is fixed by DeathStarBench's pinned openresty image Dockerfile; the
@@ -121,48 +120,3 @@ Actions runner. Shared backing stores mean the two controlled replicas are
 redundant service processes, not independent databases. HAProxy TCP health
 checks detect process/route availability; they do not inspect Thrift semantics.
 The adapter never derives a discovery graph from the known deployment.
-
-## Bounded DeepFlow fallback
-
-`deepflow_fallback.fallback(ctx, adapter, out)` starts the one permitted fallback
-on both guests and returns a handle whose `collect()` method stops the agents,
-copies their raw file output, and writes a hash/provenance manifest. Triggering
-is deliberately outside this adapter: the common orchestrator may call it only
-after actual OBI coverage is absent, before fallback traffic, and must collect
-before guest teardown. It is not a parallel collector comparison.
-
-The fallback pins official DeepFlow agent `v7.2.3` and its multi-platform image
-digest. It uses the official `--standalone` mode, which requires no DeepFlow
-server and writes `l4_flow_log` and `l7_flow_log` locally. The pinned agent can
-publish its first standalone configuration notification before its main loop is
-waiting; the fallback therefore uses the supported 10-second minimum proactive
-reload interval instead of the 60-second default. Readiness requires the pinned
-agent's packet-dispatcher start marker on both guests twice, rather than merely
-accepting a live container. Collection copies regular raw files individually
-(the agent's current-log symlink is not mistaken for a flow file) and records a
-technical error if a guest produced no L4/L7 file. Each guest is limited
-to one CPU, 1024 MiB RAM and 1024 PIDs. Flow files rotate at 128 MiB with at most
-two files for each of the two supported output types (512 MiB maximum per
-guest); Docker logs are limited to two 50 MiB files. Raw files, agent logs,
-container/image inspection, exact configuration, hashes and errors are retained.
-
-This option has a concrete DSB limitation: the pinned official
-`L7Protocol` enum includes HTTP, MongoDB, Redis and other protocols but not
-Thrift. No custom parser is added. The fallback can therefore retain L4
-connections for DSB's Thrift calls and supported database/frontend L7 records,
-but cannot turn those connections into Thrift method observations. Unsupported
-operation interpretation remains explicit rather than being inferred from the
-known deployment.
-
-The bounded qualification did not establish this fallback as operational on
-the two Ubuntu 24.04 guests. Run 40330475066 produced only the agent log and no
-L4/L7 file. Run 40333407431 used the supported 10-second reload interval and
-required dispatcher evidence, but neither guest emitted a dispatcher-start
-marker within 90 seconds; node A subsequently exited with status zero. The
-recorded command used the pinned image's `--standalone` flag and configuration
-path, the pinned loader forces the agent enabled in standalone mode, and the
-official standalone configuration has no separate enable switch. The second
-failure path did not retain the agent logs, so there is no evidence-backed
-configuration correction to justify another run. This fallback is therefore a
-bounded technical non-result, not application observation evidence and not a
-recovery of the unsupported Thrift calls.

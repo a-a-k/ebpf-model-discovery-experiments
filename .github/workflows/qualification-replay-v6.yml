@@ -1,5 +1,5 @@
-name: Explicit inspected qualification continuation v6
-run-name: v6 qualification ${{ inputs.operation }} parent record ${{ inputs.parent_record }}
+name: Restore retained observations
+run-name: qualification ${{ inputs.operation }} parent record ${{ inputs.parent_record }}
 'on':
   workflow_dispatch:
     inputs:

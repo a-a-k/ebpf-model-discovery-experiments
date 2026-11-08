@@ -1,9 +1,7 @@
-"""Iteration-4 OpenTelemetry Demo adapter.
+"""OpenTelemetry Demo workload and operation contracts.
 
-This module deliberately leaves :mod:`systems.otel_demo.adapter` unchanged.  It
-adds the uncapped, durably journaled workload contract used by protocol v4 and
-keeps source-audited obligations separate from Bering's recovered graph.
-"""
+Operations retain complete response and persistence evidence. Source-audited
+obligations remain separate from the observed call graph."""
 from __future__ import annotations
 
 import base64
