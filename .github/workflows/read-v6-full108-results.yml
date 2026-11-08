@@ -23,17 +23,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: docs
+          sparse-checkout: |
+            docs
+            src
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Prepare and record the full standard worker resources
+        env:
+          PYTHONPATH: src
+        run: python -m ebpf_discovery.resources_v6 --report work/reader-host-resources.json
+      - name: Retain the actual worker receipt before result processing
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-full108-reader-host-${{ github.run_id }}
+          path: work/reader-host-resources.json
+          if-no-files-found: error
+          compression-level: 6
       - name: Verify and project the exact completed result publications
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import csv, datetime, hashlib, itertools, json, os, pathlib, re, shutil, stat, subprocess, time
+          import csv, datetime, hashlib, itertools, json, os, pathlib, re, resource, shutil, stat, subprocess, time
           import urllib.error, urllib.parse, urllib.request, zipfile
 
           REPO='a-a-k/ebpf-model-discovery-experiments'
@@ -73,7 +86,8 @@ jobs:
               'complete_comparable_cost_comparison':False,
               'cost_limitation':'Frozen ledger cut and actual reader costs are separate; unknown human/unmetered costs are never zero.',
               'host':{'cpu_count':os.cpu_count(),'allowed_CPUs':sorted(os.sched_getaffinity(0)),
-                  'memory':pathlib.Path('/proc/meminfo').read_text(),'free_bytes_before':shutil.disk_usage(root).free}}
+                  'memory':pathlib.Path('/proc/meminfo').read_text(),'free_bytes_before':shutil.disk_usage(root).free,
+                  'full_worker_preparation':json.loads(pathlib.Path('work/reader-host-resources.json').read_text(encoding='utf8'))}}
           def check(ok,reason):
               if not ok:raise ValueError(reason)
           def sha(body):return hashlib.sha256(body).hexdigest()
@@ -409,7 +423,7 @@ jobs:
           finally:
               end=os.times();result['actual_reader_cost']={'started_ns':started,'ended_ns':time.time_ns(),
                   'CPU_seconds':{k:getattr(end,k)-getattr(cpu,k) for k in ('user','system','children_user','children_system')},
-                  'free_bytes_after':shutil.disk_usage(root).free};save()
+                  'free_bytes_after':shutil.disk_usage(root).free,'maximum_RSS_KiB':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss};save()
               print(json.dumps({'output':str(out),'bytes':out.stat().st_size,'sha256':sha(out.read_bytes()),'status':result['status']}))
           PY
       - name: Publish only literal results, flat source rows, provenance and actual reader cost
