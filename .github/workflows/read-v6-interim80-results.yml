@@ -33,7 +33,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           python - <<'PY'
-          import csv, hashlib, itertools, json, os, pathlib, re, shutil, stat, subprocess, time
+          import csv, hashlib, itertools, json, os, pathlib, re, resource, shutil, stat, subprocess, time
           import urllib.error, urllib.parse, urllib.request, zipfile
 
           REPO='a-a-k/ebpf-model-discovery-experiments'
