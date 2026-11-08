@@ -85,3 +85,50 @@ def test_private_prepared_plan_does_not_relax_main_or_training(tmp_path, monkeyp
     monkeypatch.setattr(b, 'owned_root', lambda root: tmp_path)
     with pytest.raises(ValueError, match='qualification-validation only'):
         b.capture_slot(SimpleNamespace(stage=stage, phase=phase, root=tmp_path), prepared_plan=True)
+
+
+def test_closed_model_origin_is_distinct_from_new_target_execution(monkeypatch):
+    monkeypatch.setenv('GITHUB_RUN_ID', '900')
+    monkeypatch.setenv('GITHUB_SHA', 'a' * 40)
+    parent = {'closed_model_origin': {'run_id': q.CLOSED_MODEL_RUN,
+                                    'source': q.CLOSED_MODEL_SOURCE, 'model_artifacts': {}}}
+    assert q.model_execution(parent) == {'run_id': q.CLOSED_MODEL_RUN, 'source': q.CLOSED_MODEL_SOURCE}
+    assert q.model_execution({}) == {'run_id': 900, 'source': 'a' * 40}
+    expected = {'id': q.CLOSED_MODEL_IDS['none'], 'name': f'v6-model-none-{q.CLOSED_MODEL_RUN}',
+                'size_in_bytes': 10, 'digest': 'sha256:' + 'b' * 64}
+    parent['closed_model_origin']['model_artifacts']['none'] = expected
+    actual = {**expected, 'expired': False,
+              'workflow_run': {'id': q.CLOSED_MODEL_RUN, 'head_sha': q.CLOSED_MODEL_SOURCE}}
+    q.require_model_artifact(parent, actual, 'none')
+    with pytest.raises(ValueError, match='registered origin'):
+        q.require_model_artifact(parent, {**actual, 'workflow_run': {'id': 900, 'head_sha': 'a' * 40}}, 'none')
+    with pytest.raises(ValueError, match='registered origin'):
+        q.require_model_artifact(parent, {**actual, 'digest': 'sha256:' + 'c' * 64}, 'none')
+
+
+def test_closed_model_parent_rejects_other_blocks_and_unapproved_source(reviewed_parent, monkeypatch):
+    value, path, save = reviewed_parent
+    value.update(system='otel_demo', mode='full', repetition=9, smoke=False,
+                 parent_run_id=42267248120, parent_source='9d6414e8824331d368d1732a15200cdad691350b',
+                 root_replay_GO=True, independent_replay_GO=True)
+    value['shared_artifact']['name'] = 'v6-shared-blueprint-42267248120'
+    for c in COLLECTORS:
+        value['training_artifacts'][c]['name'] = f'v6-training-{c}-42267248120'
+    value.update({k: 'd' * 64 for k in ('inspection_report_sha256', 'parent_plan_sha256',
+                 'shared_sha256', 'golden_sha256', 'blueprint_sha256')})
+    value['closed_input_sha256_by_collector'] = {c: 'e' * 64 for c in COLLECTORS}
+    value['closed_model_origin'] = {'run_id': q.CLOSED_MODEL_RUN, 'source': q.CLOSED_MODEL_SOURCE,
+        'failed_validation_job': 128708466812,
+        'parent_record_sha256': 'd11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4',
+        'root_validation_only_GO': True, 'independent_validation_only_GO': True,
+        'no_previous_guests_or_targets': True, 'all_four_frozen_models_retained': True,
+        'model_artifacts': {c: {'id': q.CLOSED_MODEL_IDS[c], 'name': f'v6-model-{c}-{q.CLOSED_MODEL_RUN}',
+                              'size_in_bytes': 10, 'digest': 'sha256:' + 'f' * 64} for c in COLLECTORS}}
+    with pytest.raises(ValueError, match='exact source census'):
+        q.record(path, save(), replay=True)
+    monkeypatch.setattr(b, 'implementation_hashes', lambda: {'src/example.py': 'a' * 64})
+    value['approved_replay_implementation_sha256'] = b.implementation_hashes()
+    assert q.record(path, save(), replay=True)['closed_model_origin']['run_id'] == q.CLOSED_MODEL_RUN
+    value['mode'] = 'partial'
+    with pytest.raises(ValueError, match='exact reviewed four closed'):
+        q.record(path, save(), replay=True)
