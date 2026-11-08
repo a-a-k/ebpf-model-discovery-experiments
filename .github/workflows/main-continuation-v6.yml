@@ -1,0 +1,419 @@
+# Registered MAIN capture inputs and isolated validation.
+name: Registered MAIN capture continuation v6
+run-name: v6 MAIN same-input continuation ${{ inputs.parent_record }}
+'on':
+  workflow_dispatch:
+    inputs:
+      parent_record:
+        type: choice
+        options:
+        - docs/v6-main-parent-OTel-partial9-20261108.json
+        - docs/v6-main-parent-OTel-partial10-20261108.json
+        - docs/v6-main-parent-OTel-partial11-20261108.json
+        - docs/v6-main-parent-OTel-absent10-20261108.json
+        required: true
+      parent_sha256:
+        type: string
+        required: true
+        description: Exact reviewed tracked parent-record Git-LF SHA256
+permissions:
+  contents: read
+  actions: read
+env:
+  PYTHONPATH: src
+  PYTHONUNBUFFERED: '1'
+  GH_TOKEN: ${{ github.token }}
+  V6_MAIN_PARENT: ${{ inputs.parent_record }}
+  V6_MAIN_PARENT_SHA: ${{ inputs.parent_sha256 }}
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: '.github
+
+          docs
+
+          scripts
+
+          src
+
+          systems
+
+          tests
+
+          pyproject.toml
+
+          README.md
+
+          AGENTS.md'
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install the unchanged application/model dependencies
+      run: python -m pip install -e . opentelemetry-proto
+    - name: Use and record the full standard worker envelope
+      run: python -m ebpf_discovery.resources_v6 --report work/host-resources.json
+    - name: Verify the exact original MAIN captures and source approval
+      id: parent
+      run: python -m ebpf_discovery.main_continuation_v6 preflight --parent-record "$V6_MAIN_PARENT" --parent-sha256 "$V6_MAIN_PARENT_SHA" --root work
+    - name: Retain preflight and actual control costs
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-main-continuation-preflight-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+
+          work/case/block-controller-cost.jsonl
+
+          work/case/portable-model-write-guard.json
+
+          work/main-continuation-*.json
+
+          work/main-continuation-cost.jsonl'
+        if-no-files-found: warn
+        compression-level: 6
+  model:
+    needs:
+    - preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: '.github
+
+          docs
+
+          scripts
+
+          src
+
+          systems
+
+          tests
+
+          pyproject.toml
+
+          README.md
+
+          AGENTS.md'
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install the unchanged application/model dependencies
+      run: python -m pip install -e . opentelemetry-proto
+    - name: Use and record the full standard worker envelope
+      run: python -m ebpf_discovery.resources_v6 --report work/host-resources.json
+    - name: Retain the actual worker before long work
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-isolated-host-model${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: work/host-resources.json
+        compression-level: 6
+    - name: Restore the exact upstream training ID and complete original bytes
+      run: python -m ebpf_discovery.main_continuation_v6 restore-training --parent-record "$V6_MAIN_PARENT" --parent-sha256 "$V6_MAIN_PARENT_SHA" --root work --slot "${{ matrix.slot }}"
+      id: restore
+    - name: Build the unchanged pinned Bering and Sheaft tools
+      run: 'bash scripts/setup-toolchain-v4.sh work/tools v5
+
+        echo "PBS_BIN=$(realpath work/tools/bin)" >> "$GITHUB_ENV"'
+    - name: Compute and freeze from this closed training input only
+      run: python scripts/observe-v6-model-host.py
+    - name: Package the portable actual frozen forecasts
+      run: python -m ebpf_discovery.block_v6 package-model --root work/case --out work/model.tar.gz
+    - name: ${{ steps.restore.outputs.artifact_name }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.restore.outputs.artifact_name }}
+        path: 'work/model.tar.gz
+
+          work/model.tar.gz.json'
+        if-no-files-found: error
+        include-hidden-files: true
+        compression-level: 0
+      id: modelupload
+      if: ${{ success() }}
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
+      id: processing
+      if: ${{ always() && steps.restore.outcome == 'success' }}
+    - name: v6-isolated-processing-slot${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-isolated-processing-slot${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: work/processing-publication/
+        if-no-files-found: error
+        include-hidden-files: true
+        compression-level: 6
+      if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
+    - name: v6-isolated-metadata-model${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-isolated-metadata-model${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+
+          work/case/block-controller-cost.jsonl
+
+          work/case/portable-model-write-guard.json
+
+          work/block-plan.json
+
+          work/isolated-controller-cost.jsonl
+
+          work/isolated-*-status.json
+
+          work/block-*-status.json
+
+          work/block-disk-guards.jsonl
+
+          work/block-vm-commands.jsonl
+
+          work/isolated-shared-import.json
+
+          work/isolated-allocation.json
+
+          work/block-all-forecasts-frozen.json
+
+          work/publications/
+
+          work/summaries/
+
+          work/vms/events/
+
+          work/vms/history/*/infrastructure.json
+
+          work/vms/history/*/owned-stop.json
+
+          work/vms/history/*/*/check.txt
+
+          work/vms/history/*/*/serial.log
+
+          work/vms/serial-log-access.jsonl
+
+          work/blueprint-preparation/v6-blueprint-preparation.json
+
+          work/blueprint-preparation/commands.jsonl
+
+          work/vms/preparation/infrastructure.json
+
+          work/vms/preparation/*/check.txt
+
+          work/vms/preparation/*/serial.log
+
+          work/capture-input/verified-import.json
+
+          work/model-input/*/verified-import.json
+
+          work/tools/builds.tsv
+
+          work/tools/pins.tsv
+
+          work/tools/logs/
+
+          work/case/processing-execution.json
+
+          work/case/model-worker-resources.json
+
+          work/case/model-swap-resources.json
+
+          work/model-host-observer.jsonl
+
+          work/case/forecast-saved.json
+
+          work/main-continuation-*.json
+
+          work/main-continuation-cost.jsonl
+
+          work/case/v6-training-publication-restored.json
+
+          work/case/v6-block-reference.json
+
+          work/case/capture-host-resources.json'
+        if-no-files-found: error
+        include-hidden-files: true
+        compression-level: 0
+      if: ${{ always() }}
+    name: model${{ matrix.slot }}
+    strategy:
+      fail-fast: false
+      matrix:
+        slot:
+        - 0
+        - 1
+        - 2
+        - 3
+  validation:
+    needs:
+    - preflight
+    - model
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: '.github
+
+          docs
+
+          scripts
+
+          src
+
+          systems
+
+          tests
+
+          pyproject.toml
+
+          README.md
+
+          AGENTS.md'
+        sparse-checkout-cone-mode: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install the unchanged application/model dependencies
+      run: python -m pip install -e . opentelemetry-proto
+    - name: Use and record the full standard worker envelope
+      run: python -m ebpf_discovery.resources_v6 --report work/host-resources.json
+    - name: Retain the actual worker before long work
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-isolated-host-validation${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: work/host-resources.json
+        compression-level: 6
+    - name: Verify all four actual frozen models before any fresh validation targets
+      run: python -m ebpf_discovery.main_continuation_v6 validation --parent-record "$V6_MAIN_PARENT" --parent-sha256 "$V6_MAIN_PARENT_SHA" --root work --slot "${{ matrix.slot }}"
+      id: capture
+    - name: Package the complete or partial original validation input
+      run: python -m ebpf_discovery.block_v6 package-capture --root work --capture-phase validation --slot "${{ matrix.slot }}"
+      id: package
+      if: ${{ always() && steps.capture.outputs.collector != '' }}
+    - name: ${{ steps.capture.outputs.artifact_name }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.capture.outputs.artifact_name }}
+        path: '${{ steps.package.outputs.archive_path }}
+
+          ${{ steps.package.outputs.manifest_path }}'
+        if-no-files-found: error
+        include-hidden-files: true
+        compression-level: 0
+      id: captureupload
+      if: ${{ always() && steps.package.outcome == 'success' }}
+    - name: Release only the verified exact published working capture
+      run: python -m ebpf_discovery.main_continuation_v6 release --parent-record "$V6_MAIN_PARENT" --parent-sha256 "$V6_MAIN_PARENT_SHA" --root work --slot "${{ matrix.slot }}" --artifact-id "${{ steps.captureupload.outputs.artifact-id }}" --artifact-digest "${{ steps.captureupload.outputs.artifact-digest }}"
+      if: ${{ steps.capture.outcome == 'success' && steps.captureupload.outcome == 'success' }}
+    - name: v6-isolated-metadata-validation${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: v6-isolated-metadata-validation${{ matrix.slot }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
+        path: 'work/host-resources.json
+
+          work/case/processing-publication-verification.json
+
+          work/case/block-controller-cost.jsonl
+
+          work/case/portable-model-write-guard.json
+
+          work/block-plan.json
+
+          work/isolated-controller-cost.jsonl
+
+          work/isolated-*-status.json
+
+          work/block-*-status.json
+
+          work/block-disk-guards.jsonl
+
+          work/block-vm-commands.jsonl
+
+          work/isolated-shared-import.json
+
+          work/isolated-allocation.json
+
+          work/block-all-forecasts-frozen.json
+
+          work/publications/
+
+          work/summaries/
+
+          work/vms/events/
+
+          work/vms/history/*/infrastructure.json
+
+          work/vms/history/*/owned-stop.json
+
+          work/vms/history/*/*/check.txt
+
+          work/vms/history/*/*/serial.log
+
+          work/vms/serial-log-access.jsonl
+
+          work/blueprint-preparation/v6-blueprint-preparation.json
+
+          work/blueprint-preparation/commands.jsonl
+
+          work/vms/preparation/infrastructure.json
+
+          work/vms/preparation/*/check.txt
+
+          work/vms/preparation/*/serial.log
+
+          work/capture-input/verified-import.json
+
+          work/model-input/*/verified-import.json
+
+          work/tools/builds.tsv
+
+          work/tools/pins.tsv
+
+          work/tools/logs/
+
+          work/case/processing-execution.json
+
+          work/case/model-worker-resources.json
+
+          work/case/forecast-saved.json
+
+          work/main-continuation-*.json
+
+          work/main-continuation-cost.jsonl
+
+          work/original-block-plan.json
+
+          work/model-input/*/verified-import.json
+
+          work/models/*/forecast-saved.json
+
+          work/models/*/v6-training-publication-restored.json
+
+          work/models/*/model-swap-resources.json'
+        if-no-files-found: error
+        include-hidden-files: true
+        compression-level: 0
+      if: ${{ always() }}
+    name: validation${{ matrix.slot }}
+    strategy:
+      fail-fast: false
+      matrix:
+        slot:
+        - 0
+        - 1
+        - 2
+        - 3

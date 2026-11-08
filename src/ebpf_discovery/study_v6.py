@@ -1,7 +1,4 @@
 """Fresh training, offline forecast freeze, and independent deployment validation.
-
-The workload helpers and scientific tools are reused explicitly. The old live
-campaign controller, checkpoint dispatch and per-case recovery branches are not.
 """
 from __future__ import annotations
 
@@ -203,6 +200,8 @@ def model(root):
     root = Path(root).resolve()
     if (root / 'forecast-saved.json').exists():
         raise ValueError('a frozen model must not be recomputed')
+    from .block_v6 import processing_publication_preflight
+    processing_publication_preflight(root)
     processing = {'run_id': os.environ['GITHUB_RUN_ID'], 'commit': os.environ['GITHUB_SHA'],
                   'runner_boot_id': Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
                   'started_ns': time.time_ns(),

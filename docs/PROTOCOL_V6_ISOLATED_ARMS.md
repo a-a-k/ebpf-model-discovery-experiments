@@ -10,7 +10,7 @@ operations, four runtime treatments, equal semantic information, native/direct
 and cheap observed-context union baselines remain unchanged. No new predictor,
 ML, accuracy threshold, passive-observation or cost-superiority claim is added.
 
-The user requested one agent arm per standard runner. A single preparation job
+Each agent arm uses a separate standard runner. A single preparation job
 freezes the same newly provisioned guest pair, application images, configuration
 and plan for the whole logical block. Four opaque training slots use separate
 standard Ubuntu workers and the existing seeded `arm_orders.training` assignment.
@@ -42,7 +42,7 @@ on failure. Bytes not published before interruption remain explicitly unavailabl
 Adverse, unavailable and UNKNOWN results never trigger a retry until positive.
 
 The original scientific design and strongest-baseline review were explicitly
-approved by the independent skeptic before implementation:
+independently reviewed before implementation:
 `work/independent-v6-remaining96-one-arm-runner-allocation-original-design-GO-20261106.json`,
 SHA256 `ebd57ca34e50f878de44f194678cc470b2fd6f73c1c0472a2daa20a37b1927e3`.
 This design approval certifies neither source nor actual resource fit.
@@ -51,7 +51,7 @@ This design approval certifies neither source nor actual resource fit.
 
 An additional prospective design decision permits exactly the three already
 scheduled absent-SDK repetition-9 blocks (Petclinic, OTel Demo, DeathStarBench)
-to start after separate exact-source ROOT and independent execution approval.
+to start after separate exact-source implementation and independent execution approval.
 The independently sealed original staged-design record is
 `work/independent-v6-exact3-absent9-staged-scientific-rollout-original-design-GO-20261106.json`,
 SHA256 `e165146a357451831da40319c2581aba3a278b2f54c7b7b39cb5e3bd7ee1a400`.
@@ -90,7 +90,7 @@ The prospective exception record is
 It must bind the literal four identities (the three absent/9 blocks plus only
 DSB/full/9), allocation regime, both original design proof hashes, failed DSB
 run/source/all retained artifact tuples, all-four-new/no-old-input conditions and
-complete implementation census, with ROOT and independent original source/
+complete implementation census, with implementation and independent source/
 execution verdicts. It cannot enlarge the permitted block set. PC/OTel full/9
 remain forbidden in this workflow.
 
@@ -118,7 +118,7 @@ The separate signed ORIGINAL design verdict is
 `docs/independent-v6-PCDSB-remaining56-staged-original-design-GO-20261107.json`,
 original signed SHA256
 `e2f8d59fd53a7e77904df62b92556040a774ebfc2357683c7340f16d8bef6755`.
-Before dispatch, the literal fourteen identities require separate ROOT and
+Before dispatch, the literal fourteen identities require separate implementation and
 independent exact-source execution approval in
 `docs/v6-PCDSB-remaining56-original-execution-GO-20261107.json`, with the actual
 resource-run references and complete implementation census. The original
