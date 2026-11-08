@@ -1,0 +1,44 @@
+{
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "reviewed_utc": "2026-11-08T08:59:58.897263+00:00",
+  "source": "fe9749ee14d900a537ed2afafbb57abcfbc861df",
+  "original_full108_interim80_exact_source_GO": true,
+  "original_fixed80_actual_metadata_identity_plan_input_GO": true,
+  "original_full108_interim80_execution_in_principle_GO_conditional_on_CI_and_merge_equality": true,
+  "actual_exact_dispatch_GO": false,
+  "actual_scientific_result_GO": false,
+  "full108_completion_GO": false,
+  "committed_GitLF_SHA256": {
+    ".github/workflows/read-v6-interim80-results.yml": "512717d7856a30f87bc8dbcb67c599f59207733a9b8d56ae6e47ffec1de9ad12",
+    "docs/v6-interim80-literal-manifest-20261108.json": "9074e34e3c0cf3489fa82a1b996cfb966440ba843b406ccc8b604bf5d83afc18",
+    "docs/v6-interim80-provisional-cost-scope-20261108.json": "0b7537d872bdb4b1d43ea4e662754c4125457f39c34d7d6d55a2bb7c381746a5",
+    "docs/independent-v6-original-full108-interim80-literal-audit-design-GO-20261108.json": "1a109b3981228464b44d6cf007f04f5cab58e4825c3532f939a1b42e4c0fb755"
+  },
+  "frozen_cell_objects_canonical_SHA256": "112d43ce98b83766a635754df7ffde3872eac1f6f8feb5061a4dd9b9e767041d",
+  "input_proof_SHA256": "63d4fb275eed79fd509ce06736bc74cf5b07f33da4bf5e2a92099e5735cf5c2b",
+  "77_plan_CD_census_SHA256": "47ed4bab1fd95e947f959ae0ee6a68ea141de95daab76fb68e656853780d2aad",
+  "checks": [
+    "Exact fe974 differs from d495 ONLY by importing stdlibresource; YAML/inlinePython compile and import checked.",
+    "Scientific rowkey/2array-omission/CSV/value/resultcellappend block byte-identical approved02eeb1d. No other scientific or final108gate files changed.",
+    "All80keys/77publisherAPI-source-job-attempt/path tuples exactly match reviewed63d/47edcensus, no outcome-selected replacements. FourPCfull9qualification cases and76MAINisolated cases,2208rows, original108goal+28pending remain mandatory.",
+    "WholeZIPbytes/SHA/everyCRC/actualAPI/source/job/slot/evaluationpublisher/closure/blueprint/all4freeze-before-target checks unchanged. All Native/no-agent/direct/cheap-context values, metrics, adverse/unavailable/UNKNOWN and null-versus-absent fields retained literally.",
+    "Manifest ROOT/INDflagscurrentlyfalse;137run/739literaljobinterval provisionalledger hash matches.35elapsedUNKNOWN includes10active and22negative skipped scheduler clocks; CPU/billing/human/postcut unknown retained, comparison_completefalse."
+  ],
+  "resources": {
+    "standard_worker": "Ubuntu24.04 standard4CPU/16GiB/360min, no model/VM or artificial caps",
+    "total_metadata_ZIP_API_bytes": 6551126670,
+    "max_one_ZIP_bytes": 214035352,
+    "max_one_original_evaluation_bytes": 213537347,
+    "max_eager_non_evaluation_metadata_bytes": 9578705,
+    "perwrite_actualfree_reserve_bytes": 2147483648,
+    "accepted_risk": "Headers do not prove JSONobject/cumulativeprunedoutput/serializationRAM peak. One full evaluation at a time, two large arrays removed before retention, verifiedtempZIP/eval release; actualfree/CPU/wall/maxRSS retained. Resourcefit/benefit not claimed."
+  },
+  "conditions": [
+    "NormalrequiredCI passes; finalmerge/ref contents equal reviewed functionalworkflow and immutable cellobjects/ledger/design.",
+    "Only truthful reviewed ROOT/INDactivation flags/approval refs may change; any input/artifact/job/path/ledger changes require newreview. Root binds exactactualsource/request/manifest and fresh available accountcapacity, preserving active science.",
+    "Runtime fulloriginalZIP/member and source/evaluation/freeze integrity must pass. Count all reader/sourceCI/download/IO/publication/review and failed/earlystop costs in finite tail; no recursiveledger or zeroUNKNOWNs.",
+    "Inspect actual generated output hashes/sizes/shape before boundedlocalreview. Full original evaluation/raw/model/SQL/journal/VM archives stayActions/cloud. Actual scientific review and full108 synthesis remain separate."
+  ],
+  "original_scope": "Explicit ORIGINAL full108-criterion component GO, not a narrower demonstration. No new predictor/refit/workload/traffic/outcome scoring or cost/collector-superiority claim. Completion-biased80 is not extrapolated to pending28. Strongest equally informed direct and cheap-union baselines remain identical saved values.",
+  "limits": "Conditional source/input/execution-in-principle only: no actual CI success/merge/livecapacity/dispatch/output validity/scientific usefulness claimed. No networkfetch/sourceedit/job/retry/dispatch/evaluationbody read by reviewer."
+}

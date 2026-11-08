@@ -1,8 +1,8 @@
 {
   "study": "clean-restart-v6",
   "original_fixed80_interim_selection_GO": true,
-  "root_original_GO": false,
-  "independent_original_GO": false,
+  "root_original_GO": true,
+  "independent_original_GO": true,
   "original_full108_scope_retained": true,
   "full108_study_complete": false,
   "pending_case_count": 28,
@@ -2013,5 +2013,33 @@
         "publication": "publications/validation/obi.json"
       }
     }
-  ]
+  ],
+  "approved_audit_source_reference": "1b4ce6ec43e1f925074096f5c8c2693923ae4671",
+  "approved_workflow_GitLF_sha256": "d7a94c53e6c065d56822bf31570610a4120e984a7d6bad1a00a10c51a398bb01",
+  "source_and_actual80_metadata_GO_proofs": [
+    {
+      "path": "docs/independent-v6-interim80-fe974-exact-source-input-conditional-execution-original-GO-20261108.json",
+      "original_bytes_sha256": "566452d21564fcf830cdc8a7c42c51f5ab799adf25b659276e8b2665479ac54c",
+      "published_GitLF_sha256": "566452d21564fcf830cdc8a7c42c51f5ab799adf25b659276e8b2665479ac54c"
+    },
+    {
+      "path": "docs/independent-v6-interim80-1b4ce6e-worker-preparation-original-amendment-GO-20261108.json",
+      "original_bytes_sha256": "842eb790a306e27683c66c4d9dcaabefa013f67b254921b6856ecbd6afc35ea4",
+      "published_GitLF_sha256": "842eb790a306e27683c66c4d9dcaabefa013f67b254921b6856ecbd6afc35ea4"
+    },
+    {
+      "path": "docs/root-v6-interim80-fe9749e-original-source-review-20261108.json",
+      "original_bytes_sha256": "74bfd24603c0e023df7aa1fde0f15f344b731d4799092c612e1fe2af3814513e",
+      "published_GitLF_sha256": "74bfd24603c0e023df7aa1fde0f15f344b731d4799092c612e1fe2af3814513e"
+    },
+    {
+      "path": "docs/root-v6-interim80-1b4ce6e-worker-preparation-original-review-20261108.json",
+      "original_bytes_sha256": "9f7533e8c9d86369ce9e53e01d61cef15a0d86ec8171c402b1fad41d2c01981b",
+      "published_GitLF_sha256": "9f7533e8c9d86369ce9e53e01d61cef15a0d86ec8171c402b1fad41d2c01981b"
+    }
+  ],
+  "activated_utc": "2026-11-08T09:11:13.830490+00:00",
+  "normal_required_CI_before_dispatch": true,
+  "actual_dispatch_binding_before_reader_required": true,
+  "scientific_success_GO": false
 }

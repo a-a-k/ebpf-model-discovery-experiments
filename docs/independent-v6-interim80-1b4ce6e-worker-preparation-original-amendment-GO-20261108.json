@@ -1,0 +1,30 @@
+{
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "reviewed_utc": "2026-11-08T09:10:27.419513+00:00",
+  "source": "1b4ce6ec43e1f925074096f5c8c2693923ae4671",
+  "original_resource_only_source_amendment_GO": true,
+  "original_full108_interim80_execution_in_principle_GO_conditions_unchanged": true,
+  "actual_exact_dispatch_GO": false,
+  "actual_scientific_result_GO": false,
+  "full108_completion_GO": false,
+  "resource_fit_GO": false,
+  "workflow_GitLF_SHA256": "d7a94c53e6c065d56822bf31570610a4120e984a7d6bad1a00a10c51a398bb01",
+  "prior_source_input_conditional_execution_proof_SHA256": "566452d21564fcf830cdc8a7c42c51f5ab799adf25b659276e8b2665479ac54c",
+  "unchanged_input_design_GitLF_SHA256": {
+    "docs/v6-interim80-literal-manifest-20261108.json": "9074e34e3c0cf3489fa82a1b996cfb966440ba843b406ccc8b604bf5d83afc18",
+    "docs/v6-interim80-provisional-cost-scope-20261108.json": "0b7537d872bdb4b1d43ea4e662754c4125457f39c34d7d6d55a2bb7c381746a5",
+    "docs/independent-v6-original-full108-interim80-literal-audit-design-GO-20261108.json": "1a109b3981228464b44d6cf007f04f5cab58e4825c3532f939a1b42e4c0fb755"
+  },
+  "trusted_unchanged_source_GitLF_SHA256": {
+    "src/ebpf_discovery/resources_v6.py": "f01e302ac54e64b445194312234d4267ccf3efc44adb9bd4e7952d58546fba05",
+    "src/ebpf_discovery/runtime.py": "c87d20cf97f3f4b07c49bbd56be486d5d3e7d6f499b1ff949d2fa2b8a9cee70b",
+    "src/ebpf_discovery/__init__.py": "5dc0d6c2cf898fa3dbed797e307b0377255ec8f1f9877bbefcadc58f45ef9e2c"
+  },
+  "verified_delta": [
+    "Onlyworkflow16new/2changedlines: checkoutdocs+src, PYTHONPATH=src resourceprepareCLI, earlysmallhostreceiptartifact, embeddedhost.full_worker_preparation.",
+    "resources_v6.prepare/runtime/packageinit use stdlib; CLI main calls prepare only, never modelSwap/model/VM/traffic or scientificprocessing. The qualified three unused hostedSDKpaths only are reclaimed; actualCPU/RAM/disk/inheritedlimits andcleanup time retained. No new caps/paid resources or changed360min deadline.",
+    "Fixed80inputmanifest/ledger/design blobs and entire scientificrow/only2omission/literalcellcopy blocks unchanged. Existing full108gate untouched; all108/all10ops/strongNative/direct/context baselines/externaloutcomes/adverseUNKNOWN retained."
+  ],
+  "costs_and_limits": "Preparation andearlyupload add actualjob/cleanup/transfer/publication costs; embedreceipt alongside priorreader wallCPU/maxRSS andprovisionalledger+postcutUNKNOWN, neverzero. JSONheap/cumulativeoutput risk remains explicitly accepted for standard16GiB read-onlyworker; no universalfit/superiorityclaim. No sourceedit/localresourceexecution, datarefetch, job/dispatch/retry or scientificbodyread by reviewer.",
+  "conditions": "Samepriorconditions: requirednormalCI andfunctionalmerge/refequality; truthfulmanifestROOT/INDactivation whileall80cellobjects/ledger unchanged; ROOT exactsource/request/manifest/livecapacity binding beforeoneexecution. ActualwholeZIP/CRC/source/closure/freeze verification andoutput/scientificreview remain mandatory. ROOTreportsall6CIpassed42465564514/42465560797; thisamendmentreviewdoesnotduplicateAPIreads."
+}
