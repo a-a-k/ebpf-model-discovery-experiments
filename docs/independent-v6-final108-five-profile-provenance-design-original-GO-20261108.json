@@ -1,0 +1,108 @@
+{
+  "reviewer": "/root/ebpf_audit_skeptic_recovery",
+  "reviewed_utc": "2026-11-08T07:09:36.987467+00:00",
+  "review_kind": "ORIGINAL design review before implementation of fixed literal-result provenance extension",
+  "original_fixed108_five_profile_reader_design_GO": true,
+  "exact_source_GO": false,
+  "actual_complete108_input_GO": false,
+  "execution_GO": false,
+  "scientific_success_GO": false,
+  "current_reader": {
+    "source": "790bb86890cde2058fbbf33b18fa53eb0ca94bfc",
+    "path": ".github/workflows/read-v6-full108-results.yml",
+    "GitLF_SHA256": "3aa4c3df35119d503e5c1123453c2e87db29220065358a334703d98496387962"
+  },
+  "intended_contribution": "Complete the original108-cell external-outcome audit using literal saved evaluations, with honest split training/processing/validation origins. This is result delivery, not a new scientific experiment, predictor or claim of improved forecasts.",
+  "strongest_simple_baseline_and_equivalence": "Extend the existing fixed literal reader with only exact provenance profiles. Copy the same saved Native/no-agent/direct conditional/cheap observed-context union values and semantic supply. Literal copying is a known equivalent operation; no extra utility/novelty/accuracy/cost advantage is claimed for the extension. No new resolver, admission/scoring framework, recomputation or refit is needed.",
+  "causal_change": "Only previously overstrict same-run/source assumptions are replaced for five preregistered literal block identities by exact old-capture/current-processing/current-validation comparisons. All scientific input bytes, workload/counts/RNG/oracles, forecasts and externally measured outcomes are preserved.",
+  "fixed_scope": {
+    "scientific_keys": 108,
+    "literal_rows": 2880,
+    "paired_cells": 8,
+    "randomized_between_host_cells": 100,
+    "dual_origin_cells": 20,
+    "unchanged_ordinary_cells": 88,
+    "full9_replay": {
+      "system": "otel_demo",
+      "mode": "full",
+      "repetition": 9,
+      "collectors": [
+        "none",
+        "obi",
+        "coroot",
+        "deepflow"
+      ],
+      "original_training_run_id": 42267248120,
+      "original_training_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "replacement_rule": "Replace only the failed GC25 processing/validation profile with the prospectively bound required same-input replay; retain old failed runs and outputs as history/costs, no fallback to old validation. Original qualification capture labels stay unchanged."
+    },
+    "MAIN_continuations": [
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "repetition": 9,
+        "original_training_run_id": 42401605258,
+        "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+        "collectors": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "repetition": 10,
+        "original_training_run_id": 42401608466,
+        "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+        "collectors": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "partial",
+        "repetition": 11,
+        "original_training_run_id": 42401611728,
+        "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+        "collectors": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      {
+        "system": "otel_demo",
+        "mode": "absent",
+        "repetition": 10,
+        "original_training_run_id": 42401597551,
+        "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+        "collectors": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ]
+      }
+    ]
+  },
+  "mandatory_design_predicates": [
+    "One literal selected profile per exact block; neither an arbitrary profile flag nor a user-provided blocks list may broaden scope. New actual processing/validation runs and sources are not yet bound and must not be fabricated.",
+    "Before first new model compute and any target, prospectively seal the exact current run/source, parent path/GitLF hash and original signed byte hash if normalized, registration/order proof and fixed original input artifact IDs/digests/closures/plan/blueprint/golden. Actual start-time comparisons use exact integer nanoseconds, not lossy floating point.",
+    "At read time bind old original case/source/run/boot/slot/attempt and closed hashes separately from actual current processing run/source/job/attempt and current model artifact APIs. Distinguish qualification full9 and MAIN continuation stages truthfully, without source/environment spoofing.",
+    "Bind all4 actual current saved forecast whole-file hashes through their retained frozen maps, exact original training APIs/seals, current model publication IDs/API digests and actual producing job/attempt lineage. A valid older successful attempt may remain selected only with exact explicit producer binding; ambiguous same-name candidates reject.",
+    "Require identical GOGC25/additional owned16GiB model-only swap profile in all4 current processing claims and retained reviewed resource proof. Do not pretend a receipt body was checked if it is not in the selected metadata.",
+    "All4 full forecast closures/publications precede the first fresh validation target, with actual barrier/current job evidence. Paired full9 stays paired; MAIN continuations stay isolated with registered arm orders. Actual evaluation publisher bytes/SHA, closed input, validation source/job/attempt, model freeze and original/current plans/imports remain mandatory.",
+    "Keep exact108 unique keys and2880 rows. Copy every scientific topfield, row, external metric, error/by-state/DB/async/direct/context value, unavailable/adverse/UNKNOWN and null-versus-absent representation. Omit only frozen_classification.class_test_assignments and target_descriptive_assignments, preserving their declared counts/full source hashes.",
+    "Flat provenance columns identify real old training, current processing and current validation tuples plus literal parent/selection hashes, while existing origin columns continue to mean validation identity. Original scientific columns and values are not reinterpreted.",
+    "Exact source review and ROOT/independent actual108 input/selection/ledger review remain separate. The complete manifest must include negative/unavailable cases without positivity-based selection; technical failures stay cost/provenance, not duplicate science rows.",
+    "Actions only: fixed metadata ZIP APIs/whole SHA/every member CRC, selected evaluation publisher bytes/SHA; no raw capture, VM, journal or full model archives for local review. One original evaluation JSON at a time, verified temporary delivery release, actual free-space guard and review of ALL actual108 artifact/member sizes plus JSON/RAM/output peak before execution. No universal resource-fit claim from small examples."
+  ],
+  "complete_comparable_costs": "Preserve all original and repeated successful models, all failed/interrupted attempts, captures, preparation/build/hash/restore/transfer/streaming publication, swap/paging/observer, CI/readers/report/review and early-stop costs. Freeze a finite explicit ledger cut; current reader and later tails are separate actual costs. Human/unmetered/unsupported paging costs remain UNKNOWN, never0. Keep complete_comparable_cost_comparison false; this is feasibility evidence, not cost superiority.",
+  "limits": "Read-only source/design review only, no source edits, data fetch, model/traffic/VM work, recompute/refit, merge or dispatch. No future actual execution IDs or results invented. This is explicit ORIGINAL full-scope design GO, not a narrower demonstration or source/input/execution/actual-result approval."
+}

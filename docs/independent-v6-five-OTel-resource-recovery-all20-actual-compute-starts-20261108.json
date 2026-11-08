@@ -1,0 +1,512 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "reviewed_utc": "2026-11-08T07:18:48.249918+00:00",
+  "actual_all20_compute_start_order_GO": true,
+  "all_actual_compute_step_starts_after_selection": true,
+  "all_actual_compute_step_starts_after_preregistration": true,
+  "all20_actual_compute_starts_observed": true,
+  "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+  "source184_GitLF_map_equal_to_reviewed_d2bd": true,
+  "job_snapshots_observed_utc": "2026-11-08 07:16:25 UTC",
+  "run_metadata_observed_utc": "2026-11-08 07:17:23 UTC",
+  "selected_API_metadata_path": "work/independent-v6-five-OTel-resource-recovery-all20-starts-selected-API-metadata-20261108.json",
+  "selected_API_metadata_SHA256": "77dfe86bc121094afebd48226f2089600a6db3d3ecdee153ba239a03f1bcf6db",
+  "dispatch_intent_original_SHA256": "002b32a1873f7b1ce4ad781e87735c7ebb44f1e4f324bb96f82ce6e598a76be1",
+  "runs": [
+    {
+      "key": "partial9",
+      "run_id": 42457618421,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "workflow_path": ".github/workflows/main-continuation-v6.yml",
+      "run_created_at": "2026-11-08T07:09:30Z",
+      "parent_record": "docs/v6-main-parent-OTel-partial9-20261108.json",
+      "parent_record_sha256": "b2666d86548463eab1763c0348a786dc8609b2d0d87e2c468e6519f3ca439aa9",
+      "binding_original_path": "work/v6-OTel-partial9-resource-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "1c01271a2038fd068cec0e214f2d12f7668f6dad8d44adb3fd21b16ebe8875bf",
+      "selection_SHA256": "1c01271a2038fd068cec0e214f2d12f7668f6dad8d44adb3fd21b16ebe8875bf",
+      "actualselected_ns": 1794121768881864800,
+      "bound_ns": 1794121772225229300,
+      "prospective_registration_ns": 1794120426013771500,
+      "original_training_run_id": 42401605258,
+      "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "all_four_actual_compute_starts_observed": true,
+      "all_actual_compute_step_starts_after_selection": true,
+      "all_actual_compute_step_starts_after_preregistration": true,
+      "models": [
+        {
+          "job_id": 128660329785,
+          "name": "model0",
+          "slot": 0,
+          "collector": "obi",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:13:43Z"
+          },
+          "actual_compute_start_ns": 1794122023000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660329773,
+          "name": "model1",
+          "slot": 1,
+          "collector": "coroot",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:45Z"
+          },
+          "actual_compute_start_ns": 1794122085000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660329732,
+          "name": "model2",
+          "slot": 2,
+          "collector": "deepflow",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:55Z"
+          },
+          "actual_compute_start_ns": 1794122095000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660329712,
+          "name": "model3",
+          "slot": 3,
+          "collector": "none",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:36Z"
+          },
+          "actual_compute_start_ns": 1794122076000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        }
+      ]
+    },
+    {
+      "key": "partial10",
+      "run_id": 42457621770,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "workflow_path": ".github/workflows/main-continuation-v6.yml",
+      "run_created_at": "2026-11-08T07:09:34Z",
+      "parent_record": "docs/v6-main-parent-OTel-partial10-20261108.json",
+      "parent_record_sha256": "73093ca16633b041456691f80c9e2ef4b2ed2cba658846220cf272c27add15fe",
+      "binding_original_path": "work/v6-OTel-partial10-resource-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "ef3b0aa4c4b5c2b80d629b20832b5f7034478baad094c2d93c93ecb172803a0f",
+      "selection_SHA256": "ef3b0aa4c4b5c2b80d629b20832b5f7034478baad094c2d93c93ecb172803a0f",
+      "actualselected_ns": 1794121772275642000,
+      "bound_ns": 1794121775565587200,
+      "prospective_registration_ns": 1794120426013771500,
+      "original_training_run_id": 42401608466,
+      "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "all_four_actual_compute_starts_observed": true,
+      "all_actual_compute_step_starts_after_selection": true,
+      "all_actual_compute_step_starts_after_preregistration": true,
+      "models": [
+        {
+          "job_id": 128660135634,
+          "name": "model0",
+          "slot": 0,
+          "collector": "none",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:14Z"
+          },
+          "actual_compute_start_ns": 1794122054000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660135707,
+          "name": "model1",
+          "slot": 1,
+          "collector": "obi",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:12:50Z"
+          },
+          "actual_compute_start_ns": 1794121970000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660135490,
+          "name": "model2",
+          "slot": 2,
+          "collector": "coroot",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:12:22Z"
+          },
+          "actual_compute_start_ns": 1794121942000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660135529,
+          "name": "model3",
+          "slot": 3,
+          "collector": "deepflow",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:33Z"
+          },
+          "actual_compute_start_ns": 1794122073000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        }
+      ]
+    },
+    {
+      "key": "partial11",
+      "run_id": 42457624998,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "workflow_path": ".github/workflows/main-continuation-v6.yml",
+      "run_created_at": "2026-11-08T07:09:37Z",
+      "parent_record": "docs/v6-main-parent-OTel-partial11-20261108.json",
+      "parent_record_sha256": "7e122c8e9d95eb8fa9c949cf5f6229f7087886c3eb5017f7cab7589edecc3b4c",
+      "binding_original_path": "work/v6-OTel-partial11-resource-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "eee4ec2ee2b28abfa38d4072ddf6049d7aaed60508a425bb77127f2f55d4e447",
+      "selection_SHA256": "eee4ec2ee2b28abfa38d4072ddf6049d7aaed60508a425bb77127f2f55d4e447",
+      "actualselected_ns": 1794121775643135000,
+      "bound_ns": 1794121778788534400,
+      "prospective_registration_ns": 1794120426013771500,
+      "original_training_run_id": 42401611728,
+      "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "all_four_actual_compute_starts_observed": true,
+      "all_actual_compute_step_starts_after_selection": true,
+      "all_actual_compute_step_starts_after_preregistration": true,
+      "models": [
+        {
+          "job_id": 128660267037,
+          "name": "model0",
+          "slot": 0,
+          "collector": "deepflow",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:15:47Z"
+          },
+          "actual_compute_start_ns": 1794122147000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660267129,
+          "name": "model1",
+          "slot": 1,
+          "collector": "coroot",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:13:07Z"
+          },
+          "actual_compute_start_ns": 1794121987000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660267069,
+          "name": "model2",
+          "slot": 2,
+          "collector": "none",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:13:12Z"
+          },
+          "actual_compute_start_ns": 1794121992000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660267078,
+          "name": "model3",
+          "slot": 3,
+          "collector": "obi",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:32Z"
+          },
+          "actual_compute_start_ns": 1794122072000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        }
+      ]
+    },
+    {
+      "key": "absent10",
+      "run_id": 42457628549,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "workflow_path": ".github/workflows/main-continuation-v6.yml",
+      "run_created_at": "2026-11-08T07:09:40Z",
+      "parent_record": "docs/v6-main-parent-OTel-absent10-20261108.json",
+      "parent_record_sha256": "254ecc0046aad8f6d6fb2fd6400de76f246c2e45aadd0e0ce28dcd819bf08173",
+      "binding_original_path": "work/v6-OTel-absent10-resource-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "1eb33b57d1c9249f0587bcd973269a95784d34ad9669d9a2667dda84d171c5d1",
+      "selection_SHA256": "1eb33b57d1c9249f0587bcd973269a95784d34ad9669d9a2667dda84d171c5d1",
+      "actualselected_ns": 1794121778842264900,
+      "bound_ns": 1794121782144966600,
+      "prospective_registration_ns": 1794120426013771500,
+      "original_training_run_id": 42401597551,
+      "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+      "all_four_actual_compute_starts_observed": true,
+      "all_actual_compute_step_starts_after_selection": true,
+      "all_actual_compute_step_starts_after_preregistration": true,
+      "models": [
+        {
+          "job_id": 128660456993,
+          "name": "model0",
+          "slot": 0,
+          "collector": "coroot",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:41Z"
+          },
+          "actual_compute_start_ns": 1794122081000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660457047,
+          "name": "model1",
+          "slot": 1,
+          "collector": "none",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:15:31Z"
+          },
+          "actual_compute_start_ns": 1794122131000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660457058,
+          "name": "model2",
+          "slot": 2,
+          "collector": "deepflow",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:16:16Z"
+          },
+          "actual_compute_start_ns": 1794122176000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128660457021,
+          "name": "model3",
+          "slot": 3,
+          "collector": "obi",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 9,
+            "name": "Compute and freeze from this closed training input only",
+            "started_at": "2026-11-08T07:14:15Z"
+          },
+          "actual_compute_start_ns": 1794122055000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        }
+      ]
+    },
+    {
+      "key": "full9",
+      "run_id": 42457632259,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "workflow_path": ".github/workflows/qualification-replay-v6.yml",
+      "run_created_at": "2026-11-08T07:09:44Z",
+      "parent_record": "docs/v6-qualification-parent-otel_demo-full9-resource-replay-20261108.json",
+      "parent_record_sha256": "d11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4",
+      "binding_original_path": "work/v6-OTel-full9-resource-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "b688070e187497c1cded998fa0beda9dd1db9e7f3dde8425bf65a475703ff6ca",
+      "selection_SHA256": "b688070e187497c1cded998fa0beda9dd1db9e7f3dde8425bf65a475703ff6ca",
+      "actualselected_ns": 1794121782193570200,
+      "bound_ns": 1794121786141078400,
+      "prospective_registration_ns": 1794120426013771500,
+      "original_training_run_id": 42267248120,
+      "original_training_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "all_four_actual_compute_starts_observed": true,
+      "all_actual_compute_step_starts_after_selection": true,
+      "all_actual_compute_step_starts_after_preregistration": true,
+      "models": [
+        {
+          "job_id": 128659951294,
+          "name": "model (coroot)",
+          "slot": null,
+          "collector": "coroot",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 11,
+            "name": "Compute and freeze forecasts without live application guests",
+            "started_at": "2026-11-08T07:11:41Z"
+          },
+          "actual_compute_start_ns": 1794121901000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128659951355,
+          "name": "model (deepflow)",
+          "slot": null,
+          "collector": "deepflow",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 11,
+            "name": "Compute and freeze forecasts without live application guests",
+            "started_at": "2026-11-08T07:13:06Z"
+          },
+          "actual_compute_start_ns": 1794121986000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128659951208,
+          "name": "model (none)",
+          "slot": null,
+          "collector": "none",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 11,
+            "name": "Compute and freeze forecasts without live application guests",
+            "started_at": "2026-11-08T07:11:34Z"
+          },
+          "actual_compute_start_ns": 1794121894000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        },
+        {
+          "job_id": 128659951359,
+          "name": "model (obi)",
+          "slot": null,
+          "collector": "obi",
+          "attempt": 1,
+          "head_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+          "compute_step": {
+            "number": 11,
+            "name": "Compute and freeze forecasts without live application guests",
+            "started_at": "2026-11-08T07:11:49Z"
+          },
+          "actual_compute_start_ns": 1794121909000000000,
+          "actual_start_after_selection": true,
+          "actual_start_after_preregistration": true,
+          "all_precompute_setup_restore_build_steps_success": true,
+          "job_status_at_snapshot": "in_progress",
+          "job_conclusion_at_snapshot": null
+        }
+      ]
+    }
+  ],
+  "failures_observed_in_retained_snapshots": [],
+  "fit_or_scientific_success_GO": false,
+  "last8_execution_GO": false,
+  "scope": "Official run/job metadata and exact local bindings/sealed parent Git blobs only. Every timestamp comparison used Python integers; actual compute started_at values, never job-start inference. Original binding files are unchanged. This is point-in-time observation and immutable API timestamp review, not a claim of uninterrupted runtime monitoring, successful model completion, four-model freeze, publication, resource fit or scientific utility. No forecasts/input bodies or artifact downloads, source edits, tests, VM/model/probe, merge/dispatch/restart/cancellation.",
+  "original_criterion_limits_costs": "Original108/all10ops/equal Native-no-agent/direct-conditional/cheap-context-union knowledge and independent external outcomes remain. All earlier failures/outputs/repeats/preparation/early-stop/swap-paging/publication/CI/review/unknown human costs remain; no outcome-based selection, novelty or cost-superiority inference. Actual subsequent results and barriers require later review."
+}

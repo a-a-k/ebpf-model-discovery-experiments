@@ -1,0 +1,116 @@
+{
+  "schema": "v6-literal-five-selected-continuations-v1",
+  "study": "clean-restart-v6",
+  "selection_uses_scientific_values": false,
+  "cells": 20,
+  "ordinary_cells": 88,
+  "profiles": [
+    {
+      "key": [
+        "otel_demo",
+        "partial",
+        9
+      ],
+      "run_id": 42457618421,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "parent": {
+        "path": "docs/v6-main-parent-OTel-partial9-20261108.json",
+        "sha256": "b2666d86548463eab1763c0348a786dc8609b2d0d87e2c468e6519f3ca439aa9"
+      },
+      "binding": {
+        "path": "docs/v6-OTel-partial9-resource-actual-execution-binding-20261108.json",
+        "sha256": "58e6c6f83fe9f501d39e6ea81cdfa9d31ae648b71eb5d1c69ec9b2a623a0bccf",
+        "original_bytes_sha256": "1c01271a2038fd068cec0e214f2d12f7668f6dad8d44adb3fd21b16ebe8875bf",
+        "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
+      },
+      "original_run_id": 42401605258,
+      "original_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    },
+    {
+      "key": [
+        "otel_demo",
+        "partial",
+        10
+      ],
+      "run_id": 42457621770,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "parent": {
+        "path": "docs/v6-main-parent-OTel-partial10-20261108.json",
+        "sha256": "73093ca16633b041456691f80c9e2ef4b2ed2cba658846220cf272c27add15fe"
+      },
+      "binding": {
+        "path": "docs/v6-OTel-partial10-resource-actual-execution-binding-20261108.json",
+        "sha256": "98f25096d638530b08478425bf9ab7dbc7111b3395add845e54547cbd8920278",
+        "original_bytes_sha256": "ef3b0aa4c4b5c2b80d629b20832b5f7034478baad094c2d93c93ecb172803a0f",
+        "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
+      },
+      "original_run_id": 42401608466,
+      "original_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    },
+    {
+      "key": [
+        "otel_demo",
+        "partial",
+        11
+      ],
+      "run_id": 42457624998,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "parent": {
+        "path": "docs/v6-main-parent-OTel-partial11-20261108.json",
+        "sha256": "7e122c8e9d95eb8fa9c949cf5f6229f7087886c3eb5017f7cab7589edecc3b4c"
+      },
+      "binding": {
+        "path": "docs/v6-OTel-partial11-resource-actual-execution-binding-20261108.json",
+        "sha256": "f38fa30dadfee10eea73e85ea73b425abc0eea8e45b5a79f0b297768c7321b6d",
+        "original_bytes_sha256": "eee4ec2ee2b28abfa38d4072ddf6049d7aaed60508a425bb77127f2f55d4e447",
+        "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
+      },
+      "original_run_id": 42401611728,
+      "original_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    },
+    {
+      "key": [
+        "otel_demo",
+        "absent",
+        10
+      ],
+      "run_id": 42457628549,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "parent": {
+        "path": "docs/v6-main-parent-OTel-absent10-20261108.json",
+        "sha256": "254ecc0046aad8f6d6fb2fd6400de76f246c2e45aadd0e0ce28dcd819bf08173"
+      },
+      "binding": {
+        "path": "docs/v6-OTel-absent10-resource-actual-execution-binding-20261108.json",
+        "sha256": "e4c11fab7c5291b43f127a9d28f83620fd704d8fc56e991c16ba65c0c437a245",
+        "original_bytes_sha256": "1eb33b57d1c9249f0587bcd973269a95784d34ad9669d9a2667dda84d171c5d1",
+        "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
+      },
+      "original_run_id": 42401597551,
+      "original_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190"
+    },
+    {
+      "key": [
+        "otel_demo",
+        "full",
+        9
+      ],
+      "run_id": 42457632259,
+      "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+      "parent": {
+        "path": "docs/v6-qualification-parent-otel_demo-full9-resource-replay-20261108.json",
+        "sha256": "d11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4"
+      },
+      "binding": {
+        "path": "docs/v6-OTel-full9-resource-actual-execution-binding-20261108.json",
+        "sha256": "14b622e3c38a25562da5920011db32311bc422f949bf2e41e0af2ccd97599060",
+        "original_bytes_sha256": "b688070e187497c1cded998fa0beda9dd1db9e7f3dde8425bf65a475703ff6ca",
+        "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
+      },
+      "original_run_id": 42267248120,
+      "original_source": "9d6414e8824331d368d1732a15200cdad691350b"
+    }
+  ],
+  "design_GO": "f8631e61159d3d26a2341c0c5a123c0f6b33deabcdcdfdec5f7926938995ef65",
+  "source_and_actual_input_execution_GO": false
+}

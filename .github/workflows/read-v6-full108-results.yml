@@ -1,4 +1,4 @@
-# Fixed contract, supplied only after ORIGINAL final selection review (not created here):
+# Fixed completed-result manifest contract:
 # docs/v6-full108-completed-result-manifest.json:
 # {study:"clean-restart-v6", original_fixed108_selection_GO:true,
 #  root_original_GO:true, independent_original_GO:true,
@@ -44,16 +44,21 @@ jobs:
               'deathstarbench':('compose_post','read_home_timeline','read_user_timeline')}
           ARMS=('none','obi','coroot','deepflow');MODES=('absent','partial','full');REPS=(9,10,11)
           SOURCES=('ebpf','native','combined','context-baseline');VIEWS=('raw','network_scope')
-          PAIRED={'petclinic':42267236483,'otel_demo':42402184737}
+          PAIRED={'petclinic':42267236483,'otel_demo':42457632259}
           ORIGINAL='9d6414e8824331d368d1732a15200cdad691350b'
-          REPLAY_RUN=42402184737;REPLAY_SOURCE='803bf539b1eee06180cb13b2ed40b4f92a2462c9'
-          REPLAY_PARENT='docs/v6-qualification-parent-otel_demo-full9-gc25-replay-20261107.json'
-          REPLAY_PARENT_SHA='c9875d135a5fffdc777b265db82a721082a849c017d7fd2ba9f9dba7c44c5599'
-          REPLAY_BINDING='docs/v6-OTel-full9-gc25-actual-execution-binding-20261107.json'
-          REPLAY_BINDING_SHA='d16a1683ac9abf977d0faf822e82cd83755c37c5c68908afb32b1081fe612d58'
-          REPLAY_BINDING_ORIGINAL_SHA='cb967a744a49c53c7c09a835cacdf923100a0f2db2cae4b9d4765a5c4f815c67'
-          REPLAY_ORDER='docs/independent-v6-OTel-full9-gc25-all-four-actual-compute-starts-supplement-20261107.json'
-          REPLAY_ORDER_SHA='e5f7d54ab889ede876b41b2a5f776fa5508ed566d0437b75fc3b6aae1a433a99'
+          REPLAY_RUN=42457632259;REPLAY_SOURCE='76aebebfc11c68c2c6f4b916f715a833f548d9cc'
+          REPLAY_PARENT='docs/v6-qualification-parent-otel_demo-full9-resource-replay-20261108.json'
+          REPLAY_PARENT_SHA='d11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4'
+          REPLAY_BINDING='docs/v6-OTel-full9-resource-actual-execution-binding-20261108.json'
+          REPLAY_BINDING_SHA='14b622e3c38a25562da5920011db32311bc422f949bf2e41e0af2ccd97599060'
+          PROFILES='docs/v6-full108-literal-five-continuation-profiles-20261108.json'
+          PROFILES_SHA='a95ab6322634b0e711a91c7b4eaa4f8f24033389f13e2baab17ade4767ac8e95'
+          REPLAY_ORDER='docs/independent-v6-five-OTel-resource-recovery-all20-actual-compute-starts-20261108.json'
+          REPLAY_ORDER_SHA='2e9ab82fd958584e2ffa05a436d1a12faa82bc86ea229890dfb6814c01fa0bec'
+          RESOURCE_PROOF='docs/v6-OTel-full9-four-model-resource-publication-review-20261108.json'
+          RESOURCE_PROOF_SHA='PENDING_ACTUAL_FOUR_MODEL_RESOURCE_PUBLICATION_REVIEW'
+          MAIN={};MAIN_PARENTS={};MAIN_BINDINGS={}
+          MAIN_ORIGINAL='5e622ed58c340e2cfe85c3c287ba90bc9c610190'
           OMIT=('class_test_assignments','target_descriptive_assignments');RESERVE=2*1024**3
           if os.environ.get('GITHUB_ACTIONS')!='true' or os.environ.get('GITHUB_REPOSITORY')!=REPO:
               raise RuntimeError('fixed completed-result projection is repository Actions only')
@@ -81,8 +86,11 @@ jobs:
               with urllib.request.urlopen(request,timeout=60) as response:return json.load(response)
           def paired(key):return key[0] in PAIRED and key[1:3]==('full',9)
           def replay(key):return key[:3]==('otel_demo','full',9)
+          def continued(key):return key[:3] in MAIN
           def origin(cell,key,artifact,phase):
               run,source=(42267248120,ORIGINAL) if replay(key) and phase=='training' else (artifact['run_id'],artifact['source'])
+              if continued(key) and phase=='training':
+                  run,source=MAIN[key[:3]]['original_run_id'],MAIN_ORIGINAL
               return (cell.get('system'),cell.get('mode'),cell.get('seed'),cell.get('collector'),cell.get('phase'),
                   cell.get('smoke'),cell.get('stage'),str(cell.get('run_id')),cell.get('commit'))==(
                   *key,phase,False,'qualification' if paired(key) else 'main',str(run),source)
@@ -105,23 +113,70 @@ jobs:
               check(total==artifact['bytes'] and digest.hexdigest()==artifact['sha256'],'whole original ZIP bytes/SHA differ')
           save()
           try:
-              parent_bytes=blob(REPLAY_PARENT);binding_bytes=blob(REPLAY_BINDING);order_bytes=blob(REPLAY_ORDER)
+              parent_bytes=blob(REPLAY_PARENT);binding_bytes=blob(REPLAY_BINDING);order_bytes=blob(REPLAY_ORDER);profile_bytes=blob(PROFILES)
               check(sha(parent_bytes)==REPLAY_PARENT_SHA and sha(binding_bytes)==REPLAY_BINDING_SHA
-                  and sha(order_bytes)==REPLAY_ORDER_SHA,'fixed replay parent/selection/order record differs')
+                  and sha(order_bytes)==REPLAY_ORDER_SHA and sha(profile_bytes)==PROFILES_SHA,'fixed parent/selection/order/profile record differs')
               replay_parent=json.loads(parent_bytes);binding=json.loads(binding_bytes);order=json.loads(order_bytes)
-              check(sha(binding_bytes.replace(b'\n',b'\r\n'))==REPLAY_BINDING_ORIGINAL_SHA,
-                  'published LF binding differs from preserved original CRLF record')
+              profiles=json.loads(profile_bytes)['profiles'];orders={r['run_id']:r for r in order['runs']}
+              expected_profiles={('otel_demo','partial',9):(42457618421,42401605258,MAIN_ORIGINAL),
+                  ('otel_demo','partial',10):(42457621770,42401608466,MAIN_ORIGINAL),
+                  ('otel_demo','partial',11):(42457624998,42401611728,MAIN_ORIGINAL),
+                  ('otel_demo','absent',10):(42457628549,42401597551,MAIN_ORIGINAL),
+                  ('otel_demo','full',9):(REPLAY_RUN,42267248120,ORIGINAL)}
+              check(len(profiles)==5 and {tuple(p['key']) for p in profiles}==set(expected_profiles)
+                  and len(orders)==5 and set(orders)=={p['run_id'] for p in profiles}
+                  and order['actual_all20_compute_start_order_GO'] is True and order['all20_actual_compute_starts_observed'] is True
+                  and order['all_actual_compute_step_starts_after_selection'] is True
+                  and order['all_actual_compute_step_starts_after_preregistration'] is True,'literal five-profile/20-start selection differs')
+              for profile in profiles:
+                  k=tuple(profile['key']);row=orders[profile['run_id']]
+                  pb=blob(profile['parent']['path']);bb=blob(profile['binding']['path']);parent=json.loads(pb);chosen=json.loads(bb)
+                  check(sha(pb)==profile['parent']['sha256'] and sha(bb)==profile['binding']['sha256']
+                      and sha(bb.replace(b'\n',b'\r\n'))==profile['binding']['original_bytes_sha256']==row['selection_SHA256']
+                      and (profile['run_id'],profile['original_run_id'],profile['original_source'])==expected_profiles[k]
+                      and profile['source']==REPLAY_SOURCE==row['source']==chosen['source']
+                      and chosen['workflow_run']['databaseId']==profile['run_id']
+                      and chosen['selected_before_dispatch'] is True
+                      and chosen['selected_ns']==row['actualselected_ns'] and chosen['bound_ns']==row['bound_ns']
+                      and chosen['parent_record']==row['parent_record']==profile['parent']['path']
+                      and chosen['parent_record_sha256']==row['parent_record_sha256']==profile['parent']['sha256']
+                      and (chosen['original_training_run_id'],chosen['original_training_source'])==expected_profiles[k][1:]
+                      and (parent['system'],parent['mode'],parent['repetition'])==k
+                      and (parent['parent_run_id'],parent['parent_source'])==expected_profiles[k][1:]
+                      and chosen['cell_keys']==[[*k,c] for c in ARMS]
+                      and chosen['processing_profile']==parent['processing_profile']=={
+                          'bering_child_go_environment':{'GOGC':'25'},'additional_model_swap_file_bytes':16*1024**3}
+                      and parent['registered_before_processing_ns']==row['prospective_registration_ns']<chosen['selected_ns']<=chosen['bound_ns']
+                      and len(row['models'])==4 and {m['collector'] for m in row['models']}==set(ARMS)
+                      and all(m['actual_compute_start_ns']>chosen['bound_ns'] and m['head_source']==REPLAY_SOURCE
+                          and m['actual_start_after_selection'] is True and m['actual_start_after_preregistration'] is True
+                          and m['all_precompute_setup_restore_build_steps_success'] is True for m in row['models']),
+                      'prospective fixed old-input/current-processing profile or actual start binding differs')
+                  check(chosen['original_training_artifact_ids']=={c:a['id'] for c,a in parent['training_artifacts'].items()},
+                      'five-profile original capture IDs differ')
+                  if k!=('otel_demo','full',9):
+                      check(parent['stage']=='main' and parent['smoke'] is False and all(parent[x] is True for x in
+                          ('root_parent_input_GO','independent_parent_input_GO','root_original_execution_GO','independent_original_execution_GO')),
+                          'MAIN parent cannot be relabelled as qualification')
+                      MAIN[k]=profile;MAIN_PARENTS[k]=parent;MAIN_BINDINGS[k]=chosen
               check((binding['workflow_run']['databaseId'],binding['source'],binding['original_training_run_id'],
                   binding['original_training_source'],binding['parent_record_sha256'])==(REPLAY_RUN,REPLAY_SOURCE,42267248120,ORIGINAL,REPLAY_PARENT_SHA)
                   and binding['workflow_run']['status']=='queued'
-                  and binding['cell_keys']==[['otel_demo','full',9,c] for c in ARMS]
-                  and order['selection_SHA256']==REPLAY_BINDING_ORIGINAL_SHA and order['all_actual_compute_step_starts_after_selection'] is True
-                  and order['all_four_actual_compute_step_start_times_observed'] is True,
+                  and binding['cell_keys']==[['otel_demo','full',9,c] for c in ARMS],
                   'fixed dual-origin selection differs')
               selection_ns=binding['selected_ns']
-              check(selection_ns==order['actualselected_ns'],'actual selection timestamp differs')
               result['fixed_replay_profile']={'parent_path':REPLAY_PARENT,'parent_sha256':REPLAY_PARENT_SHA,
                   'selection_path':REPLAY_BINDING,'selection_sha256':REPLAY_BINDING_SHA,'literal_selection':binding}
+              result['fixed_five_continuation_profiles']={'path':PROFILES,'sha256':PROFILES_SHA,'literal':profiles,
+                  'actual_compute_order_path':REPLAY_ORDER,'actual_compute_order_sha256':REPLAY_ORDER_SHA}
+              resource_bytes=blob(RESOURCE_PROOF);resource_review=json.loads(resource_bytes)
+              check(sha(resource_bytes)==RESOURCE_PROOF_SHA
+                  and (resource_review['run_id'],resource_review['source'],resource_review['parent_record_sha256'])==
+                      (REPLAY_RUN,REPLAY_SOURCE,REPLAY_PARENT_SHA)
+                  and resource_review['root_actual_model_resource_review_GO'] is True
+                  and resource_review['independent_actual_model_resource_review_GO'] is True
+                  and set(resource_review['models'])==set(ARMS),'reviewed actual four-model resource/publication proof required')
+              result['fixed_full9_resource_review']={'path':RESOURCE_PROOF,'sha256':RESOURCE_PROOF_SHA,'literal':resource_review}
               manifest_bytes=blob(MANIFEST);manifest=json.loads(manifest_bytes)
               check(manifest.get('study')=='clean-restart-v6' and all(manifest.get(k) is True for k in
                   ('original_fixed108_selection_GO','root_original_GO','independent_original_GO')),'reviewed fixed108 manifest required')
@@ -171,6 +226,10 @@ jobs:
                       if replay(key):
                           wanted.update(('qualification-parent-block-plan.json','qualification-replay-import.json','model-package-imports.json'))
                           wanted.update(f'models/{c}/{n}' for c in ARMS for n in ('forecast-saved.json','v6-training-publication-restored.json'))
+                      if continued(key):
+                          wanted.update(('original-block-plan.json','isolated-allocation.json'))
+                          wanted.update(f'models/{c}/{n}' for c in ARMS for n in
+                              ('forecast-saved.json','v6-training-publication-restored.json','model-swap-resources.json'))
                       raw={n:zipped.read(n) for n in wanted};plan=json.loads(raw['block-plan.json']);freeze=json.loads(raw['block-all-forecasts-frozen.json'])
                       models={m['case']['collector']:m for m in freeze['models']}
                       check(len(freeze['models'])==4 and set(models)==set(ARMS) and freeze['all_four_frozen_before_targets'] is True,'original four-model barrier differs')
@@ -201,6 +260,7 @@ jobs:
                                   and restored['block_plan_sha256']==replay_parent['parent_plan_sha256'] and restored['parent_record_sha256']==REPLAY_PARENT_SHA
                                   and (str(saved['processing_execution']['run_id']),saved['processing_execution']['commit'])==(str(REPLAY_RUN),REPLAY_SOURCE)
                                   and saved['processing_execution']['bering_child_go_environment']=={'GOGC':'25'}
+                                  and saved['processing_execution']['additional_model_swap_file_bytes']==16*1024**3
                                   and selection_ns<saved['processing_execution']['started_ns']<saved['saved_ns']<freeze['verified_ns']
                                   and restored['processing_execution']=={'run_id':REPLAY_RUN,'source':REPLAY_SOURCE},'old capture/current model binding differs')
                               check(all(capture[k]==v for k,v in replay_parent['training_artifacts'][c].items())
@@ -209,10 +269,71 @@ jobs:
                               check(all(current_model_api[k]==model_api[k] for k in ('id','name','size_in_bytes','digest'))
                                   and current_model_api['expired'] is False and model_api['name']==f'v6-model-{c}-{REPLAY_RUN}'
                                   and (current_model_api['workflow_run']['id'],current_model_api['workflow_run']['head_sha'])==(REPLAY_RUN,REPLAY_SOURCE),'actual current model artifact differs')
+                              resource=resource_review['models'][c];swap_bytes=resource['swap_receipt_json_utf8'].encode('utf8');swap=json.loads(swap_bytes)
+                              check(sha(swap_bytes)==resource['swap_receipt_sha256']==saved['sha256_by_path']['model-swap-resources.json']
+                                  and swap['status']=='active' and swap['additional_swap_file_bytes']==16*1024**3
+                                  and all(resource['current_model_artifact_API'][k]==current_model_api[k] for k in ('id','name','size_in_bytes','digest')),
+                                  'actual reviewed swap receipt/current full9 model binding differs')
                               replay_lineage[c]={'training_run_id':42267248120,'training_source':ORIGINAL,'training_artifact_id':capture['id'],
                                   'training_closed_input_sha256':closed,'processing_execution':saved['processing_execution'],
                                   'model_artifact_API':current_model_api,'validation_run_id':REPLAY_RUN,'validation_source':REPLAY_SOURCE,
                                   'parent_record_sha256':REPLAY_PARENT_SHA,'selection_record_sha256':REPLAY_BINDING_SHA}
+                          publication['verified_dual_origin_models']=replay_lineage
+                      if continued(key):
+                          profile=MAIN[key[:3]];registered=MAIN_PARENTS[key[:3]];chosen=MAIN_BINDINGS[key[:3]]
+                          ref=profile['parent'];old_plan=json.loads(raw['original-block-plan.json'])
+                          allocation=json.loads(raw['isolated-allocation.json'])
+                          expected_plan={**old_plan,'run_id':profile['run_id'],'source':profile['source'],'main_closed_input_parent':ref}
+                          check(plan==expected_plan and old_plan==registered['parent_plan']
+                              and sha(raw['original-block-plan.json'])==registered['parent_plan_sha256']
+                              and allocation['main_closed_input_parent']==ref and allocation['plan']==plan
+                              and allocation['block_plan_sha256']==sha(raw['block-plan.json'])
+                              and allocation['regime']=='randomized-between-host-arms-v6'
+                              and freeze['allocation']==allocation and set(allocation['models'])==set(ARMS),
+                              'literal MAIN old/current plan and allocation differ')
+                          capture_boots=set();model_boots=set();model_ids=set()
+                          for c in ARMS:
+                              saved_bytes=raw[f'models/{c}/forecast-saved.json'];saved=json.loads(saved_bytes)
+                              restored=json.loads(raw[f'models/{c}/v6-training-publication-restored.json'])
+                              swap_bytes=raw[f'models/{c}/model-swap-resources.json'];swap=json.loads(swap_bytes)
+                              row=allocation['models'][c];processing=saved['processing_execution'];producer=restored['model_producing_job']
+                              slot=old_plan['arm_orders']['training'].index(c);capture=restored['artifact_API'];model_api=row['model_artifact_API']
+                              closed=registered['closed_input_sha256_by_collector'][c]
+                              check(sha(saved_bytes)==models[c]['forecast_manifest_sha256']==row['forecast_sha256']
+                                  and saved['case']==models[c]['case']==row['case']==registered['capture_case_by_collector'][c]
+                                  and restored['original_capture_identity']==saved['case'] and restored['main_continuation_parent']==ref
+                                  and saved['training_closed_input_sha256']==restored['training_closed_input_sha256']==closed
+                                  and capture==row['training_artifact_API']
+                                  and all(capture[k]==v for k,v in registered['training_artifacts'][c].items())
+                                  and (capture['workflow_run']['id'],capture['workflow_run']['head_sha'])==(profile['original_run_id'],MAIN_ORIGINAL),
+                                  'literal MAIN original capture/frozen forecast differs')
+                              check((str(processing['run_id']),processing['commit'])==(str(profile['run_id']),profile['source'])
+                                  and processing['bering_child_go_environment']=={'GOGC':'25'}
+                                  and processing['additional_model_swap_file_bytes']==16*1024**3
+                                  and registered['registered_before_processing_ns']<chosen['selected_ns']<processing['started_ns']<saved['saved_ns']<freeze['verified_ns']
+                                  and producer['display_name']==f'model{slot}' and producer['job']=='model' and producer['slot']==slot
+                                  and producer['runner_boot_id']==processing['runner_boot_id']
+                                  and swap['status']=='active' and swap['additional_swap_file_bytes']==16*1024**3
+                                  and sha(swap_bytes)==saved['sha256_by_path']['model-swap-resources.json'],
+                                  'literal MAIN current model profile/order/swap binding differs')
+                              model_job=api(f"actions/jobs/{producer['job_id']}")
+                              check((model_job['run_id'],model_job['head_sha'],model_job['run_attempt'],model_job['name'],model_job['conclusion'])==
+                                  (profile['run_id'],profile['source'],producer['attempt'],f'model{slot}','success'),
+                                  'actual MAIN producing model job differs')
+                              current_model=api(f"actions/artifacts/{model_api['id']}")
+                              check(all(current_model[k]==model_api[k] for k in ('id','name','size_in_bytes','digest'))
+                                  and current_model['expired'] is False
+                                  and model_api['name']==f"v6-isolated-model-slot{slot}-{profile['run_id']}-attempt{producer['attempt']}"
+                                  and (current_model['workflow_run']['id'],current_model['workflow_run']['head_sha'])==(profile['run_id'],profile['source']),
+                                  'actual MAIN current model publication differs')
+                              capture_boots.add(saved['case']['runner_boot_id']);model_boots.add(processing['runner_boot_id']);model_ids.add(model_api['id'])
+                              replay_lineage[c]={'training_run_id':profile['original_run_id'],'training_source':MAIN_ORIGINAL,
+                                  'training_artifact_id':capture['id'],'training_closed_input_sha256':closed,
+                                  'processing_execution':processing,'model_artifact_API':current_model,'actual_model_job_API':model_job,
+                                  'validation_run_id':profile['run_id'],'validation_source':profile['source'],
+                                  'parent_record_sha256':ref['sha256'],'selection_record_sha256':profile['binding']['sha256']}
+                          check(len(capture_boots)==len(model_boots)==len(model_ids)==4 and None not in capture_boots|model_boots,
+                              'four distinct old captures/current model hosts/publications required')
                           publication['verified_dual_origin_models']=replay_lineage
                       check(shutil.disk_usage(root).free>=max(zipped.getinfo(e['paths']['evaluation']).file_size for e in group)+RESERVE,'insufficient one-summary/output workspace')
                       by_path={e['paths']['evaluation']:e for e in group}
@@ -260,7 +381,8 @@ jobs:
                                           '__cell_training_artifact_id':replay_lineage[c]['training_artifact_id'],
                                           '__cell_training_closed_input_sha256':replay_lineage[c]['training_closed_input_sha256'],
                                           '__cell_model_artifact_id':replay_lineage[c]['model_artifact_API']['id'],
-                                          '__cell_parent_record_sha256':REPLAY_PARENT_SHA,'__cell_selection_record_sha256':REPLAY_BINDING_SHA} if replay(key) else {}),
+                                          '__cell_parent_record_sha256':replay_lineage[c]['parent_record_sha256'],
+                                          '__cell_selection_record_sha256':replay_lineage[c]['selection_record_sha256']} if replay(key) or continued(key) else {}),
                                       '__cell_job_id':a['job_id'],'__cell_job_attempt':a['job_attempt'],**row})
                               result['cells'].append({'key':entry['key'],'allocation_regime':'physically_paired' if paired(key) else 'randomized_between_host',
                                   'original_metadata_artifact':a,'original_evaluation':expected_eval,'original_publication':published,

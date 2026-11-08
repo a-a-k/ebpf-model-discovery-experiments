@@ -1,0 +1,63 @@
+{
+  "selected_ns": 1794121768881864800,
+  "selected_before_dispatch": true,
+  "bound_ns": 1794121772225229300,
+  "workflow_run": {
+    "createdAt": "2026-11-08T07:09:30Z",
+    "databaseId": 42457618421,
+    "displayTitle": "v6 MAIN same-input continuation docs/v6-main-parent-OTel-partial9-20261108.json",
+    "event": "workflow_dispatch",
+    "headSha": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+    "status": "queued",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42457618421"
+  },
+  "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+  "parent_record": "docs/v6-main-parent-OTel-partial9-20261108.json",
+  "parent_record_sha256": "b2666d86548463eab1763c0348a786dc8609b2d0d87e2c468e6519f3ca439aa9",
+  "processing_profile": {
+    "bering_child_go_environment": {
+      "GOGC": "25"
+    },
+    "additional_model_swap_file_bytes": 17179869184
+  },
+  "cell_keys": [
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "deepflow"
+    ]
+  ],
+  "original_training_run_id": 42401605258,
+  "original_training_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+  "original_training_artifact_ids": {
+    "obi": 13587602964,
+    "coroot": 13587034318,
+    "deepflow": 13588600623,
+    "none": 13587333186
+  },
+  "all_four_new_models_before_first_fresh_targets": true,
+  "allocation": "randomized between-host",
+  "all_previous_outputs_and_costs_retained": true,
+  "scientific_values_used_for_selection": false,
+  "required_actual_compute_start_order_review": true,
+  "fit_or_scientific_success_claimed": false
+}
