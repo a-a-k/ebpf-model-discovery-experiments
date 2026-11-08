@@ -23,11 +23,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: docs
+          sparse-checkout: |
+            docs
+            src
           sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Prepare and record the full standard worker resources
+        env:
+          PYTHONPATH: src
+        run: python -m ebpf_discovery.resources_v6 --report work/reader-host-resources.json
+      - name: Retain the actual worker receipt before result processing
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-interim80-reader-host-${{ github.run_id }}
+          path: work/reader-host-resources.json
+          if-no-files-found: error
+          compression-level: 6
       - name: Verify and project the exact completed result publications
         env:
           GH_TOKEN: ${{ github.token }}
@@ -61,7 +74,8 @@ jobs:
               'complete_comparable_cost_comparison':False,
               'cost_limitation':'Frozen ledger cut and actual reader costs are separate; unknown human/unmetered costs are never zero.',
               'host':{'cpu_count':os.cpu_count(),'allowed_CPUs':sorted(os.sched_getaffinity(0)),
-                  'memory':pathlib.Path('/proc/meminfo').read_text(),'free_bytes_before':shutil.disk_usage(root).free}}
+                  'memory':pathlib.Path('/proc/meminfo').read_text(),'free_bytes_before':shutil.disk_usage(root).free,
+                  'full_worker_preparation':json.loads(pathlib.Path('work/reader-host-resources.json').read_text(encoding='utf8'))}}
           def check(ok,reason):
               if not ok:raise ValueError(reason)
           def sha(body):return hashlib.sha256(body).hexdigest()
