@@ -1,0 +1,34 @@
+{
+  "registered_utc": "2026-11-08T11:31:00.304362+00:00",
+  "root_ORIGINAL_validation_only_model_reuse_tar_release_design_GO": true,
+  "independent_design_path": "work\\independent-v6-full9-validation-only-model-reuse-verified-tar-release-original-design-GO-20261108.json",
+  "independent_SHA256": "324ed4ec04c34c116901608de92dd7f19326c103916f8d7a7055df9c49e1e220",
+  "original_criterion": "Feasibility of executable operation models and externally checked prospective outcomes with absent/incomplete SDK traces; all108/all10 retained, no mandatory superiority to equivalent direct arithmetic.",
+  "intended_contribution": "Finish exactfirst paired OTel full9 validation from four alreadyfrozen/published successfulmodels; recovertechnicalstartupcapacityfailure without modelrecomputation or changing scientificdata.",
+  "strongest_simple_baseline": "Existing successfulfull4 import/hash/freeze pipeline plus releaseonlyverifiedownedcompressedcopies (same helper as isolatedarms). Re-runningmodelcomputations or weakeningVMguard is unnecessary; randomoldsourcefailedjobretry retainsknowncopies.",
+  "actual_facts": {
+    "failure_job": 128708466812,
+    "model_run": 42457632259,
+    "model_source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc",
+    "failure_finally_free_bytes": 53043347456,
+    "VMrequired_bytes": 53687091200,
+    "gap_bytes": 643743744,
+    "five_verified_compressed_tar_bytes": 7576575183,
+    "projected_post_release_free_bytes": 60619922639,
+    "projected_margin_over_unchanged_VMguard": 6932831439,
+    "projection_is_not_actual_measurement": true,
+    "no_guests_or_targets_started": true
+  },
+  "change": "Add only fixed qualification-validation-only operation for the four literal76a modelpublications; newtargetrun/source explicit; keep original9d capturecases. Releaseonlyverified5compressedtars afterfullrestore/census/freeze, retainall4frozenmodeltrees/seals/barrier; recordactualpostreleasefree and applyunchanged2x24GiB+2GiBguard. No additionalSDKcleanup/mntmoves/profile/model/control changes.",
+  "same_information_and_semantic_knowledge": true,
+  "native_direct_cheap_context_baselines_unchanged": true,
+  "costs": "Alloldmodelwork, failedvalidation prefix, newtransfer/verification/deletion/sourceCI/review/publication costs retained; human/unmetered UNKNOWN; no lowercost/utilityclaim.",
+  "source_implementation_or_execution_GO": false,
+  "required_before_execution": [
+    "exactsourceandfunctionaltests",
+    "newsealedparent4oldmodels/newtargets+all4resourceproof",
+    "independentORIGINALsourceexecutionGO",
+    "normalCI",
+    "actualsourcebounddispatchbeforetarget"
+  ]
+}
