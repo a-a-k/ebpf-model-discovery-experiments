@@ -430,6 +430,8 @@ jobs:
                                   and value['cell']['blueprint_sha256']==model['case']['blueprint_sha256']==plan['blueprint_sha256'],'cell/source/blueprint origin differs')
                               check(value['validation_closed_input_sha256']==before['closed_input_sha256']==before['files']['closed-input.json']['sha256']==published['closed_input_sha256']
                                   and value['forecast_manifest_sha256']==model['forecast_manifest_sha256'] and freeze['verified_ns']<value['cell']['started_ns'],'closed/frozen/prospective binding differs')
+                              if replay(key):check(target_binding['bound_ns']<value['cell']['started_ns'],
+                                  'actual new target execution binding must precede the fresh capture')
                               capture_api=published['artifact_API'];check(capture_api['workflow_run']['id']==a['run_id'] and capture_api['workflow_run']['head_sha']==a['source'],'original capture publication origin differs')
                               slot=plan['arm_orders']['validation'].index(c)
                               if paired(key):
