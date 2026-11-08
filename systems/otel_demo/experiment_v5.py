@@ -1,9 +1,7 @@
-"""Iteration-5 OTel Demo experiment bridge.
+"""OpenTelemetry Demo workload with explicit SDK controls.
 
-Workload contracts, durable request planning, and outcome verification are the
-unchanged v4 implementation.  Only deployment tracing-mode semantics come from
-the separately versioned v5 adapter.
-"""
+Workload contracts and verification use experiment_v4.Adapter; deployment and
+tracing controls use adapter_v5.Adapter."""
 
 from __future__ import annotations
 

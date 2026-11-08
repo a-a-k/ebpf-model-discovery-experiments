@@ -1,6 +1,6 @@
 # Registered MAIN capture inputs and isolated validation.
-name: Registered MAIN capture continuation v6
-run-name: v6 MAIN same-input continuation ${{ inputs.parent_record }}
+name: Process retained observations
+run-name: MAIN same-input continuation ${{ inputs.parent_record }}
 'on':
   workflow_dispatch:
     inputs:

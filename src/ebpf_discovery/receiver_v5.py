@@ -1,4 +1,4 @@
-"""Gracefully closable raw OTLP receiver for iteration 5.
+"""Raw OTLP receiver with graceful shutdown.
 
 SIGTERM stops acceptance, joins every in-flight request handler, closes the
 listening socket, and only then writes a hash checkpoint.  This proves closure

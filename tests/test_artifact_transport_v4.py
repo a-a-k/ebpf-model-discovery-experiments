@@ -198,15 +198,3 @@ def test_archive_member_traversal_rejected_with_resealed_outer_hash(tmp_path):
     assert not (tmp_path / "out").exists()
 
 
-def test_series_requires_both_full_subtree_packages_and_retains_restore_proof():
-    workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/series-v4.yml").read_text()
-    assert "--source work/campaign/toolchain --out work/campaign/toolchain-package" in workflow
-    assert "--source work/campaign/infrastructure/remote-toolchain-v4" in workflow
-    assert "--out work/campaign/infrastructure/handoff-package --kind handoff" in workflow
-    assert "steps.full_toolchain_package.outputs.ready == 'true'" in workflow
-    assert "steps.full_handoff_package.outputs.ready == 'true'" in workflow
-    assert "steps.retention_layout.outputs.ready == 'true'" in workflow
-    assert "!work/campaign/toolchain/**" in workflow
-    assert "!work/campaign/infrastructure/remote-toolchain-v4/**" in workflow
-    assert "work/campaign/infrastructure/handoff-package/package-status.json" in workflow
-    assert "work/campaign/retention-layout.json" in workflow

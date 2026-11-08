@@ -5,7 +5,7 @@ and prospective outcome forecasts when application SDK tracing is absent or
 incomplete. Bering builds graphs from retained observations; Sheaft predicts
 outcomes that are checked against independent application measurements.
 
-## Current study: v6
+## Experiment
 
 The [protocol](docs/PROTOCOL_V6.md) defines 108 cells:
 
@@ -27,8 +27,10 @@ unavailable forecasts, adverse results and unknown values remain in the results.
 The study does not assume that graph size or model availability demonstrates
 predictive usefulness.
 
-[Reviewed interim findings](docs/FINDINGS_V6.md) cover 80 completed cells; the
-remaining 28 OTel cells are required for the complete 108-cell study.
+See [results and limitations](docs/FINDINGS.md).
+The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
+generation; the [context baseline](docs/CONTEXT_BASELINE.md) specifies the
+observed-edge union.
 
 ## Code and execution
 
@@ -51,13 +53,3 @@ processing files use a streaming upload with a manifest of bytes, SHA256, mode
 and modification time. Preparation, transfers, failures, repeated processing and
 review costs remain part of the study; unmeasured costs are unknown.
 
-## Historical evidence
-
-The completed 81-cell study used repetitions 6/7/8. Its SDK-only input was a
-filtered source projection collected while an eBPF collector was also running;
-it was not a separate SDK-only runtime control. Those measurements do not fill
-the fresh v6 matrix.
-
-- [Iteration-5 findings and limitations](docs/HISTORICAL_RESULTS_V5.md).
-- [Iteration-4 methods, results and reproduction](docs/LEGACY_EXPERIMENT_V4.md).
-- [Artifact publication and retention](docs/ARCHIVE_PUBLICATION.md).

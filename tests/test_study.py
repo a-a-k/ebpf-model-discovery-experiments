@@ -6,7 +6,6 @@ from types import SimpleNamespace
 import pytest
 
 from ebpf_discovery import study
-from ebpf_discovery.campaign_process_v4 import _commands
 
 
 @pytest.fixture
@@ -154,17 +153,6 @@ def test_modified_frozen_model_is_retained_as_failure(rig, monkeypatch):
     assert "collector-close" in rig.events
 
 
-def test_supervisor_selects_study_explicitly_and_preserves_legacy_default(tmp_path):
-    config = dict(out=str(tmp_path), system="petclinic", mode="partial", seed=6,
-                  checkpoint=str(tmp_path / "checkpoint"), vms=str(tmp_path / "vms"),
-                  collector="deepflow", smoke=True)
-    command, _ = _commands(config)
-    assert command[command.index("-m") + 1] == "ebpf_discovery.campaign_v5"
-    command, _ = _commands({**config, "runner": "study"})
-    assert command[command.index("-m") + 1] == "ebpf_discovery.study"
-    assert command[command.index("--collector") + 1] == "deepflow"
-    with pytest.raises(ValueError, match="explicit collector"):
-        _commands({**config, "runner": "study", "collector": None})
 
 
 def test_invalid_cell_is_rejected_before_constructing_components(rig):

@@ -1,4 +1,4 @@
-"""Lossless DeepFlow v7.2.3 standalone JSONL codec for iteration 5.
+"""Lossless DeepFlow v7.2.3 standalone JSONL codec.
 
 The original flat JSON record remains the authority.  This module emits a
 generic OTLP-shaped observation only for unambiguous ``signal_source=EBPF``

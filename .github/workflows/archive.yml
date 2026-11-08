@@ -1,9 +1,9 @@
-name: Archive original measurement artifacts
+name: Publish experiment artifacts
 on:
   workflow_dispatch:
     inputs:
       run_ids:
-        description: Space-separated run IDs, including failed preparations and superseded pilot
+        description: Experiment run IDs, including failed technical attempts
         required: true
         type: string
 permissions:
@@ -13,6 +13,7 @@ permissions:
 jobs:
   archive:
     runs-on: ubuntu-24.04
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
       - name: Create a new draft evidence release

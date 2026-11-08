@@ -1,6 +1,6 @@
 # Explicit job slots retain exact upstream IDs across built-in failed-job retries.
-name: Isolated arm study v6 (24 blocks and registered DSB retry)
-run-name: v6 isolated ${{ inputs.stage }} ${{ inputs.system }}/${{ inputs.mode }} r${{ inputs.repetition }} full
+name: Isolated runtime treatments
+run-name: isolated ${{ inputs.stage }} ${{ inputs.system }}/${{ inputs.mode }} r${{ inputs.repetition }} full
 'on':
   workflow_dispatch:
     inputs:

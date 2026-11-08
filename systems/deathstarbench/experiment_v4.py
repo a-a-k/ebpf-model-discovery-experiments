@@ -1,4 +1,4 @@
-"""Iteration-4 DeathStarBench operation and source-audited call declarations.
+"""DeathStarBench operations and observed-call contracts.
 
 This module does not add topology to a discovered graph. Call declarations must
 be resolved against observed Bering edges before constructing a predicate.

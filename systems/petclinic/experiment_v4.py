@@ -1,9 +1,7 @@
-"""Iteration-4 Petclinic adapter and structural operation contracts.
+"""Petclinic workloads and structural operation contracts.
 
-The deployment remains the pinned v3 application build.  This subclass removes
-study-injected request deadlines and gateway recovery filters while preserving
-the upstream application's own owner-details fallback.
-"""
+Operations retain independent read/write outcome checks without an
+experiment-imposed request deadline."""
 from __future__ import annotations
 
 import base64

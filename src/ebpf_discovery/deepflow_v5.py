@@ -1,4 +1,4 @@
-"""Pinned DeepFlow v7.2.3 standalone lifecycle for iteration 5.
+"""Pinned DeepFlow v7.2.3 standalone collection.
 
 DeepFlow writes flat JSONL on each guest rather than OTLP.  Immutable snapshots
 are copied and decoded losslessly by :mod:`deepflow_codec_v5`; the native OTLP

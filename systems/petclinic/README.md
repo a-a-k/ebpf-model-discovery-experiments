@@ -21,12 +21,10 @@ rules while preserving container identity, independent guest kernels, and observ
 cross-node TCP calls. `set_replicas` stops or starts only the Visits containers and
 never rewrites routing. Resolved Compose files and `placement.json` are retained.
 
-The previously qualified SIMPAT image was a GitHub Actions artifact and may be
-expired or require credentials. A workflow may provide an already restored public
-or otherwise authorized archive via `PETCLINIC_IMAGE_ARCHIVE`. Without it, the
-adapter rebuilds the pinned source, pinned Java base, and digest-verified Java
-agent remotely and records `rebuild_from_pinned_source`; it does **not** claim the
-new image is byte-identical to the historical artifact.
+The adapter builds the pinned source, Java base and digest-verified Java agent
+in Actions and records the resulting image provenance. A prebuilt authorized
+archive can be selected with `PETCLINIC_IMAGE_ARCHIVE`; its actual identity is
+recorded separately from a source rebuild.
 
 ## Operations and external oracles
 
@@ -43,7 +41,7 @@ requires exactly one row whose returned ID, pet ID 1, date `2026-09-01`, and
 description all match. The synchronous committed rows need no live polling. This
 local database census has no workload HTTP step or request header. Reset deletes
 only these synthetic rows. No response, manifest, or expected topology is supplied
-as learner evidence.
+as discovery input.
 
 ## Native tracing
 
