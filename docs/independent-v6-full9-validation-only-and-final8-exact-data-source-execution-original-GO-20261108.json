@@ -1,0 +1,73 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "reviewed_utc": "2026-11-08T12:00:51.256964+00:00",
+  "original_user_criterion_execution_GO": true,
+  "original_full9_first4_paired_targets_validate_only_GO": true,
+  "original_scheduled_final8_full10_full11_isolated_execution_GO": true,
+  "seal_exact_reviewed_records_GO": true,
+  "scientific_success_GO": false,
+  "full108_complete_GO": false,
+  "full_validation_successful_budget_observed": false,
+  "full_size_phase_budgets_qualified": false,
+  "approved_functional_source": "a5ca2fdb0fd33d7fd1669c0566373050972bc918",
+  "approved_GitLF_implementation_files": 184,
+  "approved_GitLF_canonical_map_sha256": "00e0972a5b84acf1914dc75aec2ca3156d0e801d6e3d37f7b8c37673baccebcd",
+  "reviewed_draft_readset_sha256": {
+    "docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json": "ecca026dc6a9f2be15237509ce91456cbde47d2e65098f03c6b4bfa2c07e65ca",
+    "docs/v6-OTel-final8-original-execution-GO-20261107.json": "1f914117b0c3f44150923b70ac6dd075f736b3b4634fd4f21a66002d650c99e4",
+    "docs/v6-OTel-full9-four-model-resource-publication-review-20261108.json": "9892a5e468100b7d23248fd20d3358374f35967e97e2aba04ad0f247631b4a5c"
+  },
+  "actual_checks": [
+    "Independently rebuilt implementationselector census from184 GitLF sourceA blobs, exactbothdraftmaps andcanonicalSHA. PublishedROOT/INDsource/design/805300aggregate proofbytes/SHA match.",
+    "Originald11 capture tuples/plan/golden/blueprint/closedinputSHA/profile/originalbeforeprocessingns identical in newvalidate-only parent. Allfour modelAPI IDs/name/bytes/digest andexact rawswapUTF8/parsed/SHA matchactualperarmproofs andresource9892. Oldmodels allfrozen before newvalidation_registered_ns; no forecasts or outcomes read for admission.",
+    "Newclosed-model origin isexact42457632259/76a, originalcapture42267248120/9d, fourcanonical retainedmodelIDs13608397911/13611353779/13608828890/13613014457. Freshactualtargetrun/source remainsseparate andmustberegistered. Allfour verifiedimports/freeze beforeanytarget, onlyfiveverifiedcompressedtars released; originalmodels/golden/blueprint/seals/twoguestkernels retained.",
+    "Actualallfour model/publication resourcepaths completed under4CPU/16GB/360min, GC25+16GiBswap, directZIP/compressedguard. Physicalmemorypressure retained; no reliablephysicalheadroom or universalfit claim. Isolated import sourceactuallyreleases shared/modeldelivery archives beforetargets; q-only retainedtar capacitymechanism isnot hidden in final8.",
+    "Known qvalidation128708466812 failurebeforeguests/targets explicit: finallyfree53043347456B vsunchangedVMrequirement53687091200B. Design324ed releasesonly5verifiedcompressed7576575183Blogicalbytes, measuredactualpostcleanupfree/unchangedguard mandatory. Fullsuccessfulvalidationruntime/storage/publicationbudget remainsunobserved, overlaprisk explicitlyaccepted without pretending qualification."
+  ],
+  "source_and_data_proof_references": {
+    "ROOT_source": "2b61d36ec733fc4d8083038190a793855a012fc7bd421bb00d09eb669f1a0b50",
+    "IND_source": "42d811a88f4510429c6f755749541494e2b3a78d7d8e52e96d72422e5e1c401d",
+    "ROOT_validate_only_design": "742340dad66c61829092ac7ac2cdece349938c032f0bb9170b09f6a31c549371",
+    "IND_validate_only_design": "324ed4ec04c34c116901608de92dd7f19326c103916f8d7a7055df9c49e1e220",
+    "IND_all4_actual_resource": "805300d3415b6c3b3a0ee2dda3a3bed0817b528c5b35769b5e7f6a543f1093ca",
+    "original_final8_design": "c028a347ac51a03fce4a5f817765c0b4ee2662abb37a9f2aebd1327462b3c143",
+    "original_swap_design": "3d91a5c64cc8a74a2c0cb71409094e339d7fa577bd0ef46835e6058d010c1c33"
+  },
+  "actual_functional_A_CI": {
+    "run_id": 42477057784,
+    "source": "a5ca2fdb0fd33d7fd1669c0566373050972bc918",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "id": 128720641909,
+        "name": "checks",
+        "conclusion": "success"
+      },
+      {
+        "id": 128720641982,
+        "name": "control-fixture-v5",
+        "conclusion": "success"
+      },
+      {
+        "id": 128720642012,
+        "name": "identical-input-discovery-fixture",
+        "conclusion": "success"
+      }
+    ],
+    "API_receipt_path": "work/independent-v6-full9-validate-final8-A-actual-CI-API-metadata-20261108.json",
+    "API_receipt_sha256": "522a31adbbb1bac9ce609c32cf65e6017fe65a55fbd5a8aa3fc82920d3e62812",
+    "final_sealed_head_normal_CI_still_required": true
+  },
+  "scopes": {
+    "full9_validate_only": "Exactly4firstpairedOTel/full/9 targets usingretainedfrozen76models, no modelrecompute/training/previousactualtargets. Preserveoldfailedattempt/costs andoldcapture→model→newtarget lineage in literal108reader.",
+    "final8": "Exactlyotel_demo-full-10 andotel_demo-full-11, fourfreshisolatedarms each; no otherblock/olddata substitution. Same standardizedrandomizedhosts,2guestkernels,counts/seeds/pinnedblueprint/GC25+16GiBmodelprofile; all4ownforecasts beforetargets.",
+    "whole_study": "Originalfresh108/all10operations/8paired100isolated unchanged; firstpairedfull9 targets remainrequired/retained evenwhilefinal8overlaps. Unknown/adverse/negative outcomesneverexclude or trigger positivityretry."
+  },
+  "authorized_sealing_changes_only": [
+    "Qparent replay/closedvalidation ROOT+INDflags false→true, source_execution_GO_pending false; addthisexecutionproof refs. Final8originalsource/ROOT/IND/scientificrollout flags andexplicitvalidationbudgetriskaccepted false→true, sourcepending false; addROOT/INDexecutionproof refs. Scope/modeltuples/resource/census/methods unchanged.",
+    "Fixcurrentseal bookkeeping: retain inherited07:04d11 seal asoriginal_parent_sealed_utc andrecordactualnewsealed_utc; preserveoriginalprocessingpreregistration andnew11:48validation_registration_ns. No retroactive timestamp rewrite.",
+    "Aftersealedbytes normalCIpasses, verifymerged184selectedGitLFmapunchanged andbindactualnewrun/source/attempt+exactsealedparent/approvalSHA BEFOREfirsttarget. Keepqualificationparent globalfullsizefit/full8dispatch andallscientificsuccessflagsfalse; final8authorization isitsseparateexactapproval."
+  ],
+  "original_criterion_baselines_costs": "GO isfor ORIGINALfeasibility study with executableoperationmodels andactualprospectivelyfrozenBering→Sheaft forecasts underabsent/incompleteSDK, judgedagainstindependentexternaloutcomes. EqualNative/no-agent, directconditional (.875/1wheregivencontracts) andcheapordinary observededge/contextunion semantic information. No weaker usefuldemo/internalARI/admissionflag criterion, no newpredictor/ML/novelty/costsuperiority. Allpreparation/earlystop/failed/repeatedmodels/failedVMstartup/reimport/transfer/hash/swap-paging/publication/metadataRangeexceptions/CI/report/review andunknownhuman costsretained; wallnotCPU/billing. Finalactualexternalresults mustbereviewed beforeanyresearchsuccessclaim.",
+  "scope_of_this_review": "Read-onlyexistingsource/derivedmetadata/drafts andofficialfunctionalACI API; no scientificbodies/forecasts/targets or sourceedits/tests/model/VM/merge/dispatch. ROOTownssealing/execution."
+}

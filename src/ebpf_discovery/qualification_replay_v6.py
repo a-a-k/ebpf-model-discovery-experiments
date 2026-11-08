@@ -31,6 +31,10 @@ from .validation_v6 import require_block_freeze, require_forecast
 
 SCHEMA = 'v6-qualification-parent-v1'
 HEX = re.compile('[0-9a-f]{64}')
+CLOSED_MODEL_RUN = 42457632259
+CLOSED_MODEL_SOURCE = '76aebebfc11c68c2c6f4b916f715a833f548d9cc'
+CLOSED_MODEL_IDS = {'none': 13608397911, 'obi': 13611353779,
+                    'coroot': 13608828890, 'deepflow': 13613014457}
 
 
 def execution():
@@ -85,7 +89,49 @@ def record(path, expected_sha, *, replay=False):
         if (value.get('approved_replay_implementation_sha256') is not None
                 and value['approved_replay_implementation_sha256'] != b.implementation_hashes()):
             raise ValueError('replay source differs from the reviewed implementation census')
+    if 'closed_model_origin' in value:
+        origin = value['closed_model_origin']
+        if (not replay or (value['system'], value['mode'], value['repetition'], value['smoke'])
+                != ('otel_demo', 'full', 9, False)
+                or (value['parent_run_id'], value['parent_source']) != (
+                    42267248120, '9d6414e8824331d368d1732a15200cdad691350b')
+                or (origin.get('run_id'), origin.get('source')) != (CLOSED_MODEL_RUN, CLOSED_MODEL_SOURCE)
+                or origin.get('failed_validation_job') != 128708466812
+                or origin.get('parent_record_sha256') !=
+                    'd11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4'
+                or any(origin.get(k) is not True for k in (
+                    'root_validation_only_GO', 'independent_validation_only_GO',
+                    'no_previous_guests_or_targets', 'all_four_frozen_models_retained'))
+                or set(origin.get('model_artifacts', {})) != set(COLLECTORS)
+                or {c: a.get('id') for c, a in origin['model_artifacts'].items()} != CLOSED_MODEL_IDS):
+            raise ValueError('only the exact reviewed four closed full9 models may cross runs')
+        if value.get('approved_replay_implementation_sha256') is None:
+            raise ValueError('validation-only continuation requires an exact source census')
+        for collector, actual in origin['model_artifacts'].items():
+            if (actual.get('name') != f'v6-model-{collector}-{CLOSED_MODEL_RUN}'
+                    or type(actual.get('size_in_bytes')) is not int or actual['size_in_bytes'] <= 0
+                    or not re.fullmatch('sha256:[0-9a-f]{64}', str(actual.get('digest', '')))):
+                raise ValueError('closed models require complete exact publication tuples')
     return value
+
+
+def model_execution(parent):
+    origin = parent.get('closed_model_origin')
+    return {'run_id': origin['run_id'], 'source': origin['source']} if origin else execution()
+
+
+def require_model_artifact(parent, actual, collector):
+    origin = parent.get('closed_model_origin')
+    name = f"v6-model-{collector}-{model_execution(parent)['run_id']}"
+    if origin is None:
+        b.artifact_identity(actual, name)
+        return
+    expected = origin['model_artifacts'][collector]
+    if (actual.get('expired') is not False or actual.get('name') != name
+            or any(actual.get(k) != expected.get(k) for k in ('id', 'name', 'size_in_bytes', 'digest'))
+            or (actual.get('workflow_run') or {}).get('id') != origin['run_id']
+            or (actual.get('workflow_run') or {}).get('head_sha') != origin['source']):
+        raise ValueError('closed model publication differs from its exact registered origin')
 
 
 def artifact(value, expected):
@@ -99,7 +145,9 @@ def artifact(value, expected):
 
 
 def preflight(args):
-    parent = record(args.parent_record, args.parent_sha256, replay=args.operation == 'replay')
+    parent = record(args.parent_record, args.parent_sha256, replay=args.operation in ('replay', 'validate'))
+    if (args.operation == 'validate') != ('closed_model_origin' in parent):
+        raise ValueError('validation-only operation requires its exact closed-model parent')
     root = b.owned_root(args.root)
     run = b.api(f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{parent['parent_run_id']}")
     if (run.get('id') != parent['parent_run_id'] or run.get('head_sha') != parent['parent_source']
@@ -113,31 +161,34 @@ def preflight(args):
     # common archive and all four ACTUAL current model publications instead.
     incoming = max(a['size_in_bytes'] for a in parent['training_artifacts'].values())
     if getattr(args, 'models_ready', False):
-        if args.operation != 'replay':
+        if args.operation not in ('replay', 'validate'):
             raise ValueError('only approved replay validation imports models')
         current, page = [], 1
         while True:
-            items = b.api(f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}/artifacts?per_page=100&page={page}")['artifacts']
+            items = b.api(f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{model_execution(parent)['run_id']}/artifacts?per_page=100&page={page}")['artifacts']
             current.extend(items)
             if len(items) < 100: break
             page += 1
         models = []
         for collector in COLLECTORS:
-            name = f"v6-model-{collector}-{os.environ['GITHUB_RUN_ID']}"
+            name = f"v6-model-{collector}-{model_execution(parent)['run_id']}"
             matches = [a for a in current if a['name'] == name]
             if len(matches) != 1:
                 raise ValueError('all four exact current model publications are required before download')
-            b.artifact_identity(matches[0], name)
+            require_model_artifact(parent, matches[0], collector)
             models.extend(matches)
         incoming = sum(a['size_in_bytes'] for a in models)
         write_json(root / 'validation-current-run-artifact-API.json', models)
     b.capacity(root, parent['shared_artifact']['size_in_bytes'] + incoming)
     if os.environ.get('GITHUB_OUTPUT'):
         outputs = {'parent_run_id': parent['parent_run_id'],
+                   'model_run_id': model_execution(parent)['run_id'],
                    'shared_artifact_id': parent['shared_artifact']['id'],
                    'system': parent['system'], 'mode': parent['mode'],
                    'repetition': parent['repetition']}
         outputs.update({c + '_artifact_id': parent['training_artifacts'][c]['id'] for c in COLLECTORS})
+        if getattr(args, 'models_ready', False):
+            outputs['model_artifact_ids'] = ','.join(str(a['id']) for a in models)
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf8') as f:
             for key, value in outputs.items(): f.write(f'{key}={value}\n')
 
@@ -297,18 +348,19 @@ def import_validation(args, parent):
         'block_plan_sha256': parent['parent_plan_sha256'], 'parent_record_sha256': args.parent_sha256})
     write_json(root / 'block-plan.json', current)
     imports = []
+    release_candidates = [(source / 'shared.tar.gz', package)]
     for collector in COLLECTORS:
-        name = f"v6-model-{collector}-{os.environ['GITHUB_RUN_ID']}"
+        name = f"v6-model-{collector}-{model_execution(parent)['run_id']}"
         values = []
         page = 1
         while True:
-            rows = b.api(f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}/artifacts?per_page=100&page={page}")['artifacts']
+            rows = b.api(f"repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{model_execution(parent)['run_id']}/artifacts?per_page=100&page={page}")['artifacts']
             values.extend(a for a in rows if a['name'] == name)
             if len(rows) < 100: break
             page += 1
         if len(values) != 1:
             raise ValueError('exactly four actual current replay model publications are required')
-        b.artifact_identity(values[0], name)
+        require_model_artifact(parent, values[0], collector)
         folder = root / 'model-input' / name
         model_package = b.read(folder / 'model.tar.gz.json')
         target = root / 'models' / collector
@@ -319,13 +371,15 @@ def import_validation(args, parent):
         saved = require_forecast(target, parent['system'], parent['mode'], parent['repetition'],
                                  collector, stage='qualification', smoke=parent['smoke'])
         status = saved['case']
+        expected_parent_sha = parent.get('closed_model_origin', {}).get(
+            'parent_record_sha256', args.parent_sha256)
         if ((str(status.get('run_id')), status.get('commit'), status.get('blueprint_sha256')) != (
                 str(parent['parent_run_id']), parent['parent_source'], parent['blueprint_sha256'])
                 or saved['training_closed_input_sha256'] != parent['closed_input_sha256_by_collector'][collector]
                 or b.read(target / 'v6-block-reference.json')['block_plan_sha256'] != parent['parent_plan_sha256']
                 or (str(saved['processing_execution'].get('run_id')), saved['processing_execution'].get('commit'))
-                != (str(execution()['run_id']), execution()['source'])
-                or b.read(target / 'v6-training-publication-restored.json')['parent_record_sha256'] != args.parent_sha256):
+                != (str(model_execution(parent)['run_id']), model_execution(parent)['source'])
+                or b.read(target / 'v6-training-publication-restored.json')['parent_record_sha256'] != expected_parent_sha):
             raise ValueError('frozen replay origin/current processing/approval binding differs')
         if 'processing_profile' in parent:
             processing = saved['processing_execution']
@@ -337,16 +391,34 @@ def import_validation(args, parent):
                 raise ValueError('replay model resource profile or prospective registration differs')
         imports.append({'collector': collector, 'artifact_API': values[0],
                         'package_sha256': model_package['sha256'], 'preextract_actual_disk_guard': model_guard})
+        release_candidates.append((folder / 'model.tar.gz', model_package))
     write_json(root / 'model-package-imports.json', imports)
     write_json(root / 'block-all-forecasts-frozen.json',
                require_block_freeze([root / 'models' / c for c in COLLECTORS]))
     write_json(root / 'qualification-replay-import.json', {
         'parent_record_path': args.parent_record.as_posix(), 'parent_record_sha256': args.parent_sha256,
-        'execution': execution(), 'current_plan_sha256': b.sha(root / 'block-plan.json'),
+        'execution': execution(), 'model_execution': model_execution(parent),
+        'current_plan_sha256': b.sha(root / 'block-plan.json'),
         'original_plan_sha256': b.sha(root / 'qualification-parent-block-plan.json'),
         'all_four_frozen_manifest_sha256': b.sha(root / 'block-all-forecasts-frozen.json'),
         'shared_archive_sha256': seal['shared_sha256'], 'preextract_actual_disk_guard': guard,
         'status': 'complete', 'stage': 'qualification'})
+    from .isolated_arm_v6 import release_package
+    before = shutil.disk_usage(root).free
+    released = []
+    for archive, inventory in release_candidates:
+        if any(p.is_symlink() for p in (archive, *archive.parents)):
+            raise ValueError('only owned regular compressed deliveries may be released')
+        release_package(archive, inventory)
+        released.append({'path': archive.relative_to(root).as_posix(),
+                         'bytes': inventory['bytes'], 'sha256': inventory['sha256']})
+    write_json(root / 'qualification-verified-archive-release.json', {
+        'execution': execution(), 'model_execution': model_execution(parent),
+        'before_free_bytes': before, 'after_free_bytes': shutil.disk_usage(root).free,
+        'released_archives': released, 'all_four_frozen_manifest_sha256':
+            b.sha(root / 'block-all-forecasts-frozen.json'),
+        'frozen_model_trees_and_cloud_originals_retained': True})
+    b.capacity(root, 2 * 24 * 1024**3)
 
 
 def require_prepared_validation(root):
@@ -361,6 +433,7 @@ def require_prepared_validation(root):
         'block_plan_sha256': parent['parent_plan_sha256'], 'parent_record_sha256': receipt['parent_record_sha256']})
     if (receipt.get('status') != 'complete' or receipt.get('stage') != 'qualification'
             or receipt['execution'] != execution() or current != expected
+            or receipt.get('model_execution') != model_execution(parent)
             or b.sha(root / 'block-plan.json') != receipt['current_plan_sha256']
             or b.sha(root / 'qualification-parent-block-plan.json') != parent['parent_plan_sha256']
             or receipt['original_plan_sha256'] != parent['parent_plan_sha256']
@@ -375,7 +448,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=('preflight', 'inspect-shared', 'inspect-capture',
                                            'finish-inspection', 'restore-training', 'validation'))
-    parser.add_argument('--operation', choices=('inspect', 'replay'), required=True)
+    parser.add_argument('--operation', choices=('inspect', 'replay', 'validate'), required=True)
     parser.add_argument('--parent-record', type=Path, required=True)
     parser.add_argument('--parent-sha256', required=True)
     parser.add_argument('--root', type=Path, required=True)
@@ -389,7 +462,11 @@ def main():
     cost = {'command': args.command, 'operation': args.operation, 'started_ns': started,
             'CPU_seconds_start': cpu(), 'execution': execution(), 'status': 'started'}
     try:
-        parent = record(args.parent_record, args.parent_sha256, replay=args.operation == 'replay')
+        parent = record(args.parent_record, args.parent_sha256, replay=args.operation in ('replay', 'validate'))
+        if ('closed_model_origin' in parent) != (args.operation == 'validate'):
+            raise ValueError('closed-model validation has its own explicit operation')
+        if args.operation == 'validate' and args.command not in ('preflight', 'validation'):
+            raise ValueError('validation-only continuation cannot inspect or recompute models')
         if args.command == 'preflight': preflight(args)
         elif args.command == 'inspect-shared': common(args, parent)
         elif args.command == 'inspect-capture':
@@ -402,7 +479,7 @@ def main():
             if args.operation != 'replay' or not args.collector: parser.error('training restore requires replay approval')
             restore_training(args)
         else:
-            if args.operation != 'replay' or args.slot is None: parser.error('validation requires replay approval and slot')
+            if args.operation not in ('replay', 'validate') or args.slot is None: parser.error('validation requires replay approval and slot')
             if args.slot == 0: import_validation(args, parent)
             args.system, args.mode, args.repetition = parent['system'], parent['mode'], parent['repetition']
             args.stage, args.phase = 'qualification', 'validation'
