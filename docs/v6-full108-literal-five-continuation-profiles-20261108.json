@@ -108,9 +108,26 @@
         "publication_normalization": "Exact CRLF to LF; original signed bytes remain in work."
       },
       "original_run_id": 42267248120,
-      "original_source": "9d6414e8824331d368d1732a15200cdad691350b"
+      "original_source": "9d6414e8824331d368d1732a15200cdad691350b",
+      "validation_origin": {
+        "run_id": 42479096323,
+        "source": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+        "parent": {
+          "path": "docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json",
+          "sha256": "146f85c7e144321ee50c9982c436332095b72716dfa18c3c56a5dbf55e06c1c4"
+        },
+        "binding": {
+          "path": "docs/v6-OTel-full9-validate-actual-execution-binding-20261108.json",
+          "sha256": "ca6e8aa49fc45bb5e6b682222ef07b9a43511a2b8d5e9594c8f405b35ed84b8f"
+        },
+        "initial_actual_scope": {
+          "path": "docs/independent-v6-ad31-qvalidate-final8-actual-dispatch-initial-order-original-GO-20261108.json",
+          "sha256": "38ea45d67c5372dee5f4c5472cf9dcfd01a273a072010e4c58cc8339214217ef"
+        }
+      }
     }
   ],
   "design_GO": "f8631e61159d3d26a2341c0c5a123c0f6b33deabcdcdfdec5f7926938995ef65",
-  "source_and_actual_input_execution_GO": false
+  "source_and_actual_input_execution_GO": false,
+  "qfull9_three_origin_design_GO": "1281efd71f6cbd3ac5637427da63735778e60a32deb6355908643e3f726e38cc"
 }

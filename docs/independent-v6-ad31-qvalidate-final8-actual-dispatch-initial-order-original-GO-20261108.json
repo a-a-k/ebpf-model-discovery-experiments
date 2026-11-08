@@ -1,0 +1,233 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "reviewed_utc": "2026-11-08T12:16:42.435675+00:00",
+  "original_actual_dispatch_source_scope_GO": true,
+  "initial_actual_selected_before_current_jobstarts_GO": true,
+  "source": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+  "runs": [
+    {
+      "key": "full9_validate",
+      "run_id": 42479096323,
+      "binding_path": "work/v6-OTel-full9-validate-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "ca6e8aa49fc45bb5e6b682222ef07b9a43511a2b8d5e9594c8f405b35ed84b8f",
+      "actualselected_ns": 1794139908636597600,
+      "bound_ns": 1794139912671427800,
+      "API_run_created_at": "2026-11-08T12:11:50Z",
+      "workflow_path": ".github/workflows/qualification-replay-v6.yml",
+      "actual_inputs_from_binding": {
+        "operation": "validate",
+        "parent_record": "docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json",
+        "parent_sha256": "146f85c7e144321ee50c9982c436332095b72716dfa18c3c56a5dbf55e06c1c4"
+      },
+      "cell_keys": [
+        [
+          "otel_demo",
+          "full",
+          9,
+          "none"
+        ],
+        [
+          "otel_demo",
+          "full",
+          9,
+          "obi"
+        ],
+        [
+          "otel_demo",
+          "full",
+          9,
+          "coroot"
+        ],
+        [
+          "otel_demo",
+          "full",
+          9,
+          "deepflow"
+        ]
+      ],
+      "all_actual_current_jobstarts_afterselection": true,
+      "jobs": [
+        {
+          "id": 128726900126,
+          "name": "validation",
+          "run_attempt": 1,
+          "head_sha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-08T12:11:53Z"
+        },
+        {
+          "id": 128726901071,
+          "name": "inspect",
+          "run_attempt": 1,
+          "head_sha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-08T12:11:52Z"
+        },
+        {
+          "id": 128726901213,
+          "name": "model",
+          "run_attempt": 1,
+          "head_sha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-11-08T12:11:52Z"
+        }
+      ],
+      "target_controller_steps": [
+        {
+          "name": "Capture fresh validation slot 0",
+          "status": "pending",
+          "started_at": null
+        },
+        {
+          "name": "Capture fresh validation slot 1",
+          "status": "pending",
+          "started_at": null
+        },
+        {
+          "name": "Capture fresh validation slot 2",
+          "status": "pending",
+          "started_at": null
+        },
+        {
+          "name": "Capture fresh validation slot 3",
+          "status": "pending",
+          "started_at": null
+        }
+      ],
+      "actual_target_request_starts_observed": false,
+      "future_actual_target_order_review_pending": true
+    },
+    {
+      "key": "full10",
+      "run_id": 42479102051,
+      "binding_path": "work/v6-OTel-full10-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "3f9ec17568a18dac01d058eb0dceb529238ed8d6252eaba36c4ac6268338694f",
+      "actualselected_ns": 1794139912684253400,
+      "bound_ns": 1794139916983470400,
+      "API_run_created_at": "2026-11-08T12:11:54Z",
+      "workflow_path": ".github/workflows/series-isolated-v6.yml",
+      "actual_inputs_from_binding": {
+        "system": "otel_demo",
+        "mode": "full",
+        "repetition": "10",
+        "stage": "main"
+      },
+      "cell_keys": [
+        [
+          "otel_demo",
+          "full",
+          10,
+          "none"
+        ],
+        [
+          "otel_demo",
+          "full",
+          10,
+          "obi"
+        ],
+        [
+          "otel_demo",
+          "full",
+          10,
+          "coroot"
+        ],
+        [
+          "otel_demo",
+          "full",
+          10,
+          "deepflow"
+        ]
+      ],
+      "all_actual_current_jobstarts_afterselection": true,
+      "jobs": [
+        {
+          "id": 128726917125,
+          "name": "prepare",
+          "run_attempt": 1,
+          "head_sha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-08T12:11:58Z"
+        }
+      ],
+      "target_controller_steps": [],
+      "actual_target_request_starts_observed": false,
+      "future_actual_target_order_review_pending": true
+    },
+    {
+      "key": "full11",
+      "run_id": 42479107381,
+      "binding_path": "work/v6-OTel-full11-actual-execution-binding-20261108.json",
+      "binding_original_SHA256": "7e9231ffc5b1b67bb4f93a79c68ebb93958e3441548731418748afe79ce183e7",
+      "actualselected_ns": 1794139916996293100,
+      "bound_ns": 1794139920852419000,
+      "API_run_created_at": "2026-11-08T12:11:58Z",
+      "workflow_path": ".github/workflows/series-isolated-v6.yml",
+      "actual_inputs_from_binding": {
+        "system": "otel_demo",
+        "mode": "full",
+        "repetition": "11",
+        "stage": "main"
+      },
+      "cell_keys": [
+        [
+          "otel_demo",
+          "full",
+          11,
+          "none"
+        ],
+        [
+          "otel_demo",
+          "full",
+          11,
+          "obi"
+        ],
+        [
+          "otel_demo",
+          "full",
+          11,
+          "coroot"
+        ],
+        [
+          "otel_demo",
+          "full",
+          11,
+          "deepflow"
+        ]
+      ],
+      "all_actual_current_jobstarts_afterselection": true,
+      "jobs": [
+        {
+          "id": 128726932847,
+          "name": "prepare",
+          "run_attempt": 1,
+          "head_sha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-11-08T12:12:02Z"
+        }
+      ],
+      "target_controller_steps": [],
+      "actual_target_request_starts_observed": false,
+      "future_actual_target_order_review_pending": true
+    }
+  ],
+  "implementation184_unchanged_from_approvedA": true,
+  "canonical_map_sha256": "00e0972a5b84acf1914dc75aec2ca3156d0e801d6e3d37f7b8c37673baccebcd",
+  "Root_finalCI_merge_GO_path": "work/root-v6-ad31f9e-final-sealed-CI-merge-scoped-dispatch-original-GO-20261108.json",
+  "Root_finalCI_merge_GO_SHA256": "5cdd1f1be1ae045081068b43ef6dcbcad6e7e32db3e055ff4aac8d315b302e43",
+  "actual_registry_SHA256": "fe66cfd7363b48a5c8d2ba30b4f6f3dd8fb61516ad524a4a498553e7f10a51be",
+  "official_API_metadata_path": "work/independent-v6-ad31-qvalidate-final8-initial-actual-API-metadata-20261108.json",
+  "official_API_metadata_SHA256": "3d59501388b18ea48632ae5e63f0357f6d141ea966fcdc584647d497d0fc028a",
+  "q_validate_model_and_inspect_actual_SKIPPED": true,
+  "model_recompute_observed": false,
+  "all_actual_target_start_order_GO": false,
+  "target_order_status": "PENDING actual target/controller/capture timestamps; no futuretargetstart or allfourimportbarrier falsely inferredfrom initialjobstatus. Capturecontrollerstep includesimport/VMpreparation and isnot actualfirstrequest time.",
+  "scientific_success_GO": false,
+  "full_validation_budget_fit_GO": false,
+  "scope": "Pythonexactintegerns from originalbindings andimmutableAPI ISOtimestamps. Point-in-time initialrun/job checks only; no uninterrupted/failure-freewatch claim, no raw/model/forecast/targetbody, sourceedit/test/VM/merge/dispatch. Previous11:06failure onlynoticed11:17 remainsretained.",
+  "criterion_baseline_costs": "Original108/all10/8paired100isolated, equalNative/no-agent/directconditional/cheapcontext semantics, independentexternaloutcomes, allnegative/adverse/UNKNOWN andallfailed/prep/reimport/transfer/paging/hash/CI/review/humanunknown costs preserved. Source/scope/order GO isnotutility orcostsuperiority."
+}

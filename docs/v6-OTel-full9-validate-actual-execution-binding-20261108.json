@@ -1,0 +1,64 @@
+{
+  "selected_ns": 1794139908636597600,
+  "selected_before_POST": true,
+  "bound_ns": 1794139912671427800,
+  "workflow_run": {
+    "createdAt": "2026-11-08T12:11:50Z",
+    "databaseId": 42479096323,
+    "displayTitle": "v6 qualification validate parent record docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json",
+    "event": "workflow_dispatch",
+    "headSha": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+    "status": "queued",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42479096323"
+  },
+  "source": "ad31f9e49e5dff73b7f968c0edb5bfcdf41392e3",
+  "workflow": "qualification-replay-v6.yml",
+  "inputs": {
+    "operation": "validate",
+    "parent_record": "docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json",
+    "parent_sha256": "146f85c7e144321ee50c9982c436332095b72716dfa18c3c56a5dbf55e06c1c4"
+  },
+  "cell_keys": [
+    [
+      "otel_demo",
+      "full",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "full",
+      9,
+      "deepflow"
+    ]
+  ],
+  "allocation": "physicallypaired",
+  "scope": "Firstfreshfull9pairedtargetsfromexact4oldmodels; no modelrecompute",
+  "reused_model_execution": {
+    "run_id": 42457632259,
+    "source": "76aebebfc11c68c2c6f4b916f715a833f548d9cc"
+  },
+  "original_capture_execution": {
+    "run_id": 42267248120,
+    "source": "9d6414e8824331d368d1732a15200cdad691350b"
+  },
+  "parent_record": "docs/v6-qualification-parent-otel_demo-full9-closed-model-validation-20261108.json",
+  "parent_record_SHA256": "146f85c7e144321ee50c9982c436332095b72716dfa18c3c56a5dbf55e06c1c4",
+  "final8_approval_SHA256": null,
+  "all4frozen_models_before_any_targets_required": true,
+  "actual_start_order_review_required": true,
+  "previous_failures_outputs_costs_retained": true,
+  "scientific_values_used_for_selection": false
+}
