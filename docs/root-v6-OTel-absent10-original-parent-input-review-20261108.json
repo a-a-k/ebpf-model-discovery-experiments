@@ -1,0 +1,11 @@
+{
+  "reviewed_utc": "2026-11-08T06:51:11.633518+00:00",
+  "root_original_input_reuse_GO": true,
+  "scope": "Exact absent10/42401597551/5e four closed captures; no scientific values used for selection",
+  "independent_proof_sha256": "2cf717d9aa94c90705c13625e4e868d97b8b8e72ee388316cd502513f1e1a473",
+  "original_plan_case_source_slots_blueprint_and_four_boots_checked": true,
+  "runtime_wholeinput_verify_required": true,
+  "local_raw_archives_downloaded": false,
+  "source_execution_GO": false,
+  "scientific_success_GO": false
+}

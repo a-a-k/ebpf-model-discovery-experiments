@@ -1,0 +1,53 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "reviewed_utc": "2026-11-08T07:03:16.936552+00:00",
+  "original_exact_source_GO": true,
+  "original_design_GO": true,
+  "execution_in_principle_GO": true,
+  "actual_dispatch_requires_conditions_below": true,
+  "actual_resource_fit_GO": false,
+  "scientific_success_GO": false,
+  "last8_execution_GO": false,
+  "source_commit": "d2bd6eda903c55e983da5974f6aaccbaf226a2e3",
+  "selected_GitLF_paths": 184,
+  "selected_source_census_path": "work/independent-v6-recovery-d2bd6ed-GitLF-source-census-20261108.json",
+  "selected_source_census_sha256": "11e01fb23da5640e9c3e2fd10d95868e44c3dfe9998abbaf1ede318fade1d993",
+  "critical_changed_GitLF_readset": {
+    ".github/workflows/main-continuation-v6.yml": "c4b13254b871746e0c4a8bf5543068fd07c74ee766e2fad7d05cb4c94dbde51e",
+    ".github/workflows/qualification-replay-v6.yml": "c34dbf533e3450d5e3163cf6b8ff89b409a9066e87c105d5522e3b8c63515e80",
+    ".github/workflows/series-isolated-v6.yml": "0b52576b10a7aa5f8e097cd7b2835d9a0979507a24588829f6eac3af8f4a5fc1",
+    "AGENTS.md": "3962b3b70aacbde7ae4c54d572e0fedd7ced552dc4ac27cdc75c21b5cd50200f",
+    "docs/PROTOCOL_V6.md": "fc3cd2ed4bf466a833a8ced9f126f4dd41d70657d61e91d15787c6ca4d440f79",
+    "docs/PROTOCOL_V6_ISOLATED_ARMS.md": "a16eccaad58c9026efba65554389cdcfc06244c75e168f345ceef2547145b421",
+    "src/ebpf_discovery/block_v6.py": "544196cb37abb686428684dcc2d4db74f0f1e2e8aef5505e84d8918f7052d7f3",
+    "src/ebpf_discovery/isolated_arm_v6.py": "921a212bf5b85e82e386dd78c1d35f06b29f77a360b481b487ab6717ad6e0602",
+    "src/ebpf_discovery/main_continuation_v6.py": "cb2e5aa22ac53e2697b6a55044ae4811944ce6cc8ecfccbf1268fd2e27781e1b",
+    "src/ebpf_discovery/qualification_replay_v6.py": "a02b574dabbf2b7057ee3736d9b6578eace97a3d4e3cb4affcb92c7b64281b40",
+    "src/ebpf_discovery/resources_v6.py": "f01e302ac54e64b445194312234d4267ccf3efc44adb9bd4e7952d58546fba05",
+    "src/ebpf_discovery/study_v6.py": "801a5cf92b078d68755ff9ab54ae7cc2574f776cfe4810d1a78fe2fec2d47758"
+  },
+  "reviewed_execution_scope": "Exactly four registered failed MAIN parents: OTel partial9/10/11 and absent10, using original successful isolated captures from5e622; plus required OTel full9 qualification continuation using the same four original9d/42267248120 captures and first fresh paired targets. Original108/all10ops/8paired100between-host unchanged. No authorization of last8 is inferred.",
+  "original_goal_strong_baselines": "Feasibility of executable operation models/prospective Bering-to-Sheaft forecasts with absent/incomplete SDK against independent external outcomes. Same Native/no-agent, direct conditional and cheap observed-context/edge-union baselines, semantic contracts and metadata. Retain unavailable/UNKNOWN/adverse/negative results; source validity, internal flags or successful engineering alone establish no scientific usefulness, novelty or cost superiority.",
+  "findings": [
+    "Direct processing publication selects the same scientific processing paths, with explicit added swap/provisioning metadata, same-device hard links and exact per-file byte/SHA/mode/mtime/device/inode manifest. Frozen hashes, source/stage census and links are checked before and after upload. Hidden files and uniform compression6 are set in all six publisher definitions; changed verification fails the job/barrier. Unfrozen output is explicitly PARTIAL.",
+    "The actual work/case/block-controller-cost.jsonl is retained in final small metadata publishers after verification, along with portable guard and publication receipts; nonexistent status receipt paths were removed.",
+    "Only package_model opts into exclusive unbuffered compressed-write budgeting. Gzip header/data/trailer writes pass through the guard, short writes raise, archive close is checked, frozen scientific hashes are verified again and actual reserve is checked after package/manifest. Default capture/common guards and archive format/member bytes/modes/compresslevel1 remain unchanged. Qualification portable publication requires successful modelpackage.",
+    "Typed fourth absent10 MAIN parent mode flows through fixed parent validation/import/targets. Strict old MAIN case/closure/slot/attempt/boot/reference and actual current processing/model-job/API origins remain separate. Four current models are mandatory before each fresh isolated target; qualification remains a distinct paired path.",
+    "New full9 resource parent draft preserves every original9d input tuple/closure/common seal exactly; new processing profile is GC25 plus additional16GiB model-only swap. Its source census, profile and prospective start/freeze order are checked. Historical sealed parent records remain separate.",
+    "All nineteen sparse checkout definitions in the three affected workflows cover the complete184 selected source paths. Independent Git-blob hashing found no dirty selected files at review. No scientific forecasting, classification or external oracle algorithm changed."
+  ],
+  "validation": "Read exact committed source/diffs and gates; independently computed184 Git-LF hashes and statically checked all checkout coverage, six hidden-file publishers/post-verifiers and actual cost JSONL retention. ROOT reports38 focused tests after guard and earlier59 pass/1 Linux skip; these were not independently rerun here. Normal CI remains a preexecution condition.",
+  "preexecution_conditions": [
+    "Seal exact four MAIN parent approvals plus new full9 qualification parent with matching184 Git-LF map, ROOT and independent input/source verdicts and prospective profile/registration; no modifying old sealed history.",
+    "Normal required CI, merged-source census equality, actual new run/source/job/attempt binding BEFORE required computation and targets. Runtime repeats whole original ZIP/tar/file inventory/closure/journal/blueprint checks and all-four current model freezes before first fresh targets.",
+    "Actual model/package/publication/resource and independent external outcomes must be reviewed before fit/scientific completion; no false global phase-qualified flag. Full-size SDK-full validation budget remains unobserved until actual results."
+  ],
+  "input_review_references": {
+    "partial3_input_sha256": "1e37280f8050338f09f2e96e5fc4dbdd553ea1b972964f3e7aa0b3c07a8f5705",
+    "absent10_input_other_independent_reviewer_sha256": "2cf717d9aa94c90705c13625e4e868d97b8b8e72ee388316cd502513f1e1a473",
+    "original_full9_input_sha256": "4861d50b98e4aa528225e7c27712daa0c421e84f45e84fcbed1d6cd2cd99d205",
+    "full9_resource_parent_reviewed_draft_sha256": "9d34059ed9e23b8dade430bb3315d59ae142229921c8ab49953619fb63e3ffe8"
+  },
+  "costs_and_limits": "Count every preparation/early stop, failed/repeated valid capture/model, hash/link/write/stat/compression/CPU/IO/wall/upload/storage, swap/paging, observer/monitor gap, CI/readers/report/review and unknown human/unmetered work. API elapsed is not CPU/billing/campaign wall; overlap and changed virtual-memory profile remain explicit. Archive hashes/timestamps are new actual identities, not byte-identical historical archive claims. On a failed short write compressed_bytes_written includes only full successful writes and is a lower bound; any uncounted partial tail remains UNKNOWN, not zero. This limitation cannot admit corruption because short write raises.",
+  "reviewer_scope": "Source/puremetadata/static review and signed record only; no implementation edits, local scientific processing/raw archive/SQL/journal download, model/VM/probe, merge/dispatch/restart/cancellation."
+}
