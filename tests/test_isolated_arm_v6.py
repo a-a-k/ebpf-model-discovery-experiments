@@ -281,7 +281,9 @@ def test_OTel_last8_cannot_run_without_all_four_published_models_and_own_review(
         'full_validation_unknown_budget_risk_accepted', 'full9_first_validation_required_and_retained')}
     approval.update(blocks=list(isolated.OTEL_FINAL_BLOCKS), allocation_regime=isolated.REGIME,
         full_size_phase_budgets_qualified=False, full_validation_budget_observed=False,
-        rollout_design_GO_sha256=isolated.OTEL_FINAL_DESIGN_SHA256, actual_resource_runs=[42402184737],
+        rollout_design_GO_sha256=isolated.OTEL_FINAL_DESIGN_SHA256, actual_resource_runs=[42457632259],
+        actual_resource_source='76aebebfc11c68c2c6f4b916f715a833f548d9cc',
+        actual_resource_parent_sha256='d11b21048dc9876ee34b909ad3980fd0c319965ee01f6903bbd89b6735fa62b4',
         bering_child_go_environment={'GOGC': '25'}, additional_model_swap_file_bytes=16*1024**3,
         model_swap_design_GO_sha256='3d91a5c64cc8a74a2c0cb71409094e339d7fa577bd0ef46835e6058d010c1c33',
         implementation_sha256=hashes)
@@ -296,7 +298,8 @@ def test_OTel_last8_cannot_run_without_all_four_published_models_and_own_review(
             ('full9_first_validation_required_and_retained', False), ('full_size_phase_budgets_qualified', True),
             ('full_validation_budget_observed', True), ('bering_child_go_environment', {}),
             ('additional_model_swap_file_bytes', 0), ('model_swap_design_GO_sha256', '0'*64),
-            ('actual_resource_runs', []), ('independent_original_GO', False), ('implementation_sha256', {})]:
+            ('actual_resource_runs', [42402184737]), ('actual_resource_source', '803bf539b1eee06180cb13b2ed40b4f92a2462c9'),
+            ('actual_resource_parent_sha256', '0'*64), ('independent_original_GO', False), ('implementation_sha256', {})]:
         old = approval[key]; approval[key] = value
         with pytest.raises(ValueError, match='remaining8'):
             isolated.gate(args)

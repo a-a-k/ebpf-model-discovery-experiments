@@ -1,0 +1,11 @@
+{
+  "reviewed_utc": "2026-11-08T09:05:31.744201+00:00",
+  "functional_source": "1b4ce6ec43e1f925074096f5c8c2693923ae4671",
+  "workflow_GitLF_sha256": "d7a94c53e6c065d56822bf31570610a4120e984a7d6bad1a00a10c51a398bb01",
+  "root_original_source_amendment_GO": true,
+  "scope": "Existingtrustedmaxworker/diskpreparation+earlyreceipt+hostmetadata only; no scientificpayload/data/operation/model/VM/28pending/full108criterionchange",
+  "scientificcopyblock_identical_to_approved_base": true,
+  "resource_and_extra_preparation_costs_recorded": true,
+  "source_and_manifest_CI_merge_and_independent_conditions_unchanged": true,
+  "scientific_success_or_full108completion_GO": false
+}
