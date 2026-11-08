@@ -68,7 +68,9 @@ jobs:
         path: 'work/host-resources.json
 
           work/case/processing-publication-verification.json
+
           work/case/block-controller-cost.jsonl
+
           work/case/portable-model-write-guard.json
 
           work/main-continuation-*.json
@@ -164,7 +166,9 @@ jobs:
         path: 'work/host-resources.json
 
           work/case/processing-publication-verification.json
+
           work/case/block-controller-cost.jsonl
+
           work/case/portable-model-write-guard.json
 
           work/block-plan.json
@@ -322,7 +326,9 @@ jobs:
         path: 'work/host-resources.json
 
           work/case/processing-publication-verification.json
+
           work/case/block-controller-cost.jsonl
+
           work/case/portable-model-write-guard.json
 
           work/block-plan.json
