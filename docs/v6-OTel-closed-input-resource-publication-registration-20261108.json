@@ -1,0 +1,39 @@
+{
+  "registered_utc": "2026-11-08T06:47:06.013757+00:00",
+  "registered_before_processing_ns": 1794120426013771500,
+  "study": "clean-restart-v6",
+  "scope": [
+    "otel_demo-partial-9",
+    "otel_demo-partial-10",
+    "otel_demo-partial-11",
+    "otel_demo-absent-10",
+    "otel_demo-full-9"
+  ],
+  "original108_all10_ops_retained": true,
+  "same_original_capture_bytes": true,
+  "new_training_or_qualification_traffic": false,
+  "processing_profile": {
+    "bering_child_go_environment": {
+      "GOGC": "25"
+    },
+    "additional_model_swap_file_bytes": 17179869184
+  },
+  "processing_publication": "lossless direct streaming ZIP, same-file hard links and exact bytes/SHA/mode/mtime manifest; portable model tar unchanged",
+  "all_four_models_recomputed_uniformly_before_first_fresh_targets": true,
+  "allocation": "full9 retains four paired targets; four MAIN blocks retain four isolated targets each; 8 paired and100isolated total",
+  "previous_attempts_outputs_and_costs_retained": true,
+  "failed_DF_full9_runs": [
+    42396800647,
+    42402184737
+  ],
+  "absent10_failure_cause": "UNKNOWN; runner communication lost; failed job log unavailable, no OOM claim",
+  "observed_DF_GC25_min_free_disk_bytes": 37429166080,
+  "extra_swap_bytes": 17179869184,
+  "universal_fit_claim": false,
+  "design_review": {
+    "path": "docs/independent-v6-fourth-parent-direct-processing-publication-full9-replay-original-design-GO-20261108.json",
+    "original_sha256": "ba773b8b72d3a3d01ae77d510601fae50d5c7bf414a604ff22e0337830e45264"
+  },
+  "source_and_actual_execution_GO": false,
+  "scientific_success_GO": false
+}

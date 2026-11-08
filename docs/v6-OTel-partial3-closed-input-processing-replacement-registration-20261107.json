@@ -1,0 +1,131 @@
+{
+  "registered_utc": "2026-11-07T20:12:17.135460+00:00",
+  "scope": "Exact12existing OTel/partial9/10/11 cells; technical processing replacement after3actualmemorypressure/shutdown failures. All original108/all10ops retained.",
+  "original_capture_source": "5e622ed58c340e2cfe85c3c287ba90bc9c610190",
+  "original_blocks": [
+    {
+      "run_id": 42401605258,
+      "repetition": 9,
+      "failed_model_job": 128505014993,
+      "active_old_DF_job_role": "model2"
+    },
+    {
+      "run_id": 42401608466,
+      "repetition": 10,
+      "failed_model_job": 128504584021,
+      "active_old_DF_job_role": "model3"
+    },
+    {
+      "run_id": 42401611728,
+      "repetition": 11,
+      "failed_model_job": 128503969202,
+      "active_old_DF_job_role": "model0"
+    }
+  ],
+  "case_keys": [
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      9,
+      "deepflow"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      10,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      10,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      10,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      10,
+      "deepflow"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      11,
+      "none"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      11,
+      "obi"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      11,
+      "coroot"
+    ],
+    [
+      "otel_demo",
+      "partial",
+      11,
+      "deepflow"
+    ]
+  ],
+  "all12_training_jobs_success_and_closed": true,
+  "old_validation_targets_started": false,
+  "snapshot_basis": "Independentofficialjobsmetadata20:11:21, threeactualfailedmodelsandno validationjobsscheduled; original4capturepublicationsperblockremainimmutable.",
+  "selection_policy": "All3replicatesandall4models uniformlynewGC25+model-only16GiBswap fromEXACTsame closedinputs; no scientificsupport/forecast/targetoutcome admission. Absent10/11 andfull9currentlyworkingjobs untouched.",
+  "data_and_provenance": "Keep originaltraining cases/run/source/closures and genuine newprocessing/model/validationorigins. Fresh4validationworkersafterall4currentforecasts; retain100between-host/8paired allocation. No newtrainingorqualificationtraffic.",
+  "old_models_and_costs_retained": true,
+  "expected_extra_work": "Recompute12models; previous6publishedNone/Coremodels andthreeunfrozenDFprefixes remainhistoricaloutputs/costs, notselectedcurrentmodels.",
+  "cancellation_intent": "StoponlyremainingthreeoldDFcomputationswithinfailedpartialblocks; all12inputsand6completedforecasts/costs retained. They cannotcompletecurrentfourmodelbarrieranduniformresourcepolicyneedsnew4models; no validtargets discarded.",
+  "cancelled_runs": [
+    {
+      "run_id": 42401605258,
+      "request_accepted_utc": "2026-11-07T20:12:28.093614+00:00"
+    },
+    {
+      "run_id": 42401608466,
+      "request_accepted_utc": "2026-11-07T20:12:29.641189+00:00"
+    },
+    {
+      "run_id": 42401611728,
+      "request_accepted_utc": "2026-11-07T20:12:31.257202+00:00"
+    }
+  ],
+  "design_original_skeptic_GO_pending": false,
+  "source_implementation_started": false,
+  "recovery_execution_GO": false,
+  "scientific_success_GO": false,
+  "root_original_design_GO": true,
+  "independent_original_design_GO": true,
+  "independent_design_proof": "work/independent-v6-OTel-partial3-same-input-isolated-continuation-original-design-GO-20261107.json",
+  "independent_design_proof_SHA256": "38a6db7f01013b3bb4c7a05d8c90a6e49541e15d32a51aba2050a62fdd15e84f",
+  "root_agreed_before_implementation_utc": "2026-11-07T20:19:49.987954+00:00",
+  "replacement_policy": "Only exactthreeactualfailedpartialblocks, same12capturedinputs, new12uniformresource models +12freshisolatedtargetcaptures. No newtraining/qualificationtraffic; unchanged108/all10/baselines/outcomes and8paired/100isolated. No MAIN-as-qualification/source spoofing. Strict old capture/current processing+validation origin adapter; ordinaryguardsstaystrict."
+}

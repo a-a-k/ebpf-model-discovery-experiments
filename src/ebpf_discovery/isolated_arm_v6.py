@@ -1,4 +1,4 @@
-"""Unstarted arms and one registered failed-block replacement on isolated workers."""
+"""Capture, model import and validation on isolated workers."""
 from __future__ import annotations
 
 import argparse
@@ -40,6 +40,9 @@ OTEL_STAGED_BLOCKS = ['otel_demo-absent-10', 'otel_demo-absent-11',
                       'otel_demo-partial-9', 'otel_demo-partial-10', 'otel_demo-partial-11']
 OTEL_STAGED_APPROVAL = 'docs/v6-OTel-remaining20-original-execution-GO-20261107.json'
 OTEL_STAGED_DESIGN_SHA256 = '8d6a18af535bb05ae3bfda3aa26b7f5927cfd6f7475d9a6f07cbe8b1991b0970'
+OTEL_FINAL_BLOCKS = ['otel_demo-full-10', 'otel_demo-full-11']
+OTEL_FINAL_APPROVAL = 'docs/v6-OTel-final8-original-execution-GO-20261107.json'
+OTEL_FINAL_DESIGN_SHA256 = 'c028a347ac51a03fce4a5f817765c0b4ee2662abb37a9f2aebd1327462b3c143'
 DSB_ORIGINAL = {'run_id': 42267262342, 'source': '9d6414e8824331d368d1732a15200cdad691350b',
     'retained_training_artifacts': [
         {'collector': 'none', 'id': 13536919189, 'bytes': 4388197895,
@@ -56,6 +59,26 @@ def gate(args):
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('isolated-arm execution is repository Actions only')
     identity = f'{args.system}-{args.mode}-{args.repetition}'
+    if args.stage == 'main' and identity in OTEL_FINAL_BLOCKS:
+        approved = b.read(b.repo() / OTEL_FINAL_APPROVAL)
+        if (not all(approved.get(k) is True for k in ('original_source_execution_GO',
+                'root_original_GO', 'independent_original_GO', 'original_scientific_rollout_GO',
+                'original108_scope_retained', 'all_four_GC25_full9_model_publications_verified',
+                'actual_model_resource_review_GO', 'full_validation_unknown_budget_risk_accepted',
+                'full9_first_validation_required_and_retained'))
+                or approved.get('blocks') != OTEL_FINAL_BLOCKS
+                or approved.get('allocation_regime') != REGIME
+                or approved.get('full_size_phase_budgets_qualified') is not False
+                or approved.get('full_validation_budget_observed') is not False
+                or approved.get('rollout_design_GO_sha256') != OTEL_FINAL_DESIGN_SHA256
+                or approved.get('actual_resource_runs') != [42402184737]
+                or approved.get('bering_child_go_environment') != {'GOGC': '25'}
+                or approved.get('additional_model_swap_file_bytes') != 16 * 1024**3
+                or approved.get('model_swap_design_GO_sha256') !=
+                    '3d91a5c64cc8a74a2c0cb71409094e339d7fa577bd0ef46835e6058d010c1c33'
+                or approved.get('implementation_sha256') != b.implementation_hashes()):
+            raise ValueError('exact OTel full remaining8 actual-model and prospective source approval required')
+        return
     if args.stage == 'main' and identity in OTEL_STAGED_BLOCKS:
         approved = b.read(b.repo() / OTEL_STAGED_APPROVAL)
         if (not all(approved.get(k) is True for k in ('original_source_execution_GO',
@@ -152,10 +175,14 @@ def actual_artifact(value):
     return api
 
 
-def fetch(value, destination, expected_names):
+def fetch(value, destination, expected_names, *, original_parent=None):
     """One exact current-run publication, whole ZIP SHA and every member CRC."""
     value = claim(value)
-    actual = actual_artifact(value)
+    if original_parent is None:
+        actual = actual_artifact(value)
+    else:
+        from .main_continuation_v6 import original_artifact
+        actual = original_artifact(original_parent, value)
     destination.mkdir(parents=True)
     predownload = b.capacity(destination, actual['size_in_bytes'])
     archive = destination / 'delivery.zip'
@@ -225,6 +252,9 @@ def release_package(path, package):
 
 
 def import_shared(root, args):
+    if getattr(args, 'main_parent_record', None):
+        from .main_continuation_v6 import import_shared as original_shared
+        return original_shared(root, args)
     wanted = planned(args)
     folder = root / 'shared-input'
     receipt = fetch(dependency(os.environ['V6_SHARED_ARTIFACT']), folder,
@@ -260,6 +290,9 @@ def import_shared(root, args):
 
 
 def verify_allocation(roots, saved, allocation):
+    if allocation.get('main_closed_input_parent'):
+        from .main_continuation_v6 import verify_allocation as original_allocation
+        return original_allocation(roots, saved, allocation)
     """Explicit alternate allocation; the ordinary paired predicate stays strict."""
     plan = allocation.get('plan') or {}
     expected = block(plan.get('system'), plan.get('mode'), plan.get('repetition'))
@@ -327,6 +360,9 @@ def verify_allocation(roots, saved, allocation):
 
 
 def import_models(root, plan):
+    if plan.get('main_closed_input_parent'):
+        from .main_continuation_v6 import import_models as original_models
+        return original_models(root, plan)
     jobs = json.loads(os.environ['V6_MODEL_ARTIFACTS'])
     upstream = {}
     for slot in range(4):

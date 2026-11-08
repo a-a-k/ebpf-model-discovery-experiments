@@ -1,0 +1,25 @@
+{
+  "reviewer": "/root/ebpf_actual7_skeptic",
+  "reviewed_date": "2026-11-07",
+  "original_resource_capacity_amendment_design_GO": true,
+  "source_GO": false,
+  "current_execution_GO": false,
+  "reliable_physical_headroom_proved": false,
+  "global_fit_or_scientific_success_GO": false,
+  "exact_scope": "Future model phase only of otel_demo/full/10 and otel_demo/full/11, all four arms in each, the final eight already scheduled cells within the original108. Current executions and earlier outputs remain unchanged.",
+  "proposal": "One additional owned16GiB swapfile backed by standard runner free local disk, identically across all four arms. Preserve existing platform swap, physical4CPU/16GB and360-minute deadline; retain GOGC=25 with GOMEMLIMIT/GOMAXPROCS unset. No input reduction, batch/pin/model/predictor/oracle/count changes and no new qualification traffic.",
+  "original_criterion_and_baselines": "Unchanged all108 fresh cells/all10 operations and feasibility of executable operation models/prospective Sheaft forecasts with missing or partial SDK, evaluated against external outcomes. Same Native/no-agent, direct conditional and cheap ordinary observed-context/edge-union baselines receive the same semantic contracts and metadata. This resource provision is engineering, not a novel predictor, better forecast, superiority or cost advantage.",
+  "actual_motivation": "Current full9 OBI GC25 model completed exit0 and publication, but sampled MemAvailable reached89,160KiB while Bering RSS reached14,550,982,656B; at that sample platform swap was3GiB with about1.5GiB free. Its successful attempt does not prove reliable physical headroom. The shutdown initiator in older failures remains UNKNOWN.",
+  "strongest_simple_engineering_baseline": "Use existing child-only GC setting and ordinary owned swap provisioning before new algorithms, observation filtering, mixed-model recovery or a new framework. Exact16GiB is a pragmatic fixed provision, not a demonstrated minimum or optimal value; it cannot reduce necessary live data or guarantee performance.",
+  "required_source_and_execution_conditions": [
+    "A narrow model-only call in existing resource preparation; do not allocate swap for capture/validation or alter application runtime treatments. Record and enforce the same fixed profile for all four arms of each new block.",
+    "Before allocation, verify actual free disk can hold the new swap plus all existing mandatory archive/unpack/packaging reserves. After allocation, retain actual free disk and existing guards. Observed prior free space is evidence for planning, not a universal future minimum.",
+    "Create one exact owned regular no-symlink file without overwriting any existing path, require actual allocated size/mkswap/swapon success, and preserve pre-existing swap. No cleanup may disable or remove another owner's swap or affect a running model; no persistent host/autostart changes.",
+    "Retain before/after RAM, swap, disk, allocation/setup elapsed and failure receipts, plus the already approved host observer during actual computation. Paging/RAM pressure and timing uncertainty remain real; no reliable-headroom or zero-OOM/agent-loss guarantee.",
+    "All four current full9 GC25 models and immutable publications must complete and their exact origin/closure/freeze/resource metadata be reviewed. Separate exact-source ROOT/IND review, source-census-bound approval, normal CI and actual prospective binding remain required before last8 dispatch. Full-size full-SDK validation budget remains explicitly UNOBSERVED until observed."
+  ],
+  "cost_and_generalization_limits": "Disclose that last8 have a different virtual-memory provision from earlier blocks, even though physical worker and scientific method are unchanged. Count allocated disk, setup, paging/I/O, CPU/wall/observer overhead, all repeated successful/failed processing, preparation/early stops, build/restore/hash/transfer/publication, CI/readers/report/review and unknown human cost. Keep concurrency/overlap distinct from summed job time and billing. Do not infer cost dominance or general full-size fit; unavailable/UNKNOWN/adverse outcomes and all repetitions remain included without positivity retries.",
+  "prior_last8_design_sha256": "c028a347ac51a03fce4a5f817765c0b4ee2662abb37a9f2aebd1327462b3c143",
+  "actual_OBI_pressure_evidence_sha256": "73c5794529fea5c15a7a9e12cc65dd42a8480f82f8ebbea3d5e69f3b32d81f17",
+  "review_actions": "Read existing resources_v6 and legacy owned-swap setup source and already saved body-free OBI samples only. No implementation, provisioning, model/VM/probe, archive/raw processing, new diagnostic, merge, dispatch, restart or cancellation. Existing two DeepFlow watches continue."
+}

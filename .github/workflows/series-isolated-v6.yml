@@ -93,6 +93,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -200,6 +203,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -306,6 +312,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -412,6 +421,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -518,6 +530,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -616,26 +631,33 @@ jobs:
         compression-level: 0
       id: modelupload
       if: ${{ success() }}
-    - name: Retain complete or partial original processing bytes
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
       id: processing
       if: ${{ always() && steps.restore.outcome == 'success' }}
     - name: v6-isolated-processing-slot0-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-processing-slot0-${{ github.run_id }}-attempt${{ github.run_attempt }}
-        path: |-
-          work/processing.tar.gz
-          work/processing.tar.gz.json
+        path: work/processing-publication/
         if-no-files-found: error
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
       if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -666,6 +688,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -735,26 +758,33 @@ jobs:
         compression-level: 0
       id: modelupload
       if: ${{ success() }}
-    - name: Retain complete or partial original processing bytes
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
       id: processing
       if: ${{ always() && steps.restore.outcome == 'success' }}
     - name: v6-isolated-processing-slot1-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-processing-slot1-${{ github.run_id }}-attempt${{ github.run_attempt }}
-        path: |-
-          work/processing.tar.gz
-          work/processing.tar.gz.json
+        path: work/processing-publication/
         if-no-files-found: error
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
       if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -785,6 +815,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -854,26 +885,33 @@ jobs:
         compression-level: 0
       id: modelupload
       if: ${{ success() }}
-    - name: Retain complete or partial original processing bytes
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
       id: processing
       if: ${{ always() && steps.restore.outcome == 'success' }}
     - name: v6-isolated-processing-slot2-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-processing-slot2-${{ github.run_id }}-attempt${{ github.run_attempt }}
-        path: |-
-          work/processing.tar.gz
-          work/processing.tar.gz.json
+        path: work/processing-publication/
         if-no-files-found: error
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
       if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -904,6 +942,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -973,26 +1012,33 @@ jobs:
         compression-level: 0
       id: modelupload
       if: ${{ success() }}
-    - name: Retain complete or partial original processing bytes
-      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing.tar.gz
+    - name: Stage complete or partial processing files without a second archive
+      run: python -m ebpf_discovery.block_v6 package-processing --root work/case --out work/processing-publication
       id: processing
       if: ${{ always() && steps.restore.outcome == 'success' }}
     - name: v6-isolated-processing-slot3-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-processing-slot3-${{ github.run_id }}-attempt${{ github.run_attempt }}
-        path: |-
-          work/processing.tar.gz
-          work/processing.tar.gz.json
+        path: work/processing-publication/
         if-no-files-found: error
         include-hidden-files: true
-        compression-level: 0
+        compression-level: 6
       if: ${{ always() && steps.processing.outcome == 'success' }}
+      id: processingupload
+    - name: Verify source bytes and hard links after streaming upload
+      if: ${{ always() && steps.processingupload.outcome == 'success' }}
+      env:
+        V6_PROCESSING_MANIFEST_SHA: ${{ steps.processing.outputs.manifest_sha256 }}
+      run: python -m ebpf_discovery.block_v6 verify-processing-publication --root work/case --out work/processing-publication --manifest-sha256 "$V6_PROCESSING_MANIFEST_SHA"
     - name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
       uses: actions/upload-artifact@v4
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -1023,6 +1069,7 @@ jobs:
           work/tools/logs/
           work/case/processing-execution.json
           work/case/model-worker-resources.json
+          work/case/model-swap-resources.json
           work/model-host-observer.jsonl
           work/case/forecast-saved.json
         if-no-files-found: error
@@ -1106,6 +1153,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -1218,6 +1268,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -1330,6 +1383,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl
@@ -1442,6 +1498,9 @@ jobs:
       with:
         name: v6-isolated-metadata-${{ github.job }}-${{ github.run_id }}-attempt${{ github.run_attempt }}
         path: |-
+          work/case/processing-publication-verification.json
+          work/case/block-controller-cost.jsonl
+          work/case/portable-model-write-guard.json
           work/host-resources.json
           work/block-plan.json
           work/isolated-controller-cost.jsonl

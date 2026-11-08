@@ -178,7 +178,7 @@ def test_PC_DSB_scope_preserves_OTel_hold_and_rejects_false_fit(monkeypatch):
         with pytest.raises(ValueError,match='remaining56'): isolated.gate(args)
         approval[key]=old
     for mode,repetition in [('partial',9),('absent',10),('full',11)]:
-        expected = 'ordinary' if mode == 'full' else 'remaining20'
+        expected = 'remaining8' if mode == 'full' else 'remaining20'
         with pytest.raises(ValueError,match=expected):
             isolated.gate(SimpleNamespace(system='otel_demo',mode=mode,repetition=repetition,stage='main'))
 
@@ -242,7 +242,7 @@ def test_workflow_direct_ids_all_four_model_dependencies_and_unlimited_standard_
     assert 'series-isolated-v6.yml' in (workflow.parents[2]/'src/ebpf_discovery/block_v6.py').read_text(encoding='utf8')
 
 
-def test_OTel_twenty_require_their_own_source_approval_and_hold_full(monkeypatch):
+def test_OTel_twenty_require_their_own_source_approval_and_separate_full_approval(monkeypatch):
     monkeypatch.setenv('GITHUB_ACTIONS', 'true')
     hashes = {'exact_source': 'bound'}
     approval = {k: True for k in ('original_source_execution_GO', 'root_original_GO',
@@ -268,5 +268,36 @@ def test_OTel_twenty_require_their_own_source_approval_and_hold_full(monkeypatch
             isolated.gate(args)
         approval[key] = old
     for repetition in (10, 11):
-        with pytest.raises(ValueError, match='ordinary'):
+        with pytest.raises(ValueError, match='remaining8'):
             isolated.gate(SimpleNamespace(system='otel_demo', mode='full', repetition=repetition, stage='main'))
+
+
+def test_OTel_last8_cannot_run_without_all_four_published_models_and_own_review(monkeypatch):
+    monkeypatch.setenv('GITHUB_ACTIONS', 'true')
+    hashes = {'exact_final_source': 'bound'}
+    approval = {k: True for k in ('original_source_execution_GO', 'root_original_GO',
+        'independent_original_GO', 'original_scientific_rollout_GO', 'original108_scope_retained',
+        'all_four_GC25_full9_model_publications_verified', 'actual_model_resource_review_GO',
+        'full_validation_unknown_budget_risk_accepted', 'full9_first_validation_required_and_retained')}
+    approval.update(blocks=list(isolated.OTEL_FINAL_BLOCKS), allocation_regime=isolated.REGIME,
+        full_size_phase_budgets_qualified=False, full_validation_budget_observed=False,
+        rollout_design_GO_sha256=isolated.OTEL_FINAL_DESIGN_SHA256, actual_resource_runs=[42402184737],
+        bering_child_go_environment={'GOGC': '25'}, additional_model_swap_file_bytes=16*1024**3,
+        model_swap_design_GO_sha256='3d91a5c64cc8a74a2c0cb71409094e339d7fa577bd0ef46835e6058d010c1c33',
+        implementation_sha256=hashes)
+    monkeypatch.setattr(b, 'read', lambda *_: approval)
+    monkeypatch.setattr(b, 'implementation_hashes', lambda: hashes)
+    for repetition in (10, 11):
+        isolated.gate(SimpleNamespace(system='otel_demo', mode='full', repetition=repetition, stage='main'))
+    args = SimpleNamespace(system='otel_demo', mode='full', repetition=10, stage='main')
+    for key, value in [('blocks', approval['blocks'] + ['otel_demo-partial-9']),
+            ('all_four_GC25_full9_model_publications_verified', False),
+            ('actual_model_resource_review_GO', False), ('full_validation_unknown_budget_risk_accepted', False),
+            ('full9_first_validation_required_and_retained', False), ('full_size_phase_budgets_qualified', True),
+            ('full_validation_budget_observed', True), ('bering_child_go_environment', {}),
+            ('additional_model_swap_file_bytes', 0), ('model_swap_design_GO_sha256', '0'*64),
+            ('actual_resource_runs', []), ('independent_original_GO', False), ('implementation_sha256', {})]:
+        old = approval[key]; approval[key] = value
+        with pytest.raises(ValueError, match='remaining8'):
+            isolated.gate(args)
+        approval[key] = old
