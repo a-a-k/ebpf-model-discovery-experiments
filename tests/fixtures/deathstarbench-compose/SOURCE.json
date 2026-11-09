@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/delimitrou/DeathStarBench",
+  "commit": "6ecb09706140f8730b5385c08f1386c654c3c526",
+  "files": [
+    {
+      "file": "client.lua",
+      "upstream_path": "socialNetwork/gen-lua/social_network_ComposePostService.lua",
+      "bytes": 8526,
+      "sha256": "a87343b39ee7743cfdc934cf63ad69d153ef2d184a184fce34574b6720588280"
+    },
+    {
+      "file": "handler.lua",
+      "upstream_path": "socialNetwork/nginx-web-server/lua-scripts/wrk2-api/post/compose.lua",
+      "bytes": 2545,
+      "sha256": "1f522cd716303686b19be62e201bd2caf8cfd0dfa7146cebf56cd50efdb5a441"
+    },
+    {
+      "file": "LICENSE",
+      "upstream_path": "LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ],
+  "scope": "Exact Lua source and mock transports only; no claim that each observed request executed the reproduced error path."
+}

@@ -37,6 +37,9 @@ The [generated results](results/literal-results.json),
 [cost ledger](docs/v6-full108-completed-cost-ledger.json) and
 [provenance](results/provenance.json) preserve the complete result scope,
 including unavailable predictions and adverse outcomes.
+The [outcome-semantics correction](results/semantic-correction.json) identifies
+the Social Network HTTP-ACK/MongoDB-write contract mismatch and distinguishes
+historical forecasts from any subsequent corrected analysis.
 The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
 generation; the [context baseline](docs/CONTEXT_BASELINE.md) specifies the
 observed-edge union.
