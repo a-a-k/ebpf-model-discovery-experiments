@@ -19,7 +19,46 @@ the input closures and qualified source files belong to the recorded commit.
 
 The [generated JSON](../results/literal-results.json) and
 [provenance](../results/provenance.json) are retained directly in the repository.
-To repeat the publication checks and report generation in Actions:
+The [semantic correction](../results/semantic-correction.json) distinguishes
+Social Network HTTP acknowledgement from successful MongoDB storage. Replaying
+the historical report does not validate a corrected forecast or a durable write.
+
+### Archive-backed report replay
+
+The [publication archive](https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/publication-archive-42658254761)
+contains the exact 102 canonical metadata ZIPs and the retained historical
+Coroot publication prefix: 103 ZIPs totaling 12,344,016,466 bytes. Its input
+bundle preserves the original reader, required source records, reference report
+and historical API receipts. The [archive receipt](../results/archive.json)
+records exact asset identities, checksums and verification runs.
+
+Run the archive-backed reader in Actions:
+
+```sh
+gh workflow run publication-archive.yml --repo a-a-k/ebpf-model-discovery-experiments --ref main -f mode=replay -f index_asset_id=728317527 -f index_bytes=213141 -f index_sha256=d5294d00a5944789b2743ae1567cc7a9b4833af4069c1012e2953805541cd277
+```
+
+This mode reads Release assets and recorded API receipts; live Actions API
+requests are forbidden. It verifies original ZIP bytes/SHA256 and member CRCs,
+then compares scientific fields, original forecasts, lineage and omissions with
+the published report. Execution, resource and cost headers describe the new
+reader run. The original scientific reader is unchanged except for its three
+I/O functions; its input source remains the recorded `c4f066d` commit.
+
+API receipts are historical snapshots. Their `expired:false`, embedded draft
+release state and draft browser URLs are not current availability assertions.
+Use the published tag URLs above and exact asset IDs/checksums in the receipt.
+Release storage removes dependence on Actions artifact expiry; continued
+GitHub repository, Release and API availability remains required.
+
+This is reproduction of the published report from original metadata. It does
+not archive the complete raw-capture/model-build input closure or demonstrate
+rebuilding all models from scratch.
+
+### Original Actions publications
+
+While the original Actions artifacts remain available, repeat the original
+publication checks directly with:
 
 ```sh
 gh workflow run read-v6-full108-results.yml --repo a-a-k/ebpf-model-discovery-experiments --ref audit/full108-literal-report-v6

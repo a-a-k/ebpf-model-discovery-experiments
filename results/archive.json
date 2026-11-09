@@ -1,0 +1,4117 @@
+{
+  "kind": "verified-publication-archive",
+  "scope": "Replay the historical published report from original metadata; no corrected scientific forecast or complete raw/model regeneration claim.",
+  "release": {
+    "id": 439394996,
+    "tag_name": "publication-archive-42658254761",
+    "target_commitish": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+    "draft": false,
+    "published_at": "2026-11-09T17:20:58Z",
+    "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/tag/publication-archive-42658254761"
+  },
+  "archive_index": {
+    "asset_id": 728317527,
+    "bytes": 213141,
+    "sha256": "d5294d00a5944789b2743ae1567cc7a9b4833af4069c1012e2953805541cd277",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/publication-archive-42658254761/archive-index.json"
+  },
+  "input_bundle": {
+    "asset_id": 728219744,
+    "bytes": 2619864,
+    "sha256": "7b00cf5056e0b02918c2698329fde6c5399f527a42ed185ba1ac6aa1368b5283",
+    "url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/releases/download/publication-archive-42658254761/publication-inputs.zip"
+  },
+  "preservation": {
+    "canonical_metadata_ZIPs": 102,
+    "historical_publication_prefixes": 1,
+    "total_ZIPs": 103,
+    "verified_original_ZIP_payload_bytes": 12344016466,
+    "historical_prefix_artifact_id": 13617096437,
+    "historical_prefix_is_extra_case": false,
+    "exact_original_ZIP_bytes_and_all_member_CRCs_verified_in_Actions": true,
+    "complete_raw_capture_model_build_regeneration_closure_preserved": false,
+    "availability": "Release assets do not use Actions artifact expiry; repository, Release and GitHub API availability remain required."
+  },
+  "source_and_semantics": {
+    "original_reader_input_source": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+    "original_reader_workflow_sha256": "38eb812a4d87fa269294bb023f45df3bbc49438014ce4a0dc631943b41df8bed",
+    "archive_and_replay_execution_source": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+    "historical_report_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+    "manifest_sha256": "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6",
+    "original_cost_ledger_sha256": "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e",
+    "API_snapshot_captured_ns": 1794243030616791397,
+    "stored_API_expiry_release_state_and_draft_URLs_are_historical": true,
+    "authoritative_download_mapping": "Exact asset IDs/bytes/SHA256; use current published URLs above, not embedded draft browser URLs.",
+    "semantic_correction": "semantic-correction.json",
+    "corrected_forecasts_computed_or_prospectively_validated": false
+  },
+  "verification": {
+    "publication": {
+      "run_id": 42659634561,
+      "source": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+      "status": "complete",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659634561",
+      "projection": {
+        "report_sha256": "69b99bfb4e401b84ce6d91f23a9c7d04b93e94d24caba34d4cf1c75cb571f21b",
+        "coverage": {
+          "expected_cells": 108,
+          "actual_cells": 108,
+          "missing_cells": [],
+          "expected_rows": 2880,
+          "actual_rows": 2880,
+          "physically_paired_cells": 8,
+          "randomized_between_host_cells": 100
+        },
+        "scientific_fields_equal_reference": true,
+        "reference_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+        "input_source": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+        "engine_sha256": "38eb812a4d87fa269294bb023f45df3bbc49438014ce4a0dc631943b41df8bed",
+        "live_Actions_API_checked_by_reader": false,
+        "API_fields_are_historical_snapshot_not_current_expiry_status": true,
+        "snapshot_captured_ns": 1794243030616791397,
+        "full_raw_capture_or_model_regeneration": false
+      },
+      "original_Actions_API_request_count": 104,
+      "Release_or_Actions_request_receipts": [
+        {
+          "method": "GET",
+          "endpoint": "releases/439394996",
+          "started_ns": 1794243445785496581
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/439394996/assets?per_page=100&page=1",
+          "started_ns": 1794243446092140637
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/runs/42658254761",
+          "started_ns": 1794243446571121418
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728219744",
+          "started_ns": 1794243446935464351
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728219744",
+          "started_ns": 1794243447798827186
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13551961317/zip",
+          "started_ns": 1794243448486178632
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13551961317.zip",
+          "started_ns": 1794243449915623662
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728240585",
+          "started_ns": 1794243451443246708
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13567648416/zip",
+          "started_ns": 1794243455155526780
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13567648416.zip",
+          "started_ns": 1794243456953976915
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728240972",
+          "started_ns": 1794243459576974110
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13568177957/zip",
+          "started_ns": 1794243460333080474
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13568177957.zip",
+          "started_ns": 1794243465615285411
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728241418",
+          "started_ns": 1794243469366118402
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13568431889/zip",
+          "started_ns": 1794243470544482411
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13568431889.zip",
+          "started_ns": 1794243472427635705
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728241708",
+          "started_ns": 1794243476055283877
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13569200351/zip",
+          "started_ns": 1794243476883494970
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13569200351.zip",
+          "started_ns": 1794243479536261289
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242023",
+          "started_ns": 1794243483186236954
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13569858122/zip",
+          "started_ns": 1794243484115735485
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13569858122.zip",
+          "started_ns": 1794243486613772852
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242326",
+          "started_ns": 1794243490227619050
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13569907343/zip",
+          "started_ns": 1794243491166637111
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13569907343.zip",
+          "started_ns": 1794243493166898174
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242683",
+          "started_ns": 1794243495763012902
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13570013812/zip",
+          "started_ns": 1794243496608942649
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13570013812.zip",
+          "started_ns": 1794243499360611795
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242946",
+          "started_ns": 1794243503190179041
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13570436993/zip",
+          "started_ns": 1794243504147629091
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13570436993.zip",
+          "started_ns": 1794243506142596174
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728243290",
+          "started_ns": 1794243508462756329
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13571144473/zip",
+          "started_ns": 1794243509401875189
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13571144473.zip",
+          "started_ns": 1794243515103272094
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728243727",
+          "started_ns": 1794243522395980509
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13571750424/zip",
+          "started_ns": 1794243523979077241
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13571750424.zip",
+          "started_ns": 1794243528573924720
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728244429",
+          "started_ns": 1794243533775200812
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13572290174/zip",
+          "started_ns": 1794243535306850584
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13572290174.zip",
+          "started_ns": 1794243539951524831
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728245050",
+          "started_ns": 1794243546680244156
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13572465361/zip",
+          "started_ns": 1794243548238603181
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13572465361.zip",
+          "started_ns": 1794243554991478200
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728245768",
+          "started_ns": 1794243561475031663
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13582682898/zip",
+          "started_ns": 1794243562997973621
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13582682898.zip",
+          "started_ns": 1794243564933513272
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246289",
+          "started_ns": 1794243568519640619
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13583039738/zip",
+          "started_ns": 1794243569553690255
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13583039738.zip",
+          "started_ns": 1794243571503930730
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246618",
+          "started_ns": 1794243574144625167
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13583776641/zip",
+          "started_ns": 1794243575190563749
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13583776641.zip",
+          "started_ns": 1794243577450565136
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246935",
+          "started_ns": 1794243580039085903
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584059793/zip",
+          "started_ns": 1794243580991178110
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584059793.zip",
+          "started_ns": 1794243583320512096
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247215",
+          "started_ns": 1794243587796772284
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584134715/zip",
+          "started_ns": 1794243589114157203
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584134715.zip",
+          "started_ns": 1794243590865484032
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247545",
+          "started_ns": 1794243593903455130
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584186033/zip",
+          "started_ns": 1794243594853306828
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584186033.zip",
+          "started_ns": 1794243597689339400
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247914",
+          "started_ns": 1794243600590823493
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584194908/zip",
+          "started_ns": 1794243601689086600
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584194908.zip",
+          "started_ns": 1794243604306822992
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728248231",
+          "started_ns": 1794243608810225697
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584223892/zip",
+          "started_ns": 1794243610288294111
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584223892.zip",
+          "started_ns": 1794243613574089323
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728248806",
+          "started_ns": 1794243618913690884
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584275065/zip",
+          "started_ns": 1794243620326208485
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584275065.zip",
+          "started_ns": 1794243627958511352
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728249733",
+          "started_ns": 1794243640616976065
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584288079/zip",
+          "started_ns": 1794243642926154638
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584288079.zip",
+          "started_ns": 1794243644959906668
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728250741",
+          "started_ns": 1794243648282528123
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584423849/zip",
+          "started_ns": 1794243649506141950
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584423849.zip",
+          "started_ns": 1794243652137395991
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251154",
+          "started_ns": 1794243656687665727
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584424702/zip",
+          "started_ns": 1794243658208699463
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584424702.zip",
+          "started_ns": 1794243660374323160
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251507",
+          "started_ns": 1794243662979124252
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584527970/zip",
+          "started_ns": 1794243664064041385
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584527970.zip",
+          "started_ns": 1794243666228395120
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251772",
+          "started_ns": 1794243668751093188
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584551460/zip",
+          "started_ns": 1794243669879603707
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584551460.zip",
+          "started_ns": 1794243672944833948
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728252154",
+          "started_ns": 1794243679906005196
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584568533/zip",
+          "started_ns": 1794243681383956694
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584568533.zip",
+          "started_ns": 1794243683941229299
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728252681",
+          "started_ns": 1794243688598141498
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584661182/zip",
+          "started_ns": 1794243690078563946
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584661182.zip",
+          "started_ns": 1794243692346261457
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253106",
+          "started_ns": 1794243695055293817
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584666305/zip",
+          "started_ns": 1794243696228382334
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584666305.zip",
+          "started_ns": 1794243699290256176
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253404",
+          "started_ns": 1794243705616463231
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584721718/zip",
+          "started_ns": 1794243707272687714
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584721718.zip",
+          "started_ns": 1794243709423458953
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253930",
+          "started_ns": 1794243712108348636
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584767095/zip",
+          "started_ns": 1794243713332676956
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584767095.zip",
+          "started_ns": 1794243716421067895
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728254313",
+          "started_ns": 1794243722069809161
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584791010/zip",
+          "started_ns": 1794243723819692064
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584791010.zip",
+          "started_ns": 1794243725565738197
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728254862",
+          "started_ns": 1794243728746309030
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584949287/zip",
+          "started_ns": 1794243729980201610
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584949287.zip",
+          "started_ns": 1794243733021117101
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728255271",
+          "started_ns": 1794243738179542132
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13584950163/zip",
+          "started_ns": 1794243739951453971
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13584950163.zip",
+          "started_ns": 1794243742211049883
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728255771",
+          "started_ns": 1794243745006916438
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585025965/zip",
+          "started_ns": 1794243746454597563
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585025965.zip",
+          "started_ns": 1794243748389049702
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728256101",
+          "started_ns": 1794243751540535652
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585103527/zip",
+          "started_ns": 1794243752997972857
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585103527.zip",
+          "started_ns": 1794243758679010750
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728256706",
+          "started_ns": 1794243763843559248
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585138462/zip",
+          "started_ns": 1794243765807405689
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585138462.zip",
+          "started_ns": 1794243768568029798
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728257391",
+          "started_ns": 1794243772755899026
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585193120/zip",
+          "started_ns": 1794243774608256079
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585193120.zip",
+          "started_ns": 1794243777147827216
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728257873",
+          "started_ns": 1794243779809136791
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585207622/zip",
+          "started_ns": 1794243781356772704
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585207622.zip",
+          "started_ns": 1794243783706639461
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728258241",
+          "started_ns": 1794243787550104362
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585249848/zip",
+          "started_ns": 1794243789321398720
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585249848.zip",
+          "started_ns": 1794243794389377198
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728258788",
+          "started_ns": 1794243800521848872
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585344615/zip",
+          "started_ns": 1794243802407867956
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585344615.zip",
+          "started_ns": 1794243805916160956
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728259353",
+          "started_ns": 1794243812015238888
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585381367/zip",
+          "started_ns": 1794243813954005382
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585381367.zip",
+          "started_ns": 1794243819225099504
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260025",
+          "started_ns": 1794243825218809666
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585430390/zip",
+          "started_ns": 1794243827262666235
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585430390.zip",
+          "started_ns": 1794243829195937323
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260463",
+          "started_ns": 1794243831475278985
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585464006/zip",
+          "started_ns": 1794243832929847333
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585464006.zip",
+          "started_ns": 1794243836218135211
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260765",
+          "started_ns": 1794243842362848093
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585477256/zip",
+          "started_ns": 1794243844308753892
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585477256.zip",
+          "started_ns": 1794243847061082388
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728261273",
+          "started_ns": 1794243852384543109
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585547299/zip",
+          "started_ns": 1794243854315566075
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585547299.zip",
+          "started_ns": 1794243861895968958
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728262265",
+          "started_ns": 1794243868929723886
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585569745/zip",
+          "started_ns": 1794243870743050915
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585569745.zip",
+          "started_ns": 1794243876630172810
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728263069",
+          "started_ns": 1794243882708764601
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585587612/zip",
+          "started_ns": 1794243884887756561
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585587612.zip",
+          "started_ns": 1794243888011198593
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728263637",
+          "started_ns": 1794243894307029427
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585630456/zip",
+          "started_ns": 1794243896431080214
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585630456.zip",
+          "started_ns": 1794243898369402693
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728264073",
+          "started_ns": 1794243901748857475
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585647862/zip",
+          "started_ns": 1794243903422390842
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585647862.zip",
+          "started_ns": 1794243907316920246
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728264600",
+          "started_ns": 1794243912366213607
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585661852/zip",
+          "started_ns": 1794243914612246119
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585661852.zip",
+          "started_ns": 1794243917497591910
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728265223",
+          "started_ns": 1794243921690613137
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585758719/zip",
+          "started_ns": 1794243923628702302
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585758719.zip",
+          "started_ns": 1794243928807551383
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728265894",
+          "started_ns": 1794243934188449376
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585776117/zip",
+          "started_ns": 1794243936308910397
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585776117.zip",
+          "started_ns": 1794243939171981038
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728266420",
+          "started_ns": 1794243948823837865
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585827702/zip",
+          "started_ns": 1794243950797470484
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585827702.zip",
+          "started_ns": 1794243954542722904
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728267247",
+          "started_ns": 1794243965231623751
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585901035/zip",
+          "started_ns": 1794243967405859400
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585901035.zip",
+          "started_ns": 1794243970927079930
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728268179",
+          "started_ns": 1794243975507803728
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13585989458/zip",
+          "started_ns": 1794243977756795200
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13585989458.zip",
+          "started_ns": 1794243982903820704
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728268802",
+          "started_ns": 1794243989366216215
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586133884/zip",
+          "started_ns": 1794243991698729730
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586133884.zip",
+          "started_ns": 1794243995373960352
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728269460",
+          "started_ns": 1794244000359702940
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586208624/zip",
+          "started_ns": 1794244002549828778
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586208624.zip",
+          "started_ns": 1794244008216332696
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728270063",
+          "started_ns": 1794244017031114526
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586351985/zip",
+          "started_ns": 1794244019451952258
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586351985.zip",
+          "started_ns": 1794244023448033058
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728270891",
+          "started_ns": 1794244029266816422
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586375855/zip",
+          "started_ns": 1794244031594165876
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586375855.zip",
+          "started_ns": 1794244034222123757
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728271391",
+          "started_ns": 1794244038841833290
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586388323/zip",
+          "started_ns": 1794244041063060673
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586388323.zip",
+          "started_ns": 1794244043678151910
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728271928",
+          "started_ns": 1794244049341608898
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586516447/zip",
+          "started_ns": 1794244051596529706
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586516447.zip",
+          "started_ns": 1794244058987421259
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728272768",
+          "started_ns": 1794244064324512140
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586717203/zip",
+          "started_ns": 1794244066564989052
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586717203.zip",
+          "started_ns": 1794244069309548117
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728273280",
+          "started_ns": 1794244074459816290
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586719086/zip",
+          "started_ns": 1794244076761996436
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586719086.zip",
+          "started_ns": 1794244081932811476
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728273849",
+          "started_ns": 1794244087625428864
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13586745201/zip",
+          "started_ns": 1794244089981863218
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13586745201.zip",
+          "started_ns": 1794244093516613482
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728274395",
+          "started_ns": 1794244097745423413
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13587050972/zip",
+          "started_ns": 1794244100100740957
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13587050972.zip",
+          "started_ns": 1794244104825348762
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728274826",
+          "started_ns": 1794244110220905902
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13587460373/zip",
+          "started_ns": 1794244112881346544
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13587460373.zip",
+          "started_ns": 1794244117424995034
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728275377",
+          "started_ns": 1794244123800634098
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13587645497/zip",
+          "started_ns": 1794244126393198620
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13587645497.zip",
+          "started_ns": 1794244132953478797
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728276071",
+          "started_ns": 1794244139248124955
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13589452190/zip",
+          "started_ns": 1794244141772474114
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13589452190.zip",
+          "started_ns": 1794244144857795386
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728276608",
+          "started_ns": 1794244151473264906
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13589548115/zip",
+          "started_ns": 1794244154154841421
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13589548115.zip",
+          "started_ns": 1794244158363873168
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728277285",
+          "started_ns": 1794244164459277898
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13589548148/zip",
+          "started_ns": 1794244167104920143
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13589548148.zip",
+          "started_ns": 1794244170510497778
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728277981",
+          "started_ns": 1794244180705748802
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13589892525/zip",
+          "started_ns": 1794244183592827794
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13589892525.zip",
+          "started_ns": 1794244187713805576
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728279159",
+          "started_ns": 1794244193796818916
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13593994744/zip",
+          "started_ns": 1794244196582434685
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13593994744.zip",
+          "started_ns": 1794244201272497996
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728279829",
+          "started_ns": 1794244209974270400
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13594159356/zip",
+          "started_ns": 1794244213369407961
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13594159356.zip",
+          "started_ns": 1794244215328534984
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728280649",
+          "started_ns": 1794244218120143596
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13594681803/zip",
+          "started_ns": 1794244220367278858
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13594681803.zip",
+          "started_ns": 1794244222190067195
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281013",
+          "started_ns": 1794244225096525845
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13595751506/zip",
+          "started_ns": 1794244227405350648
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13595751506.zip",
+          "started_ns": 1794244229841136429
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281407",
+          "started_ns": 1794244234240354405
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13613623933/zip",
+          "started_ns": 1794244236725055922
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13613623933.zip",
+          "started_ns": 1794244238698301501
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281808",
+          "started_ns": 1794244242191083439
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13613688381/zip",
+          "started_ns": 1794244244541226383
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13613688381.zip",
+          "started_ns": 1794244253778232091
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728282569",
+          "started_ns": 1794244261842666210
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13613861965/zip",
+          "started_ns": 1794244265345465816
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13613861965.zip",
+          "started_ns": 1794244267391690311
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728283267",
+          "started_ns": 1794244270256253011
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13614089789/zip",
+          "started_ns": 1794244272600226785
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13614089789.zip",
+          "started_ns": 1794244280372575365
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728283926",
+          "started_ns": 1794244292024871787
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13614168780/zip",
+          "started_ns": 1794244295719646739
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13614168780.zip",
+          "started_ns": 1794244301272728076
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728284825",
+          "started_ns": 1794244312501737017
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13614299177/zip",
+          "started_ns": 1794244316283464992
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13614299177.zip",
+          "started_ns": 1794244320061729210
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728285706",
+          "started_ns": 1794244324852623551
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13614758383/zip",
+          "started_ns": 1794244327497537030
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13614758383.zip",
+          "started_ns": 1794244334544071118
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728286508",
+          "started_ns": 1794244345920527447
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13615667584/zip",
+          "started_ns": 1794244349796684741
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13615667584.zip",
+          "started_ns": 1794244363208231918
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728288124",
+          "started_ns": 1794244377752412589
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13616094769/zip",
+          "started_ns": 1794244381709174861
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13616094769.zip",
+          "started_ns": 1794244388842517745
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728290104",
+          "started_ns": 1794244400120969520
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13616313680/zip",
+          "started_ns": 1794244404029358395
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13616313680.zip",
+          "started_ns": 1794244409267337589
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728291651",
+          "started_ns": 1794244422197980780
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13616809022/zip",
+          "started_ns": 1794244426093553000
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13616809022.zip",
+          "started_ns": 1794244435909387806
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728293274",
+          "started_ns": 1794244445239791383
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13617111415/zip",
+          "started_ns": 1794244449128493739
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13617111415.zip",
+          "started_ns": 1794244459041560990
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728294766",
+          "started_ns": 1794244469375821575
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13617272185/zip",
+          "started_ns": 1794244473411469210
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13617272185.zip",
+          "started_ns": 1794244483608814505
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728296696",
+          "started_ns": 1794244493939250522
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13617571905/zip",
+          "started_ns": 1794244497859438027
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13617571905.zip",
+          "started_ns": 1794244504074413385
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728297897",
+          "started_ns": 1794244518088527122
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13619051812/zip",
+          "started_ns": 1794244522181774430
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13619051812.zip",
+          "started_ns": 1794244534213035480
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728299749",
+          "started_ns": 1794244545984470073
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13619187377/zip",
+          "started_ns": 1794244550142944355
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13619187377.zip",
+          "started_ns": 1794244556754635437
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728300881",
+          "started_ns": 1794244566279925517
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13621804196/zip",
+          "started_ns": 1794244570239574532
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13621804196.zip",
+          "started_ns": 1794244572289166075
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728301626",
+          "started_ns": 1794244574943612218
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13626838934/zip",
+          "started_ns": 1794244587524698888
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13626838934.zip",
+          "started_ns": 1794244598434892547
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728303006",
+          "started_ns": 1794244609605305733
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13626957371/zip",
+          "started_ns": 1794244613703211462
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13626957371.zip",
+          "started_ns": 1794244621578171675
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728304535",
+          "started_ns": 1794244634121859242
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13627467888/zip",
+          "started_ns": 1794244638294935673
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13627467888.zip",
+          "started_ns": 1794244646775452668
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728305845",
+          "started_ns": 1794244663481691880
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13629023598/zip",
+          "started_ns": 1794244667757349185
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13629023598.zip",
+          "started_ns": 1794244687384977758
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728308358",
+          "started_ns": 1794244700932347316
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13629205350/zip",
+          "started_ns": 1794244705028617500
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13629205350.zip",
+          "started_ns": 1794244719738793540
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728310155",
+          "started_ns": 1794244731211148670
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13629883147/zip",
+          "started_ns": 1794244736189016600
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13629883147.zip",
+          "started_ns": 1794244742277207969
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728311632",
+          "started_ns": 1794244751360934283
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13630031779/zip",
+          "started_ns": 1794244755758891701
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13630031779.zip",
+          "started_ns": 1794244794101051360
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728314426",
+          "started_ns": 1794244806156385327
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13631885856/zip",
+          "started_ns": 1794244810565805461
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13631885856.zip",
+          "started_ns": 1794244818566751235
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728315609",
+          "started_ns": 1794244831412425667
+        },
+        {
+          "method": "GET",
+          "endpoint": "actions/artifacts/13617096437/zip",
+          "started_ns": 1794244837271573436
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=artifact-13617096437.zip",
+          "started_ns": 1794244846257530623
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728316943",
+          "started_ns": 1794244856291783167
+        },
+        {
+          "method": "POST",
+          "endpoint": "https://uploads.github.com/repos/a-a-k/ebpf-model-discovery-experiments/releases/439394996/assets?name=archive-index.json",
+          "started_ns": 1794244856724838196
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728317527",
+          "started_ns": 1794244857571145017
+        },
+        {
+          "method": "PATCH",
+          "endpoint": "releases/439394996",
+          "started_ns": 1794244857878629125
+        }
+      ],
+      "verified_downloads": [
+        {
+          "artifact_id": 13551961317,
+          "asset_id": 728240585,
+          "bytes": 7627074,
+          "sha256": "1603bd0c5bcc34866299df24fa16aacc3ec0f095e9d393bc5a3dfd6fbe694b1d"
+        },
+        {
+          "artifact_id": 13567648416,
+          "asset_id": 728240972,
+          "bytes": 32792688,
+          "sha256": "8d60caa8399d6a9f3e9a793c6d602154690ab546d72296f727c4a8cb9c479783"
+        },
+        {
+          "artifact_id": 13568177957,
+          "asset_id": 728241418,
+          "bytes": 82903771,
+          "sha256": "be598f958113b09184b8465407ad8e11d4717202b113f438757a675154c6088c"
+        },
+        {
+          "artifact_id": 13568431889,
+          "asset_id": 728241708,
+          "bytes": 33038649,
+          "sha256": "54669e829c8b82fc6cef22fcc7940a037be8a206f5b366f9c43c12f7b1a6e736"
+        },
+        {
+          "artifact_id": 13569200351,
+          "asset_id": 728242023,
+          "bytes": 48792349,
+          "sha256": "591c3e1e040b5190333ad9fa4559ac820f91f92133e40486c471a2f2f12da376"
+        },
+        {
+          "artifact_id": 13569858122,
+          "asset_id": 728242326,
+          "bytes": 49775220,
+          "sha256": "984daa4f949ccc83049c3b3561ab76648af1990d9b835789febb77bb727c9eef"
+        },
+        {
+          "artifact_id": 13569907343,
+          "asset_id": 728242683,
+          "bytes": 34226592,
+          "sha256": "606c7e5e9c98449aece26ef803f63f7a89b21e2dc8ee48291449a53974f569cd"
+        },
+        {
+          "artifact_id": 13570013812,
+          "asset_id": 728242946,
+          "bytes": 48677274,
+          "sha256": "13c809ee1d4bbcda603695ca13e4de882a12b6226d6b70ea859bccd7aa9c8315"
+        },
+        {
+          "artifact_id": 13570436993,
+          "asset_id": 728243290,
+          "bytes": 33772931,
+          "sha256": "7b034cfa9d07f27d35327bbd0bb78da91fe8fbaa5ebf6c44ad364824fb8b1bd9"
+        },
+        {
+          "artifact_id": 13571144473,
+          "asset_id": 728243727,
+          "bytes": 138252175,
+          "sha256": "42b2cf11cc3c0694d1260113a1162f29b261f39a0bd7a0fe6c68fae33d5361de"
+        },
+        {
+          "artifact_id": 13571750424,
+          "asset_id": 728244429,
+          "bytes": 123980920,
+          "sha256": "5e9ca946388115fd02512a38bd88bf270e6090a53c225f14fb6f1b7f7b8f7fcd"
+        },
+        {
+          "artifact_id": 13572290174,
+          "asset_id": 728245050,
+          "bytes": 139409817,
+          "sha256": "52c447a5a14d5053bafb7432c9215271c2a15332b7a8a7c7ae4e573f54eeec4d"
+        },
+        {
+          "artifact_id": 13572465361,
+          "asset_id": 728245768,
+          "bytes": 123751276,
+          "sha256": "b5b479049de6fd60ef52fa1ef0f6b83c55c740205e864896d17c01d4b57385de"
+        },
+        {
+          "artifact_id": 13582682898,
+          "asset_id": 728246289,
+          "bytes": 43713858,
+          "sha256": "9af3bdb929c0cbc6620982708bf65792e5aec5f08316c5d94ba961d6dd0bb5c7"
+        },
+        {
+          "artifact_id": 13583039738,
+          "asset_id": 728246618,
+          "bytes": 44077155,
+          "sha256": "718930e0908ca3667de467394d36b3beb0d566ea97c79d90d16b9bd24f8c80e5"
+        },
+        {
+          "artifact_id": 13583776641,
+          "asset_id": 728246935,
+          "bytes": 33771664,
+          "sha256": "de91d8789eda8c0d0d99929a2a612b8b8ae2b41e5d5102ab18bb014367f92b07"
+        },
+        {
+          "artifact_id": 13584059793,
+          "asset_id": 728247215,
+          "bytes": 75877806,
+          "sha256": "d8687d7456a14d61a6df1e2520b25c79f29475b1c8f2bc6e18e7b0480b680828"
+        },
+        {
+          "artifact_id": 13584134715,
+          "asset_id": 728247545,
+          "bytes": 32791688,
+          "sha256": "ebe10bef87b4d9ebe1afb0f9b01ea0e626477558d9e86791e166ef27c6e45352"
+        },
+        {
+          "artifact_id": 13584186033,
+          "asset_id": 728247914,
+          "bytes": 49781999,
+          "sha256": "acac682542545fa4e9bdf2df470b5597c8f34bc69f063bec38feee9b41c3836f"
+        },
+        {
+          "artifact_id": 13584194908,
+          "asset_id": 728248231,
+          "bytes": 91568399,
+          "sha256": "d8be2a0b9ff154f1a28ea1c230b9426f3ac9e4c346694e27aaab10e4f4dfa64c"
+        },
+        {
+          "artifact_id": 13584223892,
+          "asset_id": 728248806,
+          "bytes": 81999637,
+          "sha256": "9ee4c32fe656822132648a8fe574c18429c180c1937f039d1cac70d47cd94d1c"
+        },
+        {
+          "artifact_id": 13584275065,
+          "asset_id": 728249733,
+          "bytes": 206600986,
+          "sha256": "d6132de71b9bd9374e6a95f87ae1749297d733c5e7fd209814ef0d72ba5b1ecf"
+        },
+        {
+          "artifact_id": 13584288079,
+          "asset_id": 728250741,
+          "bytes": 48677010,
+          "sha256": "637293999ef63ad77172ce36ae54e73fbf8fa91e323fdb95c10779796ced81e6"
+        },
+        {
+          "artifact_id": 13584423849,
+          "asset_id": 728251154,
+          "bytes": 90347364,
+          "sha256": "423394bf9f50f31765cb56e9d3f729d4d6967257a104d685bf4fcbb6ac8900df"
+        },
+        {
+          "artifact_id": 13584424702,
+          "asset_id": 728251507,
+          "bytes": 33020012,
+          "sha256": "82d52d75243955d680802df8956d61bc7033c2d6a1368f7e3a94a0c4ac49fa41"
+        },
+        {
+          "artifact_id": 13584527970,
+          "asset_id": 728251772,
+          "bytes": 34244245,
+          "sha256": "9ff122830ed7d0a2e326b6caaa4a5390cc9272577cf62c4be53aa21419bc4f8b"
+        },
+        {
+          "artifact_id": 13584551460,
+          "asset_id": 728252154,
+          "bytes": 76078687,
+          "sha256": "b16b6e4d4573535f38d4157692f15a187c3e30c60c37fc78e826d499738635e4"
+        },
+        {
+          "artifact_id": 13584568533,
+          "asset_id": 728252681,
+          "bytes": 77898232,
+          "sha256": "a318029cf6aa5a6211ddbe97e7dd4a31b1fe5716164e9d8b36a2824caeab9c0c"
+        },
+        {
+          "artifact_id": 13584661182,
+          "asset_id": 728253106,
+          "bytes": 33772159,
+          "sha256": "71101945a1f86f22a490602977b7b58a5ee5482d7778ca181314d8cfbf57b7d0"
+        },
+        {
+          "artifact_id": 13584666305,
+          "asset_id": 728253404,
+          "bytes": 81598044,
+          "sha256": "a6ed91514bb2a878cb6079ab1123bd180d03baec43ec3f5004636879b42fcaeb"
+        },
+        {
+          "artifact_id": 13584721718,
+          "asset_id": 728253930,
+          "bytes": 32791476,
+          "sha256": "6ae69aec847fe0ea190494176e3d28619078733a048df855cecad058af36657e"
+        },
+        {
+          "artifact_id": 13584767095,
+          "asset_id": 728254313,
+          "bytes": 104423536,
+          "sha256": "2055369c440a958c8609de5e2c1b606126e7e0bc5d33be0ca398ac791776cfa3"
+        },
+        {
+          "artifact_id": 13584791010,
+          "asset_id": 728254862,
+          "bytes": 34248195,
+          "sha256": "b2b866362c6b19b90c219e125005c00df63015068fdda17a099af0886c9b0b7b"
+        },
+        {
+          "artifact_id": 13584949287,
+          "asset_id": 728255271,
+          "bytes": 104953751,
+          "sha256": "b26dadaaaebd92a2fb9d61895b530cfee60eec64bf77fcb298a22cc017110798"
+        },
+        {
+          "artifact_id": 13584950163,
+          "asset_id": 728255771,
+          "bytes": 48672756,
+          "sha256": "727c965656e47b2fb9c004fdc9543cad52ad3bcc2b3b8482a2e7c40d6fd36639"
+        },
+        {
+          "artifact_id": 13585025965,
+          "asset_id": 728256101,
+          "bytes": 49778751,
+          "sha256": "9de5b9d107aed31026f0931f9d81ccb895a970ebc8a66559d15ae333cd732ab4"
+        },
+        {
+          "artifact_id": 13585103527,
+          "asset_id": 728256706,
+          "bytes": 120113616,
+          "sha256": "7463788f24ce3d9cff061104f36df379a2728ef124509f1aa918e5e4b5339a83"
+        },
+        {
+          "artifact_id": 13585138462,
+          "asset_id": 728257391,
+          "bytes": 90343891,
+          "sha256": "ad772afb94114c2d923e7f930d2f449ab2cd0095f80d0c362bd924919e02acdc"
+        },
+        {
+          "artifact_id": 13585193120,
+          "asset_id": 728257873,
+          "bytes": 48796024,
+          "sha256": "15bf066671035bc98581ad40b256f06d6785873b6b7d1bc421310dcd89fa9933"
+        },
+        {
+          "artifact_id": 13585207622,
+          "asset_id": 728258241,
+          "bytes": 76090717,
+          "sha256": "93a4a265280018c3904c643b7f6562c826136f5d5567df79a17cf70194335453"
+        },
+        {
+          "artifact_id": 13585249848,
+          "asset_id": 728258788,
+          "bytes": 104401127,
+          "sha256": "5d84523312447a5e2cc0ef1a24b7da8a504d0a1f01db4a2faf9bbdfb17d3eca3"
+        },
+        {
+          "artifact_id": 13585344615,
+          "asset_id": 728259353,
+          "bytes": 94157711,
+          "sha256": "55b86a04bf1a6df31ac44add48de4a52ae6b96c9a0f3979b5cb1d19955420710"
+        },
+        {
+          "artifact_id": 13585381367,
+          "asset_id": 728260025,
+          "bytes": 119015338,
+          "sha256": "f4216a8e4270513c3088f851a0ce055b1d8fb0dec630a9f2b8f8b8759cb6b6af"
+        },
+        {
+          "artifact_id": 13585430390,
+          "asset_id": 728260463,
+          "bytes": 33018561,
+          "sha256": "06427667661f11f2336086d14d16ea1b5429b5fa8b6b58270c060f1909c993b5"
+        },
+        {
+          "artifact_id": 13585464006,
+          "asset_id": 728260765,
+          "bytes": 90341204,
+          "sha256": "370531d0648ad5ab972dbc9a21e3d5f14c595a2d22c3fac77b36ad9fa5566c2a"
+        },
+        {
+          "artifact_id": 13585477256,
+          "asset_id": 728261273,
+          "bytes": 90578272,
+          "sha256": "247ff0a43f1fa7784b75a58a095b9aeaed3a6e666ec5ce5daf1f731be6f3b6ea"
+        },
+        {
+          "artifact_id": 13585547299,
+          "asset_id": 728262265,
+          "bytes": 76094421,
+          "sha256": "f3b358f90985e563eabf4f608978bcf61a08c7c2e8a171e8e1ecb0cfba217da0"
+        },
+        {
+          "artifact_id": 13585569745,
+          "asset_id": 728263069,
+          "bytes": 120111457,
+          "sha256": "a1ab13db8d9bc090591a5dcf0a9ca7de88adc668b595c9d558d104c98b86874d"
+        },
+        {
+          "artifact_id": 13585587612,
+          "asset_id": 728263637,
+          "bytes": 118948621,
+          "sha256": "6ff0e145c07d5fba8e3612e4c62ea59a83f8968c4ab2c91982155ae291772b87"
+        },
+        {
+          "artifact_id": 13585630456,
+          "asset_id": 728264073,
+          "bytes": 48798707,
+          "sha256": "4fd2eda818fcfdcd67f058d0b8bffb89f9ba0c82fad851901058837fac187803"
+        },
+        {
+          "artifact_id": 13585647862,
+          "asset_id": 728264600,
+          "bytes": 120098231,
+          "sha256": "899b61de848a1f51498602d8800f4005d29dcbe0f553e6d495d2f0b49f197953"
+        },
+        {
+          "artifact_id": 13585661852,
+          "asset_id": 728265223,
+          "bytes": 75877051,
+          "sha256": "a5b3516c7acbf728a7dcb39b6d3542ff473ea439081b136f24f7373ca4d1c14c"
+        },
+        {
+          "artifact_id": 13585758719,
+          "asset_id": 728265894,
+          "bytes": 104852175,
+          "sha256": "746363b2ec28e8fb5d297063eac11642dec54971be1f1f3bbcb743e82234dda0"
+        },
+        {
+          "artifact_id": 13585776117,
+          "asset_id": 728266420,
+          "bytes": 75879540,
+          "sha256": "4937aba6792351774a708fdb318974494d19199fbb34a9f9d5f80b8513233c39"
+        },
+        {
+          "artifact_id": 13585827702,
+          "asset_id": 728267247,
+          "bytes": 94382171,
+          "sha256": "d562fe0577d2bad8dc0f4fe9264f0941bfdcebbe11ec2b93b9213545b7660b72"
+        },
+        {
+          "artifact_id": 13585901035,
+          "asset_id": 728268179,
+          "bytes": 94386848,
+          "sha256": "c9af6769c7dc7f26dbbd8b4fdbb7afb5cbc4079d8b65186c904bf0d2c1316f83"
+        },
+        {
+          "artifact_id": 13585989458,
+          "asset_id": 728268802,
+          "bytes": 119002831,
+          "sha256": "f30f90e311ad04606487dcc954f9236cb056468a3a04f8298c7eae70d77af32f"
+        },
+        {
+          "artifact_id": 13586133884,
+          "asset_id": 728269460,
+          "bytes": 104430690,
+          "sha256": "79130e6d5310a478256f351af17080acb9d49770cbefdc4be8b95493879b17c4"
+        },
+        {
+          "artifact_id": 13586208624,
+          "asset_id": 728270063,
+          "bytes": 139409924,
+          "sha256": "99e3ea2fbec6ff1d53fbe2228152d5bce548bd1ef31ce7ee528d7d8c86427235"
+        },
+        {
+          "artifact_id": 13586351985,
+          "asset_id": 728270891,
+          "bytes": 109870844,
+          "sha256": "646605e5b06c8ef22ab0dc93cc721f3a69e6b6cd5abd199210a8d489c242b1dc"
+        },
+        {
+          "artifact_id": 13586375855,
+          "asset_id": 728271391,
+          "bytes": 91591008,
+          "sha256": "98a8a66caf76fb9f61b3d21cf7ac70c04e5ae30cc2581357d93071eb9db29d98"
+        },
+        {
+          "artifact_id": 13586388323,
+          "asset_id": 728271928,
+          "bytes": 91569092,
+          "sha256": "921093278bda29b26a56a3e4891d504095f7b5b7d2c9ff6b52fafc07bb16a232"
+        },
+        {
+          "artifact_id": 13586516447,
+          "asset_id": 728272768,
+          "bytes": 94158277,
+          "sha256": "5ffabe8e2d74d26883506f8cc05e45c978c2f11ef43b35fecbb550b4f177b83f"
+        },
+        {
+          "artifact_id": 13586717203,
+          "asset_id": 728273280,
+          "bytes": 104869458,
+          "sha256": "77ff1d7a57bd6032d758251717749526d8aa9f1f08a534fa0020cc75fc0e0d06"
+        },
+        {
+          "artifact_id": 13586719086,
+          "asset_id": 728273849,
+          "bytes": 109850791,
+          "sha256": "b50a050b2c17c37abe9405a7080493b8f3382a9e07a5c9eea8ff801fc055e55d"
+        },
+        {
+          "artifact_id": 13586745201,
+          "asset_id": 728274395,
+          "bytes": 90690791,
+          "sha256": "06848c7e02b576ce3efe3ae8387b88ac782853f97e996cbf32ee11ab7582f7fd"
+        },
+        {
+          "artifact_id": 13587050972,
+          "asset_id": 728274826,
+          "bytes": 123749929,
+          "sha256": "6a468f15f34b99935b314cd7d7e126f446f2e06ac3ce4b823436027426581846"
+        },
+        {
+          "artifact_id": 13587460373,
+          "asset_id": 728275377,
+          "bytes": 138325498,
+          "sha256": "9d0200ff12f6c8594ab256852c2ea6fecd85e7f23d4487b3bff780848499e728"
+        },
+        {
+          "artifact_id": 13587645497,
+          "asset_id": 728276071,
+          "bytes": 124265466,
+          "sha256": "95c0fd23fdecc1a3e289bddc151a68d0f5ac9653f6031e0c8d8c1b6bef2fcb64"
+        },
+        {
+          "artifact_id": 13589452190,
+          "asset_id": 728276608,
+          "bytes": 124132359,
+          "sha256": "420eac20daee656720da333b3f76b595b38b5d476fb8ea5b5c106ec31bb3d676"
+        },
+        {
+          "artifact_id": 13589548115,
+          "asset_id": 728277285,
+          "bytes": 123751595,
+          "sha256": "366f2af9477e8f0b7ad9f006e4b66e7a1de8fc2cbba142241e1900dfac86e11a"
+        },
+        {
+          "artifact_id": 13589548148,
+          "asset_id": 728277981,
+          "bytes": 138313176,
+          "sha256": "8877ffec548755840e873c91c92a9b39a91570a8f6f9be35c3f448dedaa1d529"
+        },
+        {
+          "artifact_id": 13589892525,
+          "asset_id": 728279159,
+          "bytes": 139432229,
+          "sha256": "cf8c6e3a67f05aa58d2ff59ee1da2d24f4aaae759f3ccb10fb47fa34fbb6c5d9"
+        },
+        {
+          "artifact_id": 13593994744,
+          "asset_id": 728279829,
+          "bytes": 214035352,
+          "sha256": "11869450fbc4c5eb3c6ec1a512515f936896396b42e7fb848a55fa3399a35fff"
+        },
+        {
+          "artifact_id": 13594159356,
+          "asset_id": 728280649,
+          "bytes": 43714123,
+          "sha256": "2f45726ab80e102d1ec303e538825aed5944249eec2ca313e04dbaeed9fb07b9"
+        },
+        {
+          "artifact_id": 13594681803,
+          "asset_id": 728281013,
+          "bytes": 44087258,
+          "sha256": "d3f1aa5c9f6ea7b8a5799aa9b3869a45028e32545e228064e13753fa3b3fb548"
+        },
+        {
+          "artifact_id": 13595751506,
+          "asset_id": 728281407,
+          "bytes": 77902150,
+          "sha256": "c046b8daf18adbe18e52c108201e01f16d01aa67547bf9636e5cc775e4480468"
+        },
+        {
+          "artifact_id": 13613623933,
+          "asset_id": 728281808,
+          "bytes": 50080341,
+          "sha256": "5fd18ea66c1633fbc4532e3d20e0e378f2d675169d58a3d38daa98c264cf0d38"
+        },
+        {
+          "artifact_id": 13613688381,
+          "asset_id": 728282569,
+          "bytes": 217272840,
+          "sha256": "3c02ced43c6dd3956fcaa631ea00754ad62aa50efd7d5e230af069d083d2fe56"
+        },
+        {
+          "artifact_id": 13613861965,
+          "asset_id": 728283267,
+          "bytes": 49730688,
+          "sha256": "d7c8b234ad3e87deb3b27e3d16435db4ad25e2f10fdb507e1dcac3ab47c40b2a"
+        },
+        {
+          "artifact_id": 13614089789,
+          "asset_id": 728283926,
+          "bytes": 241032278,
+          "sha256": "35254c631db9564d0b65ab2a90db1bf4fbd111711a28989aec8b68ee1b973341"
+        },
+        {
+          "artifact_id": 13614168780,
+          "asset_id": 728284825,
+          "bytes": 240722783,
+          "sha256": "e71d15513fcf279741639165121699573df2276a0e4517e0ca7992cfef83176b"
+        },
+        {
+          "artifact_id": 13614299177,
+          "asset_id": 728285706,
+          "bytes": 83918897,
+          "sha256": "bf4a2ddb38ae5255d1e0c319246c296cd2fe11be0eb1ec3e8cda0b9be5daa39a"
+        },
+        {
+          "artifact_id": 13614758383,
+          "asset_id": 728286508,
+          "bytes": 244436467,
+          "sha256": "b82aedc765858640a769ce9ccb8be5efeaee0988519c1b72a837a43c3c82a6ce"
+        },
+        {
+          "artifact_id": 13615667584,
+          "asset_id": 728288124,
+          "bytes": 274577638,
+          "sha256": "96aeca6a0faf0bd05081b7ca3ba806e97ce61ef4708772272a1ec2a2e913beba"
+        },
+        {
+          "artifact_id": 13616094769,
+          "asset_id": 728290104,
+          "bytes": 244749420,
+          "sha256": "5cf0f406140e464f0270e91a5cab41406aa690ff9bac460c2d9ff524d6bac858"
+        },
+        {
+          "artifact_id": 13616313680,
+          "asset_id": 728291651,
+          "bytes": 240868971,
+          "sha256": "c9decbd93587f95dc43f29d3d85a404ad891a471cc96900e04a74ade5fa3be5e"
+        },
+        {
+          "artifact_id": 13616809022,
+          "asset_id": 728293274,
+          "bytes": 240610583,
+          "sha256": "76426aca02c89c7f15bc75bcbf63815d77ec9022bdd6be90e6d8d5c9fc3369e0"
+        },
+        {
+          "artifact_id": 13617111415,
+          "asset_id": 728294766,
+          "bytes": 240908747,
+          "sha256": "cad9a55e9fa8a3cabd3dfb93f9d11f1dfe74007d922935c52216d034610830d5"
+        },
+        {
+          "artifact_id": 13617272185,
+          "asset_id": 728296696,
+          "bytes": 244771699,
+          "sha256": "4ec0e600e2b42d690997e674bbf57b4a16df6b7cc6f63d913c56d81e86866291"
+        },
+        {
+          "artifact_id": 13617571905,
+          "asset_id": 728297897,
+          "bytes": 274729931,
+          "sha256": "ca505dbae13feb3569eb4df2a7f5488554063088b6a7fa0db6e005d474f790bc"
+        },
+        {
+          "artifact_id": 13619051812,
+          "asset_id": 728299749,
+          "bytes": 274466325,
+          "sha256": "849e18caed2ec122c9b083bb2bdc0d09bb3a84050458593efd4177c7aec04f5c"
+        },
+        {
+          "artifact_id": 13619187377,
+          "asset_id": 728300881,
+          "bytes": 241187275,
+          "sha256": "0c1580f0549e1cdb8d245be24c807ea33163da66aae8d0cfa8e531cd681f6179"
+        },
+        {
+          "artifact_id": 13621804196,
+          "asset_id": 728301626,
+          "bytes": 30610386,
+          "sha256": "0c30f1aac51776385aacd5dc50090d459d49acd069e2d338476679f1e524fd8d"
+        },
+        {
+          "artifact_id": 13626838934,
+          "asset_id": 728303006,
+          "bytes": 256935014,
+          "sha256": "9229f8d9cf0233dec9f66f8bf8ff19b953657db3de90b17f05c95d68c46c6fa0"
+        },
+        {
+          "artifact_id": 13626957371,
+          "asset_id": 728304535,
+          "bytes": 257248084,
+          "sha256": "159cacba63baad0f8074e9ce0af1e5f785e73cab57d0c461449ac0e0d0ba43a1"
+        },
+        {
+          "artifact_id": 13627467888,
+          "asset_id": 728305845,
+          "bytes": 261678469,
+          "sha256": "a9a41bee2e5c2369869b0d96ad916ab16b6dbc048e5ba444232ce2db77a28035"
+        },
+        {
+          "artifact_id": 13629023598,
+          "asset_id": 728308358,
+          "bytes": 256961202,
+          "sha256": "ead5dcd1f73e3600dcff2f1daf2b33c4d09c413be3d7fd40ba7ac12f6594ac4f"
+        },
+        {
+          "artifact_id": 13629205350,
+          "asset_id": 728310155,
+          "bytes": 290525963,
+          "sha256": "c9728401f404e9f0c78c5eee1f3f75814e71e46b80f9123c8792d2dee60ad1d7"
+        },
+        {
+          "artifact_id": 13629883147,
+          "asset_id": 728311632,
+          "bytes": 250083978,
+          "sha256": "2c5818d857bf4c0c093dff2ad764d1ccc8db04228846310e4eccf6edf1f8fe82"
+        },
+        {
+          "artifact_id": 13630031779,
+          "asset_id": 728314426,
+          "bytes": 260400979,
+          "sha256": "ed0e94a1f1d232354541a0fe83e6910a5f029ed79cbf562397c53b3c602ea6a0"
+        },
+        {
+          "artifact_id": 13631885856,
+          "asset_id": 728315609,
+          "bytes": 283203978,
+          "sha256": "b01f505d14ac993297b64bd924362751c3877c09a1178a04718df13cd4dda7a5"
+        },
+        {
+          "artifact_id": 13617096437,
+          "asset_id": 728316943,
+          "bytes": 241176860,
+          "sha256": "0c144237f7f9c86b3a9504b81282ae5760c5e2d1bdecd6ea22271910eea2b61e"
+        }
+      ],
+      "actual_reader_cost": {
+        "started_ns": 1794243448441823550,
+        "ended_ns": 1794244835554941918,
+        "CPU_seconds": {
+          "user": 209.34,
+          "system": 45.03,
+          "children_user": 0.0,
+          "children_system": 0.0
+        },
+        "free_bytes_after": 109852876800,
+        "maximum_RSS_KiB": 987848
+      },
+      "archive_processing_interval_ns": {
+        "started": 1794243445785321724,
+        "ended": 1794244859234676864
+      },
+      "host_resources": {
+        "observed_ns": 1794243442393326347,
+        "runner_label": "ubuntu-24.04",
+        "job_timeout_minutes": 360,
+        "documented_standard_public_runner": {
+          "vCPU": 4,
+          "RAM_GB": 16
+        },
+        "removed_artificial_go_overrides": {},
+        "unused_SDK_disk_cleanup": {
+          "paths_present_before": {
+            "/usr/local/lib/android": true,
+            "/usr/share/dotnet": true,
+            "/opt/ghc": false
+          },
+          "free_bytes_before": 91970863104,
+          "free_bytes_after": 109977640960,
+          "elapsed_seconds": 83.261558046,
+          "scope": "Only three explicitly named unused hosted SDK directories"
+        },
+        "effective_go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        },
+        "allowed_CPUs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "memory": {
+          "MemTotal": "16367524 kB",
+          "MemFree": "14253492 kB",
+          "MemAvailable": "15442636 kB",
+          "Buffers": "426720 kB",
+          "Cached": "1047680 kB",
+          "SwapCached": "0 kB",
+          "Active": "744532 kB",
+          "Inactive": "963484 kB",
+          "Active(anon)": "290472 kB",
+          "Inactive(anon)": "0 kB",
+          "Active(file)": "454060 kB",
+          "Inactive(file)": "963484 kB",
+          "Unevictable": "46728 kB",
+          "Mlocked": "43656 kB",
+          "SwapTotal": "3145724 kB",
+          "SwapFree": "3145724 kB",
+          "Zswap": "0 kB",
+          "Zswapped": "0 kB",
+          "Dirty": "24380 kB",
+          "Writeback": "0 kB",
+          "AnonPages": "280628 kB",
+          "Mapped": "336592 kB",
+          "Shmem": "47840 kB",
+          "KReclaimable": "65860 kB",
+          "Slab": "144260 kB",
+          "SReclaimable": "65860 kB",
+          "SUnreclaim": "78400 kB",
+          "KernelStack": "4288 kB",
+          "PageTables": "6256 kB",
+          "SecPageTables": "0 kB",
+          "NFS_Unstable": "0 kB",
+          "Bounce": "0 kB",
+          "WritebackTmp": "0 kB",
+          "CommitLimit": "11329484 kB",
+          "Committed_AS": "2033272 kB",
+          "VmallocTotal": "34359738367 kB",
+          "VmallocUsed": "42660 kB",
+          "VmallocChunk": "0 kB",
+          "Percpu": "2352 kB",
+          "HardwareCorrupted": "0 kB",
+          "AnonHugePages": "0 kB",
+          "ShmemHugePages": "0 kB",
+          "ShmemPmdMapped": "0 kB",
+          "FileHugePages": "2048 kB",
+          "FilePmdMapped": "0 kB",
+          "CmaTotal": "0 kB",
+          "CmaFree": "1476608 kB",
+          "Unaccepted": "0 kB",
+          "Balloon": "0 kB",
+          "GPUActive": "0 kB",
+          "GPUReclaim": "0 kB",
+          "HugePages_Total": "0",
+          "HugePages_Free": "0",
+          "HugePages_Rsvd": "0",
+          "HugePages_Surp": "0",
+          "Hugepagesize": "2048 kB",
+          "Hugetlb": "0 kB",
+          "DirectMap4k": "124032 kB",
+          "DirectMap2M": "4065280 kB",
+          "DirectMap1G": "14680064 kB"
+        },
+        "inherited_OS_limits": {
+          "RLIMIT_CPU": [
+            -1,
+            -1
+          ],
+          "RLIMIT_AS": [
+            -1,
+            -1
+          ],
+          "RLIMIT_DATA": [
+            -1,
+            -1
+          ],
+          "RLIMIT_NOFILE": [
+            65536,
+            65536
+          ]
+        },
+        "platform_cgroups": {
+          "cpu.max": null,
+          "memory.max": null,
+          "memory.high": null,
+          "pids.max": null
+        },
+        "disk_bytes": {
+          "total": 154894188544,
+          "free": 109977640960,
+          "used": 44899770368
+        },
+        "model_worker_CPUs_or_memory_capped_by_study": false,
+        "paid_runner_provisioned": false,
+        "platform_limit_sources": [
+          "https://docs.github.com/en/actions/reference/limits",
+          "https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job"
+        ]
+      },
+      "proof_artifact": {
+        "id": 13694219333,
+        "bytes": 1768853,
+        "sha256": "5776fbf4ceec70e07698df3dc2066e444bd2d68c6aeb181f10781e7e3fdbbc36"
+      },
+      "proof_artifact_uses_Actions_retention": true
+    },
+    "archive_only_replay": {
+      "run_id": 42663983154,
+      "source": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+      "status": "complete",
+      "run_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42663983154",
+      "projection": {
+        "report_sha256": "1d7f761f4d15d53613da5660b662ecfab33f96891ddf5f08626ee55ce67c7b15",
+        "coverage": {
+          "expected_cells": 108,
+          "actual_cells": 108,
+          "missing_cells": [],
+          "expected_rows": 2880,
+          "actual_rows": 2880,
+          "physically_paired_cells": 8,
+          "randomized_between_host_cells": 100
+        },
+        "scientific_fields_equal_reference": true,
+        "reference_sha256": "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf36",
+        "input_source": "c4f066d7c067d5661c3d942aacadb25d3103820d",
+        "engine_sha256": "38eb812a4d87fa269294bb023f45df3bbc49438014ce4a0dc631943b41df8bed",
+        "live_Actions_API_checked_by_reader": false,
+        "API_fields_are_historical_snapshot_not_current_expiry_status": true,
+        "snapshot_captured_ns": 1794243030616791397,
+        "full_raw_capture_or_model_regeneration": false
+      },
+      "original_Actions_API_request_count": 0,
+      "Release_or_Actions_request_receipts": [
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728317527",
+          "started_ns": 1794245031658585024
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/439394996/assets?per_page=100&page=1",
+          "started_ns": 1794245032087526694
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/439394996/assets?per_page=100&page=2",
+          "started_ns": 1794245032695280704
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/439394996",
+          "started_ns": 1794245033039648218
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728219744",
+          "started_ns": 1794245033493064699
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728240585",
+          "started_ns": 1794245034218902802
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728240972",
+          "started_ns": 1794245038959034249
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728241418",
+          "started_ns": 1794245040157559446
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728241708",
+          "started_ns": 1794245042682673715
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242023",
+          "started_ns": 1794245044064001341
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242326",
+          "started_ns": 1794245046007980879
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242683",
+          "started_ns": 1794245047565961613
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728242946",
+          "started_ns": 1794245049488135331
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728243290",
+          "started_ns": 1794245051017668230
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728243727",
+          "started_ns": 1794245052373587607
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728244429",
+          "started_ns": 1794245056507647164
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728245050",
+          "started_ns": 1794245060139384102
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728245768",
+          "started_ns": 1794245064244705756
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246289",
+          "started_ns": 1794245067189366722
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246618",
+          "started_ns": 1794245068600118791
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728246935",
+          "started_ns": 1794245070356410739
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247215",
+          "started_ns": 1794245071923390927
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247545",
+          "started_ns": 1794245074161778582
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728247914",
+          "started_ns": 1794245075699540812
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728248231",
+          "started_ns": 1794245077274170795
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728248806",
+          "started_ns": 1794245080233901578
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728249733",
+          "started_ns": 1794245083177269866
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728250741",
+          "started_ns": 1794245088098578985
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251154",
+          "started_ns": 1794245090033798941
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251507",
+          "started_ns": 1794245092616551117
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728251772",
+          "started_ns": 1794245094197995379
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728252154",
+          "started_ns": 1794245095734671855
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728252681",
+          "started_ns": 1794245098252608179
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253106",
+          "started_ns": 1794245100664965846
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253404",
+          "started_ns": 1794245102353293936
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728253930",
+          "started_ns": 1794245105468438256
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728254313",
+          "started_ns": 1794245107154182029
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728254862",
+          "started_ns": 1794245109880337500
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728255271",
+          "started_ns": 1794245112146486256
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728255771",
+          "started_ns": 1794245116115054226
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728256101",
+          "started_ns": 1794245118631249830
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728256706",
+          "started_ns": 1794245121080506467
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728257391",
+          "started_ns": 1794245125033169901
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728257873",
+          "started_ns": 1794245128342873537
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728258241",
+          "started_ns": 1794245130496446023
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728258788",
+          "started_ns": 1794245133657052347
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728259353",
+          "started_ns": 1794245136956758832
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260025",
+          "started_ns": 1794245140351584524
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260463",
+          "started_ns": 1794245143893409169
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728260765",
+          "started_ns": 1794245145827735710
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728261273",
+          "started_ns": 1794245149266567600
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728262265",
+          "started_ns": 1794245152556857313
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728263069",
+          "started_ns": 1794245155446084014
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728263637",
+          "started_ns": 1794245159625880452
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728264073",
+          "started_ns": 1794245162914601934
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728264600",
+          "started_ns": 1794245165490636220
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728265223",
+          "started_ns": 1794245168853937354
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728265894",
+          "started_ns": 1794245171927721086
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728266420",
+          "started_ns": 1794245175753747635
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728267247",
+          "started_ns": 1794245178635281432
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728268179",
+          "started_ns": 1794245182017695754
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728268802",
+          "started_ns": 1794245185369754416
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728269460",
+          "started_ns": 1794245190002026679
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728270063",
+          "started_ns": 1794245193229808157
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728270891",
+          "started_ns": 1794245198193030890
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728271391",
+          "started_ns": 1794245201952562964
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728271928",
+          "started_ns": 1794245205584854064
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728272768",
+          "started_ns": 1794245208890506890
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728273280",
+          "started_ns": 1794245212108208402
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728273849",
+          "started_ns": 1794245216255081590
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728274395",
+          "started_ns": 1794245219946025516
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728274826",
+          "started_ns": 1794245223273069868
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728275377",
+          "started_ns": 1794245227008042554
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728276071",
+          "started_ns": 1794245231570069595
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728276608",
+          "started_ns": 1794245236157029987
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728277285",
+          "started_ns": 1794245240669106552
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728277981",
+          "started_ns": 1794245244606659295
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728279159",
+          "started_ns": 1794245249663513876
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728279829",
+          "started_ns": 1794245254809966247
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728280649",
+          "started_ns": 1794245261815408910
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281013",
+          "started_ns": 1794245264683143092
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281407",
+          "started_ns": 1794245267252225474
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728281808",
+          "started_ns": 1794245271152765556
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728282569",
+          "started_ns": 1794245274172875129
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728283267",
+          "started_ns": 1794245280201879676
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728283926",
+          "started_ns": 1794245282784773900
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728284825",
+          "started_ns": 1794245289336123276
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728285706",
+          "started_ns": 1794245296668312243
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728286508",
+          "started_ns": 1794245300770535684
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728288124",
+          "started_ns": 1794245307441134074
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728290104",
+          "started_ns": 1794245315815871644
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728291651",
+          "started_ns": 1794245322284255706
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728293274",
+          "started_ns": 1794245328715280383
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728294766",
+          "started_ns": 1794245336532205473
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728296696",
+          "started_ns": 1794245344073107837
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728297897",
+          "started_ns": 1794245350931560583
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728299749",
+          "started_ns": 1794245359520185891
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728300881",
+          "started_ns": 1794245367426381376
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728301626",
+          "started_ns": 1794245375248117537
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728303006",
+          "started_ns": 1794245387906180402
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728304535",
+          "started_ns": 1794245396330248639
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728305845",
+          "started_ns": 1794245403561130000
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728308358",
+          "started_ns": 1794245411356550105
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728310155",
+          "started_ns": 1794245420090819027
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728311632",
+          "started_ns": 1794245429848604811
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728314426",
+          "started_ns": 1794245437520037565
+        },
+        {
+          "method": "GET",
+          "endpoint": "releases/assets/728315609",
+          "started_ns": 1794245444773114712
+        }
+      ],
+      "verified_downloads": [
+        {
+          "artifact_id": 13551961317,
+          "asset_id": 728240585,
+          "bytes": 7627074,
+          "sha256": "1603bd0c5bcc34866299df24fa16aacc3ec0f095e9d393bc5a3dfd6fbe694b1d"
+        },
+        {
+          "artifact_id": 13567648416,
+          "asset_id": 728240972,
+          "bytes": 32792688,
+          "sha256": "8d60caa8399d6a9f3e9a793c6d602154690ab546d72296f727c4a8cb9c479783"
+        },
+        {
+          "artifact_id": 13568177957,
+          "asset_id": 728241418,
+          "bytes": 82903771,
+          "sha256": "be598f958113b09184b8465407ad8e11d4717202b113f438757a675154c6088c"
+        },
+        {
+          "artifact_id": 13568431889,
+          "asset_id": 728241708,
+          "bytes": 33038649,
+          "sha256": "54669e829c8b82fc6cef22fcc7940a037be8a206f5b366f9c43c12f7b1a6e736"
+        },
+        {
+          "artifact_id": 13569200351,
+          "asset_id": 728242023,
+          "bytes": 48792349,
+          "sha256": "591c3e1e040b5190333ad9fa4559ac820f91f92133e40486c471a2f2f12da376"
+        },
+        {
+          "artifact_id": 13569858122,
+          "asset_id": 728242326,
+          "bytes": 49775220,
+          "sha256": "984daa4f949ccc83049c3b3561ab76648af1990d9b835789febb77bb727c9eef"
+        },
+        {
+          "artifact_id": 13569907343,
+          "asset_id": 728242683,
+          "bytes": 34226592,
+          "sha256": "606c7e5e9c98449aece26ef803f63f7a89b21e2dc8ee48291449a53974f569cd"
+        },
+        {
+          "artifact_id": 13570013812,
+          "asset_id": 728242946,
+          "bytes": 48677274,
+          "sha256": "13c809ee1d4bbcda603695ca13e4de882a12b6226d6b70ea859bccd7aa9c8315"
+        },
+        {
+          "artifact_id": 13570436993,
+          "asset_id": 728243290,
+          "bytes": 33772931,
+          "sha256": "7b034cfa9d07f27d35327bbd0bb78da91fe8fbaa5ebf6c44ad364824fb8b1bd9"
+        },
+        {
+          "artifact_id": 13571144473,
+          "asset_id": 728243727,
+          "bytes": 138252175,
+          "sha256": "42b2cf11cc3c0694d1260113a1162f29b261f39a0bd7a0fe6c68fae33d5361de"
+        },
+        {
+          "artifact_id": 13571750424,
+          "asset_id": 728244429,
+          "bytes": 123980920,
+          "sha256": "5e9ca946388115fd02512a38bd88bf270e6090a53c225f14fb6f1b7f7b8f7fcd"
+        },
+        {
+          "artifact_id": 13572290174,
+          "asset_id": 728245050,
+          "bytes": 139409817,
+          "sha256": "52c447a5a14d5053bafb7432c9215271c2a15332b7a8a7c7ae4e573f54eeec4d"
+        },
+        {
+          "artifact_id": 13572465361,
+          "asset_id": 728245768,
+          "bytes": 123751276,
+          "sha256": "b5b479049de6fd60ef52fa1ef0f6b83c55c740205e864896d17c01d4b57385de"
+        },
+        {
+          "artifact_id": 13582682898,
+          "asset_id": 728246289,
+          "bytes": 43713858,
+          "sha256": "9af3bdb929c0cbc6620982708bf65792e5aec5f08316c5d94ba961d6dd0bb5c7"
+        },
+        {
+          "artifact_id": 13583039738,
+          "asset_id": 728246618,
+          "bytes": 44077155,
+          "sha256": "718930e0908ca3667de467394d36b3beb0d566ea97c79d90d16b9bd24f8c80e5"
+        },
+        {
+          "artifact_id": 13583776641,
+          "asset_id": 728246935,
+          "bytes": 33771664,
+          "sha256": "de91d8789eda8c0d0d99929a2a612b8b8ae2b41e5d5102ab18bb014367f92b07"
+        },
+        {
+          "artifact_id": 13584059793,
+          "asset_id": 728247215,
+          "bytes": 75877806,
+          "sha256": "d8687d7456a14d61a6df1e2520b25c79f29475b1c8f2bc6e18e7b0480b680828"
+        },
+        {
+          "artifact_id": 13584134715,
+          "asset_id": 728247545,
+          "bytes": 32791688,
+          "sha256": "ebe10bef87b4d9ebe1afb0f9b01ea0e626477558d9e86791e166ef27c6e45352"
+        },
+        {
+          "artifact_id": 13584186033,
+          "asset_id": 728247914,
+          "bytes": 49781999,
+          "sha256": "acac682542545fa4e9bdf2df470b5597c8f34bc69f063bec38feee9b41c3836f"
+        },
+        {
+          "artifact_id": 13584194908,
+          "asset_id": 728248231,
+          "bytes": 91568399,
+          "sha256": "d8be2a0b9ff154f1a28ea1c230b9426f3ac9e4c346694e27aaab10e4f4dfa64c"
+        },
+        {
+          "artifact_id": 13584223892,
+          "asset_id": 728248806,
+          "bytes": 81999637,
+          "sha256": "9ee4c32fe656822132648a8fe574c18429c180c1937f039d1cac70d47cd94d1c"
+        },
+        {
+          "artifact_id": 13584275065,
+          "asset_id": 728249733,
+          "bytes": 206600986,
+          "sha256": "d6132de71b9bd9374e6a95f87ae1749297d733c5e7fd209814ef0d72ba5b1ecf"
+        },
+        {
+          "artifact_id": 13584288079,
+          "asset_id": 728250741,
+          "bytes": 48677010,
+          "sha256": "637293999ef63ad77172ce36ae54e73fbf8fa91e323fdb95c10779796ced81e6"
+        },
+        {
+          "artifact_id": 13584423849,
+          "asset_id": 728251154,
+          "bytes": 90347364,
+          "sha256": "423394bf9f50f31765cb56e9d3f729d4d6967257a104d685bf4fcbb6ac8900df"
+        },
+        {
+          "artifact_id": 13584424702,
+          "asset_id": 728251507,
+          "bytes": 33020012,
+          "sha256": "82d52d75243955d680802df8956d61bc7033c2d6a1368f7e3a94a0c4ac49fa41"
+        },
+        {
+          "artifact_id": 13584527970,
+          "asset_id": 728251772,
+          "bytes": 34244245,
+          "sha256": "9ff122830ed7d0a2e326b6caaa4a5390cc9272577cf62c4be53aa21419bc4f8b"
+        },
+        {
+          "artifact_id": 13584551460,
+          "asset_id": 728252154,
+          "bytes": 76078687,
+          "sha256": "b16b6e4d4573535f38d4157692f15a187c3e30c60c37fc78e826d499738635e4"
+        },
+        {
+          "artifact_id": 13584568533,
+          "asset_id": 728252681,
+          "bytes": 77898232,
+          "sha256": "a318029cf6aa5a6211ddbe97e7dd4a31b1fe5716164e9d8b36a2824caeab9c0c"
+        },
+        {
+          "artifact_id": 13584661182,
+          "asset_id": 728253106,
+          "bytes": 33772159,
+          "sha256": "71101945a1f86f22a490602977b7b58a5ee5482d7778ca181314d8cfbf57b7d0"
+        },
+        {
+          "artifact_id": 13584666305,
+          "asset_id": 728253404,
+          "bytes": 81598044,
+          "sha256": "a6ed91514bb2a878cb6079ab1123bd180d03baec43ec3f5004636879b42fcaeb"
+        },
+        {
+          "artifact_id": 13584721718,
+          "asset_id": 728253930,
+          "bytes": 32791476,
+          "sha256": "6ae69aec847fe0ea190494176e3d28619078733a048df855cecad058af36657e"
+        },
+        {
+          "artifact_id": 13584767095,
+          "asset_id": 728254313,
+          "bytes": 104423536,
+          "sha256": "2055369c440a958c8609de5e2c1b606126e7e0bc5d33be0ca398ac791776cfa3"
+        },
+        {
+          "artifact_id": 13584791010,
+          "asset_id": 728254862,
+          "bytes": 34248195,
+          "sha256": "b2b866362c6b19b90c219e125005c00df63015068fdda17a099af0886c9b0b7b"
+        },
+        {
+          "artifact_id": 13584949287,
+          "asset_id": 728255271,
+          "bytes": 104953751,
+          "sha256": "b26dadaaaebd92a2fb9d61895b530cfee60eec64bf77fcb298a22cc017110798"
+        },
+        {
+          "artifact_id": 13584950163,
+          "asset_id": 728255771,
+          "bytes": 48672756,
+          "sha256": "727c965656e47b2fb9c004fdc9543cad52ad3bcc2b3b8482a2e7c40d6fd36639"
+        },
+        {
+          "artifact_id": 13585025965,
+          "asset_id": 728256101,
+          "bytes": 49778751,
+          "sha256": "9de5b9d107aed31026f0931f9d81ccb895a970ebc8a66559d15ae333cd732ab4"
+        },
+        {
+          "artifact_id": 13585103527,
+          "asset_id": 728256706,
+          "bytes": 120113616,
+          "sha256": "7463788f24ce3d9cff061104f36df379a2728ef124509f1aa918e5e4b5339a83"
+        },
+        {
+          "artifact_id": 13585138462,
+          "asset_id": 728257391,
+          "bytes": 90343891,
+          "sha256": "ad772afb94114c2d923e7f930d2f449ab2cd0095f80d0c362bd924919e02acdc"
+        },
+        {
+          "artifact_id": 13585193120,
+          "asset_id": 728257873,
+          "bytes": 48796024,
+          "sha256": "15bf066671035bc98581ad40b256f06d6785873b6b7d1bc421310dcd89fa9933"
+        },
+        {
+          "artifact_id": 13585207622,
+          "asset_id": 728258241,
+          "bytes": 76090717,
+          "sha256": "93a4a265280018c3904c643b7f6562c826136f5d5567df79a17cf70194335453"
+        },
+        {
+          "artifact_id": 13585249848,
+          "asset_id": 728258788,
+          "bytes": 104401127,
+          "sha256": "5d84523312447a5e2cc0ef1a24b7da8a504d0a1f01db4a2faf9bbdfb17d3eca3"
+        },
+        {
+          "artifact_id": 13585344615,
+          "asset_id": 728259353,
+          "bytes": 94157711,
+          "sha256": "55b86a04bf1a6df31ac44add48de4a52ae6b96c9a0f3979b5cb1d19955420710"
+        },
+        {
+          "artifact_id": 13585381367,
+          "asset_id": 728260025,
+          "bytes": 119015338,
+          "sha256": "f4216a8e4270513c3088f851a0ce055b1d8fb0dec630a9f2b8f8b8759cb6b6af"
+        },
+        {
+          "artifact_id": 13585430390,
+          "asset_id": 728260463,
+          "bytes": 33018561,
+          "sha256": "06427667661f11f2336086d14d16ea1b5429b5fa8b6b58270c060f1909c993b5"
+        },
+        {
+          "artifact_id": 13585464006,
+          "asset_id": 728260765,
+          "bytes": 90341204,
+          "sha256": "370531d0648ad5ab972dbc9a21e3d5f14c595a2d22c3fac77b36ad9fa5566c2a"
+        },
+        {
+          "artifact_id": 13585477256,
+          "asset_id": 728261273,
+          "bytes": 90578272,
+          "sha256": "247ff0a43f1fa7784b75a58a095b9aeaed3a6e666ec5ce5daf1f731be6f3b6ea"
+        },
+        {
+          "artifact_id": 13585547299,
+          "asset_id": 728262265,
+          "bytes": 76094421,
+          "sha256": "f3b358f90985e563eabf4f608978bcf61a08c7c2e8a171e8e1ecb0cfba217da0"
+        },
+        {
+          "artifact_id": 13585569745,
+          "asset_id": 728263069,
+          "bytes": 120111457,
+          "sha256": "a1ab13db8d9bc090591a5dcf0a9ca7de88adc668b595c9d558d104c98b86874d"
+        },
+        {
+          "artifact_id": 13585587612,
+          "asset_id": 728263637,
+          "bytes": 118948621,
+          "sha256": "6ff0e145c07d5fba8e3612e4c62ea59a83f8968c4ab2c91982155ae291772b87"
+        },
+        {
+          "artifact_id": 13585630456,
+          "asset_id": 728264073,
+          "bytes": 48798707,
+          "sha256": "4fd2eda818fcfdcd67f058d0b8bffb89f9ba0c82fad851901058837fac187803"
+        },
+        {
+          "artifact_id": 13585647862,
+          "asset_id": 728264600,
+          "bytes": 120098231,
+          "sha256": "899b61de848a1f51498602d8800f4005d29dcbe0f553e6d495d2f0b49f197953"
+        },
+        {
+          "artifact_id": 13585661852,
+          "asset_id": 728265223,
+          "bytes": 75877051,
+          "sha256": "a5b3516c7acbf728a7dcb39b6d3542ff473ea439081b136f24f7373ca4d1c14c"
+        },
+        {
+          "artifact_id": 13585758719,
+          "asset_id": 728265894,
+          "bytes": 104852175,
+          "sha256": "746363b2ec28e8fb5d297063eac11642dec54971be1f1f3bbcb743e82234dda0"
+        },
+        {
+          "artifact_id": 13585776117,
+          "asset_id": 728266420,
+          "bytes": 75879540,
+          "sha256": "4937aba6792351774a708fdb318974494d19199fbb34a9f9d5f80b8513233c39"
+        },
+        {
+          "artifact_id": 13585827702,
+          "asset_id": 728267247,
+          "bytes": 94382171,
+          "sha256": "d562fe0577d2bad8dc0f4fe9264f0941bfdcebbe11ec2b93b9213545b7660b72"
+        },
+        {
+          "artifact_id": 13585901035,
+          "asset_id": 728268179,
+          "bytes": 94386848,
+          "sha256": "c9af6769c7dc7f26dbbd8b4fdbb7afb5cbc4079d8b65186c904bf0d2c1316f83"
+        },
+        {
+          "artifact_id": 13585989458,
+          "asset_id": 728268802,
+          "bytes": 119002831,
+          "sha256": "f30f90e311ad04606487dcc954f9236cb056468a3a04f8298c7eae70d77af32f"
+        },
+        {
+          "artifact_id": 13586133884,
+          "asset_id": 728269460,
+          "bytes": 104430690,
+          "sha256": "79130e6d5310a478256f351af17080acb9d49770cbefdc4be8b95493879b17c4"
+        },
+        {
+          "artifact_id": 13586208624,
+          "asset_id": 728270063,
+          "bytes": 139409924,
+          "sha256": "99e3ea2fbec6ff1d53fbe2228152d5bce548bd1ef31ce7ee528d7d8c86427235"
+        },
+        {
+          "artifact_id": 13586351985,
+          "asset_id": 728270891,
+          "bytes": 109870844,
+          "sha256": "646605e5b06c8ef22ab0dc93cc721f3a69e6b6cd5abd199210a8d489c242b1dc"
+        },
+        {
+          "artifact_id": 13586375855,
+          "asset_id": 728271391,
+          "bytes": 91591008,
+          "sha256": "98a8a66caf76fb9f61b3d21cf7ac70c04e5ae30cc2581357d93071eb9db29d98"
+        },
+        {
+          "artifact_id": 13586388323,
+          "asset_id": 728271928,
+          "bytes": 91569092,
+          "sha256": "921093278bda29b26a56a3e4891d504095f7b5b7d2c9ff6b52fafc07bb16a232"
+        },
+        {
+          "artifact_id": 13586516447,
+          "asset_id": 728272768,
+          "bytes": 94158277,
+          "sha256": "5ffabe8e2d74d26883506f8cc05e45c978c2f11ef43b35fecbb550b4f177b83f"
+        },
+        {
+          "artifact_id": 13586717203,
+          "asset_id": 728273280,
+          "bytes": 104869458,
+          "sha256": "77ff1d7a57bd6032d758251717749526d8aa9f1f08a534fa0020cc75fc0e0d06"
+        },
+        {
+          "artifact_id": 13586719086,
+          "asset_id": 728273849,
+          "bytes": 109850791,
+          "sha256": "b50a050b2c17c37abe9405a7080493b8f3382a9e07a5c9eea8ff801fc055e55d"
+        },
+        {
+          "artifact_id": 13586745201,
+          "asset_id": 728274395,
+          "bytes": 90690791,
+          "sha256": "06848c7e02b576ce3efe3ae8387b88ac782853f97e996cbf32ee11ab7582f7fd"
+        },
+        {
+          "artifact_id": 13587050972,
+          "asset_id": 728274826,
+          "bytes": 123749929,
+          "sha256": "6a468f15f34b99935b314cd7d7e126f446f2e06ac3ce4b823436027426581846"
+        },
+        {
+          "artifact_id": 13587460373,
+          "asset_id": 728275377,
+          "bytes": 138325498,
+          "sha256": "9d0200ff12f6c8594ab256852c2ea6fecd85e7f23d4487b3bff780848499e728"
+        },
+        {
+          "artifact_id": 13587645497,
+          "asset_id": 728276071,
+          "bytes": 124265466,
+          "sha256": "95c0fd23fdecc1a3e289bddc151a68d0f5ac9653f6031e0c8d8c1b6bef2fcb64"
+        },
+        {
+          "artifact_id": 13589452190,
+          "asset_id": 728276608,
+          "bytes": 124132359,
+          "sha256": "420eac20daee656720da333b3f76b595b38b5d476fb8ea5b5c106ec31bb3d676"
+        },
+        {
+          "artifact_id": 13589548115,
+          "asset_id": 728277285,
+          "bytes": 123751595,
+          "sha256": "366f2af9477e8f0b7ad9f006e4b66e7a1de8fc2cbba142241e1900dfac86e11a"
+        },
+        {
+          "artifact_id": 13589548148,
+          "asset_id": 728277981,
+          "bytes": 138313176,
+          "sha256": "8877ffec548755840e873c91c92a9b39a91570a8f6f9be35c3f448dedaa1d529"
+        },
+        {
+          "artifact_id": 13589892525,
+          "asset_id": 728279159,
+          "bytes": 139432229,
+          "sha256": "cf8c6e3a67f05aa58d2ff59ee1da2d24f4aaae759f3ccb10fb47fa34fbb6c5d9"
+        },
+        {
+          "artifact_id": 13593994744,
+          "asset_id": 728279829,
+          "bytes": 214035352,
+          "sha256": "11869450fbc4c5eb3c6ec1a512515f936896396b42e7fb848a55fa3399a35fff"
+        },
+        {
+          "artifact_id": 13594159356,
+          "asset_id": 728280649,
+          "bytes": 43714123,
+          "sha256": "2f45726ab80e102d1ec303e538825aed5944249eec2ca313e04dbaeed9fb07b9"
+        },
+        {
+          "artifact_id": 13594681803,
+          "asset_id": 728281013,
+          "bytes": 44087258,
+          "sha256": "d3f1aa5c9f6ea7b8a5799aa9b3869a45028e32545e228064e13753fa3b3fb548"
+        },
+        {
+          "artifact_id": 13595751506,
+          "asset_id": 728281407,
+          "bytes": 77902150,
+          "sha256": "c046b8daf18adbe18e52c108201e01f16d01aa67547bf9636e5cc775e4480468"
+        },
+        {
+          "artifact_id": 13613623933,
+          "asset_id": 728281808,
+          "bytes": 50080341,
+          "sha256": "5fd18ea66c1633fbc4532e3d20e0e378f2d675169d58a3d38daa98c264cf0d38"
+        },
+        {
+          "artifact_id": 13613688381,
+          "asset_id": 728282569,
+          "bytes": 217272840,
+          "sha256": "3c02ced43c6dd3956fcaa631ea00754ad62aa50efd7d5e230af069d083d2fe56"
+        },
+        {
+          "artifact_id": 13613861965,
+          "asset_id": 728283267,
+          "bytes": 49730688,
+          "sha256": "d7c8b234ad3e87deb3b27e3d16435db4ad25e2f10fdb507e1dcac3ab47c40b2a"
+        },
+        {
+          "artifact_id": 13614089789,
+          "asset_id": 728283926,
+          "bytes": 241032278,
+          "sha256": "35254c631db9564d0b65ab2a90db1bf4fbd111711a28989aec8b68ee1b973341"
+        },
+        {
+          "artifact_id": 13614168780,
+          "asset_id": 728284825,
+          "bytes": 240722783,
+          "sha256": "e71d15513fcf279741639165121699573df2276a0e4517e0ca7992cfef83176b"
+        },
+        {
+          "artifact_id": 13614299177,
+          "asset_id": 728285706,
+          "bytes": 83918897,
+          "sha256": "bf4a2ddb38ae5255d1e0c319246c296cd2fe11be0eb1ec3e8cda0b9be5daa39a"
+        },
+        {
+          "artifact_id": 13614758383,
+          "asset_id": 728286508,
+          "bytes": 244436467,
+          "sha256": "b82aedc765858640a769ce9ccb8be5efeaee0988519c1b72a837a43c3c82a6ce"
+        },
+        {
+          "artifact_id": 13615667584,
+          "asset_id": 728288124,
+          "bytes": 274577638,
+          "sha256": "96aeca6a0faf0bd05081b7ca3ba806e97ce61ef4708772272a1ec2a2e913beba"
+        },
+        {
+          "artifact_id": 13616094769,
+          "asset_id": 728290104,
+          "bytes": 244749420,
+          "sha256": "5cf0f406140e464f0270e91a5cab41406aa690ff9bac460c2d9ff524d6bac858"
+        },
+        {
+          "artifact_id": 13616313680,
+          "asset_id": 728291651,
+          "bytes": 240868971,
+          "sha256": "c9decbd93587f95dc43f29d3d85a404ad891a471cc96900e04a74ade5fa3be5e"
+        },
+        {
+          "artifact_id": 13616809022,
+          "asset_id": 728293274,
+          "bytes": 240610583,
+          "sha256": "76426aca02c89c7f15bc75bcbf63815d77ec9022bdd6be90e6d8d5c9fc3369e0"
+        },
+        {
+          "artifact_id": 13617111415,
+          "asset_id": 728294766,
+          "bytes": 240908747,
+          "sha256": "cad9a55e9fa8a3cabd3dfb93f9d11f1dfe74007d922935c52216d034610830d5"
+        },
+        {
+          "artifact_id": 13617272185,
+          "asset_id": 728296696,
+          "bytes": 244771699,
+          "sha256": "4ec0e600e2b42d690997e674bbf57b4a16df6b7cc6f63d913c56d81e86866291"
+        },
+        {
+          "artifact_id": 13617571905,
+          "asset_id": 728297897,
+          "bytes": 274729931,
+          "sha256": "ca505dbae13feb3569eb4df2a7f5488554063088b6a7fa0db6e005d474f790bc"
+        },
+        {
+          "artifact_id": 13619051812,
+          "asset_id": 728299749,
+          "bytes": 274466325,
+          "sha256": "849e18caed2ec122c9b083bb2bdc0d09bb3a84050458593efd4177c7aec04f5c"
+        },
+        {
+          "artifact_id": 13619187377,
+          "asset_id": 728300881,
+          "bytes": 241187275,
+          "sha256": "0c1580f0549e1cdb8d245be24c807ea33163da66aae8d0cfa8e531cd681f6179"
+        },
+        {
+          "artifact_id": 13621804196,
+          "asset_id": 728301626,
+          "bytes": 30610386,
+          "sha256": "0c30f1aac51776385aacd5dc50090d459d49acd069e2d338476679f1e524fd8d"
+        },
+        {
+          "artifact_id": 13626838934,
+          "asset_id": 728303006,
+          "bytes": 256935014,
+          "sha256": "9229f8d9cf0233dec9f66f8bf8ff19b953657db3de90b17f05c95d68c46c6fa0"
+        },
+        {
+          "artifact_id": 13626957371,
+          "asset_id": 728304535,
+          "bytes": 257248084,
+          "sha256": "159cacba63baad0f8074e9ce0af1e5f785e73cab57d0c461449ac0e0d0ba43a1"
+        },
+        {
+          "artifact_id": 13627467888,
+          "asset_id": 728305845,
+          "bytes": 261678469,
+          "sha256": "a9a41bee2e5c2369869b0d96ad916ab16b6dbc048e5ba444232ce2db77a28035"
+        },
+        {
+          "artifact_id": 13629023598,
+          "asset_id": 728308358,
+          "bytes": 256961202,
+          "sha256": "ead5dcd1f73e3600dcff2f1daf2b33c4d09c413be3d7fd40ba7ac12f6594ac4f"
+        },
+        {
+          "artifact_id": 13629205350,
+          "asset_id": 728310155,
+          "bytes": 290525963,
+          "sha256": "c9728401f404e9f0c78c5eee1f3f75814e71e46b80f9123c8792d2dee60ad1d7"
+        },
+        {
+          "artifact_id": 13629883147,
+          "asset_id": 728311632,
+          "bytes": 250083978,
+          "sha256": "2c5818d857bf4c0c093dff2ad764d1ccc8db04228846310e4eccf6edf1f8fe82"
+        },
+        {
+          "artifact_id": 13630031779,
+          "asset_id": 728314426,
+          "bytes": 260400979,
+          "sha256": "ed0e94a1f1d232354541a0fe83e6910a5f029ed79cbf562397c53b3c602ea6a0"
+        },
+        {
+          "artifact_id": 13631885856,
+          "asset_id": 728315609,
+          "bytes": 283203978,
+          "sha256": "b01f505d14ac993297b64bd924362751c3877c09a1178a04718df13cd4dda7a5"
+        }
+      ],
+      "actual_reader_cost": {
+        "started_ns": 1794245034180101190,
+        "ended_ns": 1794245452425880119,
+        "CPU_seconds": {
+          "user": 175.75,
+          "system": 40.72,
+          "children_user": 0.0,
+          "children_system": 0.0
+        },
+        "free_bytes_after": 109941526528,
+        "maximum_RSS_KiB": 983496
+      },
+      "archive_processing_interval_ns": {
+        "started": 1794245031658346037,
+        "ended": 1794245453896697889
+      },
+      "host_resources": {
+        "observed_ns": 1794245031451811175,
+        "runner_label": "ubuntu-24.04",
+        "job_timeout_minutes": 360,
+        "documented_standard_public_runner": {
+          "vCPU": 4,
+          "RAM_GB": 16
+        },
+        "removed_artificial_go_overrides": {},
+        "unused_SDK_disk_cleanup": {
+          "paths_present_before": {
+            "/usr/local/lib/android": true,
+            "/usr/share/dotnet": true,
+            "/opt/ghc": false
+          },
+          "free_bytes_before": 91970871296,
+          "free_bytes_after": 109977649152,
+          "elapsed_seconds": 66.436357401,
+          "scope": "Only three explicitly named unused hosted SDK directories"
+        },
+        "effective_go_overrides": {
+          "GOMEMLIMIT": null,
+          "GOMAXPROCS": null,
+          "GOGC": null
+        },
+        "allowed_CPUs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "memory": {
+          "MemTotal": "16367524 kB",
+          "MemFree": "14273064 kB",
+          "MemAvailable": "15458580 kB",
+          "Buffers": "426560 kB",
+          "Cached": "1042956 kB",
+          "SwapCached": "0 kB",
+          "Active": "739044 kB",
+          "Inactive": "961584 kB",
+          "Active(anon)": "285840 kB",
+          "Inactive(anon)": "0 kB",
+          "Active(file)": "453204 kB",
+          "Inactive(file)": "961584 kB",
+          "Unevictable": "46728 kB",
+          "Mlocked": "43656 kB",
+          "SwapTotal": "3145724 kB",
+          "SwapFree": "3145724 kB",
+          "Zswap": "0 kB",
+          "Zswapped": "0 kB",
+          "Dirty": "21744 kB",
+          "Writeback": "0 kB",
+          "AnonPages": "278120 kB",
+          "Mapped": "332668 kB",
+          "Shmem": "45780 kB",
+          "KReclaimable": "64120 kB",
+          "Slab": "140984 kB",
+          "SReclaimable": "64120 kB",
+          "SUnreclaim": "76864 kB",
+          "KernelStack": "4176 kB",
+          "PageTables": "6224 kB",
+          "SecPageTables": "0 kB",
+          "NFS_Unstable": "0 kB",
+          "Bounce": "0 kB",
+          "WritebackTmp": "0 kB",
+          "CommitLimit": "11329484 kB",
+          "Committed_AS": "2035476 kB",
+          "VmallocTotal": "34359738367 kB",
+          "VmallocUsed": "38820 kB",
+          "VmallocChunk": "0 kB",
+          "Percpu": "2336 kB",
+          "HardwareCorrupted": "0 kB",
+          "AnonHugePages": "0 kB",
+          "ShmemHugePages": "0 kB",
+          "ShmemPmdMapped": "0 kB",
+          "FileHugePages": "2048 kB",
+          "FilePmdMapped": "0 kB",
+          "CmaTotal": "0 kB",
+          "CmaFree": "1460224 kB",
+          "Unaccepted": "0 kB",
+          "Balloon": "0 kB",
+          "GPUActive": "0 kB",
+          "GPUReclaim": "0 kB",
+          "HugePages_Total": "0",
+          "HugePages_Free": "0",
+          "HugePages_Rsvd": "0",
+          "HugePages_Surp": "0",
+          "Hugepagesize": "2048 kB",
+          "Hugetlb": "0 kB",
+          "DirectMap4k": "111744 kB",
+          "DirectMap2M": "4077568 kB",
+          "DirectMap1G": "14680064 kB"
+        },
+        "inherited_OS_limits": {
+          "RLIMIT_CPU": [
+            -1,
+            -1
+          ],
+          "RLIMIT_AS": [
+            -1,
+            -1
+          ],
+          "RLIMIT_DATA": [
+            -1,
+            -1
+          ],
+          "RLIMIT_NOFILE": [
+            65536,
+            65536
+          ]
+        },
+        "platform_cgroups": {
+          "cpu.max": null,
+          "memory.max": null,
+          "memory.high": null,
+          "pids.max": null
+        },
+        "disk_bytes": {
+          "total": 154894188544,
+          "free": 109977649152,
+          "used": 44899762176
+        },
+        "model_worker_CPUs_or_memory_capped_by_study": false,
+        "paid_runner_provisioned": false,
+        "platform_limit_sources": [
+          "https://docs.github.com/en/actions/reference/limits",
+          "https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job"
+        ]
+      },
+      "proof_artifact": {
+        "id": 13697000299,
+        "bytes": 1762803,
+        "sha256": "c69cfccd994034a2695229fc2b86d560ad6b9203b3fcba2c4f217f6fd134d543"
+      },
+      "proof_artifact_uses_Actions_retention": true
+    }
+  },
+  "verification_costs": {
+    "scope": "Semantic erratum, archive and replay; finite cut before final documentation delivery CI",
+    "captured_utc": "2026-11-09T17:36:02.962931+00:00",
+    "workflow_runs": 11,
+    "unique_terminal_jobs": 27,
+    "known_worker_seconds": 3141,
+    "unknown_worker_intervals": [],
+    "human_work_seconds": null,
+    "complete_comparable_cost_comparison": false,
+    "worker_elapsed_is_CPU_billing_or_sequential_time": false,
+    "later_documentation_delivery_CI_is_outside_cut_and_not_zero": true,
+    "jobs": [
+      {
+        "id": 129294097170,
+        "run_id": 42655876562,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:32:56Z",
+        "completed_at": "2026-11-09T16:33:37Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655876562/job/129294097170"
+      },
+      {
+        "id": 129294097434,
+        "run_id": 42655876562,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:32:56Z",
+        "completed_at": "2026-11-09T16:33:52Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655876562/job/129294097434"
+      },
+      {
+        "id": 129294097582,
+        "run_id": 42655876562,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:32:57Z",
+        "completed_at": "2026-11-09T16:33:23Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655876562/job/129294097582"
+      },
+      {
+        "id": 129294311496,
+        "run_id": 42655938665,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:33:17Z",
+        "completed_at": "2026-11-09T16:33:59Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655938665/job/129294311496"
+      },
+      {
+        "id": 129294311807,
+        "run_id": 42655938665,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:33:18Z",
+        "completed_at": "2026-11-09T16:33:43Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655938665/job/129294311807"
+      },
+      {
+        "id": 129294311852,
+        "run_id": 42655938665,
+        "run_attempt": 1,
+        "head_sha": "ff200dea50b4bb9861316745a7fec0500af5465a",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:33:18Z",
+        "completed_at": "2026-11-09T16:34:03Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42655938665/job/129294311852"
+      },
+      {
+        "id": 129298927957,
+        "run_id": 42657249778,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:07Z",
+        "completed_at": "2026-11-09T16:41:26Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657249778/job/129298927957"
+      },
+      {
+        "id": 129298928472,
+        "run_id": 42657249778,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:08Z",
+        "completed_at": "2026-11-09T16:41:58Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657249778/job/129298928472"
+      },
+      {
+        "id": 129298928819,
+        "run_id": 42657249778,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:08Z",
+        "completed_at": "2026-11-09T16:41:39Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657249778/job/129298928819"
+      },
+      {
+        "id": 129299113481,
+        "run_id": 42657262491,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:34Z",
+        "completed_at": "2026-11-09T16:42:18Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657262491/job/129299113481"
+      },
+      {
+        "id": 129299113529,
+        "run_id": 42657262491,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:34Z",
+        "completed_at": "2026-11-09T16:41:55Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657262491/job/129299113529"
+      },
+      {
+        "id": 129299113543,
+        "run_id": 42657262491,
+        "run_attempt": 1,
+        "head_sha": "4adb6a71e208f29e9f45183cb718220dfc29d3fb",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:41:34Z",
+        "completed_at": "2026-11-09T16:42:27Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42657262491/job/129299113543"
+      },
+      {
+        "id": 129302118357,
+        "run_id": 42658146391,
+        "run_attempt": 1,
+        "head_sha": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:46:33Z",
+        "completed_at": "2026-11-09T16:47:26Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42658146391/job/129302118357"
+      },
+      {
+        "id": 129302118733,
+        "run_id": 42658146391,
+        "run_attempt": 1,
+        "head_sha": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:46:33Z",
+        "completed_at": "2026-11-09T16:47:13Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42658146391/job/129302118733"
+      },
+      {
+        "id": 129302118989,
+        "run_id": 42658146391,
+        "run_attempt": 1,
+        "head_sha": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:46:33Z",
+        "completed_at": "2026-11-09T16:46:55Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42658146391/job/129302118989"
+      },
+      {
+        "id": 129306353198,
+        "run_id": 42659342590,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:53:58Z",
+        "completed_at": "2026-11-09T16:54:42Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659342590/job/129306353198"
+      },
+      {
+        "id": 129306353754,
+        "run_id": 42659342590,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:53:59Z",
+        "completed_at": "2026-11-09T16:54:55Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659342590/job/129306353754"
+      },
+      {
+        "id": 129306353815,
+        "run_id": 42659342590,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:53:58Z",
+        "completed_at": "2026-11-09T16:54:20Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659342590/job/129306353815"
+      },
+      {
+        "id": 129306405110,
+        "run_id": 42659356703,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:54:04Z",
+        "completed_at": "2026-11-09T16:55:01Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659356703/job/129306405110"
+      },
+      {
+        "id": 129306405570,
+        "run_id": 42659356703,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:54:04Z",
+        "completed_at": "2026-11-09T16:54:31Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659356703/job/129306405570"
+      },
+      {
+        "id": 129306405740,
+        "run_id": 42659356703,
+        "run_attempt": 1,
+        "head_sha": "e58ef1834f8451e4ba8177f2b217ed9055e15681",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:54:04Z",
+        "completed_at": "2026-11-09T16:54:47Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659356703/job/129306405740"
+      },
+      {
+        "id": 129307340017,
+        "run_id": 42659623365,
+        "run_attempt": 1,
+        "head_sha": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+        "name": "checks",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:55:43Z",
+        "completed_at": "2026-11-09T16:56:14Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659623365/job/129307340017"
+      },
+      {
+        "id": 129307340144,
+        "run_id": 42659623365,
+        "run_attempt": 1,
+        "head_sha": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+        "name": "control-fixture-v5",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:55:43Z",
+        "completed_at": "2026-11-09T16:56:09Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659623365/job/129307340144"
+      },
+      {
+        "id": 129307340590,
+        "run_id": 42659623365,
+        "run_attempt": 1,
+        "head_sha": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+        "name": "identical-input-discovery-fixture",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:55:43Z",
+        "completed_at": "2026-11-09T16:56:30Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659623365/job/129307340590"
+      },
+      {
+        "id": 129302515477,
+        "run_id": 42658254761,
+        "run_attempt": 1,
+        "head_sha": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+        "name": "publication",
+        "status": "completed",
+        "conclusion": "failure",
+        "started_at": "2026-11-09T16:47:14Z",
+        "completed_at": "2026-11-09T16:50:36Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42658254761/job/129302515477"
+      },
+      {
+        "id": 129307382927,
+        "run_id": 42659634561,
+        "run_attempt": 1,
+        "head_sha": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+        "name": "publication",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T16:55:48Z",
+        "completed_at": "2026-11-09T17:21:03Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42659634561/job/129307382927"
+      },
+      {
+        "id": 129322622037,
+        "run_id": 42663983154,
+        "run_attempt": 1,
+        "head_sha": "f3aeaed391891dfc3f0971400df0910ab1ab55ce",
+        "name": "publication",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-11-09T17:22:34Z",
+        "completed_at": "2026-11-09T17:30:57Z",
+        "html_url": "https://github.com/a-a-k/ebpf-model-discovery-experiments/actions/runs/42663983154/job/129322622037"
+      }
+    ],
+    "failed_first_archive": {
+      "run_id": 42658254761,
+      "source": "47c1d5c1e1b80ede781c6cfe09a8996b99ad8a67",
+      "status": "failed",
+      "error": "HTTPError('415 Client Error: Unsupported Media Type for url: https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13551961317/zip')",
+      "started_ns": 1794242941539342019,
+      "ended_ns": 1794243032863306734,
+      "payload_ZIPs_transferred": 0,
+      "verified_input_bundle_retained_and_reused": true,
+      "proof_artifact": {
+        "id": 13693472300,
+        "bytes": 119346,
+        "sha256": "c67e80f400ce29b2b5709c17de9753fa5fde42062deee021cb7db44cbdec84f5"
+      }
+    }
+  }
+}

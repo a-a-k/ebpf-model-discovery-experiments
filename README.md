@@ -40,6 +40,8 @@ including unavailable predictions and adverse outcomes.
 The [outcome-semantics correction](results/semantic-correction.json) identifies
 the Social Network HTTP-ACK/MongoDB-write contract mismatch and distinguishes
 historical forecasts from any subsequent corrected analysis.
+The [publication archive receipt](results/archive.json) identifies the retained
+metadata and the report replay that does not require live Actions API access.
 The [reproduction guide](docs/REPRODUCING.md) describes acquisition and report
 generation; the [context baseline](docs/CONTEXT_BASELINE.md) specifies the
 observed-edge union.

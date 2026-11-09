@@ -176,3 +176,9 @@ intervals totaling 1,649 seconds. Later delivery CI is outside that finite cut;
 human and unmetered work remain unknown. These are worker intervals, not CPU,
 billing or sequential elapsed time. No complete cost-superiority comparison
 is claimed.
+
+The [publication archive](../results/archive.json) retains the 102 canonical
+metadata ZIPs, the historical Coroot prefix, required source and historical API
+receipts. It supports report replay without live Actions API access. This tier
+does not preserve the complete raw-capture/model-build regeneration closure;
+replay agreement does not validate the corrected compose contract.
