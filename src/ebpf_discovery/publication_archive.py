@@ -136,7 +136,8 @@ class GitHub:
 
     def download(self, endpoint, path, size, sha):
         require(shutil.disk_usage(Path(path).parent).free >= size + RESERVE, "download disk reserve")
-        response = self.request("GET", endpoint, headers={"Accept": "application/octet-stream"},
+        accept = "application/vnd.github+json" if endpoint.startswith("actions/") else "application/octet-stream"
+        response = self.request("GET", endpoint, headers={"Accept": accept},
                                 allow_redirects=False, stream=True)
         if response.is_redirect:
             target = response.headers["Location"]
