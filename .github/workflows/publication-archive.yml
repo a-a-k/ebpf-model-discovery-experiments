@@ -8,7 +8,7 @@ on:
         default: create
         required: true
       release_id:
-        description: Resume an incomplete draft release; blank creates a new one
+        description: Resume an owned archive release; blank creates a new one
         type: string
       index_asset_id:
         description: Replay only - exact published archive index asset ID

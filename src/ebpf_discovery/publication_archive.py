@@ -33,6 +33,7 @@ REFERENCE_SHA = "1153f70032bc36bbc1936e666c8338e0935c24d2c8553b64836e711c9005bf3
 MANIFEST_SHA = "23b73280cc0f6386bffe35a29b85fb903fddbdf905a20f61a6643944cdc691a6"
 LEDGER_SHA = "198cd5825bea33567353afb5166d552c9a2df963b8f4a86628122de82a4cbf3e"
 RESERVE = 2 * 1024**3
+ARCHIVE_MARKER = f"Fixed-publication-dataset: {SOURCE}; manifest-sha256: {MANIFEST_SHA}; payloads: 103; bytes: 12344016466."
 
 
 def require(condition, message):
@@ -186,12 +187,73 @@ class Release:
                     asset = self.github.request("POST", f"https://uploads.github.com/repos/{REPO}/releases/{self.id}/assets?name={path.name}",
                                                 headers={"Content-Type": "application/octet-stream"}, data=body).json()
                 self.assets[path.name] = asset
+                verified = self.github.json(f"releases/assets/{asset['id']}")
+                require((verified["name"], verified["size"], verified["digest"], verified["state"]) ==
+                        (path.name, size, "sha256:" + sha, "uploaded"), "uploaded release asset differs")
+                self.assets[path.name] = verified
+                return verified
             except (requests.RequestException, ValueError):
                 self.assets = {a["name"]: a for a in self.github.pages(f"releases/{self.id}/assets")}
                 if attempt == 3:
                     raise
                 time.sleep(2 ** attempt)
         raise ValueError("upload was not remotely verified")
+
+
+def validate_asset(actual, expected):
+    require(actual is not None and all(actual.get(k) == expected[k]
+            for k in ("id", "name", "size", "digest", "state")), "archive asset ID/bytes/SHA/state differs")
+
+
+def validate_release_owner(github, info, release, roots):
+    match = re.fullmatch(r"publication-archive-([1-9][0-9]*)", info["tag_name"])
+    require(match and ARCHIVE_MARKER in (info.get("body") or "") and
+            re.fullmatch(r"[0-9a-f]{40}", info["target_commitish"]), "release is not the intended publication archive")
+    creator = github.json(f"actions/runs/{match[1]}")
+    require(creator["head_sha"] == info["target_commitish"] and creator["id"] == int(match[1]) and
+            creator["path"] == ".github/workflows/publication-archive.yml" and
+            creator["event"] == "workflow_dispatch", "release creation workflow/source differs")
+    allowed = {f"artifact-{a['id']}.zip": a for a in roots.values()}
+    require(set(release.assets) <= set(allowed) | {"publication-inputs.zip", "archive-index.json"},
+            "unexpected assets in resumed publication archive")
+    for name, actual in release.assets.items():
+        require(actual["state"] == "uploaded" and actual["size"] > 0 and
+                re.fullmatch(r"sha256:[0-9a-f]{64}", actual.get("digest") or ""), "incomplete existing asset")
+        if name in allowed:
+            a = allowed[name]
+            require(actual["size"] == a["bytes"] and actual["digest"] == "sha256:" + a["sha256"],
+                    "existing payload differs from fixed dataset")
+
+
+def validate_bundle_owner(bundle, info):
+    require(bundle.index["archive_owner"] == {"release_id": info["id"], "release_tag": info["tag_name"],
+            "creation_source": info["target_commitish"]}, "bundle belongs to a different archive release")
+
+
+def validate_archive_index(index, bundle, release, info):
+    require((index["repository"], index["source"], index["release_id"], index["release_tag"],
+             index["payload_count"], index["payload_bytes"]) ==
+            (REPO, SOURCE, release.id, info["tag_name"], 103, 12344016466), "foreign/incomplete archive index")
+    validate_bundle_owner(bundle, info)
+    validate_asset(release.assets.get("publication-inputs.zip"), index["bundle_asset"])
+    expected = {f"artifact-{a['id']}.zip": a for a in bundle.index["payloads"]}
+    indexed = {a["name"]: a for a in index["payload_assets"]}
+    require(len(index["payload_assets"]) == 103 and set(indexed) == set(expected), "archive index incomplete payload set")
+    for name, artifact in expected.items():
+        actual = release.assets.get(name)
+        validate_asset(actual, indexed[name])
+        require(actual["state"] == "uploaded" and actual["size"] == artifact["bytes"] and
+                actual["digest"] == "sha256:" + artifact["sha256"], "fixed payload identity differs")
+    require(index["projection"]["scientific_fields_equal_reference"] is True and
+            index["projection"]["reference_sha256"] == REFERENCE_SHA and
+            index["historical_prefix_is_extra_independent_case"] is False, "archive lacks exact report verification")
+
+
+def publish_release(github, info):
+    published = (github.request("PATCH", f"releases/{info['id']}", json={"draft": False}).json()
+                 if info["draft"] else github.json(f"releases/{info['id']}"))
+    require(not published["draft"] and all(published[k] == info[k]
+            for k in ("id", "tag_name", "target_commitish")), "release publication identity differs")
 
 
 def snapshot(github, ledger):
@@ -221,7 +283,7 @@ def git_blob(path):
     return subprocess.check_output(["git", "show", SOURCE + ":" + path])
 
 
-def create_bundle(github, path):
+def create_bundle(github, path, release_info):
     workflow = git_blob(READER)
     tree = reader_tree(workflow)
     paths = {node.value for node in ast.walk(tree) if isinstance(node, ast.Constant)
@@ -239,6 +301,8 @@ def create_bundle(github, path):
     files["api/snapshot.json"] = json.dumps(receipts).encode()
     index = {"scope": "Fixed publication replay; raw/model regeneration inputs are not archived by this tier.",
              "source": SOURCE, "reader_sha256": READER_SHA,
+             "archive_owner": {"release_id": release_info["id"], "release_tag": release_info["tag_name"],
+                               "creation_source": release_info["target_commitish"]},
              "payloads": list(payloads(json.loads(files["source/" + MANIFEST])).values()),
              "files": {name: {"bytes": len(body), "sha256": digest(body)} for name, body in files.items()}}
     with zipfile.ZipFile(path, "x", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as output:
@@ -329,7 +393,21 @@ def project(bundle, backend, directory, host_receipt):
         fields = ("key", "allocation_regime", "original_metadata_artifact", "original_evaluation",
                   "original_publication", "original_forecast", "source_member_hashes", "omitted", "literal_evaluation")
         def scientific_cells(report):
-            return sorted(({key: cell[key] for key in fields} for cell in report["cells"]),
+            def identity(cell):
+                value = {key: cell[key] for key in fields}
+                lineage = cell["verified_replay_lineage"]
+                if lineage:
+                    value["lineage"] = {k: v for k, v in lineage.items()
+                                        if k not in ("model_artifact_API", "actual_model_job_API")}
+                    a, j = lineage["model_artifact_API"], lineage["actual_model_job_API"]
+                    value["lineage"]["artifact"] = {k: a[k] for k in ("id", "name", "size_in_bytes", "digest")}
+                    value["lineage"]["artifact"]["workflow_run"] = {k: a["workflow_run"][k] for k in ("id", "head_sha")}
+                    value["lineage"]["job"] = {k: j[k] for k in
+                        ("id", "run_id", "head_sha", "run_attempt", "name", "status", "conclusion", "started_at", "completed_at")}
+                else:
+                    value["lineage"] = None
+                return value
+            return sorted((identity(cell) for cell in report["cells"]),
                           key=lambda cell: tuple(cell["key"]))
         require(result["status"] == "complete" and result["coverage"] == reference["coverage"] and
                 scientific_cells(result) == scientific_cells(reference), "archived scientific report differs")
@@ -373,15 +451,18 @@ def main():
         if args.mode == "create":
             if args.release_id:
                 release_info = github.json(f"releases/{args.release_id}")
-                require(release_info["draft"] and release_info["tag_name"].startswith("publication-archive-"), "resume only owned incomplete publication archive")
             else:
                 release_info = github.request("POST", "releases", json={
                     "tag_name": "publication-archive-" + os.environ["GITHUB_RUN_ID"],
                     "target_commitish": os.environ["GITHUB_SHA"], "draft": True,
                     "name": "Published study report and original metadata",
-                    "body": "Fixed 108-case publication replay: 102 canonical metadata ZIPs and one historical failed-publication prefix, pinned source and historical API receipts. Does not archive all raw captures/model-build inputs. The compose_post semantic erratum applies; this archive does not validate a corrected forecast or a durable-write claim. No Actions expiry applies to release assets; continued repository/release availability remains required.",
+                    "body": ARCHIVE_MARKER + "\n\nFixed 108-case publication replay: 102 canonical metadata ZIPs and one historical failed-publication prefix, pinned source and historical API receipts. Does not archive all raw captures/model-build inputs. The compose_post semantic erratum applies; this archive does not validate a corrected forecast or a durable-write claim. No Actions expiry applies to release assets; continued repository/release availability remains required.",
                 }).json()
             release = Release(github, release_info["id"])
+            roots = payloads(json.loads(git_blob(MANIFEST)))
+            validate_release_owner(github, release_info, release, roots)
+            require(release_info["draft"] or "archive-index.json" in release.assets,
+                    "published release cannot be extended without its verified final index")
             proof["release"] = release_info
             dump(root / "proof.json", proof)
             bundle_path = root / "publication-inputs.zip"
@@ -389,21 +470,38 @@ def main():
             if old:
                 github.download(f"releases/assets/{old['id']}", bundle_path, old["size"], old["digest"].removeprefix("sha256:"))
             else:
-                create_bundle(github, bundle_path)
+                create_bundle(github, bundle_path, release_info)
             bundle_asset = release.publish(bundle_path)
+            bundle = Bundle(bundle_path)
+            validate_bundle_owner(bundle, release_info)
+            old_index = release.assets.get("archive-index.json")
+            if old_index:
+                index_path = root / "archive-index.json"
+                github.download(f"releases/assets/{old_index['id']}", index_path, old_index["size"],
+                                old_index["digest"].removeprefix("sha256:"))
+                index = json.loads(index_path.read_bytes())
+                validate_archive_index(index, bundle, release, release_info)
+                publish_release(github, release_info)
+                proof.update(status="complete", resumed_existing_immutable_index=True,
+                             fresh_scientific_projection_performed=False, projection=index["projection"],
+                             archive_index={"asset_id": old_index["id"], "bytes": old_index["size"],
+                                            "sha256": file_digest(index_path), "url": old_index["browser_download_url"]},
+                             original_Actions_API_requests=[c for c in github.calls if "/actions/" in "/" + c["endpoint"]])
+                return
         else:
             index_path = root / "archive-index.json"
             github.download(f"releases/assets/{args.index_asset_id}", index_path, args.index_bytes, args.index_sha256)
             index = json.loads(index_path.read_bytes())
             require(index["repository"] == REPO and index["source"] == SOURCE, "foreign archive index")
             release = Release(github, index["release_id"])
+            release_info = github.json(f"releases/{release.id}")
+            require(not release_info["draft"], "replay requires published archive")
+            require(release.assets.get("archive-index.json", {}).get("id") == args.index_asset_id,
+                    "index is not a member of the selected archive release")
             bundle_asset = index["bundle_asset"]
             bundle_path = root / "publication-inputs.zip"
             github.download(f"releases/assets/{bundle_asset['id']}", bundle_path, bundle_asset["size"], bundle_asset["digest"].removeprefix("sha256:"))
-            require({a["name"] for a in index["payload_assets"]} ==
-                    {f"artifact-{a['id']}.zip" for a in Bundle(bundle_path).index["payloads"]}, "archive index incomplete payload set")
-            for expected in index["payload_assets"]:
-                require(release.assets.get(expected["name"], {}).get("id") == expected["id"], "archive asset replaced")
+            validate_archive_index(index, Bundle(bundle_path), release, release_info)
         bundle = Bundle(bundle_path)
         backend = Backend(bundle, github, release, args.mode == "create")
         proof["projection"] = project(bundle, backend, root / "reader", host)
@@ -426,8 +524,8 @@ def main():
             index_asset = release.publish(index_path)
             proof["archive_index"] = {"asset_id": index_asset["id"], "bytes": index_asset["size"],
                                       "sha256": file_digest(index_path), "url": index_asset["browser_download_url"]}
-            published = github.request("PATCH", f"releases/{release.id}", json={"draft": False}).json()
-            require(not published["draft"], "release did not publish")
+            validate_archive_index(index, bundle, release, release_info)
+            publish_release(github, release_info)
         proof.update(status="complete", verified_downloads=backend.downloaded,
                      original_Actions_API_requests=[c for c in github.calls if "/actions/" in "/" + c["endpoint"]])
         require(args.mode != "replay" or not proof["original_Actions_API_requests"], "replay used live Actions API")
