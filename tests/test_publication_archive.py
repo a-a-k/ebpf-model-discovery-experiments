@@ -87,6 +87,23 @@ def test_stream_download_rejects_corruption_and_cleans_only_owned_partial(tmp_pa
     assert not (tmp_path / "original.zip.partial").exists()
 
 
+@pytest.mark.parametrize("endpoint,accept", [
+    ("actions/artifacts/1/zip", "application/vnd.github+json"),
+    ("releases/assets/1", "application/octet-stream"),
+])
+def test_actions_and_release_downloads_use_their_distinct_api_media_types(tmp_path, monkeypatch, endpoint, accept):
+    github = archive.GitHub()
+    response = Mock(is_redirect=False)
+    response.__enter__ = Mock(return_value=response)
+    response.__exit__ = Mock(return_value=False)
+    response.iter_content.return_value = [b"right"]
+    monkeypatch.setattr(github, "request", Mock(return_value=response))
+    monkeypatch.setattr(archive.shutil, "disk_usage", lambda _: SimpleNamespace(free=archive.RESERVE + 100))
+    github.download(endpoint, tmp_path / "original.zip", 5, archive.digest(b"right"))
+    assert github.request.call_args.kwargs["headers"]["Accept"] == accept
+    assert (tmp_path / "original.zip").read_bytes() == b"right"
+
+
 def test_existing_upload_is_reused_only_after_exact_remote_verification(tmp_path):
     body = b"original"
     path = tmp_path / "artifact-1.zip"
