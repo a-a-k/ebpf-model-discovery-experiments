@@ -77,12 +77,19 @@ def test_matrix_freezes_every_block_before_any_fresh_target():
     assert jobs['target']['needs'] == ['prepare', 'barrier']
     assert jobs['barrier']['needs'] == ['prepare', 'freeze']
     assert jobs['freeze']['strategy']['matrix']['mode'] == ['absent', 'partial', 'full']
-    assert jobs['target']['strategy']['matrix']['collector'] == ['none', 'obi', 'coroot', 'deepflow']
+    assert jobs['target']['strategy']['matrix'] == '${{ fromJSON(needs.prepare.outputs.target_matrix) }}'
     assert int(jobs['target']['strategy']['max-parallel']) == 36
     assert all(job['timeout-minutes'] == '360' for job in jobs.values())
     plan = json.loads((root / 'docs/compose-ack-correction-plan.json').read_bytes())
     assert plan['fresh_cells'] == 36 and len(plan['blocks']) == 9
     assert len({a['artifact']['id'] for b in plan['blocks'] for a in b['arms'].values()}) == 36
+    from ebpf_discovery.compose_ack_repair import target_matrix
+    matrix = target_matrix(plan)['include']
+    assert len(matrix) == 36
+    for block in plan['blocks']:
+        matching = [c for c in matrix if [c['mode'], c['repetition']] == block['key'][1:]]
+        assert [c['collector'] for c in matching] == block['original_arm_orders']['validation']
+        assert {c['collector'] for c in matching} == {'none', 'obi', 'coroot', 'deepflow'}
 
 
 def target_job(job_id, attempt, offset=0):

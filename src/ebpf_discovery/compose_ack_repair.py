@@ -52,6 +52,13 @@ def selected(plan, mode, repetition):
     return matches[0]
 
 
+def target_matrix(plan):
+    return {'include': [{'mode': block['key'][1], 'repetition': block['key'][2],
+                         'collector': arm, 'slot': slot}
+                        for block in plan['blocks']
+                        for slot, arm in enumerate(block['original_arm_orders']['validation'])]}
+
+
 def output(**values):
     with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf8') as stream:
         for key, value in values.items():
@@ -172,7 +179,8 @@ def prepare(github, root):
                 archive.write(name, name)
     release.publish(bundle)
     write_json(root / 'release.json', info)
-    output(release_id=release.id, release_tag=tag)
+    output(release_id=release.id, release_tag=tag,
+           target_matrix=json.dumps(target_matrix(plan), separators=(',', ':')))
 
 
 def freeze(github, release, root, block):
@@ -343,6 +351,7 @@ def validate(github, release, root, plan, block, arm, args):
         require(case.status['runner_boot_id'] != original['case']['runner_boot_id'], 'validation reused an original capture host')
         case.status['correction_series'] = plan_name()
         case.status['correction_allocation_regime'] = 'one runtime arm per independent target worker'
+        case.status['correction_validation_slot'] = block['original_arm_orders']['validation'].index(arm)
         case.status['original_capture_case'] = original['case']
         name = f"target {block['key'][1]}/{block['key'][2]}/{arm}"
         jobs = github.pages(f"actions/runs/{os.environ['GITHUB_RUN_ID']}/jobs?filter=all", 'jobs')
