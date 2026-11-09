@@ -1,0 +1,2504 @@
+{
+  "study": "compose-ack-contract-correction",
+  "registered_before_processing_ns": 1794249964150294400,
+  "scope": "All36 original DeathStarBench input cells, all3 operations; exact observed models reused; corrected contract forecasts before fresh independent targets. Historical data untouched.",
+  "original_criterion": "Feasibility of executable operation models and external outcome forecasts with absent or incomplete SDK tracing, equally informed direct/native/context baselines; no model, prediction or effort superiority assumed.",
+  "hypothesis": "A treatment-specific ACK contract removes an incorrect Mongo-success dependency while retaining transport-failure requirements; any resulting graph-supported forecasts are tested against new independent HTTP ACK targets. Audit all three fixed-fixture DSB outcomes, including the strongest read-user DB-down baseline; do not artificially preserve a weak UNKNOWN direct baseline.",
+  "strongest_baseline": "Same source-defined branch semantics and two-slot inventory given to direct conditional calculation, clean native NONE, cheap context union and each eBPF input; absent graph evidence never suppresses the direct baseline. ReadUserTimeline DB-down is also1 under the independently source-audited registered warm-Redis fixture and ignored failed Mongo cursor, with the same semantics supplied to every graph method; Mongo is not called off-path.",
+  "root_original_design_GO": true,
+  "independent_original_design_GO_sha256": "242cb9acc38f45962c1ba38c90c4f3dcc3bd48d489fdac2ae1ac85fbb7a5593f",
+  "error_assumption_misses_are_retained_not_retried_for_success": true,
+  "costs": "Original closed-input/model and engineering costs remain referenced; new source/CI/review/import/contract compilation/Sheaft/fresh VM/collector/traffic/oracle/classification/transfer/storage/retry/early-stop costs retained. Human work unknown. No Bering discovery or new capture phase is required.",
+  "fresh_cells": 36,
+  "operations": [
+    "compose_post",
+    "read_home_timeline",
+    "read_user_timeline"
+  ],
+  "blocks": [
+    {
+      "key": [
+        "deathstarbench",
+        "absent",
+        9
+      ],
+      "parent_run_id": 42347362261,
+      "shared_artifact": {
+        "id": 13564606255,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU2NDYwNjI1NQ==",
+        "name": "v6-isolated-shared-42347362261-attempt1",
+        "size_in_bytes": 3113427950,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13564606255",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13564606255/zip",
+        "expired": false,
+        "digest": "sha256:e87291faa4504f67c847c80308eb7e60f0f299f3d12b22079706494018caab5c",
+        "created_at": "2026-11-07T06:38:25Z",
+        "updated_at": "2026-11-07T06:38:25Z",
+        "expires_at": "2027-02-05T06:31:05Z",
+        "workflow_run": {
+          "id": 42347362261,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "none",
+          "obi"
+        ],
+        "validation": [
+          "none",
+          "coroot",
+          "deepflow",
+          "obi"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13567876950,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2Nzg3Njk1MA==",
+            "name": "v6-isolated-model-slot2-42347362261-attempt1",
+            "size_in_bytes": 225807082,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13567876950",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13567876950/zip",
+            "expired": false,
+            "digest": "sha256:83c94929288d617bb1c681f2b030ca27f273f3d8f05865aa47ddff47a4d7f8be",
+            "created_at": "2026-11-07T08:37:15Z",
+            "updated_at": "2026-11-07T08:37:15Z",
+            "expires_at": "2027-02-05T06:31:05Z",
+            "workflow_run": {
+              "id": 42347362261,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "fab5235d510db014322667e969ebd0693dd72ba47c883cea202dbf8813f78b77",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 9,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347362261",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "869aa48c-9573-4266-8749-7faf47e3bf4b",
+            "started_ns": 1794033806452471417,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "0de4cbe0d175eb556b04ef7af318fb9003f5faf57e3927d4d280382efa3b0982",
+            "ended_ns": 1794039569401480828,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13570436993,
+            "name": "v6-isolated-metadata-validation0-42347362261-attempt1",
+            "run_id": 42347362261,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128360881544,
+            "job_attempt": 1,
+            "bytes": 33772931,
+            "sha256": "7b034cfa9d07f27d35327bbd0bb78da91fe8fbaa5ebf6c44ad364824fb8b1bd9"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13566601981,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2NjYwMTk4MQ==",
+            "name": "v6-isolated-model-slot3-42347362261-attempt1",
+            "size_in_bytes": 347822557,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13566601981",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13566601981/zip",
+            "expired": false,
+            "digest": "sha256:1a22347c6993fa84a9cd5617b888cf54c86a9aeb4f24ddce53529e1fa70ed723",
+            "created_at": "2026-11-07T07:59:31Z",
+            "updated_at": "2026-11-07T07:59:31Z",
+            "expires_at": "2027-02-05T06:31:05Z",
+            "workflow_run": {
+              "id": 42347362261,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "d1c107bdaba5f9cf07a3e551898d936e36a00da0f5dacac9abe48e360461c682",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 9,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347362261",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "625e8339-999b-4f16-a5d8-ca033e8b7cdb",
+            "started_ns": 1794033747017692880,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "0de4cbe0d175eb556b04ef7af318fb9003f5faf57e3927d4d280382efa3b0982",
+            "ended_ns": 1794037219825725077,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13570013812,
+            "name": "v6-isolated-metadata-validation3-42347362261-attempt1",
+            "run_id": 42347362261,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128360881488,
+            "job_attempt": 1,
+            "bytes": 48677274,
+            "sha256": "13c809ee1d4bbcda603695ca13e4de882a12b6226d6b70ea859bccd7aa9c8315"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13568102138,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2ODEwMjEzOA==",
+            "name": "v6-isolated-model-slot0-42347362261-attempt1",
+            "size_in_bytes": 288387694,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568102138",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568102138/zip",
+            "expired": false,
+            "digest": "sha256:a9144474bd8411d8452acf21d8ca721cbe60ee4d2457798bd6687d4904e719e8",
+            "created_at": "2026-11-07T08:43:27Z",
+            "updated_at": "2026-11-07T08:43:27Z",
+            "expires_at": "2027-02-05T06:31:05Z",
+            "workflow_run": {
+              "id": 42347362261,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "5961d20785ee2e65ffe67839e99e1dcb9a0113b988a2165f7f35fbfbe49812e0",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 9,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347362261",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "2c2cc775-0e03-486f-bf85-d3f9ba6ea6dc",
+            "started_ns": 1794033742294672347,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "0de4cbe0d175eb556b04ef7af318fb9003f5faf57e3927d4d280382efa3b0982",
+            "ended_ns": 1794039704105771820,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13569907343,
+            "name": "v6-isolated-metadata-validation1-42347362261-attempt1",
+            "run_id": 42347362261,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128360881514,
+            "job_attempt": 1,
+            "bytes": 34226592,
+            "sha256": "606c7e5e9c98449aece26ef803f63f7a89b21e2dc8ee48291449a53974f569cd"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13568661059,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2ODY2MTA1OQ==",
+            "name": "v6-isolated-model-slot1-42347362261-attempt1",
+            "size_in_bytes": 595007132,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568661059",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568661059/zip",
+            "expired": false,
+            "digest": "sha256:24f155ef40e6324f225b7cd29837a67f398ad677f3a43a6de84d648e97c3edbb",
+            "created_at": "2026-11-07T09:04:22Z",
+            "updated_at": "2026-11-07T09:04:22Z",
+            "expires_at": "2027-02-05T06:31:05Z",
+            "workflow_run": {
+              "id": 42347362261,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "4f1f62959a48b8dc4c5b62ccb73679dc5d44b5c2899873fb67b841a186345a11",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 9,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347362261",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "6c25bcf3-33b9-4d12-9f60-c2d2f9d0faf5",
+            "started_ns": 1794033953874253227,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "0de4cbe0d175eb556b04ef7af318fb9003f5faf57e3927d4d280382efa3b0982",
+            "ended_ns": 1794039653633390903,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13569858122,
+            "name": "v6-isolated-metadata-validation2-42347362261-attempt1",
+            "run_id": 42347362261,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128360881569,
+            "job_attempt": 1,
+            "bytes": 49775220,
+            "sha256": "984daa4f949ccc83049c3b3561ab76648af1990d9b835789febb77bb727c9eef"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "absent",
+        10
+      ],
+      "parent_run_id": 42380965603,
+      "shared_artifact": {
+        "id": 13576869942,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3Njg2OTk0Mg==",
+        "name": "v6-isolated-shared-42380965603-attempt1",
+        "size_in_bytes": 3181356365,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13576869942",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13576869942/zip",
+        "expired": false,
+        "digest": "sha256:4f89f1bf19b4ac82bc6a974457d61d0c0217b1e647194c3a6fd29bedae2895ea",
+        "created_at": "2026-11-07T14:26:29Z",
+        "updated_at": "2026-11-07T14:26:29Z",
+        "expires_at": "2027-02-05T14:18:20Z",
+        "workflow_run": {
+          "id": 42380965603,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "deepflow",
+          "none",
+          "coroot",
+          "obi"
+        ],
+        "validation": [
+          "coroot",
+          "none",
+          "obi",
+          "deepflow"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13582252171,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjI1MjE3MQ==",
+            "name": "v6-isolated-model-slot1-42380965603-attempt1",
+            "size_in_bytes": 225803073,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582252171",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582252171/zip",
+            "expired": false,
+            "digest": "sha256:fd3b32df687ae21be783b51173c66c932c713e1ddfceb7bd1484916d1c65a186",
+            "created_at": "2026-11-07T16:47:34Z",
+            "updated_at": "2026-11-07T16:47:34Z",
+            "expires_at": "2027-02-05T14:18:20Z",
+            "workflow_run": {
+              "id": 42380965603,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "d984772a758ae2e37200969517c167ba73b5144582b22d0b64914066e0456b03",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 10,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380965603",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "f83d7585-e709-4461-8177-e77dcbe71056",
+            "started_ns": 1794061887273001103,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "204186949063bd8ceaf36430e78125fb970b344371ff0295ef75dd7a81c2cc10",
+            "ended_ns": 1794068676089231617,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13583776641,
+            "name": "v6-isolated-metadata-validation1-42380965603-attempt1",
+            "run_id": 42380965603,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128466121879,
+            "job_attempt": 1,
+            "bytes": 33771664,
+            "sha256": "de91d8789eda8c0d0d99929a2a612b8b8ae2b41e5d5102ab18bb014367f92b07"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13581747363,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTc0NzM2Mw==",
+            "name": "v6-isolated-model-slot3-42380965603-attempt1",
+            "size_in_bytes": 352293647,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581747363",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581747363/zip",
+            "expired": false,
+            "digest": "sha256:ccf503158a3ee4c40dd1f3a41d6dd6800cf9fa25ce4ad6f7001f8bfca2c5b9d6",
+            "created_at": "2026-11-07T16:33:06Z",
+            "updated_at": "2026-11-07T16:33:06Z",
+            "expires_at": "2027-02-05T14:18:20Z",
+            "workflow_run": {
+              "id": 42380965603,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "c3cbc602e0634aad251724aa1fd7629bad26597bd52b4ebcceecc3fa9e138c29",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 10,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380965603",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "8cae92ba-8006-4ea1-b8f6-ec630e315eb0",
+            "started_ns": 1794061924580907695,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "204186949063bd8ceaf36430e78125fb970b344371ff0295ef75dd7a81c2cc10",
+            "ended_ns": 1794067160274919327,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584950163,
+            "name": "v6-isolated-metadata-validation2-42380965603-attempt1",
+            "run_id": 42380965603,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128466121906,
+            "job_attempt": 1,
+            "bytes": 48672756,
+            "sha256": "727c965656e47b2fb9c004fdc9543cad52ad3bcc2b3b8482a2e7c40d6fd36639"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13582072954,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjA3Mjk1NA==",
+            "name": "v6-isolated-model-slot2-42380965603-attempt1",
+            "size_in_bytes": 291032436,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582072954",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582072954/zip",
+            "expired": false,
+            "digest": "sha256:b727b8aad4db2a0a1bb4d6ab4f1ed1fbdce929f80d3fabd58202a59af90279ca",
+            "created_at": "2026-11-07T16:41:02Z",
+            "updated_at": "2026-11-07T16:41:02Z",
+            "expires_at": "2027-02-05T14:18:20Z",
+            "workflow_run": {
+              "id": 42380965603,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "ace9908e2f7ebd0ccb6fa4484ad66f1dd700e644dfc6122e66052e0519cb6329",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 10,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380965603",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "2cfe4cc0-86c6-45cf-ae11-b520cb3db29e",
+            "started_ns": 1794061845802233166,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "204186949063bd8ceaf36430e78125fb970b344371ff0295ef75dd7a81c2cc10",
+            "ended_ns": 1794068297331753067,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584527970,
+            "name": "v6-isolated-metadata-validation0-42380965603-attempt1",
+            "run_id": 42380965603,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128466121985,
+            "job_attempt": 1,
+            "bytes": 34244245,
+            "sha256": "9ff122830ed7d0a2e326b6caaa4a5390cc9272577cf62c4be53aa21419bc4f8b"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13582158018,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjE1ODAxOA==",
+            "name": "v6-isolated-model-slot0-42380965603-attempt1",
+            "size_in_bytes": 589267152,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582158018",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582158018/zip",
+            "expired": false,
+            "digest": "sha256:3d0a989a2ffe3cf4b0ee91124221e768cc330d13852df0a8b71f13eba5e76671",
+            "created_at": "2026-11-07T16:52:48Z",
+            "updated_at": "2026-11-07T16:52:48Z",
+            "expires_at": "2027-02-05T14:18:20Z",
+            "workflow_run": {
+              "id": 42380965603,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "3302774fb1d4dc5082f100d5e0c0b8b6eff98e1bc119dd2bb699d1483e0883c5",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 10,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380965603",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "78956a7a-af22-4705-8505-8f0f0d3dd028",
+            "started_ns": 1794061824171950291,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "204186949063bd8ceaf36430e78125fb970b344371ff0295ef75dd7a81c2cc10",
+            "ended_ns": 1794067853908674651,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584186033,
+            "name": "v6-isolated-metadata-validation3-42380965603-attempt1",
+            "run_id": 42380965603,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128466121921,
+            "job_attempt": 1,
+            "bytes": 49781999,
+            "sha256": "acac682542545fa4e9bdf2df470b5597c8f34bc69f063bec38feee9b41c3836f"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "absent",
+        11
+      ],
+      "parent_run_id": 42380968511,
+      "shared_artifact": {
+        "id": 13578155214,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3ODE1NTIxNA==",
+        "name": "v6-isolated-shared-42380968511-attempt1",
+        "size_in_bytes": 3102524848,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13578155214",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13578155214/zip",
+        "expired": false,
+        "digest": "sha256:331a328227b11b14302d681d87e7b68e37980379c94f98be917dcd8c0b1d948a",
+        "created_at": "2026-11-07T14:27:02Z",
+        "updated_at": "2026-11-07T14:27:02Z",
+        "expires_at": "2027-02-05T14:18:22Z",
+        "workflow_run": {
+          "id": 42380968511,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "coroot",
+          "deepflow",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "deepflow",
+          "coroot"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13582371109,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjM3MTEwOQ==",
+            "name": "v6-isolated-model-slot3-42380968511-attempt1",
+            "size_in_bytes": 225822540,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582371109",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582371109/zip",
+            "expired": false,
+            "digest": "sha256:060e324dcc1110e2f622a6f9a8741a0bc3b2843f3e4f6437cf888aae49001896",
+            "created_at": "2026-11-07T16:40:42Z",
+            "updated_at": "2026-11-07T16:40:42Z",
+            "expires_at": "2027-02-05T14:18:22Z",
+            "workflow_run": {
+              "id": 42380968511,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "8fdf5b3d5d5447f8e758227878f59b4318bdf9bd7c5d5ee18898934930e779ed",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 11,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380968511",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "ab5d68da-02f3-47c1-9e66-d9657e0edb25",
+            "started_ns": 1794061925699698254,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "2b004c2fba93f0e96296b6b89518f43ef330d2c21cd3c33fe1ee6a3e65faf6d2",
+            "ended_ns": 1794068373865254275,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584661182,
+            "name": "v6-isolated-metadata-validation1-42380968511-attempt1",
+            "run_id": 42380968511,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128468548126,
+            "job_attempt": 1,
+            "bytes": 33772159,
+            "sha256": "71101945a1f86f22a490602977b7b58a5ee5482d7778ca181314d8cfbf57b7d0"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13581466269,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTQ2NjI2OQ==",
+            "name": "v6-isolated-model-slot2-42380968511-attempt1",
+            "size_in_bytes": 350986508,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581466269",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581466269/zip",
+            "expired": false,
+            "digest": "sha256:4d5d88f209f26b5bcf083b906f21f0ee766ddd9eff0b1a3486581ab0092e64e7",
+            "created_at": "2026-11-07T16:21:19Z",
+            "updated_at": "2026-11-07T16:21:19Z",
+            "expires_at": "2027-02-05T14:18:22Z",
+            "workflow_run": {
+              "id": 42380968511,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "7b34c980951e7cdb59c36ee1b9390a3af828d847d2bb6f4bdfb10308a1a2028d",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 11,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380968511",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "71b8a014-42a2-4831-89ab-a6cde3f0e288",
+            "started_ns": 1794061866795076489,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "2b004c2fba93f0e96296b6b89518f43ef330d2c21cd3c33fe1ee6a3e65faf6d2",
+            "ended_ns": 1794066816912049025,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584288079,
+            "name": "v6-isolated-metadata-validation0-42380968511-attempt1",
+            "run_id": 42380968511,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128468547996,
+            "job_attempt": 1,
+            "bytes": 48677010,
+            "sha256": "637293999ef63ad77172ce36ae54e73fbf8fa91e323fdb95c10779796ced81e6"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13581128884,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTEyODg4NA==",
+            "name": "v6-isolated-model-slot0-42380968511-attempt1",
+            "size_in_bytes": 286906664,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581128884",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581128884/zip",
+            "expired": false,
+            "digest": "sha256:23de2a4b90482c9043e699b949b1cc4f67d4573e04350e895c91ccd723234372",
+            "created_at": "2026-11-07T16:32:03Z",
+            "updated_at": "2026-11-07T16:32:03Z",
+            "expires_at": "2027-02-05T14:18:22Z",
+            "workflow_run": {
+              "id": 42380968511,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "81ba9cb2a8d4d593e6b3bebd58eeea7d8f0bb88f6f854c13bf95fac2ab2a7401",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 11,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380968511",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "845ae634-6cbc-48c6-ae61-51c0ae41c3cb",
+            "started_ns": 1794061842706820965,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "2b004c2fba93f0e96296b6b89518f43ef330d2c21cd3c33fe1ee6a3e65faf6d2",
+            "ended_ns": 1794067807752411364,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584791010,
+            "name": "v6-isolated-metadata-validation3-42380968511-attempt1",
+            "run_id": 42380968511,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128468548079,
+            "job_attempt": 1,
+            "bytes": 34248195,
+            "sha256": "b2b866362c6b19b90c219e125005c00df63015068fdda17a099af0886c9b0b7b"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13582019329,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjAxOTMyOQ==",
+            "name": "v6-isolated-model-slot1-42380968511-attempt1",
+            "size_in_bytes": 589534081,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582019329",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582019329/zip",
+            "expired": false,
+            "digest": "sha256:6c83b6f2c70bc7c365ee3c88845a754794d3276bdb51739cb7cb622f9f318e2e",
+            "created_at": "2026-11-07T17:02:00Z",
+            "updated_at": "2026-11-07T17:02:00Z",
+            "expires_at": "2027-02-05T14:18:22Z",
+            "workflow_run": {
+              "id": 42380968511,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "88dcdb908dd3b44b4d63c192ed4cbf6c1cb9a9c84869cef1b404242166ba9cb7",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "absent",
+            "seed": 11,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380968511",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "83e3e885-cc09-46dd-b15f-769a765e91ae",
+            "started_ns": 1794062130411740965,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "2b004c2fba93f0e96296b6b89518f43ef330d2c21cd3c33fe1ee6a3e65faf6d2",
+            "ended_ns": 1794068237801861878,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585025965,
+            "name": "v6-isolated-metadata-validation2-42380968511-attempt1",
+            "run_id": 42380968511,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128468548077,
+            "job_attempt": 1,
+            "bytes": 49778751,
+            "sha256": "9de5b9d107aed31026f0931f9d81ccb895a970ebc8a66559d15ae333cd732ab4"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "full",
+        9
+      ],
+      "parent_run_id": 42347366203,
+      "shared_artifact": {
+        "id": 13563369608,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU2MzM2OTYwOA==",
+        "name": "v6-isolated-shared-42347366203-attempt1",
+        "size_in_bytes": 3183281486,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13563369608",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13563369608/zip",
+        "expired": false,
+        "digest": "sha256:a3a3ae3ef6e2997566952154866ccc29cb6b946bae99a5c9ced6c8f72ce19cee",
+        "created_at": "2026-11-07T06:37:40Z",
+        "updated_at": "2026-11-07T06:37:40Z",
+        "expires_at": "2027-02-05T06:31:08Z",
+        "workflow_run": {
+          "id": 42347366203,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "none",
+          "obi",
+          "coroot",
+          "deepflow"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13568843006,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2ODg0MzAwNg==",
+            "name": "v6-isolated-model-slot0-42347366203-attempt1",
+            "size_in_bytes": 263929597,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568843006",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568843006/zip",
+            "expired": false,
+            "digest": "sha256:c62afc7857763e860c72b86c5b14b0d94779e24557e91064d9fc44b381dca93f",
+            "created_at": "2026-11-07T09:21:21Z",
+            "updated_at": "2026-11-07T09:21:21Z",
+            "expires_at": "2027-02-05T06:31:08Z",
+            "workflow_run": {
+              "id": 42347366203,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "d8d5a96c84f97a5fccadb0c6d46ab46f34fffd5df90d0b0fbe031bacfb5a5ff4",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 9,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347366203",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "8cc50563-4b85-4c5c-9c0d-5bdb1c3cfd59",
+            "started_ns": 1794033756626923793,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "88cc5b813a6cb43320e58b533f48aa3b1da6a37d1abf90e74ce9fedd309cde94",
+            "ended_ns": 1794040133570042623,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13572465361,
+            "name": "v6-isolated-metadata-validation1-42347366203-attempt1",
+            "run_id": 42347366203,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128373410957,
+            "job_attempt": 1,
+            "bytes": 123751276,
+            "sha256": "b5b479049de6fd60ef52fa1ef0f6b83c55c740205e864896d17c01d4b57385de"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13567747133,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2Nzc0NzEzMw==",
+            "name": "v6-isolated-model-slot1-42347366203-attempt1",
+            "size_in_bytes": 395152212,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13567747133",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13567747133/zip",
+            "expired": false,
+            "digest": "sha256:8f85e0dcb854566d54768927ad3c666e1599dd5b49374ef9efae54034fb1aaa9",
+            "created_at": "2026-11-07T08:37:40Z",
+            "updated_at": "2026-11-07T08:37:40Z",
+            "expires_at": "2027-02-05T06:31:08Z",
+            "workflow_run": {
+              "id": 42347366203,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "cd20f86fc6f8ec44da20b860628c13dcf6dcd91f934f7ae2590af7018c0883c6",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 9,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347366203",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "401b1d26-2c48-4f85-a6b8-3b1287b0e90f",
+            "started_ns": 1794033762632685904,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "88cc5b813a6cb43320e58b533f48aa3b1da6a37d1abf90e74ce9fedd309cde94",
+            "ended_ns": 1794037343364218115,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13571144473,
+            "name": "v6-isolated-metadata-validation0-42347366203-attempt1",
+            "run_id": 42347366203,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128373411032,
+            "job_attempt": 1,
+            "bytes": 138252175,
+            "sha256": "42b2cf11cc3c0694d1260113a1162f29b261f39a0bd7a0fe6c68fae33d5361de"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13568091974,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU2ODA5MTk3NA==",
+            "name": "v6-isolated-model-slot2-42347366203-attempt1",
+            "size_in_bytes": 317092312,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568091974",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13568091974/zip",
+            "expired": false,
+            "digest": "sha256:4b460a78bac2c13e9e9f0bb7f694ce90053c57a726db57b92d0fa7dbf7e4402f",
+            "created_at": "2026-11-07T08:42:01Z",
+            "updated_at": "2026-11-07T08:42:01Z",
+            "expires_at": "2027-02-05T06:31:08Z",
+            "workflow_run": {
+              "id": 42347366203,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "1ee2859d428b5f915377fd7b8c9317f59c02082fa75e45c57bd68945245127a9",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 9,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347366203",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "04b68229-6654-4154-9802-9a3941926319",
+            "started_ns": 1794033795402240197,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "88cc5b813a6cb43320e58b533f48aa3b1da6a37d1abf90e74ce9fedd309cde94",
+            "ended_ns": 1794037324879098591,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13571750424,
+            "name": "v6-isolated-metadata-validation2-42347366203-attempt1",
+            "run_id": 42347366203,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128373410968,
+            "job_attempt": 1,
+            "bytes": 123980920,
+            "sha256": "5e9ca946388115fd02512a38bd88bf270e6090a53c225f14fb6f1b7f7b8f7fcd"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13570143017,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU3MDE0MzAxNw==",
+            "name": "v6-isolated-model-slot3-42347366203-attempt1",
+            "size_in_bytes": 741134754,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13570143017",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13570143017/zip",
+            "expired": false,
+            "digest": "sha256:0e7d272252de9d30cbc0cba719f4ef19957c64bff71921ccd0a39d2de201645e",
+            "created_at": "2026-11-07T10:01:42Z",
+            "updated_at": "2026-11-07T10:01:42Z",
+            "expires_at": "2027-02-05T06:31:08Z",
+            "workflow_run": {
+              "id": 42347366203,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed"
+            }
+          },
+          "original_forecast_manifest_sha256": "a50aa095337ee0890fb48a3484aeb1120e1f9fa85ec31a255e63e19a5817699f",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 9,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42347366203",
+            "commit": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "runner_boot_id": "bc775aec-a8ae-48ab-ba8c-844c3d6ff2af",
+            "started_ns": 1794033664535340001,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "88cc5b813a6cb43320e58b533f48aa3b1da6a37d1abf90e74ce9fedd309cde94",
+            "ended_ns": 1794039959845527422,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13572290174,
+            "name": "v6-isolated-metadata-validation3-42347366203-attempt1",
+            "run_id": 42347366203,
+            "source": "b913a5df7be680c5e6ede001d0f8eb6fb856a4ed",
+            "job_id": 128373411010,
+            "job_attempt": 1,
+            "bytes": 139409817,
+            "sha256": "52c447a5a14d5053bafb7432c9215271c2a15332b7a8a7c7ae4e573f54eeec4d"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "full",
+        10
+      ],
+      "parent_run_id": 42380978976,
+      "shared_artifact": {
+        "id": 13577907334,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3NzkwNzMzNA==",
+        "name": "v6-isolated-shared-42380978976-attempt1",
+        "size_in_bytes": 3134656517,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577907334",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577907334/zip",
+        "expired": false,
+        "digest": "sha256:2a6d1ffd6145bd9f1aa8e0ac35bcc5e764c470051bba64fee5682dec59bc1b7f",
+        "created_at": "2026-11-07T14:27:21Z",
+        "updated_at": "2026-11-07T14:27:21Z",
+        "expires_at": "2027-02-05T14:18:30Z",
+        "workflow_run": {
+          "id": 42380978976,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "obi",
+          "none",
+          "coroot",
+          "deepflow"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13581923583,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTkyMzU4Mw==",
+            "name": "v6-isolated-model-slot2-42380978976-attempt1",
+            "size_in_bytes": 264250032,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581923583",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581923583/zip",
+            "expired": false,
+            "digest": "sha256:fec63de67e9c1b62832d8c165f1aefa81019150ee658d391a479596e01f8d4ae",
+            "created_at": "2026-11-07T16:44:20Z",
+            "updated_at": "2026-11-07T16:44:20Z",
+            "expires_at": "2027-02-05T14:18:30Z",
+            "workflow_run": {
+              "id": 42380978976,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "ec8e23a14da4614cbcb4ae44a5470591c05e1e5187689b076a1656744f0bea90",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 10,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380978976",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "141f789a-31af-4b78-9dfb-3e72043342ad",
+            "started_ns": 1794061919936199667,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "168f31ba85fbbb6cccca6edcdd1dd5a5b8b72286e9ed17d22f31c15c1ea5452b",
+            "ended_ns": 1794067236862300952,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13587050972,
+            "name": "v6-isolated-metadata-validation1-42380978976-attempt1",
+            "run_id": 42380978976,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128482699790,
+            "job_attempt": 1,
+            "bytes": 123749929,
+            "sha256": "6a468f15f34b99935b314cd7d7e126f446f2e06ac3ce4b823436027426581846"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13583040604,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MzA0MDYwNA==",
+            "name": "v6-isolated-model-slot0-42380978976-attempt1",
+            "size_in_bytes": 401940032,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583040604",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583040604/zip",
+            "expired": false,
+            "digest": "sha256:2dd6c9c31c94d47f0350c37aad6eec24f56f87d00c40897911fbc0b58d746340",
+            "created_at": "2026-11-07T16:57:12Z",
+            "updated_at": "2026-11-07T16:57:12Z",
+            "expires_at": "2027-02-05T14:18:30Z",
+            "workflow_run": {
+              "id": 42380978976,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "ffd87d547371fe2c6af39e4d2923b1bb510be78a27cf7bd6f23a62e2e3519126",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 10,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380978976",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "f3176d0d-b888-4479-bc90-b48e15662c6c",
+            "started_ns": 1794061868186954516,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "168f31ba85fbbb6cccca6edcdd1dd5a5b8b72286e9ed17d22f31c15c1ea5452b",
+            "ended_ns": 1794067512353167039,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13587460373,
+            "name": "v6-isolated-metadata-validation0-42380978976-attempt1",
+            "run_id": 42380978976,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128482699797,
+            "job_attempt": 1,
+            "bytes": 138325498,
+            "sha256": "9d0200ff12f6c8594ab256852c2ea6fecd85e7f23d4487b3bff780848499e728"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13583631713,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MzYzMTcxMw==",
+            "name": "v6-isolated-model-slot3-42380978976-attempt1",
+            "size_in_bytes": 338411394,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583631713",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583631713/zip",
+            "expired": false,
+            "digest": "sha256:711cc4477ee3fae75a87557be32af9370bf67f8a361c69b9b05f1100ab6e2ebe",
+            "created_at": "2026-11-07T17:21:44Z",
+            "updated_at": "2026-11-07T17:21:44Z",
+            "expires_at": "2027-02-05T14:18:30Z",
+            "workflow_run": {
+              "id": 42380978976,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "342a90401c179986cffac3a755ca9fd2ef03bf76bc52778641f80c796d66946c",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 10,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380978976",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "6fe85a02-e3e2-4a84-b939-f1e102408cd9",
+            "started_ns": 1794062006363323741,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "168f31ba85fbbb6cccca6edcdd1dd5a5b8b72286e9ed17d22f31c15c1ea5452b",
+            "ended_ns": 1794069186391688774,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13587645497,
+            "name": "v6-isolated-metadata-validation2-42380978976-attempt1",
+            "run_id": 42380978976,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128482699822,
+            "job_attempt": 1,
+            "bytes": 124265466,
+            "sha256": "95c0fd23fdecc1a3e289bddc151a68d0f5ac9653f6031e0c8d8c1b6bef2fcb64"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13584273885,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4NDI3Mzg4NQ==",
+            "name": "v6-isolated-model-slot1-42380978976-attempt1",
+            "size_in_bytes": 738775437,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13584273885",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13584273885/zip",
+            "expired": false,
+            "digest": "sha256:5ed2c14e6dc03f69d24040305544a04d04f5d8140881453995036c1f8decc2fe",
+            "created_at": "2026-11-07T17:56:47Z",
+            "updated_at": "2026-11-07T17:56:47Z",
+            "expires_at": "2027-02-05T14:18:30Z",
+            "workflow_run": {
+              "id": 42380978976,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "c3963faf4acd5ad5f45c7277d04c40425c953cbfcebcfc1cc6b2b2f8ffdba193",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 10,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380978976",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "4e45a5cf-060f-4da1-9edc-aae37592b3f1",
+            "started_ns": 1794061988621924539,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "168f31ba85fbbb6cccca6edcdd1dd5a5b8b72286e9ed17d22f31c15c1ea5452b",
+            "ended_ns": 1794067705370642395,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13586208624,
+            "name": "v6-isolated-metadata-validation3-42380978976-attempt1",
+            "run_id": 42380978976,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128482699883,
+            "job_attempt": 1,
+            "bytes": 139409924,
+            "sha256": "99e3ea2fbec6ff1d53fbe2228152d5bce548bd1ef31ce7ee528d7d8c86427235"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "full",
+        11
+      ],
+      "parent_run_id": 42380981787,
+      "shared_artifact": {
+        "id": 13577554045,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3NzU1NDA0NQ==",
+        "name": "v6-isolated-shared-42380981787-attempt1",
+        "size_in_bytes": 3164864582,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577554045",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577554045/zip",
+        "expired": false,
+        "digest": "sha256:cfd22cb8dbfa496a40cb484b70582d6308f379a324c4914c3a0ab9053f3597c2",
+        "created_at": "2026-11-07T14:26:49Z",
+        "updated_at": "2026-11-07T14:26:49Z",
+        "expires_at": "2027-02-05T14:18:32Z",
+        "workflow_run": {
+          "id": 42380981787,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "coroot",
+          "obi",
+          "deepflow",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "coroot",
+          "deepflow",
+          "none"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13581398720,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTM5ODcyMA==",
+            "name": "v6-isolated-model-slot3-42380981787-attempt1",
+            "size_in_bytes": 264154154,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581398720",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581398720/zip",
+            "expired": false,
+            "digest": "sha256:26d3c80aac7e9eac7fae0f8b9a6befdd9b2678fdfb1448e60489915c1fd4f795",
+            "created_at": "2026-11-07T16:40:06Z",
+            "updated_at": "2026-11-07T16:40:06Z",
+            "expires_at": "2027-02-05T14:18:32Z",
+            "workflow_run": {
+              "id": 42380981787,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "efcf318dbf4928c522723bc717e5103bf9d0cb06b65a6d214aa329da8d60e920",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 11,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380981787",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "11e3bd7e-0d81-4a9f-812f-a7ca420c4fcf",
+            "started_ns": 1794061937923519571,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "a8e3a0f832beca40247e1c8e3a8b52751bd44b14476cc801f484368d8e32c55c",
+            "ended_ns": 1794066902608125704,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13589548115,
+            "name": "v6-isolated-metadata-validation3-42380981787-attempt2",
+            "run_id": 42380981787,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128504590914,
+            "job_attempt": 2,
+            "bytes": 123751595,
+            "sha256": "366f2af9477e8f0b7ad9f006e4b66e7a1de8fc2cbba142241e1900dfac86e11a"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13583086664,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MzA4NjY2NA==",
+            "name": "v6-isolated-model-slot1-42380981787-attempt1",
+            "size_in_bytes": 399573500,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583086664",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583086664/zip",
+            "expired": false,
+            "digest": "sha256:030809f780d1460da65b946fe9c776af67987946bfbedf92710c8b0ef270e4ea",
+            "created_at": "2026-11-07T17:04:19Z",
+            "updated_at": "2026-11-07T17:04:19Z",
+            "expires_at": "2027-02-05T14:18:32Z",
+            "workflow_run": {
+              "id": 42380981787,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "9575d16c6e48c5234d648002a2889b952ab9066158f8abd68ec54d99eb4e0994",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 11,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380981787",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "4def4912-611b-4053-b7b8-cc919186a716",
+            "started_ns": 1794061843239911664,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "a8e3a0f832beca40247e1c8e3a8b52751bd44b14476cc801f484368d8e32c55c",
+            "ended_ns": 1794066863216652301,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13589548148,
+            "name": "v6-isolated-metadata-validation0-42380981787-attempt2",
+            "run_id": 42380981787,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128504590924,
+            "job_attempt": 2,
+            "bytes": 138313176,
+            "sha256": "8877ffec548755840e873c91c92a9b39a91570a8f6f9be35c3f448dedaa1d529"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13582192507,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjE5MjUwNw==",
+            "name": "v6-isolated-model-slot0-42380981787-attempt1",
+            "size_in_bytes": 315137776,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582192507",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582192507/zip",
+            "expired": false,
+            "digest": "sha256:00fa82a8769c88f165564bc18a657a7cb65a491a7835610757c684dc5676d1db",
+            "created_at": "2026-11-07T16:49:52Z",
+            "updated_at": "2026-11-07T16:49:52Z",
+            "expires_at": "2027-02-05T14:18:32Z",
+            "workflow_run": {
+              "id": 42380981787,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "e31601700737b560931fe4b0f9a7d1bd10eefa34cb601a7f624b885e615c13e8",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 11,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380981787",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "e7ee8682-e51d-49f2-b90a-3108944e56c3",
+            "started_ns": 1794061880845793286,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "a8e3a0f832beca40247e1c8e3a8b52751bd44b14476cc801f484368d8e32c55c",
+            "ended_ns": 1794065477530490161,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13589452190,
+            "name": "v6-isolated-metadata-validation1-42380981787-attempt2",
+            "run_id": 42380981787,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128504590873,
+            "job_attempt": 2,
+            "bytes": 124132359,
+            "sha256": "420eac20daee656720da333b3f76b595b38b5d476fb8ea5b5c106ec31bb3d676"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13586604859,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4NjYwNDg1OQ==",
+            "name": "v6-isolated-model-slot2-42380981787-attempt2",
+            "size_in_bytes": 740987100,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586604859",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13586604859/zip",
+            "expired": false,
+            "digest": "sha256:2b017dd087be86e9d85f08bac01cfccc059ca026109bc59a3e3c11140ba272c9",
+            "created_at": "2026-11-07T19:23:55Z",
+            "updated_at": "2026-11-07T19:23:55Z",
+            "expires_at": "2027-02-05T18:02:52Z",
+            "workflow_run": {
+              "id": 42380981787,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "d3f6cd4ce281e00457a9067e58c849afb800405f9cb8e36a25cd6907bd18a75f",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "full",
+            "seed": 11,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380981787",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "b62bb9be-de86-42d7-8110-3bfacbb34cb2",
+            "started_ns": 1794061880402385735,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "a8e3a0f832beca40247e1c8e3a8b52751bd44b14476cc801f484368d8e32c55c",
+            "ended_ns": 1794067682085659391,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13589892525,
+            "name": "v6-isolated-metadata-validation2-42380981787-attempt2",
+            "run_id": 42380981787,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128504591034,
+            "job_attempt": 2,
+            "bytes": 139432229,
+            "sha256": "cf8c6e3a67f05aa58d2ff59ee1da2d24f4aaae759f3ccb10fb47fa34fbb6c5d9"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "partial",
+        9
+      ],
+      "parent_run_id": 42380971028,
+      "shared_artifact": {
+        "id": 13577252802,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3NzI1MjgwMg==",
+        "name": "v6-isolated-shared-42380971028-attempt1",
+        "size_in_bytes": 3253281904,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577252802",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577252802/zip",
+        "expired": false,
+        "digest": "sha256:a42d0c681f365c69f8385f4ce57dab3f9e25250660b864c353855e983a6b6fdf",
+        "created_at": "2026-11-07T14:25:01Z",
+        "updated_at": "2026-11-07T14:25:01Z",
+        "expires_at": "2027-02-05T14:18:24Z",
+        "workflow_run": {
+          "id": 42380971028,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "none",
+          "coroot"
+        ],
+        "validation": [
+          "coroot",
+          "obi",
+          "none",
+          "deepflow"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13581545285,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTU0NTI4NQ==",
+            "name": "v6-isolated-model-slot2-42380971028-attempt1",
+            "size_in_bytes": 261462137,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581545285",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581545285/zip",
+            "expired": false,
+            "digest": "sha256:b1ad3c38ab9b01918d31ad3379daf694506c9849ba94d432b3d604fd5aedd88d",
+            "created_at": "2026-11-07T16:15:23Z",
+            "updated_at": "2026-11-07T16:15:23Z",
+            "expires_at": "2027-02-05T14:18:24Z",
+            "workflow_run": {
+              "id": 42380971028,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "1cfe75b52a5607ef670b491b1eb30394a7da94823c222a333fcfc1d6fa2cbe85",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 9,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380971028",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "6de19362-6339-4a59-a3f3-b78b7f369063",
+            "started_ns": 1794061719962270542,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "2075892b7a66852ffdd8afa23a84bb89e44c053f1bc864cd361dd770d642ff50",
+            "ended_ns": 1794065254818236690,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584767095,
+            "name": "v6-isolated-metadata-validation2-42380971028-attempt1",
+            "run_id": 42380971028,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128469972812,
+            "job_attempt": 1,
+            "bytes": 104423536,
+            "sha256": "2055369c440a958c8609de5e2c1b606126e7e0bc5d33be0ca398ac791776cfa3"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13582442257,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjQ0MjI1Nw==",
+            "name": "v6-isolated-model-slot0-42380971028-attempt1",
+            "size_in_bytes": 395323042,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582442257",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582442257/zip",
+            "expired": false,
+            "digest": "sha256:584da27df741e0499e7d6491040fd220a173399bed05fdb94413e552c24a7a14",
+            "created_at": "2026-11-07T17:02:06Z",
+            "updated_at": "2026-11-07T17:02:06Z",
+            "expires_at": "2027-02-05T14:18:24Z",
+            "workflow_run": {
+              "id": 42380971028,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "2e38f42d4c55a8eea735deae71f15e83dada18200f55b69c07ac054911c84bca",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 9,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380971028",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "19ab91fe-9b5f-4c16-802e-5609670f8f08",
+            "started_ns": 1794061772263960668,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "2075892b7a66852ffdd8afa23a84bb89e44c053f1bc864cd361dd770d642ff50",
+            "ended_ns": 1794067711860698745,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585381367,
+            "name": "v6-isolated-metadata-validation1-42380971028-attempt1",
+            "run_id": 42380971028,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128469972808,
+            "job_attempt": 1,
+            "bytes": 119015338,
+            "sha256": "f4216a8e4270513c3088f851a0ce055b1d8fb0dec630a9f2b8f8b8759cb6b6af"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13581793611,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTc5MzYxMQ==",
+            "name": "v6-isolated-model-slot3-42380971028-attempt1",
+            "size_in_bytes": 320617729,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581793611",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581793611/zip",
+            "expired": false,
+            "digest": "sha256:743fd52fca00c749ac2df5c1fb0bed244df6af239e15e655f83ea43ba124630d",
+            "created_at": "2026-11-07T16:53:07Z",
+            "updated_at": "2026-11-07T16:53:07Z",
+            "expires_at": "2027-02-05T14:18:24Z",
+            "workflow_run": {
+              "id": 42380971028,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "58e14d18da2ec85c6897cbb30461ee099f573838d6f5757b63bd710a4d6e70a2",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 9,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380971028",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "fba79ef2-5cd7-4d60-9f93-387a0f4a568d",
+            "started_ns": 1794061924185070608,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "2075892b7a66852ffdd8afa23a84bb89e44c053f1bc864cd361dd770d642ff50",
+            "ended_ns": 1794066992111609618,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13584949287,
+            "name": "v6-isolated-metadata-validation0-42380971028-attempt1",
+            "run_id": 42380971028,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128469972851,
+            "job_attempt": 1,
+            "bytes": 104953751,
+            "sha256": "b26dadaaaebd92a2fb9d61895b530cfee60eec64bf77fcb298a22cc017110798"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13582922197,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjkyMjE5Nw==",
+            "name": "v6-isolated-model-slot1-42380971028-attempt1",
+            "size_in_bytes": 685316143,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582922197",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582922197/zip",
+            "expired": false,
+            "digest": "sha256:f9351ad7cb8fd365d4955b8adabfb2cf28b3d729659574db4405faa5e171cf86",
+            "created_at": "2026-11-07T17:06:24Z",
+            "updated_at": "2026-11-07T17:06:24Z",
+            "expires_at": "2027-02-05T14:18:24Z",
+            "workflow_run": {
+              "id": 42380971028,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "c5803ad3ed23625e446c86e0160064be3bd69b090310a90ca07ca2446be744d7",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 9,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380971028",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "d94bc600-4c1b-4141-b010-4c5b79c1f767",
+            "started_ns": 1794061716226900243,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "2075892b7a66852ffdd8afa23a84bb89e44c053f1bc864cd361dd770d642ff50",
+            "ended_ns": 1794065374142575870,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585103527,
+            "name": "v6-isolated-metadata-validation3-42380971028-attempt1",
+            "run_id": 42380971028,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128469972804,
+            "job_attempt": 1,
+            "bytes": 120113616,
+            "sha256": "7463788f24ce3d9cff061104f36df379a2728ef124509f1aa918e5e4b5339a83"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "partial",
+        10
+      ],
+      "parent_run_id": 42380973772,
+      "shared_artifact": {
+        "id": 13577467571,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3NzQ2NzU3MQ==",
+        "name": "v6-isolated-shared-42380973772-attempt1",
+        "size_in_bytes": 3104635146,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577467571",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577467571/zip",
+        "expired": false,
+        "digest": "sha256:af11264c42f1307b23f6863e7802e49a131cdfb7f4b6c471f090d5af01d67acc",
+        "created_at": "2026-11-07T14:26:37Z",
+        "updated_at": "2026-11-07T14:26:37Z",
+        "expires_at": "2027-02-05T14:18:26Z",
+        "workflow_run": {
+          "id": 42380973772,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "obi",
+          "deepflow",
+          "coroot",
+          "none"
+        ],
+        "validation": [
+          "deepflow",
+          "none",
+          "obi",
+          "coroot"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13581743243,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTc0MzI0Mw==",
+            "name": "v6-isolated-model-slot3-42380973772-attempt1",
+            "size_in_bytes": 261351200,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581743243",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581743243/zip",
+            "expired": false,
+            "digest": "sha256:5fc360ec2439c3b623c08111915b861e22be85ab07d9bab0bb293032c1e6bc3b",
+            "created_at": "2026-11-07T16:38:39Z",
+            "updated_at": "2026-11-07T16:38:39Z",
+            "expires_at": "2027-02-05T14:18:26Z",
+            "workflow_run": {
+              "id": 42380973772,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "98ae4706fa5f40736bdfad1cec4af036ba8846564e0bcd472eb1e37c3f7d7269",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 10,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380973772",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "81da47c4-1e2f-469e-8ded-9981522f4e0c",
+            "started_ns": 1794061931893513948,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "8c6f25eb6ab0deb405fc673eb49e6932c60f900ad5a1a64b48c3075e7bdb0104",
+            "ended_ns": 1794066912261120656,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13586133884,
+            "name": "v6-isolated-metadata-validation1-42380973772-attempt1",
+            "run_id": 42380973772,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128481342222,
+            "job_attempt": 1,
+            "bytes": 104430690,
+            "sha256": "79130e6d5310a478256f351af17080acb9d49770cbefdc4be8b95493879b17c4"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13582379885,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjM3OTg4NQ==",
+            "name": "v6-isolated-model-slot0-42380973772-attempt1",
+            "size_in_bytes": 395082202,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582379885",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582379885/zip",
+            "expired": false,
+            "digest": "sha256:cccd0dd8b16d44e9d377ecb5bb588eeedeefa1558de9d43c56de8f32ac89bd9b",
+            "created_at": "2026-11-07T17:06:24Z",
+            "updated_at": "2026-11-07T17:06:24Z",
+            "expires_at": "2027-02-05T14:18:26Z",
+            "workflow_run": {
+              "id": 42380973772,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "a8465be01698c82c37cf755f4b8f607301e47d169850e41e44f5d190b0af6814",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 10,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380973772",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "05bdb1d9-91f4-4bb1-8155-0d2dd852293e",
+            "started_ns": 1794061886628302440,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "8c6f25eb6ab0deb405fc673eb49e6932c60f900ad5a1a64b48c3075e7bdb0104",
+            "ended_ns": 1794067803352470069,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585587612,
+            "name": "v6-isolated-metadata-validation2-42380973772-attempt1",
+            "run_id": 42380973772,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128481342218,
+            "job_attempt": 1,
+            "bytes": 118948621,
+            "sha256": "6ff0e145c07d5fba8e3612e4c62ea59a83f8968c4ab2c91982155ae291772b87"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13581603556,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MTYwMzU1Ng==",
+            "name": "v6-isolated-model-slot2-42380973772-attempt1",
+            "size_in_bytes": 311770991,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581603556",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13581603556/zip",
+            "expired": false,
+            "digest": "sha256:3639ade3fa9ad9d1e0687aa4aac0914ac31576901233269f3dd776873a7ec463",
+            "created_at": "2026-11-07T16:37:51Z",
+            "updated_at": "2026-11-07T16:37:51Z",
+            "expires_at": "2027-02-05T14:18:26Z",
+            "workflow_run": {
+              "id": 42380973772,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "774adc05b8bce151577cf25ea8f79871d15db0da01dc659dd06c0f9e3747d2ea",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 10,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380973772",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "75ebc266-0531-42d7-9e7f-12501460544b",
+            "started_ns": 1794061832911447273,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "8c6f25eb6ab0deb405fc673eb49e6932c60f900ad5a1a64b48c3075e7bdb0104",
+            "ended_ns": 1794065419907761710,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13586717203,
+            "name": "v6-isolated-metadata-validation3-42380973772-attempt1",
+            "run_id": 42380973772,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128481342186,
+            "job_attempt": 1,
+            "bytes": 104869458,
+            "sha256": "77ff1d7a57bd6032d758251717749526d8aa9f1f08a534fa0020cc75fc0e0d06"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13584088412,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4NDA4ODQxMg==",
+            "name": "v6-isolated-model-slot1-42380973772-attempt1",
+            "size_in_bytes": 713793209,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13584088412",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13584088412/zip",
+            "expired": false,
+            "digest": "sha256:7e45f21d4b241413eb5f3c534672affc46f855bd8793433fa58c9023e317ecbd",
+            "created_at": "2026-11-07T17:50:34Z",
+            "updated_at": "2026-11-07T17:50:34Z",
+            "expires_at": "2027-02-05T14:18:26Z",
+            "workflow_run": {
+              "id": 42380973772,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "ac67d86426ddd2ccb7e58567b4891efd280d2ec631b0c0017d56461f0a55a581",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 10,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380973772",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "b00e173f-c039-4b1c-8a50-362ef0aa73c8",
+            "started_ns": 1794061930436675320,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "8c6f25eb6ab0deb405fc673eb49e6932c60f900ad5a1a64b48c3075e7bdb0104",
+            "ended_ns": 1794068494204508379,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585647862,
+            "name": "v6-isolated-metadata-validation0-42380973772-attempt1",
+            "run_id": 42380973772,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128481342109,
+            "job_attempt": 1,
+            "bytes": 120098231,
+            "sha256": "899b61de848a1f51498602d8800f4005d29dcbe0f553e6d495d2f0b49f197953"
+          }
+        }
+      }
+    },
+    {
+      "key": [
+        "deathstarbench",
+        "partial",
+        11
+      ],
+      "parent_run_id": 42380976315,
+      "shared_artifact": {
+        "id": 13577848045,
+        "node_id": "MDg6QXJ0aWZhY3QxMzU3Nzg0ODA0NQ==",
+        "name": "v6-isolated-shared-42380976315-attempt1",
+        "size_in_bytes": 3130808127,
+        "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577848045",
+        "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13577848045/zip",
+        "expired": false,
+        "digest": "sha256:c6e6016db720281cf7f50740725c80ede8302829c52cbad2d70c95409ee9a7eb",
+        "created_at": "2026-11-07T14:26:20Z",
+        "updated_at": "2026-11-07T14:26:20Z",
+        "expires_at": "2027-02-05T14:18:28Z",
+        "workflow_run": {
+          "id": 42380976315,
+          "repository_id": 1434356471,
+          "head_repository_id": 1434356471,
+          "head_branch": "main",
+          "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+        }
+      },
+      "original_arm_orders": {
+        "training": [
+          "deepflow",
+          "coroot",
+          "obi",
+          "none"
+        ],
+        "validation": [
+          "obi",
+          "coroot",
+          "deepflow",
+          "none"
+        ]
+      },
+      "arms": {
+        "none": {
+          "artifact": {
+            "id": 13582017564,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjAxNzU2NA==",
+            "name": "v6-isolated-model-slot3-42380976315-attempt1",
+            "size_in_bytes": 261197693,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582017564",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582017564/zip",
+            "expired": false,
+            "digest": "sha256:83aed00ca3abeceab0829bd5f894ad0c65b88d2f9e026d3d14862fee0bad6d8a",
+            "created_at": "2026-11-07T16:45:42Z",
+            "updated_at": "2026-11-07T16:45:42Z",
+            "expires_at": "2027-02-05T14:18:28Z",
+            "workflow_run": {
+              "id": 42380976315,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "463cb4d6991c86693eaa5d7e8da3d08b361423f9cb600b450121d266b75ecff7",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 11,
+            "collector": "none",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380976315",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "4a0b0756-2c8f-4131-a21f-fa895f6386d4",
+            "started_ns": 1794061897345978500,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training3",
+              "attempt": 1,
+              "slot": 3
+            },
+            "blueprint_sha256": "71a15edd6ee7f7a16e1e3f5b0266e5ddc9ce917b63434c98c32889e85c15c8dd",
+            "ended_ns": 1794067063051489139,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585249848,
+            "name": "v6-isolated-metadata-validation3-42380976315-attempt1",
+            "run_id": 42380976315,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128479288168,
+            "job_attempt": 1,
+            "bytes": 104401127,
+            "sha256": "5d84523312447a5e2cc0ef1a24b7da8a504d0a1f01db4a2faf9bbdfb17d3eca3"
+          }
+        },
+        "obi": {
+          "artifact": {
+            "id": 13582162561,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjE2MjU2MQ==",
+            "name": "v6-isolated-model-slot2-42380976315-attempt1",
+            "size_in_bytes": 388869132,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582162561",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582162561/zip",
+            "expired": false,
+            "digest": "sha256:c35c1ad775bffe8c5817ac71dff74fc7c43d4450328adce2c888b5f8818c9ba5",
+            "created_at": "2026-11-07T16:40:16Z",
+            "updated_at": "2026-11-07T16:40:16Z",
+            "expires_at": "2027-02-05T14:18:28Z",
+            "workflow_run": {
+              "id": 42380976315,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "e2d1e10a7c4405efbbe3d569a3f4325b98aa6c3a841d89d55b713dba3a832a9c",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 11,
+            "collector": "obi",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380976315",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "a8ed4649-db5a-40fd-b976-6c79741685d2",
+            "started_ns": 1794061837670185296,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training2",
+              "attempt": 1,
+              "slot": 2
+            },
+            "blueprint_sha256": "71a15edd6ee7f7a16e1e3f5b0266e5ddc9ce917b63434c98c32889e85c15c8dd",
+            "ended_ns": 1794065373799204732,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585989458,
+            "name": "v6-isolated-metadata-validation0-42380976315-attempt1",
+            "run_id": 42380976315,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128479288086,
+            "job_attempt": 1,
+            "bytes": 119002831,
+            "sha256": "f30f90e311ad04606487dcc954f9236cb056468a3a04f8298c7eae70d77af32f"
+          }
+        },
+        "coroot": {
+          "artifact": {
+            "id": 13582502220,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MjUwMjIyMA==",
+            "name": "v6-isolated-model-slot1-42380976315-attempt1",
+            "size_in_bytes": 327543833,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582502220",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13582502220/zip",
+            "expired": false,
+            "digest": "sha256:4ce4fa764322714e6a150897f95feda572b2fc1e3149aafe4c7c9bca79569898",
+            "created_at": "2026-11-07T17:03:59Z",
+            "updated_at": "2026-11-07T17:03:59Z",
+            "expires_at": "2027-02-05T14:18:28Z",
+            "workflow_run": {
+              "id": 42380976315,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "f1c8ad8f47e8353d393ed50be7317a864b73edc2b257bfc923ceab85855849cd",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 11,
+            "collector": "coroot",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380976315",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "ce518377-951a-4e14-b78d-06ca6b4704bc",
+            "started_ns": 1794061836277961381,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training1",
+              "attempt": 1,
+              "slot": 1
+            },
+            "blueprint_sha256": "71a15edd6ee7f7a16e1e3f5b0266e5ddc9ce917b63434c98c32889e85c15c8dd",
+            "ended_ns": 1794067960401136210,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585758719,
+            "name": "v6-isolated-metadata-validation1-42380976315-attempt1",
+            "run_id": 42380976315,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128479288087,
+            "job_attempt": 1,
+            "bytes": 104852175,
+            "sha256": "746363b2ec28e8fb5d297063eac11642dec54971be1f1f3bbcb743e82234dda0"
+          }
+        },
+        "deepflow": {
+          "artifact": {
+            "id": 13583334360,
+            "node_id": "MDg6QXJ0aWZhY3QxMzU4MzMzNDM2MA==",
+            "name": "v6-isolated-model-slot0-42380976315-attempt1",
+            "size_in_bytes": 708578205,
+            "url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583334360",
+            "archive_download_url": "https://api.github.com/repos/a-a-k/ebpf-model-discovery-experiments/actions/artifacts/13583334360/zip",
+            "expired": false,
+            "digest": "sha256:dd93dba91bccdfe817e8ca4145c1fe0961190018a12b1160c65a96b9b6ed6caf",
+            "created_at": "2026-11-07T17:43:47Z",
+            "updated_at": "2026-11-07T17:43:47Z",
+            "expires_at": "2027-02-05T14:18:28Z",
+            "workflow_run": {
+              "id": 42380976315,
+              "repository_id": 1434356471,
+              "head_repository_id": 1434356471,
+              "head_branch": "main",
+              "head_sha": "f1d33e1e3df99665623809b971963976f5c4bd55"
+            }
+          },
+          "original_forecast_manifest_sha256": "715fd4e38936a01580610a339a7c006764fe08f51ced7b49ce78b9e478ea5499",
+          "original_capture_case": {
+            "study": "clean-restart-v6",
+            "protocol_version": "graph-v5",
+            "system": "deathstarbench",
+            "mode": "partial",
+            "seed": 11,
+            "collector": "deepflow",
+            "phase": "training",
+            "smoke": false,
+            "stage": "main",
+            "run_id": "42380976315",
+            "commit": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "runner_boot_id": "5d5de5fd-0c1e-40bd-b217-162388881184",
+            "started_ns": 1794061795981693719,
+            "status": "capture_complete",
+            "allocation_regime": "randomized-between-host-arms-v6",
+            "producing_job": {
+              "job": "training0",
+              "attempt": 1,
+              "slot": 0
+            },
+            "blueprint_sha256": "71a15edd6ee7f7a16e1e3f5b0266e5ddc9ce917b63434c98c32889e85c15c8dd",
+            "ended_ns": 1794067884617646243,
+            "cleanup_errors": []
+          },
+          "original_validation_metadata": {
+            "id": 13585569745,
+            "name": "v6-isolated-metadata-validation2-42380976315-attempt1",
+            "run_id": 42380976315,
+            "source": "f1d33e1e3df99665623809b971963976f5c4bd55",
+            "job_id": 128479288119,
+            "job_attempt": 1,
+            "bytes": 120111457,
+            "sha256": "a1ab13db8d9bc090591a5dcf0a9ca7de88adc668b595c9d558d104c98b86874d"
+          }
+        }
+      }
+    }
+  ]
+}
