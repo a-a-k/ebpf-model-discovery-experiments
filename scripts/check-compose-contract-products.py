@@ -20,7 +20,7 @@ for name, pin in [('bering', PINS['Bering']), ('sheaft', PINS['Sheaft'])]:
     assert actual['commit'] == pin and digest(build / 'bin' / name) == actual['binary_sha256']
 source = build / 'checkouts/sheaft/examples/outputs/model.required-calls.sample.json'
 sample = json.loads(source.read_text())
-model = {key: deepcopy(sample[key]) for key in ('services', 'edges', 'endpoints')}
+model = {key: deepcopy(sample[key]) for key in ('services', 'edges', 'endpoints', 'metadata')}
 for service in model['services']:
     service['metadata'] = {}
     service['replicas'] = 1

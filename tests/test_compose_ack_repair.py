@@ -83,3 +83,39 @@ def test_matrix_freezes_every_block_before_any_fresh_target():
     plan = json.loads((root / 'docs/compose-ack-correction-plan.json').read_bytes())
     assert plan['fresh_cells'] == 36 and len(plan['blocks']) == 9
     assert len({a['artifact']['id'] for b in plan['blocks'] for a in b['arms'].values()}) == 36
+
+
+def target_job(job_id, attempt, offset=0):
+    from datetime import datetime, timedelta, timezone
+    start = datetime(2026, 11, 9, tzinfo=timezone.utc) + timedelta(seconds=offset)
+    return {'id': job_id, 'run_attempt': attempt, 'status': 'completed', 'conclusion': 'success',
+            'steps': [{'name': 'Capture fresh independent targets from the original sealed blueprint',
+                       'status': 'completed', 'conclusion': 'success',
+                       'started_at': start.isoformat(), 'completed_at': (start + timedelta(seconds=10)).isoformat()}]}
+
+
+def publication(attempt, start, producer_id):
+    return {'asset': {'id': attempt}, 'receipt': {'attempt': attempt, 'error': None,
+            'result': {'technical_complete': True, 'status': {'started_ns': start + 10**9,
+                'ended_ns': start + 5 * 10**9, 'producing_job': {'id': producer_id}}}}}
+
+
+def test_reused_successful_api_alias_does_not_require_a_fictitious_new_publication():
+    from ebpf_discovery.compose_ack_repair import select_actual_publication, step_interval_ns
+    original = target_job(10, 1)
+    base = step_interval_ns(original['steps'][0]['started_at'])
+    actual = publication(1, base, 10)
+    alias = target_job(20, 3)
+    chosen, job, aliases = select_actual_publication([actual], [alias])
+    assert chosen['receipt']['attempt'] == 1
+    assert job['run_attempt'] == 3
+    assert aliases == [alias]
+
+
+def test_latest_actual_capture_clock_wins_over_highest_old_alias_label():
+    from ebpf_discovery.compose_ack_repair import select_actual_publication, step_interval_ns
+    earlier_alias, new = target_job(20, 99), target_job(30, 2, offset=20)
+    first = publication(1, step_interval_ns(earlier_alias['steps'][0]['started_at']), 10)
+    second = publication(2, step_interval_ns(new['steps'][0]['started_at']), 30)
+    chosen, job, _ = select_actual_publication([first, second], [earlier_alias, new])
+    assert chosen['receipt']['attempt'] == 2 and job['id'] == 30

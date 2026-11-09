@@ -6,8 +6,9 @@ Actions worker and are published with exact byte/SHA receipts to one Release.
 from __future__ import annotations
 
 import argparse
+import calendar
 from collections import Counter
-from contextlib import contextmanager
+from datetime import datetime, timezone
 import hashlib
 import json
 import os
@@ -186,6 +187,15 @@ def freeze(github, release, root, block):
         return
     folder = root / 'corrected'
     folder.mkdir()
+    tools = Path(os.environ['PBS_BIN']).resolve().parent
+    build = b.read(tools / 'toolchain-build.json')
+    from .toolchain_v5 import PINS
+    for name, pin in (('bering', PINS['Bering']), ('sheaft', PINS['Sheaft'])):
+        actual = next(row for row in build['binaries'] if row['name'] == name)
+        require(actual['commit'] == pin and file_digest(tools / 'bin' / name) == actual['binary_sha256'],
+                'actual product binary differs from approved pin/build receipt')
+    shutil.copyfile(tools / 'toolchain-build.json', folder / 'actual-toolchain-build.json')
+    shutil.copyfile(tools / 'builds.tsv', folder / 'actual-toolchain-builds.tsv')
     provenance = {}
     for arm in ARMS:
         model = root / 'original' / arm
@@ -334,6 +344,13 @@ def validate(github, release, root, plan, block, arm, args):
         case.status['correction_series'] = plan_name()
         case.status['correction_allocation_regime'] = 'one runtime arm per independent target worker'
         case.status['original_capture_case'] = original['case']
+        name = f"target {block['key'][1]}/{block['key'][2]}/{arm}"
+        jobs = github.pages(f"actions/runs/{os.environ['GITHUB_RUN_ID']}/jobs?filter=all", 'jobs')
+        producer = [j for j in jobs if j['name'] == name and j['status'] == 'in_progress' and
+                    j['run_attempt'] == int(os.environ['GITHUB_RUN_ATTEMPT']) and j['head_sha'] == os.environ['GITHUB_SHA']]
+        require(len(producer) == 1, 'exact current target producer job required')
+        case.status['producing_job'] = {'id': producer[0]['id'], 'name': name,
+                                       'attempt': int(os.environ['GITHUB_RUN_ATTEMPT'])}
         shutil.copyfile('work/host-resources.json', capture / 'capture-host-resources.json')
         write_json(capture / 'block-freeze-verified-before-capture.json', all_frozen)
         case.capture(deploy / 'blueprint', shared_plan['blueprint_sha256'])
@@ -350,10 +367,18 @@ def validate(github, release, root, plan, block, arm, args):
     require([row['action'] for row in commands] == ['start', 'stop', 'discard'] and
             all(row['exit_status'] == 0 for row in commands) and commands[0]['started_ns'] > all_frozen['saved_ns'],
             'fresh guest lifecycle does not follow the corrected forecast barrier')
+    class_file = capture / 'class-evaluation/classes-v5.json'
+    omitted = [{'field': name, 'items': len(class_result[name])} for name in
+               ('class_test_assignments', 'target_descriptive_assignments') if name in class_result]
+    class_projection = {k: v for k, v in class_result.items()
+                        if k not in ('class_test_assignments', 'target_descriptive_assignments')}
     result.update(freeze_asset=row['asset'], all36_barrier={'asset_id': args.barrier_asset_id,
                   'bytes': args.barrier_bytes, 'sha256': args.barrier_sha256},
                   original_model=block['arms'][arm], fresh_guest_lifecycle=commands,
-                  frozen_classification_applied_without_refit=class_result)
+                  frozen_classification_applied_without_refit=class_projection,
+                  classification_array_omissions=omitted,
+                  full_classification_in_raw_capture={'path': class_file.relative_to(capture).as_posix(),
+                                                       'bytes': class_file.stat().st_size, 'sha256': file_digest(class_file)})
     write_json(root / 'result.json', result)
 
 
@@ -409,6 +434,40 @@ def publish_target(release, root, args, error):
     release.publish(path)
 
 
+def step_interval_ns(value):
+    date = datetime.fromisoformat(value.replace('Z', '+00:00')).astimezone(timezone.utc)
+    return calendar.timegm(date.utctimetuple()) * 10**9 + date.microsecond * 1000
+
+
+def select_actual_publication(attempts, jobs):
+    """Use actual capture clocks, not later reused-successful API attempt labels."""
+    valid = []
+    for attempt in attempts:
+        receipt = attempt['receipt']
+        result = receipt.get('result') or {}
+        if receipt['error'] is not None or result.get('technical_complete') is not True:
+            continue
+        status = result['status']
+        matches = []
+        for job in jobs:
+            if job['status'] != 'completed' or job['conclusion'] != 'success':
+                continue
+            for step in job.get('steps', []):
+                if (step['name'] == 'Capture fresh independent targets from the original sealed blueprint' and
+                        step['status'] == 'completed' and step['conclusion'] == 'success' and
+                        step_interval_ns(step['started_at']) <= status['started_ns'] <= status['ended_ns'] <
+                        step_interval_ns(step['completed_at']) + 10**9):
+                    matches.append(job)
+                    break
+        if matches:
+            preferred = [j for j in matches if j['id'] == status.get('producing_job', {}).get('id')]
+            producer = (preferred or sorted(matches, key=lambda j: (j['run_attempt'], j['id'])))[0]
+            valid.append((status['started_ns'], attempt, producer, matches))
+    require(valid, 'no published successful target matches an actual executed step interval')
+    _, chosen, producer, aliases = max(valid, key=lambda value: value[0])
+    return chosen, producer, aliases
+
+
 def summarize(github, release, root, plan):
     """Select successful technical job attempts, retain every other attempt."""
     jobs = github.pages(f"actions/runs/{os.environ['GITHUB_RUN_ID']}/jobs?filter=all", 'jobs')
@@ -420,7 +479,6 @@ def summarize(github, release, root, plan):
             actual = [j for j in jobs if j['name'] == name and j['conclusion'] == 'success' and
                       j['status'] == 'completed' and j['head_sha'] == os.environ['GITHUB_SHA']]
             require(actual, 'missing completed technical target job: ' + name)
-            job = max(actual, key=lambda j: (j['run_attempt'], j['id']))
             prefix = f'target-{mode}-{repetition}-{arm}-attempt'
             attempts = []
             for asset in release.assets.values():
@@ -432,12 +490,15 @@ def summarize(github, release, root, plan):
                             (receipt['mode'], receipt['repetition'], receipt['collector']) == (mode, repetition, arm),
                             'foreign target publication')
                     attempts.append({'asset': asset_identity(asset), 'receipt': receipt})
-            all_attempts.extend(attempts)
-            chosen = [a for a in attempts if a['receipt']['attempt'] == job['run_attempt']]
-            require(len(chosen) == 1 and chosen[0]['receipt']['error'] is None and
-                    chosen[0]['receipt']['result']['technical_complete'] is True, 'successful target evidence missing')
-            cases.append({'key': [*block['key'], arm], 'producing_job': job,
-                          'publication': chosen[0]['asset'], 'result': chosen[0]['receipt']['result']})
+            all_attempts.extend({'asset': a['asset'], 'key': [*block['key'], arm],
+                                 'attempt': a['receipt']['attempt'], 'error': a['receipt']['error'],
+                                 'result_retained_at_exact_receipt_asset': True} for a in attempts)
+            chosen, job, aliases = select_actual_publication(attempts, actual)
+            cases.append({'key': [*block['key'], arm], 'producing_job_API': job,
+                          'capture_producer': chosen['receipt']['result']['status'].get('producing_job'),
+                          'all_matching_successful_job_API_aliases': aliases,
+                          'publication': chosen['asset'], 'published_attempt': chosen['receipt']['attempt'],
+                          'result': chosen['receipt']['result']})
     require(len(cases) == 36 and sum(c['result']['row_count'] for c in cases) == 864, 'fixed36/864 coverage differs')
     value = {'study': plan_name(), 'source': os.environ['GITHUB_SHA'], 'run_id': os.environ['GITHUB_RUN_ID'],
              'status': 'complete', 'plan_sha256': file_digest(PLAN), 'cases': cases,
